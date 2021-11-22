@@ -282,9 +282,9 @@ namespace ReactDotNet
 
                 UniqueKeyInitializer.InitializeKeyIfNotExists(Cols);
 
-                var children = Cols.Select(x => x.ToReactElement()).ToArray();
+                var children = Cols.Select(x => x.ToReactElement());
 
-                return ReactHelper.CreateReactElement("div", this.CollectReactAttributedProperties(), children);
+                return React.createElement("div", this.CollectReactAttributedProperties(), children);
             }
 
             // rows
@@ -301,9 +301,9 @@ namespace ReactDotNet
 
                 UniqueKeyInitializer.InitializeKeyIfNotExists(Rows);
 
-                var children = Rows.Select(x => x.ToReactElement()).ToArray();
+                var children = Rows.Select(x => x.ToReactElement());
 
-                return ReactHelper.CreateReactElement("div", this.CollectReactAttributedProperties(), children);
+                return React.createElement("div", this.CollectReactAttributedProperties(), children);
             }
         }
     }
