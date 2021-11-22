@@ -339,7 +339,7 @@ namespace ReactDotNet
                 if (sibling.key == null)
                 {
                     sibling.key = key++.ToString();
-                }
+                }.
             }
         }
     }

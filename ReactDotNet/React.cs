@@ -15,6 +15,9 @@ namespace ReactDotNet
         public static extern ReactElement createElement(string tag, ObjectLiteral attributes, string content);
 
         [Name("createElement")]
+        public static extern ReactElement createElement(Type tag, ObjectLiteral attributes, string content);
+
+        [Name("createElement")]
         public static extern ReactElement createElement(string tag, ObjectLiteral attributes);
 
         [Name("createElement")]
