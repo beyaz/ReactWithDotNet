@@ -16,7 +16,7 @@ namespace ReactDotNet
                 return 0;
             }
 
-            var reactElement = ReactHelper.CreateReactElement(componentType, null);
+            var reactElement = React.createElement(componentType, null);
 
             ReactDOM.unmountComponentAtNode(Window.Document.GetElementById(targetElementId));
             ReactDOM.render(reactElement, Window.Document.GetElementById(targetElementId));

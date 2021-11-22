@@ -197,7 +197,7 @@ namespace ReactDotNet
 
         public override ReactElement ToReactElement()
         {
-            return ReactHelper.CreateReactElement("button", this.CollectReactAttributedProperties(), text);
+            return React.createElement("button", this.CollectReactAttributedProperties(), text);
         }
     }
 
@@ -235,7 +235,7 @@ namespace ReactDotNet
 
         public override ReactElement ToReactElement()
         {
-            return ReactHelper.CreateReactElement("div", this.CollectReactAttributedProperties());
+            return React.createElement("div", this.CollectReactAttributedProperties());
         }
     }
 
@@ -265,7 +265,7 @@ namespace ReactDotNet
 
             if (Cols.Count == 0 && Rows.Count == 0)
             {
-                return ReactHelper.CreateReactElement("div", this.CollectReactAttributedProperties());
+                return React.createElement("div", this.CollectReactAttributedProperties());
             }
 
             if (Cols.Count > 0)

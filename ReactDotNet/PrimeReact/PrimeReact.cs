@@ -15,7 +15,7 @@ namespace ReactDotNet.PrimeReact
             
             var type = FindPrimeType(tag);
 
-            return ReactHelper.CreateReactElement(type, this.CollectReactAttributedProperties());
+            return React.createElement(type, this.CollectReactAttributedProperties());
         }
     }
 
@@ -121,8 +121,8 @@ namespace ReactDotNet.PrimeReact
 
             var children = new[]
             {
-                ReactHelper.CreateReactElement(@splitterPanel, attributeFor0.As<ObjectLiteral>(), child0),
-                ReactHelper.CreateReactElement(@splitterPanel, attributeFor1.As<ObjectLiteral>(), child1)
+                React.createElement(@splitterPanel, attributeFor0.As<ObjectLiteral>(), child0),
+                React.createElement(@splitterPanel, attributeFor1.As<ObjectLiteral>(), child1)
             };
 
 

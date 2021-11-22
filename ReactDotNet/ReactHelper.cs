@@ -26,39 +26,27 @@ namespace ReactDotNet
     {
         [Name("createElement")]
         public static extern ReactElement createElement(Type componentType);
+
+        [Name("createElement")]
+        public static extern ReactElement createElement(string tag, ObjectLiteral attributes, string content);
+
+        [Name("createElement")]
+        public static extern ReactElement createElement(string tag, ObjectLiteral attributes);
+
+        [Name("createElement")]
+        public static extern ReactElement createElement(Type tag, ObjectLiteral attributes);
+
+        [Name("createElement")]
+        public static extern ReactElement createElement(Type tag, ObjectLiteral attributes, ReactElement children);
     }
 
     public static class ReactHelper
     {
-        public static ReactElement CreateReactElement(string tag, ObjectLiteral attributes, string content)
-        {
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
+       
 
-            return Script.Write<ReactElement>("React.createElement(tag, attributes, content)");
-        }
+      
 
-        public static ReactElement CreateReactElement(string tag, ObjectLiteral attributes)
-        {
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
-
-            return Script.Write<ReactElement>("React.createElement(tag, attributes)");
-        }
-
-        public static ReactElement CreateReactElement(Type tag, ObjectLiteral attributes)
-        {
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
-
-            return Script.Write<ReactElement>("React.createElement(tag, attributes)");
-        }
+        
 
         public static ReactElement CreateReactElement(string tag, ObjectLiteral attributes, IEnumerable<ReactElement> children)
         {
@@ -73,15 +61,7 @@ namespace ReactDotNet
             return Script.Write<ReactElement>("React.createElement(tag, attributes, childrenArray)");
         }
 
-        public static ReactElement CreateReactElement(Type tag, ObjectLiteral attributes, ReactElement children)
-        {
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
-
-            return Script.Write<ReactElement>("React.createElement(tag, attributes, children)");
-        }
+        
 
         public static ReactElement CreateReactElement(Type tag, ObjectLiteral attributes, IEnumerable<ReactElement> children)
         {
@@ -95,6 +75,5 @@ namespace ReactDotNet
 
             return Script.Write<ReactElement>("React.createElement(tag, attributes, childrenArray)");
         }
-
     }
 }

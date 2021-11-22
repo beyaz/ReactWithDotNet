@@ -44,7 +44,7 @@ namespace ReactDotNet
 
         public virtual ReactElement ToReactElement()
         {
-            return ReactHelper.CreateReactElement(GetType(), this.CollectReactAttributedProperties());
+            return React.createElement(GetType(), this.CollectReactAttributedProperties());
         }
 
         protected void SetState(Action<TState> modifyStateAction)
