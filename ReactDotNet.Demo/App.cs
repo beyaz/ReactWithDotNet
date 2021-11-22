@@ -1,5 +1,7 @@
 ﻿
 
+using Bridge.Html5;
+
 namespace ReactDotNet.Demo
 {
     public class App
@@ -8,8 +10,9 @@ namespace ReactDotNet.Demo
         public static void Main()
         {
 
-            // Extensions.RenderReactElementIn<MainWindow>("app");
-            ReactHelper.RenderReactElementIn<TodoRecordListView>("app");
+
+            ReactDOM.render(React.createElement(typeof(TodoRecordListView)),Window.Document.GetElementById("app"));
+
         }
         #endregion
     }

@@ -1,4 +1,4 @@
-﻿using Bridge;
+﻿using Bridge.Html5;
 
 namespace ReactDotNet
 {
@@ -16,11 +16,10 @@ namespace ReactDotNet
                 return 0;
             }
 
-            // ReSharper disable once UnusedVariable
             var reactElement = ReactHelper.CreateReactElement(componentType, null);
 
-            Script.Write("ReactDOM.unmountComponentAtNode( document.getElementById(targetElementId) )");
-            Script.Write("ReactDOM.render(reactElement, document.getElementById(targetElementId))");
+            ReactDOM.unmountComponentAtNode(Window.Document.GetElementById(targetElementId));
+            ReactDOM.render(reactElement, Window.Document.GetElementById(targetElementId));
 
             return 1;
         }
