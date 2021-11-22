@@ -126,7 +126,7 @@ namespace ReactDotNet.PrimeReact
             };
 
 
-            return ReactHelper.CreateReactElement(@Splitter, this.CollectReactAttributedProperties(), children);
+            return React.createElement(@Splitter, this.CollectReactAttributedProperties(), children);
 
         }
     }
