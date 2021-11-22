@@ -61,7 +61,13 @@ namespace ReactDotNet.Demo
 
             if (state.ClickCount > 4)
             {
-                return new MaterialUI.Button { Margin  = { Left = 11, Right = 11}, variant = ButtonVariant.outlined.ToString(), Label = state.ClickCount.ToString() + "-y"};
+
+                return new MaterialUI.Button
+                {
+                    Margin  = { Left = 11, Right = 11 },
+                    variant = ButtonVariant.outlined, 
+                    Label = state.ClickCount + "-y"
+                };
 
                 return new Dropdown
                 {

@@ -17,6 +17,7 @@ namespace ReactDotNet.MaterialUI
         }
     }
 
+    [Enum(Emit.StringNameLowerCase)]
     public enum ButtonVariant
     {
         text , outlined , contained
