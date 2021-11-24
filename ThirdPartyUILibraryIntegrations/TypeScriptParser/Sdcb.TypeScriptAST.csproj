@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Sdcb.TypeScript</RootNamespace>
+    <Authors>Sdcb</Authors>
+    <Description>TypeScript AST Parser, .NET Core standard 2.0 library, forked from: https://github.com/ToCSharp/TypeScriptAST</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Copyright>Sdcb</Copyright>
+    <PackageProjectUrl>https://github.com/sdcb/TypeScriptAST</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/sdcb/TypeScriptAST</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>linqpad-samples</PackageTags>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;IDE0007;CS0162</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19554-01">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="linqpad-samples\**" Pack="True" PackagePath="linqpad-samples" />
+  </ItemGroup>
+
+</Project>
