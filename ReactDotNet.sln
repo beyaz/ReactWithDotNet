@@ -13,17 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Framework Integrations",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharpExporter", "CSharpExporter", "{888109B8-08E5-49AD-AE25-5A999964E4EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet.CSharpExporter", "ThirdPartyUILibraryIntegrations\CSharpExporter\ReactDotNet.CSharpExporter\ReactDotNet.CSharpExporter.csproj", "{4F8CAF42-FFCD-4ED4-AAED-DBF3B4500D64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet.CSharpExporter", "UI Framework Integrations\CSharpExporter\ReactDotNet.CSharpExporter\ReactDotNet.CSharpExporter.csproj", "{4F8CAF42-FFCD-4ED4-AAED-DBF3B4500D64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet.CSharpExporter.Tests", "ThirdPartyUILibraryIntegrations\CSharpExporter\ReactDotNet.CSharpExporter.Tests\ReactDotNet.CSharpExporter.Tests.csproj", "{32AFFA7B-2BD5-4C1C-BDE3-AA9E52994942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet.CSharpExporter.Tests", "UI Framework Integrations\CSharpExporter\ReactDotNet.CSharpExporter.Tests\ReactDotNet.CSharpExporter.Tests.csproj", "{32AFFA7B-2BD5-4C1C-BDE3-AA9E52994942}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TypeScriptParser", "TypeScriptParser", "{9FE604FB-2F16-4A88-84F9-7E9152458859}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sdcb.TypeScriptAST", "ThirdPartyUILibraryIntegrations\TypeScriptParser\Sdcb.TypeScriptAST.csproj", "{F9D4F4BD-8D06-4E03-B880-2C691B0EFA18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sdcb.TypeScriptAST", "UI Framework Integrations\TypeScriptParser\Sdcb.TypeScriptAST.csproj", "{F9D4F4BD-8D06-4E03-B880-2C691B0EFA18}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Supported React UI Frameworks", "Supported React UI Frameworks", "{0E70DF98-441C-42C1-AF4B-1E681D0D8530}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.PrimeReact", "ThirdPartyUILibraryIntegrations\Supported React UI Frameworks\ReactDotNet.PrimeReact\ReactDotNet.PrimeReact.csproj", "{55282CDC-6920-40CF-A55D-1BBA462EBB26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.PrimeReact", "UI Framework Integrations\Supported React UI Frameworks\ReactDotNet.PrimeReact\ReactDotNet.PrimeReact.csproj", "{55282CDC-6920-40CF-A55D-1BBA462EBB26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
