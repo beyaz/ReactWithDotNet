@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.VisualSutionExt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.Demo", "ReactDotNet.Demo\ReactDotNet.Demo.csproj", "{38902DCD-B156-4000-B018-C99F1E73FC76}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdPartyUILibraryIntegrations", "ThirdPartyUILibraryIntegrations", "{39646DF0-1988-48D1-8319-799C447D39A2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Framework Integrations", "UI Framework Integrations", "{39646DF0-1988-48D1-8319-799C447D39A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharpExporter", "CSharpExporter", "{888109B8-08E5-49AD-AE25-5A999964E4EC}"
 EndProject
