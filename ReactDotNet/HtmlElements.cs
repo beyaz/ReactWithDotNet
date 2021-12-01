@@ -248,6 +248,8 @@ namespace ReactDotNet
 
         public override ReactElement ToReactElement()
         {
+            UniqueKeyInitializer.InitializeKeyIfNotExists(children);
+
             return React.createElement(this.GetType().Name, this.CollectReactAttributedProperties(), children.Select(x => x.ToReactElement()));
         }
 

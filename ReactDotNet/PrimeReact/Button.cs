@@ -4,6 +4,9 @@ using Bridge.Html5;
 
 namespace ReactDotNet.PrimeReact
 {
+
+   
+
     [Enum(Emit.StringNameLowerCase)]
     public enum ButtonPositionType
     {
@@ -41,6 +44,22 @@ namespace ReactDotNet.PrimeReact
         /// </summary>
         [React]
         public string loadingIcon { get; set; }
-    
+
+
+
+      
+        
+        [React]
+        public string badge { get; set; }
+
+        [React]
+        public string badgeClassName { get; set; }
+
+        [React]
+        public string tooltip { get; set; }
+
+        [React]
+        public TooltipOptions tooltipOptions { get; } = new TooltipOptions();
+
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="Events\WheelEvent.cs" />
     <Compile Include="HtmlElements.cs" />
     <Compile Include="MaterialUI\Button.cs" />
+    <Compile Include="PrimeReact\TooltipOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactComponent.cs" />
     <Compile Include="ReactDOM.cs" />

@@ -60,7 +60,7 @@ namespace ReactDotNet.Demo
                 {
                     new PrimeReact.Button { label = "Save", icon ="pi pi-check"},
                     new PrimeReact.Button { label = "Delete", icon ="pi pi-trash" ,Margin = { Left = 5, Right = 7}},
-                    new PrimeReact.Button { label = "Cancel", icon ="pi pi-times" }
+                    new PrimeReact.Button { label = "Cancel", icon ="pi pi-times", tooltip = "Aloha", tooltipOptions = { position = TooltipPositionType.left}}
                 };
 
                 return new Dropdown
