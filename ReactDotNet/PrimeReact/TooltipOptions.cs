@@ -69,9 +69,13 @@ namespace ReactDotNet.PrimeReact
     /// <summary>
     ///     The tooltip options
     /// </summary>
-    [ObjectLiteral]
+    [ObjectLiteral(ObjectCreateMode.Constructor)]
+    [Constructor("{style: {}}")]
     public sealed class TooltipOptions
     {
+        
+        
+
         /// <summary>
         ///     Style class of the tooltip.
         /// </summary>
@@ -86,7 +90,7 @@ namespace ReactDotNet.PrimeReact
         /// <summary>
         ///     Style of the tooltip.
         /// </summary>
-        public CSSStyleDeclaration style { get; } = ObjectLiteral.Create<CSSStyleDeclaration>();
+        public readonly CSSStyleDeclaration style = ObjectLiteral.Create<CSSStyleDeclaration>();
 
         /// <summary>
         ///     Defines which position on the tooltip being positioned to align with the target element.
@@ -157,6 +161,7 @@ namespace ReactDotNet.PrimeReact
 
         /// <summary>
         ///     Whether to hide tooltip when hovering over tooltip content.
+        /// <para>Default true</para>
         /// </summary>
         public bool autoHide { get; set; } = true;
 

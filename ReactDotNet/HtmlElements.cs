@@ -6,6 +6,7 @@ using System.Reflection;
 using Bridge;
 using Bridge.Html5;
 using ReactDotNet;
+using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet
 {
@@ -390,6 +391,10 @@ namespace ReactDotNet
 
     static class ReactAttributeCollector
     {
+
+        [Template("Object.prototype.toString.call( {0} ) === '[object Object]'")]
+        static extern bool IsPlainObject(object value);
+
         public static ObjectLiteral CollectReactAttributedProperties(this IElement element)
         {
             var attributes = ObjectLiteral.Create<ObjectLiteral>();
@@ -401,6 +406,22 @@ namespace ReactDotNet
                 if (value != null && value["$boxed"].As<bool>())
                 {
                     value = value["v"].As<object>();
+                }
+
+                if (propertyInfo.PropertyType.FullName == typeof(TooltipOptions).FullName)
+                {
+                    var newVal = ObjectLiteral.Create<object>();
+
+                    foreach (var name in Object.GetOwnPropertyNames(value))
+                    {
+                        if (name == "$getType")
+                        {
+                            continue;
+                        }
+                        newVal[name] = value[name];
+                    }
+
+                    value = newVal;
                 }
 
                 attributes[propertyInfo.Name] = value;

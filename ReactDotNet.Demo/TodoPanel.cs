@@ -74,7 +74,9 @@ namespace ReactDotNet.Demo
                     {
                         position = TooltipPositionType.left,
                         onShow = onTooltipShow,
-                        @event = TooltipEventType.hover
+                        autoHide = false,
+                        @event = TooltipEventType.hover,
+                        style = { BackgroundColor = "yellow",Border = "5px solid red"}
                     }}
                 };
 
