@@ -68,8 +68,8 @@ namespace ReactDotNet.Demo
             {
                 return new span("p-buttonset")
                 {
-                    new PrimeReact.Button { label = "Save", icon ="pi pi-check"},
-                    new PrimeReact.Button { label = "Delete", icon ="pi pi-trash" ,Margin = { Left = 5, Right = 7}},
+                    new PrimeReact.Button { label = "Save", icon   ="pi pi-check"},
+                    new PrimeReact.Button { label = "Delete", icon ="pi pi-trash" ,Margin = { Left = 5, Right = 7}, tooltip = "Aloha1"},
                     new PrimeReact.Button { label = state.Text, icon ="pi pi-times", tooltip = "Aloha", tooltipOptions =
                     {
                         position = TooltipPositionType.left,

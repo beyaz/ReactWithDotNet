@@ -408,7 +408,7 @@ namespace ReactDotNet
                     value = value["v"].As<object>();
                 }
 
-                if (propertyInfo.PropertyType.FullName == typeof(TooltipOptions).FullName)
+                if (value != null && propertyInfo.PropertyType.FullName == typeof(TooltipOptions).FullName)
                 {
                     var newVal = ObjectLiteral.Create<object>();
 

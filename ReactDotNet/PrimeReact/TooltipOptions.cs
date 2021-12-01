@@ -69,8 +69,8 @@ namespace ReactDotNet.PrimeReact
     /// <summary>
     ///     The tooltip options
     /// </summary>
-    [ObjectLiteral(ObjectCreateMode.Constructor)]
-    [Constructor("{style: {}}")]
+    //[ObjectLiteral(ObjectCreateMode.Constructor)]
+    //[Constructor("{style: {}}")]
     public sealed class TooltipOptions
     {
         
