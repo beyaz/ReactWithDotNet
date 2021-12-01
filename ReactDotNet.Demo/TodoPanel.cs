@@ -50,6 +50,16 @@ namespace ReactDotNet.Demo
             });
         }
 
+
+        public void onTooltipShow(TooltipEventParams e)
+        {
+            SetState(m =>
+            {
+                m.Text += "2";
+                m.ClickCount++;
+            });
+        }
+
         public override ReactElement render()
         {
             var record = props.TodoRecord;
@@ -60,7 +70,12 @@ namespace ReactDotNet.Demo
                 {
                     new PrimeReact.Button { label = "Save", icon ="pi pi-check"},
                     new PrimeReact.Button { label = "Delete", icon ="pi pi-trash" ,Margin = { Left = 5, Right = 7}},
-                    new PrimeReact.Button { label = "Cancel", icon ="pi pi-times", tooltip = "Aloha", tooltipOptions = { position = TooltipPositionType.left}}
+                    new PrimeReact.Button { label = state.Text, icon ="pi pi-times", tooltip = "Aloha", tooltipOptions =
+                    {
+                        position = TooltipPositionType.left,
+                        onShow = onTooltipShow,
+                        @event = TooltipEventType.hover
+                    }}
                 };
 
                 return new Dropdown
