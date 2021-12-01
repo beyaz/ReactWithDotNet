@@ -1,4 +1,6 @@
+using System.Linq;
 using FluentAssertions;
+using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ReactDotNet.CSharpExporter.Tests
@@ -10,20 +12,17 @@ namespace ReactDotNet.CSharpExporter.Tests
         public void TestMethod1()
         {
 
-            var input = "type BadgeSizeType = 'normal' | 'large' | 'xlarge';";
 
-            var expected = @"
-    [Enum(Emit.StringNameLowerCase)]
-    public enum BadgeSizeType
-    {
-        normal, large, xlarge
-    }
+            var url = "https://primefaces.org/primereact/showcase/#/button";
+            var web = new HtmlWeb();
+            var doc = web.Load(url);
+            var t = doc.DocumentNode.SelectNodes(@"//div[contains(@class, 'doc-tablewrapper')]");
 
-";
+            var nodes =
+                doc.DocumentNode.Descendants("div")
+                   .Where(n => n.HasClass("doc-tablewrapper")).ToList();
 
-            var output = MyParser.GetCSharpDefinition(input);
 
-            output.Trim().Should().Be(expected);
         }
 
     }

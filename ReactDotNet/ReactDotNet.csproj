@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PrimeReact\Button.cs" />
     <Compile Include="Events\CompositionEvent.cs" />
     <Compile Include="Events\FocusEvent.cs" />
     <Compile Include="Events\FormEvent.cs" />

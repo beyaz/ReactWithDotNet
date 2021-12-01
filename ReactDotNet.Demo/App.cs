@@ -13,6 +13,7 @@ namespace ReactDotNet.Demo
 
             ReactDOM.render(React.createElement(typeof(TodoRecordListView)),Window.Document.GetElementById("app"));
 
+            
         }
         #endregion
     }

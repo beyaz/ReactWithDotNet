@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -200,6 +201,8 @@ namespace ReactDotNet
             return React.createElement("button", this.CollectReactAttributedProperties(), text);
         }
     }
+    
+    
 
     public class Space : Element
     {
@@ -236,6 +239,45 @@ namespace ReactDotNet
         public override ReactElement ToReactElement()
         {
             return React.createElement("div", this.CollectReactAttributedProperties());
+        }
+    }
+
+    public class ElementCollection : Element, IEnumerable<IElement>
+    {
+        protected readonly List<IElement> children = new List<IElement>();
+
+        public override ReactElement ToReactElement()
+        {
+            return React.createElement(this.GetType().Name, this.CollectReactAttributedProperties(), children.Select(x => x.ToReactElement()));
+        }
+
+        public IEnumerator<IElement> GetEnumerator()
+        {
+            return children.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return children.GetEnumerator();
+        }
+
+        public void Add(IElement element)
+        {
+            children.Add(element);
+        }
+    }
+
+    public class span : ElementCollection
+    {
+        public span()
+        {
+            
+        }
+
+        public span(string className)
+        {
+            this.className = className;
+
         }
     }
 
@@ -352,7 +394,14 @@ namespace ReactDotNet
 
             foreach (var propertyInfo in element.GetType().GetReactAttributedProperties())
             {
-                attributes[propertyInfo.Name] = propertyInfo.GetValue(element);
+                var value = propertyInfo.GetValue(element);
+                
+                if (value != null && value["$boxed"].As<bool>())
+                {
+                    value = value["v"].As<object>();
+                }
+
+                attributes[propertyInfo.Name] = value;
             }
 
             return attributes;

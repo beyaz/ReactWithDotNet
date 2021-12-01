@@ -130,25 +130,9 @@ namespace ReactDotNet.PrimeReact
 
         }
     }
+     
 
-
-    public class Button : ElementBase
-    {
-        public Button()
-        {
-            className = "p-button p-component p-button-outlined";
-        }
-
-        [React]
-        public Action<SyntheticEvent<HTMLElement>> onClick { get; set; }
-        
-
-        [React]
-        public string label { get; set; }
-
-        
-
-    }
+  
 
     static class Helper
     {

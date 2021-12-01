@@ -53,6 +53,27 @@ namespace ReactDotNet.Demo
         public override ReactElement render()
         {
             var record = props.TodoRecord;
+
+            if (state.ClickCount > 2)
+            {
+                return new span("p-buttonset")
+                {
+                    new PrimeReact.Button { label = "Save", icon ="pi pi-check"},
+                    new PrimeReact.Button { label = "Delete", icon ="pi pi-trash" ,Margin = { Left = 5, Right = 7}},
+                    new PrimeReact.Button { label = "Cancel", icon ="pi pi-times" }
+                };
+
+                return new Dropdown
+                {
+                    optionLabel = nameof(record.Text),
+                    optionValue = nameof(record.Id),
+                    options     = new[] { new TodoRecord { Id = 4, Text = "4" }, new TodoRecord { Id = 5, Text = "5" } },
+                    value       = state.DropdownSelectedValue,
+                    onChange    = e => { SetState(s => s.DropdownSelectedValue = (int)e.value); }
+                };
+            }
+         
+
             if (state.ClickCount >=3)
             {
                 record = new TodoRecord { Id = state.Id, Text = state.Text };
