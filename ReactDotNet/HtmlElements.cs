@@ -392,8 +392,16 @@ namespace ReactDotNet
     static class ReactAttributeCollector
     {
 
-        [Template("Object.prototype.toString.call( {0} ) === '[object Object]'")]
+        [Template("Bridge.isPlainObject({0})")]
         static extern bool IsPlainObject(object value);
+
+        static bool IsBoxed(object value)
+        {
+            return value != null && value["$boxed"].As<bool>();
+        }
+
+        [Template("Bridge.unbox({0})")]
+        static extern object GetBoxedValue(object value);
 
         public static ObjectLiteral CollectReactAttributedProperties(this IElement element)
         {
@@ -403,9 +411,14 @@ namespace ReactDotNet
             {
                 var value = propertyInfo.GetValue(element);
                 
-                if (value != null && value["$boxed"].As<bool>())
+                
+                if (IsBoxed(value))
                 {
-                    value = value["v"].As<object>();
+                    value = GetBoxedValue(value);
+                }
+                else
+                {
+                    
                 }
 
                 if (value != null && propertyInfo.PropertyType.FullName == typeof(TooltipOptions).FullName)
@@ -421,7 +434,7 @@ namespace ReactDotNet
                         newVal[name] = value[name];
                     }
 
-                    value = newVal;
+                    //value = newVal;
                 }
 
                 attributes[propertyInfo.Name] = value;
