@@ -395,6 +395,9 @@ namespace ReactDotNet
         [Template("Bridge.isPlainObject({0})")]
         static extern bool IsPlainObject(object value);
 
+        [Template("Bridge.toPlain({0})")]
+        static extern object ToPlain(object value);
+
         static bool IsBoxed(object value)
         {
             return value != null && value["$boxed"].As<bool>();
@@ -418,25 +421,9 @@ namespace ReactDotNet
                 }
                 else
                 {
-                    
+                    value = ToPlain(value);
                 }
-
-                if (value != null && propertyInfo.PropertyType.FullName == typeof(TooltipOptions).FullName)
-                {
-                    var newVal = ObjectLiteral.Create<object>();
-
-                    foreach (var name in Object.GetOwnPropertyNames(value))
-                    {
-                        if (name == "$getType")
-                        {
-                            continue;
-                        }
-                        newVal[name] = value[name];
-                    }
-
-                    //value = newVal;
-                }
-
+                
                 attributes[propertyInfo.Name] = value;
             }
 
