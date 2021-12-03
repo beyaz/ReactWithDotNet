@@ -9,7 +9,6 @@ namespace ReactDotNet.PrimeReact
 {
     public class ElementCollection : Element, IEnumerable<IElement>
     {
-        protected readonly List<IElement> children = new List<IElement>();
 
         public override ReactElement ToReactElement()
         {
@@ -22,21 +21,7 @@ namespace ReactDotNet.PrimeReact
 
             return React.createElement(targetType, this.CollectReactAttributedProperties(), children.Select(x => x.ToReactElement()));
         }
-
-        public IEnumerator<IElement> GetEnumerator()
-        {
-            return children.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return children.GetEnumerator();
-        }
-
-        public void Add(IElement element)
-        {
-            children.Add(element);
-        }
+        
     }
 
 

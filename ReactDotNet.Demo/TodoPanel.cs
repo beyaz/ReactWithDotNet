@@ -68,6 +68,12 @@ namespace ReactDotNet.Demo
             if (state.ClickCount > 2)
             {
 
+                return new Button
+                {
+                    new Text("A"),
+                    new Text("B"),
+                };
+
                 return new PrimeReact.Button("google p-p-0")
                 {
                     new i("pi pi-google p-px-2"),
