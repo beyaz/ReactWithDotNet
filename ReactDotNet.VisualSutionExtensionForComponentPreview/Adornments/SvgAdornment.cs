@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Threading;
+using Configuration = ___Module___.Configuration;
 using Image = System.Windows.Controls.Image;
 using Task = System.Threading.Tasks.Task;
 
@@ -138,7 +139,7 @@ namespace SvgViewer
 
                 var takeScreenShotFunc = await UrlScreenShotTaker.GetUrlScreenShotTakerFuncAsync();
 
-                await Task.Delay(500);
+                await Task.Delay(Configuration.Config.WaitTimeInMillisecondsForRefresh);
 
                 var arr = await takeScreenShotFunc(textDocument.FilePath);
 

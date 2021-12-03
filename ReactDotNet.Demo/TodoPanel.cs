@@ -143,12 +143,12 @@ namespace ReactDotNet.Demo
 
             return new SplitPanel
             {
-                Padding = { Left = 15, Right = 5 },
+                Padding = { Left = 5, Right = 5 },
                 Cols =
                 {
                     new button { text = record.Id.ToString(), onClick = onClick, gravity = 2, Margin = { Left = 20, Right = 20, Bottom = 10, Top = 10}},
                     
-                    new button { text = record.Text+"", onClick = onClick , Padding = { Left = 20, Right = 20, Bottom = 10, Top = 10}}
+                    new button { text = record.Text+"a", onClick = onClick , Padding = { Left = 20, Right = 20, Bottom = 10, Top = 10}}
                 }
             };
         }
