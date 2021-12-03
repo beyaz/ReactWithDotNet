@@ -5,7 +5,6 @@ using Bridge.Html5;
 using ReactDotNet;
 using ReactDotNet.MaterialUI;
 using ReactDotNet.PrimeReact;
-using Button = ReactDotNet.Button;
 using ReactElement = ReactDotNet.ReactElement;
 
 namespace ReactDotNet.Demo
@@ -23,7 +22,7 @@ namespace ReactDotNet.Demo
 
     
     
-    class TodoRecordView : ReactDotNet.ReactComponent<TodoRecordView,TodoRecord>
+    class TodoRecordView : ReactComponent<TodoRecordView,TodoRecord>
     {
 
         [React]
@@ -68,16 +67,17 @@ namespace ReactDotNet.Demo
             if (state.ClickCount > 2)
             {
 
-                return new Button
+                var b = new button
                 {
-                    new Text("A"),
-                    new Text("B"),
+                    text = "Aloha-"
                 };
+                
 
+                return b;
                 return new PrimeReact.Button("google p-p-0")
                 {
                     new i("pi pi-google p-px-2"),
-                    new span("p-px-3") { Text = "Google" }
+                    new span("p-px-3") { text = "Google" }
 
                 };
 
@@ -146,9 +146,9 @@ namespace ReactDotNet.Demo
                 Padding = { Left = 5, Right = 5 },
                 Cols =
                 {
-                    new Button { text = record.Id.ToString(), onClick = onClick, gravity = 2, Margin = { Left = 20, Right = 20, Bottom = 10, Top = 10}},
+                    new button { text = record.Id.ToString(), onClick = onClick, gravity = 2, Margin = { Left = 20, Right = 20, Bottom = 10, Top = 10}},
                     
-                    new Button { text = record.Text, onClick = onClick , Padding = { Left = 20, Right = 20, Bottom = 10, Top = 10}}
+                    new button { text = record.Text, onClick = onClick , Padding = { Left = 20, Right = 20, Bottom = 10, Top = 10}}
                 }
             };
         }

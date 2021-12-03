@@ -164,7 +164,7 @@ namespace SvgViewer
 
             try
             {
-                return _view.TextBuffer.CurrentSnapshot.GetText().Contains("Json_to_React_UI_with_CSharp");
+                return _view.TextBuffer.CurrentSnapshot.GetText().Contains("ReactComponent<");
             }
             catch (XmlException)
             {
