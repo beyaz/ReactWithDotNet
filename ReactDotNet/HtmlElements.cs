@@ -202,8 +202,8 @@ namespace ReactDotNet
             return React.createElement("button", this.CollectReactAttributedProperties(), text);
         }
     }
-    
-    
+
+
 
     public class Space : Element
     {
@@ -280,8 +280,38 @@ namespace ReactDotNet
         public span(string className)
         {
             this.className = className;
+        }
+
+        public string Text { get; set; }
+
+        public override ReactElement ToReactElement()
+        {
+            UniqueKeyInitializer.InitializeKeyIfNotExists(children);
+
+            return React.createElement(nameof(span), this.CollectReactAttributedProperties(), Text, children.Select(x => x.ToReactElement()));
+        }
+    }
+
+    public class i : ElementCollection
+    {
+        public i()
+        {
 
         }
+
+        public i(string className)
+        {
+            this.className = className;
+        }
+
+
+        public override ReactElement ToReactElement()
+        {
+            UniqueKeyInitializer.InitializeKeyIfNotExists(children);
+
+            return React.createElement(nameof(i), this.CollectReactAttributedProperties(), children.Select(x => x.ToReactElement()));
+        }
+
     }
 
     public class Panel : Element
@@ -413,7 +443,11 @@ namespace ReactDotNet
             foreach (var propertyInfo in element.GetType().GetReactAttributedProperties())
             {
                 var value = propertyInfo.GetValue(element);
-                
+
+                if (value == null)// if (value == null && propertyInfo.PropertyType.IsClass)
+                {
+                    continue;
+                }
                 
                 if (IsBoxed(value))
                 {
@@ -422,6 +456,11 @@ namespace ReactDotNet
                 else
                 {
                     value = ToPlain(value);
+                }
+
+                if (IsPlainObject(value) && Script.Write<bool>("Object.keys(value).length === 0"))
+                {
+                    continue;
                 }
                 
                 attributes[propertyInfo.Name] = value;

@@ -349,3 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /ReactDotNet.Demo/.local-chromium/Win64-884014/chrome-win
+/.local-chromium/Win64-884014/chrome-win

@@ -1,11 +1,44 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Bridge;
 using Bridge.Html5;
 
 namespace ReactDotNet.PrimeReact
 {
+    public class ElementCollection : Element, IEnumerable<IElement>
+    {
+        protected readonly List<IElement> children = new List<IElement>();
 
-   
+        public override ReactElement ToReactElement()
+        {
+            UniqueKeyInitializer.InitializeKeyIfNotExists(children);
+
+            var tag = this.GetType().Name;
+
+            Console.Write(tag);
+            var targetType = PrimeReact.Helper.FindPrimeType(tag);
+
+            return React.createElement(targetType, this.CollectReactAttributedProperties(), children.Select(x => x.ToReactElement()));
+        }
+
+        public IEnumerator<IElement> GetEnumerator()
+        {
+            return children.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return children.GetEnumerator();
+        }
+
+        public void Add(IElement element)
+        {
+            children.Add(element);
+        }
+    }
+
 
     [Enum(Emit.StringNameLowerCase)]
     public enum ButtonPositionType
@@ -13,8 +46,18 @@ namespace ReactDotNet.PrimeReact
         top, bottom, left, right
     }
 
-    public class Button : ElementBase
+    public class Button : ElementCollection
     {
+        public Button()
+        {
+            
+        }
+
+        public Button(string className)
+        {
+            this.className = className;
+        }
+
         [React]
         public Action<SyntheticEvent<HTMLElement>> onClick { get; set; }
 
@@ -31,7 +74,7 @@ namespace ReactDotNet.PrimeReact
         /// Position of the icon, valid values are "left", "right", "top" and "bottom".
         /// </summary>
         [React]
-        public ButtonPositionType iconPos { get; set; }
+        public ButtonPositionType? iconPos { get; set; }
 
         /// <summary>
         ///Display loading icon of the button
@@ -58,8 +101,8 @@ namespace ReactDotNet.PrimeReact
         [React]
         public string tooltip { get; set; }
 
-        [React]
-        public TooltipOptions tooltipOptions { get; } = new TooltipOptions();
+        //[React]
+        //public TooltipOptions tooltipOptions { get; } = new TooltipOptions();
 
     }
 }

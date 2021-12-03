@@ -73,9 +73,6 @@ namespace ReactDotNet.PrimeReact
     //[Constructor("{style: {}}")]
     public sealed class TooltipOptions
     {
-        
-        
-
         /// <summary>
         ///     Style class of the tooltip.
         /// </summary>
@@ -85,7 +82,7 @@ namespace ReactDotNet.PrimeReact
         ///     Position of the tooltip, valid values are right, left, top and bottom.
         ///     <para>Default: right</para>
         /// </summary>
-        public TooltipPositionType position { get; set; } = TooltipPositionType.right;
+        public TooltipPositionType? position { get; set; } = TooltipPositionType.right;
 
         /// <summary>
         ///     Style of the tooltip.
@@ -105,7 +102,7 @@ namespace ReactDotNet.PrimeReact
         /// <summary>
         ///     Event to show the tooltip, valid values are hover and focus.
         /// </summary>
-        public TooltipEventType @event { get; set; }
+        public TooltipEventType? @event { get; set; }
 
         /// <summary>
         ///     Event to show the tooltip if the event property is empty.
