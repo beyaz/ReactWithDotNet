@@ -7,6 +7,33 @@ namespace ___Module___
 {
     static class FpExtensions
     {
+
+        public static void Run(string startMessage, Action action, string finalMessage, Action<string> trace)
+        {
+            try
+            {
+                trace(startMessage);
+                
+                action();
+
+                trace(finalMessage);
+            }
+            catch (Exception e)
+            {
+                trace(e.ToString());
+            }
+        }
+
+        public static void Run(string startMessage, Action action, string finalMessage)
+        {
+            Run(startMessage,action,finalMessage,FileTracer.Trace);
+        }
+
+        public static void Run(Action action)
+        {
+            Run($"Started. Method: {action.Method.Name}", action, $"Finished. Method: {action.Method.Name}", FileTracer.Trace);
+        }
+
         static readonly object _syncObject = new object();
         public static void Log(string message)
         {
