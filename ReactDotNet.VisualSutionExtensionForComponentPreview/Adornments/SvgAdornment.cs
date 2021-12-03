@@ -70,9 +70,18 @@ namespace SvgViewer
                 };
             }
 
+            if (startListen == null)
+            {
+                startListen = FileWatcherHelper.CreateFileWatcher(Configuration.Config.OutputJsFilePath, () => GenerateImageAsync().FireAndForget()).startListen;
+                startListen();
+            }
+            
+
 
             GenerateImageAsync().FireAndForget();
         }
+
+        static Action startListen;
 
         private void OnTextBufferChanged(object sender, EventArgs e)
         {
@@ -119,7 +128,7 @@ namespace SvgViewer
 
                 
 
-
+                
                 
 
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
@@ -135,11 +144,11 @@ namespace SvgViewer
                     return;
                 }
 
-               
+
+                FileTracer.Trace("Started to take screenshut.");
 
                 var takeScreenShotFunc = await UrlScreenShotTaker.GetUrlScreenShotTakerFuncAsync();
 
-                await Task.Delay(Configuration.Config.WaitTimeInMillisecondsForRefresh);
 
                 var arr = await takeScreenShotFunc(textDocument.FilePath);
 
@@ -147,6 +156,8 @@ namespace SvgViewer
                 Source = ByteImageConverter.ByteToImage(arr);
 
                 UpdateAdornmentLocation(Source.Width, Source.Height);
+
+                FileTracer.Trace("Finished taking screenshut.");
             }
             catch (Exception ex)
             {

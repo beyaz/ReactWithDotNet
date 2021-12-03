@@ -48,6 +48,8 @@
     <Compile Include="Adornments\AdornmentLayer.cs" />
     <Compile Include="Adornments\SvgCreationListener.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="DirectoryHelper.cs" />
+    <Compile Include="FileTracer.cs" />
     <Compile Include="FpExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="source.extension.cs">
