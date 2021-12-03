@@ -57,22 +57,35 @@ namespace SvgViewer
             _view.ViewportHeightChanged += SetAdornmentLocation;
             _view.ViewportWidthChanged += SetAdornmentLocation;
 
+
+            if (textDocumentFactoryService.TryGetTextDocument(_view.TextBuffer, out var textDocument))
+            {
+                textDocument.FileActionOccurred += (s, e) =>
+                {
+                    if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
+                    {
+                        GenerateImageAsync().FireAndForget();
+                    }
+                };
+            }
+
+
             GenerateImageAsync().FireAndForget();
         }
 
         private void OnTextBufferChanged(object sender, EventArgs e)
         {
-            var lastVersion = _view.TextBuffer.CurrentSnapshot.Version.VersionNumber;
+            //var lastVersion = _view.TextBuffer.CurrentSnapshot.Version.VersionNumber;
 
-            ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
-            {
-                await Task.Delay(500);
+            //ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+            //{
+            //    await Task.Delay(500);
 
-                if (_view.TextBuffer.CurrentSnapshot.Version.VersionNumber == lastVersion)
-                {
-                    await GenerateImageAsync();
-                }
-            });
+            //    if (_view.TextBuffer.CurrentSnapshot.Version.VersionNumber == lastVersion)
+            //    {
+            //        await GenerateImageAsync();
+            //    }
+            //});
         }
 
         private void OnTextviewClosed(object sender, EventArgs e)
@@ -83,12 +96,7 @@ namespace SvgViewer
             _view.ViewportWidthChanged -= SetAdornmentLocation;
         }
 
-        private void OnDocumentSaved(object sender, TextDocumentFileActionEventArgs e)
-        {
-            GenerateImageAsync().FireAndForget();
-        }
-
-        private async Task GenerateImageAsync()
+        async Task GenerateImageAsync()
         {
             if (isClosed)
             {
@@ -126,8 +134,11 @@ namespace SvgViewer
                     return;
                 }
 
+               
+
                 var takeScreenShotFunc = await UrlScreenShotTaker.GetUrlScreenShotTakerFuncAsync();
 
+                await Task.Delay(500);
 
                 var arr = await takeScreenShotFunc(textDocument.FilePath);
 
@@ -141,6 +152,9 @@ namespace SvgViewer
                 System.Diagnostics.Debug.Write(ex);
             }
         }
+
+       
+
         public class ByteImageConverter
         {
             public static ImageSource ByteToImage(byte[] imageData)
