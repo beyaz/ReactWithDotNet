@@ -17,6 +17,7 @@ namespace ___Module___
 
     static class FileWatcherHelper
     {
+
         public static (Action startListen, Action stopListen) CreateFileWatcher(string filePath, Action onChange)
         {
             // Create a new FileSystemWatcher and set its properties.
@@ -26,16 +27,25 @@ namespace ___Module___
 
             /* Watch for changes in LastAccess and LastWrite times, and 
                the renaming of files or directories. */
-            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
-                                                            | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-            // Only watch text files.
-            watcher.Filter = "*.txt";
+            watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size;
+
+
+            var lastRead = DateTime.MinValue;
+
 
             void onChangeHandler(object s, FileSystemEventArgs e)
             {
                 if (e.ChangeType == WatcherChangeTypes.Changed && e.FullPath == filePath)
                 {
-                    onChange();
+
+
+                    DateTime lastWriteTime = File.GetLastWriteTime(filePath);
+                    if (lastWriteTime != lastRead)
+                    {
+                        onChange();
+                        lastRead = lastWriteTime;
+                    }
+
                 }
             }
 
@@ -47,7 +57,7 @@ namespace ___Module___
             return (startListen, stopListen);
 
         }
-        
+
     }
 
 }

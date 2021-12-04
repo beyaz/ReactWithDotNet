@@ -59,16 +59,16 @@ namespace SvgViewer
             _view.ViewportWidthChanged += SetAdornmentLocation;
 
 
-            if (textDocumentFactoryService.TryGetTextDocument(_view.TextBuffer, out var textDocument))
-            {
-                textDocument.FileActionOccurred += (s, e) =>
-                {
-                    if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
-                    {
-                        GenerateImageAsync().FireAndForget();
-                    }
-                };
-            }
+            //if (textDocumentFactoryService.TryGetTextDocument(_view.TextBuffer, out var textDocument))
+            //{
+            //    textDocument.FileActionOccurred += (s, e) =>
+            //    {
+            //        if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
+            //        {
+            //            GenerateImageAsync().FireAndForget();
+            //        }
+            //    };
+            //}
 
             if (startListen == null)
             {

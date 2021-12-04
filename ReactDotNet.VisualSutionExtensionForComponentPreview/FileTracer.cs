@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace ___Module___
 {
@@ -16,11 +17,11 @@ namespace ___Module___
                 {
                     var targetFilePath = DirectoryHelper.GetFilePath("ReactDotNet.VsComponentPreview.trace.txt");
 
-                    using (var fs = new FileStream(targetFilePath, FileMode.CreateNew))
+                    using (var fs = new FileStream(targetFilePath, FileMode.Append))
                     {
                         using (var sw = new StreamWriter(fs))
                         {
-                            sw.Write(message);
+                            sw.Write(message + Environment.NewLine);
                         }
                     }
                 }
