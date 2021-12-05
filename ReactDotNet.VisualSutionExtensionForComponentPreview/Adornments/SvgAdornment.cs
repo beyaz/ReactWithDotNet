@@ -30,6 +30,11 @@ namespace SvgViewer
         bool isClosed;
         string filePath;
 
+        void UpdateUI(Action action)
+        {
+            Dispatcher.BeginInvoke(action, DispatcherPriority.Background);
+        }
+
         public SvgAdornment(IWpfTextView view, ITextDocumentFactoryService textDocumentFactoryService)
         {
             MouseDown += (s, e) =>
@@ -38,7 +43,7 @@ namespace SvgViewer
                 {
                     isClosed = true;
 
-                    Dispatcher.BeginInvoke((Action)(() => { Visibility = Visibility.Collapsed; }), DispatcherPriority.Background);
+                    UpdateUI(() => { Visibility = Visibility.Collapsed; });
                 }
             };
 
@@ -136,9 +141,12 @@ namespace SvgViewer
 
                 var arr = await takeScreenShotFunc(filePath);
 
-                Source = ByteImageConverter.ByteToImage(arr);
+                UpdateUI(() =>
+                {
+                    Source = ByteImageConverter.ByteToImage(arr);
 
-                UpdateAdornmentLocation(Source.Width, Source.Height);
+                    UpdateAdornmentLocation(Source.Width, Source.Height);
+                });
 
                 Trace("Finished taking screenshut.");
             }

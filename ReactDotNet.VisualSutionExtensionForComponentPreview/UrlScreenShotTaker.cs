@@ -35,7 +35,7 @@ namespace ___Module___
                 return TakeScreenShotFunc;
             }
 
-            Action<string> trace = Log;
+            Action<string> trace = FileTracer.Trace;
 
             trace("Creating browser headless mode...");
             
@@ -62,6 +62,8 @@ namespace ___Module___
                 var reactComponentTypeName = Path.GetFileNameWithoutExtension(filePath);
 
                 await page.GoToAsync(url);
+
+                trace($"Navigated to url: {url}");
 
                 await page.EvaluateExpressionAsync<int>("ReactDotNet.ReactElementPreview.RenderPreview('" + reactComponentTypeName + "', 'app')");
 
