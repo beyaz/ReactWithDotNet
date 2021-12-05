@@ -5,49 +5,6 @@ using System.Linq;
 namespace FP
 {
     /// <summary>
-    ///     The error
-    /// </summary>
-    [Serializable]
-    public sealed class Error
-    {
-        #region Public Properties
-        /// <summary>
-        ///     Gets or sets the message.
-        /// </summary>
-        public string Message { get; set; }
-        #endregion
-
-        #region Public Methods
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="Exception" /> to <see cref="Error" />.
-        /// </summary>
-        public static implicit operator Error(Exception exception)
-        {
-            return new Error
-            {
-                Message = exception.ToString()
-            };
-        }
-
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="System.String" /> to <see cref="Error" />.
-        /// </summary>
-        public static implicit operator Error(string errorMessage)
-        {
-            return new Error
-            {
-                Message = errorMessage
-            };
-        }
-
-        public override string ToString()
-        {
-            return Message;
-        }
-        #endregion
-    }
-
-    /// <summary>
     ///     The response
     /// </summary>
     [Serializable]
@@ -61,13 +18,17 @@ namespace FP
         #endregion
 
         #region Fields
-       
-        protected readonly List<Error> exceptions = new List<Error>();
+        /// <summary>
+        ///     The exceptions
+        /// </summary>
+        protected readonly List<Exception> exceptions = new List<Exception>();
         #endregion
 
         #region Public Properties
-       
-        public IReadOnlyList<Error> Exceptions => exceptions;
+        /// <summary>
+        ///     Gets the exceptions.
+        /// </summary>
+        public IReadOnlyList<Exception> Exceptions => exceptions;
 
         /// <summary>
         ///     Gets the fail message.
@@ -79,7 +40,9 @@ namespace FP
         /// </summary>
         public bool IsFail => exceptions.Count > 0;
 
-        
+        /// <summary>
+        ///     Gets a value indicating whether this instance is success.
+        /// </summary>
         public bool IsSuccess => exceptions.Count == 0;
         #endregion
 
@@ -91,8 +54,21 @@ namespace FP
         {
             return new Response
             {
-                exceptions = { errorMessage }
+                exceptions = { new Exception(errorMessage) }
             };
+        }
+
+        /// <summary>
+        ///     Implements the operator +.
+        /// </summary>
+        public static Response operator +(Response responseX, Response responseY)
+        {
+            var response = new Response();
+
+            response.exceptions.AddRange(responseX.Exceptions);
+            response.exceptions.AddRange(responseY.Exceptions);
+
+            return response;
         }
 
         /// <summary>
@@ -103,18 +79,6 @@ namespace FP
             var response = new Response();
 
             response.exceptions.Add(exception);
-
-            return response;
-        }
-
-      
-
-        public static Response  operator +(Response responseX, Response responseY)
-        {
-            var response = new Response();
-
-            response.exceptions.AddRange(responseX.Exceptions);
-            response.exceptions.AddRange(responseY.Exceptions);
 
             return response;
         }
@@ -148,21 +112,9 @@ namespace FP
         }
 
         /// <summary>
-        ///     Performs an implicit conversion from <see cref="Error" /> to <see cref="Response{TValue}" />.
+        ///     Performs an implicit conversion from <see cref="Exception[]" /> to <see cref="Response{TValue}" />.
         /// </summary>
-        public static implicit operator Response<TValue>(Error error)
-        {
-            var response = new Response<TValue>();
-
-            response.exceptions.Add(error);
-
-            return response;
-        }
-
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="Error" /> to <see cref="Response{TValue}" />.
-        /// </summary>
-        public static implicit operator Response<TValue>(Error[] errors)
+        public static implicit operator Response<TValue>(Exception[] errors)
         {
             var response = new Response<TValue>();
 
@@ -170,6 +122,8 @@ namespace FP
 
             return response;
         }
+
+        
 
         /// <summary>
         ///     Performs an implicit conversion from <see cref="TValue" /> to <see cref="Response{TValue}" />.

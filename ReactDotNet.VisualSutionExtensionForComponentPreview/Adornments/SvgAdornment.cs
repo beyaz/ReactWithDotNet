@@ -9,10 +9,12 @@ using System.Windows.Threading;
 using System.Xml;
 using ___Module___;
 using EnvDTE;
+using FP;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Threading;
+using static ___Module___.FileTracer;
 using Configuration = ___Module___.Configuration;
 using Image = System.Windows.Controls.Image;
 using Task = System.Threading.Tasks.Task;
@@ -72,11 +74,17 @@ namespace SvgViewer
 
             if (startListen == null)
             {
-                startListen = FileWatcherHelper.CreateFileWatcher(Configuration.Config.OutputJsFilePath, () => GenerateImageAsync().FireAndForget()).startListen;
-                startListen();
-            }
-            
+                Configuration.GetOutputJsFilePath()
+                             .Match(outputJsFilePath =>
+                                    {
+                                        startListen = FileWatcherHelper.CreateFileWatcher(outputJsFilePath, () => GenerateImageAsync().FireAndForget()).startListen;
+                                        startListen();
+                                        Trace($"Started to listen file: {outputJsFilePath}");
+                                    },
+                                    exceptions => Trace($"File listen failed: {string.Join(Environment.NewLine, exceptions)}"));
 
+
+            }
 
             GenerateImageAsync().FireAndForget();
         }
@@ -145,7 +153,7 @@ namespace SvgViewer
                 }
 
 
-                FileTracer.Trace("Started to take screenshut.");
+                Trace("Started to take screenshut.");
 
                 var takeScreenShotFunc = await UrlScreenShotTaker.GetUrlScreenShotTakerFuncAsync();
 
@@ -157,7 +165,7 @@ namespace SvgViewer
 
                 UpdateAdornmentLocation(Source.Width, Source.Height);
 
-                FileTracer.Trace("Finished taking screenshut.");
+                Trace("Finished taking screenshut.");
             }
             catch (Exception ex)
             {

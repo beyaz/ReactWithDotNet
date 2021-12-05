@@ -1,18 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace FP
 {
+    /// <summary>
+    ///     The fp extensions
+    /// </summary>
     public static class FpExtensions
     {
-        public static Response Try(Action action)
+        #region Public Methods
+        /// <summary>
+        ///     Binds the specified function.
+        /// </summary>
+        public static Response<B> Bind<A, B>(this Response<A> response, Func<A, Response<B>> func)
+        {
+            if (response.IsFail)
+            {
+                return response.Exceptions.ToArray();
+            }
+
+            return func(response.Value);
+        }
+
+        /// <summary>
+        ///     Binds the specified to b.
+        /// </summary>
+        public static Response<B> Bind<A, B>(this Response<A> response, Func<A, B> toB)
         {
             try
             {
-                action();
-                
-                return Response.Success;
+                if (response.IsSuccess)
+                {
+                    return toB(response.Value);
+                }
+
+                return response.Exceptions.ToArray();
             }
             catch (Exception exception)
             {
@@ -20,52 +44,48 @@ namespace FP
             }
         }
 
-        
+        /// <summary>
+        ///     Funs the specified f.
+        /// </summary>
+        [Pure]
+        public static Func<R> fun<R>(Func<R> f) => f;
 
-        public static Response After<T>(this T response, Action action) where T: Response
-        {
-            if (response.IsFail)
-            {
-                return response;
-            }
+        /// <summary>
+        ///     Funs the specified f.
+        /// </summary>
+        [Pure]
+        public static Func<T1, R> fun<T1, R>(Func<T1, R> f) => f;
 
-            return Try(action);
-        }
-
-        public static void After<T>(this T response, Action onSuccess, Action<IReadOnlyList<Error>> onFail) where T: Response
+        /// <summary>
+        ///     Matches the specified on success.
+        /// </summary>
+        public static void Match<TValue>(this Response<TValue> response, Action<TValue> onSuccess, Action<IReadOnlyList<Exception>> onFail)
         {
             if (response.IsSuccess)
             {
-                onSuccess();
+                onSuccess(response.Value);
                 return;
             }
 
             onFail(response.Exceptions);
         }
 
-        public static void ForEach<T>(this IEnumerable<T> items, Action<T> applyAction)
+        
+
+        /// <summary>
+        ///     Tries the specified function.
+        /// </summary>
+        public static Response<A> Try<A>(Func<A> func)
         {
-            foreach (var item in items)
+            try
             {
-                applyAction(item);
+                return func();
+            }
+            catch (Exception exception)
+            {
+                return exception;
             }
         }
-
-        public static Response ForEach<T>(this IEnumerable<T> items, Func<T,Response> applyAction)
-        {
-            var response = Response.Success;
-
-            foreach (var item in items)
-            {
-                response += applyAction(item);
-            }
-
-            return response;
-        }
-
-        [Pure]
-        public static Func<R> fun<R>(Func<R> f) => f;
-        [Pure]
-        public static Func<T1, R> fun<T1, R>(Func<T1, R> f) => f;
+        #endregion
     }
 }

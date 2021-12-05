@@ -1,6 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
+using FP;
+using Newtonsoft.Json;
 using static FP.FpExtensions;
 
 namespace ___Module___
@@ -8,39 +9,22 @@ namespace ___Module___
     [Serializable]
     public class ConfigurationContract
     {
+        #region Public Properties
         public string OutputJsFilePath { get; set; }
+        #endregion
     }
 
     static class Configuration
     {
-        static void InitializeConfig()
+        #region Public Methods
+        public static Response<string> GetOutputJsFilePath()
         {
-
             string readConfig() => File.ReadAllText(DirectoryHelper.GetFilePath("ReactDotNet.VsComponentPreview.Config.json"));
 
-            var result = Try(readConfig).Bind(Newtonsoft.Json.JsonConvert.DeserializeObject<ConfigurationContract>);
-
-            result.Match(success: config =>
-                         {
-                             FileTracer.Trace("Config successfully loaded.");
-                             Config = config;
-                         },
-                         fail: exceptions =>
-                         {
-                             FileTracer.Trace("Config is not found.");
-                         });
-
-            
-            
+            return Try(readConfig)
+                  .Bind( /*deserialize*/JsonConvert.DeserializeObject<ConfigurationContract>)
+                  .Bind(config => config.OutputJsFilePath);
         }
-
-        static Configuration()
-        {
-            FpExtensions.Run(InitializeConfig);
-        }
-
-        public static ConfigurationContract Config { get; private set; }
-
-        
+        #endregion
     }
 }
