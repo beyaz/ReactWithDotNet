@@ -67,41 +67,26 @@ namespace ReactDotNet.Demo
             if (state.ClickCount > 2)
             {
 
-                var b = new button
+
+
+                return new span("p-buttonset")
                 {
-                    text = "Aloha-"
-                };
-                
-
-                return b;
-                return new PrimeReact.Button("google p-p-0")
-                {
-                    new i("pi pi-google p-px-2"),
-                    new span("p-px-3") { text = "Google" }
-
-                };
-
-
-                //return new span("p-buttonset")
-                //{
-                //new PrimeReact.Button { label = "Save", icon   ="pi pi-check"},
-                //new PrimeReact.Button { label = "Delete", icon ="pi pi-trash" ,Margin = { Left = 5, Right = 7}, tooltip = "Aloha1"},
-                //new PrimeReact.Button { label = state.Text, icon ="pi pi-times", tooltip = "Aloha", tooltipOptions =
-                //{
-                //    position = TooltipPositionType.left,
-                //    onShow = onTooltipShow,
-                //    autoHide = false,
-                //    @event = TooltipEventType.hover,
-                //    style = { BackgroundColor = "yellow",Border = "5px solid red"}
-                //}},
-                return new PrimeReact.Button("google p-p-0*")
+                    new PrimeReact.Button { label = "Save", icon   = "pi pi-check" },
+                    new PrimeReact.Button { label = "Delete", icon = "pi pi-trash", Margin = { Left = 5, Right = 7 }, tooltip = "Aloha1" },
+                    new PrimeReact.Button
                     {
-                        label = "ahh"
-                        //new i("pi pi-google p-px-2"),
-                        //new span("p-px-3") { Text = "Google" }
+                        label = state.Text, icon = "pi pi-times", tooltip = "Aloha", tooltipOptions =
+                        {
+                            position = TooltipPositionType.left,
+                            onShow   = onTooltipShow,
+                            autoHide = false,
+                            @event   = TooltipEventType.hover,
+                            style    = { BackgroundColor = "yellow", Border = "5px solid red" }
+                        }
+                    }
+                };
 
-                    };
-                //};
+
 
                 return new Dropdown
                 {
