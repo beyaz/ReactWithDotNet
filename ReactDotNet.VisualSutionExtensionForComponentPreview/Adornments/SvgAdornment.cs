@@ -28,6 +28,7 @@ namespace SvgViewer
         readonly ITextDocumentFactoryService textDocumentFactoryService;
 
         bool isClosed;
+        string filePath;
 
         public SvgAdornment(IWpfTextView view, ITextDocumentFactoryService textDocumentFactoryService)
         {
@@ -61,23 +62,17 @@ namespace SvgViewer
             _view.ViewportWidthChanged += SetAdornmentLocation;
 
 
-            //if (textDocumentFactoryService.TryGetTextDocument(_view.TextBuffer, out var textDocument))
-            //{
-            //    textDocument.FileActionOccurred += (s, e) =>
-            //    {
-            //        if (e.FileActionType == FileActionTypes.ContentSavedToDisk)
-            //        {
-            //            GenerateImageAsync().FireAndForget();
-            //        }
-            //    };
-            //}
+            if (textDocumentFactoryService.TryGetTextDocument(_view.TextBuffer, out var textDocument))
+            {
+                 filePath = textDocument.FilePath;
+            }
 
             if (startListen == null)
             {
                 Configuration.GetOutputJsFilePath()
                              .Match(outputJsFilePath =>
                                     {
-                                        startListen = FileWatcherHelper.CreateFileWatcher(outputJsFilePath, () => GenerateImageAsync().FireAndForget()).startListen;
+                                        startListen = FileWatcherHelper.CreateFileWatcher(outputJsFilePath, () => GenerateImageAsync().FireAndForget(), Trace).startListen;
                                         startListen();
                                         Trace($"Started to listen file: {outputJsFilePath}");
                                     },
@@ -125,41 +120,21 @@ namespace SvgViewer
 
             try
             {
-
-                
-
                 if (!HasReactComponent())
                 {
                     Source = null;
                     return;
                 }
 
-                
-
-                
-                
-
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
                 ToolTip = "Double click for close";
-
-                ITextDocument textDocument;
-
-                var reactComponentTypeName = string.Empty;
-
-                if (!textDocumentFactoryService.TryGetTextDocument(_view.TextBuffer, out textDocument))
-                {
-                    return;
-                }
-
 
                 Trace("Started to take screenshut.");
 
                 var takeScreenShotFunc = await UrlScreenShotTaker.GetUrlScreenShotTakerFuncAsync();
 
-
-                var arr = await takeScreenShotFunc(textDocument.FilePath);
-
+                var arr = await takeScreenShotFunc(filePath);
 
                 Source = ByteImageConverter.ByteToImage(arr);
 
@@ -169,7 +144,7 @@ namespace SvgViewer
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Write(ex);
+                Trace(ex.ToString());
             }
         }
 
