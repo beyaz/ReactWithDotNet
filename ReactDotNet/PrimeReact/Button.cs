@@ -24,7 +24,6 @@ namespace ReactDotNet.PrimeReact
         
     }
 
-
     [Enum(Emit.StringNameLowerCase)]
     public enum ButtonPositionType
     {
