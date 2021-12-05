@@ -32,7 +32,14 @@ namespace SvgViewer
 
         void UpdateUI(Action action)
         {
-            Dispatcher.BeginInvoke(action, DispatcherPriority.Background);
+            try
+            {
+                Dispatcher.BeginInvoke(action, DispatcherPriority.Background);
+            }
+            catch (Exception e)
+            {
+                Trace(e.ToString());
+            }
         }
 
         public SvgAdornment(IWpfTextView view, ITextDocumentFactoryService textDocumentFactoryService)
@@ -143,9 +150,11 @@ namespace SvgViewer
 
                 UpdateUI(() =>
                 {
+                    Trace("Started... Updating image source");
                     Source = ByteImageConverter.ByteToImage(arr);
 
                     UpdateAdornmentLocation(Source.Width, Source.Height);
+                    Trace("Finished... Updating image source");
                 });
 
                 Trace("Finished taking screenshut.");
