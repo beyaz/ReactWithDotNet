@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Supported React UI Framewor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.PrimeReact", "UI Framework Integrations\Supported React UI Frameworks\ReactDotNet.PrimeReact\ReactDotNet.PrimeReact.csproj", "{55282CDC-6920-40CF-A55D-1BBA462EBB26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FP", "FP\FP.csproj", "{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{55282CDC-6920-40CF-A55D-1BBA462EBB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55282CDC-6920-40CF-A55D-1BBA462EBB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55282CDC-6920-40CF-A55D-1BBA462EBB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
