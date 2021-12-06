@@ -49,19 +49,14 @@ namespace ReactDotNet.Demo
         }
 
         #region Public Methods
-        public void onClick(SyntheticEvent<HTMLElement> e)
+        public async Task onClick(SyntheticEvent<HTMLElement> e)
         {
-            async Task fetch()
+            var employee = await AsyncAjax.Get<Employee>("Http://localhost:5656/api/employee/1");
+            SetState(m =>
             {
-                var employee  = await AsyncAjax.Get<Employee>("Http://localhost:5656/api/employee/1");
-                SetState(m =>
-                {
-                    m.Text += "-"+employee.Name;
-                    m.ClickCount++;
-                });
-            }
-
-            fetch();
+                m.Text += "-" + employee.Name;
+                m.ClickCount++;
+            });
         }
 
 
@@ -146,9 +141,9 @@ namespace ReactDotNet.Demo
                 Padding = { Left = 5, Right = 5 },
                 Cols =
                 {
-                    new button { text = record.Id.ToString(), onClick = onClick, gravity = 2, Margin = { Left = 20, Right = 20, Bottom = 10, Top = 10}},
+                    new button { text = record.Id.ToString(), onClick = e=> onClick(e), gravity = 2, Margin = { Left = 20, Right = 20, Bottom = 10, Top = 10}},
                     
-                    new button { text = record.Text+"1e", onClick = onClick , Padding = { Left = 20, Right = 20, Bottom = 10, Top = 10}}
+                    new button { text = record.Text+"1e", onClick = e=> onClick(e) , Padding = { Left = 20, Right = 20, Bottom = 10, Top = 10}}
                 }
             };
         }
