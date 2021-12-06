@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bridge.Html5;
+using Newtonsoft.Json;
 using ReactDotNet;
 using ReactDotNet.MaterialUI;
 using ReactDotNet.PrimeReact;
@@ -39,9 +40,32 @@ namespace ReactDotNet.Demo
         }
         #endregion
 
+        public class Employee
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Salary { get; set; }
+        }
+
         #region Public Methods
         public void onClick(SyntheticEvent<HTMLElement> e)
         {
+            var request = new XMLHttpRequest();
+
+            Action<Event> onLoad = delegate
+            {
+                var employee = JsonConvert.DeserializeObject<Employee>(request.ResponseText);
+
+                SetState(m =>
+                {
+                    m.Text += employee.Name;
+                });
+            };
+
+            request.OnLoad = onLoad;
+            request.Open("GET", "Http://localhost:5656/api/employee/1", true);
+            request.Send();
+
             SetState(m =>
             {
                 m.Text += "2";
