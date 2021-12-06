@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Bridge.Html5;
 using Newtonsoft.Json;
 using ReactDotNet;
@@ -50,27 +51,17 @@ namespace ReactDotNet.Demo
         #region Public Methods
         public void onClick(SyntheticEvent<HTMLElement> e)
         {
-            var request = new XMLHttpRequest();
-
-            Action<Event> onLoad = delegate
+            async Task fetch()
             {
-                var employee = JsonConvert.DeserializeObject<Employee>(request.ResponseText);
-
+                var employee  = await AsyncAjax.Get<Employee>("Http://localhost:5656/api/employee/1");
                 SetState(m =>
                 {
-                    m.Text += employee.Name;
+                    m.Text += "-"+employee.Name;
+                    m.ClickCount++;
                 });
-            };
+            }
 
-            request.OnLoad = onLoad;
-            request.Open("GET", "Http://localhost:5656/api/employee/1", true);
-            request.Send();
-
-            SetState(m =>
-            {
-                m.Text += "2";
-                m.ClickCount++;
-            });
+            fetch();
         }
 
 
