@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Bridge;
 using Bridge.Html5;
-using ReactDotNet;
-using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet
 {
@@ -193,7 +189,7 @@ namespace ReactDotNet
         }
     }
 
-    public class i : ElementCollection
+    public class i : Element
     {
         public i()
         {
@@ -250,9 +246,9 @@ namespace ReactDotNet
 
                 UniqueKeyInitializer.InitializeKeyIfNotExists(Cols);
 
-                var children = Cols.Select(x => x.ToReactElement());
+                var childElements = Cols.Select(x => x.ToReactElement());
 
-                return React.createElement("div", this.CollectReactAttributedProperties(), children);
+                return React.createElement("div", this.CollectReactAttributedProperties(), childElements);
             }
 
             // rows
@@ -269,9 +265,9 @@ namespace ReactDotNet
 
                 UniqueKeyInitializer.InitializeKeyIfNotExists(Rows);
 
-                var children = Rows.Select(x => x.ToReactElement());
+                var childElements = Rows.Select(x => x.ToReactElement());
 
-                return React.createElement("div", this.CollectReactAttributedProperties(), children);
+                return React.createElement("div", this.CollectReactAttributedProperties(), childElements);
             }
         }
     }

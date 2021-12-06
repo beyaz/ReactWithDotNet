@@ -37,6 +37,11 @@ namespace ReactDotNet
                 dotNetTypeName = "bool";
             }
 
+            if (dotNetTypeName == "number")
+            {
+                dotNetTypeName = "int";
+            }
+
             if (dotNetTypeName == "any")
             {
                 dotNetTypeName = "string";

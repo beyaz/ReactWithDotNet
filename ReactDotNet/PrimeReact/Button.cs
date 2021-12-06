@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Bridge;
 using Bridge.Html5;
 
 namespace ReactDotNet.PrimeReact
 {
-    public class ElementCollection : Element, IEnumerable<IElement>
+    public class PrimeElementBase : Element
     {
 
         public override ReactElement ToReactElement()
         {
             UniqueKeyInitializer.InitializeKeyIfNotExists(children);
 
-            var tag = this.GetType().Name;
+            var tag = GetType().Name;
 
-            Console.Write(tag);
             var targetType = PrimeReact.Helper.FindPrimeType(tag);
 
             return React.createElement(targetType, this.CollectReactAttributedProperties(), children.Select(x => x.ToReactElement()));
@@ -30,7 +27,7 @@ namespace ReactDotNet.PrimeReact
         top, bottom, left, right
     }
 
-    public class Button : ElementCollection
+    public class Button : PrimeElementBase
     {
         public Button()
         {
@@ -43,7 +40,7 @@ namespace ReactDotNet.PrimeReact
         }
 
         [React]
-        public Action<SyntheticEvent<HTMLElement>> onClick { get; set; }
+        public new Action<SyntheticEvent<HTMLElement>> onClick { get; set; }
 
         /// <summary>
         ///     Text of the button.
