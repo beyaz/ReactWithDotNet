@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet", "ReactDotNet\ReactDotNet.csproj", "{A339556A-BD8B-4F9E-84EA-79954E3C47FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.VisualSutionExtensionForComponentPreview", "ReactDotNet.VisualSutionExtensionForComponentPreview\ReactDotNet.VisualSutionExtensionForComponentPreview.csproj", "{479551DD-A7B1-49F9-9D01-21D6321FDBD6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.Demo", "ReactDotNet.Demo\ReactDotNet.Demo.csproj", "{38902DCD-B156-4000-B018-C99F1E73FC76}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Framework Integrations", "UI Framework Integrations", "{39646DF0-1988-48D1-8319-799C447D39A2}"
@@ -27,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.PrimeReact", "U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FP", "FP\FP.csproj", "{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.ComponentPreviewVsExtension", "ReactDotNet.ComponentPreviewVsExtension\ReactDotNet.ComponentPreviewVsExtension.csproj", "{479551DD-A7B1-49F9-9D01-21D6321FDBD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,10 +37,6 @@ Global
 		{A339556A-BD8B-4F9E-84EA-79954E3C47FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A339556A-BD8B-4F9E-84EA-79954E3C47FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A339556A-BD8B-4F9E-84EA-79954E3C47FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{38902DCD-B156-4000-B018-C99F1E73FC76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{38902DCD-B156-4000-B018-C99F1E73FC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38902DCD-B156-4000-B018-C99F1E73FC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,6 +61,10 @@ Global
 		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,8 +14,8 @@
     <ProjectGuid>{479551DD-A7B1-49F9-9D01-21D6321FDBD6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReactDotNet.VisualSutionExtensionForComponentPreview</RootNamespace>
-    <AssemblyName>ReactDotNet.VisualSutionExtensionForComponentPreview</AssemblyName>
+    <RootNamespace>ReactDotNet.ComponentPreviewVsExtension</RootNamespace>
+    <AssemblyName>ReactDotNet.ComponentPreviewVsExtension</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
@@ -69,7 +69,7 @@
     <Content Include="Resources\Icon.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="ReactDotNet.VsComponentPreview.Config.json">
+    <None Include="ReactDotNet.ComponentPreview.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="source.extension.vsixmanifest">
