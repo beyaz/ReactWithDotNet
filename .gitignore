@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 /ReactDotNet.Demo/.local-chromium/Win64-884014/chrome-win
 /.local-chromium/Win64-884014/chrome-win
+/ReactDotNet.ComponentPreviewVsExtension/.local-chromium/Win64-884014/chrome-win

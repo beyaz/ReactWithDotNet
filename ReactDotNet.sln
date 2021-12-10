@@ -7,26 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet", "ReactDotNet\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.Demo", "ReactDotNet.Demo\ReactDotNet.Demo.csproj", "{38902DCD-B156-4000-B018-C99F1E73FC76}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Framework Integrations", "UI Framework Integrations", "{39646DF0-1988-48D1-8319-799C447D39A2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharpExporter", "CSharpExporter", "{888109B8-08E5-49AD-AE25-5A999964E4EC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet.CSharpExporter", "UI Framework Integrations\CSharpExporter\ReactDotNet.CSharpExporter\ReactDotNet.CSharpExporter.csproj", "{4F8CAF42-FFCD-4ED4-AAED-DBF3B4500D64}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet.CSharpExporter.Tests", "UI Framework Integrations\CSharpExporter\ReactDotNet.CSharpExporter.Tests\ReactDotNet.CSharpExporter.Tests.csproj", "{32AFFA7B-2BD5-4C1C-BDE3-AA9E52994942}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TypeScriptParser", "TypeScriptParser", "{9FE604FB-2F16-4A88-84F9-7E9152458859}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sdcb.TypeScriptAST", "UI Framework Integrations\TypeScriptParser\Sdcb.TypeScriptAST.csproj", "{F9D4F4BD-8D06-4E03-B880-2C691B0EFA18}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Supported React UI Frameworks", "Supported React UI Frameworks", "{0E70DF98-441C-42C1-AF4B-1E681D0D8530}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.PrimeReact", "UI Framework Integrations\Supported React UI Frameworks\ReactDotNet.PrimeReact\ReactDotNet.PrimeReact.csproj", "{55282CDC-6920-40CF-A55D-1BBA462EBB26}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FP", "FP\FP.csproj", "{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.ComponentPreviewVsExtension", "ReactDotNet.ComponentPreviewVsExtension\ReactDotNet.ComponentPreviewVsExtension.csproj", "{479551DD-A7B1-49F9-9D01-21D6321FDBD6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,42 +21,9 @@ Global
 		{38902DCD-B156-4000-B018-C99F1E73FC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38902DCD-B156-4000-B018-C99F1E73FC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38902DCD-B156-4000-B018-C99F1E73FC76}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F8CAF42-FFCD-4ED4-AAED-DBF3B4500D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F8CAF42-FFCD-4ED4-AAED-DBF3B4500D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F8CAF42-FFCD-4ED4-AAED-DBF3B4500D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F8CAF42-FFCD-4ED4-AAED-DBF3B4500D64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{32AFFA7B-2BD5-4C1C-BDE3-AA9E52994942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32AFFA7B-2BD5-4C1C-BDE3-AA9E52994942}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32AFFA7B-2BD5-4C1C-BDE3-AA9E52994942}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32AFFA7B-2BD5-4C1C-BDE3-AA9E52994942}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9D4F4BD-8D06-4E03-B880-2C691B0EFA18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9D4F4BD-8D06-4E03-B880-2C691B0EFA18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9D4F4BD-8D06-4E03-B880-2C691B0EFA18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9D4F4BD-8D06-4E03-B880-2C691B0EFA18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55282CDC-6920-40CF-A55D-1BBA462EBB26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55282CDC-6920-40CF-A55D-1BBA462EBB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55282CDC-6920-40CF-A55D-1BBA462EBB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55282CDC-6920-40CF-A55D-1BBA462EBB26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{476C73E0-2AE3-4004-AF65-BB47FD2F4AD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{479551DD-A7B1-49F9-9D01-21D6321FDBD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{888109B8-08E5-49AD-AE25-5A999964E4EC} = {39646DF0-1988-48D1-8319-799C447D39A2}
-		{4F8CAF42-FFCD-4ED4-AAED-DBF3B4500D64} = {888109B8-08E5-49AD-AE25-5A999964E4EC}
-		{32AFFA7B-2BD5-4C1C-BDE3-AA9E52994942} = {888109B8-08E5-49AD-AE25-5A999964E4EC}
-		{9FE604FB-2F16-4A88-84F9-7E9152458859} = {39646DF0-1988-48D1-8319-799C447D39A2}
-		{F9D4F4BD-8D06-4E03-B880-2C691B0EFA18} = {9FE604FB-2F16-4A88-84F9-7E9152458859}
-		{0E70DF98-441C-42C1-AF4B-1E681D0D8530} = {39646DF0-1988-48D1-8319-799C447D39A2}
-		{55282CDC-6920-40CF-A55D-1BBA462EBB26} = {0E70DF98-441C-42C1-AF4B-1E681D0D8530}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE2102C7-A6D2-4046-90A1-F2BFA3DF5035}
