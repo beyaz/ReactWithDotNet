@@ -191,16 +191,72 @@ namespace ReactDotNet
 
     public class i : Element
     {
-        public i()
-        {
-
-        }
+        public i() { }
 
         public i(string className)
         {
             this.className = className;
         }
+    }
 
+    public class div : Element
+    {
+        public div() { }
+
+        public div(string className)
+        {
+            this.className = className;
+        }
+    }
+
+    public class h5 : Element
+    {
+        public h5() { }
+
+        public h5(string className)
+        {
+            this.className = className;
+        }
+    }
+
+    public class h4 : Element
+    {
+        public h4() { }
+
+        public h4(string className)
+        {
+            this.className = className;
+        }
+    }
+
+    public class h3 : Element
+    {
+        public h3() { }
+
+        public h3(string className)
+        {
+            this.className = className;
+        }
+    }
+
+    public class h2 : Element
+    {
+        public h2() { }
+
+        public h2(string className)
+        {
+            this.className = className;
+        }
+    }
+
+    public class h1 : Element
+    {
+        public h1() { }
+
+        public h1(string className)
+        {
+            this.className = className;
+        }
     }
 
     public class Panel : Element

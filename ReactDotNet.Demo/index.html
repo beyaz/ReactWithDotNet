@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>ReactDotNet Demo</title>
-    <!--<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-transition-group/4.4.2/react-transition-group.js" integrity="sha512-A66wlO3J8etE3ZxBJDeqj1RUrSpHnHA485YnfpkO6k4r7oz+4gdUBsIPBRAhPDumwZ4mGRJgTvrbQJWL1eRIvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -30,55 +30,92 @@
 
 
 
-    <script src="bridge.js"></script>
-    <script src="bridge.meta.js"></script>
-    <script src="newtonsoft.json.js"></script>
-    <script src="D:\work\git\ReactDotNet\ReactDotNet\bin\Debug\ReactDotNet.js"></script>
-    <script src="D:\work\git\ReactDotNet\ReactDotNet\bin\Debug\ReactDotNet.meta.js"></script>
-    <script src="ReactDotNet.Demo.js"></script>
-    <script src="ReactDotNet.Demo.meta.js"></script>
+    <script src="D:\work\git\ReactDotNet\ReactDotNet\ReactDotNet.js"></script>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/codemirror.min.js" integrity="sha512-XMlgZzPyVXf1I/wbGnofk1Hfdx+zAWyZjh6c21yGo/k1zNC4Ve6xcQnTDTCHrjFGsOrVicJsBURLYktVEu/8vQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/codemirror.min.css" integrity="sha512-6sALqOPMrNSc+1p5xOhPwGIzs6kIlST+9oGWlI4Wwcbj1saaX9J3uzO3Vub016dmHV7hM+bMi/rfXLiF5DNIZg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/theme/eclipse.css" />
-
+    
 </head>
-<body>
-<div id="app">
+    <body>
+        <div id="app">
 
-</div>
+        </div>
+    </body>
+
+<script type="text/javascript">
+
+    
+    var cmp0 = ReactDotNet.DefineComponent({
+        fullName: 'A.B.C0',
+        rootNode:
+        {
+            tag: 'div',
+            props:{ style: { border: '1px solid blue' } },
+            children:
+            [
+                {
+                    path: ['primereact', 'Button'],
+                    props:
+                    {
+                        key: '0',
+                        label: "aBc", onClick: 'b', $onClickIsRemote: true,
+                        style: { marginRight: '40px' }
+                    }
+                },
+                {
+                    path: ['primereact', 'Button'],
+                    props:
+                    {
+                        label: 'aBc', onClick: 'onBClicked', $onClickIsRemote: true, key: '1'
+                    }
+                }
+            ]
+        }
+    });
+
+    var cmp1 = ReactDotNet.DefineComponent({
+        fullName: 'A.B.C1',
+        rootNode:
+        {
+            tag: 'div',
+            props: { style: { border: '1px solid red' } },
+            children:
+            [
+                {
+                    path: ['primereact', 'Button'],
+                    props:
+                    {
+                        key: '0',
+                        label: "aBc",
+                        onClick: 'b',
+                        $onClickIsRemote: true,
+                        style: { marginRight: '40px' }
+                    }
+                },
+                {
+                    path: ['primereact', 'Button'],
+                    props:
+                    {
+                        label: 'aBc',
+                        onClick: 'onBClicked',
+                        $onClickIsRemote: true,
+                        key: '1'
+                    }
+                }
+            ]
+        }
+    });
 
 
-<!--<textarea id="editor" style="height: 200px">
-   
-</textarea>-->
-
-</body>
-
-
-
-<script>
-
-    //var start = function()
-    //{
-
+    
+    
+    ReactDotNet.OnReady(function(){
         
+        ReactDOM.render(
+            React.createElement(cmp1),
+            document.getElementById('app')
+        );
 
-    //    var myTextarea = document.getElementById("editor");
-    //    var editor = CodeMirror.fromTextArea(myTextarea, {
-    //        lineNumbers: true,
-    //        matchBrackets: true,
-    //        extraKeys: { "Ctrl-Space": "autocomplete" },
-    //        mode: "text/x-markdown",
-    //        lineWrapping: true
-        
-    //    });
-       
-    //}
-    //setTimeout(start, 100);
+    });
 
 </script>
-
 
 </html>

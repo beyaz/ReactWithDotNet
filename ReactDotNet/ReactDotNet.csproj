@@ -1,94 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <NoStdLib>true</NoStdLib>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A339556A-BD8B-4F9E-84EA-79954E3C47FE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReactDotNet</RootNamespace>
-    <AssemblyName>ReactDotNet</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="AsyncAjax.cs" />
-    <Compile Include="Element.cs" />
-    <Compile Include="PrimeReact\Button.cs" />
-    <Compile Include="Events\CompositionEvent.cs" />
-    <Compile Include="Events\FocusEvent.cs" />
-    <Compile Include="Events\FormEvent.cs" />
-    <Compile Include="Events\ImageEvent.cs" />
-    <Compile Include="Events\KeyboardEvent.cs" />
-    <Compile Include="Events\MediaEvent.cs" />
-    <Compile Include="Events\MouseEvent.cs" />
-    <Compile Include="Events\SelectionEvent.cs" />
-    <Compile Include="Events\SyntheticEvent.cs" />
-    <Compile Include="Events\Touch.cs" />
-    <Compile Include="Events\TouchEvent.cs" />
-    <Compile Include="Events\UIEvent.cs" />
-    <Compile Include="Events\WheelEvent.cs" />
-    <Compile Include="HtmlElements.cs" />
-    <Compile Include="MaterialUI\Button.cs" />
-    <Compile Include="PrimeReact\TabPanel.cs" />
-    <Compile Include="PrimeReact\TooltipOptions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropScrapper.cs" />
-    <Compile Include="ReactAttributeCollector.cs" />
-    <Compile Include="ReactComponent.cs" />
-    <Compile Include="ReactDOM.cs" />
-    <Compile Include="ReactElement.cs" />
-    <Compile Include="ReactElementPreview.cs" />
-    <Compile Include="React.cs" />
-    <Compile Include="PrimeReact\PrimeReact.cs" />
-    <Compile Include="ReflectionHelper.cs" />
-    <Compile Include="Space.cs" />
-    <Compile Include="UniqueKeyInitializer.cs" />
+    <None Update="ReactDotNet.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="bridge.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Bridge">
-      <Version>17.10.1</Version>
-    </PackageReference>
-    <PackageReference Include="Bridge.Core">
-      <Version>17.10.1</Version>
-    </PackageReference>
-    <PackageReference Include="Bridge.Html5">
-      <Version>17.10.0</Version>
-    </PackageReference>
-    <PackageReference Include="Bridge.Min">
-      <Version>17.10.1</Version>
-    </PackageReference>
-    <PackageReference Include="Bridge.Newtonsoft.Json">
-      <Version>1.17.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
