@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet", "ReactDotNet\ReactDotNet.csproj", "{ABF5AA3B-7A14-4F34-8FE8-54834754D237}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.Demo", "ReactDotNet.Demo\ReactDotNet.Demo.csproj", "{BE8F5E20-E1FA-4C29-A059-00713FF57553}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet.Demo", "ReactDotNet.Demo\ReactDotNet.Demo.csproj", "{BE8F5E20-E1FA-4C29-A059-00713FF57553}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactDotNet.Test", "ReactDotNet.Test\ReactDotNet.Test.csproj", "{F9DFCF0F-2750-46C0-8001-626FD0907226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BE8F5E20-E1FA-4C29-A059-00713FF57553}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE8F5E20-E1FA-4C29-A059-00713FF57553}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE8F5E20-E1FA-4C29-A059-00713FF57553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9DFCF0F-2750-46C0-8001-626FD0907226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9DFCF0F-2750-46C0-8001-626FD0907226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9DFCF0F-2750-46C0-8001-626FD0907226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9DFCF0F-2750-46C0-8001-626FD0907226}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
