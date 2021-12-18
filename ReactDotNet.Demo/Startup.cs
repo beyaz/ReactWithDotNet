@@ -6,13 +6,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
+namespace ReactDotNet
+{
+}
 namespace ReactDotNet.Demo
 {
+
+    
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -26,6 +29,12 @@ namespace ReactDotNet.Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            
+            services.AddControllers().AddJsonOptions(j =>
+            {
+                JsonSerializationOptionHelper.Modify(j.JsonSerializerOptions);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

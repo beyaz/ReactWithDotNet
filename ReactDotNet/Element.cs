@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Bridge;
-using Bridge.Html5;
 using static ReactDotNet.UniqueKeyInitializer;
 
 namespace ReactDotNet
@@ -58,7 +56,7 @@ namespace ReactDotNet
         ///     Gets or sets the on click.
         /// </summary>
         [React]
-        public Action<SyntheticEvent<HTMLElement>> onClick { get; set; }
+        public Action onClick { get; set; }
 
         /// <summary>
         ///     Gets the padding.
@@ -69,7 +67,7 @@ namespace ReactDotNet
         ///     Gets the style.
         /// </summary>
         [React]
-        public CSSStyleDeclaration style { get; } = ObjectLiteral.Create<CSSStyleDeclaration>();
+        public CSSStyleDeclaration style { get; } = new CSSStyleDeclaration();
 
         /// <summary>
         ///     'innerText' property of element.
@@ -105,7 +103,14 @@ namespace ReactDotNet
 
             var attributes = this.CollectReactAttributedProperties();
 
-            return React.createElement(tag, attributes, text, children.Select(x => x.ToReactElement()));
+            return new ReactElement
+            {
+                Tag = tag, 
+                Props = attributes, 
+                Text = text, 
+                Children = children.Select(x => x.ToReactElement()).ToList()
+            };
+            
         }
         #endregion
 

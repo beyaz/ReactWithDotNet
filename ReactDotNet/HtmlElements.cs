@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bridge.Html5;
 
 namespace ReactDotNet
 {
@@ -285,7 +284,8 @@ namespace ReactDotNet
 
             if (Cols.Count == 0 && Rows.Count == 0)
             {
-                return React.createElement("div", this.CollectReactAttributedProperties());
+
+                return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties() };
             }
 
             if (Cols.Count > 0)
@@ -304,7 +304,10 @@ namespace ReactDotNet
 
                 var childElements = Cols.Select(x => x.ToReactElement());
 
-                return React.createElement("div", this.CollectReactAttributedProperties(), childElements);
+                return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements.ToList() };
+
+
+
             }
 
             // rows
@@ -323,7 +326,7 @@ namespace ReactDotNet
 
                 var childElements = Rows.Select(x => x.ToReactElement());
 
-                return React.createElement("div", this.CollectReactAttributedProperties(), childElements);
+                return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements.ToList() };
             }
         }
     }

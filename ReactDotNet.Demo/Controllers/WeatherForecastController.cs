@@ -24,16 +24,24 @@ namespace ReactDotNet.Demo
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public ReactElement Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return new div("C4") { text = "Aloha", style =
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = "ttt23"
-            })
-            .ToArray();
+                Width = "5px", 
+                Display = Display.Flex, 
+                Height = "6px",
+                AlignContent = AlignContent.FlexStart
+            } };
+
+
+            //    new div("croot")
+            //{
+            //    new div("C1"),
+            //    new div("C2"),
+            //    new div("C3"),
+            //    new div("C4") { text = "Aloha", style = { Width = "5px", Display = Display.Flex}}
+            //};
         }
     }
 }
