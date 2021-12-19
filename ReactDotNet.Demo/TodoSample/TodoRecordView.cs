@@ -1,5 +1,8 @@
 ﻿namespace ReactDotNet.Demo.TodoSample
 {
+
+   
+
     public class TodoRecordView : ReactComponent<TodoRecordView, TodoRecord>
     {
         void OnClicked()

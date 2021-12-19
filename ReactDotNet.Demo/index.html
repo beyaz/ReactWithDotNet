@@ -43,81 +43,20 @@
 
 <script type="text/javascript">
 
-
-    var cmp0 = ReactDotNet.DefineComponent({
-        fullName: 'A.B.C0',
-        rootNode:
-        {
-            tag: 'div',
-            props: { style: { border: '1px solid blue' } },
-            children:
-                [
-                    {
-                        path: ['primereact', 'Button'],
-                        props:
-                        {
-                            key: '0',
-                            label: "aBc", onClick: 'b', $onClickIsRemote: true,
-                            style: { marginRight: '40px' }
-                        }
-                    },
-                    {
-                        path: ['primereact', 'Button'],
-                        props:
-                        {
-                            label: 'aBc', onClick: 'onBClicked', $onClickIsRemote: true, key: '1'
-                        }
-                    }
-                ]
-        }
-    });
-
-    var cmp1 = ReactDotNet.DefineComponent({
-        fullName: 'A.B.C1',
-        rootNode:
-        {
-            tag: 'div',
-            props: { style: { border: '1px solid red' } },
-            children:
-                [
-                    {
-                        path: ['primereact', 'Button'],
-                        props:
-                        {
-                            key: '0',
-                            label: "aBc",
-                            onClick: 'b',
-                            $onClickIsRemote: true,
-                            style: { marginRight: '40px' }
-                        }
-                    },
-                    {
-                        path: ['primereact', 'Button'],
-                        props:
-                        {
-                            label: 'aBc',
-                            onClick: 'onBClicked',
-                            $onClickIsRemote: true,
-                            key: '1'
-                        }
-                    }
-                ]
-        }
-    });
-
     ReactDotNet.SendRequest = function(request, callback)
     {
         fetch("/component/HandleRequest",
         {
             method: "POST",
-            headers: {
+            headers:
+            {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(request)
+
         }).then(response => response.json()).then(json => callback(json));
     };
-
 
     ReactDotNet.OnReady(function ()
     {

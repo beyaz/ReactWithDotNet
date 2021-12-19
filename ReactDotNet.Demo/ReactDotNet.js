@@ -108,7 +108,7 @@
         {
             MethodName: "HandleComponentEvent",
             EventHandlerMethodName: remoteMethodName,
-            FullName: "ReactDotNet.Demo.TodoSample.TodoRecordView,ReactDotNet.Demo",
+            FullName: component.constructor.fullName,
             stateAsJson: JSON.stringify(component.state.$state)
         };
 
