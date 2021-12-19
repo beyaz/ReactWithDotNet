@@ -7,7 +7,6 @@
   <ItemGroup>
     <Compile Remove="PrimeReact\AutoComplete.cs" />
     <Compile Remove="PrimeReact\TabPanel.cs" />
-    <Compile Remove="PrimeReact\TooltipOptions.cs" />
   </ItemGroup>
 
   <ItemGroup>

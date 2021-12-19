@@ -1,13 +1,10 @@
 ﻿using System;
-using Bridge;
-using Bridge.Html5;
 
 namespace ReactDotNet.PrimeReact
 {
     /// <summary>
     ///     The tooltip position type
     /// </summary>
-    [Enum(Emit.StringNameLowerCase)]
     public enum TooltipPositionType
     {
         /// <summary>
@@ -34,7 +31,6 @@ namespace ReactDotNet.PrimeReact
     /// <summary>
     ///     The tooltip event type
     /// </summary>
-    [Enum(Emit.StringNameLowerCase)]
     public enum TooltipEventType
     {
         /// <summary>
@@ -48,29 +44,11 @@ namespace ReactDotNet.PrimeReact
         focus
     }
 
-    /// <summary>
-    ///     The tooltip event parameters
-    /// </summary>
-    [External]
-    [ObjectLiteral]
-    public sealed class TooltipEventParams
-    {
-        /// <summary>
-        ///     The original event
-        /// </summary>
-        public SyntheticEvent<HTMLElement> originalEvent;
-
-        /// <summary>
-        ///     The target
-        /// </summary>
-        public HTMLElement target;
-    }
+   
 
     /// <summary>
     ///     The tooltip options
     /// </summary>
-    //[ObjectLiteral(ObjectCreateMode.Constructor)]
-    //[Constructor("{style: {}}")]
     public sealed class TooltipOptions
     {
         /// <summary>
@@ -82,12 +60,12 @@ namespace ReactDotNet.PrimeReact
         ///     Position of the tooltip, valid values are right, left, top and bottom.
         ///     <para>Default: right</para>
         /// </summary>
-        public TooltipPositionType? position { get; set; } = TooltipPositionType.right;
+        public TooltipPositionType? position { get; set; } 
 
         /// <summary>
         ///     Style of the tooltip.
         /// </summary>
-        public readonly CSSStyleDeclaration style = ObjectLiteral.Create<CSSStyleDeclaration>();
+        public readonly CSSStyleDeclaration style = new CSSStyleDeclaration();
 
         /// <summary>
         ///     Defines which position on the tooltip being positioned to align with the target element.
@@ -119,77 +97,58 @@ namespace ReactDotNet.PrimeReact
         /// <summary>
         ///     Whether to automatically manage layering.
         /// </summary>
-        public bool autoZIndex { get; set; } = true;
+        public bool? autoZIndex { get; set; } 
 
         /// <summary>
         ///     Base zIndex value to use in layering.
         /// </summary>
-        public int baseZIndex { get; set; }
+        public int? baseZIndex { get; set; }
 
         /// <summary>
         ///     Whether the tooltip will follow the mouse.
         /// </summary>
-        public bool mouseTrack { get; set; }
+        public bool? mouseTrack { get; set; }
 
         /// <summary>
         ///     Defines top position of the tooltip in relation to the mouse when the mouseTrack is enabled.
         /// </summary>
-        public int mouseTrackTop { get; set; } = 5;
+        public int? mouseTrackTop { get; set; }
 
         /// <summary>
         ///     Defines top position of the tooltip in relation to the mouse when the mouseTrack is enabled.
         /// </summary>
-        public int mouseTrackLeft { get; set; } = 5;
+        public int? mouseTrackLeft { get; set; }
 
         /// <summary>
         ///     Delay to show the tooltip in milliseconds.
         /// </summary>
-        public int showDelay { get; set; }
+        public int? showDelay { get; set; }
 
         /// <summary>
         ///     Delay to update the tooltip in milliseconds.
         /// </summary>
-        public int updateDelay { get; set; }
+        public int? updateDelay { get; set; }
 
         /// <summary>
         ///     Delay to hide the tooltip in milliseconds.
         /// </summary>
-        public int hideDelay { get; set; }
+        public int? hideDelay { get; set; }
 
         /// <summary>
         ///     Whether to hide tooltip when hovering over tooltip content.
         /// <para>Default true</para>
         /// </summary>
-        public bool autoHide { get; set; } = true;
+        public bool? autoHide { get; set; } 
 
         /// <summary>
         ///     Gets or sets a value indicating whether this <see cref="TooltipOptions" /> is disabled.
         /// </summary>
-        public bool disabled { get; set; }
+        public bool? disabled { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether [show on disabled].
         /// </summary>
-        public bool showOnDisabled { get; set; }
+        public bool? showOnDisabled { get; set; }
 
-        /// <summary>
-        ///     Callback to invoke before the tooltip is shown.
-        /// </summary>
-        public Action<TooltipEventParams> onBeforeShow { get; set; }
-
-        /// <summary>
-        ///     Callback to invoke before the tooltip is hidden.
-        /// </summary>
-        public Action<TooltipEventParams> onBeforeHide { get; set; }
-
-        /// <summary>
-        ///     Callback to invoke when the tooltip is shown.
-        /// </summary>
-        public Action<TooltipEventParams> onShow { get; set; }
-
-        /// <summary>
-        ///     Callback to invoke when the tooltip is hidden.
-        /// </summary>
-        public Action<TooltipEventParams> onHide { get; set; }
     }
 }

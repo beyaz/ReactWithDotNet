@@ -64,8 +64,8 @@ namespace ReactDotNet.PrimeReact
         [React]
         public string tooltip { get; set; }
 
-        //[React]
-        //public TooltipOptions tooltipOptions { get; } = new TooltipOptions();
+        [React]
+        public TooltipOptions tooltipOptions { get; } = new TooltipOptions();
 
     }
 }

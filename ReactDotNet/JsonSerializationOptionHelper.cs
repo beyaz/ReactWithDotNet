@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet
 {
@@ -20,11 +21,15 @@ namespace ReactDotNet
         {
             options.WriteIndented        = true;
             options.IgnoreNullValues     = true;
+            
             options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             options.Converters.Add(new UnionConverter<AlignContent>());
             options.Converters.Add(new UnionConverter<Display>());
             options.Converters.Add(new ActionConverter());
-            
+
+            options.Converters.Add(new EnumToStringConverter<TooltipPositionType>()); 
+
+
 
             return options;
         }
@@ -49,6 +54,22 @@ namespace ReactDotNet
             return b;
         }
         #endregion
+
+
+        class EnumToStringConverter<T>: JsonConverter<T>
+        {
+            #region Public Methods
+            public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(value.ToString());
+            }
+            #endregion
+        }
 
         class ActionConverter : JsonConverter<Action>
         {

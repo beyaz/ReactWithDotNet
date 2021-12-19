@@ -58,7 +58,12 @@ namespace ReactDotNet.Demo.TodoSample
             return new div("C4")
             {
                 new button{ text   = MyProp1+"Click Count: " + state.ClickCount, onClick = OnClicked},
-                new Button{label = MyProp1+"Click Count: " + state.ClickCount, onClick = OnClicked}
+                new Button
+                {
+                    label = MyProp1+"Click Count: " + state.ClickCount, onClick = OnClicked,
+                    tooltip = "My tooltip",
+                    tooltipOptions = { position = TooltipPositionType.left}
+                }
             };
         }
     }
