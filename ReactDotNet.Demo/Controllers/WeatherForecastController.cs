@@ -17,21 +17,14 @@ namespace ReactDotNet.Demo.TodoSample
     {
         void OnClicked()
         {
-            state.Text += "a";
+            state.ClickCount++;
         }
 
         public override ReactElement render()
         {
             return new div("C4")
             {
-                text = GetType().FullName,
-                style =
-                {
-                    Width        = "50px",
-                    Display      = Display.Flex,
-                    Height       = "600px",
-                    AlignContent = AlignContent.FlexStart
-                }
+                new button{ text = "Click Count: " + state.ClickCount, onClick = OnClicked}
             };
         }
     }

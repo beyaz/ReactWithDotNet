@@ -8,6 +8,37 @@ namespace ReactDotNet
     [TestClass]
     public class UnitTest1
     {
+
+        void onClicked()
+        {
+
+        }
+
+        [TestMethod]
+        public void ActionSerialization()
+        {
+            ReactElement model = new button
+            {
+                text = "Aloha",
+                onClick = onClicked
+            };
+
+            var result = JsonSerializer.Serialize(model, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+
+            result.Should().Be(@"
+{
+  ""tag"": ""button"",
+  ""text"": ""Aloha"",
+  ""props"": {
+    ""onClick"": ""onClicked"",
+    ""$onClickedIsRemote"": true,
+    ""style"": {}
+  },
+  ""children"": []
+}
+".Trim());
+        }
+
         [TestMethod]
         public void TestMethod1()
         {
@@ -19,6 +50,7 @@ namespace ReactDotNet
                     AlignContent = AlignContent.FlexStart,
                     Width        = "5px",
                     Display      = Display.Flex,
+                    
                     
                 }
             };

@@ -16,6 +16,8 @@ namespace ReactDotNet
             options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             options.Converters.Add(new UnionConverter<AlignContent>());
             options.Converters.Add(new UnionConverter<Display>());
+            options.Converters.Add(new ActionConverter());
+            
 
             return options;
         }
@@ -40,6 +42,28 @@ namespace ReactDotNet
             return b;
         }
         #endregion
+
+        class ActionConverter : JsonConverter<Action>
+        {
+            #region Public Methods
+            public override Action Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void Write(Utf8JsonWriter writer, Action value, JsonSerializerOptions options)
+            {
+                var rawValue = value.Method.Name;
+
+                writer.WriteStringValue(rawValue);
+
+                writer.WritePropertyName($"${rawValue}IsRemote");
+
+                writer.WriteBooleanValue(true);
+                
+            }
+            #endregion
+        }
 
         class UnionConverter<B> : JsonConverter<Union<string, B>> where B : Enum
         {
