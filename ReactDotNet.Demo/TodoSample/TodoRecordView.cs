@@ -11,7 +11,7 @@ namespace ReactDotNet.Demo.TodoSample
         public List<TodoRecord> Records { get; set; }
     }
 
-    class TodoRecordListView : ReactDotNet.ReactComponent<TodoRecordListView, TodoRecordList>
+    class TodoRecordListView : ReactDotNet.ReactComponent<TodoRecordList>
     {
 
         [React]
@@ -43,7 +43,7 @@ namespace ReactDotNet.Demo.TodoSample
     }
 
 
-    public class TodoRecordView : ReactComponent<TodoRecordView, TodoRecord>
+    public class TodoRecordView : ReactComponent<TodoRecord>
     {
         public string MyProp1 { get; set; }
 
