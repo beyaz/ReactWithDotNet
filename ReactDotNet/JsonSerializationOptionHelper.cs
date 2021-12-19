@@ -55,12 +55,8 @@ namespace ReactDotNet
             {
                 var rawValue = value.Method.Name;
 
-                writer.WriteStringValue(rawValue);
-
-                writer.WritePropertyName($"${rawValue}IsRemote");
-
-                writer.WriteBooleanValue(true);
-                
+                var prefix = "$remote$";
+                writer.WriteStringValue(prefix+ rawValue);
             }
             #endregion
         }

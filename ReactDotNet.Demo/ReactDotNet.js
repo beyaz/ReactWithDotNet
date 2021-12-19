@@ -40,24 +40,37 @@
         // visit props
         var processedProps = {};
 
+        function tryProcessAsEventHandler(name)
+        {
+            var value = props[name];
+
+            if (typeof value === 'string')
+            {
+                var prefix = "$remote$";
+
+                var index = value.indexOf(prefix);
+                if (index === 0)
+                {
+                    var remoteMethodName = value.substr(prefix.length);
+
+                    processedProps[name] = function (e)
+                    {
+                        HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArgument: e });
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         // look events
         for (let name in props)
         {
-            if (name[0] === '$')
+            var isProcessedAsEvent = tryProcessAsEventHandler(name);
+            if (isProcessedAsEvent)
             {
-                continue;
-            }
-
-            var isRemoteEvent = props['$' + name + 'IsRemote'] === true;
-            if (isRemoteEvent)
-            {
-                var remoteMethodName = props[name];
-
-                processedProps[name] = function (e)
-                {
-                    HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArgument: e });
-                }
-
                 continue;
             }
 
@@ -86,43 +99,23 @@
 
     function HandleAction(data)
     {
-        setTimeout(function()
-            {
-                data.component.setState({
-                    $rootNode:
-                    {
-                        tag: 'div',
-                        props: { style: { border: '1px solid blue' } },
-                        children:
-                        [
-                            {
-                                path: ['primereact', 'Button'],
-                                props:
-                                {
-                                    key: '0',
-                                    label: "aBc",
-                                    onClick: 'b',
-                                    $onClickIsRemote: true,
-                                    style: { marginRight: '40px' }
-                                }
-                            },
-                            {
-                                path: ['primereact', 'Button'],
-                                props:
-                                {
-                                    label: 'aBc',
-                                    onClick: 'onBClicked',
-                                    $onClickIsRemote: true,
-                                    key: '1'
-                                }
-                            },
-                                { tag: 'div', text: 'Aloha', props: { key: '2'} }
-                        ]
-                    }
+        var remoteMethodName = data.remoteMethodName;
+        var component = data.component;
+        var eventArgument = data.eventArgument;
 
-                });
-            },
-            20);
+
+        var request =
+        {
+            MethodName: "HandleComponentEvent",
+            EventHandlerMethodName: remoteMethodName,
+            FullName: "ReactDotNet.Demo.TodoSample.TodoRecordView,ReactDotNet.Demo"
+        };
+
+        function onSuccess(response)
+        {
+            data.component.setState({ $rootNode: response.rootElement });
+        }
+        global.ReactDotNet.SendRequest(request, onSuccess);
     }
 
     function DefineComponent(componentDecleration)

@@ -30,8 +30,7 @@ namespace ReactDotNet
   ""tag"": ""button"",
   ""text"": ""Aloha"",
   ""props"": {
-    ""onClick"": ""onClicked"",
-    ""$onClickedIsRemote"": true,
+    ""onClick"": ""$remote$onClicked"",
     ""style"": {}
   },
   ""children"": []
