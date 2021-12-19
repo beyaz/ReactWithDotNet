@@ -27,16 +27,14 @@ namespace ReactDotNet
                 {
                     throw new MissingMemberException(typeOfInstance.FullName, "state");
                 }
-
-                stateAsJson = stateAsJson.RemoveFromStart("\"").RemoveFromEnd("\"");
+                
 
                 
 
                 var state = JsonSerializer.Deserialize(stateAsJson, stateFieldInfo.FieldType, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
 
                 stateFieldInfo.SetValue(instance,state);
-            }
-
+            } 
             if (request.MethodName == "FetchComponent")
             {
                 var type = findType(request.FullName);

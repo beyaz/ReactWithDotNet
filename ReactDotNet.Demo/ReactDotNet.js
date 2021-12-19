@@ -116,7 +116,7 @@
         {
             data.component.setState({
                 $rootNode: response.rootElement,
-                $state: response.stateAsJson
+                $state: JSON.parse(response.stateAsJson)
             });
         }
         global.ReactDotNet.SendRequest(request, onSuccess);
@@ -133,7 +133,7 @@
                 this.state =
                 {
                     $rootNode: componentDeclaration.rootElement,
-                    $state: componentDeclaration.stateAsJson
+                    $state: JSON.parse(componentDeclaration.stateAsJson)
                 };
 
                 this.fullName = componentDeclaration.fullName;
