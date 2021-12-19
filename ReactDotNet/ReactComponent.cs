@@ -3,12 +3,16 @@
 
 namespace ReactDotNet
 {
-    
+    public interface IReactComponent
+    {
+         ReactElement render();
+    }
+
     public interface IReactComponent<TProps,TState>
     {
     }
 
-    public abstract class ReactComponent<TProps, TState> : IReactComponent<TProps, TState>, IElement where TState : new()
+    public abstract class ReactComponent<TProps, TState> : IReactComponent<TProps, TState>, IElement, IReactComponent where TState : new()
     {
         // ReSharper disable once UnassignedReadonlyField
         protected internal readonly TProps props;

@@ -156,15 +156,15 @@
     {
         var request =
         {
-            "method": "FetchComponent",
-            "fullName": fullNameOfComponent
+            MethodName: "FetchComponent",
+            FullName: fullNameOfComponent
         };
 
-        function onSuccess(json)
+        function onSuccess(response)
         {
             var component = DefineComponent({
                 fullName: fullNameOfComponent,
-                rootNode: json
+                rootNode: response.rootElement
             });
 
             callback(React.createElement(component));

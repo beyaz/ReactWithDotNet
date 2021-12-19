@@ -107,14 +107,14 @@
 
     ReactDotNet.SendRequest = function(request, callback)
     {
-        fetch("/weatherforecast/HandleRequest",
+        fetch("/component/HandleRequest",
         {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ FullName: "Aloha5" })
+            body: JSON.stringify(request)
         }).then(response => response.json()).then(json => callback(json));
     };
 
@@ -126,7 +126,7 @@
             ReactDOM.render(component, document.getElementById('app'));
         }
 
-        ReactDotNet.FetchComponent("ReactDotNet.Demo.TodoSample.TodoRecordView", onComponentReadyToUse);
+        ReactDotNet.FetchComponent("ReactDotNet.Demo.TodoSample.TodoRecordView,ReactDotNet.Demo", onComponentReadyToUse);
     });
 
 </script>
