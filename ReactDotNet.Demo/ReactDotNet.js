@@ -32,7 +32,7 @@
         {
             var cmp = DefineComponent(jsonNode);
 
-            return createElement(cmp);
+            return createElement(cmp, jsonNode.props);
         }
 
         var constructorFunction = jsonNode.tag;

@@ -10,7 +10,7 @@ namespace ReactDotNet
 
       
 
-        public static IReadOnlyDictionary<string,object> CollectReactAttributedProperties(this IElement element)
+        public static Dictionary<string,object> CollectReactAttributedProperties(this IElement element)
         {
             var attributes = new Dictionary<string, object>();
 

@@ -13,7 +13,7 @@ namespace ReactDotNet
 
         public string Text { get; set; }
 
-        public IReadOnlyDictionary<string, object> Props { get; set; }
+        public Dictionary<string, object> Props { get; set; } = new Dictionary<string, object>();
 
         public IReadOnlyList<ReactElement> Children { get; set; }
 
