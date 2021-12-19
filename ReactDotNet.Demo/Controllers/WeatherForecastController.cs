@@ -39,9 +39,9 @@ namespace ReactDotNet.Demo
         {
             return new div("C4") { text = "Aloha", style =
             {
-                Width = "5px", 
+                Width = "50px", 
                 Display = Display.Flex, 
-                Height = "6px",
+                Height = "600px",
                 AlignContent = AlignContent.FlexStart
             } };
 

@@ -76,7 +76,7 @@ namespace ReactDotNet
         /// <summary>
         /// The height CSS property specifies the height of the content area of an element. The content area is inside the padding, border, and margin of the element.
         /// </summary>
-        public string Height;
+        public string Height { get; set; }
 
         public string  Width { get; set; }
 

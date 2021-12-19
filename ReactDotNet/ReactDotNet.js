@@ -65,15 +65,9 @@
         }
         props = processedProps;
 
-        if (children == null)
+        if (jsonNode.text != null)
         {
-            if (constructorFunction)
-            {
-                if (jsonNode.text != null)
-                {
-                    return createElement(constructorFunction, props, jsonNode.text);
-                }
-            }
+            return createElement(constructorFunction, props, jsonNode.text);
         }
 
         if (children)
@@ -84,6 +78,8 @@
                 children[i] = ConvertToReactElement(children[i], component);
             }
         }
+
+      
 
         return createElement(constructorFunction, props, children);
     }
