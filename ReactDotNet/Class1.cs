@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 
 namespace ReactDotNet
 {
-
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Constructor | AttributeTargets.Delegate | AttributeTargets.Enum | AttributeTargets.Field | AttributeTargets.Interface | AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Struct)]
     public sealed class NameAttribute : Attribute
     {

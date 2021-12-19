@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentAssertions;
@@ -8,6 +9,22 @@ namespace ReactDotNet
     [TestClass]
     public class UnitTest1
     {
+        [Serializable]
+        public class SampleModel
+        {
+            public int ClickCount { get; set; }
+            public int Id { get; set; }
+            public string Text { get; set; }
+            public int DropdownSelectedValue { get; set; }
+        }
+        [TestMethod]
+        public void Deserialize()
+        {
+            var json  = "{\r\n\"clickCount\": 2}";
+            var state = (SampleModel)JsonSerializer.Deserialize(json, typeof(SampleModel), JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+
+            state.ClickCount.Should().Be(2);
+        }
 
         void onClicked()
         {

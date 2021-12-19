@@ -17,7 +17,7 @@ namespace ReactDotNet
         // ReSharper disable once UnassignedReadonlyField
         protected internal readonly TProps props;
 
-        protected internal readonly TState state;
+        protected internal TState state;
 
         protected ReactComponent()
         {

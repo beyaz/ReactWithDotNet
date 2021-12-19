@@ -8,6 +8,13 @@ namespace ReactDotNet
 {
     public static class JsonSerializationOptionHelper
     {
+        public static string ToJson(object value)
+        {
+            var option = Modify(new JsonSerializerOptions());
+
+            return JsonSerializer.Serialize(value, option);
+        }
+
         #region Public Methods
         public static JsonSerializerOptions Modify(JsonSerializerOptions options)
         {

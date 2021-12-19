@@ -108,17 +108,21 @@
         {
             MethodName: "HandleComponentEvent",
             EventHandlerMethodName: remoteMethodName,
-            FullName: "ReactDotNet.Demo.TodoSample.TodoRecordView,ReactDotNet.Demo"
+            FullName: "ReactDotNet.Demo.TodoSample.TodoRecordView,ReactDotNet.Demo",
+            stateAsJson: JSON.stringify(component.state.$state)
         };
 
         function onSuccess(response)
         {
-            data.component.setState({ $rootNode: response.rootElement });
+            data.component.setState({
+                $rootNode: response.rootElement,
+                $state: response.stateAsJson
+            });
         }
         global.ReactDotNet.SendRequest(request, onSuccess);
     }
 
-    function DefineComponent(componentDecleration)
+    function DefineComponent(componentDeclaration)
     {
         class NewComponent extends React.Component
         {
@@ -128,10 +132,11 @@
 
                 this.state =
                 {
-                    $rootNode: componentDecleration.rootNode
+                    $rootNode: componentDeclaration.rootElement,
+                    $state: componentDeclaration.stateAsJson
                 };
 
-                this.fullName = componentDecleration.fullName;
+                this.fullName = componentDeclaration.fullName;
             }
 
             render()
@@ -140,7 +145,7 @@
             }
         }
 
-        NewComponent.fullName = componentDecleration.fullName;
+        NewComponent.fullName = componentDeclaration.fullName;
 
         return NewComponent;
     }
@@ -155,10 +160,7 @@
 
         function onSuccess(response)
         {
-            var component = DefineComponent({
-                fullName: fullNameOfComponent,
-                rootNode: response.rootElement
-            });
+            var component = DefineComponent(response);
 
             callback(React.createElement(component));
         }
