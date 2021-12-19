@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet.Demo.TodoSample
 {
@@ -56,7 +57,8 @@ namespace ReactDotNet.Demo.TodoSample
         {
             return new div("C4")
             {
-                new button{ text = MyProp1+"Click Count: " + state.ClickCount, onClick = OnClicked}
+                new button{ text   = MyProp1+"Click Count: " + state.ClickCount, onClick = OnClicked},
+                new Button{label = MyProp1+"Click Count: " + state.ClickCount, onClick = OnClicked}
             };
         }
     }

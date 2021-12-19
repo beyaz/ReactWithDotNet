@@ -7,7 +7,6 @@ namespace ReactDotNet
     
     public interface IElement
     {
-        string key { get; set; }
 
         CSSStyleDeclaration style { get; }
 
@@ -300,11 +299,13 @@ namespace ReactDotNet
                     Cols.ForEach(child => { child.style.Width = GravityCalculator.CalculateGravity(child, Cols) * 100 + "%"; });
                 }
 
-                UniqueKeyInitializer.InitializeKeyIfNotExists(Cols);
+                
 
-                var childElements = Cols.Select(x => x.ToReactElement());
+                var childElements = Cols.Select(x => x.ToReactElement()).ToList();
 
-                return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements.ToList() };
+                UniqueKeyInitializer.InitializeKeyIfNotExists(childElements);
+
+                return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements };
 
 
 
@@ -322,11 +323,13 @@ namespace ReactDotNet
                     Rows.ForEach(child => { child.style.Height = GravityCalculator.CalculateGravity(child, Rows) * 100 + "%"; });
                 }
 
-                UniqueKeyInitializer.InitializeKeyIfNotExists(Rows);
+                
 
-                var childElements = Rows.Select(x => x.ToReactElement());
+                var childElements = Rows.Select(x => x.ToReactElement()).ToList();
 
-                return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements.ToList() };
+                UniqueKeyInitializer.InitializeKeyIfNotExists(childElements);
+
+                return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements };
             }
         }
     }
