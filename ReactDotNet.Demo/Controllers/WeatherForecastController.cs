@@ -37,7 +37,7 @@ namespace ReactDotNet.Demo
     public class ComponentController : ControllerBase
     {
         [HttpPost]
-        [Route("HandleRequest")]
+        [Route(nameof(HandleRequest))]
         public ComponentRequest HandleRequest(ComponentRequest request)
         {
             return ComponentRequestHandler.HandleRequest(request,Type.GetType);
