@@ -17,7 +17,7 @@
                 throw 'Path is not read. Path:' + steps.join('.');
             }
 
-            obj = obj[steps[i]];y
+            obj = obj[steps[i]];
         }
 
         return obj;

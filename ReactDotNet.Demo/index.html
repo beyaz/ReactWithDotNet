@@ -107,9 +107,14 @@
 
     ReactDotNet.SendRequest = function(request, callback)
     {
-        fetch("/weatherforecast",
+        fetch("/weatherforecast/HandleRequest",
         {
-            method: "GET"
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ FullName: "Aloha5" })
         }).then(response => response.json()).then(json => callback(json));
     };
 

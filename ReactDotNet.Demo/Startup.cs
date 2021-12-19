@@ -37,6 +37,7 @@ namespace ReactDotNet.Demo
             {
                 JsonSerializationOptionHelper.Modify(j.JsonSerializerOptions);
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,12 +59,13 @@ namespace ReactDotNet.Demo
                 EnableDefaultFiles = true
             });
 
-            app.UseAuthorization();
+            // app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

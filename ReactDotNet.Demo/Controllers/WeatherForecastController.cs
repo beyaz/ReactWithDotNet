@@ -29,21 +29,31 @@ namespace ReactDotNet.Demo.TodoSample
 
 namespace ReactDotNet.Demo
 {
+    [Serializable]
+    public class ComponentRequest
+    {
+        public string FullName { get; set; }
+    }
+
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        
-        [HttpGet]
-        public ReactElement Get()
+        [HttpPost]
+        [Route("HandleRequest")]
+        public ReactElement HandleRequest(ComponentRequest request)
         {
-            return new div("C4") { text = "Aloha", style =
+            return new div("C4")
             {
-                Width = "50px", 
-                Display = Display.Flex, 
-                Height = "600px",
-                AlignContent = AlignContent.FlexStart
-            } };
+                text = request.FullName,
+                style =
+                {
+                    Width        = "50px",
+                    Display      = Display.Flex,
+                    Height       = "600px",
+                    AlignContent = AlignContent.FlexStart
+                }
+            };
 
 
             //    new div("croot")
@@ -54,5 +64,26 @@ namespace ReactDotNet.Demo
             //    new div("C4") { text = "Aloha", style = { Width = "5px", Display = Display.Flex}}
             //};
         }
+
+        //[HttpGet]
+        //public ReactElement Get()
+        //{
+        //    return new div("C4") { text = "Aloha", style =
+        //    {
+        //        Width = "50px", 
+        //        Display = Display.Flex, 
+        //        Height = "600px",
+        //        AlignContent = AlignContent.FlexStart
+        //    } };
+
+
+        //    //    new div("croot")
+        //    //{
+        //    //    new div("C1"),
+        //    //    new div("C2"),
+        //    //    new div("C3"),
+        //    //    new div("C4") { text = "Aloha", style = { Width = "5px", Display = Display.Flex}}
+        //    //};
+        //}
     }
 }
