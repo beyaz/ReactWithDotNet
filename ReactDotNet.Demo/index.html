@@ -107,95 +107,10 @@
 
     ReactDotNet.SendRequest = function(request, callback)
     {
-        var settings = {
-            'cache': false,
-            // 'dataType': "jsonp",
-            "async": true,
-            "crossDomain": true,
-            "url": "/weatherforecast",
-            "method": "GET",
-            xhrFields: {
-                withCredentials: true
-            },
-            "headers": {
-                // 'Access-Control-Allow-Credentials': true,
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET',
-                'Access-Control-Allow-Headers': 'application/json; charset=utf-8'
-            }
-        };
-
-        $.ajax(settings).done(function (response)
+        fetch("/weatherforecast",
         {
-            callback(JSON.parse(response));
-        });
-
-        /*
-
-       $.ajax({
-           type: 'GET',
-           crossDomain: true,
-           headers: {
-               'Access-Control-Allow-Origin': 'https://localhost:44382',
-               "Access-Control-Allow-Methods":"GET"
-           },
-           dataType: 'jsonp',
-           url: 'https://localhost:44382/weatherforecast',
-           success: function (json)
-           {
-               var component = DefineComponent({
-                   fullName: fullNameOfComponent,
-                   rootNode: json
-               });
-
-               callback(React.createElement(component));
-           },
-           error: function (error)
-           {
-               console.log(error);
-           }
-       });
-
-      
-
-       $.getJSON("https://localhost:44382/weatherforecast", function (json)
-       {
-           var component = DefineComponent({
-               fullName: fullNameOfComponent,
-               rootNode: json
-           });
-
-           callback(React.createElement(component));
-       });
-
-      
-       var headers = {
-           "Access-Control-Allow-Origin": "https://localhost:44382",
-           "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT",
-           credentials: 'include'
-       };
-
-      
-       fetch("https://localhost:44382/weatherforecast", {
-           method: "GET",
-           mode: 'no-cors',
-           headers: headers
-       }).then(function(response)
-       {
-           response.json().then(function(json)
-           {
-               var component = DefineComponent({
-                   fullName: fullNameOfComponent,
-                   rootNode: json
-               });
-
-               callback(React.createElement(component));
-           });
-
-     
-
-          
-       }); */
+            method: "GET"
+        }).then(response => response.json()).then(json => callback(json));
     };
 
 
