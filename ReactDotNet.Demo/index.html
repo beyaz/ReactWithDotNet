@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>ReactDotNet Demo</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-transition-group/4.4.2/react-transition-group.js" integrity="sha512-A66wlO3J8etE3ZxBJDeqj1RUrSpHnHA485YnfpkO6k4r7oz+4gdUBsIPBRAhPDumwZ4mGRJgTvrbQJWL1eRIvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -26,48 +26,49 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeicons@4.1.0/primeicons.css">
 
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 
     <script src="D:\work\git\ReactDotNet\ReactDotNet\ReactDotNet.js"></script>
 
-    
-</head>
-    <body>
-        <div id="app">
 
-        </div>
-    </body>
+</head>
+<body>
+<div id="app">
+
+</div>
+</body>
+</html>
 
 <script type="text/javascript">
 
-    
+
     var cmp0 = ReactDotNet.DefineComponent({
         fullName: 'A.B.C0',
         rootNode:
         {
             tag: 'div',
-            props:{ style: { border: '1px solid blue' } },
+            props: { style: { border: '1px solid blue' } },
             children:
-            [
-                {
-                    path: ['primereact', 'Button'],
-                    props:
+                [
                     {
-                        key: '0',
-                        label: "aBc", onClick: 'b', $onClickIsRemote: true,
-                        style: { marginRight: '40px' }
-                    }
-                },
-                {
-                    path: ['primereact', 'Button'],
-                    props:
+                        path: ['primereact', 'Button'],
+                        props:
+                        {
+                            key: '0',
+                            label: "aBc", onClick: 'b', $onClickIsRemote: true,
+                            style: { marginRight: '40px' }
+                        }
+                    },
                     {
-                        label: 'aBc', onClick: 'onBClicked', $onClickIsRemote: true, key: '1'
+                        path: ['primereact', 'Button'],
+                        props:
+                        {
+                            label: 'aBc', onClick: 'onBClicked', $onClickIsRemote: true, key: '1'
+                        }
                     }
-                }
-            ]
+                ]
         }
     });
 
@@ -78,44 +79,134 @@
             tag: 'div',
             props: { style: { border: '1px solid red' } },
             children:
-            [
-                {
-                    path: ['primereact', 'Button'],
-                    props:
+                [
                     {
-                        key: '0',
-                        label: "aBc",
-                        onClick: 'b',
-                        $onClickIsRemote: true,
-                        style: { marginRight: '40px' }
-                    }
-                },
-                {
-                    path: ['primereact', 'Button'],
-                    props:
+                        path: ['primereact', 'Button'],
+                        props:
+                        {
+                            key: '0',
+                            label: "aBc",
+                            onClick: 'b',
+                            $onClickIsRemote: true,
+                            style: { marginRight: '40px' }
+                        }
+                    },
                     {
-                        label: 'aBc',
-                        onClick: 'onBClicked',
-                        $onClickIsRemote: true,
-                        key: '1'
+                        path: ['primereact', 'Button'],
+                        props:
+                        {
+                            label: 'aBc',
+                            onClick: 'onBClicked',
+                            $onClickIsRemote: true,
+                            key: '1'
+                        }
                     }
-                }
-            ]
+                ]
         }
     });
 
+    ReactDotNet.SendRequest = function(request, callback)
+    {
+        var settings = {
+            'cache': false,
+            // 'dataType': "jsonp",
+            "async": true,
+            "crossDomain": true,
+            "url": "https://localhost:44382/weatherforecast",
+            "method": "GET",
+            xhrFields: {
+                withCredentials: true
+            },
+            "headers": {
+                // 'Access-Control-Allow-Credentials': true,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET',
+                'Access-Control-Allow-Headers': 'application/json; charset=utf-8'
+            }
+        };
 
-    
-    
-    ReactDotNet.OnReady(function(){
-        
-        ReactDOM.render(
-            React.createElement(cmp1),
-            document.getElementById('app')
-        );
+        $.ajax(settings).done(function (response)
+        {
+            callback(JSON.parse(response));
+        });
 
+        /*
+
+       $.ajax({
+           type: 'GET',
+           crossDomain: true,
+           headers: {
+               'Access-Control-Allow-Origin': 'https://localhost:44382',
+               "Access-Control-Allow-Methods":"GET"
+           },
+           dataType: 'jsonp',
+           url: 'https://localhost:44382/weatherforecast',
+           success: function (json)
+           {
+               var component = DefineComponent({
+                   fullName: fullNameOfComponent,
+                   rootNode: json
+               });
+
+               callback(React.createElement(component));
+           },
+           error: function (error)
+           {
+               console.log(error);
+           }
+       });
+
+      
+
+       $.getJSON("https://localhost:44382/weatherforecast", function (json)
+       {
+           var component = DefineComponent({
+               fullName: fullNameOfComponent,
+               rootNode: json
+           });
+
+           callback(React.createElement(component));
+       });
+
+      
+       var headers = {
+           "Access-Control-Allow-Origin": "https://localhost:44382",
+           "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT",
+           credentials: 'include'
+       };
+
+      
+       fetch("https://localhost:44382/weatherforecast", {
+           method: "GET",
+           mode: 'no-cors',
+           headers: headers
+       }).then(function(response)
+       {
+           response.json().then(function(json)
+           {
+               var component = DefineComponent({
+                   fullName: fullNameOfComponent,
+                   rootNode: json
+               });
+
+               callback(React.createElement(component));
+           });
+
+     
+
+          
+       }); */
+    };
+
+
+    ReactDotNet.OnReady(function ()
+    {
+        function onComponentReadyToUse(component)
+        {
+            ReactDOM.render(component, document.getElementById('app'));
+        }
+
+        ReactDotNet.FetchComponent("ReactDotNet.Demo.TodoSample.TodoRecordView", onComponentReadyToUse);
     });
 
 </script>
-
-</html>

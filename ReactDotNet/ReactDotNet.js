@@ -156,10 +156,32 @@
         return NewComponent;
     }
 
+    function FetchComponent(fullNameOfComponent, callback)
+    {
+        var request =
+        {
+            "method": "FetchComponent",
+            "fullName": fullNameOfComponent
+        };
+
+        function onSuccess(json)
+        {
+            var component = DefineComponent({
+                fullName: fullNameOfComponent,
+                rootNode: json
+            });
+
+            callback(React.createElement(component));
+        }
+        global.ReactDotNet.SendRequest(request, onSuccess);
+    }
+
+
     global.ReactDotNet =
     {
         OnReady: OnReady,
-        DefineComponent: DefineComponent
+        DefineComponent: DefineComponent,
+        FetchComponent: FetchComponent
     };
 
 })(window,React);

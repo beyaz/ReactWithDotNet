@@ -1,9 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+
+
+namespace ReactDotNet.Demo.TodoSample
+{
+    [Serializable]
+    public class TodoRecord
+    {
+        public int ClickCount { get; set; }
+        public int Id { get; set; }
+        public string Text { get; set; }
+        public int DropdownSelectedValue { get; set; }
+    }
+
+    class TodoRecordView : ReactComponent<TodoRecordView, TodoRecord>
+    {
+        void OnClicked()
+        {
+            state.Text += "a";
+        }
+
+        public override ReactElement render()
+        {
+            return new button { text = state.Text , Padding = { Left = 5, Right = 5}, onClick = OnClicked };
+        }
+    }
+}
 
 namespace ReactDotNet.Demo
 {
@@ -11,18 +33,7 @@ namespace ReactDotNet.Demo
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "aaaFreezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
+        
         [HttpGet]
         public ReactElement Get()
         {

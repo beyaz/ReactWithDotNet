@@ -8,14 +8,14 @@ namespace ReactDotNet
     {
     }
 
-    public class ReactComponent<TProps, TState> : IReactComponent<TProps, TState>, IElement where TState : new()
+    public abstract class ReactComponent<TProps, TState> : IReactComponent<TProps, TState>, IElement where TState : new()
     {
         // ReSharper disable once UnassignedReadonlyField
         protected internal readonly TProps props;
 
         protected internal readonly TState state;
 
-        public ReactComponent()
+        protected ReactComponent()
         {
             state = new TState();
         }
@@ -28,18 +28,12 @@ namespace ReactDotNet
         [React]
         public CSSStyleDeclaration style { get; } = new CSSStyleDeclaration();
 
-        public virtual ReactElement ToReactElement()
-        {
-            return null;
-        }
+        public ReactElement ToReactElement() => render();
 
-       
 
-       
 
-        public virtual ReactElement render()
-        {
-            return null;
-        }
+
+
+        public abstract ReactElement render();
     }
 }
