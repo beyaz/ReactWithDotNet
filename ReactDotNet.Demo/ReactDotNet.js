@@ -28,6 +28,13 @@
         
         var createElement = React.createElement;
 
+        if (jsonNode.fullName)
+        {
+            var cmp = DefineComponent(jsonNode);
+
+            return createElement(cmp);
+        }
+
         var constructorFunction = jsonNode.tag;
         var children = jsonNode.children || null;
         var props = jsonNode.props || {};
@@ -116,7 +123,7 @@
         {
             data.component.setState({
                 $rootNode: response.rootElement,
-                $state: JSON.parse(response.stateAsJson)
+                $state: response.state
             });
         }
         global.ReactDotNet.SendRequest(request, onSuccess);
@@ -133,7 +140,7 @@
                 this.state =
                 {
                     $rootNode: componentDeclaration.rootElement,
-                    $state: JSON.parse(componentDeclaration.stateAsJson)
+                    $state: componentDeclaration.state
                 };
 
                 this.fullName = componentDeclaration.fullName;

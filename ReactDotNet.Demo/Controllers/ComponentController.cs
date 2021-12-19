@@ -9,7 +9,7 @@ namespace ReactDotNet.Demo
     {
         [HttpPost]
         [Route(nameof(HandleRequest))]
-        public ComponentRequest HandleRequest(ComponentRequest request)
+        public ComponentResponse HandleRequest(ComponentRequest request)
         {
             return ComponentRequestHandler.HandleRequest(request,Type.GetType);
         }

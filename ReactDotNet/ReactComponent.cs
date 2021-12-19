@@ -5,7 +5,7 @@ namespace ReactDotNet
 {
     public interface IReactComponent
     {
-         ReactElement render();
+        ReactElement ToReactElement();
     }
 
     public interface IReactComponent<TProps,TState>
@@ -32,11 +32,15 @@ namespace ReactDotNet
         [React]
         public CSSStyleDeclaration style { get; } = new CSSStyleDeclaration();
 
-        public ReactElement ToReactElement() => render();
-
-
-
-
+        public ReactElement ToReactElement()
+        {
+            return new ReactElement
+            {
+                FullName    = GetType().GetFullName(),
+                RootElement = render(),
+                State       = state
+            };
+        }
 
         public abstract ReactElement render();
     }

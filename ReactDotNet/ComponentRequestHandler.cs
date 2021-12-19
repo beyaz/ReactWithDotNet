@@ -16,9 +16,21 @@ namespace ReactDotNet
         public string EventHandlerMethodName { get; set; }
     }
 
+    [Serializable]
+    public class ComponentResponse
+    {
+        public string FullName { get; set; }
+        public object State { get; set; }
+        public ReactElement RootElement { get; set; }
+    }
+
     public static class ComponentRequestHandler
     {
-        public static ComponentRequest HandleRequest(ComponentRequest request, Func<string,Type> findType)
+        public static string GetFullName(this Type type)
+        {
+            return $"{type.FullName},{type.Assembly.GetName().Name}";
+        }
+        public static ComponentResponse HandleRequest(ComponentRequest request, Func<string,Type> findType)
         {
             void setState(Type typeOfInstance,object instance, string stateAsJson)
             {
@@ -27,9 +39,6 @@ namespace ReactDotNet
                 {
                     throw new MissingMemberException(typeOfInstance.FullName, "state");
                 }
-                
-
-                
 
                 var state = JsonSerializer.Deserialize(stateAsJson, stateFieldInfo.FieldType, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
 
@@ -47,8 +56,12 @@ namespace ReactDotNet
                     {
                         var state = type.GetField("state", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(instance);
 
-                        request.StateAsJson = JsonSerializationOptionHelper.ToJson(state);
-                        request.RootElement = instance.render();
+                        return new ComponentResponse
+                        {
+                            FullName    = type.GetFullName(),
+                            State       = state,
+                            RootElement = instance.ToReactElement()
+                        };
                     }
                 }
             }
@@ -71,14 +84,18 @@ namespace ReactDotNet
 
                         var state = type.GetField("state", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(instance);
 
-                        request.StateAsJson = JsonSerializationOptionHelper.ToJson(state);
-                        request.RootElement = instance.render();
+                        return new ComponentResponse
+                        {
+                            FullName    = type.GetFullName(),
+                            State       = state,
+                            RootElement = instance.ToReactElement()
+                        };
                     }
                 }
             }
-            
 
-            return request;
+
+            throw new NotImplementedException(request.MethodName);
         }
     }
 }
