@@ -8,5 +8,9 @@
     <ProjectReference Include="..\ReactDotNet\ReactDotNet.csproj" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="copy /y &quot;$(SolutionDir)ReactDotNet\ReactDotNet.js&quot; &quot;$(SolutionDir)ReactDotNet.Demo\ReactDotNet.js&quot;" />
+  </Target>
+
 
 </Project>

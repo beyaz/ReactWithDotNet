@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Microsoft.Extensions.FileProviders;
 
 namespace ReactDotNet
 {
@@ -48,6 +50,13 @@ namespace ReactDotNet.Demo
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseFileServer(new FileServerOptions
+            {
+                FileProvider       = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "")),
+                // RequestPath        = "/",
+                EnableDefaultFiles = true
+            });
 
             app.UseAuthorization();
 
