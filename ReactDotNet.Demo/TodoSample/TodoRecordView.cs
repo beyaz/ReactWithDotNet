@@ -21,8 +21,7 @@ namespace ReactDotNet.Demo.TodoSample
     class TodoRecordListView : ReactDotNet.ReactComponent<TodoRecordList>
     {
 
-        [React]
-        public string Aloha { get; set; }
+        public string Aloha { get; set; } = "ABC";
 
         #region Constructors
         public TodoRecordListView()

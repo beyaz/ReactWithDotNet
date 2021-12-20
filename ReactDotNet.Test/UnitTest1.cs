@@ -11,6 +11,49 @@ namespace ReactDotNet
     public class UnitTest1
     {
 
+        class View1 : ReactComponent<SampleModelA>
+        {
+            public string Prop1 { get; set; } = "PropValue1";
+            public string Prop2 { get; set; } = "PropValue2";
+
+            public ReactElement RootElement => render();
+
+            public override ReactElement render()
+            {
+                return new div("A")
+                {
+                    text = "b"
+                };
+            }
+        }
+
+        class View2:ReactComponent<SampleModelA>
+        {
+            public string Prop1 { get; set; } = "PropValue1";
+            public string Prop2 { get; set; } = "PropValue2";
+
+            public ReactElement RootElement => render();
+
+            public override ReactElement render()
+            {
+                return new div("A")
+                {
+                   new View1{ Prop1 = "A"}
+                };
+            }
+        }
+
+        [TestMethod]
+        public void SerializeComponentWithProperties()
+        {
+            var view = new View2();
+
+            var result = JsonSerializer.Serialize(view, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+
+            result.Should().Be(@"""innerA.innerB.text""".Trim());
+        }
+
+
         [TestMethod]
         public void BindingPath()
         {
