@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ReactDotNet.PrimeReact;
 using InputText = ReactDotNet.PrimeReact.InputText;
+using  static ReactDotNet.Mixin;
 
 namespace ReactDotNet.Demo.TodoSample
 {
@@ -12,6 +13,8 @@ namespace ReactDotNet.Demo.TodoSample
     {
         public List<TodoRecord> Records { get; set; }
         public string AnyName { get; set; }
+
+        public string B { get; set; }
 
     }
 
@@ -30,6 +33,7 @@ namespace ReactDotNet.Demo.TodoSample
                 new TodoRecord { Id = 2, Text = "2" }
             };
             state.AnyName = "NameX";
+            state.B = "B";
         }
         #endregion
 
@@ -38,30 +42,30 @@ namespace ReactDotNet.Demo.TodoSample
         public override ReactElement render()
         {
 
-            return new InputText
-            {
-                value     = state.AnyName,
-                valueBind = ()=>state.AnyName
-                
-            };
+           
 
             return new div("className-"+state.Records.Count)
             {
                 new InputText
                 {
-                    value       = state.AnyName,
-                    valueBind =()=>state.AnyName
+                    valueBind = Bind(()=>state.AnyName)
                 },
                 new TodoRecordView{ MyProp1 = "A"},
                 new TodoRecordView{ MyProp1 = "B"},
                 new TodoRecordView{ MyProp1 = "C"},
+                new Button(){ label = "Update", onClick = Update},
                 new InputTextarea
                 {
-                    value = "B",
+                    value = state.B,
                     rows = 3
                     
                 },
             };
+        }
+
+        void Update()
+        {
+            state.B = state.AnyName;
         }
         #endregion
     }

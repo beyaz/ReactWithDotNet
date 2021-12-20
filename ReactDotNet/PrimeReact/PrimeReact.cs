@@ -33,10 +33,11 @@ namespace ReactDotNet.PrimeReact
 
         [React]
         [JsonPropertyName("bind$value$onChange$e.target.value")]
-        public Expression<Func<string>> valueBind { get; set; }
+        public string valueBind { get; set; }
 
        
     }
+    
 
    
 

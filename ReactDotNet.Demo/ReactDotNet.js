@@ -122,29 +122,27 @@
 
         function tryProcessAsBinding(name)
         {
-            // sample: {  value:'abc', bind$value$onChange$e.target.value:'Prop1.a'  }
+            // sample: {  "bind$value$onChange$e.target.value" : 'prop1.innerPropA.innerPropB'  }
 
             var bindingSourcePath = null;
             var bindingTargetPath = null;
             var onChangeEventName = null;
+            var realPropName = null;
 
-            var bindAttributePrefix = 'bind$' + name + '$';
-            for (var i = 0; i < propNamesLength; i++)
+            var bindAttributePrefix = 'bind$';
+            if (name.indexOf(bindAttributePrefix) === 0)
             {
-                if (propNames[i].indexOf(bindAttributePrefix) === 0)
-                {
-                    var arr = propNames[i].split('$');
+                var arr = name.split('$');
 
-                    onChangeEventName = arr[2];
-                    bindingTargetPath = arr[3].substr(2).split('.');
-                    bindingSourcePath = props[propNames[i]].split('.');
-                    break;
-                }
+                realPropName = arr[1];
+                onChangeEventName = arr[2];
+                bindingTargetPath = arr[3].substr(2).split('.');
+                bindingSourcePath = props[name].split('.');
             }
 
             if (bindingSourcePath)
             {
-                processedProps[name] = GetValueInPath(component.state.$state, bindingSourcePath);
+                processedProps[realPropName] = GetValueInPath(component.state.$state, bindingSourcePath);
                 processedProps[onChangeEventName] = function (e)
                 {
                     var state = Clone(component.state.$state);
@@ -192,12 +190,14 @@
 
         if (childrenLength > 0)
         {
+            var newChildren = [];
+
             for (var i = 0; i < childrenLength; i++)
             {
-                children[i] = ConvertToReactElement(children[i], component);
+                newChildren.push(ConvertToReactElement(children[i], component));
             }
 
-            return createElement(constructorFunction, props, children);
+            return createElement(constructorFunction, props, newChildren);
         }
 
         return createElement(constructorFunction, props);

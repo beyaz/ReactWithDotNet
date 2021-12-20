@@ -23,9 +23,10 @@ namespace ReactDotNet
         {
             options.WriteIndented    = true;
             options.IgnoreNullValues = true;
-           
-            
-            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+
+
+
+            options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
             options.Converters.Add(new UnionConverter<AlignContent>());
             options.Converters.Add(new UnionConverter<Display>());
             options.Converters.Add(new ActionConverter());
