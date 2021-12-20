@@ -7,6 +7,7 @@ using ReactDotNet;
 
 namespace ReactDotNet.PrimeReact
 {
+   
     public class ElementBase : Element
     {
         public override ReactElement ToReactElement()
@@ -32,7 +33,7 @@ namespace ReactDotNet.PrimeReact
 
         [React]
         [JsonPropertyName("bind$value$onChange$e.target.value")]
-        public string valueBind { get; set; }
+        public Expression<Func<string>> valueBind { get; set; }
 
        
     }

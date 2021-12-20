@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentAssertions;
@@ -9,6 +10,40 @@ namespace ReactDotNet
     [TestClass]
     public class UnitTest1
     {
+
+        [TestMethod]
+        public void BindingPath()
+        {
+            var state = new SampleModelAContainer();
+
+            Expression<Func<string>> valueBind = () => state.InnerA.InnerB.Text;
+
+            var result = JsonSerializer.Serialize(valueBind, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+
+            result.Should().Be(@"""innerA.innerB.text""".Trim());
+        }
+
+
+        [Serializable]
+        public class SampleModelAContainer
+        {
+            public string Text { get; set; }
+            public SampleModelA InnerA { get; set; }
+        }
+
+        [Serializable]
+        public class SampleModelA
+        {
+            public string Text { get; set; }
+            public SampleModelB InnerB { get; set; }
+        }
+
+        [Serializable]
+        public class SampleModelB
+        {
+            public string Text { get; set; }
+        }
+
         [Serializable]
         public class SampleModel
         {
@@ -16,7 +51,11 @@ namespace ReactDotNet
             public int Id { get; set; }
             public string Text { get; set; }
             public int DropdownSelectedValue { get; set; }
+
+
         }
+
+
         [TestMethod]
         public void Deserialize()
         {

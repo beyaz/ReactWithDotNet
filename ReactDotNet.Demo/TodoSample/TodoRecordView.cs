@@ -41,7 +41,7 @@ namespace ReactDotNet.Demo.TodoSample
             return new InputText
             {
                 value     = state.AnyName,
-                valueBind = nameof(state.AnyName),
+                valueBind = ()=>state.AnyName
                 
             };
 
@@ -50,7 +50,7 @@ namespace ReactDotNet.Demo.TodoSample
                 new InputText
                 {
                     value       = state.AnyName,
-                    valueBind = nameof(state.AnyName)
+                    valueBind =()=>state.AnyName
                 },
                 new TodoRecordView{ MyProp1 = "A"},
                 new TodoRecordView{ MyProp1 = "B"},

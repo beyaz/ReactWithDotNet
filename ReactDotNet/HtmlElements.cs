@@ -15,6 +15,7 @@ namespace ReactDotNet
         ReactElement ToReactElement();
     }
 
+    [Serializable]
     public sealed class MarginThickness
     {
         readonly CSSStyleDeclaration style;
@@ -85,6 +86,7 @@ namespace ReactDotNet
         }
     }
 
+    [Serializable]
     public sealed class PaddingThickness
     {
         readonly CSSStyleDeclaration style;
@@ -155,6 +157,7 @@ namespace ReactDotNet
         }
     }
 
+    [Serializable]
     public class ReactAttribute : Attribute
     {
     }
