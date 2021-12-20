@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text.Json.Serialization;
 using ReactDotNet;
 
 namespace ReactDotNet.PrimeReact
@@ -21,20 +23,24 @@ namespace ReactDotNet.PrimeReact
         }
     }
 
-    /*
+    
     public class InputText : ElementBase
     {
-        [React]
-        public Action<SyntheticEvent<HTMLElement>> onClick { get; set; }
 
         [React]
         public string value { get; set; }
+
+        [React]
+        [JsonPropertyName("bind$value$onChange$e.target.value")]
+        public string valueBind { get; set; }
+
+       
     }
+
+   
 
     public class InputTextarea : ElementBase
     {
-        [React]
-        public Action<SyntheticEvent<HTMLElement>> onClick { get; set; }
 
         [React]
         public string value { get; set; }
@@ -42,7 +48,7 @@ namespace ReactDotNet.PrimeReact
         [React]
         public int rows { get; set; }
     }
-
+    /*
 
     public class DropdownChangeTargetOptions
     {

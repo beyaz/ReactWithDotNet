@@ -23,6 +23,41 @@
         return obj;
     }
 
+    function SetValueInPath(obj, steps, value)
+    {
+        if (obj == null)
+        {
+            throw Error('SetValueInPath->' + value);
+        }
+
+        var len = steps.length;
+
+        for (var i = 0; i < len; i++)
+        {
+            var step = steps[i];
+
+            if (obj[step] == null)
+            {
+                obj[step] = {};
+            }
+
+            if (i === len - 1)
+            {
+                obj[step] = value;
+            }
+            else
+            {
+                obj = obj[step];
+            }
+        }
+    }
+    
+
+    function Clone(obj)
+    {
+        return JSON.parse(JSON.stringify(obj));
+    }
+
     function ConvertToReactElement(jsonNode, component)
     {
         
@@ -36,8 +71,21 @@
         }
 
         var constructorFunction = jsonNode.tag;
+
         var children = jsonNode.children || null;
+
+        var childrenLength = 0;
+        if (children)
+        {
+            childrenLength = children.length;
+        }
+
+
+
         var props = jsonNode.props || {};
+
+        var propNames = Object.keys(props);
+        var propNamesLength = propNames.length;
 
         if (jsonNode.path)
         {
@@ -72,6 +120,46 @@
             return false;
         }
 
+        function tryProcessAsBinding(name)
+        {
+            // sample: {  value:'abc', bind$value$onChange$e.target.value:'Prop1.a'  }
+
+            var bindingSourcePath = null;
+            var bindingTargetPath = null;
+            var onChangeEventName = null;
+
+            var bindAttributePrefix = 'bind$' + name + '$';
+            for (var i = 0; i < propNamesLength; i++)
+            {
+                if (propNames[i].indexOf(bindAttributePrefix) === 0)
+                {
+                    var arr = propNames[i].split('$');
+
+                    onChangeEventName = arr[2];
+                    bindingTargetPath = arr[3].substr(2).split('.');
+                    bindingSourcePath = props[propNames[i]].split('.');
+                    break;
+                }
+            }
+
+            if (bindingSourcePath)
+            {
+                processedProps[name] = GetValueInPath(component.state.$state, bindingSourcePath);
+                processedProps[onChangeEventName] = function (e)
+                {
+                    var state = Clone(component.state.$state);
+
+                    SetValueInPath(state, bindingSourcePath, GetValueInPath(e, bindingTargetPath));
+
+                    component.setState({ $state: state });
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         // look events
         for (let name in props)
         {
@@ -80,6 +168,18 @@
             {
                 continue;
             }
+
+            var isProcessedAsBinding = tryProcessAsBinding(name);
+            if (isProcessedAsBinding)
+            {
+                continue;
+            }
+
+            if (name.indexOf('bind$') === 0)
+            {
+                continue;
+            }
+
 
             processedProps[name] = props[name];
         }
@@ -90,18 +190,17 @@
             return createElement(constructorFunction, props, jsonNode.text);
         }
 
-        if (children)
+        if (childrenLength > 0)
         {
-            var len = children.length;
-            for (var i = 0; i < len; i++)
+            for (var i = 0; i < childrenLength; i++)
             {
                 children[i] = ConvertToReactElement(children[i], component);
             }
+
+            return createElement(constructorFunction, props, children);
         }
 
-      
-
-        return createElement(constructorFunction, props, children);
+        return createElement(constructorFunction, props);
     }
 
     function HandleAction(data)

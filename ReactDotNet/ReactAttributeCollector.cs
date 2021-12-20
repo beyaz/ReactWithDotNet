@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace ReactDotNet
 {
@@ -22,9 +23,16 @@ namespace ReactDotNet
                 {
                     continue;
                 }
+
+                var propName = propertyInfo.Name;
+
+                var jsonPropertyName = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
+                if (jsonPropertyName != null)
+                {
+                    propName = jsonPropertyName.Name;
+                }
                 
-                
-                attributes[propertyInfo.Name] = value;
+                attributes[propName] = value;
             }
 
             return attributes;
