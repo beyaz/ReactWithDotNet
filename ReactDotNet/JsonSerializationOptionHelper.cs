@@ -64,7 +64,14 @@ namespace ReactDotNet
                         }
                     }
 
-                    writer.WritePropertyName(options.PropertyNamingPolicy.ConvertName(propertyInfo.Name));
+                    var propertyName              = propertyInfo.Name;
+                    var jsonPropertyNameAttribute = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
+                    if (jsonPropertyNameAttribute != null)
+                    {
+                        propertyName = jsonPropertyNameAttribute.Name;
+                    }
+
+                    writer.WritePropertyName(options.PropertyNamingPolicy.ConvertName(propertyName));
                     
                     JsonSerializer.Serialize(writer, propertyValue, options);
                 }

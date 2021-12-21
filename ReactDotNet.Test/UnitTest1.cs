@@ -56,7 +56,8 @@ namespace ReactDotNet
                 {
                     style = { PaddingLeft = "5px"}
                 },
-                new img{ src = "a.png", width = 3}
+                new img{ src = "a.png", width = 3},
+                new PrimeReact.InputText{ value = "abc"}
             };
 
             var actual = ToJson(div);

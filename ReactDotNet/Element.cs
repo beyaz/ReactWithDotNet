@@ -141,6 +141,7 @@ namespace ReactDotNet
 
     public abstract class ThirdPartyComponent: Element
     {
+        [JsonPropertyName("$path")]
         public abstract IReadOnlyList<string> Path { get; }
     }
 }
