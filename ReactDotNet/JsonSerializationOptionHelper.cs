@@ -18,8 +18,7 @@ namespace ReactDotNet
         {
             public override bool CanConvert(Type typeToConvert)
             {
-                return typeToConvert.IsSubclassOf(typeof(Element)) ||
-                       typeToConvert == (typeof(IElement));
+                return typeToConvert.IsSubclassOf(typeof(Element)) || typeToConvert.FullName == typeof(Element).FullName;
             }
 
             public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)

@@ -8,7 +8,7 @@ namespace ReactDotNet
         ReactElement ToReactElement();
     }
 
-    public abstract class ReactComponent<TState> :  IElement, IReactComponent where TState : new()
+    public abstract class ReactComponent<TState> :  Element, IReactComponent where TState : new()
     {
         protected internal TState state;
 
@@ -17,14 +17,12 @@ namespace ReactDotNet
             state = new TState();
         }
 
-        public int? gravity { get; set; }
-
         
 
-        [React]
-        public CSSStyleDeclaration style { get; } = new CSSStyleDeclaration();
+        
+        
 
-        public ReactElement ToReactElement()
+        public override ReactElement ToReactElement()
         {
             return new ReactElement
             {

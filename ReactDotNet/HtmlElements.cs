@@ -5,15 +5,7 @@ using System.Linq;
 namespace ReactDotNet
 {
     
-    public interface IElement
-    {
-
-        CSSStyleDeclaration style { get; }
-
-        int? gravity { get; }
-
-        ReactElement ToReactElement();
-    }
+    
 
     [Serializable]
     public sealed class MarginThickness
@@ -262,11 +254,11 @@ namespace ReactDotNet
 
     public class Panel : Element
     {
-        public List<IElement> Cols { get; } = new List<IElement>();
+        public List<Element> Cols { get; } = new List<Element>();
 
-        public IEnumerable<IElement> rows;
+        public IEnumerable<Element> rows;
 
-        public List<IElement> Rows { get; } = new List<IElement>();
+        public List<Element> Rows { get; } = new List<Element>();
 
         public override ReactElement ToReactElement()
         {
@@ -339,7 +331,7 @@ namespace ReactDotNet
 
     static class GravityCalculator
     {
-        public static double CalculateGravity(IElement htmlElement, IReadOnlyList<IElement> siblings)
+        public static double CalculateGravity(Element htmlElement, IReadOnlyList<Element> siblings)
         {
             var total = siblings.Sum(x => x.gravity ?? 1);
 

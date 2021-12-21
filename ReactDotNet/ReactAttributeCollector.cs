@@ -11,7 +11,7 @@ namespace ReactDotNet
 
       
 
-        public static Dictionary<string,object> CollectReactAttributedProperties(this IElement element)
+        public static Dictionary<string,object> CollectReactAttributedProperties(this Element element)
         {
             var attributes = new Dictionary<string, object>();
 

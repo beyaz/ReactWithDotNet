@@ -10,7 +10,7 @@ namespace ReactDotNet
     /// <summary>
     ///     The element
     /// </summary>
-    public abstract class Element : IElement, IEnumerable<Element>
+    public abstract class Element : IEnumerable<Element>
     {
         public string Tag => GetType().Name.ToLower();
 
