@@ -31,15 +31,15 @@ namespace ReactDotNet
         {
             void setState(Type typeOfInstance,object instance, string stateAsJson)
             {
-                var stateFieldInfo = typeOfInstance.GetField("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                if (stateFieldInfo == null)
+                var statePropertyInfo = typeOfInstance.GetProperty("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                if (statePropertyInfo == null)
                 {
                     throw new MissingMemberException(typeOfInstance.FullName, "state");
                 }
 
-                var state = JsonSerializer.Deserialize(stateAsJson, stateFieldInfo.FieldType, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+                var state = JsonSerializer.Deserialize(stateAsJson, statePropertyInfo.PropertyType, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
 
-                stateFieldInfo.SetValue(instance,state);
+                statePropertyInfo.SetValue(instance,state);
             } 
             if (request.MethodName == "FetchComponent")
             {
