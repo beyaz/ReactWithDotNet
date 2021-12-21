@@ -23,7 +23,7 @@ namespace ReactDotNet.PrimeReact
             };
         }
 
-        public override IReadOnlyList<string> Path => new[] { "primereact", GetType().Name };
+        public override IReadOnlyList<string> JsLocation => new[] { "primereact", GetType().Name };
     }
 
     

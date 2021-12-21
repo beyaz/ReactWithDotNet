@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace ReactDotNet
+﻿namespace ReactDotNet
 {
     public interface IReactComponent
     {
@@ -10,28 +7,12 @@ namespace ReactDotNet
 
     public abstract class ReactComponent<TState> :  Element, IReactComponent where TState : new()
     {
-        protected internal TState state;
-
-        protected ReactComponent()
-        {
-            state = new TState();
-        }
-
+        public TState state { get; set; }
         
+        public Element RootElement => render();
 
-        
-        
+        public string FullName => GetType().GetFullName();
 
-        public override ReactElement ToReactElement()
-        {
-            return new ReactElement
-            {
-                FullName    = GetType().GetFullName(),
-                RootElement = render(),
-                State       = state
-            };
-        }
-
-        public abstract ReactElement render();
+        public abstract Element render();
     }
 }

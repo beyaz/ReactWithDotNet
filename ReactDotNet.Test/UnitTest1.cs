@@ -17,9 +17,8 @@ namespace ReactDotNet
             public string Prop1 { get; set; } = "PropValue1";
             public string Prop2 { get; set; } = "PropValue2";
 
-            public ReactElement RootElement => render();
 
-            public override ReactElement render()
+            public override Element render()
             {
                 return new div("A")
                 {
@@ -33,13 +32,11 @@ namespace ReactDotNet
             public string Prop1 { get; set; } = "PropValue1";
             public string Prop2 { get; set; } = "PropValue2";
 
-            public ReactElement RootElement => render();
-
-            public override ReactElement render()
+            public override Element render()
             {
                 return new div("A")
                 {
-                   // new View1{ Prop1 = "A"}
+                   new View1{ Prop1 = "A"}
                 };
             }
         }
@@ -57,7 +54,8 @@ namespace ReactDotNet
                     style = { PaddingLeft = "5px"}
                 },
                 new img{ src = "a.png", width = 3},
-                new PrimeReact.InputText{ value = "abc"}
+                new PrimeReact.InputText{ value = "abc"},
+                new View2{ Prop1 = "x", Prop2 = "y"}
             };
 
             var actual = ToJson(div);
@@ -86,10 +84,31 @@ namespace ReactDotNet
     },
     {
       ""value"": ""abc"",
-      ""$path"": [
+      ""jsLocation"": [
         ""primereact"",
         ""InputText""
       ]
+    },
+    {
+      ""prop1"": ""x"",
+      ""prop2"": ""y"",
+      ""rootElement"": {
+        ""tag"": ""div"",
+        ""className"": ""A"",
+        ""children"": [
+          {
+            ""prop1"": ""A"",
+            ""prop2"": ""PropValue2"",
+            ""rootElement"": {
+              ""tag"": ""div"",
+              ""className"": ""A"",
+              ""text"": ""b""
+            },
+            ""fullName"": ""ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test""
+          }
+        ]
+      },
+      ""fullName"": ""ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test""
     }
   ]
 }
