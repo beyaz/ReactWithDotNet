@@ -36,6 +36,14 @@ namespace ReactDotNet
             }
         }
 
+        class EventInfo
+        {
+            [JsonPropertyName("$isRemoteMethod")]
+            public bool IsRemoteMethod { get; set; }
+
+            public string RemoteMethodName { get; set; }
+        }
+
         public class JsonConverterForElement<T> : JsonConverter<T> where T:Element
         {
             public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -79,6 +87,11 @@ namespace ReactDotNet
                     propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
 
                     writer.WritePropertyName(propertyName);
+
+                    if (propertyValue is Action action)
+                    {
+                        propertyValue = new EventInfo { IsRemoteMethod = true, RemoteMethodName = action.Method.Name };
+                    }
                     
                     JsonSerializer.Serialize(writer, propertyValue, options);
 
@@ -135,7 +148,6 @@ namespace ReactDotNet
             options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
             options.Converters.Add(new UnionConverter<AlignContent>());
             options.Converters.Add(new UnionConverter<Display>());
-            options.Converters.Add(new ActionConverter());
             options.Converters.Add(new JsonConverterForElement()); 
 
             options.Converters.Add(new EnumToStringConverter<TooltipPositionType>()); 
@@ -181,23 +193,7 @@ namespace ReactDotNet
             #endregion
         }
 
-        class ActionConverter : JsonConverter<Action>
-        {
-            #region Public Methods
-            public override Action Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void Write(Utf8JsonWriter writer, Action value, JsonSerializerOptions options)
-            {
-                var rawValue = value.Method.Name;
-
-                var prefix = "$remote$";
-                writer.WriteStringValue(prefix+ rawValue);
-            }
-            #endregion
-        }
+        
 
         class UnionConverter<B> : JsonConverter<Union<string, B>> where B : Enum
         {

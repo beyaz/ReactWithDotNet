@@ -44,8 +44,6 @@ namespace ReactDotNet
         [TestMethod]
         public void SerializeComponentWithProperties()
         {
-            var view = new View2();
-
             var div = new div("abc")
             {
                 new div("B"),
@@ -53,7 +51,7 @@ namespace ReactDotNet
                 {
                     style = { PaddingLeft = "5px"}
                 },
-                new img{ src = "a.png", width = 3},
+                new img{ src = "a.png", width = 3, onClick = onClicked},
                 new PrimeReact.InputText{ value = "abc"},
                 new View2{ Prop1 = "x", Prop2 = "y"}
             };
@@ -91,10 +89,15 @@ namespace ReactDotNet
       ""width"": 3,
       ""height"": 0,
       ""tag"": ""img"",
+      ""onClick"": {
+        ""$isRemoteMethod"": true,
+        ""remoteMethodName"": ""onClicked""
+      },
       ""reactAttributes"": [
         ""src"",
         ""width"",
-        ""height""
+        ""height"",
+        ""onClick""
       ]
     },
     {

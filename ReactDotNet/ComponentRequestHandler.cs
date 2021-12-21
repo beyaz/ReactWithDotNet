@@ -34,7 +34,7 @@ namespace ReactDotNet
         {
             void setState(Type typeOfInstance,object instance, string stateAsJson)
             {
-                var stateFieldInfo = typeOfInstance.GetField("state", BindingFlags.NonPublic | BindingFlags.Instance);
+                var stateFieldInfo = typeOfInstance.GetField("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 if (stateFieldInfo == null)
                 {
                     throw new MissingMemberException(typeOfInstance.FullName, "state");
