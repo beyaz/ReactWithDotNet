@@ -26,13 +26,16 @@ namespace ReactDotNet.Demo.TodoSample
         #region Constructors
         public TodoRecordListView()
         {
-            state.Records = new List<TodoRecord>
+            state = new TodoRecordList
             {
-                new TodoRecord { Id = 1, Text = "1" },
-                new TodoRecord { Id = 2, Text = "2" }
+                Records = new List<TodoRecord>
+                {
+                    new TodoRecord { Id = 1, Text = "1" },
+                    new TodoRecord { Id = 2, Text = "2" }
+                },
+                AnyName = "NameX",
+                B = "B"
             };
-            state.AnyName = "NameX";
-            state.B = "B";
         }
         #endregion
 
@@ -47,18 +50,19 @@ namespace ReactDotNet.Demo.TodoSample
             {
                 new InputText
                 {
-                    valueBind = Bind(()=>state.AnyName)
+                    value =state.B
+                    // valueBind = Bind(()=>state.AnyName)
                 },
-                new TodoRecordView{ MyProp1 = "A"},
-                new TodoRecordView{ MyProp1 = "B"},
-                new TodoRecordView{ MyProp1 = "C"},
+                // new TodoRecordView{ MyProp1 = "A"},
+                //new TodoRecordView{ MyProp1 = "B"},
+                //new TodoRecordView{ MyProp1 = "C"},
                 new Button(){ label = "Update", onClick = Update},
-                new InputTextarea
-                {
-                    value = state.B,
-                    rows = 3
+                //new InputTextarea
+                //{
+                //    value = state.B,
+                //    rows = 3
                     
-                },
+                //},
             };
         }
 

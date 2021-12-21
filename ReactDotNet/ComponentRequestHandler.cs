@@ -30,7 +30,7 @@ namespace ReactDotNet
         {
             return $"{type.FullName},{type.Assembly.GetName().Name}";
         }
-        public static ComponentResponse HandleRequest(ComponentRequest request, Func<string,Type> findType)
+        public static Element HandleRequest(ComponentRequest request, Func<string,Type> findType)
         {
             void setState(Type typeOfInstance,object instance, string stateAsJson)
             {
@@ -50,18 +50,11 @@ namespace ReactDotNet
 
                 if (type != null)
                 {
-                    var instance = (IReactComponent)Activator.CreateInstance(type);
+                    var instance = (Element)Activator.CreateInstance(type);
 
                     if (instance != null)
                     {
-                        var state = type.GetField("state", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(instance);
-
-                        return new ComponentResponse
-                        {
-                            FullName    = type.GetFullName(),
-                            State       = state,
-                            RootElement = instance.ToReactElement()
-                        };
+                        return instance;
                     }
                 }
             }
@@ -72,7 +65,7 @@ namespace ReactDotNet
 
                 if (type != null)
                 {
-                    var instance = (IReactComponent)Activator.CreateInstance(type);
+                    var instance = (Element)Activator.CreateInstance(type);
 
                     if (instance != null)
                     {
@@ -82,14 +75,7 @@ namespace ReactDotNet
                         
                         methodInfo?.Invoke(instance,Array.Empty<object>());
 
-                        var state = type.GetField("state", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(instance);
-
-                        return new ComponentResponse
-                        {
-                            FullName    = type.GetFullName(),
-                            State       = state,
-                            RootElement = instance.ToReactElement()
-                        };
+                        return instance;
                     }
                 }
             }

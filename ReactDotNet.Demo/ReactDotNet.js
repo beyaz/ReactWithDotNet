@@ -1,6 +1,8 @@
 
 (function (global, React)
 {
+    var createElement = React.createElement;
+
     function OnReady(callback)
     {
         document.addEventListener('DOMContentLoaded', callback);
@@ -60,19 +62,39 @@
 
     function ConvertToReactElement(jsonNode, component)
     {
-        
-        var createElement = React.createElement;
-
+        // is ReactDotNet component
         if (jsonNode.fullName)
         {
             var cmp = DefineComponent(jsonNode);
 
-            return createElement(cmp, jsonNode.props);
+            return createElement(cmp);
+        }
+
+        var i;
+
+        var reactAttributes = jsonNode.reactAttributes;
+
+        var reactAttributesLength = 0;
+
+        var props = null;
+
+        if (reactAttributes)
+        {
+            reactAttributesLength = reactAttributes.length;
+        }
+
+        if (reactAttributesLength > 0)
+        {
+            props = {};
         }
 
         var constructorFunction = jsonNode.tag;
+        if (jsonNode.jsLocation)
+        {
+            constructorFunction = GetValueInPath(window, jsonNode.jsLocation);
+        }
 
-        var children = jsonNode.children || null;
+        var children = jsonNode.children;
 
         var childrenLength = 0;
         if (children)
@@ -80,70 +102,40 @@
             childrenLength = children.length;
         }
 
+        // collect props
 
-
-        var props = jsonNode.props || {};
-
-        var propNames = Object.keys(props);
-        var propNamesLength = propNames.length;
-
-        if (jsonNode.path)
+        function tryProcessAsEventHandler(propName)
         {
-            constructorFunction = GetValueInPath(window, jsonNode.path);
-        }
-
-        // visit props
-        var processedProps = {};
-
-        function tryProcessAsEventHandler(name)
-        {
-            var value = props[name];
-
-            if (typeof value === 'string')
+            var value = jsonNode[propName];
+            if (value.$isRemoteMethod === true)
             {
-                var prefix = "$remote$";
+                var remoteMethodName = value.remoteMethodName;
 
-                var index = value.indexOf(prefix);
-                if (index === 0)
+                props[propName] = function (e)
                 {
-                    var remoteMethodName = value.substr(prefix.length);
-
-                    processedProps[name] = function (e)
-                    {
-                        HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArgument: e });
-                    }
-
-                    return true;
+                    HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArgument: e });
                 }
+
+                return true;
             }
 
             return false;
         }
 
-        function tryProcessAsBinding(name)
+        function tryProcessAsBinding(propName)
         {
             // sample: {  "bind$value$onChange$e.target.value" : 'prop1.innerPropA.innerPropB'  }
 
-            var bindingSourcePath = null;
-            var bindingTargetPath = null;
-            var onChangeEventName = null;
-            var realPropName = null;
-
-            var bindAttributePrefix = 'bind$';
-            if (name.indexOf(bindAttributePrefix) === 0)
+            var value = jsonNode[propName];
+            if (value.$isBinded === true)
             {
-                var arr = name.split('$');
+                var targetPropName = value.targetPropName;
+                var eventName = value.eventName;
+                var bindingSourcePath = value.bindingSourcePath;
+                var bindingTargetPath = value.bindingTargetPath;
 
-                realPropName = arr[1];
-                onChangeEventName = arr[2];
-                bindingTargetPath = arr[3].substr(2).split('.');
-                bindingSourcePath = props[name].split('.');
-            }
-
-            if (bindingSourcePath)
-            {
-                processedProps[realPropName] = GetValueInPath(component.state.$state, bindingSourcePath);
-                processedProps[onChangeEventName] = function (e)
+                props[targetPropName] = GetValueInPath(component.state.$state, bindingSourcePath);
+                props[eventName] = function (e)
                 {
                     var state = Clone(component.state.$state);
 
@@ -158,16 +150,17 @@
             return false;
         }
 
-        // look events
-        for (let name in props)
+        for (i = 0; i < reactAttributesLength; i++)
         {
-            var isProcessedAsEvent = tryProcessAsEventHandler(name);
+            var propName = reactAttributes[i];
+
+            var isProcessedAsEvent = tryProcessAsEventHandler(propName);
             if (isProcessedAsEvent)
             {
                 continue;
             }
 
-            var isProcessedAsBinding = tryProcessAsBinding(name);
+            var isProcessedAsBinding = tryProcessAsBinding(propName);
             if (isProcessedAsBinding)
             {
                 continue;
@@ -178,10 +171,8 @@
                 continue;
             }
 
-
-            processedProps[name] = props[name];
+            props[propName] = jsonNode[propName];
         }
-        props = processedProps;
 
         if (jsonNode.text != null)
         {
@@ -192,7 +183,7 @@
         {
             var newChildren = [];
 
-            for (var i = 0; i < childrenLength; i++)
+            for (i = 0; i < childrenLength; i++)
             {
                 newChildren.push(ConvertToReactElement(children[i], component));
             }
