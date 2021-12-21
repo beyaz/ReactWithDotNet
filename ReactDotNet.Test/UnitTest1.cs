@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static ReactDotNet.Mixin;
 
 namespace ReactDotNet
 {
@@ -48,7 +49,7 @@ namespace ReactDotNet
         {
             var view = new View2();
 
-            var result = JsonSerializer.Serialize(view, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+            var result = ToJson(view);
 
             result.Should().Be(@"""innerA.innerB.text""".Trim());
         }
@@ -59,9 +60,7 @@ namespace ReactDotNet
         {
             var state = new SampleModelAContainer();
 
-            Expression<Func<string>> valueBind = () => state.InnerA.InnerB.Text;
-
-            var result = JsonSerializer.Serialize(valueBind, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+            var result = ToJson(Bind(() => state.InnerA.InnerB.Text));
 
             result.Should().Be(@"""innerA.innerB.text""".Trim());
         }
@@ -103,7 +102,7 @@ namespace ReactDotNet
         public void Deserialize()
         {
             var json  = "{\r\n\"clickCount\": 2}";
-            var state = (SampleModel)JsonSerializer.Deserialize(json, typeof(SampleModel), JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+            var state = (SampleModel)JsonSerializer.Deserialize(json, typeof(SampleModel), new JsonSerializerOptions().ModifyForReactDotNet());
 
             state.ClickCount.Should().Be(2);
         }
@@ -122,7 +121,7 @@ namespace ReactDotNet
                 onClick = onClicked
             };
 
-            var result = JsonSerializer.Serialize(model, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+            var result = JsonSerializer.Serialize(model, (new JsonSerializerOptions()).ModifyForReactDotNet());
 
             result.Should().Be(@"
 {
@@ -153,7 +152,7 @@ namespace ReactDotNet
                 }
             };
 
-            var result = JsonSerializer.Serialize(model,JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+            var result = JsonSerializer.Serialize(model,(new JsonSerializerOptions()).ModifyForReactDotNet());
 
             result.Should().Be(@"
 {

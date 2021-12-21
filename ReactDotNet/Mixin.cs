@@ -10,6 +10,16 @@ namespace ReactDotNet
     {
         public static  readonly JsonNamingPolicy JsonNamingPolicy = JsonNamingPolicy.CamelCase;
 
+        public static string ToJson(object value)
+        {
+            return JsonSerializer.Serialize(value, new JsonSerializerOptions().ModifyForReactDotNet());
+        }
+
+        public static JsonSerializerOptions ModifyForReactDotNet(this JsonSerializerOptions options)
+        {
+            return JsonSerializationOptionHelper.Modify(options);
+        }
+
         public static string Bind(Expression<Func<string>> propertyAccessor)
         {
             string NameofAllPath(MemberExpression memberExpression)
