@@ -83,6 +83,13 @@ namespace ReactDotNet
       ""width"": 3,
       ""height"": 0,
       ""tag"": ""img""
+    },
+    {
+      ""value"": ""abc"",
+      ""$path"": [
+        ""primereact"",
+        ""InputText""
+      ]
     }
   ]
 }
