@@ -38,7 +38,7 @@ namespace ReactDotNet.Demo.TodoSample
 
         #region Public Methods
 
-        public override ReactElement render()
+        public override Element render()
         {
 
            
@@ -79,7 +79,7 @@ namespace ReactDotNet.Demo.TodoSample
             state.ClickCount++;
         }
 
-        public override ReactElement render()
+        public override Element render()
         {
             return new div("C4")
             {

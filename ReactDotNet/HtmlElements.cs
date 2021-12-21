@@ -262,12 +262,16 @@ namespace ReactDotNet
             this.className = className;
         }
 
+        [React]
         public string src { get; set; }
 
+        [React]
         public string alt { get; set; }
 
+        [React]
         public int width { get; set; }
 
+        [React]
         public int height { get; set; }
     }
 

@@ -64,29 +64,47 @@ namespace ReactDotNet
 {
   ""tag"": ""div"",
   ""className"": ""abc"",
+  ""reactAttributes"": [
+    ""className""
+  ],
   ""children"": [
     {
       ""tag"": ""div"",
-      ""className"": ""B""
+      ""className"": ""B"",
+      ""reactAttributes"": [
+        ""className""
+      ]
     },
     {
       ""tag"": ""div"",
       ""className"": ""C"",
       ""style"": {
         ""paddingLeft"": ""5px""
-      }
+      },
+      ""reactAttributes"": [
+        ""className"",
+        ""style""
+      ]
     },
     {
       ""src"": ""a.png"",
       ""width"": 3,
       ""height"": 0,
-      ""tag"": ""img""
+      ""tag"": ""img"",
+      ""reactAttributes"": [
+        ""src"",
+        ""width"",
+        ""height""
+      ]
     },
     {
       ""value"": ""abc"",
       ""jsLocation"": [
         ""primereact"",
         ""InputText""
+      ],
+      ""reactAttributes"": [
+        ""value""
       ]
     },
     {
@@ -95,6 +113,9 @@ namespace ReactDotNet
       ""rootElement"": {
         ""tag"": ""div"",
         ""className"": ""A"",
+        ""reactAttributes"": [
+          ""className""
+        ],
         ""children"": [
           {
             ""prop1"": ""A"",
@@ -102,7 +123,10 @@ namespace ReactDotNet
             ""rootElement"": {
               ""tag"": ""div"",
               ""className"": ""A"",
-              ""text"": ""b""
+              ""text"": ""b"",
+              ""reactAttributes"": [
+                ""className""
+              ]
             },
             ""fullName"": ""ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test""
           }
@@ -112,7 +136,6 @@ namespace ReactDotNet
     }
   ]
 }
-
 ";
             actual.Trim().Should().Be(expected.Trim());
         }

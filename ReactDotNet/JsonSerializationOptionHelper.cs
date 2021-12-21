@@ -49,6 +49,8 @@ namespace ReactDotNet
             {
                 writer.WriteStartObject();
 
+                var reactAttributes = new List<string>();
+
                 foreach (var propertyInfo in value.GetType().GetProperties().Where(x=>x.GetCustomAttribute<JsonIgnoreAttribute>() == null))
                 {
                     var propertyValue = propertyInfo.GetValue(value);
@@ -66,18 +68,40 @@ namespace ReactDotNet
                         }
                     }
 
-                    var propertyName              = propertyInfo.Name;
+                    var propertyName = propertyInfo.Name;
+
                     var jsonPropertyNameAttribute = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
                     if (jsonPropertyNameAttribute != null)
                     {
                         propertyName = jsonPropertyNameAttribute.Name;
                     }
 
-                    writer.WritePropertyName(options.PropertyNamingPolicy.ConvertName(propertyName));
+                    propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
+
+                    writer.WritePropertyName(propertyName);
                     
                     JsonSerializer.Serialize(writer, propertyValue, options);
+
+                    if (value is ThirdPartyComponent || value is HtmlElement)
+                    {
+                        if (propertyInfo.GetCustomAttribute<ReactAttribute>()!=null)
+                        {
+                            reactAttributes.Add(propertyName);
+                        }
+                    }
                 }
 
+                if (reactAttributes.Count>0)
+                {
+                    writer.WritePropertyName("reactAttributes");
+
+                    writer.WriteStartArray();
+                    foreach (var item in reactAttributes)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
 
                 if (value.children.Count > 0)
                 {
