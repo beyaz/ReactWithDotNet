@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using static ReactDotNet.UniqueKeyInitializer;
 
 namespace ReactDotNet
@@ -11,11 +12,13 @@ namespace ReactDotNet
     /// </summary>
     public abstract class Element : IElement, IEnumerable<IElement>
     {
+        public string Tag => GetType().Name.ToLower();
+
         #region Fields
         /// <summary>
         ///     The children
         /// </summary>
-        protected readonly List<IElement> children = new List<IElement>();
+        protected internal readonly List<IElement> children = new List<IElement>();
         #endregion
 
         #region Constructors
@@ -50,6 +53,7 @@ namespace ReactDotNet
         /// <summary>
         ///     Gets the margin.
         /// </summary>
+        [JsonIgnore]
         public MarginThickness Margin { get; }
 
         /// <summary>
@@ -61,6 +65,7 @@ namespace ReactDotNet
         /// <summary>
         ///     Gets the padding.
         /// </summary>
+        [JsonIgnore]
         public PaddingThickness Padding { get; }
 
         /// <summary>

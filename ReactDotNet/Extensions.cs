@@ -4,6 +4,17 @@ namespace ReactDotNet
 {
     static class Extensions
     {
+
+        public static object GetDefaultValue(this Type t)
+        {
+            if (t.IsValueType)
+            {
+                return Activator.CreateInstance(t);
+            }
+
+            return null;
+        }
+
         /// <summary>
         ///     Removes value from end of str
         /// </summary>

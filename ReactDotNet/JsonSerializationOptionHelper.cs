@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -7,9 +10,74 @@ using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet
 {
+
     static class JsonSerializationOptionHelper
     {
-        
+
+        public class JsonConverterForElement : JsonConverterFactory
+        {
+            public override bool CanConvert(Type typeToConvert)
+            {
+                return typeToConvert.IsSubclassOf(typeof(Element));
+            }
+
+            public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+            {
+                JsonConverter converter = (JsonConverter)Activator.CreateInstance(typeof(JsonConverterForElement<>)
+                                                                                     .MakeGenericType(typeToConvert),
+                                                                                  BindingFlags.Instance | BindingFlags.Public,
+                                                                                  binder: null,
+                                                                                  args: null,
+                                                                                  culture: null)!;
+
+                return converter;
+            }
+        }
+
+        public class JsonConverterForElement<T> : JsonConverter<T> where T:Element
+        {
+            public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+            {
+                writer.WriteStartObject();
+
+                foreach (var propertyInfo in value.GetType().GetProperties().Where(x=>x.GetCustomAttribute<JsonIgnoreAttribute>() == null))
+                {
+                    var propertyValue = propertyInfo.GetValue(value);
+                    if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
+                    {
+                        continue;
+                    }
+
+                    writer.WritePropertyName(options.PropertyNamingPolicy.ConvertName(propertyInfo.Name));
+                    
+                    JsonSerializer.Serialize(writer, propertyValue, options);
+                }
+
+                if (value.children.Count > 0)
+                {
+                    writer.WritePropertyName("children");
+
+                    writer.WriteStartArray();
+
+                    foreach (var item in value.children)
+                    {
+                        JsonSerializer.Serialize(writer, item, options);
+                    }
+
+                    writer.WriteEndArray();
+                }
+                
+                
+                writer.WriteEndObject();
+            }
+        }
+
+
 
         #region Public Methods
         public static JsonSerializerOptions Modify(JsonSerializerOptions options)
@@ -23,7 +91,7 @@ namespace ReactDotNet
             options.Converters.Add(new UnionConverter<AlignContent>());
             options.Converters.Add(new UnionConverter<Display>());
             options.Converters.Add(new ActionConverter());
-            
+            options.Converters.Add(new JsonConverterForElement()); 
 
             options.Converters.Add(new EnumToStringConverter<TooltipPositionType>()); 
 

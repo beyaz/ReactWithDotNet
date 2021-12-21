@@ -49,7 +49,13 @@ namespace ReactDotNet
         {
             var view = new View2();
 
-            var result = ToJson(new div());
+            var div = new div("abc")
+            {
+                new div("B"),
+                new div("C")
+            };
+
+            var result = ToJson(div);
 
             result.Should().Be(@"""innerA.innerB.text""".Trim());
         }
