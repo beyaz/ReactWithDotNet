@@ -12,16 +12,13 @@ namespace ReactDotNet
         public string FullName { get; set; }
         public string StateAsJson { get; set; }
         public string MethodName { get; set; }
-        public ReactElement RootElement { get; set; }
         public string EventHandlerMethodName { get; set; }
     }
 
     [Serializable]
     public class ComponentResponse
     {
-        public string FullName { get; set; }
-        public object State { get; set; }
-        public ReactElement RootElement { get; set; }
+       
     }
 
     public static class ComponentRequestHandler

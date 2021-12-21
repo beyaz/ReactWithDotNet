@@ -27,7 +27,7 @@ namespace ReactDotNet
             }
         }
 
-        class View2:ReactComponent<SampleModelA>
+        class View2 : ReactComponent<SampleModelA>
         {
             public string Prop1 { get; set; } = "PropValue1";
             public string Prop2 { get; set; } = "PropValue2";
@@ -36,7 +36,7 @@ namespace ReactDotNet
             {
                 return new div("A")
                 {
-                   new View1{ Prop1 = "A"}
+                    new View1 { Prop1 = "A" }
                 };
             }
         }
@@ -49,11 +49,11 @@ namespace ReactDotNet
                 new div("B"),
                 new div("C")
                 {
-                    style = { PaddingLeft = "5px"}
+                    style = { PaddingLeft = "5px" }
                 },
-                new img{ src = "a.png", width = 3, onClick = onClicked},
-                new PrimeReact.InputText{ value = "abc"},
-                new View2{ Prop1 = "x", Prop2 = "y"}
+                new img { src                    = "a.png", width = 3, onClick = onClicked },
+                new PrimeReact.InputText { value = "abc" },
+                new View2 { Prop1                = "x", Prop2 = "y" }
             };
 
             var actual = ToJson(div);
@@ -201,63 +201,7 @@ namespace ReactDotNet
 
         }
 
-        [TestMethod]
-        public void ActionSerialization()
-        {
-            ReactElement model = new button
-            {
-                text = "Aloha",
-                onClick = onClicked
-            };
 
-            var result = JsonSerializer.Serialize(model, (new JsonSerializerOptions()).ModifyForReactDotNet());
 
-            result.Should().Be(@"
-{
-  ""tag"": ""button"",
-  ""text"": ""Aloha"",
-  ""props"": {
-    ""onClick"": ""$remote$onClicked"",
-    ""style"": {}
-  },
-  ""children"": []
-}
-".Trim());
-        }
-
-        [TestMethod]
-        public void TestMethod1()
-        {
-            ReactElement model = new div("C4")
-            {
-                text = "Aloha",
-                style =
-                {
-                    AlignContent = AlignContent.FlexStart,
-                    Width        = "5px",
-                    Display      = Display.Flex,
-                    
-                    
-                }
-            };
-
-            var result = JsonSerializer.Serialize(model,(new JsonSerializerOptions()).ModifyForReactDotNet());
-
-            result.Should().Be(@"
-{
-  ""tag"": ""div"",
-  ""text"": ""Aloha"",
-  ""props"": {
-    ""className"": ""C4"",
-    ""style"": {
-      ""display"": ""flex"",
-      ""width"": ""5px"",
-      ""alignContent"": ""flex-start""
-    }
-  },
-  ""children"": []
-}
-".Trim());
-        }
     }
 }

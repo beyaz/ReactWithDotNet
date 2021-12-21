@@ -1,7 +1,10 @@
-﻿namespace ReactDotNet
+﻿using System.Text.Json.Serialization;
+
+namespace ReactDotNet
 {
-    public class Space : Element
+    public class Space : div
     {
+        [JsonIgnore]
         public double? Height
         {
             set
@@ -17,6 +20,7 @@
             }
         }
 
+        [JsonIgnore]
         public double? Width
         {
             set
@@ -32,9 +36,6 @@
             }
         }
 
-        public override ReactElement ToReactElement()
-        {
-            return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties() };
-        }
+        
     }
 }

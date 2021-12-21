@@ -283,8 +283,11 @@ namespace ReactDotNet
 
         public List<Element> Rows { get; } = new List<Element>();
 
-        public override ReactElement ToReactElement()
+        public Element render()
         {
+            // todo: implement
+            throw new NotImplementedException();
+            /*
             if (rows != null)
             {
                 var list = rows.ToList();
@@ -301,8 +304,7 @@ namespace ReactDotNet
 
             if (Cols.Count == 0 && Rows.Count == 0)
             {
-
-                return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties() };
+                return new div();
             }
 
             if (Cols.Count > 0)
@@ -348,7 +350,7 @@ namespace ReactDotNet
                 UniqueKeyInitializer.InitializeKeyIfNotExists(childElements);
 
                 return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements };
-            }
+            }*/
         }
     }
 

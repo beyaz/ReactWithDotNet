@@ -10,19 +10,6 @@ namespace ReactDotNet.PrimeReact
    
     public class ElementBase : ThirdPartyComponent
     {
-        public override ReactElement ToReactElement()
-        {
-            var childElements = children.Select(x => x.ToReactElement()).ToList();
-
-            UniqueKeyInitializer.InitializeKeyIfNotExists(childElements);
-            return new ReactElement
-            {
-                Path  = new[] { "primereact", GetType().Name },
-                Props = this.CollectReactAttributedProperties(),
-                Children = childElements
-            };
-        }
-
         public override IReadOnlyList<string> JsLocation => new[] { "primereact", GetType().Name };
     }
 

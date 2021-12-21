@@ -96,31 +96,6 @@ namespace ReactDotNet
         {
             return children.GetEnumerator();
         }
-
-        /// <summary>
-        ///     Converts to reactelement.
-        /// </summary>
-        public virtual ReactElement ToReactElement()
-        {
-            
-
-            var tag = GetType().Name.ToLower();
-
-            var attributes = this.CollectReactAttributedProperties();
-
-            var childElements = children.Select(x => x.ToReactElement()).ToList();
-
-            InitializeKeyIfNotExists(childElements);
-
-            return new ReactElement
-            {
-                Tag = tag, 
-                Props = attributes, 
-                Text = text, 
-                Children = childElements
-            };
-            
-        }
         #endregion
 
         #region Explicit Interface Methods
