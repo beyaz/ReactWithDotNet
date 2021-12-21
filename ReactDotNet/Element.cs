@@ -10,7 +10,7 @@ namespace ReactDotNet
     /// <summary>
     ///     The element
     /// </summary>
-    public abstract class Element : IElement, IEnumerable<IElement>
+    public abstract class Element : IElement, IEnumerable<Element>
     {
         public string Tag => GetType().Name.ToLower();
 
@@ -18,7 +18,7 @@ namespace ReactDotNet
         /// <summary>
         ///     The children
         /// </summary>
-        protected internal readonly List<IElement> children = new List<IElement>();
+        protected internal readonly List<Element> children = new List<Element>();
         #endregion
 
         #region Constructors
@@ -84,7 +84,7 @@ namespace ReactDotNet
         /// <summary>
         ///     Adds the specified element.
         /// </summary>
-        public void Add(IElement element)
+        public void Add(Element element)
         {
             children.Add(element);
         }
@@ -92,7 +92,7 @@ namespace ReactDotNet
         /// <summary>
         ///     Gets the enumerator.
         /// </summary>
-        public IEnumerator<IElement> GetEnumerator()
+        public IEnumerator<Element> GetEnumerator()
         {
             return children.GetEnumerator();
         }

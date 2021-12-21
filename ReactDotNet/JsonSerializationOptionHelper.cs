@@ -18,7 +18,8 @@ namespace ReactDotNet
         {
             public override bool CanConvert(Type typeToConvert)
             {
-                return typeToConvert.IsSubclassOf(typeof(Element));
+                return typeToConvert.IsSubclassOf(typeof(Element)) ||
+                       typeToConvert == (typeof(IElement));
             }
 
             public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
@@ -41,6 +42,8 @@ namespace ReactDotNet
                 throw new NotImplementedException();
             }
 
+            
+
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             {
                 writer.WriteStartObject();
@@ -53,10 +56,20 @@ namespace ReactDotNet
                         continue;
                     }
 
+                    if (propertyValue is CSSStyleDeclaration style)
+                    {
+                        var hasValue = typeof(CSSStyleDeclaration).GetProperties().Any(x => x.GetValue(style) != x.PropertyType.GetDefaultValue());
+                        if (!hasValue)
+                        {
+                            continue;
+                        }
+                    }
+
                     writer.WritePropertyName(options.PropertyNamingPolicy.ConvertName(propertyInfo.Name));
                     
                     JsonSerializer.Serialize(writer, propertyValue, options);
                 }
+
 
                 if (value.children.Count > 0)
                 {

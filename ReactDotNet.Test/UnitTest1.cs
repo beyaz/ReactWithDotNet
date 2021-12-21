@@ -39,7 +39,7 @@ namespace ReactDotNet
             {
                 return new div("A")
                 {
-                   new View1{ Prop1 = "A"}
+                   // new View1{ Prop1 = "A"}
                 };
             }
         }
