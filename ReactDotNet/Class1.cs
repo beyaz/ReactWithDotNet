@@ -46,7 +46,7 @@ namespace ReactDotNet
         /// <summary>
         /// The padding-left CSS property of an element sets the padding space required on the left side of an element. The padding area is the space between the content of the element and it's border. A negative value is not allowed.
         /// </summary>
-        public string PaddingLeft;
+        public string PaddingLeft { get; set; }
         /// <summary>
         /// The padding-right CSS property of an element sets the padding space required on the right side of an element. The padding area is the space between the content of the element and its border. Negative values are not allowed.
         /// </summary>

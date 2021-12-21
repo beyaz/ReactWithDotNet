@@ -53,11 +53,41 @@ namespace ReactDotNet
             {
                 new div("B"),
                 new div("C")
+                {
+                    style = { PaddingLeft = "5px"}
+                },
+                new img{ src = "a.png", width = 3}
             };
 
-            var result = ToJson(div);
+            var actual = ToJson(div);
 
-            result.Should().Be(@"""innerA.innerB.text""".Trim());
+            var expected = @"
+{
+  ""tag"": ""div"",
+  ""className"": ""abc"",
+  ""children"": [
+    {
+      ""tag"": ""div"",
+      ""className"": ""B""
+    },
+    {
+      ""tag"": ""div"",
+      ""className"": ""C"",
+      ""style"": {
+        ""paddingLeft"": ""5px""
+      }
+    },
+    {
+      ""src"": ""a.png"",
+      ""width"": 3,
+      ""height"": 0,
+      ""tag"": ""img""
+    }
+  ]
+}
+
+";
+            actual.Trim().Should().Be(expected.Trim());
         }
 
 

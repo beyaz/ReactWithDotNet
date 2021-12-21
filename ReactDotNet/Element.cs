@@ -12,7 +12,7 @@ namespace ReactDotNet
     /// </summary>
     public abstract class Element : IEnumerable<Element>
     {
-        public string Tag => GetType().Name.ToLower();
+        
 
         #region Fields
         /// <summary>
@@ -132,5 +132,15 @@ namespace ReactDotNet
             return children.GetEnumerator();
         }
         #endregion
+    }
+
+    public abstract class HtmlElement:Element
+    {
+        public string Tag => GetType().Name.ToLower();
+    }
+
+    public abstract class ThirdPartyComponent: Element
+    {
+        public abstract IReadOnlyList<string> Path { get; }
     }
 }

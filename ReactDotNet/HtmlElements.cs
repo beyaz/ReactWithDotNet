@@ -157,7 +157,7 @@ namespace ReactDotNet
 
    
 
-    public class button : Element
+    public class button : HtmlElement
     {
         public button()
         {
@@ -170,7 +170,7 @@ namespace ReactDotNet
 
     }
 
-    public class span : Element
+    public class span : HtmlElement
     {
         public span()
         {
@@ -182,7 +182,7 @@ namespace ReactDotNet
         }
     }
 
-    public class i : Element
+    public class i : HtmlElement
     {
         public i() { }
 
@@ -192,7 +192,7 @@ namespace ReactDotNet
         }
     }
 
-    public class div : Element
+    public class div : HtmlElement
     {
         public div() { }
 
@@ -202,7 +202,7 @@ namespace ReactDotNet
         }
     }
 
-    public class h5 : Element
+    public class h5 : HtmlElement
     {
         public h5() { }
 
@@ -212,7 +212,7 @@ namespace ReactDotNet
         }
     }
 
-    public class h4 : Element
+    public class h4 : HtmlElement
     {
         public h4() { }
 
@@ -222,7 +222,7 @@ namespace ReactDotNet
         }
     }
 
-    public class h3 : Element
+    public class h3 : HtmlElement
     {
         public h3() { }
 
@@ -232,7 +232,7 @@ namespace ReactDotNet
         }
     }
 
-    public class h2 : Element
+    public class h2 : HtmlElement
     {
         public h2() { }
 
@@ -242,7 +242,7 @@ namespace ReactDotNet
         }
     }
 
-    public class h1 : Element
+    public class h1 : HtmlElement
     {
         public h1() { }
 
@@ -250,6 +250,25 @@ namespace ReactDotNet
         {
             this.className = className;
         }
+    }
+
+
+    public class img : HtmlElement
+    {
+        public img() { }
+
+        public img(string className)
+        {
+            this.className = className;
+        }
+
+        public string src { get; set; }
+
+        public string alt { get; set; }
+
+        public int width { get; set; }
+
+        public int height { get; set; }
     }
 
     public class Panel : Element

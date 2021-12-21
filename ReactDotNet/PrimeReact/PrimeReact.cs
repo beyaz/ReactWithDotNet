@@ -8,7 +8,7 @@ using ReactDotNet;
 namespace ReactDotNet.PrimeReact
 {
    
-    public class ElementBase : Element
+    public class ElementBase : ThirdPartyComponent
     {
         public override ReactElement ToReactElement()
         {
@@ -22,6 +22,8 @@ namespace ReactDotNet.PrimeReact
                 Children = childElements
             };
         }
+
+        public override IReadOnlyList<string> Path => new[] { "primereact", GetType().Name };
     }
 
     
