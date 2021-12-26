@@ -53,16 +53,20 @@ namespace ReactDotNet.Demo.TodoSample
                     value =state.B
                     // valueBind = Bind(()=>state.AnyName)
                 },
-                // new TodoRecordView{ MyProp1 = "A"},
-                //new TodoRecordView{ MyProp1 = "B"},
-                //new TodoRecordView{ MyProp1 = "C"},
-                new Button(){ label = "Update", onClick = Update},
-                //new InputTextarea
-                //{
-                //    value = state.B,
-                //    rows = 3
+                new InputText
+                {
+                    valueBind = ()=>state.AnyName
+                },
+                new TodoRecordView{ MyProp1 = "A"},
+                new TodoRecordView{ MyProp1 = "B"},
+                new TodoRecordView{ MyProp1 = "C"},
+                new Button{ label = "Update", onClick = Update},
+                new InputTextarea
+                {
+                    value = state.B,
+                    rows = 3
                     
-                //},
+                },
             };
         }
 
@@ -76,10 +80,16 @@ namespace ReactDotNet.Demo.TodoSample
 
     public class TodoRecordView : ReactComponent<TodoRecord>
     {
+        public TodoRecordView()
+        {
+            state = new TodoRecord();
+        }
+
         public string MyProp1 { get; set; }
 
         void OnClicked()
         {
+            
             state.ClickCount++;
         }
 

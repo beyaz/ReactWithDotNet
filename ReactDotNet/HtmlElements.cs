@@ -154,8 +154,19 @@ namespace ReactDotNet
     {
     }
 
+    [Serializable]
+    public class ReactBindAttribute : Attribute
+    {
+        public string TargetProp { get;  set; }
+        public string JsValueAccess { get;  set; }
+        public string EventName { get;  set; }
 
-   
+       
+        
+    }
+
+
+
 
     public class button : HtmlElement
     {

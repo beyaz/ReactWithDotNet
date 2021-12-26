@@ -21,8 +21,8 @@ namespace ReactDotNet.PrimeReact
         public string value { get; set; }
 
         [React]
-        [JsonPropertyName("bind$value$onChange$e.target.value")]
-        public string valueBind { get; set; }
+        [ReactBind(TargetProp = nameof(value), JsValueAccess = "e.target.value",  EventName = "onChange")]
+        public Expression<Func<string>> valueBind { get; set; }
 
        
     }

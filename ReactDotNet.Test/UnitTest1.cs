@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq.Expressions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -41,9 +42,16 @@ namespace ReactDotNet
             }
         }
 
+        static string ReadTestFile(string name)
+        {
+            return File.ReadAllText(name);
+        }
+
         [TestMethod]
         public void SerializeComponentWithProperties()
         {
+            var state = new SampleModelAContainer();
+
             var div = new div("abc")
             {
                 new div("B"),
@@ -53,106 +61,18 @@ namespace ReactDotNet
                 },
                 new img { src                    = "a.png", width = 3, onClick = onClicked },
                 new PrimeReact.InputText { value = "abc" },
+                new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
                 new View2 { Prop1                = "x", Prop2 = "y" }
             };
 
             var actual = ToJson(div);
 
-            var expected = @"
-{
-  ""tag"": ""div"",
-  ""className"": ""abc"",
-  ""reactAttributes"": [
-    ""className""
-  ],
-  ""children"": [
-    {
-      ""tag"": ""div"",
-      ""className"": ""B"",
-      ""reactAttributes"": [
-        ""className""
-      ]
-    },
-    {
-      ""tag"": ""div"",
-      ""className"": ""C"",
-      ""style"": {
-        ""paddingLeft"": ""5px""
-      },
-      ""reactAttributes"": [
-        ""className"",
-        ""style""
-      ]
-    },
-    {
-      ""src"": ""a.png"",
-      ""width"": 3,
-      ""height"": 0,
-      ""tag"": ""img"",
-      ""onClick"": {
-        ""$isRemoteMethod"": true,
-        ""remoteMethodName"": ""onClicked""
-      },
-      ""reactAttributes"": [
-        ""src"",
-        ""width"",
-        ""height"",
-        ""onClick""
-      ]
-    },
-    {
-      ""value"": ""abc"",
-      ""jsLocation"": [
-        ""primereact"",
-        ""InputText""
-      ],
-      ""reactAttributes"": [
-        ""value""
-      ]
-    },
-    {
-      ""prop1"": ""x"",
-      ""prop2"": ""y"",
-      ""rootElement"": {
-        ""tag"": ""div"",
-        ""className"": ""A"",
-        ""reactAttributes"": [
-          ""className""
-        ],
-        ""children"": [
-          {
-            ""prop1"": ""A"",
-            ""prop2"": ""PropValue2"",
-            ""rootElement"": {
-              ""tag"": ""div"",
-              ""className"": ""A"",
-              ""text"": ""b"",
-              ""reactAttributes"": [
-                ""className""
-              ]
-            },
-            ""fullName"": ""ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test""
-          }
-        ]
-      },
-      ""fullName"": ""ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test""
-    }
-  ]
-}
-";
+            var expected = ReadTestFile("SerializeComponentWithProperties.txt");
             actual.Trim().Should().Be(expected.Trim());
         }
 
 
-        [TestMethod]
-        public void BindingPath()
-        {
-            var state = new SampleModelAContainer();
-
-            var result = ToJson(Bind(() => state.InnerA.InnerB.Text));
-
-            result.Should().Be(@"""innerA.innerB.text""".Trim());
-        }
+        
 
 
         [Serializable]

@@ -1,0 +1,104 @@
+{
+  "tag": "div",
+  "className": "abc",
+  "reactAttributes": [
+    "className"
+  ],
+  "children": [
+    {
+      "tag": "div",
+      "className": "B",
+      "reactAttributes": [
+        "className"
+      ]
+    },
+    {
+      "tag": "div",
+      "className": "C",
+      "style": {
+        "paddingLeft": "5px"
+      },
+      "reactAttributes": [
+        "className",
+        "style"
+      ]
+    },
+    {
+      "src": "a.png",
+      "width": 3,
+      "height": 0,
+      "tag": "img",
+      "onClick": {
+        "$isRemoteMethod": true,
+        "remoteMethodName": "onClicked"
+      },
+      "reactAttributes": [
+        "src",
+        "width",
+        "height",
+        "onClick"
+      ]
+    },
+    {
+      "value": "abc",
+      "jsLocation": [
+        "primereact",
+        "InputText"
+      ],
+      "reactAttributes": [
+        "value"
+      ]
+    },
+    {
+      "valueBind": {
+        "eventName": "onChange",
+        "$isBinding": true,
+        "jsValueAccess": [
+          "e",
+          "target",
+          "value"
+        ],
+        "sourcePath": [
+          "innerA",
+          "innerB",
+          "text"
+        ],
+        "targetProp": "value"
+      },
+      "jsLocation": [
+        "primereact",
+        "InputText"
+      ],
+      "reactAttributes": [
+        "valueBind"
+      ]
+    },
+    {
+      "prop1": "x",
+      "prop2": "y",
+      "rootElement": {
+        "tag": "div",
+        "className": "A",
+        "reactAttributes": [
+          "className"
+        ],
+        "children": [
+          {
+            "prop1": "A",
+            "prop2": "PropValue2",
+            "rootElement": {
+              "tag": "div",
+              "className": "A",
+              "text": "b",
+              "reactAttributes": [
+                "className"
+              ]
+            },
+            "fullName": "ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test"
+          }
+        ]
+      },
+      "fullName": "ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test"
+    }
+  ]
+}

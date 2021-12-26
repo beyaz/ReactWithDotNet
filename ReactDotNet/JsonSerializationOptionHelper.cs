@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -10,12 +9,48 @@ using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet
 {
-
     static class JsonSerializationOptionHelper
     {
+        #region Public Methods
+        public static JsonSerializerOptions Modify(JsonSerializerOptions options)
+        {
+            options.WriteIndented    = true;
+            options.IgnoreNullValues = true;
+
+            options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
+            options.Converters.Add(new UnionConverter<AlignContent>());
+            options.Converters.Add(new UnionConverter<Display>());
+            options.Converters.Add(new JsonConverterForElement());
+
+            options.Converters.Add(new EnumToStringConverter<TooltipPositionType>());
+
+            return options;
+        }
+        #endregion
+
+        #region Methods
+        static object GetValueFromUnion<B>(Union<string, B> union) where B : Enum
+        {
+            if (union.a != null)
+            {
+                return union.a;
+            }
+
+            var b             = union.b;
+            var field         = b.GetType().GetField(b.ToString());
+            var nameAttribute = (NameAttribute)field?.GetCustomAttributes(typeof(NameAttribute)).FirstOrDefault();
+            if (nameAttribute != null)
+            {
+                return nameAttribute.value;
+            }
+
+            return b;
+        }
+        #endregion
 
         public class JsonConverterForElement : JsonConverterFactory
         {
+            #region Public Methods
             public override bool CanConvert(Type typeToConvert)
             {
                 return typeToConvert.IsSubclassOf(typeof(Element)) ||
@@ -25,33 +60,25 @@ namespace ReactDotNet
 
             public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
             {
-                JsonConverter converter = (JsonConverter)Activator.CreateInstance(typeof(JsonConverterForElement<>)
-                                                                                     .MakeGenericType(typeToConvert),
-                                                                                  BindingFlags.Instance | BindingFlags.Public,
-                                                                                  binder: null,
-                                                                                  args: null,
-                                                                                  culture: null)!;
+                var converter = (JsonConverter)Activator.CreateInstance(typeof(JsonConverterForElement<>)
+                                                                           .MakeGenericType(typeToConvert),
+                                                                        BindingFlags.Instance | BindingFlags.Public,
+                                                                        binder: null,
+                                                                        args: null,
+                                                                        culture: null)!;
 
                 return converter;
             }
+            #endregion
         }
 
-        class EventInfo
+        public class JsonConverterForElement<T> : JsonConverter<T> where T : Element
         {
-            [JsonPropertyName("$isRemoteMethod")]
-            public bool IsRemoteMethod { get; set; }
-
-            public string RemoteMethodName { get; set; }
-        }
-
-        public class JsonConverterForElement<T> : JsonConverter<T> where T:Element
-        {
+            #region Public Methods
             public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
-
-            
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             {
@@ -59,7 +86,7 @@ namespace ReactDotNet
 
                 var reactAttributes = new List<string>();
 
-                foreach (var propertyInfo in value.GetType().GetProperties().Where(x=>x.GetCustomAttribute<JsonIgnoreAttribute>() == null))
+                foreach (var propertyInfo in value.GetType().GetProperties().Where(x => x.GetCustomAttribute<JsonIgnoreAttribute>() == null))
                 {
                     var propertyValue = propertyInfo.GetValue(value);
                     if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
@@ -92,19 +119,37 @@ namespace ReactDotNet
                     {
                         propertyValue = new EventInfo { IsRemoteMethod = true, RemoteMethodName = action.Method.Name };
                     }
-                    
+
+                    if (propertyValue is Expression<Func<string>> expression)
+                    {
+                        var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
+                        if (reactBindAttribute == null)
+                        {
+                            continue;
+                        }
+
+                        propertyValue = new BindInfo
+                        {
+                            TargetProp    = reactBindAttribute.TargetProp,
+                            EventName     = reactBindAttribute.EventName,
+                            SourcePath    = Extensions.Bind(expression).Split('.',StringSplitOptions.RemoveEmptyEntries),
+                            IsBinding     = true,
+                            JsValueAccess = reactBindAttribute.JsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries)
+                        };
+                    }
+
                     JsonSerializer.Serialize(writer, propertyValue, options);
 
                     if (value is ThirdPartyComponent || value is HtmlElement)
                     {
-                        if (propertyInfo.GetCustomAttribute<ReactAttribute>()!=null)
+                        if (propertyInfo.GetCustomAttribute<ReactAttribute>() != null)
                         {
                             reactAttributes.Add(propertyName);
                         }
                     }
                 }
 
-                if (reactAttributes.Count>0)
+                if (reactAttributes.Count > 0)
                 {
                     writer.WritePropertyName("reactAttributes");
 
@@ -113,6 +158,7 @@ namespace ReactDotNet
                     {
                         writer.WriteStringValue(item);
                     }
+
                     writer.WriteEndArray();
                 }
 
@@ -129,56 +175,28 @@ namespace ReactDotNet
 
                     writer.WriteEndArray();
                 }
-                
-                
+
                 writer.WriteEndObject();
             }
+            #endregion
         }
 
-
-
-        #region Public Methods
-        public static JsonSerializerOptions Modify(JsonSerializerOptions options)
+        class BindInfo
         {
-            options.WriteIndented    = true;
-            options.IgnoreNullValues = true;
+            #region Public Properties
+            public string EventName { get; set; }
 
+            [JsonPropertyName("$isBinding")]
+            public bool IsBinding { get; set; }
 
+            public string[] JsValueAccess { get; set; }
 
-            options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
-            options.Converters.Add(new UnionConverter<AlignContent>());
-            options.Converters.Add(new UnionConverter<Display>());
-            options.Converters.Add(new JsonConverterForElement()); 
-
-            options.Converters.Add(new EnumToStringConverter<TooltipPositionType>()); 
-
-
-
-            return options;
+            public string[] SourcePath { get; set; }
+            public string TargetProp { get; set; }
+            #endregion
         }
-        #endregion
 
-        #region Methods
-        static object GetValueFromUnion<B>(Union<string, B> union) where B : Enum
-        {
-            if (union.a != null)
-            {
-                return union.a;
-            }
-
-            var b             = union.b;
-            var field         = b.GetType().GetField(b.ToString());
-            var nameAttribute = (NameAttribute)field?.GetCustomAttributes(typeof(NameAttribute)).FirstOrDefault();
-            if (nameAttribute != null)
-            {
-                return nameAttribute.value;
-            }
-
-            return b;
-        }
-        #endregion
-
-        class EnumToStringConverter<T>: JsonConverter<T>
+        class EnumToStringConverter<T> : JsonConverter<T>
         {
             #region Public Methods
             public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -193,7 +211,15 @@ namespace ReactDotNet
             #endregion
         }
 
-        
+        class EventInfo
+        {
+            #region Public Properties
+            [JsonPropertyName("$isRemoteMethod")]
+            public bool IsRemoteMethod { get; set; }
+
+            public string RemoteMethodName { get; set; }
+            #endregion
+        }
 
         class UnionConverter<B> : JsonConverter<Union<string, B>> where B : Enum
         {

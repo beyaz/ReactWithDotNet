@@ -124,22 +124,31 @@
 
         function tryProcessAsBinding(propName)
         {
-            // sample: {  "bind$value$onChange$e.target.value" : 'prop1.innerPropA.innerPropB'  }
+            /*
+            "valueBind": {
+                "eventName": "onChange",
+                "$isBinding": true,
+                "jsValueAccess": ["e","target","value"],
+                "sourcePath": ["innerA","innerB","text"],
+                "targetProp": "value"
+              }
+             */
 
             var value = jsonNode[propName];
-            if (value.$isBinded === true)
-            {
-                var targetPropName = value.targetPropName;
-                var eventName = value.eventName;
-                var bindingSourcePath = value.bindingSourcePath;
-                var bindingTargetPath = value.bindingTargetPath;
 
-                props[targetPropName] = GetValueInPath(component.state.$state, bindingSourcePath);
+            if (value.$isBinding === true)
+            {
+                var targetProp = value.targetProp;
+                var eventName = value.eventName;
+                var sourcePath = value.sourcePath;
+                var jsValueAccess = value.jsValueAccess;
+
+                props[targetProp] = GetValueInPath(component.state.$state, sourcePath);
                 props[eventName] = function (e)
                 {
                     var state = Clone(component.state.$state);
 
-                    SetValueInPath(state, bindingSourcePath, GetValueInPath(e, bindingTargetPath));
+                    SetValueInPath(state, sourcePath, GetValueInPath({e: e}, jsValueAccess));
 
                     component.setState({ $state: state });
                 }

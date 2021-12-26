@@ -18,4 +18,10 @@
     <ProjectReference Include="..\ReactDotNet\ReactDotNet.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="SerializeComponentWithProperties.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
