@@ -18,11 +18,10 @@ namespace ReactDotNet
             options.IgnoreNullValues = true;
 
             options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
-            options.Converters.Add(new UnionConverter<AlignContent>());
-            options.Converters.Add(new UnionConverter<Display>());
+            options.Converters.Add(new Union_String_Enum_Converter()); 
             options.Converters.Add(new JsonConverterForElement());
 
-            options.Converters.Add(new EnumToStringConverter<TooltipPositionType>());
+            options.Converters.Add(new JsonConverterForEnum());
 
             return options;
         }
@@ -47,6 +46,60 @@ namespace ReactDotNet
             return b;
         }
         #endregion
+
+        public class Union_String_Enum_Converter : JsonConverterFactory
+        {
+            public override bool CanConvert(Type typeToConvert)
+            {
+                if (typeToConvert.IsGenericType)
+                {
+                    var gtd = typeToConvert.GetGenericTypeDefinition();
+                    if (gtd == typeof(Union<,>))
+                    {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+
+            public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+            {
+                var genericArguments = typeToConvert.GetGenericArguments();
+
+                var converter = (JsonConverter)Activator.CreateInstance(typeof(Union_String_Enum_Converter<>)
+                                                                           .MakeGenericType(genericArguments[1]),
+                                                                        BindingFlags.Instance | BindingFlags.Public,
+                                                                        binder: null,
+                                                                        args: null,
+                                                                        culture: null)!;
+
+                return converter;
+            }
+        }
+
+
+        public class JsonConverterForEnum : JsonConverterFactory
+        {
+            #region Public Methods
+            public override bool CanConvert(Type typeToConvert)
+            {
+                return typeToConvert.IsSubclassOf(typeof(Enum));
+            }
+
+            public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+            {
+                var converter = (JsonConverter)Activator.CreateInstance(typeof(EnumToStringConverter<>)
+                                                                           .MakeGenericType(typeToConvert),
+                                                                        BindingFlags.Instance | BindingFlags.Public,
+                                                                        binder: null,
+                                                                        args: null,
+                                                                        culture: null)!;
+
+                return converter;
+            }
+            #endregion
+        }
 
         public class JsonConverterForElement : JsonConverterFactory
         {
@@ -82,6 +135,8 @@ namespace ReactDotNet
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             {
+                value.BeforeSerialize();
+
                 writer.WriteStartObject();
 
                 var reactAttributes = new List<string>();
@@ -96,8 +151,25 @@ namespace ReactDotNet
 
                     if (propertyValue is CSSStyleDeclaration style)
                     {
-                        var hasValue = typeof(CSSStyleDeclaration).GetProperties().Any(x => x.GetValue(style) != x.PropertyType.GetDefaultValue());
-                        if (!hasValue)
+                        bool hasValue(PropertyInfo x)
+                        {
+                            var value = x.GetValue(style);
+
+                            var defaultValue = x.PropertyType.GetDefaultValue();
+
+                            if (value == null)
+                            {
+                                if (defaultValue == null)
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+
+                            return !value.Equals(defaultValue);
+                        }
+                        if (!typeof(CSSStyleDeclaration).GetProperties().Any(hasValue))
                         {
                             continue;
                         }
@@ -118,6 +190,20 @@ namespace ReactDotNet
                     if (propertyValue is Action action)
                     {
                         propertyValue = new EventInfo { IsRemoteMethod = true, RemoteMethodName = action.Method.Name };
+                    }
+
+                    if (propertyInfo.PropertyType.IsGenericType)
+                    {
+                        if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
+                        {
+                            propertyValue = new EventInfo { IsRemoteMethod = true, RemoteMethodName = ((Delegate)propertyValue).Method.Name };
+                        }
+                        
+                    }
+
+                    if (propertyValue is Enum enumValue)
+                    {
+                        propertyValue = enumValue.ToString();
                     }
 
                     if (propertyValue is Expression<Func<string>> expression)
@@ -162,13 +248,13 @@ namespace ReactDotNet
                     writer.WriteEndArray();
                 }
 
-                if (value.children.Count > 0)
+                if (value.Children.Count > 0)
                 {
                     writer.WritePropertyName("children");
 
                     writer.WriteStartArray();
 
-                    foreach (var item in value.children)
+                    foreach (var item in value.Children)
                     {
                         JsonSerializer.Serialize(writer, item, options);
                     }
@@ -206,7 +292,7 @@ namespace ReactDotNet
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             {
-                writer.WriteStringValue(value.ToString());
+                writer.WriteStringValue(value.ToString().ToLower());
             }
             #endregion
         }
@@ -221,7 +307,7 @@ namespace ReactDotNet
             #endregion
         }
 
-        class UnionConverter<B> : JsonConverter<Union<string, B>> where B : Enum
+        class Union_String_Enum_Converter<B> : JsonConverter<Union<string, B>> where B : Enum
         {
             #region Public Methods
             public override Union<string, B> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

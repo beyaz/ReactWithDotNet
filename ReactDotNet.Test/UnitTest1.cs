@@ -48,6 +48,25 @@ namespace ReactDotNet
         }
 
         [TestMethod]
+        public void SerializeBasicDiv()
+        {
+            var div = new div("B");
+
+            var actual = ToJson(div);
+
+            var expected = @"
+{
+  ""tag"": ""div"",
+  ""className"": ""B"",
+  ""reactAttributes"": [
+    ""className""
+  ]
+}
+";
+            actual.Trim().Should().Be(expected.Trim());
+        }
+
+        [TestMethod]
         public void SerializeComponentWithProperties()
         {
             var state = new SampleModelAContainer();

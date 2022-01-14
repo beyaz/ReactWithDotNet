@@ -286,6 +286,55 @@ namespace ReactDotNet
         public int height { get; set; }
     }
 
+    public class HPanel : div
+    {
+        public override string Tag => nameof(div);
+
+        public HPanel()
+        {
+            style.Display = Display.Flex;
+            style.FlexDirection = FlexDirection.Row;
+            style.AlignItems = AlignItems.Stretch;
+            style.Width = "100%";
+        }
+
+        protected internal override void BeforeSerialize()
+        {
+            var children = Children;
+
+            if (children.Any(x => x.gravity.HasValue))
+            {
+                children.ForEach(child => { child.style.Width = GravityCalculator.CalculateGravity(child, children) * 100 + "%"; });
+            }
+
+            UniqueKeyInitializer.InitializeKeyIfNotExists(children);
+        }
+    }
+
+    public class VPanel : div
+    {
+        public override string Tag => nameof(div);
+
+        public VPanel()
+        {
+            style.Display = Display.Flex;
+            style.FlexDirection = FlexDirection.Column;
+            style.AlignItems = AlignItems.Stretch;
+            style.Height = "100%";
+        }
+
+        protected internal override void BeforeSerialize()
+        {
+            var children = Children;
+
+            if (children.Any(x => x.gravity.HasValue))
+            {
+                children.ForEach(child => { child.style.Height = GravityCalculator.CalculateGravity(child, children) * 100 + "%"; });
+            }
+
+            UniqueKeyInitializer.InitializeKeyIfNotExists(children);
+        }
+    }
     public class Panel : Element
     {
         public List<Element> Cols { get; } = new List<Element>();

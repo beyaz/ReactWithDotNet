@@ -8,6 +8,17 @@
         document.addEventListener('DOMContentLoaded', callback);
     }
 
+    function IterateObject(obj, fn)
+    {
+        for (var key in obj)
+        {
+            if (obj.hasOwnProperty(key))
+            {
+                fn(key, obj[key]);
+            }
+        }
+    }
+
     function GetValueInPath(obj, steps)
     {
         var len = steps.length;
@@ -111,9 +122,9 @@
             {
                 var remoteMethodName = value.remoteMethodName;
 
-                props[propName] = function (e)
+                props[propName] = function ()
                 {
-                    HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArgument: e });
+                    HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: Array.prototype.slice.call(arguments) });
                 }
 
                 return true;
@@ -203,12 +214,55 @@
         return createElement(constructorFunction, props);
     }
 
+    function NormalizeEventArguments(eventArguments)
+    {
+        function normalizeEventArgument(obj)
+        {
+            var eventArgument = {};
+
+            var hasArgument = false;
+            IterateObject(obj, function (key, value)
+            {
+                if (key === 'originalEvent')
+                {
+                    return;
+                }
+
+                eventArgument[key] = value;
+
+                hasArgument = true;
+            });
+
+            if (hasArgument === false)
+            {
+                return null;
+            }
+
+            return eventArgument;
+        }
+
+        var length = eventArguments.length;
+
+        for (var i = 0; i < length; i++)
+        {
+            eventArguments[i] = normalizeEventArgument(eventArguments[i]);
+        }
+
+        if (length === 1)
+        {
+            if (eventArguments[0] === null)
+            {
+                return [];
+            }
+        }
+
+        return eventArguments;
+    }
+
     function HandleAction(data)
     {
         var remoteMethodName = data.remoteMethodName;
         var component = data.component;
-        var eventArgument = data.eventArgument;
-
 
         var request =
         {
@@ -217,6 +271,20 @@
             FullName: component.constructor.fullName,
             stateAsJson: JSON.stringify(component.state.$state)
         };
+
+        var eventArguments = NormalizeEventArguments(data.eventArguments);
+
+        if (eventArguments.length > 0)
+        {
+            var length = eventArguments.length;
+
+            for (var i = 0; i < length; i++)
+            {
+                eventArguments[i] = JSON.stringify(eventArguments[i]);
+            }
+
+            request.eventArgumentsAsJsonArray = eventArguments;
+        }
 
         function onSuccess(response)
         {

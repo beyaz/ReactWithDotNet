@@ -12,14 +12,20 @@ namespace ReactDotNet
     /// </summary>
     public abstract class Element : IEnumerable<Element>
     {
-        
+        internal protected virtual void BeforeSerialize()
+        {
+        }
 
         #region Fields
         /// <summary>
         ///     The children
         /// </summary>
-        protected internal readonly List<Element> children = new List<Element>();
+        readonly List<Element> children = new List<Element>();
+
+        [JsonIgnore]
+        public List<Element> Children => children;
         #endregion
+
 
         #region Constructors
         /// <summary>
@@ -109,9 +115,9 @@ namespace ReactDotNet
         #endregion
     }
 
-    public abstract class HtmlElement:Element
+    public abstract class HtmlElement : Element
     {
-        public string Tag => GetType().Name.ToLower();
+        public virtual string Tag => GetType().Name.ToLower();
     }
 
     public abstract class ThirdPartyComponent: Element

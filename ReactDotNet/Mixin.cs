@@ -19,7 +19,5 @@ namespace ReactDotNet
         {
             return JsonSerializationOptionHelper.Modify(options);
         }
-
-        
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using ReactDotNet.PrimeReact;
 using InputText = ReactDotNet.PrimeReact.InputText;
 using  static ReactDotNet.Mixin;
+using ReactDotNet.MaterialUI;
 
 namespace ReactDotNet.Demo.TodoSample
 {
@@ -15,6 +16,10 @@ namespace ReactDotNet.Demo.TodoSample
         public string AnyName { get; set; }
 
         public string B { get; set; }
+
+        public string SelectedTabName { get; set; }
+
+        public int SelectedTabIndex { get; set; }
 
     }
 
@@ -34,7 +39,8 @@ namespace ReactDotNet.Demo.TodoSample
                     new TodoRecord { Id = 2, Text = "2" }
                 },
                 AnyName = "NameX",
-                B = "B"
+                B = "B",
+                SelectedTabName = "None"
             };
         }
         #endregion
@@ -44,9 +50,21 @@ namespace ReactDotNet.Demo.TodoSample
         public override Element render()
         {
 
-           
+            var countries = new[] {
+            new { name= "Australia", code= "AU" },
+            new { name = "Brazil", code = "BR" },
+            new { name = "China", code = "CN" },
+            new { name = "Egypt", code = "EG" },
+            new { name = "France", code = "FR" },
+            new { name = "Germany", code = "DE" },
+            new { name = "India", code = "IN" },
+            new { name = "Japan", code = "JP" },
+            new { name = "Spain", code = "ES" },
+            new { name = "United States", code = "US" }
+            };
 
-            return new div("className-"+state.Records.Count)
+
+            return new div("className-" + state.Records.Count)
             {
                 new InputText
                 {
@@ -65,9 +83,68 @@ namespace ReactDotNet.Demo.TodoSample
                 {
                     value = state.B,
                     rows = 3
-                    
+
                 },
+                //new MaterialUI.Autocomplete{ 
+                //    value  = "aa" , 
+                //    options       = new []{"A","B"}, 
+                //    renderInput =()=> new MaterialUI.TextField{}
+
+                //},
+
+                new Button{ label = state.SelectedTabName},
+                new MaterialUI.TextField{ valueBind = ()=>state.B, variant = TextFieldVariant.outlined  },
+                new TabView()
+                {
+                    // onTabChange = OnTabChange,
+                    onTabChange = (e)=>{ OnTabChange(e); },
+                    activeIndex = state.SelectedTabIndex,
+                    Children={
+                         new TabPanel
+                    {
+                        header = "tab1",
+                        Children =
+                             {
+                                 new VPanel
+                                 {
+                                    new Button(){label ="A"},
+                                    new Button(){label ="BB"},
+                                    new ListBox{
+                                        options=countries,
+                                        value="FR" ,                                        
+                                        onChange= e => state.SelectedTabName ="Aloha"+ e.value,
+                                        optionLabel = "name",
+                                        optionValue =  "code",
+                                        filter = true,
+                                        //itemTemplate={this.countryTemplate} 
+                                        //style={{ width: '15rem' }}
+                                        listStyle={ MaxHeight = "250px" }
+                                    }
+
+                                 },
+                               
+                                 new HPanel
+                                 {
+                                     new Button(){label ="C"},
+                                     new Button(){label ="d"}
+                                 }
+                             }
+                    },
+                    new TabPanel
+                    {
+                        header = "tab2"
+                    }
+                    }
+                }
+
             };
+        }
+
+        void OnTabChange(TabViewTabChangeParams e)
+        {
+            state.SelectedTabIndex = e.index;
+
+            state.SelectedTabName = "SelectedIndexş:" + e.index;
         }
 
         void Update()

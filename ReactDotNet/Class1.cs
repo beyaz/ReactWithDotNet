@@ -64,7 +64,7 @@ namespace ReactDotNet
         /// <summary>
         /// The CSS flex-direction property specifies how flex items are placed in t
         /// </summary>
-        public FlexDirection FlexDirection;
+        public Union<string, FlexDirection> FlexDirection { get; set; }
 
 
         /// <summary>
@@ -80,6 +80,7 @@ namespace ReactDotNet
         public string  Width { get; set; }
 
         public Union<string, AlignContent> AlignContent { get; set; }
+        public string MaxHeight { get; set; }
     }
 
     public enum AlignContent

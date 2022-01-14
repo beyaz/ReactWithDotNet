@@ -1,10 +1,8 @@
 ﻿using System;
-using Bridge;
-using Bridge.Html5;
 
 namespace ReactDotNet.PrimeReact
 {
-    public class TabView : PrimeElementBase
+    public class TabView : ElementBase
     {
         /// <summary>
         ///     Unique identifier of the element.
@@ -33,16 +31,31 @@ namespace ReactDotNet.PrimeReact
         /// </summary>
         [React]
         public bool scrollable { get; set; }
+
+        /// <summary>
+        ///     Callback to invoke when an active tab is changed.
+        /// </summary>
+        [React]
+        public Action<TabViewTabChangeParams> onTabChange { get; set; }
+
+        public TabView(Action<TabViewTabChangeParams> onChange)
+        {
+            onTabChange = onChange;
+        }
+        public TabView()
+        {
+        }
+
+
     }
 
-    [External]
+    [Serializable]
     public class TabViewTabChangeParams
     {
-        public SyntheticEvent<HTMLElement> originalEvent;
-        public int index;
+        public int index { get; set; }
     }
 
-    public class TabPanel : PrimeElementBase
+    public class TabPanel : ElementBase
     {
         /// <summary>
         ///     Orientation of tab headers.
@@ -100,10 +113,6 @@ namespace ReactDotNet.PrimeReact
         [React]
         public object contentStyle { get; set; }
 
-        /// <summary>
-        ///     Callback to invoke when an active tab is changed.
-        /// </summary>
-        [React]
-        public Action<TabViewTabChangeParams> onTabChange { get; set; }
+
     }
 }

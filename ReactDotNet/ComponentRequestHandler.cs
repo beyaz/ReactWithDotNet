@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
+using static System.Array;
 
 namespace ReactDotNet
 {
@@ -13,6 +15,8 @@ namespace ReactDotNet
         public string StateAsJson { get; set; }
         public string MethodName { get; set; }
         public string EventHandlerMethodName { get; set; }
+        public string[] EventArgumentsAsJsonArray { get; set; }
+        
     }
 
     [Serializable]
@@ -56,6 +60,24 @@ namespace ReactDotNet
                 }
             }
 
+            object[] createMethodArguments(MethodInfo methodInfo, IReadOnlyList<string> eventArgumentsAsJsonArray)
+            {
+                var parameterInfoList = methodInfo.GetParameters();
+                if (parameterInfoList.Length == 0)
+                {
+                    return Empty<object>();
+                }
+
+                var eventArguments = new object[parameterInfoList.Length];
+
+                for (var i = 0; i < parameterInfoList.Length; i++)
+                {
+                    eventArguments[i] = JsonSerializer.Deserialize(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
+                }
+
+                return eventArguments;
+            }
+            
             if (request.MethodName == "HandleComponentEvent")
             {
                 var type = findType(request.FullName);
@@ -69,14 +91,13 @@ namespace ReactDotNet
                         setState(type, instance, request.StateAsJson);
 
                         var methodInfo = type.GetMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                        
-                        methodInfo?.Invoke(instance,Array.Empty<object>());
+
+                        methodInfo?.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
 
                         return instance;
                     }
                 }
             }
-
 
             throw new NotImplementedException(request.MethodName);
         }

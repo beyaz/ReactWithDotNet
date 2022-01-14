@@ -5,23 +5,18 @@ namespace ReactDotNet
 {
     static class UniqueKeyInitializer
     {
-      
+        public static void InitializeKeyIfNotExists(IReadOnlyList<Element> siblings)
+        {
+            var key = 0;
 
-        // TODO: check usage
-        //public static void InitializeKeyIfNotExists(IReadOnlyList<ReactElement> siblings)
-        //{
-        //    var key = 0;
-
-        //    foreach (var sibling in siblings)
-        //    {
-                
-
-        //        if (!sibling.Props.ContainsKey("key"))
-        //        {
-        //            sibling.Props["key"] = key++.ToString();
-        //        }
-        //    }
-        //}
+            foreach (var sibling in siblings)
+            {
+                if (sibling.key == null)
+                {
+                    sibling.key = key++.ToString();
+                }
+            }
+        }
     }
 
 
