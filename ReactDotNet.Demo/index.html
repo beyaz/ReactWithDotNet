@@ -6,7 +6,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Disable Cache -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- Disable Cache -->
+
     <title>ReactDotNet Demo</title>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
@@ -68,7 +76,9 @@
 
         //ReactDOM.render(React.createElement(primereact.InputText, { value: 'a' }), document.getElementById('app'));
 
-        ReactDotNet.FetchComponent("ReactDotNet.Demo.TodoSample.TodoRecordListView,ReactDotNet.Demo", onComponentReadyToUse);
+        // ReactDotNet.FetchComponent("ReactDotNet.Demo.TodoSample.TodoRecordListView,ReactDotNet.Demo", onComponentReadyToUse);
+
+        ReactDotNet.FetchComponent("KT_TFS_Commit_Helper.MainView, ReactDotNet.Demo", onComponentReadyToUse);
     });
 
 </script>

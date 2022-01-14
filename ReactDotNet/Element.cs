@@ -62,6 +62,7 @@ namespace ReactDotNet
         [JsonIgnore]
         public MarginThickness Margin { get; }
 
+
         /// <summary>
         ///     Gets or sets the on click.
         /// </summary>

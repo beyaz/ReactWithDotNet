@@ -8,7 +8,7 @@ namespace ReactDotNet
 {
     public static class Mixin
     {
-        public static  readonly JsonNamingPolicy JsonNamingPolicy = JsonNamingPolicy.CamelCase;
+        public static readonly JsonNamingPolicy JsonNamingPolicy =  JsonNamingPolicy.CamelCase;
 
         public static string ToJson(object value)
         {

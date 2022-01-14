@@ -4,6 +4,28 @@ using System.Linq;
 namespace ReactDotNet.PrimeReact
 {
 
+    
+       
+    public class BlockUI : ElementBase
+    {
+        /// <summary>
+        /// Unique identifier of the element.
+        /// </summary>
+        [React]
+        public string id { get; set; }
+
+        /// <summary>
+        /// Controls the blocked state.
+        /// </summary>
+        [React]
+        public bool blocked { get; set; }
+
+
+        [React]
+        public Element template { get; set; }
+        
+
+    }
 
     [Serializable]
     public class ListBoxChangeParams

@@ -16,6 +16,7 @@ namespace ReactDotNet
         {
             options.WriteIndented    = true;
             options.IgnoreNullValues = true;
+            
 
             options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
             options.Converters.Add(new Union_String_Enum_Converter()); 
@@ -224,6 +225,15 @@ namespace ReactDotNet
                         };
                     }
 
+                    if (propertyName != "rootElement" && propertyValue is Element element)
+                    {
+                        propertyValue = new InnerElementInfo
+                        {
+                            IsElement = true,
+                            Element = element
+                        };
+                    }
+
                     JsonSerializer.Serialize(writer, propertyValue, options);
 
                     if (value is ThirdPartyComponent || value is HtmlElement)
@@ -280,6 +290,14 @@ namespace ReactDotNet
             public string[] SourcePath { get; set; }
             public string TargetProp { get; set; }
             #endregion
+        }
+
+        class InnerElementInfo
+        {
+            public Element Element{ get; set; }
+
+            [JsonPropertyName("$isElement")]
+            public bool IsElement { get; set; }
         }
 
         class EnumToStringConverter<T> : JsonConverter<T>

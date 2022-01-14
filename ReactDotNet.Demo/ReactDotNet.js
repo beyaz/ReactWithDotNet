@@ -133,6 +133,19 @@
             return false;
         }
 
+        function tryProcessAsElement(propName)
+        {
+            var value = jsonNode[propName];
+            if (value.$isElement === true)
+            {
+                props[propName] = ConvertToReactElement(value.element, component)
+
+                return true;
+            }
+
+            return false;
+        }
+
         function tryProcessAsBinding(propName)
         {
             /*
@@ -186,6 +199,13 @@
                 continue;
             }
 
+            var processedAsTemplate = tryProcessAsElement(propName);
+            if (processedAsTemplate)
+            {
+                continue;
+            }
+            
+
             if (name.indexOf('bind$') === 0)
             {
                 continue;
@@ -218,6 +238,11 @@
     {
         function normalizeEventArgument(obj)
         {
+            if (obj && obj._reactName === 'onClick')
+            {
+                return null;
+            }
+
             var eventArgument = {};
 
             var hasArgument = false;
@@ -288,6 +313,27 @@
 
         function onSuccess(response)
         {
+            var clientTask = response.state.clientTask;
+            if (clientTask)
+            {
+                response.state.clientTask = null;
+
+                if (clientTask.comebackWithLastAction)
+                {
+                    var afterSetState = function ()
+                    {
+                        HandleAction(data);
+                    };
+
+                    data.component.setState({
+                        $rootNode: response.rootElement,
+                        $state: response.state
+                    }, afterSetState);
+
+                    return;
+                }
+            }
+
             data.component.setState({
                 $rootNode: response.rootElement,
                 $state: response.state

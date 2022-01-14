@@ -48,8 +48,15 @@ namespace ReactDotNet.Demo
             app.UseFileServer(new FileServerOptions
             {
                 FileProvider       = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "")),
-                // RequestPath        = "/",
-                EnableDefaultFiles = true
+                EnableDefaultFiles = true,
+                StaticFileOptions =
+                {
+                    HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
+                    OnPrepareResponse = (e) =>
+                    {
+                        e.ToString();
+                    }
+                }
             });
 
             // app.UseAuthorization();

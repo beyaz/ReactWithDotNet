@@ -25,7 +25,7 @@ namespace ReactDotNet
         /// <summary>
         /// The margin-left CSS property of an element sets the margin space required on the left side of a box associated with an element. A negative value is also allowed.
         /// </summary>
-        public string MarginLeft;
+        public string MarginLeft { get; set; }
         /// <summary>
         /// The margin-right CSS property of an element sets the margin space required on the right side of an element. A negative value is also allowed.
         /// </summary>
@@ -61,6 +61,8 @@ namespace ReactDotNet
         /// </summary>
         public Union<string, Display> Display { get; set; }
 
+        public Union<string, JustifyContent> JustifyContent { get; set; }
+
         /// <summary>
         /// The CSS flex-direction property specifies how flex items are placed in t
         /// </summary>
@@ -81,8 +83,22 @@ namespace ReactDotNet
 
         public Union<string, AlignContent> AlignContent { get; set; }
         public string MaxHeight { get; set; }
-    }
 
+        public string Color { get; set; }
+    }
+    public enum JustifyContent
+    {
+        Inherit,
+        [Name("flex-start")]
+        FlexStart,
+        [Name("flex-end")]
+        FlexEnd,
+        Center,
+        [Name("space-between")]
+        SpaceBetween,
+        [Name("space-around")]
+        SpaceAround
+    }
     public enum AlignContent
     {
         None,
