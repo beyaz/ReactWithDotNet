@@ -311,10 +311,11 @@ namespace ReactDotNet
         }
     }
 
-    public class VPanel : div
+    
+    public sealed class VPanel : div
     {
         public override string Tag => nameof(div);
-
+        
         public VPanel()
         {
             style.Display = Display.Flex;

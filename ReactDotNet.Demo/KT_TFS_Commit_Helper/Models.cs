@@ -37,6 +37,8 @@ namespace KT_TFS_Commit_Helper
         public bool IsBlocked { get;  set; }
 
         public ClientTask ClientTask { get; set; } 
+
+        public bool CanShowSuccessIcon { get; set; }
     }
 
 
@@ -69,15 +71,6 @@ namespace KT_TFS_Commit_Helper
         }
         public override Element render()
         {
-            static div makeCenter(div div)
-            {
-                div.style.Display = Display.Flex;
-                div.style.JustifyContent = JustifyContent.Center;
-                div.style.AlignItems = AlignItems.Center;
-
-                return div;
-            }
-
             void Push()
             {
                 if (state.IsBlocked == false)
@@ -87,49 +80,63 @@ namespace KT_TFS_Commit_Helper
                     return;
                 }
 
-                Thread.Sleep(13000);
+                Thread.Sleep(3000);
 
                 state.IsBlocked = false;
+                state.CanShowSuccessIcon = true;
             }
 
             return new BlockUI
             {
                 blocked = state.IsBlocked,
-                template = makeCenter(new div { new i { className = "pi pi-spin pi-spinner" }, new div { Margin = { Left = 5}, style = { Color = "White" }, text = "pushing..." } }),
+                template = new div { new i { className = "pi pi-spin pi-spinner" }, new div { Margin = { Left = 5}, style = { Color = "White" }, text = "pushing..." } }.MakeCenter(),
                 Children =
                 {
-                    new HPanel
-                    {
-                        new ListBox
+                    new div
+                    {                    
+                        new HPanel
                         {
-                            options=state.Solutions,
-                            value=state.SelectedSolution,
-                            onChange= e => OnSolutionSelected(e.value+ string.Empty),
-                            optionLabel = "name",
-                            optionValue =  "name",
-                            filter = true,
-                            listStyle={ MaxHeight = "250px" }
-                        },
-
-                        new VPanel
-                        {
-                            new InputText{value = state.SelectedSolution},
-                            new HPanel
-                            {
-                                new InputText{value = state.Comment},
-                                new Button{ label = "Push",   onClick = Push }
-                            },
                             new ListBox
                             {
-                                options=state.ChangedFiles,
+                                options=state.Solutions,
+                                value=state.SelectedSolution,
+                                onChange= e => OnSolutionSelected(e.value+ string.Empty),
                                 optionLabel = "name",
                                 optionValue =  "name",
+                                filter = true,
                                 listStyle={ MaxHeight = "250px" }
+                            },
+
+                            new VPanel
+                            {
+                               gravity = 5,
+                               Margin={ Left = 10 },
+                               Children =
+                               {
+                                    new span{text = state.SelectedSolution},
+                                    new HPanel
+                                    {
+                                        new InputText{value = state.Comment, gravity = 5},
+                                        new Button{ label = "Push",   onClick = Push }
+                                    },
+                                    new ListBox
+                                    {
+                                        options=state.ChangedFiles,
+                                        optionLabel = "name",
+                                        optionValue =  "name",
+                                        listStyle={ MaxHeight = "250px" }
+                                    }
+                                }
                             }
-                        }
-                    }
+                        },
+                        new div 
+                        {
+                            new i { className = "pi pi-check-circle" }, 
+                            new div { Margin = { Left = 5}, text = "Success" } 
+                        }.MakeCenter().IsVisible(state.CanShowSuccessIcon)
+                    }.HasBorder()
                 }
-             };
+            };
         }
     }
 }

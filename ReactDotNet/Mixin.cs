@@ -19,5 +19,37 @@ namespace ReactDotNet
         {
             return JsonSerializationOptionHelper.Modify(options);
         }
+
+
+        public static T Gravity<T>(this T element, int gravity) where T: Element
+        {
+            element.gravity = gravity;
+
+            return element;
+        }
+
+        public static T IsVisible<T>(this T element, bool isVisible) where T : Element
+        {
+            element.style.Visibility = isVisible ? Visibility.Visible : Visibility.Collapse;
+
+            return element;
+        }
+
+        public static T MakeCenter<T>(this T element) where T : Element
+        {
+            element.style.Display = Display.Flex;
+            element.style.JustifyContent = JustifyContent.Center;
+            element.style.AlignItems = AlignItems.Center;
+
+            return element;
+        }
+
+        public static T HasBorder<T>(this T element) where T : Element
+        {
+            element.style.Border = "1px solid #ced4da";
+            element.style.BorderRadius = "3px";
+
+            return element;
+        }
     }
 }
