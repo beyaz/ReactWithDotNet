@@ -6,6 +6,11 @@ using static System.Array;
 
 namespace ReactDotNet
 {
+    [Serializable]
+    public class ClientTask
+    {
+        public bool ComebackWithLastAction { get; set; }
+    }
 
 
     [Serializable]

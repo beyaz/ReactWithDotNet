@@ -51,5 +51,29 @@ namespace ReactDotNet
 
             return element;
         }
+
+        public static T Padding<T>(this T element, int padding) where T : Element
+        {
+            element.style.Padding = padding + "px";
+
+            return element;
+        }
+
+        public static T Style<T>(this T element, Action<CSSStyleDeclaration> modifyStyle) where T : Element
+        {
+            modifyStyle(element.style);
+
+            return element;
+        }
+
+        public static string AsPixel(this int value)
+        {
+            return value + "px";
+        }
+
+        public static string AsPixel(this double value)
+        {
+            return value + "px";
+        }
     }
 }

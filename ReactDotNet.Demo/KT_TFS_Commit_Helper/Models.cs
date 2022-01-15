@@ -6,12 +6,7 @@ using System.Threading;
 
 namespace KT_TFS_Commit_Helper
 {
-    [Serializable]
-    public class ClientTask
-    {
-        public bool ComebackWithLastAction{ get; set; }
-    }
-
+   
     [Serializable]
     public class FileInfo
     {
@@ -51,7 +46,17 @@ namespace KT_TFS_Commit_Helper
                 Solutions = new[]
                 {
                     new SolutionInfo{Name="CCO"},
-                    new SolutionInfo{Name="CCA"}
+                    new SolutionInfo{Name="CCA"},
+                    new SolutionInfo{Name="CCA_1"},
+                    new SolutionInfo{Name="CCA_2"},
+                    new SolutionInfo{Name="CCA_3"},
+                    new SolutionInfo{Name="CCA_3"},
+                    new SolutionInfo{Name="CCA_3"},
+                    new SolutionInfo{Name="CCA_3"},
+                    new SolutionInfo{Name="CCA_3"},
+                    new SolutionInfo{Name="CCA_3"},
+                    new SolutionInfo{Name="CCA_3"},
+                    new SolutionInfo{Name="CCA_3"}
                 },
                 ChangedFiles = new FileInfo[0],
             };
@@ -62,6 +67,8 @@ namespace KT_TFS_Commit_Helper
             state.SelectedSolution = solutionName;
             state.Comment = "Deneme";
             state.IsBlocked = false;
+            state.CanShowSuccessIcon = false;
+
             state.ChangedFiles = new[]
             {
                 new FileInfo{ Name = "A.cs"},
@@ -89,11 +96,11 @@ namespace KT_TFS_Commit_Helper
             return new BlockUI
             {
                 blocked = state.IsBlocked,
-                template = new div { new i { className = "pi pi-spin pi-spinner" }, new div { Margin = { Left = 5}, style = { Color = "White" }, text = "pushing..." } }.MakeCenter(),
+                template = new div { new i { className = "pi pi-spin pi-spinner" }, new div { Margin = { Left = 5 }, style = { Color = "White" }, text = "pushing..." } }.MakeCenter(),
                 Children =
                 {
                     new div
-                    {                    
+                    {
                         new HPanel
                         {
                             new ListBox
@@ -104,7 +111,7 @@ namespace KT_TFS_Commit_Helper
                                 optionLabel = "name",
                                 optionValue =  "name",
                                 filter = true,
-                                listStyle={ MaxHeight = "250px" }
+                                // listStyle={ MaxHeight = "250px" }
                             },
 
                             new VPanel
@@ -124,17 +131,18 @@ namespace KT_TFS_Commit_Helper
                                         options=state.ChangedFiles,
                                         optionLabel = "name",
                                         optionValue =  "name",
-                                        listStyle={ MaxHeight = "250px" }
-                                    }
+                                        //listStyle = { MaxHeight = "250px" }
+                                    }.IsVisible(!state.CanShowSuccessIcon).Style(s=>s.MarginTop=10.AsPixel()),
+                                    new div
+                                    {
+                                        new i { className = "pi pi-check-circle" },
+                                        new div { Margin = { Left = 5}, text = "Success" }
+                                    }.MakeCenter().IsVisible(state.CanShowSuccessIcon)
                                 }
                             }
                         },
-                        new div 
-                        {
-                            new i { className = "pi pi-check-circle" }, 
-                            new div { Margin = { Left = 5}, text = "Success" } 
-                        }.MakeCenter().IsVisible(state.CanShowSuccessIcon)
-                    }.HasBorder()
+
+                    }.HasBorder().Padding(5).Style(s=>s.MinHeight=400.AsPixel()).MakeCenter().Style(s=>s.Margin=50.AsPixel())
                 }
             };
         }

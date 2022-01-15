@@ -426,12 +426,5 @@ namespace ReactDotNet
             return (double)gravity / total;
         }
     }
-
-    static class NumberExtensions
-    {
-        public static string AsPixel(this double value)
-        {
-            return value + "px";
-        }
-    }
+   
 }
