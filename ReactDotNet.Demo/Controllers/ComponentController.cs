@@ -11,7 +11,7 @@ namespace ReactDotNet.Demo
         [Route(nameof(HandleRequest))]
         public Element HandleRequest(ComponentRequest request)
         {
-            return ComponentRequestHandler.HandleRequest(request,Type.GetType);
+            return ComponentRequestHandler.HandleRequest(request, Type.GetType);
         }
     }
 }
