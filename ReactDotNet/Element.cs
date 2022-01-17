@@ -14,6 +14,7 @@ namespace ReactDotNet
     {
         internal protected virtual void BeforeSerialize()
         {
+            InitializeKeyIfNotExists(children);
         }
 
         #region Fields

@@ -67,6 +67,60 @@ namespace ReactDotNet
         }
 
         [TestMethod]
+        public void HPanelGravity()
+        {
+            var div = new HPanel { new div("B") { gravity = 4 }, new div("B") };
+
+            var actual = ToJson(div);
+
+            var expected = @"
+{
+  ""tag"": ""div"",
+  ""style"": {
+    ""alignItems"": ""stretch"",
+    ""display"": ""flex"",
+    ""flexDirection"": ""row"",
+    ""width"": ""100%""
+  },
+  ""reactAttributes"": [
+    ""style""
+  ],
+  ""children"": [
+    {
+      ""tag"": ""div"",
+      ""className"": ""B"",
+      ""gravity"": 4,
+      ""key"": ""0"",
+      ""style"": {
+        ""width"": ""80%""
+      },
+      ""reactAttributes"": [
+        ""className"",
+        ""key"",
+        ""style""
+      ]
+    },
+    {
+      ""tag"": ""div"",
+      ""className"": ""B"",
+      ""key"": ""1"",
+      ""style"": {
+        ""width"": ""20%""
+      },
+      ""reactAttributes"": [
+        ""className"",
+        ""key"",
+        ""style""
+      ]
+    }
+  ]
+}
+";
+            actual.Trim().Should().Be(expected.Trim());
+        }
+
+
+        [TestMethod]
         public void SerializeComponentWithProperties()
         {
             var state = new SampleModelAContainer();

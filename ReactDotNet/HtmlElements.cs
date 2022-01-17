@@ -300,14 +300,17 @@ namespace ReactDotNet
 
         protected internal override void BeforeSerialize()
         {
+            base.BeforeSerialize();
+
             var children = Children;
 
             if (children.Any(x => x.gravity.HasValue))
             {
-                children.ForEach(child => { child.style.Width = GravityCalculator.CalculateGravity(child, children) * 100 + "%"; });
+                foreach (var child in children)
+                {
+                    child.style.Width = (GravityCalculator.CalculateGravity(child, children) * 100).AsPercent();
+                }
             }
-
-            UniqueKeyInitializer.InitializeKeyIfNotExists(children);
         }
     }
 
@@ -326,14 +329,17 @@ namespace ReactDotNet
 
         protected internal override void BeforeSerialize()
         {
+            base.BeforeSerialize();
+
             var children = Children;
 
             if (children.Any(x => x.gravity.HasValue))
             {
-                children.ForEach(child => { child.style.Height = GravityCalculator.CalculateGravity(child, children) * 100 + "%"; });
+                foreach (var child in children)
+                {
+                    child.style.Height = (GravityCalculator.CalculateGravity(child, children) * 100).AsPercent();
+                }
             }
-
-            UniqueKeyInitializer.InitializeKeyIfNotExists(children);
         }
     }
     public class Panel : Element

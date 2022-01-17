@@ -75,5 +75,10 @@ namespace ReactDotNet
         {
             return value + "px";
         }
+
+        public static string AsPercent(this double value)
+        {
+            return value.ToString().Replace(",",".") + "%";
+        }
     }
 }
