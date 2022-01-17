@@ -27,7 +27,9 @@ namespace ReactDotNet
     [Serializable]
     public class ComponentResponse
     {
-       
+        public Element Element { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 
     public static class ComponentRequestHandler
@@ -36,20 +38,24 @@ namespace ReactDotNet
         {
             return $"{type.FullName},{type.Assembly.GetName().Name}";
         }
-        public static Element HandleRequest(ComponentRequest request, Func<string,Type> findType)
+
+        public static ComponentResponse HandleRequest(ComponentRequest request, Func<string,Type> findType)
         {
-            void setState(Type typeOfInstance,object instance, string stateAsJson)
+            string setState(Type typeOfInstance,object instance, string stateAsJson)
             {
                 var statePropertyInfo = typeOfInstance.GetProperty("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 if (statePropertyInfo == null)
                 {
-                    throw new MissingMemberException(typeOfInstance.FullName, "state");
+                    return $"MissingMember at {typeOfInstance.FullName}::state";
                 }
 
                 var state = JsonSerializer.Deserialize(stateAsJson, statePropertyInfo.PropertyType, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
 
                 statePropertyInfo.SetValue(instance,state);
-            } 
+
+                return null;
+            }
+
             if (request.MethodName == "FetchComponent")
             {
                 var type = findType(request.FullName);
@@ -60,7 +66,7 @@ namespace ReactDotNet
 
                     if (instance != null)
                     {
-                        return instance;
+                        return new ComponentResponse { Element = instance };
                     }
                 }
             }
@@ -86,25 +92,43 @@ namespace ReactDotNet
             if (request.MethodName == "HandleComponentEvent")
             {
                 var type = findType(request.FullName);
-
-                if (type != null)
+                if (type == null)
                 {
-                    var instance = (Element)Activator.CreateInstance(type);
-
-                    if (instance != null)
-                    {
-                        setState(type, instance, request.StateAsJson);
-
-                        var methodInfo = type.GetMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-                        methodInfo?.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
-
-                        return instance;
-                    }
+                    return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
                 }
+                
+                var instance = (Element)Activator.CreateInstance(type);
+                if (instance == null)
+                {
+                    return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
+                }
+               
+                var errorMessage = setState(type, instance, request.StateAsJson);
+                if (errorMessage != null)
+                {
+                    return new ComponentResponse { ErrorMessage = errorMessage };
+                }
+
+                var methodInfo = type.GetMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+                if (methodInfo == null)
+                {
+                    return new ComponentResponse { ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}" };
+                }
+
+                try
+                {
+                    methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
+                }
+                catch (Exception exception)
+                {
+                    return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
+                }
+
+                return new ComponentResponse { Element = instance };   
             }
 
-            throw new NotImplementedException(request.MethodName);
+            return new ComponentResponse { ErrorMessage = $"Not implemented method. {request.MethodName}"};
         }
     }
 }

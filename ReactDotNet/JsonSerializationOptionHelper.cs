@@ -145,6 +145,13 @@ namespace ReactDotNet
                 foreach (var propertyInfo in value.GetType().GetProperties().Where(x => x.GetCustomAttribute<JsonIgnoreAttribute>() == null))
                 {
                     var propertyValue = propertyInfo.GetValue(value);
+
+                    var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
+                    if (reactDefaultValueAttribute != null)
+                    {
+                        propertyValue = reactDefaultValueAttribute.DefaultValue;
+                    }
+                    
                     if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
                     {
                         continue;
@@ -215,14 +222,24 @@ namespace ReactDotNet
                             continue;
                         }
 
+                        string defaultValue = null;
+
+                        if (reactDefaultValueAttribute != null)
+                        {
+                            defaultValue = reactDefaultValueAttribute.DefaultValue;
+                        }
+
                         propertyValue = new BindInfo
                         {
                             TargetProp    = reactBindAttribute.TargetProp,
                             EventName     = reactBindAttribute.EventName,
                             SourcePath    = Extensions.Bind(expression).Split('.',StringSplitOptions.RemoveEmptyEntries),
                             IsBinding     = true,
-                            JsValueAccess = reactBindAttribute.JsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries)
+                            JsValueAccess = reactBindAttribute.JsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
+                            DefaultValue  = defaultValue
                         };
+
+                        
                     }
 
                     if (propertyName != "rootElement" && propertyValue is Element element)
@@ -288,7 +305,9 @@ namespace ReactDotNet
             public string[] JsValueAccess { get; set; }
 
             public string[] SourcePath { get; set; }
+
             public string TargetProp { get; set; }
+            public string DefaultValue { get; internal set; }
             #endregion
         }
 

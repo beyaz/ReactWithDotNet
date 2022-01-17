@@ -160,9 +160,12 @@ namespace ReactDotNet
         public string TargetProp { get;  set; }
         public string JsValueAccess { get;  set; }
         public string EventName { get;  set; }
+    }
 
-       
-        
+    [Serializable]
+    public class ReactDefaultValueAttribute : Attribute
+    {        
+       public string DefaultValue { get;  set; }
     }
 
 

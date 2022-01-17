@@ -13,11 +13,17 @@ namespace ReactDotNet.PrimeReact
         public override IReadOnlyList<string> JsLocation => new[] { "primereact", GetType().Name };
     }
 
-    
+
+
     public class InputText : ElementBase
     {
+        static string IfNullThenReturnEmptyString(string value)
+        {
+            return value;
+        }
 
         [React]
+        [ReactDefaultValue(DefaultValue = "" )]
         public string value { get; set; }
 
         [React]
