@@ -146,6 +146,21 @@
             return false;
         }
 
+        function IfNull(value, defaultValue)
+        {
+            if (defaultValue === undefined)
+            {
+                return value;
+            }
+
+            if (value == null)
+            {
+                return defaultValue;
+            }
+
+            return value;
+        }
+
         function tryProcessAsBinding(propName)
         {
             /*
@@ -162,17 +177,18 @@
 
             if (value.$isBinding === true)
             {
-                var targetProp = value.targetProp;
-                var eventName = value.eventName;
-                var sourcePath = value.sourcePath;
+                var targetProp    = value.targetProp;
+                var eventName     = value.eventName;
+                var sourcePath    = value.sourcePath;
                 var jsValueAccess = value.jsValueAccess;
+                var defaultValue  = value.defaultValue;
 
-                props[targetProp] = GetValueInPath(component.state.$state, sourcePath);
+                props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
                 props[eventName] = function (e)
                 {
                     var state = Clone(component.state.$state);
 
-                    SetValueInPath(state, sourcePath, GetValueInPath({e: e}, jsValueAccess));
+                    SetValueInPath(state, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
 
                     component.setState({ $state: state });
                 }
@@ -238,6 +254,11 @@
     {
         function normalizeEventArgument(obj)
         {
+            if (typeof obj === 'string')
+            {
+                return obj;
+            }
+
             if (obj && obj._reactName === 'onClick')
             {
                 return null;
@@ -291,9 +312,9 @@
 
         var request =
         {
-            MethodName: "HandleComponentEvent",
+            MethodName : "HandleComponentEvent",
             EventHandlerMethodName: remoteMethodName,
-            FullName: component.constructor.fullName,
+            FullName   : component.constructor.fullName,
             stateAsJson: JSON.stringify(component.state.$state)
         };
 
@@ -313,21 +334,29 @@
 
         function onSuccess(response)
         {
-            var clientTask = response.state.clientTask;
+            if (response.errorMessage != null)
+            {
+                throw response.errorMessage;
+            }
+
+            var element = response.element;
+
+            var clientTask = element.state.clientTask;
             if (clientTask)
             {
-                response.state.clientTask = null;
+                element.state.clientTask = null;
 
                 if (clientTask.comebackWithLastAction)
                 {
                     var afterSetState = function ()
                     {
-                        HandleAction(data);
+                        request.stateAsJson = JSON.stringify(component.state.$state);
+                        global.ReactDotNet.SendRequest(request, onSuccess);
                     };
 
                     data.component.setState({
-                        $rootNode: response.rootElement,
-                        $state: response.state
+                        $rootNode: element.rootElement,
+                        $state   : element.state
                     }, afterSetState);
 
                     return;
@@ -335,8 +364,8 @@
             }
 
             data.component.setState({
-                $rootNode: response.rootElement,
-                $state: response.state
+                $rootNode: element.rootElement,
+                $state   : element.state
             });
         }
         global.ReactDotNet.SendRequest(request, onSuccess);
@@ -380,7 +409,14 @@
 
         function onSuccess(response)
         {
-            var component = DefineComponent(response);
+            if (response.errorMessage != null)
+            {
+                throw response.errorMessage;
+            }
+
+            var element = response.element;
+
+            var component = DefineComponent(element);
 
             callback(React.createElement(component));
         }
