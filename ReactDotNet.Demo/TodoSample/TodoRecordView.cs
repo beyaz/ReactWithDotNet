@@ -4,7 +4,6 @@ using System.Linq;
 using ReactDotNet.PrimeReact;
 using InputText = ReactDotNet.PrimeReact.InputText;
 using  static ReactDotNet.Mixin;
-using ReactDotNet.MaterialUI;
 
 namespace ReactDotNet.Demo.TodoSample
 {
@@ -93,7 +92,6 @@ namespace ReactDotNet.Demo.TodoSample
                 //},
 
                 new Button{ label = state.SelectedTabName},
-                new MaterialUI.TextField{ valueBind = ()=>state.B, variant = TextFieldVariant.outlined  },
                 new TabView()
                 {
                     // onTabChange = OnTabChange,
