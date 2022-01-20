@@ -45,6 +45,10 @@ namespace ReactDotNet.PrimeReact
         [React]
         public bool? loading { get; set; }
 
+        [React]
+        public bool? disabled { get; set; }
+        
+
         /// <summary>
         /// Name of the loading icon or JSX.Element for loading icon.
         /// </summary>

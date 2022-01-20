@@ -135,7 +135,7 @@ namespace ReactDotNet.Demo.TodoSample
                     }
                 }
 
-            };
+            }.Style(s=>s.Background = "#E7E9EB");
         }
 
         void OnTabChange(TabViewTabChangeParams e)
