@@ -57,6 +57,12 @@ namespace ReactDotNet
         [React]
         public string key { get; set; }
 
+        [React]
+        public string width { get; set; }
+
+        [React]
+        public string height { get; set; }
+
         /// <summary>
         ///     Gets the margin.
         /// </summary>
