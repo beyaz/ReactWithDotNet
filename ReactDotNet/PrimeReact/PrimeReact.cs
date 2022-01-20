@@ -29,8 +29,9 @@ namespace ReactDotNet.PrimeReact
         [React]
         [ReactBind(TargetProp = nameof(value), JsValueAccess = "e.target.value",  EventName = "onChange")]
         public Expression<Func<string>> valueBind { get; set; }
-
-       
+        
+        [React]
+        public string placeholder { get; set; }
     }
     
 

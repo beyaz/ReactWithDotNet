@@ -216,6 +216,8 @@ namespace ReactDotNet
         }
     }
 
+
+
     public class h5 : HtmlElement
     {
         public h5() { }
@@ -434,6 +436,17 @@ namespace ReactDotNet
 
             return (double)gravity / total;
         }
+    }
+
+
+    public class svg : HtmlElement
+    {
+        public string xmlns { get; set; } = "http://www.w3.org/2000/svg";
+    }
+
+    public class path : HtmlElement
+    {
+        public string d { get; set; }
     }
    
 }
