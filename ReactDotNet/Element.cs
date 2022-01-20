@@ -121,6 +121,14 @@ namespace ReactDotNet
             return children.GetEnumerator();
         }
         #endregion
+
+
+        public static Element operator +(Element parent, Element child)  
+        {
+            parent.children.Add(child);
+
+            return parent;  
+        } 
     }
 
     public abstract class HtmlElement : Element

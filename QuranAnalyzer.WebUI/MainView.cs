@@ -59,10 +59,8 @@ namespace QuranAnalyzer.WebUI
             }
 
             var searchText = new span("p-input-icon-right")
-                {
-                    new i("pi pi-search"),
-                    new InputText{placeholder = "ara"}
-                };
+                                + new i("pi pi-search")
+                                + new InputText { placeholder = "ara" };
 
             var factsContainer = new div
             {
@@ -82,9 +80,9 @@ namespace QuranAnalyzer.WebUI
                 }
             };
 
-            var topNav = new div 
-            { 
-                style = {Height ="50px"},
+            var topNav = new div
+            {
+                style = { Height = "50px" },
                 Children =
                 {
                     //new svg
@@ -99,15 +97,17 @@ namespace QuranAnalyzer.WebUI
                     //    }
                     //},
 
-                    new svg
-                    {
-                        viewBox ="0 0 200 20", width = "200px",
-                        Children =
-                        {
-                            new path{d= "M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z", fill = "blue"}
-                        }
-                    }
+                    //new svg
+                    //{
+                    //    viewBox ="0 0 200 20", width = "200px",
+                    //    Children =
+                    //    {
+                    //        new path{d= "M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z", fill = "blue"}
+                    //    }
+                    //}
                     
+                    new svg { viewBox ="0 0 200 20", width = "200px"}
+                        + new path{d= "M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z", fill = "blue"}
                 }
             };
             var main = new div
@@ -116,7 +116,11 @@ namespace QuranAnalyzer.WebUI
                 factsContainer
             };
 
-            return new div { topNav, main };
+            return new div()
+                    + topNav
+                    + main;
         }
     }
 }
+
+// https://codepen.io/Zeeslag/pen/MWpLoKX
