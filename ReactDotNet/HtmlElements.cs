@@ -464,5 +464,15 @@ namespace ReactDotNet
 
       
     }
+
+    public class nav : HtmlElement
+    {
+        public nav() { }
+
+        public nav(string className)
+        {
+            this.className = className;
+        }
+    }
    
 }
