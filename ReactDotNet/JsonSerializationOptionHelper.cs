@@ -191,7 +191,11 @@ namespace ReactDotNet
                         propertyName = jsonPropertyNameAttribute.Name;
                     }
 
-                    propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
+                    if (options.PropertyNamingPolicy != null)
+                    {
+                        propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
+                    }
+                    
 
                     writer.WritePropertyName(propertyName);
 
@@ -354,15 +358,24 @@ namespace ReactDotNet
 
             public override void Write(Utf8JsonWriter writer, Union<string, B> value, JsonSerializerOptions options)
             {
+                void writeStringValue(string v)
+                {
+                    if (options.PropertyNamingPolicy != null)
+                    {
+                        v = options.PropertyNamingPolicy.ConvertName(v);
+                    }
+                    writer.WriteStringValue(v);
+                }
+
                 var rawValue = GetValueFromUnion(value);
 
                 if (rawValue is string str)
                 {
-                    writer.WriteStringValue(options.PropertyNamingPolicy.ConvertName(str));
+                    writeStringValue(str);
                     return;
                 }
 
-                writer.WriteStringValue(options.PropertyNamingPolicy.ConvertName(rawValue.ToString()));
+                writeStringValue(rawValue.ToString());
             }
             #endregion
         }
