@@ -9,12 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ReactDotNet.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Events\" />
   </ItemGroup>
 

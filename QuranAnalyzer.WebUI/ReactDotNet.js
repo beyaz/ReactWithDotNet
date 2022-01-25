@@ -99,7 +99,7 @@
             props = {};
         }
 
-        var constructorFunction = jsonNode.tag;
+        var constructorFunction = jsonNode.tagName;
         if (jsonNode.jsLocation)
         {
             constructorFunction = GetValueInPath(window, jsonNode.jsLocation);

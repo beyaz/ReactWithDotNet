@@ -283,17 +283,11 @@ namespace ReactDotNet
 
         [React]
         public string alt { get; set; }
-
-        [React]
-        public int width { get; set; }
-
-        [React]
-        public int height { get; set; }
     }
 
     public class HPanel : div
     {
-        public override string Tag => nameof(div);
+        public override string tagName => nameof(div);
 
         public HPanel()
         {
@@ -322,7 +316,7 @@ namespace ReactDotNet
     
     public sealed class VPanel : div
     {
-        public override string Tag => nameof(div);
+        public override string tagName => nameof(div);
         
         public VPanel()
         {

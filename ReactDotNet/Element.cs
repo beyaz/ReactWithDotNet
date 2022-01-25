@@ -133,7 +133,7 @@ namespace ReactDotNet
 
     public abstract class HtmlElement : Element
     {
-        public virtual string Tag => GetType().Name.ToLower();
+        public virtual string tagName => GetType().Name.ToLower();
     }
 
     public abstract class ThirdPartyComponent: Element
