@@ -56,7 +56,7 @@ namespace ReactDotNet
 
             var expected = @"
 {
-  ""tag"": ""div"",
+  ""tagName"": ""div"",
   ""className"": ""B"",
   ""reactAttributes"": [
     ""className""
@@ -75,7 +75,7 @@ namespace ReactDotNet
 
             var expected = @"
 {
-  ""tag"": ""div"",
+  ""tagName"": ""div"",
   ""style"": {
     ""alignItems"": ""stretch"",
     ""display"": ""flex"",
@@ -87,7 +87,7 @@ namespace ReactDotNet
   ],
   ""children"": [
     {
-      ""tag"": ""div"",
+      ""tagName"": ""div"",
       ""className"": ""B"",
       ""gravity"": 4,
       ""key"": ""0"",
@@ -101,7 +101,7 @@ namespace ReactDotNet
       ]
     },
     {
-      ""tag"": ""div"",
+      ""tagName"": ""div"",
       ""className"": ""B"",
       ""key"": ""1"",
       ""style"": {
@@ -130,7 +130,7 @@ namespace ReactDotNet
                 new div("B"),
                 new div("C")
                 {
-                    style = { PaddingLeft = "5px" }
+                    style = { paddingLeft = "5px" }
                 },
                 new img { src                    = "a.png", width = 3, onClick = onClicked },
                 new PrimeReact.InputText { value = "abc" },

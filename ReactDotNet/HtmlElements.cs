@@ -23,11 +23,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.MarginLeft = value.Value.AsPixel();
+                    style.marginLeft = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.MarginLeft = null;
+                    style.marginLeft = null;
                 }
             }
         }
@@ -38,11 +38,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.MarginTop = value.Value.AsPixel();
+                    style.marginTop = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.MarginTop = null;
+                    style.marginTop = null;
                 }
             }
         }
@@ -53,11 +53,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.MarginRight = value.Value.AsPixel();
+                    style.marginRight = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.MarginRight = null;
+                    style.marginRight = null;
                 }
             }
         }
@@ -68,11 +68,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.MarginBottom = value.Value.AsPixel();
+                    style.marginBottom = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.MarginBottom = null;
+                    style.marginBottom = null;
                 }
             }
         }
@@ -94,11 +94,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.PaddingLeft = value.Value.AsPixel();
+                    style.paddingLeft = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.PaddingLeft = null;
+                    style.paddingLeft = null;
                 }
             }
         }
@@ -109,11 +109,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.PaddingTop = value.Value.AsPixel();
+                    style.paddingTop = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.PaddingTop = null;
+                    style.paddingTop = null;
                 }
             }
         }
@@ -124,11 +124,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.PaddingRight = value.Value.AsPixel();
+                    style.paddingRight = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.PaddingRight = null;
+                    style.paddingRight = null;
                 }
             }
         }
@@ -139,11 +139,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.PaddingBottom = value.Value.AsPixel();
+                    style.paddingBottom = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.PaddingBottom = null;
+                    style.paddingBottom = null;
                 }
             }
         }
@@ -283,6 +283,13 @@ namespace ReactDotNet
 
         [React]
         public string alt { get; set; }
+
+        [React]
+        public int width { get; set; }
+
+        
+        [React]
+        public int height { get; set; }
     }
 
     public class HPanel : div
@@ -291,10 +298,10 @@ namespace ReactDotNet
 
         public HPanel()
         {
-            style.Display = Display.Flex;
-            style.FlexDirection = FlexDirection.Row;
-            style.AlignItems = AlignItems.Stretch;
-            style.Width = "100%";
+            style.display = Display.flex;
+            style.flexDirection = FlexDirection.row;
+            style.alignItems = AlignItems.stretch;
+            style.width = "100%";
         }
 
         protected internal override void BeforeSerialize()
@@ -307,7 +314,7 @@ namespace ReactDotNet
             {
                 foreach (var child in children)
                 {
-                    child.style.Width = (GravityCalculator.CalculateGravity(child, children) * 100).AsPercent();
+                    child.style.width = (GravityCalculator.CalculateGravity(child, children) * 100).AsPercent();
                 }
             }
         }
@@ -320,10 +327,10 @@ namespace ReactDotNet
         
         public VPanel()
         {
-            style.Display = Display.Flex;
-            style.FlexDirection = FlexDirection.Column;
-            style.AlignItems = AlignItems.Stretch;
-            style.Height = "100%";
+            style.display = Display.flex;
+            style.flexDirection = FlexDirection.column;
+            style.alignItems = AlignItems.stretch;
+            style.height = "100%";
         }
 
         protected internal override void BeforeSerialize()
@@ -336,7 +343,7 @@ namespace ReactDotNet
             {
                 foreach (var child in children)
                 {
-                    child.style.Height = (GravityCalculator.CalculateGravity(child, children) * 100).AsPercent();
+                    child.style.height = (GravityCalculator.CalculateGravity(child, children) * 100).AsPercent();
                 }
             }
         }

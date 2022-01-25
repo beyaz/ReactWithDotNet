@@ -1,12 +1,12 @@
 {
-  "tag": "div",
+  "tagName": "div",
   "className": "abc",
   "reactAttributes": [
     "className"
   ],
   "children": [
     {
-      "tag": "div",
+      "tagName": "div",
       "className": "B",
       "key": "0",
       "reactAttributes": [
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "tag": "div",
+      "tagName": "div",
       "className": "C",
       "key": "1",
       "style": {
@@ -31,7 +31,7 @@
       "src": "a.png",
       "width": 3,
       "height": 0,
-      "tag": "img",
+      "tagName": "img",
       "key": "2",
       "onClick": {
         "$isRemoteMethod": true,
@@ -89,7 +89,7 @@
       "prop1": "x",
       "prop2": "y",
       "rootElement": {
-        "tag": "div",
+        "tagName": "div",
         "className": "A",
         "reactAttributes": [
           "className"
@@ -99,7 +99,7 @@
             "prop1": "A",
             "prop2": "PropValue2",
             "rootElement": {
-              "tag": "div",
+              "tagName": "div",
               "className": "A",
               "text": "b",
               "reactAttributes": [

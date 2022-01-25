@@ -11,11 +11,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.Height = value.Value.AsPixel();
+                    style.height = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.Height = null;
+                    style.height = null;
                 }
             }
         }
@@ -27,11 +27,11 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.Width = value.Value.AsPixel();
+                    style.width = value.Value.AsPixel();
                 }
                 else
                 {
-                    style.Width = null;
+                    style.width = null;
                 }
             }
         }
