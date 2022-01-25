@@ -47,7 +47,7 @@ namespace ReactDotNet
         public static T HasBorder<T>(this T element) where T : Element
         {
             element.style.border = "1px solid #ced4da";
-            element.style.borderRadius = "3px";
+            element.style.borderRadius = "3px";            
 
             return element;
         }

@@ -308,7 +308,7 @@ namespace ReactDotNet
         {
             base.BeforeSerialize();
 
-            var children = Children;
+            var children = base.children;
 
             if (children.Any(x => x.gravity.HasValue))
             {
@@ -337,7 +337,7 @@ namespace ReactDotNet
         {
             base.BeforeSerialize();
 
-            var children = Children;
+            var children = base.children;
 
             if (children.Any(x => x.gravity.HasValue))
             {

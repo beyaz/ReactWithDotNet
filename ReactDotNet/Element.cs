@@ -21,10 +21,8 @@ namespace ReactDotNet
         /// <summary>
         ///     The children
         /// </summary>
-        readonly List<Element> children = new List<Element>();
+        public readonly List<Element> children = new List<Element>();
 
-        [JsonIgnore]
-        public List<Element> Children => children;
         #endregion
 
 

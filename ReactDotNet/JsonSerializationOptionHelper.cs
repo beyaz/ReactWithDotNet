@@ -273,13 +273,13 @@ namespace ReactDotNet
                     writer.WriteEndArray();
                 }
 
-                if (value.Children.Count > 0)
+                if (value.children.Count > 0)
                 {
                     writer.WritePropertyName("children");
 
                     writer.WriteStartArray();
 
-                    foreach (var item in value.Children)
+                    foreach (var item in value.children)
                     {
                         JsonSerializer.Serialize(writer, item, options);
                     }
