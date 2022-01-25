@@ -8,18 +8,22 @@
     {
       "tag": "div",
       "className": "B",
+      "key": "0",
       "reactAttributes": [
-        "className"
+        "className",
+        "key"
       ]
     },
     {
       "tag": "div",
       "className": "C",
+      "key": "1",
       "style": {
         "paddingLeft": "5px"
       },
       "reactAttributes": [
         "className",
+        "key",
         "style"
       ]
     },
@@ -28,6 +32,7 @@
       "width": 3,
       "height": 0,
       "tag": "img",
+      "key": "2",
       "onClick": {
         "$isRemoteMethod": true,
         "remoteMethodName": "onClicked"
@@ -36,20 +41,24 @@
         "src",
         "width",
         "height",
+        "key",
         "onClick"
       ]
     },
     {
-      "value": "abc",
+      "value": "",
       "jsLocation": [
         "primereact",
         "InputText"
       ],
+      "key": "3",
       "reactAttributes": [
-        "value"
+        "value",
+        "key"
       ]
     },
     {
+      "value": "",
       "valueBind": {
         "eventName": "onChange",
         "$isBinding": true,
@@ -69,8 +78,11 @@
         "primereact",
         "InputText"
       ],
+      "key": "4",
       "reactAttributes": [
-        "valueBind"
+        "value",
+        "valueBind",
+        "key"
       ]
     },
     {
@@ -94,11 +106,13 @@
                 "className"
               ]
             },
-            "fullName": "ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test"
+            "fullName": "ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test",
+            "key": "0"
           }
         ]
       },
-      "fullName": "ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test"
+      "fullName": "ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test",
+      "key": "5"
     }
   ]
 }
