@@ -16,10 +16,9 @@ namespace ReactDotNet
         {
             options.WriteIndented    = true;
             options.IgnoreNullValues = true;
-            
 
             options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
-            options.Converters.Add(new Union_String_Enum_Converter()); 
+            options.Converters.Add(new Union_String_Enum_Converter());
             options.Converters.Add(new JsonConverterForElement());
 
             options.Converters.Add(new JsonConverterForEnum());
@@ -60,7 +59,7 @@ namespace ReactDotNet
                         return true;
                     }
                 }
-                
+
                 return false;
             }
 
@@ -78,7 +77,6 @@ namespace ReactDotNet
                 return converter;
             }
         }
-
 
         public class JsonConverterForEnum : JsonConverterFactory
         {
@@ -151,7 +149,7 @@ namespace ReactDotNet
                     {
                         propertyValue = reactDefaultValueAttribute.DefaultValue;
                     }
-                    
+
                     if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
                     {
                         continue;
@@ -195,7 +193,6 @@ namespace ReactDotNet
                     {
                         propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
                     }
-                    
 
                     writer.WritePropertyName(propertyName);
 
@@ -210,7 +207,6 @@ namespace ReactDotNet
                         {
                             propertyValue = new EventInfo { IsRemoteMethod = true, RemoteMethodName = ((Delegate)propertyValue).Method.Name };
                         }
-                        
                     }
 
                     if (propertyValue is Enum enumValue)
@@ -242,8 +238,6 @@ namespace ReactDotNet
                             JsValueAccess = reactBindAttribute.JsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
                             DefaultValue  = defaultValue
                         };
-
-                        
                     }
 
                     if (propertyName != "rootElement" && propertyValue is Element element)
