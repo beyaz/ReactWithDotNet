@@ -13,16 +13,25 @@ namespace QuranAnalyzer.WebUI
     [Serializable]
     public class MainViewModel
     {
-
+        public string SelectedFact { get; set; }
     }
 
     class MainView : ReactComponent<MainViewModel>
     {
         Theme theme = new Theme();
+        public MainView()
+        {
+            state = new MainViewModel();
+        }
+
+        void OnClicked(string name)
+        {
+            state.SelectedFact = name;
+        }
 
         public override Element render()
         {
-            static Element Fact(string title)
+            static Element Fact(string title, Action onClick)
             {
                 return new div
                 {
@@ -40,6 +49,7 @@ namespace QuranAnalyzer.WebUI
                         textAlign = TextAlign.center,
                         fontFamily = "Verdana,sans-serif"
                     },
+                    onClick = onClick,
                     children =
                     {
                         new div
@@ -67,6 +77,8 @@ namespace QuranAnalyzer.WebUI
                 }.HasBorder();
             }
 
+            
+
             var searchText = new span("p-input-icon-right")
                                 + new i("pi pi-search")
                                 + new InputText { placeholder = "ara" };
@@ -82,16 +94,16 @@ namespace QuranAnalyzer.WebUI
                 },
                 children =
                 {
-                    Fact("Kaf"),
-                    Fact("Ha-Mim"),
-                    Fact("Nun"),
-                    Fact("Ya-sin"),
-                    Fact("Ya-sin"),
-                    Fact("Ya-sin"),
-                    Fact("Ya-sin"),
-                    Fact("Ya-sin"),
-                    Fact("Ya-sin"),
-                    Fact("Ya-sin")
+                    Fact("Kaf", () => OnClicked("Kaf")),
+                    Fact("Ha-Mim", () => OnClicked("Kaf")),
+                    Fact("Nun", () => OnClicked("Nun")),
+                    Fact("Ya-sin", () => OnClicked("Kaf")),
+                    Fact("Ya-sin", () => OnClicked("Kaf")),
+                    Fact("Ya-sin", () => OnClicked("Kaf")),
+                    Fact("Ya-sin", () => OnClicked("Kaf")),
+                    Fact("Ya-sin", () => OnClicked("Kaf")),
+                    Fact("Ya-sin", () => OnClicked("Kaf")),
+                    Fact("Ya-sin", () => OnClicked("Kaf"))
                 }
             };
 
@@ -143,6 +155,25 @@ namespace QuranAnalyzer.WebUI
                 }
                 
             }.HasBorder();
+
+            if (state.SelectedFact== "Kaf")
+            {
+                main = new div
+                {
+                    style = { marginTop = "5px" },
+                    text = "Kaf"
+
+                }.HasBorder();
+            }
+            if (state.SelectedFact== "Nun")
+            {
+                main = new div
+                {
+                    style = { marginTop = "5px" },
+                    text = "Nun"
+
+                }.HasBorder();
+            }
 
             var footer = new div
             {
