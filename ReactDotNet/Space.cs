@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-
+using static ReactDotNet.Mixin;
 namespace ReactDotNet
 {
     public class Space : div
@@ -11,7 +11,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.height = value.Value.AsPixel();
+                    style.height = px(value.Value);
                 }
                 else
                 {
@@ -27,7 +27,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.width = value.Value.AsPixel();
+                    style.width = px(value.Value);
                 }
                 else
                 {

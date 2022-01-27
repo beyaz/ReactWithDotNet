@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static ReactDotNet.Mixin;
 
 namespace ReactDotNet
 {
@@ -23,7 +24,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.marginLeft = value.Value.AsPixel();
+                    style.marginLeft = px(value.Value);
                 }
                 else
                 {
@@ -38,7 +39,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.marginTop = value.Value.AsPixel();
+                    style.marginTop = px(value.Value);
                 }
                 else
                 {
@@ -53,7 +54,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.marginRight = value.Value.AsPixel();
+                    style.marginRight = px(value.Value);
                 }
                 else
                 {
@@ -68,7 +69,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.marginBottom = value.Value.AsPixel();
+                    style.marginBottom = px(value.Value);
                 }
                 else
                 {
@@ -94,7 +95,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.paddingLeft = value.Value.AsPixel();
+                    style.paddingLeft = px(value.Value);
                 }
                 else
                 {
@@ -109,7 +110,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.paddingTop = value.Value.AsPixel();
+                    style.paddingTop = px(value.Value);
                 }
                 else
                 {
@@ -124,7 +125,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.paddingRight = value.Value.AsPixel();
+                    style.paddingRight = px(value.Value);
                 }
                 else
                 {
@@ -139,7 +140,7 @@ namespace ReactDotNet
             {
                 if (value.HasValue)
                 {
-                    style.paddingBottom = value.Value.AsPixel();
+                    style.paddingBottom = px(value.Value);
                 }
                 else
                 {

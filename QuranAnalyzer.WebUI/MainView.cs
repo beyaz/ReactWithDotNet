@@ -1,6 +1,7 @@
 ﻿using ReactDotNet;
 using ReactDotNet.PrimeReact;
 using System;
+using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI
 {
@@ -28,10 +29,10 @@ namespace QuranAnalyzer.WebUI
                     style =
                     {
                         borderRadius = "5px",
-                        width      = 150.AsPixel(),
-                        height     = 200.AsPixel() ,
+                        width      = px(150),
+                        height     = px(200) ,
                         //boxShadow  ="0 4px 8px 0 rgba(0,0,0,0.2)",
-                        margin     = 20.AsPixel(),
+                        margin     = px(20),
                          display = Display.flex,
                         justifyContent = JustifyContent.center,
                         alignItems = AlignItems.center,
@@ -54,7 +55,7 @@ namespace QuranAnalyzer.WebUI
                                      {
                                          wordBreak = WordBreak.break_all,
                                          margin = "15px",
-                                         fontSize=13.AsPixel(),
+                                         fontSize= px(13),
                                          color="#546285"
                                      },
                                      text = "Kısa açıklamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1gtgtgrtrtğ", Margin={ Top=5} }

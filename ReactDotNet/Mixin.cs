@@ -66,12 +66,12 @@ namespace ReactDotNet
             return element;
         }
 
-        public static string AsPixel(this int value)
+        public static string px(int value)
         {
             return value + "px";
         }
 
-        public static string AsPixel(this double value)
+        public static string px(double value)
         {
             return value + "px";
         }
