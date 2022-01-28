@@ -2,6 +2,8 @@
 using ReactDotNet.PrimeReact;
 using System;
 using static ReactDotNet.Mixin;
+using static QuranAnalyzer.Mixin;
+using System.Threading;
 
 namespace QuranAnalyzer.WebUI
 {
@@ -14,6 +16,11 @@ namespace QuranAnalyzer.WebUI
     public class MainViewModel
     {
         public string SelectedFact { get; set; }
+        public string SummaryText { get;  set; }
+
+        public ClientTask ClientTask { get; set; }
+        public string OperationName { get; set; }
+        public bool IsBlocked { get; set; }
     }
 
     class MainView : ReactComponent<MainViewModel>
@@ -29,8 +36,59 @@ namespace QuranAnalyzer.WebUI
             state.SelectedFact = name;
         }
 
+        
+
         public override Element render()
         {
+
+            Element kaf(Action onClick)
+            {
+                var searchBar = new HPanel
+                {
+                    new div
+                    {
+                        new div{text = "Sure:"},
+                        new InputText{value = "42:* // 42. surenin tamamında ar",}
+                    },
+                    new div
+                    {
+                        new div{text = "Karaktere"},
+                        new InputText{value = state.SelectedFact}
+                    },
+                    
+                    new Button("p-button-outlined") { text="Ara", onClick = onClick },
+                };
+
+                var results = new TabView
+                {
+                    new TabPanel
+                    {
+                        header = "Özet", 
+                        children = 
+                        {
+                            new div(){text = state.SummaryText},
+                            new HPanel
+                            { 
+                                new div { text = "42. suredeki Kaf harfi geçiş sayısı "},
+                                new pre { text = " '19 ", style = {fontFamily = "'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif", color= "red" } },
+                                new div { text = "x 6' dır."},
+                            }
+                        } 
+                    },
+                    new TabPanel
+                    {
+                        header = "Detaylı Tablo", 
+                        children = 
+                        {
+                            new div(){text = "detaylı tablo"}
+                        } 
+                    }
+                };
+
+                return new div { searchBar, results };
+
+            }
+
             static Element Fact(string title, Action onClick)
             {
                 return new div
@@ -145,7 +203,7 @@ namespace QuranAnalyzer.WebUI
                 (new svg { viewBox = "0 0 20 20", style = { height = "16px", margin = "14px" } }
                 + new path { d = "M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z", fill = "blue" });
 
-            var main = new div
+            Element main = new div
             {
                 style = {marginTop = "5px"},
                 children =
@@ -156,14 +214,24 @@ namespace QuranAnalyzer.WebUI
                 
             }.HasBorder();
 
-            if (state.SelectedFact== "Kaf")
+            void OnKafSelectClicked()
             {
-                main = new div
+                if (state.IsBlocked == false)
                 {
-                    style = { marginTop = "5px" },
-                    text = "Kaf"
+                    state.OperationName = "Hesaplanıyor...";
+                    state.IsBlocked = true;
+                    state.ClientTask = new ClientTask { ComebackWithLastAction = true };
+                    return;
+                }
+                Thread.Sleep(3000);
+                state.IsBlocked = false;
 
-                }.HasBorder();
+                state.SummaryText = "42. suredeki Kaf harfi toplam geçiş adeti <span>19</span> x 6";
+            }
+
+            if (state.SelectedFact == "Kaf")
+            {
+                main = kaf(OnKafSelectClicked).HasBorder();
             }
             if (state.SelectedFact== "Nun")
             {
@@ -181,10 +249,29 @@ namespace QuranAnalyzer.WebUI
                 children = { new div { text = "copyright"} }
             }.HasBorder();
 
-            return new div { style = {background = theme.MainPaperBackgroundColor, marginLeft = "20px", marginRight = "20px"}}
+            Element blockUI(Element content)
+            {
+                return new BlockUI
+                {
+                    blocked = state.IsBlocked,
+                    template = new div
+                    {
+                        new i { className = "pi pi-spin pi-spinner" },
+                        new div { Margin = { Left = 5 }, style = { color = "White" }, text = state.OperationName }
+                    }.MakeCenter(),
+
+                    children =
+                    {
+                        content
+                    }
+                };
+            }
+
+
+            return blockUI(new div { style = {background = theme.MainPaperBackgroundColor, marginLeft = "20px", marginRight = "20px"}}
                     + topNav
                     + main
-                    + footer;
+                    + footer);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using KoranAnalyzer;
+using static QuranAnalyzer.Mixin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuranAnalyzer
@@ -29,20 +29,7 @@ namespace QuranAnalyzer
             GetCountOfCharacter(kaf, new[] { 42 }).Should().Be(57);
         }
 
-        static int GetCountOfCharacter(int characterIndex, int[] chapterNumbers)
-        {
-            var count = 0;
-
-            foreach (var chapterNumber in chapterNumbers)
-            {
-                foreach (var aya in DataAccess.AllSura[chapterNumber - 1].aya)
-                {
-                    count += DataAccess.Analyze(aya).Count(x => x.HarfIndex == characterIndex);
-                }
-            }
-
-            return count;
-        }
+        
 
         [TestMethod]
         public void ye_sin()

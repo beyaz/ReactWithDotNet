@@ -145,10 +145,14 @@ namespace ReactDotNet
                     var propertyValue = propertyInfo.GetValue(value);
 
                     var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
-                    if (reactDefaultValueAttribute != null)
+                    if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
                     {
-                        propertyValue = reactDefaultValueAttribute.DefaultValue;
+                        if (reactDefaultValueAttribute != null)
+                        {
+                            propertyValue = reactDefaultValueAttribute.DefaultValue;
+                        }
                     }
+                   
 
                     if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
                     {

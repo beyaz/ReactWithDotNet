@@ -217,6 +217,15 @@ namespace ReactDotNet
         }
     }
 
+    public class pre : HtmlElement
+    {
+        public pre() { }
+
+        public pre(string className)
+        {
+            this.className = className;
+        }
+    }
 
 
     public class h5 : HtmlElement

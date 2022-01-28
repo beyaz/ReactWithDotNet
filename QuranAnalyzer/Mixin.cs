@@ -1,11 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace QuranAnalyzer
 {
     public static class Mixin
     {
+       public static int GetCountOfCharacter(int characterIndex, int[] chapterNumbers)
+        {
+            var count = 0;
+
+            foreach (var chapterNumber in chapterNumbers)
+            {
+                foreach (var aya in DataAccess.AllSura[chapterNumber - 1].aya)
+                {
+                    count += DataAccess.Analyze(aya).Count(x => x.HarfIndex == characterIndex);
+                }
+            }
+
+            return count;
+        }
+
         public static bool HasValueAndSame(this IReadOnlyList<string> a, IReadOnlyList<string> b)
         {
             if (a==null || b == null)

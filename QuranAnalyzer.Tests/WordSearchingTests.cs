@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using FluentAssertions;
-using KoranAnalyzer;
+using QuranAnalyzer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using static KoranAnalyzer.DataAccess;
+using static QuranAnalyzer.DataAccess;
 using static QuranAnalyzer.Mixin;
 
 namespace QuranAnalyzer
