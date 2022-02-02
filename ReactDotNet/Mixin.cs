@@ -59,12 +59,20 @@ namespace ReactDotNet
             return element;
         }
 
-        public static T Style<T>(this T element, Action<CSSStyleDeclaration> modifyStyle) where T : Element
+        public static T Style<T>(this T element, Action<Style> modifyStyle) where T : Element
         {
             modifyStyle(element.style);
 
             return element;
         }
+
+        public static TParent appendChild<TParent,TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
+        {
+            element.children.Add(child);
+
+            return element;
+        }
+        
 
         public static string px(int value)
         {

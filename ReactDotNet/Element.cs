@@ -84,7 +84,7 @@ namespace ReactDotNet
         ///     Gets the style.
         /// </summary>
         [React]
-        public CSSStyleDeclaration style { get; } = new CSSStyleDeclaration();
+        public Style style { get; private set; } = new Style();
 
         /// <summary>
         ///     'innerText' property of element.
@@ -126,7 +126,17 @@ namespace ReactDotNet
             parent.children.Add(child);
 
             return parent;  
-        } 
+        }
+
+
+        
+        
+        public static Element operator +(Element element, Style style)  
+        {
+            element.style = style;
+
+            return element;  
+        }
     }
 
     public abstract class HtmlElement : Element

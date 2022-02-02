@@ -65,7 +65,7 @@ namespace ReactDotNet.PrimeReact
         /// <summary>
         ///     Style of the tooltip.
         /// </summary>
-        public readonly CSSStyleDeclaration style = new CSSStyleDeclaration();
+        public readonly Style style = new Style();
 
         /// <summary>
         ///     Defines which position on the tooltip being positioned to align with the target element.

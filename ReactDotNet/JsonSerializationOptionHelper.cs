@@ -159,7 +159,7 @@ namespace ReactDotNet
                         continue;
                     }
 
-                    if (propertyValue is CSSStyleDeclaration style)
+                    if (propertyValue is Style style)
                     {
                         bool hasValue(PropertyInfo x)
                         {
@@ -179,7 +179,7 @@ namespace ReactDotNet
 
                             return !value.Equals(defaultValue);
                         }
-                        if (!typeof(CSSStyleDeclaration).GetProperties().Any(hasValue))
+                        if (!typeof(Style).GetProperties().Any(hasValue))
                         {
                             continue;
                         }

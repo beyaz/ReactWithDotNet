@@ -11,9 +11,9 @@ namespace ReactDotNet
     [Serializable]
     public sealed class MarginThickness
     {
-        readonly CSSStyleDeclaration style;
+        readonly Style style;
 
-        public MarginThickness(CSSStyleDeclaration style)
+        public MarginThickness(Style style)
         {
             this.style = style;
         }
@@ -82,9 +82,9 @@ namespace ReactDotNet
     [Serializable]
     public sealed class PaddingThickness
     {
-        readonly CSSStyleDeclaration style;
+        readonly Style style;
 
-        public PaddingThickness(CSSStyleDeclaration style)
+        public PaddingThickness(Style style)
         {
             this.style = style;
         }

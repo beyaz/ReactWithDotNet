@@ -73,7 +73,7 @@ namespace ReactDotNet.PrimeReact
         ///     Inline style of inner list element.
         /// </summary>
         [React]
-        public CSSStyleDeclaration listStyle { get; } = new CSSStyleDeclaration();
+        public Style listStyle { get; } = new Style();
         
 
 
