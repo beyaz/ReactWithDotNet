@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuranAnalyzer
-{
+namespace QuranAnalyzer;
+
+
     public static class Mixin
     {
        public static int GetCountOfCharacter(int characterIndex, int[] chapterNumbers)
@@ -21,6 +22,11 @@ namespace QuranAnalyzer
 
             return count;
         }
+
+       public static int GetCountOfCharacter(string character, int[] chapterNumbers)
+       {
+           return GetCountOfCharacter(Array.IndexOf(DataAccess.harfler,character), chapterNumbers);
+       }
 
         public static bool HasValueAndSame(this IReadOnlyList<string> a, IReadOnlyList<string> b)
         {
@@ -83,4 +89,4 @@ namespace QuranAnalyzer
             return count;
         }
     }
-}
+

@@ -8,6 +8,30 @@ using System.Linq;
 
 namespace QuranAnalyzer.WebUI
 {
+
+   
+
+    static class MixinForUI
+    {
+        public static Element BlockUI(Element content, bool isBlocked, string operationMessage)
+        {
+            return new BlockUI
+            {
+                blocked = isBlocked,
+                template = new div
+                {
+                    new i { className = "pi pi-spin pi-spinner" },
+                    new div { Margin  = { Left = 5 }, style = { color = "White" }, text = operationMessage }
+                }.MakeCenter(),
+
+                children =
+                {
+                    content
+                }
+            };
+        }
+    }
+
     class Theme
     {
         public readonly string MainPaperBackgroundColor = "white";
@@ -29,6 +53,7 @@ namespace QuranAnalyzer.WebUI
     class MainView : ReactComponent<MainViewModel>
     {
         Theme theme = new Theme();
+
         public MainView()
         {
             state = new MainViewModel();
@@ -46,12 +71,19 @@ namespace QuranAnalyzer.WebUI
 
             Element kaf(Action onClick)
             {
+
+                return new FactView{ state = new FactViewModel
+                {
+                    SuraFilter = "42:*",
+                    SearchCharacters = "ق"
+                }};
+
                 var searchBar = new HPanel
                 {
                     new div
                     {
                         new div{text = "Sure:"},
-                        new InputText{value = "42:* // 42. surenin tamamında ar",}
+                        new InputText{value = "42:*",}
                     },
                     new div
                     {
@@ -208,9 +240,12 @@ namespace QuranAnalyzer.WebUI
                     return;
                 }
                 Thread.Sleep(3000);
+
+                var number = QuranAnalyzer.Mixin.GetCountOfCharacter("ف", new[] {42});
+
                 state.IsBlocked = false;
 
-                state.SummaryText = "42. suredeki Kaf harfi toplam geçiş adeti <span>19</span> x 6";
+                state.SummaryText = number+"---42. suredeki Kaf harfi toplam geçiş adeti <span>19</span> x 6";
             }
 
             if (state.SelectedFact == "Kaf")

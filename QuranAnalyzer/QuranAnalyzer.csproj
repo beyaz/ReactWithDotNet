@@ -5,4 +5,8 @@
     <RootNamespace>QuranAnalyzer</RootNamespace>
   </PropertyGroup>
 
+    <PropertyGroup>
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
 </Project>
