@@ -305,6 +305,20 @@
         return eventArguments;
     }
 
+    function GetAvailableWidth()
+    {
+        return window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+    }
+
+    function GetAvailableHeight()
+    {
+        return window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+    }
+
     function HandleAction(data)
     {
         var remoteMethodName = data.remoteMethodName;
@@ -312,7 +326,10 @@
 
         var request =
         {
-            MethodName : "HandleComponentEvent",
+            MethodName: "HandleComponentEvent",
+            AvailableWidth: GetAvailableWidth(),
+            AvailableHeight: GetAvailableHeight(),
+
             EventHandlerMethodName: remoteMethodName,
             FullName   : component.constructor.fullName,
             stateAsJson: JSON.stringify(component.state.$state)
@@ -404,6 +421,9 @@
         var request =
         {
             MethodName: "FetchComponent",
+            AvailableWidth: GetAvailableWidth(),
+            AvailableHeight: GetAvailableHeight(),
+
             FullName: fullNameOfComponent
         };
 

@@ -12,4 +12,8 @@
     <Folder Include="Events\" />
   </ItemGroup>
 
+    <PropertyGroup>
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
 </Project>
