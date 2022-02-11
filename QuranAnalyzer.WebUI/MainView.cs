@@ -48,6 +48,8 @@ namespace QuranAnalyzer.WebUI
         public bool IsBlocked { get; set; }
 
         public bool HamburgerMenuIsOpen { get; set; }
+
+        public double MainDivScrollY { get; set; }
     }
 
     class MainView : ReactComponent<MainViewModel>
@@ -64,6 +66,10 @@ namespace QuranAnalyzer.WebUI
             state.SelectedFact = name;
         }
 
+        void OnMainContentDivScrollChanged()
+        {
+
+        }
         
 
         public override Element render()
@@ -335,18 +341,33 @@ namespace QuranAnalyzer.WebUI
         {
             var top = new div { topContent } + new Style
             { 
-                position       = Position.@fixed, 
+                position       = Position.@fixed,
                 top            = px(0),
                 left = px(0),
 
                 width = "100%",
                 height         = px(50),
                 zIndex = "1",
-                background = "rgb(248, 249, 249)",
-                boxShadow = "0 1px 2px hsla(0,0%,0%,0.05),0 1px 4px hsla(0,0%,0%,0.05),0 2px 8px hsla(0,0%,0%,0.05)"
+                //background = "rgb(248, 249, 249)",
             };
 
-            var main   = new div { mainContent } + new Style 
+            if (state.MainDivScrollY > 0 )
+            {
+                top = new div { topContent } + new Style
+                { 
+                    position = Position.@fixed,
+                    top      = px(0),
+                    left     = px(0),
+
+                    width      = "100%",
+                    height     = px(50),
+                    zIndex     = "1",
+                    //background = "rgb(248, 249, 249)",
+                    boxShadow  = "0 1px 2px hsla(0,0%,0%,0.05),0 1px 4px hsla(0,0%,0%,0.05),0 2px 8px hsla(0,0%,0%,0.05)"
+                };
+            }
+
+            var main   = new div { id="main", children = { mainContent }} + new Style 
             { 
                 position       = Position.@fixed, 
                 top            = px(0),
@@ -373,10 +394,10 @@ namespace QuranAnalyzer.WebUI
 
             if (state.HamburgerMenuIsOpen)
             {
-                return new div {  top, menu,  main, footer } + new Style { height = "100vh" , width = "100%" };
+                return new div {  top, menu,  main,  } + new Style { height = "100vh" , width = "100%" };
             }
 
-            return new div {  top,  main, footer } + new Style { height = "100vh" , width = "100%" };
+            return new div {  top,  main,  } + new Style { height = "100vh" , width = "100%" };
         }
         
 

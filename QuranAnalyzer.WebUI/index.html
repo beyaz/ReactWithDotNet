@@ -75,7 +75,57 @@
             ReactDOM.render(component, document.getElementById('app'));
         }
 
-        ReactDotNet.FetchComponent("QuranAnalyzer.WebUI.MainView,QuranAnalyzer.WebUI", onComponentReadyToUse);
+        var typeNameOfMainView = "QuranAnalyzer.WebUI.MainView,QuranAnalyzer.WebUI";
+
+        ReactDotNet.FetchComponent(typeNameOfMainView, onComponentReadyToUse);
+
+        function componentDidMount(component)
+        {
+            var currentScrollY = 0;
+
+            function handleScroll(e)
+            {
+                var scrollY = e.target.scrollTop;
+
+                function canFireAction()
+                {
+                    if (scrollY > 0)
+                    {
+                        return currentScrollY === 0;
+                    }
+
+                    if (currentScrollY > 0)
+                    {
+                        return true;   
+                    }
+
+                    return false;
+                }
+
+                if (canFireAction())
+                {
+                    currentScrollY = scrollY;
+                    ReactDotNet.HandleAction({ remoteMethodName: 'OnMainContentDivScrollChanged', component: component, eventArguments: [] });
+                }
+                else
+                {
+                    currentScrollY = scrollY;
+                }
+            }
+
+            document.getElementById("main").addEventListener('scroll', handleScroll);
+
+            ReactDotNet.RegisterActionToComponent(typeNameOfMainView, 'beforePostingState', function(state)
+            {
+                state.mainDivScrollY = currentScrollY;
+
+                return state;
+            });
+        }
+
+        ReactDotNet.RegisterActionToComponent(typeNameOfMainView, 'componentDidMount', componentDidMount);
+        
+
     });
 
 </script>

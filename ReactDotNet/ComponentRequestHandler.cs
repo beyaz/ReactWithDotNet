@@ -22,7 +22,8 @@ public class ComponentRequest
     public string EventHandlerMethodName { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
     public double AvailableWidth { get; set; }
-    public double AvailableHeight{ get; set; }
+    public double AvailableHeight { get; set; }
+    public double ScrollY { get; set; }
 }
 
 [Serializable]

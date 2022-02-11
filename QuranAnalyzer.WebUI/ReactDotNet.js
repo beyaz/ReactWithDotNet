@@ -324,6 +324,19 @@
         var remoteMethodName = data.remoteMethodName;
         var component = data.component;
 
+        function getStateAsJson()
+        {
+            var state = component.state.$state;
+
+            var beforePostingState = TryGetComponentAction(component, 'beforePostingState');
+            if (beforePostingState)
+            {
+                state = beforePostingState(Clone(state));
+            }
+
+            return JSON.stringify(state);
+        }
+
         var request =
         {
             MethodName: "HandleComponentEvent",
@@ -332,7 +345,7 @@
 
             EventHandlerMethodName: remoteMethodName,
             FullName   : component.constructor.fullName,
-            stateAsJson: JSON.stringify(component.state.$state)
+            stateAsJson: getStateAsJson()
         };
 
         var eventArguments = NormalizeEventArguments(data.eventArguments);
@@ -388,6 +401,32 @@
         global.ReactDotNet.SendRequest(request, onSuccess);
     }
 
+    var componentActions = {};
+  
+    function GetComponentActionLocation(fullName, actionName)
+    {
+        return fullName + "$" + actionName;
+    }
+
+    function RegisterActionToComponent(fullName, actionName, handlerFunction)
+    {
+        componentActions[GetComponentActionLocation(fullName, actionName)] = handlerFunction;
+    }
+
+    function TryGetComponentAction(component, actionName)
+    {
+        return componentActions[GetComponentActionLocation(component.fullName, actionName)];
+    }
+
+    function TryDispatchComponentAction(component, actionName)
+    {
+        var fn = TryGetComponentAction(component, actionName);
+        if (fn)
+        {
+            return fn(component);
+        }
+    }
+
     function DefineComponent(componentDeclaration)
     {
         class NewComponent extends React.Component
@@ -408,6 +447,16 @@
             render()
             {
                 return ConvertToReactElement(this.state.$rootNode, this);
+            }
+
+            componentDidMount()
+            {
+                TryDispatchComponentAction(this, 'componentDidMount');
+            }
+
+            componentWillUnmount()
+            {
+                TryDispatchComponentAction(this, 'componentWillUnmount');
             }
         }
 
@@ -448,7 +497,9 @@
     {
         OnReady: OnReady,
         DefineComponent: DefineComponent,
-        FetchComponent: FetchComponent
+        FetchComponent: FetchComponent,
+        RegisterActionToComponent: RegisterActionToComponent,
+        HandleAction: HandleAction
     };
 
 })(window,React);
