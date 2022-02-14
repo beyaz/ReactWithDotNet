@@ -4,7 +4,7 @@
     {
         public Element RootElement => render();
 
-        public string FullName => GetType().GetFullName();
+        public string fullName => GetType().GetFullName();
 
         public abstract Element render();
     }

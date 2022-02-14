@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-using System.Linq.Expressions;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static ReactDotNet.Mixin;
@@ -185,7 +183,7 @@ namespace ReactDotNet
         [TestMethod]
         public void Deserialize()
         {
-            var json  = "{\r\n\"clickCount\": 2}";
+            var json  = "{\r\n\"ClickCount\": 2}";
             var state = (SampleModel)JsonSerializer.Deserialize(json, typeof(SampleModel), new JsonSerializerOptions().ModifyForReactDotNet());
 
             state.ClickCount.Should().Be(2);

@@ -158,9 +158,9 @@ namespace ReactDotNet
     [Serializable]
     public class ReactBindAttribute : Attribute
     {
-        public string TargetProp { get;  set; }
-        public string JsValueAccess { get;  set; }
-        public string EventName { get;  set; }
+        public string targetProp { get;  set; }
+        public string jsValueAccess { get;  set; }
+        public string eventName { get;  set; }
     }
 
     [Serializable]

@@ -10,7 +10,7 @@ namespace ReactDotNet.PrimeReact
    
     public class ElementBase : ThirdPartyComponent
     {
-        public override IReadOnlyList<string> JsLocation => new[] { "primereact", GetType().Name };
+        public override IReadOnlyList<string> jsLocation => new[] { "primereact", GetType().Name };
     }
 
 
@@ -27,7 +27,7 @@ namespace ReactDotNet.PrimeReact
         public string value { get; set; }
 
         [React]
-        [ReactBind(TargetProp = nameof(value), JsValueAccess = "e.target.value",  EventName = "onChange")]
+        [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value",  eventName = "onChange")]
         public Expression<Func<string>> valueBind { get; set; }
         
         [React]

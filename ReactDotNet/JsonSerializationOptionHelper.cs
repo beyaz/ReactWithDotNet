@@ -202,14 +202,14 @@ namespace ReactDotNet
 
                     if (propertyValue is Action action)
                     {
-                        propertyValue = new EventInfo { IsRemoteMethod = true, RemoteMethodName = action.Method.Name };
+                        propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name };
                     }
 
                     if (propertyInfo.PropertyType.IsGenericType)
                     {
                         if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
                         {
-                            propertyValue = new EventInfo { IsRemoteMethod = true, RemoteMethodName = ((Delegate)propertyValue).Method.Name };
+                            propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = ((Delegate)propertyValue).Method.Name };
                         }
                     }
 
@@ -235,16 +235,16 @@ namespace ReactDotNet
 
                         propertyValue = new BindInfo
                         {
-                            TargetProp    = reactBindAttribute.TargetProp,
-                            EventName     = reactBindAttribute.EventName,
-                            SourcePath    = Extensions.Bind(expression).Split('.',StringSplitOptions.RemoveEmptyEntries),
+                            targetProp    = reactBindAttribute.targetProp,
+                            eventName     = reactBindAttribute.eventName,
+                            sourcePath    = Extensions.Bind(expression).Split('.',StringSplitOptions.RemoveEmptyEntries),
                             IsBinding     = true,
-                            JsValueAccess = reactBindAttribute.JsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
-                            DefaultValue  = defaultValue
+                            jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
+                            defaultValue  = defaultValue
                         };
                     }
 
-                    if (propertyName != "rootElement" && propertyValue is Element element)
+                    if (propertyName != nameof(ReactComponent.RootElement) && propertyValue is Element element)
                     {
                         propertyValue = new InnerElementInfo
                         {
@@ -299,17 +299,17 @@ namespace ReactDotNet
         class BindInfo
         {
             #region Public Properties
-            public string EventName { get; set; }
+            public string eventName { get; set; }
 
             [JsonPropertyName("$isBinding")]
             public bool IsBinding { get; set; }
 
-            public string[] JsValueAccess { get; set; }
+            public string[] jsValueAccess { get; set; }
 
-            public string[] SourcePath { get; set; }
+            public string[] sourcePath { get; set; }
 
-            public string TargetProp { get; set; }
-            public string DefaultValue { get; internal set; }
+            public string targetProp { get; set; }
+            public string defaultValue { get; internal set; }
             #endregion
         }
 
@@ -342,7 +342,7 @@ namespace ReactDotNet
             [JsonPropertyName("$isRemoteMethod")]
             public bool IsRemoteMethod { get; set; }
 
-            public string RemoteMethodName { get; set; }
+            public string remoteMethodName { get; set; }
             #endregion
         }
 

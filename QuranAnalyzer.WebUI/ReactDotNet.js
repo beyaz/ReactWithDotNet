@@ -138,7 +138,7 @@
             var value = jsonNode[propName];
             if (value.$isElement === true)
             {
-                props[propName] = ConvertToReactElement(value.element, component)
+                props[propName] = ConvertToReactElement(value.Element, component);
 
                 return true;
             }
@@ -345,7 +345,7 @@
 
             EventHandlerMethodName: remoteMethodName,
             FullName   : component.constructor.fullName,
-            stateAsJson: getStateAsJson()
+            StateAsJson: getStateAsJson()
         };
 
         var eventArguments = NormalizeEventArguments(data.eventArguments);
@@ -364,28 +364,28 @@
 
         function onSuccess(response)
         {
-            if (response.errorMessage != null)
+            if (response.ErrorMessage != null)
             {
-                throw response.errorMessage;
+                throw response.ErrorMessage;
             }
 
-            var element = response.element;
+            var element = response.Element;
 
-            var clientTask = element.state.clientTask;
+            var clientTask = element.state.ClientTask;
             if (clientTask)
             {
-                element.state.clientTask = null;
+                element.state.ClientTask = null;
 
-                if (clientTask.comebackWithLastAction)
+                if (clientTask.ComebackWithLastAction)
                 {
                     var afterSetState = function ()
                     {
-                        request.stateAsJson = JSON.stringify(component.state.$state);
+                        request.StateAsJson = JSON.stringify(component.state.$state);
                         global.ReactDotNet.SendRequest(request, onSuccess);
                     };
 
                     data.component.setState({
-                        $rootNode: element.rootElement,
+                        $rootNode: element.RootElement,
                         $state   : element.state
                     }, afterSetState);
 
@@ -394,7 +394,7 @@
             }
 
             data.component.setState({
-                $rootNode: element.rootElement,
+                $rootNode: element.RootElement,
                 $state   : element.state
             });
         }
@@ -437,7 +437,7 @@
 
                 this.state =
                 {
-                    $rootNode: componentDeclaration.rootElement,
+                    $rootNode: componentDeclaration.RootElement,
                     $state: componentDeclaration.state
                 };
 
@@ -478,12 +478,12 @@
 
         function onSuccess(response)
         {
-            if (response.errorMessage != null)
+            if (response.ErrorMessage != null)
             {
-                throw response.errorMessage;
+                throw response.ErrorMessage;
             }
 
-            var element = response.element;
+            var element = response.Element;
 
             var component = DefineComponent(element);
 

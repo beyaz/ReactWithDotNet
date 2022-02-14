@@ -68,9 +68,9 @@
           "value"
         ],
         "sourcePath": [
-          "innerA",
-          "innerB",
-          "text"
+          "InnerA",
+          "InnerB",
+          "Text"
         ],
         "targetProp": "value"
       },
@@ -86,9 +86,9 @@
       ]
     },
     {
-      "prop1": "x",
-      "prop2": "y",
-      "rootElement": {
+      "Prop1": "x",
+      "Prop2": "y",
+      "RootElement": {
         "tagName": "div",
         "className": "A",
         "reactAttributes": [
@@ -96,9 +96,9 @@
         ],
         "children": [
           {
-            "prop1": "A",
-            "prop2": "PropValue2",
-            "rootElement": {
+            "Prop1": "A",
+            "Prop2": "PropValue2",
+            "RootElement": {
               "tagName": "div",
               "className": "A",
               "text": "b",

@@ -150,6 +150,6 @@ namespace ReactDotNet
 
     public abstract class ThirdPartyComponent: Element
     {
-        public abstract IReadOnlyList<string> JsLocation { get; }
+        public abstract IReadOnlyList<string> jsLocation { get; }
     }
 }

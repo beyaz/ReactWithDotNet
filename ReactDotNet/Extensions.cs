@@ -32,7 +32,7 @@ namespace ReactDotNet
 
                 const string Separator = ".";
 
-                return string.Join(Separator, path.Select(Mixin.JsonNamingPolicy.ConvertName));
+                return string.Join(Separator, path);
             }
 
 
