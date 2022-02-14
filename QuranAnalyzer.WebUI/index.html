@@ -31,18 +31,7 @@
 
     <!-- REACT DOT NET -->
     <script src="ReactDotNet.js"></script>
-
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
-        #app {
-            height: 100%;
-        }
-    </style>
-
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 <div id="app">
@@ -115,15 +104,17 @@
 
             document.getElementById("main").addEventListener('scroll', handleScroll);
 
-            ReactDotNet.RegisterActionToComponent(typeNameOfMainView, 'beforePostingState', function(state)
+            function beforePostingState(state)
             {
                 state.mainDivScrollY = currentScrollY;
 
                 return state;
-            });
+            }
+
+            ReactDotNet.RegisterActionToComponent({typeNameOfComponent: typeNameOfMainView, actionName: 'beforePostingState', handlerFunction: beforePostingState });
         }
 
-        ReactDotNet.RegisterActionToComponent(typeNameOfMainView, 'componentDidMount', componentDidMount);
+        ReactDotNet.RegisterActionToComponent({typeNameOfComponent: typeNameOfMainView, actionName: 'componentDidMount', handlerFunction: componentDidMount});
         
 
     });

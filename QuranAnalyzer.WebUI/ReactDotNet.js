@@ -408,9 +408,9 @@
         return fullName + "$" + actionName;
     }
 
-    function RegisterActionToComponent(fullName, actionName, handlerFunction)
+    function RegisterActionToComponent(parameterObject)
     {
-        componentActions[GetComponentActionLocation(fullName, actionName)] = handlerFunction;
+        componentActions[GetComponentActionLocation(parameterObject.typeNameOfComponent, parameterObject.actionName)] = parameterObject.handlerFunction;
     }
 
     function TryGetComponentAction(component, actionName)

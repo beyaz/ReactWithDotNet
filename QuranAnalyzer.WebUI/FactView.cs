@@ -64,7 +64,7 @@ namespace QuranAnalyzer.WebUI;
                 },
                     
                 new Button("p-button-outlined") { text ="Ara", onClick = OnSelectClicked },
-            };
+            } + new Style{ margin = ReactDotNet.Mixin.px(10)};
 
             var results = new TabView
             {
@@ -92,6 +92,6 @@ namespace QuranAnalyzer.WebUI;
                 }
             };
 
-            return MixinForUI.BlockUI(new div { searchBar, results } + new Style { marginTop = ReactDotNet.Mixin.px(55), marginBottom = ReactDotNet.Mixin.px(55)}, state.IsBlocked, state.OperationName);
+            return MixinForUI.BlockUI(new div { searchBar, results } + new Style { marginTop = ReactDotNet.Mixin.px(55), marginBottom = ReactDotNet.Mixin.px(55), padding = "25px"}, state.IsBlocked, state.OperationName);
         }
     }

@@ -1,0 +1,13 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Product Sans',Arial,sans-serif;
+}
+
+#app {
+    height: 100%;
+}
+
+#title {
+    font-size: 22px;
+}
