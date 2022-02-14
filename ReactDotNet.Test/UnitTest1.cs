@@ -123,6 +123,8 @@ namespace ReactDotNet
         [TestMethod]
         public void SerializeComponentWithProperties()
         {
+            
+
             var state = new SampleModelAContainer();
 
             var div = new div("abc")

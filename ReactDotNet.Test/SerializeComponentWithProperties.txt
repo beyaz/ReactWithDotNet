@@ -46,7 +46,7 @@
       ]
     },
     {
-      "value": "",
+      "value": "abc",
       "jsLocation": [
         "primereact",
         "InputText"
