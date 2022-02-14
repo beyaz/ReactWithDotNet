@@ -4,5 +4,5 @@ public class Card : ElementBase
 {
     
     [React]
-    public int title { get; set; }
+    public string title { get; set; }
 }

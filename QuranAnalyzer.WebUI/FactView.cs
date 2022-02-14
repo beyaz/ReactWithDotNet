@@ -50,21 +50,25 @@ namespace QuranAnalyzer.WebUI;
 
         public override Element render()
         {
-            var searchBar = new HPanel
+            var searchBar = new Card
             {
-                new div
-                {
-                    new div{text            = "Sure:"},
-                    new InputText{valueBind = ()=>state.SuraFilter}
-                },
-                new div
-                {
-                    new div{text        = "Aranan Karakterler"},
-                    new InputText{valueBind = ()=>state.SearchCharacters}
-                },
-                    
-                new Button("p-button-outlined") { text ="Ara", onClick = OnSelectClicked },
-            } + new Style{ margin = ReactDotNet.Mixin.px(10)};
+               title = "Arama",
+               children = {  new HPanel
+               {
+                   new div
+                   {
+                       new div {text            = "Sure:"},
+                       new InputText {valueBind = () => state.SuraFilter}
+                   },
+                   new div
+                   {
+                       new div {text            = "Aranan Karakterler"},
+                       new InputText {valueBind = () => state.SearchCharacters}
+                   },
+
+                   new Button("p-button-outlined") {text = "Ara", onClick = OnSelectClicked},
+               } + new Style {margin = ReactDotNet.Mixin.px(10)} }
+            };
 
             var results = new TabView
             {
