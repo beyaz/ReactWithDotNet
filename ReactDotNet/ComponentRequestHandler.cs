@@ -11,6 +11,10 @@ using static Array;
 public class ClientTask
 {
     public bool ComebackWithLastAction { get; set; }
+    public bool HistoryPushState { get; set; }
+    public string HistoryPushStateTitle { get; set; }
+    public string HistoryPushStateUrl { get; set; }
+
 }
 
 [Serializable]
@@ -21,9 +25,6 @@ public class ComponentRequest
     public string MethodName { get; set; }
     public string EventHandlerMethodName { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
-    public double AvailableWidth { get; set; }
-    public double AvailableHeight { get; set; }
-    public double ScrollY { get; set; }
 }
 
 [Serializable]

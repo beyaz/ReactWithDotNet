@@ -305,20 +305,6 @@
         return eventArguments;
     }
 
-    function GetAvailableWidth()
-    {
-        return window.innerWidth
-            || document.documentElement.clientWidth
-            || document.body.clientWidth;
-    }
-
-    function GetAvailableHeight()
-    {
-        return window.innerHeight
-            || document.documentElement.clientHeight
-            || document.body.clientHeight;
-    }
-
     function HandleAction(data)
     {
         var remoteMethodName = data.remoteMethodName;
@@ -340,8 +326,6 @@
         var request =
         {
             MethodName: "HandleComponentEvent",
-            AvailableWidth: GetAvailableWidth(),
-            AvailableHeight: GetAvailableHeight(),
 
             EventHandlerMethodName: remoteMethodName,
             FullName   : component.constructor.fullName,
@@ -390,6 +374,11 @@
                     }, afterSetState);
 
                     return;
+                }
+
+                if (clientTask.HistoryPushState)
+                {
+                    window.history.replaceState({}, clientTask.HistoryPushStateTitle, clientTask.HistoryPushStateUrl);
                 }
             }
 
@@ -470,10 +459,7 @@
         var request =
         {
             MethodName: "FetchComponent",
-            AvailableWidth: GetAvailableWidth(),
-            AvailableHeight: GetAvailableHeight(),
-
-            FullName: fullNameOfComponent
+            FullName  : fullNameOfComponent
         };
 
         function onSuccess(response)

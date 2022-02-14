@@ -74,6 +74,10 @@ namespace QuranAnalyzer.WebUI
         public bool HamburgerMenuIsOpen { get; set; }
 
         public double MainDivScrollY { get; set; }
+        public double AvailableWidth { get; set; }
+        public double AvailableHeight { get; set; }
+
+        public string SearchPartOfUrl { get; set; }
     }
 
     class MainView : ReactComponent<MainViewModel>
@@ -83,11 +87,26 @@ namespace QuranAnalyzer.WebUI
         public MainView()
         {
             state = new MainViewModel();
+            
+        }
+
+        void OnFirstLoaded()
+        {
+            if (state.SearchPartOfUrl != null && state.SearchPartOfUrl.Length >0  )
+            {
+                state.SelectedFact = state.SearchPartOfUrl.Split("=").Last();
+            }
         }
 
         void OnClicked(string name)
         {
             state.SelectedFact = name;
+            state.ClientTask = new ClientTask
+            {
+                HistoryPushState      = true,
+                HistoryPushStateTitle = "Kaf",
+                HistoryPushStateUrl   = "/index.html?fact=kaf"
+            };
         }
 
         void OnMainContentDivScrollChanged()
@@ -209,7 +228,7 @@ namespace QuranAnalyzer.WebUI
 
 
 
-            if (state.SelectedFact == "Kaf")
+            if (state.SelectedFact == "kaf")
             {
                 main = new FactView{ state = new FactViewModel
                 {

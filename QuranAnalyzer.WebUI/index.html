@@ -107,11 +107,30 @@
             function beforePostingState(state)
             {
                 state.MainDivScrollY = currentScrollY;
+                state.AvailableWidth = GetAvailableWidth();
+                state.AvailableHeight = GetAvailableHeight();
+                state.SearchPartOfUrl = window.location.search;
+
+                function GetAvailableWidth()
+                {
+                    return window.innerWidth
+                        || document.documentElement.clientWidth
+                        || document.body.clientWidth;
+                }
+
+                function GetAvailableHeight()
+                {
+                    return window.innerHeight
+                        || document.documentElement.clientHeight
+                        || document.body.clientHeight;
+                }
 
                 return state;
             }
 
             ReactDotNet.RegisterActionToComponent({typeNameOfComponent: typeNameOfMainView, actionName: 'beforePostingState', handlerFunction: beforePostingState });
+
+            ReactDotNet.HandleAction({ remoteMethodName: 'OnFirstLoaded', component: component, eventArguments: [] });
         }
 
         ReactDotNet.RegisterActionToComponent({typeNameOfComponent: typeNameOfMainView, actionName: 'componentDidMount', handlerFunction: componentDidMount});
