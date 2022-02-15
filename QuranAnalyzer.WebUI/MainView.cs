@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace QuranAnalyzer.WebUI
 {
-
     class SvgHamburgerIcon : ReactComponent
     {
         public bool HamburgerMenuIsOpen { get; set; }
@@ -78,6 +77,8 @@ namespace QuranAnalyzer.WebUI
         public double AvailableHeight { get; set; }
 
         public string SearchPartOfUrl { get; set; }
+
+        public FactViewModel FactViewModel { get; set; }
     }
 
     class MainView : ReactComponent<MainViewModel>
@@ -228,13 +229,15 @@ namespace QuranAnalyzer.WebUI
 
 
 
-            if (state.SelectedFact == "kaf")
+            if (state.SelectedFact?.Equals("kaf",StringComparison.OrdinalIgnoreCase) == true)
             {
-                main = new FactView{ state = new FactViewModel
+                state.FactViewModel ??= new FactViewModel
                 {
                     SuraFilter       = "42:*",
                     SearchCharacters = "ق"
-                }};
+                };
+
+                main = new FactView{ state = state.FactViewModel};
             }
             if (state.SelectedFact== "Nun")
             {
@@ -357,7 +360,7 @@ namespace QuranAnalyzer.WebUI
                 width = "100%",
                 height = "calc(100% - 65px)",
                 overflowY = Overflow.auto,
-                background = "blue"
+                
             };
 
             var footer = new div { footerContent } + new Style 

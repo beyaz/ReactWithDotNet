@@ -4,6 +4,8 @@ namespace ReactDotNet
 {
     public class Space : div
     {
+        public override string tagName => "div";
+
         [JsonIgnore]
         public double? Height
         {

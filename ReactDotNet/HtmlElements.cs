@@ -347,8 +347,6 @@ namespace ReactDotNet
         {
             base.BeforeSerialize();
 
-            var children = base.children;
-
             if (children.Any(x => x.gravity.HasValue))
             {
                 foreach (var child in children)

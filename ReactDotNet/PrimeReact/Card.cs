@@ -2,7 +2,6 @@
 
 public class Card : ElementBase
 {
-    
     [React]
     public string title { get; set; }
 }

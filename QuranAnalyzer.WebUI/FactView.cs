@@ -1,101 +1,153 @@
 ﻿using System;
-using System.Threading;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
+using static QuranAnalyzer.WebUI.MixinForUI;
+using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI;
 
+[Serializable]
+public class FactViewModel
+{
+    public string SelectedFact { get; set; }
+    public string SummaryText { get; set; }
 
-    [Serializable]
-    public class FactViewModel
+    public ClientTask ClientTask { get; set; }
+    public string OperationName { get; set; }
+    public bool IsBlocked { get; set; }
+
+    public string SuraFilter { get; set; }
+
+    public string SearchCharacters { get; set; }
+
+    public int CountOfCharacters { get; set; }
+}
+
+[Serializable]
+public sealed class Occurence
+{
+    public string Charachter { get; set; }
+
+    public string ABc { get; set; }
+}
+
+class FactView : ReactComponent<FactViewModel>
+{
+    public FactView()
     {
-        public string SelectedFact { get; set; }
-        public string SummaryText { get;  set; }
-
-        public ClientTask ClientTask { get; set; }
-        public string OperationName { get; set; }
-        public bool IsBlocked { get; set; }
-
-        public string SuraFilter { get; set; }
-
-        public string SearchCharacters { get; set; }
+        state = new FactViewModel();
     }
 
-    class FactView : ReactComponent<FactViewModel>
+    void OnSelectClicked()
     {
-        public FactView()
+        if (state.IsBlocked == false)
         {
-            state = new FactViewModel();
+            state.OperationName = "Hesaplanıyor...";
+            state.IsBlocked     = true;
+            state.ClientTask    = new ClientTask {ComebackWithLastAction = true};
+            return;
         }
 
-        
+        state.CountOfCharacters = Mixin.GetCountOfCharacter(state.SearchCharacters, new[] {42});
 
-        void OnSelectClicked()
+        state.IsBlocked = false;
+
+        state.SummaryText = "42. suredeki " + state.SearchCharacters[0] + " harfi geçiş sayısı :";
+    }
+
+    public override Element render()
+    {
+        var container = new div {Margin = {Left = 10, Right = 10}};
+
+        var searchBar = new Card
         {
-            if (state.IsBlocked == false)
+            title  = "Arama",
+            Margin = {Top = 5},
+            children =
             {
-                state.OperationName = "Hesaplanıyor...";
-                state.IsBlocked     = true;
-                state.ClientTask    = new ClientTask { ComebackWithLastAction = true };
-                return;
-            }
-            
-
-            var number = QuranAnalyzer.Mixin.GetCountOfCharacter(state.SearchCharacters, new[] {42});
-
-            state.IsBlocked = false;
-
-            state.SummaryText = number+"---42. suredeki Kaf harfi toplam geçiş adeti <span>19</span> x 6";
-        }
-
-        public override Element render()
-        {
-            var searchBar = new Card
-            {
-               title = "Arama",
-               children = {  new HPanel
-               {
-                   new div
-                   {
-                       new div {text            = "Sure:"},
-                       new InputText {valueBind = () => state.SuraFilter}
-                   },
-                   new div
-                   {
-                       new div {text            = "Aranan Karakterler"},
-                       new InputText {valueBind = () => state.SearchCharacters}
-                   },
-
-                   new Button("p-button-outlined") {text = "Ara", onClick = OnSelectClicked},
-               } + new Style {margin = ReactDotNet.Mixin.px(10)} }
-            };
-
-            var results = new TabView
-            {
-                new TabPanel
+                new VPanel
                 {
-                    header = "Özet", 
-                    children = 
+                    new VPanel
                     {
-                        new div(){text = state.SummaryText},
-                        new HPanel
-                        { 
-                            new div { text = "42. suredeki Kaf harfi geçiş sayısı "},
-                            new pre { text = " '19 ", style = {fontFamily = "'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif", color = "red" } },
-                            new div { text = "x 6' dır."},
-                        }
-                    } 
-                },
-                new TabPanel
-                {
-                    header = "Detaylı Tablo", 
-                    children = 
+                        new div {text            = "Sure:"},
+                        new InputText {valueBind = () => state.SuraFilter}
+                    },
+
+                    new Space {Height = 10},
+
+                    new VPanel
                     {
-                        new div(){text = "detaylı tablo"}
-                    } 
+                        new div {text            = "Aranan Karakterler"},
+                        new InputText {valueBind = () => state.SearchCharacters}
+                    },
+
+                    new Space {Height = 10},
+
+                    new Button("p-button-outlined") {label = "Ara", onClick = OnSelectClicked},
                 }
-            };
+            }
+        };
 
-            return MixinForUI.BlockUI(new div { searchBar, results } + new Style { marginTop = ReactDotNet.Mixin.px(55), marginBottom = ReactDotNet.Mixin.px(55), padding = "25px"}, state.IsBlocked, state.OperationName);
+        if (state.SummaryText.HasNoValue())
+        {
+            return BlockUI(container + searchBar, state.IsBlocked, state.OperationName);
         }
+
+        var summaryContent = new HPanel
+        {
+            new div {text = state.SummaryText},
+            new div {text = state.CountOfCharacters.ToString(), style = {marginLeft = px(5), marginRight = px(5)}}
+        };
+
+        if (state.CountOfCharacters % 19 == 0)
+        {
+            summaryContent.Add(new div {text = "("});
+            summaryContent.Add(new div {text = "19 x " + state.CountOfCharacters / 19, style = {color = "red", marginLeft = px(5), marginRight = px(5)}});
+            summaryContent.Add(new div {text = ")"});
+        }
+
+        var results = new Card
+        {
+            title  = "Sonuçlar",
+            Margin = {Top = 5},
+            children =
+            {
+                new TabView
+                {
+                    new TabPanel
+                    {
+                        header = "Özet",
+                        children =
+                        {
+                            summaryContent
+                        }
+                    },
+                    new TabPanel
+                    {
+                        header = "Detaylı Tablo",
+                        children =
+                        {
+                            new DataTable
+                            {
+                                scrollHeight = px(300),
+                                scrollable   = true,
+                                value = new[]
+                                {
+                                    new Occurence {ABc = "A", Charachter  = "C"},
+                                    new Occurence {ABc = "A2", Charachter = "C3"}
+                                },
+                                children =
+                                {
+                                    new Column {field = nameof(Occurence.ABc), header        = "Abc"},
+                                    new Column {field = nameof(Occurence.Charachter), header = "Abc4"}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        return BlockUI(container + searchBar + results, state.IsBlocked, state.OperationName);
     }
+}
