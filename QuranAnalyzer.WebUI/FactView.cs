@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.Json.Serialization;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
 using static QuranAnalyzer.WebUI.MixinForUI;
@@ -22,9 +21,7 @@ public class FactViewModel
     public string SearchCharacters { get; set; }
 
     public int CountOfCharacters { get; set; }
-
-    //[JsonPropertyName("$stateId")]
-    //public int? StateId { get; set; } = 4;
+    
 
     public int SelectedTabIndex { get; set; }
 }
