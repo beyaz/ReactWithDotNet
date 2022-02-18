@@ -29,8 +29,8 @@
 
         public TState state { get; set; }
 
-        public string TypeOfState => typeof(TState).GetFullName();
+        public string FullTypeNameOfState => typeof(TState).GetFullName();
 
-        public int? UniqueIdForState { get; set; }
+        public int? UniqueIdOfState { get; set; }
     }
 }

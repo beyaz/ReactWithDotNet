@@ -401,12 +401,9 @@
 
                 if(isComponent(child))
                 {
-                    map[location] = child.state;
-
-                    if (child.UniqueIdForState > 0)
-                    {
-                        map[location] = StateCache[child.UniqueIdForState];
-                    }
+                    NotNull(child.UniqueIdOfState);
+                    
+                    map[location] = StateCache[child.UniqueIdOfState];
                     
                     visitChilderen(child.RootElement, location);
                     
@@ -478,15 +475,16 @@
                 for (var j = 0; j < unAvailableStateIdList.length; j++)
                 {
                     StateCache[unAvailableStateIdList[j]] = null;
+                    StateCache[unAvailableStateIdList[j] + "-FullTypeNameOfState"] = null;
                 }
                 unAvailableStateIdList.length = 0;
 
-                if (!(element.UniqueIdForState > 0))
+                if (!(element.UniqueIdOfState > 0))
                 {
-                    element.UniqueIdForState = data.component.$UniqueIdForState;
+                    element.UniqueIdOfState = data.component.$UniqueIdOfState;
                 }
 
-                StateCache[element.UniqueIdForState] = element.state;
+                StateCache[element.UniqueIdOfState] = element.state;
 
                 data.component.$stateAsJsProperty = element.state;
                 data.component.$rootJsonNodeForUI = element.RootElement;
@@ -561,20 +559,20 @@
                 super(props||{});
 
                 // register stateId
-                {
-                    NotFrozen(componentDeclaration);
-                    
-                    if (!(componentDeclaration.UniqueIdForState > 0))
-                    {
-                        this.$UniqueIdForState = componentDeclaration.UniqueIdForState = GetNextUniqueNumber();
+                NotFrozen(componentDeclaration);
+                NotNull(componentDeclaration.FullTypeNameOfState);
 
-                        StateCache[componentDeclaration.UniqueIdForState] = componentDeclaration.state;
-                    }
+                if (!(componentDeclaration.UniqueIdOfState > 0))
+                {
+                    this.$UniqueIdOfState = componentDeclaration.UniqueIdOfState = GetNextUniqueNumber();
+
+                    StateCache[componentDeclaration.UniqueIdOfState] = componentDeclaration.state;
+                    StateCache[componentDeclaration.UniqueIdOfState + "-FullTypeNameOfState"] = componentDeclaration.FullTypeNameOfState;
                 }
 
-
-                this.$stateAsJsProperty = componentDeclaration.state;
-                this.$rootJsonNodeForUI = componentDeclaration.RootElement;
+                this.$FullTypeNameOfState = componentDeclaration.FullTypeNameOfState;
+                this.$stateAsJsProperty   = componentDeclaration.state;
+                this.$rootJsonNodeForUI   = componentDeclaration.RootElement;
 
                 this.state =
                 {

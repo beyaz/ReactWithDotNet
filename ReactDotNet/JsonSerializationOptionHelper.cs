@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet
 {
@@ -145,6 +144,10 @@ namespace ReactDotNet
                     if (true == elementSerializationExtraData.ChildStates?.ContainsKey(elementSerializationExtraData.BreadCrumpPath) && elementSerializationExtraData.BreadCrumpPath !="0")
                     {
                         var statePropertyInfo = value.GetType().GetProperty("state");
+                        if (statePropertyInfo == null)
+                        {
+                            throw new MissingMemberException(value.GetType().GetFullName(), "state");
+                        }
 
                         // todo: evaluate real class names
                         try
@@ -152,8 +155,9 @@ namespace ReactDotNet
                             var stateValue = JsonSerializer.Deserialize(elementSerializationExtraData.ChildStates[elementSerializationExtraData.BreadCrumpPath], statePropertyInfo.PropertyType);
                             statePropertyInfo.SetValue(value,stateValue);
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
+                            // ignored
                         }
                     }
                       
@@ -185,11 +189,11 @@ namespace ReactDotNet
                     {
                         bool hasValue(PropertyInfo x)
                         {
-                            var value = x.GetValue(style);
+                            var styleProperty = x.GetValue(style);
 
                             var defaultValue = x.PropertyType.GetDefaultValue();
 
-                            if (value == null)
+                            if (styleProperty == null)
                             {
                                 if (defaultValue == null)
                                 {
@@ -199,7 +203,7 @@ namespace ReactDotNet
                                 return true;
                             }
 
-                            return !value.Equals(defaultValue);
+                            return !styleProperty.Equals(defaultValue);
                         }
                         if (!typeof(Style).GetProperties().Any(hasValue))
                         {
@@ -367,7 +371,7 @@ namespace ReactDotNet
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             {
-                writer.WriteStringValue(value.ToString().ToLower());
+                writer.WriteStringValue(value.ToString()?.ToLower());
             }
             #endregion
         }
