@@ -351,8 +351,6 @@
 
         visitChilderen(component.$rootJsonNodeForUI, "0");
 
-        console.log("posing states", map);
-
         return stringifyValuesInMap(map);
 
         function stringifyValuesInMap(map)
@@ -372,7 +370,7 @@
             if (jsonUiNode != null)
             {
                 if (jsonUiNode.RootElement != null)
-                {
+                {i
                     if (jsonUiNode.fullName != null)
                     {
                         if (jsonUiNode.state != null)
@@ -467,9 +465,7 @@
             }
 
             var element = JSON.parse(response.ElementAsJsonString);
-
-            console.log("Incoming Element", element);
-
+            
             function restoreState(onStateReady)
             {
                 for (var j = 0; j < unAvailableStateIdList.length; j++)
