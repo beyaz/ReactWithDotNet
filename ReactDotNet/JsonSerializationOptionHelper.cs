@@ -6,8 +6,9 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ReactDotNet
-{
+namespace ReactDotNet;
+
+
     static class JsonSerializationOptionHelper
     {
         #region Public Methods
@@ -418,4 +419,3 @@ namespace ReactDotNet
             #endregion
         }
     }
-}
