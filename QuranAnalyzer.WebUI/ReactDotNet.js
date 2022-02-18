@@ -65,6 +65,27 @@
         }
     }
     
+    function NotNull(value)
+    {
+        if (value == null)
+        {
+            throw Error('value cannot be null.');
+        }
+
+        return value;
+    }
+
+    function NotFrozen(value)
+    {
+        if (Object.isFrozen(value))
+        {
+            throw Error('value cannot be frozen.');
+        }
+
+        return value;
+    }
+
+    
 
     function Clone(obj)
     {
@@ -78,7 +99,7 @@
         {
             var cmp = DefineComponent(jsonNode);
 
-            return createElement(cmp);
+            return createElement(cmp, {key: NotNull(jsonNode.key)});
         }
 
         var i;
@@ -186,11 +207,11 @@
                 props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
                 props[eventName] = function (e)
                 {
-                    var state = Clone(component.state.$state);
+                    var state = component.$stateAsJsProperty;
 
                     SetValueInPath(state, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
 
-                    component.setState({ $state: state });
+                    component.setState({ $state: Clone(state) });
                 }
 
                 return true;
@@ -305,11 +326,103 @@
         return eventArguments;
     }
 
+    var GetNextUniqueNumber = (function()
+    {
+        var nextValue = 0;
+
+        return function()
+        {
+            return nextValue++;
+        }
+    })();
+
+    var StateCache = 
+    {
+
+    };
+
+    var unAvailableStateIdList = [];
+
+    function CollectStates(component)
+    {
+        var map = {};
+
+        map["0"] = component.state.$state;
+
+        visitChilderen(component.$rootJsonNodeForUI, "0");
+
+        console.log("posing states", map);
+
+        return stringifyValuesInMap(map);
+
+        function stringifyValuesInMap(map)
+        {
+            function modify(key, value)
+            {
+                unAvailableStateIdList.push(key);
+                map[key] = JSON.stringify(value);
+            }
+            IterateObject(map,modify);
+
+            return map;
+        }
+
+        function isComponent(jsonUiNode)
+        {
+            if (jsonUiNode != null)
+            {
+                if (jsonUiNode.RootElement != null)
+                {
+                    if (jsonUiNode.fullName != null)
+                    {
+                        if (jsonUiNode.state != null)
+                        {
+                            return true;
+                        }
+                    }
+                } 
+            }
+
+            return false;
+        }
+        
+        function visitChilderen(node, path)
+        {
+            if (node.children == null)
+            {
+                return;
+            }
+
+            for (var i = 0; i < node.children.length; i++)
+            {
+                var child = node.children[i];
+
+                var location = path + "," + i;
+
+                if(isComponent(child))
+                {
+                    map[location] = child.state;
+
+                    if (child.UniqueIdForState > 0)
+                    {
+                        map[location] = StateCache[child.UniqueIdForState];
+                    }
+                    
+                    visitChilderen(child.RootElement, location);
+                    
+                    continue;
+                }
+
+                visitChilderen(child, location);
+            }
+        }
+    }
+
     function HandleAction(data)
     {
         var remoteMethodName = data.remoteMethodName;
         var component = data.component;
-
+        
         function getStateAsJson()
         {
             var state = component.state.$state;
@@ -329,8 +442,11 @@
 
             EventHandlerMethodName: remoteMethodName,
             FullName   : component.constructor.fullName,
-            StateAsJson: getStateAsJson()
+            StateAsJson: getStateAsJson(),
+            ChildStates: CollectStates(component)
         };
+
+        
 
         var eventArguments = NormalizeEventArguments(data.eventArguments);
 
@@ -353,7 +469,33 @@
                 throw response.ErrorMessage;
             }
 
-            var element = response.Element;
+            var element = JSON.parse(response.ElementAsJsonString);
+
+            console.log("Incoming Element", element);
+
+            function restoreState(onStateReady)
+            {
+                for (var j = 0; j < unAvailableStateIdList.length; j++)
+                {
+                    StateCache[unAvailableStateIdList[j]] = null;
+                }
+                unAvailableStateIdList.length = 0;
+
+                if (!(element.UniqueIdForState > 0))
+                {
+                    element.UniqueIdForState = data.component.$UniqueIdForState;
+                }
+
+                StateCache[element.UniqueIdForState] = element.state;
+
+                data.component.$stateAsJsProperty = element.state;
+                data.component.$rootJsonNodeForUI = element.RootElement;
+
+                data.component.setState({
+                    $rootNode: Clone(data.component.$rootJsonNodeForUI),
+                    $state   : Clone(data.component.$stateAsJsProperty)
+                }, onStateReady);
+            }
 
             var clientTask = element.state.ClientTask;
             if (clientTask)
@@ -362,16 +504,13 @@
 
                 if (clientTask.ComebackWithLastAction)
                 {
-                    var afterSetState = function ()
+                    var afterSetState = function()
                     {
                         request.StateAsJson = JSON.stringify(component.state.$state);
                         global.ReactDotNet.SendRequest(request, onSuccess);
                     };
 
-                    data.component.setState({
-                        $rootNode: element.RootElement,
-                        $state   : element.state
-                    }, afterSetState);
+                    restoreState(afterSetState);
 
                     return;
                 }
@@ -382,10 +521,7 @@
                 }
             }
 
-            data.component.setState({
-                $rootNode: element.RootElement,
-                $state   : element.state
-            });
+            restoreState();
         }
         global.ReactDotNet.SendRequest(request, onSuccess);
     }
@@ -412,7 +548,7 @@
         var fn = TryGetComponentAction(component, actionName);
         if (fn)
         {
-            return fn(component);
+            fn(component);
         }
     }
 
@@ -422,12 +558,28 @@
         {
             constructor(props)
             {
-                super(props);
+                super(props||{});
+
+                // register stateId
+                {
+                    NotFrozen(componentDeclaration);
+                    
+                    if (!(componentDeclaration.UniqueIdForState > 0))
+                    {
+                        this.$UniqueIdForState = componentDeclaration.UniqueIdForState = GetNextUniqueNumber();
+
+                        StateCache[componentDeclaration.UniqueIdForState] = componentDeclaration.state;
+                    }
+                }
+
+
+                this.$stateAsJsProperty = componentDeclaration.state;
+                this.$rootJsonNodeForUI = componentDeclaration.RootElement;
 
                 this.state =
                 {
-                    $rootNode: componentDeclaration.RootElement,
-                    $state: componentDeclaration.state
+                    $rootNode: Clone(this.$rootJsonNodeForUI),
+                    $state   : Clone(this.$stateAsJsProperty)
                 };
 
                 this.fullName = componentDeclaration.fullName;
@@ -435,7 +587,9 @@
 
             render()
             {
-                return ConvertToReactElement(this.state.$rootNode, this);
+                NotFrozen(this.$rootJsonNodeForUI);
+
+                return ConvertToReactElement(this.$rootJsonNodeForUI, this);
             }
 
             componentDidMount()

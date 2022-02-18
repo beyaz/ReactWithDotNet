@@ -12,7 +12,7 @@ namespace ReactDotNet
     /// </summary>
     public abstract class Element : IEnumerable<Element>
     {
-        internal protected virtual void BeforeSerialize()
+        protected internal virtual void BeforeSerialize()
         {
             InitializeKeyIfNotExists(children);
         }

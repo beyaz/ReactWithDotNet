@@ -134,9 +134,31 @@ namespace ReactDotNet
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             {
+                var elementSerializationExtraData = options.GetElementSerializationExtraData();
+
                 value.BeforeSerialize();
 
                 writer.WriteStartObject();
+
+                if (value is IReactStatefulComponent)
+                {
+                    if (true == elementSerializationExtraData.ChildStates?.ContainsKey(elementSerializationExtraData.BreadCrumpPath) && elementSerializationExtraData.BreadCrumpPath !="0")
+                    {
+                        var statePropertyInfo = value.GetType().GetProperty("state");
+
+                        // todo: evaluate real class names
+                        try
+                        {
+                            var stateValue = JsonSerializer.Deserialize(elementSerializationExtraData.ChildStates[elementSerializationExtraData.BreadCrumpPath], statePropertyInfo.PropertyType);
+                            statePropertyInfo.SetValue(value,stateValue);
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                    }
+                      
+                }
+
 
                 var reactAttributes = new List<string>();
 
@@ -244,7 +266,7 @@ namespace ReactDotNet
                         };
                     }
 
-                    if (propertyName != nameof(ReactComponent.RootElement) && propertyValue is Element element)
+                    if (propertyName != nameof(IReactStatefulComponent.RootElement) && propertyValue is Element element)
                     {
                         propertyValue = new InnerElementInfo
                         {
@@ -283,10 +305,23 @@ namespace ReactDotNet
 
                     writer.WriteStartArray();
 
+                    var breadCrumpPath = elementSerializationExtraData.BreadCrumpPath;
+
+                    var i = 0;
                     foreach (var item in value.children)
                     {
+                        elementSerializationExtraData.BreadCrumpPath = breadCrumpPath +"," + i;
+                        if (item is IReactStatelessComponent statelessComponent)
+                        {
+                            JsonSerializer.Serialize(writer, statelessComponent.render(), options);
+                            i++;
+                            continue;
+                        }
                         JsonSerializer.Serialize(writer, item, options);
+                        i++;
                     }
+
+                    elementSerializationExtraData.BreadCrumpPath = breadCrumpPath;
 
                     writer.WriteEndArray();
                 }
@@ -321,6 +356,7 @@ namespace ReactDotNet
             public bool IsElement { get; set; }
         }
 
+        
         class EnumToStringConverter<T> : JsonConverter<T>
         {
             #region Public Methods

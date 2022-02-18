@@ -5,6 +5,7 @@ using static ReactDotNet.Mixin;
 using static QuranAnalyzer.Mixin;
 using System.Threading;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace QuranAnalyzer.WebUI
 {
@@ -79,6 +80,9 @@ namespace QuranAnalyzer.WebUI
         public string SearchPartOfUrl { get; set; }
 
         public FactViewModel FactViewModel { get; set; }
+
+        //[JsonPropertyName("$stateId")]
+        //public int? StateId { get; set; } = 3;
     }
 
     class MainView : ReactComponent<MainViewModel>
@@ -88,7 +92,11 @@ namespace QuranAnalyzer.WebUI
         public MainView()
         {
             state = new MainViewModel();
-            
+        }
+
+        public void constructor()
+        {
+            state = new MainViewModel();
         }
 
         void OnFirstLoaded()
@@ -223,7 +231,7 @@ namespace QuranAnalyzer.WebUI
             var topNav = new nav { style = { display = Display.flex, justifyContent = JustifyContent.flex_start, alignItems = AlignItems.center }, }
                 +
                 createHamburgerIcon()
-                + new div{ children = {new div{id="title", text = "19 Sistemi Hakkında"}}};
+                + new div{ children = {new div{id="title", text = "19 Sistemi Hakkında",key = "0"}}};
 
             Element main = factsContainer;
 
@@ -294,17 +302,19 @@ namespace QuranAnalyzer.WebUI
             + 
             new Style 
             { 
-                position   = Position.@fixed, 
-                height     = "100%",
-                width      = "70%",
-                top        = px(50),
-                background = "rgb(248, 249, 249)",
-                zIndex     = "1",
-                display = Display.flex,
+                position      = Position.@fixed, 
+                height        = "100%",
+                width         = "70%",
+                top           = px(50),
+                background    = "white",
+                boxShadow = "5px 0 5px -5px rgb(0 0 0 / 28%)",
+                zIndex        = "1",
+                display       = state.HamburgerMenuIsOpen ? Display.flex : Display.none,
+                transition =  "visibility 0s linear 500ms, opacity 500ms",
                 flexDirection = FlexDirection.column,
-                alignItems = AlignItems.center,
-                fontSize = px(18)
-
+                alignItems    = AlignItems.center,
+                fontSize      = px(18),
+                
             };
             
             
@@ -349,6 +359,8 @@ namespace QuranAnalyzer.WebUI
                 };
             }
 
+            mainContent.key = "tt";
+
             var main   = new div { id="main", children = { mainContent }} + new Style 
             { 
                 position       = Position.@fixed, 
@@ -374,12 +386,7 @@ namespace QuranAnalyzer.WebUI
                 zIndex = "1"
             };
 
-            if (state.HamburgerMenuIsOpen)
-            {
-                return new div {  top, menu,  main,  } + new Style { height = "100vh" , width = "100%" };
-            }
-
-            return new div {  top,  main,  } + new Style { height = "100vh" , width = "100%" };
+            return new div {  top, menu,  main,  } + new Style { height = "100vh" , width = "100%" };
         }
         
 

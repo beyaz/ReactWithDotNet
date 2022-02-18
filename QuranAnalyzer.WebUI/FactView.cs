@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
 using static QuranAnalyzer.WebUI.MixinForUI;
@@ -21,6 +22,11 @@ public class FactViewModel
     public string SearchCharacters { get; set; }
 
     public int CountOfCharacters { get; set; }
+
+    //[JsonPropertyName("$stateId")]
+    //public int? StateId { get; set; } = 4;
+
+    public int SelectedTabIndex { get; set; }
 }
 
 [Serializable]
@@ -38,6 +44,11 @@ class FactView : ReactComponent<FactViewModel>
         state = new FactViewModel();
     }
 
+    public void constructor()
+    {
+        state = new FactViewModel();
+    }
+
     void OnSelectClicked()
     {
         if (state.IsBlocked == false)
@@ -50,7 +61,8 @@ class FactView : ReactComponent<FactViewModel>
 
         state.CountOfCharacters = Mixin.GetCountOfCharacter(state.SearchCharacters, new[] {42});
 
-        state.IsBlocked = false;
+        state.IsBlocked     = false;
+        state.OperationName = null;
 
         state.SummaryText = "42. suredeki " + state.SearchCharacters[0] + " harfi geçiş sayısı :";
     }
@@ -114,32 +126,37 @@ class FactView : ReactComponent<FactViewModel>
             {
                 new TabView
                 {
-                    new TabPanel
+                    onTabChange = e=>state.SelectedTabIndex = e.index,
+                    activeIndex = state.SelectedTabIndex,
+                    children =
                     {
-                        header = "Özet",
-                        children =
+                        new TabPanel
                         {
-                            summaryContent
-                        }
-                    },
-                    new TabPanel
-                    {
-                        header = "Detaylı Tablo",
-                        children =
-                        {
-                            new DataTable
+                            header = "Özet",
+                            children =
                             {
-                                scrollHeight = px(300),
-                                scrollable   = true,
-                                value = new[]
+                                summaryContent
+                            }
+                        },
+                        new TabPanel
+                        {
+                            header = "Detaylı Tablo",
+                            children =
+                            {
+                                new DataTable
                                 {
-                                    new Occurence {ABc = "A", Charachter  = "C"},
-                                    new Occurence {ABc = "A2", Charachter = "C3"}
-                                },
-                                children =
-                                {
-                                    new Column {field = nameof(Occurence.ABc), header        = "Abc"},
-                                    new Column {field = nameof(Occurence.Charachter), header = "Abc4"}
+                                    scrollHeight = px(300),
+                                    scrollable   = true,
+                                    value = new[]
+                                    {
+                                        new Occurence {ABc = "A", Charachter  = "C"},
+                                        new Occurence {ABc = "A2", Charachter = "C3"}
+                                    },
+                                    children =
+                                    {
+                                        new Column {field = nameof(Occurence.ABc), header        = "Abc"},
+                                        new Column {field = nameof(Occurence.Charachter), header = "Abc4"}
+                                    }
                                 }
                             }
                         }

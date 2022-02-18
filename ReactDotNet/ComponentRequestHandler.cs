@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ReactDotNet;
 
@@ -25,6 +26,7 @@ public class ComponentRequest
     public string MethodName { get; set; }
     public string EventHandlerMethodName { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
+    public Dictionary<string,string> ChildStates { get; set; }
 }
 
 [Serializable]
@@ -33,7 +35,10 @@ public class ComponentResponse
     public Element Element { get; set; }
 
     public string ErrorMessage { get; set; }
+
+    public string ElementAsJsonString { get; set; }
 }
+
 
 public static class ComponentRequestHandler
 {
@@ -128,9 +133,68 @@ public static class ComponentRequestHandler
                 return new ComponentResponse {ErrorMessage = $"Method invocation error.{exception}"};
             }
 
-            return new ComponentResponse {Element = instance};
+            
+
+            return new ComponentResponse
+            {
+                ElementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates)
+            };
         }
 
         return new ComponentResponse {ErrorMessage = $"Not implemented method. {request.MethodName}"};
     }
+
+    
+
+   
+}
+
+
+class ElementSerializationExtraData
+{
+    public Dictionary<string,string> ChildStates { get; set; }
+    public string BreadCrumpPath { get; set; }
+}
+static class ComponentSerializer
+{
+    public static string SerializeComponent(Element instance, Dictionary<string,string> childStates)
+    {
+        var jsonSerializerOptions = new JsonSerializerOptions
+        {
+            Converters = {new DummyConverter {ElementSerializationExtraData = new ElementSerializationExtraData
+            {
+                ChildStates = childStates,
+                BreadCrumpPath = "0"
+            }}}
+        }.ModifyForReactDotNet();
+
+        return System.Text.Json.JsonSerializer.Serialize(instance, jsonSerializerOptions);
+    }
+
+    public static ElementSerializationExtraData GetElementSerializationExtraData(this JsonSerializerOptions options)
+    {
+        return (options.Converters[0] as DummyConverter)?.ElementSerializationExtraData ?? new ElementSerializationExtraData()
+        {
+            
+        };
+    }
+    class Dummy
+    {
+            
+    }
+    class DummyConverter : JsonConverter<Dummy>
+    {
+        public ElementSerializationExtraData ElementSerializationExtraData { get; set; }
+
+        public override Dummy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, Dummy value, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+        
 }
