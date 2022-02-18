@@ -19,6 +19,13 @@ public class ClientTask
 }
 
 [Serializable]
+public sealed class ClientStateInfo
+{
+    public string StateAsJson { get; set; }
+    public string FullTypeNameOfState { get; set; }
+}
+
+[Serializable]
 public class ComponentRequest
 {
     public string FullName { get; set; }
