@@ -33,7 +33,7 @@ public class ComponentRequest
     public string MethodName { get; set; }
     public string EventHandlerMethodName { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
-    public IReadOnlyDictionary<string,string> ChildStates { get; set; }
+    public IReadOnlyDictionary<string,ClientStateInfo> ChildStates { get; set; }
 }
 
 [Serializable]
@@ -159,12 +159,12 @@ public static class ComponentRequestHandler
 
 class ElementSerializationExtraData
 {
-    public IReadOnlyDictionary<string,string> ChildStates { get; set; }
+    public IReadOnlyDictionary<string,ClientStateInfo> ChildStates { get; set; }
     public string BreadCrumpPath { get; set; }
 }
 static class ComponentSerializer
 {
-    public static string SerializeComponent(Element instance, IReadOnlyDictionary<string,string> childStates)
+    public static string SerializeComponent(Element instance, IReadOnlyDictionary<string,ClientStateInfo> childStates)
     {
         var jsonSerializerOptions = new JsonSerializerOptions
         {

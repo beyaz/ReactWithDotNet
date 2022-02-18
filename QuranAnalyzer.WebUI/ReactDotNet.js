@@ -347,7 +347,7 @@
     {
         var map = {};
 
-        map["0"] = component.state.$state;
+        map["0"] = { StateAsJson: component.state.$state, FullTypeNameOfState: component.$FullTypeNameOfState };
 
         visitChilderen(component.$rootJsonNodeForUI, "0");
 
@@ -360,7 +360,7 @@
             function modify(key, value)
             {
                 unAvailableStateIdList.push(key);
-                map[key] = JSON.stringify(value);
+                value.StateAsJson = JSON.stringify(value.StateAsJson);
             }
             IterateObject(map,modify);
 
@@ -402,8 +402,8 @@
                 if(isComponent(child))
                 {
                     NotNull(child.UniqueIdOfState);
-                    
-                    map[location] = StateCache[child.UniqueIdOfState];
+
+                    map[location] = { StateAsJson: StateCache[child.UniqueIdOfState], FullTypeNameOfState: StateCache[child.UniqueIdOfState + "-FullTypeNameOfState"] };
                     
                     visitChilderen(child.RootElement, location);
                     
