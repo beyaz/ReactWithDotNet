@@ -36,7 +36,6 @@ public static class AyaFilter
             }
 
             return parseSureNumber()
-               .Then(minusOne)
                .Then(findSurahByNumber)
                .Then(sura=>collectAyaList(sura,arr[1]));
 
@@ -52,13 +51,10 @@ public static class AyaFilter
                     return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
                 }
 
-                return AllSura[surahNumber];
+                return AllSura[--surahNumber];
             }
 
-            static Response<int> minusOne(int number)
-            {
-                return --number;
-            }
+            
 
           
 

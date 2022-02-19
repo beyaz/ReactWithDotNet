@@ -50,4 +50,11 @@ namespace QuranAnalyzer;
             records[52+ 6+ 1]._text.Should().Be("فَبِأَىِّ حَدِيثٍۭ بَعْدَهُۥ يُؤْمِنُونَ");
             
         }
+
+
+        [TestMethod]
+        public void FilterWithStarWithManyWithSpecificAyahNumber_with_Error()
+        {
+            AyaFilter.Filter(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
+        }
     }

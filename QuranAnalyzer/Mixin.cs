@@ -6,6 +6,27 @@ namespace QuranAnalyzer;
 
 public static class Mixin
     {
+
+        public static Response<IReadOnlyList<DataAccess.MatchInfo>> SearchCharachters(string searchScript, string searchCharachters)
+        {
+
+            
+
+            var charachterList = searchCharachters.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+
+            var indexList = charachterList.Select(x => Array.IndexOf(DataAccess.harfler, x)).ToList();
+
+            var items = new List<DataAccess.MatchInfo>();
+
+            foreach (var aya in AyaFilter.Filter(searchScript).Value)
+            {
+                items.AddRange(DataAccess.Analyze(aya).Where(x => indexList.Contains(x.HarfIndex)));
+            }
+
+            return items;
+        }
+
+
        public static int GetCountOfCharacter(int characterIndex, int[] chapterNumbers)
         {
             var count = 0;
