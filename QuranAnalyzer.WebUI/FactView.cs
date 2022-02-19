@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
 using static QuranAnalyzer.WebUI.MixinForUI;
@@ -24,6 +26,10 @@ public class FactViewModel
     
 
     public int SelectedTabIndex { get; set; }
+    public Occurence[] ResultRecords { get; set; }
+
+
+    public IReadOnlyList<MatchInfo> matchRecords{ get; set; }
 }
 
 [Serializable]
@@ -31,7 +37,7 @@ public sealed class Occurence
 {
     public string Charachter { get; set; }
 
-    public string ABc { get; set; }
+    public string AyahNumber { get; set; }
 }
 
 class FactView : ReactComponent<FactViewModel>
@@ -46,6 +52,8 @@ class FactView : ReactComponent<FactViewModel>
         state = new FactViewModel();
     }
 
+    
+
     void OnSelectClicked()
     {
         if (state.IsBlocked == false)
@@ -56,7 +64,21 @@ class FactView : ReactComponent<FactViewModel>
             return;
         }
 
-        state.CountOfCharacters = Mixin.SearchCharachters(state.SuraFilter,  state.SearchCharacters).Value.Count;
+        state.matchRecords = Mixin.SearchCharachters(state.SuraFilter, state.SearchCharacters).Value;
+
+        state.ResultRecords = state.matchRecords.Select(m =>
+        {
+            return new Occurence
+            {
+                Charachter = m.ToString(),
+
+                AyahNumber = m.aya._index,
+
+
+            };
+        }).ToArray();
+
+        state.CountOfCharacters = state.matchRecords.Count;
 
         state.IsBlocked     = false;
         state.OperationName = null;
@@ -115,6 +137,30 @@ class FactView : ReactComponent<FactViewModel>
             summaryContent.Add(new div {text = ")"});
         }
 
+        var element = new HPanel
+        {
+            new div {text = "11111"},
+
+            new span {text = "a"},
+            new div {text  = "2222"},
+        };
+
+        //foreach (var matchRecord in state.matchRecords)
+        //{
+        //    var text = matchRecord.aya._text;
+
+        //    var el = text.Substring(0, matchRecord.StartIndex);
+
+        //    element.Add(new div {text = el});
+
+        //    element.Add(new span {text = matchRecord.ToString()});
+
+            
+        //    //element.Add(new div {text =text.Substring(matchRecord.StartIndex,4)});
+
+
+        //}
+
         var results = new Card
         {
             title  = "Sonuçlar",
@@ -144,19 +190,23 @@ class FactView : ReactComponent<FactViewModel>
                                 {
                                     scrollHeight = px(300),
                                     scrollable   = true,
-                                    value = new[]
-                                    {
-                                        new Occurence {ABc = "A", Charachter  = "C"},
-                                        new Occurence {ABc = "A2", Charachter = "C3"}
-                                    },
+                                    value = state.ResultRecords,
                                     children =
                                     {
-                                        new Column {field = nameof(Occurence.ABc), header        = "Abc"},
-                                        new Column {field = nameof(Occurence.Charachter), header = "Abc4"}
+                                        new Column {field = nameof(Occurence.Charachter), header = "Harf"},
+                                        new Column {field = nameof(Occurence.AyahNumber), header = "Ayet No"},
                                     }
                                 }
                             }
-                        }
+                        },
+                        new TabPanel
+                        {
+                            header = "Mushaf Üzerinde Göster",
+                            children =
+                            {
+                                element
+                            }
+                        },
                     }
                 }
             }

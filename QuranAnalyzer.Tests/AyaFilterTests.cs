@@ -57,4 +57,12 @@ namespace QuranAnalyzer;
         {
             AyaFilter.Filter(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
         }
+
+        [TestMethod]
+        public void YaSin()
+        {
+            var records = Mixin.SearchCharachters("36 : *", "ي , سٓ").Value;
+
+            records.Count.Should().Be(285);
+        }
     }

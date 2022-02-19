@@ -12,7 +12,8 @@ public static class Mixin
 
             
 
-            var charachterList = searchCharachters.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+            // var charachterList = searchCharachters.Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToArray();
+            var charachterList = WordSearcher.ToList(searchCharachters);
 
             var indexList = charachterList.Select(x => Array.IndexOf(DataAccess.harfler, x)).ToList();
 
