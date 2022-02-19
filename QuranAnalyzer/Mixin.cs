@@ -7,7 +7,7 @@ namespace QuranAnalyzer;
 public static class Mixin
     {
 
-        public static Response<IReadOnlyList<DataAccess.MatchInfo>> SearchCharachters(string searchScript, string searchCharachters)
+        public static Response<IReadOnlyList<MatchInfo>> SearchCharachters(string searchScript, string searchCharachters)
         {
 
             
@@ -16,7 +16,7 @@ public static class Mixin
 
             var indexList = charachterList.Select(x => Array.IndexOf(DataAccess.harfler, x)).ToList();
 
-            var items = new List<DataAccess.MatchInfo>();
+            var items = new List<MatchInfo>();
 
             foreach (var aya in AyaFilter.Filter(searchScript).Value)
             {

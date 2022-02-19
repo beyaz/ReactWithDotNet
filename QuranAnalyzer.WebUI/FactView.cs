@@ -56,7 +56,7 @@ class FactView : ReactComponent<FactViewModel>
             return;
         }
 
-        state.CountOfCharacters = Mixin.GetCountOfCharacter(state.SearchCharacters, new[] {42});
+        state.CountOfCharacters = Mixin.SearchCharachters(state.SuraFilter,  state.SearchCharacters).Value.Count;
 
         state.IsBlocked     = false;
         state.OperationName = null;

@@ -25,6 +25,34 @@ namespace QuranAnalyzer
         public string _bismillah { get; set; }
     }
 
+
+    public class MatchInfo
+    {
+        public int StartIndex { get; set; }
+
+        public int HarfIndex { get; set; }
+
+        public aya aya;
+
+        public bool HasNoMatch => HarfIndex == -1;
+
+        public override string ToString()
+        {
+            if (aya != null)
+            {
+                if (HarfIndex >= 0)
+                {
+                    return DataAccess.harfler[HarfIndex];
+                }
+
+                return aya._text[StartIndex].ToString();
+
+            }
+
+            return string.Empty;
+        }
+    }
+
     public static class DataAccess
     {
         public static readonly sura[] AllSura = System.Text.Json.JsonSerializer.Deserialize<sura[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
@@ -92,32 +120,7 @@ namespace QuranAnalyzer
             10
         };
 
-        public class MatchInfo
-        {
-            public int StartIndex { get; set; }
-
-            public int HarfIndex { get; set; }
-
-            public aya aya;
-
-            public bool HasNoMatch => HarfIndex == -1;
-
-            public override string ToString()
-            {
-                if (aya != null)
-                {
-                    if (HarfIndex >= 0)
-                    {
-                        return harfler[HarfIndex];
-                    }
-
-                    return aya._text[StartIndex].ToString();
-
-                }
-
-                return string.Empty;
-            }
-        }
+        
         public static MatchInfo TryRead( aya aya, int startIndex, bool isHemzeActive)
         {
             string line = aya._text+aya._bismillah;
