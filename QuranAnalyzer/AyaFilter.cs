@@ -29,7 +29,7 @@ public static class AyaFilter
 
         Response<IReadOnlyList<aya>> process(string searchItem)
         {
-            var arr = searchScript.Split(": ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var arr = searchItem.Split(": ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
             {
                 return (Error) $"arama kriterlerinde hata var.{searchItem}";
@@ -71,7 +71,17 @@ public static class AyaFilter
                     return sura.aya;
                 }
 
-                return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
+                Response<IReadOnlyList<aya>> selectOne(int ayahIndex)
+                {
+                    if (ayahIndex<=0 || ayahIndex > sura.aya.Length)
+                    {
+                        return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
+                    }
+
+                    return new []{sura.aya[--ayahIndex]};
+                }
+
+                return ayaFilter.Then(int.Parse).Then(selectOne);
             }
         }
     }

@@ -297,4 +297,9 @@ namespace QuranAnalyzer;
         {
             return nextFunc(value);
         }
+
+        public static Response<B> Then<A,B>(this A value, Func<A,B> nextFunc)
+        {
+            return nextFunc(value);
+        }
     }
