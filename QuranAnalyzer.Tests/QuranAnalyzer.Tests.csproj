@@ -18,4 +18,8 @@
     <ProjectReference Include="..\QuranAnalyzer\QuranAnalyzer.csproj" />
   </ItemGroup>
 
+    <PropertyGroup>
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
 </Project>

@@ -4,8 +4,7 @@ using System.Linq;
 
 namespace QuranAnalyzer;
 
-
-    public static class Mixin
+public static class Mixin
     {
        public static int GetCountOfCharacter(int characterIndex, int[] chapterNumbers)
         {
