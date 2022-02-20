@@ -23,6 +23,7 @@ namespace QuranAnalyzer
         public string _index { get; set; }
         public string _text { get; set; }
         public string _bismillah { get; set; }
+        public int SurahNumber { get; set; }
     }
 
 
@@ -32,7 +33,7 @@ namespace QuranAnalyzer
 
         public int HarfIndex { get; set; }
 
-        public aya aya;
+        public aya aya{ get; set; }
 
         public bool HasNoMatch => HarfIndex == -1;
 
@@ -123,7 +124,7 @@ namespace QuranAnalyzer
         
         public static MatchInfo TryRead( aya aya, int startIndex, bool isHemzeActive)
         {
-            string line = aya._text+aya._bismillah;
+            string line = aya._bismillah + aya._text;
 
             for (var i = 0; i < harfler.Length; i++)
             {
@@ -255,7 +256,7 @@ namespace QuranAnalyzer
 
         public static IReadOnlyList<MatchInfo> Analyze(aya aya,  bool isHemzeActive = true)
         {
-            var line  = aya._text + aya._bismillah;
+            var line  = aya._bismillah + aya._text;
 
             var items = new List<MatchInfo>();
 

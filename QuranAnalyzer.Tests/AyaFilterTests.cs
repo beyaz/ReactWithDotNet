@@ -64,5 +64,7 @@ namespace QuranAnalyzer;
             var records = Mixin.SearchCharachters("36 : *", "ي , سٓ").Value;
 
             records.Count.Should().Be(285);
+
+            CharachterSearchResultColorizer.ColorizeCharachterSearchResults(records);
         }
     }

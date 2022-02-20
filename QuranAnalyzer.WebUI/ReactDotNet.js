@@ -370,7 +370,7 @@
             if (jsonUiNode != null)
             {
                 if (jsonUiNode.RootElement != null)
-                {i
+                {
                     if (jsonUiNode.fullName != null)
                     {
                         if (jsonUiNode.state != null)

@@ -62,6 +62,11 @@ public static class AyaFilter
 
             Response<IReadOnlyList<aya>> collectAyaList(sura sura, string ayaFilter)
             {
+                foreach (var aya in sura.aya)
+                {
+                    aya.SurahNumber = sura.Index;
+                }
+
                 if (ayaFilter == "*")
                 {
                     return sura.aya;

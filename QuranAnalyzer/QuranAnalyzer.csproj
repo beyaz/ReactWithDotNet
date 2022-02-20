@@ -9,4 +9,8 @@
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ReactDotNet\ReactDotNet.csproj" />
+    </ItemGroup>
+
 </Project>

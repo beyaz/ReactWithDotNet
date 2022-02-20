@@ -137,29 +137,8 @@ class FactView : ReactComponent<FactViewModel>
             summaryContent.Add(new div {text = ")"});
         }
 
-        var element = new HPanel
-        {
-            new div {text = "11111"},
-
-            new span {text = "a"},
-            new div {text  = "2222"},
-        };
-
-        //foreach (var matchRecord in state.matchRecords)
-        //{
-        //    var text = matchRecord.aya._text;
-
-        //    var el = text.Substring(0, matchRecord.StartIndex);
-
-        //    element.Add(new div {text = el});
-
-        //    element.Add(new span {text = matchRecord.ToString()});
-
-            
-        //    //element.Add(new div {text =text.Substring(matchRecord.StartIndex,4)});
-
-
-        //}
+        
+        
 
         var results = new Card
         {
@@ -204,7 +183,7 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Mushaf Üzerinde Göster",
                             children =
                             {
-                                element
+                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(state.matchRecords)
                             }
                         },
                     }
