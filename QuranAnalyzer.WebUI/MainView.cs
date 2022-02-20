@@ -81,8 +81,80 @@ namespace QuranAnalyzer.WebUI
 
         public FactViewModel FactViewModel { get; set; }
 
-        //[JsonPropertyName("$stateId")]
-        //public int? StateId { get; set; } = 3;
+    }
+
+    class FactMiniViewModel
+    {
+        public ClientTask ClientTask { get; set; }
+        public Fact Fact { get; set; }
+    }
+    class FactMiniView:ReactComponent<FactMiniViewModel>
+    {
+        public FactMiniView()
+        {
+            state = new FactMiniViewModel();
+        }
+
+
+        
+
+        public string title { get; set; }
+
+        void OnClicked(string name)
+        {
+            state.ClientTask = new ClientTask
+            {
+               DispatchEvent = true,
+               DispatchEventName = "OnFactClicked",
+               DispatchEventParameters = new object[]{ name }
+            };
+        }
+
+        public override Element render()
+        {
+            return new div
+            {
+                style =
+                {
+                    borderRadius = "5px",
+                    width        = px(150),
+                    height       = px(200) ,
+                    //boxShadow  ="0 4px 8px 0 rgba(0,0,0,0.2)",
+                    margin         = px(20),
+                    display        = Display.flex,
+                    justifyContent = JustifyContent.center,
+                    alignItems     = AlignItems.center,
+                    flexDirection  = FlexDirection.column,
+                    textAlign      = TextAlign.center,
+                    fontFamily     = "Verdana,sans-serif"
+                },
+                onClick = ()=>OnClicked(state.Fact.Name),
+                children =
+                {
+                    new div
+                    {
+
+                        style = { padding = "1px",  },
+                        children =
+                        {
+                            new div { style =   {color ="#08090a", fontSize = "17px", fontWeight = "600" }, text = title },
+                            new div
+                            {
+                                style =
+                                {
+                                    wordBreak = WordBreak.break_all,
+                                    margin    = "15px",
+                                    fontSize  = px(13),
+                                    color     ="#546285"
+                                },
+                                text = "Kısa açıklamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1gtgtgrtrtğ", Margin ={ Top =5} }
+                        }
+                    }
+
+                }
+
+            }.HasBorder();
+        }
     }
 
     class MainView : ReactComponent<MainViewModel>
@@ -91,30 +163,33 @@ namespace QuranAnalyzer.WebUI
 
         public MainView()
         {
-            state = new MainViewModel();
-        }
-
-        public void constructor()
-        {
-            state = new MainViewModel();
+            state = new MainViewModel
+            {
+                ClientTask = new ClientTask
+                {
+                    ListenEvent     = true,
+                    ListenEventName = "OnFactClicked",
+                    ListenEventRouteTo = nameof(OnFactClicked)
+                }
+            };
         }
 
         void OnFirstLoaded()
         {
             if (state.SearchPartOfUrl != null && state.SearchPartOfUrl.Length >0  )
             {
-                state.SelectedFact = state.SearchPartOfUrl.Split("=").Last();
+                state.SelectedFact = System.Web.HttpUtility.UrlDecode(state.SearchPartOfUrl.Split("=").Last());
             }
         }
 
-        void OnClicked(string name)
+        void OnFactClicked(string selectedFactName)
         {
-            state.SelectedFact = name;
+            state.SelectedFact = selectedFactName;
             state.ClientTask = new ClientTask
             {
                 HistoryPushState      = true,
-                HistoryPushStateTitle = "Kaf",
-                HistoryPushStateUrl   = "/index.html?fact=kaf"
+                HistoryPushStateTitle = selectedFactName,
+                HistoryPushStateUrl   = "/index.html?fact="+selectedFactName
             };
         }
 
@@ -126,7 +201,7 @@ namespace QuranAnalyzer.WebUI
 
         public override Element render()
         {
-            static Element Fact(string title, Action onClick)
+            static Element fact( string title, Action onClick)
             {
                 return new div
                 {
@@ -205,6 +280,13 @@ namespace QuranAnalyzer.WebUI
                                 + new i("pi pi-search")
                                 + new InputText { placeholder = "ara" };
 
+
+
+
+           
+
+            
+
             var factsContainer = new div
             {
                 style =
@@ -216,18 +298,22 @@ namespace QuranAnalyzer.WebUI
                 },
                 children =
                 {
-                    Fact("Kaf", () => OnClicked("Kaf")),
-                    Fact("Ha-Mim", () => OnClicked("Kaf")),
-                    Fact("Nun", () => OnClicked("Nun")),
-                    Fact("Ya-sin", () => OnClicked("Kaf")),
-                    Fact("Ya-sin", () => OnClicked("Kaf")),
-                    Fact("Ya-sin", () => OnClicked("Kaf")),
-                    Fact("Ya-sin", () => OnClicked("Kaf")),
-                    Fact("Ya-sin", () => OnClicked("Kaf")),
-                    Fact("Ya-sin", () => OnClicked("Kaf")),
-                    Fact("Ya-sin", () => OnClicked("Kaf"))
+                    fact("Kaf", () => OnFactClicked("kaf")),
+                    
+                    fact("Ya-sin", () => OnFactClicked("ya-sin")),
+
+                    fact("Ha-Mim", () => OnFactClicked("ha-mim")),
+
+                    fact("Nun", () => OnFactClicked("nun"))
                 }
             };
+            
+            foreach (var fact1 in Fact.GetFacts())
+            {
+                factsContainer.Add(new FactMiniView {state = new FactMiniViewModel{ Fact = fact1} ,title = fact1.Name});
+            }
+
+
             var topNav = new nav { style = { display = Display.flex, justifyContent = JustifyContent.flex_start, alignItems = AlignItems.center }, }
                 +
                 createHamburgerIcon()
@@ -247,6 +333,41 @@ namespace QuranAnalyzer.WebUI
 
                 main = new FactView{ state = state.FactViewModel};
             }
+
+            if (state.SelectedFact?.Equals("ya-sin",StringComparison.OrdinalIgnoreCase) == true)
+            {
+                state.FactViewModel ??= new FactViewModel
+                {
+                    SuraFilter       = "36:*",
+                    SearchCharacters = "ي , سٓ"
+                };
+
+                main = new FactView{ state = state.FactViewModel};
+            }
+
+            var f = Fact.GetFacts().FirstOrDefault(x => x.Name == state.SelectedFact);
+            if (f!= null)
+            {
+                state.FactViewModel ??= new FactViewModel
+                {
+                    SuraFilter       = f.SearchScript,
+                    SearchCharacters = f.SearchCharacters
+                };
+
+                main = new FactView{ state = state.FactViewModel};
+            }
+
+            //if (state.SelectedFact?.Equals("Fact 42",StringComparison.OrdinalIgnoreCase) == true)
+            //{
+            //    state.FactViewModel ??= new FactViewModel
+            //    {
+            //        SuraFilter       = "36:*",
+            //        SearchCharacters = "ي , سٓ"
+            //    };
+
+            //    main = new FactView{ state = state.FactViewModel};
+            //}
+
             if (state.SelectedFact== "Nun")
             {
                 main = new div

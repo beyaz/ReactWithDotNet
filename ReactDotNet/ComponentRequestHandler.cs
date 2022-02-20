@@ -15,7 +15,12 @@ public class ClientTask
     public bool HistoryPushState { get; set; }
     public string HistoryPushStateTitle { get; set; }
     public string HistoryPushStateUrl { get; set; }
-
+    public bool DispatchEvent { get; set; }
+    public string DispatchEventName { get; set; }
+    public object[] DispatchEventParameters { get; set; }
+    public bool ListenEvent { get; set; }
+    public string ListenEventName { get; set; }
+    public string ListenEventRouteTo { get; set; }
 }
 
 [Serializable]

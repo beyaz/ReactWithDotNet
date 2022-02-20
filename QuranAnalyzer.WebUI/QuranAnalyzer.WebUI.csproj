@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Facts.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Facts.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\QuranAnalyzer\QuranAnalyzer.csproj" />
     <ProjectReference Include="..\ReactDotNet\ReactDotNet.csproj" />
   </ItemGroup>

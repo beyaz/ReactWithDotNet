@@ -513,6 +513,19 @@
                 {
                     window.history.replaceState({}, clientTask.HistoryPushStateTitle, clientTask.HistoryPushStateUrl);
                 }
+
+                if (clientTask.DispatchEvent)
+                {
+                    EventBus.Dispatch(clientTask.DispatchEventName, clientTask.DispatchEventParameters);
+                }
+
+                if (clientTask.ListenEvent)
+                {
+                    EventBus.On(clientTask.ListenEventName, function()
+                    {
+                        HandleAction({ remoteMethodName: clientTask.ListenEventRouteTo, component: component, eventArguments: arguments[0] });
+                    });
+                }
             }
 
             restoreState();
@@ -626,6 +639,21 @@
         global.ReactDotNet.SendRequest(request, onSuccess);
     }
 
+    const EventBus = 
+    {
+        On(event, callback) 
+        {
+            document.addEventListener(event, (e) => callback(e.detail));
+        },
+        Dispatch(event, data) 
+        {
+            document.dispatchEvent(new CustomEvent(event, { detail: data }));
+        },
+        Remove(event, callback) 
+        {
+            document.removeEventListener(event, callback);
+        }
+    };
 
     global.ReactDotNet =
     {
@@ -633,7 +661,8 @@
         DefineComponent: DefineComponent,
         FetchComponent: FetchComponent,
         RegisterActionToComponent: RegisterActionToComponent,
-        HandleAction: HandleAction
+        HandleAction: HandleAction,
+        EventBus: EventBus
     };
 
 })(window,React);

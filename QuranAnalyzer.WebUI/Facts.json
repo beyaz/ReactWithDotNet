@@ -1,0 +1,14 @@
+﻿[
+    {
+        "Name": "Fact 30",
+        "ShortDescription": "Y.S ",
+        "SearchScript": "36:*",
+        "SearchCharacters": "ي , سٓ"
+    },
+    {
+        "Name": "Fact 42",
+        "ShortDescription": "Lokman ",
+        "SearchScript": "31:*",
+        "SearchCharacters": "الٓمٓ"
+    }
+]
