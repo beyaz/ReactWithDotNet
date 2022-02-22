@@ -282,20 +282,19 @@ namespace QuranAnalyzer.WebUI
 
             var topNav = new nav
                          {
-                             style = 
-                             { 
-                                 display = Display.flex, 
-                                 justifyContent = JustifyContent.flex_start,
-                                 alignItems = AlignItems.center
-                             },
+                             hamburgerIcon,
+                             new div
+                             {
+                                 new div {id = "title", text = "19 Sistemi Hakkında"}
+                             }
                          }
-                +
-                hamburgerIcon
-                + new div{ 
-                    children =
-                {
-                    new div{id ="title", text = "19 Sistemi Hakkında"}
-                }};
+
+                         + new Style
+                         {
+                             display        = Display.flex,
+                             justifyContent = JustifyContent.flex_start,
+                             alignItems     = AlignItems.center
+                         };
 
             Element main = factsContainer;
 
@@ -317,37 +316,10 @@ namespace QuranAnalyzer.WebUI
                 main = new FactView{ state = state.FactViewModel};
             }
 
+
+
            
 
-            var footer = new div
-            {
-                 new div { text = "Anasayfa"},
-                 new div { text = "İletişim"},
-                 new div { text = "Soru-Cevap"},
-            } +
-            new Style 
-            { 
-                display        = Display.flex, 
-                justifyContent =JustifyContent.space_between
-            };
-
-            Element blockUI(Element content)
-            {
-                return new BlockUI
-                {
-                    blocked = state.IsBlocked,
-                    template = new div
-                    {
-                        new i { className = "pi pi-spin pi-spinner" },
-                        new div { Margin = { Left = 5 }, style = { color = "White" }, text = state.OperationName }
-                    }.MakeCenter(),
-
-                    children =
-                    {
-                        content
-                    }
-                };
-            }
 
             Element createMenuItem(string text)
             {
@@ -381,16 +353,10 @@ namespace QuranAnalyzer.WebUI
             
             
 
-            return CreatePage(topNav, main, footer, menu);
-
-
-            return blockUI(new div { style = {background = theme.MainPaperBackgroundColor, marginLeft = "20px", marginRight = "20px"}}
-                    + topNav
-                    + main
-                    + footer);
+            return CreatePage(topNav, main, menu);
         }
 
-        Element CreatePage(Element topContent, Element mainContent, Element footerContent, Element menu)
+        Element CreatePage(Element topContent, Element mainContent, Element menu)
         {
             var top = new div { topContent } + new Style
             { 
