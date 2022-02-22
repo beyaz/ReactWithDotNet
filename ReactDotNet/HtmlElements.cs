@@ -215,6 +215,11 @@ namespace ReactDotNet
         {
             this.className = className;
         }
+
+        public div(IEnumerable<Element> children)
+        {
+            this.children.AddRange(children);
+        }
     }
 
     public class pre : HtmlElement

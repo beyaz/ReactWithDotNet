@@ -201,55 +201,7 @@ namespace QuranAnalyzer.WebUI
 
         public override Element render()
         {
-            static Element fact( string title, Action onClick)
-            {
-                return new div
-                {
-                    style =
-                    {
-                        borderRadius = "5px",
-                        width      = px(150),
-                        height     = px(200) ,
-                        //boxShadow  ="0 4px 8px 0 rgba(0,0,0,0.2)",
-                        margin     = px(20),
-                         display = Display.flex,
-                        justifyContent = JustifyContent.center,
-                        alignItems = AlignItems.center,
-                        flexDirection = FlexDirection.column,
-                        textAlign = TextAlign.center,
-                        fontFamily = "Verdana,sans-serif"
-                    },
-                    onClick = onClick,
-                    children =
-                    {
-                        new div
-                        {
-
-                           style = { padding = "1px",  },
-                           children =
-                           {
-                                 new div { style =   {color ="#08090a", fontSize = "17px", fontWeight = "600" }, text = title },
-                                 new div
-                                 {
-                                     style =
-                                     {
-                                         wordBreak = WordBreak.break_all,
-                                         margin = "15px",
-                                         fontSize= px(13),
-                                         color="#546285"
-                                     },
-                                     text = "Kısa açıklamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1gtgtgrtrtğ", Margin={ Top=5} }
-                           }
-                        }
-
-                    }
-
-                }.HasBorder();
-            }
-
-            
-
-            
+            var facts = Fact.GetFacts().ToList();
 
             var searchText = new span("p-input-icon-right")
                                 + new i("pi pi-search")
@@ -258,25 +210,12 @@ namespace QuranAnalyzer.WebUI
 
 
 
-           
+
+
+
 
             
-
-            var factsContainer = new div
-            {
-                style =
-                {
-                    background = theme.MainPaperBackgroundColor,
-                    display = Display.flex,
-                    flexWrap = FlexWrap.wrap,
-                    justifyContent = JustifyContent.center
-                }
-            };
             
-            foreach (var fact1 in Fact.GetFacts())
-            {
-                factsContainer.Add(new FactMiniView {state = new FactMiniViewModel{ Fact = fact1} ,title = fact1.Name});
-            }
 
             var hamburgerIcon = new SvgHamburgerIcon { HamburgerMenuIsOpen = state.HamburgerMenuIsOpen , onClick = ()=>state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen};
 
@@ -296,34 +235,46 @@ namespace QuranAnalyzer.WebUI
                              alignItems     = AlignItems.center
                          };
 
-            Element main = factsContainer;
-
-
-
             
 
-            
+            var main = new div(facts.Select(x=>new FactMiniView {state = new FactMiniViewModel{ Fact = x} ,title = x.Name}))
+                           + new Style
+                           {
+                               background     = theme.MainPaperBackgroundColor,
+                               display        = Display.flex,
+                               flexWrap       = FlexWrap.wrap,
+                               justifyContent = JustifyContent.center
+                           };
 
-            var f = Fact.GetFacts().FirstOrDefault(x => x.Name == state.SelectedFact);
-            if (f!= null)
+
+
+
+
+            if (state.SelectedFact != null)
             {
-                state.FactViewModel ??= new FactViewModel
+                var fact = facts.FirstOrDefault(x => x.Name == state.SelectedFact);
+                if (fact!= null)
                 {
-                    SuraFilter       = f.SearchScript,
-                    SearchCharacters = f.SearchCharacters
-                };
+                    state.FactViewModel ??= new FactViewModel
+                    {
+                        SuraFilter       = fact.SearchScript,
+                        SearchCharacters = fact.SearchCharacters
+                    };
 
-                main = new FactView{ state = state.FactViewModel};
+                    main = new FactView{ state = state.FactViewModel};
+                }
             }
+
+            
 
 
 
            
 
 
-            Element createMenuItem(string text)
+            Element createMenuItem(string label)
             {
-                return new div { text = text } + new Style { fontSize = px(17) , marginTop = px(20) };
+                return new div { text = label } + new Style { fontSize = px(17) , marginTop = px(20) };
             }
 
             var menu = new div 
