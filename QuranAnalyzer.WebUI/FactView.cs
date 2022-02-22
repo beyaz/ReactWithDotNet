@@ -35,7 +35,15 @@ public class FactViewModel
 [Serializable]
 public sealed class Occurence
 {
-    public string Charachter { get; set; }
+    public int? Charachter1 { get; set; }
+    public int? Charachter2 { get; set; }
+    public int? Charachter3 { get; set; }
+    public int? Charachter4 { get; set; }
+    public int? Charachter5 { get; set; }
+    public int? Charachter6 { get; set; }
+    public int? Charachter7 { get; set; }
+    public int? Charachter8 { get; set; }
+    public int? Charachter9 { get; set; }
 
     public string AyahNumber { get; set; }
 }
@@ -66,17 +74,38 @@ class FactView : ReactComponent<FactViewModel>
 
         state.matchRecords = Mixin.SearchCharachters(state.SuraFilter, state.SearchCharacters).Value;
 
-        state.ResultRecords = state.matchRecords.Select(m =>
+
+        var results = new List<Occurence>();
+
+        foreach (var record in state.matchRecords)
         {
-            return new Occurence
+            var occurence = new Occurence
             {
-                Charachter = m.ToString(),
-
-                AyahNumber = m.aya._index,
-
-
+                AyahNumber = record.aya._index
             };
-        }).ToArray();
+
+            if (results.Any(x=>x.AyahNumber == occurence.AyahNumber))
+            {
+                continue;
+            }
+
+            results.Add(occurence);
+
+            foreach (var charachter in WordSearcher.ToList(state.SearchCharacters))
+            {
+                var propertyName = "Charachter" + (WordSearcher.ToList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
+
+                var property     = typeof(Occurence).GetProperty(propertyName);
+                
+                var count =  state.matchRecords.Count(m => record.aya._index == m.aya._index && m.ToString() == charachter);
+
+                property.SetValue(occurence, count);
+            }
+
+                
+        }
+
+        state.ResultRecords = results.ToArray();
 
         state.CountOfCharacters = state.matchRecords.Count;
 
@@ -88,12 +117,16 @@ class FactView : ReactComponent<FactViewModel>
 
     public override Element render()
     {
-        var container = new div {Margin = {Left = 10, Right = 10}};
+        var container = new VPanel
+        {
+            Margin = {Left = 10, Right = 10},
+        };
 
         var searchBar = new Card
         {
             title  = "Arama",
             Margin = {Top = 5},
+            
             children =
             {
                 new VPanel
@@ -137,8 +170,31 @@ class FactView : ReactComponent<FactViewModel>
             summaryContent.Add(new div {text = ")"});
         }
 
+
+        var resultColumns = new List<Column>
+        {
+            new Column {field = nameof(Occurence.AyahNumber), header = "Ayet No"},
+        };
+
         
-        
+        foreach (var charachter in WordSearcher.ToList(state.SearchCharacters))
+        {
+            var propertyName = "Charachter" + (WordSearcher.ToList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
+
+            resultColumns.Add(new Column {field = propertyName, header = charachter.ToString()});
+            
+        }
+
+        var dt = new DataTable
+        {
+            scrollHeight = px(300),
+            scrollable   = true,
+            value        = state.ResultRecords,
+            
+        };
+
+        dt.children.AddRange(resultColumns);
+
 
         var results = new Card
         {
@@ -165,17 +221,7 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Detaylı Tablo",
                             children =
                             {
-                                new DataTable
-                                {
-                                    scrollHeight = px(300),
-                                    scrollable   = true,
-                                    value = state.ResultRecords,
-                                    children =
-                                    {
-                                        new Column {field = nameof(Occurence.Charachter), header = "Harf"},
-                                        new Column {field = nameof(Occurence.AyahNumber), header = "Ayet No"},
-                                    }
-                                }
+                                dt
                             }
                         },
                         new TabPanel

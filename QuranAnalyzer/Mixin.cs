@@ -21,7 +21,7 @@ public static class Mixin
 
             foreach (var aya in AyaFilter.Filter(searchScript).Value)
             {
-                items.AddRange(DataAccess.Analyze(aya).Where(x => indexList.Contains(x.HarfIndex)));
+                items.AddRange(DataAccess.Analyze(aya,true).Where(x => indexList.Contains(x.HarfIndex)));
             }
 
             return items;

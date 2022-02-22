@@ -295,16 +295,6 @@ namespace QuranAnalyzer.WebUI
                     display = Display.flex,
                     flexWrap = FlexWrap.wrap,
                     justifyContent = JustifyContent.center
-                },
-                children =
-                {
-                    fact("Kaf", () => OnFactClicked("kaf")),
-                    
-                    fact("Ya-sin", () => OnFactClicked("ya-sin")),
-
-                    fact("Ha-Mim", () => OnFactClicked("ha-mim")),
-
-                    fact("Nun", () => OnFactClicked("nun"))
                 }
             };
             
@@ -323,27 +313,9 @@ namespace QuranAnalyzer.WebUI
 
 
 
-            if (state.SelectedFact?.Equals("kaf",StringComparison.OrdinalIgnoreCase) == true)
-            {
-                state.FactViewModel ??= new FactViewModel
-                {
-                    SuraFilter       = "42:*",
-                    SearchCharacters = "ق"
-                };
+            
 
-                main = new FactView{ state = state.FactViewModel};
-            }
-
-            if (state.SelectedFact?.Equals("ya-sin",StringComparison.OrdinalIgnoreCase) == true)
-            {
-                state.FactViewModel ??= new FactViewModel
-                {
-                    SuraFilter       = "36:*",
-                    SearchCharacters = "ي , سٓ"
-                };
-
-                main = new FactView{ state = state.FactViewModel};
-            }
+            
 
             var f = Fact.GetFacts().FirstOrDefault(x => x.Name == state.SelectedFact);
             if (f!= null)
@@ -357,26 +329,7 @@ namespace QuranAnalyzer.WebUI
                 main = new FactView{ state = state.FactViewModel};
             }
 
-            //if (state.SelectedFact?.Equals("Fact 42",StringComparison.OrdinalIgnoreCase) == true)
-            //{
-            //    state.FactViewModel ??= new FactViewModel
-            //    {
-            //        SuraFilter       = "36:*",
-            //        SearchCharacters = "ي , سٓ"
-            //    };
-
-            //    main = new FactView{ state = state.FactViewModel};
-            //}
-
-            if (state.SelectedFact== "Nun")
-            {
-                main = new div
-                {
-                    style = { marginTop = "5px" },
-                    text = "Nun"
-
-                }.HasBorder();
-            }
+           
 
             var footer = new div
             {
@@ -494,17 +447,6 @@ namespace QuranAnalyzer.WebUI
                 height = "calc(100% - 65px)",
                 overflowY = Overflow.auto,
                 
-            };
-
-            var footer = new div { footerContent } + new Style 
-            { 
-                position       = Position.@fixed, 
-               
-                height      = px(20),
-                width = "100%",
-                bottom = px(0),
-                background = "whitesmoke",
-                zIndex = "1"
             };
 
             return new div {  top, menu,  main,  } + new Style { height = "100vh" , width = "100%" };

@@ -9,7 +9,14 @@ public static class CharachterSearchResultColorizer
 {
     public static Element ColorizeCharachterSearchResults(IReadOnlyList<MatchInfo> matchRecords)
     {
-        var container = new VPanel();
+        var container = new VPanel
+        {
+            style =
+            {
+                fontFamily = "Lateef, cursive", fontSize = px(25),
+                direction = Direction.rtl
+            }
+        };
 
         foreach (var items in from m in matchRecords group m by m.aya._index into mgroup select mgroup.ToList())
         {
@@ -17,7 +24,17 @@ public static class CharachterSearchResultColorizer
 
             container.Add(new HPanel
             {
-                new div {text = $"[{items[0].aya.SurahNumber}:{items[0].aya._index}]", style = {marginRight = px(5), color = "green"}},
+                new div
+                {
+                    text = $"[{items[0].aya.SurahNumber}:{items[0].aya._index}]", 
+                    style =
+                    {
+                        marginLeft = px(5), 
+                        color       = "green", 
+                        fontSize    = px(13),
+                        direction   = Direction.ltr
+                    }
+                },
                 el
             });
         }
@@ -27,7 +44,14 @@ public static class CharachterSearchResultColorizer
 
     static Element ColorizeCharachterSearchResult(string ayahText, IReadOnlyList<MatchInfo> matchRecords)
     {
-        var element = new HPanel();
+        var element = new HPanel
+        {
+            style =
+            {
+                
+               verticalAlign = VerticalAlign.top
+            }
+        };
 
         var startPosition = 0;
 
@@ -37,7 +61,7 @@ public static class CharachterSearchResultColorizer
 
             element.Add(new div {text = text});
 
-            element.Add(new span {text = matchRecord.ToString(), style = {color = "red", marginLeft = "2px", marginRight = "2px"}});
+            element.Add(new span {text = matchRecord.ToString(), style = {color = "red", marginLeft = "3px", marginRight = "3px"}});
 
             startPosition = matchRecord.StartIndex + matchRecord.ToString().Length;
         }
