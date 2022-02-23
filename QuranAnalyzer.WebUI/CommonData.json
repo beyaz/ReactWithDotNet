@@ -1,0 +1,9 @@
+﻿{
+    "MainTitle": "19 Sistemi Hakkında",
+    "MainMenuItems": [
+        { "Text": "Anasayfa" },
+        { "Text": "Başlangıç Harfleri" },
+        { "Text": "Soru - Cevap" },
+        { "Text": "İletişim" }
+    ] 
+}

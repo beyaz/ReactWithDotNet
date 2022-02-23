@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="CommonData.json" />
     <Content Remove="Facts.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="CommonData.json" />
     <EmbeddedResource Include="Facts.json" />
   </ItemGroup>
 
