@@ -630,7 +630,7 @@
                 throw response.ErrorMessage;
             }
 
-            var element = response.Element;
+            var element = JSON.parse(response.ElementAsJsonString);
 
             var component = DefineComponent(element);
 

@@ -38,7 +38,7 @@ public class ComponentRequest
     public string MethodName { get; set; }
     public string EventHandlerMethodName { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
-    public IReadOnlyDictionary<string,ClientStateInfo> ChildStates { get; set; }
+    public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
 }
 
 [Serializable]
@@ -51,7 +51,6 @@ public class ComponentResponse
     public string ElementAsJsonString { get; set; }
 }
 
-
 public static class ComponentRequestHandler
 {
     public static string GetFullName(this Type type)
@@ -61,52 +60,24 @@ public static class ComponentRequestHandler
 
     public static ComponentResponse HandleRequest(ComponentRequest request, Func<string, Type> findType)
     {
-        string setState(Type typeOfInstance, object instance, string stateAsJson)
-        {
-            var statePropertyInfo = typeOfInstance.GetProperty("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (statePropertyInfo == null)
-            {
-                return $"MissingMember at {typeOfInstance.FullName}::state";
-            }
-
-            var state = JsonSerializer.Deserialize(stateAsJson, statePropertyInfo.PropertyType, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
-
-            statePropertyInfo.SetValue(instance, state);
-
-            return null;
-        }
-
         if (request.MethodName == "FetchComponent")
         {
             var type = findType(request.FullName);
-
-            if (type != null)
+            if (type == null)
             {
-                var instance = (Element) Activator.CreateInstance(type);
-
-                if (instance != null)
-                {
-                    return new ComponentResponse {Element = instance};
-                }
-            }
-        }
-
-        object[] createMethodArguments(MethodInfo methodInfo, IReadOnlyList<string> eventArgumentsAsJsonArray)
-        {
-            var parameterInfoList = methodInfo.GetParameters();
-            if (parameterInfoList.Length == 0)
-            {
-                return Empty<object>();
+                return new ComponentResponse {ErrorMessage = $"Type not found.{request.FullName}"};
             }
 
-            var eventArguments = new object[parameterInfoList.Length];
-
-            for (var i = 0; i < parameterInfoList.Length; i++)
+            var instance = (Element) Activator.CreateInstance(type);
+            if (instance == null)
             {
-                eventArguments[i] = JsonSerializer.Deserialize(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
+                return new ComponentResponse {ErrorMessage = $"Type not instanstied.{request.FullName}"};
             }
 
-            return eventArguments;
+            return new ComponentResponse
+            {
+                ElementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates)
+            };
         }
 
         if (request.MethodName == "HandleComponentEvent")
@@ -145,8 +116,6 @@ public static class ComponentRequestHandler
                 return new ComponentResponse {ErrorMessage = $"Method invocation error.{exception}"};
             }
 
-            
-
             return new ComponentResponse
             {
                 ElementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates)
@@ -154,46 +123,79 @@ public static class ComponentRequestHandler
         }
 
         return new ComponentResponse {ErrorMessage = $"Not implemented method. {request.MethodName}"};
+
+        string setState(Type typeOfInstance, object instance, string stateAsJson)
+        {
+            var statePropertyInfo = typeOfInstance.GetProperty("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (statePropertyInfo == null)
+            {
+                return $"MissingMember at {typeOfInstance.FullName}::state";
+            }
+
+            var state = JsonSerializer.Deserialize(stateAsJson, statePropertyInfo.PropertyType, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+
+            statePropertyInfo.SetValue(instance, state);
+
+            return null;
+        }
+
+        object[] createMethodArguments(MethodInfo methodInfo, IReadOnlyList<string> eventArgumentsAsJsonArray)
+        {
+            var parameterInfoList = methodInfo.GetParameters();
+            if (parameterInfoList.Length == 0)
+            {
+                return Empty<object>();
+            }
+
+            var eventArguments = new object[parameterInfoList.Length];
+
+            for (var i = 0; i < parameterInfoList.Length; i++)
+            {
+                eventArguments[i] = JsonSerializer.Deserialize(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
+            }
+
+            return eventArguments;
+        }
     }
-
-    
-
-   
 }
-
 
 class ElementSerializationExtraData
 {
-    public IReadOnlyDictionary<string,ClientStateInfo> ChildStates { get; set; }
+    public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
     public string BreadCrumpPath { get; set; }
 }
+
 static class ComponentSerializer
 {
-    public static string SerializeComponent(Element instance, IReadOnlyDictionary<string,ClientStateInfo> childStates)
+    public static string SerializeComponent(Element instance, IReadOnlyDictionary<string, ClientStateInfo> childStates)
     {
         var jsonSerializerOptions = new JsonSerializerOptions
         {
-            Converters = {new DummyConverter {ElementSerializationExtraData = new ElementSerializationExtraData
+            Converters =
             {
-                ChildStates = childStates,
-                BreadCrumpPath = "0"
-            }}}
+                new DummyConverter
+                {
+                    ElementSerializationExtraData = new ElementSerializationExtraData
+                    {
+                        ChildStates    = childStates,
+                        BreadCrumpPath = "0"
+                    }
+                }
+            }
         }.ModifyForReactDotNet();
 
-        return System.Text.Json.JsonSerializer.Serialize(instance, jsonSerializerOptions);
+        return JsonSerializer.Serialize(instance, jsonSerializerOptions);
     }
 
     public static ElementSerializationExtraData GetElementSerializationExtraData(this JsonSerializerOptions options)
     {
-        return (options.Converters[0] as DummyConverter)?.ElementSerializationExtraData ?? new ElementSerializationExtraData()
-        {
-            
-        };
+        return (options.Converters[0] as DummyConverter)?.ElementSerializationExtraData ?? new ElementSerializationExtraData();
     }
+
     class Dummy
     {
-            
     }
+
     class DummyConverter : JsonConverter<Dummy>
     {
         public ElementSerializationExtraData ElementSerializationExtraData { get; set; }
@@ -208,5 +210,4 @@ static class ComponentSerializer
             throw new NotImplementedException();
         }
     }
-        
 }
