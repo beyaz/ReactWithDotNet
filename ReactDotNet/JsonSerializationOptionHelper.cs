@@ -313,7 +313,9 @@ static class JsonSerializationOptionHelper
                     elementSerializationExtraData.BreadCrumpPath = breadCrumpPath + "," + i;
                     if (item is IReactStatelessComponent statelessComponent)
                     {
-                        JsonSerializer.Serialize(writer, statelessComponent.render(), options);
+                        var rootElement = statelessComponent.render();
+                        rootElement.key = statelessComponent.key;
+                        JsonSerializer.Serialize(writer, rootElement , options);
                         i++;
                         continue;
                     }

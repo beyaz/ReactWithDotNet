@@ -2,6 +2,7 @@
 {
     public interface IReactStatelessComponent
     {
+         string key { get; }
          Element render();
     }
 
