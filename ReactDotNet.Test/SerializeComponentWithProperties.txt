@@ -107,11 +107,13 @@
               ]
             },
             "fullName": "ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test",
+            "FullTypeNameOfState": "ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
             "key": "0"
           }
         ]
       },
       "fullName": "ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test",
+      "FullTypeNameOfState": "ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
       "key": "5"
     }
   ]
