@@ -14,6 +14,10 @@ namespace ReactDotNet
     {
         protected internal virtual void BeforeSerialize()
         {
+            if (this is nav)
+            {
+                this.ToString();
+            }
             InitializeKeyIfNotExists(children);
         }
 

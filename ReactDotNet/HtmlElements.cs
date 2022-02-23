@@ -300,11 +300,11 @@ namespace ReactDotNet
         public string alt { get; set; }
 
         [React]
-        public int width { get; set; }
+        public new int width { get; set; }
 
         
         [React]
-        public int height { get; set; }
+        public new int height { get; set; }
     }
 
     public class HPanel : div
@@ -322,8 +322,6 @@ namespace ReactDotNet
         protected internal override void BeforeSerialize()
         {
             base.BeforeSerialize();
-
-            var children = base.children;
 
             if (children.Any(x => x.gravity.HasValue))
             {
