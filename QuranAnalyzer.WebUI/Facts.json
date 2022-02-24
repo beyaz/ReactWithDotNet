@@ -6,15 +6,45 @@
         "SearchCharacters": "ي , سٓ"
     },
     {
-        "Name": "Fact_42",
-        "ShortDescription": "Lokman ",
-        "SearchScript": "31:*",
-        "SearchCharacters": "الٓمٓ"
+        "Name": "HaMim",
+        "ShortDescription": "Yedi surenin başında 'H' ve 'M' harfleri bulunmaktadır;",
+        "SearchScript": "40:*, 41:*, 42:*, 43:*, 44:*, 45:*, 46:*",
+        "SearchCharacters": "ح م"
     },
     {
-        "Name": "Kaf",
-        "ShortDescription": "KAf ",
+        "Name": "Kaf_42",
+        "ShortDescription": "Kaf harfinin 42. suredeki geçiş adetini hesapla",
         "SearchScript": "42:*",
         "SearchCharacters": "ق"
+    },
+    {
+        "Name": "Kaf_50",
+        "ShortDescription": "Kaf harfinin 50. suredeki geçiş adetini hesapla",
+        "SearchScript": "50:*",
+        "SearchCharacters": "ق"
+    },
+    {
+        "Name": "Nun",
+        "ShortDescription": "Nun harfinin 68. suredeki geçiş adetini hesapla",
+        "SearchScript": "68:*",
+        "SearchCharacters": "ن"
+    },
+    {
+        "Name": "Sad",
+        "ShortDescription": "Sad harfinin 7, 19 ve 38 inci suredeki geçiş adetini hesapla",
+        "SearchScript": "7:*, 19:*, 38:*",
+        "SearchCharacters": "ص"
+    },
+    {
+        "Name": "K.H.Y.‘A.S.",
+        "ShortDescription": "K.H.Y.‘A.S. (Kef He Ya ‘Ayn Sad)",
+        "SearchScript": "19:*",
+        "SearchCharacters": "ك ه ي ع ص"
+    },
+    {
+        "Name": "‘A.S.Q. (‘Ayn Sin Kaf)",
+        "ShortDescription": "Sure 42’nin 2. ayetinde bu harfler vardır.",
+        "SearchScript": "42:*",
+        "SearchCharacters": "ع س ق"
     }
 ]

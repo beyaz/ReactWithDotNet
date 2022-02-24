@@ -7,6 +7,7 @@ namespace QuranAnalyzer.WebUI;
 public sealed class MainMenuModel
 {
     public string Text { get; set; }
+    public string Id { get; set; }
 }
 
 [Serializable]

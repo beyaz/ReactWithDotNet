@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
 using static QuranAnalyzer.WebUI.MixinForUI;
@@ -28,7 +29,7 @@ public class FactViewModel
     public int SelectedTabIndex { get; set; }
     public Occurence[] ResultRecords { get; set; }
 
-
+    
     public IReadOnlyList<MatchInfo> matchRecords{ get; set; }
 }
 
@@ -195,7 +196,6 @@ class FactView : ReactComponent<FactViewModel>
 
         dt.children.AddRange(resultColumns);
 
-
         var results = new Card
         {
             title  = "Sonuçlar",
@@ -231,7 +231,7 @@ class FactView : ReactComponent<FactViewModel>
                             {
                                 CharachterSearchResultColorizer.ColorizeCharachterSearchResults(state.matchRecords)
                             }
-                        },
+                        }
                     }
                 }
             }

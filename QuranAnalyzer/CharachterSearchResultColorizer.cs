@@ -18,25 +18,29 @@ public static class CharachterSearchResultColorizer
             }
         };
 
-        foreach (var items in from m in matchRecords group m by m.aya._index into mgroup select mgroup.ToList())
-        {
-            var el = ColorizeCharachterSearchResult(items[0].aya._bismillah + items[0].aya._text, items);
 
-            container.Add(new HPanel
+        foreach (var itemsInSurah in from m in matchRecords group m by m.aya.SurahNumber into mgroup select mgroup.ToList())
+        {
+            foreach (var items in from m in itemsInSurah group m by m.aya._index into mgroup select mgroup.ToList())
             {
-                new div
+                var el = ColorizeCharachterSearchResult(items[0].aya._bismillah + items[0].aya._text, items);
+
+                container.Add(new HPanel
                 {
-                    text = $"[{items[0].aya.SurahNumber}:{items[0].aya._index}]", 
-                    style =
+                    new div
                     {
-                        marginLeft = px(5), 
-                        color       = "green", 
-                        fontSize    = px(13),
-                        direction   = Direction.ltr
-                    }
-                },
-                el
-            });
+                        text = $"[{items[0].aya.SurahNumber}:{items[0].aya._index}]",
+                        style =
+                        {
+                            marginLeft = px(5),
+                            color      = "green",
+                            fontSize   = px(13),
+                            direction  = Direction.ltr
+                        }
+                    },
+                    el
+                });
+            }
         }
 
         return container;

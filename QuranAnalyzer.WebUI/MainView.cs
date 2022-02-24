@@ -24,6 +24,8 @@ public class MainViewModel
 
     public string SearchPartOfUrl { get; set; }
 
+    public string LastClickedMenuId { get; set; }
+
     public FactViewModel FactViewModel { get; set; }
 }
 
@@ -67,6 +69,18 @@ class MainView : ReactComponent<MainViewModel>
     {
     }
 
+    void OnMainMenuItemClicked(string menuId)
+    {
+        state.LastClickedMenuId = menuId;
+
+        state.ClientTask = new ClientTask
+        {
+            DispatchEvent           = true,
+            DispatchEventName       = nameof(OnMainMenuItemClicked),
+            DispatchEventParameters = new object[] {menuId}
+        };
+    }
+
     public override Element render()
     {
         var commonData     = ResourceAccess.CommonData;
@@ -90,7 +104,7 @@ class MainView : ReactComponent<MainViewModel>
                          alignItems     = AlignItems.center
                      };
 
-        var main = new div(facts.Select(x => new FactMiniView {state = new FactMiniViewModel {Fact = x}, title = x.Name}))
+        var main = new div(facts.Select(x => new FactMiniView {state = new FactMiniViewModel {Fact = x}}))
                    + new Style
                    {
                        background     = theme.MainPaperBackgroundColor,
@@ -114,17 +128,22 @@ class MainView : ReactComponent<MainViewModel>
             }
         }
 
-        var menu = new div(mainMenuModels.Select(x => new div
-                                                      {
-                                                          text = x.Text
-                                                      }
-                                                      +
-                                                      new Style
-                                                      {
-                                                          fontSize  = px(17),
-                                                          marginTop = px(20)
-                                                      })
-                          )
+        Element ToMenuItem(MainMenuModel m)
+        {
+            return new div
+                   {
+                       text = m.Text,
+                       onClick = ()=>OnMainMenuItemClicked(m.Id)
+                   }
+                   +
+                   new Style
+                   {
+                       fontSize  = px(17),
+                       marginTop = px(50)
+                   };
+        }
+
+        var menu = new div(mainMenuModels.Select(ToMenuItem))
                    +
                    new Style
                    {
@@ -136,7 +155,7 @@ class MainView : ReactComponent<MainViewModel>
                        boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
                        zIndex        = "1",
                        display       = state.HamburgerMenuIsOpen ? Display.flex : Display.none,
-                       transition    = "visibility 0s linear 500ms, opacity 500ms",
+                       transition    = "visibility 0s linear 1000ms, opacity 500ms",
                        flexDirection = FlexDirection.column,
                        alignItems    = AlignItems.center,
                        fontSize      = px(18),

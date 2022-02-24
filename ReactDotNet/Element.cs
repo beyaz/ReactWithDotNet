@@ -14,6 +14,7 @@ namespace ReactDotNet
     {
         protected internal virtual void BeforeSerialize()
         {
+            children.RemoveAll(x => x is null);
             InitializeKeyIfNotExists(children);
         }
 
