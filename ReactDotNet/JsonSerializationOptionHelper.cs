@@ -139,26 +139,31 @@ static class JsonSerializationOptionHelper
 
             writer.WriteStartObject();
 
-            if (value is IReactStatefulComponent)
+            void tryInitStateProperty()
             {
-                if (elementSerializationExtraData.BreadCrumpPath != "0")
+                if (value is IReactStatefulComponent)
                 {
-                    if (true == elementSerializationExtraData.ChildStates?.TryGetValue(elementSerializationExtraData.BreadCrumpPath, out ClientStateInfo clientStateInfo))
+                    if (elementSerializationExtraData.BreadCrumpPath != "0")
                     {
-                        var statePropertyInfo = value.GetType().GetProperty("state");
-                        if (statePropertyInfo == null)
+                        if (true == elementSerializationExtraData.ChildStates?.TryGetValue(elementSerializationExtraData.BreadCrumpPath, out ClientStateInfo clientStateInfo))
                         {
-                            throw new MissingMemberException(value.GetType().GetFullName(), "state");
-                        }
+                            var statePropertyInfo = value.GetType().GetProperty("state");
+                            if (statePropertyInfo == null)
+                            {
+                                throw new MissingMemberException(value.GetType().GetFullName(), "state");
+                            }
 
-                        if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
-                        {
-                            var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                            statePropertyInfo.SetValue(value, stateValue);
+                            if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
+                            {
+                                var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                                statePropertyInfo.SetValue(value, stateValue);
+                            }
                         }
                     }
                 }
             }
+
+            tryInitStateProperty();
 
             var reactAttributes = new List<string>();
 
@@ -175,37 +180,13 @@ static class JsonSerializationOptionHelper
                     }
                 }
 
-                if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
+                var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+                if (isDefaultValue || IsEmptyStyle(propertyValue))
                 {
                     continue;
                 }
 
-                if (propertyValue is Style style)
-                {
-                    bool hasValue(PropertyInfo x)
-                    {
-                        var styleProperty = x.GetValue(style);
-
-                        var defaultValue = x.PropertyType.GetDefaultValue();
-
-                        if (styleProperty == null)
-                        {
-                            if (defaultValue == null)
-                            {
-                                return false;
-                            }
-
-                            return true;
-                        }
-
-                        return !styleProperty.Equals(defaultValue);
-                    }
-
-                    if (!typeof(Style).GetProperties().Any(hasValue))
-                    {
-                        continue;
-                    }
-                }
+               
 
                 var propertyName = propertyInfo.Name;
 
@@ -331,6 +312,39 @@ static class JsonSerializationOptionHelper
 
             writer.WriteEndObject();
         }
+
+        static bool IsEmptyStyle(object value)
+        {
+            if (value is Style style)
+            {
+                bool hasValue(PropertyInfo x)
+                {
+                    var styleProperty = x.GetValue(style);
+
+                    var defaultValue = x.PropertyType.GetDefaultValue();
+
+                    if (styleProperty == null)
+                    {
+                        if (defaultValue == null)
+                        {
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                    return !styleProperty.Equals(defaultValue);
+                }
+
+                if (!typeof(Style).GetProperties().Any(hasValue))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #endregion
     }
 
