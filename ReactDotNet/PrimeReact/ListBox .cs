@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections;
 
 namespace ReactDotNet.PrimeReact
 {
@@ -8,11 +8,7 @@ namespace ReactDotNet.PrimeReact
        
     public class BlockUI : ElementBase
     {
-        /// <summary>
-        /// Unique identifier of the element.
-        /// </summary>
-        [React]
-        public string id { get; set; }
+        
 
         /// <summary>
         /// Controls the blocked state.
@@ -39,7 +35,7 @@ namespace ReactDotNet.PrimeReact
         /// An array of objects to display as the available options.
         /// </summary>
         [React]
-        public object[] options { get; set; }
+        public IEnumerable options { get; set; }
 
         /// <summary>
         /// Selected value to display.

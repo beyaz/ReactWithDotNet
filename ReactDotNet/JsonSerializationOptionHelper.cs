@@ -139,122 +139,21 @@ static class JsonSerializationOptionHelper
 
             writer.WriteStartObject();
 
-            void tryInitStateProperty()
-            {
-                if (value is IReactStatefulComponent)
-                {
-                    if (elementSerializationExtraData.BreadCrumpPath != "0")
-                    {
-                        if (true == elementSerializationExtraData.ChildStates?.TryGetValue(elementSerializationExtraData.BreadCrumpPath, out ClientStateInfo clientStateInfo))
-                        {
-                            var statePropertyInfo = value.GetType().GetProperty("state");
-                            if (statePropertyInfo == null)
-                            {
-                                throw new MissingMemberException(value.GetType().GetFullName(), "state");
-                            }
-
-                            if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
-                            {
-                                var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                                statePropertyInfo.SetValue(value, stateValue);
-                            }
-                        }
-                    }
-                }
-            }
-
             tryInitStateProperty();
 
             var reactAttributes = new List<string>();
 
             foreach (var propertyInfo in value.GetType().GetProperties().Where(x => x.GetCustomAttribute<JsonIgnoreAttribute>() == null))
             {
-                var propertyValue = propertyInfo.GetValue(value);
+                var propertyName = getPropertyName(propertyInfo);
 
-                var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
-                if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
-                {
-                    if (reactDefaultValueAttribute != null)
-                    {
-                        propertyValue = reactDefaultValueAttribute.DefaultValue;
-                    }
-                }
-
-                var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
-                if (isDefaultValue || IsEmptyStyle(propertyValue))
+                var (propertyValue, noNeedToExport) = getPropertyValue(propertyInfo, propertyName);
+                if (noNeedToExport)
                 {
                     continue;
                 }
 
-               
-
-                var propertyName = propertyInfo.Name;
-
-                var jsonPropertyNameAttribute = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
-                if (jsonPropertyNameAttribute != null)
-                {
-                    propertyName = jsonPropertyNameAttribute.Name;
-                }
-
-                if (options.PropertyNamingPolicy != null)
-                {
-                    propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
-                }
-
                 writer.WritePropertyName(propertyName);
-
-                if (propertyValue is Action action)
-                {
-                    propertyValue = new EventInfo {IsRemoteMethod = true, remoteMethodName = action.Method.Name};
-                }
-
-                if (propertyInfo.PropertyType.IsGenericType)
-                {
-                    if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
-                    {
-                        propertyValue = new EventInfo {IsRemoteMethod = true, remoteMethodName = ((Delegate) propertyValue).Method.Name};
-                    }
-                }
-
-                if (propertyValue is Enum enumValue)
-                {
-                    propertyValue = enumValue.ToString();
-                }
-
-                if (propertyValue is Expression<Func<string>> expression)
-                {
-                    var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
-                    if (reactBindAttribute == null)
-                    {
-                        continue;
-                    }
-
-                    string defaultValue = null;
-
-                    if (reactDefaultValueAttribute != null)
-                    {
-                        defaultValue = reactDefaultValueAttribute.DefaultValue;
-                    }
-
-                    propertyValue = new BindInfo
-                    {
-                        targetProp    = reactBindAttribute.targetProp,
-                        eventName     = reactBindAttribute.eventName,
-                        sourcePath    = Extensions.Bind(expression).Split('.', StringSplitOptions.RemoveEmptyEntries),
-                        IsBinding     = true,
-                        jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
-                        defaultValue  = defaultValue
-                    };
-                }
-
-                if (propertyName != nameof(IReactStatefulComponent.RootElement) && propertyValue is Element element)
-                {
-                    propertyValue = new InnerElementInfo
-                    {
-                        IsElement = true,
-                        Element   = element
-                    };
-                }
 
                 JsonSerializer.Serialize(writer, propertyValue, options);
 
@@ -296,7 +195,7 @@ static class JsonSerializationOptionHelper
                     {
                         var rootElement = statelessComponent.render();
                         rootElement.key = statelessComponent.key;
-                        JsonSerializer.Serialize(writer, rootElement , options);
+                        JsonSerializer.Serialize(writer, rootElement, options);
                         i++;
                         continue;
                     }
@@ -311,6 +210,123 @@ static class JsonSerializationOptionHelper
             }
 
             writer.WriteEndObject();
+
+            void tryInitStateProperty()
+            {
+                if (value is IReactStatefulComponent)
+                {
+                    if (elementSerializationExtraData.BreadCrumpPath != "0")
+                    {
+                        if (true == elementSerializationExtraData.ChildStates?.TryGetValue(elementSerializationExtraData.BreadCrumpPath, out ClientStateInfo clientStateInfo))
+                        {
+                            var statePropertyInfo = value.GetType().GetProperty("state");
+                            if (statePropertyInfo == null)
+                            {
+                                throw new MissingMemberException(value.GetType().GetFullName(), "state");
+                            }
+
+                            if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
+                            {
+                                var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                                statePropertyInfo.SetValue(value, stateValue);
+                            }
+                        }
+                    }
+                }
+            }
+
+            string getPropertyName(PropertyInfo propertyInfo)
+            {
+                var propertyName = propertyInfo.Name;
+
+                var jsonPropertyNameAttribute = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
+                if (jsonPropertyNameAttribute != null)
+                {
+                    propertyName = jsonPropertyNameAttribute.Name;
+                }
+
+                if (options.PropertyNamingPolicy != null)
+                {
+                    propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
+                }
+
+                return propertyName;
+            }
+
+            (object value, bool noNeedToExport) getPropertyValue(PropertyInfo propertyInfo, string propertyName)
+            {
+                var propertyValue = propertyInfo.GetValue(value);
+
+                var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
+                if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
+                {
+                    if (reactDefaultValueAttribute != null)
+                    {
+                        propertyValue = reactDefaultValueAttribute.DefaultValue;
+                    }
+                }
+
+                var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+                if (isDefaultValue || IsEmptyStyle(propertyValue))
+                {
+                    return (null, true);
+                }
+
+                if (propertyValue is Action action)
+                {
+                    propertyValue = new EventInfo {IsRemoteMethod = true, remoteMethodName = action.Method.Name};
+                }
+
+                if (propertyInfo.PropertyType.IsGenericType)
+                {
+                    if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
+                    {
+                        propertyValue = new EventInfo {IsRemoteMethod = true, remoteMethodName = ((Delegate) propertyValue)?.Method.Name};
+                    }
+                }
+
+                if (propertyValue is Enum enumValue)
+                {
+                    propertyValue = enumValue.ToString();
+                }
+
+                if (propertyValue is Expression<Func<string>> expression)
+                {
+                    var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
+                    if (reactBindAttribute == null)
+                    {
+                        return (null, true);
+                    }
+
+                    string defaultValue = null;
+
+                    if (reactDefaultValueAttribute != null)
+                    {
+                        defaultValue = reactDefaultValueAttribute.DefaultValue;
+                    }
+
+                    propertyValue = new BindInfo
+                    {
+                        targetProp    = reactBindAttribute.targetProp,
+                        eventName     = reactBindAttribute.eventName,
+                        sourcePath    = Extensions.Bind(expression).Split('.', StringSplitOptions.RemoveEmptyEntries),
+                        IsBinding     = true,
+                        jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
+                        defaultValue  = defaultValue
+                    };
+                }
+
+                if (propertyName != nameof(IReactStatefulComponent.RootElement) && propertyValue is Element element)
+                {
+                    propertyValue = new InnerElementInfo
+                    {
+                        IsElement = true,
+                        Element   = element
+                    };
+                }
+
+                return (propertyValue, false);
+            }
         }
 
         static bool IsEmptyStyle(object value)
@@ -344,7 +360,6 @@ static class JsonSerializationOptionHelper
 
             return false;
         }
-
         #endregion
     }
 
