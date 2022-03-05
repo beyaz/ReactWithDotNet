@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
 using static QuranAnalyzer.WebUI.MixinForUI;
@@ -123,13 +122,14 @@ class FactView : ReactComponent<FactViewModel>
             Margin = {Left = 10, Right = 10},
         };
 
-        var searchBar = new Card
+        var searchBar = new divWithBorder
         {
-            title  = "Arama",
-            Margin = {Top = 5},
             
+            Margin = {Top = 5},
+            PaddingAll = 15,
             children =
             {
+                new h4{text = "Arama"},
                 new VPanel
                 {
                     new VPanel
@@ -174,7 +174,7 @@ class FactView : ReactComponent<FactViewModel>
 
         var resultColumns = new List<Column>
         {
-            new Column {field = nameof(Occurence.AyahNumber), header = "Ayet No"},
+            new() {field = nameof(Occurence.AyahNumber), header = "Ayet No"}
         };
 
         

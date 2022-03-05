@@ -82,6 +82,7 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
                    flexDirection  = FlexDirection.column,
                    textAlign      = TextAlign.center,
                    fontFamily     = "Verdana,sans-serif",
+                   cursor = Cursor.pointer
                };
     }
 }

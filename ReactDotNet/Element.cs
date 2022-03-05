@@ -66,12 +66,8 @@ namespace ReactDotNet
         public string id { get; set; }
         
 
-        /// <summary>
-        ///     Gets the margin.
-        /// </summary>
-        [JsonIgnore]
-        public MarginThickness Margin { get; }
-
+        
+        
 
         /// <summary>
         ///     Gets or sets the on click.
@@ -79,11 +75,83 @@ namespace ReactDotNet
         [React]
         public Action onClick { get; set; }
 
-        /// <summary>
-        ///     Gets the padding.
-        /// </summary>
+
+        #region Margin
+        [JsonIgnore]
+        public MarginThickness Margin { get; }
+
+        [JsonIgnore]
+        public double? MarginAll
+        {
+            set
+            {
+                Margin.Left   = value;
+                Margin.Right  = value;
+                Margin.Top    = value;
+                Margin.Bottom = value;
+            }
+        }
+
+        [JsonIgnore]
+        public double? MarginLeftRight
+        {
+            set
+            {
+                Margin.Left  = value;
+                Margin.Right = value;
+            }
+        }
+
+        [JsonIgnore]
+        public double? MarginTopBottom
+        {
+            set
+            {
+                Margin.Top    = value;
+                Margin.Bottom = value;
+            }
+        }
+
+        #endregion
+
+        #region Padding
         [JsonIgnore]
         public PaddingThickness Padding { get; }
+
+        [JsonIgnore]
+        public double? PaddingAll
+        {
+            set
+            {
+                Padding.Left   = value;
+                Padding.Right  = value;
+                Padding.Top    = value;
+                Padding.Bottom = value;
+            }
+        }
+
+        [JsonIgnore]
+        public double? PaddingLeftRight
+        {
+            set
+            {
+                Padding.Left  = value;
+                Padding.Right = value;
+            }
+        }
+
+        [JsonIgnore]
+        public double? PaddingTopBottom
+        {
+            set
+            {
+                Padding.Top    = value;
+                Padding.Bottom = value;
+            }
+        }
+        #endregion
+
+
 
         /// <summary>
         ///     Gets the style.
