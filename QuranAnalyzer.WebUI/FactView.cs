@@ -212,8 +212,7 @@ class FactView : ReactComponent<FactViewModel>
             {
                 new TabView
                 {
-                    //onTabChange = e=>state.SelectedTabIndex = e.index,
-                    //activeIndex = state.SelectedTabIndex,
+                    activeIndexBind = ()=>state.SelectedTabIndex,
                     children =
                     {
                         new TabPanel

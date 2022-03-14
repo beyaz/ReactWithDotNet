@@ -8,7 +8,7 @@ namespace ReactDotNet
     static class Extensions
     {
 
-        public static string Bind(Expression<Func<string>> propertyAccessor)
+        public static string Bind<T>(Expression<Func<T>> propertyAccessor)
         {
             string NameofAllPath(MemberExpression memberExpression)
             {

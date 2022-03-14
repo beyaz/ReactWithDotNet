@@ -290,30 +290,30 @@ static class JsonSerializationOptionHelper
                     propertyValue = enumValue.ToString();
                 }
 
-                if (propertyValue is Expression<Func<string>> expression)
                 {
-                    var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
-                    if (reactBindAttribute == null)
+                    if (propertyValue is Expression<Func<string>> expression)
                     {
-                        return (null, true);
+                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, expression);
+                        if (bindInfo == null)
+                        {
+                            return (null, true);
+                        }
+
+                        return (bindInfo, false);
                     }
+                }
 
-                    string defaultValue = null;
-
-                    if (reactDefaultValueAttribute != null)
+                {
+                    if (propertyValue is Expression<Func<int>> expression)
                     {
-                        defaultValue = reactDefaultValueAttribute.DefaultValue;
+                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, expression);
+                        if (bindInfo == null)
+                        {
+                            return (null, true);
+                        }
+
+                        return (bindInfo, false);
                     }
-
-                    propertyValue = new BindInfo
-                    {
-                        targetProp    = reactBindAttribute.targetProp,
-                        eventName     = reactBindAttribute.eventName,
-                        sourcePath    = Extensions.Bind(expression).Split('.', StringSplitOptions.RemoveEmptyEntries),
-                        IsBinding     = true,
-                        jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
-                        defaultValue  = defaultValue
-                    };
                 }
 
                 if (propertyName != nameof(IReactStatefulComponent.RootElement) && propertyValue is Element element)
@@ -327,6 +327,32 @@ static class JsonSerializationOptionHelper
 
                 return (propertyValue, false);
             }
+        }
+
+        static BindInfo GetExpressionAsBindingInfo<TBindValuePropertyType>(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Expression<Func<TBindValuePropertyType>> expression)
+        {
+            var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
+            if (reactBindAttribute == null)
+            {
+                return null;
+            }
+
+            string defaultValue = null;
+
+            if (reactDefaultValueAttribute != null)
+            {
+                defaultValue = reactDefaultValueAttribute.DefaultValue;
+            }
+
+            return new BindInfo
+            {
+                targetProp    = reactBindAttribute.targetProp,
+                eventName     = reactBindAttribute.eventName,
+                sourcePath    = Extensions.Bind(expression).Split('.', StringSplitOptions.RemoveEmptyEntries),
+                IsBinding     = true,
+                jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
+                defaultValue  = defaultValue
+            };
         }
 
         static bool IsEmptyStyle(object value)

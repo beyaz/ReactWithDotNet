@@ -1,15 +1,11 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace ReactDotNet.PrimeReact
 {
     public class TabView : ElementBase
     {
-        /// <summary>
-        ///     Unique identifier of the element.
-        ///     <para>default: null</para>
-        /// </summary>
-        [React]
-        public string id { get; set; }
+        
 
         /// <summary>
         ///     Active index of the TabView.
@@ -17,6 +13,11 @@ namespace ReactDotNet.PrimeReact
         /// </summary>
         [React]
         public int activeIndex { get; set; }
+
+        [React]
+        [ReactBind(targetProp = nameof(activeIndex), jsValueAccess = "e.index", eventName = "onTabChange")]
+        public Expression<Func<int>> activeIndexBind { get; set; }
+
 
         /// <summary>
         ///     Whether to render the contents of the selected tab or all tabs.
