@@ -18,6 +18,7 @@ namespace QuranAnalyzer
         public string  _name { get; set; }
     }
 
+    [Serializable]
     public class aya
     {
         public string _index { get; set; }
@@ -26,7 +27,7 @@ namespace QuranAnalyzer
         public int SurahNumber { get; set; }
     }
 
-
+    [Serializable]
     public class MatchInfo
     {
         public int StartIndex { get; set; }

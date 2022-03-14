@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
@@ -29,7 +30,6 @@ public class FactViewModel
     public Occurence[] ResultRecords { get; set; }
 
     
-    public IReadOnlyList<MatchInfo> matchRecords{ get; set; }
 
 }
 
@@ -76,12 +76,12 @@ class FactView : ReactComponent<FactViewModel>
             return;
         }
 
-        state.matchRecords = Mixin.SearchCharachters(state.SuraFilter, state.SearchCharacters).Value;
+        var matchRecords = Mixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
 
 
         var results = new List<Occurence>();
 
-        foreach (var record in state.matchRecords)
+        foreach (var record in matchRecords)
         {
             var occurence = new Occurence
             {
@@ -101,7 +101,9 @@ class FactView : ReactComponent<FactViewModel>
 
                 var property     = typeof(Occurence).GetProperty(propertyName);
                 
-                var count =  state.matchRecords.Count(m => record.aya._index == m.aya._index && m.ToString() == charachter);
+                var count =  matchRecords.Count(m => record.aya._index == m.aya._index && m.ToString() == charachter);
+
+                Debug.Assert(property != null, nameof(property) + " != null");
 
                 property.SetValue(occurence, count);
             }
@@ -111,7 +113,7 @@ class FactView : ReactComponent<FactViewModel>
 
         state.ResultRecords = results.ToArray();
 
-        state.CountOfCharacters = state.matchRecords.Count;
+        state.CountOfCharacters = matchRecords.Count;
 
         state.IsBlocked     = false;
         state.OperationName = null;
@@ -186,7 +188,7 @@ class FactView : ReactComponent<FactViewModel>
         {
             var propertyName = "Charachter" + (WordSearcher.ToList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
 
-            resultColumns.Add(new Column {field = propertyName, header = charachter.ToString()});
+            resultColumns.Add(new Column {field = propertyName, header = charachter});
             
         }
 
@@ -200,6 +202,8 @@ class FactView : ReactComponent<FactViewModel>
 
         dt.children.AddRange(resultColumns);
 
+        var matchRecords = Mixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
+
         var results = new Card
         {
             title  = "Sonuçlar",
@@ -208,8 +212,8 @@ class FactView : ReactComponent<FactViewModel>
             {
                 new TabView
                 {
-                    onTabChange = e=>state.SelectedTabIndex = e.index,
-                    activeIndex = state.SelectedTabIndex,
+                    //onTabChange = e=>state.SelectedTabIndex = e.index,
+                    //activeIndex = state.SelectedTabIndex,
                     children =
                     {
                         new TabPanel
@@ -233,7 +237,7 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Mushaf Üzerinde Göster",
                             children =
                             {
-                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(state.matchRecords)
+                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords)
                             }
                         }
                     }
