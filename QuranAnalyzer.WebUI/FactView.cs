@@ -30,6 +30,7 @@ public class FactViewModel
 
     
     public IReadOnlyList<MatchInfo> matchRecords{ get; set; }
+
 }
 
 [Serializable]
@@ -46,6 +47,9 @@ public sealed class Occurence
     public int? Charachter9 { get; set; }
 
     public string AyahNumber { get; set; }
+
+
+
 }
 
 class FactView : ReactComponent<FactViewModel>
@@ -236,6 +240,8 @@ class FactView : ReactComponent<FactViewModel>
                 }
             }
         };
+
+       
 
         return BlockUI(container + searchBar + results, state.IsBlocked, state.OperationName);
     }
