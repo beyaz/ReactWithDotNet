@@ -10,8 +10,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="MainPage.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="MainPage.yaml" />
     <EmbeddedResource Include="CommonData.json" />
     <EmbeddedResource Include="Facts.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,8 +2,8 @@
     "MainTitle": "19 Sistemi Hakkında",
     "MainMenuItems": [
         {
-            "Text": "Anasayfa", 
-            "Id": "anasayfa"
+            "Text": "Anasayfa",
+            "Id": "MainPage"
         },
         {
             "Text": "Başlangıç Harfleri",
@@ -18,5 +18,5 @@
             "Id": "iletsim"
 
         }
-    ] 
+    ]
 }

@@ -291,6 +291,21 @@ public class h1 : HtmlElement
     }
 }
 
+public class a : HtmlElement
+{
+    public a()
+    {
+    }
+
+    public a(string className)
+    {
+        this.className = className;
+    }
+
+    [React]
+    public string href { get; set; }
+}
+
 public class img : HtmlElement
 {
     public img()

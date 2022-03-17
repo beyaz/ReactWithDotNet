@@ -9,6 +9,7 @@ namespace QuranAnalyzer.WebUI;
 [Serializable]
 public class MainViewModel
 {
+    public string Page { get; set; }
     public string SelectedFact { get; set; }
     public string SummaryText { get; set; }
 
@@ -48,10 +49,11 @@ class MainView : ReactComponent<MainViewModel>
 
     public void OnFirstLoaded()
     {
-        if (state.SearchPartOfUrl != null && state.SearchPartOfUrl.Length > 0)
-        {
-            state.SelectedFact = HttpUtility.UrlDecode(state.SearchPartOfUrl.Split("=").Last());
-        }
+
+        state.SelectedFact = getValueByName("fact");
+        state.Page         = getValueByName("page");
+
+        string getValueByName(string name) => HttpUtility.ParseQueryString(state.SearchPartOfUrl).Get(name);
     }
 
     void OnFactClicked(string selectedFactName)
@@ -113,6 +115,7 @@ class MainView : ReactComponent<MainViewModel>
                        justifyContent = JustifyContent.center
                    };
 
+        
         if (state.SelectedFact != null)
         {
             var fact = facts.FirstOrDefault(x => x.Name == state.SelectedFact);
@@ -128,11 +131,19 @@ class MainView : ReactComponent<MainViewModel>
             }
         }
 
+        if (state.Page is not null)
+        {
+            
+            main = new div { text = ResourceAccess.MainPage.Content };
+        }
+
+
         Element ToMenuItem(MainMenuModel m)
         {
-            return new div
+            return new a
                    {
                        text = m.Text,
+                       href = "/index.html?page="+m.Id,
                        onClick = ()=>OnMainMenuItemClicked(m.Id)
                    }
                    +
