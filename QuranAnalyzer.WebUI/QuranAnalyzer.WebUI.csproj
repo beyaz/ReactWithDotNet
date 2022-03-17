@@ -11,10 +11,12 @@
 
   <ItemGroup>
     <None Remove="MainPage.yaml" />
+    <None Remove="QuestionAnswerPage.yaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="MainPage.yaml" />
+    <EmbeddedResource Include="Pages\QuestionAnswerPage.yaml" />
+    <EmbeddedResource Include="Pages\MainPage.yaml" />
     <EmbeddedResource Include="CommonData.json" />
     <EmbeddedResource Include="Facts.json" />
   </ItemGroup>

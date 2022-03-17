@@ -7,7 +7,6 @@ namespace QuranAnalyzer.WebUI;
 
 static class ResourceHelper
 {
-    #region Public Methods
     public static T Read<T>(string fileName)
     {
         var fileData = readResource("QuranAnalyzer.WebUI." + fileName);
@@ -19,8 +18,6 @@ static class ResourceHelper
 
         return JsonSerializer.Deserialize<T>(fileData);
 
-        return JsonSerializer.Deserialize<T>(readResource("QuranAnalyzer.WebUI." + fileName));
-
         static string readResource(string resourcePath)
         {
             using Stream stream = typeof(FactModel).Assembly.GetManifestResourceStream(resourcePath);
@@ -30,5 +27,6 @@ static class ResourceHelper
             return reader.ReadToEnd();
         }
     }
-    #endregion
+
+    public static T ReadPage<T>(string pageName) => Read<T>($"Pages.{pageName}.yaml");
 }

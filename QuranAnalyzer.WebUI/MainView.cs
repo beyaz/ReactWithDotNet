@@ -135,6 +135,11 @@ class MainView : ReactComponent<MainViewModel>
         {
             
             main = new div { text = ResourceAccess.MainPage.Content };
+
+            if (state.Page is "QuestionAnswerPage")
+            {
+                main = new div { text = ResourceAccess.QuestionAnswerPage.Summary };
+            }
         }
 
 
