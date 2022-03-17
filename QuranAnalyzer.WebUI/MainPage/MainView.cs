@@ -85,7 +85,7 @@ class MainView : ReactComponent<MainViewModel>
 
     public override Element render()
     {
-        var commonData     = ResourceAccess.CommonData;
+        var commonData     = ResourceAccess.MainPage;
         var mainMenuModels = commonData.MainMenuItems;
         var facts          = ResourceAccess.Facts;
 

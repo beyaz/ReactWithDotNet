@@ -1,0 +1,13 @@
+﻿MainTitle: 19 Sistemi Hakkında
+MainMenuItems:
+  - Text: Anasayfa
+    Id: MainPage
+
+  - Text: Başlangıç Harfleri
+    Id: baslangic_harfleri
+  
+  - Text: Soru - Cevap
+    Id: QuestionAnswerPage
+        
+  - Text: İletişim
+    Id: iletsim

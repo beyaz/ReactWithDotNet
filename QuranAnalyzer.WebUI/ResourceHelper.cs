@@ -28,5 +28,5 @@ static class ResourceHelper
         }
     }
 
-    public static T ReadPage<T>(string pageName) => Read<T>($"Pages.{pageName}.yaml");
+    public static T ReadPage<T>(string pageName) => Read<T>($"Resources.{pageName}.yaml");
 }

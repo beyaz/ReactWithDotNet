@@ -5,9 +5,7 @@ namespace QuranAnalyzer.WebUI;
 
 public static class ResourceAccess
 {
-    public  static  readonly CommonDataModel CommonData = ResourceHelper.Read<CommonDataModel>("CommonData.json");
-
-    public static readonly IReadOnlyList<FactModel> Facts = ResourceHelper.Read<FactModel[]>("Facts.json");
+    public static readonly IReadOnlyList<FactModel> Facts = ResourceHelper.Read<FactModel[]>("FactPage.Facts.json");
 
     public static readonly MainPageModel MainPage = ResourceHelper.ReadPage<MainPageModel>(nameof(MainPage));
 
@@ -16,13 +14,21 @@ public static class ResourceAccess
 }
 
 
-
+[Serializable]
+public sealed class MainMenuModel
+{
+    public string Text { get; set; }
+    public string Id { get; set; }
+}
 
 [Serializable]
 public sealed class MainPageModel
 {
     public string Title { get; set; }
     public string Content { get; set; }
+
+    public string MainTitle { get; set; }
+    public MainMenuModel[] MainMenuItems { get; set; }
 }
 
 [Serializable]

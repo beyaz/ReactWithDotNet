@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
-using static QuranAnalyzer.WebUI.MixinForUI;
 using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI;
@@ -161,7 +160,7 @@ class FactView : ReactComponent<FactViewModel>
 
         if (state.SummaryText.HasNoValue())
         {
-            return BlockUI(container + searchBar, state.IsBlocked, state.OperationName);
+            return Extensions.BlockUI(container + searchBar, state.IsBlocked, state.OperationName);
         }
 
         var summaryContent = new HPanel
@@ -246,6 +245,6 @@ class FactView : ReactComponent<FactViewModel>
 
        
 
-        return BlockUI(container + searchBar + results, state.IsBlocked, state.OperationName);
+        return Extensions.BlockUI(container + searchBar + results, state.IsBlocked, state.OperationName);
     }
 }
