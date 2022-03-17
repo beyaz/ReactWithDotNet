@@ -3,6 +3,19 @@
 {
     var createElement = React.createElement;
 
+    const EventBus =
+    {
+        On(event, callback) {
+            document.addEventListener(event, (e) => callback(e.detail));
+        },
+        Dispatch(event, data) {
+            document.dispatchEvent(new CustomEvent(event, { detail: data }));
+        },
+        Remove(event, callback) {
+            document.removeEventListener(event, callback);
+        }
+    };
+
     function OnReady(callback)
     {
         document.addEventListener('DOMContentLoaded', callback);
@@ -639,21 +652,7 @@
         global.ReactDotNet.SendRequest(request, onSuccess);
     }
 
-    const EventBus = 
-    {
-        On(event, callback) 
-        {
-            document.addEventListener(event, (e) => callback(e.detail));
-        },
-        Dispatch(event, data) 
-        {
-            document.dispatchEvent(new CustomEvent(event, { detail: data }));
-        },
-        Remove(event, callback) 
-        {
-            document.removeEventListener(event, callback);
-        }
-    };
+
 
     global.ReactDotNet =
     {
