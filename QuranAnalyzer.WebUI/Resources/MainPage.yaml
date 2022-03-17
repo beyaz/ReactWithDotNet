@@ -1,5 +1,6 @@
-﻿MainTitle: 19 Sistemi Hakkında
-MainMenuItems:
+﻿Title: 19 Sistemi Hakkında
+Content: Bu sitede ne var?
+MenuItems:
   - Text: Anasayfa
     Id: MainPage
 
@@ -10,4 +11,4 @@ MainMenuItems:
     Id: QuestionAnswerPage
         
   - Text: İletişim
-    Id: iletsim
+    Id: Contact

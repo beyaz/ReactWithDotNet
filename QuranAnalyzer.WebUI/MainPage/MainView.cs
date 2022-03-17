@@ -86,7 +86,7 @@ class MainView : ReactComponent<MainViewModel>
     public override Element render()
     {
         var commonData     = ResourceAccess.MainPage;
-        var mainMenuModels = commonData.MainMenuItems;
+        var mainMenuModels = commonData.MenuItems;
         var facts          = ResourceAccess.Facts;
 
         var hamburgerIcon = new SvgHamburgerIcon {HamburgerMenuIsOpen = state.HamburgerMenuIsOpen, onClick = () => state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen};
@@ -96,7 +96,7 @@ class MainView : ReactComponent<MainViewModel>
                          hamburgerIcon,
                          new div
                          {
-                             new div {id = "title", text = commonData.MainTitle}
+                             new div {id = "title", text = commonData.Title}
                          }
                      }
                      + new Style
@@ -133,12 +133,18 @@ class MainView : ReactComponent<MainViewModel>
 
         if (state.Page is not null)
         {
-            
-            main = new div { text = ResourceAccess.MainPage.Content };
-
-            if (state.Page is "QuestionAnswerPage")
+            if (state.Page is nameof(ResourceAccess.QuestionAnswerPage))
             {
                 main = new div { text = ResourceAccess.QuestionAnswerPage.Summary };
+            }
+            if (state.Page is "Contact")
+            {
+                main = new ContactPage.View {model = ResourceHelper.Read<ContactPage.Model>("ContactPage.Data.yaml")};
+            }
+            
+            else
+            {
+                main = new div { text = ResourceAccess.MainPage.Content };
             }
         }
 

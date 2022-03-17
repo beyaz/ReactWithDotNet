@@ -24,11 +24,10 @@ public sealed class MainMenuModel
 [Serializable]
 public sealed class MainPageModel
 {
-    public string Title { get; set; }
     public string Content { get; set; }
 
-    public string MainTitle { get; set; }
-    public MainMenuModel[] MainMenuItems { get; set; }
+    public string Title { get; set; }
+    public MainMenuModel[] MenuItems { get; set; }
 }
 
 [Serializable]

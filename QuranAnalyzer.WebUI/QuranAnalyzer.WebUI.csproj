@@ -13,10 +13,12 @@
     <None Remove="MainPage.yaml" />
     <None Remove="MainPage\MainPage.yaml" />
     <None Remove="QuestionAnswerPage.yaml" />
+    <None Remove="Resources\Contact.yaml" />
     <None Remove="Resources\MainPage.yaml" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="ContactPage\Data.yaml" />
     <Content Include="Resources\MainPage.yaml" />
   </ItemGroup>
 
