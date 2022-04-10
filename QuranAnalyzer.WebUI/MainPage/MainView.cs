@@ -32,8 +32,6 @@ public class MainViewModel
 
 class MainView : ReactComponent<MainViewModel>
 {
-    readonly Theme theme = new();
-
     public MainView()
     {
         state = new MainViewModel
@@ -82,6 +80,8 @@ class MainView : ReactComponent<MainViewModel>
             DispatchEventParameters = new object[] {menuId}
         };
     }
+    
+    void hamburgerMenuClicked() => state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
 
     public override Element render()
     {
@@ -89,27 +89,10 @@ class MainView : ReactComponent<MainViewModel>
         var mainMenuModels = commonData.MenuItems;
         var facts          = ResourceAccess.Facts;
 
-        var hamburgerIcon = new SvgHamburgerIcon {HamburgerMenuIsOpen = state.HamburgerMenuIsOpen, onClick = () => state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen};
-
-        var topNav = new nav
-                     {
-                         hamburgerIcon,
-                         new div
-                         {
-                             new div {id = "title", text = commonData.Title}
-                         }
-                     }
-                     + new Style
-                     {
-                         display        = Display.flex,
-                         justifyContent = JustifyContent.flex_start,
-                         alignItems     = AlignItems.center
-                     };
-
         var main = new div(facts.Select(x => new FactMiniView {state = new FactMiniViewModel {Fact = x}}))
                    + new Style
                    {
-                       background     = theme.MainPaperBackgroundColor,
+                       background     = "white",
                        display        = Display.flex,
                        flexWrap       = FlexWrap.wrap,
                        justifyContent = JustifyContent.center
@@ -148,83 +131,74 @@ class MainView : ReactComponent<MainViewModel>
             }
         }
 
-
-        Element ToMenuItem(MainMenuModel m)
+        Element buildMainContent()
         {
-            return new a
+
+        }
+      
+
+        Element buildTopNav()
+        {
+            var hamburgerIcon = new SvgHamburgerIcon { HamburgerMenuIsOpen = state.HamburgerMenuIsOpen, onClick = hamburgerMenuClicked };
+
+            return new nav
                    {
-                       text = m.Text,
-                       href = "/index.html?page="+m.Id,
-                       onClick = ()=>OnMainMenuItemClicked(m.Id)
+                       hamburgerIcon,
+                       new div
+                       {
+                           new div {id = "title", text = commonData.Title}
+                       }
                    }
-                   +
-                   new Style
+                   + new Style
                    {
-                       fontSize  = px(17),
-                       marginTop = px(50)
+                       display        = Display.flex,
+                       justifyContent = JustifyContent.flex_start,
+                       alignItems     = AlignItems.center
                    };
         }
 
-        var menu = new div(mainMenuModels.Select(ToMenuItem))
-                   +
-                   new Style
-                   {
-                       position      = Position.@fixed,
-                       height        = "100%",
-                       width         = "70%",
-                       top           = px(50),
-                       background    = "white",
-                       boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
-                       zIndex        = "1",
-                       display       = state.HamburgerMenuIsOpen ? Display.flex : Display.none,
-                       transition    = "visibility 0s linear 1000ms, opacity 500ms",
-                       flexDirection = FlexDirection.column,
-                       alignItems    = AlignItems.center,
-                       fontSize      = px(18),
-                   };
-
-        return CreatePage(topNav, main, menu);
-    }
-
-    Element CreatePage(Element topContent, Element mainContent, Element menu)
-    {
-        var top = new div {topContent} + new Style
+        Element buildLeftMenu()
         {
-            position = Position.@fixed,
-            top      = px(0),
-            left     = px(0),
+            return new div(mainMenuModels.Select(ToMenuItem))
+                       +
+                       new Style
+                       {
+                           position      = Position.@fixed,
+                           height        = "100%",
+                           width         = "70%",
+                           top           = px(50),
+                           background    = "white",
+                           boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
+                           zIndex        = "1",
+                           display       = state.HamburgerMenuIsOpen ? Display.flex : Display.none,
+                           transition    = "visibility 0s linear 1000ms, opacity 500ms",
+                           flexDirection = FlexDirection.column,
+                           alignItems    = AlignItems.center,
+                           fontSize      = px(18),
+                       };
 
-            width  = "100%",
-            height = px(50),
-            zIndex = "1",
-            borderBottom = "1px solid #dadce0"
-        };
-
-        if (state.MainDivScrollY > 0)
-        {
-            top += new Style
+            Element ToMenuItem(MainMenuModel m)
             {
-                borderBottom = "",
-                boxShadow    = "0 1px 2px hsla(0,0%,0%,0.05),0 1px 4px hsla(0,0%,0%,0.05),0 2px 8px hsla(0,0%,0%,0.05)"
-            };
+                return new a
+                       {
+                           text    = m.Text,
+                           href    = "/index.html?page=" + m.Id,
+                           onClick = () => OnMainMenuItemClicked(m.Id)
+                       }
+                       +
+                       new Style
+                       {
+                           fontSize  = px(17),
+                           marginTop = px(50)
+                       };
+            }
         }
 
+       
 
-        var main = new div {id = "main", children = {mainContent}} + new Style
-        {
-            position     = Position.@fixed,
-            top          = px(0),
-            left         = px(0),
-            marginTop    = px(50),
-            marginBottom = px(27),
-
-            width     = "100%",
-            height    = "calc(100% - 65px)",
-            overflowY = Overflow.auto,
-        };
-
-        return new div {top, menu, main,} + new Style {height = "100vh", width = "100%"};
+        
+         return new MainPage { topContent = buildTopNav(), mainContent = main, menu = buildLeftMenu(), mainDivScrollY = state.MainDivScrollY};
     }
+    
 }
 
-// https://codepen.io/Zeeslag/pen/MWpLoKX

@@ -104,9 +104,11 @@ static class JsonSerializationOptionHelper
         #region Public Methods
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert.IsSubclassOf(typeof(Element)) ||
-                   typeToConvert.FullName == typeof(Element).FullName ||
-                   typeToConvert.IsSubclassOf(typeof(ReactComponent<>));
+            return typeToConvert.IsSubclassOf(typeof(Element)) 
+                   || typeToConvert.FullName == typeof(Element).FullName 
+                   || typeToConvert.IsSubclassOf(typeof(ReactComponent<>))
+                   || typeToConvert.IsSubclassOf(typeof(ReactComponent))
+                   ;
         }
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
@@ -136,6 +138,18 @@ static class JsonSerializationOptionHelper
             var elementSerializationExtraData = options.GetElementSerializationExtraData();
 
             value.BeforeSerialize();
+
+            // maybe root element is inherits from ReactElement
+            {
+                if (value is IReactStatelessComponent statelessComponent)
+                {
+                    var rootElement = statelessComponent.render();
+                    rootElement.key = statelessComponent.key;
+                    JsonSerializer.Serialize(writer, rootElement, options);
+                    return;
+                }
+            }
+
 
             writer.WriteStartObject();
 
