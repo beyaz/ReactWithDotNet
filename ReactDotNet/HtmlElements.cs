@@ -189,7 +189,20 @@ public class span : HtmlElement
         this.className = className;
     }
 }
+public class label : HtmlElement
+{
+    public label()
+    {
+    }
 
+    public label(string className)
+    {
+        this.className = className;
+    }
+
+    [React]
+    public string htmlFor { get; set; }
+}
 public class i : HtmlElement
 {
     public i()
