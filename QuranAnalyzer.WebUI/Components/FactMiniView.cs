@@ -1,6 +1,7 @@
-﻿using ReactDotNet;
+﻿using QuranAnalyzer.WebUI.Pages.FactPage;
+using ReactDotNet;
 
-namespace QuranAnalyzer.WebUI;
+namespace QuranAnalyzer.WebUI.Components;
 
 class FactMiniViewModel
 {

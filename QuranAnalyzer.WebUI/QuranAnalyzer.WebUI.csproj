@@ -12,22 +12,19 @@
   <ItemGroup>
     <None Remove="Pages\QuestionAnswerPage\Data.yaml" />
     <None Remove="MainPage.yaml" />
-    <None Remove="MainPage\MainPage.yaml" />
+    <None Remove="Pages\MainPage\MainPage.yaml" />
     <None Remove="QuestionAnswerPage.yaml" />
-    <None Remove="Resources\Contact.yaml" />
-    <None Remove="Resources\MainPage.yaml" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Pages\QuestionAnswerPage\Data.yaml" />
     <EmbeddedResource Include="Pages\ContactPage\Data.yaml" />
-    <Content Include="Resources\MainPage.yaml" />
+    <Content Include="Pages\MainPage\MainPage.yaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\QuestionAnswerPage.yaml" />
-    <EmbeddedResource Include="Resources\MainPage.yaml" />
-    <EmbeddedResource Include="FactPage\Facts.json" />
+    <EmbeddedResource Include="Pages\MainPage\MainPage.yaml" />
+    <EmbeddedResource Include="Pages\FactPage\Facts.json" />
   </ItemGroup>
 
   <ItemGroup>

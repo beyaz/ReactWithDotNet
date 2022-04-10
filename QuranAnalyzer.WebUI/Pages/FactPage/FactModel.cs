@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuranAnalyzer.WebUI;
+namespace QuranAnalyzer.WebUI.Pages.FactPage;
 
 [Serializable]
 public sealed class FactModel

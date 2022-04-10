@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
+using QuranAnalyzer.WebUI.Pages.FactPage;
 using YamlDotNet.Serialization;
 
 namespace QuranAnalyzer.WebUI;

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using QuranAnalyzer.WebUI.Components;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
 using static ReactDotNet.Mixin;
 
-namespace QuranAnalyzer.WebUI;
+namespace QuranAnalyzer.WebUI.Pages.FactPage;
 
 [Serializable]
 public class FactViewModel

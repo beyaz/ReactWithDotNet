@@ -1,7 +1,7 @@
 ﻿using ReactDotNet;
 using static ReactDotNet.Mixin;
 
-namespace QuranAnalyzer.WebUI;
+namespace QuranAnalyzer.WebUI.Components;
 
 
 class divWithBorder:div

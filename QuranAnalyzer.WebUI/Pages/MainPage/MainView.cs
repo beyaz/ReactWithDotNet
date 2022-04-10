@@ -1,10 +1,31 @@
 ﻿using System;
 using System.Linq;
 using System.Web;
+using QuranAnalyzer.WebUI.Components;
+using QuranAnalyzer.WebUI.Pages.FactPage;
 using ReactDotNet;
 using static ReactDotNet.Mixin;
 
-namespace QuranAnalyzer.WebUI;
+namespace QuranAnalyzer.WebUI.Pages.MainPage;
+
+
+[Serializable]
+public sealed class MainMenuModel
+{
+    public string Text { get; set; }
+    public string Id { get; set; }
+}
+
+[Serializable]
+public sealed class MainPageModel
+{
+    public string Content { get; set; }
+
+    public string Title { get; set; }
+    public MainMenuModel[] MenuItems { get; set; }
+}
+
+
 
 [Serializable]
 public class MainViewModel
@@ -85,11 +106,13 @@ class MainView : ReactComponent<MainViewModel>
 
     public override Element render()
     {
-        var commonData     = ResourceAccess.MainPage;
+    
+
+    var     commonData     = ResourceHelper.ReadPage<MainPageModel>(nameof(MainPage)); 
         var mainMenuModels = commonData.MenuItems;
         var facts          = ResourceAccess.Facts;
 
-        return new MainPage
+        return new Components.MainPage
         {
             topContent     = buildTopNav(),
             mainContent    = buildMainContent(),
@@ -118,8 +141,8 @@ class MainView : ReactComponent<MainViewModel>
             {
                 var pages = new Element[]
                 {
-                    new Pages.QuestionAnswerPage.View(),
-                    new Pages.ContactPage.View()
+                    new QuestionAnswerPage.View(),
+                    new ContactPage.View()
                 };
 
                 var page = pages.FirstOrDefault(x => x.id == state.PageId);

@@ -1,6 +1,6 @@
 ﻿using ReactDotNet;
 
-namespace QuranAnalyzer.WebUI;
+namespace QuranAnalyzer.WebUI.Components;
 
 class SvgHamburgerIcon : ReactComponent
 {

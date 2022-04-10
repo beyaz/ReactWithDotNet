@@ -11,9 +11,12 @@ public sealed class Model
 }
 
 
-public class View : ReactComponent
+
+public class View : PageBase
 {
     public override string id { get; set; } = nameof(ContactPage);
+
+
 
 
     public override Element render()
