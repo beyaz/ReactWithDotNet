@@ -89,7 +89,49 @@ class MainView : ReactComponent<MainViewModel>
         var mainMenuModels = commonData.MenuItems;
         var facts          = ResourceAccess.Facts;
 
-        var main = new div(facts.Select(x => new FactMiniView {state = new FactMiniViewModel {Fact = x}}))
+        return new MainPage
+        {
+            topContent     = buildTopNav(),
+            mainContent    = buildMainContent(),
+            menu           = buildLeftMenu(),
+            mainDivScrollY = state.MainDivScrollY
+        };
+
+        Element buildMainContent()
+        {
+            if (state.SelectedFact != null)
+            {
+                var fact = facts.FirstOrDefault(x => x.Name == state.SelectedFact);
+                if (fact != null)
+                {
+                    state.FactViewModel ??= new FactViewModel
+                    {
+                        SuraFilter       = fact.SearchScript,
+                        SearchCharacters = fact.SearchCharacters
+                    };
+
+                    return new FactView { state = state.FactViewModel };
+                }
+            }
+
+            if (state.Page is not null)
+            {
+                if (state.Page is nameof(ResourceAccess.QuestionAnswerPage))
+                {
+                    return new div { text = ResourceAccess.QuestionAnswerPage.Summary };
+                }
+                if (state.Page is "Contact")
+                {
+                    return new ContactPage.View { model = ResourceHelper.Read<ContactPage.Model>("ContactPage.Data.yaml") };
+                }
+
+                else
+                {
+                    return new div { text = ResourceAccess.MainPage.Content };
+                }
+            }
+
+            return new div(facts.Select(x => new FactMiniView { state = new FactMiniViewModel { Fact = x } }))
                    + new Style
                    {
                        background     = "white",
@@ -98,44 +140,8 @@ class MainView : ReactComponent<MainViewModel>
                        justifyContent = JustifyContent.center
                    };
 
-        
-        if (state.SelectedFact != null)
-        {
-            var fact = facts.FirstOrDefault(x => x.Name == state.SelectedFact);
-            if (fact != null)
-            {
-                state.FactViewModel ??= new FactViewModel
-                {
-                    SuraFilter       = fact.SearchScript,
-                    SearchCharacters = fact.SearchCharacters
-                };
-
-                main = new FactView {state = state.FactViewModel};
-            }
         }
 
-        if (state.Page is not null)
-        {
-            if (state.Page is nameof(ResourceAccess.QuestionAnswerPage))
-            {
-                main = new div { text = ResourceAccess.QuestionAnswerPage.Summary };
-            }
-            if (state.Page is "Contact")
-            {
-                main = new ContactPage.View {model = ResourceHelper.Read<ContactPage.Model>("ContactPage.Data.yaml")};
-            }
-            
-            else
-            {
-                main = new div { text = ResourceAccess.MainPage.Content };
-            }
-        }
-
-        Element buildMainContent()
-        {
-
-        }
-      
 
         Element buildTopNav()
         {
@@ -197,7 +203,7 @@ class MainView : ReactComponent<MainViewModel>
        
 
         
-         return new MainPage { topContent = buildTopNav(), mainContent = main, menu = buildLeftMenu(), mainDivScrollY = state.MainDivScrollY};
+         
     }
     
 }
