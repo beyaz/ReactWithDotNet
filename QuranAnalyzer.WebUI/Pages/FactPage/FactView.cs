@@ -243,7 +243,7 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Mushaf Üzerinde Göster",
                             children =
                             {
-                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords) + new Style{fontSize = px(12)}
+                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords) + getFontSize()
                             }
                         }
                     }
@@ -251,7 +251,16 @@ class FactView : ReactComponent<FactViewModel>
             }
         };
 
-       
+
+        Style getFontSize()
+        {
+            if (state.AvailableWidth <500)
+            {
+                return new Style {fontSize = px(12)};
+            }
+
+            return new Style { fontSize = px(19) };
+        }
 
         return Extensions.BlockUI(container + searchBar + results, state.IsBlocked, state.OperationName);
     }

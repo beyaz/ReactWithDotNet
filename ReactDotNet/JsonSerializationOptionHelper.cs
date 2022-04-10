@@ -373,29 +373,7 @@ static class JsonSerializationOptionHelper
         {
             if (value is Style style)
             {
-                bool hasValue(PropertyInfo x)
-                {
-                    var styleProperty = x.GetValue(style);
-
-                    var defaultValue = x.PropertyType.GetDefaultValue();
-
-                    if (styleProperty == null)
-                    {
-                        if (defaultValue == null)
-                        {
-                            return false;
-                        }
-
-                        return true;
-                    }
-
-                    return !styleProperty.Equals(defaultValue);
-                }
-
-                if (!typeof(Style).GetProperties().Any(hasValue))
-                {
-                    return true;
-                }
+                return style.GetValues().Count == 0;
             }
 
             return false;

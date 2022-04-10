@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -18,28 +19,44 @@ namespace ReactDotNet
 
         public static void Import(this Style style, Style newStyle)
         {
+            foreach (var (propertyInfo, newValue) in newStyle.GetValues())
+            {
+                propertyInfo.SetValue(style,newValue);
+            }
+        }
+
+        internal static IReadOnlyList<(PropertyInfo propertyInfo, object newValue)> GetValues(this Style style)
+        {
+            var returnItems = new List<(PropertyInfo propertyInfo, object newValue)>();
+
             foreach (var propertyInfo in typeof(Style).GetProperties())
             {
-                var value    = propertyInfo.GetValue(style);
-                var newValue = propertyInfo.GetValue(newStyle);
+                var value = propertyInfo.GetValue(style);
+
+                var defaultValue = propertyInfo.PropertyType.GetDefaultValue();
 
                 if (value == null)
                 {
-                    if (newValue != null)
+                    if (defaultValue == null)
                     {
-                        propertyInfo.SetValue(style, newValue);
+                        continue;
                     }
 
+                    returnItems.Add((propertyInfo, null));
                     continue;
                 }
 
-                if (!value.Equals(newValue))
+                if (!value.Equals(defaultValue))
                 {
-                    propertyInfo.SetValue(style, newValue);
+                    returnItems.Add((propertyInfo, value));
                 }
-
             }
+
+            return returnItems;
         }
+
+        
+
         public static JsonSerializerOptions ModifyForReactDotNet(this JsonSerializerOptions options)
         {
             return JsonSerializationOptionHelper.Modify(options);
