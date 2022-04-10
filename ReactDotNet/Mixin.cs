@@ -10,6 +10,9 @@ namespace ReactDotNet
     {
         // public static readonly JsonNamingPolicy JsonNamingPolicy =  JsonNamingPolicy.CamelCase;
 
+
+
+
         public static  JsonNamingPolicy JsonNamingPolicy;
 
         public static string ToJson(object value)
@@ -124,6 +127,11 @@ namespace ReactDotNet
         public static string px(double value)
         {
             return value + "px";
+        }
+
+        public static Style fontSize(double value)
+        {
+            return new Style{fontSize = px(value)};
         }
 
         public static string AsPercent(this double value)

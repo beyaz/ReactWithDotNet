@@ -256,10 +256,10 @@ class FactView : ReactComponent<FactViewModel>
         {
             if (state.AvailableWidth <500)
             {
-                return new Style {fontSize = px(12)};
+                return fontSize(9);
             }
 
-            return new Style { fontSize = px(19) };
+            return fontSize(19);
         }
 
         return Extensions.BlockUI(container + searchBar + results, state.IsBlocked, state.OperationName);
