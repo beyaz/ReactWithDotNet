@@ -252,7 +252,7 @@ class FactView : ReactComponent<FactViewModel>
         };
 
 
-        Style getFontSize()
+        Action<Style> getFontSize()
         {
             if (state.AvailableWidth <500)
             {

@@ -210,6 +210,15 @@ namespace ReactDotNet
 
             return element;  
         }
+
+        public static Element operator +(Element element, Action<Style> styleModifier)
+        {
+            styleModifier(element.style);
+
+            return element;
+        }
+
+        
     }
 
     public abstract class HtmlElement : Element

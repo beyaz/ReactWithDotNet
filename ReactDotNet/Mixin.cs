@@ -129,9 +129,9 @@ namespace ReactDotNet
             return value + "px";
         }
 
-        public static Style fontSize(double value)
+        public static Action<Style> fontSize(double value)
         {
-            return new Style{fontSize = px(value)};
+            return style => style.fontSize = px(value);
         }
 
         public static string AsPercent(this double value)
@@ -139,4 +139,5 @@ namespace ReactDotNet
             return value.ToString().Replace(",",".") + "%";
         }
     }
+
 }
