@@ -34,7 +34,9 @@ public class FactViewModel
     public int SelectedTabIndex { get; set; }
     public Occurence[] ResultRecords { get; set; }
 
-    
+    public double AvailableWidth { get; set; }
+
+
 
 }
 
@@ -241,7 +243,7 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Mushaf Üzerinde Göster",
                             children =
                             {
-                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords)
+                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords) + new Style{fontSize = px(12)}
                             }
                         }
                     }

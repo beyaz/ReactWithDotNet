@@ -204,9 +204,9 @@ namespace ReactDotNet
 
         
         
-        public static Element operator +(Element element, Style style)  
+        public static Element operator +(Element element, Style style)
         {
-            element.style = style;
+            element.style.Import(style);
 
             return element;  
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 
 namespace ReactDotNet
@@ -14,6 +16,30 @@ namespace ReactDotNet
             return JsonSerializer.Serialize(value, new JsonSerializerOptions().ModifyForReactDotNet());
         }
 
+        public static void Import(this Style style, Style newStyle)
+        {
+            foreach (var propertyInfo in typeof(Style).GetProperties())
+            {
+                var value    = propertyInfo.GetValue(style);
+                var newValue = propertyInfo.GetValue(newStyle);
+
+                if (value == null)
+                {
+                    if (newValue != null)
+                    {
+                        propertyInfo.SetValue(style, newValue);
+                    }
+
+                    continue;
+                }
+
+                if (!value.Equals(newValue))
+                {
+                    propertyInfo.SetValue(style, newValue);
+                }
+
+            }
+        }
         public static JsonSerializerOptions ModifyForReactDotNet(this JsonSerializerOptions options)
         {
             return JsonSerializationOptionHelper.Modify(options);

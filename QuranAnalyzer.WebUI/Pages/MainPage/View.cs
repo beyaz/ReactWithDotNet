@@ -130,7 +130,8 @@ class View : ReactComponent<MainViewModel>
                     state.FactViewModel ??= new FactViewModel
                     {
                         SuraFilter       = fact.SearchScript,
-                        SearchCharacters = fact.SearchCharacters
+                        SearchCharacters = fact.SearchCharacters,
+                        AvailableWidth = state.AvailableWidth
                     };
 
                     return new FactView { state = state.FactViewModel };
