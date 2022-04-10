@@ -51,9 +51,12 @@ public class MainViewModel
     public FactViewModel FactViewModel { get; set; }
 }
 
-class MainView : ReactComponent<MainViewModel>
+class View : ReactComponent<MainViewModel>
 {
-    public MainView()
+
+    static readonly MainPageModel ConstantData = ResourceHelper.ReadPageData<MainPageModel>(nameof(MainPage));
+
+    public View()
     {
         state = new MainViewModel
         {
@@ -106,10 +109,7 @@ class MainView : ReactComponent<MainViewModel>
 
     public override Element render()
     {
-    
-
-    var     commonData     = ResourceHelper.ReadPage<MainPageModel>(nameof(MainPage)); 
-        var mainMenuModels = commonData.MenuItems;
+        var mainMenuModels = ConstantData.MenuItems;
         var facts          = ResourceAccess.Facts;
 
         return new Components.MainPage
@@ -173,7 +173,7 @@ class MainView : ReactComponent<MainViewModel>
                        hamburgerIcon,
                        new div
                        {
-                           new div {id = "title", text = commonData.Title}
+                           new div {id = "title", text = ConstantData.Title}
                        }
                    }
                    + new Style

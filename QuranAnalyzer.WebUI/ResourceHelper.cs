@@ -1,18 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
-using QuranAnalyzer.WebUI.Pages.FactPage;
 using YamlDotNet.Serialization;
 
 namespace QuranAnalyzer.WebUI;
 
 static class ResourceHelper
 {
-    public static T Read<T>(string fileName)
+    public static T Read<T>(string fileNameRelativelyInProject)
     {
-        var fileData = readResource("QuranAnalyzer.WebUI." + fileName);
+        var fileData = readResource("QuranAnalyzer.WebUI." + fileNameRelativelyInProject);
 
-        if (fileName.EndsWith(".yaml"))
+        if (fileNameRelativelyInProject.EndsWith(".yaml"))
         {
             return new DeserializerBuilder().Build().Deserialize<T>(fileData);
         }
@@ -21,13 +20,13 @@ static class ResourceHelper
 
         static string readResource(string resourcePath)
         {
-            using Stream stream = typeof(FactModel).Assembly.GetManifestResourceStream(resourcePath);
+            using var stream = typeof(ResourceHelper).Assembly.GetManifestResourceStream(resourcePath);
 
-            using StreamReader reader = new StreamReader(stream ?? throw new InvalidOperationException());
+            using var reader = new StreamReader(stream ?? throw new InvalidOperationException());
 
             return reader.ReadToEnd();
         }
     }
 
-    public static T ReadPage<T>(string pageName) => Read<T>($"Resources.{pageName}.yaml");
+    public static T ReadPageData<T>(string pageName) => Read<T>($"Pages.{pageName}.Data.yaml");
 }

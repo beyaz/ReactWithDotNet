@@ -10,20 +10,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Pages\MainPage\Data.yaml" />
     <None Remove="Pages\QuestionAnswerPage\Data.yaml" />
     <None Remove="MainPage.yaml" />
-    <None Remove="Pages\MainPage\MainPage.yaml" />
     <None Remove="QuestionAnswerPage.yaml" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Pages\QuestionAnswerPage\Data.yaml" />
     <EmbeddedResource Include="Pages\ContactPage\Data.yaml" />
-    <Content Include="Pages\MainPage\MainPage.yaml" />
+    <Content Include="Pages\MainPage\Data.yaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Pages\MainPage\MainPage.yaml" />
+    <EmbeddedResource Include="Pages\MainPage\Data.yaml" />
     <EmbeddedResource Include="Pages\FactPage\Facts.json" />
   </ItemGroup>
 
