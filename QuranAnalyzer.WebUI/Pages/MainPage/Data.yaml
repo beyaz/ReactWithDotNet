@@ -5,7 +5,7 @@ MenuItems:
     Id: MainPage
 
   - Text: Başlangıç Harfleri
-    Id: baslangic_harfleri
+    Id: InitialLetters
   
   - Text: Soru - Cevap
     Id: QuestionAnswerPage

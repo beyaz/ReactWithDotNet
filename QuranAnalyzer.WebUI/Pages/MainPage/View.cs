@@ -143,7 +143,8 @@ class View : ReactComponent<MainViewModel>
                 var pages = new Element[]
                 {
                     new QuestionAnswerPage.View(),
-                    new ContactPage.View()
+                    new ContactPage.View(),
+                    new InitialLetters.View()
                 };
 
                 var page = pages.FirstOrDefault(x => x.id == state.PageId);
@@ -153,11 +154,11 @@ class View : ReactComponent<MainViewModel>
                 }
             }
 
-            return new div(facts.Select(x => new FactMiniView { state = new FactMiniViewModel { Fact = x } }))
-                   + background("white")
-                   + Display.flex
-                   + FlexWrap.wrap
-                   + JustifyContent.center;
+            return new div
+            {
+                new div{text = ConstantData.Title},
+                new div{text = ConstantData.Content}
+            };
 
         }
 
