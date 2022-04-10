@@ -154,13 +154,10 @@ class View : ReactComponent<MainViewModel>
             }
 
             return new div(facts.Select(x => new FactMiniView { state = new FactMiniViewModel { Fact = x } }))
-                   + new Style
-                   {
-                       background     = "white",
-                       display        = Display.flex,
-                       flexWrap       = FlexWrap.wrap,
-                       justifyContent = JustifyContent.center
-                   };
+                   + background("white")
+                   + Display.flex
+                   + FlexWrap.wrap
+                   + JustifyContent.center;
 
         }
 

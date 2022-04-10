@@ -218,7 +218,27 @@ namespace ReactDotNet
             return element;
         }
 
+        public static Element operator +(Element element, Display display)
+        {
+            element.style.display = display;
+
+            return element;
+        }
+        public static Element operator +(Element element, FlexWrap flexWrap)
+        {
+            element.style.flexWrap = flexWrap;
+
+            return element;
+        }
+
+        public static Element operator +(Element element, JustifyContent justifyContent)
+        {
+            element.style.justifyContent = justifyContent;
+
+            return element;
+        }
         
+
     }
 
     public abstract class HtmlElement : Element

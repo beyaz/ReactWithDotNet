@@ -134,6 +134,12 @@ namespace ReactDotNet
             return style => style.fontSize = px(value);
         }
 
+        public static Action<Style> background(string value)
+        {
+            return style => style.background = value;
+        }
+        
+
         public static string AsPercent(this double value)
         {
             return value.ToString().Replace(",",".") + "%";
