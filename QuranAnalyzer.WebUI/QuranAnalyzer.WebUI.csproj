@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Pages\QuestionAnswerPage\Data.yaml" />
     <None Remove="MainPage.yaml" />
     <None Remove="MainPage\MainPage.yaml" />
     <None Remove="QuestionAnswerPage.yaml" />
@@ -18,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="ContactPage\Data.yaml" />
+    <EmbeddedResource Include="Pages\QuestionAnswerPage\Data.yaml" />
+    <EmbeddedResource Include="Pages\ContactPage\Data.yaml" />
     <Content Include="Resources\MainPage.yaml" />
   </ItemGroup>
 

@@ -63,7 +63,7 @@ namespace ReactDotNet
         public string height { get; set; }
 
         [React]
-        public string id { get; set; }
+        public virtual string id { get; set; }
         
 
         

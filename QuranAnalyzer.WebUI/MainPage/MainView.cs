@@ -9,7 +9,7 @@ namespace QuranAnalyzer.WebUI;
 [Serializable]
 public class MainViewModel
 {
-    public string Page { get; set; }
+    public string PageId { get; set; }
     public string SelectedFact { get; set; }
     public string SummaryText { get; set; }
 
@@ -49,7 +49,7 @@ class MainView : ReactComponent<MainViewModel>
     {
 
         state.SelectedFact = getValueByName("fact");
-        state.Page         = getValueByName("page");
+        state.PageId         = getValueByName("page");
 
         string getValueByName(string name) => HttpUtility.ParseQueryString(state.SearchPartOfUrl).Get(name);
     }
@@ -114,20 +114,18 @@ class MainView : ReactComponent<MainViewModel>
                 }
             }
 
-            if (state.Page is not null)
+            if (state.PageId is not null)
             {
-                if (state.Page is nameof(ResourceAccess.QuestionAnswerPage))
+                var pages = new Element[]
                 {
-                    return new div { text = ResourceAccess.QuestionAnswerPage.Summary };
-                }
-                if (state.Page is "Contact")
-                {
-                    return new ContactPage.View { model = ResourceHelper.Read<ContactPage.Model>("ContactPage.Data.yaml") };
-                }
+                    new Pages.QuestionAnswerPage.View(),
+                    new Pages.ContactPage.View()
+                };
 
-                else
+                var page = pages.FirstOrDefault(x => x.id == state.PageId);
+                if (page is not null)
                 {
-                    return new div { text = ResourceAccess.MainPage.Content };
+                    return page;
                 }
             }
 
