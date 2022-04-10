@@ -99,10 +99,10 @@ class MainView : ReactComponent<MainViewModel>
 
         Element buildMainContent()
         {
-            if (state.SelectedFact != null)
+            if (state.SelectedFact is not null)
             {
                 var fact = facts.FirstOrDefault(x => x.Name == state.SelectedFact);
-                if (fact != null)
+                if (fact is not null)
                 {
                     state.FactViewModel ??= new FactViewModel
                     {
