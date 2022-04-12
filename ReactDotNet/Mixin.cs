@@ -169,6 +169,13 @@ namespace ReactDotNet
         {
             return value.ToString(CultureInfo.InvariantCulture).Replace(",",".") + "%";
         }
+
+        public static ElementModifier className(string className)
+        {
+            return new ElementModifier(element => element.className = className);
+        }
+
+        
     }
 
 }

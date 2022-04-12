@@ -172,9 +172,8 @@ public class button : HtmlElement
     {
     }
 
-    public button(string className)
+    public button(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
 
@@ -184,34 +183,33 @@ public class span : HtmlElement
     {
     }
 
-    public span(string className)
+    public span(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
+
 public class label : HtmlElement
 {
     public label()
     {
     }
 
-    public label(string className)
+    public label(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 
     [React]
     public string htmlFor { get; set; }
 }
+
 public class i : HtmlElement
 {
     public i()
     {
     }
 
-    public i(string className)
+    public i(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
 
@@ -221,17 +219,12 @@ public class div : HtmlElement
     {
     }
 
-    public div(string className)
-    {
-        this.className = className;
-    }
-
     public div(IEnumerable<Element> children)
     {
         this.children.AddRange(children);
     }
 
-    public div(params ElementModifier[] modifiers):base(modifiers)
+    public div(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -242,9 +235,8 @@ public class pre : HtmlElement
     {
     }
 
-    public pre(string className)
+    public pre(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
 
@@ -254,9 +246,8 @@ public class h5 : HtmlElement
     {
     }
 
-    public h5(string className)
+    public h5(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
 
@@ -266,9 +257,8 @@ public class h4 : HtmlElement
     {
     }
 
-    public h4(string className)
+    public h4(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
 
@@ -278,9 +268,8 @@ public class h3 : HtmlElement
     {
     }
 
-    public h3(string className)
+    public h3(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
 
@@ -290,9 +279,8 @@ public class h2 : HtmlElement
     {
     }
 
-    public h2(string className)
+    public h2(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
 
@@ -302,9 +290,8 @@ public class h1 : HtmlElement
     {
     }
 
-    public h1(string className)
+    public h1(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }
 
@@ -314,9 +301,8 @@ public class a : HtmlElement
     {
     }
 
-    public a(string className)
+    public a(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 
     [React]
@@ -329,9 +315,8 @@ public class img : HtmlElement
     {
     }
 
-    public img(string className)
+    public img(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 
     [React]
@@ -349,6 +334,10 @@ public class img : HtmlElement
 
 public class HPanel : div
 {
+    public HPanel(params ElementModifier[] modifiers) : base(modifiers)
+    {
+    }
+
     public override string tagName => nameof(div);
 
     public HPanel()
@@ -403,85 +392,6 @@ public sealed class VPanel : div
     }
 }
 
-public class Panel : Element
-{
-    public List<Element> Cols { get; } = new List<Element>();
-
-    public IEnumerable<Element> rows;
-
-    public List<Element> Rows { get; } = new List<Element>();
-
-    public Element render()
-    {
-        // todo: implement
-        throw new NotImplementedException();
-        /*
-        if (rows != null)
-        {
-            var list = rows.ToList();
-            if (list.Count > 0)
-            {
-                Rows.AddRange(rows);
-            }
-        }
-
-        if (Cols.Count > 0 && Rows.Count > 0)
-        {
-            throw new Exception("Cols and Rows can not be assigned same time.");
-        }
-
-        if (Cols.Count == 0 && Rows.Count == 0)
-        {
-            return new div();
-        }
-
-        if (Cols.Count > 0)
-        {
-            style.Display       = Display.Flex;
-            style.FlexDirection = FlexDirection.Row;
-            style.AlignItems    = AlignItems.Stretch;
-            style.Height        = "100%";
-
-            if (Cols.Any(x => x.gravity.HasValue))
-            {
-                Cols.ForEach(child => { child.style.Width = GravityCalculator.CalculateGravity(child, Cols) * 100 + "%"; });
-            }
-
-            
-
-            var childElements = Cols.Select(x => x.ToReactElement()).ToList();
-
-            UniqueKeyInitializer.InitializeKeyIfNotExists(childElements);
-
-            return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements };
-
-
-
-        }
-
-        // rows
-        {
-            style.Display       = Display.Flex;
-            style.FlexDirection = FlexDirection.Column;
-            style.AlignItems    = AlignItems.Stretch;
-            style.Width         = "100%";
-
-            if (Rows.Any(x => x.gravity.HasValue))
-            {
-                Rows.ForEach(child => { child.style.Height = GravityCalculator.CalculateGravity(child, Rows) * 100 + "%"; });
-            }
-
-            
-
-            var childElements = Rows.Select(x => x.ToReactElement()).ToList();
-
-            UniqueKeyInitializer.InitializeKeyIfNotExists(childElements);
-
-            return new ReactElement { Tag = "div", Props = this.CollectReactAttributedProperties(), Children = childElements };
-        }*/
-    }
-}
-
 static class GravityCalculator
 {
     public static double CalculateGravity(Element htmlElement, IReadOnlyList<Element> siblings)
@@ -496,6 +406,10 @@ static class GravityCalculator
 
 public class svg : HtmlElement
 {
+    public svg(params ElementModifier[] modifiers) : base(modifiers)
+    {
+    }
+
     [React]
     public string xmlns { get; set; } = "http://www.w3.org/2000/svg";
 
@@ -505,6 +419,10 @@ public class svg : HtmlElement
 
 public class path : HtmlElement
 {
+    public path(params ElementModifier[] modifiers) : base(modifiers)
+    {
+    }
+
     [React]
     public string d { get; set; }
 
@@ -514,6 +432,10 @@ public class path : HtmlElement
 
 public class rect : HtmlElement
 {
+    public rect(params ElementModifier[] modifiers) : base(modifiers)
+    {
+    }
+
     [React]
     public int y { get; set; }
 }
@@ -524,8 +446,7 @@ public class nav : HtmlElement
     {
     }
 
-    public nav(string className)
+    public nav(params ElementModifier[] modifiers) : base(modifiers)
     {
-        this.className = className;
     }
 }

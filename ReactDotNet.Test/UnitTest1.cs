@@ -19,7 +19,7 @@ namespace ReactDotNet
 
             public override Element render()
             {
-                return new div("A")
+                return new div(className("A"))
                 {
                     text = "b"
                 };
@@ -33,7 +33,7 @@ namespace ReactDotNet
 
             public override Element render()
             {
-                return new div("A")
+                return new div(className("A"))
                 {
                     new View1 { Prop1 = "A" }
                 };
@@ -48,7 +48,7 @@ namespace ReactDotNet
         [TestMethod]
         public void SerializeBasicDiv()
         {
-            var div = new div("B");
+            var div = new div(className("B"));
 
             var actual = ToJson(div);
 
@@ -67,7 +67,7 @@ namespace ReactDotNet
         [TestMethod]
         public void HPanelGravity()
         {
-            var div = new HPanel { new div("B") { gravity = 4 }, new div("B") };
+            var div = new HPanel { new div(className("B")) { gravity = 4 }, new div(className("B")) };
 
             var actual = ToJson(div);
 
@@ -125,17 +125,17 @@ namespace ReactDotNet
 
             var state = new SampleModelAContainer();
 
-            var div = new div("abc")
+            var div = new div(className("abc"))
             {
-                new div("B"),
-                new div("C")
-                {
-                    style = { paddingLeft = "5px" }
-                },
-                new img { src                    = "a.png", width = 3, onClick = onClicked },
-                new PrimeReact.InputText { value = "abc" },
-                new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
-                new View2 { Prop1                = "x", Prop2 = "y" }
+                new div(className("B")),
+                        new div(className("C"))
+                        {
+                            style = { paddingLeft = "5px" }
+                        },
+                        new img { src                    = "a.png", width = 3, onClick = onClicked },
+                        new PrimeReact.InputText { value = "abc" },
+                        new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
+                        new View2 { Prop1                = "x", Prop2 = "y" }
             };
 
             var actual = ToJson(div);
