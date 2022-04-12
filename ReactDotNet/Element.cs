@@ -11,6 +11,11 @@ namespace ReactDotNet
     /// </summary>
     public abstract class Element : IEnumerable<Element>
     {
+        protected Element(params ElementModifier[] modifiers) 
+        {
+            Mixin.Apply(this,modifiers);
+        }
+
         protected internal virtual void BeforeSerialize()
         {
             children.RemoveAll(x => x is null);
@@ -227,14 +232,26 @@ namespace ReactDotNet
     {
         public virtual string tagName => GetType().Name.ToLower();
 
-        protected HtmlElement(params ElementModifier[] modifiers)
+        protected HtmlElement()
         {
-            Mixin.Apply(this,modifiers);
+            
+        }
+        protected HtmlElement(params ElementModifier[] modifiers):base(modifiers)
+        {
         }
     }
 
     public abstract class ThirdPartyComponent: Element
     {
         public abstract IReadOnlyList<string> jsLocation { get; }
+
+        protected ThirdPartyComponent(params ElementModifier[] modifiers) : base(modifiers)
+        {
+        }
+
+        public ThirdPartyComponent()
+        {
+            
+        }
     }
 }

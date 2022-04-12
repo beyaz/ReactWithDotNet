@@ -1,4 +1,5 @@
 ﻿using ReactDotNet;
+using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Components;
 
@@ -10,10 +11,9 @@ class SvgHamburgerIcon : ReactComponent
     {
         if (HamburgerMenuIsOpen)
         {
-            return new svg
+            return new svg(height(20), margin(14))
             {
                 viewBox = "0 0 15 15",
-                style   = {height = "20px", margin = "14px"},
                 onClick = onClick,
                 children =
                 {
@@ -22,14 +22,9 @@ class SvgHamburgerIcon : ReactComponent
             };
         }
 
-        return new svg
+        return new svg(height(24), margin(12))
         {
             viewBox = "0 0 24 24",
-            style =
-            {
-                height = "24px",
-                margin = "12px"
-            },
             onClick = onClick,
             children =
             {

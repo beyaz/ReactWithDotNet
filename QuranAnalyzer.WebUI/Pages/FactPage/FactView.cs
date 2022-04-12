@@ -159,9 +159,9 @@ class FactView : ReactComponent<FactViewModel>
                         new InputText {valueBind = () => state.SearchCharacters}
                     },
 
-                    new Space {Height = 10},
+                    new Space {Height = 20},
 
-                    new Button("p-button-outlined") {label = "Ara", onClick = OnSelectClicked},
+                    new Button(className("p-button-outlined"), alignSelf(AlignItems.flex_end), paddingLeft(50), paddingRight(50)) {label = "Ara", onClick = OnSelectClicked},
                 }
             }
         };

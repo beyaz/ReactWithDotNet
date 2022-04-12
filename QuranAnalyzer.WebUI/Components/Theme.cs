@@ -9,7 +9,8 @@ class divWithBorder:div
     public override string tagName => nameof(div);
     public divWithBorder()
     {
-        style.border = "1px solid rgb(218, 220, 224)";
+        style.border       = "1px solid rgb(218, 220, 224)";
+        style.borderRadius = "5px";
     }
 }
 

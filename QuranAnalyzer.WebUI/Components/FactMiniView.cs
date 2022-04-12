@@ -1,5 +1,6 @@
 ﻿using QuranAnalyzer.WebUI.Pages.FactPage;
 using ReactDotNet;
+using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Components;
 
@@ -48,7 +49,7 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
             {
                 wordBreak = WordBreak.break_all,
                 margin    = "15px",
-                fontSize  = ReactDotNet.Mixin.px(13),
+                fontSize  = px(13),
                 color     = "#546285"
             }
         };
@@ -58,14 +59,10 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
                    onClick = () => OnClicked(state.Fact.Name),
                    children =
                    {
-                       new div
+                       new div(padding(5))
                        {
                            title,
                            description
-                       }
-                       + new Style
-                       {
-                           padding = "5px"
                        }
                    }
                }
@@ -73,10 +70,10 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
                {
                    border         = "1px solid #ced4da",
                    borderRadius   = "5px",
-                   width          = ReactDotNet.Mixin.px(150),
-                   height         = ReactDotNet.Mixin.px(150),
+                   width          = px(150),
+                   height         = px(150),
                    boxShadow      = "0 4px 8px 0 rgba(0,0,0,0.2)",
-                   margin         = ReactDotNet.Mixin.px(20),
+                   margin         = px(20),
                    display        = Display.flex,
                    justifyContent = JustifyContent.center,
                    alignItems     = AlignItems.center,

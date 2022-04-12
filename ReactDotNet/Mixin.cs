@@ -147,6 +147,39 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.margin = px(margin));
         }
 
+        public static ElementModifier padding(double padding)
+        {
+            return new ElementModifier(element => element.style.padding = px(padding));
+        }
+        public static ElementModifier paddingLeft(double paddingLeft)
+        {
+            return new ElementModifier(element => element.style.paddingLeft = px(paddingLeft));
+        }
+        public static ElementModifier paddingRight(double paddingRight)
+        {
+            return new ElementModifier(element => element.style.paddingRight = px(paddingRight));
+        }
+
+        public static ElementModifier paddingTop(double paddingTop)
+        {
+            return new ElementModifier(element => element.style.paddingTop = px(paddingTop));
+        }
+
+        public static ElementModifier paddingBottom(double paddingBottom)
+        {
+            return new ElementModifier(element => element.style.paddingBottom = px(paddingBottom));
+        }
+
+        public static ElementModifier height(double height)
+        {
+            return new ElementModifier(element => element.style.height = px(height));
+        }
+
+        public static ElementModifier width(double width)
+        {
+            return new ElementModifier(element => element.style.width = px(width));
+        }
+
         public static ElementModifier marginLeft(double margin)
         {
             return new ElementModifier(element => element.style.marginLeft = px(margin));
@@ -174,8 +207,11 @@ namespace ReactDotNet
         {
             return new ElementModifier(element => element.className = className);
         }
+        public static ElementModifier alignSelf(AlignItems alignSelf)
+        {
+            return new ElementModifier(element => element.style.alignSelf = alignSelf);
+        }
 
-        
     }
 
 }
