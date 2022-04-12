@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Reflection;
 using System.Text.Json;
 
@@ -8,10 +8,13 @@ namespace ReactDotNet
 {
     public static class Mixin
     {
-        // public static readonly JsonNamingPolicy JsonNamingPolicy =  JsonNamingPolicy.CamelCase;
-
-
-
+        internal static void Apply(Element element, params ElementModifier[] modifiers)
+        {
+            foreach (var modifier in modifiers)
+            {
+                modifier.Modify(element);
+            }
+        }
 
         public static  JsonNamingPolicy JsonNamingPolicy;
 
@@ -129,41 +132,42 @@ namespace ReactDotNet
             return value + "px";
         }
 
-        public static Action<Style> fontSize(double value)
+        public static ElementModifier fontSize(double value)
         {
-            return style => style.fontSize = px(value);
+            return new ElementModifier(element => element.style.fontSize = px(value));
         }
 
-        public static Action<Style> background(string value)
+        public static ElementModifier background(string value)
         {
-            return style => style.background = value;
+            return new ElementModifier(element => element.style.background = value);
         }
 
-        public static Action<Style> margin(double margin)
+        public static ElementModifier margin(double margin)
         {
-            return style => style.margin = px(margin);
+            return new ElementModifier(element => element.style.margin = px(margin));
         }
 
-        public static Action<Style> marginLeft(double margin)
+        public static ElementModifier marginLeft(double margin)
         {
-            return style => style.marginLeft = px(margin);
+            return new ElementModifier(element => element.style.marginLeft = px(margin));
         }
-        public static Action<Style> marginRight(double margin)
+        public static ElementModifier marginRight(double margin)
         {
-            return style => style.marginRight = px(margin);
+            return new ElementModifier(element => element.style.marginRight = px(margin));
         }
 
-        public static Action<Style> marginTop(double margin)
+        public static ElementModifier marginTop(double margin)
         {
-            return style => style.marginTop = px(margin);
+            return new ElementModifier(element => element.style.marginTop = px(margin));
         }
-        public static Action<Style> marginBottom(double margin)
+        public static ElementModifier marginBottom(double margin)
         {
-            return style => style.marginBottom = px(margin);
+            return new ElementModifier(element => element.style.marginBottom = px(margin));
         }
+
         public static string AsPercent(this double value)
         {
-            return value.ToString().Replace(",",".") + "%";
+            return value.ToString(CultureInfo.InvariantCulture).Replace(",",".") + "%";
         }
     }
 

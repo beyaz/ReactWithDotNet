@@ -22,24 +22,19 @@ public class View : PageBase
 
         return new div
         {
-            new div
+            new div(Display.flex,AlignItems.center,JustifyContent.center,fontSize(19),marginTop(20))
             {
                 text = model.Header
-            } + marginTop(20)
-              + Display.flex
-              + JustifyContent.center
-              + AlignItems.center
-              + fontSize(19)
-           ,
+            },
 
-            new div {text = model.Note} + fontSize(17) + marginLeft(10) + marginRight(10),
+            new div(fontSize(17) , marginLeft(10) , marginRight(10)) {text = model.Note},
 
-            new VPanel
+            new VPanel(marginTop(22))
             {
                 new InputText(),
                 new InputTextarea{ rows = 6},
                 new Button{ label = "Gönder"}
-            } + marginTop(22)
+            } 
         };
     }
 }

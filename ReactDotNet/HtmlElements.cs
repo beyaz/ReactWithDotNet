@@ -230,6 +230,10 @@ public class div : HtmlElement
     {
         this.children.AddRange(children);
     }
+
+    public div(params ElementModifier[] modifiers):base(modifiers)
+    {
+    }
 }
 
 public class pre : HtmlElement
@@ -379,6 +383,10 @@ public sealed class VPanel : div
         style.flexDirection = FlexDirection.column;
         style.alignItems    = AlignItems.stretch;
         style.height        = "100%";
+    }
+
+    public VPanel(params ElementModifier[] modifiers) : base(modifiers)
+    {
     }
 
     protected internal override void BeforeSerialize()

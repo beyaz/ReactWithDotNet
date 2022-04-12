@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
 using static ReactDotNet.UniqueKeyInitializer;
 
@@ -211,38 +210,14 @@ namespace ReactDotNet
             return element;  
         }
 
-        public static Element operator +(Element element, Action<Style> styleModifier)
+        public static Element operator +(Element element, ElementModifier elementModifier)
         {
-            styleModifier(element.style);
+            elementModifier.Modify(element);
 
             return element;
         }
 
-        public static Element operator +(Element element, Display display)
-        {
-            element.style.display = display;
-
-            return element;
-        }
-        public static Element operator +(Element element, FlexWrap flexWrap)
-        {
-            element.style.flexWrap = flexWrap;
-
-            return element;
-        }
-
-        public static Element operator +(Element element, JustifyContent justifyContent)
-        {
-            element.style.justifyContent = justifyContent;
-
-            return element;
-        }
-        public static Element operator +(Element element, AlignItems alignItems)
-        {
-            element.style.alignItems = alignItems;
-
-            return element;
-        }
+        
         
 
 
@@ -251,6 +226,11 @@ namespace ReactDotNet
     public abstract class HtmlElement : Element
     {
         public virtual string tagName => GetType().Name.ToLower();
+
+        protected HtmlElement(params ElementModifier[] modifiers)
+        {
+            Mixin.Apply(this,modifiers);
+        }
     }
 
     public abstract class ThirdPartyComponent: Element
