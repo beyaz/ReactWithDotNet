@@ -1,5 +1,7 @@
 ﻿using System;
 using ReactDotNet;
+using ReactDotNet.PrimeReact;
+using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.ContactPage;
 
@@ -10,14 +12,9 @@ public sealed class Model
     public string Note { get; set; }
 }
 
-
-
 public class View : PageBase
 {
     public override string id { get; set; } = nameof(ContactPage);
-
-
-
 
     public override Element render()
     {
@@ -25,9 +22,24 @@ public class View : PageBase
 
         return new div
         {
-            new div {text = model.Header},
-            new div {text = model.Note}
+            new div
+            {
+                text = model.Header
+            } + marginTop(20)
+              + Display.flex
+              + JustifyContent.center
+              + AlignItems.center
+              + fontSize(19)
+           ,
+
+            new div {text = model.Note} + fontSize(17) + marginLeft(10) + marginRight(10),
+
+            new VPanel
+            {
+                new InputText(),
+                new InputTextarea{ rows = 6},
+                new Button{ label = "Gönder"}
+            } + marginTop(22)
         };
     }
 }
-

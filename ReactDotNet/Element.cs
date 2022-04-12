@@ -237,7 +237,14 @@ namespace ReactDotNet
 
             return element;
         }
+        public static Element operator +(Element element, AlignItems alignItems)
+        {
+            element.style.alignItems = alignItems;
+
+            return element;
+        }
         
+
 
     }
 

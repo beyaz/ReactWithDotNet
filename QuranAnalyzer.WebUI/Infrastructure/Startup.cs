@@ -66,6 +66,7 @@ namespace ReactDotNet.Demo
                 endpoints.MapControllers();
             });
 
+            
         }
     }
 }

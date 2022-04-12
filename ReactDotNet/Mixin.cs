@@ -138,8 +138,29 @@ namespace ReactDotNet
         {
             return style => style.background = value;
         }
-        
 
+        public static Action<Style> margin(double margin)
+        {
+            return style => style.margin = px(margin);
+        }
+
+        public static Action<Style> marginLeft(double margin)
+        {
+            return style => style.marginLeft = px(margin);
+        }
+        public static Action<Style> marginRight(double margin)
+        {
+            return style => style.marginRight = px(margin);
+        }
+
+        public static Action<Style> marginTop(double margin)
+        {
+            return style => style.marginTop = px(margin);
+        }
+        public static Action<Style> marginBottom(double margin)
+        {
+            return style => style.marginBottom = px(margin);
+        }
         public static string AsPercent(this double value)
         {
             return value.ToString().Replace(",",".") + "%";
