@@ -168,7 +168,7 @@ class FactView : ReactComponent<FactViewModel>
 
         if (state.SummaryText.HasNoValue())
         {
-            return Extensions.BlockUI(container + searchBar, state.IsBlocked, state.OperationName);
+            return Extensions.BlockUI(container.appendChild(searchBar), state.IsBlocked, state.OperationName);
         }
 
         var summaryContent = new HPanel
@@ -262,6 +262,7 @@ class FactView : ReactComponent<FactViewModel>
             return fontSize(19);
         }
 
-        return Extensions.BlockUI(container + searchBar + results, state.IsBlocked, state.OperationName);
+
+        return Extensions.BlockUI(container.appendChild(searchBar).appendChild(results), state.IsBlocked, state.OperationName);
     }
 }

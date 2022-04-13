@@ -198,12 +198,7 @@ namespace ReactDotNet
         #endregion
 
 
-        public static Element operator +(Element parent, Element child)  
-        {
-            parent.children.Add(child);
-
-            return parent;  
-        }
+        
 
 
         
