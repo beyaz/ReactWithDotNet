@@ -3,11 +3,26 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Text.Json;
+using System.Web;
 
 namespace ReactDotNet
 {
     public static class Mixin
     {
+
+        internal static IReadOnlyDictionary<string, string> ParseQueryString(string query)
+        {
+            var items = new Dictionary<string, string>();
+
+            var nameValueCollection = HttpUtility.ParseQueryString(query);
+            foreach (var key in nameValueCollection.AllKeys)
+            {
+                items.Add(key, nameValueCollection.Get(key));
+            }
+
+            return items;
+        }
+
         internal static void Apply(Element element, params ElementModifier[] modifiers)
         {
             foreach (var modifier in modifiers)
@@ -127,16 +142,47 @@ namespace ReactDotNet
             return value + "px";
         }
 
+        /// <summary>
+        ///  Relative to 1% of the height of the viewport*
+        /// </summary>
+        public static string vh(double value)
+        {
+            return value + "vh";
+        }
+
+        /// <summary>
+        ///  Relative to 1% of the width of the viewport*
+        /// </summary>
+        public static string vw(double value)
+        {
+            return value + "vw";
+        }
+
+
         public static string px(double value)
         {
             return value + "px";
         }
-
+        public static ElementModifier lineHeight(string lineHeight)
+        {
+            return new ElementModifier(element => element.style.lineHeight = lineHeight);
+        }
         public static ElementModifier fontSize(double value)
         {
             return new ElementModifier(element => element.style.fontSize = px(value));
         }
-
+        public static ElementModifier fontSize(string fontSize)
+        {
+            return new ElementModifier(element => element.style.fontSize = fontSize);
+        }
+        public static ElementModifier fontFamily(string fontFamily)
+        {
+            return new ElementModifier(element => element.style.fontFamily = fontFamily);
+        }
+        public static ElementModifier fontWeight(int fontWeight)
+        {
+            return new ElementModifier(element => element.style.fontWeight = fontWeight.ToString());
+        }
         public static ElementModifier background(string value)
         {
             return new ElementModifier(element => element.style.background = value);
@@ -175,11 +221,19 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.height = px(height));
         }
 
+        public static ElementModifier height(string height)
+        {
+            return new ElementModifier(element => element.style.height = height);
+        }
+
         public static ElementModifier width(double width)
         {
             return new ElementModifier(element => element.style.width = px(width));
         }
-
+        public static ElementModifier width(string width)
+        {
+            return new ElementModifier(element => element.style.width = width);
+        }
         public static ElementModifier marginLeft(double margin)
         {
             return new ElementModifier(element => element.style.marginLeft = px(margin));
@@ -193,14 +247,30 @@ namespace ReactDotNet
         {
             return new ElementModifier(element => element.style.marginTop = px(margin));
         }
+
+        public static ElementModifier marginTop(string marginTop)
+        {
+            return new ElementModifier(element => element.style.marginTop = marginTop);
+        }
+
         public static ElementModifier marginBottom(double margin)
         {
             return new ElementModifier(element => element.style.marginBottom = px(margin));
         }
 
-        public static string AsPercent(this double value)
+        public static string percentOf(double value)
         {
             return value.ToString(CultureInfo.InvariantCulture).Replace(",",".") + "%";
+        }
+
+        public static string AsPercent(this double value)
+        {
+            return percentOf(value);
+        }
+
+        public static string percentOf(int value)
+        {
+            return value.ToString(CultureInfo.InvariantCulture).Replace(",", ".") + "%";
         }
 
         public static ElementModifier className(string className)
@@ -212,6 +282,36 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.alignSelf = alignSelf);
         }
 
+        public static ElementModifier border(string border)
+        {
+            return new ElementModifier(element => element.style.border = border);
+        }
+
+
+        public static ElementModifier borderLeft(string borderLeft)
+        {
+            return new ElementModifier(element => element.style.borderLeft = borderLeft);
+        }
+
+        public static ElementModifier borderRight(string borderRight)
+        {
+            return new ElementModifier(element => element.style.borderRight = borderRight);
+        }
+
+        public static ElementModifier borderTop(string borderTop)
+        {
+            return new ElementModifier(element => element.style.borderTop = borderTop);
+        }
+
+        public static ElementModifier borderBottom(string borderBottom)
+        {
+            return new ElementModifier(element => element.style.borderBottom = borderBottom);
+        }
+
+        public static ElementModifier borderRadius(string borderRadius)
+        {
+            return new ElementModifier(element => element.style.borderRadius = borderRadius);
+        }
     }
 
 }

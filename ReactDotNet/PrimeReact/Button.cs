@@ -64,11 +64,7 @@ namespace ReactDotNet.PrimeReact
         [React]
         public string badgeClassName { get; set; }
 
-        [React]
-        public string tooltip { get; set; }
-
-        [React]
-        public TooltipOptions tooltipOptions { get; } = new TooltipOptions();
+        
 
     }
 }

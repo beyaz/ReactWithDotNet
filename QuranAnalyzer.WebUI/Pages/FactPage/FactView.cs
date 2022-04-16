@@ -79,7 +79,7 @@ class FactView : ReactComponent<FactViewModel>
         {
             state.OperationName = "Hesaplanıyor...";
             state.IsBlocked     = true;
-            state.ClientTask    = new ClientTask {ComebackWithLastAction = true};
+            state.ClientTask    = new ClientTask {ComebackWithLastActionTimeout = 5};
             return;
         }
 

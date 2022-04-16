@@ -13,7 +13,7 @@ static class JsonSerializationOptionHelper
     #region Public Methods
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
     {
-        options.WriteIndented    = true;
+        // options.WriteIndented    = true;
         options.IgnoreNullValues = true;
 
         options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
@@ -82,7 +82,12 @@ static class JsonSerializationOptionHelper
         #region Public Methods
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert.IsSubclassOf(typeof(Enum));
+            if (typeToConvert.Assembly == typeof(JsonConverterForEnum).Assembly)
+            {
+                return typeToConvert.IsSubclassOf(typeof(Enum));
+            }
+
+            return false;
         }
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
@@ -319,6 +324,18 @@ static class JsonSerializationOptionHelper
 
                 {
                     if (propertyValue is Expression<Func<int>> expression)
+                    {
+                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, expression);
+                        if (bindInfo == null)
+                        {
+                            return (null, true);
+                        }
+
+                        return (bindInfo, false);
+                    }
+                }
+                {
+                    if (propertyValue is Expression<Func<bool>> expression)
                     {
                         var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, expression);
                         if (bindInfo == null)

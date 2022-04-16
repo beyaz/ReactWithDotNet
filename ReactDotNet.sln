@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuranAnalyzer.Tests", "Qura
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuranAnalyzer.WebUI", "QuranAnalyzer.WebUI\QuranAnalyzer.WebUI.csproj", "{FF58F6B6-E466-44E2-A5E7-089308A39546}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.PaymentWithIyzico", "..\DimidiWebAPI\Modules.PaymentWithIyzico\Modules.PaymentWithIyzico.csproj", "{18337D1E-E077-4711-97FA-51964AA7D7CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DimidiBusiness", "..\DimidiWebAPI\DimidiBusiness\DimidiBusiness.csproj", "{7B29A2B2-3F8F-4F2F-89D1-9E179BAEEEB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{FF58F6B6-E466-44E2-A5E7-089308A39546}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF58F6B6-E466-44E2-A5E7-089308A39546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF58F6B6-E466-44E2-A5E7-089308A39546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18337D1E-E077-4711-97FA-51964AA7D7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18337D1E-E077-4711-97FA-51964AA7D7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18337D1E-E077-4711-97FA-51964AA7D7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18337D1E-E077-4711-97FA-51964AA7D7CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B29A2B2-3F8F-4F2F-89D1-9E179BAEEEB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B29A2B2-3F8F-4F2F-89D1-9E179BAEEEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B29A2B2-3F8F-4F2F-89D1-9E179BAEEEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B29A2B2-3F8F-4F2F-89D1-9E179BAEEEB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,6 +20,13 @@ namespace ReactDotNet.PrimeReact
         {
             
         }
+
+
+        [React]
+        public string tooltip { get; set; }
+
+        [React]
+        public TooltipOptions tooltipOptions { get; } = new TooltipOptions();
     }
 
 
@@ -57,42 +64,7 @@ namespace ReactDotNet.PrimeReact
     }
     /*
 
-    public class DropdownChangeTargetOptions
-    {
-       public string name;
-       public string id;
-       public object value;
-    }
-
-   public class DropdownChangeParams
-    {
-        public SyntheticEvent<HTMLElement> originalEvent;
-        public object value;
-
-        public extern void stopPropagation();
-        public extern void preventDefault();
-
-        public DropdownChangeTargetOptions target;
-    }
-
-    public class Dropdown : ElementBase
-    {
-        [React]
-        public Action<DropdownChangeParams> onChange { get; set; }
-
-        [React]
-        public string optionLabel { get; set; }
-
-        [React]
-        public object value { get; set; }
-
-        [React]
-        public string optionValue { get; set; }
-        
-        [React]
-        public IReadOnlyList<object> options { get; set; }
-        
-    }
+   
 
     public class SplitPanel : Element
     {

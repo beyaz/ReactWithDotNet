@@ -6,6 +6,16 @@ namespace ReactDotNet
     {
         public override string tagName => "div";
 
+        public Space()
+        {
+            
+        }
+
+        public Space(params ElementModifier[] modifiers) : base(modifiers)
+        {
+        }
+
+
         [JsonIgnore]
         public double? Height
         {

@@ -101,6 +101,13 @@ namespace ReactDotNet.PrimeReact
         public string headerClassName { get; set; }
 
         /// <summary>
+        /// Inline style of the tab header.
+        /// </summary>
+        [React]
+        public Style headerStyle { get; set; }
+        
+
+        /// <summary>
         ///     Style class of the tab content.
         ///     <para>default: null</para>
         /// </summary>
@@ -116,4 +123,6 @@ namespace ReactDotNet.PrimeReact
 
 
     }
+
+    
 }

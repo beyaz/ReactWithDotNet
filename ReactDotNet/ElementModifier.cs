@@ -34,9 +34,20 @@ public sealed class ElementModifier
     {
         return new ElementModifier(element => element.style.flexWrap = flexWrap);
     }
+
+    public static implicit operator ElementModifier(FlexDirection flexDirection)
+    {
+        return new ElementModifier(element => element.style.flexDirection = flexDirection);
+    }
+
     public static implicit operator ElementModifier(JustifyContent justifyContent)
     {
         return new ElementModifier(element => element.style.justifyContent = justifyContent);
+    }
+
+    public static implicit operator ElementModifier(WhiteSpace whiteSpace)
+    {
+        return new ElementModifier(element => element.style.whiteSpace= whiteSpace);
     }
     
 

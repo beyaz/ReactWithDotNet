@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using static ReactDotNet.Mixin;
 
 namespace ReactDotNet;
@@ -202,6 +203,37 @@ public class label : HtmlElement
     public string htmlFor { get; set; }
 }
 
+public class input : HtmlElement
+{
+    public input()
+    {
+    }
+
+    public input(params ElementModifier[] modifiers) : base(modifiers)
+    {
+    }
+
+    [React]
+    public string type { get; set; }
+
+    [React]
+    public string name { get; set; }
+
+    [React]
+    public string value { get; set; }
+
+    [React]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    public Expression<Func<string>> valueBind { get; set; }
+
+    [React]
+    public bool @checked { get; set; }
+
+    [React]
+    [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.target.checked", eventName = "onChange")]
+    public Expression<Func<bool>> checkedBind { get; set; }
+}
+
 public class i : HtmlElement
 {
     public i()
@@ -217,6 +249,11 @@ public class div : HtmlElement
 {
     public div()
     {
+    }
+
+    public div(string text)
+    {
+        this.text = text;
     }
 
     public div(IEnumerable<Element> children)

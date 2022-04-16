@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Web;
 
 namespace ReactDotNet;
 
@@ -11,7 +12,6 @@ using static Array;
 [Serializable]
 public class ClientTask
 {
-    public bool ComebackWithLastAction { get; set; }
     public bool HistoryPushState { get; set; }
     public string HistoryPushStateTitle { get; set; }
     public string HistoryPushStateUrl { get; set; }
@@ -21,6 +21,10 @@ public class ClientTask
     public bool ListenEvent { get; set; }
     public string ListenEventName { get; set; }
     public string ListenEventRouteTo { get; set; }
+    public bool CallJsFunction { get; set; }
+    public string CallJsFunctionName { get; set; }
+    public object[] CallJsFunctionArguments { get; set; }
+    public int? ComebackWithLastActionTimeout { get; set; }
 }
 
 [Serializable]
@@ -39,6 +43,11 @@ public class ComponentRequest
     public string EventHandlerMethodName { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
+
+    public string SearchPartOfUrl { get; set; }
+    public double AvailableWidth { get; set; }
+    public double AvailableHeight { get; set; }
+
 }
 
 [Serializable]
@@ -72,6 +81,15 @@ public static class ComponentRequestHandler
             if (instance == null)
             {
                 return new ComponentResponse {ErrorMessage = $"Type not instanstied.{request.FullName}"};
+            }
+
+            if (instance is IReactStatefulComponent reactStatefulComponent)
+            {
+                reactStatefulComponent.Context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
+                reactStatefulComponent.Context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
+                reactStatefulComponent.Context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
+
+                reactStatefulComponent.constructor();
             }
 
             return new ComponentResponse

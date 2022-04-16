@@ -1,4 +1,6 @@
-﻿namespace ReactDotNet.PrimeReact;
+﻿using System;
+
+namespace ReactDotNet.PrimeReact;
 
 public class Card : ElementBase
 {
@@ -25,4 +27,30 @@ public class Dialog: ElementBase
     /// </summary>
     [React]
     public Element footer { get; set; }
+
+    /// <summary>
+    /// Title content of the dialog.
+    /// </summary>
+    [React]
+    public object header { get; set; }
+
+
+    /// <summary>
+    /// Adds a close icon to the header to hide the dialog.
+    /// </summary>
+    [React]
+    public bool closable { get; set; }
+
+
+    /// <summary>
+    /// Callback to invoke when dialog is showed.
+    /// </summary>
+    [React]
+    public Action onShow { get; set; }
+
+    /// <summary>
+    /// Callback to invoke when dialog is hidden (Required).
+    /// </summary>
+    [React]
+    public Action onHide { get; set; }
 }
