@@ -9,6 +9,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ReactDotNet.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ReactDotNet.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Events\" />
   </ItemGroup>
 
