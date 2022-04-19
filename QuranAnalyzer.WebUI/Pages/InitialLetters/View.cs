@@ -14,10 +14,20 @@ public class View : PageBase
     {
         var facts = ResourceAccess.Facts;
 
-        return new div(facts.Select(x => new FactMiniView { state = new FactMiniViewModel { Fact = x } }))
+        return new div(facts.Select(ToElement))
                + background("white")
                + Display.flex
                + FlexWrap.wrap
                + JustifyContent.center;
+
+        Element ToElement(FactModel factModel)
+        {
+            return new FactMiniView
+            {
+                state = new FactMiniViewModel { Fact = factModel }
+            };
+        }
     }
+
+   
 }

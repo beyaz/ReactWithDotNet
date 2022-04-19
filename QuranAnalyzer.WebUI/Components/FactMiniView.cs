@@ -31,13 +31,22 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
     {
         var model = state.Fact;
 
+        var fontSize = "17px";
+
+        var availableWidth = Context?.TryGetValue(BrowserInformation.AvailableWidth);
+
+        if (availableWidth < 500)
+        {
+            fontSize = "14px";
+        }
+
         var title = new div
         {
             text = model.Name,
             style =
             {
                 color      = "#08090a",
-                fontSize   = "17px",
+                fontSize   = vw(3.1),
                 fontWeight = "600"
             }
         };
@@ -48,8 +57,8 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
             style =
             {
                 wordBreak = WordBreak.break_all,
-                margin    = "15px",
-                fontSize  = px(13),
+                margin    = "4px",
+                fontSize  = vw(3.1),
                 color     = "#546285"
             }
         };
@@ -70,17 +79,17 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
                {
                    border         = "1px solid #ced4da",
                    borderRadius   = "5px",
-                   width          = px(150),
-                   height         = px(150),
+                   width          = vw(30),
+                   height         = vw(30),
                    boxShadow      = "0 4px 8px 0 rgba(0,0,0,0.2)",
-                   margin         = px(20),
+                   margin         = vw(4),
                    display        = Display.flex,
                    justifyContent = JustifyContent.center,
                    alignItems     = AlignItems.center,
                    flexDirection  = FlexDirection.column,
                    textAlign      = TextAlign.center,
                    fontFamily     = "Verdana,sans-serif",
-                   cursor = Cursor.pointer
+                   cursor         = Cursor.pointer
                };
     }
 }

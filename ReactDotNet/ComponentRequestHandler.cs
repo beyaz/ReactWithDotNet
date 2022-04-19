@@ -149,9 +149,11 @@ public static class ComponentRequestHandler
 
         void initializeBrowserInformation(IReactStatefulComponent reactStatefulComponent)
         {
-            reactStatefulComponent.Context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
-            reactStatefulComponent.Context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
-            reactStatefulComponent.Context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
+            var context = reactStatefulComponent.Context ??= new ReactContext();
+            
+            context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
+            context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
+            context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
         }
 
         string setState(Type typeOfInstance, object instance, string stateAsJson)
@@ -193,6 +195,9 @@ class ElementSerializationExtraData
 {
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
     public string BreadCrumpPath { get; set; }
+
+    public Element RootElement { get; set; }
+
 }
 
 static class ComponentSerializer
@@ -208,7 +213,8 @@ static class ComponentSerializer
                     ElementSerializationExtraData = new ElementSerializationExtraData
                     {
                         ChildStates    = childStates,
-                        BreadCrumpPath = "0"
+                        BreadCrumpPath = "0",
+                        RootElement = instance
                     }
                 }
             }

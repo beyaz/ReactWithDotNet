@@ -210,6 +210,7 @@ static class JsonSerializationOptionHelper
                 foreach (var item in value.children)
                 {
                     elementSerializationExtraData.BreadCrumpPath = breadCrumpPath + "," + i;
+
                     if (item is IReactStatelessComponent statelessComponent)
                     {
                         var rootElement = statelessComponent.render();
@@ -217,6 +218,15 @@ static class JsonSerializationOptionHelper
                         JsonSerializer.Serialize(writer, rootElement, options);
                         i++;
                         continue;
+                    }
+
+                    if (item is  IReactStatefulComponent reactStatefulComponent)
+                    {
+                        
+                        if (elementSerializationExtraData.RootElement is IReactStatefulComponent rootElementAsReactStatefulComponent)
+                        {
+                            reactStatefulComponent.Context ??= rootElementAsReactStatefulComponent.Context;
+                        }
                     }
 
                     JsonSerializer.Serialize(writer, item, options);

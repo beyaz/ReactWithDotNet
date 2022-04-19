@@ -516,7 +516,7 @@
                         setTimeout(function()
                         {
                             request.StateAsJson = JSON.stringify(component.state.$state);
-                            global.ReactDotNet.SendRequest(request, onSuccess);
+                            SendRequest(request, onSuccess);
 
                         }, clientTask.ComebackWithLastActionTimeout);
                     };
@@ -554,7 +554,7 @@
 
             restoreState();
         }
-        global.ReactDotNet.SendRequest(request, onSuccess);
+        SendRequest(request, onSuccess);
     }
 
     var componentActions = {};
@@ -642,25 +642,12 @@
     function FetchComponent(fullNameOfComponent, callback)
     {
 
-        function getAvailableWidth() {
-            return window.innerWidth
-                || document.documentElement.clientWidth
-                || document.body.clientWidth;
-        }
-
-        function getAvailableHeight() {
-            return window.innerHeight
-                || document.documentElement.clientHeight
-                || document.body.clientHeight;
-        }
+        
 
         var request =
         {
             MethodName: "FetchComponent",
-            FullName: fullNameOfComponent,
-            SearchPartOfUrl: window.location.search,
-            AvailableWidth: getAvailableWidth(),
-            AvailableHeight: getAvailableHeight()
+            FullName: fullNameOfComponent
         };
 
         function onSuccess(response)
@@ -676,9 +663,38 @@
 
             callback(React.createElement(component));
         }
-        global.ReactDotNet.SendRequest(request, onSuccess);
+        SendRequest(request, onSuccess);
     }
 
+    function SendRequest(request, onSuccess)
+    {
+        BeforeSendRequest(request);
+
+        global.ReactDotNet.SendRequest(request, onSuccess);
+
+        function BeforeSendRequest(request)
+        {
+            request.AvailableWidth = getAvailableWidth();
+            request.AvailableHeight = getAvailableHeight();
+            request.SearchPartOfUrl = window.location.search;
+
+            function getAvailableWidth()
+            {
+                return window.innerWidth
+                    || document.documentElement.clientWidth
+                    || document.body.clientWidth;
+            }
+
+            function getAvailableHeight()
+            {
+                return window.innerHeight
+                    || document.documentElement.clientHeight
+                    || document.body.clientHeight;
+            }
+        }
+    }
+
+ 
 
 
     global.ReactDotNet =

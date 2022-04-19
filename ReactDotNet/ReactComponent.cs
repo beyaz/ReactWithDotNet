@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ReactDotNet
 {
@@ -76,15 +77,15 @@ namespace ReactDotNet
     {
         Element RootElement { get; }
 
-        ReactContext Context { get; }
+        ReactContext Context { get; set; }
 
         void constructor();
     }
 
     public abstract class ReactComponent<TState> : Element, IReactStatefulComponent where TState : new()
     {
-
-        public ReactContext Context { get; } = new ReactContext();
+        [JsonIgnore]
+        public ReactContext Context { get; set; }
 
         public virtual void constructor()
         {
