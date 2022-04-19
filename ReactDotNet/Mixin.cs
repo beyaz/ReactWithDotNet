@@ -14,6 +14,11 @@ namespace ReactDotNet
         {
             var items = new Dictionary<string, string>();
 
+            if (query == null)
+            {
+                return items;
+            }
+
             var nameValueCollection = HttpUtility.ParseQueryString(query);
             foreach (var key in nameValueCollection.AllKeys)
             {
