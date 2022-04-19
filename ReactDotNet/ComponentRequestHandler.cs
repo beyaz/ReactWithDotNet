@@ -53,8 +53,6 @@ public class ComponentRequest
 [Serializable]
 public class ComponentResponse
 {
-    public Element Element { get; set; }
-
     public string ErrorMessage { get; set; }
 
     public string ElementAsJsonString { get; set; }
