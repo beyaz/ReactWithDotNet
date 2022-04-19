@@ -85,9 +85,7 @@ public static class ComponentRequestHandler
 
             if (instance is IReactStatefulComponent reactStatefulComponent)
             {
-                reactStatefulComponent.Context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
-                reactStatefulComponent.Context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
-                reactStatefulComponent.Context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
+                initializeBrowserInformation(reactStatefulComponent);
 
                 reactStatefulComponent.constructor();
             }
@@ -97,6 +95,8 @@ public static class ComponentRequestHandler
                 ElementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates)
             };
         }
+
+        
 
         if (request.MethodName == "HandleComponentEvent")
         {
@@ -110,6 +110,11 @@ public static class ComponentRequestHandler
             if (instance == null)
             {
                 return new ComponentResponse {ErrorMessage = $"Type not instanstied.{request.FullName}"};
+            }
+
+            if (instance is IReactStatefulComponent reactStatefulComponent)
+            {
+                initializeBrowserInformation(reactStatefulComponent);
             }
 
             var errorMessage = setState(type, instance, request.StateAsJson);
@@ -141,6 +146,13 @@ public static class ComponentRequestHandler
         }
 
         return new ComponentResponse {ErrorMessage = $"Not implemented method. {request.MethodName}"};
+
+        void initializeBrowserInformation(IReactStatefulComponent reactStatefulComponent)
+        {
+            reactStatefulComponent.Context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
+            reactStatefulComponent.Context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
+            reactStatefulComponent.Context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
+        }
 
         string setState(Type typeOfInstance, object instance, string stateAsJson)
         {
