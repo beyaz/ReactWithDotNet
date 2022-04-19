@@ -1,15 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.FactPage;
 using ReactDotNet;
 using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
-
-
-
-
 
 public class View : PageBase
 {
@@ -26,4 +21,3 @@ public class View : PageBase
                + JustifyContent.center;
     }
 }
-
