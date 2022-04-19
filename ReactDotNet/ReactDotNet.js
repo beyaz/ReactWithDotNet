@@ -360,7 +360,7 @@
     {
         var map = {};
 
-        map["0"] = { StateAsJson: component.state.$state, FullTypeNameOfState: component.$FullTypeNameOfState };
+        // map["0"] = { StateAsJson: component.state.$state, FullTypeNameOfState: component.$FullTypeNameOfState };
 
         visitChilderen(component.$rootJsonNodeForUI, "0");
 

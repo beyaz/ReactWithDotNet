@@ -360,7 +360,7 @@
     {
         var map = {};
 
-        map["0"] = { StateAsJson: component.state.$state, FullTypeNameOfState: component.$FullTypeNameOfState };
+        // map["0"] = { StateAsJson: component.state.$state, FullTypeNameOfState: component.$FullTypeNameOfState };
 
         visitChilderen(component.$rootJsonNodeForUI, "0");
 
@@ -509,19 +509,23 @@
             {
                 element.state.ClientTask = null;
 
-                if (clientTask.ComebackWithLastAction)
+                if (clientTask.ComebackWithLastActionTimeout >= 0)
                 {
                     var afterSetState = function()
                     {
-                        request.StateAsJson = JSON.stringify(component.state.$state);
-                        global.ReactDotNet.SendRequest(request, onSuccess);
+                        setTimeout(function()
+                        {
+                            request.StateAsJson = JSON.stringify(component.state.$state);
+                            global.ReactDotNet.SendRequest(request, onSuccess);
+
+                        }, clientTask.ComebackWithLastActionTimeout);
                     };
 
                     restoreState(afterSetState);
 
                     return;
                 }
-
+                
                 if (clientTask.HistoryPushState)
                 {
                     window.history.replaceState({}, clientTask.HistoryPushStateTitle, clientTask.HistoryPushStateUrl);
@@ -538,6 +542,13 @@
                     {
                         HandleAction({ remoteMethodName: clientTask.ListenEventRouteTo, component: component, eventArguments: arguments[0] });
                     });
+                }
+
+                if (clientTask.CallJsFunction)
+                {
+                    var fn = GetValueInPath(window, clientTask.CallJsFunctionName.split('.'));
+
+                    fn.apply(null, clientTask.CallJsFunctionArguments);
                 }
             }
 
@@ -630,10 +641,26 @@
 
     function FetchComponent(fullNameOfComponent, callback)
     {
+
+        function getAvailableWidth() {
+            return window.innerWidth
+                || document.documentElement.clientWidth
+                || document.body.clientWidth;
+        }
+
+        function getAvailableHeight() {
+            return window.innerHeight
+                || document.documentElement.clientHeight
+                || document.body.clientHeight;
+        }
+
         var request =
         {
             MethodName: "FetchComponent",
-            FullName  : fullNameOfComponent
+            FullName: fullNameOfComponent,
+            SearchPartOfUrl: window.location.search,
+            AvailableWidth: getAvailableWidth(),
+            AvailableHeight: getAvailableHeight()
         };
 
         function onSuccess(response)

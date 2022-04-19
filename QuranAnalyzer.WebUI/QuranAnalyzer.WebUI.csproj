@@ -14,12 +14,17 @@
     <None Remove="Pages\QuestionAnswerPage\Data.yaml" />
     <None Remove="MainPage.yaml" />
     <None Remove="QuestionAnswerPage.yaml" />
+    <None Remove="ReactDotNet.js" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Pages\QuestionAnswerPage\Data.yaml" />
     <EmbeddedResource Include="Pages\ContactPage\Data.yaml" />
     <Content Include="Pages\MainPage\Data.yaml" />
+    <Content Include="ReactDotNet.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
