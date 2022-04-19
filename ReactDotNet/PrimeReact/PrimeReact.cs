@@ -26,7 +26,7 @@ namespace ReactDotNet.PrimeReact
         public string tooltip { get; set; }
 
         [React]
-        public TooltipOptions tooltipOptions { get; } = new TooltipOptions();
+        public TooltipOptions tooltipOptions { get; set; } 
     }
 
 

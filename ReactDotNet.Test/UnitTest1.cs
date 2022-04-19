@@ -7,6 +7,20 @@ using static ReactDotNet.Mixin;
 
 namespace ReactDotNet
 {
+
+    static class TextExtensions
+    {
+        public static string Clear(this string value)
+        {
+            if (value == null)
+            {
+                return value;
+            }
+
+            return value.Replace(" ", "").Replace("\n", "").Replace("\r", "").Trim();
+        }
+
+    }
     [TestClass]
     public class UnitTest1
     {
@@ -61,8 +75,10 @@ namespace ReactDotNet
   ]
 }
 ";
-            actual.Trim().Should().Be(expected.Trim());
+            actual.Clear().Should().Be(expected.Clear());
         }
+
+        
 
         [TestMethod]
         public void HPanelGravity()
@@ -114,7 +130,7 @@ namespace ReactDotNet
   ]
 }
 ";
-            actual.Trim().Should().Be(expected.Trim());
+            actual.Clear().Should().Be(expected.Clear());
         }
 
 
@@ -141,7 +157,7 @@ namespace ReactDotNet
             var actual = ToJson(div);
 
             var expected = ReadTestFile("SerializeComponentWithProperties.txt");
-            actual.Trim().Should().Be(expected.Trim());
+            actual.Clear().Should().Be(expected.Clear());
         }
 
 
