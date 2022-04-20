@@ -1,72 +1,59 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static ReactDotNet.Mixin;
 
-namespace ReactDotNet
+namespace ReactDotNet;
+
+[TestClass]
+public class UnitTest1
 {
 
-    static class TextExtensions
+    class View1 : ReactComponent<SampleModelA>
     {
-        public static string Clear(this string value)
+        public string Prop1 { get; set; } = "PropValue1";
+        public string Prop2 { get; set; } = "PropValue2";
+
+
+        public override Element render()
         {
-            if (value == null)
+            return new div(className("A"))
             {
-                return value;
-            }
-
-            return value.Replace(" ", "").Replace("\n", "").Replace("\r", "").Trim();
+                text = "b"
+            };
         }
-
     }
-    [TestClass]
-    public class UnitTest1
+
+    class View2 : ReactComponent<SampleModelA>
     {
+        public string Prop1 { get; set; } = "PropValue1";
+        public string Prop2 { get; set; } = "PropValue2";
 
-        class View1 : ReactComponent<SampleModelA>
+        public override Element render()
         {
-            public string Prop1 { get; set; } = "PropValue1";
-            public string Prop2 { get; set; } = "PropValue2";
-
-
-            public override Element render()
+            return new div(className("A"))
             {
-                return new div(className("A"))
-                {
-                    text = "b"
-                };
-            }
+                new View1 { Prop1 = "A" }
+            };
         }
+    }
 
-        class View2 : ReactComponent<SampleModelA>
-        {
-            public string Prop1 { get; set; } = "PropValue1";
-            public string Prop2 { get; set; } = "PropValue2";
+    static string ReadTestFile(string name)
+    {
+        return File.ReadAllText(name);
+    }
 
-            public override Element render()
-            {
-                return new div(className("A"))
-                {
-                    new View1 { Prop1 = "A" }
-                };
-            }
-        }
+    [TestMethod]
+    public void SerializeBasicDiv()
+    {
+        var div = new div(className("B"));
 
-        static string ReadTestFile(string name)
-        {
-            return File.ReadAllText(name);
-        }
+        var actual = ToJson(div);
 
-        [TestMethod]
-        public void SerializeBasicDiv()
-        {
-            var div = new div(className("B"));
-
-            var actual = ToJson(div);
-
-            var expected = @"
+        var expected = @"
 {
   ""tagName"": ""div"",
   ""className"": ""B"",
@@ -75,19 +62,19 @@ namespace ReactDotNet
   ]
 }
 ";
-            actual.Clear().Should().Be(expected.Clear());
-        }
+        actual.Clear().Should().Be(expected.Clear());
+    }
 
         
 
-        [TestMethod]
-        public void HPanelGravity()
-        {
-            var div = new HPanel { new div(className("B")) { gravity = 4 }, new div(className("B")) };
+    [TestMethod]
+    public void HPanelGravity()
+    {
+        var div = new HPanel { new div(className("B")) { gravity = 4 }, new div(className("B")) };
 
-            var actual = ToJson(div);
+        var actual = ToJson(div);
 
-            var expected = @"
+        var expected = @"
 {
   ""tagName"": ""div"",
   ""style"": {
@@ -130,87 +117,114 @@ namespace ReactDotNet
   ]
 }
 ";
-            actual.Clear().Should().Be(expected.Clear());
-        }
+        actual.Clear().Should().Be(expected.Clear());
+    }
 
 
-        [TestMethod]
-        public void SerializeComponentWithProperties()
-        {
+    [TestMethod]
+    public void SerializeComponentWithProperties()
+    {
             
 
+        var state = new SampleModelAContainer();
+
+        var div = new div(className("abc"))
+        {
+            new div(className("B")),
+            new div(className("C"))
+            {
+                style = { paddingLeft = "5px" }
+            },
+            new img { src                        = "a.png", width = 3, onClick = onClicked },
+            new PrimeReact.InputText { value     = "abc" },
+            new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
+            new View2 { Prop1                    = "x", Prop2 = "y" }
+        };
+
+        var actual = ToJson(div);
+
+        var expected = ReadTestFile("SerializeComponentWithProperties.txt");
+        actual.Clear().Should().Be(expected.Clear());
+    }
+
+    [TestMethod]
+    public void PerformanceTest()
+    {
+
+
+        Element createElement()
+        {
             var state = new SampleModelAContainer();
 
             var div = new div(className("abc"))
             {
                 new div(className("B")),
-                        new div(className("C"))
-                        {
-                            style = { paddingLeft = "5px" }
-                        },
-                        new img { src                    = "a.png", width = 3, onClick = onClicked },
-                        new PrimeReact.InputText { value = "abc" },
-                        new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
-                        new View2 { Prop1                = "x", Prop2 = "y" }
+                new div(className("C"))
+                {
+                    style = { paddingLeft = "5px" }
+                },
+                new img { src                        = "a.png", width = 3, onClick = onClicked },
+                new PrimeReact.InputText { value     = "abc" },
+                new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
+                new View2 { Prop1                    = "x", Prop2 = "y" }
             };
 
-            var actual = ToJson(div);
-
-            var expected = ReadTestFile("SerializeComponentWithProperties.txt");
-            actual.Clear().Should().Be(expected.Clear());
+            return div;
         }
 
+       var a = ToJson(new div(Enumerable.Range(0, 100).Select(x => createElement())));
 
         
+    }
 
 
-        [Serializable]
-        public class SampleModelAContainer
-        {
-            public string Text { get; set; }
-            public SampleModelA InnerA { get; set; }
-        }
 
-        [Serializable]
-        public class SampleModelA
-        {
-            public string Text { get; set; }
-            public SampleModelB InnerB { get; set; }
-        }
+    [Serializable]
+    public class SampleModelAContainer
+    {
+        public string Text { get; set; }
+        public SampleModelA InnerA { get; set; }
+    }
 
-        [Serializable]
-        public class SampleModelB
-        {
-            public string Text { get; set; }
-        }
+    [Serializable]
+    public class SampleModelA
+    {
+        public string Text { get; set; }
+        public SampleModelB InnerB { get; set; }
+    }
 
-        [Serializable]
-        public class SampleModel
-        {
-            public int ClickCount { get; set; }
-            public int Id { get; set; }
-            public string Text { get; set; }
-            public int DropdownSelectedValue { get; set; }
+    [Serializable]
+    public class SampleModelB
+    {
+        public string Text { get; set; }
+    }
 
-
-        }
-
-
-        [TestMethod]
-        public void Deserialize()
-        {
-            var json  = "{\r\n\"ClickCount\": 2}";
-            var state = (SampleModel)JsonSerializer.Deserialize(json, typeof(SampleModel), new JsonSerializerOptions().ModifyForReactDotNet());
-
-            state.ClickCount.Should().Be(2);
-        }
-
-        void onClicked()
-        {
-
-        }
-
+    [Serializable]
+    public class SampleModel
+    {
+        public int ClickCount { get; set; }
+        public int Id { get; set; }
+        public string Text { get; set; }
+        public int DropdownSelectedValue { get; set; }
 
 
     }
+
+
+    [TestMethod]
+    public void Deserialize()
+    {
+        var json  = "{\r\n\"ClickCount\": 2}";
+        var state = (SampleModel)JsonSerializer.Deserialize(json, typeof(SampleModel), new JsonSerializerOptions().ModifyForReactDotNet());
+
+        state.ClickCount.Should().Be(2);
+    }
+
+    void onClicked()
+    {
+
+    }
+
+
+
 }

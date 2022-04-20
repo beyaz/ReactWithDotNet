@@ -23,5 +23,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+    
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
 
 </Project>
