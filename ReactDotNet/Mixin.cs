@@ -253,6 +253,15 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.marginTop = px(margin));
         }
 
+        public static ElementModifier marginLeft(string marginLeft)
+        {
+            return new ElementModifier(element => element.style.marginLeft = marginLeft);
+        }
+        public static ElementModifier marginRight(string marginRight)
+        {
+            return new ElementModifier(element => element.style.marginRight = marginRight);
+        }
+
         public static ElementModifier marginTop(string marginTop)
         {
             return new ElementModifier(element => element.style.marginTop = marginTop);
@@ -316,6 +325,11 @@ namespace ReactDotNet
         public static ElementModifier borderRadius(string borderRadius)
         {
             return new ElementModifier(element => element.style.borderRadius = borderRadius);
+        }
+
+        public static ElementModifier color(string color)
+        {
+            return new ElementModifier(element => element.style.color = color);
         }
     }
 

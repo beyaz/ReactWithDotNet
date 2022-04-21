@@ -49,8 +49,20 @@ public sealed class ElementModifier
     {
         return new ElementModifier(element => element.style.whiteSpace= whiteSpace);
     }
-    
 
+    public static implicit operator ElementModifier(AlignContent alignContent)
+    {
+        return new ElementModifier(element => element.style.alignContent = alignContent);
+    }
+    
+    public static ElementModifier operator +(ElementModifier a, ElementModifier b)
+    {
+        return new ElementModifier(element =>
+        {
+            a.Modify(element);
+            b.Modify(element);
+        });
+    }
 
 
 }
