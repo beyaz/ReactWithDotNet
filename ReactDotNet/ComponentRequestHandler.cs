@@ -25,6 +25,10 @@ public class ClientTask
     public string CallJsFunctionName { get; set; }
     public object[] CallJsFunctionArguments { get; set; }
     public int? ComebackWithLastActionTimeout { get; set; }
+
+    public string ListenComponentEvent { get; set; }
+    public string ListenComponentEventRouteTo { get; set; }
+
 }
 
 [Serializable]
