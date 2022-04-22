@@ -5,13 +5,16 @@
 
     const EventBus =
     {
-        On(event, callback) {
+        On(event, callback)
+        {
             document.addEventListener(event, (e) => callback(e.detail));
         },
-        Dispatch(event, data) {
+        Dispatch(event, data)
+        {
             document.dispatchEvent(new CustomEvent(event, { detail: data }));
         },
-        Remove(event, callback) {
+        Remove(event, callback)
+        {
             document.removeEventListener(event, callback);
         }
     };
@@ -538,7 +541,7 @@
 
                 if (clientTask.ListenEvent)
                 {
-                    EventBus.On(clientTask.ListenEventName, function()
+                    EventBus.On(clientTask.ListenEvent, function()
                     {
                         HandleAction({ remoteMethodName: clientTask.ListenEventRouteTo, component: component, eventArguments: arguments[0] });
                     });
@@ -546,7 +549,11 @@
 
                 if (clientTask.CallJsFunction)
                 {
-                    var fn = GetValueInPath(window, clientTask.CallJsFunctionName.split('.'));
+                    var fn = GetValueInPath(window, clientTask.CallJsFunction.split('.'));
+                    if (fn == null)
+                    {
+                        throw Error('Function not found. Function is ' + clientTask.CallJsFunction);
+                    }
 
                     fn.apply(null, clientTask.CallJsFunctionArguments);
                 }
@@ -576,11 +583,7 @@
 
     function TryDispatchComponentAction(component, actionName)
     {
-        var fn = TryGetComponentAction(component, actionName);
-        if (fn)
-        {
-            fn(component);
-        }
+        EventBus.Dispatch(GetComponentActionLocation(component.fullName, actionName), component);
     }
 
     function DefineComponent(componentDeclaration)
@@ -641,9 +644,6 @@
 
     function FetchComponent(fullNameOfComponent, callback)
     {
-
-        
-
         var request =
         {
             MethodName: "FetchComponent",
@@ -660,6 +660,20 @@
             var element = JSON.parse(response.ElementAsJsonString);
 
             var component = DefineComponent(element);
+
+            var clientTask = element.state.ClientTask;
+            if (clientTask)
+            {
+                element.state.ClientTask = null;
+
+                if (clientTask.ListenComponentEvent)
+                {
+                    EventBus.On(GetComponentActionLocation(component.fullName, clientTask.ListenComponentEvent), function (cmp)
+                    {
+                        HandleAction({ remoteMethodName: clientTask.ListenComponentEventRouteTo, component: cmp, eventArguments: [] });
+                    });
+                }
+            }
 
             callback(React.createElement(component));
         }

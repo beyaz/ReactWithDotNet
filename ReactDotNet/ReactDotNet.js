@@ -541,7 +541,7 @@
 
                 if (clientTask.ListenEvent)
                 {
-                    EventBus.On(clientTask.ListenEventName, function()
+                    EventBus.On(clientTask.ListenEvent, function()
                     {
                         HandleAction({ remoteMethodName: clientTask.ListenEventRouteTo, component: component, eventArguments: arguments[0] });
                     });

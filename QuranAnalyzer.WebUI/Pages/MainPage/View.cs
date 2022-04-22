@@ -62,8 +62,7 @@ class View : ReactComponent<MainViewModel>
         {
             ClientTask = new ClientTask
             {
-                ListenEvent        = true,
-                ListenEventName    = nameof(OnFactClicked),
+                ListenEvent    = nameof(OnFactClicked),
                 ListenEventRouteTo = nameof(OnFactClicked)
             }
         };

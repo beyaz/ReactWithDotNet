@@ -18,20 +18,30 @@ public class ClientTask
     public object[] CallJsFunctionArguments { get; set; }
     #endregion
 
+
+    #region Listen Component Event
+    public string ListenComponentEvent { get; set; }
+    public string ListenComponentEventRouteTo { get; set; }
+    #endregion
+
+    #region Listen Event
+    public string ListenEvent { get; set; }
+    public string ListenEventRouteTo { get; set; }
+    #endregion
+
     public bool HistoryPushState { get; set; }
     public string HistoryPushStateTitle { get; set; }
     public string HistoryPushStateUrl { get; set; }
+
     public bool DispatchEvent { get; set; }
     public string DispatchEventName { get; set; }
     public object[] DispatchEventParameters { get; set; }
-    public bool ListenEvent { get; set; }
-    public string ListenEventName { get; set; }
-    public string ListenEventRouteTo { get; set; }
+
+
     
     public int? ComebackWithLastActionTimeout { get; set; }
 
-    public string ListenComponentEvent { get; set; }
-    public string ListenComponentEventRouteTo { get; set; }
+  
 
 }
 
