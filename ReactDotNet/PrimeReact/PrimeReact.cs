@@ -33,10 +33,6 @@ namespace ReactDotNet.PrimeReact
 
     public class InputText : ElementBase
     {
-        static string IfNullThenReturnEmptyString(string value)
-        {
-            return value;
-        }
 
         [React]
         [ReactDefaultValue(DefaultValue = "" )]
@@ -44,6 +40,7 @@ namespace ReactDotNet.PrimeReact
 
         [React]
         [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value",  eventName = "onChange")]
+        [ReactDefaultValue(DefaultValue = "")]
         public Expression<Func<string>> valueBind { get; set; }
         
         [React]
