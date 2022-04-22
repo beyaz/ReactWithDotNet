@@ -29,7 +29,7 @@
     </PropertyGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="copy /y &quot;$(TargetDir)$(TargetName).dll*&quot; &quot;D:\work\git\DimidiWebAPI\&quot;" />
+      <Exec Command="copy /y &quot;$(TargetDir)$(TargetName).dll*&quot; &quot;D:\work\git\DimidiWebAPI\&quot;&#xD;&#xA;copy /y &quot;$(TargetDir)ReactDotNet.js&quot;     &quot;D:\work\git\DimidiWebAPI\Modules.PaymentWithIyzico\wwwroot\&quot;" />
     </Target>
 
 </Project>

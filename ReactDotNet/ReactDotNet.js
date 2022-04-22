@@ -549,7 +549,11 @@
 
                 if (clientTask.CallJsFunction)
                 {
-                    var fn = GetValueInPath(window, clientTask.CallJsFunctionName.split('.'));
+                    var fn = GetValueInPath(window, clientTask.CallJsFunction.split('.'));
+                    if (fn == null)
+                    {
+                        throw Error('Function not found. Function is ' + clientTask.CallJsFunction);
+                    }
 
                     fn.apply(null, clientTask.CallJsFunctionArguments);
                 }

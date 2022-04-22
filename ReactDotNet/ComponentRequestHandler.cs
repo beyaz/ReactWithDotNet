@@ -12,6 +12,12 @@ using static Array;
 [Serializable]
 public class ClientTask
 {
+
+    #region Call Js Function
+    public string CallJsFunction { get; set; }
+    public object[] CallJsFunctionArguments { get; set; }
+    #endregion
+
     public bool HistoryPushState { get; set; }
     public string HistoryPushStateTitle { get; set; }
     public string HistoryPushStateUrl { get; set; }
@@ -21,9 +27,7 @@ public class ClientTask
     public bool ListenEvent { get; set; }
     public string ListenEventName { get; set; }
     public string ListenEventRouteTo { get; set; }
-    public bool CallJsFunction { get; set; }
-    public string CallJsFunctionName { get; set; }
-    public object[] CallJsFunctionArguments { get; set; }
+    
     public int? ComebackWithLastActionTimeout { get; set; }
 
     public string ListenComponentEvent { get; set; }
