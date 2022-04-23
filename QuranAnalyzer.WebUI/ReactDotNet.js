@@ -30,9 +30,17 @@
         }
     };
 
-    function OnReady(callback)
+    function OnDocumentReady(callback)
     {
-        document.addEventListener('DOMContentLoaded', callback);
+        var stateCheck = setInterval(function ()
+        {
+            if (document.readyState === 'complete')
+            {
+                clearInterval(stateCheck);
+
+                setTimeout(callback, 1);
+            }
+        }, 10);
     }
 
     function IterateObject(obj, fn)
@@ -302,7 +310,7 @@
     {
         function normalizeEventArgument(obj)
         {
-            if (typeof obj === 'string')
+            if (typeof obj === 'string' || typeof obj === 'number')
             {
                 return obj;
             }
@@ -522,11 +530,7 @@
 
             element.state.ClientTask = null;
 
-            var afterSetState = null;
-            if (clientTask)
-            {
-                afterSetState = processClientTask(clientTask);
-            }
+            var afterSetState = processClientTask(clientTask);
 
             restoreState(afterSetState);
 
@@ -554,19 +558,22 @@
                         }, clientTask.Timeout);
                     };
                 }
-                else if (clientTask.TaskId === ClientTaskId.PushHistory)
+
+                if (clientTask.TaskId === ClientTaskId.PushHistory)
                 {
                     window.history.replaceState({}, clientTask.Title, clientTask.Url);
 
                     return processClientTask(clientTask.After);
                 }
-                else if (clientTask.TaskId === ClientTaskId.DispatchEvent)
+
+                if (clientTask.TaskId === ClientTaskId.DispatchEvent)
                 {
                     EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
 
                     return processClientTask(clientTask.After);
                 }
-                else if (clientTask.TaskId === ClientTaskId.ListenEvent)
+
+                if (clientTask.TaskId === ClientTaskId.ListenEvent)
                 {
                     EventBus.On(clientTask.EventName, function()
                     {
@@ -575,22 +582,15 @@
 
                     return processClientTask(clientTask.After);
                 }
-                else if (clientTask.TaskId === ClientTaskId.CallJsFunction)
-                {
-                    var fn = GetValueInPath(window, clientTask.JsFunctionPath.split('.'));
-                    if (fn == null)
-                    {
-                        throw Error('Function not found. Function is ' + clientTask.JsFunctionPath);
-                    }
 
-                    fn.apply(null, clientTask.JsFunctionArguments);
+                if (clientTask.TaskId === ClientTaskId.CallJsFunction)
+                {
+                    CallJsFunctionInPath(clientTask);
 
                     return processClientTask(clientTask.After);
                 }
-                else
-                {
-                    throw Error('ClientTask not recognized.');
-                }
+
+                throw Error('ClientTask not recognized.');
             }
    
         }
@@ -662,8 +662,7 @@
 
             componentDidMount()
             {
-                var scope = this;
-                setTimeout(() => TryDispatchComponentAction(scope, 'componentDidMount'), 10);
+                TryDispatchComponentAction(this, 'componentDidMount');
             }
 
             componentWillUnmount()
@@ -710,7 +709,7 @@
         var fullTypeNameOfReactComponent = obj.fullTypeNameOfReactComponent;
         var containerHtmlElementId       = obj.containerHtmlElementId;
 
-        OnReady(function()
+        OnDocumentReady(function()
         {
             var request =
             {
@@ -734,21 +733,35 @@
                 element.state.ClientTask = null;
                 
                 var reactElement = React.createElement(component);
-                
-                if (clientTask)
+
+                function processClientTask(clientTask)
                 {
+                    if (clientTask == null)
+                    {
+                        return null;
+                    }
+
                     if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
                     {
                         EventBus.On(GetComponentActionLocation(component.fullName, clientTask.EventName), function (cmp)
                         {
                             HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: cmp, eventArguments: [] });
                         });
+
+                        return processClientTask(clientTask.After);
                     }
-                    else
+
+                    if (clientTask.TaskId === ClientTaskId.CallJsFunction)
                     {
-                        throw new Error('Client Task not recognized');
+                        CallJsFunctionInPath(clientTask);
+
+                        return processClientTask(clientTask.After);
                     }
+
+                    throw new Error('Client Task not recognized');
                 }
+
+                processClientTask(clientTask);
 
                 ReactDOM.render(reactElement, document.getElementById(containerHtmlElementId));
             }
@@ -756,10 +769,21 @@
             SendRequest(request, onSuccess);
         });
     }
+
+    function CallJsFunctionInPath(clientTask)
+    {
+        var fn = GetValueInPath(window, clientTask.JsFunctionPath.split('.'));
+        if (fn == null)
+        {
+            throw Error('Function not found. Function is ' + clientTask.JsFunctionPath);
+        }
+
+        fn.apply(null, clientTask.JsFunctionArguments);
+    }
     
     global.ReactDotNet =
     {
-        OnReady: OnReady,
+        OnDocumentReady: OnDocumentReady,
         RegisterActionToComponent: RegisterActionToComponent,
         HandleAction: HandleAction,
         EventBus: EventBus,

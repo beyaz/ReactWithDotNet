@@ -73,7 +73,7 @@
             {
                 currentScrollY = scrollY;
 
-                ReactDotNet.EventBus.Dispatch('MainContentDivScrollChanged', scrollY);
+                ReactDotNet.EventBus.Dispatch('MainContentDivScrollChanged', [scrollY]);
             }
             else
             {
@@ -81,7 +81,10 @@
             }
         }
 
-        document.getElementById("main").addEventListener('scroll', handleScroll);
+        ReactDotNet.OnDocumentReady(function()
+        {
+            document.getElementById("main").addEventListener('scroll', handleScroll);
+        });
     }
 
 </script>

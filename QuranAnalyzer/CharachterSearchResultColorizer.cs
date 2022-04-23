@@ -65,7 +65,7 @@ public static class CharachterSearchResultColorizer
 
             element.Add(new div {text = text});
 
-            element.Add(new span {text = matchRecord.ToString(), style = {color = "red", marginLeft = "3px", marginRight = "3px"}});
+            element.Add(new span {text = matchRecord.ToString(), style = {color = "red", marginLeft = "3px", marginRight = "3px", background = "yellow"}});
 
             startPosition = matchRecord.StartIndex + matchRecord.ToString().Length;
         }

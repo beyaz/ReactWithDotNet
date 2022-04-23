@@ -71,6 +71,7 @@ class View : ReactComponent<MainViewModel>
                 {
                     EventName     = ReactComponentEvents.componentDidMount.ToString(),
                     RouteToMethod = nameof(OnFirstLoaded),
+
                     After = new ClientTaskCallJsFunction
                     {
                         JsFunctionPath = "RegisterScrollEvents"
@@ -86,7 +87,12 @@ class View : ReactComponent<MainViewModel>
         state.ClientTask = new ClientTaskListenEvent
         {
             EventName     = nameof(OnFactClicked),
-            RouteToMethod = nameof(OnFactClicked)
+            RouteToMethod = nameof(OnFactClicked),
+            After = new ClientTaskListenEvent
+            {
+                EventName     = "MainContentDivScrollChanged",
+                RouteToMethod = nameof(OnMainContentDivScrollChanged)
+            }
         };
     }
     
