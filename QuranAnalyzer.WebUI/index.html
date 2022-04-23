@@ -2,7 +2,6 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,22 +41,10 @@
 
 <script type="text/javascript">
 
-    ReactDotNet.SendRequest = function(request, callback)
-    {
-        fetch("/component/HandleRequest",
-        {
-            method: "POST",
-            headers:
-            {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(request)
-
-        }).then(response => response.json()).then(json => callback(json));
-    };
-    
-    ReactDotNet.RenderComponentIn({ fullTypeNameOfReactComponent: "QuranAnalyzer.WebUI.Pages.MainPage.View,QuranAnalyzer.WebUI", containerHtmlElementId: 'app'});
+    ReactDotNet.RenderComponentIn({
+        fullTypeNameOfReactComponent: "QuranAnalyzer.WebUI.Pages.MainPage.View,QuranAnalyzer.WebUI",
+        containerHtmlElementId: 'app'
+    });
 
     window.RegisterScrollEvents = function()
     {

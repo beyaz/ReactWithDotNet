@@ -70,10 +70,15 @@ class View : ReactComponent<MainViewModel>
                 state.ClientTask = new ClientTaskListenComponentEvent
                 {
                     EventName     = ReactComponentEvents.componentDidMount.ToString(),
-                    RouteToMethod = nameof(OnFirstLoaded)
+                    RouteToMethod = nameof(OnFirstLoaded),
+                    After = new ClientTaskCallJsFunction
+                    {
+                        JsFunctionPath = "RegisterScrollEvents"
+                    }
                 };
             }
         }
+
     }
 
     void OnFirstLoaded()
@@ -95,8 +100,9 @@ class View : ReactComponent<MainViewModel>
         };
     }
 
-    public void OnMainContentDivScrollChanged()
+    public void OnMainContentDivScrollChanged(double mainDivScrollY)
     {
+        state.MainDivScrollY = mainDivScrollY;
     }
 
     void OnMainMenuItemClicked(string menuId)

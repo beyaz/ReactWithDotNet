@@ -519,15 +519,32 @@
             }
 
             var clientTask = element.state.ClientTask;
+
+            element.state.ClientTask = null;
+
+            var afterSetState = null;
             if (clientTask)
             {
-                element.state.ClientTask = null;
+                afterSetState = processClientTask(clientTask);
+            }
 
+            restoreState(afterSetState);
 
+            function processClientTask(clientTask)
+            {
+                if (clientTask == null)
+                {
+                    return null;
+                }
 
                 if (clientTask.TaskId === ClientTaskId.ComebackWithLastAction)
                 {
-                    var afterSetState = function()
+                    if (clientTask.After != null)
+                    {
+                        throw new Error('ClientTask.After can not be use after this task');
+                    }
+
+                    return function()
                     {
                         setTimeout(function()
                         {
@@ -536,18 +553,18 @@
 
                         }, clientTask.Timeout);
                     };
-
-                    restoreState(afterSetState);
-
-                    return;
                 }
                 else if (clientTask.TaskId === ClientTaskId.PushHistory)
                 {
                     window.history.replaceState({}, clientTask.Title, clientTask.Url);
+
+                    return processClientTask(clientTask.After);
                 }
                 else if (clientTask.TaskId === ClientTaskId.DispatchEvent)
                 {
                     EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
+
+                    return processClientTask(clientTask.After);
                 }
                 else if (clientTask.TaskId === ClientTaskId.ListenEvent)
                 {
@@ -555,6 +572,8 @@
                     {
                         HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: arguments[0] });
                     });
+
+                    return processClientTask(clientTask.After);
                 }
                 else if (clientTask.TaskId === ClientTaskId.CallJsFunction)
                 {
@@ -565,19 +584,19 @@
                     }
 
                     fn.apply(null, clientTask.JsFunctionArguments);
+
+                    return processClientTask(clientTask.After);
                 }
                 else
                 {
                     throw Error('ClientTask not recognized.');
                 }
             }
-
-            restoreState();
+   
         }
         SendRequest(request, onSuccess);
     }
 
-   
 
     var componentActions = {};
   
@@ -643,7 +662,8 @@
 
             componentDidMount()
             {
-                setTimeout(()=>TryDispatchComponentAction(this, 'componentDidMount'), 22);
+                var scope = this;
+                setTimeout(() => TryDispatchComponentAction(scope, 'componentDidMount'), 10);
             }
 
             componentWillUnmount()
@@ -740,11 +760,24 @@
     global.ReactDotNet =
     {
         OnReady: OnReady,
-        DefineComponent: DefineComponent,
         RegisterActionToComponent: RegisterActionToComponent,
         HandleAction: HandleAction,
         EventBus: EventBus,
-        RenderComponentIn: RenderComponentIn
+        RenderComponentIn: RenderComponentIn,
+        SendRequest: function (request, callback)
+        {
+            fetch("/component/HandleRequest",
+            {
+                method: "POST",
+                headers:
+                {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(request)
+
+            }).then(response => response.json()).then(json => callback(json));
+        }
     };
 
 })(window, React, ReactDOM);
