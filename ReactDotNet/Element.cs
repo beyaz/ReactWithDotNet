@@ -77,7 +77,7 @@ namespace ReactDotNet
         ///     Gets or sets the on click.
         /// </summary>
         [React]
-        public Action onClick { get; set; }
+        public Action<string> onClick { get; set; }
 
 
         #region Margin

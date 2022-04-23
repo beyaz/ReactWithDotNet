@@ -247,7 +247,7 @@ public class UnitTest1
         state.ClickCount.Should().Be(2);
     }
 
-    void onClicked()
+    void onClicked(string id)
     {
 
     }

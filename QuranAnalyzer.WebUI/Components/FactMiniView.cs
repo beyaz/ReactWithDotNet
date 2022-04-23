@@ -69,7 +69,7 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
 
         return new div
                {
-                   onClick = () => OnClicked(state.Fact.Name),
+                   onClick = (_) => OnClicked(state.Fact.Name),
                    children =
                    {
                        new div(padding(5))

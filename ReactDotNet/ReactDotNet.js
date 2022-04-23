@@ -317,7 +317,18 @@
 
             if (obj && obj._reactName === 'onClick')
             {
-                return null;
+                var target = obj.target;
+                while (target)
+                {
+                    if (target.id !== '')
+                    {
+                        return target.id;
+                    }
+
+                    target = target.parentElement;
+                }
+
+                return obj.target.id;
             }
 
             var eventArgument = {};

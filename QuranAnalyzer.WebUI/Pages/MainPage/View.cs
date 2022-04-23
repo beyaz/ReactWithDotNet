@@ -122,7 +122,7 @@ class View : ReactComponent<MainViewModel>
         };
     }
     
-    void hamburgerMenuClicked() => state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
+    void hamburgerMenuClicked(string _) => state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
 
     public override Element render()
     {
@@ -226,7 +226,7 @@ class View : ReactComponent<MainViewModel>
                        {
                            text    = m.Text,
                            href    = "/index.html?page=" + m.Id,
-                           onClick = () => OnMainMenuItemClicked(m.Id)
+                           onClick = (_) => OnMainMenuItemClicked(m.Id)
                        }
                        +
                        new Style

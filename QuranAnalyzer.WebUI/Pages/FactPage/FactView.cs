@@ -73,7 +73,7 @@ class FactView : ReactComponent<FactViewModel>
 
     
 
-    void OnSelectClicked()
+    void OnSelectClicked(string _)
     {
         if (state.IsBlocked == false)
         {

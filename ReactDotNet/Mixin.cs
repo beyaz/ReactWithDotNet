@@ -335,6 +335,19 @@ namespace ReactDotNet
         {
             return new ElementModifier(element => element.style.color = color);
         }
+
+        public static ElementModifier id(string id)
+        {
+            return new ElementModifier(element => element.id = id);
+        }
+    }
+
+    public static class HtmlEvent
+    {
+        public static ElementModifier onClick(Action<string> onClick)
+        {
+            return new ElementModifier(element => element.onClick = onClick);
+        }
     }
 
 }
