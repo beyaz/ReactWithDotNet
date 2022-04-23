@@ -19,12 +19,16 @@ class FactMiniView : ReactComponent<FactMiniViewModel>
 
     void OnClicked(string name)
     {
-        state.ClientTask = new ClientTask
+        state.ClientTask = new ClientTaskDispatchEvent
         {
-            DispatchEvent           = true,
-            DispatchEventName       = "OnFactClicked",
-            DispatchEventParameters = new object[] {name}
+            EventName       = "OnFactClicked",
+            EventArguments = new object[] {name}
         };
+    }
+
+    public override void constructor()
+    {
+        state = new FactMiniViewModel();
     }
 
     public override Element render()

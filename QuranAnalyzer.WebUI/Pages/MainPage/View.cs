@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Web;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.FactPage;
 using ReactDotNet;
@@ -41,10 +40,7 @@ public class MainViewModel
     public bool HamburgerMenuIsOpen { get; set; }
 
     public double MainDivScrollY { get; set; }
-    public double AvailableWidth { get; set; }
-    public double AvailableHeight { get; set; }
-
-    public string SearchPartOfUrl { get; set; }
+    
 
     public string LastClickedMenuId { get; set; }
 
@@ -56,35 +52,46 @@ class View : ReactComponent<MainViewModel>
 
     static readonly MainPageModel ConstantData = ResourceHelper.ReadPageData<MainPageModel>(nameof(MainPage));
 
-    public View()
+    public override void constructor()
     {
-        state = new MainViewModel
+        state = new MainViewModel();
+
+        if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("fact", out var selectedFact))
         {
-            ClientTask = new ClientTask
+            state.SelectedFact = selectedFact;
+        }
+
+        if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("page", out var pageId))
+        {
+            state.PageId = pageId;
+
+            if (pageId == InitialLetters.View.PageId)
             {
-                ListenEvent    = nameof(OnFactClicked),
-                ListenEventRouteTo = nameof(OnFactClicked)
+                state.ClientTask = new ClientTaskListenComponentEvent
+                {
+                    EventName     = ReactComponentEvents.componentDidMount.ToString(),
+                    RouteToMethod = nameof(OnFirstLoaded)
+                };
             }
+        }
+    }
+
+    void OnFirstLoaded()
+    {
+        state.ClientTask = new ClientTaskListenEvent
+        {
+            EventName     = nameof(OnFactClicked),
+            RouteToMethod = nameof(OnFactClicked)
         };
     }
-
-    public void OnFirstLoaded()
-    {
-
-        state.SelectedFact = getValueByName("fact");
-        state.PageId         = getValueByName("page");
-
-        string getValueByName(string name) => HttpUtility.ParseQueryString(state.SearchPartOfUrl).Get(name);
-    }
-
+    
     void OnFactClicked(string selectedFactName)
     {
         state.SelectedFact = selectedFactName;
-        state.ClientTask = new ClientTask
+        state.ClientTask = new ClientTaskPushHistory
         {
-            HistoryPushState      = true,
-            HistoryPushStateTitle = selectedFactName,
-            HistoryPushStateUrl   = "/index.html?fact=" + selectedFactName
+            Title = selectedFactName,
+            Url   = "/index.html?fact=" + selectedFactName
         };
     }
 
@@ -96,11 +103,10 @@ class View : ReactComponent<MainViewModel>
     {
         state.LastClickedMenuId = menuId;
 
-        state.ClientTask = new ClientTask
+        state.ClientTask = new ClientTaskDispatchEvent
         {
-            DispatchEvent           = true,
-            DispatchEventName       = nameof(OnMainMenuItemClicked),
-            DispatchEventParameters = new object[] {menuId}
+            EventName       = nameof(OnMainMenuItemClicked),
+            EventArguments = new object[] {menuId}
         };
     }
     
@@ -130,7 +136,7 @@ class View : ReactComponent<MainViewModel>
                     {
                         SuraFilter       = fact.SearchScript,
                         SearchCharacters = fact.SearchCharacters,
-                        AvailableWidth = state.AvailableWidth
+                        AvailableWidth = Context.TryGetValue(BrowserInformation.AvailableWidth)
                     };
 
                     return new FactView { state = state.FactViewModel };

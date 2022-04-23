@@ -56,89 +56,45 @@
 
         }).then(response => response.json()).then(json => callback(json));
     };
+    
+    ReactDotNet.RenderComponentIn({ fullTypeNameOfReactComponent: "QuranAnalyzer.WebUI.Pages.MainPage.View,QuranAnalyzer.WebUI", containerHtmlElementId: 'app'});
 
-    ReactDotNet.OnReady(function ()
+    window.RegisterScrollEvents = function()
     {
-        function onComponentReadyToUse(component)
+        var currentScrollY = 0;
+
+        function handleScroll(e)
         {
-            ReactDOM.render(component, document.getElementById('app'));
-        }
+            var scrollY = e.target.scrollTop;
 
-        var typeNameOfMainView = "QuranAnalyzer.WebUI.Pages.MainPage.View,QuranAnalyzer.WebUI";
-
-        //ReactDotNet.FetchComponent("QuranAnalyzer.WebUI.ComponentAView,QuranAnalyzer.WebUI", onComponentReadyToUse);
-        //return;
-
-        ReactDotNet.FetchComponent(typeNameOfMainView, onComponentReadyToUse);
-
-        function componentDidMount(component)
-        {
-            var currentScrollY = 0;
-
-            function handleScroll(e)
+            function canFireAction()
             {
-                var scrollY = e.target.scrollTop;
-
-                function canFireAction()
+                if (scrollY > 0)
                 {
-                    if (scrollY > 0)
-                    {
-                        return currentScrollY === 0;
-                    }
-
-                    if (currentScrollY > 0)
-                    {
-                        return true;   
-                    }
-
-                    return false;
+                    return currentScrollY === 0;
                 }
 
-                if (canFireAction())
+                if (currentScrollY > 0)
                 {
-                    currentScrollY = scrollY;
-                    ReactDotNet.HandleAction({ remoteMethodName: 'OnMainContentDivScrollChanged', component: component, eventArguments: [] });
+                    return true;   
                 }
-                else
-                {
-                    currentScrollY = scrollY;
-                }
+
+                return false;
             }
 
-            document.getElementById("main").addEventListener('scroll', handleScroll);
-
-            function beforePostingState(state)
+            if (canFireAction())
             {
-                state.MainDivScrollY = currentScrollY;
-                state.AvailableWidth = GetAvailableWidth();
-                state.AvailableHeight = GetAvailableHeight();
-                state.SearchPartOfUrl = window.location.search;
+                currentScrollY = scrollY;
 
-                function GetAvailableWidth()
-                {
-                    return window.innerWidth
-                        || document.documentElement.clientWidth
-                        || document.body.clientWidth;
-                }
-
-                function GetAvailableHeight()
-                {
-                    return window.innerHeight
-                        || document.documentElement.clientHeight
-                        || document.body.clientHeight;
-                }
-
-                return state;
+                ReactDotNet.EventBus.Dispatch('MainContentDivScrollChanged', scrollY);
             }
-
-            ReactDotNet.RegisterActionToComponent({typeNameOfComponent: typeNameOfMainView, actionName: 'beforePostingState', handlerFunction: beforePostingState });
-
-            ReactDotNet.HandleAction({ remoteMethodName: 'OnFirstLoaded', component: component, eventArguments: [] });
+            else
+            {
+                currentScrollY = scrollY;
+            }
         }
 
-        ReactDotNet.RegisterActionToComponent({typeNameOfComponent: typeNameOfMainView, actionName: 'componentDidMount', handlerFunction: componentDidMount});
-        
-
-    });
+        document.getElementById("main").addEventListener('scroll', handleScroll);
+    }
 
 </script>

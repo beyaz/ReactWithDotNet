@@ -8,7 +8,9 @@ namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 public class View : PageBase
 {
-    public override string id { get; set; } = nameof(InitialLetters);
+    public override string id { get; set; } = PageId;
+
+    public static string PageId => nameof(InitialLetters);
 
     public override Element render()
     {

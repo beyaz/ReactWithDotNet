@@ -40,7 +40,11 @@ namespace ReactDotNet
 
         public static string ToJson(object value)
         {
-            return JsonSerializer.Serialize(value, new JsonSerializerOptions().ModifyForReactDotNet());
+            var options = new JsonSerializerOptions();
+
+            options = options.ModifyForReactDotNet();
+            
+            return JsonSerializer.Serialize(value, options);
         }
 
         public static void Import(this Style style, Style newStyle)

@@ -17,6 +17,10 @@ public class UnitTest1
         public string Prop1 { get; set; } = "PropValue1";
         public string Prop2 { get; set; } = "PropValue2";
 
+        public override void constructor()
+        {
+            
+        }
 
         public override Element render()
         {
@@ -31,6 +35,10 @@ public class UnitTest1
     {
         public string Prop1 { get; set; } = "PropValue1";
         public string Prop2 { get; set; } = "PropValue2";
+
+        public override void constructor()
+        {
+        }
 
         public override Element render()
         {
@@ -65,7 +73,26 @@ public class UnitTest1
         actual.Clear().Should().Be(expected.Clear());
     }
 
-        
+    [TestMethod]
+    public void SerializeClientTask()
+    {
+        var a = new SerializeClientTaskModel
+        {
+            ClientTask = new ClientTaskCallJsFunction
+            {
+                JsFunctionArguments = new [] {(object)2},
+                JsFunctionPath      = "A.B"
+            }
+        };
+
+        var json = ToJson(a);
+    }
+
+    class SerializeClientTaskModel
+    {
+        public ClientTask ClientTask { get; set; }
+    }
+
 
     [TestMethod]
     public void HPanelGravity()

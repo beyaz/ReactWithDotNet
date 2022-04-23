@@ -9,41 +9,10 @@ namespace ReactDotNet;
 
 using static Array;
 
-[Serializable]
-public class ClientTask
-{
-
-    #region Call Js Function
-    public string CallJsFunction { get; set; }
-    public object[] CallJsFunctionArguments { get; set; }
-    #endregion
 
 
-    #region Listen Component Event
-    public string ListenComponentEvent { get; set; }
-    public string ListenComponentEventRouteTo { get; set; }
-    #endregion
-
-    #region Listen Event
-    public string ListenEvent { get; set; }
-    public string ListenEventRouteTo { get; set; }
-    #endregion
-
-    public bool HistoryPushState { get; set; }
-    public string HistoryPushStateTitle { get; set; }
-    public string HistoryPushStateUrl { get; set; }
-
-    public bool DispatchEvent { get; set; }
-    public string DispatchEventName { get; set; }
-    public object[] DispatchEventParameters { get; set; }
 
 
-    
-    public int? ComebackWithLastActionTimeout { get; set; }
-
-  
-
-}
 
 [Serializable]
 public sealed class ClientStateInfo

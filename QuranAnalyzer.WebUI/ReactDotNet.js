@@ -1,6 +1,17 @@
 
-(function (global, React)
+(function (global, React, ReactDOM)
 {
+
+    var ClientTaskId =
+    {
+        CallJsFunction: 0,
+        ListenEvent: 1,
+        DispatchEvent: 2,        
+        ListenComponentEvent: 3,
+        PushHistory: 4,
+        ComebackWithLastAction: 5
+    }
+
     var createElement = React.createElement;
 
     const EventBus =
@@ -512,7 +523,9 @@
             {
                 element.state.ClientTask = null;
 
-                if (clientTask.ComebackWithLastActionTimeout >= 0)
+
+
+                if (clientTask.TaskId === ClientTaskId.ComebackWithLastAction)
                 {
                     var afterSetState = function()
                     {
@@ -521,41 +534,41 @@
                             request.StateAsJson = JSON.stringify(component.state.$state);
                             SendRequest(request, onSuccess);
 
-                        }, clientTask.ComebackWithLastActionTimeout);
+                        }, clientTask.Timeout);
                     };
 
                     restoreState(afterSetState);
 
                     return;
                 }
-                
-                if (clientTask.HistoryPushState)
+                else if (clientTask.TaskId === ClientTaskId.PushHistory)
                 {
-                    window.history.replaceState({}, clientTask.HistoryPushStateTitle, clientTask.HistoryPushStateUrl);
+                    window.history.replaceState({}, clientTask.Title, clientTask.Url);
                 }
-
-                if (clientTask.DispatchEvent)
+                else if (clientTask.TaskId === ClientTaskId.DispatchEvent)
                 {
-                    EventBus.Dispatch(clientTask.DispatchEventName, clientTask.DispatchEventParameters);
+                    EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
                 }
-
-                if (clientTask.ListenEvent)
+                else if (clientTask.TaskId === ClientTaskId.ListenEvent)
                 {
-                    EventBus.On(clientTask.ListenEvent, function()
+                    EventBus.On(clientTask.EventName, function()
                     {
-                        HandleAction({ remoteMethodName: clientTask.ListenEventRouteTo, component: component, eventArguments: arguments[0] });
+                        HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: arguments[0] });
                     });
                 }
-
-                if (clientTask.CallJsFunction)
+                else if (clientTask.TaskId === ClientTaskId.CallJsFunction)
                 {
-                    var fn = GetValueInPath(window, clientTask.CallJsFunction.split('.'));
+                    var fn = GetValueInPath(window, clientTask.JsFunctionPath.split('.'));
                     if (fn == null)
                     {
-                        throw Error('Function not found. Function is ' + clientTask.CallJsFunction);
+                        throw Error('Function not found. Function is ' + clientTask.JsFunctionPath);
                     }
 
-                    fn.apply(null, clientTask.CallJsFunctionArguments);
+                    fn.apply(null, clientTask.JsFunctionArguments);
+                }
+                else
+                {
+                    throw Error('ClientTask not recognized.');
                 }
             }
 
@@ -563,6 +576,8 @@
         }
         SendRequest(request, onSuccess);
     }
+
+   
 
     var componentActions = {};
   
@@ -628,7 +643,7 @@
 
             componentDidMount()
             {
-                TryDispatchComponentAction(this, 'componentDidMount');
+                setTimeout(()=>TryDispatchComponentAction(this, 'componentDidMount'), 22);
             }
 
             componentWillUnmount()
@@ -641,45 +656,7 @@
 
         return NewComponent;
     }
-
-    function FetchComponent(fullNameOfComponent, callback)
-    {
-        var request =
-        {
-            MethodName: "FetchComponent",
-            FullName: fullNameOfComponent
-        };
-
-        function onSuccess(response)
-        {
-            if (response.ErrorMessage != null)
-            {
-                throw response.ErrorMessage;
-            }
-
-            var element = JSON.parse(response.ElementAsJsonString);
-
-            var component = DefineComponent(element);
-
-            var clientTask = element.state.ClientTask;
-            if (clientTask)
-            {
-                element.state.ClientTask = null;
-
-                if (clientTask.ListenComponentEvent)
-                {
-                    EventBus.On(GetComponentActionLocation(component.fullName, clientTask.ListenComponentEvent), function (cmp)
-                    {
-                        HandleAction({ remoteMethodName: clientTask.ListenComponentEventRouteTo, component: cmp, eventArguments: [] });
-                    });
-                }
-            }
-
-            callback(React.createElement(component));
-        }
-        SendRequest(request, onSuccess);
-    }
-
+   
     function SendRequest(request, onSuccess)
     {
         BeforeSendRequest(request);
@@ -708,19 +685,68 @@
         }
     }
 
- 
+    function RenderComponentIn(obj)
+    {
+        var fullTypeNameOfReactComponent = obj.fullTypeNameOfReactComponent;
+        var containerHtmlElementId       = obj.containerHtmlElementId;
 
+        OnReady(function()
+        {
+            var request =
+            {
+                MethodName: "FetchComponent",
+                FullName: fullTypeNameOfReactComponent
+            };
 
+            function onSuccess(response)
+            {
+                if (response.ErrorMessage != null)
+                {
+                    throw response.ErrorMessage;
+                }
+
+                var element = JSON.parse(response.ElementAsJsonString);
+
+                var component = DefineComponent(element);
+
+                var clientTask = element.state.ClientTask;
+                
+                element.state.ClientTask = null;
+                
+                var reactElement = React.createElement(component);
+                
+                if (clientTask)
+                {
+                    if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
+                    {
+                        EventBus.On(GetComponentActionLocation(component.fullName, clientTask.EventName), function (cmp)
+                        {
+                            HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: cmp, eventArguments: [] });
+                        });
+                    }
+                    else
+                    {
+                        throw new Error('Client Task not recognized');
+                    }
+                }
+
+                ReactDOM.render(reactElement, document.getElementById(containerHtmlElementId));
+            }
+            
+            SendRequest(request, onSuccess);
+        });
+    }
+    
     global.ReactDotNet =
     {
         OnReady: OnReady,
         DefineComponent: DefineComponent,
-        FetchComponent: FetchComponent,
         RegisterActionToComponent: RegisterActionToComponent,
         HandleAction: HandleAction,
-        EventBus: EventBus
+        EventBus: EventBus,
+        RenderComponentIn: RenderComponentIn
     };
 
-})(window,React);
+})(window, React, ReactDOM);
 
 

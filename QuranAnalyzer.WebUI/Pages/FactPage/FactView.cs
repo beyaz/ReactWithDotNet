@@ -65,8 +65,8 @@ class FactView : ReactComponent<FactViewModel>
     {
         state = new FactViewModel();
     }
-
-    public void constructor()
+    
+    public override void constructor()
     {
         state = new FactViewModel();
     }
@@ -79,7 +79,7 @@ class FactView : ReactComponent<FactViewModel>
         {
             state.OperationName = "Hesaplanıyor...";
             state.IsBlocked     = true;
-            state.ClientTask    = new ClientTask {ComebackWithLastActionTimeout = 5};
+            state.ClientTask    = new ClientTaskComebackWithLastAction {Timeout = 5};
             return;
         }
 

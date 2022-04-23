@@ -15,12 +15,16 @@ static class JsonSerializationOptionHelper
     {
         // options.WriteIndented    = true;
         options.IgnoreNullValues = true;
+        
 
         options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
         options.Converters.Add(new Union_String_Enum_Converter());
         options.Converters.Add(new JsonConverterForElement());
 
         options.Converters.Add(new JsonConverterForEnum());
+
+        options.Converters.Add(new ClientTaskConverter());
+        
 
         return options;
     }
@@ -286,6 +290,8 @@ static class JsonSerializationOptionHelper
             {
                 var propertyValue = propertyInfo.GetValue(value);
 
+               
+
                 var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
                 if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
                 {
@@ -406,6 +412,55 @@ static class JsonSerializationOptionHelper
             return false;
         }
         #endregion
+    }
+
+    
+
+
+    public class ClientTaskConverter : JsonConverterFactory
+    {
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return typeToConvert.IsAssignableFrom(typeof(ClientTask));
+        }
+
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        {
+            return (JsonConverter)Activator.CreateInstance(typeof(PolymorphicJsonConverter<>).MakeGenericType(typeToConvert));
+        }
+    }
+
+    class PolymorphicJsonConverter<T> : JsonConverter<T>
+    {
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return typeof(T).IsAssignableFrom(typeToConvert);
+        }
+
+        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        {
+            if (value is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            writer.WriteStartObject();
+            foreach (var property in value.GetType().GetProperties())
+            {
+                if (!property.CanRead)
+                    continue;
+                var propertyValue = property.GetValue(value);
+                writer.WritePropertyName(property.Name);
+                JsonSerializer.Serialize(writer, propertyValue, options);
+            }
+            writer.WriteEndObject();
+        }
     }
 
     class BindInfo

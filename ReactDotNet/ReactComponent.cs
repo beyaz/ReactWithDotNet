@@ -3,6 +3,11 @@ using System.Text.Json.Serialization;
 
 namespace ReactDotNet
 {
+    public enum ReactComponentEvents
+    {
+        componentDidMount
+    }
+
     public interface IReactStatelessComponent
     {
          string key { get; }
@@ -87,10 +92,7 @@ namespace ReactDotNet
         [JsonIgnore]
         public ReactContext Context { get; set; }
 
-        public virtual void constructor()
-        {
-            
-        }
+        public abstract void constructor();
 
         public Element RootElement => render();
 
