@@ -583,6 +583,13 @@
                     return processClientTask(clientTask.After);
                 }
 
+                if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
+                {
+                    ListenComponentEvent(clientTask, component.fullName);
+
+                    return processClientTask(clientTask.After);
+                }
+
                 if (clientTask.TaskId === ClientTaskId.CallJsFunction)
                 {
                     CallJsFunctionInPath(clientTask);
@@ -743,10 +750,7 @@
 
                     if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
                     {
-                        EventBus.On(GetComponentActionLocation(component.fullName, clientTask.EventName), function (cmp)
-                        {
-                            HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: cmp, eventArguments: [] });
-                        });
+                        ListenComponentEvent(clientTask, fullTypeNameOfReactComponent);
 
                         return processClientTask(clientTask.After);
                     }
@@ -780,13 +784,21 @@
 
         fn.apply(null, clientTask.JsFunctionArguments);
     }
+
+    function ListenComponentEvent(clientTask, fullTypeNameOfReactComponent)
+    {
+        EventBus.On(GetComponentActionLocation(fullTypeNameOfReactComponent, clientTask.EventName), function (cmp)
+        {
+            HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: cmp, eventArguments: [] });
+        });
+    }
     
     global.ReactDotNet =
     {
         OnDocumentReady: OnDocumentReady,
         RegisterActionToComponent: RegisterActionToComponent,
         HandleAction: HandleAction,
-        EventBus: EventBus,
+        DispatchEvent: EventBus.Dispatch,
         RenderComponentIn: RenderComponentIn,
         SendRequest: function (request, callback)
         {
