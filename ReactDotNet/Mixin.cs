@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ReactDotNet
 {
-    public static class Mixin
+    public static partial class Mixin
     {
 
         internal static IReadOnlyDictionary<string, string> ParseQueryString(string query)

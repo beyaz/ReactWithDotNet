@@ -55,6 +55,13 @@ public sealed class ClientTaskComebackWithLastAction: ClientTask
     public int TaskId => 5;
     public int Timeout { get; set; }
 }
-
+[Serializable]
+public sealed class ClientTaskGotoMethod : ClientTask
+{
+    public int TaskId => 6;
+    public int Timeout { get; set; }
+    public string  MethodName { get; set; }
+    public object[] MethodArguments { get; set; }
+}
 
 

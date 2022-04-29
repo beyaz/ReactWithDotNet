@@ -1,6 +1,25 @@
 
 (function (global, React, ReactDOM)
 {
+    function GoUpwardFindFirst(htmlElement, findFunc)
+    {
+        while (htmlElement)
+        {
+            if (findFunc(htmlElement))
+            {
+                return htmlElement;
+            }
+
+            htmlElement = htmlElement.parentElement;
+        }
+        
+        return null;
+    }
+    
+    function HasId(htmlElement)
+    {
+        return htmlElement.id !== '';
+    }
 
     var ClientTaskId =
     {
@@ -9,7 +28,8 @@
         DispatchEvent: 2,        
         ListenComponentEvent: 3,
         PushHistory: 4,
-        ComebackWithLastAction: 5
+        ComebackWithLastAction: 5,
+        GotoMethod: 6
     }
 
     var createElement = React.createElement;
@@ -317,18 +337,7 @@
 
             if (obj && obj._reactName === 'onClick')
             {
-                var target = obj.target;
-                while (target)
-                {
-                    if (target.id !== '')
-                    {
-                        return target.id;
-                    }
-
-                    target = target.parentElement;
-                }
-
-                return obj.target.id;
+                return (GoUpwardFindFirst(obj.target, HasId) ?? obj.target).id;
             }
 
             var eventArgument = {};
@@ -570,6 +579,24 @@
                     };
                 }
 
+                if (clientTask.TaskId === ClientTaskId.GotoMethod)
+                {
+                    if (clientTask.After != null)
+                    {
+                        throw new Error('ClientTask.After can not be use after this task');
+                    }
+
+                    return function ()
+                    {
+                        setTimeout(function ()
+                        {
+                            HandleAction({ remoteMethodName: clientTask.MethodName, component: component, eventArguments: clientTask.MethodArguments || [] });
+
+                        }, clientTask.Timeout);
+                    };
+                    
+                }
+
                 if (clientTask.TaskId === ClientTaskId.PushHistory)
                 {
                     window.history.replaceState({}, clientTask.Title, clientTask.Url);
@@ -702,23 +729,9 @@
 
         function BeforeSendRequest(request)
         {
-            request.AvailableWidth = getAvailableWidth();
-            request.AvailableHeight = getAvailableHeight();
+            request.AvailableWidth  = document.documentElement.clientWidth;
+            request.AvailableHeight = document.documentElement.clientHeight;
             request.SearchPartOfUrl = window.location.search;
-
-            function getAvailableWidth()
-            {
-                return window.innerWidth
-                    || document.documentElement.clientWidth
-                    || document.body.clientWidth;
-            }
-
-            function getAvailableHeight()
-            {
-                return window.innerHeight
-                    || document.documentElement.clientHeight
-                    || document.body.clientHeight;
-            }
         }
     }
 
