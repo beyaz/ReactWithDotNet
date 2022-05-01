@@ -19,6 +19,12 @@ public sealed class ElementModifier
         }
     }
 
+    public static implicit operator ElementModifier(Style style)
+    {
+        return new ElementModifier(element => element.style.Import(style));
+
+    }
+
     public static implicit operator ElementModifier(Display display)
     {
         return new ElementModifier(element => element.style.display = display);
