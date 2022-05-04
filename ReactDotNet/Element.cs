@@ -234,6 +234,19 @@ namespace ReactDotNet
         protected HtmlElement(params ElementModifier[] modifiers):base(modifiers)
         {
         }
+
+        [React]
+        public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
+    }
+
+    [Serializable]
+    public sealed class dangerouslySetInnerHTML
+    {
+        public dangerouslySetInnerHTML(string html)
+        {
+            __html = html;
+        }
+        public string __html { get; set; }
     }
 
     public abstract class ThirdPartyComponent: Element

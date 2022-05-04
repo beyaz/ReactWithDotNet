@@ -215,6 +215,27 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.paddingRight = px(paddingRight));
         }
 
+        public static ElementModifier paddingLeftRight(string paddingLeftRight)
+        {
+            return new ElementModifier(element =>
+            {
+                element.style.paddingLeft  = paddingLeftRight;
+                element.style.paddingRight = paddingLeftRight;
+            });
+        }
+
+        public static ElementModifier marginLeftRight(string marginLeftRight)
+        {
+            return new ElementModifier(element =>
+            {
+                element.style.marginLeft  = marginLeftRight;
+                element.style.marginRight = marginLeftRight;
+            });
+        }
+        
+
+
+
         public static ElementModifier paddingTop(double paddingTop)
         {
             return new ElementModifier(element => element.style.paddingTop = px(paddingTop));

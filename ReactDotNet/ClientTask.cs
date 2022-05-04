@@ -64,4 +64,10 @@ public sealed class ClientTaskGotoMethod : ClientTask
     public object[] MethodArguments { get; set; }
 }
 
+[Serializable]
+public sealed class ClientTaskNavigateToUrl : ClientTask
+{
+    public int TaskId => 7;
+    public string Url { get; set; }
+}
 

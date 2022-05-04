@@ -29,7 +29,8 @@
         ListenComponentEvent: 3,
         PushHistory: 4,
         ComebackWithLastAction: 5,
-        GotoMethod: 6
+        GotoMethod: 6,
+        ClientTaskNavigateToUrl : 7
     }
 
     var createElement = React.createElement;
@@ -634,6 +635,13 @@
 
                     return processClientTask(clientTask.After);
                 }
+                if (clientTask.TaskId === ClientTaskId.ClientTaskNavigateToUrl)
+                {
+                    window.location.replace(location.origin + clientTask.Url);
+
+                    return processClientTask(clientTask.After);
+                }
+                
 
                 throw Error('ClientTask not recognized.');
             }

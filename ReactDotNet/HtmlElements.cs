@@ -183,7 +183,10 @@ public class span : HtmlElement
     public span()
     {
     }
-
+    public span(string text)
+    {
+        this.text = text;
+    }
     public span(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
