@@ -59,13 +59,10 @@ public sealed class Occurence
 
 }
 
+
+
 class FactView : ReactComponent<FactViewModel>
 {
-    public FactView()
-    {
-        state = new FactViewModel();
-    }
-    
     public override void constructor()
     {
         state = new FactViewModel();
@@ -73,7 +70,7 @@ class FactView : ReactComponent<FactViewModel>
 
     
 
-    void OnSelectClicked(string _)
+    void OnCaclculateClicked(string _)
     {
         if (state.IsBlocked == false)
         {
@@ -84,7 +81,6 @@ class FactView : ReactComponent<FactViewModel>
         }
 
         var matchRecords = Mixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
-
 
         var results = new List<Occurence>();
 
@@ -125,7 +121,7 @@ class FactView : ReactComponent<FactViewModel>
         state.IsBlocked     = false;
         state.OperationName = null;
 
-        state.SummaryText = "42. suredeki " + state.SearchCharacters[0] + " harfi geçiş sayısı :";
+        state.SummaryText = $"'{state.SuraFilter}' suresinde '{state.SearchCharacters[0]}' harfi geçiş sayısı :";
     }
 
     public override Element render()
@@ -161,7 +157,7 @@ class FactView : ReactComponent<FactViewModel>
 
                     new Space {Height = 20},
 
-                    new Button(className("p-button-outlined"), alignSelf(AlignItems.flex_end), paddingLeft(50), paddingRight(50)) {label = "Ara", onClick = OnSelectClicked},
+                    new Button(className("p-button-outlined"), alignSelf(AlignItems.flex_end), paddingLeft(50), paddingRight(50)) {label = "Ara", onClick = OnCaclculateClicked},
                 }
             }
         };

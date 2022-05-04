@@ -28,6 +28,9 @@
     <Compile Update="Mixin.ParseStyle.cs">
       <Generator>DGMLFileGenerator</Generator>
     </Compile>
+    <Compile Update="PrimeReact\InputText.cs">
+      <Generator>DGMLFileGenerator</Generator>
+    </Compile>
   </ItemGroup>
 
     <PropertyGroup>

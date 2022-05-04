@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 using ReactDotNet;
 
@@ -28,27 +26,6 @@ namespace ReactDotNet.PrimeReact
         [React]
         public TooltipOptions tooltipOptions { get; set; } 
     }
-
-
-
-    public class InputText : ElementBase
-    {
-
-        [React]
-        [ReactDefaultValue(DefaultValue = "" )]
-        public string value { get; set; }
-
-        [React]
-        [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value",  eventName = "onChange")]
-        [ReactDefaultValue(DefaultValue = "")]
-        public Expression<Func<string>> valueBind { get; set; }
-        
-        [React]
-        public string placeholder { get; set; }
-    }
-    
-
-   
 
     public class InputTextarea : ElementBase
     {

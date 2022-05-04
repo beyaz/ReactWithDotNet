@@ -207,99 +207,100 @@ namespace QuranAnalyzer;
         #endregion
     }
 
-    public static class FpExtensions
+public static class FpExtensions
+{
+    public static Response Try(Action action)
     {
-        public static Response Try(Action action)
+        try
         {
-            try
-            {
-                action();
-                
-                return Response.Success;
-            }
-            catch (Exception exception)
-            {
-                return exception;
-            }
+            action();
+
+            return Response.Success;
         }
-
-        public static Response<T> Try<T>(Func<T> func)
+        catch (Exception exception)
         {
-            try
-            {
-                return func();
-            }
-            catch (Exception exception)
-            {
-                return exception;
-            }
+            return exception;
         }
-        
+    }
 
-        public static Response After<T>(this T response, Action action) where T: Response
+    public static Response<T> Try<T>(Func<T> func)
+    {
+        try
         {
-            if (response.IsFail)
-            {
-                return response;
-            }
-
-            return Try(action);
+            return func();
         }
-
-        public static void After<T>(this T response, Action onSuccess, Action<IReadOnlyList<Error>> onFail) where T: Response
+        catch (Exception exception)
         {
-            if (response.IsSuccess)
-            {
-                onSuccess();
-                return;
-            }
-
-            onFail(response.Errors);
+            return exception;
         }
+    }
 
-        public static void ForEach<T>(this IEnumerable<T> items, Action<T> applyAction)
+
+    public static Response After<T>(this T response, Action action) where T : Response
+    {
+        if (response.IsFail)
         {
-            foreach (var item in items)
-            {
-                applyAction(item);
-            }
-        }
-
-        public static Response ForEach<T>(this IEnumerable<T> items, Func<T,Response> applyAction)
-        {
-            var response = Response.Success;
-
-            foreach (var item in items)
-            {
-                response += applyAction(item);
-            }
-
             return response;
         }
 
-        [Pure]
-        public static Func<R> fun<R>(Func<R> f) => f;
-        [Pure]
-        public static Func<T1, R> fun<T1, R>(Func<T1, R> f) => f;
+        return Try(action);
+    }
 
-
-        public static Response<B> Then<A,B>(this Response<A> response, Func<A,Response<B>> nextFunc)
+    public static void After<T>(this T response, Action onSuccess, Action<IReadOnlyList<Error>> onFail) where T : Response
+    {
+        if (response.IsSuccess)
         {
-            if (response.IsFail)
-            {
-                return response.Errors.ToArray();
-            }
-
-            return nextFunc(response.Value);
+            onSuccess();
+            return;
         }
 
-        public static Response<B> Then<A,B>(this A value, Func<A,Response<B>> nextFunc)
-        {
-            return nextFunc(value);
-        }
+        onFail(response.Errors);
+    }
 
-        public static Response<B> Then<A,B>(this A value, Func<A,B> nextFunc)
+    public static void ForEach<T>(this IEnumerable<T> items, Action<T> applyAction)
+    {
+        foreach (var item in items)
         {
-            return nextFunc(value);
+            applyAction(item);
         }
     }
+
+    public static Response ForEach<T>(this IEnumerable<T> items, Func<T, Response> applyAction)
+    {
+        var response = Response.Success;
+
+        foreach (var item in items)
+        {
+            response += applyAction(item);
+        }
+
+        return response;
+    }
+
+    [Pure]
+    public static Func<R> fun<R>(Func<R> f) => f;
+
+    [Pure]
+    public static Func<T1, R> fun<T1, R>(Func<T1, R> f) => f;
+
+
+    public static Response<B> Then<A, B>(this Response<A> response, Func<A, Response<B>> nextFunc)
+    {
+        if (response.IsFail)
+        {
+            return response.Errors.ToArray();
+        }
+
+        return nextFunc(response.Value);
+    }
+
+    public static Response<B> Then<A, B>(this A value, Func<A, Response<B>> nextFunc)
+    {
+        return nextFunc(value);
+    }
+
+    public static Response<B> Then<A, B>(this A value, Func<A, B> nextFunc)
+    {
+        return nextFunc(value);
+    }
+}
