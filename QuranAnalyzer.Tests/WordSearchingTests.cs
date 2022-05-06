@@ -5,11 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using FluentAssertions;
-using QuranAnalyzer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using static QuranAnalyzer.DataAccess;
-using static QuranAnalyzer.Mixin;
 
 
 
@@ -108,21 +105,11 @@ namespace QuranAnalyzer
         {
             var searchText = "جبريل";
 
-            var searchList =  WordSearcher.ToList(searchText);
 
-            foreach (var sura in AllSura)
-            {
-                foreach (var aya in sura.aya)
-                {
-                    var ayaText = WordSearcher.ToList(aya._text);
+            ListOfVerseContains(searchText).Count().Should().Be(3);
+            ListOfVerseContains(searchText).Select(x=>x.count).Sum().Should().Be(3);
 
-                    var count = Mixin.Contains(ayaText, searchList);
-                    if (count>0)
-                    {
-                        count.ToString();
-                    }
-                }
-            }
+
         }
 
 
@@ -199,10 +186,11 @@ namespace QuranAnalyzer
             const string nunVavNun = "نون";
 
             ListOfVerseEndsWith(nunVavNun).Count().Should().Be(133);
+            ListOfVerseContains(nunVavNun).Count().Should().Be(103);
+            ListOfVerseContains(nunVavNun).Select(x => x.count).Sum().Should().Be(113);
 
-
-            const string nunNun = "نن";
-            ListOfVerseContains(nunNun).Select(x=>x.count).Sum().Should().Be(19*19);
+            //const string nunNun = "نن";
+            //ListOfVerseContains(nunNun).Select(x=>x.count).Sum().Should().Be(19*19);
         }
     }
 }
