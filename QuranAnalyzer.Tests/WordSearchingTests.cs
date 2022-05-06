@@ -19,7 +19,7 @@ namespace QuranAnalyzer
     {
         static int GetCountOfWord(string searchWord)
         {
-            var searchList = WordSearcher.ToList(searchWord);
+            var searchList = WordSearcher.AsClearArabicCharacterList(searchWord);
 
             var total = 0;
             foreach (var sura in AllSura)
@@ -28,7 +28,7 @@ namespace QuranAnalyzer
                 {
                     foreach (var word in aya._text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                     {
-                        var isSame = WordSearcher.ToList(word).HasValueAndSame(searchList);
+                        var isSame = WordSearcher.AsClearArabicCharacterList(word).HasValueAndSame(searchList);
 
                         if (isSame)
                         {
@@ -121,7 +121,7 @@ namespace QuranAnalyzer
             var searchText = "شَهْرٌ";
 
 
-            var kelime_arindirilmis_array = WordSearcher.ToList(text);
+            var kelime_arindirilmis_array = WordSearcher.AsClearArabicCharacterList(text);
 
             string.Join(Environment.NewLine, kelime_arindirilmis_array);
 
@@ -133,7 +133,7 @@ namespace QuranAnalyzer
 
             foreach (var searchItem in searchItems)
             {
-                var search = WordSearcher.ToList(searchItem);
+                var search = WordSearcher.AsClearArabicCharacterList(searchItem);
 
                 var count = Mixin.Contains(kelime_arindirilmis_array, search);
             }

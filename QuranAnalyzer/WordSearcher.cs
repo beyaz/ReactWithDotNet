@@ -6,7 +6,7 @@ namespace QuranAnalyzer
 {
     public static class WordSearcher
     {
-        public static IReadOnlyList<string> ToList(string data)
+        public static IReadOnlyList<string> AsClearArabicCharacterList(this string data)
         {
             //Arapça tüm harfler. Faklı yazılımları ile
             var harfler = new string[]{

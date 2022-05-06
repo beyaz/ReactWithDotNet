@@ -32,7 +32,9 @@ public class FactViewModel
     
 
     public int SelectedTabIndex { get; set; }
-    public Occurence[] ResultRecords { get; set; }
+
+    [NonSerialized] 
+    public Occurence[] ResultRecords;
 
     public double AvailableWidth { get; set; }
 
@@ -98,9 +100,9 @@ class FactView : ReactComponent<FactViewModel>
 
             results.Add(occurence);
 
-            foreach (var charachter in WordSearcher.ToList(state.SearchCharacters))
+            foreach (var charachter in WordSearcher.AsClearArabicCharacterList(state.SearchCharacters))
             {
-                var propertyName = "Charachter" + (WordSearcher.ToList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
+                var propertyName = "Charachter" + (WordSearcher.AsClearArabicCharacterList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
 
                 var property     = typeof(Occurence).GetProperty(propertyName);
                 
@@ -187,9 +189,9 @@ class FactView : ReactComponent<FactViewModel>
         };
 
         
-        foreach (var charachter in WordSearcher.ToList(state.SearchCharacters))
+        foreach (var charachter in WordSearcher.AsClearArabicCharacterList(state.SearchCharacters))
         {
-            var propertyName = "Charachter" + (WordSearcher.ToList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
+            var propertyName = "Charachter" + (WordSearcher.AsClearArabicCharacterList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
 
             resultColumns.Add(new Column {field = propertyName, header = charachter});
             
@@ -239,7 +241,7 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Mushaf Üzerinde Göster",
                             children =
                             {
-                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords) + getFontSize()
+                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords, state.SearchCharacters.AsClearArabicCharacterList()) + getFontSize()
                             }
                         }
                     }

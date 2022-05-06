@@ -66,7 +66,7 @@ namespace QuranAnalyzer;
 
             records.Count.Should().Be(285);
 
-            CharachterSearchResultColorizer.ColorizeCharachterSearchResults(records);
+            
         }
 
 

@@ -113,7 +113,7 @@ public static class Mixin
     public static Response<IReadOnlyList<MatchInfo>> SearchCharachters(string searchScript, string searchCharachters)
     {
         // var charachterList = searchCharachters.Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToArray();
-        var charachterList = WordSearcher.ToList(searchCharachters);
+        var charachterList = WordSearcher.AsClearArabicCharacterList(searchCharachters);
 
         var indexList = charachterList.Select(x => Array.IndexOf(DataAccess.harfler, x)).ToList();
 
