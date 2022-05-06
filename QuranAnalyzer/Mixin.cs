@@ -1,14 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
-using ReactDotNet;
 
 namespace QuranAnalyzer;
 
 public static class Mixin
 {
     #region Public Methods
+
+   
+    public static bool EndsWith(this IReadOnlyList<string> source, IReadOnlyList<string> search)
+    {
+        if (search.Count > source.Count)
+        {
+            return false;
+        }
+
+        var sourceIndex = source.Count - search.Count;
+
+        for (var i = 0; i < search.Count; i++)
+        {
+            if (source[sourceIndex + i] != search[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static int Contains(IReadOnlyList<string> source, IReadOnlyList<string> search)
     {
         if (search.Count > source.Count)

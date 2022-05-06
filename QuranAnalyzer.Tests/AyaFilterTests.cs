@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.IO;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuranAnalyzer;
@@ -67,4 +68,21 @@ namespace QuranAnalyzer;
 
             CharachterSearchResultColorizer.ColorizeCharachterSearchResults(records);
         }
-    }
+
+
+        //[TestMethod]
+        public void Export()
+        {
+            using StreamWriter w = File.AppendText("d:\\A.txt");
+
+            var total = 1;
+            foreach (var sura in DataAccess.AllSura)
+            {
+                
+                foreach (var aya in sura.aya)
+                {
+                    w.WriteLine(total++ + "|"+ sura.Index +"|"+(aya._index) +"|" + aya._text);
+                }
+            }
+        }
+}

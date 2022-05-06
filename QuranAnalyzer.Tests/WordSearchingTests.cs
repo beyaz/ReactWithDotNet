@@ -1,4 +1,5 @@
-﻿using System;
+﻿global using static QuranAnalyzer.QuranQuery;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using static QuranAnalyzer.DataAccess;
 using static QuranAnalyzer.Mixin;
+
+
 
 namespace QuranAnalyzer
 {
@@ -189,5 +192,17 @@ namespace QuranAnalyzer
         }
 
 
+
+        [TestMethod]
+        public void EndsWithNunVavNun()
+        {
+            const string nunVavNun = "نون";
+
+            ListOfVerseEndsWith(nunVavNun).Count().Should().Be(133);
+
+
+            const string nunNun = "نن";
+            ListOfVerseContains(nunNun).Select(x=>x.count).Sum().Should().Be(19*19);
+        }
     }
 }
