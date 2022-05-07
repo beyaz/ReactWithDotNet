@@ -75,6 +75,69 @@
         }
     }
 
+    function PickPropertiesToNewObject(obj, fn_bool__CanPick__stringKey_objectValue)
+    {
+        var returnObj = {};
+        
+        IterateObject(obj, function (key, value)
+        {
+            if (fn_bool__CanPick__stringKey_objectValue(key, value))
+            {
+                returnObj[key] = value;
+            }
+        });
+
+        return returnObj;
+    }
+
+    function IsEmptyObject(obj)
+    {
+        for (var key in obj)
+        {
+            if (Object.prototype.hasOwnProperty.call(obj, key))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function IsNotEmptyObject(obj)
+    {
+        return IsEmptyObject(obj) === false;
+    }
+
+    function FilterArray(arr, fn_bool__filter__objectValue)
+    {
+        var returnArray = [];
+
+        var len = arr.length;
+        for (var i = 0; i < len; i++)
+        {
+            if (fn_bool__filter__objectValue(arr[i]))
+            {
+                returnArray.push(arr[i]);
+            }
+        }
+
+        return returnArray;
+    }
+
+    function ConvertAll(arr, fn_object__convert__objectValue)
+    {
+        var returnArray = [];
+
+        var len = arr.length;
+
+        for (var i = 0; i < len; i++)
+        {
+            returnArray.push(fn_object__convert__objectValue(arr[i]));
+        }
+
+        return returnArray;
+    }
+
     function GetValueInPath(obj, steps)
     {
         var len = steps.length;
@@ -341,45 +404,21 @@
                 return (GoUpwardFindFirst(obj.target, HasId) ?? obj.target).id;
             }
 
-            var eventArgument = {};
-
-            var hasArgument = false;
-            IterateObject(obj, function (key, value)
+            // ReSharper disable once UnusedParameter
+            function canSendToServer(key, value)
             {
                 if (key === 'originalEvent')
                 {
-                    return;
+                    return false;
                 }
 
-                eventArgument[key] = value;
-
-                hasArgument = true;
-            });
-
-            if (hasArgument === false)
-            {
-                return null;
+                return true;
             }
 
-            return eventArgument;
+            return PickPropertiesToNewObject(obj, canSendToServer);
         }
 
-        var length = eventArguments.length;
-
-        for (var i = 0; i < length; i++)
-        {
-            eventArguments[i] = normalizeEventArgument(eventArguments[i]);
-        }
-
-        if (length === 1)
-        {
-            if (eventArguments[0] === null)
-            {
-                return [];
-            }
-        }
-
-        return eventArguments;
+        return FilterArray(ConvertAll(eventArguments, normalizeEventArgument), IsNotEmptyObject);
     }
 
     var GetNextUniqueNumber = (function()
@@ -496,22 +535,8 @@
             StateAsJson: getStateAsJson(),
             ChildStates: CollectStates(component)
         };
-
         
-
-        var eventArguments = NormalizeEventArguments(data.eventArguments);
-
-        if (eventArguments.length > 0)
-        {
-            var length = eventArguments.length;
-
-            for (var i = 0; i < length; i++)
-            {
-                eventArguments[i] = JSON.stringify(eventArguments[i]);
-            }
-
-            request.eventArgumentsAsJsonArray = eventArguments;
-        }
+        request.eventArgumentsAsJsonArray = ConvertAll(NormalizeEventArguments(data.eventArguments), JSON.stringify);
 
         function onSuccess(response)
         {
