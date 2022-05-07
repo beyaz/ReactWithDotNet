@@ -9,19 +9,10 @@ namespace QuranAnalyzer;
 
 public static class CharachterSearchResultColorizer
 {
-    static string fontSize(double minSize, double maxSize, double minViewPortWidth, double maxViewPortWidth)
-    {
-        // https://css-tricks.com/snippets/css/fluid-typography/
-        // calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width])));
-
-        return $"calc({minSize}px + ({maxSize-minSize}) * ((100vw - {minViewPortWidth}px) / ({maxViewPortWidth - minViewPortWidth})))";
-    }
+    
     public static Element ColorizeCharachterSearchResults(IReadOnlyList<MatchInfo> matchRecords, IReadOnlyList<string> searchCharachterList_)
     {
-        string f(int size)
-        {
-            return fontSize(size-5, size+5, 300, 1600);
-        }
+       
 
         var backgroundColors = new[] { "rgb(217 217 206)", "rgb(235 230 90)", "#8fe4ec", "#f2bef1", "#f0e91a" };
 
@@ -31,7 +22,7 @@ public static class CharachterSearchResultColorizer
         {
             style =
             {
-                fontFamily = "Lateef, cursive", fontSize = f(33),
+                fontFamily = "Lateef, cursive", fontSize = "6.5rem",
                 direction = Direction.rtl
             }
         };
@@ -52,7 +43,7 @@ public static class CharachterSearchResultColorizer
                         {
                             marginLeft = px(5),
                             color      = "green",
-                            fontSize   = f(13),
+                            fontSize   = "1rem",
                             direction  = Direction.ltr
                         }
                     },
@@ -86,7 +77,8 @@ public static class CharachterSearchResultColorizer
         {
             style =
             {
-                verticalAlign = VerticalAlign.top
+                verticalAlign = VerticalAlign.top,
+                fontSize = "1.4rem"
             }
         };
 
