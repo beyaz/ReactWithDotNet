@@ -64,7 +64,8 @@ namespace ReactDotNet.PrimeReact
         [React]
         public string badgeClassName { get; set; }
 
-        
+        [React]
+        public bool? autoFocus { get; set; }
 
     }
 }
