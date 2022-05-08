@@ -246,6 +246,10 @@ namespace ReactDotNet
         {
             __html = html;
         }
+
+        public dangerouslySetInnerHTML()
+        {
+        }
         public string __html { get; set; }
     }
 

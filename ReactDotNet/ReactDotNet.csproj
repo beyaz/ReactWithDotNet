@@ -30,7 +30,16 @@
     </Compile>
     <Compile Update="PrimeReact\InputText.cs">
       <Generator>DGMLFileGenerator</Generator>
+      <LastGenOutput>InputText.dgml</LastGenOutput>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PrimeReact\InputText.dgml">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InputText.cs</DependentUpon>
+    </None>
   </ItemGroup>
 
     <PropertyGroup>

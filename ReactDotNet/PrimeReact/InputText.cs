@@ -25,4 +25,8 @@ public class InputText : ElementBase
     /// </summary>
     [React]
     public string keyfilter { get; set; }
+
+    [React]
+    public bool? autoFocus { get; set; }
+    
 }

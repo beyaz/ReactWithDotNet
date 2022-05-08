@@ -37,7 +37,9 @@ public class InputMask : ElementBase
     /// </summary>
     [React]
     public int? maxlength { get; set; }
-    
+
+    [React]
+    public bool? autoFocus { get; set; }
 }
 
 

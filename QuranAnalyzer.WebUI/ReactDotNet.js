@@ -419,6 +419,10 @@
         }
 
         return FilterArray(ConvertAll(eventArguments, normalizeEventArgument), IsNotEmptyObject);
+
+        //Pipe(eventArguments, [ConvertAll, x, normalizeEventArgument], [FilterArray, x, IsNotEmptyObject]);
+
+        //Pipe(eventArguments, x => ConvertAll(x, normalizeEventArgument), x => FilterArray(x, IsNotEmptyObject));
     }
 
     var GetNextUniqueNumber = (function()

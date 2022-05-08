@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" DataVirtualized="false" GraphDirection="LeftToRight" Layout="Sugiyama" NeighborhoodDistance="0" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="-1" Label="There is no global invocation and no any function definition" Category="Error" />
+  </Nodes>
+  <Links />
+  <Categories>
+    <Category Id="Par" Background="Green" />
+    <Category Id="Alt" Background="Yellow" />
+    <Category Id="Cho" Background="Blue" />
+    <Category Id="Ite" Background="Red" />
+    <Category Id="Error" Background="Black" />
+  </Categories>
+  <Styles />
+  <Properties />
+</DirectedGraph>
