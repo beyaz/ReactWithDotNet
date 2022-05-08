@@ -27,6 +27,19 @@ namespace QuranAnalyzer
 
             GetCountOfCharacter(kaf, new[] { 50 }).Should().Be(57);
             GetCountOfCharacter(kaf, new[] { 42 }).Should().Be(57);
+
+            
+
+            var count = 0;
+            foreach (var sura in DataAccess.AllSura)
+            {
+                foreach (var aya in sura.aya)
+                {
+                    count += DataAccess.Analyze(aya).Count(x => x.HarfIndex == 26);
+                }
+            }
+
+            count.Should().Be(25676);
         }
 
         
@@ -41,9 +54,7 @@ namespace QuranAnalyzer
 
             GetCountOfCharacter(ye, new[] { chapterNumber }).Should().Be(237);
             GetCountOfCharacter(sin, new[] { chapterNumber }).Should().Be(48);
-            
-            
-
         }
+        
     }
 }
