@@ -126,6 +126,8 @@
 
     function ConvertAll(arr, fn_object__convert__objectValue)
     {
+        // return arr.reduce((arr, item) => arr.push(fn_object__convert__objectValue(item)), []);
+
         var returnArray = [];
 
         var len = arr.length;
@@ -134,7 +136,7 @@
         {
             returnArray.push(fn_object__convert__objectValue(arr[i]));
         }
-
+        
         return returnArray;
     }
 
