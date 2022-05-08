@@ -29,6 +29,8 @@ public class Dropdown : ElementBase
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 
+    [React]
+    public bool? autoFocus { get; set; }
 }
 
 public class DropdownChangeParams

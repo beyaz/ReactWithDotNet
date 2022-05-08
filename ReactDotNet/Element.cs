@@ -251,6 +251,11 @@ namespace ReactDotNet
         {
         }
         public string __html { get; set; }
+
+        public static implicit operator dangerouslySetInnerHTML(string html)
+        {
+            return new dangerouslySetInnerHTML {__html = html};
+        }
     }
 
     public abstract class ThirdPartyComponent: Element

@@ -32,7 +32,7 @@ namespace ReactDotNet
         {
             foreach (var modifier in modifiers)
             {
-                modifier.Modify(element);
+                modifier?.Modify(element);
             }
         }
 
@@ -351,6 +351,12 @@ namespace ReactDotNet
         {
             return new ElementModifier(element => element.style.borderRadius = borderRadius);
         }
+
+        public static ElementModifier borderColor(string borderColor)
+        {
+            return new ElementModifier(element => element.style.borderColor = borderColor);
+        }
+        
 
         public static ElementModifier color(string color)
         {
