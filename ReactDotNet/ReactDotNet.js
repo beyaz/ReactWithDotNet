@@ -138,6 +138,16 @@
         return returnArray;
     }
 
+    function Pipe(value)
+    {
+        for (var i = 1; i < arguments.length; i++)
+        {
+            value = arguments[i](value);
+        }
+
+        return value;
+    }
+
     function GetValueInPath(obj, steps)
     {
         var len = steps.length;
@@ -418,11 +428,10 @@
             return PickPropertiesToNewObject(obj, canSendToServer);
         }
 
-        return FilterArray(ConvertAll(eventArguments, normalizeEventArgument), IsNotEmptyObject);
-
-        //Pipe(eventArguments, [ConvertAll, x, normalizeEventArgument], [FilterArray, x, IsNotEmptyObject]);
-
-        //Pipe(eventArguments, x => ConvertAll(x, normalizeEventArgument), x => FilterArray(x, IsNotEmptyObject));
+        return Pipe(eventArguments,
+            arr => ConvertAll(arr, normalizeEventArgument),
+            arr => FilterArray(arr, IsNotEmptyObject)
+        );
     }
 
     var GetNextUniqueNumber = (function()
