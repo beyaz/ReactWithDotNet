@@ -120,6 +120,8 @@
 
     function GetValueInPath(obj, steps)
     {
+        steps = typeof steps === 'string' ? steps.split('.') : steps;
+
         var len = steps.length;
 
         for (var i = 0; i < len; i++)
@@ -233,7 +235,20 @@
             childrenLength = children.length;
         }
 
+
         // collect props
+
+        function tryTransformValue(propName)
+        {
+            var value = jsonNode[propName];
+            if (value.$JsTransformFunctionLocation)
+            {
+                props[propName] = GetValueInPath(window, value.$JsTransformFunctionLocation)(value.RawValue);
+                return true;
+            }
+
+            return false;
+        }
 
         function tryProcessAsEventHandler(propName)
         {
@@ -340,7 +355,11 @@
             {
                 continue;
             }
-            
+
+            if (tryTransformValue(propName))
+            {
+                continue;
+            }
 
             if (name.indexOf('bind$') === 0)
             {

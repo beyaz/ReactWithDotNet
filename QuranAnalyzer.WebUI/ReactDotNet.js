@@ -108,38 +108,20 @@
         return IsEmptyObject(obj) === false;
     }
 
-    function FilterArray(arr, fn_bool__filter__objectValue)
+    function Pipe(value)
     {
-        var returnArray = [];
-
-        var len = arr.length;
-        for (var i = 0; i < len; i++)
+        for (var i = 1; i < arguments.length; i++)
         {
-            if (fn_bool__filter__objectValue(arr[i]))
-            {
-                returnArray.push(arr[i]);
-            }
+            value = arguments[i](value);
         }
 
-        return returnArray;
-    }
-
-    function ConvertAll(arr, fn_object__convert__objectValue)
-    {
-        var returnArray = [];
-
-        var len = arr.length;
-
-        for (var i = 0; i < len; i++)
-        {
-            returnArray.push(fn_object__convert__objectValue(arr[i]));
-        }
-
-        return returnArray;
+        return value;
     }
 
     function GetValueInPath(obj, steps)
     {
+        steps = typeof steps === 'string' ? steps.split('.') : steps;
+
         var len = steps.length;
 
         for (var i = 0; i < len; i++)
@@ -253,7 +235,20 @@
             childrenLength = children.length;
         }
 
+
         // collect props
+
+        function tryTransformValue(propName)
+        {
+            var value = jsonNode[propName];
+            if (value.$JsTransformFunctionLocation)
+            {
+                props[propName] = GetValueInPath(window, value.$JsTransformFunctionLocation)(value.RawValue);
+                return true;
+            }
+
+            return false;
+        }
 
         function tryProcessAsEventHandler(propName)
         {
@@ -360,7 +355,11 @@
             {
                 continue;
             }
-            
+
+            if (tryTransformValue(propName))
+            {
+                continue;
+            }
 
             if (name.indexOf('bind$') === 0)
             {
@@ -418,11 +417,10 @@
             return PickPropertiesToNewObject(obj, canSendToServer);
         }
 
-        return FilterArray(ConvertAll(eventArguments, normalizeEventArgument), IsNotEmptyObject);
-
-        //Pipe(eventArguments, [ConvertAll, x, normalizeEventArgument], [FilterArray, x, IsNotEmptyObject]);
-
-        //Pipe(eventArguments, x => ConvertAll(x, normalizeEventArgument), x => FilterArray(x, IsNotEmptyObject));
+        return Pipe(eventArguments,
+            arr => arr.map(normalizeEventArgument),
+            arr => arr.filter(IsNotEmptyObject)
+        );
     }
 
     var GetNextUniqueNumber = (function()
@@ -540,7 +538,7 @@
             ChildStates: CollectStates(component)
         };
         
-        request.eventArgumentsAsJsonArray = ConvertAll(NormalizeEventArguments(data.eventArguments), JSON.stringify);
+        request.eventArgumentsAsJsonArray = NormalizeEventArguments(data.eventArguments).map(JSON.stringify);
 
         function onSuccess(response)
         {
