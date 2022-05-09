@@ -108,38 +108,6 @@
         return IsEmptyObject(obj) === false;
     }
 
-    function FilterArray(arr, fn_bool__filter__objectValue)
-    {
-        var returnArray = [];
-
-        var len = arr.length;
-        for (var i = 0; i < len; i++)
-        {
-            if (fn_bool__filter__objectValue(arr[i]))
-            {
-                returnArray.push(arr[i]);
-            }
-        }
-
-        return returnArray;
-    }
-
-    function ConvertAll(arr, fn_object__convert__objectValue)
-    {
-        // return arr.reduce((arr, item) => arr.push(fn_object__convert__objectValue(item)), []);
-
-        var returnArray = [];
-
-        var len = arr.length;
-
-        for (var i = 0; i < len; i++)
-        {
-            returnArray.push(fn_object__convert__objectValue(arr[i]));
-        }
-        
-        return returnArray;
-    }
-
     function Pipe(value)
     {
         for (var i = 1; i < arguments.length; i++)
@@ -431,8 +399,8 @@
         }
 
         return Pipe(eventArguments,
-            arr => ConvertAll(arr, normalizeEventArgument),
-            arr => FilterArray(arr, IsNotEmptyObject)
+            arr => arr.map(normalizeEventArgument),
+            arr => arr.filter(IsNotEmptyObject)
         );
     }
 
@@ -551,7 +519,7 @@
             ChildStates: CollectStates(component)
         };
         
-        request.eventArgumentsAsJsonArray = ConvertAll(NormalizeEventArguments(data.eventArguments), JSON.stringify);
+        request.eventArgumentsAsJsonArray = NormalizeEventArguments(data.eventArguments).map(JSON.stringify);
 
         function onSuccess(response)
         {
