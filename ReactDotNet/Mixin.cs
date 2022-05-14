@@ -297,6 +297,11 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.marginBottom = px(margin));
         }
 
+        public static ElementModifier visibility(Visibility visibility)
+        {
+            return new ElementModifier(element => element.style.visibility = visibility);
+        }
+
         public static string percentOf(double value)
         {
             return value.ToString(CultureInfo.InvariantCulture).Replace(",",".") + "%";
