@@ -43,7 +43,10 @@ public class ComponentResponse
     public string ErrorMessage { get; set; }
 
     public string ElementAsJsonString { get; set; }
+
     public IReadOnlyList<string> Trace { get; set; }
+
+    public string NavigateToUrl { get; set; }
 }
 
 public static class ComponentRequestHandler

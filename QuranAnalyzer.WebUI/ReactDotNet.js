@@ -30,7 +30,7 @@
         PushHistory: 4,
         ComebackWithLastAction: 5,
         GotoMethod: 6,
-        ClientTaskNavigateToUrl : 7
+        NavigateToUrl : 7
     }
 
     var createElement = React.createElement;
@@ -668,7 +668,7 @@
                         CallJsFunctionInPath(clientTask);
                     };
                 }
-                if (clientTask.TaskId === ClientTaskId.ClientTaskNavigateToUrl)
+                if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
                 {
                     window.location.replace(location.origin + clientTask.Url);
 
@@ -791,6 +791,12 @@
 
             function onSuccess(response)
             {
+                if (response.NavigateToUrl)
+                {
+                    window.location.replace(location.origin + response.NavigateToUrl);
+                    return;
+                }
+
                 if (response.ErrorMessage != null)
                 {
                     throw response.ErrorMessage;
