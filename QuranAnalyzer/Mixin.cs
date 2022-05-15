@@ -112,28 +112,17 @@ public static class Mixin
             return DataAccess.Analyze(verse).GetCountOf(character);
         }
 
-        return verseList.Select(calculateCount).ReduceSum();
+        return verseList.Sum(calculateCount);
     }
 
-    public static Response<int> ReduceSum(this IEnumerable<Response<int>> enumerable)
+    public static Response<int> Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, Response<int>> selector)
     {
-        if (enumerable == null)
+        if (source == null)
         {
-            throw new ArgumentNullException(nameof(enumerable));
+            throw new ArgumentNullException(nameof(source));
         }
 
-        var total = 0;
-        foreach (var response in enumerable)
-        {
-            if (response.IsFail)
-            {
-                return response.Errors.ToArray();
-            }
-
-            total += response.Value;
-        }
-
-        return total;
+        return source.Aggregate(0, selector, (total, value) => total + value);
     }
 
     public static Response<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TSource, Response<TAccumulate>> func, Func<TAccumulate, TAccumulate, TAccumulate> acumulate)

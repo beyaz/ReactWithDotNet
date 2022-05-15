@@ -30,17 +30,6 @@ namespace QuranAnalyzer
             GetCountOfCharacter(kaf, new[] { 42 }).Should().Be(57);
 
             
-
-            var count = 0;
-            foreach (var sura in DataAccess.AllSura)
-            {
-                foreach (var aya in sura.aya)
-                {
-                    count += DataAccess.Analyze(aya).Count(x => x.HarfIndex == 26);
-                }
-            }
-
-            count.Should().Be(25676);
         }
 
         
