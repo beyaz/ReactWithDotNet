@@ -4,7 +4,7 @@ namespace QuranAnalyzer;
 
 public static class QuranQuery
 {
-    public static IEnumerable<aya> ListOfVerseEndsWith(string value)
+    public static IEnumerable<Verse> ListOfVerseEndsWith(string value)
     {
         var valueList = value.AsClearArabicCharacterList();
 
@@ -22,7 +22,7 @@ public static class QuranQuery
     }
 
 
-    public static IEnumerable<(aya verse, int count)> ListOfVerseContains(string value)
+    public static IEnumerable<(Verse verse, int count)> ListOfVerseContains(string value)
     {
         var valueList = value.AsClearArabicCharacterList();
 

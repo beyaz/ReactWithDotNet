@@ -28,17 +28,17 @@ public static class CharachterSearchResultColorizer
         };
 
 
-        foreach (var itemsInSurah in from m in matchRecords group m by m.aya.SurahNumber into mgroup select mgroup.ToList())
+        foreach (var itemsInSurah in from m in matchRecords group m by m.verse.SurahNumber into mgroup select mgroup.ToList())
         {
-            foreach (var items in from m in itemsInSurah group m by m.aya._index into mgroup select mgroup.ToList())
+            foreach (var items in from m in itemsInSurah group m by m.verse._index into mgroup select mgroup.ToList())
             {
-                var el = ColorizeCharachterSearchResult(items[0].aya._bismillah + items[0].aya._text, items, getBackgroundColor);
+                var el = ColorizeCharachterSearchResult(items[0].verse._bismillah + items[0].verse._text, items, getBackgroundColor);
 
                 container.Add(new HPanel
                 {
                     new div
                     {
-                        text = $"[{items[0].aya.SurahNumber}:{items[0].aya._index}]",
+                        text = $"[{items[0].verse.SurahNumber}:{items[0].verse._index}]",
                         style =
                         {
                             marginLeft = px(5),

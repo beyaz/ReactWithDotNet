@@ -90,7 +90,7 @@ class FactView : ReactComponent<FactViewModel>
         {
             var occurence = new Occurence
             {
-                AyahNumber = record.aya._index
+                AyahNumber = record.verse._index
             };
 
             if (results.Any(x=>x.AyahNumber == occurence.AyahNumber))
@@ -106,7 +106,7 @@ class FactView : ReactComponent<FactViewModel>
 
                 var property     = typeof(Occurence).GetProperty(propertyName);
                 
-                var count =  matchRecords.Count(m => record.aya._index == m.aya._index && m.ToString() == charachter);
+                var count =  matchRecords.Count(m => record.verse._index == m.verse._index && m.ToString() == charachter);
 
                 Debug.Assert(property != null, nameof(property) + " != null");
 

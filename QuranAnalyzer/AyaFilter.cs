@@ -7,9 +7,9 @@ namespace QuranAnalyzer;
 
 public static class AyaFilter
 {
-    public static Response<IReadOnlyList<aya>> Filter(string searchScript)
+    public static Response<IReadOnlyList<Verse>> Filter(string searchScript)
     {
-        var returnList = new List<aya>();
+        var returnList = new List<Verse>();
 
         var items = searchScript.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
@@ -27,7 +27,7 @@ public static class AyaFilter
         return returnList;
 
 
-        Response<IReadOnlyList<aya>> process(string searchItem)
+        Response<IReadOnlyList<Verse>> process(string searchItem)
         {
             var arr = searchItem.Split(": ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
@@ -60,7 +60,7 @@ public static class AyaFilter
 
 
 
-            Response<IReadOnlyList<aya>> collectAyaList(sura sura, string ayaFilter)
+            Response<IReadOnlyList<Verse>> collectAyaList(sura sura, string ayaFilter)
             {
                 foreach (var aya in sura.aya)
                 {
@@ -72,7 +72,7 @@ public static class AyaFilter
                     return sura.aya;
                 }
 
-                Response<IReadOnlyList<aya>> selectOne(int ayahIndex)
+                Response<IReadOnlyList<Verse>> selectOne(int ayahIndex)
                 {
                     if (ayahIndex<=0 || ayahIndex > sura.aya.Length)
                     {

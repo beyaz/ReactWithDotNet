@@ -13,13 +13,13 @@ namespace QuranAnalyzer
     {
         public int Index => int.Parse(_index);
 
-        public aya[] aya { get; set; }
+        public Verse[] aya { get; set; }
         public string _index { get; set; }
         public string  _name { get; set; }
     }
 
     [Serializable]
-    public class aya
+    public class Verse
     {
         public string _index { get; set; }
         public string _text { get; set; }
@@ -34,20 +34,20 @@ namespace QuranAnalyzer
 
         public int HarfIndex { get; set; }
 
-        public aya aya{ get; set; }
+        public Verse verse{ get; set; }
 
         public bool HasNoMatch => HarfIndex == -1;
 
         public override string ToString()
         {
-            if (aya != null)
+            if (verse != null)
             {
                 if (HarfIndex >= 0)
                 {
                     return DataAccess.harfler[HarfIndex];
                 }
 
-                return aya._text[StartIndex].ToString();
+                return verse._text[StartIndex].ToString();
 
             }
 
@@ -123,9 +123,9 @@ namespace QuranAnalyzer
         };
 
         
-        public static MatchInfo TryRead( aya aya, int startIndex, bool isHemzeActive)
+        public static MatchInfo TryRead( Verse verse, int startIndex, bool isHemzeActive)
         {
-            string line = aya._bismillah + aya._text;
+            string line = verse._bismillah + verse._text;
 
             for (var i = 0; i < harfler.Length; i++)
             {
@@ -145,7 +145,7 @@ namespace QuranAnalyzer
                         {
                             StartIndex = startIndex, 
                             HarfIndex  = i,
-                            aya        = aya
+                            verse        = verse
                         };
                     }
 
@@ -255,9 +255,9 @@ namespace QuranAnalyzer
             return null;
         }
 
-        public static IReadOnlyList<MatchInfo> Analyze(aya aya,  bool isHemzeActive = true)
+        public static IReadOnlyList<MatchInfo> Analyze(Verse verse,  bool isHemzeActive = true)
         {
-            var line  = aya._bismillah + aya._text;
+            var line  = verse._bismillah + verse._text;
 
             var items = new List<MatchInfo>();
 
@@ -265,7 +265,7 @@ namespace QuranAnalyzer
 
             while (cursor<line.Length)
             {
-                var item = TryRead(aya, cursor, isHemzeActive);
+                var item = TryRead(verse, cursor, isHemzeActive);
                 if (item != null)
                 {
                     items.Add(item);
@@ -273,7 +273,7 @@ namespace QuranAnalyzer
                     continue;
                 }
 
-                items.Add(new MatchInfo{ HarfIndex = -1, StartIndex = cursor, aya = aya });
+                items.Add(new MatchInfo{ HarfIndex = -1, StartIndex = cursor, verse = verse });
 
                 cursor++;
             }

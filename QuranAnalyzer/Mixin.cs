@@ -94,15 +94,15 @@ public static class Mixin
         return count;
     }
 
-    static string IdOf(aya verse)
+    static string IdOf(Verse verse)
     {
         return $"{verse.SurahNumber}:{verse._index}";
     }
-    public static Response<int> GetCountOfCharacter(IReadOnlyList<aya> verseList, string character , CountingOption option = null)
+    public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, string character , CountingOption option = null)
     {
         option ??= new CountingOption();
 
-        Response<int> calculateCount(aya verse)
+        Response<int> calculateCount(Verse verse)
         {
             if (character == "ا" && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(IdOf(verse)))
             {
