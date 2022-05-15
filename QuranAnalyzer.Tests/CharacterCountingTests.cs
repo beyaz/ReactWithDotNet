@@ -48,13 +48,8 @@ namespace QuranAnalyzer
         [TestMethod]
         public void ye_sin()
         {
-            var chapterNumber = 36;
-
-            var ye  = 27;
-            var sin = 11;
-
-            GetCountOfCharacter(ye, new[] { chapterNumber }).Should().Be(237);
-            GetCountOfCharacter(sin, new[] { chapterNumber }).Should().Be(48);
+            Pipe(AyaFilter.Filter("36:*"), verses => GetCountOfCharacter(verses, ArabicCharacters.Ya)).Value.Should().Be(237);
+            Pipe(AyaFilter.Filter("36:*"), verses => GetCountOfCharacter(verses, ArabicCharacters.Sin)).Value.Should().Be(48);
         }
 
         [TestMethod]
@@ -63,7 +58,7 @@ namespace QuranAnalyzer
             Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "م")).Value.Should().Be(2195);
             Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ل")).Value.Should().Be(3202);
             Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ا")).Value.Should().Be(4504);
-            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ا",new CountingOption{UseElifCountsSpecifiedByRK = true})).Value.Should().Be(4502);
+            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption{UseElifCountsSpecifiedByRK = true})).Value.Should().Be(4502);
         }
     }
 }

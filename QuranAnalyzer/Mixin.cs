@@ -10,6 +10,13 @@ public sealed class CountingOption
     public bool UseElifCountsSpecifiedByRK { get; set; }
 }
 
+public static class ArabicCharacters
+{
+    public static string Sin = "س";
+    public static string Ya = "ي";
+}
+
+
 
 public static class Mixin
 {
@@ -105,7 +112,28 @@ public static class Mixin
             return DataAccess.Analyze(verse).GetCountOf(character);
         }
 
-        return verseList.Aggregate(0, calculateCount, (total,count) => total + count);
+        return verseList.Select(calculateCount).ReduceSum();
+    }
+
+    public static Response<int> ReduceSum(this IEnumerable<Response<int>> enumerable)
+    {
+        if (enumerable == null)
+        {
+            throw new ArgumentNullException(nameof(enumerable));
+        }
+
+        var total = 0;
+        foreach (var response in enumerable)
+        {
+            if (response.IsFail)
+            {
+                return response.Errors.ToArray();
+            }
+
+            total += response.Value;
+        }
+
+        return total;
     }
 
     public static Response<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TSource, Response<TAccumulate>> func, Func<TAccumulate, TAccumulate, TAccumulate> acumulate)
