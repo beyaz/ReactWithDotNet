@@ -10,7 +10,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void FilterWithStar()
         {
-            var records = AyaFilter.Filter(" 42  : * ").Value;
+            var records = AyaFilter.GetVerseList(" 42  : * ").Value;
 
             records.Count.Should().Be(53);
 
@@ -23,7 +23,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void FilterWithStarWithMany()
         {
-            var records = AyaFilter.Filter(" 42  : * , 114 : *").Value;
+            var records = AyaFilter.GetVerseList(" 42  : * , 114 : *").Value;
 
             records.Count.Should().Be(53 + 6);
 
@@ -38,7 +38,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void FilterWithStarWithManyWithSpecificAyahNumber()
         {
-            var records = AyaFilter.Filter(" 42  : * , 114 : *, 77:50").Value;
+            var records = AyaFilter.GetVerseList(" 42  : * , 114 : *, 77:50").Value;
 
             records.Count.Should().Be(53 + 6 + 1);
 
@@ -56,7 +56,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void FilterWithStarWithManyWithSpecificAyahNumber_with_Error()
         {
-            AyaFilter.Filter(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
+            AyaFilter.GetVerseList(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
         }
 
         [TestMethod]

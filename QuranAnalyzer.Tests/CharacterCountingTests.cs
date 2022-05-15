@@ -1,53 +1,46 @@
-﻿using System.Linq;
-using FluentAssertions;
-using static QuranAnalyzer.Mixin;
+﻿using static QuranAnalyzer.Mixin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static QuranAnalyzer.ArabicCharacters;
+using static QuranAnalyzer.AyaFilter;
 using static QuranAnalyzer.FpExtensions;
 
-namespace QuranAnalyzer
+namespace QuranAnalyzer;
+
+[TestClass]
+public class CharacterCountingTests
 {
-    [TestClass]
-    public class CharacterCountingTests
+
+    [TestMethod]
+    public void Sad_in_38_and_19_and_98()
     {
+        Pipe(GetVerseList("38:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(29);
+        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(26);
+        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(98);
 
-        [TestMethod]
-        public void Sad()
-        {
-            var sad = 13;
+    }
 
-            GetCountOfCharacter(sad, new[] { 38 }).Should().Be(29);
-            GetCountOfCharacter(sad, new[] { 19 }).Should().Be(26);
-            GetCountOfCharacter(sad, new[] { 7 }).Should().Be(98);
-
-        }
-
-        [TestMethod]
-        public void Kaf()
-        {
-            var kaf = 20;
-
-            GetCountOfCharacter(kaf, new[] { 50 }).Should().Be(57);
-            GetCountOfCharacter(kaf, new[] { 42 }).Should().Be(57);
-
-            
-        }
+    [TestMethod]
+    public void Kaf_in_50_and_42()
+    {
+        Pipe(GetVerseList("50:*"), verses => GetCountOfCharacter(verses, Kaf)).ShouldBe(57);
+        Pipe(GetVerseList("42:*"), verses => GetCountOfCharacter(verses, Kaf)).ShouldBe(57);
+    }
 
         
 
-        [TestMethod]
-        public void ye_sin()
-        {
-            Pipe(AyaFilter.Filter("36:*"), verses => GetCountOfCharacter(verses, ArabicCharacters.Ya)).Value.Should().Be(237);
-            Pipe(AyaFilter.Filter("36:*"), verses => GetCountOfCharacter(verses, ArabicCharacters.Sin)).Value.Should().Be(48);
-        }
+    [TestMethod]
+    public void ye_sin()
+    {
+        Pipe(GetVerseList("36:*"), verses => GetCountOfCharacter(verses, Ya)).ShouldBe(237);
+        Pipe(GetVerseList("36:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(48);
+    }
 
-        [TestMethod]
-        public void Bakara()
-        {
-            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "م")).Value.Should().Be(2195);
-            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ل")).Value.Should().Be(3202);
-            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ا")).Value.Should().Be(4504);
-            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption{UseElifCountsSpecifiedByRK = true})).Value.Should().Be(4502);
-        }
+    [TestMethod]
+    public void Bakara()
+    {
+        Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "م")).ShouldBe(2195);
+        Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "ل")).ShouldBe(3202);
+        Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "ا")).ShouldBe(4504);
+        Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption{UseElifCountsSpecifiedByRK = true})).ShouldBe(4502);
     }
 }

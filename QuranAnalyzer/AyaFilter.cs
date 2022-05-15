@@ -7,7 +7,7 @@ namespace QuranAnalyzer;
 
 public static class AyaFilter
 {
-    public static Response<IReadOnlyList<Verse>> Filter(string searchScript)
+    public static Response<IReadOnlyList<Verse>> GetVerseList(string searchScript)
     {
         var returnList = new List<Verse>();
 

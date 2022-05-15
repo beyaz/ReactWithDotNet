@@ -14,6 +14,9 @@ public static class ArabicCharacters
 {
     public static string Sin = "س";
     public static string Ya = "ي";
+
+    public static string Kaf = "ق";
+    public static string Sad = "ص";
 }
 
 
@@ -78,21 +81,7 @@ public static class Mixin
 
         return count;
     }
-
-    public static int GetCountOfCharacter(int characterIndex, int[] chapterNumbers)
-    {
-        var count = 0;
-
-        foreach (var chapterNumber in chapterNumbers)
-        {
-            foreach (var aya in DataAccess.AllSura[chapterNumber - 1].aya)
-            {
-                count += DataAccess.Analyze(aya).Count(x => x.HarfIndex == characterIndex);
-            }
-        }
-
-        return count;
-    }
+    
 
     static string IdOf(Verse verse)
     {
@@ -162,10 +151,7 @@ public static class Mixin
         return DataAccess.harfler.GetIndex(character);
     }
 
-    public static int GetCountOfCharacter(string character, int[] chapterNumbers)
-    {
-        return GetCountOfCharacter(Array.IndexOf(DataAccess.harfler, character), chapterNumbers);
-    }
+    
 
     public static bool HasValueAndSame(this IReadOnlyList<string> a, IReadOnlyList<string> b)
     {
@@ -201,7 +187,7 @@ public static class Mixin
 
         var items = new List<MatchInfo>();
 
-        foreach (var aya in AyaFilter.Filter(searchScript).Value)
+        foreach (var aya in AyaFilter.GetVerseList(searchScript).Value)
         {
             items.AddRange(DataAccess.Analyze(aya).Where(x => indexList.Contains(x.HarfIndex)));
         }
