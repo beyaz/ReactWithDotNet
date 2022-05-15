@@ -5,6 +5,12 @@ using static  QuranAnalyzer.FpExtensions;
 
 namespace QuranAnalyzer;
 
+public sealed class CountingOption
+{
+    public bool UseElifCountsSpecifiedByRK { get; set; }
+}
+
+
 public static class Mixin
 {
     #region Public Methods
@@ -81,9 +87,25 @@ public static class Mixin
         return count;
     }
 
-    public static Response<int> GetCountOfCharacter(IReadOnlyList<aya> verseList, string character)
+    static string IdOf(aya verse)
     {
-        return verseList.Aggregate(0, verse => DataAccess.Analyze(verse).GetCountOf(character), (total,count)=>total + count);
+        return $"{verse.SurahNumber}:{verse._index}";
+    }
+    public static Response<int> GetCountOfCharacter(IReadOnlyList<aya> verseList, string character , CountingOption option = null)
+    {
+        option ??= new CountingOption();
+
+        Response<int> calculateCount(aya verse)
+        {
+            if (character == "ا" && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(IdOf(verse)))
+            {
+                return SpecifiedByRK.RealElifCounts[IdOf(verse)];
+            }
+
+            return DataAccess.Analyze(verse).GetCountOf(character);
+        }
+
+        return verseList.Aggregate(0, calculateCount, (total,count) => total + count);
     }
 
     public static Response<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TSource, Response<TAccumulate>> func, Func<TAccumulate, TAccumulate, TAccumulate> acumulate)

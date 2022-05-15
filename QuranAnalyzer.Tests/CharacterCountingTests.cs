@@ -58,13 +58,12 @@ namespace QuranAnalyzer
         }
 
         [TestMethod]
-        public void Elif_Bakara()
+        public void Bakara()
         {
             Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "م")).Value.Should().Be(2195);
             Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ل")).Value.Should().Be(3202);
             Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ا")).Value.Should().Be(4504);
-
-          
+            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ا",new CountingOption{UseElifCountsSpecifiedByRK = true})).Value.Should().Be(4502);
         }
     }
 }
