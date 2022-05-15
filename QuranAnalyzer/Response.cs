@@ -333,4 +333,15 @@ public static class FpExtensions
 
         return func1(responseA.Value);
     }
+
+    public static Response<B> Pipe<A, B>(Response<A> responseA, Func<A, Response<B>> func1)
+    {
+        if (responseA.IsFail)
+        {
+            return responseA.Errors.ToArray();
+        }
+
+        return func1(responseA.Value);
+    }
+
 }

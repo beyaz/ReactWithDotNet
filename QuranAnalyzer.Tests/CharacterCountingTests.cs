@@ -2,6 +2,7 @@
 using FluentAssertions;
 using static QuranAnalyzer.Mixin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static QuranAnalyzer.FpExtensions;
 
 namespace QuranAnalyzer
 {
@@ -59,13 +60,11 @@ namespace QuranAnalyzer
         [TestMethod]
         public void Elif_Bakara()
         {
-            var chapterNumber = 2;
+            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "م")).Value.Should().Be(2195);
+            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ل")).Value.Should().Be(3202);
+            Pipe(AyaFilter.Filter("2:*"), verses => GetCountOfCharacter(verses, "ا")).Value.Should().Be(4504);
 
-            var ye  = 27;
-            var sin = 11;
-
-            GetCountOfCharacter(ye, new[] { chapterNumber }).Should().Be(237);
-            GetCountOfCharacter(sin, new[] { chapterNumber }).Should().Be(48);
+          
         }
     }
 }

@@ -81,6 +81,38 @@ public static class Mixin
         return count;
     }
 
+    public static Response<int> GetCountOfCharacter(IReadOnlyList<aya> verseList, string character)
+    {
+        return verseList.Aggregate(0, verse => DataAccess.Analyze(verse).GetCountOf(character), (total,count)=>total + count);
+    }
+
+    public static Response<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TSource, Response<TAccumulate>> func, Func<TAccumulate, TAccumulate, TAccumulate> acumulate)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (func == null)
+        {
+            throw new ArgumentNullException(nameof(func));
+        }
+
+        TAccumulate result = seed;
+        foreach (TSource element in source)
+        {
+            var response = func(element);
+            if (response.IsFail)
+            {
+                return response.Errors.ToArray();
+            }
+
+            result = acumulate(result, response.Value);
+        }
+
+        return result;
+    }
+
     public static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
         return Pipe(character.AsArabicCharacterIndex(), arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
