@@ -83,7 +83,7 @@ public static class Mixin
 
     public static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
-        return Pipe(character.AsArabicCharacterIndex(), asArabicCharacterIndex => matchList.Count(x => x.HarfIndex == asArabicCharacterIndex));
+        return Pipe(character.AsArabicCharacterIndex(), arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
     }
 
     static Response<int> AsArabicCharacterIndex(this string character)
