@@ -100,9 +100,9 @@ class FactView : ReactComponent<FactViewModel>
 
             results.Add(occurence);
 
-            foreach (var charachter in WordSearcher.AsClearArabicCharacterList(state.SearchCharacters))
+            foreach (var charachter in state.SearchCharacters.AsClearArabicCharacterList())
             {
-                var propertyName = "Charachter" + (WordSearcher.AsClearArabicCharacterList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
+                var propertyName = "Charachter" + (state.SearchCharacters.AsClearArabicCharacterList().ToList().IndexOf(charachter) + 1);
 
                 var property     = typeof(Occurence).GetProperty(propertyName);
                 
@@ -112,8 +112,6 @@ class FactView : ReactComponent<FactViewModel>
 
                 property.SetValue(occurence, count);
             }
-
-                
         }
 
         state.ResultRecords = results.ToArray();
@@ -189,9 +187,9 @@ class FactView : ReactComponent<FactViewModel>
         };
 
         
-        foreach (var charachter in WordSearcher.AsClearArabicCharacterList(state.SearchCharacters))
+        foreach (var charachter in state.SearchCharacters.AsClearArabicCharacterList())
         {
-            var propertyName = "Charachter" + (WordSearcher.AsClearArabicCharacterList(state.SearchCharacters).ToList().IndexOf(charachter) + 1);
+            var propertyName = "Charachter" + (state.SearchCharacters.AsClearArabicCharacterList().ToList().IndexOf(charachter) + 1);
 
             resultColumns.Add(new Column {field = propertyName, header = charachter});
             

@@ -46,5 +46,11 @@
         "ShortDescription": "Sure 42’nin 2. ayetinde bu harfler vardır.",
         "SearchScript": "42:*",
         "SearchCharacters": "ع س ق"
+    },
+    {
+        "Name": "Elif Lam Mim",
+        "ShortDescription": "2. suredeki başlangıç harfleri",
+        "SearchScript": "2:*",
+        "SearchCharacters": "ا ل م"
     }
 ]

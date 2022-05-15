@@ -55,6 +55,17 @@ namespace QuranAnalyzer
             GetCountOfCharacter(ye, new[] { chapterNumber }).Should().Be(237);
             GetCountOfCharacter(sin, new[] { chapterNumber }).Should().Be(48);
         }
-        
+
+        [TestMethod]
+        public void Elif_Bakara()
+        {
+            var chapterNumber = 2;
+
+            var ye  = 27;
+            var sin = 11;
+
+            GetCountOfCharacter(ye, new[] { chapterNumber }).Should().Be(237);
+            GetCountOfCharacter(sin, new[] { chapterNumber }).Should().Be(48);
+        }
     }
 }

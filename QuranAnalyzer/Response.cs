@@ -176,10 +176,19 @@ namespace QuranAnalyzer;
             return response;
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="Error" /> to <see cref="Response{TValue}" />.
-        /// </summary>
-        public static implicit operator Response<TValue>(Error[] errors)
+        public static implicit operator Response<TValue>(string error)
+        {
+            var response = new Response<TValue>();
+
+            response.errors.Add(error);
+
+            return response;
+        }
+
+    /// <summary>
+    ///     Performs an implicit conversion from <see cref="Error" /> to <see cref="Response{TValue}" />.
+    /// </summary>
+    public static implicit operator Response<TValue>(Error[] errors)
         {
             var response = new Response<TValue>();
 
@@ -302,5 +311,26 @@ public static class FpExtensions
     public static Response<B> Then<A, B>(this A value, Func<A, B> nextFunc)
     {
         return nextFunc(value);
+    }
+
+    public static Response<int> GetIndex<T>(this T[] array, T value)
+    {
+        var index = Array.IndexOf(array,value);
+        if (index<0)
+        {
+            return $"{value} değeri listede bulunamadı";
+        }
+
+        return index;
+    }
+
+    public static Response<B> Pipe<A,B>(Response<A> responseA, Func<A,B> func1)
+    {
+        if (responseA.IsFail)
+        {
+            return responseA.Errors.ToArray();
+        }
+
+        return func1(responseA.Value);
     }
 }

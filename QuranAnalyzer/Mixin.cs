@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static  QuranAnalyzer.FpExtensions;
 
 namespace QuranAnalyzer;
 
@@ -80,6 +81,16 @@ public static class Mixin
         return count;
     }
 
+    public static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
+    {
+        return Pipe(character.AsArabicCharacterIndex(), asArabicCharacterIndex => matchList.Count(x => x.HarfIndex == asArabicCharacterIndex));
+    }
+
+    static Response<int> AsArabicCharacterIndex(this string character)
+    {
+        return DataAccess.harfler.GetIndex(character);
+    }
+
     public static int GetCountOfCharacter(string character, int[] chapterNumbers)
     {
         return GetCountOfCharacter(Array.IndexOf(DataAccess.harfler, character), chapterNumbers);
@@ -113,7 +124,7 @@ public static class Mixin
     public static Response<IReadOnlyList<MatchInfo>> SearchCharachters(string searchScript, string searchCharachters)
     {
         // var charachterList = searchCharachters.Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToArray();
-        var charachterList = WordSearcher.AsClearArabicCharacterList(searchCharachters);
+        var charachterList = searchCharachters.AsClearArabicCharacterList();
 
         var indexList = charachterList.Select(x => Array.IndexOf(DataAccess.harfler, x)).ToList();
 
