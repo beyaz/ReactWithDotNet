@@ -658,9 +658,15 @@
 
                 if (clientTask.TaskId === ClientTaskId.CallJsFunction)
                 {
-                    CallJsFunctionInPath(clientTask);
+                    if (clientTask.After != null)
+                    {
+                        throw new Error('ClientTask.After can not be use after this task');
+                    }
 
-                    return processClientTask(clientTask.After);
+                    return function ()
+                    {
+                        CallJsFunctionInPath(clientTask);
+                    };
                 }
                 if (clientTask.TaskId === ClientTaskId.ClientTaskNavigateToUrl)
                 {
