@@ -866,7 +866,25 @@
 
     function Fetch(url, options, processResponse, callback)
     {        
-        fetch(url, options).then(response => processResponse(response)).then(json => callback(json));
+        var useJquery = true;
+        if(useJquery)
+        {
+            var jqueryOptions = {
+                url: url,
+                method: options.method,
+                contentType : 'application/json',
+                data: options.body
+            };
+            $.ajax(jqueryOptions, 'json').done(function (response) 
+            {
+                callback(response);
+            });
+        }
+        else
+        {
+            fetch(url, options).then(response => processResponse(response)).then(json => callback(json));    
+        }
+        
     }
 
     global.ReactDotNet =
