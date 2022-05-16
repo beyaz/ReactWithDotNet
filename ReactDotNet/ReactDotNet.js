@@ -863,7 +863,12 @@
             HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: cmp, eventArguments: [] });
         });
     }
-    
+
+    function Fetch(url, options, processResponse, callback)
+    {        
+        fetch(url, options).then(response => processResponse(response)).then(json => callback(json));
+    }
+
     global.ReactDotNet =
     {
         OnDocumentReady: OnDocumentReady,
@@ -873,17 +878,18 @@
         RenderComponentIn: RenderComponentIn,
         SendRequest: function (request, callback)
         {
-            fetch("/component/HandleRequest",
-            {
-                method: "POST",
-                headers:
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+            Fetch("/component/HandleRequest", {
+                    method: "POST",
+                    headers:
+                    {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(request)
                 },
-                body: JSON.stringify(request)
-
-            }).then(response => response.json()).then(json => callback(json));
+                response => response.json(),
+                json => callback(json)
+            );
         }
     };
 
