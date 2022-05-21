@@ -1,6 +1,6 @@
 /**
  *  Written by Abdullah Beyaztaþ
- *  Manages react ui by using react render informations that incoming from server.
+ *  Manages react ui by using react render informations which incoming from server.
  */
 (function (global, React, ReactDOM)
 {
