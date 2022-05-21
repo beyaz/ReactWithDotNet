@@ -21,7 +21,7 @@
     
     function HasId(htmlElement)
     {
-        return htmlElement.id !== '';
+        return htmlElement.id !== "";
     }
 
     var ClientTaskId =
@@ -58,7 +58,7 @@
     {
         var stateCheck = setInterval(function ()
         {
-            if (document.readyState === 'complete')
+            if (document.readyState === "complete")
             {
                 clearInterval(stateCheck);
 
@@ -123,7 +123,7 @@
 
     function GetValueInPath(obj, steps)
     {
-        steps = typeof steps === 'string' ? steps.split('.') : steps;
+        steps = typeof steps === "string" ? steps.split(".") : steps;
 
         var len = steps.length;
 
@@ -131,7 +131,7 @@
         {
             if (obj == null)
             {
-                throw 'Path is not read. Path:' + steps.join('.');
+                throw "Path is not read. Path:" + steps.join(".");
             }
 
             obj = obj[steps[i]];
@@ -144,7 +144,7 @@
     {
         if (obj == null)
         {
-            throw Error('SetValueInPath->' + value);
+            throw Error("SetValueInPath->" + value);
         }
 
         var len = steps.length;
@@ -173,7 +173,7 @@
     {
         if (value == null)
         {
-            throw Error('value cannot be null.');
+            throw Error("value cannot be null.");
         }
 
         return value;
@@ -183,7 +183,7 @@
     {
         if (Object.isFrozen(value))
         {
-            throw Error('value cannot be frozen.');
+            throw Error("value cannot be frozen.");
         }
 
         return value;
@@ -373,7 +373,7 @@
                 continue;
             }
 
-            if (name.indexOf('bind$') === 0)
+            if (name.indexOf("bind$") === 0)
             {
                 continue;
             }
@@ -405,12 +405,12 @@
     {
         function normalizeEventArgument(obj)
         {
-            if (typeof obj === 'string' || typeof obj === 'number')
+            if (typeof obj === "string" || typeof obj === "number")
             {
                 return obj;
             }
 
-            if (obj && obj._reactName === 'onClick')
+            if (obj && obj._reactName === "onClick")
             {
                 return NVL(GoUpwardFindFirst(obj.target, HasId), obj.target).id;
             }
@@ -418,7 +418,7 @@
             // ReSharper disable once UnusedParameter
             function canSendToServer(key, value)
             {
-                if (key === 'originalEvent')
+                if (key === "originalEvent")
                 {
                     return false;
                 }
@@ -531,7 +531,7 @@
         {
             var state = component.state.$state;
 
-            var beforePostingState = TryGetComponentAction(component, 'beforePostingState');
+            var beforePostingState = TryGetComponentAction(component, "beforePostingState");
             if (beforePostingState)
             {
                 state = beforePostingState(Clone(state));
@@ -605,7 +605,7 @@
                 {
                     if (clientTask.After != null)
                     {
-                        throw new Error('ClientTask.After can not be use after this task');
+                        throw new Error("ClientTask.After can not be use after this task");
                     }
 
                     return function()
@@ -623,7 +623,7 @@
                 {
                     if (clientTask.After != null)
                     {
-                        throw new Error('ClientTask.After can not be use after this task');
+                        throw new Error("ClientTask.After can not be use after this task");
                     }
 
                     return function ()
@@ -672,7 +672,7 @@
                 {
                     if (clientTask.After != null)
                     {
-                        throw new Error('ClientTask.After can not be use after this task');
+                        throw new Error("ClientTask.After can not be use after this task");
                     }
 
                     return function ()
@@ -688,7 +688,7 @@
                 }
                 
 
-                throw Error('ClientTask not recognized.');
+                throw Error("ClientTask not recognized.");
             }
    
         }
@@ -760,12 +760,12 @@
 
             componentDidMount()
             {
-                TryDispatchComponentAction(this, 'componentDidMount');
+                TryDispatchComponentAction(this, "componentDidMount");
             }
 
             componentWillUnmount()
             {
-                TryDispatchComponentAction(this, 'componentWillUnmount');
+                TryDispatchComponentAction(this, "componentWillUnmount");
             }
         }
 
@@ -859,10 +859,10 @@
 
     function CallJsFunctionInPath(clientTask)
     {
-        var fn = GetValueInPath(window, clientTask.JsFunctionPath.split('.'));
+        var fn = GetValueInPath(window, clientTask.JsFunctionPath.split("."));
         if (fn == null)
         {
-            throw Error('Function not found. Function is ' + clientTask.JsFunctionPath);
+            throw Error("Function not found. Function is " + clientTask.JsFunctionPath);
         }
 
         fn.apply(null, clientTask.JsFunctionArguments);
@@ -907,8 +907,8 @@
                     method: "POST",
                     headers:
                     {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Accept': "application/json",
+                        'Content-Type': "application/json"
                     },
                     body: JSON.stringify(request)
                 },
