@@ -1,6 +1,43 @@
-
+/**
+ *  Written by Abdullah Beyaztaþ
+ *  Manages react ui by using react render informations which incoming from server.
+ */
 (function (global, React, ReactDOM)
 {
+    var createElement = React.createElement;
+    
+    const EventBus =
+    {
+        On: function(event, callback)
+        {
+            document.addEventListener(event, (e) => callback(e.detail));
+        },
+        Dispatch: function(event, data)
+        {
+            document.dispatchEvent(new CustomEvent(event, { detail: data }));
+        },
+        Remove: function(event, callback)
+        {
+            document.removeEventListener(event, callback);
+        }
+    };
+    
+    function IterateObject(obj, fn)
+    {
+        for (var key in obj)
+        {
+            if (obj.hasOwnProperty(key))
+            {
+                fn(key, obj[key]);
+            }
+        }
+    }
+    
+    function HasId(htmlElement)
+    {
+        return htmlElement.id !== "";
+    }
+    
     function GoUpwardFindFirst(htmlElement, findFunc)
     {
         while (htmlElement)
@@ -15,64 +52,18 @@
         
         return null;
     }
-    
-    function HasId(htmlElement)
-    {
-        return htmlElement.id !== '';
-    }
-
-    var ClientTaskId =
-    {
-        CallJsFunction: 0,
-        ListenEvent: 1,
-        DispatchEvent: 2,        
-        ListenComponentEvent: 3,
-        PushHistory: 4,
-        ComebackWithLastAction: 5,
-        GotoMethod: 6,
-        NavigateToUrl : 7
-    }
-
-    var createElement = React.createElement;
-
-    const EventBus =
-    {
-        On(event, callback)
-        {
-            document.addEventListener(event, (e) => callback(e.detail));
-        },
-        Dispatch(event, data)
-        {
-            document.dispatchEvent(new CustomEvent(event, { detail: data }));
-        },
-        Remove(event, callback)
-        {
-            document.removeEventListener(event, callback);
-        }
-    };
 
     function OnDocumentReady(callback)
     {
         var stateCheck = setInterval(function ()
         {
-            if (document.readyState === 'complete')
+            if (document.readyState === "complete")
             {
                 clearInterval(stateCheck);
 
                 setTimeout(callback, 1);
             }
         }, 10);
-    }
-
-    function IterateObject(obj, fn)
-    {
-        for (var key in obj)
-        {
-            if (obj.hasOwnProperty(key))
-            {
-                fn(key, obj[key]);
-            }
-        }
     }
 
     function PickPropertiesToNewObject(obj, fn_bool__CanPick__stringKey_objectValue)
@@ -120,7 +111,7 @@
 
     function GetValueInPath(obj, steps)
     {
-        steps = typeof steps === 'string' ? steps.split('.') : steps;
+        steps = typeof steps === "string" ? steps.split(".") : steps;
 
         var len = steps.length;
 
@@ -128,7 +119,7 @@
         {
             if (obj == null)
             {
-                throw 'Path is not read. Path:' + steps.join('.');
+                throw "Path is not read. Path:" + steps.join(".");
             }
 
             obj = obj[steps[i]];
@@ -141,7 +132,7 @@
     {
         if (obj == null)
         {
-            throw Error('SetValueInPath->' + value);
+            throw Error("SetValueInPath->" + value);
         }
 
         var len = steps.length;
@@ -170,7 +161,7 @@
     {
         if (value == null)
         {
-            throw Error('value cannot be null.');
+            throw Error("value cannot be null.");
         }
 
         return value;
@@ -180,17 +171,37 @@
     {
         if (Object.isFrozen(value))
         {
-            throw Error('value cannot be frozen.');
+            throw Error("value cannot be frozen.");
         }
 
         return value;
     }
 
-    
+    function NVL(a, b)
+    {
+        if (a == null)
+        {
+            return b;
+        }
+
+        return a;
+    }    
 
     function Clone(obj)
     {
         return JSON.parse(JSON.stringify(obj));
+    }
+
+    var ClientTaskId =
+    {
+        CallJsFunction: 0,
+        ListenEvent: 1,
+        DispatchEvent: 2,        
+        ListenComponentEvent: 3,
+        PushHistory: 4,
+        ComebackWithLastAction: 5,
+        GotoMethod: 6,
+        NavigateToUrl : 7
     }
 
     function ConvertToReactElement(jsonNode, component)
@@ -361,7 +372,7 @@
                 continue;
             }
 
-            if (name.indexOf('bind$') === 0)
+            if (name.indexOf("bind$") === 0)
             {
                 continue;
             }
@@ -393,20 +404,20 @@
     {
         function normalizeEventArgument(obj)
         {
-            if (typeof obj === 'string' || typeof obj === 'number')
+            if (typeof obj === "string" || typeof obj === "number")
             {
                 return obj;
             }
 
-            if (obj && obj._reactName === 'onClick')
+            if (obj && obj._reactName === "onClick")
             {
-                return (GoUpwardFindFirst(obj.target, HasId) ?? obj.target).id;
+                return NVL(GoUpwardFindFirst(obj.target, HasId), obj.target).id;
             }
 
             // ReSharper disable once UnusedParameter
             function canSendToServer(key, value)
             {
-                if (key === 'originalEvent')
+                if (key === "originalEvent")
                 {
                     return false;
                 }
@@ -519,7 +530,7 @@
         {
             var state = component.state.$state;
 
-            var beforePostingState = TryGetComponentAction(component, 'beforePostingState');
+            var beforePostingState = TryGetComponentAction(component, "beforePostingState");
             if (beforePostingState)
             {
                 state = beforePostingState(Clone(state));
@@ -593,7 +604,7 @@
                 {
                     if (clientTask.After != null)
                     {
-                        throw new Error('ClientTask.After can not be use after this task');
+                        throw new Error("ClientTask.After can not be use after this task");
                     }
 
                     return function()
@@ -611,7 +622,7 @@
                 {
                     if (clientTask.After != null)
                     {
-                        throw new Error('ClientTask.After can not be use after this task');
+                        throw new Error("ClientTask.After can not be use after this task");
                     }
 
                     return function ()
@@ -660,7 +671,7 @@
                 {
                     if (clientTask.After != null)
                     {
-                        throw new Error('ClientTask.After can not be use after this task');
+                        throw new Error("ClientTask.After can not be use after this task");
                     }
 
                     return function ()
@@ -676,13 +687,12 @@
                 }
                 
 
-                throw Error('ClientTask not recognized.');
+                throw Error("ClientTask not recognized.");
             }
    
         }
         SendRequest(request, onSuccess);
     }
-
 
     var componentActions = {};
   
@@ -748,12 +758,12 @@
 
             componentDidMount()
             {
-                TryDispatchComponentAction(this, 'componentDidMount');
+                TryDispatchComponentAction(this, "componentDidMount");
             }
 
             componentWillUnmount()
             {
-                TryDispatchComponentAction(this, 'componentWillUnmount');
+                TryDispatchComponentAction(this, "componentWillUnmount");
             }
         }
 
@@ -802,15 +812,15 @@
                     throw response.ErrorMessage;
                 }
 
-                var element = JSON.parse(response.ElementAsJsonString);
+                const element = JSON.parse(response.ElementAsJsonString);
 
-                var component = DefineComponent(element);
+                const component = DefineComponent(element);
 
-                var clientTask = element.state.ClientTask;
+                const clientTask = element.state.ClientTask;
                 
                 element.state.ClientTask = null;
                 
-                var reactElement = React.createElement(component);
+                const reactElement = React.createElement(component);
 
                 function processClientTask(clientTask)
                 {
@@ -833,7 +843,7 @@
                         return processClientTask(clientTask.After);
                     }
 
-                    throw new Error('Client Task not recognized');
+                    throw new Error("Client Task not recognized");
                 }
 
                 processClientTask(clientTask);
@@ -847,10 +857,10 @@
 
     function CallJsFunctionInPath(clientTask)
     {
-        var fn = GetValueInPath(window, clientTask.JsFunctionPath.split('.'));
+        var fn = GetValueInPath(window, clientTask.JsFunctionPath.split("."));
         if (fn == null)
         {
-            throw Error('Function not found. Function is ' + clientTask.JsFunctionPath);
+            throw Error("Function not found. Function is " + clientTask.JsFunctionPath);
         }
 
         fn.apply(null, clientTask.JsFunctionArguments);
@@ -863,7 +873,25 @@
             HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: cmp, eventArguments: [] });
         });
     }
-    
+
+    function Fetch(url, options, processResponse, callback)
+    {
+        fetch(url, options).then(response => processResponse(response)).then(json => callback(json));
+
+        // if you want to use your custom api then override here
+        // jquery example
+        //var jqueryOptions =
+        //{
+        //    url: url,
+        //    method: options.method,
+        //    contentType: 'application/json',
+        //    data: options.body
+        //};
+        //$.ajax(jqueryOptions, 'json').done(function (response) {
+        //    callback(response);
+        //});
+    }
+
     global.ReactDotNet =
     {
         OnDocumentReady: OnDocumentReady,
@@ -873,17 +901,18 @@
         RenderComponentIn: RenderComponentIn,
         SendRequest: function (request, callback)
         {
-            fetch("/component/HandleRequest",
-            {
-                method: "POST",
-                headers:
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+            Fetch("/component/HandleRequest", {
+                    method: "POST",
+                    headers:
+                    {
+                        'Accept': "application/json",
+                        'Content-Type': "application/json"
+                    },
+                    body: JSON.stringify(request)
                 },
-                body: JSON.stringify(request)
-
-            }).then(response => response.json()).then(json => callback(json));
+                response => response.json(),
+                json => callback(json)
+            );
         }
     };
 
