@@ -1,4 +1,7 @@
-
+/**
+ *  Written by Abdullah Beyaztaþ
+ *  Manages react ui by using react render informations that incoming from server.
+ */
 (function (global, React, ReactDOM)
 {
     function GoUpwardFindFirst(htmlElement, findFunc)
@@ -37,15 +40,15 @@
 
     const EventBus =
     {
-        On(event, callback)
+        On: function(event, callback)
         {
             document.addEventListener(event, (e) => callback(e.detail));
         },
-        Dispatch(event, data)
+        Dispatch: function(event, data)
         {
             document.dispatchEvent(new CustomEvent(event, { detail: data }));
         },
-        Remove(event, callback)
+        Remove: function(event, callback)
         {
             document.removeEventListener(event, callback);
         }
@@ -186,6 +189,15 @@
         return value;
     }
 
+    function NVL(a, b)
+    {
+        if (a == null)
+        {
+            return b;
+        }
+
+        return a;
+    }
     
 
     function Clone(obj)
@@ -400,7 +412,7 @@
 
             if (obj && obj._reactName === 'onClick')
             {
-                return (GoUpwardFindFirst(obj.target, HasId) ?? obj.target).id;
+                return NVL(GoUpwardFindFirst(obj.target, HasId), obj.target).id;
             }
 
             // ReSharper disable once UnusedParameter
@@ -802,15 +814,15 @@
                     throw response.ErrorMessage;
                 }
 
-                var element = JSON.parse(response.ElementAsJsonString);
+                const element = JSON.parse(response.ElementAsJsonString);
 
-                var component = DefineComponent(element);
+                const component = DefineComponent(element);
 
-                var clientTask = element.state.ClientTask;
+                const clientTask = element.state.ClientTask;
                 
                 element.state.ClientTask = null;
                 
-                var reactElement = React.createElement(component);
+                const reactElement = React.createElement(component);
 
                 function processClientTask(clientTask)
                 {
@@ -833,7 +845,7 @@
                         return processClientTask(clientTask.After);
                     }
 
-                    throw new Error('Client Task not recognized');
+                    throw new Error("Client Task not recognized");
                 }
 
                 processClientTask(clientTask);
@@ -865,26 +877,21 @@
     }
 
     function Fetch(url, options, processResponse, callback)
-    {        
-        var useJquery = true;
-        if(useJquery)
-        {
-            var jqueryOptions = {
-                url: url,
-                method: options.method,
-                contentType : 'application/json',
-                data: options.body
-            };
-            $.ajax(jqueryOptions, 'json').done(function (response) 
-            {
-                callback(response);
-            });
-        }
-        else
-        {
-            fetch(url, options).then(response => processResponse(response)).then(json => callback(json));    
-        }
-        
+    {
+        fetch(url, options).then(response => processResponse(response)).then(json => callback(json));
+
+        // if you want to use your custom api then override here
+        // jquery example
+        //var jqueryOptions =
+        //{
+        //    url: url,
+        //    method: options.method,
+        //    contentType: 'application/json',
+        //    data: options.body
+        //};
+        //$.ajax(jqueryOptions, 'json').done(function (response) {
+        //    callback(response);
+        //});
     }
 
     global.ReactDotNet =
