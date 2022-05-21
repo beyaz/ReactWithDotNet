@@ -4,40 +4,8 @@
  */
 (function (global, React, ReactDOM)
 {
-    function GoUpwardFindFirst(htmlElement, findFunc)
-    {
-        while (htmlElement)
-        {
-            if (findFunc(htmlElement))
-            {
-                return htmlElement;
-            }
-
-            htmlElement = htmlElement.parentElement;
-        }
-        
-        return null;
-    }
-    
-    function HasId(htmlElement)
-    {
-        return htmlElement.id !== "";
-    }
-
-    var ClientTaskId =
-    {
-        CallJsFunction: 0,
-        ListenEvent: 1,
-        DispatchEvent: 2,        
-        ListenComponentEvent: 3,
-        PushHistory: 4,
-        ComebackWithLastAction: 5,
-        GotoMethod: 6,
-        NavigateToUrl : 7
-    }
-
     var createElement = React.createElement;
-
+    
     const EventBus =
     {
         On: function(event, callback)
@@ -53,6 +21,37 @@
             document.removeEventListener(event, callback);
         }
     };
+    
+    function IterateObject(obj, fn)
+    {
+        for (var key in obj)
+        {
+            if (obj.hasOwnProperty(key))
+            {
+                fn(key, obj[key]);
+            }
+        }
+    }
+    
+    function HasId(htmlElement)
+    {
+        return htmlElement.id !== "";
+    }
+    
+    function GoUpwardFindFirst(htmlElement, findFunc)
+    {
+        while (htmlElement)
+        {
+            if (findFunc(htmlElement))
+            {
+                return htmlElement;
+            }
+
+            htmlElement = htmlElement.parentElement;
+        }
+        
+        return null;
+    }
 
     function OnDocumentReady(callback)
     {
@@ -65,17 +64,6 @@
                 setTimeout(callback, 1);
             }
         }, 10);
-    }
-
-    function IterateObject(obj, fn)
-    {
-        for (var key in obj)
-        {
-            if (obj.hasOwnProperty(key))
-            {
-                fn(key, obj[key]);
-            }
-        }
     }
 
     function PickPropertiesToNewObject(obj, fn_bool__CanPick__stringKey_objectValue)
@@ -197,12 +185,23 @@
         }
 
         return a;
-    }
-    
+    }    
 
     function Clone(obj)
     {
         return JSON.parse(JSON.stringify(obj));
+    }
+
+    var ClientTaskId =
+    {
+        CallJsFunction: 0,
+        ListenEvent: 1,
+        DispatchEvent: 2,        
+        ListenComponentEvent: 3,
+        PushHistory: 4,
+        ComebackWithLastAction: 5,
+        GotoMethod: 6,
+        NavigateToUrl : 7
     }
 
     function ConvertToReactElement(jsonNode, component)
@@ -694,7 +693,6 @@
         }
         SendRequest(request, onSuccess);
     }
-
 
     var componentActions = {};
   
