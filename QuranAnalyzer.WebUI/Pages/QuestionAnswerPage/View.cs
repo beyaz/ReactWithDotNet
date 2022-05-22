@@ -71,7 +71,7 @@ public class View : PageBase
                             }
 
                         },
-                        new div(x.Question) + paddingLeft(14) + paddingTopBottom(px(10))
+                        new div(x.Question) | paddingLeft(14) | paddingTopBottom(px(10))
                     }
                 }
             ;
