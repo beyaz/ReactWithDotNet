@@ -217,10 +217,21 @@ namespace ReactDotNet
             return element;
         }
 
-        
-        
 
 
+        public static Element operator |(Element element, ElementModifier elementModifier)
+        {
+            elementModifier?.Modify(element);
+
+            return element;
+        }
+
+        public static Element operator /(Element element, ElementModifier elementModifier)
+        {
+            elementModifier?.Modify(element);
+
+            return element;
+        }
     }
 
     public abstract class HtmlElement : Element

@@ -39,14 +39,14 @@ public class View : PageBase
 
             
 
-        return new div(marginTop(30))
+        return new div
             {
                 new Space{Height = 30},
                 new div(paddingLeftRight(px(15)))
                 {
-                    new div("Soru - Cevap") + marginBottom(px(16)) + fontWeight(500) + TextAlign.center,
-                    new p(@"When YouTube can't complete the action you’ve taken, an error message may surface on your device. There are many root causes of error messages. Many are out of YouTube’s control, such as a bad internet connection or insufficient memory on your device."),
-                    new p("Some of the most common error messages are:"),
+                    new div(model.Title) | marginBottom(px(16)) | fontWeight(500) | TextAlign.center,
+
+                    new p(model.Summary),
 
                     new div(model.QuestionsAndAnswers.Select(asLink))
                 }
