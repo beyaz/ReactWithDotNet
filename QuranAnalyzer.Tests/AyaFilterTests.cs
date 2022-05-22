@@ -10,7 +10,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void FilterWithStar()
         {
-            var records = AyaFilter.GetVerseList(" 42  : * ").Value;
+            var records = VerseFilter.GetVerseList(" 42  : * ").Value;
 
             records.Count.Should().Be(53);
 
@@ -23,7 +23,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void FilterWithStarWithMany()
         {
-            var records = AyaFilter.GetVerseList(" 42  : * , 114 : *").Value;
+            var records = VerseFilter.GetVerseList(" 42  : * , 114 : *").Value;
 
             records.Count.Should().Be(53 + 6);
 
@@ -38,7 +38,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void FilterWithStarWithManyWithSpecificAyahNumber()
         {
-            var records = AyaFilter.GetVerseList(" 42  : * , 114 : *, 77:50").Value;
+            var records = VerseFilter.GetVerseList(" 42  : * , 114 : *, 77:50").Value;
 
             records.Count.Should().Be(53 + 6 + 1);
 
@@ -56,7 +56,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void FilterWithStarWithManyWithSpecificAyahNumber_with_Error()
         {
-            AyaFilter.GetVerseList(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
+            VerseFilter.GetVerseList(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
         }
 
         [TestMethod]
@@ -76,10 +76,10 @@ namespace QuranAnalyzer;
             using StreamWriter w = File.AppendText("d:\\A.txt");
 
             var total = 1;
-            foreach (var sura in DataAccess.AllSura)
+            foreach (var sura in DataAccess.AllSurahs)
             {
                 
-                foreach (var aya in sura.aya)
+                foreach (var aya in sura.Verses)
                 {
                     w.WriteLine(total++ + "|"+ sura.Index +"|"+(aya._index) +"|" + aya._text);
                 }

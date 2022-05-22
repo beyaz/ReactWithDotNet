@@ -22,9 +22,9 @@ namespace QuranAnalyzer
             var searchList = WordSearcher.AsClearArabicCharacterList(searchWord);
 
             var total = 0;
-            foreach (var sura in AllSura)
+            foreach (var sura in AllSurahs)
             {
-                foreach (var aya in sura.aya)
+                foreach (var aya in sura.Verses)
                 {
                     foreach (var word in aya._text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                     {
@@ -135,7 +135,7 @@ namespace QuranAnalyzer
             {
                 var search = WordSearcher.AsClearArabicCharacterList(searchItem);
 
-                var count = Mixin.Contains(kelime_arindirilmis_array, search);
+                var count = ListExtensions.Contains(kelime_arindirilmis_array, search);
             }
 
 
@@ -145,16 +145,16 @@ namespace QuranAnalyzer
         [TestMethod]
         public void TestMethod1()
         {
-            AllSura.Length.Should().Be(114);
-            AllSura[0].Index.Should().Be(1);
-            AllSura[113].Index.Should().Be(114);
+            AllSurahs.Length.Should().Be(114);
+            AllSurahs[0].Index.Should().Be(1);
+            AllSurahs[113].Index.Should().Be(114);
 
 
             var notMatchedList = new List<string>();
 
-            foreach (var sura in AllSura)
+            foreach (var sura in AllSurahs)
             {
-                foreach (var aya in sura.aya)
+                foreach (var aya in sura.Verses)
                 {
                     var matchInfoList = Analyze(aya);
 

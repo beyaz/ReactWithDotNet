@@ -1,7 +1,7 @@
 ﻿using static QuranAnalyzer.Mixin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static QuranAnalyzer.ArabicCharacters;
-using static QuranAnalyzer.AyaFilter;
+using static QuranAnalyzer.VerseFilter;
 using static QuranAnalyzer.FpExtensions;
 
 namespace QuranAnalyzer;

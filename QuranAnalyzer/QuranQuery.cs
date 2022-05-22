@@ -8,9 +8,9 @@ public static class QuranQuery
     {
         var valueList = value.AsClearArabicCharacterList();
 
-        foreach (var sura in DataAccess.AllSura)
+        foreach (var sura in DataAccess.AllSurahs)
         {
-            foreach (var aya in sura.aya)
+            foreach (var aya in sura.Verses)
             {
                 var list = aya._text.AsClearArabicCharacterList();
                 if (list.EndsWith(valueList))
@@ -26,13 +26,13 @@ public static class QuranQuery
     {
         var valueList = value.AsClearArabicCharacterList();
 
-        foreach (var sura in DataAccess.AllSura)
+        foreach (var sura in DataAccess.AllSurahs)
         {
-            foreach (var aya in sura.aya)
+            foreach (var aya in sura.Verses)
             {
                 var list = aya._text.AsClearArabicCharacterList();
 
-                var count = Mixin.Contains(list, valueList);
+                var count = ListExtensions.Contains(list, valueList);
                 if ( count> 0)
                 {
                     yield return (aya,count);

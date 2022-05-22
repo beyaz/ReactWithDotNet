@@ -1,93 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static  QuranAnalyzer.FpExtensions;
+using static QuranAnalyzer.FpExtensions;
 
 namespace QuranAnalyzer;
 
+[Serializable]
+public class MatchInfo
+{
+    #region Public Properties
+    public int HarfIndex { get; set; }
+
+    public bool HasNoMatch => HarfIndex == -1;
+    public int StartIndex { get; set; }
+
+    public Verse verse { get; set; }
+    #endregion
+
+    #region Public Methods
+    public override string ToString()
+    {
+        if (verse != null)
+        {
+            if (HarfIndex >= 0)
+            {
+                return DataAccess.harfler[HarfIndex];
+            }
+
+            return verse._text[StartIndex].ToString();
+        }
+
+        return string.Empty;
+    }
+    #endregion
+}
+
 public sealed class CountingOption
 {
+    #region Public Properties
     public bool UseElifCountsSpecifiedByRK { get; set; }
+    #endregion
 }
 
 public static class ArabicCharacters
 {
-    public static string Sin = "س";
-    public static string Ya = "ي";
-
+    #region Static Fields
     public static string Kaf = "ق";
     public static string Sad = "ص";
+    public static string Sin = "س";
+    public static string Ya = "ي";
+    #endregion
 }
-
-
 
 public static class Mixin
 {
     #region Public Methods
-
-   
-    public static bool EndsWith(this IReadOnlyList<string> source, IReadOnlyList<string> search)
+    public static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
-        if (search.Count > source.Count)
-        {
-            return false;
-        }
-
-        var sourceIndex = source.Count - search.Count;
-
-        for (var i = 0; i < search.Count; i++)
-        {
-            if (source[sourceIndex + i] != search[i])
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return Pipe(character.AsArabicCharacterIndex(), arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
     }
 
-    public static int Contains(IReadOnlyList<string> source, IReadOnlyList<string> search)
-    {
-        if (search.Count > source.Count)
-        {
-            return 0;
-        }
-
-        var count = 0;
-        for (int i = 0; i < source.Count; i++)
-        {
-            if (i + search.Count >= source.Count)
-            {
-                return count;
-            }
-
-            var difference = i;
-
-            var isMatch = true;
-            for (int j = 0; j < search.Count; j++)
-            {
-                if (source[difference + j] != search[j])
-                {
-                    isMatch = false;
-                    break;
-                }
-            }
-
-            if (isMatch)
-            {
-                count++;
-            }
-        }
-
-        return count;
-    }
-    
-
-    static string IdOf(Verse verse)
-    {
-        return $"{verse.SurahNumber}:{verse._index}";
-    }
-    public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, string character , CountingOption option = null)
+    public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, string character, CountingOption option = null)
     {
         option ??= new CountingOption();
 
@@ -104,80 +77,6 @@ public static class Mixin
         return verseList.Sum(calculateCount);
     }
 
-    public static Response<int> Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, Response<int>> selector)
-    {
-        if (source == null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
-
-        return source.Aggregate(0, selector, (total, value) => total + value);
-    }
-
-    public static Response<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TSource, Response<TAccumulate>> func, Func<TAccumulate, TAccumulate, TAccumulate> acumulate)
-    {
-        if (source == null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
-
-        if (func == null)
-        {
-            throw new ArgumentNullException(nameof(func));
-        }
-
-        TAccumulate result = seed;
-        foreach (TSource element in source)
-        {
-            var response = func(element);
-            if (response.IsFail)
-            {
-                return response.Errors.ToArray();
-            }
-
-            result = acumulate(result, response.Value);
-        }
-
-        return result;
-    }
-
-    public static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
-    {
-        return Pipe(character.AsArabicCharacterIndex(), arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
-    }
-
-    static Response<int> AsArabicCharacterIndex(this string character)
-    {
-        return DataAccess.harfler.GetIndex(character);
-    }
-
-    
-
-    public static bool HasValueAndSame(this IReadOnlyList<string> a, IReadOnlyList<string> b)
-    {
-        if (a == null || b == null)
-        {
-            return false;
-        }
-
-        if (a.Count != b.Count)
-        {
-            return false;
-        }
-
-        var length = a.Count;
-
-        for (int i = 0; i < length; i++)
-        {
-            if (a[i] != b[i])
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public static Response<IReadOnlyList<MatchInfo>> SearchCharachters(string searchScript, string searchCharachters)
     {
         // var charachterList = searchCharachters.Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToArray();
@@ -187,7 +86,7 @@ public static class Mixin
 
         var items = new List<MatchInfo>();
 
-        foreach (var aya in AyaFilter.GetVerseList(searchScript).Value)
+        foreach (var aya in VerseFilter.GetVerseList(searchScript).Value)
         {
             items.AddRange(DataAccess.Analyze(aya).Where(x => indexList.Contains(x.HarfIndex)));
         }
@@ -195,24 +94,23 @@ public static class Mixin
         return items;
     }
 
-
-    
-    
-    
-
-
     public static Response<IReadOnlyList<MatchInfo>> SearchCharachtersWithCache(string searchScript, string searchCharachters)
     {
         var key = searchScript + "|" + searchCharachters;
 
-        return CachedAccess.AccessValue(key, ()=>SearchCharachters(searchScript, searchCharachters));
+        return CachedAccess.AccessValue(key, () => SearchCharachters(searchScript, searchCharachters));
     }
-
-
-
-
     #endregion
 
+    #region Methods
+    static Response<int> AsArabicCharacterIndex(this string character)
+    {
+        return DataAccess.harfler.GetIndex(character);
+    }
 
-
+    static string IdOf(Verse verse)
+    {
+        return $"{verse.SurahNumber}:{verse._index}";
+    }
+    #endregion
 }

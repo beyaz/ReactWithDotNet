@@ -5,8 +5,9 @@ using static QuranAnalyzer.FpExtensions;
 
 namespace QuranAnalyzer;
 
-public static class AyaFilter
+public static class VerseFilter
 {
+    #region Public Methods
     public static Response<IReadOnlyList<Verse>> GetVerseList(string searchScript)
     {
         var returnList = new List<Verse>();
@@ -26,7 +27,6 @@ public static class AyaFilter
 
         return returnList;
 
-
         Response<IReadOnlyList<Verse>> process(string searchItem)
         {
             var arr = searchItem.Split(": ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -36,54 +36,49 @@ public static class AyaFilter
             }
 
             return parseSureNumber()
-               .Then(findSurahByNumber)
-               .Then(sura=>collectAyaList(sura,arr[1]));
+                  .Then(findSurahByNumber)
+                  .Then<Surah, IReadOnlyList<Verse>>(sura => collectAyaList(sura, arr[1]));
 
             Response<int> parseSureNumber()
             {
                 return Try(() => int.Parse(arr[0]));
             }
 
-            Response<sura> findSurahByNumber(int surahNumber)
+            Response<Surah> findSurahByNumber(int surahNumber)
             {
-                if (surahNumber<=0 || surahNumber > AllSura.Length)
+                if (surahNumber <= 0 || surahNumber > AllSurahs.Length)
                 {
                     return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
                 }
 
-                return AllSura[--surahNumber];
+                return AllSurahs[--surahNumber];
             }
 
-            
-
-          
-
-
-
-            Response<IReadOnlyList<Verse>> collectAyaList(sura sura, string ayaFilter)
+            Response<IReadOnlyList<Verse>> collectAyaList(Surah sura, string ayaFilter)
             {
-                foreach (var aya in sura.aya)
+                foreach (var aya in sura.Verses)
                 {
                     aya.SurahNumber = sura.Index;
                 }
 
                 if (ayaFilter == "*")
                 {
-                    return sura.aya;
+                    return sura.Verses;
                 }
 
                 Response<IReadOnlyList<Verse>> selectOne(int ayahIndex)
                 {
-                    if (ayahIndex<=0 || ayahIndex > sura.aya.Length)
+                    if (ayahIndex <= 0 || ayahIndex > sura.Verses.Length)
                     {
                         return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
                     }
 
-                    return new []{sura.aya[--ayahIndex]};
+                    return new[] {sura.Verses[--ayahIndex]};
                 }
 
                 return ayaFilter.Then(int.Parse).Then(selectOne);
             }
         }
     }
+    #endregion
 }
