@@ -49,13 +49,14 @@ public static class ArabicCharacters
     public static string Sad = "ص";
     public static string Sin = "س";
     public static string Ya = "ي";
+    public static string Elif = "ا";
     #endregion
 }
 
 public static class Mixin
 {
     #region Public Methods
-    public static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
+     static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
         return Pipe(character.AsArabicCharacterIndex(), arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
     }
@@ -66,7 +67,7 @@ public static class Mixin
 
         Response<int> calculateCount(Verse verse)
         {
-            if (character == "ا" && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(IdOf(verse)))
+            if (character == ArabicCharacters.Elif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(IdOf(verse)))
             {
                 return SpecifiedByRK.RealElifCounts[IdOf(verse)];
             }
@@ -79,7 +80,6 @@ public static class Mixin
 
     public static Response<IReadOnlyList<MatchInfo>> SearchCharachters(string searchScript, string searchCharachters)
     {
-        // var charachterList = searchCharachters.Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToArray();
         var charachterList = searchCharachters.AsClearArabicCharacterList();
 
         var indexList = charachterList.Select(x => Array.IndexOf(DataAccess.harfler, x)).ToList();
