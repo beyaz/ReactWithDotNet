@@ -148,13 +148,13 @@ static class JsonSerializationOptionHelper
 
             value.BeforeSerialize();
 
+            
+
             // maybe root element is inherits from ReactElement
             {
-                if (value is IReactStatelessComponent statelessComponent)
+                if (value is ReactComponent reactComponent)
                 {
-                    var rootElement = statelessComponent.render();
-                    rootElement.key = statelessComponent.key;
-                    JsonSerializer.Serialize(writer, rootElement, options);
+                    JsonSerializer.Serialize(writer, renderStatelessReactComponent(reactComponent), options);
                     return;
                 }
             }
@@ -215,11 +215,9 @@ static class JsonSerializationOptionHelper
                 {
                     elementSerializationExtraData.BreadCrumpPath = breadCrumpPath + "," + i;
 
-                    if (item is IReactStatelessComponent statelessComponent)
+                    if (item is ReactComponent reactComponent)
                     {
-                        var rootElement = statelessComponent.render();
-                        rootElement.key = statelessComponent.key;
-                        JsonSerializer.Serialize(writer, rootElement, options);
+                        JsonSerializer.Serialize(writer, renderStatelessReactComponent(reactComponent), options);
                         i++;
                         continue;
                     }
@@ -373,6 +371,17 @@ static class JsonSerializationOptionHelper
                 }
 
                 return (propertyValue, false);
+            }
+
+            static Element renderStatelessReactComponent(ReactComponent reactComponent)
+            {
+                var rootElement = reactComponent.render();
+
+                rootElement.key = reactComponent.key;
+
+                rootElement |= reactComponent.modifier;
+
+                return rootElement;
             }
         }
 

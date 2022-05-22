@@ -225,8 +225,7 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Özet",
                             children =
                             {
-                                summaryContent,
-                                new CountsSummaryView{ Counts = new List<(string name, int count)>{("A",5),("B",4), ("c",5)}} | margin(222)
+                                new CountsSummaryView{ Counts = new List<(string name, int count)>{("A",5),("B",4), ("c",5)}} | margin(22)
                             }
                         },
                         new TabPanel
@@ -274,26 +273,31 @@ class CountsSummaryView: ReactComponent
 
     public override Element render()
     {
-        var header = new div
+        var returnDiv = new div
         {
-            new div(),
-            new div("Geçiş Adeti")
+            new div(Counts.Select(x => new div($"{x.count} adet {x.name} harfi bulundu.")))
         };
 
-        var body = new div(Counts.Select(x=>new div{  new div(x.name), new div(x.count.ToString()) }));
+        var total = Counts.Select(x => x.count).Sum();
 
-        var bottom = new div
+        if (total % 19 == 0)
         {
-            new div(),
-            new div("Geçiş Adeti")
-        };
+            returnDiv.appendChild(new div
+            {
+                new div {text = "Toplam: ("},
+                new div {text = "19 x " + total / 19, style = {color = "red", marginLeft = px(5), marginRight = px(5)}},
+                new div {text = ")"}
+            });
+        }
+        else
+        {
+            returnDiv.appendChild(new div
+            {
+                new div($"Toplam: {total}")
+            });
+        }
 
-        return new div
-        {
-            header,
-            body,
-            bottom
-        };
+        return returnDiv;
 
     }
 }

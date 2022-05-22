@@ -212,9 +212,7 @@ namespace ReactDotNet
 
         public static Element operator +(Element element, ElementModifier elementModifier)
         {
-            elementModifier?.Modify(element);
-
-            return element;
+            return element | elementModifier;
         }
         
         public static Element operator |(Element element, ElementModifier elementModifier)
