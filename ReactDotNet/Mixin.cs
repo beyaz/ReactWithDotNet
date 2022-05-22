@@ -241,6 +241,15 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.paddingTop = px(paddingTop));
         }
 
+        public static ElementModifier paddingTopBottom(string paddingTopBottom)
+        {
+            return new ElementModifier(element =>
+            {
+                element.style.paddingTop = paddingTopBottom;
+                element.style.paddingBottom = paddingTopBottom;
+            });
+        }
+
         public static ElementModifier paddingBottom(double paddingBottom)
         {
             return new ElementModifier(element => element.style.paddingBottom = px(paddingBottom));
@@ -292,9 +301,9 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.marginTop = marginTop);
         }
 
-        public static ElementModifier marginBottom(double margin)
+        public static ElementModifier marginBottom(string margin)
         {
-            return new ElementModifier(element => element.style.marginBottom = px(margin));
+            return new ElementModifier(element => element.style.marginBottom = margin);
         }
 
         public static ElementModifier visibility(Visibility visibility)

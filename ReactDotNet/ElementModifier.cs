@@ -60,7 +60,12 @@ public sealed class ElementModifier
     {
         return new ElementModifier(element => element.style.alignContent = alignContent);
     }
-    
+
+    public static implicit operator ElementModifier(TextAlign textAlign)
+    {
+        return new ElementModifier(element => element.style.textAlign = textAlign);
+    }
+
     public static ElementModifier operator +(ElementModifier a, ElementModifier b)
     {
         return new ElementModifier(element =>

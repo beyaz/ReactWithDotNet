@@ -271,6 +271,26 @@ public class div : HtmlElement
     }
 }
 
+public class p : HtmlElement
+{
+    public p()
+    {
+    }
+
+    public p(string text)
+    {
+        this.text = text;
+    }
+
+    public p(IEnumerable<Element> children)
+    {
+        this.children.AddRange(children);
+    }
+
+    public p(params ElementModifier[] modifiers) : base(modifiers)
+    {
+    }
+}
 public class pre : HtmlElement
 {
     public pre()
@@ -302,6 +322,11 @@ public class h4 : HtmlElement
     public h4(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
+
+    public h4(string text)
+    {
+        this.text = text;
+    }
 }
 
 public class h3 : HtmlElement
@@ -313,16 +338,28 @@ public class h3 : HtmlElement
     public h3(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
+
+    public h3(string text)
+    {
+        this.text = text;
+    }
 }
 
 public class h2 : HtmlElement
 {
+  
+
     public h2()
     {
     }
 
     public h2(params ElementModifier[] modifiers) : base(modifiers)
     {
+    }
+
+    public h2(string text)
+    {
+        this.text = text;
     }
 }
 
@@ -334,6 +371,11 @@ public class h1 : HtmlElement
 
     public h1(params ElementModifier[] modifiers) : base(modifiers)
     {
+    }
+
+    public h1(string text)
+    {
+        this.text = text;
     }
 }
 
@@ -351,6 +393,16 @@ public class a : HtmlElement
     public string href { get; set; }
 }
 
+public class li : HtmlElement
+{
+    public li()
+    {
+    }
+
+    public li(params ElementModifier[] modifiers) : base(modifiers)
+    {
+    }
+}
 public class img : HtmlElement
 {
     public img()
