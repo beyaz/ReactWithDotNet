@@ -381,6 +381,8 @@ namespace ReactDotNet
         {
             return new ElementModifier(element => element.id = id);
         }
+        
+        
     }
 
     public static class HtmlEvent
