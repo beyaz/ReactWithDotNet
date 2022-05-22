@@ -282,6 +282,15 @@ namespace ReactDotNet
             return new ElementModifier(element => element.style.marginRight = px(margin));
         }
 
+        public static ElementModifier viewBox(string viewBox)
+        {
+            return new ElementModifier(element => ((svg)element).viewBox = viewBox);
+        }
+        public static ElementModifier href(string href)
+        {
+            return new ElementModifier(element => ((a)element).href = href);
+        }
+
         public static ElementModifier marginTop(double margin)
         {
             return new ElementModifier(element => element.style.marginTop = px(margin));
