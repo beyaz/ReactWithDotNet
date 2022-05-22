@@ -1,4 +1,4 @@
-﻿using static QuranAnalyzer.Mixin;
+﻿using static QuranAnalyzer.QuranAnalyzerMixin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static QuranAnalyzer.ArabicCharacters;
 using static QuranAnalyzer.VerseFilter;

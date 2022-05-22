@@ -62,7 +62,7 @@ namespace QuranAnalyzer;
         [TestMethod]
         public void YaSin()
         {
-            var records = Mixin.SearchCharachters("36 : *", "ي , سٓ").Value;
+            var records = QuranAnalyzerMixin.SearchCharachters("36 : *", "ي , سٓ").Value;
 
             records.Count.Should().Be(285);
 

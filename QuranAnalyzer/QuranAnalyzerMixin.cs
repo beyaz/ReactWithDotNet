@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static QuranAnalyzer.DataAccess;
 using static QuranAnalyzer.FpExtensions;
+using static QuranAnalyzer.VerseFilter;
 
 namespace QuranAnalyzer;
 
@@ -24,7 +26,7 @@ public class MatchInfo
         {
             if (HarfIndex >= 0)
             {
-                return DataAccess.harfler[HarfIndex];
+                return harfler[HarfIndex];
             }
 
             return verse._text[StartIndex].ToString();
@@ -53,10 +55,10 @@ public static class ArabicCharacters
     #endregion
 }
 
-public static class Mixin
+public static class QuranAnalyzerMixin
 {
     #region Public Methods
-     static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
+    static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
         return Pipe(character.AsArabicCharacterIndex(), arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
     }
@@ -72,7 +74,7 @@ public static class Mixin
                 return SpecifiedByRK.RealElifCounts[IdOf(verse)];
             }
 
-            return DataAccess.Analyze(verse).GetCountOf(character);
+            return AnalyzeVerse(verse).GetCountOf(character);
         }
 
         return verseList.Sum(calculateCount);
@@ -82,13 +84,13 @@ public static class Mixin
     {
         var charachterList = searchCharachters.AsClearArabicCharacterList();
 
-        var indexList = charachterList.Select(x => Array.IndexOf(DataAccess.harfler, x)).ToList();
+        var indexList = charachterList.Select(x => Array.IndexOf(harfler, x)).ToList();
 
         var items = new List<MatchInfo>();
 
-        foreach (var aya in VerseFilter.GetVerseList(searchScript).Value)
+        foreach (var verse in GetVerseList(searchScript).Value)
         {
-            items.AddRange(DataAccess.Analyze(aya).Where(x => indexList.Contains(x.HarfIndex)));
+            items.AddRange(AnalyzeVerse(verse).Where(x => indexList.Contains(x.HarfIndex)));
         }
 
         return items;
@@ -105,7 +107,7 @@ public static class Mixin
     #region Methods
     static Response<int> AsArabicCharacterIndex(this string character)
     {
-        return DataAccess.harfler.GetIndex(character);
+        return harfler.GetIndex(character);
     }
 
     static string IdOf(Verse verse)

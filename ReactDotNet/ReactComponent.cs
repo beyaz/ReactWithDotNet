@@ -18,7 +18,9 @@ namespace ReactDotNet
     {
         public abstract Element render();
 
-        
+        internal ElementModifier modifier;
+
+
     }
 
     

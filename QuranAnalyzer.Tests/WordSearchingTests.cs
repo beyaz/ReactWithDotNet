@@ -156,7 +156,7 @@ namespace QuranAnalyzer
             {
                 foreach (var aya in sura.Verses)
                 {
-                    var matchInfoList = Analyze(aya);
+                    var matchInfoList = AnalyzeVerse(aya);
 
 
                     foreach (var matchInfo in matchInfoList.Where(x => x.HasNoMatch))

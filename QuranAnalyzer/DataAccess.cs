@@ -222,7 +222,7 @@ public static class DataAccess
         return null;
     }
 
-    public static IReadOnlyList<MatchInfo> Analyze(Verse verse, bool isHemzeActive = true)
+    public static IReadOnlyList<MatchInfo> AnalyzeVerse(Verse verse, bool isHemzeActive = true)
     {
         var line = verse._bismillah + verse._text;
 

@@ -32,7 +32,7 @@ public static class QuranQuery
             {
                 var list = aya._text.AsClearArabicCharacterList();
 
-                var count = ListExtensions.Contains(list, valueList);
+                var count = list.Contains(valueList);
                 if ( count> 0)
                 {
                     yield return (aya,count);

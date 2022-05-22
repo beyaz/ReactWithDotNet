@@ -216,22 +216,28 @@ namespace ReactDotNet
 
             return element;
         }
-
-
-
+        
         public static Element operator |(Element element, ElementModifier elementModifier)
         {
+            if (element is ReactComponent reactComponent)
+            {
+                if (reactComponent.modifier == null)
+                {
+                    reactComponent.modifier = elementModifier;
+                }
+                else
+                {
+                    reactComponent.modifier |= elementModifier;
+                }
+
+                return element;
+            }
             elementModifier?.Modify(element);
 
             return element;
         }
 
-        public static Element operator /(Element element, ElementModifier elementModifier)
-        {
-            elementModifier?.Modify(element);
-
-            return element;
-        }
+        
     }
 
     public abstract class HtmlElement : Element

@@ -34,7 +34,7 @@ public static class ListExtensions
         return result;
     }
 
-    public static int Contains(IReadOnlyList<string> source, IReadOnlyList<string> search)
+    public static int Contains(this IReadOnlyList<string> source, IReadOnlyList<string> search)
     {
         if (search.Count > source.Count)
         {

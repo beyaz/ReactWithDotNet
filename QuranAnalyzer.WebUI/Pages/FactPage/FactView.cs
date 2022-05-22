@@ -82,7 +82,7 @@ class FactView : ReactComponent<FactViewModel>
             return;
         }
 
-        var matchRecords = Mixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
+        var matchRecords = QuranAnalyzerMixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
 
         var results = new List<Occurence>();
 
@@ -170,7 +170,9 @@ class FactView : ReactComponent<FactViewModel>
         var summaryContent = new HPanel
         {
             new div {text = state.SummaryText},
-            new div {text = state.CountOfCharacters.ToString(), style = {marginLeft = px(5), marginRight = px(5)}}
+            new div {text = state.CountOfCharacters.ToString(), style = {marginLeft = px(5), marginRight = px(5)}},
+
+           
         };
 
         if (state.CountOfCharacters % 19 == 0)
@@ -205,7 +207,7 @@ class FactView : ReactComponent<FactViewModel>
 
         dt.children.AddRange(resultColumns);
 
-        var matchRecords = Mixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
+        var matchRecords = QuranAnalyzerMixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
 
         var results = new Card
         {
@@ -223,7 +225,8 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Özet",
                             children =
                             {
-                                summaryContent
+                                summaryContent,
+                                new CountsSummaryView{ Counts = new List<(string name, int count)>{("A",5),("B",4), ("c",5)}} | margin(222)
                             }
                         },
                         new TabPanel
@@ -248,6 +251,8 @@ class FactView : ReactComponent<FactViewModel>
         };
 
 
+
+
         ElementModifier getFontSize()
         {
             if (state.AvailableWidth <500)
@@ -260,5 +265,35 @@ class FactView : ReactComponent<FactViewModel>
 
 
         return Extensions.BlockUI(container.appendChild(searchBar).appendChild(results), state.IsBlocked, state.OperationName);
+    }
+}
+
+class CountsSummaryView: ReactComponent
+{
+    public IReadOnlyList<(string name, int count)> Counts { get; set; }
+
+    public override Element render()
+    {
+        var header = new div
+        {
+            new div(),
+            new div("Geçiş Adeti")
+        };
+
+        var body = new div(Counts.Select(x=>new div{  new div(x.name), new div(x.count.ToString()) }));
+
+        var bottom = new div
+        {
+            new div(),
+            new div("Geçiş Adeti")
+        };
+
+        return new div
+        {
+            header,
+            body,
+            bottom
+        };
+
     }
 }

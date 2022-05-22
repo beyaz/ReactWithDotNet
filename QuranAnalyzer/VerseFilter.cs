@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using static QuranAnalyzer.DataAccess;
 using static QuranAnalyzer.FpExtensions;
 
@@ -37,7 +38,7 @@ public static class VerseFilter
 
             return parseSureNumber()
                   .Then(findSurahByNumber)
-                  .Then<Surah, IReadOnlyList<Verse>>(sura => collectAyaList(sura, arr[1]));
+                  .Then(sura => collectAyaList(sura, arr[1]));
 
             Response<int> parseSureNumber()
             {
@@ -63,12 +64,12 @@ public static class VerseFilter
 
                 if (ayaFilter == "*")
                 {
-                    return sura.Verses;
+                    return sura.Verses.ToArray();
                 }
 
                 Response<IReadOnlyList<Verse>> selectOne(int ayahIndex)
                 {
-                    if (ayahIndex <= 0 || ayahIndex > sura.Verses.Length)
+                    if (ayahIndex <= 0 || ayahIndex > sura.Verses.Count)
                     {
                         return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
                     }
