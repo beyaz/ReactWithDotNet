@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="PrimeReact\AutoComplete.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="ReactDotNet.js" />
   </ItemGroup>
 

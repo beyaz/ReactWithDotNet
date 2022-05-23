@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace ReactDotNet.PrimeReact;
@@ -37,3 +36,4 @@ public class DropdownChangeParams
 {
     public string value { get; set; }
 }
+

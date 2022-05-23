@@ -8,6 +8,8 @@ public class Card : ElementBase
     public string title { get; set; }
 }
 
+
+
 public class Dialog: ElementBase
 {
     /// <summary>
@@ -54,3 +56,5 @@ public class Dialog: ElementBase
     [React]
     public Action onHide { get; set; }
 }
+
+

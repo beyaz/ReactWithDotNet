@@ -41,7 +41,7 @@ public class View : PageBase
 
         return new div
             {
-                new Space{Height = 30},
+                new Space{Height = 230},
                 new div(paddingLeftRight(px(15)))
                 {
                     new div(model.Title) | marginBottom(px(16)) | fontWeight(500) | TextAlign.center,
