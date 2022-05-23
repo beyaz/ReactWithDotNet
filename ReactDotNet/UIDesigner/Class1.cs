@@ -10,16 +10,15 @@ namespace ReactDotNet.UIDesigner
     [Serializable]
     public class UIDesignerModel
     {
-        public IReadOnlyList<AAA> Suggestions { get; set; } = new List<AAA>
+        public IReadOnlyList<ReactComponentInfo> Suggestions { get; set; } = new List<ReactComponentInfo>
         {
-            new() {Name = "Abx", Value = "xyz"}, 
-            new() {Name = "Abx", Value = "xyzyy"},
+            new (){Name ="abc1", Value = "ytr"},
+            new() {Name ="abc2", Value = "ytr2"}
         };
         public string SelectedComponentName { get; set; }
-
     }
 
-    public class AAA
+    public class ReactComponentInfo
     {
         public string Name { get; set; }
         public string Value { get; set; }
@@ -37,8 +36,8 @@ namespace ReactDotNet.UIDesigner
             var componentSelector = new ListBox
             {
                 options     = state.Suggestions,
-                optionLabel = "Name",
-                optionValue = "Value",
+                optionLabel = nameof(ReactComponentInfo.Name),
+                optionValue = nameof(ReactComponentInfo.Value),
                 value       = state.SelectedComponentName,
                 onChange    = OnChange,
                 style =
@@ -48,7 +47,7 @@ namespace ReactDotNet.UIDesigner
                 },
                 filter = true
             };
-            return new div(width(px(500)) , height(px(500)), border("1px dashed #e0e0e0"), padding(5))
+            return new HPanel(border("1px dashed #e0e0e0"), padding(5), margin(7))
             {
                 componentSelector,
                 new div("data"),

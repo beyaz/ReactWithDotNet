@@ -430,16 +430,22 @@ public class HPanel : div
 {
     public HPanel(params ElementModifier[] modifiers) : base(modifiers)
     {
+        InitializeStyle(style);
     }
 
     public override string tagName => nameof(div);
 
-    public HPanel()
+    static void InitializeStyle(Style style)
     {
         style.display       = Display.flex;
         style.flexDirection = FlexDirection.row;
         style.alignItems    = AlignItems.stretch;
         style.width         = "100%";
+
+    }
+    public HPanel()
+    {
+        InitializeStyle(style);
     }
 
     protected internal override void BeforeSerialize()
