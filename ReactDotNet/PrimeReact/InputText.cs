@@ -14,7 +14,13 @@ public class InputText : ElementBase
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value",  eventName = "onChange")]
     [ReactDefaultValue(DefaultValue = "")]
     public Expression<Func<string>> valueBind { get; set; }
-        
+
+
+    [React]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    [ReactDefaultValue(DefaultValue = "")]
+    public BindingSourcePath<string> valueBindNew { get; set; }
+
     [React]
     public string placeholder { get; set; }
 

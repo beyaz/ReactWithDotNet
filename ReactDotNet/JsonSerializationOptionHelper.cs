@@ -326,7 +326,9 @@ static class JsonSerializationOptionHelper
                 {
                     if (propertyValue is Expression<Func<string>> expression)
                     {
-                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, expression);
+                        string[] calculateSourcePathFunc() => expression.AsBindingSourcePathInState().Split('.', StringSplitOptions.RemoveEmptyEntries);
+
+                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
                         if (bindInfo == null)
                         {
                             return (null, true);
@@ -339,7 +341,9 @@ static class JsonSerializationOptionHelper
                 {
                     if (propertyValue is Expression<Func<int>> expression)
                     {
-                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, expression);
+                        string[] calculateSourcePathFunc() => expression.AsBindingSourcePathInState().Split('.', StringSplitOptions.RemoveEmptyEntries);
+
+                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
                         if (bindInfo == null)
                         {
                             return (null, true);
@@ -351,7 +355,9 @@ static class JsonSerializationOptionHelper
                 {
                     if (propertyValue is Expression<Func<bool>> expression)
                     {
-                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, expression);
+                        string[] calculateSourcePathFunc() => expression.AsBindingSourcePathInState().Split('.', StringSplitOptions.RemoveEmptyEntries);
+
+                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
                         if (bindInfo == null)
                         {
                             return (null, true);
@@ -385,7 +391,7 @@ static class JsonSerializationOptionHelper
             }
         }
 
-        static BindInfo GetExpressionAsBindingInfo<TBindValuePropertyType>(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Expression<Func<TBindValuePropertyType>> expression)
+        static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
         {
             var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
             if (reactBindAttribute == null)
@@ -404,7 +410,7 @@ static class JsonSerializationOptionHelper
             {
                 targetProp    = reactBindAttribute.targetProp,
                 eventName     = reactBindAttribute.eventName,
-                sourcePath    = Extensions.Bind(expression).Split('.', StringSplitOptions.RemoveEmptyEntries),
+                sourcePath    = calculateSourcePathFunc(),
                 IsBinding     = true,
                 jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
                 defaultValue  = defaultValue

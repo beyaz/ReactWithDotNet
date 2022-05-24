@@ -216,12 +216,10 @@ namespace ReactDotNet.UIDesigner
 
                     for (int i = 0; i < state.Properties.Count; i++)
                     {
-                        var index = i;
                         yield return new div
                         {
                             new div(state.Properties[i].Path),
-                            new InputText {valueBind = () => state.Properties[index].Value}
-                            // Js("setValueInPath","state.Properties[5].Value")
+                            new InputText {valueBindNew = $"state.Properties[{i}].Value"}
                         };
                     }
                 }
