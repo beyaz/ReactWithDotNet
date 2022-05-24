@@ -30,3 +30,19 @@ public class InputText : ElementBase
     public bool? autoFocus { get; set; }
     
 }
+
+public sealed class BindingSourcePath<T>
+{
+    public Expression<Func<T>> Expression { get; set; }
+    public string PathInState { get; set; }
+
+    public static implicit operator BindingSourcePath<T>(Expression<Func<T>> expression)
+    {
+        return new BindingSourcePath<T> { Expression = expression};
+    }
+
+    public static implicit operator BindingSourcePath<T>(string pathInState)
+    {
+        return new BindingSourcePath<T> { PathInState = pathInState };
+    }
+}
