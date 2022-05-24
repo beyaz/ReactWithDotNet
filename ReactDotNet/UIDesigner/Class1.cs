@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using ReactDotNet.PrimeReact;
 using static ReactDotNet.Mixin;
@@ -10,12 +11,9 @@ namespace ReactDotNet.UIDesigner
     [Serializable]
     public class UIDesignerModel
     {
-        public IReadOnlyList<ReactComponentInfo> Suggestions { get; set; } = new List<ReactComponentInfo>
-        {
-            new (){Name ="abc1", Value = "ytr"},
-            new() {Name ="abc2", Value = "ytr2"}
-        };
         public string SelectedComponentName { get; set; }
+
+        public ClientTask ClientTask { get; set; }
     }
 
     public class ReactComponentInfo
@@ -28,31 +26,109 @@ namespace ReactDotNet.UIDesigner
     {
         public override void constructor()
         {
-            state = new UIDesignerModel();
+            state = new UIDesignerModel
+            {
+                ClientTask = new ClientTaskListenComponentEvent
+                {
+                    EventName     = ReactComponentEvents.componentDidMount.ToString(),
+                    RouteToMethod = nameof(OnFirstLoaded)
+                },
+                
+            };
         }
-        
+
+        static IEnumerable<ReactComponentInfo> GetComponents(Assembly assembly)
+        {
+            foreach (var type in assembly.GetTypes())
+            {
+                if (type.IsSubclassOf(typeof(ReactComponent)))
+                {
+                    yield return new ReactComponentInfo {Name = type.FullName, Value = type.FullName};
+                }
+            }
+        }
+
+        IReadOnlyList<ReactComponentInfo> Suggestions => GetComponents(Assembly.Load("QuranAnalyzer.WebUI")).ToList();
+
+        public void OnFirstLoaded()
+        {
+            Refresh();
+        }
+
+        public void Refresh()
+        {
+            state.ClientTask = new ClientTaskGotoMethod
+            {
+                MethodName = nameof(Refresh),
+                Timeout    = 2000
+            };
+        }
+
         public override Element render()
         {
             var componentSelector = new ListBox
             {
-                options     = state.Suggestions,
+                options     = Suggestions,
                 optionLabel = nameof(ReactComponentInfo.Name),
                 optionValue = nameof(ReactComponentInfo.Value),
                 value       = state.SelectedComponentName,
                 onChange    = OnChange,
-                style =
-                {
-                    height = px(500),
-                    width = px(300)
-                },
                 filter = true
             };
-            return new HPanel(border("1px dashed #e0e0e0"), padding(5), margin(7))
+
+            var dataPanel = new InputTextarea
             {
-                componentSelector,
-                new div("data"),
-                new div("output" + state.SelectedComponentName)
+                value = "abc-data" + state.SelectedComponentName
             };
+
+            var mainPanel = new Splitter
+            {
+                layout = SplitterLayoutType.vertical,
+                style =
+                {
+                    width  = "100%",
+                    height = "100%"
+                },
+
+                children =
+                {
+                    new SplitterPanel
+                    {
+                        size = 70,
+                        children =
+                        {
+                            new div("output" + state.SelectedComponentName)
+                            | border("1px dashed #e0e0e0")
+                            | width("100%")
+                            | height("100%")
+                        }
+                    },
+
+                    new SplitterPanel
+                    {
+                        size = 30,
+                        children =
+                        {
+                            new Splitter
+                            {
+                                new SplitterPanel
+                                {
+                                    size     = 3,
+                                    children = {componentSelector | height("100%")}
+                                },
+
+                                new SplitterPanel
+                                {
+                                    size     = 5,
+                                    children = {dataPanel | width("100%")}
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            return new div { mainPanel } | width("100%")| height("100%")| padding(10);
         }
 
         void OnChange(ListBoxChangeParams e)
