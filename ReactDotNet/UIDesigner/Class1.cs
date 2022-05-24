@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using ReactDotNet.PrimeReact;
 using static ReactDotNet.Mixin;
 
@@ -11,9 +12,11 @@ namespace ReactDotNet.UIDesigner
     [Serializable]
     public class UIDesignerModel
     {
-        public string SelectedComponentName { get; set; }
+        public string SelectedComponentTypeReference { get; set; }
 
         public ClientTask ClientTask { get; set; }
+
+        public IReadOnlyList<DotNetObjectPropertyValue> Properties { get; set; }
     }
 
     public class ReactComponentInfo
@@ -22,8 +25,42 @@ namespace ReactDotNet.UIDesigner
         public string Value { get; set; }
     }
 
+    [Serializable]
+    public sealed class DotNetObjectPropertyValue
+    {
+        public string Path { get; set; }
+        public string Value { get; set; }
+
+       
+    }
+
+    
+
     public class UIDesignerView:ReactComponent<UIDesignerModel>
     {
+        static IEnumerable<DotNetObjectPropertyValue> GetProperties(Type type)
+        {
+            foreach (var propertyInfo in type.GetProperties())
+            {
+                if (isSerializable(propertyInfo))
+                {
+                    yield return new DotNetObjectPropertyValue {Path = propertyInfo.Name};
+                }
+            }
+
+            static bool isSerializable(PropertyInfo propertyInfo)
+            {
+                if (propertyInfo.PropertyType == typeof(string))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        
+
         public override void constructor()
         {
             state = new UIDesignerModel
@@ -43,7 +80,7 @@ namespace ReactDotNet.UIDesigner
             {
                 if (type.IsSubclassOf(typeof(ReactComponent)))
                 {
-                    yield return new ReactComponentInfo {Name = type.FullName, Value = type.FullName};
+                    yield return new ReactComponentInfo {Name = type.GetFullName(), Value = type.GetFullName() };
                 }
             }
         }
@@ -60,7 +97,7 @@ namespace ReactDotNet.UIDesigner
             state.ClientTask = new ClientTaskGotoMethod
             {
                 MethodName = nameof(Refresh),
-                Timeout    = 2000
+                Timeout    = 200000
             };
         }
 
@@ -71,15 +108,35 @@ namespace ReactDotNet.UIDesigner
                 options     = Suggestions,
                 optionLabel = nameof(ReactComponentInfo.Name),
                 optionValue = nameof(ReactComponentInfo.Value),
-                value       = state.SelectedComponentName,
+                value       = state.SelectedComponentTypeReference,
                 onChange    = OnChange,
                 filter = true
             };
 
-            var dataPanel = new InputTextarea
+            var dataPanel = new div(GetPropertyEditors())
             {
-                value = "abc-data" + state.SelectedComponentName
+                
             };
+
+
+            Element createElement()
+            {
+                try
+                {
+                    var type = Type.GetType(state.SelectedComponentTypeReference);
+                    if (type == null)
+                    {
+                        return new div("type not found.");
+                    }
+
+                    return null;
+                }
+                catch (Exception exception)
+                {
+
+                    return new div(exception.ToString());
+                }
+            }
 
             var mainPanel = new Splitter
             {
@@ -97,7 +154,7 @@ namespace ReactDotNet.UIDesigner
                         size = 70,
                         children =
                         {
-                            new div("output" + state.SelectedComponentName)
+                            new div{ createElement() }
                             | border("1px dashed #e0e0e0")
                             | width("100%")
                             | height("100%")
@@ -113,13 +170,13 @@ namespace ReactDotNet.UIDesigner
                             {
                                 new SplitterPanel
                                 {
-                                    size     = 3,
+                                    size     = 2,
                                     children = {componentSelector | height("100%")}
                                 },
 
                                 new SplitterPanel
                                 {
-                                    size     = 5,
+                                    size     = 6,
                                     children = {dataPanel | width("100%")}
                                 }
                             }
@@ -131,9 +188,47 @@ namespace ReactDotNet.UIDesigner
             return new div { mainPanel } | width("100%")| height("100%")| padding(10);
         }
 
+        void OnDataChange(string dataAsJson)
+        {
+            // state.ComponentData = dataAsJson;
+        }
+
+       
+
         void OnChange(ListBoxChangeParams e)
         {
-            state.SelectedComponentName = e.value;
+            // state.ComponentData = GetDefaultDataAsJson(state.SelectedComponentName);
+
+
+            state.SelectedComponentTypeReference = e.value;
+
+            
+        }
+
+        IEnumerable<Element> GetPropertyEditors()
+        {
+            if (string.IsNullOrWhiteSpace(state.SelectedComponentTypeReference) == false)
+            {
+                var type = Type.GetType(state.SelectedComponentTypeReference, false);
+                if (type != null)
+                {
+                    state.Properties = GetProperties(type).ToList();
+
+                    for (int i = 0; i < state.Properties.Count; i++)
+                    {
+                        var index = i;
+                        yield return new div
+                        {
+                            new div(state.Properties[i].Path),
+                            new InputText {valueBind = () => state.Properties[index].Value}
+                            // Js("setValueInPath","state.Properties[5].Value")
+                        };
+                    }
+                }
+            }
+
+            yield return null;
         }
     }
+    
 }

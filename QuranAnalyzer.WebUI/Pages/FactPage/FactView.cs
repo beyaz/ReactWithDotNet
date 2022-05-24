@@ -267,9 +267,13 @@ class FactView : ReactComponent<FactViewModel>
     }
 }
 
+[Serializable]
 class CountsSummaryView: ReactComponent
 {
-    public IReadOnlyList<(string name, int count)> Counts { get; set; }
+
+    public string AAA { get; set; } = "ABC";
+
+    public IReadOnlyList<(string name, int count)> Counts { get; set; } = new[] {("a", 5)};
 
     public override Element render()
     {
@@ -295,6 +299,38 @@ class CountsSummaryView: ReactComponent
             {
                 new div($"Toplam: {total}")
             });
+        }
+
+        return returnDiv;
+
+    }
+}
+
+
+[Serializable]
+class DesignerDeneme : ReactComponent
+{
+
+    public string AAA { get; set; }
+
+    public string BBB { get; set; }
+
+
+    public override Element render()
+    {
+        var returnDiv = new div("Empty")
+        {
+           
+        };
+
+        if (AAA != null)
+        {
+            returnDiv.appendChild(new div(AAA));
+        }
+
+        if (BBB != null)
+        {
+            returnDiv.appendChild(new div(BBB));
         }
 
         return returnDiv;

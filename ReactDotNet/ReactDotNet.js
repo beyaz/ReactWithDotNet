@@ -414,6 +414,12 @@
                 return NVL(GoUpwardFindFirst(obj.target, HasId), obj.target).id;
             }
 
+            // inputtext: // todo take from attribute
+            if (obj && obj._reactName === "onChange")
+            {
+                return obj.target.value;
+            }
+
             // ReSharper disable once UnusedParameter
             function canSendToServer(key, value)
             {
