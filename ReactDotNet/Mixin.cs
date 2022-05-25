@@ -1,14 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Web;
 
 namespace ReactDotNet
 {
+
+
+
+    public sealed class BindibleProperty<T>
+    {
+        public string PathInState { get; set; }
+
+        public T RawValue { get; set; }
+
+        public string[] AsBindingSourcePathInState()
+        {
+            return PathInState.Split(".[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static implicit operator BindibleProperty<T>(T rawValue)
+        {
+            return new BindibleProperty<T> { RawValue = rawValue };
+        }
+    }
+
     public static partial class Mixin
     {
+        public static BindibleProperty<T> Bind<T>(this Expression<Func<T>> propertyAccessor)
+        {
+            return new BindibleProperty<T> {PathInState = propertyAccessor.AsBindingSourcePathInState()};
+        }
 
         internal static IReadOnlyDictionary<string, string> ParseQueryString(string query)
         {

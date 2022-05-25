@@ -155,6 +155,10 @@ public class UnitTest1
 
         var state = new SampleModelAContainer();
 
+        var xxx = ToJson(new div{ new PrimeReact.InputText { value = Mixin.Bind(() => state.InnerA.InnerB.Text) } });
+
+
+
         var div = new div(className("abc"))
         {
             new div(className("B")),
@@ -162,10 +166,10 @@ public class UnitTest1
             {
                 style = { paddingLeft = "5px" }
             },
-            new img { src                        = "a.png", width = 3, onClick = onClicked },
-            new PrimeReact.InputText { value     = "abc" },
-            new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
-            new View2 { Prop1                    = "x", Prop2 = "y" }
+            new img { src                    = "a.png", width = 3, onClick = onClicked },
+            new PrimeReact.InputText { value = "abc" },
+            new PrimeReact.InputText { value = Mixin.Bind(()=> state.InnerA.InnerB.Text) },
+            new View2 { Prop1                = "x", Prop2 = "y" }
         };
 
         var actual = ToJson(div);
@@ -190,10 +194,10 @@ public class UnitTest1
                 {
                     style = { paddingLeft = "5px" }
                 },
-                new img { src                        = "a.png", width = 3, onClick = onClicked },
-                new PrimeReact.InputText { value     = "abc" },
-                new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
-                new View2 { Prop1                    = "x", Prop2 = "y" }
+                new img { src                    = "a.png", width = 3, onClick = onClicked },
+                new PrimeReact.InputText { value = "abc" },
+                new PrimeReact.InputText { value = Mixin.Bind(()=> state.InnerA.InnerB.Text) },
+                new View2 { Prop1                = "x", Prop2 = "y" }
             };
 
             return div;

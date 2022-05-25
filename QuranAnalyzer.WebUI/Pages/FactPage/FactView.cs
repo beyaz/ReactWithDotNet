@@ -144,7 +144,7 @@ class FactView : ReactComponent<FactViewModel>
                     new VPanel
                     {
                         new div {text            = "Sure:"},
-                        new InputText {valueBind = () => state.SuraFilter}
+                        new InputText {value = Mixin.Bind( () => state.SuraFilter)}
                     },
 
                     new Space {Height = 10},
@@ -152,7 +152,7 @@ class FactView : ReactComponent<FactViewModel>
                     new VPanel
                     {
                         new div {text            = "Aranan Karakterler"},
-                        new InputText {valueBind = () => state.SearchCharacters}
+                        new InputText {value = Mixin.Bind(() => state.SearchCharacters)}
                     },
 
                     new Space {Height = 20},

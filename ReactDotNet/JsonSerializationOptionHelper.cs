@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet;
 
@@ -321,6 +322,26 @@ static class JsonSerializationOptionHelper
                 if (propertyValue is Enum enumValue)
                 {
                     propertyValue = enumValue.ToString();
+                }
+
+                {
+                    if (propertyValue is BindibleProperty<string> bindibleProperty)
+                    {
+                        if (bindibleProperty.PathInState != null)
+                        {
+                            string[] calculateSourcePathFunc() => bindibleProperty.AsBindingSourcePathInState();
+
+                            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
+                            if (bindInfo == null)
+                            {
+                                return (null, true);
+                            }
+
+                            return (bindInfo, false);
+                        }
+
+                        return (bindibleProperty.RawValue, false);
+                    }
                 }
 
                 {

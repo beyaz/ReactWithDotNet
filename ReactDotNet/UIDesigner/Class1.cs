@@ -219,7 +219,7 @@ namespace ReactDotNet.UIDesigner
                         yield return new div
                         {
                             new div(state.Properties[i].Path),
-                            new InputText {valueBindNew = $"state.Properties[{i}].Value"}
+                            new InputText {value = new BindibleProperty<string>{ PathInState = $"Properties[{i}].Value"}},
                         };
                     }
                 }
