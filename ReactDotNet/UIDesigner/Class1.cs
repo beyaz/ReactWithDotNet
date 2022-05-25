@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -7,226 +9,311 @@ using System.Text.Json;
 using ReactDotNet.PrimeReact;
 using static ReactDotNet.Mixin;
 
-namespace ReactDotNet.UIDesigner
+namespace ReactDotNet.UIDesigner;
+
+[Serializable]
+public class UIDesignerModel
 {
-    [Serializable]
-    public class UIDesignerModel
-    {
-        public string SelectedComponentTypeReference { get; set; }
+    public string SelectedComponentTypeReference { get; set; }
 
-        public ClientTask ClientTask { get; set; }
+    public ClientTask ClientTask { get; set; }
 
-        public IReadOnlyList<DotNetObjectPropertyValue> Properties { get; set; }
-    }
+    public IReadOnlyList<DotNetObjectPropertyValue> Properties { get; set; }
 
-    public class ReactComponentInfo
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
+    public string SaveDirectoryPath { get; set; } = @"d:\\temp\\";
+}
 
-    [Serializable]
-    public sealed class DotNetObjectPropertyValue
-    {
-        public string Path { get; set; }
-        public string Value { get; set; }
+public class ReactComponentInfo
+{
+    public string Name { get; set; }
+    public string Value { get; set; }
+}
 
-       
-    }
+[Serializable]
+public sealed class DotNetObjectPropertyValue
+{
+    public string Path { get; set; }
+    public string Value { get; set; }
+}
 
     
 
-    public class UIDesignerView:ReactComponent<UIDesignerModel>
+public class UIDesignerView:ReactComponent<UIDesignerModel>
+{
+    void Update(object obj, string navigation, object newval)
     {
-        static IEnumerable<DotNetObjectPropertyValue> GetProperties(Type type)
+        var firstSlash = navigation.IndexOf("/");
+        if (firstSlash < 0)
         {
-            foreach (var propertyInfo in type.GetProperties())
-            {
-                if (isSerializable(propertyInfo))
-                {
-                    yield return new DotNetObjectPropertyValue {Path = propertyInfo.Name};
-                }
-            }
+            obj.GetType().GetProperty(navigation).SetValue(obj, newval);
+        }
+        else
+        {
+            var header = navigation.Substring(0, firstSlash);
+            var tail   = navigation.Substring(firstSlash + 1);
+            var subObj = obj.GetType().GetProperty(header).GetValue(obj);
+            Update(subObj, tail, newval);
+        }
+    }
 
-            static bool isSerializable(PropertyInfo propertyInfo)
-            {
-                if (propertyInfo.PropertyType == typeof(string))
-                {
-                    return true;
-                }
 
-                return false;
+    void SaveProperties(string typeReference, IEnumerable<DotNetObjectPropertyValue> items)
+    {
+        var filePath = GetCacheFilePath(typeReference);
+
+        File.WriteAllText(filePath, JsonSerializer.Serialize(items, new JsonSerializerOptions {WriteIndented = true}));
+    }
+
+    string GetCacheFilePath(string typeReference) => state.SaveDirectoryPath + typeReference + ".json";
+
+    IEnumerable<DotNetObjectPropertyValue> ReadProperties(string typeReference)
+    {
+        var filePath = GetCacheFilePath(typeReference);
+
+        if (!File.Exists(filePath))
+        {
+            return Enumerable.Empty<DotNetObjectPropertyValue>();
+        }
+        var json = File.ReadAllText(filePath);
+
+        return JsonSerializer.Deserialize<IEnumerable<DotNetObjectPropertyValue>>(json);
+    }
+
+    static IEnumerable<DotNetObjectPropertyValue> GetProperties(Type type)
+    {
+        foreach (var propertyInfo in type.GetProperties())
+        {
+            if (isSerializable(propertyInfo))
+            {
+                yield return new DotNetObjectPropertyValue {Path = propertyInfo.Name};
             }
         }
+
+        static bool isSerializable(PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.PropertyType == typeof(string))
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
 
         
 
-        public override void constructor()
+    public override void constructor()
+    {
+        state = new UIDesignerModel
         {
-            state = new UIDesignerModel
+            ClientTask = new ClientTaskListenComponentEvent
             {
-                ClientTask = new ClientTaskListenComponentEvent
-                {
-                    EventName     = ReactComponentEvents.componentDidMount.ToString(),
-                    RouteToMethod = nameof(OnFirstLoaded)
-                },
+                EventName     = ReactComponentEvents.componentDidMount.ToString(),
+                RouteToMethod = nameof(OnFirstLoaded)
+            },
                 
-            };
-        }
+        };
+    }
 
-        static IEnumerable<ReactComponentInfo> GetComponents(Assembly assembly)
+    static IEnumerable<ReactComponentInfo> GetComponents(Assembly assembly)
+    {
+        foreach (var type in assembly.GetTypes())
         {
-            foreach (var type in assembly.GetTypes())
+            if (type.IsSubclassOf(typeof(ReactComponent)) && !type.IsAbstract)
             {
-                if (type.IsSubclassOf(typeof(ReactComponent)))
-                {
-                    yield return new ReactComponentInfo {Name = type.GetFullName(), Value = type.GetFullName() };
-                }
+                yield return new ReactComponentInfo {Name = type.GetFullName(), Value = type.GetFullName() };
             }
         }
+    }
 
-        IReadOnlyList<ReactComponentInfo> Suggestions => GetComponents(Assembly.Load("QuranAnalyzer.WebUI")).ToList();
+    IReadOnlyList<ReactComponentInfo> Suggestions => GetComponents(Assembly.Load("QuranAnalyzer.WebUI")).ToList();
 
-        public void OnFirstLoaded()
+    public void OnFirstLoaded()
+    {
+        Refresh();
+    }
+
+    public void Refresh()
+    {
+        state.ClientTask = new ClientTaskGotoMethod
         {
-            Refresh();
-        }
+            MethodName = nameof(Refresh),
+            Timeout    = 2000
+        };
+    }
 
-        public void Refresh()
+    public override Element render()
+    {
+        var componentSelector = new ListBox
         {
-            state.ClientTask = new ClientTaskGotoMethod
-            {
-                MethodName = nameof(Refresh),
-                Timeout    = 200000
-            };
-        }
+            options     = Suggestions,
+            optionLabel = nameof(ReactComponentInfo.Name),
+            optionValue = nameof(ReactComponentInfo.Value),
+            value       = state.SelectedComponentTypeReference,
+            onChange    = OnSelectedComponentChanged,
+            filter      = true
+        };
 
-        public override Element render()
+        var dataPanel = new div(GetPropertyEditors())
         {
-            var componentSelector = new ListBox
-            {
-                options     = Suggestions,
-                optionLabel = nameof(ReactComponentInfo.Name),
-                optionValue = nameof(ReactComponentInfo.Value),
-                value       = state.SelectedComponentTypeReference,
-                onChange    = OnChange,
-                filter = true
-            };
-
-            var dataPanel = new div(GetPropertyEditors())
-            {
                 
-            };
+        };
 
 
-            Element createElement()
+        Element createElement()
+        {
+            try
             {
-                try
+                var type = Type.GetType(state.SelectedComponentTypeReference);
+                if (type == null)
                 {
-                    var type = Type.GetType(state.SelectedComponentTypeReference);
-                    if (type == null)
+                    return new div("type not found.");
+                }
+
+                var instance = Activator.CreateInstance(type);
+
+                foreach (var dotNetObjectPropertyValue in state.Properties.Where(x=>!string.IsNullOrWhiteSpace(x.Value)))
+                {
+                    var path      = dotNetObjectPropertyValue.Path;
+                    var jsonValue = dotNetObjectPropertyValue.Value;
+
+                    var propertyInfo = type.GetProperty(path);
+
+                    object propertyValue = null;
+                    if (propertyInfo.PropertyType == typeof(string))
                     {
-                        return new div("type not found.");
+                        propertyValue = jsonValue;
                     }
+                    else
+                    {
+                        propertyValue = JsonSerializer.Deserialize(jsonValue, propertyInfo.PropertyType);
+                    }
+                        
 
-                    return null;
+                    propertyInfo.SetValue(instance,propertyValue);
                 }
-                catch (Exception exception)
-                {
 
-                    return new div(exception.ToString());
-                }
+
+                return instance as Element;
             }
-
-            var mainPanel = new Splitter
+            catch (Exception exception)
             {
-                layout = SplitterLayoutType.vertical,
-                style =
+
+                return new div(exception.ToString());
+            }
+        }
+
+        var mainPanel = new Splitter
+        {
+            layout = SplitterLayoutType.vertical,
+            style =
+            {
+                width  = "100%",
+                height = "100%"
+            },
+
+            children =
+            {
+                new SplitterPanel
                 {
-                    width  = "100%",
-                    height = "100%"
+                    size = 70,
+                    children =
+                    {
+                        new div{ createElement() }
+                        | border("1px dashed #e0e0e0")
+                        | width("100%")
+                        | height("100%")
+                    }
                 },
 
-                children =
+                new SplitterPanel
                 {
-                    new SplitterPanel
+                    size = 30,
+                    children =
                     {
-                        size = 70,
-                        children =
+                        new Splitter
                         {
-                            new div{ createElement() }
-                            | border("1px dashed #e0e0e0")
-                            | width("100%")
-                            | height("100%")
-                        }
-                    },
-
-                    new SplitterPanel
-                    {
-                        size = 30,
-                        children =
-                        {
-                            new Splitter
+                            new SplitterPanel
                             {
-                                new SplitterPanel
-                                {
-                                    size     = 2,
-                                    children = {componentSelector | height("100%")}
-                                },
+                                size     = 2,
+                                children = {componentSelector | height("100%")}
+                            },
 
-                                new SplitterPanel
-                                {
-                                    size     = 6,
-                                    children = {dataPanel | width("100%")}
-                                }
+                            new SplitterPanel
+                            {
+                                size     = 6,
+                                children = {dataPanel | width("100%")}
                             }
                         }
                     }
                 }
-            };
+            }
+        };
 
-            return new div { mainPanel } | width("100%")| height("100%")| padding(10);
+        return new div { mainPanel } | width("100%")| height("100%")| padding(10);
+    }
+        
+    void OnSelectedComponentChanged(ListBoxChangeParams e)
+    {
+        if (!string.IsNullOrWhiteSpace(state.SelectedComponentTypeReference) && state.Properties?.Count > 0)
+        {
+            SaveProperties(state.SelectedComponentTypeReference, state.Properties);
         }
 
-        void OnDataChange(string dataAsJson)
-        {
-            // state.ComponentData = dataAsJson;
-        }
-
-       
-
-        void OnChange(ListBoxChangeParams e)
-        {
-            // state.ComponentData = GetDefaultDataAsJson(state.SelectedComponentName);
-
-
-            state.SelectedComponentTypeReference = e.value;
+        state.SelectedComponentTypeReference = e.value;
 
             
-        }
 
-        IEnumerable<Element> GetPropertyEditors()
+        state.Properties = null;
+
+        var type = FindType(state.SelectedComponentTypeReference);
+        if (type != null)
         {
-            if (string.IsNullOrWhiteSpace(state.SelectedComponentTypeReference) == false)
+            state.Properties = GetProperties(type).ToList();
+
+            foreach (var item in ReadProperties(state.SelectedComponentTypeReference))
             {
-                var type = Type.GetType(state.SelectedComponentTypeReference, false);
-                if (type != null)
+                var entry = state.Properties.FirstOrDefault(x=>x.Path == item.Path);
+                if (entry != null)
                 {
-                    state.Properties = GetProperties(type).ToList();
-
-                    for (int i = 0; i < state.Properties.Count; i++)
-                    {
-                        yield return new div
-                        {
-                            new div(state.Properties[i].Path),
-                            new InputText {value = new BindibleProperty<string>{ PathInState = $"Properties[{i}].Value"}},
-                        };
-                    }
+                    entry.Value = item.Value;
                 }
+                    
             }
-
-            yield return null;
         }
     }
-    
+
+    static Type FindType(string typeReference)
+    {
+        if (!string.IsNullOrWhiteSpace(typeReference))
+        {
+            return Type.GetType(typeReference, false);
+        }
+
+        return null;
+    }
+
+
+
+
+    IEnumerable<Element> GetPropertyEditors()
+    {
+        if (string.IsNullOrWhiteSpace(state.SelectedComponentTypeReference) == false)
+        {
+            var type = Type.GetType(state.SelectedComponentTypeReference, false);
+            if (type != null)
+            {
+                for (var i = 0; i < state.Properties.Count; i++)
+                {
+                    yield return new div
+                    {
+                        new div(state.Properties[i].Path),
+                        new InputText {value = new BindibleProperty<string>{ PathInState = $"Properties[{i}].Value"}},
+                    };
+                }
+            }
+        }
+
+        yield return null;
+    }
 }

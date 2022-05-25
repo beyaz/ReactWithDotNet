@@ -318,7 +318,7 @@ class DesignerDeneme : ReactComponent
 
     public override Element render()
     {
-        var returnDiv = new div("Empty")
+        var returnDiv = new div
         {
            
         };
@@ -331,6 +331,11 @@ class DesignerDeneme : ReactComponent
         if (BBB != null)
         {
             returnDiv.appendChild(new div(BBB));
+        }
+
+        if (returnDiv.children.Count == 0)
+        {
+            returnDiv.text = "Empty";
         }
 
         return returnDiv;
