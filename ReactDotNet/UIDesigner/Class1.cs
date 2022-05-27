@@ -149,9 +149,15 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
         }
     }
 
+    static object fileLock = new ();
+
     void SaveState()
     {
-        File.WriteAllText(@"d:\\temp\\UIDesignerModel.json",JsonSerializer.Serialize(state));
+        lock (fileLock)
+        {
+            File.WriteAllText(@"d:\\temp\\UIDesignerModel.json", JsonSerializer.Serialize(state));
+        }
+      
     }
 
     UIDesignerModel ReadState()
@@ -407,7 +413,7 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
                     {
                         new div{ createElement() }
                         | border("1px dashed #e0e0e0")
-                        | width("100%")
+                        | width(state.ScreenWidth+"%")
                         | height("100%")
                     }
                 },
@@ -419,7 +425,7 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
                     {
                         new div(Display.flex,FlexDirection.column)
                         {
-                            new Slider{value = state.ScreenWidth, MarginAll = 10, onSlideEnd = OnWidthChanged},
+                            new Slider{value = state.ScreenWidth, MarginAll = 10, PaddingAll = 10, onChange = OnWidthChanged},
                             new Splitter
                             {
                                 new SplitterPanel
@@ -445,7 +451,7 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
 
     void OnWidthChanged(SliderChangeParams e)
     {
-        state.ScreenWidth = e.value+5;
+        state.ScreenWidth = e.value;
     }
 
     void OnSelectedPropertyValueChanged(SyntheticEvent e)
