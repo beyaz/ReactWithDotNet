@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using ReactDotNet.PrimeReact;
@@ -21,11 +22,21 @@ public class UIDesignerModel
     public IReadOnlyList<DotNetObjectPropertyValue> Properties { get; set; }
 
     public string SaveDirectoryPath { get; set; } = @"d:\\temp\\";
+
+
+    public string SelectedPropertyName { get; set; }
+    public string SelectedPropertyValue { get; set; }
 }
 
 public class ReactComponentInfo
 {
     public string Name { get; set; }
+    public string Value { get; set; }
+}
+
+public class Pair
+{
+    public string Key { get; set; }
     public string Value { get; set; }
 }
 
@@ -40,20 +51,51 @@ public sealed class DotNetObjectPropertyValue
 
 public class UIDesignerView:ReactComponent<UIDesignerModel>
 {
-    void Update(object obj, string navigation, object newval)
+    static Exception SaveValueToPropertyPath(object value, object instance, string propertyPath)
     {
-        var firstSlash = navigation.IndexOf("/");
-        if (firstSlash < 0)
+        if (instance == null)
         {
-            obj.GetType().GetProperty(navigation).SetValue(obj, newval);
+            return new ArgumentNullException(nameof(instance));
         }
-        else
+
+        while (true)
         {
-            var header = navigation.Substring(0, firstSlash);
-            var tail   = navigation.Substring(firstSlash + 1);
-            var subObj = obj.GetType().GetProperty(header).GetValue(obj);
-            Update(subObj, tail, newval);
+            var parts = propertyPath.Split('.');
+
+            var propertyInfo = instance.GetType().GetProperty(parts[0]);
+
+            if (propertyInfo == null)
+            {
+                return new MissingMemberException(instance.GetType().FullName, parts[0]);
+            }
+
+            if (parts.Length == 1)
+            {
+                propertyInfo.SetValue(instance, value, null);
+            }
+            else
+            {
+                var innerInstance = propertyInfo.GetValue(instance);
+                if (innerInstance == null)
+                {
+                    innerInstance = Activator.CreateInstance(propertyInfo.PropertyType);
+                    if (innerInstance == null)
+                    {
+                        return new NullReferenceException(propertyInfo.Name);
+                    }
+                    propertyInfo.SetValue(instance, innerInstance);
+                }
+
+                instance     = innerInstance;
+                propertyPath = string.Join(".", parts.Skip(1));
+
+                continue;
+            }
+
+            break;
         }
+
+        return null;
     }
 
 
@@ -83,24 +125,15 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
     {
         foreach (var propertyInfo in type.GetProperties())
         {
-            if (isSerializable(propertyInfo))
+            if (propertyInfo.PropertyType.IsAbstract)
             {
-                yield return new DotNetObjectPropertyValue {Path = propertyInfo.Name};
-            }
-        }
-
-        static bool isSerializable(PropertyInfo propertyInfo)
-        {
-            if (propertyInfo.PropertyType == typeof(string))
-            {
-                return true;
+                continue;
             }
 
-            return false;
+            yield return new DotNetObjectPropertyValue {Path = propertyInfo.Name};
         }
     }
 
-        
 
     public override void constructor()
     {
@@ -119,28 +152,52 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
     {
         foreach (var type in assembly.GetTypes())
         {
-            if (type.IsSubclassOf(typeof(ReactComponent)) && !type.IsAbstract)
+            if (type.IsAbstract)
+            {
+                continue;
+            }
+
+            if(IsReactComponent(type))
             {
                 yield return new ReactComponentInfo {Name = type.GetFullName(), Value = type.GetFullName() };
             }
         }
     }
 
+    static bool IsReactComponent(Type type)
+    {
+        if (type.IsSubclassOf(typeof(ReactComponent)))
+        {
+            return true;
+        }
+        
+        return IsReactStatefulComponent(type);
+    }
+
+    static bool IsReactStatefulComponent(Type type)
+    {
+        type = type.BaseType;
+
+        if (type?.IsGenericType == true )
+        {
+            var typeDefinition = type.GetGenericTypeDefinition();
+            if (typeDefinition == typeof(ReactComponent<>) || typeDefinition.IsSubclassOf(typeof(ReactComponent<>)))
+            {
+                return true;
+            }
+            
+        }
+
+        return false;
+    }
+
     IReadOnlyList<ReactComponentInfo> Suggestions => GetComponents(Assembly.Load("QuranAnalyzer.WebUI")).ToList();
 
     public void OnFirstLoaded()
     {
-        Refresh();
     }
 
-    public void Refresh()
-    {
-        state.ClientTask = new ClientTaskGotoMethod
-        {
-            MethodName = nameof(Refresh),
-            Timeout    = 2000
-        };
-    }
+   
 
     public override Element render()
     {
@@ -154,9 +211,27 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
             filter      = true
         };
 
-        var dataPanel = new div(GetPropertyEditors())
+
+        var propertyList = new ListBox
         {
-                
+            options     = (state.Properties ?? Enumerable.Empty<DotNetObjectPropertyValue>()).OrderBy(x => string.IsNullOrWhiteSpace(x.Value)).Select(x=>new Pair{Key = x.Path,Value = x.Path}),
+            optionLabel = nameof(Pair.Key),
+            optionValue = nameof(Pair.Value),
+            value       = state.SelectedPropertyName,
+            onChange    = OnSelectedPropertyChanged,
+            filter      = true
+        };
+
+        var dataPanel = new Splitter
+        {
+            new SplitterPanel
+            {
+                propertyList
+            },
+            new SplitterPanel
+            {
+                new InputTextarea{value = state.SelectedPropertyValue, onChange =  OnSelectedPropertyValueChanged}
+            }
         };
 
 
@@ -171,6 +246,10 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
                 }
 
                 var instance = Activator.CreateInstance(type);
+                if (instance == null)
+                {
+                    return new div("instance is null.");
+                }
 
                 foreach (var dotNetObjectPropertyValue in state.Properties.Where(x=>!string.IsNullOrWhiteSpace(x.Value)))
                 {
@@ -179,29 +258,95 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
 
                     var propertyInfo = type.GetProperty(path);
 
-                    object propertyValue = null;
-                    if (propertyInfo.PropertyType == typeof(string))
+                    if (propertyInfo is not null)
                     {
-                        propertyValue = jsonValue;
-                    }
-                    else
-                    {
-                        propertyValue = JsonSerializer.Deserialize(jsonValue, propertyInfo.PropertyType);
-                    }
-                        
+                        object propertyValue = null;
+                        if (propertyInfo.PropertyType == typeof(string))
+                        {
+                            propertyValue = jsonValue;
+                        }
+                        else
+                        {
+                            propertyValue = JsonSerializer.Deserialize(jsonValue, propertyInfo.PropertyType);
+                        }
 
-                    propertyInfo.SetValue(instance,propertyValue);
+                        SaveValueToPropertyPath(propertyValue, instance, path);
+                    }
                 }
 
+                if (IsReactStatefulComponent(type))
+                {
+                    var statePropertyInfo = type.GetProperty("state");
+                    if (statePropertyInfo is not null)
+                    {
+                        var stateInstance = statePropertyInfo.GetValue(instance);
+                        if (stateInstance == null)
+                        {
+                            stateInstance = Activator.CreateInstance(statePropertyInfo.PropertyType);
+
+                            statePropertyInfo.SetValue(instance, stateInstance);
+                        }
+
+                        OpenNullProperties(stateInstance);
+                    }
+
+                    return ((IReactStatefulComponent)instance).RootElement;
+
+                }
 
                 return instance as Element;
             }
             catch (Exception exception)
             {
-
                 return new div(exception.ToString());
             }
         }
+
+        static void OpenNullProperties(object instance)
+        {
+            if (instance == null)
+            {
+                return;
+            }
+
+            foreach (var propertyInfo in GetNestedProperties(instance.GetType()))
+            {
+                if (propertyInfo.GetValue(instance) == null)
+                {
+                    var propertyValue = Activator.CreateInstance(propertyInfo.PropertyType);
+
+                    OpenNullProperties(propertyValue);
+
+                    propertyInfo.SetValue(instance, propertyValue);
+                }
+            }
+
+
+            static IEnumerable<PropertyInfo> GetNestedProperties(Type type)
+            {
+                foreach (var propertyInfo in type.GetProperties())
+                {
+                    if (propertyInfo.PropertyType == typeof(string))
+                    {
+                        continue;
+                    }
+
+                    if (propertyInfo.PropertyType.IsAbstract)
+                    {
+                        continue;
+                    }
+
+                    if (propertyInfo.PropertyType.IsValueType)
+                    {
+                        continue;
+                    }
+
+                    yield return propertyInfo;
+                }
+            }
+        }
+
+       
 
         var mainPanel = new Splitter
         {
@@ -252,7 +397,19 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
 
         return new div { mainPanel } | width("100%")| height("100%")| padding(10);
     }
-        
+
+    void OnSelectedPropertyValueChanged(string newValue)
+    {
+        state.SelectedPropertyValue = newValue;
+    }
+
+    void OnSelectedPropertyChanged(ListBoxChangeParams e)
+    {
+        state.SelectedPropertyName = e.value;
+
+        state.SelectedPropertyValue = state.Properties.First(x => x.Path == state.SelectedPropertyName).Value;
+    }
+
     void OnSelectedComponentChanged(ListBoxChangeParams e)
     {
         if (!string.IsNullOrWhiteSpace(state.SelectedComponentTypeReference) && state.Properties?.Count > 0)
@@ -294,26 +451,5 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
     }
 
 
-
-
-    IEnumerable<Element> GetPropertyEditors()
-    {
-        if (string.IsNullOrWhiteSpace(state.SelectedComponentTypeReference) == false)
-        {
-            var type = Type.GetType(state.SelectedComponentTypeReference, false);
-            if (type != null)
-            {
-                for (var i = 0; i < state.Properties.Count; i++)
-                {
-                    yield return new div
-                    {
-                        new div(state.Properties[i].Path),
-                        new InputText {value = new BindibleProperty<string>{ PathInState = $"Properties[{i}].Value"}},
-                    };
-                }
-            }
-        }
-
-        yield return null;
-    }
+    
 }
