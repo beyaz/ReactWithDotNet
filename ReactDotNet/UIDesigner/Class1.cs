@@ -147,17 +147,31 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
         }
     }
 
+    void SaveState()
+    {
+        File.WriteAllText(@"d:\\temp\\UIDesignerModel.json",JsonSerializer.Serialize(state));
+    }
+
+    UIDesignerModel ReadState()
+    {
+        if (File.Exists(@"d:\\temp\\UIDesignerModel.json"))
+        {
+            var json = File.ReadAllText(@"d:\\temp\\UIDesignerModel.json");
+
+            return JsonSerializer.Deserialize<UIDesignerModel>(json);
+        }
+
+        return new UIDesignerModel();
+
+    }
 
     public override void constructor()
     {
-        state = new UIDesignerModel
+        state = ReadState();
+        state.ClientTask = new ClientTaskListenComponentEvent
         {
-            ClientTask = new ClientTaskListenComponentEvent
-            {
-                EventName     = ReactComponentEvents.componentDidMount.ToString(),
-                RouteToMethod = nameof(OnFirstLoaded)
-            },
-                
+            EventName     = ReactComponentEvents.componentDidMount.ToString(),
+            RouteToMethod = nameof(OnFirstLoaded)
         };
     }
 
@@ -214,6 +228,8 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
 
     public override Element render()
     {
+        SaveState();
+
         var componentSelector = new ListBox
         {
             options     = Suggestions,
@@ -221,7 +237,8 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
             optionValue = nameof(ReactComponentInfo.Value),
             value       = state.SelectedComponentTypeReference,
             onChange    = OnSelectedComponentChanged,
-            filter      = true
+            filter      = true,
+            listStyle   = { maxHeight = px(400)}
         };
 
 
@@ -232,7 +249,8 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
             optionValue = nameof(Pair.Value),
             value       = state.SelectedPropertyName,
             onChange    = OnSelectedPropertyChanged,
-            filter      = true
+            filter      = true,
+            listStyle   = { maxHeight = px(400) }
         };
 
         var dataPanel = new Splitter
