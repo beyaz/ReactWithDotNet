@@ -252,7 +252,7 @@
         function tryTransformValue(propName)
         {
             var value = jsonNode[propName];
-            if (value.$JsTransformFunctionLocation)
+            if (value != null && value.$JsTransformFunctionLocation)
             {
                 props[propName] = GetValueInPath(window, value.$JsTransformFunctionLocation)(value.RawValue);
                 return true;
@@ -264,7 +264,7 @@
         function tryProcessAsEventHandler(propName)
         {
             var value = jsonNode[propName];
-            if (value.$isRemoteMethod === true)
+            if (value != null && value.$isRemoteMethod === true)
             {
                 var remoteMethodName = value.remoteMethodName;
 
@@ -282,7 +282,7 @@
         function tryProcessAsElement(propName)
         {
             var value = jsonNode[propName];
-            if (value.$isElement === true)
+            if (value != null && value.$isElement === true)
             {
                 props[propName] = ConvertToReactElement(value.Element, component);
 
@@ -321,7 +321,7 @@
 
             var value = jsonNode[propName];
 
-            if (value.$isBinding === true)
+            if (value != null && value.$isBinding === true)
             {
                 var targetProp    = value.targetProp;
                 var eventName     = value.eventName;
@@ -417,7 +417,12 @@
             // inputtext: // todo take from attribute
             if (obj && obj._reactName === "onChange")
             {
-                return obj.target.value;
+                return {
+                  target: {
+                      value: obj.target.value,
+                      selectionStart: obj.target.selectionStart
+                  }
+                };
             }
 
             // ReSharper disable once UnusedParameter

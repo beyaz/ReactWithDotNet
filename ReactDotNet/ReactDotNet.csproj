@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Mixin.ParseStyle.cs">
       <Generator>DGMLFileGenerator</Generator>
     </Compile>

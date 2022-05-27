@@ -6,6 +6,7 @@ public class InputTextarea : ElementBase
 {
 
     [React]
+    [ReactDefaultValue(DefaultValue = "")]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public BindibleProperty<string> value { get; set; }
 
@@ -22,5 +23,9 @@ public class InputTextarea : ElementBase
     public bool? autoResize { get; set; }
 
     [React]
-    public Action<string> onChange { get; set; }
+    public Action<SyntheticEvent> onChange { get; set; }
+
+
+    [React]
+    public Action<SyntheticEvent> onFocus { get; set; }
 }

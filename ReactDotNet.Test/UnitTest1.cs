@@ -157,6 +157,9 @@ public class UnitTest1
 
         var xxx = ToJson(new div{ new PrimeReact.InputText { value = Mixin.Bind(() => state.InnerA.InnerB.Text) } });
 
+        var xxx2 = ToJson(new div { new PrimeReact.InputTextarea { value = Mixin.Bind(() => state.InnerA.InnerB.Text) } });
+
+        var xxx3 = ToJson(new div { new PrimeReact.InputTextarea { value = null } });
 
 
         var div = new div(className("abc"))

@@ -239,7 +239,7 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
         {
             try
             {
-                var type = Type.GetType(state.SelectedComponentTypeReference);
+                var type = FindType(state.SelectedComponentTypeReference);
                 if (type == null)
                 {
                     return new div("type not found.");
@@ -398,9 +398,9 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
         return new div { mainPanel } | width("100%")| height("100%")| padding(10);
     }
 
-    void OnSelectedPropertyValueChanged(string newValue)
+    void OnSelectedPropertyValueChanged(SyntheticEvent e)
     {
-        state.SelectedPropertyValue = newValue;
+        state.SelectedPropertyValue = e.target.value;
     }
 
     void OnSelectedPropertyChanged(ListBoxChangeParams e)
