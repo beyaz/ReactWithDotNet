@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet;
 
@@ -288,22 +287,28 @@ static class JsonSerializationOptionHelper
             (object value, bool noNeedToExport) getPropertyValue(PropertyInfo propertyInfo, string propertyName)
             {
                 var propertyValue = propertyInfo.GetValue(value);
-
-               
-
+                
                 var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
-                if (propertyValue == propertyInfo.PropertyType.GetDefaultValue())
+
                 {
-                    if (reactDefaultValueAttribute != null)
+                    var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+                    
+                    if (isDefaultValue)
                     {
-                        propertyValue = reactDefaultValueAttribute.DefaultValue;
+                        if (reactDefaultValueAttribute != null)
+                        {
+                            propertyValue = reactDefaultValueAttribute.DefaultValue;
+                        }
                     }
                 }
 
-                var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
-                if (isDefaultValue || IsEmptyStyle(propertyValue))
+
                 {
-                    return (null, true);
+                    var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+                    if (isDefaultValue || IsEmptyStyle(propertyValue))
+                    {
+                        return (null, true);
+                    }
                 }
 
                 if (propertyValue is Action action)
@@ -340,7 +345,14 @@ static class JsonSerializationOptionHelper
                             return (bindInfo, false);
                         }
 
-                        return (bindibleProperty.RawValue, false);
+                        var rawValue = bindibleProperty.RawValue;
+
+                        if (rawValue is null  && reactDefaultValueAttribute is not null)
+                        {
+                            rawValue = reactDefaultValueAttribute.DefaultValue;
+                        }
+
+                        return (rawValue, false);
                     }
                 }
 

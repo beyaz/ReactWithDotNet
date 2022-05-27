@@ -407,7 +407,7 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
     {
         state.SelectedPropertyName = e.value;
 
-        state.SelectedPropertyValue = state.Properties.First(x => x.Path == state.SelectedPropertyName).Value;
+        state.SelectedPropertyValue = state.Properties.FirstOrDefault(x => x.Path == state.SelectedPropertyName)?.Value;
     }
 
     void OnSelectedComponentChanged(ListBoxChangeParams e)
