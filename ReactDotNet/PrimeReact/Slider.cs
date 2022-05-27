@@ -1,4 +1,6 @@
-﻿namespace ReactDotNet.PrimeReact;
+﻿using System;
+
+namespace ReactDotNet.PrimeReact;
 
 /// <summary>
 ///     Slider is a component to provide input using dragging of a handle.
@@ -39,6 +41,18 @@ public class Slider : ElementBase
     /// </summary>
     [React]
     public SliderOrientationType? orientation { get; set; }
+
+    /// <summary>
+    /// Callback to invoke on value change via slide.
+    /// </summary>
+    [React]
+    public Action<SliderChangeParams> onChange { get; set; }
+
+    /// <summary>
+    /// Callback to invoke when slide ends.
+    /// </summary>
+    [React]
+    public Action<SliderChangeParams> onSlideEnd { get; set; }
 }
 
 public enum SliderOrientationType

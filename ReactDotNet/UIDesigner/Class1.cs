@@ -26,6 +26,8 @@ public class UIDesignerModel
 
     public string SelectedPropertyName { get; set; }
     public string SelectedPropertyValue { get; set; }
+
+    public int ScreenWidth { get; set; }
 }
 
 public class ReactComponentInfo
@@ -158,7 +160,14 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
         {
             var json = File.ReadAllText(@"d:\\temp\\UIDesignerModel.json");
 
-            return JsonSerializer.Deserialize<UIDesignerModel>(json);
+            try
+            {
+                return JsonSerializer.Deserialize<UIDesignerModel>(json);
+            }
+            catch (Exception )
+            {
+                return new UIDesignerModel();
+            }
         }
 
         return new UIDesignerModel();
@@ -408,18 +417,22 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
                     size = 30,
                     children =
                     {
-                        new Splitter
+                        new div(Display.flex,FlexDirection.column)
                         {
-                            new SplitterPanel
+                            new Slider{value = state.ScreenWidth, MarginAll = 10, onSlideEnd = OnWidthChanged},
+                            new Splitter
                             {
-                                size     = 2,
-                                children = {componentSelector | height("100%")}
-                            },
+                                new SplitterPanel
+                                {
+                                    size     = 2,
+                                    children = {componentSelector | height("100%")}
+                                },
 
-                            new SplitterPanel
-                            {
-                                size     = 6,
-                                children = {dataPanel | width("100%")}
+                                new SplitterPanel
+                                {
+                                    size     = 6,
+                                    children = {dataPanel | width("100%")}
+                                }
                             }
                         }
                     }
@@ -428,6 +441,11 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
         };
 
         return new div { mainPanel } | width("100%")| height("100%")| padding(10);
+    }
+
+    void OnWidthChanged(SliderChangeParams e)
+    {
+        state.ScreenWidth = e.value+5;
     }
 
     void OnSelectedPropertyValueChanged(SyntheticEvent e)

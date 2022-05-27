@@ -354,6 +354,35 @@ static class JsonSerializationOptionHelper
 
                         return (rawValue, false);
                     }
+
+                    
+                }
+
+                {
+                    if (propertyValue is BindibleProperty<int> bindibleProperty)
+                    {
+                        if (bindibleProperty.PathInState != null)
+                        {
+                            string[] calculateSourcePathFunc() => bindibleProperty.AsBindingSourcePathInState();
+
+                            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
+                            if (bindInfo == null)
+                            {
+                                return (null, true);
+                            }
+
+                            return (bindInfo, false);
+                        }
+
+                        var rawValue = bindibleProperty.RawValue;
+
+                        if (rawValue is 0 && reactDefaultValueAttribute is not null)
+                        {
+                            rawValue = int.Parse(reactDefaultValueAttribute.DefaultValue);
+                        }
+
+                        return (rawValue, false);
+                    }
                 }
 
                 {
