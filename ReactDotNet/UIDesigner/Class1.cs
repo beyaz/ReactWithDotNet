@@ -47,10 +47,23 @@ public sealed class DotNetObjectPropertyValue
     public string Value { get; set; }
 }
 
-    
+
+static class UIDesignerViewExtension
+{
+    public static void TryUpdateFirst<T>(this IEnumerable<T> enumerable, Func<T, bool> findFunction, Action<T> update)
+    {
+        var value = enumerable.FirstOrDefault(findFunction);
+        if (value is not null)
+        {
+            update(value);
+        }
+    }
+}
 
 public class UIDesignerView:ReactComponent<UIDesignerModel>
 {
+
+
     static Exception SaveValueToPropertyPath(object value, object instance, string propertyPath)
     {
         if (instance == null)
@@ -230,7 +243,8 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
             },
             new SplitterPanel
             {
-                new InputTextarea{value = state.SelectedPropertyValue, onChange =  OnSelectedPropertyValueChanged}
+                new InputTextarea{value = state.SelectedPropertyValue, onChange =  OnSelectedPropertyValueChanged} | width("100%")
+                                                                                                                   | height("100%")
             }
         };
 
@@ -401,6 +415,11 @@ public class UIDesignerView:ReactComponent<UIDesignerModel>
     void OnSelectedPropertyValueChanged(SyntheticEvent e)
     {
         state.SelectedPropertyValue = e.target.value;
+
+        if (state.SelectedPropertyName is not null)
+        {
+            state.Properties.TryUpdateFirst(x => x.Path == state.SelectedPropertyName,x => x.Value = state.SelectedPropertyValue);
+        }
     }
 
     void OnSelectedPropertyChanged(ListBoxChangeParams e)
