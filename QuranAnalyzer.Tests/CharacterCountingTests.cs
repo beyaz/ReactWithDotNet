@@ -91,7 +91,7 @@ public class CharacterCountingTests
     {
         Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Ra)).ShouldBe(257);
         Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(812);
-        //Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(1306);
-        //Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(1306);
+        Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(1315);
+        Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(1306);
     }
 }
