@@ -86,6 +86,9 @@ public static class SpecifiedByRK
         {"14:21",   28},
         {"14:18",   12},
 
+        // Chapter 15
+        {"15:68",       6},
+        {"15:19",       9},
 
 
     };
@@ -177,6 +180,10 @@ public static class SpecifiedByRK
         {"14:37",       16},
         {"14:21",       29},
         {"14:18",       13},
+
+        // Chapter 15
+        {"15:68",       5},
+        {"15:19",       10},
 
     };
 
