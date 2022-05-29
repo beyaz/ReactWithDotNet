@@ -94,4 +94,14 @@ public class CharacterCountingTests
         Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(1315);
         Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(1306);
     }
+
+    [TestMethod]
+    public void Chapter_13()
+    {
+        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Ra)).ShouldBe(137);
+        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(260);
+        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(480);
+        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(610);
+        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(605);
+    }
 }
