@@ -42,6 +42,7 @@ public sealed class CountingOption
     #region Public Properties
     public bool UseElifCountsSpecifiedByRK { get; set; }
     public bool Use_Sad_in_Surah_7_Verse_69_in_word_bestaten { get; set; }
+    public bool Use_Lam_SpecifiedByRK { get; set; }
 
     #endregion
 }
@@ -82,6 +83,11 @@ public static class QuranAnalyzerMixin
             if (character == ArabicCharacters.Sad && option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten && IdOf(verse) == "7:69")
             {
                 return SpecifiedByRK.SS[IdOf(verse)];
+            }
+
+            if (character == ArabicCharacters.Lam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(IdOf(verse)))
+            {
+                return SpecifiedByRK.Lam[IdOf(verse)];
             }
 
             return AnalyzeVerse(verse).GetCountOf(character);

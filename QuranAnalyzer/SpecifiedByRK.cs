@@ -105,5 +105,18 @@ public static class SpecifiedByRK
         {"10:18",       18},
 
     };
+
+
+    public static IReadOnlyDictionary<string, int> Lam = new Dictionary<string, int>
+    {
+        {"11:70", 8}
+    };
+    public static IReadOnlyDictionary<string, int> Lam_Tanzil = new Dictionary<string, int>
+    {
+        {"11:70", 9}
+    };
+
+
+
     #endregion
 }
