@@ -58,6 +58,10 @@ public static class ArabicCharacters
     public static string Mim = "م";
     public static string Lam = "ل";
     public static string Ra = "ر";
+
+    public static string Kef = "ص";
+    public static string Ha = "ع";
+    public static string Ayn = "ه";
     #endregion
 }
 
@@ -121,7 +125,7 @@ public static class QuranAnalyzerMixin
     #endregion
 
     #region Methods
-    static Response<int> AsArabicCharacterIndex(this string character)
+    public static Response<int> AsArabicCharacterIndex(this string character)
     {
         return harfler.GetIndex(character);
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using QuranAnalyzer.WebUI.Components;
 using ReactDotNet;
 using ReactDotNet.PrimeReact;
@@ -86,6 +87,8 @@ class FactView : ReactComponent<FactViewModel>
 
         var results = new List<Occurence>();
 
+        var counts = new List<(string charachter, int count)>();
+
         foreach (var record in matchRecords)
         {
             var occurence = new Occurence
@@ -100,6 +103,8 @@ class FactView : ReactComponent<FactViewModel>
 
             results.Add(occurence);
 
+           
+
             foreach (var charachter in state.SearchCharacters.AsClearArabicCharacterList())
             {
                 var propertyName = "Charachter" + (state.SearchCharacters.AsClearArabicCharacterList().ToList().IndexOf(charachter) + 1);
@@ -107,6 +112,9 @@ class FactView : ReactComponent<FactViewModel>
                 var property     = typeof(Occurence).GetProperty(propertyName);
                 
                 var count =  matchRecords.Count(m => record.verse._index == m.verse._index && m.ToString() == charachter);
+
+
+                counts.Add((charachter,count));
 
                 Debug.Assert(property != null, nameof(property) + " != null");
 
@@ -121,7 +129,15 @@ class FactView : ReactComponent<FactViewModel>
         state.IsBlocked     = false;
         state.OperationName = null;
 
-        state.SummaryText = $"'{state.SuraFilter}' suresinde '{state.SearchCharacters[0]}' harfi geçiş sayısı :";
+        
+
+        var sb = new StringBuilder();
+        foreach (var (charachter, count) in counts)
+        {
+            sb.AppendLine($"{charachter} : {count}");
+        }
+
+        state.SummaryText = sb.ToString();
     }
 
     public override Element render()
@@ -225,7 +241,8 @@ class FactView : ReactComponent<FactViewModel>
                             header = "Özet",
                             children =
                             {
-                                new CountsSummaryView{ Counts = new List<(string name, int count)>{("A",5),("B",4), ("c",5)}} | margin(22)
+                                // new CountsSummaryView{ Counts = new List<(string name, int count)>{("A",5),("B",4), ("c",5)}} | margin(22)
+                                summaryContent
                             }
                         },
                         new TabPanel
