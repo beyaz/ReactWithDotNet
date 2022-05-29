@@ -42,6 +42,14 @@ public static class SpecifiedByRK
         {"7:95",    21},
         {"7:90",    11},
 
+        // Chapter 10 
+        {"10:49",   21},
+        {"10:41",   7 },
+        {"10:28",   14},
+        {"10:27",   21},
+        {"10:18",   17},
+
+
     };
 
     public static IReadOnlyDictionary<string, int> SS = new Dictionary<string, int>
@@ -88,6 +96,13 @@ public static class SpecifiedByRK
         {"7:97",    10},
         {"7:95",    20},
         {"7:90",    10},
+
+        // Chapter 10
+        {"10:49",       22},
+        {"10:41",       9},
+        {"10:28",       13},
+        {"10:27",       22},
+        {"10:18",       18},
 
     };
     #endregion

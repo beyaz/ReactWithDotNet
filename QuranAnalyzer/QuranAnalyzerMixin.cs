@@ -56,6 +56,7 @@ public static class ArabicCharacters
     public static string Elif = "ا";
     public static string Mim = "م";
     public static string Lam = "ل";
+    public static string Ra = "ر";
     #endregion
 }
 
