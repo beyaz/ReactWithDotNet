@@ -52,4 +52,17 @@ public class CharacterCountingTests
         Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "ا")).ShouldBe(2511);
         Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(2521);
     }
+
+
+    [TestMethod]
+    public void Chapter_7()
+    {
+        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(98);
+        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Sad, new CountingOption{Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = true})).ShouldBe(97);
+
+        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(1164);
+        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(1530);
+        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(2521);
+        //Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(2529);
+    }
 }

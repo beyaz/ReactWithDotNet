@@ -30,6 +30,15 @@ public static class SpecifiedByRK
         {"3:187", 17}
     };
 
+    public static IReadOnlyDictionary<string, int> SS = new Dictionary<string, int>
+    {
+        {"7:69", 0}// bestaten: *بَسْطَةً*
+    };
+    public static IReadOnlyDictionary<string, int> SS_Tanzil = new Dictionary<string, int>
+    {
+        {"7:69", 1} // bestaten: *بَصْۜطَةً*
+    };
+
     public static IReadOnlyDictionary<string, int> TanzilElifCounts = new Dictionary<string, int>
     {
         // Chapter 2
