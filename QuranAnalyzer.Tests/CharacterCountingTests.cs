@@ -43,4 +43,13 @@ public class CharacterCountingTests
         Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "ا")).ShouldBe(4504);
         Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption{UseElifCountsSpecifiedByRK = true})).ShouldBe(4502);
     }
+
+    [TestMethod]
+    public void İmran()
+    {
+        Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "م")).ShouldBe(1249);
+        Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "ل")).ShouldBe(1892);
+        Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "ا")).ShouldBe(2511);
+        Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(2521);
+    }
 }
