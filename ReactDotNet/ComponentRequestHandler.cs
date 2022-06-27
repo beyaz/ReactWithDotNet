@@ -9,48 +9,48 @@ namespace ReactDotNet;
 
 using static Array;
 
-
-
-
-
-
 [Serializable]
 public sealed class ClientStateInfo
 {
-    public string StateAsJson { get; set; }
+    #region Public Properties
     public string FullTypeNameOfState { get; set; }
+    public string StateAsJson { get; set; }
+    #endregion
 }
 
 [Serializable]
 public class ComponentRequest
 {
-    public string FullName { get; set; }
-    public string StateAsJson { get; set; }
-    public string MethodName { get; set; }
-    public string EventHandlerMethodName { get; set; }
-    public string[] EventArgumentsAsJsonArray { get; set; }
+    #region Public Properties
+    public double AvailableHeight { get; set; }
+    public double AvailableWidth { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
+    public string[] EventArgumentsAsJsonArray { get; set; }
+    public string EventHandlerMethodName { get; set; }
+    public string FullName { get; set; }
+    public string MethodName { get; set; }
 
     public string SearchPartOfUrl { get; set; }
-    public double AvailableWidth { get; set; }
-    public double AvailableHeight { get; set; }
-
+    public string StateAsJson { get; set; }
+    #endregion
 }
 
 [Serializable]
 public class ComponentResponse
 {
+    #region Public Properties
+    public string ElementAsJsonString { get; set; }
     public string ErrorMessage { get; set; }
 
-    public string ElementAsJsonString { get; set; }
+    public string NavigateToUrl { get; set; }
 
     public IReadOnlyList<string> Trace { get; set; }
-
-    public string NavigateToUrl { get; set; }
+    #endregion
 }
 
 public static class ComponentRequestHandler
 {
+    #region Public Methods
     public static string GetFullName(this Type type)
     {
         return $"{type.FullName},{type.Assembly.GetName().Name}";
@@ -65,7 +65,7 @@ public static class ComponentRequestHandler
         stopwatch.Start();
 
         trace.Add($"BEGIN {stopwatch.ElapsedMilliseconds}");
-        
+
         if (request.MethodName == "FetchComponent")
         {
             return fetchComponent();
@@ -77,7 +77,7 @@ public static class ComponentRequestHandler
         }
 
         return new ComponentResponse { ErrorMessage = $"Not implemented method. {request.MethodName}" };
-        
+
         ComponentResponse fetchComponent()
         {
             var type = findType(request.FullName);
@@ -103,7 +103,6 @@ public static class ComponentRequestHandler
 
             trace.Add($"Calling constructor finished at {stopwatch.ElapsedMilliseconds}");
 
-
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
             var elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates);
@@ -119,11 +118,8 @@ public static class ComponentRequestHandler
             };
         }
 
-       
-
         ComponentResponse handleComponentEvent()
         {
-
             var type = findType(request.FullName);
             if (type == null)
             {
@@ -163,6 +159,7 @@ public static class ComponentRequestHandler
             {
                 return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
             }
+
             trace.Add($"Method '{methodInfo.Name}' invocation finished at {stopwatch.ElapsedMilliseconds}");
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
@@ -176,17 +173,14 @@ public static class ComponentRequestHandler
             return new ComponentResponse
             {
                 ElementAsJsonString = elementAsJsonString,
-                Trace = trace
+                Trace               = trace
             };
         }
-
-
-        
 
         void initializeBrowserInformation(IReactStatefulComponent reactStatefulComponent)
         {
             var context = reactStatefulComponent.Context ??= new ReactContext();
-            
+
             context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
             context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
             context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
@@ -225,19 +219,27 @@ public static class ComponentRequestHandler
             return eventArguments;
         }
     }
+    #endregion
 }
 
 class ElementSerializationExtraData
 {
-    public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
+    #region Public Properties
     public string BreadCrumpPath { get; set; }
+    public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
 
     public Element RootElement { get; set; }
-
+    #endregion
 }
 
 static class ComponentSerializer
 {
+    #region Public Methods
+    public static ElementSerializationExtraData GetElementSerializationExtraData(this JsonSerializerOptions options)
+    {
+        return (options.Converters[0] as DummyConverter)?.ElementSerializationExtraData ?? new ElementSerializationExtraData();
+    }
+
     public static string SerializeComponent(Element instance, IReadOnlyDictionary<string, ClientStateInfo> childStates)
     {
         var jsonSerializerOptions = new JsonSerializerOptions
@@ -250,7 +252,7 @@ static class ComponentSerializer
                     {
                         ChildStates    = childStates,
                         BreadCrumpPath = "0",
-                        RootElement = instance
+                        RootElement    = instance
                     }
                 }
             }
@@ -258,11 +260,7 @@ static class ComponentSerializer
 
         return JsonSerializer.Serialize(instance, jsonSerializerOptions);
     }
-
-    public static ElementSerializationExtraData GetElementSerializationExtraData(this JsonSerializerOptions options)
-    {
-        return (options.Converters[0] as DummyConverter)?.ElementSerializationExtraData ?? new ElementSerializationExtraData();
-    }
+    #endregion
 
     class Dummy
     {
@@ -270,8 +268,11 @@ static class ComponentSerializer
 
     class DummyConverter : JsonConverter<Dummy>
     {
+        #region Public Properties
         public ElementSerializationExtraData ElementSerializationExtraData { get; set; }
+        #endregion
 
+        #region Public Methods
         public override Dummy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
@@ -281,5 +282,6 @@ static class ComponentSerializer
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
