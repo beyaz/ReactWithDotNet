@@ -6,7 +6,7 @@ namespace ReactDotNet;
 [Serializable]
 public abstract class ClientTask
 {
-    public ClientTask After { get; set; }
+    public ClientTask After { get; set; } 
 }
 
 [Serializable]

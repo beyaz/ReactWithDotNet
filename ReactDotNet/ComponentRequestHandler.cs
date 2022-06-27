@@ -65,20 +65,31 @@ public static class ComponentRequestHandler
         stopwatch.Start();
 
         trace.Add($"BEGIN {stopwatch.ElapsedMilliseconds}");
-
-
+        
         if (request.MethodName == "FetchComponent")
+        {
+            return fetchComponent();
+        }
+
+        if (request.MethodName == "HandleComponentEvent")
+        {
+            return handleComponentEvent();
+        }
+
+        return new ComponentResponse { ErrorMessage = $"Not implemented method. {request.MethodName}" };
+        
+        ComponentResponse fetchComponent()
         {
             var type = findType(request.FullName);
             if (type == null)
             {
-                return new ComponentResponse {ErrorMessage = $"Type not found.{request.FullName}"};
+                return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            var instance = (Element) Activator.CreateInstance(type);
+            var instance = (Element)Activator.CreateInstance(type);
             if (instance == null)
             {
-                return new ComponentResponse {ErrorMessage = $"Type not instanstied.{request.FullName}"};
+                return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
             trace.Add($"Calling constructor started at {stopwatch.ElapsedMilliseconds}");
@@ -104,22 +115,25 @@ public static class ComponentRequestHandler
             return new ComponentResponse
             {
                 ElementAsJsonString = elementAsJsonString,
-                Trace= trace
+                Trace               = trace
             };
         }
 
-        if (request.MethodName == "HandleComponentEvent")
+       
+
+        ComponentResponse handleComponentEvent()
         {
+
             var type = findType(request.FullName);
             if (type == null)
             {
-                return new ComponentResponse {ErrorMessage = $"Type not found.{request.FullName}"};
+                return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            var instance = (Element) Activator.CreateInstance(type);
+            var instance = (Element)Activator.CreateInstance(type);
             if (instance == null)
             {
-                return new ComponentResponse {ErrorMessage = $"Type not instanstied.{request.FullName}"};
+                return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
             if (instance is IReactStatefulComponent reactStatefulComponent)
@@ -130,14 +144,14 @@ public static class ComponentRequestHandler
             var errorMessage = setState(type, instance, request.StateAsJson);
             if (errorMessage != null)
             {
-                return new ComponentResponse {ErrorMessage = errorMessage};
+                return new ComponentResponse { ErrorMessage = errorMessage };
             }
 
             var methodInfo = type.GetMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             if (methodInfo == null)
             {
-                return new ComponentResponse {ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}"};
+                return new ComponentResponse { ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}" };
             }
 
             trace.Add($"Method '{methodInfo.Name}' invocation started at {stopwatch.ElapsedMilliseconds}");
@@ -147,7 +161,7 @@ public static class ComponentRequestHandler
             }
             catch (Exception exception)
             {
-                return new ComponentResponse {ErrorMessage = $"Method invocation error.{exception}"};
+                return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
             }
             trace.Add($"Method '{methodInfo.Name}' invocation finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -162,11 +176,12 @@ public static class ComponentRequestHandler
             return new ComponentResponse
             {
                 ElementAsJsonString = elementAsJsonString,
-                Trace               = trace
+                Trace = trace
             };
         }
 
-        return new ComponentResponse {ErrorMessage = $"Not implemented method. {request.MethodName}"};
+
+        
 
         void initializeBrowserInformation(IReactStatefulComponent reactStatefulComponent)
         {
