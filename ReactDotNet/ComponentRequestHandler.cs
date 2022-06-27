@@ -12,16 +12,13 @@ using static Array;
 [Serializable]
 public sealed class ClientStateInfo
 {
-    #region Public Properties
     public string FullTypeNameOfState { get; set; }
     public string StateAsJson { get; set; }
-    #endregion
 }
 
 [Serializable]
 public class ComponentRequest
 {
-    #region Public Properties
     public double AvailableHeight { get; set; }
     public double AvailableWidth { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
@@ -32,7 +29,6 @@ public class ComponentRequest
 
     public string SearchPartOfUrl { get; set; }
     public string StateAsJson { get; set; }
-    #endregion
 }
 
 [Serializable]
@@ -92,23 +88,30 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
-            trace.Add($"Calling constructor started at {stopwatch.ElapsedMilliseconds}");
-
-            if (instance is IReactStatefulComponent reactStatefulComponent)
+            // Call contstructor
             {
-                initializeBrowserInformation(reactStatefulComponent);
+                trace.Add($"Calling constructor started at {stopwatch.ElapsedMilliseconds}");
 
-                reactStatefulComponent.constructor();
+                if (instance is IReactStatefulComponent reactStatefulComponent)
+                {
+                    initializeBrowserInformation(reactStatefulComponent);
+
+                    reactStatefulComponent.constructor();
+                }
+
+                trace.Add($"Calling constructor finished at {stopwatch.ElapsedMilliseconds}");
             }
 
-            trace.Add($"Calling constructor finished at {stopwatch.ElapsedMilliseconds}");
+            string elementAsJsonString;
+            
+            // Serialize
+            {
+                trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
+                elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates);
 
-            var elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates);
-
-            trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
-
+                trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
+            }
             trace.Add($"END {stopwatch.ElapsedMilliseconds}");
 
             return new ComponentResponse
@@ -136,37 +139,49 @@ public static class ComponentRequestHandler
             {
                 initializeBrowserInformation(reactStatefulComponent);
             }
-
-            var errorMessage = setState(type, instance, request.StateAsJson);
-            if (errorMessage != null)
+            
+            // Init state
             {
-                return new ComponentResponse { ErrorMessage = errorMessage };
+                var errorMessage = setState(type, instance, request.StateAsJson);
+                if (errorMessage != null)
+                {
+                    return new ComponentResponse { ErrorMessage = errorMessage };
+                }
             }
 
+            // Find method
             var methodInfo = type.GetMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             if (methodInfo == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}" };
-            }
+            } 
 
-            trace.Add($"Method '{methodInfo.Name}' invocation started at {stopwatch.ElapsedMilliseconds}");
-            try
+            // Invoke method
             {
-                methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
+                trace.Add($"Method '{methodInfo.Name}' invocation started at {stopwatch.ElapsedMilliseconds}");
+                try
+                {
+                    methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
+                }
+                catch (Exception exception)
+                {
+                    return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
+                }
+
+                trace.Add($"Method '{methodInfo.Name}' invocation finished at {stopwatch.ElapsedMilliseconds}");
             }
-            catch (Exception exception)
+
+            string elementAsJsonString;
+
+            // Serialize to json
             {
-                return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
+                trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
+
+                elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates);
+
+                trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             }
-
-            trace.Add($"Method '{methodInfo.Name}' invocation finished at {stopwatch.ElapsedMilliseconds}");
-
-            trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
-
-            var elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates);
-
-            trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
             trace.Add($"END {stopwatch.ElapsedMilliseconds}");
 
