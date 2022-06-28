@@ -189,7 +189,7 @@ class View : ReactComponent<MainViewModel>
                     new SvgHamburgerIcon { HamburgerMenuIsOpen = state.HamburgerMenuIsOpen, onClick = hamburgerMenuClicked },
                     new div
                     {
-                        new div { id = "title", text = ConstantData.Title }
+                        new div(ConstantData.Title) { id = "title" }
                     }
                 },
                 style =
