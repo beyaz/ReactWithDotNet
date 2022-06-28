@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
@@ -84,7 +85,7 @@ namespace ReactDotNet
         {
             var returnItems = new List<(PropertyInfo propertyInfo, object newValue)>();
 
-            foreach (var propertyInfo in typeof(Style).GetProperties())
+            foreach (var propertyInfo in typeof(Style).GetProperties().Where(p=>p.CanRead))
             {
                 var value = propertyInfo.GetValue(style);
 
