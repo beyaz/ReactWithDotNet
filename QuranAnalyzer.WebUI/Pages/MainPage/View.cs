@@ -182,22 +182,23 @@ class View : ReactComponent<MainViewModel>
 
         Element buildTopNav()
         {
-            var hamburgerIcon = new SvgHamburgerIcon { HamburgerMenuIsOpen = state.HamburgerMenuIsOpen, onClick = hamburgerMenuClicked };
-
             return new nav
-                   {
-                       hamburgerIcon,
-                       new div
-                       {
-                           new div {id = "title", text = ConstantData.Title}
-                       }
-                   }
-                   + new Style
-                   {
-                       display        = Display.flex,
-                       justifyContent = JustifyContent.flex_start,
-                       alignItems     = AlignItems.center
-                   };
+            {
+                children =
+                {
+                    new SvgHamburgerIcon { HamburgerMenuIsOpen = state.HamburgerMenuIsOpen, onClick = hamburgerMenuClicked },
+                    new div
+                    {
+                        new div { id = "title", text = ConstantData.Title }
+                    }
+                },
+                style =
+                {
+                    display        = Display.flex,
+                    justifyContent = JustifyContent.flex_start,
+                    alignItems     = AlignItems.center
+                }
+            };
         }
 
         Element buildLeftMenu()
@@ -226,13 +227,8 @@ class View : ReactComponent<MainViewModel>
                        {
                            text    = m.Text,
                            href    = "/index.html?page=" + m.Id,
-                           onClick = (_) => OnMainMenuItemClicked(m.Id)
-                       }
-                       +
-                       new Style
-                       {
-                           fontSize  = px(17),
-                           marginTop = px(50)
+                           onClick = _ => OnMainMenuItemClicked(m.Id),
+                           style = { fontSize = px(17), marginTop = px(50) }
                        };
             }
         }

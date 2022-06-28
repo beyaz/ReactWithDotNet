@@ -35,7 +35,7 @@ namespace ReactDotNet
 
 
     [Serializable]
-    public sealed class Style
+    public sealed partial class Style
     {
         public Union<string, AlignContent> alignContent { get; set; }
 

@@ -14,7 +14,7 @@ class divWithBorder:div
     }
 }
 
-class MainPage:ReactComponent
+class MainPage : ReactComponent
 {
    public Element topContent;
    public Element mainContent;
@@ -44,21 +44,37 @@ class MainPage:ReactComponent
             };
         }
 
-        var m = new div { style = {  display = Display.flex, justifyContent = JustifyContent.center} };
-        
-        var mainContentContainer = new div(marginLeftRight(px(10)), marginTop(px(10))) { mainContent };
-
-        var main = new div { id = "main", children = { m.appendChild( mainContentContainer) } } + new Style
+        var main = new div
         {
-            position     = Position.@fixed,
-            top          = px(0),
-            left         = px(0),
-            marginTop    = px(50),
-            marginBottom = px(27),
+            id = "main",
+            children =
+            {
+                new div
+                {
+                    style = { display = Display.flex, justifyContent = JustifyContent.center },
+                    children =
+                    {
+                        new div
+                        {
+                            style    = { marginLeftRight = px(10), marginTop = px(10), maxWidth = px(800) },
+                            children = { mainContent }
+                        }
+                    }
+                }
+            },
+            
+            style =
+            {
+                position     = Position.@fixed,
+                top          = px(0),
+                left         = px(0),
+                marginTop    = px(50),
+                marginBottom = px(27),
 
-            width     = "100%",
-            height    = "calc(100% - 65px)",
-            overflowY = Overflow.auto,
+                width     = "100%",
+                height    = "calc(100% - 65px)",
+                overflowY = "auto"
+            }
         };
 
         return new div { top, menu, main } + new Style { height = "100vh", width = "100%", backgroundColor = "rgb(245, 245, 245)" };
