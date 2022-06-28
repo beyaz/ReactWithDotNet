@@ -44,8 +44,11 @@ class MainPage:ReactComponent
             };
         }
 
+        var m = new div { style = {  display = Display.flex, justifyContent = JustifyContent.center} };
+        
+        var mainContentContainer = new div(marginLeftRight(px(10)), marginTop(px(10))) { mainContent };
 
-        var main = new div { id = "main", children = { mainContent } } + new Style
+        var main = new div { id = "main", children = { m.appendChild( mainContentContainer) } } + new Style
         {
             position     = Position.@fixed,
             top          = px(0),
@@ -58,6 +61,6 @@ class MainPage:ReactComponent
             overflowY = Overflow.auto,
         };
 
-        return new div { top, menu, main } + new Style { height = "100vh", width = "100%" };
+        return new div { top, menu, main } + new Style { height = "100vh", width = "100%", backgroundColor = "rgb(245, 245, 245)" };
     }
 }

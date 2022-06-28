@@ -415,8 +415,16 @@ namespace ReactDotNet
         {
             return new ElementModifier(element => element.id = id);
         }
-        
-        
+
+        public static ElementModifier maxWidth(string maxWidth)
+        {
+            return new ElementModifier(element => element.style.maxWidth = maxWidth);
+        }
+
+        public static ElementModifier maxHeight(string maxHeight)
+        {
+            return new ElementModifier(element => element.style.maxHeight = maxHeight);
+        }
     }
 
     public static class HtmlEvent
