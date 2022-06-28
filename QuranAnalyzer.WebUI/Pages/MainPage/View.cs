@@ -203,7 +203,7 @@ class View : ReactComponent<MainViewModel>
 
         Element buildLeftMenu()
         {
-            return new div(mainMenuModels.Select(ToMenuItem))
+            return new div(mainMenuModels.Select(toMenuItem))
                        +
                        new Style
                        {
@@ -221,7 +221,7 @@ class View : ReactComponent<MainViewModel>
                            fontSize      = px(18),
                        };
 
-            Element ToMenuItem(MainMenuModel m)
+            Element toMenuItem(MainMenuModel m)
             {
                 return new a
                        {
