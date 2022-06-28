@@ -204,22 +204,23 @@ class View : ReactComponent<MainViewModel>
         Element buildLeftMenu()
         {
             return new div(mainMenuModels.Select(toMenuItem))
-                       +
-                       new Style
-                       {
-                           position      = Position.@fixed,
-                           height        = "100%",
-                           width         = "70%",
-                           top           = px(50),
-                           background    = "white",
-                           boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
-                           zIndex        = "1",
-                           display       = state.HamburgerMenuIsOpen ? Display.flex : Display.none,
-                           transition    = "visibility 0s linear 1000ms, opacity 500ms",
-                           flexDirection = FlexDirection.column,
-                           alignItems    = AlignItems.center,
-                           fontSize      = px(18),
-                       };
+            {
+                style =
+                {
+                    position      = Position.@fixed,
+                    height        = "100%",
+                    width         = "70%",
+                    top           = px(50),
+                    background    = "white",
+                    boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
+                    zIndex        = "1",
+                    display       = state.HamburgerMenuIsOpen ? Display.flex : Display.none,
+                    transition    = "visibility 0s linear 1000ms, opacity 500ms",
+                    flexDirection = FlexDirection.column,
+                    alignItems    = AlignItems.center,
+                    fontSize      = px(18)
+                }
+            };
 
             Element toMenuItem(MainMenuModel m)
             {
