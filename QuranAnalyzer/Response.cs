@@ -237,16 +237,6 @@ public static class FpExtensions
         return Try(() => int.Parse(value));
     }
 
-    public static Response<B> Pipe<A, B>(Response<A> responseA, Func<A, B> func1)
-    {
-        if (responseA.IsFail)
-        {
-            return responseA.Errors.ToArray();
-        }
-
-        return func1(responseA.Value);
-    }
-
     public static Response<B> Pipe<A, B>(Response<A> responseA, Func<A, Response<B>> func1)
     {
         if (responseA.IsFail)
@@ -266,7 +256,17 @@ public static class FpExtensions
 
         return nextFunc(response.Value);
     }
-    
+
+    public static Response<B> Then<A, B>(this Response<A> response, Func<A, B> nextFunc)
+    {
+        if (response.IsFail)
+        {
+            return response.Errors.ToArray();
+        }
+
+        return nextFunc(response.Value);
+    }
+
     static Response<T> Try<T>(Func<T> func)
     {
         try

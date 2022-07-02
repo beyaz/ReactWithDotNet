@@ -74,7 +74,7 @@ public static class QuranAnalyzerMixin
     #region Public Methods
     static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
-        return Pipe(character.AsArabicCharacterIndex(), arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
+        return character.AsArabicCharacterIndex().Then(arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
     }
 
     public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, string character, CountingOption option = null)
