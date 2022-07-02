@@ -12,14 +12,22 @@ namespace QuranAnalyzer;
 public class CharacterCountingTests
 {
 
-    static Func<string,Response<int>> getCountOfCharacter(IReadOnlyList<Verse> verses) => character =>GetCountOfCharacter(verses, character);
+    
+    static void CountShouldBe(string searchScript, string character,  int expectedCount)
+    {
+        GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, character)).ShouldBe(expectedCount);
+    }
+    static void CountShouldBe(string searchScript, string character, CountingOption option, int expectedCount)
+    {
+        GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, character, option)).ShouldBe(expectedCount);
+    }
 
     [TestMethod]
     public void Sad_in_38_and_19_and_98()
     {
-        Pipe(GetVerseList("38:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(29);
-        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(26);
-        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(98);
+        CountShouldBe("38:*",Sad,29);
+        CountShouldBe("19:*",Sad,26);
+        CountShouldBe("7:* ",Sad,98);
 
     }
 
