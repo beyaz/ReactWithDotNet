@@ -52,8 +52,25 @@ namespace QuranAnalyzer;
             
         }
 
+    [TestMethod]
+    public void SpecifiedWithRange()
+    {
+        var records = VerseFilter.GetVerseList(" 20  : 4- 7").Value;
 
-        [TestMethod]
+        records.Count.Should().Be(4);
+        records[0].SurahNumber.Should().Be(20);
+        records[1].SurahNumber.Should().Be(20);
+        records[2].SurahNumber.Should().Be(20);
+        records[3].SurahNumber.Should().Be(20);
+
+        records[0]._index.Should().Be("4");
+        records[1]._index.Should().Be("5");
+        records[2]._index.Should().Be("6");
+        records[3]._index.Should().Be("7");
+    }
+
+
+    [TestMethod]
         public void FilterWithStarWithManyWithSpecificAyahNumber_with_Error()
         {
             VerseFilter.GetVerseList(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();

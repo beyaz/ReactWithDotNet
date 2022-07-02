@@ -30,7 +30,7 @@ public static class VerseFilter
 
         Response<IReadOnlyList<Verse>> process(string searchItem)
         {
-            var arr = searchItem.Split(": ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var arr = searchItem.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
             {
                 return (Error) $"arama kriterlerinde hata var.{searchItem}";
@@ -38,7 +38,7 @@ public static class VerseFilter
 
             return parseSureNumber()
                   .Then(findSurahByNumber)
-                  .Then(sura => collectAyaList(sura, arr[1]));
+                  .Then(sura => collectVerseList(sura, arr[1]));
 
             Response<int> parseSureNumber()
             {
@@ -55,19 +55,34 @@ public static class VerseFilter
                 return AllSurahs[--surahNumber];
             }
 
-            Response<IReadOnlyList<Verse>> collectAyaList(Surah sura, string ayaFilter)
+            Response<IReadOnlyList<Verse>> collectVerseList(Surah sura, string ayaFilter)
             {
                 foreach (var aya in sura.Verses)
                 {
                     aya.SurahNumber = sura.Index;
                 }
 
-                if (ayaFilter == "*")
+                var filters = ayaFilter.Split("-".ToCharArray()).Where(x=>!string.IsNullOrWhiteSpace(x)).Select(x=>x.Trim()).ToArray();
+
+
+                if (filters.Length == 1)
                 {
-                    return sura.Verses.ToArray();
+                    if (filters[0] == "*")
+                    {
+                        return sura.Verses.ToArray();
+                    }
+
+                    return ParseInt(filters[0]).Then(selectOne);
                 }
 
-                return ParseInt(ayaFilter).Then(selectOne);
+                if (filters.Length == 2)
+                {
+                    // return Apply(selectMultipe, Apply(ParseInt,filters[0]), Apply(ParseInt,filters[1]));
+                    return Apply(selectMultipe, ParseInt(filters[0]), ParseInt(filters[1]));
+                }
+                
+                return (Error)$"Sure seçiminde yanlışlık var.{searchItem}";
+
 
                 Response<IReadOnlyList<Verse>> selectOne(int ayahIndex)
                 {
@@ -77,6 +92,26 @@ public static class VerseFilter
                     }
 
                     return new[] {sura.Verses[--ayahIndex]};
+                }
+
+                Response<IReadOnlyList<Verse>> selectMultipe(int verseStartIndex, int verseEndIndex)
+                {
+                    if (verseStartIndex <= 0 || verseStartIndex > sura.Verses.Count)
+                    {
+                        return (Error)$"Sure seçiminde yanlışlık var.{searchItem}";
+                    }
+
+                    if (verseEndIndex <= 0 || verseEndIndex > sura.Verses.Count)
+                    {
+                        return (Error)$"Sure seçiminde yanlışlık var.{searchItem}";
+                    }
+
+                    if (verseStartIndex > verseEndIndex)
+                    {
+                        return (Error)$"Sure seçiminde yanlışlık var.{searchItem}";
+                    }
+
+                    return sura.Verses.ToList().GetRange(verseStartIndex - 1, verseEndIndex - verseStartIndex + 1);
                 }
             }
         }

@@ -267,6 +267,26 @@ public static class FpExtensions
         return nextFunc(response.Value);
     }
 
+    public static Response<B> Apply<A,B>(Func<A,Response<B>> functionAToB, A a)
+    {
+        return functionAToB(a);
+    }
+
+    public static Response<C> Apply<A, B,C>(Func<A, B, Response<C>> fn, Response<A> responseA, Response<B> responseB)
+    {
+        if (responseA.IsFail)
+        {
+            return responseA.Errors.ToArray();
+        }
+
+        if (responseB.IsFail)
+        {
+            return responseB.Errors.ToArray();
+        }
+
+        return fn(responseA.Value, responseB.Value);
+    }
+
     static Response<T> Try<T>(Func<T> func)
     {
         try
