@@ -128,10 +128,59 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_19()
     {
-        // Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Kef)).ShouldBe(137);
-        // Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ha)).ShouldBe(175);
-        // Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ya)).ShouldBe(343);
-        // Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ayn)).ShouldBe(117);
+        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Kef)).ShouldBe(137);
+        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ha)).ShouldBe(175);
+        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ya)).ShouldBe(343);
+        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ayn)).ShouldBe(117);
         Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(26);
+    }
+
+    [TestMethod]
+    public void Section_37()
+    {
+        Pipe(GetVerseList("40:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(64);
+        Pipe(GetVerseList("44:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(16);
+        Pipe(GetVerseList("45:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(31);
+        Pipe(GetVerseList("46:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(36);
+
+
+        Pipe(GetVerseList("40:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(380);
+        Pipe(GetVerseList("44:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(150);
+        Pipe(GetVerseList("45:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(200);
+        Pipe(GetVerseList("46:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(225);
+    }
+
+    [TestMethod]
+    public void Section_38()
+    {
+        Pipe(GetVerseList("42:*"), verses => GetCountOfCharacter(verses, Ayn)).ShouldBe(98);
+        Pipe(GetVerseList("42:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(54);
+        Pipe(GetVerseList("42:*"), verses => GetCountOfCharacter(verses, Kaf)).ShouldBe(57);
+    }
+
+    [TestMethod]
+    public void Ha_Mim()
+    {
+        Pipe(GetVerseList("40:*,41:*,42:*,43:*,44:*,45:*,46:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(292);
+        Pipe(GetVerseList("40:*,41:*,42:*,43:*,44:*,45:*,46:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(1855);
+    }
+
+    [TestMethod]
+    public void TH()
+    {
+        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ha)).ShouldBe(175);
+        Pipe(GetVerseList("20:*"), verses => GetCountOfCharacter(verses, Ha)).ShouldBe(250); // todo: 251 olmalı
+
+        Pipe(GetVerseList("20:*"), verses => GetCountOfCharacter(verses, T)).ShouldBe(28);
+        Pipe(GetVerseList("26:*"), verses => GetCountOfCharacter(verses, T)).ShouldBe(33);
+        Pipe(GetVerseList("27:*"), verses => GetCountOfCharacter(verses, T)).ShouldBe(27);
+        Pipe(GetVerseList("28:*"), verses => GetCountOfCharacter(verses, T)).ShouldBe(19);
+
+        Pipe(GetVerseList("26:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(94);
+        Pipe(GetVerseList("27:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(94);
+        Pipe(GetVerseList("28:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(102);
+
+        Pipe(GetVerseList("26:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(484);
+        Pipe(GetVerseList("28:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(460);
     }
 }

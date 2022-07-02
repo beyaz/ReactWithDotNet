@@ -59,9 +59,13 @@ public static class ArabicCharacters
     public static string Lam = "ل";
     public static string Ra = "ر";
 
-    public static string Kef = "ص";
-    public static string Ha = "ع";
-    public static string Ayn = "ه";
+    public static string Kef = "ك";
+    public static string Ha = "ه";
+    public static string Ayn = "ع";
+
+    public static string HH = "ح";
+
+    public static string T = "ط";
     #endregion
 }
 

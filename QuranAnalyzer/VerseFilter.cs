@@ -42,7 +42,7 @@ public static class VerseFilter
 
             Response<int> parseSureNumber()
             {
-                return Try(() => int.Parse(arr[0]));
+                return ParseInt(arr[0]);
             }
 
             Response<Surah> findSurahByNumber(int surahNumber)
@@ -67,6 +67,8 @@ public static class VerseFilter
                     return sura.Verses.ToArray();
                 }
 
+                return ParseInt(ayaFilter).Then(selectOne);
+
                 Response<IReadOnlyList<Verse>> selectOne(int ayahIndex)
                 {
                     if (ayahIndex <= 0 || ayahIndex > sura.Verses.Count)
@@ -76,8 +78,6 @@ public static class VerseFilter
 
                     return new[] {sura.Verses[--ayahIndex]};
                 }
-
-                return ayaFilter.Then(int.Parse).Then(selectOne);
             }
         }
     }

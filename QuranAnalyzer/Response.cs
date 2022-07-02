@@ -219,52 +219,6 @@ public sealed class Response<TValue> : Response
 public static class FpExtensions
 {
     #region Public Methods
-    public static Response After<T>(this T response, Action action) where T : Response
-    {
-        if (response.IsFail)
-        {
-            return response;
-        }
-
-        return Try(action);
-    }
-
-    public static void After<T>(this T response, Action onSuccess, Action<IReadOnlyList<Error>> onFail) where T : Response
-    {
-        if (response.IsSuccess)
-        {
-            onSuccess();
-            return;
-        }
-
-        onFail(response.Errors);
-    }
-
-    public static void ForEach<T>(this IEnumerable<T> items, Action<T> applyAction)
-    {
-        foreach (var item in items)
-        {
-            applyAction(item);
-        }
-    }
-
-    public static Response ForEach<T>(this IEnumerable<T> items, Func<T, Response> applyAction)
-    {
-        var response = Response.Success;
-
-        foreach (var item in items)
-        {
-            response += applyAction(item);
-        }
-
-        return response;
-    }
-
-    [Pure]
-    public static Func<R> fun<R>(Func<R> f) => f;
-
-    [Pure]
-    public static Func<T1, R> fun<T1, R>(Func<T1, R> f) => f;
 
     public static Response<int> GetIndex<T>(this T[] array, T value)
     {
@@ -275,6 +229,12 @@ public static class FpExtensions
         }
 
         return index;
+    }
+
+
+    public static Response<int> ParseInt(string value)
+    {
+        return Try(() => int.Parse(value));
     }
 
     public static Response<B> Pipe<A, B>(Response<A> responseA, Func<A, B> func1)
@@ -306,32 +266,8 @@ public static class FpExtensions
 
         return nextFunc(response.Value);
     }
-
-    public static Response<B> Then<A, B>(this A value, Func<A, Response<B>> nextFunc)
-    {
-        return nextFunc(value);
-    }
-
-    public static Response<B> Then<A, B>(this A value, Func<A, B> nextFunc)
-    {
-        return nextFunc(value);
-    }
-
-    public static Response Try(Action action)
-    {
-        try
-        {
-            action();
-
-            return Response.Success;
-        }
-        catch (Exception exception)
-        {
-            return exception;
-        }
-    }
-
-    public static Response<T> Try<T>(Func<T> func)
+    
+    static Response<T> Try<T>(Func<T> func)
     {
         try
         {

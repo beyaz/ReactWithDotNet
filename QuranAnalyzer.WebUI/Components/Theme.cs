@@ -14,6 +14,50 @@ class divWithBorder:div
     }
 }
 
+class SiteTitle : div
+{
+    public override string tagName => nameof(div);
+    public SiteTitle(string text)
+    {
+        this.text = text;
+        
+        style.fontSize = "22px";
+    }
+}
+
+class LargeTitle : div
+{
+    public override string tagName => nameof(div);
+    public LargeTitle(string text)
+    {
+        this.text = text;
+
+        style.fontSize = "20px";
+    }
+}
+
+class Title : div
+{
+    public override string tagName => nameof(div);
+    public Title(string text)
+    {
+        this.text = text;
+
+        style.fontSize = "18px";
+    }
+}
+
+class SubTitle : div
+{
+    public override string tagName => nameof(div);
+    public SubTitle(string text)
+    {
+        this.text = text;
+
+        style.fontSize = "16px";
+    }
+}
+
 class MainPage : ReactComponent
 {
    public Element topContent;
