@@ -1,4 +1,6 @@
-﻿using static QuranAnalyzer.QuranAnalyzerMixin;
+﻿using System;
+using System.Collections.Generic;
+using static QuranAnalyzer.QuranAnalyzerMixin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static QuranAnalyzer.ArabicCharacters;
 using static QuranAnalyzer.VerseFilter;
@@ -9,6 +11,8 @@ namespace QuranAnalyzer;
 [TestClass]
 public class CharacterCountingTests
 {
+
+    static Func<string,Response<int>> getCountOfCharacter(IReadOnlyList<Verse> verses) => character =>GetCountOfCharacter(verses, character);
 
     [TestMethod]
     public void Sad_in_38_and_19_and_98()
