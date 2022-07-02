@@ -2,7 +2,6 @@
 using static QuranAnalyzer.QuranAnalyzerMixin;
 using static QuranAnalyzer.ArabicCharacters;
 using static QuranAnalyzer.VerseFilter;
-using static QuranAnalyzer.FpExtensions;
 
 namespace QuranAnalyzer;
 
@@ -13,111 +12,111 @@ public class CharacterCountingTests
     [TestMethod]
     public void Bakara()
     {
-        Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "م")).ShouldBe(2195);
-        Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "ل")).ShouldBe(3202);
-        Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "ا")).ShouldBe(4504);
-        Pipe(GetVerseList("2:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(4502);
+        CountShouldBe("2:*","م",2195);
+        CountShouldBe("2:*","ل",3202);
+        CountShouldBe("2:*","ا",4504);
+        CountShouldBe("2:*","ا", new CountingOption { UseElifCountsSpecifiedByRK = true },4502);
     }
 
     [TestMethod]
     public void Chapter_10()
     {
-        Pipe(GetVerseList("10:*"), verses => GetCountOfCharacter(verses, Ra)).ShouldBe(257);
-        Pipe(GetVerseList("10:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(913);
-        Pipe(GetVerseList("10:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(1323);
-        Pipe(GetVerseList("10:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(1319);
+        CountShouldBe("10:*",Ra,257);
+        CountShouldBe("10:*",Lam,913);
+        CountShouldBe("10:*",Elif,1323);
+        CountShouldBe("10:*",Elif, new CountingOption { UseElifCountsSpecifiedByRK = true },1319);
     }
 
     [TestMethod]
     public void Chapter_11()
     {
-        Pipe(GetVerseList("11:*"), verses => GetCountOfCharacter(verses, Ra)).ShouldBe(325);
-        Pipe(GetVerseList("11:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(795);
-        Pipe(GetVerseList("11:*"), verses => GetCountOfCharacter(verses, Lam, new CountingOption { Use_Lam_SpecifiedByRK = true })).ShouldBe(794);
-        Pipe(GetVerseList("11:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(1373);
-        Pipe(GetVerseList("11:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(1370);
+        CountShouldBe("11:*",Ra,325);
+        CountShouldBe("11:*",Lam,795);
+        CountShouldBe("11:*",Lam, new CountingOption { Use_Lam_SpecifiedByRK = true },794);
+        CountShouldBe("11:*",Elif,1373);
+        CountShouldBe("11:*",Elif, new CountingOption { UseElifCountsSpecifiedByRK = true },1370);
     }
 
     [TestMethod]
     public void Chapter_12()
     {
-        Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Ra)).ShouldBe(257);
-        Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(812);
-        Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(1315);
-        Pipe(GetVerseList("12:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(1306);
+        CountShouldBe("12:*",Ra,257);
+        CountShouldBe("12:*",Lam,812);
+        CountShouldBe("12:*",Elif,1315);
+        CountShouldBe("12:*",Elif, new CountingOption { UseElifCountsSpecifiedByRK = true },1306);
     }
 
     [TestMethod]
     public void Chapter_13()
     {
-        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Ra)).ShouldBe(137);
-        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(260);
-        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(480);
-        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(610);
-        Pipe(GetVerseList("13:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(605);
+        CountShouldBe("13:*",Ra,137);
+        CountShouldBe("13:*",Mim,260);
+        CountShouldBe("13:*",Lam,480);
+        CountShouldBe("13:*",Elif,610);
+        CountShouldBe("13:*",Elif, new CountingOption { UseElifCountsSpecifiedByRK = true },605);
     }
 
     [TestMethod]
     public void Chapter_14()
     {
-        Pipe(GetVerseList("14:*"), verses => GetCountOfCharacter(verses, Ra)).ShouldBe(160);
-        Pipe(GetVerseList("14:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(452);
-        Pipe(GetVerseList("14:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(589);
-        Pipe(GetVerseList("14:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(585);
+        CountShouldBe("14:*",Ra,160);
+        CountShouldBe("14:*",Lam,452);
+        CountShouldBe("14:*",Elif,589);
+        CountShouldBe("14:*",Elif, new CountingOption { UseElifCountsSpecifiedByRK = true },585);
     }
 
     [TestMethod]
     public void Chapter_15()
     {
-        Pipe(GetVerseList("15:*"), verses => GetCountOfCharacter(verses, Ra)).ShouldBe(96);
-        Pipe(GetVerseList("15:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(323);
-        Pipe(GetVerseList("15:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(493);
-        Pipe(GetVerseList("15:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(493);
+        CountShouldBe("15:*",Ra,96);
+        CountShouldBe("15:*",Lam,323);
+        CountShouldBe("15:*",Elif,493);
+        CountShouldBe("15:*",Elif, new CountingOption { UseElifCountsSpecifiedByRK = true },493);
     }
 
     [TestMethod]
     public void Chapter_19()
     {
-        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Kef)).ShouldBe(137);
-        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ha)).ShouldBe(175);
-        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ya)).ShouldBe(343);
-        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ayn)).ShouldBe(117);
-        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(26);
+        CountShouldBe("19:*",Kef,137);
+        CountShouldBe("19:*",Ha,175);
+        CountShouldBe("19:*",Ya,343);
+        CountShouldBe("19:*",Ayn,117);
+        CountShouldBe("19:*",Sad,26);
     }
 
     [TestMethod]
     public void Chapter_7()
     {
-        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Sad)).ShouldBe(98);
-        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Sad, new CountingOption { Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = true })).ShouldBe(97);
+        CountShouldBe("7:*",Sad,98);
+        CountShouldBe("7:*",Sad, new CountingOption { Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = true },97);
 
-        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(1164);
-        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Lam)).ShouldBe(1530);
-        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Elif)).ShouldBe(2521);
-        Pipe(GetVerseList("7:*"), verses => GetCountOfCharacter(verses, Elif, new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(2529);
+        CountShouldBe("7:*",Mim,1164);
+        CountShouldBe("7:*",Lam,1530);
+        CountShouldBe("7:*",Elif,2521);
+        CountShouldBe("7:*",Elif, new CountingOption { UseElifCountsSpecifiedByRK = true },2529);
     }
 
     [TestMethod]
     public void Ha_Mim()
     {
-        Pipe(GetVerseList("40:*,41:*,42:*,43:*,44:*,45:*,46:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(292);
-        Pipe(GetVerseList("40:*,41:*,42:*,43:*,44:*,45:*,46:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(1855);
+        CountShouldBe("40:*,41:*,42:*,43:*,44:*,45:*,46:*",HH,292);
+        CountShouldBe("40:*,41:*,42:*,43:*,44:*,45:*,46:*",Mim,1855);
     }
 
     [TestMethod]
     public void İmran()
     {
-        Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "م")).ShouldBe(1249);
-        Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "ل")).ShouldBe(1892);
-        Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "ا")).ShouldBe(2511);
-        Pipe(GetVerseList("3:*"), verses => GetCountOfCharacter(verses, "ا", new CountingOption { UseElifCountsSpecifiedByRK = true })).ShouldBe(2521);
+        CountShouldBe("3:*","م",1249);
+        CountShouldBe("3:*","ل",1892);
+        CountShouldBe("3:*","ا",2511);
+        CountShouldBe("3:*","ا", new CountingOption { UseElifCountsSpecifiedByRK = true },2521);
     }
 
     [TestMethod]
     public void Kaf_in_50_and_42()
     {
-        Pipe(GetVerseList("50:*"), verses => GetCountOfCharacter(verses, Kaf)).ShouldBe(57);
-        Pipe(GetVerseList("42:*"), verses => GetCountOfCharacter(verses, Kaf)).ShouldBe(57);
+        CountShouldBe("50:*",Kaf,57);
+        CountShouldBe("42:*",Kaf,57);
     }
 
     [TestMethod]
@@ -131,49 +130,49 @@ public class CharacterCountingTests
     [TestMethod]
     public void Section_37()
     {
-        Pipe(GetVerseList("40:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(64);
-        Pipe(GetVerseList("44:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(16);
-        Pipe(GetVerseList("45:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(31);
-        Pipe(GetVerseList("46:*"), verses => GetCountOfCharacter(verses, HH)).ShouldBe(36);
+        CountShouldBe("40:*",HH,64);
+        CountShouldBe("44:*",HH,16);
+        CountShouldBe("45:*",HH,31);
+        CountShouldBe("46:*",HH,36);
 
-        Pipe(GetVerseList("40:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(380);
-        Pipe(GetVerseList("44:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(150);
-        Pipe(GetVerseList("45:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(200);
-        Pipe(GetVerseList("46:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(225);
+        CountShouldBe("40:*",Mim,380);
+        CountShouldBe("44:*",Mim,150);
+        CountShouldBe("45:*",Mim,200);
+        CountShouldBe("46:*",Mim,225);
     }
 
     [TestMethod]
     public void Section_38()
     {
-        Pipe(GetVerseList("42:*"), verses => GetCountOfCharacter(verses, Ayn)).ShouldBe(98);
-        Pipe(GetVerseList("42:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(54);
-        Pipe(GetVerseList("42:*"), verses => GetCountOfCharacter(verses, Kaf)).ShouldBe(57);
+        CountShouldBe("42:*",Ayn,98);
+        CountShouldBe("42:*",Sin,54);
+        CountShouldBe("42:*",Kaf,57);
     }
 
     [TestMethod]
     public void TH()
     {
-        Pipe(GetVerseList("19:*"), verses => GetCountOfCharacter(verses, Ha)).ShouldBe(175);
-        Pipe(GetVerseList("20:*"), verses => GetCountOfCharacter(verses, Ha)).ShouldBe(250); // todo: 251 olmalı
+        CountShouldBe("19:*",Ha,175);
+        CountShouldBe("20:*",Ha,250); // todo: 251 olmalı
 
-        Pipe(GetVerseList("20:*"), verses => GetCountOfCharacter(verses, T)).ShouldBe(28);
-        Pipe(GetVerseList("26:*"), verses => GetCountOfCharacter(verses, T)).ShouldBe(33);
-        Pipe(GetVerseList("27:*"), verses => GetCountOfCharacter(verses, T)).ShouldBe(27);
-        Pipe(GetVerseList("28:*"), verses => GetCountOfCharacter(verses, T)).ShouldBe(19);
+        CountShouldBe("20:*",T,28);
+        CountShouldBe("26:*",T,33);
+        CountShouldBe("27:*",T,27);
+        CountShouldBe("28:*",T,19);
 
-        Pipe(GetVerseList("26:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(94);
-        Pipe(GetVerseList("27:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(94);
-        Pipe(GetVerseList("28:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(102);
+        CountShouldBe("26:*",Sin,94);
+        CountShouldBe("27:*",Sin,94);
+        CountShouldBe("28:*",Sin,102);
 
-        Pipe(GetVerseList("26:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(484);
-        Pipe(GetVerseList("28:*"), verses => GetCountOfCharacter(verses, Mim)).ShouldBe(460);
+        CountShouldBe("26:*",Mim,484);
+        CountShouldBe("28:*",Mim,460);
     }
 
     [TestMethod]
     public void ye_sin()
     {
-        Pipe(GetVerseList("36:*"), verses => GetCountOfCharacter(verses, Ya)).ShouldBe(237);
-        Pipe(GetVerseList("36:*"), verses => GetCountOfCharacter(verses, Sin)).ShouldBe(48);
+        CountShouldBe("36:*",Ya,237);
+        CountShouldBe("36:*",Sin,48);
     }
     #endregion
 
