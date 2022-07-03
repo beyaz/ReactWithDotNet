@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static QuranAnalyzer.QuranAnalyzerMixin;
 using static QuranAnalyzer.ArabicCharacters;
 using static QuranAnalyzer.VerseFilter;
@@ -150,10 +151,18 @@ public class CharacterCountingTests
     }
 
     [TestMethod]
+    public void AnalyzeVerseTest()
+    {
+        DataAccess.AnalyzeVerse(new Verse { _text = "طه" }).Count.Should().Be(2);
+        DataAccess.AnalyzeVerse(new Verse { _text = "طه" })[0].HarfIndex.Should().Be(15);
+        DataAccess.AnalyzeVerse(new Verse { _text = "طه" })[1].HarfIndex.Should().Be(25);
+    }
+    [TestMethod]
     public void TH()
     {
+        
         CountShouldBe("19:*",Ha,175);
-        CountShouldBe("20:*",Ha,250); // todo: 251 olmalı
+        CountShouldBe("20:*",Ha,251);
 
         CountShouldBe("20:*",T,28);
         CountShouldBe("26:*",T,33);

@@ -101,7 +101,7 @@ public static class DataAccess
         {
             MatchInfo tryMatch(string searchCharacter)
             {
-                if (startIndex + searchCharacter.Length >= line.Length)
+                if (startIndex + searchCharacter.Length > line.Length)
                 {
                     return null;
                 }
