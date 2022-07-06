@@ -4,8 +4,7 @@
 */
 
 import React from 'react';
-import ReactDOM from "react-dom";
-
+import {createRoot} from 'react-dom/client';
 
 var createElement = React.createElement;
 
@@ -862,7 +861,7 @@ function RenderComponentIn(obj)
 
             processClientTask(clientTask);
 
-            ReactDOM.render(reactElement, document.getElementById(containerHtmlElementId));
+            createRoot(document.getElementById(containerHtmlElementId)).render(reactElement);
         }
         
         SendRequest(request, onSuccess);
