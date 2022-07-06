@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button } from 'primereact/button';
-import {createRoot} from 'react-dom/client';
+import { InputText } from 'primereact/InputText';
+import { InputTextarea } from 'primereact/InputTextarea';
+
 import ReactDotNet from "./ReactDotNet";
 
 import Xarrow from "react-xarrows";
@@ -42,10 +42,13 @@ import Xarrow from "react-xarrows";
 //    );
 //}
 
-
-
-window.primereact = { "Button": Button };
-window.ReactDotNet = ReactDotNet;
+window.primereact =
+{
+    "Button": Button,
+    "InputText": InputText,
+    "InputTextarea": InputTextarea
+};
+window.Xarrow = Xarrow;
 
 
 
