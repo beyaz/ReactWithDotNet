@@ -1,0 +1,16 @@
+{
+    "name": "quran-analyzer-web-ui",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "esbuild index.jsx --bundle --outfile=index.js",
+        "build-for-production": "esbuild index.jsx --bundle --outfile=index.js --minify --analyze"
+    },
+    "dependencies": {
+        "esbuild": "^0.14.48",
+        "primeicons": "^5.0.0",
+        "primereact": "^8.2.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-xarrows": "^2.0.2"
+    }
+}
