@@ -790,7 +790,7 @@ function SendRequest(request, onSuccess)
 {
     BeforeSendRequest(request);
 
-    global.ReactDotNet.SendRequest(request, onSuccess);
+    ReactDotNet.SendRequest(request, onSuccess);
 
     function BeforeSendRequest(request)
     {
