@@ -237,7 +237,7 @@ function ConvertToReactElement(jsonNode, component)
     var constructorFunction = jsonNode.tagName;
     if (jsonNode.jsLocation)
     {
-        constructorFunction = GetValueInPath(window, jsonNode.jsLocation);
+        constructorFunction = ReactDotNet.FindComponentByFullName(jsonNode.jsLocation.join('.'));
     }
 
     var children = jsonNode.children;
@@ -905,6 +905,17 @@ function Fetch(url, options, processResponse, callback)
     //});
 }
 
+function GetComponentByFullName(componentFullName)
+{
+    var component = ReactDotNet.FindComponentByFullName(componentFullName);
+    if (component == null)
+    {
+        throw 'Component not found. Component name is ' + componentFullName;
+    }
+
+    return component;
+}
+
 var ReactDotNet =
 {
     OnDocumentReady: OnDocumentReady,
@@ -926,6 +937,10 @@ var ReactDotNet =
             response => response.json(),
             json => callback(json)
         );
+    },
+    FindComponentByFullName: function()
+    {
+        throw 'Override this method.';
     }
 };
 

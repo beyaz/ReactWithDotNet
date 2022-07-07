@@ -6,6 +6,9 @@ public class ElementBase : ThirdPartyComponent
 {
     public override IReadOnlyList<string> jsLocation => new[] { "primereact", GetType().Name };
 
+
+    public  string FullName => $"primereact.{GetType().Name}";
+
     public ElementBase(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
