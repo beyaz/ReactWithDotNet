@@ -1,11 +1,9 @@
 ﻿using System.Text.Json.Serialization;
-using static ReactDotNet.Html5.Mixin;
+using static ReactDotNet.Mixin;
 namespace ReactDotNet.Html5
 {
     public class Space : div
     {
-        public override string tagName => "div";
-
         public Space()
         {
             

@@ -1,5 +1,6 @@
-﻿using ReactDotNet.Html5;
-using ReactDotNet.Html5.PrimeReact;
+﻿using ReactDotNet;
+using ReactDotNet.Html5;
+using ReactDotNet.PrimeReact;
 
 
 

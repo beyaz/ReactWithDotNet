@@ -1,6 +1,7 @@
 ﻿using System;
+using ReactDotNet.Html5;
 
-namespace ReactDotNet.Html5.PrimeReact
+namespace ReactDotNet.PrimeReact
 {
     /// <summary>
     ///     The tooltip position type

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReactDotNet.Html5
-{
+namespace ReactDotNet;
+
+
     public class SyntheticEvent
     {
         public ShadowHtmlElement target { get; set; }
@@ -15,4 +16,4 @@ namespace ReactDotNet.Html5
         public string value { get; set; }
 
     }
-}
+

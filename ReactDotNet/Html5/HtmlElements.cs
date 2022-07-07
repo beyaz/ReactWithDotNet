@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Sockets;
-using static ReactDotNet.Html5.Mixin;
+using System.Text.Json.Serialization;
+using static ReactDotNet.Mixin;
 
 namespace ReactDotNet.Html5;
 
@@ -149,25 +150,6 @@ public sealed class PaddingThickness
     }
 }
 
-[Serializable]
-public class ReactAttribute : Attribute
-{
-}
-
-[Serializable]
-public class ReactBindAttribute : Attribute
-{
-    public string targetProp { get; set; }
-    public string jsValueAccess { get; set; }
-    public string eventName { get; set; }
-}
-
-[Serializable]
-public class ReactDefaultValueAttribute : Attribute
-{
-    public string DefaultValue { get; set; }
-}
-
 
 
 public class button : HtmlElement
@@ -253,6 +235,11 @@ public class i : HtmlElement
 
 public class div : HtmlElement
 {
+    public override string tagName => nameof(div);
+
+    [JsonPropertyName("$type")]
+    public override string Type => nameof(div);
+
     public div()
     {
     }
@@ -433,9 +420,7 @@ public class HPanel : div
     {
         InitializeStyle(style);
     }
-
-    public override string tagName => nameof(div);
-
+    
     static void InitializeStyle(Style style)
     {
         style.display       = Display.flex;
@@ -465,8 +450,6 @@ public class HPanel : div
 
 public sealed class VPanel : div
 {
-    public override string tagName => nameof(div);
-
     public VPanel()
     {
         style.display       = Display.flex;

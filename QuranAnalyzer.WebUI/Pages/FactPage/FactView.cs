@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using QuranAnalyzer.WebUI.Components;
+using ReactDotNet;
 using ReactDotNet.Html5;
-using ReactDotNet.Html5.PrimeReact;
-using static ReactDotNet.Html5.Mixin;
+using ReactDotNet.PrimeReact;
+using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.FactPage;
 

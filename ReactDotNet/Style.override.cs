@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using static ReactDotNet.Html5.Mixin;
+using static ReactDotNet.Mixin;
 namespace ReactDotNet.Html5
 {
     partial class Style

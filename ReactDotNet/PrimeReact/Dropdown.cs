@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Linq.Expressions;
+using ReactDotNet.Html5;
 
-namespace ReactDotNet.Html5.PrimeReact;
+namespace ReactDotNet.PrimeReact;
 
 public class Dropdown : ElementBase
 {

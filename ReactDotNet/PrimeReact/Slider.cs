@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReactDotNet.Html5.PrimeReact;
+namespace ReactDotNet.PrimeReact;
 
 /// <summary>
 ///     Slider is a component to provide input using dragging of a handle.

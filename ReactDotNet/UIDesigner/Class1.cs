@@ -4,8 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using ReactDotNet.Html5.PrimeReact;
-using static ReactDotNet.Html5.Mixin;
+using ReactDotNet.PrimeReact;
+using ReactDotNet.PrimeReact;
+using static ReactDotNet.Mixin;
 
 namespace ReactDotNet.Html5.UIDesigner;
 

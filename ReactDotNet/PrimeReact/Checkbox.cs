@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
+using ReactDotNet.Html5;
 
-namespace ReactDotNet.Html5.PrimeReact;
+namespace ReactDotNet.PrimeReact;
 
 [Serializable]
 public class Checkbox : ElementBase

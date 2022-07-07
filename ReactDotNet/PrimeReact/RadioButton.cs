@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace ReactDotNet.Html5.PrimeReact;
+namespace ReactDotNet.PrimeReact;
 
 [Serializable]
 public class RadioButtonChangeParams

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static ReactDotNet.Html5.Mixin;
+using static ReactDotNet.Mixin;
 
 namespace ReactDotNet.Html5;
 

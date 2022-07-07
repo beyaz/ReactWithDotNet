@@ -3,7 +3,7 @@ using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.FactPage;
 using ReactDotNet.Html5;
-using static ReactDotNet.Html5.Mixin;
+using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 

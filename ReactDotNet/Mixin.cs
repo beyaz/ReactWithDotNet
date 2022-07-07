@@ -6,8 +6,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Web;
+using ReactDotNet.Html5;
 
-namespace ReactDotNet.Html5
+namespace ReactDotNet
 {
 
 

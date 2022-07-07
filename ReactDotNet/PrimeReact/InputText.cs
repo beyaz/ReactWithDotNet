@@ -1,5 +1,5 @@
 ﻿
-namespace ReactDotNet.Html5.PrimeReact;
+namespace ReactDotNet.PrimeReact;
 
 public class InputText : ElementBase
 {

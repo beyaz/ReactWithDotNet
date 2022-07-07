@@ -1,12 +1,12 @@
 ﻿using ReactDotNet.Html5;
-using static ReactDotNet.Html5.Mixin;
+using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Components;
 
 
-class divWithBorder:div
+
+class divWithBorder: div
 {
-    public override string tagName => nameof(div);
     public divWithBorder()
     {
         style.border       = "1px solid rgb(218, 220, 224)";
@@ -16,7 +16,6 @@ class divWithBorder:div
 
 class SiteTitle : div
 {
-    public override string tagName => nameof(div);
     public SiteTitle(string text)
     {
         this.text = text;
@@ -27,7 +26,6 @@ class SiteTitle : div
 
 class LargeTitle : div
 {
-    public override string tagName => nameof(div);
     public LargeTitle(string text)
     {
         this.text = text;
@@ -38,7 +36,6 @@ class LargeTitle : div
 
 class Title : div
 {
-    public override string tagName => nameof(div);
     public Title(string text)
     {
         this.text = text;
@@ -49,7 +46,6 @@ class Title : div
 
 class SubTitle : div
 {
-    public override string tagName => nameof(div);
     public SubTitle(string text)
     {
         this.text = text;

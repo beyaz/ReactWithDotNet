@@ -233,11 +233,16 @@ function ConvertToReactElement(jsonNode, component)
     {
         props = {};
     }
-
-    var constructorFunction = jsonNode.tagName;
-    if (jsonNode.jsLocation)
+    
+    var constructorFunction = jsonNode.$type;
+    if (!constructorFunction)
     {
-        constructorFunction = ReactDotNet.FindComponentByFullName(jsonNode.jsLocation.join('.'));
+        throw 'ReactNode is not recognized';
+    }
+    
+    if (/* is component */constructorFunction.indexOf('.') > 0)
+    {
+        constructorFunction = ReactDotNet.FindComponentByFullName(constructorFunction);
     }
 
     var children = jsonNode.children;

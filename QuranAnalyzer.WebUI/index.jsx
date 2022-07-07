@@ -66,22 +66,22 @@ window.primereact =
 window.Xarrow = Xarrow;
 
 var componentMap = {
-    "primereact.Button": Button,
-    "primereact.InputText": InputText,
-    "primereact.InputTextarea": InputTextarea,
-    "primereact.BlockUI": BlockUI,
-    "primereact.Card": Card,
-    "primereact.TabView": TabView,
-    "primereact.TabPanel": TabPanel,
-    "primereact.SplitterPanel": SplitterPanel,
-    "primereact.Splitter": Splitter,
-    "primereact.Slider": Slider,
-    "primereact.ListBox": ListBox,
-    "primereact.Dropdown": Dropdown,
-    "primereact.Column": Column,
-    "primereact.DataTable": DataTable,
-    "primereact.Checkbox": Checkbox,
-    "primereact.InputMask": InputMask,
+    "ReactDotNet.PrimeReact.Button": Button,
+    "ReactDotNet.PrimeReact.InputText": InputText,
+    "ReactDotNet.PrimeReact.InputTextarea": InputTextarea,
+    "ReactDotNet.PrimeReact.BlockUI": BlockUI,
+    "ReactDotNet.PrimeReact.Card": Card,
+    "ReactDotNet.PrimeReact.TabView": TabView,
+    "ReactDotNet.PrimeReact.TabPanel": TabPanel,
+    "ReactDotNet.PrimeReact.SplitterPanel": SplitterPanel,
+    "ReactDotNet.PrimeReact.Splitter": Splitter,
+    "ReactDotNet.PrimeReact.Slider": Slider,
+    "ReactDotNet.PrimeReact.ListBox": ListBox,
+    "ReactDotNet.PrimeReact.Dropdown": Dropdown,
+    "ReactDotNet.PrimeReact.Column": Column,
+    "ReactDotNet.PrimeReact.DataTable": DataTable,
+    "ReactDotNet.PrimeReact.Checkbox": Checkbox,
+    "ReactDotNet.PrimeReact.InputMask": InputMask,
     "ReactDotNet.react_xarrows.Xarrow": Xarrow
 };
 
