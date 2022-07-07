@@ -100,6 +100,9 @@ namespace ReactDotNet.Html5
 
         public string fullName => GetType().GetFullName();
 
+        public string FullTypeName => GetType().GetFullName();
+
+
         public abstract Element render();
 
 

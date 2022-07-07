@@ -209,7 +209,7 @@ var ClientTaskId =
 function ConvertToReactElement(jsonNode, component)
 {
     // is ReactDotNet component
-    if (jsonNode.fullName)
+    if (jsonNode.FullTypeName)
     {
         var cmp = DefineComponent(jsonNode);
 
@@ -734,8 +734,19 @@ function TryDispatchComponentAction(component, actionName)
     EventBus.Dispatch(GetComponentActionLocation(component.fullName, actionName), component);
 }
 
+var ComponentDefinitions = {
+};
+
 function DefineComponent(componentDeclaration)
 {
+    const fullTypeName = componentDeclaration.FullTypeName;
+
+    const component = ComponentDefinitions[fullTypeName];
+    if (component)
+    {
+        // return component;
+    }
+    
     class NewComponent extends React.Component
     {
         constructor(props)
@@ -764,7 +775,7 @@ function DefineComponent(componentDeclaration)
                 $state   : Clone(this.$stateAsJsProperty)
             };
 
-            this.fullName = componentDeclaration.fullName;
+            this.fullName = fullTypeName;
         }
 
         render()
@@ -785,8 +796,10 @@ function DefineComponent(componentDeclaration)
         }
     }
 
-    NewComponent.fullName = componentDeclaration.fullName;
+    NewComponent.fullName = fullTypeName;
 
+    ComponentDefinitions[fullTypeName] = NewComponent;
+    
     return NewComponent;
 }
 
