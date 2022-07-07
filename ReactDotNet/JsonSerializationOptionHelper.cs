@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ReactDotNet;
+namespace ReactDotNet.Html5;
 
 static class JsonSerializationOptionHelper
 {

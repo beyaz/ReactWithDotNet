@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Web;
 
-namespace ReactDotNet
+namespace ReactDotNet.Html5
 {
 
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 
-namespace ReactDotNet.PrimeReact;
+namespace ReactDotNet.Html5.PrimeReact;
 
 public class Column  : ElementBase
 {

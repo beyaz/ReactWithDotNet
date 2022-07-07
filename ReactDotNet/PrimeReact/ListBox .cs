@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace ReactDotNet.PrimeReact
+namespace ReactDotNet.Html5.PrimeReact
 {
 
     

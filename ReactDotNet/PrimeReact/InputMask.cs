@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace ReactDotNet.PrimeReact;
+namespace ReactDotNet.Html5.PrimeReact;
 
 [Serializable]
 public class InputMask : ElementBase

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using ReactDotNet;
-using static ReactDotNet.Mixin;
+using ReactDotNet.Html5;
+using static ReactDotNet.Html5.Mixin;
 
 namespace QuranAnalyzer;
 

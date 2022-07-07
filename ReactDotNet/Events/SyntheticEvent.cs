@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReactDotNet
+namespace ReactDotNet.Html5
 {
     public class SyntheticEvent
     {

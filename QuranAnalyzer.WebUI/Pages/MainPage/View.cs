@@ -2,8 +2,8 @@
 using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.FactPage;
-using ReactDotNet;
-using static ReactDotNet.Mixin;
+using ReactDotNet.Html5;
+using static ReactDotNet.Html5.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 

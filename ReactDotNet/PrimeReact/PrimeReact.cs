@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ReactDotNet.PrimeReact;
+namespace ReactDotNet.Html5.PrimeReact;
 
 public class ElementBase : ThirdPartyComponent
 {

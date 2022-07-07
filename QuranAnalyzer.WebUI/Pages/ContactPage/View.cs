@@ -1,7 +1,7 @@
 ﻿using System;
-using ReactDotNet;
-using ReactDotNet.PrimeReact;
-using static ReactDotNet.Mixin;
+using ReactDotNet.Html5;
+using ReactDotNet.Html5.PrimeReact;
+using static ReactDotNet.Html5.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.ContactPage;
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace ReactDotNet;
+namespace ReactDotNet.Html5;
 
 partial class Mixin
 {

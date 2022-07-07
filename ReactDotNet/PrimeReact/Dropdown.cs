@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq.Expressions;
 
-namespace ReactDotNet.PrimeReact;
+namespace ReactDotNet.Html5.PrimeReact;
 
 public class Dropdown : ElementBase
 {

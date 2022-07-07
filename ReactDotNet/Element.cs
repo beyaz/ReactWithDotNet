@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using static ReactDotNet.UniqueKeyInitializer;
+using static ReactDotNet.Html5.UniqueKeyInitializer;
 
-namespace ReactDotNet
+namespace ReactDotNet.Html5
 {
     /// <summary>
     ///     The element

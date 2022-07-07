@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using static ReactDotNet.Mixin;
-namespace ReactDotNet
+using static ReactDotNet.Html5.Mixin;
+namespace ReactDotNet.Html5
 {
     partial class Style
     {

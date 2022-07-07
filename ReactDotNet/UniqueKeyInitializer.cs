@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ReactDotNet
+namespace ReactDotNet.Html5
 {
     static class UniqueKeyInitializer
     {

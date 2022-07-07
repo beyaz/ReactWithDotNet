@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text.Json;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static ReactDotNet.Mixin;
+using static ReactDotNet.Html5.Mixin;
 
-namespace ReactDotNet;
+namespace ReactDotNet.Html5;
 
 [TestClass]
 public class UnitTest1

@@ -1,4 +1,4 @@
-namespace ReactDotNet;
+namespace ReactDotNet.Html5;
 
     static class TextExtensions
     {

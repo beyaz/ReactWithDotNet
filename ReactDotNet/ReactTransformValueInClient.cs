@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace ReactDotNet;
+namespace ReactDotNet.Html5;
 
 [Serializable]
 public  class ReactTransformValueInClient

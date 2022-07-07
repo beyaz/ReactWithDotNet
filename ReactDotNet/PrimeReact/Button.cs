@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace ReactDotNet.PrimeReact
+namespace ReactDotNet.Html5.PrimeReact
 {
     
 

@@ -1,5 +1,5 @@
-﻿using ReactDotNet;
-using ReactDotNet.PrimeReact;
+﻿using ReactDotNet.Html5;
+using ReactDotNet.Html5.PrimeReact;
 
 
 

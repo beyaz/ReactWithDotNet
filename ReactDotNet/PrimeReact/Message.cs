@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReactDotNet.PrimeReact;
+namespace ReactDotNet.Html5.PrimeReact;
 
 [Serializable]
 public class Message : ElementBase

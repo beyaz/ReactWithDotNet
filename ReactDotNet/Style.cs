@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace ReactDotNet
+namespace ReactDotNet.Html5
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Constructor | AttributeTargets.Delegate | AttributeTargets.Enum | AttributeTargets.Field | AttributeTargets.Interface | AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Struct)]
     public sealed class NameAttribute : Attribute

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Sockets;
-using static ReactDotNet.Mixin;
+using static ReactDotNet.Html5.Mixin;
 
-namespace ReactDotNet;
+namespace ReactDotNet.Html5;
 
 [Serializable]
 public sealed class MarginThickness

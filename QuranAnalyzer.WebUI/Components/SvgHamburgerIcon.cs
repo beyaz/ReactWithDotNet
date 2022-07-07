@@ -1,5 +1,5 @@
-﻿using ReactDotNet;
-using static ReactDotNet.Mixin;
+﻿using ReactDotNet.Html5;
+using static ReactDotNet.Html5.Mixin;
 
 namespace QuranAnalyzer.WebUI.Components;
 

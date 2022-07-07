@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReactDotNet;
+namespace ReactDotNet.Html5;
 
 public sealed class ElementModifier
 {
