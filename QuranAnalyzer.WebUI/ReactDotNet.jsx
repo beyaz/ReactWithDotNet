@@ -243,6 +243,10 @@ function ConvertToReactElement(jsonNode, component)
     if (/* is component */constructorFunction.indexOf('.') > 0)
     {
         constructorFunction = ReactDotNet.FindComponentByFullName(constructorFunction);
+        if (!constructorFunction)
+        {
+            throw 'External react component not found. Component name is ' + jsonNode.$type;
+        }
     }
 
     var children = jsonNode.children;

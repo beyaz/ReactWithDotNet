@@ -96,11 +96,6 @@ ReactDotNet.FindComponentByFullName = function (componentFullName)
     return null;
 }
 
-ReactDotNet.RenderComponentIn({
-    fullTypeNameOfReactComponent: "QuranAnalyzer.WebUI.Pages.MainPage.View,QuranAnalyzer.WebUI",
-    containerHtmlElementId: 'app'
-});
-
 window.RegisterScrollEvents = function()
 {
     var currentScrollY = 0;

@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using ReactDotNet.PrimeReact;
+using ReactDotNet.Html5;
 using ReactDotNet.PrimeReact;
 using static ReactDotNet.Mixin;
 
-namespace ReactDotNet.Html5.UIDesigner;
+namespace ReactDotNet.UIDesigner;
 
 [Serializable]
 class UIDesignerModel
