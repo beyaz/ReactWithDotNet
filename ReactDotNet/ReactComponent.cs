@@ -103,6 +103,9 @@ namespace ReactDotNet.Html5
         public string FullTypeName => GetType().GetFullName();
 
 
+        [JsonPropertyName("$type$")]
+        public string ___Type___ => GetType().GetFullName();
+
         public abstract Element render();
 
 

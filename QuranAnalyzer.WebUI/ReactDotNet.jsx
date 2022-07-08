@@ -8,6 +8,25 @@ import {createRoot} from 'react-dom/client';
 
 var createElement = React.createElement;
 
+const DotNetTypeOfReactComponent = '$type$';
+function getDotNetTypeOfReactComponent(component)
+{
+    if (component == null)
+    {
+        throw 'component is null.';
+    }
+
+    const type = component[DotNetTypeOfReactComponent];
+
+    if (!type)
+    {
+        throw 'DotNetTypeOfReactComponent not found';
+    }
+
+    return type;
+}
+
+
 const EventBus =
 {
     On: function(event, callback)
@@ -99,6 +118,33 @@ function IsEmptyObject(obj)
 function IsNotEmptyObject(obj)
 {
     return IsEmptyObject(obj) === false;
+}
+
+const EventQueue = [];
+var IsExecutingEvent = false;
+function EmitNextEvent()
+{
+    if (EventQueue.length > 0)
+    {
+        const fn = EventQueue.shift();
+
+        IsExecutingEvent = true;
+        
+        fn();
+
+        return;
+    }
+
+    IsExecutingEvent = false;
+}
+function PushToEventQueue(fn)
+{
+    EventQueue.push(fn);
+
+    if (!IsExecutingEvent)
+    {
+        EmitNextEvent();
+    }
 }
 
 function Pipe(value)
@@ -209,7 +255,7 @@ var ClientTaskId =
 function ConvertToReactElement(jsonNode, component)
 {
     // is ReactDotNet component
-    if (jsonNode.FullTypeName)
+    if (jsonNode[DotNetTypeOfReactComponent])
     {
         var cmp = DefineComponent(jsonNode);
 
@@ -277,7 +323,7 @@ function ConvertToReactElement(jsonNode, component)
 
             props[propName] = function ()
             {
-                HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: Array.prototype.slice.call(arguments) });
+                PushToEventQueue( () => HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: Array.prototype.slice.call(arguments) }) );
             }
 
             return true;
@@ -497,7 +543,7 @@ function CollectStates(component)
         {
             if (jsonUiNode.RootElement != null)
             {
-                if (jsonUiNode.fullName != null)
+                if (jsonUiNode[DotNetTypeOfReactComponent] != null)
                 {
                     if (jsonUiNode.state != null)
                     {
@@ -562,7 +608,7 @@ function HandleAction(data)
         MethodName: "HandleComponentEvent",
 
         EventHandlerMethodName: remoteMethodName,
-        FullName   : component.constructor.fullName,
+        FullName   : component.constructor[DotNetTypeOfReactComponent],
         StateAsJson: getStateAsJson(),
         ChildStates: CollectStates(component)
     };
@@ -603,13 +649,18 @@ function HandleAction(data)
             }, onStateReady);
         }
 
-        var clientTask = element.state.ClientTask;
+        const clientTask = element.state.ClientTask;
 
         element.state.ClientTask = null;
 
-        var afterSetState = processClientTask(clientTask);
+        const afterSetState = processClientTask(clientTask);
 
-        restoreState(afterSetState);
+        if (afterSetState)
+        {
+            EventQueue.push(afterSetState);
+        }
+        
+        restoreState(EmitNextEvent);
 
         function processClientTask(clientTask)
         {
@@ -680,7 +731,7 @@ function HandleAction(data)
 
             if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
             {
-                ListenComponentEvent(clientTask, component.fullName);
+                ListenComponentEvent(clientTask, component[DotNetTypeOfReactComponent]);
 
                 return processClientTask(clientTask.After);
             }
@@ -697,13 +748,13 @@ function HandleAction(data)
                     CallJsFunctionInPath(clientTask);
                 };
             }
+
             if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
             {
                 window.location.replace(location.origin + clientTask.Url);
 
                 return processClientTask(clientTask.After);
             }
-            
 
             throw Error("ClientTask not recognized.");
         }
@@ -726,12 +777,12 @@ function RegisterActionToComponent(parameterObject)
 
 function TryGetComponentAction(component, actionName)
 {
-    return componentActions[GetComponentActionLocation(component.fullName, actionName)];
+    return componentActions[GetComponentActionLocation(component[DotNetTypeOfReactComponent], actionName)];
 }
 
 function TryDispatchComponentAction(component, actionName)
 {
-    EventBus.Dispatch(GetComponentActionLocation(component.fullName, actionName), component);
+    EventBus.Dispatch(GetComponentActionLocation(component[DotNetTypeOfReactComponent], actionName), component);
 }
 
 var ComponentDefinitions = {
@@ -739,9 +790,9 @@ var ComponentDefinitions = {
 
 function DefineComponent(componentDeclaration)
 {
-    const fullTypeName = componentDeclaration.FullTypeName;
+    const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
 
-    const component = ComponentDefinitions[fullTypeName];
+    const component = ComponentDefinitions[dotNetTypeOfReactComponent];
     if (component)
     {
         // return component;
@@ -775,7 +826,8 @@ function DefineComponent(componentDeclaration)
                 $state   : Clone(this.$stateAsJsProperty)
             };
 
-            this.fullName = fullTypeName;
+            this.fullName = dotNetTypeOfReactComponent;
+            this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
         }
 
         render()
@@ -796,9 +848,10 @@ function DefineComponent(componentDeclaration)
         }
     }
 
-    NewComponent.fullName = fullTypeName;
+    NewComponent.fullName = dotNetTypeOfReactComponent;
+    NewComponent[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
-    ComponentDefinitions[fullTypeName] = NewComponent;
+    ComponentDefinitions[dotNetTypeOfReactComponent] = NewComponent;
     
     return NewComponent;
 }
