@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <LangVersion>preview</LangVersion>
+        <RootNamespace>ReactDotNet</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="PrimeReact\" />
+    </ItemGroup>
+    
+</Project>

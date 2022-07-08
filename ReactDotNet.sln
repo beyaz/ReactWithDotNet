@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuranAnalyzer.Tests", "Qura
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuranAnalyzer.WebUI", "QuranAnalyzer.WebUI\QuranAnalyzer.WebUI.csproj", "{FF58F6B6-E466-44E2-A5E7-089308A39546}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactDotNet.Libraries", "ReactDotNet.Libraries\ReactDotNet.Libraries.csproj", "{14913BC9-3D78-4A2D-85E3-AB0B0D670057}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FF58F6B6-E466-44E2-A5E7-089308A39546}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF58F6B6-E466-44E2-A5E7-089308A39546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF58F6B6-E466-44E2-A5E7-089308A39546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14913BC9-3D78-4A2D-85E3-AB0B0D670057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14913BC9-3D78-4A2D-85E3-AB0B0D670057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14913BC9-3D78-4A2D-85E3-AB0B0D670057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14913BC9-3D78-4A2D-85E3-AB0B0D670057}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
