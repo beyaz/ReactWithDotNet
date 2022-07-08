@@ -98,16 +98,10 @@ namespace ReactDotNet.Html5
 
         public Element RootElement => render();
 
-        public string fullName => GetType().GetFullName();
-
-        public string FullTypeName => GetType().GetFullName();
-
-
         [JsonPropertyName("$type$")]
         public string ___Type___ => GetType().GetFullName();
 
         public abstract Element render();
-
 
         public TState state { get; set; }
 
