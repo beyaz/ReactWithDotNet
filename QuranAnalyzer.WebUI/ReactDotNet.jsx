@@ -8,23 +8,8 @@ import {createRoot} from 'react-dom/client';
 
 var createElement = React.createElement;
 
-const DotNetTypeOfReactComponent = '$type$';
-function getDotNetTypeOfReactComponent(component)
-{
-    if (component == null)
-    {
-        throw 'component is null.';
-    }
-
-    const type = component[DotNetTypeOfReactComponent];
-
-    if (!type)
-    {
-        throw 'DotNetTypeOfReactComponent not found';
-    }
-
-    return type;
-}
+const DotNetTypeOfReactComponent = '$Type$';
+const FullTypeNameOfState = '$TypeOfState$';
 
 
 const EventBus =
@@ -806,17 +791,17 @@ function DefineComponent(componentDeclaration)
 
             // register stateId
             NotFrozen(componentDeclaration);
-            NotNull(componentDeclaration.FullTypeNameOfState);
+            NotNull(componentDeclaration[FullTypeNameOfState]);
 
             const uniqueIdOfState = GetNextUniqueNumber();
             
             this.$UniqueIdOfState = componentDeclaration.UniqueIdOfState = uniqueIdOfState;
 
             StateCache[uniqueIdOfState] = componentDeclaration.state;
-            StateCache[uniqueIdOfState + "-FullTypeNameOfState"] = componentDeclaration.FullTypeNameOfState;
+            StateCache[uniqueIdOfState + "-FullTypeNameOfState"] = componentDeclaration[FullTypeNameOfState];
             
 
-            this.$FullTypeNameOfState = componentDeclaration.FullTypeNameOfState;
+            this.$FullTypeNameOfState = componentDeclaration[FullTypeNameOfState];
             this.$stateAsJsProperty   = componentDeclaration.state;
             this.$rootJsonNodeForUI   = componentDeclaration.RootElement;
 
