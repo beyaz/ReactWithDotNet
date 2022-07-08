@@ -757,13 +757,13 @@ function DefineComponent(componentDeclaration)
             NotFrozen(componentDeclaration);
             NotNull(componentDeclaration.FullTypeNameOfState);
 
-            if (!(componentDeclaration.UniqueIdOfState > 0))
-            {
-                this.$UniqueIdOfState = componentDeclaration.UniqueIdOfState = GetNextUniqueNumber();
+            const uniqueIdOfState = GetNextUniqueNumber();
+            
+            this.$UniqueIdOfState = componentDeclaration.UniqueIdOfState = uniqueIdOfState;
 
-                StateCache[componentDeclaration.UniqueIdOfState] = componentDeclaration.state;
-                StateCache[componentDeclaration.UniqueIdOfState + "-FullTypeNameOfState"] = componentDeclaration.FullTypeNameOfState;
-            }
+            StateCache[uniqueIdOfState] = componentDeclaration.state;
+            StateCache[uniqueIdOfState + "-FullTypeNameOfState"] = componentDeclaration.FullTypeNameOfState;
+            
 
             this.$FullTypeNameOfState = componentDeclaration.FullTypeNameOfState;
             this.$stateAsJsProperty   = componentDeclaration.state;

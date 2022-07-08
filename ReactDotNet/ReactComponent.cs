@@ -109,7 +109,5 @@ namespace ReactDotNet.Html5
         public TState state { get; set; }
 
         public string FullTypeNameOfState => typeof(TState).GetFullName();
-
-        public int? UniqueIdOfState { get; set; }
     }
 }
