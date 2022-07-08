@@ -229,6 +229,11 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     return new div("instance is null.");
                 }
 
+                if (instance is IReactStatefulComponent reactStatefulComponent)
+                {
+                    reactStatefulComponent.constructor();
+                }
+
                 foreach (var dotNetObjectPropertyValue in state.Properties.Where(x => !string.IsNullOrWhiteSpace(x.Value)))
                 {
                     var path      = dotNetObjectPropertyValue.Path;
