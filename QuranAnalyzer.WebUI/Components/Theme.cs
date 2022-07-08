@@ -117,6 +117,6 @@ class MainPage : ReactComponent
             }
         };
 
-        return new div { top, menu, main } + new Style { height = "100vh", width = "100%", backgroundColor = "rgb(245, 245, 245)" };
+        return new div { top, menu, main } + new Style { height = "100vh", width = "100%",  };
     }
 }

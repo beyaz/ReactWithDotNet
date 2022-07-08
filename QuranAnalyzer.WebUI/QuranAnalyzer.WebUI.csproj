@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Pages\MainPage\Data.yaml" />
-    <EmbeddedResource Include="Pages\FactPage\Facts.json" />
   </ItemGroup>
 
   <ItemGroup>

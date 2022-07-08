@@ -127,7 +127,6 @@ class View : ReactComponent<MainViewModel>
     public override Element render()
     {
         var mainMenuModels = ConstantData.MenuItems;
-        var facts          = ResourceAccess.Facts;
 
         return new Components.MainPage
         {
@@ -139,22 +138,6 @@ class View : ReactComponent<MainViewModel>
 
         Element buildMainContent()
         {
-            if (state.SelectedFact is not null)
-            {
-                var fact = facts.FirstOrDefault(x => x.Name == state.SelectedFact);
-                if (fact is not null)
-                {
-                    state.FactViewModel ??= new FactViewModel
-                    {
-                        SuraFilter       = fact.SearchScript,
-                        SearchCharacters = fact.SearchCharacters,
-                        AvailableWidth = Context.TryGetValue(BrowserInformation.AvailableWidth)
-                    };
-
-                    return new FactView { state = state.FactViewModel };
-                }
-            }
-
             if (state.PageId is not null)
             {
                 var pages = new Element[]
@@ -218,6 +201,7 @@ Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
                     position      = Position.@fixed,
                     height        = "100%",
                     width         = "70%",
+                    maxWidth = "400px",
                     top           = px(50),
                     background    = "white",
                     boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",

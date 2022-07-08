@@ -11,10 +11,7 @@ using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.FactPage;
 
-static class ResourceAccess
-{
-    public static readonly IReadOnlyList<FactModel> Facts = ResourceHelper.Read<FactModel[]>("Pages.FactPage.Facts.json");
-}
+
 
 [Serializable]
 public class FactViewModel
