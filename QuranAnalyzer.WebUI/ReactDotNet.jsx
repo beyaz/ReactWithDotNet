@@ -826,7 +826,6 @@ function DefineComponent(componentDeclaration)
                 $state   : Clone(this.$stateAsJsProperty)
             };
 
-            this.fullName = dotNetTypeOfReactComponent;
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
         }
 
@@ -847,8 +846,7 @@ function DefineComponent(componentDeclaration)
             TryDispatchComponentAction(this, "componentWillUnmount");
         }
     }
-
-    NewComponent.fullName = dotNetTypeOfReactComponent;
+    
     NewComponent[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
     ComponentDefinitions[dotNetTypeOfReactComponent] = NewComponent;
