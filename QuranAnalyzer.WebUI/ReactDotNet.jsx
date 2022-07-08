@@ -517,11 +517,11 @@ function CollectStates(component)
             return;
         }
 
-        for (var i = 0; i < node.children.length; i++)
+        for (let i = 0; i < node.children.length; i++)
         {
-            var child = node.children[i];
+            const child = node.children[i];
 
-            var location = path + "," + i;
+            const location = path + "," + i;
 
             if(isComponent(child))
             {
@@ -744,7 +744,7 @@ function DefineComponent(componentDeclaration)
     const component = ComponentDefinitions[fullTypeName];
     if (component)
     {
-        return component;
+        // return component;
     }
     
     class NewComponent extends React.Component
