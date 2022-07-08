@@ -429,12 +429,6 @@ namespace ReactDotNet
         }
     }
 
-    public static class HtmlEvent
-    {
-        public static ElementModifier onClick(Action<string> onClick)
-        {
-            return new ElementModifier(element => element.onClick = onClick);
-        }
-    }
+    
 
 }
