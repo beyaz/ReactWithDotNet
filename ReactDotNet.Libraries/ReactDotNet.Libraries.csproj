@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="PrimeReact\" />
-    </ItemGroup>
+      <ProjectReference Include="..\ReactDotNet\ReactDotNet.csproj" />
+    </ItemGroup>   
     
 </Project>
