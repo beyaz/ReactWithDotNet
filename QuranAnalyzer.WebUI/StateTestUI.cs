@@ -83,6 +83,8 @@ class ModelContainer1
     public ModelB B { get; set; }
     public ModelC C { get; set; }
     public string Container1Text { get; set; }
+
+    public int ClickCount { get; set; }
 }
 class Container1 : ReactComponent<ModelContainer1>
 {
@@ -107,8 +109,10 @@ class Container1 : ReactComponent<ModelContainer1>
                 new ComponentA {state = state.A},
                 new ComponentB{state  = state.B},
                 new ComponentC{state  = state.C},
-                state.Container1Text == null ? null : new div(state.Container1Text)
-            }
+                new div(state.Container1Text + state.ClickCount),
+                
+            },
+            onClick = _ => state.ClickCount++
         };
     }
 }
@@ -120,6 +124,8 @@ class ModelContainer2
     public ModelB B { get; set; }
     public ModelC C { get; set; }
     public string Container2Text { get; set; }
+
+    public int ClickCount { get; set; }
 }
 class Container2 : ReactComponent<ModelContainer2>
 {
@@ -144,8 +150,9 @@ class Container2 : ReactComponent<ModelContainer2>
                 new ComponentA {state = state.A},
                 new ComponentB{state  = state.B},
                 new ComponentC{state  = state.C},
-                state.Container2Text == null ? null : new div(state.Container2Text)
-            }
+                new div(state.Container2Text + state.ClickCount++)
+            },
+            onClick = _ => state.ClickCount++
         };
     }
 }

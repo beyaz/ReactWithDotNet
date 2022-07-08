@@ -744,7 +744,7 @@ function DefineComponent(componentDeclaration)
     const component = ComponentDefinitions[fullTypeName];
     if (component)
     {
-        // return component;
+        return component;
     }
     
     class NewComponent extends React.Component
