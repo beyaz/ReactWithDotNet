@@ -18,7 +18,7 @@ static class Extensions
             template = new div
             {
                 new i { className = "pi pi-spin pi-spinner" },
-                new div { Margin  = { Left = 5 }, style = { color = "White" }, text = operationMessage }
+                new div { Margin  = { Left = 5 }, style = { color = "White" }, innerText = operationMessage }
             }.MakeCenter(),
 
             children =

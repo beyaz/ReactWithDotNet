@@ -38,7 +38,7 @@ public static class CharachterSearchResultColorizer
                 {
                     new div
                     {
-                        text = $"[{items[0].verse.SurahNumber}:{items[0].verse._index}]",
+                        innerText = $"[{items[0].verse.SurahNumber}:{items[0].verse._index}]",
                         style =
                         {
                             marginLeft = px(5),
@@ -90,18 +90,18 @@ public static class CharachterSearchResultColorizer
         {
             var text = ayahText.Substring(startPosition, matchRecord.StartIndex - startPosition);
 
-            element.Add(new div {text = text});
+            element.Add(new div {innerText = text});
 
             var colorizedText = matchRecord.ToString();
 
-            element.Add(new span {text = colorizedText, style = {color = "red", marginLeft = "3px", marginRight = "3px", background = getBackgroundColor(colorizedText)}});
+            element.Add(new span {innerText = colorizedText, style = {color = "red", marginLeft = "3px", marginRight = "3px", background = getBackgroundColor(colorizedText)}});
 
             startPosition = matchRecord.StartIndex + colorizedText.Length;
         }
 
         if (startPosition < ayahText.Length-1)
         {
-            element.Add(new div {text = ayahText.Substring(startPosition)});
+            element.Add(new div {innerText = ayahText.Substring(startPosition)});
         }
 
         return element;

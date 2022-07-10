@@ -15,7 +15,12 @@ public class View : PageBase
 
     public override Element render()
     {
+        const string Elif = "Elif";
+        const string Lam  = "Lam";
+        const string Mim = "Mim";
 
+        var elifLamMim_2 = new Style { border = "2px solid blue" };
+        
         return new div
         {
             children =
@@ -29,36 +34,27 @@ public class View : PageBase
                     },
                     children =
                     {
-                        new div("Elif")
+                        new div
                         {
-                            style = { margin = "10px" , border = "2px solid blue"},
-                            id    = "Elif"
-                        },
-
-                        new div("Lam")
-                        {
-                            style = { margin = "10px", border = "2px solid red"},
-                            id    = "Lam"
+                            Style = elifLamMim_2,
+                            id    = $"2-{Elif}",
+                            innerText = Elif
                         },
 
                         new div
                         {
-                            style = {padding = "3px", border = "2px solid green", borderRadius = "7px" },
-                            id    = "2-Mim-1",
-                            children =
-                            {
-                                new div("Mim")
-                                {
-                                    style = { margin = "10px", border = "2px solid yellow", borderRadius = "7px"},
-                                    id    = "Mim"
-                                }
-                            }
+                            style = { border = "2px solid red"},
+                            id    = $"2-{Lam}",
+                            innerText  = Lam
+                        },
+
+                        new div
+                        {
+                            style = { border = "2px solid red",borderRadius = "7px"},
+                            id    = $"2-{Mim}",
+                            innerText  = Mim
                         }
-                       
 
-                        
-
-                       
                     }
 
                 },
@@ -76,16 +72,24 @@ public class View : PageBase
                     children =
                     {
                         new div("19 x 44"),
-                        new a{href = "#",text = "incele"}
+                        new a{href = "#",innerText = "incele"}
                     }
                 },
 
-                new Xarrow{start = "Elif", end = "Result", path = "smooth", color = "blue",strokeWidth    = 1},
+                CreatePath("Elif","Result","blue"),
+                
                 new Xarrow{start = "Lam", end  = "Result",path  = "smooth", color = "red", strokeWidth    = 1},
                 new Xarrow{start = "Mim", end  = "Result",path  = "smooth",color  = "yellow", strokeWidth = 1},
                 new Xarrow{start = "2-Mim-1", end  = "Result2",path  = "smooth",color  = "green", strokeWidth = 2, labels = "134", startAnchor="right"},
             }
         };
+
+
+
+        static Element CreatePath(string startElementId, string endElementId, string color)
+        {
+            return new Xarrow { start = startElementId, end = endElementId, path = "smooth", color = color, strokeWidth = 1 };
+        }
         
     }
 

@@ -168,9 +168,9 @@ public class span : HtmlElement
     public span()
     {
     }
-    public span(string text)
+    public span(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
     }
     public span(params ElementModifier[] modifiers) : base(modifiers)
     {
@@ -244,9 +244,9 @@ public class div : HtmlElement
     {
     }
 
-    public div(string text)
+    public div(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
     }
 
     public div(IEnumerable<Element> children)
@@ -265,9 +265,9 @@ public class p : HtmlElement
     {
     }
 
-    public p(string text)
+    public p(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
     }
 
     public p(IEnumerable<Element> children)
@@ -311,9 +311,9 @@ public class h4 : HtmlElement
     {
     }
 
-    public h4(string text)
+    public h4(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
     }
 }
 
@@ -327,9 +327,9 @@ public class h3 : HtmlElement
     {
     }
 
-    public h3(string text)
+    public h3(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
     }
 }
 
@@ -345,9 +345,9 @@ public class h2 : HtmlElement
     {
     }
 
-    public h2(string text)
+    public h2(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
     }
 }
 
@@ -361,9 +361,9 @@ public class h1 : HtmlElement
     {
     }
 
-    public h1(string text)
+    public h1(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
     }
 }
 

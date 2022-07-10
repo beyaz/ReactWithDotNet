@@ -218,7 +218,7 @@ Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
             {
                 return new a
                        {
-                           text    = m.Text,
+                           innerText    = m.Text,
                            href    = "/index.html?page=" + m.Id,
                            onClick = _ => OnMainMenuItemClicked(m.Id),
                            style = { fontSize = px(17), marginTop = px(50) }

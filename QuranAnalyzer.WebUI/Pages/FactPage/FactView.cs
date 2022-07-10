@@ -152,12 +152,12 @@ class FactView : ReactComponent<FactViewModel>
             PaddingAll = 15,
             children =
             {
-                new h4{text = "Arama"},
+                new h4{innerText = "Arama"},
                 new VPanel
                 {
                     new VPanel
                     {
-                        new div {text            = "Sure:"},
+                        new div {innerText            = "Sure:"},
                         new InputText {value = Mixin.Bind( () => state.SuraFilter)}
                     },
 
@@ -165,7 +165,7 @@ class FactView : ReactComponent<FactViewModel>
 
                     new VPanel
                     {
-                        new div {text            = "Aranan Karakterler"},
+                        new div {innerText            = "Aranan Karakterler"},
                         new InputText {value = Mixin.Bind(() => state.SearchCharacters)}
                     },
 
@@ -183,17 +183,17 @@ class FactView : ReactComponent<FactViewModel>
 
         var summaryContent = new HPanel
         {
-            new div {text = state.SummaryText},
-            new div {text = state.CountOfCharacters.ToString(), style = {marginLeft = px(5), marginRight = px(5)}},
+            new div {innerText = state.SummaryText},
+            new div {innerText = state.CountOfCharacters.ToString(), style = {marginLeft = px(5), marginRight = px(5)}},
 
            
         };
 
         if (state.CountOfCharacters % 19 == 0)
         {
-            summaryContent.Add(new div {text = "("});
-            summaryContent.Add(new div {text = "19 x " + state.CountOfCharacters / 19, style = {color = "red", marginLeft = px(5), marginRight = px(5)}});
-            summaryContent.Add(new div {text = ")"});
+            summaryContent.Add(new div {innerText = "("});
+            summaryContent.Add(new div {innerText = "19 x " + state.CountOfCharacters / 19, style = {color = "red", marginLeft = px(5), marginRight = px(5)}});
+            summaryContent.Add(new div {innerText = ")"});
         }
 
 
@@ -303,9 +303,9 @@ class CountsSummaryView: ReactComponent
         {
             returnDiv.appendChild(new div
             {
-                new div {text = "Toplam: ("},
-                new div {text = "19 x " + total / 19, style = {color = "red", marginLeft = px(5), marginRight = px(5)}},
-                new div {text = ")"}
+                new div {innerText = "Toplam: ("},
+                new div {innerText = "19 x " + total / 19, style = {color = "red", marginLeft = px(5), marginRight = px(5)}},
+                new div {innerText = ")"}
             });
         }
         else
@@ -350,7 +350,7 @@ class DesignerDeneme : ReactComponent
 
         if (returnDiv.children.Count == 0)
         {
-            returnDiv.text = "Empty";
+            returnDiv.innerText = "Empty";
         }
 
         return returnDiv;

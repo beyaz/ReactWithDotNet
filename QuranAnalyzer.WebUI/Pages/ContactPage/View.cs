@@ -24,10 +24,10 @@ public class View : PageBase
         {
             new div(Display.flex,AlignItems.center,JustifyContent.center,fontSize(19),marginTop(20))
             {
-                text = model.Header
+                innerText = model.Header
             },
 
-            new div(fontSize(17) , marginLeft(10) , marginRight(10)) {text = model.Note},
+            new div(fontSize(17) , marginLeft(10) , marginRight(10)) {innerText = model.Note},
 
             new VPanel(marginTop(22))
             {

@@ -16,9 +16,9 @@ class divWithBorder: div
 
 class SiteTitle : div
 {
-    public SiteTitle(string text)
+    public SiteTitle(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
         
         style.fontSize = "22px";
     }
@@ -26,9 +26,9 @@ class SiteTitle : div
 
 class LargeTitle : div
 {
-    public LargeTitle(string text)
+    public LargeTitle(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
 
         style.fontSize = "20px";
     }
@@ -36,9 +36,9 @@ class LargeTitle : div
 
 class Title : div
 {
-    public Title(string text)
+    public Title(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
 
         style.fontSize = "18px";
     }
@@ -46,9 +46,9 @@ class Title : div
 
 class SubTitle : div
 {
-    public SubTitle(string text)
+    public SubTitle(string innerText)
     {
-        this.text = text;
+        this.innerText = innerText;
 
         style.fontSize = "16px";
     }

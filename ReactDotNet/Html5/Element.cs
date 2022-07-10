@@ -166,7 +166,7 @@ public abstract class Element : IEnumerable<Element>
     /// <summary>
     ///     'innerText' property of element.
     /// </summary>
-    public string text { get; set; }
+    public string innerText { get; set; }
     #endregion
 
     #region Public Methods
@@ -198,11 +198,18 @@ public abstract class Element : IEnumerable<Element>
     #endregion
 
 
-        
 
 
-        
-        
+
+    /// <summary>
+    ///     Gets the style.
+    /// </summary>
+    public Style Style 
+    {
+        set => style.Import(value);
+    }
+
+
     public static Element operator +(Element element, Style style)
     {
         element.style.Import(style);

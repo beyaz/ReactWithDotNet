@@ -26,7 +26,7 @@ public class UnitTest1
         {
             return new div(className("A"))
             {
-                text = "b"
+                innerText = "b"
             };
         }
     }

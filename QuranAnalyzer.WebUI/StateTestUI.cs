@@ -22,7 +22,7 @@ namespace ReactDotNet;
             return new div
             {
                 style   = { width = "200px", height = "100px", border = "1px solid blue", textAlign = "center", paddingTop = "20px" },
-                text    = state.PropA + state.ClickCount,
+                innerText    = state.PropA + state.ClickCount,
                 onClick = _ => state.ClickCount++
             };
         }
@@ -46,7 +46,7 @@ namespace ReactDotNet;
             return new div
             {
                 style   = { width = "250px", height = "150px" ,border = "1px solid brown", textAlign = "center", paddingTop = "40px" },
-                text    = state.PropB + state.ClickCount,
+                innerText    = state.PropB + state.ClickCount,
                 onClick = _ => state.ClickCount++
             };
         }
@@ -70,7 +70,7 @@ class ComponentC : ReactComponent<ModelC>
         return new div
         {
             style   = { width = "300px", height = "200px", border = "1px solid red", textAlign = "center", paddingTop = "50px" },
-            text    = state.PropC + state.ClickCount,
+            innerText    = state.PropC + state.ClickCount,
             onClick = _ => state.ClickCount++
         };
     }
