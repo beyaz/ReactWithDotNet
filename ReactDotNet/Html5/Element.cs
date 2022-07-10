@@ -11,9 +11,9 @@ namespace ReactDotNet.Html5;
 /// </summary>
 public abstract class Element : IEnumerable<Element>
 {
-    protected Element(params ElementModifier[] modifiers) 
+    protected Element(params ElementModifier[] modifiers)
     {
-        Mixin.Apply(this,modifiers);
+        Mixin.Apply(this, modifiers);
     }
 
     protected internal virtual void BeforeSerialize()
@@ -68,10 +68,10 @@ public abstract class Element : IEnumerable<Element>
 
     [React]
     public virtual string id { get; set; }
-        
 
-        
-        
+
+
+
 
     /// <summary>
     ///     Gets or sets the on click.
@@ -202,8 +202,9 @@ public abstract class Element : IEnumerable<Element>
 
 
     /// <summary>
-    ///     Gets the style.
+    ///     Imports filled values given style
     /// </summary>
+    [JsonIgnoreAttribute]
     public Style Style 
     {
         set => style.Import(value);

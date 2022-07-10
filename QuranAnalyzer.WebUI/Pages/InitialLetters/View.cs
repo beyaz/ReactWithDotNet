@@ -19,7 +19,7 @@ public class View : PageBase
         const string Lam  = "Lam";
         const string Mim = "Mim";
 
-        var elifLamMim_2 = new Style { border = "2px solid blue" };
+        var elifLamMim_2 = new Style { border = "2px solid purple", borderRadius = "7px", padding = "5px"};
         
         return new div
         {
@@ -43,16 +43,16 @@ public class View : PageBase
 
                         new div
                         {
-                            style = { border = "2px solid red"},
-                            id    = $"2-{Lam}",
-                            innerText  = Lam
+                            Style     = elifLamMim_2,
+                            id        = $"2-{Lam}",
+                            innerText = Lam
                         },
 
                         new div
                         {
-                            style = { border = "2px solid red",borderRadius = "7px"},
-                            id    = $"2-{Mim}",
-                            innerText  = Mim
+                            Style     = elifLamMim_2,
+                            id        = $"2-{Mim}",
+                            innerText = Mim
                         }
 
                     }

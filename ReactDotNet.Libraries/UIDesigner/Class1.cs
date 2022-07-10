@@ -172,8 +172,16 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     public override void constructor()
     {
         state = ReadState();
+        
+        state.ClientTask = new ClientTaskListenComponentEvent { EventName = ReactComponentEvents.componentDidMount.ToString(), RouteToMethod = nameof(ComponentDidMount) };
     }
     
+    public void ComponentDidMount()
+    {
+        Refresh();
+    }
+
+
     public override Element render()
     {
         SaveState();
@@ -439,8 +447,14 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 }
             }
         }
+
+        Refresh();
     }
 
+    public void Refresh()
+    {
+        state.ClientTask = new ClientTaskGotoMethod { Timeout = 1000, MethodName = nameof(Refresh) };
+    }
     void OnSelectedPropertyChanged(ListBoxChangeParams e)
     {
         state.SelectedPropertyName = e.value;
