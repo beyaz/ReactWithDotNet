@@ -172,8 +172,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     public override void constructor()
     {
         state = ReadState();
-        
-        state.ClientTask = new ClientTaskListenComponentEvent { EventName = ReactComponentEvents.componentDidMount.ToString(), RouteToMethod = nameof(ComponentDidMount) };
     }
     
     public void ComponentDidMount()

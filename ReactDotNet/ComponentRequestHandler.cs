@@ -97,6 +97,29 @@ public static class ComponentRequestHandler
                     initializeBrowserInformation(reactStatefulComponent);
 
                     reactStatefulComponent.constructor();
+
+                    if (type.GetMethod("ComponentDidMount") is not null)
+                    {
+                        var statePropertyInfo = type.GetProperty("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        if (statePropertyInfo is not null)
+                        {
+                            var state = statePropertyInfo.GetValue(instance);
+                            if (state is not null)
+                            {
+                                var clientTaskProperty = statePropertyInfo.PropertyType.GetProperty("ClientTask");
+                                if (clientTaskProperty is not null)
+                                {
+                                    if (clientTaskProperty.GetValue(state) is null)
+                                    {
+                                        clientTaskProperty.SetValue(state, new ClientTaskListenComponentEvent { EventName = ReactComponentEvents.componentDidMount.ToString(), RouteToMethod = "ComponentDidMount" });
+                                    }
+
+
+                                }
+                            }
+                            
+                        }
+                    }
                 }
 
                 trace.Add($"Calling constructor finished at {stopwatch.ElapsedMilliseconds}");
