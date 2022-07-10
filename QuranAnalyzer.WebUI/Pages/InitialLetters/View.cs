@@ -156,23 +156,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Mim}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"2-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"2-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"2-{Mim}", innerText  = Mim }
                             }
                         }
                     },
@@ -190,24 +176,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"3-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"3-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"3-{Mim}",
-                                    innerText = Mim
-                                }
-
+                                new InitialLetter { id = $"3-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"3-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"3-{Mim}", innerText  = Mim }
                             }
                         },
                     },
@@ -223,29 +194,10 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Mim}",
-                                    innerText = Mim
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Sad}",
-                                    innerText = Sad
-                                }
+                                new InitialLetter { id = $"7-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"7-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"7-{Mim}", innerText  = Mim },
+                                new InitialLetter { id = $"7-{Sad}", innerText  = Sad }
                             }
                         }
                     },
@@ -262,23 +214,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"7-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"7-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"7-{Ra}", innerText   = Mim }
                             }
                         }
                     },
@@ -294,23 +232,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"7-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"7-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"7-{Ra}", innerText   = Mim }
                             }
                         }
                     },
@@ -327,23 +251,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"7-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"7-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"7-{Ra}", innerText   = Mim }
                             }
                         }
                     },
@@ -360,29 +270,10 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Mim}",
-                                    innerText = Mim
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"7-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"7-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"7-{Mim}", innerText  = Mim },
+                                new InitialLetter { id = $"7-{Ra}", innerText   = Mim }
                             }
                         }
                     },
@@ -399,23 +290,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"7-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"7-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"7-{Ra}", innerText   = Mim }
                             }
                         }
                     },
@@ -432,23 +309,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"7-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"7-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"7-{Ra}", innerText   = Mim }
                             }
                         }
                     },
@@ -465,35 +328,11 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"19-{Kaf}",
-                                    innerText = Kaf
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"19-{Ha}",
-                                    innerText = Ha
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"19-{Ya}",
-                                    innerText = Ya
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"19-{Ain}",
-                                    innerText = Ain
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"19-{Sad}",
-                                    innerText = Sad
-                                }
+                                new InitialLetter { id = $"19-{Kaf}", innerText = Kaf },
+                                new InitialLetter { id = $"19-{Ha}", innerText  = Ha },
+                                new InitialLetter { id = $"19-{Ya}", innerText  = Ya },
+                                new InitialLetter { id = $"19-{Ain}", innerText = Ain },
+                                new InitialLetter { id = $"19-{Sad}", innerText = Sad }
 
                             }
                         }
@@ -510,17 +349,8 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ta}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ha}",
-                                    innerText = Lam
-                                }
+                                new InitialLetter { id = $"7-{Ta}", innerText = Elif },
+                                new InitialLetter { id = $"7-{Ha}", innerText = Lam }
                             }
                         }
                     },
@@ -592,23 +422,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Mim}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"2-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"2-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"2-{Mim}", innerText  = Mim }
                             }
                         }
                     },
@@ -625,23 +441,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Mim}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"2-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"2-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"2-{Mim}", innerText  = Mim }
                             }
                         }
                     },
@@ -658,23 +460,9 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"2-{Mim}",
-                                    innerText = Mim
-                                }
+                                new InitialLetter { id = $"2-{Elif}", innerText = Elif },
+                                new InitialLetter { id = $"2-{Lam}", innerText  = Lam },
+                                new InitialLetter { id = $"2-{Mim}", innerText  = Mim }
                             }
                         }
                     },
@@ -691,17 +479,8 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"36-{Ya}",
-                                    innerText = Ya
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"36-{Sin}",
-                                    innerText = Sin
-                                }
+                                new InitialLetter { id = $"36-{Ya}", innerText  = Ya },
+                                new InitialLetter { id = $"36-{Sin}", innerText = Sin }
                             }
                         }
                     },
@@ -717,11 +496,7 @@ public class View : PageBase
                         {
                             Items =
                             {
-                                new InitialLetter
-                                {
-                                    id        = $"38-{Sad}",
-                                    innerText = Sad
-                                }
+                                new InitialLetter { id = $"38-{Sad}", innerText = Sad }
                             }
                         }
                     },
