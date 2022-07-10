@@ -9,7 +9,7 @@ public class Message : ElementBase
     ///     Text of the message.
     /// </summary>
     [React]
-    public new string text { get; set; }
+    public  string text { get; set; }
 
 
     /// <summary>

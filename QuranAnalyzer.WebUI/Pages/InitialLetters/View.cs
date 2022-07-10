@@ -10,24 +10,41 @@ namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 class InitialLetter : ReactComponent
 {
-    
+
+    public string Label { get; set; }
+
+    public string innerText
+    {
+        set => Label = value;
+    }
+
+    public string Id { get; set; }
+
+    public string SecondBorderColor { get; set; }
     
     public override Element render()
     {
-        return new div
+        var containerDiv = new div
         {
-            style = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "4px", margin = "10px" },
+            style = { borderRadius = "0.5rem", padding = "4px", margin = "10px" },
 
             children =
             {
                 new div
                 {
                     style     = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px", margin = "10px" },
-                    id        = $"7-{Sad}",
-                    innerText = Sad
+                    id        = id,
+                    innerText = Label
                 }
             }
         };
+
+        if (SecondBorderColor is not null)
+        {
+            containerDiv.style.border = $"thin solid {SecondBorderColor}";
+        }
+        
+        return containerDiv;
     }
 }
 
@@ -79,23 +96,20 @@ public class View : PageBase
                             },
                             children =
                             {
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"2-{Elif}",
                                     innerText = Elif
                                 },
 
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"2-{Lam}",
                                     innerText = Lam
                                 },
 
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"2-{Mim}",
                                     innerText = Mim
                                 }
@@ -141,23 +155,20 @@ public class View : PageBase
                             },
                             children =
                             {
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"3-{Elif}",
                                     innerText = Elif
                                 },
 
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"3-{Lam}",
                                     innerText = Lam
                                 },
 
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"3-{Mim}",
                                     innerText = Mim
                                 }
@@ -201,63 +212,30 @@ public class View : PageBase
                             },
                             children =
                             {
-                               new div
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Elif}",
+                                    innerText = Elif
+                                },
+
+                               new InitialLetter
                                {
-                                   style = {  padding = "4px", margin = "10px" },
-                                   children =
-                                   {
-                                       new div
-                                       {
-                                           style     = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px", margin = "10px"},
-                                           id        = $"7-{Elif}",
-                                           innerText = Elif
-                                       }
-                                   }
+                                   id        = $"7-{Lam}",
+                                   innerText = Lam
                                },
 
-                               new div
+                               new InitialLetter
                                {
-                                   style = {  padding = "4px", margin = "10px" },
-                                   children =
-                                   {
-                                       new div
-                                       {
-                                           style     = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px", margin = "10px"},
-                                           id        = $"7-{Lam}",
-                                           innerText = Lam
-                                       }
-                                   }
+                                   id        = $"7-{Mim}",
+                                   innerText = Mim
                                },
 
-                               new div
+                               new InitialLetter
                                {
-                                   style = {  padding = "4px", margin = "10px" },
-                                   children=
-                                   {
-                                       new div
-                                       {
-                                           style     = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px", margin = "10px"},
-                                           id        = $"7-{Mim}",
-                                           innerText = Mim
-                                       },
-                                   }
-                               },
+                                   id        = $"7-{Sad}",
+                                   innerText = Sad
+                               }
 
-                                new div
-                                { 
-                                    style = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "4px", margin = "10px" },
-                                    
-                                    children=
-                                   {
-                                       new div
-                                       {
-                                           style     = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px",margin = "10px" },
-                                           id        = $"7-{Sad}",
-                                           innerText = Sad
-                                       }
-                                   } 
-                                }
-                                
 
                             }
                         }
@@ -301,37 +279,32 @@ public class View : PageBase
                             },
                             children =
                             {
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"19-{Kaf}",
                                     innerText = Kaf
                                 },
 
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"19-{Ha}",
                                     innerText = Ha
                                 },
 
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"19-{Ya}",
                                     innerText = Ya
                                 },
 
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"19-{Ain}",
                                     innerText = Ain
                                 },
 
-                                new div
+                                new InitialLetter
                                 {
-                                    Style     = elifLamMim_2,
                                     id        = $"19-{Sad}",
                                     innerText = Sad
                                 }

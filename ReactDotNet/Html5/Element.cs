@@ -163,10 +163,7 @@ public abstract class Element : IEnumerable<Element>
     [React]
     public Style style { get; private set; } = new Style();
 
-    /// <summary>
-    ///     'innerText' property of element.
-    /// </summary>
-    public string innerText { get; set; }
+    
     #endregion
 
     #region Public Methods
@@ -263,6 +260,11 @@ public abstract class HtmlElement : Element
 
     [React]
     public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
+
+    /// <summary>
+    ///     'innerText' property of element.
+    /// </summary>
+    public string innerText { get; set; }
 }
 
 [Serializable]
