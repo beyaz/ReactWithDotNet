@@ -27,13 +27,13 @@ class InitialLetter : ReactComponent
     {
         var containerDiv = new div
         {
-            style = { borderRadius = "0.5rem", padding = "4px", margin = "10px" },
+            style = { borderRadius = "0.5rem", padding = "4px", margin = "1px" },
 
             children =
             {
                 new div
                 {
-                    style     = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px", margin = "10px" },
+                    style     = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px", margin = "5px" },
                     id        = id,
                     innerText = Label
                 }
@@ -133,13 +133,9 @@ public class View : PageBase
 
                     new td
                     {
-                        new div
+                        new InitialLetterLineGroup
                         {
-                            style =
-                            {
-                                display = "flex", margin = "6px"
-                            },
-                            children =
+                            Items =
                             {
                                 new InitialLetter
                                 {
@@ -182,13 +178,9 @@ public class View : PageBase
 
                     new td
                     {
-                        new div
+                        new InitialLetterLineGroup
                         {
-                            style =
-                            {
-                                display = "flex", margin = "6px"
-                            },
-                            children =
+                            Items =
                             {
                                 new InitialLetter
                                 {
@@ -229,13 +221,9 @@ public class View : PageBase
                     },
                     new td
                     {
-                        new div
+                        new InitialLetterLineGroup
                         {
-                            style =
-                            {
-                                display = "flex", margin = "6px"
-                            },
-                            children =
+                            Items =
                             {
                                 new InitialLetter
                                 {
@@ -286,13 +274,9 @@ public class View : PageBase
 
                     new td
                     {
-                        new div
+                        new InitialLetterLineGroup
                         {
-                            style =
-                            {
-                                display = "flex", margin = "6px"
-                            },
-                            children =
+                            Items =
                             {
                                 new InitialLetter
                                 {
@@ -352,47 +336,57 @@ public class View : PageBase
            {
                table,
 
-               CreatePath($"2-{Elif}","2-counts","#a9acaa"),
-               CreatePath($"2-{Lam}","2-counts","#a9acaa"),
-               CreatePath($"2-{Mim}","2-counts","#a9acaa"),
+               new Arrow{startElementId=$"2-{Elif}", endElementId = "2-counts", color="#a9acaa"},
+               new Arrow{startElementId=$"2-{Lam}",endElementId = "2-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"2-{Mim}",endElementId = "2-counts",color="#a9acaa"},
 
 
-               CreatePath($"3-{Elif}","3-counts","#a9acaa"),
-               CreatePath($"3-{Lam}","3-counts","#a9acaa"),
-               CreatePath($"3-{Mim}","3-counts","#a9acaa"),
+               new Arrow{startElementId=$"3-{Elif}",endElementId = "3-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"3-{Lam}",endElementId = "3-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"3-{Mim}",endElementId = "3-counts",color="#a9acaa"},
 
-               CreatePath($"7-{Elif}","7-counts","#a9acaa"),
-               CreatePath($"7-{Lam}","7-counts","#a9acaa"),
-               CreatePath($"7-{Mim}","7-counts","#a9acaa"),
-               CreatePath($"7-{Sad}","7-counts","#a9acaa"),
+               new Arrow{startElementId=$"7-{Elif}",endElementId = "7-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"7-{Lam}",endElementId = "7-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"7-{Mim}",endElementId = "7-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"7-{Sad}",endElementId = "7-counts",color="#a9acaa"},
 
-               CreatePath($"19-{Kaf}","19-counts","#a9acaa"),
-               CreatePath($"19-{Ha}", "19-counts","#a9acaa"),
-               CreatePath($"19-{Ya}", "19-counts","#a9acaa"),
-               CreatePath($"19-{Ain}","19-counts","#a9acaa"),
-               CreatePath($"19-{Sad}","19-counts","#a9acaa"),
+               new Arrow{startElementId=$"19-{Kaf}",endElementId = "19-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"19-{Ha}",endElementId =  "19-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"19-{Ya}",endElementId =  "19-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"19-{Ain}",endElementId = "19-counts",color="#a9acaa"},
+               new Arrow{startElementId=$"19-{Sad}",endElementId = "19-counts",color="#a9acaa"},
 
 
 
-               CreatePath($"7-{Sad}","19-counts","yellow"),
-               CreatePath($"19-{Sad}","19-counts","yellow"),
            }
         };
         
 
 
-
-        static Element CreatePath(string startElementId, string endElementId, string color)
-        {
-            return new Xarrow
-            {
-                start = startElementId, end = endElementId, path = "smooth", 
-                color = color, strokeWidth = 1, startAnchor = "top",
-                
-            };
-        }
+        
         
     }
 
    
+}
+
+class Arrow: ReactComponent
+{
+   public  string startElementId;
+   public  string endElementId;
+   public  string color;
+   
+    public override Element render()
+    {
+        return new Xarrow
+        {
+            start       = startElementId,
+            end         = endElementId,
+            path        = "smooth",
+            color       = color,
+            strokeWidth = 1,
+            startAnchor = "top",
+
+        };
+    }
 }
