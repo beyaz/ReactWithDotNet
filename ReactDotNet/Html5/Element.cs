@@ -248,7 +248,6 @@ public abstract class Element : IEnumerable<Element>
 
 public abstract class HtmlElement : Element
 {
-    public virtual string tagName => GetType().Name.ToLower();
 
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Sockets;
 using System.Text.Json.Serialization;
 using static ReactDotNet.Mixin;
 
@@ -235,7 +234,6 @@ public class i : HtmlElement
 
 public class div : HtmlElement
 {
-    public override string tagName => nameof(div);
 
     [JsonPropertyName("$type")]
     public override string Type => nameof(div);
