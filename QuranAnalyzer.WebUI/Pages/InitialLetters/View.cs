@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.FactPage;
 using ReactDotNet.Html5;
@@ -18,7 +19,7 @@ class InitialLetter : ReactComponent
         set => Label = value;
     }
 
-    public string Id { get; set; }
+    public string id { get; set; }
 
     public string SecondBorderColor { get; set; }
     
@@ -45,6 +46,50 @@ class InitialLetter : ReactComponent
         }
         
         return containerDiv;
+    }
+}
+
+class CountingResult: ReactComponent
+{
+    public string id { get; set; }
+
+    public int MultipleOf { get; set; }
+
+    public override Element render()
+    {
+        return new div
+        {
+            style = { display = "flex", flexDirection = "row", marginLeft = "5px", marginTop = "-40px" },
+            id    = id,
+            children =
+            {
+                new div($"19 x {MultipleOf}"),
+                new a
+                {
+                    innerText = "incele",
+                    href      = "#",
+                    style     = { marginLeft = "5px" }
+                }
+            }
+        };
+    }
+}
+
+class InitialLetterLineGroup: ReactComponent
+{
+    public List<InitialLetter> Items { get; } = new();
+
+    
+    public override Element render()
+    {
+        return new div
+        {
+            style =
+            {
+                display = "flex", margin = "6px"
+            },
+            Children = Items
+        };
     }
 }
 
@@ -115,25 +160,15 @@ public class View : PageBase
                                 }
 
                             }
-                        },
+                        }
                     },
 
                     new td
                     {
-                        new div
+                        new CountingResult
                         {
-                            style = { display = "flex", flexDirection = "row", marginLeft = "5px", marginTop = "-40px" },
                             id    = "2-counts",
-                            children =
-                            {
-                                new div("19 x 521"),
-                                new a
-                                {
-                                    innerText = "incele",
-                                    href      = "#",
-                                    style     = { marginLeft = "5px" }
-                                }
-                            }
+                            MultipleOf = 521
                         },
                     }
                 },
@@ -178,21 +213,11 @@ public class View : PageBase
                     },
                     new td
                     {
-                        new div
+                        new CountingResult
                         {
-                            style = { display = "flex", flexDirection = "row", marginLeft = "5px", marginTop = "-40px" },
                             id    = "3-counts",
-                            children =
-                            {
-                                new div("19 x 298"),
-                                new a
-                                {
-                                    innerText = "incele",
-                                    href      = "#",
-                                    style     = { marginLeft = "5px" }
-                                }
-                            }
-                        },
+                            MultipleOf = 298
+                        }
                     }
                 },
 
@@ -243,20 +268,10 @@ public class View : PageBase
 
                     new td
                     {
-                        new div
+                        new CountingResult
                         {
-                            style = { display = "flex", flexDirection = "row",  marginLeft = "5px", marginTop = "-40px" },
-                            id    = "7-counts",
-                            children =
-                            {
-                                new div("19 x 280"),
-                                new a
-                                {
-                                    innerText = "incele",
-                                    href      = "#",
-                                    style     = { marginLeft = "5px" }
-                                }
-                            }
+                            id = "7-counts",
+                            MultipleOf = 280
                         }
                     }
                 },
@@ -310,26 +325,16 @@ public class View : PageBase
                                 }
 
                             }
-                        },
+                        }
                     },
 
                     new td
                     {
-                        new div
+                        new CountingResult
                         {
-                            style = { display = "flex", flexDirection = "row", marginLeft = "5px", marginTop = "-40px" },
-                            id    = "19-counts",
-                            children =
-                            {
-                                new div("19 x 42"),
-                                new a
-                                {
-                                    innerText = "incele",
-                                    href      = "#",
-                                    style     = { marginLeft = "5px" }
-                                }
-                            }
-                        },
+                            id         = "19-counts",
+                            MultipleOf = 42
+                        }
                     }
                 },
             }

@@ -393,10 +393,7 @@ public static partial class Mixin
         return new ElementModifier(element => element.style.color = color);
     }
 
-    public static ElementModifier id(string id)
-    {
-        return new ElementModifier(element => element.id = id);
-    }
+    
 
     public static ElementModifier maxWidth(string maxWidth)
     {

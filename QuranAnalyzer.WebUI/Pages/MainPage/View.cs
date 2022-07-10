@@ -140,7 +140,7 @@ class View : ReactComponent<MainViewModel>
         {
             if (state.PageId is not null)
             {
-                var pages = new Element[]
+                var pages = new PageBase[]
                 {
                     new QuestionAnswerPage.View(),
                     new ContactPage.View(),

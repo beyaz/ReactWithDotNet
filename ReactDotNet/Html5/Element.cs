@@ -28,6 +28,15 @@ public abstract class Element : IEnumerable<Element>
     /// </summary>
     public readonly List<Element> children = new List<Element>();
 
+    /// <summary>
+    ///     Imports filled values given style
+    /// </summary>
+    [JsonIgnoreAttribute]
+    public IReadOnlyList<Element> Children
+    {
+        set => children.AddRange(value);
+    }
+    
     #endregion
 
 
@@ -66,8 +75,7 @@ public abstract class Element : IEnumerable<Element>
     [React]
     public string height { get; set; }
 
-    [React]
-    public virtual string id { get; set; }
+  
 
 
 
@@ -265,6 +273,9 @@ public abstract class HtmlElement : Element
     ///     'innerText' property of element.
     /// </summary>
     public string innerText { get; set; }
+
+    [React]
+    public virtual string id { get; set; }
 }
 
 [Serializable]
