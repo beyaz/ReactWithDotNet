@@ -4,7 +4,10 @@ public class table : HtmlElement
 {
     
 }
+public class tbody : HtmlElement
+{
 
+}
 public class tr : HtmlElement
 {
     [React]

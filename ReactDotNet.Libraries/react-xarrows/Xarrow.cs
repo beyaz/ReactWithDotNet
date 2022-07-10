@@ -82,5 +82,17 @@ namespace ReactDotNet.react_xarrows
         /// </summary>
         [React]
         public double? animateDrawing { get; set; }
+
+        /// <summary>
+        /// you can customize the svg edges (head or tail) of the arrow. you can use predefined svg by passing string,one of "arrow1" | "circle" | "heart"
+        /// </summary>
+        [React]
+        public string headShape { get; set; }
+
+        /// <summary>
+        /// you can customize the svg edges (head or tail) of the arrow. you can use predefined svg by passing string,one of "arrow1" | "circle" | "heart"
+        /// </summary>
+        [React]
+        public string tailShape { get; set; }
     }
 }
