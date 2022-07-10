@@ -149,7 +149,7 @@ public class View : PageBase
                 },
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 2, ChapterName = "Bakara"} },
+                    new td { new Chapter { ChapterNo = 2, ChapterName = "Bakara" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -182,10 +182,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 3, ChapterName = "İmran Ailesi"}
-                    },
+                    new td { new Chapter { ChapterNo = 3, ChapterName = "İmran Ailesi" } },
 
                     new td
                     {
@@ -214,71 +211,12 @@ public class View : PageBase
                             }
                         },
                     },
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id    = "3-counts",
-                            MultipleOf = 298
-                        }
-                    }
+                    new td { new CountingResult { id = "3-counts", MultipleOf = 298 } }
                 },
 
                 new tr
                 {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 7, ChapterName = "Araf"}
-                    },
-                    new td
-                    {
-                        new InitialLetterLineGroup
-                        {
-                            Items =
-                            {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                               new InitialLetter
-                               {
-                                   id        = $"7-{Lam}",
-                                   innerText = Lam
-                               },
-
-                               new InitialLetter
-                               {
-                                   id        = $"7-{Mim}",
-                                   innerText = Mim
-                               },
-
-                               new InitialLetter
-                               {
-                                   id        = $"7-{Sad}",
-                                   innerText = Sad
-                               }
-                            }
-                        }
-                    },
-
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id = "7-counts",
-                            MultipleOf = 280
-                        }
-                    }
-                },
-
-                new tr
-                {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 10, ChapterName = "___"}
-                    },
+                    new td { new Chapter { ChapterNo = 7, ChapterName = "Araf" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -297,165 +235,27 @@ public class View : PageBase
                                     innerText = Lam
                                 },
 
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
-                            }
-                        }
-                    },
-
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id         = "10-counts",
-                            MultipleOf = 280
-                        }
-                    }
-                },
-                new tr
-                {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 11, ChapterName = "___"}
-                    },
-                    new td
-                    {
-                        new InitialLetterLineGroup
-                        {
-                            Items =
-                            {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
-                            }
-                        }
-                    },
-
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id         = "10-counts",
-                            MultipleOf = 280
-                        }
-                    }
-                },
-
-                new tr
-                {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 12, ChapterName = "___"}
-                    },
-                    new td
-                    {
-                        new InitialLetterLineGroup
-                        {
-                            Items =
-                            {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
-                                }
-                            }
-                        }
-                    },
-
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id         = "10-counts",
-                            MultipleOf = 280
-                        }
-                    }
-                },
-
-                new tr
-                {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 13, ChapterName = "___"}
-                    },
-                    new td
-                    {
-                        new InitialLetterLineGroup
-                        {
-                            Items =
-                            {
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Elif}",
-                                    innerText = Elif
-                                },
-
-                                new InitialLetter
-                                {
-                                    id        = $"7-{Lam}",
-                                    innerText = Lam
-                                },
-                                
                                 new InitialLetter
                                 {
                                     id        = $"7-{Mim}",
                                     innerText = Mim
                                 },
-                                
+
                                 new InitialLetter
                                 {
-                                    id        = $"7-{Ra}",
-                                    innerText = Mim
+                                    id        = $"7-{Sad}",
+                                    innerText = Sad
                                 }
                             }
                         }
                     },
 
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id         = "10-counts",
-                            MultipleOf = 280
-                        }
-                    }
+                    new td { new CountingResult { id = "7-counts", MultipleOf = 280 } }
                 },
 
                 new tr
                 {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 14, ChapterName = "___"}
-                    },
+                    new td { new Chapter { ChapterNo = 10, ChapterName = "___" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -483,22 +283,11 @@ public class View : PageBase
                         }
                     },
 
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id         = "10-counts",
-                            MultipleOf = 280
-                        }
-                    }
+                    new td { new CountingResult { id = "10-counts", MultipleOf = 280 } }
                 },
-
                 new tr
                 {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 15, ChapterName = "___"}
-                    },
+                    new td { new Chapter { ChapterNo = 11, ChapterName = "___" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -526,23 +315,150 @@ public class View : PageBase
                         }
                     },
 
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id         = "10-counts",
-                            MultipleOf = 280
-                        }
-                    }
+                    new td { new CountingResult { id = "10-counts", MultipleOf = 280 } }
                 },
 
                 new tr
                 {
+                    new td { new Chapter { ChapterNo = 12, ChapterName = "___" } },
                     new td
                     {
-                        new Chapter{ ChapterNo = 19, ChapterName = "Meryem"}
+                        new InitialLetterLineGroup
+                        {
+                            Items =
+                            {
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Elif}",
+                                    innerText = Elif
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Lam}",
+                                    innerText = Lam
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Ra}",
+                                    innerText = Mim
+                                }
+                            }
+                        }
                     },
 
+                    new td { new CountingResult { id = "10-counts", MultipleOf = 280 } }
+                },
+
+                new tr
+                {
+                    new td { new Chapter { ChapterNo = 13, ChapterName = "___" } },
+                    new td
+                    {
+                        new InitialLetterLineGroup
+                        {
+                            Items =
+                            {
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Elif}",
+                                    innerText = Elif
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Lam}",
+                                    innerText = Lam
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Mim}",
+                                    innerText = Mim
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Ra}",
+                                    innerText = Mim
+                                }
+                            }
+                        }
+                    },
+
+                    new td { new CountingResult { id = "10-counts", MultipleOf = 280 } }
+                },
+
+                new tr
+                {
+                    new td { new Chapter { ChapterNo = 14, ChapterName = "___" } },
+                    new td
+                    {
+                        new InitialLetterLineGroup
+                        {
+                            Items =
+                            {
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Elif}",
+                                    innerText = Elif
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Lam}",
+                                    innerText = Lam
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Ra}",
+                                    innerText = Mim
+                                }
+                            }
+                        }
+                    },
+
+                    new td { new CountingResult { id = "10-counts", MultipleOf = 280 } }
+                },
+
+                new tr
+                {
+                    new td { new Chapter { ChapterNo = 15, ChapterName = "___" } },
+                    new td
+                    {
+                        new InitialLetterLineGroup
+                        {
+                            Items =
+                            {
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Elif}",
+                                    innerText = Elif
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Lam}",
+                                    innerText = Lam
+                                },
+
+                                new InitialLetter
+                                {
+                                    id        = $"7-{Ra}",
+                                    innerText = Mim
+                                }
+                            }
+                        }
+                    },
+
+                    new td { new CountingResult { id = "10-counts", MultipleOf = 280 } }
+                },
+
+                new tr
+                {
+                    new td { new Chapter { ChapterNo = 19, ChapterName = "Meryem" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -582,23 +498,12 @@ public class View : PageBase
                             }
                         }
                     },
-
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id         = "19-counts",
-                            MultipleOf = 42
-                        }
-                    }
+                    new td { new CountingResult { id = "19-counts", MultipleOf = 42 } }
                 },
 
                 new tr
                 {
-                    new td
-                    {
-                        new Chapter{ ChapterNo = 20, ChapterName = "Ta-ha"}
-                    },
+                    new td { new Chapter { ChapterNo = 20, ChapterName = "Ta-ha" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -619,20 +524,12 @@ public class View : PageBase
                             }
                         }
                     },
-
-                    new td
-                    {
-                        new CountingResult
-                        {
-                            id         = "10-counts",
-                            MultipleOf = 280
-                        }
-                    }
+                    new td { new CountingResult { id = "10-counts", MultipleOf = 280 } }
                 },
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 26, ChapterName = "Ta-Sin-Mim"} },
+                    new td { new Chapter { ChapterNo = 26, ChapterName = "Ta-Sin-Mim" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -651,7 +548,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 27, ChapterName = "Ta-Sin"} },
+                    new td { new Chapter { ChapterNo = 27, ChapterName = "Ta-Sin" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -669,7 +566,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 28, ChapterName = "Ta-Sin-Mim"} },
+                    new td { new Chapter { ChapterNo = 28, ChapterName = "Ta-Sin-Mim" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -688,7 +585,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 29, ChapterName = "Bakara"} },
+                    new td { new Chapter { ChapterNo = 29, ChapterName = "Bakara" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -721,7 +618,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 30, ChapterName = "Bakara"} },
+                    new td { new Chapter { ChapterNo = 30, ChapterName = "Bakara" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -754,7 +651,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 32, ChapterName = "Bakara"} },
+                    new td { new Chapter { ChapterNo = 32, ChapterName = "Bakara" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -787,7 +684,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 36, ChapterName = "Yasin"} },
+                    new td { new Chapter { ChapterNo = 36, ChapterName = "Yasin" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -813,7 +710,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 38, ChapterName = "Sad"} },
+                    new td { new Chapter { ChapterNo = 38, ChapterName = "Sad" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -833,14 +730,14 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 40, ChapterName = "Ḥāʾ–Mīm" } },
+                    new td { new Chapter { ChapterNo = 40, ChapterName = "Ḥāʾ–Mīm" } },
                     new td
                     {
                         new InitialLetterLineGroup
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"38-{Ha}", innerText = Ha },
+                                new InitialLetter { id = $"38-{Ha}", innerText  = Ha },
                                 new InitialLetter { id = $"38-{Mim}", innerText = Mim }
                             }
                         }
@@ -849,7 +746,7 @@ public class View : PageBase
                 },
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 41, ChapterName = "Ḥāʾ–Mīm" } },
+                    new td { new Chapter { ChapterNo = 41, ChapterName = "Ḥāʾ–Mīm" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -866,7 +763,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 42, ChapterName = "Ḥāʾ–Mīm" } },
+                    new td { new Chapter { ChapterNo = 42, ChapterName = "Ḥāʾ–Mīm" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -883,7 +780,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 43, ChapterName = "Ḥāʾ–Mīm" } },
+                    new td { new Chapter { ChapterNo = 43, ChapterName = "Ḥāʾ–Mīm" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -900,7 +797,7 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 44, ChapterName = "Ḥāʾ–Mīm" } },
+                    new td { new Chapter { ChapterNo = 44, ChapterName = "Ḥāʾ–Mīm" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -916,24 +813,7 @@ public class View : PageBase
                 },
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 45, ChapterName = "Ḥāʾ–Mīm" } },
-                    new td
-                    {
-                        new InitialLetterLineGroup
-                        {
-                            Items =
-                            {
-                                new InitialLetter { id = $"38-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"38-{Mim}", innerText = Mim }
-                            }
-                        }
-                    },
-                    new td { new CountingResult { id = "2-counts", MultipleOf = 521 } }
-                },
-
-                new tr
-                {
-                    new td { new Chapter{ ChapterNo = 46, ChapterName = "Ḥāʾ–Mīm" } },
+                    new td { new Chapter { ChapterNo = 45, ChapterName = "Ḥāʾ–Mīm" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -950,14 +830,15 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 50, ChapterName = "Qāf" } },
+                    new td { new Chapter { ChapterNo = 46, ChapterName = "Ḥāʾ–Mīm" } },
                     new td
                     {
                         new InitialLetterLineGroup
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"50-{Kaf}", innerText  = Kaf }
+                                new InitialLetter { id = $"38-{Ha}", innerText  = Ha },
+                                new InitialLetter { id = $"38-{Mim}", innerText = Mim }
                             }
                         }
                     },
@@ -966,7 +847,23 @@ public class View : PageBase
 
                 new tr
                 {
-                    new td { new Chapter{ ChapterNo = 68, ChapterName = "Nun" } },
+                    new td { new Chapter { ChapterNo = 50, ChapterName = "Qāf" } },
+                    new td
+                    {
+                        new InitialLetterLineGroup
+                        {
+                            Items =
+                            {
+                                new InitialLetter { id = $"50-{Kaf}", innerText = Kaf }
+                            }
+                        }
+                    },
+                    new td { new CountingResult { id = "2-counts", MultipleOf = 521 } }
+                },
+
+                new tr
+                {
+                    new td { new Chapter { ChapterNo = 68, ChapterName = "Nun" } },
                     new td
                     {
                         new InitialLetterLineGroup
