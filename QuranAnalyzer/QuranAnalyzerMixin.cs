@@ -50,22 +50,24 @@ public sealed class CountingOption
 public static class ArabicCharacters
 {
     #region Static Fields
-    public static string Kaf = "ق";
-    public static string Sad = "ص";
-    public static string Sin = "س";
-    public static string Ya = "ي";
-    public static string Elif = "ا";
-    public static string Mim = "م";
-    public static string Lam = "ل";
-    public static string Ra = "ر";
+    public const string Kaf = "ق";
+    public const string Sad = "ص";
+    public const string Sin = "س";
+    public const string Ya = "ي";
+    public const string Elif = "ا";
+    public const string Mim = "م";
+    public const string Lam = "ل";
+    public const string Ra = "ر";
 
-    public static string Kef = "ك";
-    public static string Ha = "ه";
-    public static string Ayn = "ع";
+    public const string Kef = "ك";
+    public const string Ha = "ه";
+    public const string Ayn = "ع";
 
-    public static string HH = "ح";
+    public const string HH = "ح";
 
-    public static string T = "ط";
+    public const string T = "ط";
+
+    public const string Nun = "ن";
     #endregion
 }
 

@@ -67,6 +67,12 @@ class FactView : ReactComponent<FactViewModel>
     public override void constructor()
     {
         state = new FactViewModel();
+
+        if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q",out var value))
+        {
+            state.SuraFilter = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
+            state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];
+        }
     }
 
     

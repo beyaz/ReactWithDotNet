@@ -51,7 +51,7 @@ class CountingResult: ReactComponent
 
     public int MultipleOf { get; set; }
 
-    
+    public string SearchScript { get; set; }
 
     public override Element render()
     {
@@ -65,7 +65,7 @@ class CountingResult: ReactComponent
                 new a
                 {
                     innerText = "incele",
-                    href      = "#",
+                    href      = $"index.html?page=CharacterCounting&q={SearchScript}",
                     style     = { marginLeft = "5px" }
                 }
             }
@@ -125,18 +125,18 @@ public class View : PageBase
 
     public override Element render()
     {
-        const string Elif = "Elif";
-        const string Lam  = "Lam";
-        const string Mim  = "Mim";
-        const string Sad  = "Sad";
-        const string Kaf  = "Kāf";
-        const string Ha   = "Hā";
-        const string Ya   = "Yāʾ";
-        const string Ain  = "ʿAin";
-        const string Ra   = "Rāʾ";
-        const string Ta   = "Ṭāʾ";
-        const string Sin  = "Sīn";
-        const string Nun  = "Nūn";
+        const string Elif = "Elif-" + ArabicCharacters.Elif;
+        const string Lam  = "Lam-" + ArabicCharacters.Lam;
+        const string Mim  = "Mim-" + ArabicCharacters.Mim;
+        const string Sad  = "Sad-" + ArabicCharacters.Sad;
+        const string Kaf  = "Kāf-"+ ArabicCharacters.Kaf;
+        const string Ha   = "Hā-" + ArabicCharacters.HH;
+        const string Ya   = "Yāʾ-" + ArabicCharacters.Ya;
+        const string Ain  = "ʿAin-" + ArabicCharacters.Ayn;
+        const string Ra   = "Rāʾ-" + ArabicCharacters.Ra;
+        const string Ta   = "Ṭāʾ-" + ArabicCharacters.T;
+        const string Sin  = "Sīn-" + ArabicCharacters.Sin;
+        const string Nun  = "Nūn-" + ArabicCharacters.Nun;
 
 
         var table = new table
@@ -407,7 +407,7 @@ public class View : PageBase
                             }
                         }
                     },
-                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8 } }
+                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = $"7:*,19:*,38:*|{ArabicCharacters.Sad}" } }
                 },
 
                 new tr
@@ -673,7 +673,7 @@ public class View : PageBase
 
 
 
-        var defaultColor = "#a9acaa";
+        var colorForConnectedFromOtherChapters = "#66f295";
 
 
         return new div
@@ -760,13 +760,13 @@ public class View : PageBase
                new Arrow{startElementId =$"36-{Ya}", endElementId = "36-counts"},
                new Arrow{startElementId =$"36-{Sin}", endElementId = "36-counts"},
 
-               new Arrow{startElementId =$"7-{Sad}",  endElementId = "Three-Sad", Dashness = true,StartAnchorFromRight  = true},
-               new Arrow{startElementId =$"19-{Sad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true},
-               new Arrow{startElementId =$"38-{Sad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true},
+               new Arrow{startElementId =$"7-{Sad}",  endElementId = "Three-Sad", Dashness = true,StartAnchorFromRight  = true,color=colorForConnectedFromOtherChapters},
+               new Arrow{startElementId =$"19-{Sad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
+               new Arrow{startElementId =$"38-{Sad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
                
                new Arrow{startElementId =$"42-{Ain}", endElementId = "42-Ain-Sin-Kaf", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"42-{Sin}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop = true},
-               new Arrow{startElementId =$"42-{Kaf}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop = true},
+               new Arrow{startElementId =$"42-{Sin}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
+               new Arrow{startElementId =$"42-{Kaf}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
 
                new Arrow{startElementId =$"42-{Kaf}", endElementId = $"42-{Kaf}-counts"},
 

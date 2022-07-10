@@ -144,13 +144,25 @@ class View : ReactComponent<MainViewModel>
                 {
                     new QuestionAnswerPage.View(),
                     new ContactPage.View(),
-                    new InitialLetters.View()
+                    new InitialLetters.View(),
+                    
                 };
 
                 var page = pages.FirstOrDefault(x => x.id == state.PageId);
                 if (page is not null)
                 {
                     return page;
+                }
+
+                if (state.PageId == "CharacterCounting")
+                {
+                    var tt = new FactView();
+
+                    tt.Context = Context;
+                    
+                    tt.constructor();
+                    
+                    return tt;
                 }
             }
 
