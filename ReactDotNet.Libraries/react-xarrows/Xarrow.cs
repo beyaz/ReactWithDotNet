@@ -73,7 +73,14 @@ namespace ReactDotNet.react_xarrows
         ///     defines how much the lines curve. makes a difference only in path='smooth'
         /// </summary>
         [React]
-        public int? curveness { get; set; }
+        public double? curveness { get; set; }
+
+        /// <summary>
+        ///     can make the arrow dashed and can even animate. if true default values(for dashness) are chosen. if object is passed then default values are chosen except what passed.
+        /// </summary>
+        [React]
+        public bool? dashness { get; set; }
+        
 
         /// <summary>
         ///     can animate the drawing of the arrow using svg animation. type: boolean|number. if true animation duration is 1s.
