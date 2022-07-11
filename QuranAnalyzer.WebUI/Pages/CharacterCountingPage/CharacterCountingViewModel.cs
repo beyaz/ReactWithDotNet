@@ -1,0 +1,51 @@
+﻿using System;
+using ReactDotNet.Html5;
+
+namespace QuranAnalyzer.WebUI.Pages.FactPage;
+
+[Serializable]
+public class CharacterCountingViewModel
+{
+    public string SelectedFact { get; set; }
+    public string SummaryText { get; set; }
+
+    public ClientTask ClientTask { get; set; }
+    public string OperationName { get; set; }
+    public bool IsBlocked { get; set; }
+
+    public string SuraFilter { get; set; }
+
+    public string SearchCharacters { get; set; }
+
+    public int CountOfCharacters { get; set; }
+    
+
+    public int SelectedTabIndex { get; set; }
+
+    [NonSerialized] 
+    public Occurence[] ResultRecords;
+
+    public double AvailableWidth { get; set; }
+
+
+
+}
+
+[Serializable]
+public sealed class Occurence
+{
+    public int? Charachter1 { get; set; }
+    public int? Charachter2 { get; set; }
+    public int? Charachter3 { get; set; }
+    public int? Charachter4 { get; set; }
+    public int? Charachter5 { get; set; }
+    public int? Charachter6 { get; set; }
+    public int? Charachter7 { get; set; }
+    public int? Charachter8 { get; set; }
+    public int? Charachter9 { get; set; }
+
+    public string AyahNumber { get; set; }
+
+
+
+}

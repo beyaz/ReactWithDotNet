@@ -44,7 +44,7 @@ public class MainViewModel
 
     public string LastClickedMenuId { get; set; }
 
-    public FactViewModel FactViewModel { get; set; }
+    public CharacterCountingViewModel CharacterCountingViewModel { get; set; }
 }
 
 class View : ReactComponent<MainViewModel>
@@ -156,7 +156,7 @@ class View : ReactComponent<MainViewModel>
 
                 if (state.PageId == "CharacterCounting")
                 {
-                    var tt = new FactView();
+                    var tt = new CharacterCountingView();
 
                     tt.Context = Context;
                     

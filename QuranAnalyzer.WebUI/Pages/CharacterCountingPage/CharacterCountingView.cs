@@ -13,60 +13,13 @@ namespace QuranAnalyzer.WebUI.Pages.FactPage;
 
 
 
-[Serializable]
-public class FactViewModel
-{
-    public string SelectedFact { get; set; }
-    public string SummaryText { get; set; }
-
-    public ClientTask ClientTask { get; set; }
-    public string OperationName { get; set; }
-    public bool IsBlocked { get; set; }
-
-    public string SuraFilter { get; set; }
-
-    public string SearchCharacters { get; set; }
-
-    public int CountOfCharacters { get; set; }
-    
-
-    public int SelectedTabIndex { get; set; }
-
-    [NonSerialized] 
-    public Occurence[] ResultRecords;
-
-    public double AvailableWidth { get; set; }
 
 
-
-}
-
-[Serializable]
-public sealed class Occurence
-{
-    public int? Charachter1 { get; set; }
-    public int? Charachter2 { get; set; }
-    public int? Charachter3 { get; set; }
-    public int? Charachter4 { get; set; }
-    public int? Charachter5 { get; set; }
-    public int? Charachter6 { get; set; }
-    public int? Charachter7 { get; set; }
-    public int? Charachter8 { get; set; }
-    public int? Charachter9 { get; set; }
-
-    public string AyahNumber { get; set; }
-
-
-
-}
-
-
-
-class FactView : ReactComponent<FactViewModel>
+class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
     public override void constructor()
     {
-        state = new FactViewModel();
+        state = new CharacterCountingViewModel();
 
         if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q",out var value))
         {
@@ -323,43 +276,5 @@ class CountsSummaryView: ReactComponent
         }
 
         return returnDiv;
-
-    }
-}
-
-
-[Serializable]
-class DesignerDeneme : ReactComponent
-{
-
-    public string AAA { get; set; }
-
-    public string BBB { get; set; }
-
-
-    public override Element render()
-    {
-        var returnDiv = new div
-        {
-           
-        };
-
-        if (AAA != null)
-        {
-            returnDiv.appendChild(new div(AAA));
-        }
-
-        if (BBB != null)
-        {
-            returnDiv.appendChild(new div(BBB));
-        }
-
-        if (returnDiv.children.Count == 0)
-        {
-            returnDiv.innerText = "Empty";
-        }
-
-        return returnDiv;
-
     }
 }
