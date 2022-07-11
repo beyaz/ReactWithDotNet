@@ -139,7 +139,7 @@ public static class QuranAnalyzerMixin
 
     static string IdOf(Verse verse)
     {
-        return $"{verse.SurahNumber}:{verse._index}";
+        return $"{verse.ChapterNumber}:{verse._index}";
     }
     #endregion
 }

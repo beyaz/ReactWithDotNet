@@ -4,7 +4,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using ReactDotNet.Html5;
-using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer;
 
@@ -29,9 +28,9 @@ public static class CharachterSearchResultColorizer
         };
 
 
-        foreach (var itemsInSurah in from m in matchRecords group m by m.Verse.SurahNumber into mgroup select mgroup.ToList())
+        foreach (var itemsInChapter in from m in matchRecords group m by m.Verse.ChapterNumber into mgroup select mgroup.ToList())
         {
-            foreach (var items in from m in itemsInSurah group m by m.Verse._index into mgroup select mgroup.ToList())
+            foreach (var items in from m in itemsInChapter group m by m.Verse._index into mgroup select mgroup.ToList())
             {
                 var el = ColorizeCharachterSearchResult(items[0].Verse._bismillah + items[0].Verse._text, items, getColor);
 
@@ -39,13 +38,13 @@ public static class CharachterSearchResultColorizer
                 {
                     new div
                     {
-                        innerText = $"[{items[0].Verse.SurahNumber}:{items[0].Verse._index}]",
+                        innerText = $"[{items[0].Verse.ChapterNumber}:{items[0].Verse._index}]",
                         style =
                         {
-                            marginLeft = px(5),
+                            marginLeft = "5px",
                             color      = "green",
                             fontSize   = "1rem",
-                            direction  = Direction.ltr
+                            direction  = "ltr"
                         }
                     },
                     el

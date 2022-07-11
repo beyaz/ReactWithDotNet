@@ -22,7 +22,7 @@ public sealed class Verse
     public string _index { get; set; }
     public string _text { get; set; }
     public string _bismillah { get; set; }
-    public int SurahNumber { get; set; }
+    public int ChapterNumber { get; set; }
 }
 
 public static class DataAccess

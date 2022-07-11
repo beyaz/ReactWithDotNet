@@ -58,10 +58,10 @@ namespace QuranAnalyzer;
         var records = VerseFilter.GetVerseList(" 20  : 4- 7").Value;
 
         records.Count.Should().Be(4);
-        records[0].SurahNumber.Should().Be(20);
-        records[1].SurahNumber.Should().Be(20);
-        records[2].SurahNumber.Should().Be(20);
-        records[3].SurahNumber.Should().Be(20);
+        records[0].ChapterNumber.Should().Be(20);
+        records[1].ChapterNumber.Should().Be(20);
+        records[2].ChapterNumber.Should().Be(20);
+        records[3].ChapterNumber.Should().Be(20);
 
         records[0]._index.Should().Be("4");
         records[1]._index.Should().Be("5");

@@ -59,7 +59,7 @@ public static class VerseFilter
             {
                 foreach (var aya in sura.Verses)
                 {
-                    aya.SurahNumber = sura.Index;
+                    aya.ChapterNumber = sura.Index;
                 }
 
                 var filters = ayaFilter.Split("-".ToCharArray()).Where(x=>!string.IsNullOrWhiteSpace(x)).Select(x=>x.Trim()).ToArray();
