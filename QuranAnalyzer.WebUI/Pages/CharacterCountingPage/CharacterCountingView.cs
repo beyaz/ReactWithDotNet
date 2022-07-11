@@ -9,7 +9,7 @@ using ReactDotNet.Html5;
 using ReactDotNet.PrimeReact;
 using static ReactDotNet.Mixin;
 
-namespace QuranAnalyzer.WebUI.Pages.FactPage;
+namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 
 

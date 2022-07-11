@@ -1,7 +1,7 @@
 ﻿using System;
 using ReactDotNet.Html5;
 
-namespace QuranAnalyzer.WebUI.Pages.FactPage;
+namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 [Serializable]
 public class CharacterCountingViewModel

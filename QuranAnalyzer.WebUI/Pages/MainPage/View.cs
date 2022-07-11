@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using QuranAnalyzer.WebUI.Components;
-using QuranAnalyzer.WebUI.Pages.FactPage;
+using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using ReactDotNet.Html5;
 using static ReactDotNet.Mixin;
 
