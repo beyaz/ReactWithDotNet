@@ -126,6 +126,11 @@ function PushToEventQueue(fn)
 {
     EventQueue.push(fn);
 
+    if (EventQueue.length === 1)
+    {
+        EmitNextEvent();
+    }
+
     if (!IsExecutingEvent)
     {
         EmitNextEvent();

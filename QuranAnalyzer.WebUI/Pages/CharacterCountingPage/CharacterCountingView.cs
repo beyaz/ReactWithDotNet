@@ -198,7 +198,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             header = "Özet",
                             children =
                             {
-                                new CountsSummaryView{ Counts = new List<(string name, int count)>{("A",5),("B",4), ("c",5)}} | margin(22)
+                                new CountsSummaryView{ Counts = new List<SummaryInfo>{new SummaryInfo{Name = "A", Count = 55}}} | margin(22)
                                // summaryContent
                             }
                         },
@@ -242,6 +242,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 }
 
 
+record SummaryInfo
+{
+    public string  Name { get; set; }
+    public int Count { get; set; }
+}
 
 [Serializable]
 class CountsSummaryView: ReactComponent
@@ -249,16 +254,16 @@ class CountsSummaryView: ReactComponent
 
     public string AAA { get; set; } = "ABC";
 
-    public IReadOnlyList<(string name, int count)> Counts { get; set; } = new[] {("a", 5)};
+    public IReadOnlyList<SummaryInfo> Counts { get; set; }
 
     public override Element render()
     {
         var returnDiv = new div
         {
-            new div(Counts.Select(x => new div($"{x.count} adet {x.name} harfi bulundu.")))
+            new div(Counts.Select(x => new div($"{x.Count} adet {x.Name} harfi bulundu.")))
         };
 
-        var total = Counts.Select(x => x.count).Sum();
+        var total = Counts.Select(x => x.Count).Sum();
 
         if (total % 19 == 0)
         {

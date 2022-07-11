@@ -300,7 +300,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public void Refresh()
     {
-        state.ClientTask = new ClientTaskGotoMethod { Timeout = 100000, MethodName = nameof(Refresh) };
+        state.ClientTask = new ClientTaskGotoMethod { Timeout = 1000, MethodName = nameof(Refresh) };
     }
     void OnSelectedPropertyChanged(ListBoxChangeParams e)
     {
@@ -311,17 +311,25 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         SaveState();
     }
 
+    
+    
     void OnSelectedPropertyValueChanged(SyntheticEvent e)
     {
         state.SelectedPropertyValue = e.target.value;
 
+        TransferPropertyValueToPropertyMap();
+
+        SaveState();
+    }
+
+    void TransferPropertyValueToPropertyMap()
+    {
         if (state.SelectedPropertyName is not null)
         {
             state.Properties.TryUpdateFirst(x => x.Path == state.SelectedPropertyName, x => x.Value = state.SelectedPropertyValue);
         }
-
-        SaveState();
     }
+    
 
     void OnWidthChanged(SliderChangeParams e)
     {
