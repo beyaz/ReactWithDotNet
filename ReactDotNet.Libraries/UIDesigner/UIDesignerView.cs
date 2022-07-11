@@ -223,7 +223,14 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     {
         foreach (var propertyInfo in type.GetProperties())
         {
-            if (propertyInfo.PropertyType.IsAbstract)
+            var propertyType = propertyInfo.PropertyType;
+            
+            if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(IReadOnlyList<>))
+            {
+                yield return new DotNetObjectPropertyValue { Path = propertyInfo.Name };
+            }
+            
+            if (propertyType.IsAbstract)
             {
                 continue;
             }
@@ -293,7 +300,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public void Refresh()
     {
-        state.ClientTask = new ClientTaskGotoMethod { Timeout = 1000, MethodName = nameof(Refresh) };
+        state.ClientTask = new ClientTaskGotoMethod { Timeout = 100000, MethodName = nameof(Refresh) };
     }
     void OnSelectedPropertyChanged(ListBoxChangeParams e)
     {

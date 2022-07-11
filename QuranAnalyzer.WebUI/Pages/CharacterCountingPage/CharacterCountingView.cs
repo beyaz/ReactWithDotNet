@@ -198,8 +198,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             header = "Özet",
                             children =
                             {
-                                // new CountsSummaryView{ Counts = new List<(string name, int count)>{("A",5),("B",4), ("c",5)}} | margin(22)
-                                summaryContent
+                                new CountsSummaryView{ Counts = new List<(string name, int count)>{("A",5),("B",4), ("c",5)}} | margin(22)
+                               // summaryContent
                             }
                         },
                         new TabPanel
@@ -240,6 +240,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         return Extensions.BlockUI(container.appendChild(searchBar).appendChild(results), state.IsBlocked, state.OperationName);
     }
 }
+
+
 
 [Serializable]
 class CountsSummaryView: ReactComponent
