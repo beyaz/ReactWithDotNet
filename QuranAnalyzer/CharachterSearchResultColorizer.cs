@@ -68,23 +68,11 @@ public static class CharachterSearchResultColorizer
 
             return "yellow";
         }
-
-
     }
 
     static Element ColorizeCharachterSearchResult(string ayahText, IReadOnlyList<MatchInfo> matchRecords, Func<string,string> getColor)
     {
-        var element = new HPanel
-        {
-            style =
-            {
-                verticalAlign = VerticalAlign.top,
-                fontSize = "1.4rem"
-            }
-        };
-
         var startPosition    = 0;
-
 
         var html = new StringBuilder();
 
@@ -92,16 +80,10 @@ public static class CharachterSearchResultColorizer
         {
             var text = ayahText.Substring(startPosition, matchRecord.StartIndexInVerseText - startPosition);
 
-            element.Add(new div {innerText = text});
-
-            
-
             var colorizedText = matchRecord.ToString();
 
             var span = new span { innerText = colorizedText, style = { color = getColor(colorizedText), marginLeft = "3px", marginRight = "3px", border = "1px solid rgb(218, 220, 224)", borderRadius = "4px"} };
             
-            element.Add(span);
-
             startPosition = matchRecord.StartIndexInVerseText + colorizedText.Length;
 
             html.Append(text);
@@ -110,11 +92,7 @@ public static class CharachterSearchResultColorizer
 
         if (startPosition < ayahText.Length-1)
         {
-            var a = ayahText.Substring(startPosition);
-            
-            element.Add(new div {innerText = a});
-
-            html.Append(a);
+            html.Append(ayahText.Substring(startPosition));
         }
 
         return new div
@@ -125,6 +103,5 @@ public static class CharachterSearchResultColorizer
                 fontSize      = "1.4rem"
             }
         };
-        return element;
     }
 }
