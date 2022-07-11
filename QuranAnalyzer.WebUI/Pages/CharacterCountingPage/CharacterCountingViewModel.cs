@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ReactDotNet.Html5;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
@@ -26,9 +27,7 @@ public class CharacterCountingViewModel
     public Occurence[] ResultRecords;
 
     public double AvailableWidth { get; set; }
-
-
-
+    public IReadOnlyList<SummaryInfo> SummaryInfoList { get; set; }
 }
 
 [Serializable]

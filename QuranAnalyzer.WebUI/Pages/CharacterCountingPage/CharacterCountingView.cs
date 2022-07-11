@@ -43,6 +43,20 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var matchRecords = QuranAnalyzerMixin.SearchCharachtersWithCache(state.ChapterFilter, state.SearchCharacters).Value;
 
+        state.SummaryInfoList = state.SearchCharacters.AsClearArabicCharacterList().Select(arabicCharcter =>
+        {
+            var arabicCharacterIndex = arabicCharcter.AsArabicCharacterIndex().Value;
+            
+            return new SummaryInfo
+            {
+                Count = matchRecords.Count(x => x.ArabicCharacterIndex == arabicCharacterIndex),
+                Name  = arabicCharcter
+            };
+        }).ToList();
+            
+       
+        
+        
         var results = new List<Occurence>();
 
         var counts = new List<(string charachter, int count)>();
@@ -199,7 +213,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             header = "Özet",
                             children =
                             {
-                                new CountsSummaryView{ Counts = new []{new SummaryInfo{Name = "A", Count = 55}}}
+                                new CountsSummaryView{ Counts = state.SummaryInfoList}
                             }
                         },
                         new TabPanel
@@ -242,7 +256,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 }
 
 
-record SummaryInfo
+public class SummaryInfo
 {
     public string  Name { get;  set; }
     public int Count { get; set; }
@@ -257,8 +271,6 @@ class CountsSummaryView: ReactComponent
     {
         static Element toElement(SummaryInfo x)
         {
-            x.Name = "aa";
-            
             return new div
             {
                 innerHTML = $"<strong>{x.Count}</strong> adet <strong>{x.Name}</strong> harfi bulundu."
