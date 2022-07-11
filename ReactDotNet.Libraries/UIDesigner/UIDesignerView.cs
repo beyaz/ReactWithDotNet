@@ -35,7 +35,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             value       = state.SelectedComponentTypeReference,
             onChange    = OnSelectedComponentChanged,
             filter      = true,
-            listStyle   = {maxHeight = Mixin.px(400)}
+            listStyle   = {maxHeight = Mixin.px(400)},
+            style = { height = "100%" }
         };
 
         var propertyList = new ListBox
@@ -51,21 +52,28 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
         var dataPanel = new Splitter
         {
-            new SplitterPanel
+            children =
             {
-                propertyList
-            },
-            new SplitterPanel
-            {
-                new InputTextarea
+                new SplitterPanel
                 {
-                    value = state.SelectedPropertyValue, 
-                    onChange = OnSelectedPropertyValueChanged,
-                    style =
+                    propertyList
+                },
+                new SplitterPanel
+                {
+                    new InputTextarea
                     {
-                        width = "100%", height = "100%"
+                        value = Mixin.Bind(() => state.SelectedPropertyValue),
+                        style =
+                        {
+                            width = "100%", height = "100%"
+                        }
                     }
                 }
+            },
+            style =
+            {
+                height = "100%",
+                width  = "100%"
             }
         };
 
@@ -158,10 +166,19 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     size = 70,
                     children =
                     {
-                        new div {createElement()}
-                        | Mixin.border("1px dashed #e0e0e0")
-                        | Mixin.width(state.ScreenWidth + "%")
-                        | Mixin.height("100%")
+                        new div
+                        {
+                           children=
+                           {
+                               createElement()
+                           },
+                           style =
+                           {
+                               border = "1px dashed #e0e0e0",
+                               width = state.ScreenWidth + "%",
+                               height = "100%"
+                           }
+                        }
                     }
                 },
 
@@ -178,13 +195,19 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                 new SplitterPanel
                                 {
                                     size     = 2,
-                                    children = {componentSelector | Mixin.height("100%")}
+                                    children =
+                                    {
+                                        componentSelector
+                                    }
                                 },
 
                                 new SplitterPanel
                                 {
                                     size     = 6,
-                                    children = {dataPanel | Mixin.width("100%") | Mixin.height("100%") }
+                                    children =
+                                    {
+                                        dataPanel
+                                    }
                                 }
                             }
                         }
@@ -193,7 +216,17 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             }
         };
 
-        return new div {mainPanel} | Mixin.width("100%") | Mixin.height("100%") | Mixin.padding(10);
+        return new div
+        {
+            children=
+            {
+                mainPanel
+            },
+            style =
+            {
+                width = "100%", height = "100%", padding = "10px"
+            }
+        };
 
 
         
@@ -307,6 +340,10 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public void Refresh()
     {
+        TransferPropertyValueToPropertyMap();
+
+        SaveState();
+
         state.ClientTask = new ClientTaskGotoMethod { Timeout = 1000, MethodName = nameof(Refresh) };
     }
     void OnSelectedPropertyChanged(ListBoxChangeParams e)
@@ -319,15 +356,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     }
 
     
-    
-    void OnSelectedPropertyValueChanged(SyntheticEvent e)
-    {
-        state.SelectedPropertyValue = e.target.value;
-
-        TransferPropertyValueToPropertyMap();
-
-        SaveState();
-    }
+   
 
     void TransferPropertyValueToPropertyMap()
     {

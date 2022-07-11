@@ -198,8 +198,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             header = "Özet",
                             children =
                             {
-                                new CountsSummaryView{ Counts = new List<SummaryInfo>{new SummaryInfo{Name = "A", Count = 55}}} | margin(22)
-                               // summaryContent
+                                new CountsSummaryView{ Counts = new []{new SummaryInfo{Name = "A", Count = 55}}} | margin(22)
+                               summaryContent
                             }
                         },
                         new TabPanel
@@ -251,16 +251,24 @@ record SummaryInfo
 [Serializable]
 class CountsSummaryView: ReactComponent
 {
-
-    public string AAA { get; set; } = "ABC";
-
     public IReadOnlyList<SummaryInfo> Counts { get; set; }
 
     public override Element render()
     {
+        static Element toElement(SummaryInfo x)
+        {
+            return new div
+            {
+                innerHTML = $"<strong>{x.Count}</strong> adet <strong>{x.Name}</strong> harfi bulundu."
+            };
+        }
+        
         var returnDiv = new div
         {
-            new div(Counts.Select(x => new div($"{x.Count} adet {x.Name} harfi bulundu.")))
+            new div
+            {
+                Children = Counts.Select(toElement)
+            }
         };
 
         var total = Counts.Select(x => x.Count).Sum();
@@ -269,16 +277,20 @@ class CountsSummaryView: ReactComponent
         {
             returnDiv.appendChild(new div
             {
-                new div {innerText = "Toplam: ("},
-                new div {innerText = "19 x " + total / 19, style = {color = "red", marginLeft = px(5), marginRight = px(5)}},
-                new div {innerText = ")"}
+                children =
+                {
+                    new div {innerHTML = $"Toplam: <strong>{total}</strong> ("},
+                    new div {innerText               = "19 x " + total / 19, style = {color = "red", marginLeftRight = "5px"}},
+                    new div {innerText               = ")"}
+                },
+                style = { display = "flex", flexDirection = "row"},
             });
         }
         else
         {
             returnDiv.appendChild(new div
             {
-                new div($"Toplam: {total}")
+                new div{innerHTML = $"Toplam: <strong>{total}</strong>"}
             });
         }
 

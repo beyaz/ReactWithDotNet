@@ -32,7 +32,7 @@ public abstract class Element : IEnumerable<Element>
     ///     Imports filled values given style
     /// </summary>
     [JsonIgnoreAttribute]
-    public IReadOnlyList<Element> Children
+    public IEnumerable<Element> Children
     {
         set => children.AddRange(value);
     }
@@ -268,6 +268,12 @@ public abstract class HtmlElement : Element
 
     [React]
     public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
+
+    [JsonIgnore]
+    public string innerHTML
+    {
+        set => dangerouslySetInnerHTML = value;
+    }
 
     /// <summary>
     ///     'innerText' property of element.
