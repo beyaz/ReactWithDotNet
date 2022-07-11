@@ -94,7 +94,9 @@ public static class CharachterSearchResultColorizer
 
             var colorizedText = matchRecord.ToString();
 
-            element.Add(new span {innerText = colorizedText, style = {color = "red", marginLeft = "3px", marginRight = "3px", background = getBackgroundColor(colorizedText)}});
+            var span = new span { innerText = colorizedText, style = { color = "red", marginLeft = "3px", marginRight = "3px", background = getBackgroundColor(colorizedText) } };
+            
+            element.Add(span);
 
             startPosition = matchRecord.StartIndexInVerseText + colorizedText.Length;
         }

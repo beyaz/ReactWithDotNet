@@ -162,19 +162,7 @@ public class button : HtmlElement
     }
 }
 
-public class span : HtmlElement
-{
-    public span()
-    {
-    }
-    public span(string innerText)
-    {
-        this.innerText = innerText;
-    }
-    public span(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
+
 
 
 

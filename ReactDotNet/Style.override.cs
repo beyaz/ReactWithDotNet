@@ -1,4 +1,8 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ReactDotNet.Html5;
 
@@ -108,6 +112,50 @@ partial class Style
         {
             paddingTop   = value;
             paddingRight = value;
+        }
+    }
+
+
+    public string ToCss()
+    {
+        var json = JsonSerializer.Serialize(this, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+
+        var map = JsonSerializer.Deserialize<Dictionary<string,string>>(json);
+
+        if (map.Count == 0)
+        {
+            return null;
+        }
+
+        return string.Join(" ", map.Select(kvp => $"{getRealCssKey(kvp.Key)}: {kvp.Value};"));
+        
+
+        static string getRealCssKey(string key)
+        {
+            return string.Join("-", SplitByCamelCase(key).Select(x => x.ToLower()));
+        }
+        static string[] SplitByCamelCase(string stringtosplit)
+        {
+            string words = string.Empty;
+            
+            if (!string.IsNullOrEmpty(stringtosplit))
+            {
+                foreach (char ch in stringtosplit)
+                {
+                    if (char.IsLower(ch))
+                    {
+                        words += ch.ToString();
+                    }
+                    else
+                    {
+                        words += " " + ch.ToString();
+                    }
+
+                }
+                return words.Split(" ".ToCharArray(),StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            return Array.Empty<string>();
         }
     }
     #endregion
