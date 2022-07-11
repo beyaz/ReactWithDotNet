@@ -23,7 +23,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         if (Context != null &&  Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q",out var value))
         {
-            state.SuraFilter = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
+            state.ChapterFilter = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
             state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];
         }
     }
@@ -41,7 +41,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return;
         }
 
-        var matchRecords = QuranAnalyzerMixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
+        var matchRecords = QuranAnalyzerMixin.SearchCharachtersWithCache(state.ChapterFilter, state.SearchCharacters).Value;
 
         var results = new List<Occurence>();
 
@@ -51,7 +51,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             var occurence = new Occurence
             {
-                VerseNumber = record.verse._index
+                VerseNumber = record.Verse._index
             };
 
             if (results.Any(x=>x.VerseNumber == occurence.VerseNumber))
@@ -69,7 +69,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                 var property     = typeof(Occurence).GetProperty(propertyName);
                 
-                var count =  matchRecords.Count(m => record.verse._index == m.verse._index && m.ToString() == charachter);
+                var count =  matchRecords.Count(m => record.Verse._index == m.Verse._index && m.ToString() == charachter);
 
 
                 counts.Add((charachter,count));
@@ -112,7 +112,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VPanel
                     {
                         new div {innerText   = "Sure:"},
-                        new InputText {value = Mixin.Bind( () => state.SuraFilter)}
+                        new InputText {value = Mixin.Bind( () => state.ChapterFilter)}
                     },
 
                     new VSpace(10),
@@ -181,7 +181,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         dt.children.AddRange(resultColumns);
 
-        var matchRecords = QuranAnalyzerMixin.SearchCharachtersWithCache(state.SuraFilter, state.SearchCharacters).Value;
+        var matchRecords = QuranAnalyzerMixin.SearchCharachtersWithCache(state.ChapterFilter, state.SearchCharacters).Value;
 
         var results = new Card
         {
@@ -244,7 +244,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
 record SummaryInfo
 {
-    public string  Name { get; set; }
+    public string  Name { get;  set; }
     public int Count { get; set; }
 }
 
@@ -257,6 +257,8 @@ class CountsSummaryView: ReactComponent
     {
         static Element toElement(SummaryInfo x)
         {
+            x.Name = "aa";
+            
             return new div
             {
                 innerHTML = $"<strong>{x.Count}</strong> adet <strong>{x.Name}</strong> harfi bulundu."

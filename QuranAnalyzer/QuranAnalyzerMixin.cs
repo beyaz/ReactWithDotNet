@@ -11,25 +11,26 @@ namespace QuranAnalyzer;
 public class MatchInfo
 {
     #region Public Properties
-    public int HarfIndex { get; set; }
+    public int ArabicCharacterIndex { get; set; }
 
-    public bool HasNoMatch => HarfIndex == -1;
-    public int StartIndex { get; set; }
+    public bool HasNoMatch => ArabicCharacterIndex == -1;
+    
+    public int StartIndexInVerseText { get; set; }
 
-    public Verse verse { get; set; }
+    public Verse Verse { get; set; }
     #endregion
 
     #region Public Methods
     public override string ToString()
     {
-        if (verse != null)
+        if (Verse != null)
         {
-            if (HarfIndex >= 0)
+            if (ArabicCharacterIndex >= 0)
             {
-                return harfler[HarfIndex];
+                return harfler[ArabicCharacterIndex];
             }
 
-            return verse._text[StartIndex].ToString();
+            return Verse._text[StartIndexInVerseText].ToString();
         }
 
         return string.Empty;
@@ -76,7 +77,7 @@ public static class QuranAnalyzerMixin
     #region Public Methods
     static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
-        return character.AsArabicCharacterIndex().Then(arabicCharacterIndex => matchList.Count(x => x.HarfIndex == arabicCharacterIndex));
+        return character.AsArabicCharacterIndex().Then(arabicCharacterIndex => matchList.Count(x => x.ArabicCharacterIndex == arabicCharacterIndex));
     }
 
     public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, string character, CountingOption option = null)
@@ -116,7 +117,7 @@ public static class QuranAnalyzerMixin
 
         foreach (var verse in GetVerseList(searchScript).Value)
         {
-            items.AddRange(AnalyzeVerse(verse).Where(x => indexList.Contains(x.HarfIndex)));
+            items.AddRange(AnalyzeVerse(verse).Where(x => indexList.Contains(x.ArabicCharacterIndex)));
         }
 
         return items;

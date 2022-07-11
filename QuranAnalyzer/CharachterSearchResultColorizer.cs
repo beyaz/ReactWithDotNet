@@ -28,17 +28,17 @@ public static class CharachterSearchResultColorizer
         };
 
 
-        foreach (var itemsInSurah in from m in matchRecords group m by m.verse.SurahNumber into mgroup select mgroup.ToList())
+        foreach (var itemsInSurah in from m in matchRecords group m by m.Verse.SurahNumber into mgroup select mgroup.ToList())
         {
-            foreach (var items in from m in itemsInSurah group m by m.verse._index into mgroup select mgroup.ToList())
+            foreach (var items in from m in itemsInSurah group m by m.Verse._index into mgroup select mgroup.ToList())
             {
-                var el = ColorizeCharachterSearchResult(items[0].verse._bismillah + items[0].verse._text, items, getBackgroundColor);
+                var el = ColorizeCharachterSearchResult(items[0].Verse._bismillah + items[0].Verse._text, items, getBackgroundColor);
 
                 container.Add(new HPanel
                 {
                     new div
                     {
-                        innerText = $"[{items[0].verse.SurahNumber}:{items[0].verse._index}]",
+                        innerText = $"[{items[0].Verse.SurahNumber}:{items[0].Verse._index}]",
                         style =
                         {
                             marginLeft = px(5),
@@ -88,7 +88,7 @@ public static class CharachterSearchResultColorizer
 
         foreach (var matchRecord in matchRecords)
         {
-            var text = ayahText.Substring(startPosition, matchRecord.StartIndex - startPosition);
+            var text = ayahText.Substring(startPosition, matchRecord.StartIndexInVerseText - startPosition);
 
             element.Add(new div {innerText = text});
 
@@ -96,7 +96,7 @@ public static class CharachterSearchResultColorizer
 
             element.Add(new span {innerText = colorizedText, style = {color = "red", marginLeft = "3px", marginRight = "3px", background = getBackgroundColor(colorizedText)}});
 
-            startPosition = matchRecord.StartIndex + colorizedText.Length;
+            startPosition = matchRecord.StartIndexInVerseText + colorizedText.Length;
         }
 
         if (startPosition < ayahText.Length-1)

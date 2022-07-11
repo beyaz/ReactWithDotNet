@@ -22,8 +22,8 @@ public class CharacterCountingTests
     public void AnalyzeVerseTest()
     {
         DataAccess.AnalyzeVerse(new Verse { _text = "طه" }).Count.Should().Be(2);
-        DataAccess.AnalyzeVerse(new Verse { _text = "طه" })[0].HarfIndex.Should().Be(15);
-        DataAccess.AnalyzeVerse(new Verse { _text = "طه" })[1].HarfIndex.Should().Be(25);
+        DataAccess.AnalyzeVerse(new Verse { _text = "طه" })[0].ArabicCharacterIndex.Should().Be(15);
+        DataAccess.AnalyzeVerse(new Verse { _text = "طه" })[1].ArabicCharacterIndex.Should().Be(25);
     }
 
     [TestMethod]

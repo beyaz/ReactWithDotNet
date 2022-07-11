@@ -113,9 +113,9 @@ public static class DataAccess
                 {
                     return new MatchInfo
                     {
-                        StartIndex = startIndex,
-                        HarfIndex  = i,
-                        verse      = verse
+                        StartIndexInVerseText = startIndex,
+                        ArabicCharacterIndex  = i,
+                        Verse      = verse
                     };
                 }
 
@@ -236,11 +236,11 @@ public static class DataAccess
             if (item != null)
             {
                 items.Add(item);
-                cursor += harfler[item.HarfIndex].Length;
+                cursor += harfler[item.ArabicCharacterIndex].Length;
                 continue;
             }
 
-            items.Add(new MatchInfo {HarfIndex = -1, StartIndex = cursor, verse = verse});
+            items.Add(new MatchInfo {ArabicCharacterIndex = -1, StartIndexInVerseText = cursor, Verse = verse});
 
             cursor++;
         }

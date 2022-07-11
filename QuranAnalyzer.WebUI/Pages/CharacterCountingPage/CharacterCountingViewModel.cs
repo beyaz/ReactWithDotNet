@@ -13,7 +13,7 @@ public class CharacterCountingViewModel
     public string OperationName { get; set; }
     public bool IsBlocked { get; set; }
 
-    public string SuraFilter { get; set; }
+    public string ChapterFilter { get; set; }
 
     public string SearchCharacters { get; set; }
 
