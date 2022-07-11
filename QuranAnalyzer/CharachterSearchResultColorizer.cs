@@ -82,7 +82,18 @@ public static class CharachterSearchResultColorizer
 
             var colorizedText = matchRecord.ToString();
 
-            var span = new span { innerText = colorizedText, style = { color = getColor(colorizedText), marginLeft = "3px", marginRight = "3px", border = "1px solid rgb(218, 220, 224)", borderRadius = "4px"} };
+            var span = new span
+            {
+                innerText = colorizedText,
+                style =
+                {
+                    color        = getColor(colorizedText),
+                    marginLeft   = "3px",
+                    marginRight  = "3px",
+                    border       = "1px solid rgb(218, 220, 224)",
+                    borderRadius = "4px"
+                }
+            };
             
             startPosition = matchRecord.StartIndexInVerseText + colorizedText.Length;
 
@@ -100,7 +111,7 @@ public static class CharachterSearchResultColorizer
             innerHTML = html.ToString(),
             style =
             {
-                fontSize      = "1.4rem"
+                fontSize = "1.4rem"
             }
         };
     }
