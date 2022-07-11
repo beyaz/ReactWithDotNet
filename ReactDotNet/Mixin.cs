@@ -114,15 +114,6 @@ public static partial class Mixin
         return element;
     }
 
-    public static T MakeCenter<T>(this T element) where T : Element
-    {
-        element.style.display        = Display.flex;
-        element.style.justifyContent = JustifyContent.center;
-        element.style.alignItems     = AlignItems.center;
-
-        return element;
-    }
-
     public static T HasBorder<T>(this T element) where T : Element
     {
         element.style.border       = "1px solid #ced4da";

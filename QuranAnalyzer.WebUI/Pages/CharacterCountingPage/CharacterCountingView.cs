@@ -99,51 +99,37 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     public override Element render()
     {
-        var container = new VPanel
-        {
-            Margin = {Left = 10, Right = 10},
-        };
 
-        var searchBar = new divWithBorder
+        var searchPanel = new divWithBorder
         {
-            
-            Margin = {Top = 5},
-            PaddingAll = 15,
+            style = { padding = "15px"},
             children =
             {
-                new h4{innerText = "Arama"},
-                new div
-                {   style ={display = "flex", flexDirection = "column"},
-                    children=
+                new h4("Arama"),
+                new VPanel
+                {
+                    new VPanel
                     {
-                        new div
-                        {
-                            style ={display = "flex", flexDirection = "column"},
-                            children =
-                            {
-                                new div {innerText   = "Sure:"},
-                                new InputText {value = Mixin.Bind( () => state.SuraFilter)}
-                            }
-                        },
+                        new div {innerText   = "Sure:"},
+                        new InputText {value = Mixin.Bind( () => state.SuraFilter)}
+                    },
 
-                        new Space {Height = 10},
+                    new VSpace(10),
 
-                        new VPanel
-                        {
-                            new div {innerText   = "Aranacak Karakterlerler"},
-                            new InputText {value = Mixin.Bind(() => state.SearchCharacters)}
-                        },
+                    new VPanel
+                    {
+                        new div {innerText   = "Aranacak Karakterlerler"},
+                        new InputText {value = Mixin.Bind(() => state.SearchCharacters)}
+                    },
 
-                        new Space {Height = 20},
+                    new VSpace(20),
 
-                        new Button
-                        {
-                            label   = "Ara",
-                            onClick = OnCaclculateClicked,
-                            className ="p-button-outlined",
-                            style     = {alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px"},
-                            
-                        },
+                    new Button
+                    {
+                        label     = "Ara",
+                        onClick   = OnCaclculateClicked,
+                        className ="p-button-outlined",
+                        style     = {alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px"}
                     }
                 }
             }
@@ -151,7 +137,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         if (state.SummaryText.HasNoValue())
         {
-            return Extensions.BlockUI(container.appendChild(searchBar), state.IsBlocked, state.OperationName);
+            return Extensions.BlockUI(searchPanel, state.IsBlocked, state.OperationName);
         }
 
         var summaryContent = new HPanel
@@ -250,7 +236,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         }
 
 
-        return Extensions.BlockUI(container.appendChild(searchBar).appendChild(results), state.IsBlocked, state.OperationName);
+        return Extensions.BlockUI( new VPanel{searchPanel, results}, state.IsBlocked, state.OperationName);
     }
 }
 

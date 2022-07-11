@@ -1,5 +1,4 @@
-﻿using ReactDotNet;
-using ReactDotNet.Html5;
+﻿using ReactDotNet.Html5;
 using ReactDotNet.PrimeReact;
 
 
@@ -17,9 +16,18 @@ static class Extensions
             blocked = isBlocked,
             template = new div
             {
-                new i { className = "pi pi-spin pi-spinner" },
-                new div { Margin  = { Left = 5 }, style = { color = "White" }, innerText = operationMessage }
-            }.MakeCenter(),
+                children =
+                {
+                    new i { className   = "pi pi-spin pi-spinner" },
+                    new div { innerText = operationMessage, style = { color = "White", marginLeft = "5px"} }
+                },
+                style =
+                {
+                    display        = "flex",
+                    justifyContent = "center",
+                    alignItems     = "center"
+                }
+            },
 
             children =
             {
