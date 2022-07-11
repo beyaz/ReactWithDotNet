@@ -50,10 +50,10 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             var occurence = new Occurence
             {
-                AyahNumber = record.verse._index
+                VerseNumber = record.verse._index
             };
 
-            if (results.Any(x=>x.AyahNumber == occurence.AyahNumber))
+            if (results.Any(x=>x.VerseNumber == occurence.VerseNumber))
             {
                 continue;
             }
@@ -158,7 +158,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var resultColumns = new List<Column>
         {
-            new() {field = nameof(Occurence.AyahNumber), header = "Ayet No"}
+            new() {field = nameof(Occurence.VerseNumber), header = "Ayet No"}
         };
 
         
