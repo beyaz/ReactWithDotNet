@@ -57,8 +57,15 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             },
             new SplitterPanel
             {
-                new InputTextarea {value = state.SelectedPropertyValue, onChange = OnSelectedPropertyValueChanged} | Mixin.width("100%")
-                                                                                                                   | Mixin.height("100%")
+                new InputTextarea
+                {
+                    value = state.SelectedPropertyValue, 
+                    onChange = OnSelectedPropertyValueChanged,
+                    style =
+                    {
+                        width = "100%", height = "100%"
+                    }
+                }
             }
         };
 
