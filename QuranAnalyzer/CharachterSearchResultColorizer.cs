@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Text;
 using ReactDotNet.Html5;
 using static ReactDotNet.Mixin;
 
@@ -14,7 +15,7 @@ public static class CharachterSearchResultColorizer
     {
        
 
-        var backgroundColors = new[] { "rgb(217 217 206)", "rgb(235 230 90)", "#8fe4ec", "#f2bef1", "#f0e91a" };
+        var colors = new[] { "blue", "red", "#d32f2f", "#0d89ec", "#fbc02d" };
 
         var searchCharachterList = searchCharachterList_.ToImmutableList();
 
@@ -32,7 +33,7 @@ public static class CharachterSearchResultColorizer
         {
             foreach (var items in from m in itemsInSurah group m by m.Verse._index into mgroup select mgroup.ToList())
             {
-                var el = ColorizeCharachterSearchResult(items[0].Verse._bismillah + items[0].Verse._text, items, getBackgroundColor);
+                var el = ColorizeCharachterSearchResult(items[0].Verse._bismillah + items[0].Verse._text, items, getColor);
 
                 container.Add(new HPanel
                 {
@@ -57,12 +58,12 @@ public static class CharachterSearchResultColorizer
 
         
 
-        string getBackgroundColor(string charachter)
+        string getColor(string charachter)
         {
             var index = searchCharachterList.IndexOf(charachter);
-            if (index >=0 && index < backgroundColors.Length)
+            if (index >=0 && index < colors.Length)
             {
-                return backgroundColors[index];
+                return colors[index];
             }
 
             return "yellow";
@@ -71,7 +72,7 @@ public static class CharachterSearchResultColorizer
 
     }
 
-    static Element ColorizeCharachterSearchResult(string ayahText, IReadOnlyList<MatchInfo> matchRecords, Func<string,string> getBackgroundColor)
+    static Element ColorizeCharachterSearchResult(string ayahText, IReadOnlyList<MatchInfo> matchRecords, Func<string,string> getColor)
     {
         var element = new HPanel
         {
@@ -83,8 +84,9 @@ public static class CharachterSearchResultColorizer
         };
 
         var startPosition    = 0;
-        
-        
+
+
+        var html = new StringBuilder();
 
         foreach (var matchRecord in matchRecords)
         {
@@ -92,20 +94,37 @@ public static class CharachterSearchResultColorizer
 
             element.Add(new div {innerText = text});
 
+            
+
             var colorizedText = matchRecord.ToString();
 
-            var span = new span { innerText = colorizedText, style = { color = "red", marginLeft = "3px", marginRight = "3px", background = getBackgroundColor(colorizedText) } };
+            var span = new span { innerText = colorizedText, style = { color = getColor(colorizedText), marginLeft = "3px", marginRight = "3px", border = "1px solid rgb(218, 220, 224)", borderRadius = "4px"} };
             
             element.Add(span);
 
             startPosition = matchRecord.StartIndexInVerseText + colorizedText.Length;
+
+            html.Append(text);
+            html.Append(span);
         }
 
         if (startPosition < ayahText.Length-1)
         {
-            element.Add(new div {innerText = ayahText.Substring(startPosition)});
+            var a = ayahText.Substring(startPosition);
+            
+            element.Add(new div {innerText = a});
+
+            html.Append(a);
         }
 
+        return new div
+        {
+            innerHTML = html.ToString(),
+            style =
+            {
+                fontSize      = "1.4rem"
+            }
+        };
         return element;
     }
 }

@@ -25,21 +25,20 @@ static class HtmlTextWriter
 {
     public static string ToHTML(this HtmlElement element)
     {
+        var css = element.style.ToCss();
+        if (css != null)
+        {
+            css = " style = " + '"' + css + '"';
+        }
+
+        var tag = element.Type;
+        
         if (element is span || element is strong)
         {
-            var css = element.style.ToCss();
-            if (css != null)
-            {
-                css = " style = " + '"' + css + '"';
-            }
-
-            var tag = element.Type;
-            
             return $"<{tag}{css}>{element.innerText}</{tag}>";
         }
 
-        throw new NotImplementedException(element.Type);
-
+        return "to html failed";
     }
 }
 

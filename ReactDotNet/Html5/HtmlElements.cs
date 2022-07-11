@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text.Json.Serialization;
 using static ReactDotNet.Mixin;
 
 namespace ReactDotNet.Html5;
@@ -218,31 +217,6 @@ public class i : HtmlElement
     }
 
     public i(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
-
-public class div : HtmlElement
-{
-
-    [JsonPropertyName("$type")]
-    public override string Type => nameof(div);
-
-    public div()
-    {
-    }
-
-    public div(string innerText)
-    {
-        this.innerText = innerText;
-    }
-
-    public div(IEnumerable<Element> children)
-    {
-        this.children.AddRange(children);
-    }
-
-    public div(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
 }
