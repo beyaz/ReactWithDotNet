@@ -21,7 +21,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         state = new CharacterCountingViewModel();
 
-        if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q",out var value))
+        if (Context != null &&  Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q",out var value))
         {
             state.SuraFilter = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
             state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];
@@ -112,25 +112,39 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             children =
             {
                 new h4{innerText = "Arama"},
-                new VPanel
-                {
-                    new VPanel
+                new div
+                {   style ={display = "flex", flexDirection = "column"},
+                    children=
                     {
-                        new div {innerText            = "Sure:"},
-                        new InputText {value = Mixin.Bind( () => state.SuraFilter)}
-                    },
+                        new div
+                        {
+                            style ={display = "flex", flexDirection = "column"},
+                            children =
+                            {
+                                new div {innerText   = "Sure:"},
+                                new InputText {value = Mixin.Bind( () => state.SuraFilter)}
+                            }
+                        },
 
-                    new Space {Height = 10},
+                        new Space {Height = 10},
 
-                    new VPanel
-                    {
-                        new div {innerText            = "Aranan Karakterler"},
-                        new InputText {value = Mixin.Bind(() => state.SearchCharacters)}
-                    },
+                        new VPanel
+                        {
+                            new div {innerText   = "Aranacak Karakterlerler"},
+                            new InputText {value = Mixin.Bind(() => state.SearchCharacters)}
+                        },
 
-                    new Space {Height = 20},
+                        new Space {Height = 20},
 
-                    new Button(className("p-button-outlined"), alignSelf(AlignItems.flex_end), paddingLeft(50), paddingRight(50)) {label = "Ara", onClick = OnCaclculateClicked},
+                        new Button
+                        {
+                            label   = "Ara",
+                            onClick = OnCaclculateClicked,
+                            className ="p-button-outlined",
+                            style     = {alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px"},
+                            
+                        },
+                    }
                 }
             }
         };
@@ -198,8 +212,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             header = "Özet",
                             children =
                             {
-                                new CountsSummaryView{ Counts = new []{new SummaryInfo{Name = "A", Count = 55}}} | margin(22)
-                               summaryContent
+                                new CountsSummaryView{ Counts = new []{new SummaryInfo{Name = "A", Count = 55}}}
                             }
                         },
                         new TabPanel

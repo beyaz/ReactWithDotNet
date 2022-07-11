@@ -4,6 +4,7 @@ namespace ReactDotNet.Html5;
 
 partial class Style
 {
+    #region margin
     [JsonIgnore]
     public string marginLeftRight
     {
@@ -14,6 +15,27 @@ partial class Style
         }
     }
 
+
+    [JsonIgnore]
+    public string marginLeftTop
+    {
+        set
+        {
+            marginLeft = value;
+            marginTop  = value;
+        }
+    }
+
+    [JsonIgnore]
+    public string marginLeftBottom
+    {
+        set
+        {
+            marginLeft   = value;
+            marginBottom = value;
+        }
+    }
+    
     [JsonIgnore]
     public string marginTopBottom
     {
@@ -23,4 +45,70 @@ partial class Style
             marginBottom = value;
         }
     }
+
+    [JsonIgnore]
+    public string marginTopRight
+    {
+        set
+        {
+            marginTop    = value;
+            marginRight = value;
+        }
+    }
+
+    #endregion
+
+    #region Padding
+    [JsonIgnore]
+    public string paddingLeftRight
+    {
+        set
+        {
+            paddingLeft  = value;
+            paddingRight = value;
+        }
+    }
+
+
+    [JsonIgnore]
+    public string paddingLeftTop
+    {
+        set
+        {
+            paddingLeft = value;
+            paddingTop  = value;
+        }
+    }
+
+
+    [JsonIgnore]
+    public string paddingLeftBottom
+    {
+        set
+        {
+            paddingLeft   = value;
+            paddingBottom = value;
+        }
+    }
+
+    [JsonIgnore]
+    public string paddingTopBottom
+    {
+        set
+        {
+            paddingTop    = value;
+            paddingBottom = value;
+        }
+    }
+
+    [JsonIgnore]
+    public string paddingTopRight
+    {
+        set
+        {
+            paddingTop   = value;
+            paddingRight = value;
+        }
+    }
+    #endregion
 }
