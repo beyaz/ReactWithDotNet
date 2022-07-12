@@ -8,8 +8,8 @@ import {createRoot} from 'react-dom/client';
 
 var createElement = React.createElement;
 
-const DotNetTypeOfReactComponent = '$Type$';
-const FullTypeNameOfState = '$TypeOfState$';
+const DotNetTypeOfReactComponent = '___Type___';
+const FullTypeNameOfState = '___TypeOfState___';
 const RootNode = 'RootElement';
 
 
