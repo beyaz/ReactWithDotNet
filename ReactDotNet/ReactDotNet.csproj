@@ -6,10 +6,6 @@
 
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
-    </PropertyGroup>  
-
-    <ItemGroup>
-      <Folder Include="Html5\" />
-    </ItemGroup>
+    </PropertyGroup>
 
 </Project>
