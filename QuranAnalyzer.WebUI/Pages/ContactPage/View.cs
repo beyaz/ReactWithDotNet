@@ -1,7 +1,6 @@
 ﻿using System;
 using ReactDotNet.Html5;
 using ReactDotNet.PrimeReact;
-using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.ContactPage;
 
@@ -22,18 +21,34 @@ public class View : PageBase
 
         return new div
         {
-            new div(Display.flex,AlignItems.center,JustifyContent.center,fontSize(19),marginTop(20))
+            new div
             {
-                innerText = model.Header
+                innerText = model.Header,
+                style     =
+                {
+                    display = "flex", alignItems = "center", justifyContent = "center",
+                    fontSize = "19px",
+                    marginTop = "20px"
+                    
+                }
             },
 
-            new div(fontSize(17) , marginLeft(10) , marginRight(10)) {innerText = model.Note},
-
-            new VPanel(marginTop(22))
+            new div
             {
-                new InputText(),
-                new InputTextarea{ rows = 6},
-                new Button{ label = "Gönder"}
+                
+                innerText = model.Note,
+                style = { fontSize = "17px", marginLeftRight = "10px"}
+            },
+
+            new VPanel
+            {
+                style={marginTop = "22px"},
+               children=
+               {
+                   new InputText(),
+                   new InputTextarea{ rows = 6},
+                   new Button{ label       = "Gönder"}
+               }
             } 
         };
     }

@@ -275,55 +275,11 @@ public static partial class Mixin
         return new ElementModifier(element => element.style.marginRight = px(margin));
     }
 
-    public static ElementModifier viewBox(string viewBox)
-    {
-        return new ElementModifier(element => ((svg)element).viewBox = viewBox);
-    }
-    public static ElementModifier href(string href)
-    {
-        return new ElementModifier(element => ((a)element).href = href);
-    }
-
-    public static ElementModifier marginTop(double margin)
-    {
-        return new ElementModifier(element => element.style.marginTop = px(margin));
-    }
-
-    public static ElementModifier marginLeft(string marginLeft)
-    {
-        return new ElementModifier(element => element.style.marginLeft = marginLeft);
-    }
-    public static ElementModifier marginRight(string marginRight)
-    {
-        return new ElementModifier(element => element.style.marginRight = marginRight);
-    }
-
-    public static ElementModifier marginTop(string marginTop)
-    {
-        return new ElementModifier(element => element.style.marginTop = marginTop);
-    }
-
-    public static ElementModifier marginBottom(string margin)
-    {
-        return new ElementModifier(element => element.style.marginBottom = margin);
-    }
-
+   
+  
     
 
-    public static string percentOf(double value)
-    {
-        return value.ToString(CultureInfo.InvariantCulture).Replace(",",".") + "%";
-    }
-
-    public static string AsPercent(this double value)
-    {
-        return percentOf(value);
-    }
-
-    public static string percentOf(int value)
-    {
-        return value.ToString(CultureInfo.InvariantCulture).Replace(",", ".") + "%";
-    }
+    
 
    
 

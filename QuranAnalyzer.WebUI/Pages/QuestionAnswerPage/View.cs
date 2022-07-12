@@ -75,14 +75,30 @@ public class View : PageBase
 
         return new div
             {
-                new Space{Height = 230},
-                new div(paddingLeftRight(px(15)))
+                new VSpace(230),
+                new div
                 {
-                    new div(model.Title) | marginBottom(px(16)) | fontWeight(500) | TextAlign.center,
+                    style={paddingLeftRight = "15px"},
+                    children=
+                    {
+                        new div
+                        {
+                            innerText = model.Title,
+                            style=
+                            {
+                                marginBottom = "16px",
+                                fontWeight = "500",
+                                textAlign = "center"
+                            }
+                        },
 
-                    new p(model.Summary),
+                        new p(model.Summary),
 
-                    new div(model.QuestionsAndAnswers.Select(x=>new QuestionLink{ Question = x.Question }))
+                        new div
+                        {
+                            Children =model.QuestionsAndAnswers.Select(x=>new QuestionLink{ Question = x.Question })
+                        }
+                    }
                 }
             };
         
