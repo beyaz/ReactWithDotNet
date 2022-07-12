@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -336,51 +335,7 @@ static class JsonSerializationOptionHelper
                         return (rawValue, false);
                     }
                 }
-
-                {
-                    if (propertyValue is Expression<Func<string>> expression)
-                    {
-                        string[] calculateSourcePathFunc() => expression.AsBindingSourcePathInState().Split('.', StringSplitOptions.RemoveEmptyEntries);
-
-                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
-                        if (bindInfo == null)
-                        {
-                            return (null, true);
-                        }
-
-                        return (bindInfo, false);
-                    }
-                }
-
-                {
-                    if (propertyValue is Expression<Func<int>> expression)
-                    {
-                        string[] calculateSourcePathFunc() => expression.AsBindingSourcePathInState().Split('.', StringSplitOptions.RemoveEmptyEntries);
-
-                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
-                        if (bindInfo == null)
-                        {
-                            return (null, true);
-                        }
-
-                        return (bindInfo, false);
-                    }
-                }
-                {
-                    if (propertyValue is Expression<Func<bool>> expression)
-                    {
-                        string[] calculateSourcePathFunc() => expression.AsBindingSourcePathInState().Split('.', StringSplitOptions.RemoveEmptyEntries);
-
-                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
-                        if (bindInfo == null)
-                        {
-                            return (null, true);
-                        }
-
-                        return (bindInfo, false);
-                    }
-                }
-
+                
                 if (propertyName != nameof(IReactStatefulComponent.___RootNode___) && propertyValue is Element element)
                 {
                     propertyValue = new InnerElementInfo
