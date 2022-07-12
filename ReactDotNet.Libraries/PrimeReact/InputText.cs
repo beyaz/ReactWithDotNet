@@ -9,8 +9,7 @@ public class InputText : ElementBase
 
     [React]
     [ReactDefaultValue(DefaultValue = "" )]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public BindibleProperty<string> value { get; set; }
+    public string value { get; set; }
 
     [React]
     [ReactDefaultValue(DefaultValue = "")]

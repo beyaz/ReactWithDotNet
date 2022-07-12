@@ -61,7 +61,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 {
                     new InputTextarea
                     {
-                        value = Mixin.Bind(() => state.SelectedPropertyValue),
+                        valueBind = () => state.SelectedPropertyValue,
                         style =
                         {
                             width = "100%", height = "100%"

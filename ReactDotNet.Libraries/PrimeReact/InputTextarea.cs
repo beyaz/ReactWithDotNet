@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace ReactDotNet.PrimeReact;
 
@@ -8,10 +9,12 @@ public class InputTextarea : ElementBase
 
     [React]
     [ReactDefaultValue(DefaultValue = "")]
+    public string value { get; set; }
+
+    [React]
+    [ReactDefaultValue(DefaultValue = "")]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public BindibleProperty<string> value { get; set; }
-
-
+    public Expression<Func<string>> valueBind { get; set; }
 
     [React]
     public int rows { get; set; }

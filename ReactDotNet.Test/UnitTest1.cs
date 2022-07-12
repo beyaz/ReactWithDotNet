@@ -108,9 +108,9 @@ public class UnitTest1
 
         var state = new SampleModelAContainer();
 
-        var xxx = ToJson(new div{ new PrimeReact.InputText { value = Mixin.Bind(() => state.InnerA.InnerB.Text) } });
+        var xxx = ToJson(new div{ new PrimeReact.InputText { valueBind = () => state.InnerA.InnerB.Text } });
 
-        var xxx2 = ToJson(new div { new PrimeReact.InputTextarea { value = Mixin.Bind(() => state.InnerA.InnerB.Text) } });
+        var xxx2 = ToJson(new div { new PrimeReact.InputTextarea { valueBind = () => state.InnerA.InnerB.Text } });
 
         var xxx3 = ToJson(new div { new PrimeReact.InputTextarea { value = null } });
 
@@ -128,7 +128,7 @@ public class UnitTest1
                },
                new img { src                    = "a.png", width = 3, onClick = onClicked },
                new PrimeReact.InputText { value = "abc" },
-               new PrimeReact.InputText { value = Mixin.Bind(()=> state.InnerA.InnerB.Text) },
+               new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
                new View2 { Prop1                = "x", Prop2 = "y" }
            }
         };
