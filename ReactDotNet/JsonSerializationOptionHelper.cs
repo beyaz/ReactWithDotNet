@@ -430,22 +430,7 @@ static class JsonSerializationOptionHelper
         }
     }
 
-    class BindInfo
-    {
-        #region Public Properties
-        public string eventName { get; set; }
 
-        [JsonPropertyName("$isBinding")]
-        public bool IsBinding { get; set; }
-
-        public string[] jsValueAccess { get; set; }
-
-        public string[] sourcePath { get; set; }
-
-        public string targetProp { get; set; }
-        public string defaultValue { get; internal set; }
-        #endregion
-    }
 
     class InnerElementInfo
     {
@@ -479,4 +464,20 @@ static class JsonSerializationOptionHelper
         public string remoteMethodName { get; set; }
         #endregion
     }
+}
+
+[Serializable]
+public sealed class BindInfo
+{
+    public string eventName { get; set; }
+
+    [JsonPropertyName("$isBinding")]
+    public bool IsBinding { get; set; }
+
+    public string[] jsValueAccess { get; set; }
+
+    public string[] sourcePath { get; set; }
+
+    public string targetProp { get; set; }
+    public string defaultValue { get; internal set; }
 }

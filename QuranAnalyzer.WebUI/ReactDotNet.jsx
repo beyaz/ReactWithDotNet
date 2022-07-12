@@ -389,7 +389,7 @@ function ConvertToReactElement(jsonNode, component)
             props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
             props[eventName] = function (e)
             {
-                var state = component.$stateAsJsProperty;
+                const state = component.$stateAsJsProperty;
 
                 SetValueInPath(state, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
 
