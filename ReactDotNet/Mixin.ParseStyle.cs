@@ -50,19 +50,6 @@ partial class Mixin
                 continue;
             }
 
-            if (propertyInfo.PropertyType.GetGenericTypeDefinition()?.Equals(typeof(Union<,>))== true)
-            {
-                var converter = propertyInfo.PropertyType.GetMethod("op_Implicit", new[] { typeof(string) });
-                if (converter == null)
-                {
-                    throw new Exception(line);
-                }
-                var propertyValue = converter.Invoke(null, new object[] {value});
-
-                items.Add((propertyInfo, propertyValue));
-                continue;
-            }
-
             throw new Exception(line);
 
         }
