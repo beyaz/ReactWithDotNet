@@ -418,10 +418,6 @@ public sealed class VPanel : div
 
 public class svg : HtmlElement
 {
-    public svg(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [React]
     public string xmlns { get; set; } = "http://www.w3.org/2000/svg";
 
