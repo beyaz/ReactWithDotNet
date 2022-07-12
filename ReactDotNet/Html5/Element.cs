@@ -11,11 +11,6 @@ namespace ReactDotNet.Html5;
 /// </summary>
 public abstract class Element : IEnumerable<Element>
 {
-    protected Element(params ElementModifier[] modifiers)
-    {
-        Mixin.Apply(this, modifiers);
-    }
-
     protected internal virtual void BeforeSerialize()
     {
         children.RemoveAll(x => x is null);
@@ -157,15 +152,6 @@ public abstract class HtmlElement : Element
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();
     
-
-    protected HtmlElement()
-    {
-            
-    }
-    protected HtmlElement(params ElementModifier[] modifiers):base(modifiers)
-    {
-    }
-
     [React]
     public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
 

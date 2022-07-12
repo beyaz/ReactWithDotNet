@@ -23,9 +23,5 @@ public class div : HtmlElement
         this.children.AddRange(children);
     }
 
-    public div(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     public override string ToString() => this.ToHTML();
 }
