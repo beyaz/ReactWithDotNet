@@ -134,13 +134,7 @@ public abstract class Element : IEnumerable<Element>
         set => style.Import(value);
     }
 
-
-    public static Element operator +(Element element, Style style)
-    {
-        element.style.Import(style);
-
-        return element;  
-    }
+    
     
 
         
