@@ -192,7 +192,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                             style={ display = "flex", flexDirection = "column", width = "100%"},
                             children=
                             {
-                                new Slider {value = state.ScreenWidth, MarginAll = 10, PaddingAll = 5, onChange = OnWidthChanged},
+                                new Slider {value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px"}},
                                 new Splitter
                                 {
                                     new SplitterPanel

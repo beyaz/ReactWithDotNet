@@ -31,7 +31,7 @@ public abstract class Element : IEnumerable<Element>
     /// <summary>
     ///     Imports filled values given style
     /// </summary>
-    [JsonIgnoreAttribute]
+    [JsonIgnore]
     public IEnumerable<Element> Children
     {
         set => children.AddRange(value);
@@ -46,8 +46,6 @@ public abstract class Element : IEnumerable<Element>
     /// </summary>
     protected Element()
     {
-        Margin  = new MarginThickness(style);
-        Padding = new PaddingThickness(style);
     }
     #endregion
 
@@ -85,80 +83,9 @@ public abstract class Element : IEnumerable<Element>
     public Action<string> onClick { get; set; }
 
 
-    #region Margin
-    [JsonIgnore]
-    public MarginThickness Margin { get; }
+   
 
-    [JsonIgnore]
-    public double? MarginAll
-    {
-        set
-        {
-            Margin.Left   = value;
-            Margin.Right  = value;
-            Margin.Top    = value;
-            Margin.Bottom = value;
-        }
-    }
-
-    [JsonIgnore]
-    public double? MarginLeftRight
-    {
-        set
-        {
-            Margin.Left  = value;
-            Margin.Right = value;
-        }
-    }
-
-    [JsonIgnore]
-    public double? MarginTopBottom
-    {
-        set
-        {
-            Margin.Top    = value;
-            Margin.Bottom = value;
-        }
-    }
-
-    #endregion
-
-    #region Padding
-    [JsonIgnore]
-    public PaddingThickness Padding { get; }
-
-    [JsonIgnore]
-    public double? PaddingAll
-    {
-        set
-        {
-            Padding.Left   = value;
-            Padding.Right  = value;
-            Padding.Top    = value;
-            Padding.Bottom = value;
-        }
-    }
-
-    [JsonIgnore]
-    public double? PaddingLeftRight
-    {
-        set
-        {
-            Padding.Left  = value;
-            Padding.Right = value;
-        }
-    }
-
-    [JsonIgnore]
-    public double? PaddingTopBottom
-    {
-        set
-        {
-            Padding.Top    = value;
-            Padding.Bottom = value;
-        }
-    }
-    #endregion
+  
 
 
 
@@ -206,7 +133,7 @@ public abstract class Element : IEnumerable<Element>
     /// <summary>
     ///     Imports filled values given style
     /// </summary>
-    [JsonIgnoreAttribute]
+    [JsonIgnore]
     public Style Style 
     {
         set => style.Import(value);

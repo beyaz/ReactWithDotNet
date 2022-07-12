@@ -200,7 +200,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         var results = new Card
         {
             title  = "Sonuçlar",
-            Margin = {Top = 5},
+            style = { marginTop = "5px"},
             children =
             {
                 new TabView
