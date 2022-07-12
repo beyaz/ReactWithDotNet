@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReactDotNet.Html5;
+namespace ReactDotNet;
 
 
 [Serializable]

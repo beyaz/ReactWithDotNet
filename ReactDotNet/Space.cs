@@ -1,5 +1,4 @@
-﻿using static ReactDotNet.Mixin;
-namespace ReactDotNet.Html5;
+﻿namespace ReactDotNet.Html5;
 
 
 /// <summary>
