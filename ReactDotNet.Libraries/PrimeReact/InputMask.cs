@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using ReactDotNet.Html5;
 
 namespace ReactDotNet.PrimeReact;
 

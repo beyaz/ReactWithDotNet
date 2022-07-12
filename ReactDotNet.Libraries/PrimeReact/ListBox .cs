@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using ReactDotNet.Html5;
 
 namespace ReactDotNet.PrimeReact
 {

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using ReactDotNet.Html5;
 using ReactDotNet.PrimeReact;
 
 namespace ReactDotNet.UIDesigner;

@@ -1,5 +1,4 @@
-﻿using ReactDotNet.Html5;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace ReactDotNet;
 

@@ -1,8 +1,4 @@
-﻿// using System;
-
-using System;
-using System.Linq;
-using ReactDotNet.Html5;
+﻿using System;
 
 namespace ReactDotNet.PrimeReact
 {

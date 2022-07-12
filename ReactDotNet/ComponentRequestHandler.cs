@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ReactDotNet.Html5;
+namespace ReactDotNet;
 
 using static Array;
 

@@ -4,7 +4,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using ReactDotNet;
-using ReactDotNet.Html5;
 
 namespace QuranAnalyzer;
 

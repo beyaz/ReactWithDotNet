@@ -1,5 +1,4 @@
-﻿using ReactDotNet.Html5;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
 namespace ReactDotNet;
