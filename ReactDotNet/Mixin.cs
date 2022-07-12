@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -113,51 +112,4 @@ public static partial class Mixin
     {
         return value + "px";
     }
-
-  
-
-  
-
-
-    public static string px(double value)
-    {
-        return value + "px";
-    }
-   
-    
-    
-   
-
-   
-
-   
-        
-
-
-    
-   
-
-    
-
-
-    
-   
-
-   
-  
-    
-
-    
-
-   
-
-
-
-
-   
-
-    
-
-    
-    
 }

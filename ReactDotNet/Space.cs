@@ -9,7 +9,7 @@ public class VSpace : div
 {
     public VSpace(double height)
     {
-        style.height = px(height);
+        style.height = $"{height}px";
     }
 
     public VSpace(string height)
@@ -23,7 +23,7 @@ public class HSpace : div
 {
     public HSpace(double width)
     {
-        style.width = px(width);
+        style.width = $"{width}px";
     }
 
     public HSpace(string width)
