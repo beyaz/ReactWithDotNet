@@ -100,12 +100,7 @@ public static partial class Mixin
     }
 
 
-    public static T Gravity<T>(this T element, int gravity) where T: Element
-    {
-        element.gravity = gravity;
-
-        return element;
-    }
+    
 
     public static T IsVisible<T>(this T element, bool isVisible) where T : Element
     {

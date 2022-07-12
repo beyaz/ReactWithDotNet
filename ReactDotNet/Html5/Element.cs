@@ -58,10 +58,7 @@ public abstract class Element : IEnumerable<Element>
     [React]
     public string className { get; set; }
 
-    /// <summary>
-    ///     Gets or sets the gravity.
-    /// </summary>
-    public int? gravity { get; set; }
+    
 
     /// <summary>
     ///     Gets or sets the key.

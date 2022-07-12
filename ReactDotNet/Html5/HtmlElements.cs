@@ -395,19 +395,7 @@ public class HPanel : div
     {
         InitializeStyle(style);
     }
-
-    protected internal override void BeforeSerialize()
-    {
-        base.BeforeSerialize();
-
-        if (children.Any(x => x.gravity.HasValue))
-        {
-            foreach (var child in children)
-            {
-                child.style.width = (GravityCalculator.CalculateGravity(child, children) * 100).AsPercent();
-            }
-        }
-    }
+    
 }
 
 public sealed class VPanel : div
@@ -423,32 +411,10 @@ public sealed class VPanel : div
     public VPanel(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
-
-    protected internal override void BeforeSerialize()
-    {
-        base.BeforeSerialize();
-
-        if (children.Any(x => x.gravity.HasValue))
-        {
-            foreach (var child in children)
-            {
-                child.style.height = (GravityCalculator.CalculateGravity(child, children) * 100).AsPercent();
-            }
-        }
-    }
+    
 }
 
-static class GravityCalculator
-{
-    public static double CalculateGravity(Element htmlElement, IReadOnlyList<Element> siblings)
-    {
-        var total = siblings.Sum(x => x.gravity ?? 1);
 
-        var gravity = htmlElement.gravity ?? 1;
-
-        return (double) gravity / total;
-    }
-}
 
 public class svg : HtmlElement
 {
