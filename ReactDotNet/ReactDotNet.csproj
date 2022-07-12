@@ -2,19 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="ReactDotNet.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="ReactDotNet.js">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>  
+  </PropertyGroup>  
 
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
