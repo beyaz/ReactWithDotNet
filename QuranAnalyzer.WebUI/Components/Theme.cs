@@ -1,5 +1,4 @@
 ﻿using ReactDotNet;
-using ReactDotNet.Html5;
 
 namespace QuranAnalyzer.WebUI.Components;
 
@@ -67,7 +66,7 @@ class MainPage : ReactComponent
         {
             style=
             {
-                position = Position.@fixed,
+                position = "fixed",
                 top      = "0px",
                 left     = "0px",
 
@@ -92,7 +91,7 @@ class MainPage : ReactComponent
             {
                 new div
                 {
-                    style = { display = Display.flex, justifyContent = JustifyContent.center },
+                    style = { display = "flex", justifyContent = "center" },
                     children =
                     {
                         new div
@@ -106,7 +105,7 @@ class MainPage : ReactComponent
             
             style =
             {
-                position     = Position.@fixed,
+                position     = "fixed",
                 top          = "0px",
                 left         = "0px",
                 marginTop    = "50px",

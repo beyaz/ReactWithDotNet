@@ -3,8 +3,6 @@ using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using ReactDotNet;
-using ReactDotNet.Html5;
-using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -198,9 +196,9 @@ Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
                 },
                 style =
                 {
-                    display        = Display.flex,
-                    justifyContent = JustifyContent.flex_start,
-                    alignItems     = AlignItems.center
+                    display        = "flex",
+                    justifyContent = "flex-start",
+                    alignItems     = "center"
                 }
             };
         }
@@ -211,7 +209,7 @@ Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
             {
                 style =
                 {
-                    position      = Position.@fixed,
+                    position      = "fixed",
                     height        = "100%",
                     width         = "70%",
                     maxWidth = "400px",
@@ -219,10 +217,10 @@ Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
                     background    = "white",
                     boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
                     zIndex        = "1",
-                    display       = state.HamburgerMenuIsOpen ? Display.flex : Display.none,
+                    display       = state.HamburgerMenuIsOpen ? "flex" : "none",
                     transition    = "visibility 0s linear 1000ms, opacity 500ms",
-                    flexDirection = FlexDirection.column,
-                    alignItems    = AlignItems.center,
+                    flexDirection = "column",
+                    alignItems    = "center",
                     fontSize      = "18px"
                 }
             };

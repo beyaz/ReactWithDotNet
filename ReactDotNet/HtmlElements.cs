@@ -138,9 +138,9 @@ public class HPanel : div
 {
     static void InitializeStyle(Style style)
     {
-        style.display = Display.flex;
-        style.flexDirection = FlexDirection.row;
-        style.alignItems = AlignItems.stretch;
+        style.display = "flex";
+        style.flexDirection = "row";
+        style.alignItems = "stretch";
         style.width = "100%";
 
     }
@@ -155,9 +155,9 @@ public sealed class VPanel : div
 {
     public VPanel()
     {
-        style.display = Display.flex;
-        style.flexDirection = FlexDirection.column;
-        style.alignItems = AlignItems.stretch;
+        style.display = "flex";
+        style.flexDirection = "column";
+        style.alignItems = "stretch";
         style.height = "100%";
     }
 }

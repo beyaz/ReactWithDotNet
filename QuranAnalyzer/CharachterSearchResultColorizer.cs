@@ -23,7 +23,7 @@ public static class CharachterSearchResultColorizer
             style =
             {
                 fontFamily = "Lateef, cursive", fontSize = "6.5rem",
-                direction = Direction.rtl
+                direction = "rtl"
             }
         };
 
