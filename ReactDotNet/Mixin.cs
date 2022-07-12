@@ -126,13 +126,6 @@ public static partial class Mixin
    
     
     
-    
-    
-    public static ElementModifier fontSize(double value)
-    {
-        return new ElementModifier(element => element.style.fontSize = px(value));
-    }
-   
    
 
    
