@@ -14,7 +14,6 @@ static class JsonSerializationOptionHelper
     {
         // options.WriteIndented    = true;
         options.IgnoreNullValues = true;
-        
 
         options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
         options.Converters.Add(new JsonConverterForElement());
@@ -22,15 +21,10 @@ static class JsonSerializationOptionHelper
         options.Converters.Add(new JsonConverterForEnum());
 
         options.Converters.Add(new ClientTaskConverter());
-        
 
         return options;
     }
     #endregion
-
-   
-
-   
 
     public class JsonConverterForEnum : JsonConverterFactory
     {
@@ -47,12 +41,12 @@ static class JsonSerializationOptionHelper
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
-            var converter = (JsonConverter) Activator.CreateInstance(typeof(EnumToStringConverter<>)
-                                                                        .MakeGenericType(typeToConvert),
-                                                                     BindingFlags.Instance | BindingFlags.Public,
-                                                                     binder: null,
-                                                                     args: null,
-                                                                     culture: null)!;
+            var converter = (JsonConverter)Activator.CreateInstance(typeof(EnumToStringConverter<>)
+                                                                       .MakeGenericType(typeToConvert),
+                                                                    BindingFlags.Instance | BindingFlags.Public,
+                                                                    binder: null,
+                                                                    args: null,
+                                                                    culture: null)!;
 
             return converter;
         }
@@ -64,21 +58,21 @@ static class JsonSerializationOptionHelper
         #region Public Methods
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert.IsSubclassOf(typeof(Element)) 
-                   || typeToConvert.FullName == typeof(Element).FullName 
+            return typeToConvert.IsSubclassOf(typeof(Element))
+                   || typeToConvert.FullName == typeof(Element).FullName
                    || typeToConvert.IsSubclassOf(typeof(ReactComponent<>))
                    || typeToConvert.IsSubclassOf(typeof(ReactComponent))
-                   ;
+                ;
         }
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
-            var converter = (JsonConverter) Activator.CreateInstance(typeof(JsonConverterForElement<>)
-                                                                        .MakeGenericType(typeToConvert),
-                                                                     BindingFlags.Instance | BindingFlags.Public,
-                                                                     binder: null,
-                                                                     args: null,
-                                                                     culture: null)!;
+            var converter = (JsonConverter)Activator.CreateInstance(typeof(JsonConverterForElement<>)
+                                                                       .MakeGenericType(typeToConvert),
+                                                                    BindingFlags.Instance | BindingFlags.Public,
+                                                                    binder: null,
+                                                                    args: null,
+                                                                    culture: null)!;
 
             return converter;
         }
@@ -99,8 +93,6 @@ static class JsonSerializationOptionHelper
 
             value.BeforeSerialize();
 
-            
-
             // maybe root element is inherits from ReactElement
             {
                 if (value is ReactComponent reactComponent)
@@ -109,7 +101,6 @@ static class JsonSerializationOptionHelper
                     return;
                 }
             }
-
 
             writer.WriteStartObject();
 
@@ -173,9 +164,8 @@ static class JsonSerializationOptionHelper
                         continue;
                     }
 
-                    if (item is  IReactStatefulComponent reactStatefulComponent)
+                    if (item is IReactStatefulComponent reactStatefulComponent)
                     {
-                        
                         if (elementSerializationExtraData.RootElement is IReactStatefulComponent rootElementAsReactStatefulComponent)
                         {
                             reactStatefulComponent.Context ??= rootElementAsReactStatefulComponent.Context;
@@ -238,12 +228,12 @@ static class JsonSerializationOptionHelper
             (object value, bool noNeedToExport) getPropertyValue(PropertyInfo propertyInfo, string propertyName)
             {
                 var propertyValue = propertyInfo.GetValue(value);
-                
+
                 var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
 
                 {
                     var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
-                    
+
                     if (isDefaultValue)
                     {
                         if (reactDefaultValueAttribute != null)
@@ -252,7 +242,6 @@ static class JsonSerializationOptionHelper
                         }
                     }
                 }
-
 
                 {
                     var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
@@ -264,14 +253,14 @@ static class JsonSerializationOptionHelper
 
                 if (propertyValue is Action action)
                 {
-                    propertyValue = new EventInfo {IsRemoteMethod = true, remoteMethodName = action.Method.Name};
+                    propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name };
                 }
 
                 if (propertyInfo.PropertyType.IsGenericType)
                 {
                     if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
                     {
-                        propertyValue = new EventInfo {IsRemoteMethod = true, remoteMethodName = ((Delegate) propertyValue)?.Method.Name};
+                        propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = ((Delegate)propertyValue)?.Method.Name };
                     }
                 }
 
@@ -298,15 +287,13 @@ static class JsonSerializationOptionHelper
 
                         var rawValue = bindibleProperty.RawValue;
 
-                        if (rawValue is null  && reactDefaultValueAttribute is not null)
+                        if (rawValue is null && reactDefaultValueAttribute is not null)
                         {
                             rawValue = reactDefaultValueAttribute.DefaultValue;
                         }
 
                         return (rawValue, false);
                     }
-
-                    
                 }
 
                 {
@@ -335,7 +322,7 @@ static class JsonSerializationOptionHelper
                         return (rawValue, false);
                     }
                 }
-                
+
                 if (propertyName != nameof(IReactStatefulComponent.___RootNode___) && propertyValue is Element element)
                 {
                     propertyValue = new InnerElementInfo
@@ -396,9 +383,6 @@ static class JsonSerializationOptionHelper
         #endregion
     }
 
-    
-
-
     public class ClientTaskConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -441,6 +425,7 @@ static class JsonSerializationOptionHelper
                 writer.WritePropertyName(property.Name);
                 JsonSerializer.Serialize(writer, propertyValue, options);
             }
+
             writer.WriteEndObject();
         }
     }
@@ -494,6 +479,4 @@ static class JsonSerializationOptionHelper
         public string remoteMethodName { get; set; }
         #endregion
     }
-
-   
 }
