@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace ReactDotNet.PrimeReact;
 
 public class InputText : ElementBase
@@ -9,8 +11,10 @@ public class InputText : ElementBase
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public BindibleProperty<string> value { get; set; }
 
-    
-    
+    [React]
+    public Func<string> valueBind { get; set; }
+
+
     [React]
     public string placeholder { get; set; }
 

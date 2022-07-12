@@ -376,7 +376,7 @@ function ConvertToReactElement(jsonNode, component)
           }
          */
 
-        var value = jsonNode[propName];
+        const value = jsonNode[propName];
 
         if (value != null && value.$isBinding === true)
         {
@@ -397,6 +397,37 @@ function ConvertToReactElement(jsonNode, component)
             }
 
             return true;
+        }
+
+        if (value != null && value.$$isBinding === true)
+        {
+            ProcessBinding(component, props, value.PathInState, value.TargetProp);
+
+            return true;
+        }
+
+        function ProcessBinding(component, props, pathInState, targetProperty)
+        {
+            if (targetProperty === 'ReactDotNet.PrimeReact.InputText::valueBind')
+            {
+                const sourcePath = pathInState.split('.');
+                
+                props['value'] = IfNull(GetValueInPath(component.state.$state, sourcePath), '');
+                props['onChange'] = function (e)
+                {
+                    let newValue = e.target.value;
+                    if (newValue == null)
+                    {
+                        newValue = '';
+                    }
+                    
+                    const state = component.$stateAsJsProperty;
+
+                    SetValueInPath(state, sourcePath, newValue);
+
+                    component.setState({ $state: Clone(state) });
+                }
+            }
         }
 
         return false;
