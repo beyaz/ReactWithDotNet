@@ -17,15 +17,7 @@ public abstract class Element : IEnumerable<Element>
     /// </summary>
     public readonly List<Element> children = new();
     #endregion
-
-    #region Constructors
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="Element" /> class.
-    /// </summary>
-    protected Element()
-    {
-    }
-    #endregion
+    
 
     #region Public Properties
     /// <summary>
