@@ -37,11 +37,7 @@ public abstract class Element : IEnumerable<Element>
         set => children.AddRange(value);
     }
 
-    /// <summary>
-    ///     Gets or sets the name of the class.
-    /// </summary>
-    [React]
-    public string className { get; set; }
+   
 
     /// <summary>
     ///     Gets or sets the key.

@@ -8,5 +8,8 @@ public class ElementBase : ThirdPartyComponent
     public string tooltip { get; set; }
 
     [React]
-    public TooltipOptions tooltipOptions { get; set; } 
+    public TooltipOptions tooltipOptions { get; set; }
+
+    [React]
+    public string className { get; set; }
 }

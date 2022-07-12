@@ -25,6 +25,12 @@ public abstract class HtmlElement : Element
 
     [React]
     public virtual string id { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the name of the class.
+    /// </summary>
+    [React]
+    public string className { get; set; }
 }
 
 

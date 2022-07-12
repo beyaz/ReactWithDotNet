@@ -128,10 +128,10 @@ public class img : HtmlElement
     public string alt { get; set; }
 
     [React]
-    public new int width { get; set; }
+    public  int width { get; set; }
 
     [React]
-    public new int height { get; set; }
+    public  int height { get; set; }
 }
 
 public class HPanel : div
