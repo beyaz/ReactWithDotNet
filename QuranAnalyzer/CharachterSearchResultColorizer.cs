@@ -10,7 +10,7 @@ namespace QuranAnalyzer;
 public static class CharachterSearchResultColorizer
 {
     
-    public static Element ColorizeCharachterSearchResults(IReadOnlyList<MatchInfo> matchRecords, IReadOnlyList<string> searchCharachterList_)
+    public static HtmlElement ColorizeCharachterSearchResults(IReadOnlyList<MatchInfo> matchRecords, IReadOnlyList<string> searchCharachterList_)
     {
        
 

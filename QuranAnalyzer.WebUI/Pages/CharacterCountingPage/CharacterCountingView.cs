@@ -240,7 +240,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
 
 
-        Element applyFontSize(Element el)
+        Element applyFontSize(HtmlElement el)
         {
             if (state.AvailableWidth <500)
             {

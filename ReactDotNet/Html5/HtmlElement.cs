@@ -5,6 +5,22 @@ namespace ReactDotNet.Html5;
 
 public abstract class HtmlElement : Element
 {
+
+    /// <summary>
+    ///     Gets the style.
+    /// </summary>
+    [React]
+    public Style style { get; } = new();
+
+    /// <summary>
+    ///     Imports filled values given style
+    /// </summary>
+    [JsonIgnore]
+    public Style Style
+    {
+        set => style.Import(value);
+    }
+
     /// <summary>
     ///     Gets or sets the on click.
     /// </summary>
