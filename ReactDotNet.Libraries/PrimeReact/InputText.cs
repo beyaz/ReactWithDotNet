@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Linq.Expressions;
 
 namespace ReactDotNet.PrimeReact;
 
@@ -12,7 +13,11 @@ public class InputText : ElementBase
     public BindibleProperty<string> value { get; set; }
 
     [React]
-    public Func<string> valueBind { get; set; }
+    [ReactDefaultValue(DefaultValue = "")]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    public Expression<Func<string>> valueBind { get; set; }
+
+
 
 
     [React]

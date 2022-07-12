@@ -124,15 +124,15 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VPanel
                     {
                         new div {innerText   = "Sure:"},
-                        new InputText {value = Mixin.Bind( () => state.ChapterFilter)}
+                        new InputText {valueBind = () => state.ChapterFilter}
                     },
 
                     new VSpace(10),
 
                     new VPanel
                     {
-                        new div {innerText   = "Aranacak Karakterlerler"},
-                        new InputText {value = Mixin.Bind(() => state.SearchCharacters)}
+                        new div {innerText       = "Aranacak Karakterlerler"},
+                        new InputText {valueBind = () => state.SearchCharacters}
                     },
 
                     new VSpace(20),
