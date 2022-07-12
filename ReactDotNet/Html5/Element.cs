@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using static ReactDotNet.Html5.UniqueKeyInitializer;
 
 namespace ReactDotNet.Html5;
 
@@ -75,6 +74,19 @@ public abstract class Element : IEnumerable<Element>
     {
         children.RemoveAll(x => x is null);
         InitializeKeyIfNotExists(children);
+
+        static void InitializeKeyIfNotExists(IReadOnlyList<Element> siblings)
+        {
+            var key = 0;
+
+            foreach (var sibling in siblings)
+            {
+                if (sibling.key == null)
+                {
+                    sibling.key = key++.ToString();
+                }
+            }
+        }
     }
     #endregion
 }
