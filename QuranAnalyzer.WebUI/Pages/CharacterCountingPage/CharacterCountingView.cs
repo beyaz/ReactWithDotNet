@@ -158,7 +158,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         var summaryContent = new HPanel
         {
             new div {innerText = state.SummaryText},
-            new div {innerText = state.CountOfCharacters.ToString(), style = {marginLeft = px(5), marginRight = px(5)}},
+            new div {innerText = state.CountOfCharacters.ToString(), style = {marginLeft = "5px", marginRight = "5px"}},
 
            
         };
@@ -166,7 +166,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (state.CountOfCharacters % 19 == 0)
         {
             summaryContent.Add(new div {innerText = "("});
-            summaryContent.Add(new div {innerText = "19 x " + state.CountOfCharacters / 19, style = {color = "red", marginLeft = px(5), marginRight = px(5)}});
+            summaryContent.Add(new div {innerText = "19 x " + state.CountOfCharacters / 19, style = {color = "red", marginLeft = "5px", marginRight = "5px" } });
             summaryContent.Add(new div {innerText = ")"});
         }
 
@@ -187,7 +187,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var dt = new DataTable
         {
-            scrollHeight = px(300),
+            scrollHeight = "300px",
             scrollable   = true,
             value        = state.ResultRecords,
             

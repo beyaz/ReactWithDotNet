@@ -35,7 +35,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             value       = state.SelectedComponentTypeReference,
             onChange    = OnSelectedComponentChanged,
             filter      = true,
-            listStyle   = {maxHeight = Mixin.px(400)},
+            listStyle   = {maxHeight = "400px" },
             style = { height = "100%" }
         };
 
@@ -47,7 +47,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             value       = state.SelectedPropertyName,
             onChange    = OnSelectedPropertyChanged,
             filter      = true,
-            listStyle   = {maxHeight = Mixin.px(400)}
+            listStyle   = {maxHeight = "400px" }
         };
 
         var dataPanel = new Splitter

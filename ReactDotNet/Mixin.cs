@@ -106,10 +106,4 @@ public static partial class Mixin
 
         return element;
     }
-        
-
-    public static string px(int value)
-    {
-        return value + "px";
-    }
 }

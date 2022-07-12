@@ -214,7 +214,7 @@ Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
                     height        = "100%",
                     width         = "70%",
                     maxWidth = "400px",
-                    top           = px(50),
+                    top           = "50px",
                     background    = "white",
                     boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
                     zIndex        = "1",
@@ -222,7 +222,7 @@ Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
                     transition    = "visibility 0s linear 1000ms, opacity 500ms",
                     flexDirection = FlexDirection.column,
                     alignItems    = AlignItems.center,
-                    fontSize      = px(18)
+                    fontSize      = "18px"
                 }
             };
 
@@ -233,7 +233,7 @@ Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
                            innerText    = m.Text,
                            href    = "/index.html?page=" + m.Id,
                            onClick = _ => OnMainMenuItemClicked(m.Id),
-                           style = { fontSize = px(17), marginTop = px(50) }
+                           style = { fontSize = "17px", marginTop = "50px" }
                        };
             }
         }

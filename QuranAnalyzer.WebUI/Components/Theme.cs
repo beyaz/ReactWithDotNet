@@ -66,11 +66,11 @@ class MainPage : ReactComponent
         var top = new div { topContent } + new Style
         {
             position = Position.@fixed,
-            top      = px(0),
-            left     = px(0),
+            top      = "0px",
+            left     = "0px",
 
             width        = "100%",
-            height       = px(50),
+            height       = "50px",
             zIndex       = "1",
             borderBottom = "1px solid #dadce0"
         };
@@ -96,7 +96,7 @@ class MainPage : ReactComponent
                     {
                         new div
                         {
-                            style    = { marginLeftRight = px(10), marginTop = px(10), maxWidth = px(800) },
+                            style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px" },
                             children = { mainContent }
                         }
                     }
@@ -106,10 +106,10 @@ class MainPage : ReactComponent
             style =
             {
                 position     = Position.@fixed,
-                top          = px(0),
-                left         = px(0),
-                marginTop    = px(50),
-                marginBottom = px(27),
+                top          = "0px",
+                left         = "0px",
+                marginTop    = "50px",
+                marginBottom = "27px",
 
                 width     = "100%",
                 height    = "calc(100% - 65px)",
