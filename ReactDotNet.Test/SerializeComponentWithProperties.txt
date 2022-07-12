@@ -1,73 +1,115 @@
 {
-    "tagName": "div",
-    "className": "abc",
-    "reactAttributes": ["className"],
-    "children": [{
-            "tagName": "div",
-            "className": "B",
-            "key": "0",
-            "reactAttributes": ["className", "key"]
-        }, {
-            "tagName": "div",
-            "className": "C",
-            "key": "1",
-            "style": {
-                "paddingLeft": "5px"
-            },
-            "reactAttributes": ["className", "key", "style"]
-        }, {
-            "src": "a.png",
-            "width": 3,
-            "height": 0,
-            "tagName": "img",
-            "key": "2",
-            "onClick": {
-                "$isRemoteMethod": true,
-                "remoteMethodName": "onClicked"
-            },
-            "reactAttributes": ["src", "width", "height", "key", "onClick"]
-        }, {
-            "value": "abc",
-            "jsLocation": ["primereact", "InputText"],
-            "key": "3",
-            "reactAttributes": ["value", "key"]
-        }, {
-            "value": {
-                "eventName": "onChange",
-                "$isBinding": true,
-                "jsValueAccess": ["e", "target", "value"],
-                "sourcePath": ["InnerA", "InnerB", "Text"],
-                "targetProp": "value",
-                "defaultValue": ""
-            },
-            "jsLocation": ["primereact", "InputText"],
-            "key": "4",
-            "reactAttributes": ["value", "key"]
-        }, {
-            "Prop1": "x",
-            "Prop2": "y",
-            "RootElement": {
-                "tagName": "div",
-                "className": "A",
-                "reactAttributes": ["className"],
-                "children": [{
-                        "Prop1": "A",
-                        "Prop2": "PropValue2",
-                        "RootElement": {
-                            "tagName": "div",
-                            "className": "A",
-                            "text": "b",
-                            "reactAttributes": ["className"]
-                        },
-                        "fullName": "ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test",
-                        "FullTypeNameOfState": "ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
-                        "key": "0"
-                    }
-                ]
-            },
-            "fullName": "ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test",
-            "FullTypeNameOfState": "ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
-            "key": "5"
-        }
-    ]
+   "$type":"div",
+   "className":"abc",
+   "reactAttributes":[
+      "className"
+   ],
+   "children":[
+      {
+         "$type":"div",
+         "className":"B",
+         "key":"0",
+         "reactAttributes":[
+            "className",
+            "key"
+         ]
+      },
+      {
+         "$type":"div",
+         "className":"C",
+         "key":"1",
+         "style":{
+            "paddingLeft":"5px"
+         },
+         "reactAttributes":[
+            "className",
+            "key",
+            "style"
+         ]
+      },
+      {
+         "src":"a.png",
+         "width":3,
+         "height":0,
+         "$type":"img",
+         "key":"2",
+         "onClick":{
+            "$isRemoteMethod":true,
+            "remoteMethodName":"onClicked"
+         },
+         "reactAttributes":[
+            "src",
+            "width",
+            "height",
+            "key",
+            "onClick"
+         ]
+      },
+      {
+         "value":"abc",
+         "$type":"ReactDotNet.PrimeReact.InputText",
+         "key":"3",
+         "reactAttributes":[
+            "value",
+            "key"
+         ]
+      },
+      {
+         "value":{
+            "eventName":"onChange",
+            "$isBinding":true,
+            "jsValueAccess":[
+               "e",
+               "target",
+               "value"
+            ],
+            "sourcePath":[
+               "InnerA",
+               "InnerB",
+               "Text"
+            ],
+            "targetProp":"value",
+            "defaultValue":""
+         },
+         "$type":"ReactDotNet.PrimeReact.InputText",
+         "key":"4",
+         "reactAttributes":[
+            "value",
+            "key"
+         ]
+      },
+      {
+         "Prop1":"x",
+         "Prop2":"y",
+         "RootElement":{
+            "$type":"div",
+            "className":"A",
+            "reactAttributes":[
+               "className"
+            ],
+            "children":[
+               {
+                  "Prop1":"A",
+                  "Prop2":"PropValue2",
+                  "RootElement":{
+                     "$type":"div",
+                     "innerText":"b",
+                     "className":"A",
+                     "reactAttributes":[
+                        "className"
+                     ]
+                  },
+                  "$Type$":"ReactDotNet.Html5.UnitTest1\u002BView1,ReactDotNet.Test",
+                  "$TypeOfState$":"ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
+                  "FullTypeNameOfState":"ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
+                  "key":"0"
+               }
+            ]
+         },
+         "$Type$":"ReactDotNet.Html5.UnitTest1\u002BView2,ReactDotNet.Test",
+         "$TypeOfState$":"ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
+         "FullTypeNameOfState":"ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
+         "key":"5"
+      }
+   ]
 }

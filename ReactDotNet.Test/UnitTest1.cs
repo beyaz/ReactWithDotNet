@@ -63,7 +63,7 @@ public class UnitTest1
 
         var expected = @"
 {
-  ""tagName"": ""div"",
+  ""$type"": ""div"",
   ""className"": ""B"",
   ""reactAttributes"": [
     ""className""
@@ -103,7 +103,7 @@ public class UnitTest1
 
         var expected = @"
 {
-  ""tagName"": ""div"",
+  ""$type"": ""div"",
   ""style"": {
     ""alignItems"": ""stretch"",
     ""display"": ""flex"",
@@ -115,7 +115,7 @@ public class UnitTest1
   ],
   ""children"": [
     {
-      ""tagName"": ""div"",
+      ""$type"": ""div"",
       ""className"": ""B"",
       ""gravity"": 4,
       ""key"": ""0"",
@@ -129,7 +129,7 @@ public class UnitTest1
       ]
     },
     {
-      ""tagName"": ""div"",
+      ""$type"": ""div"",
       ""className"": ""B"",
       ""key"": ""1"",
       ""style"": {
