@@ -18,7 +18,6 @@ static class JsonSerializationOptionHelper
         
 
         options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
-        options.Converters.Add(new Union_String_Enum_Converter());
         options.Converters.Add(new JsonConverterForElement());
 
         options.Converters.Add(new JsonConverterForEnum());
@@ -30,56 +29,9 @@ static class JsonSerializationOptionHelper
     }
     #endregion
 
-    #region Methods
-    static object GetValueFromUnion<B>(Union<string, B> union) where B : Enum
-    {
-        if (union.a != null)
-        {
-            return union.a;
-        }
+   
 
-        var b             = union.b;
-        var field         = b.GetType().GetField(b.ToString());
-        var nameAttribute = (NameAttribute) field?.GetCustomAttributes(typeof(NameAttribute)).FirstOrDefault();
-        if (nameAttribute != null)
-        {
-            return nameAttribute.value;
-        }
-
-        return b;
-    }
-    #endregion
-
-    public class Union_String_Enum_Converter : JsonConverterFactory
-    {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            if (typeToConvert.IsGenericType)
-            {
-                var gtd = typeToConvert.GetGenericTypeDefinition();
-                if (gtd == typeof(Union<,>))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            var genericArguments = typeToConvert.GetGenericArguments();
-
-            var converter = (JsonConverter) Activator.CreateInstance(typeof(Union_String_Enum_Converter<>)
-                                                                        .MakeGenericType(genericArguments[1]),
-                                                                     BindingFlags.Instance | BindingFlags.Public,
-                                                                     binder: null,
-                                                                     args: null,
-                                                                     culture: null)!;
-
-            return converter;
-        }
-    }
+   
 
     public class JsonConverterForEnum : JsonConverterFactory
     {
@@ -588,36 +540,5 @@ static class JsonSerializationOptionHelper
         #endregion
     }
 
-    class Union_String_Enum_Converter<B> : JsonConverter<Union<string, B>> where B : Enum
-    {
-        #region Public Methods
-        public override Union<string, B> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, Union<string, B> value, JsonSerializerOptions options)
-        {
-            void writeStringValue(string v)
-            {
-                if (options.PropertyNamingPolicy != null)
-                {
-                    v = options.PropertyNamingPolicy.ConvertName(v);
-                }
-
-                writer.WriteStringValue(v);
-            }
-
-            var rawValue = GetValueFromUnion(value);
-
-            if (rawValue is string str)
-            {
-                writeStringValue(str);
-                return;
-            }
-
-            writeStringValue(rawValue.ToString());
-        }
-        #endregion
-    }
+   
 }
