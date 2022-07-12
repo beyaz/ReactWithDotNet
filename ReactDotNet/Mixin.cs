@@ -313,10 +313,7 @@ public static partial class Mixin
         return new ElementModifier(element => element.style.marginBottom = margin);
     }
 
-    public static ElementModifier visibility(Visibility visibility)
-    {
-        return new ElementModifier(element => element.style.visibility = visibility);
-    }
+    
 
     public static string percentOf(double value)
     {
