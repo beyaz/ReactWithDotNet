@@ -106,11 +106,15 @@ class Chapter : ReactComponent
             children =
             {
                 new div{innerText  = $"Sure - {ChapterNo}"},
-                new HPanel(new Style{ fontWeight = "600"})
+                new HPanel
                 {
-                    new div{ innerText = "("},
-                    new div{ innerText = ChapterName, style = { fontStyle = "bold"}},
-                    new div{ innerText = ")"}
+                    style={fontWeight = "600"},
+                    children=
+                    {
+                        new div{ innerText = "("},
+                        new div{ innerText = ChapterName, style = { fontStyle = "bold"}},
+                        new div{ innerText = ")"}
+                    }
                 }
             }
         };
