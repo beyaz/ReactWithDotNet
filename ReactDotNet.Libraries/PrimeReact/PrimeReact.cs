@@ -2,7 +2,7 @@
 
 namespace ReactDotNet.PrimeReact;
 
-public class ElementBase : ThirdPartyComponent
+public class ElementBase : ThirdPartyReactComponent
 {
     [React]
     public string tooltip { get; set; }

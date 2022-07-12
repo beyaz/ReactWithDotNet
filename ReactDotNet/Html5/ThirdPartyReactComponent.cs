@@ -2,7 +2,7 @@
 
 namespace ReactDotNet.Html5;
 
-public abstract class ThirdPartyComponent: Element
+public abstract class ThirdPartyReactComponent: Element
 {
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().FullName;

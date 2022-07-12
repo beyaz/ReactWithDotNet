@@ -180,7 +180,7 @@ static class JsonSerializationOptionHelper
 
                 JsonSerializer.Serialize(writer, propertyValue, options);
 
-                if (value is ThirdPartyComponent || value is HtmlElement)
+                if (value is ThirdPartyReactComponent || value is HtmlElement)
                 {
                     if (propertyInfo.GetCustomAttribute<ReactAttribute>() != null)
                     {

@@ -2,7 +2,7 @@
 
 namespace ReactDotNet.react_xarrows
 {
-    public class Xarrow : ThirdPartyComponent
+    public class Xarrow : ThirdPartyReactComponent
     {
         /// <summary>
         ///     required
