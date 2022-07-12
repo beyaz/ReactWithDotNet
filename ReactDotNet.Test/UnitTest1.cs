@@ -6,7 +6,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static ReactDotNet.Mixin;
 
-namespace ReactDotNet.Html5;
+namespace ReactDotNet;
 
 [TestClass]
 public class UnitTest1

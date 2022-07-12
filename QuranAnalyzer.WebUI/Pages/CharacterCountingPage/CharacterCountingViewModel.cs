@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ReactDotNet;
-using ReactDotNet.Html5;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 

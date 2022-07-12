@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.FileProviders;
 
-namespace ReactDotNet.Html5.Demo
+namespace ReactDotNet.Demo
 {
 
     

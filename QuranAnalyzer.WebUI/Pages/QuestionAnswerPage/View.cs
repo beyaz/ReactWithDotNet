@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using ReactDotNet;
-using ReactDotNet.Html5;
-using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
 

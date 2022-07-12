@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReactDotNet.Html5.Demo
+namespace ReactDotNet.Demo
 {
     public class Program
     {

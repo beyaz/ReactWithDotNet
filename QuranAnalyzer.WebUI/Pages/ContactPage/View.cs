@@ -1,6 +1,5 @@
 ﻿using System;
 using ReactDotNet;
-using ReactDotNet.Html5;
 using ReactDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.ContactPage;
