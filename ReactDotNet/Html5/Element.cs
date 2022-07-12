@@ -45,11 +45,7 @@ public abstract class Element : IEnumerable<Element>
     [React]
     public string key { get; set; }
 
-    /// <summary>
-    ///     Gets or sets the on click.
-    /// </summary>
-    [React]
-    public Action<string> onClick { get; set; }
+
 
     /// <summary>
     ///     Gets the style.

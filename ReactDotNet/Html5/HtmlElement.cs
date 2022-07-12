@@ -5,6 +5,11 @@ namespace ReactDotNet.Html5;
 
 public abstract class HtmlElement : Element
 {
+    /// <summary>
+    ///     Gets or sets the on click.
+    /// </summary>
+    [React]
+    public Action<string> onClick { get; set; }
 
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();

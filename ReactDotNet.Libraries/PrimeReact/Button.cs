@@ -1,4 +1,6 @@
 ﻿// using System;
+
+using System;
 using System.Linq;
 using ReactDotNet.Html5;
 
@@ -13,6 +15,9 @@ namespace ReactDotNet.PrimeReact
 
     public class Button : ElementBase
     {
+        [React]
+        public Action<string> onClick { get; set; }
+        
         /// <summary>
         ///     Text of the button.
         /// </summary>

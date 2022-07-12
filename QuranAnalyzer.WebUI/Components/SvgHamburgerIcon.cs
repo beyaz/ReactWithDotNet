@@ -1,4 +1,5 @@
-﻿using ReactDotNet.Html5;
+﻿using System;
+using ReactDotNet.Html5;
 using static ReactDotNet.Mixin;
 
 namespace QuranAnalyzer.WebUI.Components;
@@ -6,6 +7,8 @@ namespace QuranAnalyzer.WebUI.Components;
 class SvgHamburgerIcon : ReactComponent
 {
     public bool HamburgerMenuIsOpen { get; set; }
+
+    public Action<string> onClick { get; set; }
 
     public override Element render()
     {
