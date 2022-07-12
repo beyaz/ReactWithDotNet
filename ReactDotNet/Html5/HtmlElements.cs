@@ -152,43 +152,16 @@ public sealed class PaddingThickness
 
 public class button : HtmlElement
 {
-    public button()
-    {
-    }
-
-    public button(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
 }
-
-
-
-
 
 public class label : HtmlElement
 {
-    public label()
-    {
-    }
-
-    public label(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [React]
     public string htmlFor { get; set; }
 }
 
 public class input : HtmlElement
 {
-    public input()
-    {
-    }
-
-    public input(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [React]
     public string type { get; set; }
 
@@ -212,13 +185,6 @@ public class input : HtmlElement
 
 public class i : HtmlElement
 {
-    public i()
-    {
-    }
-
-    public i(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
 }
 
 public class p : HtmlElement
@@ -231,45 +197,18 @@ public class p : HtmlElement
     {
         this.innerText = innerText;
     }
-
-    public p(IEnumerable<Element> children)
-    {
-        this.children.AddRange(children);
-    }
-
-    public p(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
 }
 public class pre : HtmlElement
 {
-    public pre()
-    {
-    }
-
-    public pre(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
 }
 
 public class h5 : HtmlElement
 {
-    public h5()
-    {
-    }
-
-    public h5(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
 }
 
 public class h4 : HtmlElement
 {
     public h4()
-    {
-    }
-
-    public h4(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
 
@@ -282,10 +221,6 @@ public class h4 : HtmlElement
 public class h3 : HtmlElement
 {
     public h3()
-    {
-    }
-
-    public h3(params ElementModifier[] modifiers) : base(modifiers)
     {
     }
 
@@ -303,10 +238,6 @@ public class h2 : HtmlElement
     {
     }
 
-    public h2(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     public h2(string innerText)
     {
         this.innerText = innerText;
@@ -319,10 +250,6 @@ public class h1 : HtmlElement
     {
     }
 
-    public h1(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     public h1(string innerText)
     {
         this.innerText = innerText;
@@ -331,38 +258,15 @@ public class h1 : HtmlElement
 
 public class a : HtmlElement
 {
-    public a()
-    {
-    }
-
-    public a(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [React]
     public string href { get; set; }
 }
 
 public class li : HtmlElement
 {
-    public li()
-    {
-    }
-
-    public li(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
 }
 public class img : HtmlElement
 {
-    public img()
-    {
-    }
-
-    public img(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [React]
     public string src { get; set; }
 
@@ -378,11 +282,6 @@ public class img : HtmlElement
 
 public class HPanel : div
 {
-    public HPanel(params ElementModifier[] modifiers) : base(modifiers)
-    {
-        InitializeStyle(style);
-    }
-    
     static void InitializeStyle(Style style)
     {
         style.display       = Display.flex;
@@ -407,14 +306,7 @@ public sealed class VPanel : div
         style.alignItems    = AlignItems.stretch;
         style.height        = "100%";
     }
-
-    public VPanel(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-    
 }
-
-
 
 public class svg : HtmlElement
 {
@@ -427,10 +319,6 @@ public class svg : HtmlElement
 
 public class path : HtmlElement
 {
-    public path(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [React]
     public string d { get; set; }
 
@@ -440,21 +328,10 @@ public class path : HtmlElement
 
 public class rect : HtmlElement
 {
-    public rect(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [React]
     public int y { get; set; }
 }
 
 public class nav : HtmlElement
 {
-    public nav()
-    {
-    }
-
-    public nav(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
 }
