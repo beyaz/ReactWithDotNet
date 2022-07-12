@@ -1,0 +1,48 @@
+﻿using System;
+using System.Text.Json.Serialization;
+
+namespace ReactDotNet.Html5;
+
+public abstract class HtmlElement : Element
+{
+
+    [JsonPropertyName("$type")]
+    public virtual string Type => GetType().Name.ToLower();
+    
+    [React]
+    public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
+
+    [JsonIgnore]
+    public string innerHTML
+    {
+        set => dangerouslySetInnerHTML = value;
+    }
+
+    /// <summary>
+    ///     'innerText' property of element.
+    /// </summary>
+    public string innerText { get; set; }
+
+    [React]
+    public virtual string id { get; set; }
+}
+
+
+[Serializable]
+public sealed class dangerouslySetInnerHTML
+{
+    public dangerouslySetInnerHTML(string html)
+    {
+        __html = html;
+    }
+
+    public dangerouslySetInnerHTML()
+    {
+    }
+    public string __html { get; set; }
+
+    public static implicit operator dangerouslySetInnerHTML(string html)
+    {
+        return new dangerouslySetInnerHTML { __html = html };
+    }
+}

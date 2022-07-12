@@ -103,9 +103,5 @@ namespace ReactDotNet.Html5
         public abstract Element render();
 
         public TState state { get; set; }
-
-        public string FullTypeNameOfState => typeof(TState).GetFullName();
-        
-        
     }
 }

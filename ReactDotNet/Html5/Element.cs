@@ -58,12 +58,7 @@ public abstract class Element : IEnumerable<Element>
     /// </summary>
     [React]
     public string key { get; set; }
-
-    [React]
-    public string width { get; set; }
-
-    [React]
-    public string height { get; set; }
+    
 
   
 
@@ -88,7 +83,7 @@ public abstract class Element : IEnumerable<Element>
     ///     Gets the style.
     /// </summary>
     [React]
-    public Style style { get; private set; } = new Style();
+    public Style style { get; } = new();
 
     
     #endregion
@@ -138,53 +133,4 @@ public abstract class Element : IEnumerable<Element>
     
 
         
-}
-
-public abstract class HtmlElement : Element
-{
-
-    [JsonPropertyName("$type")]
-    public virtual string Type => GetType().Name.ToLower();
-    
-    [React]
-    public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
-
-    [JsonIgnore]
-    public string innerHTML
-    {
-        set => dangerouslySetInnerHTML = value;
-    }
-
-    /// <summary>
-    ///     'innerText' property of element.
-    /// </summary>
-    public string innerText { get; set; }
-
-    [React]
-    public virtual string id { get; set; }
-}
-
-[Serializable]
-public sealed class dangerouslySetInnerHTML
-{
-    public dangerouslySetInnerHTML(string html)
-    {
-        __html = html;
-    }
-
-    public dangerouslySetInnerHTML()
-    {
-    }
-    public string __html { get; set; }
-
-    public static implicit operator dangerouslySetInnerHTML(string html)
-    {
-        return new dangerouslySetInnerHTML {__html = html};
-    }
-}
-
-public abstract class ThirdPartyComponent: Element
-{
-    [JsonPropertyName("$type")]
-    public virtual string Type => GetType().FullName;
 }
