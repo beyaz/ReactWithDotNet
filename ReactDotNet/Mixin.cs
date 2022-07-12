@@ -35,14 +35,6 @@ public static partial class Mixin
         return items;
     }
 
-    internal static void Apply(Element element, params ElementModifier[] modifiers)
-    {
-        foreach (var modifier in modifiers)
-        {
-            modifier?.Modify(element);
-        }
-    }
-
     public static  JsonNamingPolicy JsonNamingPolicy;
 
     public static string ToJson(object value)

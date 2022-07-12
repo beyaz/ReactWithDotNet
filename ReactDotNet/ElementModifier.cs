@@ -11,14 +11,7 @@ public sealed class ElementModifier
     {
         this.modifier = modifier;
     }
-
-    public void Modify(Element element)
-    {
-        if (modifier != null)
-        {
-            modifier(element);
-        }
-    }
+    
 
     
     
