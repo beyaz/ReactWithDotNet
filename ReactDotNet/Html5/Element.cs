@@ -21,7 +21,7 @@ public abstract class Element : IEnumerable<Element>
     /// <summary>
     ///     The children
     /// </summary>
-    public readonly List<Element> children = new List<Element>();
+    public readonly List<Element> children = new();
 
     /// <summary>
     ///     Imports filled values given style
