@@ -24,9 +24,11 @@ public class UnitTest1
 
         public override Element render()
         {
-            return new div(className("A"))
+            return new div
             {
-                innerText = "b"
+                className = "A",
+                innerText = "b",
+                
             };
         }
     }
@@ -42,9 +44,10 @@ public class UnitTest1
 
         public override Element render()
         {
-            return new div(className("A"))
+            return new div
             {
-                new View1 { Prop1 = "A" }
+                className = "A",
+                children  = { new View1 { Prop1 = "A" } }
             };
         }
     }
@@ -57,7 +60,7 @@ public class UnitTest1
     [TestMethod]
     public void SerializeBasicDiv()
     {
-        var div = new div(className("B"));
+        var div = new div{ className = "B" };
 
         var actual = ToJson(div);
 
@@ -94,58 +97,7 @@ public class UnitTest1
     }
 
 
-    [TestMethod]
-    public void HPanelGravity()
-    {
-        var div = new HPanel { new div(className("B")) { gravity = 4 }, new div(className("B")) };
-
-        var actual = ToJson(div);
-
-        var expected = @"
-{
-  ""$type"": ""div"",
-  ""style"": {
-    ""alignItems"": ""stretch"",
-    ""display"": ""flex"",
-    ""flexDirection"": ""row"",
-    ""width"": ""100%""
-  },
-  ""reactAttributes"": [
-    ""style""
-  ],
-  ""children"": [
-    {
-      ""$type"": ""div"",
-      ""className"": ""B"",
-      ""gravity"": 4,
-      ""key"": ""0"",
-      ""style"": {
-        ""width"": ""80%""
-      },
-      ""reactAttributes"": [
-        ""className"",
-        ""key"",
-        ""style""
-      ]
-    },
-    {
-      ""$type"": ""div"",
-      ""className"": ""B"",
-      ""key"": ""1"",
-      ""style"": {
-        ""width"": ""20%""
-      },
-      ""reactAttributes"": [
-        ""className"",
-        ""key"",
-        ""style""
-      ]
-    }
-  ]
-}
-";
-        actual.Clear().Should().Be(expected.Clear());
-    }
+    
 
 
     [TestMethod]
@@ -162,17 +114,22 @@ public class UnitTest1
         var xxx3 = ToJson(new div { new PrimeReact.InputTextarea { value = null } });
 
 
-        var div = new div(className("abc"))
+        var div = new div
         {
-            new div(className("B")),
-            new div(className("C"))
-            {
-                style = { paddingLeft = "5px" }
-            },
-            new img { src                    = "a.png", width = 3, onClick = onClicked },
-            new PrimeReact.InputText { value = "abc" },
-            new PrimeReact.InputText { value = Mixin.Bind(()=> state.InnerA.InnerB.Text) },
-            new View2 { Prop1                = "x", Prop2 = "y" }
+            className = "abc",
+           children =
+           {
+               new div{className = "B"},
+               new div
+               {
+                   className = "C",
+                   style     = { paddingLeft = "5px" }
+               },
+               new img { src                    = "a.png", width = 3, onClick = onClicked },
+               new PrimeReact.InputText { value = "abc" },
+               new PrimeReact.InputText { value = Mixin.Bind(()=> state.InnerA.InnerB.Text) },
+               new View2 { Prop1                = "x", Prop2 = "y" }
+           }
         };
 
         var actual = ToJson(div);
@@ -181,35 +138,7 @@ public class UnitTest1
         actual.Clear().Should().Be(expected.Clear());
     }
 
-    [TestMethod]
-    public void PerformanceTest()
-    {
-
-
-        Element createElement()
-        {
-            var state = new SampleModelAContainer();
-
-            var div = new div(className("abc"))
-            {
-                new div(className("B")),
-                new div(className("C"))
-                {
-                    style = { paddingLeft = "5px" }
-                },
-                new img { src                    = "a.png", width = 3, onClick = onClicked },
-                new PrimeReact.InputText { value = "abc" },
-                new PrimeReact.InputText { value = Mixin.Bind(()=> state.InnerA.InnerB.Text) },
-                new View2 { Prop1                = "x", Prop2 = "y" }
-            };
-
-            return div;
-        }
-
-       var a = ToJson(new div(Enumerable.Range(0, 100).Select(x => createElement())));
-
-        
-    }
+    
 
 
 

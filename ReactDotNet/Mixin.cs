@@ -333,19 +333,7 @@ public static partial class Mixin
         return value.ToString(CultureInfo.InvariantCulture).Replace(",", ".") + "%";
     }
 
-    public static ElementModifier className(string className)
-    {
-        return new ElementModifier(element => element.className = className);
-    }
-    public static ElementModifier alignSelf(AlignItems alignSelf)
-    {
-        return new ElementModifier(element => element.style.alignSelf = alignSelf);
-    }
-
-    public static ElementModifier border(string border)
-    {
-        return new ElementModifier(element => element.style.border = border);
-    }
+   
 
 
 
