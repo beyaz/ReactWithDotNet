@@ -10,7 +10,7 @@ var createElement = React.createElement;
 
 const DotNetTypeOfReactComponent = '___Type___';
 const FullTypeNameOfState = '___TypeOfState___';
-const RootNode = 'RootElement';
+const RootNode = '___RootNode___';
 
 
 const EventBus =
@@ -90,6 +90,13 @@ function PickPropertiesToNewObject(obj, fn_bool__CanPick__stringKey_objectValue)
 
 function IsEmptyObject(obj)
 {
+    const typeofValue = typeof obj;
+
+    if (typeofValue === 'number' || typeofValue === 'string' )
+    {
+        return false;
+    }
+    
     for (var key in obj)
     {
         if (Object.prototype.hasOwnProperty.call(obj, key))

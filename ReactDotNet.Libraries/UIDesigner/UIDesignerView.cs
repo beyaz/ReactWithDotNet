@@ -137,7 +137,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         UIDesignerViewExtension.OpenNullProperties(stateInstance);
                     }
 
-                    return ((IReactStatefulComponent) instance).RootElement;
+                    return ((IReactStatefulComponent) instance).___RootNode___;
                 }
 
                 return instance as Element;

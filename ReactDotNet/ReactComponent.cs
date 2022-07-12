@@ -78,7 +78,7 @@ namespace ReactDotNet.Html5
 
     public interface IReactStatefulComponent
     {
-        Element RootElement { get; }
+        Element ___RootNode___ { get; }
 
         ReactContext Context { get; set; }
 
@@ -92,7 +92,7 @@ namespace ReactDotNet.Html5
 
         public abstract void constructor();
 
-        public Element RootElement => render();
+        public Element ___RootNode___ => render();
 
         public string ___Type___ => GetType().GetFullName();
 

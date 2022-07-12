@@ -429,7 +429,7 @@ static class JsonSerializationOptionHelper
                     }
                 }
 
-                if (propertyName != nameof(IReactStatefulComponent.RootElement) && propertyValue is Element element)
+                if (propertyName != nameof(IReactStatefulComponent.___RootNode___) && propertyValue is Element element)
                 {
                     propertyValue = new InnerElementInfo
                     {
