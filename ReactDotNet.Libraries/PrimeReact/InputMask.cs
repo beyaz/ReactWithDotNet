@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
 
 namespace ReactDotNet.PrimeReact;
 
@@ -12,28 +11,18 @@ public class InputMask : ElementBase
     [React]
     public string mask { get; set; }
 
-
-    /// <summary>
-    ///     Value of the component.
-    /// </summary>
-    [React]
-    public string value { get; set; }
-
-
     [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public Expression<Func<string>> valueBind { get; set; }
+    public BindibleProperty<string> value { get; set; }
 
     /// <summary>
-    /// Advisory information to display on input.
+    ///     Advisory information to display on input.
     /// </summary>
     [React]
     public string placeholder { get; set; }
 
-
-
     /// <summary>
-    /// Maximum number of character allows in the input field.
+    ///     Maximum number of character allows in the input field.
     /// </summary>
     [React]
     public int? maxlength { get; set; }
@@ -41,6 +30,3 @@ public class InputMask : ElementBase
     [React]
     public bool? autoFocus { get; set; }
 }
-
-
-

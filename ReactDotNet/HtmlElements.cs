@@ -23,18 +23,12 @@ public class input : HtmlElement
     public string name { get; set; }
 
     [React]
-    public string value { get; set; }
-
-    [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public Expression<Func<string>> valueBind { get; set; }
-
-    [React]
-    public bool @checked { get; set; }
-
+    public BindibleProperty<string> value { get; set; }
+    
     [React]
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.target.checked", eventName = "onChange")]
-    public Expression<Func<bool>> checkedBind { get; set; }
+    public BindibleProperty<bool> @checked { get; set; }
 }
 
 public class i : HtmlElement

@@ -11,10 +11,7 @@ public class Dropdown : ElementBase
 
     [React]
     public string optionLabel { get; set; }
-
-    [React]
-    public object value { get; set; }
-
+    
     [React]
     public string optionValue { get; set; }
 
@@ -26,7 +23,7 @@ public class Dropdown : ElementBase
 
     [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public Expression<Func<string>> valueBind { get; set; }
+    public BindibleProperty<string> value { get; set; }
 
     [React]
     public bool? autoFocus { get; set; }
