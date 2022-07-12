@@ -20,11 +20,7 @@ public sealed class ElementModifier
         }
     }
 
-    public static implicit operator ElementModifier(Style style)
-    {
-        return new ElementModifier(element => element.style.Import(style));
-
-    }
+    
     
 
    
