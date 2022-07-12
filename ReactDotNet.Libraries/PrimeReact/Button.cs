@@ -13,17 +13,6 @@ namespace ReactDotNet.PrimeReact
 
     public class Button : ElementBase
     {
-        public Button()
-        {
-            
-        }
-
-        public Button(params ElementModifier[] modifiers) : base(modifiers)
-        {
-        }
-
-
-
         /// <summary>
         ///     Text of the button.
         /// </summary>

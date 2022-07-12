@@ -207,13 +207,4 @@ public abstract class ThirdPartyComponent: Element
 {
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().FullName;
-
-    protected ThirdPartyComponent(params ElementModifier[] modifiers) : base(modifiers)
-    {
-    }
-
-    public ThirdPartyComponent()
-    {
-            
-    }
 }
