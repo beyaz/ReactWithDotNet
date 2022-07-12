@@ -479,5 +479,5 @@ public sealed class BindInfo
     public string[] sourcePath { get; set; }
 
     public string targetProp { get; set; }
-    public string defaultValue { get; internal set; }
+    public string defaultValue { get;  set; }
 }

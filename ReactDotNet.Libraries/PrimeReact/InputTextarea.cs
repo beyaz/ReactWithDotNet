@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ReactDotNet.PrimeReact;
 
@@ -10,6 +11,17 @@ public class InputTextarea : ElementBase
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public BindibleProperty<string> value { get; set; }
 
+    internal static IReadOnlyList<BindInfo> BindMap = new[]
+    {
+        new BindInfo
+        {
+            targetProp    = nameof(value),
+            eventName     = "onChange",
+            IsBinding     = true,
+            jsValueAccess = "e.target.value".Split('.', StringSplitOptions.RemoveEmptyEntries),
+            defaultValue  = ""
+        }
+    };
 
 
     [React]
