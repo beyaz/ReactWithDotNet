@@ -160,6 +160,9 @@ class ModelContainer3
 {
     public ModelContainer1 ContainerModel1 { get; set; }
     public ModelContainer2 ContainerModel2 { get; set; }
+
+    public string Container3Text { get; set; }
+    public int ClickCount { get; set; }
 }
 class Container3 : ReactComponent<ModelContainer3>
 {
@@ -172,15 +175,16 @@ class Container3 : ReactComponent<ModelContainer3>
                 A              = new ModelA { PropA = "A" },
                 B              = new ModelB { PropB = "B" },
                 C              = new ModelC { PropC = "C" },
-                Container1Text = "Container1Text"
+                Container1Text = "Container1_"
             },
             ContainerModel2 = new ModelContainer2
             {
                 A              = new ModelA { PropA = "A" },
                 B              = new ModelB { PropB = "B" },
                 C              = new ModelC { PropC = "C" },
-                Container2Text = "Container2Text"
+                Container2Text = "Container2_"
             },
+            Container3Text = "Container3_"
         };
     }
 
@@ -188,12 +192,15 @@ class Container3 : ReactComponent<ModelContainer3>
     {
         return new div
         {
-            style = { display = "flex" },
+            style = { display = "flex", flexDirection = "column"},
             children =
             {
                 new Container1{ state = state.ContainerModel1},
-                new Container2{ state = state.ContainerModel2}
-            }
+                new Container2{ state = state.ContainerModel2},
+                new div{innerText     = state.Container3Text + state.ClickCount}
+
+            },
+            onClick = _ => state.ClickCount++
         };
     }
 }

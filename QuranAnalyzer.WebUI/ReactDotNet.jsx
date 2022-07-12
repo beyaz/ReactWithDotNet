@@ -114,9 +114,23 @@ function IsNotEmptyObject(obj)
 }
 
 const EventQueue = [];
+
 var IsExecutingEvent = false;
+
+function OnReactStateReady()
+{
+    IsExecutingEvent = false;
+
+    EmitNextEvent();
+}
+
 function EmitNextEvent()
 {
+    if (IsExecutingEvent)
+    {
+        throw "ReactDotNet event queue problem occured.";
+    }
+    
     if (EventQueue.length > 0)
     {
         const fn = EventQueue.shift();
@@ -124,20 +138,12 @@ function EmitNextEvent()
         IsExecutingEvent = true;
         
         fn();
-
-        return;
     }
-
-    IsExecutingEvent = false;
 }
+
 function PushToEventQueue(fn)
 {
     EventQueue.push(fn);
-
-    if (EventQueue.length === 1)
-    {
-        EmitNextEvent();
-    }
 
     if (!IsExecutingEvent)
     {
@@ -147,7 +153,7 @@ function PushToEventQueue(fn)
 
 function Pipe(value)
 {
-    for (var i = 1; i < arguments.length; i++)
+    for (let i = 1; i < arguments.length; i++)
     {
         value = arguments[i](value);
     }
@@ -658,7 +664,7 @@ function HandleAction(data)
             EventQueue.push(afterSetState);
         }
         
-        restoreState(EmitNextEvent);
+        restoreState(OnReactStateReady);
 
         function processClientTask(clientTask)
         {
