@@ -348,51 +348,12 @@ public static partial class Mixin
     }
 
 
-    public static ElementModifier borderLeft(string borderLeft)
-    {
-        return new ElementModifier(element => element.style.borderLeft = borderLeft);
-    }
 
-    public static ElementModifier borderRight(string borderRight)
-    {
-        return new ElementModifier(element => element.style.borderRight = borderRight);
-    }
 
-    public static ElementModifier borderTop(string borderTop)
-    {
-        return new ElementModifier(element => element.style.borderTop = borderTop);
-    }
-
-    public static ElementModifier borderBottom(string borderBottom)
-    {
-        return new ElementModifier(element => element.style.borderBottom = borderBottom);
-    }
-
-    public static ElementModifier borderRadius(string borderRadius)
-    {
-        return new ElementModifier(element => element.style.borderRadius = borderRadius);
-    }
-
-    public static ElementModifier borderColor(string borderColor)
-    {
-        return new ElementModifier(element => element.style.borderColor = borderColor);
-    }
-        
-
-    public static ElementModifier color(string color)
-    {
-        return new ElementModifier(element => element.style.color = color);
-    }
+   
 
     
 
-    public static ElementModifier maxWidth(string maxWidth)
-    {
-        return new ElementModifier(element => element.style.maxWidth = maxWidth);
-    }
-
-    public static ElementModifier maxHeight(string maxHeight)
-    {
-        return new ElementModifier(element => element.style.maxHeight = maxHeight);
-    }
+    
+    
 }
