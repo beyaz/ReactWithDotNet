@@ -10,6 +10,7 @@ var createElement = React.createElement;
 
 const DotNetTypeOfReactComponent = '$Type$';
 const FullTypeNameOfState = '$TypeOfState$';
+const RootNode = 'RootElement';
 
 
 const EventBus =
@@ -531,7 +532,7 @@ function CollectStates(component)
     {
         if (jsonUiNode != null)
         {
-            if (jsonUiNode.RootElement != null)
+            if (jsonUiNode[RootNode] != null)
             {
                 if (jsonUiNode[DotNetTypeOfReactComponent] != null)
                 {
@@ -565,7 +566,7 @@ function CollectStates(component)
 
                 map[location] = { StateAsJson: StateCache[child.UniqueIdOfState], FullTypeNameOfState: StateCache[child.UniqueIdOfState + "-FullTypeNameOfState"] };
                 
-                visitChilderen(child.RootElement, location);
+                visitChilderen(child[RootNode], location);
                 
                 continue;
             }
@@ -631,7 +632,7 @@ function HandleAction(data)
             StateCache[element.UniqueIdOfState] = element.state;
 
             data.component.$stateAsJsProperty = element.state;
-            data.component.$rootJsonNodeForUI = element.RootElement;
+            data.component.$rootJsonNodeForUI = element[RootNode];
 
             data.component.setState({
                 $rootNode: Clone(data.component.$rootJsonNodeForUI),
@@ -808,7 +809,7 @@ function DefineComponent(componentDeclaration)
 
             this.$FullTypeNameOfState = componentDeclaration[FullTypeNameOfState];
             this.$stateAsJsProperty   = componentDeclaration.state;
-            this.$rootJsonNodeForUI   = componentDeclaration.RootElement;
+            this.$rootJsonNodeForUI   = componentDeclaration[RootNode];
 
             this.state =
             {
