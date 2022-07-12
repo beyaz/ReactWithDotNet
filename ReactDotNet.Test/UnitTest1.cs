@@ -97,21 +97,7 @@ public class UnitTest1
     }
 
 
-    [TestMethod]
-    public void SerializationOfComponent()
-    {
-        var div = new div
-        {
-            new View1()
-        };
-
-        var json = ToJson(div);
-
-        json.Clear().Should().Be(@"
-{""$type"":""div"",""children"":[{""Prop1"":""PropValue1"",""Prop2"":""PropValue2"",""RootElement"":{""$type"":""div"",""innerText"":""b"",""className"":""A"",""reactAttributes"":[""className""]},""$Type$"":""ReactDotNet.Html5.UnitTest1\u002BView1,ReactDotNet.Test"",""$TypeOfState$"":""ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test"",""key"":""0""}]}
-
-".Clear());
-    }
+   
 
 
 
