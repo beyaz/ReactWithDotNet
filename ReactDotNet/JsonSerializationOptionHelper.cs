@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -268,6 +269,36 @@ static class JsonSerializationOptionHelper
                 {
                     propertyValue = enumValue.ToString();
                 }
+
+                {
+                    if (propertyValue is Expression<Func<int>> ||
+                        propertyValue is Expression<Func<string>>)
+                    {
+                        string[] calculateSourcePathFunc()
+                        {
+                            if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
+                            {
+                                return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
+                            }
+
+                            if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
+                            {
+                                return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
+                            }
+
+                            throw new NotImplementedException();
+                        }
+
+                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
+                        if (bindInfo == null)
+                        {
+                            return (null, true);
+                        }
+
+                        return (bindInfo, false);
+                    }
+                }
+
 
                 {
                     if (propertyValue is BindibleProperty<string> bindibleProperty)
