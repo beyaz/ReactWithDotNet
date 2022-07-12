@@ -16,33 +16,33 @@
       },
       {
          "$type":"div",
-         "className":"C",
-         "key":"1",
          "style":{
             "paddingLeft":"5px"
          },
+         "className":"C",
+         "key":"1",
          "reactAttributes":[
+            "style",
             "className",
-            "key",
-            "style"
+            "key"
          ]
       },
       {
          "src":"a.png",
          "width":3,
          "height":0,
-         "$type":"img",
-         "key":"2",
          "onClick":{
             "$isRemoteMethod":true,
             "remoteMethodName":"onClicked"
          },
+         "$type":"img",
+         "key":"2",
          "reactAttributes":[
             "src",
             "width",
             "height",
-            "key",
-            "onClick"
+            "onClick",
+            "key"
          ]
       },
       {
@@ -81,7 +81,7 @@
       {
          "Prop1":"x",
          "Prop2":"y",
-         "RootElement":{
+         "___RootNode___":{
             "$type":"div",
             "className":"A",
             "reactAttributes":[
@@ -91,7 +91,7 @@
                {
                   "Prop1":"A",
                   "Prop2":"PropValue2",
-                  "RootElement":{
+                  "___RootNode___":{
                      "$type":"div",
                      "innerText":"b",
                      "className":"A",
@@ -99,16 +99,14 @@
                         "className"
                      ]
                   },
-                  "$Type$":"ReactDotNet.Html5.UnitTest1\u002BView1,ReactDotNet.Test",
-                  "$TypeOfState$":"ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
-                  "FullTypeNameOfState":"ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
+                  "___Type___":"ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test",
+                  "___TypeOfState___":"ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
                   "key":"0"
                }
             ]
          },
-         "$Type$":"ReactDotNet.Html5.UnitTest1\u002BView2,ReactDotNet.Test",
-         "$TypeOfState$":"ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
-         "FullTypeNameOfState":"ReactDotNet.Html5.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
+         "___Type___":"ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test",
+         "___TypeOfState___":"ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
          "key":"5"
       }
    ]
