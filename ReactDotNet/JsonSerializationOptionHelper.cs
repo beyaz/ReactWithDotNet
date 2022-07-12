@@ -447,8 +447,6 @@ static class JsonSerializationOptionHelper
 
                 rootElement.key = reactComponent.key;
 
-                rootElement |= reactComponent.modifier;
-
                 return rootElement;
             }
         }

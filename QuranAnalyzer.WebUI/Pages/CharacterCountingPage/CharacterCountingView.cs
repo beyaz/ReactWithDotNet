@@ -229,7 +229,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             header = "Mushaf Üzerinde Göster",
                             children =
                             {
-                                CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords, state.SearchCharacters.AsClearArabicCharacterList()) + getFontSize()
+                                applyFontSize(CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords, state.SearchCharacters.AsClearArabicCharacterList()))
                             }
                         }
                     }
@@ -240,14 +240,17 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
 
 
-        ElementModifier getFontSize()
+        Element applyFontSize(Element el)
         {
             if (state.AvailableWidth <500)
             {
-                return fontSize(9);
+                el.style.fontSize = "9px";
+                return el;
             }
 
-            return fontSize(19);
+            el.style.fontSize = "19px";
+            
+            return el;
         }
 
 

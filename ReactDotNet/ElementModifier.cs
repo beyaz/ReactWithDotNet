@@ -77,13 +77,6 @@ public sealed class ElementModifier
     }
 
 
-    public static ElementModifier operator |(ElementModifier a, ElementModifier b)
-    {
-        return new ElementModifier(element =>
-        {
-            a.Modify(element);
-            b.Modify(element);
-        });
-    }
+
 
 }

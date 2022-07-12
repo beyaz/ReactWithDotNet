@@ -17,10 +17,6 @@ namespace ReactDotNet.Html5
     public abstract class ReactComponent : Element, IReactStatelessComponent
     {
         public abstract Element render();
-
-        internal ElementModifier modifier;
-
-
     }
 
     

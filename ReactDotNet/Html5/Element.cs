@@ -146,31 +146,7 @@ public abstract class Element : IEnumerable<Element>
 
         return element;  
     }
-
-    public static Element operator +(Element element, ElementModifier elementModifier)
-    {
-        return element | elementModifier;
-    }
-        
-    public static Element operator |(Element element, ElementModifier elementModifier)
-    {
-        if (element is ReactComponent reactComponent)
-        {
-            if (reactComponent.modifier == null)
-            {
-                reactComponent.modifier = elementModifier;
-            }
-            else
-            {
-                reactComponent.modifier |= elementModifier;
-            }
-
-            return element;
-        }
-        elementModifier?.Modify(element);
-
-        return element;
-    }
+    
 
         
 }
