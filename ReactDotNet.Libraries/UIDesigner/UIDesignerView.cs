@@ -187,26 +187,30 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     size = 30,
                     children =
                     {
-                        new div(Display.flex, FlexDirection.column, Mixin.width("100%"))
+                        new div
                         {
-                            new Slider {value = state.ScreenWidth, MarginAll = 10, PaddingAll = 5, onChange = OnWidthChanged},
-                            new Splitter
+                            style={ display = "flex", flexDirection = "column", width = "100%"},
+                            children=
                             {
-                                new SplitterPanel
+                                new Slider {value = state.ScreenWidth, MarginAll = 10, PaddingAll = 5, onChange = OnWidthChanged},
+                                new Splitter
                                 {
-                                    size     = 2,
-                                    children =
+                                    new SplitterPanel
                                     {
-                                        componentSelector
-                                    }
-                                },
+                                        size = 2,
+                                        children =
+                                        {
+                                            componentSelector
+                                        }
+                                    },
 
-                                new SplitterPanel
-                                {
-                                    size     = 6,
-                                    children =
+                                    new SplitterPanel
                                     {
-                                        dataPanel
+                                        size = 6,
+                                        children =
+                                        {
+                                            dataPanel
+                                        }
                                     }
                                 }
                             }

@@ -102,34 +102,12 @@ public static partial class Mixin
 
     
 
-    public static T IsVisible<T>(this T element, bool isVisible) where T : Element
-    {
-        element.style.visibility = isVisible ? Visibility.visible : Visibility.collapse;
 
-        return element;
-    }
+    
 
-    public static T HasBorder<T>(this T element) where T : Element
-    {
-        element.style.border       = "1px solid #ced4da";
-        element.style.borderRadius = "3px";            
+    
 
-        return element;
-    }
-
-    public static T Padding<T>(this T element, int padding) where T : Element
-    {
-        element.style.padding = padding + "px";
-
-        return element;
-    }
-
-    public static T Style<T>(this T element, Action<Style> modifyStyle) where T : Element
-    {
-        modifyStyle(element.style);
-
-        return element;
-    }
+   
 
     public static TParent appendChild<TParent,TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
     {
@@ -144,136 +122,41 @@ public static partial class Mixin
         return value + "px";
     }
 
-    /// <summary>
-    ///  Relative to 1% of the height of the viewport*
-    /// </summary>
-    public static string vh(double value)
-    {
-        return value + "vh";
-    }
+  
 
-    /// <summary>
-    ///  Relative to 1% of the width of the viewport*
-    /// </summary>
-    public static string vw(double value)
-    {
-        return value + "vw";
-    }
+  
 
 
     public static string px(double value)
     {
         return value + "px";
     }
-    public static ElementModifier lineHeight(string lineHeight)
-    {
-        return new ElementModifier(element => element.style.lineHeight = lineHeight);
-    }
+   
+    
+    
+    
+    
     public static ElementModifier fontSize(double value)
     {
         return new ElementModifier(element => element.style.fontSize = px(value));
     }
-    public static ElementModifier fontSize(string fontSize)
-    {
-        return new ElementModifier(element => element.style.fontSize = fontSize);
-    }
-    public static ElementModifier fontFamily(string fontFamily)
-    {
-        return new ElementModifier(element => element.style.fontFamily = fontFamily);
-    }
-    public static ElementModifier fontWeight(int fontWeight)
-    {
-        return new ElementModifier(element => element.style.fontWeight = fontWeight.ToString());
-    }
-    public static ElementModifier background(string value)
-    {
-        return new ElementModifier(element => element.style.background = value);
-    }
+   
+   
 
-    public static ElementModifier margin(double margin)
-    {
-        return new ElementModifier(element => element.style.margin = px(margin));
-    }
+   
 
-    public static ElementModifier padding(double padding)
-    {
-        return new ElementModifier(element => element.style.padding = px(padding));
-    }
-    public static ElementModifier paddingLeft(double paddingLeft)
-    {
-        return new ElementModifier(element => element.style.paddingLeft = px(paddingLeft));
-    }
-    public static ElementModifier paddingRight(double paddingRight)
-    {
-        return new ElementModifier(element => element.style.paddingRight = px(paddingRight));
-    }
-
-    public static ElementModifier paddingLeftRight(string paddingLeftRight)
-    {
-        return new ElementModifier(element =>
-        {
-            element.style.paddingLeft  = paddingLeftRight;
-            element.style.paddingRight = paddingLeftRight;
-        });
-    }
-
-    public static ElementModifier marginLeftRight(string marginLeftRight)
-    {
-        return new ElementModifier(element =>
-        {
-            element.style.marginLeft  = marginLeftRight;
-            element.style.marginRight = marginLeftRight;
-        });
-    }
+   
         
 
 
+    
+   
 
-    public static ElementModifier paddingTop(double paddingTop)
-    {
-        return new ElementModifier(element => element.style.paddingTop = px(paddingTop));
-    }
+    
 
-    public static ElementModifier paddingTopBottom(string paddingTopBottom)
-    {
-        return new ElementModifier(element =>
-        {
-            element.style.paddingTop    = paddingTopBottom;
-            element.style.paddingBottom = paddingTopBottom;
-        });
-    }
 
-    public static ElementModifier paddingBottom(double paddingBottom)
-    {
-        return new ElementModifier(element => element.style.paddingBottom = px(paddingBottom));
-    }
-
-    public static ElementModifier height(double height)
-    {
-        return new ElementModifier(element => element.style.height = px(height));
-    }
-
-    public static ElementModifier height(string height)
-    {
-        return new ElementModifier(element => element.style.height = height);
-    }
-
-    public static ElementModifier width(double width)
-    {
-        return new ElementModifier(element => element.style.width = px(width));
-    }
-    public static ElementModifier width(string width)
-    {
-        return new ElementModifier(element => element.style.width = width);
-    }
-    public static ElementModifier marginLeft(double margin)
-    {
-        return new ElementModifier(element => element.style.marginLeft = px(margin));
-    }
-    public static ElementModifier marginRight(double margin)
-    {
-        return new ElementModifier(element => element.style.marginRight = px(margin));
-    }
+    
+   
 
    
   

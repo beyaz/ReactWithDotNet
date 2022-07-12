@@ -36,25 +36,33 @@ public class View : PageBase
         {
             return new div(Display.flex, AlignItems.center)
                 {
-                    new div(width(px(24)) | height(px(24)))
+                    new div
                     {
-                        new svg
+                        style={width_height = "24px"},
+                        children=
                         {
-                            new path
+                            new svg
                             {
-                                d    = "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z",
-                                fill = "#0b57d0"
+                                new path
+                                {
+                                    d    = "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z",
+                                    fill = "#0b57d0"
 
-                            },
-                            new path
-                            {
-                                d    = "M0 0h24v24H0z",
-                                fill = "none"
+                                },
+                                new path
+                                {
+                                    d    = "M0 0h24v24H0z",
+                                    fill = "none"
+                                }
                             }
                         }
                     }
                     ,
-                    new div(Question) | paddingLeft(14) | paddingTopBottom(px(10))
+                    new div
+                    {
+                        innerText = Question,
+                        style={ paddingLeft = "14px", paddingTopBottom = "10px"}
+                    }
 
                 }
                 ;

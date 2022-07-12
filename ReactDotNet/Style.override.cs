@@ -62,6 +62,19 @@ partial class Style
 
     #endregion
 
+
+    [JsonIgnore]
+    public string width_height
+    {
+        set
+        {
+            width  = value;
+            height = value;
+        }
+    }
+    
+        
+        
     #region Padding
     [JsonIgnore]
     public string paddingLeftRight
