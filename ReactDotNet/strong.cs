@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace ReactDotNet.Html5;
+namespace ReactDotNet;
 
 public class strong : HtmlElement
 {
@@ -32,7 +32,7 @@ static class HtmlTextWriter
         }
 
         var tag = element.Type;
-        
+
         if (element is span || element is strong)
         {
             return $"<{tag}{css}>{element.innerText}</{tag}>";

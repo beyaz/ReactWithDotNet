@@ -1,6 +1,4 @@
-﻿using ReactDotNet.Html5;
-
-namespace ReactDotNet.react_xarrows
+﻿namespace ReactDotNet.react_xarrows
 {
     public class Xarrow : ThirdPartyReactComponent
     {

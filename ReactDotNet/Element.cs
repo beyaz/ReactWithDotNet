@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace ReactDotNet.Html5;
+namespace ReactDotNet;
 
 /// <summary>
 ///     The element
@@ -16,7 +16,7 @@ public abstract class Element : IEnumerable<Element>
     /// </summary>
     public readonly List<Element> children = new();
     #endregion
-    
+
 
     #region Public Properties
     /// <summary>
@@ -28,7 +28,7 @@ public abstract class Element : IEnumerable<Element>
         set => children.AddRange(value);
     }
 
-   
+
 
     /// <summary>
     ///     Gets or sets the key.

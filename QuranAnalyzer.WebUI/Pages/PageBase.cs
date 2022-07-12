@@ -1,4 +1,4 @@
-﻿using ReactDotNet.Html5;
+﻿using ReactDotNet;
 
 namespace QuranAnalyzer.WebUI.Pages;
 

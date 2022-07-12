@@ -1,8 +1,8 @@
-﻿namespace ReactDotNet.Html5;
+﻿namespace ReactDotNet;
 
 public class table : HtmlElement
 {
-    
+
 }
 public class tbody : HtmlElement
 {
@@ -11,7 +11,7 @@ public class tbody : HtmlElement
 public class tr : HtmlElement
 {
     [React]
-    public int?  rowspan { get; set; }
+    public int? rowspan { get; set; }
 
     [React]
     public int? colspan { get; set; }

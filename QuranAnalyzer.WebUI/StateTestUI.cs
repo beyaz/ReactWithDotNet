@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ReactDotNet.Html5;
 
 namespace ReactDotNet;
 
-    class ModelA
+class ModelA
     {
         public string PropA { get; set; }
         public int ClickCount { get; set; }

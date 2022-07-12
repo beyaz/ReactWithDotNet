@@ -1,5 +1,4 @@
 ﻿using System;
-using ReactDotNet.Html5;
 
 namespace ReactDotNet.PrimeReact;
 

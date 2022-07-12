@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ReactDotNet.Html5;
+using System;
 using System.Text.Json.Serialization;
 
-namespace ReactDotNet.Html5;
+namespace ReactDotNet;
 
 public abstract class HtmlElement : Element
 {
@@ -29,7 +30,7 @@ public abstract class HtmlElement : Element
 
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();
-    
+
     [React]
     public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
 

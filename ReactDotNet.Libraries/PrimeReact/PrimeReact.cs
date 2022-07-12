@@ -1,6 +1,4 @@
-﻿using ReactDotNet.Html5;
-
-namespace ReactDotNet.PrimeReact;
+﻿namespace ReactDotNet.PrimeReact;
 
 public class ElementBase : ThirdPartyReactComponent
 {

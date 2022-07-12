@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ReactDotNet.Html5;
+using System;
 using System.Linq.Expressions;
 
-namespace ReactDotNet.Html5;
+namespace ReactDotNet;
 
 
 public class button : HtmlElement
@@ -86,7 +87,7 @@ public class h3 : HtmlElement
 
 public class h2 : HtmlElement
 {
-  
+
 
     public h2()
     {
@@ -128,37 +129,37 @@ public class img : HtmlElement
     public string alt { get; set; }
 
     [React]
-    public  int width { get; set; }
+    public int width { get; set; }
 
     [React]
-    public  int height { get; set; }
+    public int height { get; set; }
 }
 
 public class HPanel : div
 {
     static void InitializeStyle(Style style)
     {
-        style.display       = Display.flex;
+        style.display = Display.flex;
         style.flexDirection = FlexDirection.row;
-        style.alignItems    = AlignItems.stretch;
-        style.width         = "100%";
+        style.alignItems = AlignItems.stretch;
+        style.width = "100%";
 
     }
     public HPanel()
     {
         InitializeStyle(style);
     }
-    
+
 }
 
 public sealed class VPanel : div
 {
     public VPanel()
     {
-        style.display       = Display.flex;
+        style.display = Display.flex;
         style.flexDirection = FlexDirection.column;
-        style.alignItems    = AlignItems.stretch;
-        style.height        = "100%";
+        style.alignItems = AlignItems.stretch;
+        style.height = "100%";
     }
 }
 

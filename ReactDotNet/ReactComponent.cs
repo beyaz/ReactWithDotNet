@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ReactDotNet.Html5;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace ReactDotNet.Html5
+namespace ReactDotNet
 {
     public enum ReactComponentEvents
     {
@@ -10,8 +11,8 @@ namespace ReactDotNet.Html5
 
     public interface IReactStatelessComponent
     {
-         string key { get; }
-         Element render();
+        string key { get; }
+        Element render();
     }
 
     public abstract class ReactComponent : Element, IReactStatelessComponent
@@ -19,7 +20,7 @@ namespace ReactDotNet.Html5
         public abstract Element render();
     }
 
-    
+
     public sealed class ReactContext
     {
         readonly Dictionary<string, object> map = new();
@@ -66,7 +67,7 @@ namespace ReactDotNet.Html5
         }
     }
 
-   
+
 
     public static class BrowserInformation
     {

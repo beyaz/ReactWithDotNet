@@ -1,4 +1,4 @@
-﻿namespace ReactDotNet.Html5;
+﻿namespace ReactDotNet;
 
 public class svg : HtmlElement
 {

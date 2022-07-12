@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ReactDotNet.Html5;
+using ReactDotNet;
 using ReactDotNet.react_xarrows;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;

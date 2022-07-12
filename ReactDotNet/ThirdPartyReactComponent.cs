@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using ReactDotNet.Html5;
+using System.Text.Json.Serialization;
 
-namespace ReactDotNet.Html5;
+namespace ReactDotNet;
 
-public abstract class ThirdPartyReactComponent: Element
+public abstract class ThirdPartyReactComponent : Element
 {
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().FullName;
