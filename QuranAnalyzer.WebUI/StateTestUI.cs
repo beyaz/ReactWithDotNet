@@ -196,6 +196,7 @@ class Container3 : ReactComponent<ModelContainer3>
             children =
             {
                 new Container1{ state = state.ContainerModel1},
+                // state.ClickCount % 3 ==0 ? new div{innerText ="Mod3"}: null,
                 new Container2{ state = state.ContainerModel2},
                 new div{innerText     = state.Container3Text + state.ClickCount}
 

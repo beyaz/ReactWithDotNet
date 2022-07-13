@@ -12,7 +12,6 @@ const DotNetTypeOfReactComponent = '___Type___';
 const FullTypeNameOfState = '___TypeOfState___';
 const RootNode = '___RootNode___';
 
-
 const EventBus =
 {
     On: function(event, callback)
@@ -263,7 +262,7 @@ function ConvertToReactElement(jsonNode, component)
     {
         const cmp = DefineComponent(jsonNode);
 
-        return createElement(cmp, {key: NotNull(jsonNode.key)});
+        return createElement(cmp, {key: NotNull(jsonNode.key), ParentReactDotNetManagedComponent: component });
     }
 
     var i;
@@ -550,76 +549,6 @@ var StateCache =
 
 var unAvailableStateIdList = [];
 
-function CollectStates(component)
-{
-    var map = {};
-
-    // map["0"] = { StateAsJson: component.state.$state, FullTypeNameOfState: component.$FullTypeNameOfState };
-
-    visitChilderen(component.$rootJsonNodeForUI, "0");
-
-    return stringifyValuesInMap(map);
-
-    function stringifyValuesInMap(map)
-    {
-        function modify(key, value)
-        {
-            unAvailableStateIdList.push(key);
-            value.StateAsJson = JSON.stringify(value.StateAsJson);
-        }
-        IterateObject(map,modify);
-
-        return map;
-    }
-
-    function isComponent(jsonUiNode)
-    {
-        if (jsonUiNode != null)
-        {
-            if (jsonUiNode[RootNode] != null)
-            {
-                if (jsonUiNode[DotNetTypeOfReactComponent] != null)
-                {
-                    if (jsonUiNode.state != null)
-                    {
-                        return true;
-                    }
-                }
-            } 
-        }
-
-        return false;
-    }
-    
-    function visitChilderen(node, path)
-    {
-        if (node.children == null)
-        {
-            return;
-        }
-
-        for (let i = 0; i < node.children.length; i++)
-        {
-            const child = node.children[i];
-
-            const location = path + "," + i;
-
-            if(isComponent(child))
-            {
-                NotNull(child.UniqueIdOfState);
-
-                map[location] = { StateAsJson: StateCache[child.UniqueIdOfState], FullTypeNameOfState: StateCache[child.UniqueIdOfState + "-FullTypeNameOfState"] };
-                
-                visitChilderen(child[RootNode], location);
-                
-                continue;
-            }
-
-            visitChilderen(child, location);
-        }
-    }
-}
-
 function HandleAction(data)
 {
     var remoteMethodName = data.remoteMethodName;
@@ -645,7 +574,7 @@ function HandleAction(data)
         EventHandlerMethodName: remoteMethodName,
         FullName   : component.constructor[DotNetTypeOfReactComponent],
         StateAsJson: getStateAsJson(),
-        ChildStates: CollectStates(component)
+        ChildStates: component.CaptureStateTree()
     };
     
     request.eventArgumentsAsJsonArray = NormalizeEventArguments(data.eventArguments).map(JSON.stringify);
@@ -862,10 +791,53 @@ function DefineComponent(componentDeclaration)
             };
 
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
-        }
 
+            if (props.ParentReactDotNetManagedComponent)
+            {
+                if (props.ParentReactDotNetManagedComponent.ReactDotNetManagedChildComponents)
+                {
+                    props.ParentReactDotNetManagedComponent.ReactDotNetManagedChildComponents.push(this);
+                }
+            }
+
+            this.ReactDotNetManagedChildComponents = [];
+        }
+        
+        CaptureStateTree(map, prefix)
+        {
+            const isRoot = map == null;
+            if (isRoot)
+            {
+                map = {};
+                prefix = "0";
+            }
+            
+            map[prefix] = { StateAsJson: JSON.stringify(this.state.$state), FullTypeNameOfState: componentDeclaration[FullTypeNameOfState] };
+            
+            if (this.ReactDotNetManagedChildComponents)
+            {
+                for (let i = 0; i < this.ReactDotNetManagedChildComponents.length; i++)
+                {
+                    const child = this.ReactDotNetManagedChildComponents[i];
+
+                    if (child.CaptureStateTree)
+                    {
+                        child.CaptureStateTree(map, prefix + "," + i);
+                    }
+                }
+            }
+
+            if (isRoot)
+            {
+                return map;
+            }
+
+            return null;
+        }
+        
         render()
         {
+            this.ReactDotNetManagedChildComponents = [];
             NotFrozen(this.$rootJsonNodeForUI);
 
             return ConvertToReactElement(this.$rootJsonNodeForUI, this);
