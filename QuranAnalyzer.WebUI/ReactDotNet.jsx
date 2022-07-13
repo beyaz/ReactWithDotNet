@@ -671,6 +671,10 @@ var ComponentDefinitions = {
 function DefineComponent(componentDeclaration)
 {
     const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
+    const fullTypeNameOfState = NotNull(componentDeclaration[FullTypeNameOfState]);
+    const rootNode = NotNull(componentDeclaration[RootNode]);
+    const state = componentDeclaration.state;
+
 
     const component = ComponentDefinitions[dotNetTypeOfReactComponent];
     if (component)
@@ -684,14 +688,10 @@ function DefineComponent(componentDeclaration)
         {
             super(props||{});
 
-            // register stateId
-            NotFrozen(componentDeclaration);
-            NotNull(componentDeclaration[FullTypeNameOfState]);
-            
             this.state =
             {
-                $rootNode: componentDeclaration[RootNode],
-                $state   : componentDeclaration.state
+                $rootNode: rootNode,
+                $state   : state
             };
 
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
@@ -716,7 +716,7 @@ function DefineComponent(componentDeclaration)
                 prefix = "0";
             }
             
-            map[prefix] = { StateAsJson: JSON.stringify(this.state.$state), FullTypeNameOfState: componentDeclaration[FullTypeNameOfState] };
+            map[prefix] = { StateAsJson: JSON.stringify(this.state.$state), FullTypeNameOfState: fullTypeNameOfState };
             
             if (this.ReactDotNetManagedChildComponents)
             {
