@@ -748,12 +748,12 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
-            TryDispatchComponentAction(this, "componentDidMount");
+            
         }
 
         componentWillUnmount()
         {
-            TryDispatchComponentAction(this, "componentWillUnmount");
+            
         }
     }
     
