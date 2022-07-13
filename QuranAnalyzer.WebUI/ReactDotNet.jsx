@@ -688,8 +688,6 @@ function DefineComponent(componentDeclaration)
             NotFrozen(componentDeclaration);
             NotNull(componentDeclaration[FullTypeNameOfState]);
             
-            this.$FullTypeNameOfState = componentDeclaration[FullTypeNameOfState];
-            
             this.state =
             {
                 $rootNode: componentDeclaration[RootNode],
