@@ -532,26 +532,9 @@ function NormalizeEventArguments(eventArguments)
     );
 }
 
-var GetNextUniqueNumber = (function()
-{
-    var nextValue = 0;
-
-    return function()
-    {
-        return nextValue++;
-    }
-})();
-
-var StateCache = 
-{
-
-};
-
-var unAvailableStateIdList = [];
-
 function HandleAction(data)
 {
-    var remoteMethodName = data.remoteMethodName;
+    const remoteMethodName = data.remoteMethodName;
     var component = data.component;
     
     function getStateAsJson()
@@ -590,20 +573,6 @@ function HandleAction(data)
         
         function restoreState(onStateReady)
         {
-            for (var j = 0; j < unAvailableStateIdList.length; j++)
-            {
-                StateCache[unAvailableStateIdList[j]] = null;
-                StateCache[unAvailableStateIdList[j] + "-FullTypeNameOfState"] = null;
-            }
-            unAvailableStateIdList.length = 0;
-
-            if (!(element.UniqueIdOfState > 0))
-            {
-                element.UniqueIdOfState = data.component.$UniqueIdOfState;
-            }
-
-            StateCache[element.UniqueIdOfState] = element.state;
-
             data.component.$stateAsJsProperty = element.state;
             data.component.$rootJsonNodeForUI = element[RootNode];
 
@@ -771,15 +740,7 @@ function DefineComponent(componentDeclaration)
             // register stateId
             NotFrozen(componentDeclaration);
             NotNull(componentDeclaration[FullTypeNameOfState]);
-
-            const uniqueIdOfState = GetNextUniqueNumber();
             
-            this.$UniqueIdOfState = componentDeclaration.UniqueIdOfState = uniqueIdOfState;
-
-            StateCache[uniqueIdOfState] = componentDeclaration.state;
-            StateCache[uniqueIdOfState + "-FullTypeNameOfState"] = componentDeclaration[FullTypeNameOfState];
-            
-
             this.$FullTypeNameOfState = componentDeclaration[FullTypeNameOfState];
             this.$stateAsJsProperty   = componentDeclaration.state;
             this.$rootJsonNodeForUI   = componentDeclaration[RootNode];
