@@ -388,11 +388,11 @@ function ConvertToReactElement(jsonNode, component)
             props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
             props[eventName] = function (e)
             {
-                const state = component.$stateAsJsProperty;
+                const state = Clone(component.state.$state);
 
                 SetValueInPath(state, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
 
-                component.setState({ $state: Clone(state) });
+                component.setState({ $state: state });
             }
 
             return true;
@@ -528,12 +528,11 @@ function HandleAction(data)
         
         function restoreState(onStateReady)
         {
-            data.component.$stateAsJsProperty = element.state;
             data.component.$rootJsonNodeForUI = element[RootNode];
 
             data.component.setState({
                 $rootNode: Clone(data.component.$rootJsonNodeForUI),
-                $state   : Clone(data.component.$stateAsJsProperty)
+                $state   : element.state
             }, onStateReady);
         }
 
@@ -692,13 +691,12 @@ function DefineComponent(componentDeclaration)
             NotNull(componentDeclaration[FullTypeNameOfState]);
             
             this.$FullTypeNameOfState = componentDeclaration[FullTypeNameOfState];
-            this.$stateAsJsProperty   = componentDeclaration.state;
             this.$rootJsonNodeForUI   = componentDeclaration[RootNode];
 
             this.state =
             {
                 $rootNode: Clone(this.$rootJsonNodeForUI),
-                $state   : Clone(this.$stateAsJsProperty)
+                $state   : componentDeclaration.state
             };
 
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
