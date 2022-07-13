@@ -25,6 +25,11 @@ class ModelA
                 onClick = _ => state.ClickCount++
             };
         }
+
+        public void ComponentDidMount()
+        {
+            state.PropA += "-DidMountA-";
+        }
     }
 
 
@@ -49,7 +54,12 @@ class ModelA
                 onClick = _ => state.ClickCount++
             };
         }
+
+    public void ComponentDidMount()
+    {
+        state.PropB += "-DidMountB-";
     }
+}
 
 
 class ModelC
