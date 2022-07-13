@@ -528,10 +528,8 @@ function HandleAction(data)
         
         function restoreState(onStateReady)
         {
-            data.component.$rootJsonNodeForUI = element[RootNode];
-
             data.component.setState({
-                $rootNode: Clone(data.component.$rootJsonNodeForUI),
+                $rootNode: element[RootNode],
                 $state   : element.state
             }, onStateReady);
         }
@@ -691,11 +689,10 @@ function DefineComponent(componentDeclaration)
             NotNull(componentDeclaration[FullTypeNameOfState]);
             
             this.$FullTypeNameOfState = componentDeclaration[FullTypeNameOfState];
-            this.$rootJsonNodeForUI   = componentDeclaration[RootNode];
-
+            
             this.state =
             {
-                $rootNode: Clone(this.$rootJsonNodeForUI),
+                $rootNode: componentDeclaration[RootNode],
                 $state   : componentDeclaration.state
             };
 
@@ -748,9 +745,7 @@ function DefineComponent(componentDeclaration)
         {
             this.ReactDotNetManagedChildComponents = [];
             
-            NotFrozen(this.$rootJsonNodeForUI);
-
-            return ConvertToReactElement(this.$rootJsonNodeForUI, this);
+            return ConvertToReactElement(this.state.$rootNode, this);
         }
 
         componentDidMount()
