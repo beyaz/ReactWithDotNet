@@ -270,89 +270,34 @@ static class JsonSerializationOptionHelper
                     propertyValue = enumValue.ToString();
                 }
 
+                
+                if (propertyValue is Expression<Func<int>> ||
+                    propertyValue is Expression<Func<string>>)
                 {
-                    if (propertyValue is Expression<Func<int>> ||
-                        propertyValue is Expression<Func<string>>)
+                    string[] calculateSourcePathFunc()
                     {
-                        string[] calculateSourcePathFunc()
+                        if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
                         {
-                            if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
-                            {
-                                return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
-                            }
-
-                            if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
-                            {
-                                return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
-                            }
-
-                            throw new NotImplementedException();
+                            return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
                         }
 
-                        var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
-                        if (bindInfo == null)
+                        if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
                         {
-                            return (null, true);
+                            return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
                         }
 
-                        return (bindInfo, false);
+                        throw new NotImplementedException();
                     }
-                }
 
-
-                {
-                    if (propertyValue is BindibleProperty<string> bindibleProperty)
+                    var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
+                    if (bindInfo == null)
                     {
-                        if (bindibleProperty.PathInState != null)
-                        {
-                            string[] calculateSourcePathFunc() => bindibleProperty.AsBindingSourcePathInState();
-
-                            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
-                            if (bindInfo == null)
-                            {
-                                return (null, true);
-                            }
-
-                            return (bindInfo, false);
-                        }
-
-                        var rawValue = bindibleProperty.RawValue;
-
-                        if (rawValue is null && reactDefaultValueAttribute is not null)
-                        {
-                            rawValue = reactDefaultValueAttribute.DefaultValue;
-                        }
-
-                        return (rawValue, false);
+                        return (null, true);
                     }
+
+                    return (bindInfo, false);
                 }
-
-                {
-                    if (propertyValue is BindibleProperty<int> bindibleProperty)
-                    {
-                        if (bindibleProperty.PathInState != null)
-                        {
-                            string[] calculateSourcePathFunc() => bindibleProperty.AsBindingSourcePathInState();
-
-                            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
-                            if (bindInfo == null)
-                            {
-                                return (null, true);
-                            }
-
-                            return (bindInfo, false);
-                        }
-
-                        var rawValue = bindibleProperty.RawValue;
-
-                        if (rawValue is 0 && reactDefaultValueAttribute is not null)
-                        {
-                            rawValue = int.Parse(reactDefaultValueAttribute.DefaultValue);
-                        }
-
-                        return (rawValue, false);
-                    }
-                }
+                
 
                 if (propertyName != nameof(IReactStatefulComponent.___RootNode___) && propertyValue is Element element)
                 {
