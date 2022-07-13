@@ -537,26 +537,12 @@ function HandleAction(data)
     const remoteMethodName = data.remoteMethodName;
     var component = data.component;
     
-    function getStateAsJson()
-    {
-        var state = component.state.$state;
-
-        var beforePostingState = TryGetComponentAction(component, "beforePostingState");
-        if (beforePostingState)
-        {
-            state = beforePostingState(Clone(state));
-        }
-
-        return JSON.stringify(state);
-    }
-
     var request =
     {
         MethodName: "HandleComponentEvent",
 
         EventHandlerMethodName: remoteMethodName,
         FullName   : component.constructor[DotNetTypeOfReactComponent],
-        StateAsJson: getStateAsJson(),
         CapturedStateTree: component.CaptureStateTree()
     };
     
@@ -613,7 +599,7 @@ function HandleAction(data)
                 {
                     setTimeout(function()
                     {
-                        request.StateAsJson = JSON.stringify(component.state.$state);
+                        request.CapturedStateTree = component.CaptureStateTree();
                         SendRequest(request, onSuccess);
 
                     }, clientTask.Timeout);
@@ -706,11 +692,6 @@ function GetComponentActionLocation(fullName, actionName)
 function RegisterActionToComponent(parameterObject)
 {
     componentActions[GetComponentActionLocation(parameterObject.typeNameOfComponent, parameterObject.actionName)] = parameterObject.handlerFunction;
-}
-
-function TryGetComponentAction(component, actionName)
-{
-    return componentActions[GetComponentActionLocation(component[DotNetTypeOfReactComponent], actionName)];
 }
 
 function TryDispatchComponentAction(component, actionName)

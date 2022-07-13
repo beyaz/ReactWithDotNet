@@ -28,7 +28,6 @@ public class ComponentRequest
     public string MethodName { get; set; }
 
     public string SearchPartOfUrl { get; set; }
-    public string StateAsJson { get; set; }
 }
 
 [Serializable]
@@ -165,7 +164,7 @@ public static class ComponentRequestHandler
             
             // Init state
             {
-                var errorMessage = setState(type, instance, request.StateAsJson);
+                var errorMessage = setState(type, instance, request.CapturedStateTree["0"].StateAsJson);
                 if (errorMessage != null)
                 {
                     return new ComponentResponse { ErrorMessage = errorMessage };
