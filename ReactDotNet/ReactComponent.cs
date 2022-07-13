@@ -98,6 +98,9 @@ namespace ReactDotNet
 
         public string ___TypeOfState___ => typeof(TState).GetFullName();
 
+        public bool ___HasComponentDidMountMethod___ => GetType().GetMethod("ComponentDidMount") != null;
+        
+
         public abstract Element render();
 
         public TState state { get; set; }
