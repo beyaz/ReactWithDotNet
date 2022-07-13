@@ -10,11 +10,6 @@ namespace ReactDotNet;
 
 public static partial class Mixin
 {
-    public static BindibleProperty<T> Bind<T>(this Expression<Func<T>> propertyAccessor)
-    {
-        return new BindibleProperty<T> {PathInState = propertyAccessor.AsBindingSourcePathInState()};
-    }
-
     internal static IReadOnlyDictionary<string, string> ParseQueryString(string query)
     {
         var items = new Dictionary<string, string>();

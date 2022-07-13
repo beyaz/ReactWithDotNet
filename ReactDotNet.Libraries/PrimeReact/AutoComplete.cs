@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections;
+using System.Linq.Expressions;
 
 namespace ReactDotNet.PrimeReact;
 
 public class AutoComplete : ElementBase
 {
     [React]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public BindibleProperty<string> value { get; set; }
+    public string value { get; set; }
 
+    [React]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    public Expression<Func<string>> valueBind { get; set; }
+    
     /// <summary>
     ///     An array of suggestions to display.
     /// </summary>

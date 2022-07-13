@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace ReactDotNet.PrimeReact;
 
@@ -11,8 +12,14 @@ public class Slider : ElementBase
     ///     Value of the component.
     /// </summary>
     [React]
+    public int value { get; set; }
+
+    /// <summary>
+    ///     Value of the component.
+    /// </summary>
+    [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public BindibleProperty<int> value { get; set; }
+    public Expression<Func<int>> valueBind { get; set; }
 
     /// <summary>
     ///     Mininum boundary value.

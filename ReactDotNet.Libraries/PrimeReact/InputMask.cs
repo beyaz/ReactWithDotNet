@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace ReactDotNet.PrimeReact;
 
@@ -12,8 +13,15 @@ public class InputMask : ElementBase
     public string mask { get; set; }
 
     [React]
+    public string value { get; set; }
+
+
+    [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public BindibleProperty<string> value { get; set; }
+    public Expression<Func<string>> valueBind { get; set; }
+
+
+
 
     /// <summary>
     ///     Advisory information to display on input.

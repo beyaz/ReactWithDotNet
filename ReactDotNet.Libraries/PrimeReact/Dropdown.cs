@@ -22,8 +22,11 @@ public class Dropdown : ElementBase
     public IEnumerable options { get; set; }
 
     [React]
+    public string value { get; set; }
+
+    [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public BindibleProperty<string> value { get; set; }
+    public Expression<Func<string>> valueBind { get; set; }
 
     [React]
     public bool? autoFocus { get; set; }
