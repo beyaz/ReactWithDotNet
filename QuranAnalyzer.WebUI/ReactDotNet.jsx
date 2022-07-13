@@ -780,6 +780,7 @@ function DefineComponent(componentDeclaration)
         render()
         {
             this.ReactDotNetManagedChildComponents = [];
+            
             NotFrozen(this.$rootJsonNodeForUI);
 
             return ConvertToReactElement(this.$rootJsonNodeForUI, this);
