@@ -21,7 +21,7 @@ public class ComponentRequest
 {
     public double AvailableHeight { get; set; }
     public double AvailableWidth { get; set; }
-    public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
+    public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
     public string EventHandlerMethodName { get; set; }
     public string FullName { get; set; }
@@ -131,7 +131,7 @@ public static class ComponentRequestHandler
             {
                 trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-                elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates);
+                elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.CapturedStateTree);
 
                 trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             }
@@ -201,7 +201,7 @@ public static class ComponentRequestHandler
             {
                 trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-                elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.ChildStates);
+                elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.CapturedStateTree);
 
                 trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             }

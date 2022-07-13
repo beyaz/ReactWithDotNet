@@ -574,7 +574,7 @@ function HandleAction(data)
         EventHandlerMethodName: remoteMethodName,
         FullName   : component.constructor[DotNetTypeOfReactComponent],
         StateAsJson: getStateAsJson(),
-        ChildStates: component.CaptureStateTree()
+        CapturedStateTree: component.CaptureStateTree()
     };
     
     request.eventArgumentsAsJsonArray = NormalizeEventArguments(data.eventArguments).map(JSON.stringify);
