@@ -261,7 +261,7 @@ function ConvertToReactElement(jsonNode, component)
     // is ReactDotNet component
     if (jsonNode[DotNetTypeOfReactComponent])
     {
-        var cmp = DefineComponent(jsonNode);
+        const cmp = DefineComponent(jsonNode);
 
         return createElement(cmp, {key: NotNull(jsonNode.key)});
     }
