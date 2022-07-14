@@ -62,18 +62,15 @@ class View : ReactComponent<MainViewModel>
         {
             state.PageId = pageId;
 
-            //if (pageId == InitialLetters.View.PageId)
+            state.ClientTask = new ClientTaskListenEvent
             {
-                state.ClientTask = new ClientTaskCallJsFunction
+                EventName     = "MainContentDivScrollChanged",
+                RouteToMethod = nameof(OnMainContentDivScrollChanged),
+                After = new ClientTaskCallJsFunction
                 {
-                    JsFunctionPath = "RegisterScrollEvents",
-                    After = new ClientTaskListenEvent
-                    {
-                        EventName     = "MainContentDivScrollChanged",
-                        RouteToMethod = nameof(OnMainContentDivScrollChanged)
-                    }
-                };
-            }
+                    JsFunctionPath = "RegisterScrollEvents"
+                }
+            };
         }
     }
     
