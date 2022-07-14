@@ -81,6 +81,11 @@ class View : ReactComponent<MainViewModel>
 
     }
 
+    public void ComponentDidMount()
+    {
+        
+    }
+    
     void OnFirstLoaded()
     {
         state.ClientTask = new ClientTaskListenEvent

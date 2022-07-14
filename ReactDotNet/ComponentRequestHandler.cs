@@ -148,7 +148,6 @@ public static class ComponentRequestHandler
 
             // Find method
             var methodInfo = type.GetMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
             if (methodInfo == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}" };
