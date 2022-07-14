@@ -752,6 +752,7 @@ function DefineComponent(componentDeclaration)
             if (this.props.$jsonNode.___HasComponentDidMountMethod___)
             {
                 HandleAction({ remoteMethodName: 'ComponentDidMount', component: this, eventArguments: [] });
+                return;
             }
         }
 
@@ -789,7 +790,7 @@ function RenderComponentIn(obj)
 
     OnDocumentReady(function()
     {
-        var request =
+        const request =
         {
             MethodName: "FetchComponent",
             FullName: fullTypeNameOfReactComponent
@@ -836,6 +837,11 @@ function RenderComponentIn(obj)
                 {
                     CallJsFunctionInPath(clientTask);
 
+                    if (clientTask.After == null)
+                    {
+                        // todo: fix
+                        OnReactStateReady();
+                    }
                     return processClientTask(clientTask.After);
                 }
 
@@ -853,7 +859,7 @@ function RenderComponentIn(obj)
 
 function CallJsFunctionInPath(clientTask)
 {
-    var fn = GetValueInPath(window, clientTask.JsFunctionPath.split("."));
+    const fn = GetValueInPath(window, clientTask.JsFunctionPath.split("."));
     if (fn == null)
     {
         throw Error("Function not found. Function is " + clientTask.JsFunctionPath);
