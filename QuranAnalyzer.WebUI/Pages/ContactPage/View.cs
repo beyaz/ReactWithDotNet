@@ -11,10 +11,8 @@ public sealed class Model
     public string Note { get; set; }
 }
 
-public class View : PageBase
+public class View : ReactComponent
 {
-    public override string id { get; set; } = nameof(ContactPage);
-
     public override Element render()
     {
         var model = ResourceHelper.Read<Model>("Pages.ContactPage.Data.yaml");

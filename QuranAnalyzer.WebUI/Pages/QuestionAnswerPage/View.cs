@@ -25,7 +25,7 @@ public sealed class QuestionAnswerPair
 }
 
 
-public class View : PageBase
+public class View : ReactComponent
 {
     class QuestionLink: ReactComponent
     {
@@ -73,8 +73,7 @@ public class View : PageBase
         }
     }
 
-
-    public override string id { get; set; } = nameof(QuestionAnswerPage);
+    
 
     public override Element render()
         {

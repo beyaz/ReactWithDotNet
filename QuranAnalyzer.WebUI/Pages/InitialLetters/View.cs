@@ -121,12 +121,8 @@ class Chapter : ReactComponent
     }
 }
 
-public class View : PageBase
+public class View : ReactComponent
 {
-    public override string id { get; set; } = PageId;
-
-    public static string PageId => nameof(InitialLetters);
-
     public override Element render()
     {
         const string Elif = "Elif-" + ArabicCharacters.Elif;
