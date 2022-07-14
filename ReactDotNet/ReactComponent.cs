@@ -103,6 +103,19 @@ namespace ReactDotNet
 
         public abstract Element render();
 
-        public TState state { get; set; }
+        TState ____ss;
+
+        public TState state
+        {
+            get => ____ss;
+            set
+            {
+                ____ss = value;
+                if (value == null)
+                {
+                    ____ss.GetType();
+                }
+            }
+        }
     }
 }

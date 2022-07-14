@@ -16,6 +16,10 @@ class ModelA
             state = new ModelA { PropA = "A" };
         }
 
+        public ComponentA()
+        {
+        state = new ModelA { PropA = "A" };
+    }
         public override Element render()
         {
             return new div
@@ -45,6 +49,11 @@ class ModelA
             state = new ModelB { PropB = "B" };
         }
 
+        public ComponentB()
+        {
+        state = new ModelB { PropB = "B" };
+    }
+        
         public override Element render()
         {
             return new div
@@ -74,6 +83,10 @@ class ComponentC : ReactComponent<ModelC>
         state = new ModelC { PropC = "C" };
     }
 
+    public ComponentC()
+    {
+        state = new ModelC { PropC = "C" };
+    }
     public override Element render()
     {
         return new div
@@ -97,7 +110,7 @@ class ModelContainer1
 }
 class Container1 : ReactComponent<ModelContainer1>
 {
-    public override void constructor()
+    public Container1()
     {
         state = new ModelContainer1
         {
@@ -108,6 +121,11 @@ class Container1 : ReactComponent<ModelContainer1>
         };
     }
 
+    public override void constructor()
+    {
+        
+    }
+
     public override Element render()
     {
         return new div
@@ -115,9 +133,10 @@ class Container1 : ReactComponent<ModelContainer1>
             style = { display = "flex"},
             children =
             {
-                new ComponentA {state = state.A},
-                new ComponentB{state  = state.B},
-                new ComponentC{state  = state.C},
+                new ComponentA {},
+                new ComponentB{},
+                state.ClickCount % 3 ==0 ? new div{innerText ="Mod3"}: null,
+                new ComponentC{},
                 new div(state.Container1Text + state.ClickCount),
                 
             },
@@ -138,7 +157,7 @@ class ModelContainer2
 }
 class Container2 : ReactComponent<ModelContainer2>
 {
-    public override void constructor()
+    public Container2()
     {
         state = new ModelContainer2
         {
@@ -149,6 +168,11 @@ class Container2 : ReactComponent<ModelContainer2>
         };
     }
 
+    public override void constructor()
+    {
+        
+    }
+
     public override Element render()
     {
         return new div
@@ -156,9 +180,9 @@ class Container2 : ReactComponent<ModelContainer2>
             style = { display = "flex" },
             children =
             {
-                new ComponentA {state = state.A},
-                new ComponentB{state  = state.B},
-                new ComponentC{state  = state.C},
+                new ComponentA {},
+                new ComponentB{},
+                new ComponentC{},
                 new div(state.Container2Text + state.ClickCount++)
             },
             onClick = _ => state.ClickCount++
@@ -176,7 +200,7 @@ class ModelContainer3
 }
 class Container3 : ReactComponent<ModelContainer3>
 {
-    public override void constructor()
+    public Container3()
     {
         state = new ModelContainer3
         {
@@ -198,6 +222,11 @@ class Container3 : ReactComponent<ModelContainer3>
         };
     }
 
+    public override void constructor()
+    {
+        
+    }
+
     public override Element render()
     {
         return new div
@@ -205,9 +234,8 @@ class Container3 : ReactComponent<ModelContainer3>
             style = { display = "flex", flexDirection = "column"},
             children =
             {
-                new Container1{ state = state.ContainerModel1},
-                // state.ClickCount % 3 ==0 ? new div{innerText ="Mod3"}: null,
-                new Container2{ state = state.ContainerModel2},
+                new Container1{ },
+                new Container2{ },
                 new div{innerText     = state.Container3Text + state.ClickCount}
 
             },

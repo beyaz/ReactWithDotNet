@@ -262,7 +262,12 @@ function ConvertToReactElement(jsonNode, component)
     {
         const cmp = DefineComponent(jsonNode);
 
-        return createElement(cmp, {key: NotNull(jsonNode.key), ParentReactDotNetManagedComponent: component });
+        return createElement(cmp,
+            {
+                key: NotNull(jsonNode.key),
+                ParentReactDotNetManagedComponent: component,
+                $jsonNode: jsonNode
+            });
     }
 
     var i;
@@ -671,15 +676,11 @@ var ComponentDefinitions = {
 function DefineComponent(componentDeclaration)
 {
     const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
-    const fullTypeNameOfState = NotNull(componentDeclaration[FullTypeNameOfState]);
-    const rootNode = NotNull(componentDeclaration[RootNode]);
-    const state = componentDeclaration.state;
-
 
     const component = ComponentDefinitions[dotNetTypeOfReactComponent];
     if (component)
     {
-        // return component;
+        return component;
     }
     
     class NewComponent extends React.Component
@@ -690,8 +691,8 @@ function DefineComponent(componentDeclaration)
 
             this.state =
             {
-                $rootNode: rootNode,
-                $state   : state
+                $rootNode: NotNull(props.$jsonNode[RootNode]),
+                $state   : NotNull(props.$jsonNode)
             };
 
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
@@ -716,7 +717,7 @@ function DefineComponent(componentDeclaration)
                 prefix = "0";
             }
             
-            map[prefix] = { StateAsJson: JSON.stringify(this.state.$state), FullTypeNameOfState: fullTypeNameOfState };
+            map[prefix] = { StateAsJson: JSON.stringify(this.state.$state), FullTypeNameOfState: NotNull(this.props.$jsonNode[FullTypeNameOfState]) };
             
             if (this.ReactDotNetManagedChildComponents)
             {
@@ -748,7 +749,7 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
-            
+            console.log(dotNetTypeOfReactComponent);
         }
 
         componentWillUnmount()
@@ -812,7 +813,7 @@ function RenderComponentIn(obj)
             
             element.state.ClientTask = null;
             
-            const reactElement = React.createElement(component);
+            const reactElement = React.createElement(component, {key: '0', $jsonNode: element});
 
             function processClientTask(clientTask)
             {
