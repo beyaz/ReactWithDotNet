@@ -84,11 +84,7 @@ class ComponentC : ReactComponent<ModelC>
 
 class ModelContainer1
 {
-    public ModelA A { get; set; }
-    public ModelB B { get; set; }
-    public ModelC C { get; set; }
     public string Container1Text { get; set; }
-
     public int ClickCount { get; set; }
 }
 
@@ -98,13 +94,24 @@ class Container1 : ReactComponent<ModelContainer1>
     {
         state = new ModelContainer1
         {
-            A              = new ModelA { PropA = "A" },
-            B              = new ModelB { PropB = "B" },
-            C              = new ModelC { PropC = "C" },
             Container1Text = "Container1Text"
         };
     }
 
+    Element conditionalRender()
+    {
+        if (this.state.ClickCount % 3 == 0)
+        {
+            return new div
+            {
+                new div { innerText = "Mod3" },
+                new ComponentC()
+            };
+        }
+
+        return new ComponentC();
+    }
+    
     public override Element render()
     {
         return new div
@@ -114,7 +121,7 @@ class Container1 : ReactComponent<ModelContainer1>
             {
                 new ComponentA(),
                 new ComponentB(),
-                state.ClickCount % 3 == 0 ? new div { innerText = "Mod3" } : null,
+                conditionalRender(),
                 new ComponentC(),
                 new div(state.Container1Text + state.ClickCount),
             },
@@ -125,11 +132,7 @@ class Container1 : ReactComponent<ModelContainer1>
 
 class ModelContainer2
 {
-    public ModelA A { get; set; }
-    public ModelB B { get; set; }
-    public ModelC C { get; set; }
     public string Container2Text { get; set; }
-
     public int ClickCount { get; set; }
 }
 
@@ -139,9 +142,6 @@ class Container2 : ReactComponent<ModelContainer2>
     {
         state = new ModelContainer2
         {
-            A              = new ModelA { PropA = "A" },
-            B              = new ModelB { PropB = "B" },
-            C              = new ModelC { PropC = "C" },
             Container2Text = "Container2Text"
         };
     }
@@ -165,8 +165,6 @@ class Container2 : ReactComponent<ModelContainer2>
 
 class ModelContainer3
 {
-    public ModelContainer1 ContainerModel1 { get; set; }
-    public ModelContainer2 ContainerModel2 { get; set; }
 
     public string Container3Text { get; set; }
     public int ClickCount { get; set; }
@@ -178,20 +176,6 @@ class Container3 : ReactComponent<ModelContainer3>
     {
         state = new ModelContainer3
         {
-            ContainerModel1 = new ModelContainer1
-            {
-                A              = new ModelA { PropA = "A" },
-                B              = new ModelB { PropB = "B" },
-                C              = new ModelC { PropC = "C" },
-                Container1Text = "Container1_"
-            },
-            ContainerModel2 = new ModelContainer2
-            {
-                A              = new ModelA { PropA = "A" },
-                B              = new ModelB { PropB = "B" },
-                C              = new ModelC { PropC = "C" },
-                Container2Text = "Container2_"
-            },
             Container3Text = "Container3_"
         };
     }
@@ -211,3 +195,197 @@ class Container3 : ReactComponent<ModelContainer3>
         };
     }
 }
+
+/*
+ https://jsfiddle.net/boilerplate/react-jsx
+
+class ComponentA extends React.Component
+{
+    constructor(props) 
+    {
+        super(props);
+
+        this.state = { PropA: "A", ClickCount: 0 };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() 
+    {
+        this.setState({ClickCount: this.state.ClickCount + 1});
+    }
+    
+    render()
+    {
+        return (
+          <div style={{ width: "200px", height : "100px", border : "1px solid blue", textAlign : "center", paddingTop: "20px" }} onClick={this.handleClick}>
+              {this.state.PropA + this.state.ClickCount}
+          </div>
+        );        
+    }
+}
+
+class ComponentB extends React.Component
+{
+    constructor(props) 
+    {
+        super(props);
+
+        this.state = { PropB: "B", ClickCount: 0 };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() 
+    {
+        this.setState({ClickCount: this.state.ClickCount + 1});
+    }
+    
+    render()
+    {
+        return (
+          <div style={{ width: "250px", height : "150px", border : "1px solid blue", textAlign : "center", paddingTop: "40px" }} onClick={this.handleClick}>
+              {this.state.PropB + this.state.ClickCount}
+          </div>
+        );        
+    }
+}
+
+class ComponentC extends React.Component
+{
+    constructor(props) 
+    {
+        super(props);
+
+        this.state = { PropC: "C", ClickCount: 0 };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() 
+    {
+        this.setState({ClickCount: this.state.ClickCount + 1});
+    }
+    
+    render()
+    {
+        return (
+          <div style={{ width: "300px", height : "200px", border : "1px solid blue", textAlign : "center", paddingTop: "50px" }} onClick={this.handleClick}>
+              {this.state.PropC + this.state.ClickCount}
+          </div>
+        );        
+    }
+}
+
+class Container1 extends React.Component
+{
+    constructor(props) 
+    {
+        super(props);
+
+        this.state = { Container1Text: "Container1Text", ClickCount: 0 };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() 
+    {
+        this.setState({ClickCount: this.state.ClickCount + 1});
+    }
+    
+    conditionalRender()
+    {
+        if( this.state.ClickCount % 3 == 0)
+        {
+            return (
+                <div>
+                    <div>Mod3</div>
+                    <ComponentC />
+                </div>            
+            );
+        }
+        
+        return (<ComponentC />);        
+    }
+    
+    render()
+    {
+        return (
+          <div style={{ display: "flex" }} onClick={this.handleClick}>
+              <ComponentA />
+              <ComponentB />
+              {this.conditionalRender()},
+              <div onClick={this.handleClick}>
+                  {this.state.Container1Text + this.state.ClickCount}
+              </div>
+          </div>
+        );        
+    }
+}
+
+class Container2 extends React.Component
+{
+    constructor(props) 
+    {
+        super(props);
+
+        this.state = { Container2Text: "Container2Text", ClickCount: 0 };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() 
+    {
+        this.setState({ClickCount: this.state.ClickCount + 1});
+    }
+    
+    render()
+    {
+        return (
+          <div style={{ display: "flex" }} onClick={this.handleClick}>
+              <ComponentA />
+              <ComponentB />
+              <ComponentC />
+              <div onClick={this.handleClick}>
+                  {this.state.Container2Text + this.state.ClickCount}
+              </div>
+          </div>
+        );        
+    }
+}
+
+class Container3 extends React.Component
+{
+    constructor(props) 
+    {
+        super(props);
+
+        this.state = { Container3Text: "Container3Text", ClickCount: 0 };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() 
+    {
+        this.setState({ClickCount: this.state.ClickCount + 1});
+    }
+    
+    render()
+    {
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }} onClick={this.handleClick}>
+              <Container1 />
+              <Container2 />
+              <div onClick={this.handleClick}>
+                  {this.state.Container3Text + this.state.ClickCount}
+              </div>
+          </div>
+        );        
+    }
+}
+
+
+ReactDOM.render(<Container3 />, document.querySelector("#app"))
+
+
+ */
