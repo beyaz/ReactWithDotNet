@@ -54,62 +54,29 @@ class View : ReactComponent<MainViewModel>
     public View()
     {
         state = new MainViewModel();
-
-        if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("fact", out var selectedFact))
-        {
-            state.SelectedFact = selectedFact;
-        }
-
-        if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("page", out var pageId))
-        {
-            state.PageId = pageId;
-
-            if (pageId == InitialLetters.View.PageId)
-            {
-                state.ClientTask = new ClientTaskListenComponentEvent
-                {
-                    EventName     = ReactComponentEvents.componentDidMount.ToString(),
-                    RouteToMethod = nameof(OnFirstLoaded),
-
-                    After = new ClientTaskCallJsFunction
-                    {
-                        JsFunctionPath = "RegisterScrollEvents"
-                    }
-                };
-            }
-        }
-
     }
 
     public void ComponentDidMount()
     {
-        
-    }
-    
-    void OnFirstLoaded()
-    {
-        state.ClientTask = new ClientTaskListenEvent
+        if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("page", out var pageId))
         {
-            EventName     = nameof(OnFactClicked),
-            RouteToMethod = nameof(OnFactClicked),
-            After = new ClientTaskListenEvent
-            {
-                EventName     = "MainContentDivScrollChanged",
-                RouteToMethod = nameof(OnMainContentDivScrollChanged)
-            }
-        };
-    }
-    
-    void OnFactClicked(string selectedFactName)
-    {
-        state.SelectedFact = selectedFactName;
-        state.ClientTask = new ClientTaskPushHistory
-        {
-            Title = selectedFactName,
-            Url   = "/index.html?fact=" + selectedFactName
-        };
-    }
+            state.PageId = pageId;
 
+            //if (pageId == InitialLetters.View.PageId)
+            {
+                state.ClientTask = new ClientTaskCallJsFunction
+                {
+                    JsFunctionPath = "RegisterScrollEvents",
+                    After = new ClientTaskListenEvent
+                    {
+                        EventName     = "MainContentDivScrollChanged",
+                        RouteToMethod = nameof(OnMainContentDivScrollChanged)
+                    }
+                };
+            }
+        }
+    }
+    
     public void OnMainContentDivScrollChanged(double mainDivScrollY)
     {
         state.MainDivScrollY = mainDivScrollY;
@@ -142,47 +109,27 @@ class View : ReactComponent<MainViewModel>
 
         Element buildMainContent()
         {
-            if (state.PageId is not null)
+            if (state.PageId == "QuestionAnswerPage")
             {
-                var pages = new PageBase[]
-                {
-                    new QuestionAnswerPage.View(),
-                    new ContactPage.View(),
-                    new InitialLetters.View(),
-                    
-                };
-
-                var page = pages.FirstOrDefault(x => x.id == state.PageId);
-                if (page is not null)
-                {
-                    return page;
-                }
-
-                if (state.PageId == "CharacterCounting")
-                {
-                    var tt = new CharacterCountingView();
-
-                    tt.Context = Context;
-                    
-                    
-                    return tt;
-                }
+                return new QuestionAnswerPage.View();
             }
 
-            return new div
+            if (state.PageId == "ContactPage")
             {
-                new LargeTitle("Bu sitede ne var?"){ style={marginTopBottom = "14px"}},
-                new div(@"
-Bir kaç yıl önce Kuran hakkında 19 Sistemi - 19 Mucizesi benzeri isimlerle duyduğum bir konu üzerine vakit buldukça araştırma yapma fırsatım oldu.
-Elimden geldiğince aklımın yettiği ölçüde nedir ne değildir inceledim.
-Bu konu etrafında doğru yanlış bir çok şey duydum.
-Konuyu kendi bizzat incelemek ve konu etrafında dönen doğru yanlış şeylere kendimce verdiğim cevapları paylaşmak istedim.
-Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyetindeyim.
-Site şu 3 ana konuyu ele alır.
-Lütfen konunun anlaşılması için soldaki menüyü sırası ile takip ediniz.
-")
-            };
+                return new ContactPage.View();
+            }
 
+            if (state.PageId == "InitialLetters")
+            {
+                return new InitialLetters.View();
+            }
+
+            if (state.PageId == "CharacterCounting")
+            {
+                return new CharacterCountingView();
+            }
+
+            return new MainPageContent();
         }
 
 
