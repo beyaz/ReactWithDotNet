@@ -99,19 +99,6 @@ namespace ReactDotNet
 
         public abstract Element render();
 
-        TState ____ss;
-
-        public TState state
-        {
-            get => ____ss;
-            protected set
-            {
-                ____ss = value;
-                if (value == null)
-                {
-                    ____ss.GetType();
-                }
-            }
-        }
+        public  TState state { get; protected set; }
     }
 }
