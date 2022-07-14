@@ -92,8 +92,6 @@ static class JsonSerializationOptionHelper
 
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
         {
-
-
             string fixPropertyName(string propertyName)
             {
                 if (options.PropertyNamingPolicy != null)
@@ -320,31 +318,7 @@ static class JsonSerializationOptionHelper
             }
         }
 
-        static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
-        {
-            var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
-            if (reactBindAttribute == null)
-            {
-                return null;
-            }
-
-            string defaultValue = null;
-
-            if (reactDefaultValueAttribute != null)
-            {
-                defaultValue = reactDefaultValueAttribute.DefaultValue;
-            }
-
-            return new BindInfo
-            {
-                targetProp    = reactBindAttribute.targetProp,
-                eventName     = reactBindAttribute.eventName,
-                sourcePath    = calculateSourcePathFunc(),
-                IsBinding     = true,
-                jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
-                defaultValue  = defaultValue
-            };
-        }
+        
 
         
         #endregion
@@ -485,12 +459,14 @@ public static class ElementSerializer
         return propertyName;
     }
 
-    public static IReadOnlyDictionary<string, object> ToMap(this HtmlElement element)
+    public static IReadOnlyDictionary<string, object> ToMap(this Element element)
     {
-        var map = new Dictionary<string, object>
+        var map = new Dictionary<string, object>();
+
+        if (element is HtmlElement htmlElement)
         {
-            { "$type", element.Type }
-        };
+            map.Add("$type", htmlElement.Type);
+        }
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
@@ -517,8 +493,74 @@ public static class ElementSerializer
                     continue;
                 }
             }
+
+
+            if (propertyValue is Expression<Func<int>> ||
+                propertyValue is Expression<Func<string>>)
+            {
+                string[] calculateSourcePathFunc()
+                {
+                    if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
+                    {
+                        return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
+                    }
+
+                    if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
+                    {
+                        return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
+                    }
+
+                    throw new NotImplementedException();
+                }
+
+                var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
+                if (bindInfo == null)
+                {
+                    continue;
+                }
+
+
+                map.Add(GetPropertyName(propertyInfo), bindInfo);
+                continue;
+            }
+
+            map.Add(GetPropertyName(propertyInfo), propertyValue);
         }
 
+        var reactAttributes = map.Keys.Where(k => k != "$type").ToArray();
+
+        if (reactAttributes.Length > 0)
+        {
+            map.Add(nameof(reactAttributes), reactAttributes);
+        }
+        
+
         return map;
+    }
+
+    public static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
+    {
+        var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
+        if (reactBindAttribute == null)
+        {
+            return null;
+        }
+
+        string defaultValue = null;
+
+        if (reactDefaultValueAttribute != null)
+        {
+            defaultValue = reactDefaultValueAttribute.DefaultValue;
+        }
+
+        return new BindInfo
+        {
+            targetProp    = reactBindAttribute.targetProp,
+            eventName     = reactBindAttribute.eventName,
+            sourcePath    = calculateSourcePathFunc(),
+            IsBinding     = true,
+            jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
+            defaultValue  = defaultValue
+        };
     }
 }

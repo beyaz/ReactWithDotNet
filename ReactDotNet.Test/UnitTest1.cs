@@ -15,16 +15,19 @@ public class UnitTest1
     [TestMethod]
     public void ToJsonBasicHtmlElements()
     {
-        var el = new a { className = "X", href = "abc"};
+        var map = new a { className = "X", href = "abc", style = { marginRight = "5px", paddingTop = "6px"}}.ToMap();
+        var json = JsonSerializer.Serialize(map,new JsonSerializerOptions{ IgnoreNullValues = true});
 
-//        el.ToJson().ShouldBeSameAs(@"
-//{
-//  $type: 'a',
-//  className: 'X',
-//  href: 'abc'
-//}
+        json.ShouldBeSameAs(@"
+        {
+          ""$type"": ""a"",
+          ""href"": ""abc"",
+          ""style"":{""marginRight"": ""5px"", ""paddingTop"": ""6px""},
+          ""className"": ""X"",
+          ""reactAttributes"": [""href"",""style"", ""className""]
+        }
 
-//");
+        ");
 
 
     }
