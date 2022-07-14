@@ -12,6 +12,23 @@ namespace ReactDotNet;
 public class UnitTest1
 {
 
+    [TestMethod]
+    public void ToJsonBasicHtmlElements()
+    {
+        var el = new a { className = "X", href = "abc"};
+
+//        el.ToJson().ShouldBeSameAs(@"
+//{
+//  $type: 'a',
+//  className: 'X',
+//  href: 'abc'
+//}
+
+//");
+
+
+    }
+
     class View1 : ReactComponent<SampleModelA>
     {
         public string Prop1 { get; set; } = "PropValue1";

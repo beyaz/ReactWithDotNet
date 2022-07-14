@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text.Json.Serialization;
 
 namespace ReactDotNet;
@@ -41,4 +42,3 @@ static class HtmlTextWriter
         return "to html failed";
     }
 }
-

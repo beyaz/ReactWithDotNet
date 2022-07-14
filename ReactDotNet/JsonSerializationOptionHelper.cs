@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static ReactDotNet.ElementSerializer;
 
 namespace ReactDotNet;
 
@@ -90,6 +92,19 @@ static class JsonSerializationOptionHelper
 
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
         {
+
+
+            string fixPropertyName(string propertyName)
+            {
+                if (options.PropertyNamingPolicy != null)
+                {
+                    propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
+                }
+
+                return propertyName;
+            }
+            
+            
             var elementSerializationExtraData = options.GetElementSerializationExtraData();
 
             value.BeforeSerialize();
@@ -111,7 +126,7 @@ static class JsonSerializationOptionHelper
 
             foreach (var propertyInfo in value.GetType().GetProperties().Where(x => x.GetCustomAttribute<JsonIgnoreAttribute>() == null))
             {
-                var propertyName = getPropertyName(propertyInfo);
+                var propertyName = fixPropertyName(GetPropertyName(propertyInfo));
 
                 var (propertyValue, noNeedToExport) = getPropertyValue(propertyInfo, propertyName);
                 if (noNeedToExport)
@@ -208,23 +223,7 @@ static class JsonSerializationOptionHelper
                 }
             }
 
-            string getPropertyName(PropertyInfo propertyInfo)
-            {
-                var propertyName = propertyInfo.Name;
-
-                var jsonPropertyNameAttribute = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
-                if (jsonPropertyNameAttribute != null)
-                {
-                    propertyName = jsonPropertyNameAttribute.Name;
-                }
-
-                if (options.PropertyNamingPolicy != null)
-                {
-                    propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
-                }
-
-                return propertyName;
-            }
+           
 
             (object value, bool noNeedToExport) getPropertyValue(PropertyInfo propertyInfo, string propertyName)
             {
@@ -347,15 +346,7 @@ static class JsonSerializationOptionHelper
             };
         }
 
-        static bool IsEmptyStyle(object value)
-        {
-            if (value is Style style)
-            {
-                return style.GetValues().Count == 0;
-            }
-
-            return false;
-        }
+        
         #endregion
     }
 
@@ -431,16 +422,20 @@ static class JsonSerializationOptionHelper
         #endregion
     }
 
-    class EventInfo
-    {
-        #region Public Properties
-        [JsonPropertyName("$isRemoteMethod")]
-        public bool IsRemoteMethod { get; set; }
-
-        public string remoteMethodName { get; set; }
-        #endregion
-    }
+    
 }
+
+[Serializable]
+public sealed class EventInfo
+{
+    #region Public Properties
+    [JsonPropertyName("$isRemoteMethod")]
+    public bool IsRemoteMethod { get; set; }
+
+    public string remoteMethodName { get; set; }
+    #endregion
+}
+
 
 [Serializable]
 public sealed class BindInfo
@@ -456,4 +451,74 @@ public sealed class BindInfo
 
     public string targetProp { get; set; }
     public string defaultValue { get;  set; }
+}
+
+
+
+public class JsonWriterContext
+{
+
+}
+public static class ElementSerializer
+{
+
+    public static bool IsEmptyStyle(object value)
+    {
+        if (value is Style style)
+        {
+            return style.GetValues().Count == 0;
+        }
+
+        return false;
+    }
+
+    public static string GetPropertyName(PropertyInfo propertyInfo)
+    {
+        var propertyName = propertyInfo.Name;
+
+        var jsonPropertyNameAttribute = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
+        if (jsonPropertyNameAttribute != null)
+        {
+            propertyName = jsonPropertyNameAttribute.Name;
+        }
+
+        return propertyName;
+    }
+
+    public static IReadOnlyDictionary<string, object> ToMap(this HtmlElement element)
+    {
+        var map = new Dictionary<string, object>
+        {
+            { "$type", element.Type }
+        };
+
+        foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
+        {
+            var propertyValue = propertyInfo.GetValue(element);
+
+            var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
+
+            {
+                var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+
+                if (isDefaultValue)
+                {
+                    if (reactDefaultValueAttribute != null)
+                    {
+                        propertyValue = reactDefaultValueAttribute.DefaultValue;
+                    }
+                }
+            }
+
+            {
+                var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+                if (isDefaultValue || IsEmptyStyle(propertyValue))
+                {
+                    continue;
+                }
+            }
+        }
+
+        return map;
+    }
 }
