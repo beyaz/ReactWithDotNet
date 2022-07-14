@@ -51,7 +51,7 @@ class View : ReactComponent<MainViewModel>
 
     static readonly MainPageModel ConstantData = ResourceHelper.ReadPageData<MainPageModel>(nameof(MainPage));
 
-    public override void constructor()
+    public View()
     {
         state = new MainViewModel();
 
@@ -159,7 +159,6 @@ class View : ReactComponent<MainViewModel>
 
                     tt.Context = Context;
                     
-                    tt.constructor();
                     
                     return tt;
                 }

@@ -14,7 +14,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     static readonly object fileLock = new();
     #endregion
 
-    public override void constructor()
+    public UIDesignerView()
     {
         state = ReadState();
     }
@@ -92,10 +92,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     return new div("instance is null.");
                 }
 
-                if (instance is IReactStatefulComponent reactStatefulComponent)
-                {
-                    reactStatefulComponent.constructor();
-                }
+                
 
                 foreach (var dotNetObjectPropertyValue in state.Properties.Where(x => !string.IsNullOrWhiteSpace(x.Value)))
                 {

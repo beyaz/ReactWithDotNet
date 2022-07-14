@@ -17,10 +17,7 @@ public class UnitTest1
         public string Prop1 { get; set; } = "PropValue1";
         public string Prop2 { get; set; } = "PropValue2";
 
-        public override void constructor()
-        {
-            
-        }
+       
 
         public override Element render()
         {
@@ -38,8 +35,9 @@ public class UnitTest1
         public string Prop1 { get; set; } = "PropValue1";
         public string Prop2 { get; set; } = "PropValue2";
 
-        public override void constructor()
+        public View2()
         {
+            
         }
 
         public override Element render()

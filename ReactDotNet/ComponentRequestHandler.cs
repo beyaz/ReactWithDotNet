@@ -95,8 +95,6 @@ public static class ComponentRequestHandler
                 {
                     initializeBrowserInformation(reactStatefulComponent);
 
-                    reactStatefulComponent.constructor();
-
                     if (type.GetMethod("ComponentDidMount") is not null)
                     {
                         var statePropertyInfo = type.GetProperty("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);

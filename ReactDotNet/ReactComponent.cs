@@ -81,16 +81,12 @@ namespace ReactDotNet
         Element ___RootNode___ { get; }
 
         ReactContext Context { get; set; }
-
-        void constructor();
     }
 
     public abstract class ReactComponent<TState> : Element, IReactStatefulComponent where TState : new()
     {
         [JsonIgnore]
         public ReactContext Context { get; set; }
-
-        public abstract void constructor();
 
         public Element ___RootNode___ => render();
 
@@ -108,7 +104,7 @@ namespace ReactDotNet
         public TState state
         {
             get => ____ss;
-            set
+            protected set
             {
                 ____ss = value;
                 if (value == null)

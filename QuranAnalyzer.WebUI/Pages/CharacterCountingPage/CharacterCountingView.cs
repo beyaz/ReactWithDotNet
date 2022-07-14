@@ -15,7 +15,7 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
-    public override void constructor()
+    public CharacterCountingView()
     {
         state = new CharacterCountingViewModel();
 
