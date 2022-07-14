@@ -1,61 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ReactDotNet;
+﻿namespace ReactDotNet;
 
 class ModelA
-    {
-        public string PropA { get; set; }
-        public int ClickCount { get; set; }
-    }
-    class ComponentA: ReactComponent<ModelA>
-    {
+{
+    public string PropA { get; set; }
+    public int ClickCount { get; set; }
+}
 
-        public ComponentA()
-        {
+class ComponentA : ReactComponent<ModelA>
+{
+    public ComponentA()
+    {
         state = new ModelA { PropA = "A" };
     }
-        public override Element render()
-        {
-            return new div
-            {
-                style   = { width = "200px", height = "100px", border = "1px solid blue", textAlign = "center", paddingTop = "20px" },
-                innerText    = state.PropA + state.ClickCount,
-                onClick = _ => state.ClickCount++
-            };
-        }
 
-        public void ComponentDidMount()
+    public override Element render()
+    {
+        return new div
         {
-            state.PropA += "-DidMountA-";
-        }
+            style     = { width = "200px", height = "100px", border = "1px solid blue", textAlign = "center", paddingTop = "20px" },
+            innerText = state.PropA + state.ClickCount,
+            onClick   = _ => state.ClickCount++
+        };
     }
 
-
-    class ModelB
+    public void ComponentDidMount()
     {
-        public string PropB { get; set; }
-        public int ClickCount { get; set; }
+        state.PropA += "-DidMountA-";
     }
-    class ComponentB : ReactComponent<ModelB>
-    {
-       
+}
 
-        public ComponentB()
-        {
+class ModelB
+{
+    public string PropB { get; set; }
+    public int ClickCount { get; set; }
+}
+
+class ComponentB : ReactComponent<ModelB>
+{
+    public ComponentB()
+    {
         state = new ModelB { PropB = "B" };
     }
-        
-        public override Element render()
+
+    public override Element render()
+    {
+        return new div
         {
-            return new div
-            {
-                style   = { width = "250px", height = "150px" ,border = "1px solid brown", textAlign = "center", paddingTop = "40px" },
-                innerText    = state.PropB + state.ClickCount,
-                onClick = _ => state.ClickCount++
-            };
-        }
+            style     = { width = "250px", height = "150px", border = "1px solid brown", textAlign = "center", paddingTop = "40px" },
+            innerText = state.PropB + state.ClickCount,
+            onClick   = _ => state.ClickCount++
+        };
+    }
 
     public void ComponentDidMount()
     {
@@ -63,31 +58,29 @@ class ModelA
     }
 }
 
-
 class ModelC
 {
     public string PropC { get; set; }
     public int ClickCount { get; set; }
 }
+
 class ComponentC : ReactComponent<ModelC>
 {
-    
-
     public ComponentC()
     {
         state = new ModelC { PropC = "C" };
     }
+
     public override Element render()
     {
         return new div
         {
-            style   = { width = "300px", height = "200px", border = "1px solid red", textAlign = "center", paddingTop = "50px" },
-            innerText    = state.PropC + state.ClickCount,
-            onClick = _ => state.ClickCount++
+            style     = { width = "300px", height = "200px", border = "1px solid red", textAlign = "center", paddingTop = "50px" },
+            innerText = state.PropC + state.ClickCount,
+            onClick   = _ => state.ClickCount++
         };
     }
 }
-
 
 class ModelContainer1
 {
@@ -98,40 +91,37 @@ class ModelContainer1
 
     public int ClickCount { get; set; }
 }
+
 class Container1 : ReactComponent<ModelContainer1>
 {
     public Container1()
     {
         state = new ModelContainer1
         {
-            A              = new ModelA{PropA  = "A"},
-            B              = new ModelB{PropB  = "B"},
-            C              = new ModelC{ PropC = "C"},
+            A              = new ModelA { PropA = "A" },
+            B              = new ModelB { PropB = "B" },
+            C              = new ModelC { PropC = "C" },
             Container1Text = "Container1Text"
         };
     }
-
-   
 
     public override Element render()
     {
         return new div
         {
-            style = { display = "flex"},
+            style = { display = "flex" },
             children =
             {
-                new ComponentA {},
-                new ComponentB{},
-                state.ClickCount % 3 ==0 ? new div{innerText ="Mod3"}: null,
-                new ComponentC{},
+                new ComponentA(),
+                new ComponentB(),
+                state.ClickCount % 3 == 0 ? new div { innerText = "Mod3" } : null,
+                new ComponentC(),
                 new div(state.Container1Text + state.ClickCount),
-                
             },
             onClick = _ => state.ClickCount++
         };
     }
 }
-
 
 class ModelContainer2
 {
@@ -142,6 +132,7 @@ class ModelContainer2
 
     public int ClickCount { get; set; }
 }
+
 class Container2 : ReactComponent<ModelContainer2>
 {
     public Container2()
@@ -155,8 +146,6 @@ class Container2 : ReactComponent<ModelContainer2>
         };
     }
 
-    
-
     public override Element render()
     {
         return new div
@@ -164,9 +153,9 @@ class Container2 : ReactComponent<ModelContainer2>
             style = { display = "flex" },
             children =
             {
-                new ComponentA {},
-                new ComponentB{},
-                new ComponentC{},
+                new ComponentA(),
+                new ComponentB(),
+                new ComponentC(),
                 new div(state.Container2Text + state.ClickCount++)
             },
             onClick = _ => state.ClickCount++
@@ -182,6 +171,7 @@ class ModelContainer3
     public string Container3Text { get; set; }
     public int ClickCount { get; set; }
 }
+
 class Container3 : ReactComponent<ModelContainer3>
 {
     public Container3()
@@ -206,19 +196,16 @@ class Container3 : ReactComponent<ModelContainer3>
         };
     }
 
-    
-
     public override Element render()
     {
         return new div
         {
-            style = { display = "flex", flexDirection = "column"},
+            style = { display = "flex", flexDirection = "column" },
             children =
             {
-                new Container1{ },
-                new Container2{ },
-                new div{innerText     = state.Container3Text + state.ClickCount}
-
+                new Container1(),
+                new Container2(),
+                new div { innerText = state.Container3Text + state.ClickCount }
             },
             onClick = _ => state.ClickCount++
         };

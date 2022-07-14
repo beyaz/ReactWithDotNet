@@ -749,7 +749,10 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
-            console.log(dotNetTypeOfReactComponent);
+            if (this.props.$jsonNode.___HasComponentDidMountMethod___)
+            {
+                HandleAction({ remoteMethodName: 'ComponentDidMount', component: this, eventArguments: [] });
+            }
         }
 
         componentWillUnmount()
