@@ -118,7 +118,7 @@ static class JsonSerializationOptionHelper
 
             writer.WriteStartObject();
 
-            tryInitStateProperty();
+            TryInitStateProperty(value,elementSerializationExtraData);
 
             var reactAttributes = new List<string>();
 
@@ -197,29 +197,7 @@ static class JsonSerializationOptionHelper
 
             writer.WriteEndObject();
 
-            void tryInitStateProperty()
-            {
-                if (value is IReactStatefulComponent)
-                {
-                    if (elementSerializationExtraData.BreadCrumpPath != "0")
-                    {
-                        if (true == elementSerializationExtraData.ChildStates?.TryGetValue(elementSerializationExtraData.BreadCrumpPath, out ClientStateInfo clientStateInfo))
-                        {
-                            var statePropertyInfo = value.GetType().GetProperty("state");
-                            if (statePropertyInfo == null)
-                            {
-                                throw new MissingMemberException(value.GetType().GetFullName(), "state");
-                            }
-
-                            if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
-                            {
-                                var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                                statePropertyInfo.SetValue(value, stateValue);
-                            }
-                        }
-                    }
-                }
-            }
+            
 
            
 
@@ -363,12 +341,21 @@ public static class ElementSerializer
         return propertyName;
     }
 
-    public static IReadOnlyDictionary<string, object> ToMap(this Element element)
+    
+
+    public static IReadOnlyDictionary<string, object> ToMap(this Element element, StateTree stateTree = null)
     {
-        // maybe root element is inherits from ReactElement
-        if (element is ReactComponent reactComponent)
+        if (stateTree == null)
         {
-            return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent));
+            stateTree = new StateTree();
+            
+        }
+        // maybe root element is inherits from ReactElement
+        {
+            if (element is ReactComponent reactComponent)
+            {
+                return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent), stateTree);
+            }
         }
 
         var map = new Dictionary<string, object>();
@@ -378,13 +365,17 @@ public static class ElementSerializer
             map.Add("$type", htmlElement.Type);
         }
 
-        if (element is IReactStatefulComponent reactStatefulComponent)
         {
-            map.Add(nameof(reactStatefulComponent.___Type___), reactStatefulComponent.___Type___);
-            map.Add(nameof(reactStatefulComponent.___TypeOfState___), reactStatefulComponent.___TypeOfState___);
-            if (reactStatefulComponent.___HasComponentDidMountMethod___)
+            if (element is IReactStatefulComponent reactStatefulComponent)
             {
-                map.Add(nameof(reactStatefulComponent.___HasComponentDidMountMethod___), reactStatefulComponent.___HasComponentDidMountMethod___);
+                map.Add(nameof(reactStatefulComponent.___Type___), reactStatefulComponent.___Type___);
+                map.Add(nameof(reactStatefulComponent.___TypeOfState___), reactStatefulComponent.___TypeOfState___);
+                if (reactStatefulComponent.___HasComponentDidMountMethod___)
+                {
+                    map.Add(nameof(reactStatefulComponent.___HasComponentDidMountMethod___), reactStatefulComponent.___HasComponentDidMountMethod___);
+                }
+
+                TryInitStateProperty(element, stateTree);
             }
         }
 
@@ -405,9 +396,26 @@ public static class ElementSerializer
         {
             map.Add(nameof(reactAttributes), reactAttributes);
         }
-        
-        
-        
+
+        if (element.children.Count > 0)
+        {
+            var childElements = new List<object>();
+
+            var breadCrumpPath = stateTree.BreadCrumpPath;
+
+            var i = 0;
+            foreach (var item in element.children)
+            {
+                stateTree.BreadCrumpPath = breadCrumpPath + "," + i;
+
+                childElements.Add(ToMap(item, stateTree));
+                i++;
+            }
+
+            stateTree.BreadCrumpPath = breadCrumpPath;
+
+            map.Add(nameof(element.children), childElements);
+        }
 
         return map;
     }
@@ -531,6 +539,35 @@ public static class ElementSerializer
         rootElement.key = reactComponent.key;
 
         return rootElement;
+    }
+
+    public static void TryInitStateProperty(Element element, StateTree stateTree)
+    {
+        if (stateTree == null)
+        {
+            return;
+        }
+        
+        if (element is IReactStatefulComponent)
+        {
+            if (stateTree.BreadCrumpPath != "0")
+            {
+                if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
+                {
+                    var statePropertyInfo = element.GetType().GetProperty("state");
+                    if (statePropertyInfo == null)
+                    {
+                        throw new MissingMemberException(element.GetType().GetFullName(), "state");
+                    }
+
+                    if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
+                    {
+                        var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                        statePropertyInfo.SetValue(element, stateValue);
+                    }
+                }
+            }
+        }
     }
 }
 

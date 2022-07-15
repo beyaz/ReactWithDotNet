@@ -233,7 +233,7 @@ public static class ComponentRequestHandler
     #endregion
 }
 
-class ElementSerializationExtraData
+public class StateTree
 {
     #region Public Properties
     public string BreadCrumpPath { get; set; }
@@ -246,9 +246,9 @@ class ElementSerializationExtraData
 static class ComponentSerializer
 {
     #region Public Methods
-    public static ElementSerializationExtraData GetElementSerializationExtraData(this JsonSerializerOptions options)
+    public static StateTree GetElementSerializationExtraData(this JsonSerializerOptions options)
     {
-        return (options.Converters[0] as DummyConverter)?.ElementSerializationExtraData ?? new ElementSerializationExtraData();
+        return (options.Converters[0] as DummyConverter)?.stateTree ?? new StateTree();
     }
 
     public static string SerializeComponent(Element instance, IReadOnlyDictionary<string, ClientStateInfo> childStates)
@@ -259,7 +259,7 @@ static class ComponentSerializer
             {
                 new DummyConverter
                 {
-                    ElementSerializationExtraData = new ElementSerializationExtraData
+                    stateTree = new StateTree
                     {
                         ChildStates    = childStates,
                         BreadCrumpPath = "0",
@@ -280,7 +280,7 @@ static class ComponentSerializer
     class DummyConverter : JsonConverter<Dummy>
     {
         #region Public Properties
-        public ElementSerializationExtraData ElementSerializationExtraData { get; set; }
+        public StateTree stateTree { get; set; }
         #endregion
 
         #region Public Methods
