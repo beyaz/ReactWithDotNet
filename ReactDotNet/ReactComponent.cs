@@ -87,6 +87,8 @@ namespace ReactDotNet
         string ___TypeOfState___ { get; }
 
         bool ___HasComponentDidMountMethod___ { get; }
+        
+        Element render();
     }
 
     public abstract class ReactComponent<TState> : Element, IReactStatefulComponent where TState : new()

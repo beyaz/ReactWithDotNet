@@ -236,6 +236,7 @@ public static class ComponentRequestHandler
 public class StateTree
 {
     #region Public Properties
+    public ReactContext Context { get; set; }
     public string BreadCrumpPath { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
 

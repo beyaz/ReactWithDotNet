@@ -351,11 +351,9 @@ public static class ElementSerializer
             
         }
         // maybe root element is inherits from ReactElement
+        if (element is ReactComponent reactComponent)
         {
-            if (element is ReactComponent reactComponent)
-            {
-                return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent), stateTree);
-            }
+            return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent), stateTree);
         }
 
         var map = new Dictionary<string, object>();
@@ -364,20 +362,28 @@ public static class ElementSerializer
         {
             map.Add("$type", htmlElement.Type);
         }
-
+        
+        if (element is IReactStatefulComponent reactStatefulComponent)
         {
-            if (element is IReactStatefulComponent reactStatefulComponent)
+            map.Add(nameof(reactStatefulComponent.___Type___), reactStatefulComponent.___Type___);
+            map.Add(nameof(reactStatefulComponent.___TypeOfState___), reactStatefulComponent.___TypeOfState___);
+            if (reactStatefulComponent.___HasComponentDidMountMethod___)
             {
-                map.Add(nameof(reactStatefulComponent.___Type___), reactStatefulComponent.___Type___);
-                map.Add(nameof(reactStatefulComponent.___TypeOfState___), reactStatefulComponent.___TypeOfState___);
-                if (reactStatefulComponent.___HasComponentDidMountMethod___)
-                {
-                    map.Add(nameof(reactStatefulComponent.___HasComponentDidMountMethod___), reactStatefulComponent.___HasComponentDidMountMethod___);
-                }
-
-                TryInitStateProperty(element, stateTree);
+                map.Add(nameof(reactStatefulComponent.___HasComponentDidMountMethod___), reactStatefulComponent.___HasComponentDidMountMethod___);
             }
+
+            reactStatefulComponent.Context = stateTree.Context;
+            
+            TryInitStateProperty(element, stateTree);
+
+            
+
+            map.Add(nameof(reactStatefulComponent.___RootNode___), ToMap(reactStatefulComponent.render(), stateTree));
+
+            return map;
+
         }
+        
 
         var reactAttributes = new List<string>();
         
