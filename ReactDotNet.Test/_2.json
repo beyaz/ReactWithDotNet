@@ -1,32 +1,81 @@
 {
-  "$type": "a",
-  "href": "abc",
-  "style": {
-    "marginRight": "5px",
-    "paddingTop": "6px"
-  },
-  "onClick": {
-    "$isRemoteMethod": true,
-    "remoteMethodName": "\u003CToJsonBasicHtmlElements\u003Eg__onClick|0_0"
-  },
-  "className": "X",
+  "$type": "div",
+  "className": "abc",
   "reactAttributes": [
-    "href",
-    "style",
-    "onClick",
     "className"
   ],
   "children": [
     {
-      "$type": "a",
-      "href": "n",
+      "$type": "div",
+      "className": "B",
+      "reactAttributes": [
+        "className"
+      ]
+    },
+    {
+      "$type": "div",
       "style": {
-        "marginLeft": "2px",
-        "paddingBottom": "7px"
+        "paddingLeft": "5px"
+      },
+      "className": "C",
+      "reactAttributes": [
+        "style",
+        "className"
+      ]
+    },
+    {
+      "$type": "img",
+      "src": "a.png",
+      "width": 3,
+      "height": 0,
+      "onClick": {
+        "$isRemoteMethod": true,
+        "remoteMethodName": "onClicked"
       },
       "reactAttributes": [
-        "href",
-        "style"
+        "src",
+        "width",
+        "height",
+        "onClick"
+      ]
+    },
+    {
+      "value": "abc",
+      "valueBind": "",
+      "reactAttributes": [
+        "value",
+        "valueBind"
+      ]
+    },
+    {
+      "value": "",
+      "valueBind": {
+        "eventName": "onChange",
+        "$isBinding": true,
+        "jsValueAccess": [
+          "e",
+          "target",
+          "value"
+        ],
+        "sourcePath": [
+          "InnerA",
+          "InnerB",
+          "Text"
+        ],
+        "targetProp": "value",
+        "defaultValue": ""
+      },
+      "reactAttributes": [
+        "value",
+        "valueBind"
+      ]
+    },
+    {
+      "___Type___": "ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test",
+      "___TypeOfState___": "ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
+      "reactAttributes": [
+        "___Type___",
+        "___TypeOfState___"
       ]
     }
   ]
