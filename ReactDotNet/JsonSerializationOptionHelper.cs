@@ -381,7 +381,7 @@ public static class ElementSerializer
             
             TryInitStateProperty(element, stateTree);
 
-            
+            map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
 
             map.Add(nameof(reactStatefulComponent.___RootNode___), ToMap(reactStatefulComponent.render(), stateTree));
 

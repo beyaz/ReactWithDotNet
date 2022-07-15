@@ -61,6 +61,13 @@ public static class ComponentRequestHandler
 
         trace.Add($"BEGIN {stopwatch.ElapsedMilliseconds}");
 
+        var context = new ReactContext();
+
+        context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
+        context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
+        context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
+        
+
         if (request.MethodName == "FetchComponent")
         {
             return fetchComponent();
@@ -132,6 +139,7 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
+            
             if (instance is IReactStatefulComponent reactStatefulComponent)
             {
                 initializeBrowserInformation(reactStatefulComponent);
@@ -174,8 +182,23 @@ public static class ComponentRequestHandler
             {
                 trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
+                var stateTree = new StateTree
+                {
+                    ChildStates    = request.CapturedStateTree,
+                    BreadCrumpPath = "0",
+                    RootElement    = instance
+                };
+
+                var map = instance.ToMap(stateTree);
+                
+
+
                 elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.CapturedStateTree);
 
+
+                // elementAsJsonString = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true });
+                
+                
                 trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             }
 
