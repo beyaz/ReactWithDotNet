@@ -15,10 +15,36 @@ public class UnitTest1
     [TestMethod]
     public void ToJsonBasicHtmlElements()
     {
-        void onClick(string id){}
-        
-        var map = new a { className = "X", href = "abc", style = { marginRight = "5px", paddingTop = "6px"}, onClick = onClick}.ToMap();
-        var json = JsonSerializer.Serialize(map,new JsonSerializerOptions{ IgnoreNullValues = true});
+        var stateTree = new StateTree();
+
+        void onClick(string id)
+        {
+        }
+
+        var map = new a
+            {
+                className = "X",
+                href = "abc", 
+                style =
+                {
+                    marginRight = "5px", paddingTop = "6px"
+                },
+                onClick = onClick,
+                children =
+                {
+                    new a
+                    {
+                        href = "n",
+                        style =
+                        {
+                            marginLeft = "2px", paddingBottom = "7px"
+                        }
+                    }
+                }
+            }
+           .ToMap(stateTree);
+
+        var json = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true});
 
         json.ShouldBeSameAs(@"
         {
@@ -27,7 +53,17 @@ public class UnitTest1
           ""style"":{""marginRight"": ""5px"", ""paddingTop"": ""6px""},
           ""onClick"": {""$isRemoteMethod"": true, ""remoteMethodName"": ""\u003CToJsonBasicHtmlElements\u003Eg__onClick|0_0""},
           ""className"": ""X"",
-          ""reactAttributes"": [""href"",""style"", ""onClick"", ""className""]
+          ""reactAttributes"": [""href"",""style"", ""onClick"", ""className""],
+          ""children"":[
+            {
+             ""$type"": ""a"",
+             ""href"": ""abc"",
+             ""style"":{""marginRight"": ""5px"", ""paddingTop"": ""6px""},
+             ""onClick"": {""$isRemoteMethod"": true, ""remoteMethodName"": ""\u003CToJsonBasicHtmlElements\u003Eg__onClick|0_0""},
+             ""className"": ""X"",
+             ""reactAttributes"": [""href"",""style"", ""onClick"", ""className""]         
+            }
+          ]
         }
 
         ");
