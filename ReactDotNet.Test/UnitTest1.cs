@@ -12,9 +12,10 @@ namespace ReactDotNet;
 [TestClass]
 public class UnitTest1
 {
+  
 
     [TestMethod]
-    public void ToJsonBasicHtmlElements()
+    public void _1()
     {
         var stateTree = new StateTree();
 
@@ -43,14 +44,44 @@ public class UnitTest1
                 }
             }
         };
-           
 
         element.ToMap(stateTree).ShouldBe("_1.json");
     }
 
-   
-    
-    
+
+    [TestMethod]
+    public void _2()
+    {
+        var state = new SampleModelAContainer();
+
+        var stateTree = new StateTree();
+
+        void onClick(string id)
+        {
+        }
+
+        var element = new div
+        {
+            className = "abc",
+            children =
+            {
+                new div{className = "B"},
+                new div
+                {
+                    className = "C",
+                    style     = { paddingLeft = "5px" }
+                },
+                new img { src                        = "a.png", width = 3, onClick = onClicked },
+                new PrimeReact.InputText { value     = "abc" },
+                new PrimeReact.InputText { valueBind = ()=> state.InnerA.InnerB.Text },
+                new View2 { Prop1                    = "x", Prop2 = "y" }
+            }
+        };
+
+        element.ToMap(stateTree).ShouldBe("_2.json");
+    }
+
+
     class View1 : ReactComponent<SampleModelA>
     {
         public string Prop1 { get; set; } = "PropValue1";
@@ -93,25 +124,7 @@ public class UnitTest1
     {
         return File.ReadAllText(name);
     }
-
-    [TestMethod]
-    public void SerializeBasicDiv()
-    {
-        var div = new div{ className = "B" };
-
-        var actual = ToJson(div);
-
-        var expected = @"
-{
-  ""$type"": ""div"",
-  ""className"": ""B"",
-  ""reactAttributes"": [
-    ""className""
-  ]
-}
-";
-        actual.Clear().Should().Be(expected.Clear());
-    }
+    
 
     [TestMethod]
     public void SerializeClientTask()

@@ -1,0 +1,33 @@
+{
+  "$type": "a",
+  "href": "abc",
+  "style": {
+    "marginRight": "5px",
+    "paddingTop": "6px"
+  },
+  "onClick": {
+    "$isRemoteMethod": true,
+    "remoteMethodName": "\u003CToJsonBasicHtmlElements\u003Eg__onClick|0_0"
+  },
+  "className": "X",
+  "reactAttributes": [
+    "href",
+    "style",
+    "onClick",
+    "className"
+  ],
+  "children": [
+    {
+      "$type": "a",
+      "href": "n",
+      "style": {
+        "marginLeft": "2px",
+        "paddingBottom": "7px"
+      },
+      "reactAttributes": [
+        "href",
+        "style"
+      ]
+    }
+  ]
+}
