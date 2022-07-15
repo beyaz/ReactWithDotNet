@@ -82,6 +82,8 @@ public class UnitTest1
     }
 
 
+   
+
     class View1 : ReactComponent<SampleModelA>
     {
         public string Prop1 { get; set; } = "PropValue1";
