@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using FluentAssertions;
 
 namespace ReactDotNet;
@@ -17,5 +20,11 @@ static class TextExtensions
     public static void ShouldBeSameAs(this string a, string b)
     {
         Clear(a).Should().Be(Clear(b));
+    }
+
+    public static void ShouldBe(this IReadOnlyDictionary<string, object> map, string testFileName)
+    {
+        var json = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true });
+        json.Should().Be(File.ReadAllText(testFileName));
     }
 }

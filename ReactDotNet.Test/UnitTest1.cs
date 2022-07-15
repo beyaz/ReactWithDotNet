@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -21,56 +22,35 @@ public class UnitTest1
         {
         }
 
-        var map = new a
+        var element = new a
+        {
+            className = "X",
+            href      = "abc",
+            style =
             {
-                className = "X",
-                href = "abc", 
-                style =
+                marginRight = "5px", paddingTop = "6px"
+            },
+            onClick = onClick,
+            children =
+            {
+                new a
                 {
-                    marginRight = "5px", paddingTop = "6px"
-                },
-                onClick = onClick,
-                children =
-                {
-                    new a
+                    href = "n",
+                    style =
                     {
-                        href = "n",
-                        style =
-                        {
-                            marginLeft = "2px", paddingBottom = "7px"
-                        }
+                        marginLeft = "2px", paddingBottom = "7px"
                     }
                 }
             }
-           .ToMap(stateTree);
+        };
+           
 
-        var json = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true});
-
-        json.ShouldBeSameAs(@"
-        {
-          ""$type"": ""a"",
-          ""href"": ""abc"",
-          ""style"":{""marginRight"": ""5px"", ""paddingTop"": ""6px""},
-          ""onClick"": {""$isRemoteMethod"": true, ""remoteMethodName"": ""\u003CToJsonBasicHtmlElements\u003Eg__onClick|0_0""},
-          ""className"": ""X"",
-          ""reactAttributes"": [""href"",""style"", ""onClick"", ""className""],
-          ""children"":[
-            {
-             ""$type"": ""a"",
-             ""href"": ""abc"",
-             ""style"":{""marginRight"": ""5px"", ""paddingTop"": ""6px""},
-             ""onClick"": {""$isRemoteMethod"": true, ""remoteMethodName"": ""\u003CToJsonBasicHtmlElements\u003Eg__onClick|0_0""},
-             ""className"": ""X"",
-             ""reactAttributes"": [""href"",""style"", ""onClick"", ""className""]         
-            }
-          ]
-        }
-
-        ");
-
-
+        element.ToMap(stateTree).ShouldBe("_1.json");
     }
 
+   
+    
+    
     class View1 : ReactComponent<SampleModelA>
     {
         public string Prop1 { get; set; } = "PropValue1";

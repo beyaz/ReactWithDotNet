@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="_1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="SerializeComponentWithProperties.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
