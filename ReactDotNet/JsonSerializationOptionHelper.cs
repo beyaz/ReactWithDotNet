@@ -494,6 +494,13 @@ public static class ElementSerializer
                 }
             }
 
+            if (propertyInfo.PropertyType.IsGenericType)
+            {
+                if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
+                {
+                    propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = ((Delegate)propertyValue)?.Method.Name };
+                }
+            }
 
             if (propertyValue is Expression<Func<int>> ||
                 propertyValue is Expression<Func<string>>)

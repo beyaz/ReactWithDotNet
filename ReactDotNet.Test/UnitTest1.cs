@@ -15,7 +15,9 @@ public class UnitTest1
     [TestMethod]
     public void ToJsonBasicHtmlElements()
     {
-        var map = new a { className = "X", href = "abc", style = { marginRight = "5px", paddingTop = "6px"}}.ToMap();
+        void onClick(string id){}
+        
+        var map = new a { className = "X", href = "abc", style = { marginRight = "5px", paddingTop = "6px"}, onClick = onClick}.ToMap();
         var json = JsonSerializer.Serialize(map,new JsonSerializerOptions{ IgnoreNullValues = true});
 
         json.ShouldBeSameAs(@"
@@ -23,8 +25,9 @@ public class UnitTest1
           ""$type"": ""a"",
           ""href"": ""abc"",
           ""style"":{""marginRight"": ""5px"", ""paddingTop"": ""6px""},
+          ""onClick"": {""$isRemoteMethod"": true, ""remoteMethodName"": ""\u003CToJsonBasicHtmlElements\u003Eg__onClick|0_0""},
           ""className"": ""X"",
-          ""reactAttributes"": [""href"",""style"", ""className""]
+          ""reactAttributes"": [""href"",""style"", ""onClick"", ""className""]
         }
 
         ");
