@@ -379,6 +379,8 @@ public static class ElementSerializer
             }
         }
 
+        var reactAttributes = new List<string>();
+        
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
             var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, GetPropertyName(propertyInfo));
@@ -387,12 +389,12 @@ public static class ElementSerializer
                 continue;
             }
 
+            reactAttributes.Add(GetPropertyName(propertyInfo));
+
             map.Add(GetPropertyName(propertyInfo), propertyValue);
         }
 
-        var reactAttributes = map.Keys.Where(k => k != "$type").ToArray();
-
-        if (reactAttributes.Length > 0)
+        if (reactAttributes.Count > 0)
         {
             map.Add(nameof(reactAttributes), reactAttributes);
         }
