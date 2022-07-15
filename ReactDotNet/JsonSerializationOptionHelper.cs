@@ -111,7 +111,7 @@ static class JsonSerializationOptionHelper
             {
                 if (value is ReactComponent reactComponent)
                 {
-                    JsonSerializer.Serialize(writer, renderStatelessReactComponent(reactComponent), options);
+                    JsonSerializer.Serialize(writer, GetElementTreeOfStatelessReactComponent(reactComponent), options);
                     return;
                 }
             }
@@ -126,7 +126,7 @@ static class JsonSerializationOptionHelper
             {
                 var propertyName = fixPropertyName(GetPropertyName(propertyInfo));
 
-                var (propertyValue, noNeedToExport) = getPropertyValue(propertyInfo, propertyName);
+                var (propertyValue, noNeedToExport) = getPropertyValue(value, propertyInfo, propertyName);
                 if (noNeedToExport)
                 {
                     continue;
@@ -173,7 +173,7 @@ static class JsonSerializationOptionHelper
 
                     if (item is ReactComponent reactComponent)
                     {
-                        JsonSerializer.Serialize(writer, renderStatelessReactComponent(reactComponent), options);
+                        JsonSerializer.Serialize(writer, GetElementTreeOfStatelessReactComponent(reactComponent), options);
                         i++;
                         continue;
                     }
@@ -223,99 +223,9 @@ static class JsonSerializationOptionHelper
 
            
 
-            (object value, bool noNeedToExport) getPropertyValue(PropertyInfo propertyInfo, string propertyName)
-            {
-                var propertyValue = propertyInfo.GetValue(value);
+            
 
-                var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
-
-                {
-                    var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
-
-                    if (isDefaultValue)
-                    {
-                        if (reactDefaultValueAttribute != null)
-                        {
-                            propertyValue = reactDefaultValueAttribute.DefaultValue;
-                        }
-                    }
-                }
-
-                {
-                    var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
-                    if (isDefaultValue || IsEmptyStyle(propertyValue))
-                    {
-                        return (null, true);
-                    }
-                }
-
-                if (propertyValue is Action action)
-                {
-                    propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name };
-                }
-
-                if (propertyInfo.PropertyType.IsGenericType)
-                {
-                    if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
-                    {
-                        propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = ((Delegate)propertyValue)?.Method.Name };
-                    }
-                }
-
-                if (propertyValue is Enum enumValue)
-                {
-                    propertyValue = enumValue.ToString();
-                }
-
-                
-                if (propertyValue is Expression<Func<int>> ||
-                    propertyValue is Expression<Func<string>>)
-                {
-                    string[] calculateSourcePathFunc()
-                    {
-                        if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
-                        {
-                            return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
-                        }
-
-                        if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
-                        {
-                            return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
-                        }
-
-                        throw new NotImplementedException();
-                    }
-
-                    var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
-                    if (bindInfo == null)
-                    {
-                        return (null, true);
-                    }
-
-                    return (bindInfo, false);
-                }
-                
-
-                if (propertyName != nameof(IReactStatefulComponent.___RootNode___) && propertyValue is Element element)
-                {
-                    propertyValue = new InnerElementInfo
-                    {
-                        IsElement = true,
-                        Element   = element
-                    };
-                }
-
-                return (propertyValue, false);
-            }
-
-            static Element renderStatelessReactComponent(ReactComponent reactComponent)
-            {
-                var rootElement = reactComponent.render();
-
-                rootElement.key = reactComponent.key;
-
-                return rootElement;
-            }
+            
         }
 
         
@@ -373,13 +283,7 @@ static class JsonSerializationOptionHelper
 
 
 
-    class InnerElementInfo
-    {
-        public Element Element { get; set; }
-
-        [JsonPropertyName("$isElement")]
-        public bool IsElement { get; set; }
-    }
+    
 
     class EnumToStringConverter<T> : JsonConverter<T>
     {
@@ -461,6 +365,16 @@ public static class ElementSerializer
 
     public static IReadOnlyDictionary<string, object> ToMap(this Element element)
     {
+
+        // maybe root element is inherits from ReactElement
+        {
+            if (element is ReactComponent reactComponent)
+            {
+                return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent));
+            }
+        }
+
+
         var map = new Dictionary<string, object>();
 
         if (element is HtmlElement htmlElement)
@@ -470,64 +384,9 @@ public static class ElementSerializer
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
-            var propertyValue = propertyInfo.GetValue(element);
-
-            var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
-
+            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, GetPropertyName(propertyInfo));
+            if (noNeedToExport)
             {
-                var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
-
-                if (isDefaultValue)
-                {
-                    if (reactDefaultValueAttribute != null)
-                    {
-                        propertyValue = reactDefaultValueAttribute.DefaultValue;
-                    }
-                }
-            }
-
-            {
-                var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
-                if (isDefaultValue || IsEmptyStyle(propertyValue))
-                {
-                    continue;
-                }
-            }
-
-            if (propertyInfo.PropertyType.IsGenericType)
-            {
-                if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
-                {
-                    propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = ((Delegate)propertyValue)?.Method.Name };
-                }
-            }
-
-            if (propertyValue is Expression<Func<int>> ||
-                propertyValue is Expression<Func<string>>)
-            {
-                string[] calculateSourcePathFunc()
-                {
-                    if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
-                    {
-                        return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
-                    }
-
-                    if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
-                    {
-                        return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
-                    }
-
-                    throw new NotImplementedException();
-                }
-
-                var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
-                if (bindInfo == null)
-                {
-                    continue;
-                }
-
-
-                map.Add(GetPropertyName(propertyInfo), bindInfo);
                 continue;
             }
 
@@ -541,8 +400,95 @@ public static class ElementSerializer
             map.Add(nameof(reactAttributes), reactAttributes);
         }
         
+        
+        
 
         return map;
+    }
+
+    public static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, string propertyName)
+    {
+        var propertyValue = propertyInfo.GetValue(instance);
+
+        var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
+
+        {
+            var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+
+            if (isDefaultValue)
+            {
+                if (reactDefaultValueAttribute != null)
+                {
+                    propertyValue = reactDefaultValueAttribute.DefaultValue;
+                }
+            }
+        }
+
+        {
+            var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+            if (isDefaultValue || IsEmptyStyle(propertyValue))
+            {
+                return (null, true);
+            }
+        }
+
+        if (propertyValue is Action action)
+        {
+            propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name };
+        }
+
+        if (propertyInfo.PropertyType.IsGenericType)
+        {
+            if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
+            {
+                propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = ((Delegate)propertyValue)?.Method.Name };
+            }
+        }
+
+        if (propertyValue is Enum enumValue)
+        {
+            propertyValue = enumValue.ToString();
+        }
+
+
+        if (propertyValue is Expression<Func<int>> ||
+            propertyValue is Expression<Func<string>>)
+        {
+            string[] calculateSourcePathFunc()
+            {
+                if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
+                {
+                    return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
+                }
+
+                if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
+                {
+                    return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
+                }
+
+                throw new NotImplementedException();
+            }
+
+            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
+            if (bindInfo == null)
+            {
+                return (null, true);
+            }
+
+            return (bindInfo, false);
+        }
+
+
+        if (propertyName != nameof(IReactStatefulComponent.___RootNode___) && propertyValue is Element element)
+        {
+            propertyValue = new InnerElementInfo
+            {
+                IsElement = true,
+                Element = element
+            };
+        }
+
+        return (propertyValue, false);
     }
 
     public static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
@@ -570,4 +516,23 @@ public static class ElementSerializer
             defaultValue  = defaultValue
         };
     }
+
+
+    public static Element GetElementTreeOfStatelessReactComponent(ReactComponent reactComponent)
+    {
+        var rootElement = reactComponent.render();
+
+        rootElement.key = reactComponent.key;
+
+        return rootElement;
+    }
+}
+
+
+public class InnerElementInfo
+{
+    public Element Element { get; set; }
+
+    [JsonPropertyName("$isElement")]
+    public bool IsElement { get; set; }
 }
