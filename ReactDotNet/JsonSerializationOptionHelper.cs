@@ -362,7 +362,12 @@ public static class ElementSerializer
         {
             map.Add("$type", htmlElement.Type);
         }
-        
+
+        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
+        {
+            map.Add("$type", thirdPartyReactComponent.Type);
+        }
+
         if (element is IReactStatefulComponent reactStatefulComponent)
         {
             map.Add(nameof(reactStatefulComponent.___Type___), reactStatefulComponent.___Type___);

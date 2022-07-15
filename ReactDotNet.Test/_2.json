@@ -40,6 +40,7 @@
       ]
     },
     {
+      "$type": "ReactDotNet.PrimeReact.InputText",
       "value": "abc",
       "valueBind": "",
       "reactAttributes": [
@@ -48,6 +49,7 @@
       ]
     },
     {
+      "$type": "ReactDotNet.PrimeReact.InputText",
       "value": "",
       "valueBind": {
         "eventName": "onChange",
@@ -73,10 +75,26 @@
     {
       "___Type___": "ReactDotNet.UnitTest1\u002BView2,ReactDotNet.Test",
       "___TypeOfState___": "ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
-      "reactAttributes": [
-        "___Type___",
-        "___TypeOfState___"
-      ]
+      "___RootNode___": {
+        "$type": "div",
+        "className": "A",
+        "reactAttributes": [
+          "className"
+        ],
+        "children": [
+          {
+            "___Type___": "ReactDotNet.UnitTest1\u002BView1,ReactDotNet.Test",
+            "___TypeOfState___": "ReactDotNet.UnitTest1\u002BSampleModelA,ReactDotNet.Test",
+            "___RootNode___": {
+              "$type": "div",
+              "className": "A",
+              "reactAttributes": [
+                "className"
+              ]
+            }
+          }
+        ]
+      }
     }
   ]
 }
