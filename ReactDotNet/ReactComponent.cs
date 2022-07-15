@@ -81,6 +81,12 @@ namespace ReactDotNet
         Element ___RootNode___ { get; }
 
         ReactContext Context { get; set; }
+        
+        string ___Type___ { get; }
+
+        string ___TypeOfState___ { get; }
+
+        bool ___HasComponentDidMountMethod___ { get; }
     }
 
     public abstract class ReactComponent<TState> : Element, IReactStatefulComponent where TState : new()

@@ -365,21 +365,27 @@ public static class ElementSerializer
 
     public static IReadOnlyDictionary<string, object> ToMap(this Element element)
     {
-
         // maybe root element is inherits from ReactElement
+        if (element is ReactComponent reactComponent)
         {
-            if (element is ReactComponent reactComponent)
-            {
-                return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent));
-            }
+            return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent));
         }
-
 
         var map = new Dictionary<string, object>();
 
         if (element is HtmlElement htmlElement)
         {
             map.Add("$type", htmlElement.Type);
+        }
+
+        if (element is IReactStatefulComponent reactStatefulComponent)
+        {
+            map.Add(nameof(reactStatefulComponent.___Type___), reactStatefulComponent.___Type___);
+            map.Add(nameof(reactStatefulComponent.___TypeOfState___), reactStatefulComponent.___TypeOfState___);
+            if (reactStatefulComponent.___HasComponentDidMountMethod___)
+            {
+                map.Add(nameof(reactStatefulComponent.___HasComponentDidMountMethod___), reactStatefulComponent.___HasComponentDidMountMethod___);
+            }
         }
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
