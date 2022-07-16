@@ -36,8 +36,24 @@ public static class ElementSerializer
         if (element is IReactStatefulComponent reactStatefulComponent)
         {
             reactStatefulComponent.Context = stateTree.Context;
+            
+            if (stateTree.BreadCrumpPath != "0")
+            {
+                if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
+                {
+                    var statePropertyInfo = element.GetType().GetProperty("state");
+                    if (statePropertyInfo == null)
+                    {
+                        throw new MissingMemberException(element.GetType().GetFullName(), "state");
+                    }
 
-            TryInitStateProperty(element, stateTree);
+                    if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
+                    {
+                        var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                        statePropertyInfo.SetValue(element, stateValue);
+                    }
+                }
+            }
 
             map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
 
@@ -249,33 +265,6 @@ public static class ElementSerializer
         return false;
     }
 
-    static void TryInitStateProperty(Element element, StateTree stateTree)
-    {
-        if (stateTree == null)
-        {
-            return;
-        }
-
-        if (element is ReactStatefulComponent)
-        {
-            if (stateTree.BreadCrumpPath != "0")
-            {
-                if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
-                {
-                    var statePropertyInfo = element.GetType().GetProperty("state");
-                    if (statePropertyInfo == null)
-                    {
-                        throw new MissingMemberException(element.GetType().GetFullName(), "state");
-                    }
-
-                    if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
-                    {
-                        var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                        statePropertyInfo.SetValue(element, stateValue);
-                    }
-                }
-            }
-        }
-    }
+    
     #endregion
 }
