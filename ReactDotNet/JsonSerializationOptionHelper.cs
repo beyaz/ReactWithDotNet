@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using static ReactDotNet.ElementSerializer;
 
 namespace ReactDotNet;
 
@@ -19,7 +17,6 @@ static class JsonSerializationOptionHelper
         options.IgnoreNullValues = true;
 
         options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
-        options.Converters.Add(new JsonConverterForElement());
 
         options.Converters.Add(new JsonConverterForEnum());
 
@@ -55,161 +52,9 @@ static class JsonSerializationOptionHelper
         #endregion
     }
 
-    public class JsonConverterForElement : JsonConverterFactory
-    {
-        #region Public Methods
-        public override bool CanConvert(Type typeToConvert)
-        {
-            return typeToConvert.IsSubclassOf(typeof(Element))
-                   || typeToConvert.FullName == typeof(Element).FullName
-                   || typeToConvert.IsSubclassOf(typeof(ReactComponent<>))
-                   || typeToConvert.IsSubclassOf(typeof(ReactComponent))
-                ;
-        }
+    
 
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            var converter = (JsonConverter)Activator.CreateInstance(typeof(JsonConverterForElement<>)
-                                                                       .MakeGenericType(typeToConvert),
-                                                                    BindingFlags.Instance | BindingFlags.Public,
-                                                                    binder: null,
-                                                                    args: null,
-                                                                    culture: null)!;
-
-            return converter;
-        }
-        #endregion
-    }
-
-    public class JsonConverterForElement<T> : JsonConverter<T> where T : Element
-    {
-        #region Public Methods
-        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-        {
-            string fixPropertyName(string propertyName)
-            {
-                if (options.PropertyNamingPolicy != null)
-                {
-                    propertyName = options.PropertyNamingPolicy.ConvertName(propertyName);
-                }
-
-                return propertyName;
-            }
-            
-            
-            var elementSerializationExtraData = options.GetElementSerializationExtraData();
-
-            value.BeforeSerialize();
-
-            // maybe root element is inherits from ReactElement
-            {
-                if (value is ReactComponent reactComponent)
-                {
-                    JsonSerializer.Serialize(writer, GetElementTreeOfStatelessReactComponent(reactComponent), options);
-                    return;
-                }
-            }
-
-            writer.WriteStartObject();
-
-            TryInitStateProperty(value,elementSerializationExtraData);
-
-            var reactAttributes = new List<string>();
-
-            foreach (var propertyInfo in value.GetType().GetProperties().Where(x => x.GetCustomAttribute<JsonIgnoreAttribute>() == null))
-            {
-                var propertyName = fixPropertyName(GetPropertyName(propertyInfo));
-
-                var (propertyValue, noNeedToExport) = getPropertyValue(value, propertyInfo, propertyName);
-                if (noNeedToExport)
-                {
-                    continue;
-                }
-
-                writer.WritePropertyName(propertyName);
-
-                JsonSerializer.Serialize(writer, propertyValue, options);
-
-                if (value is ThirdPartyReactComponent || value is HtmlElement)
-                {
-                    if (propertyInfo.GetCustomAttribute<ReactAttribute>() != null)
-                    {
-                        reactAttributes.Add(propertyName);
-                    }
-                }
-            }
-
-            if (reactAttributes.Count > 0)
-            {
-                writer.WritePropertyName("reactAttributes");
-
-                writer.WriteStartArray();
-                foreach (var item in reactAttributes)
-                {
-                    writer.WriteStringValue(item);
-                }
-
-                writer.WriteEndArray();
-            }
-
-            if (value.children.Count > 0)
-            {
-                writer.WritePropertyName("children");
-
-                writer.WriteStartArray();
-
-                var breadCrumpPath = elementSerializationExtraData.BreadCrumpPath;
-
-                var i = 0;
-                foreach (var item in value.children)
-                {
-                    elementSerializationExtraData.BreadCrumpPath = breadCrumpPath + "," + i;
-
-                    if (item is ReactComponent reactComponent)
-                    {
-                        JsonSerializer.Serialize(writer, GetElementTreeOfStatelessReactComponent(reactComponent), options);
-                        i++;
-                        continue;
-                    }
-
-                    if (item is IReactStatefulComponent reactStatefulComponent)
-                    {
-                        if (elementSerializationExtraData.RootElement is IReactStatefulComponent rootElementAsReactStatefulComponent)
-                        {
-                            reactStatefulComponent.Context ??= rootElementAsReactStatefulComponent.Context;
-                        }
-                    }
-
-                    JsonSerializer.Serialize(writer, item, options);
-                    i++;
-                }
-
-                elementSerializationExtraData.BreadCrumpPath = breadCrumpPath;
-
-                writer.WriteEndArray();
-            }
-
-            writer.WriteEndObject();
-
-            
-
-           
-
-            
-
-            
-        }
-
-        
-
-        
-        #endregion
-    }
+   
 
   
 
@@ -528,7 +373,7 @@ public static class ElementSerializer
             return;
         }
         
-        if (element is ReactStatefulComponent statefulComponent)
+        if (element is ReactStatefulComponent)
         {
             if (stateTree.BreadCrumpPath != "0")
             {
