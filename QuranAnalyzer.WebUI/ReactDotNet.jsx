@@ -484,6 +484,11 @@ function NormalizeEventArguments(eventArguments)
                 return false;
             }
 
+            if (key === "target")
+            {
+                return false;
+            }
+            
             return true;
         }
 

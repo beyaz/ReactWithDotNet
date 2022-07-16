@@ -345,7 +345,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
         SaveState();
 
-        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 10000, MethodName = nameof(Refresh) } };
+        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 100000, MethodName = nameof(Refresh) } };
     }
     void OnSelectedPropertyChanged(ListBoxChangeParams e)
     {
