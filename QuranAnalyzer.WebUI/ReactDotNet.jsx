@@ -547,6 +547,8 @@ function HandleAction(data)
                             SendRequest(request, onSuccess);
 
                         }, clientTask.Timeout);
+
+                        OnReactStateReady();
                     });
 
                     continue;
@@ -554,11 +556,6 @@ function HandleAction(data)
 
                 if (clientTask.TaskId === ClientTaskId.GotoMethod)
                 {
-                    if (clientTask.After != null)
-                    {
-                        throw new Error("ClientTask.After can not be use after this task");
-                    }
-
                     EventQueue.push(() =>
                     {
                         setTimeout(() =>
@@ -566,6 +563,8 @@ function HandleAction(data)
                             HandleAction({ remoteMethodName: clientTask.MethodName, component: component, eventArguments: clientTask.MethodArguments || [] });
 
                         }, clientTask.Timeout);
+
+                        OnReactStateReady();
                     });
 
                     continue;
@@ -604,14 +603,10 @@ function HandleAction(data)
 
                 if (clientTask.TaskId === ClientTaskId.CallJsFunction)
                 {
-                    if (clientTask.After != null)
-                    {
-                        throw new Error("ClientTask.After can not be use after this task");
-                    }
-
                     EventQueue.push(() =>
                     {
                         CallJsFunctionInPath(clientTask);
+                        OnReactStateReady();
                     });
 
                     continue;
