@@ -47,7 +47,7 @@ public static class ElementSerializer
 
                     if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
                     {
-                        var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                        var stateValue = Json.DeserializeJson(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
                         statePropertyInfo.SetValue(element, stateValue);
                     }
                 }

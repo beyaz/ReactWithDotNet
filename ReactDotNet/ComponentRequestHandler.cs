@@ -226,7 +226,8 @@ public static class ComponentRequestHandler
                 return $"MissingMember at {typeOfInstance.FullName}::state";
             }
 
-            var state = JsonSerializer.Deserialize(stateAsJson, statePropertyInfo.PropertyType, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
+            
+            var state = Json.DeserializeJson(stateAsJson, statePropertyInfo.PropertyType);
 
             statePropertyInfo.SetValue(instance, state);
 
@@ -245,7 +246,8 @@ public static class ComponentRequestHandler
 
             for (var i = 0; i < parameterInfoList.Length; i++)
             {
-                eventArguments[i] = JsonSerializer.Deserialize(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
+                eventArguments[i] = Json.DeserializeJson(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
+                
             }
 
             return eventArguments;
@@ -253,6 +255,22 @@ public static class ComponentRequestHandler
     }
     #endregion
 
+}
+
+static class Json
+{
+    public static object DeserializeJson(string json, Type returnType)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize(json, returnType);
+        }
+        catch (Exception exception)
+        {
+            exception.ToString();
+            throw;
+        }
+    }
 }
 
 public class StateTree
