@@ -197,11 +197,11 @@ public static class ComponentRequestHandler
 
                 elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.CapturedStateTree);
 
-                File.WriteAllText($@"d:\X\{x}.json",elementAsJsonString);
+                //File.WriteAllText($@"d:\X\{x}.json",elementAsJsonString);
                 
 
-                var b = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true });
-                File.WriteAllText($@"d:\X\{x}-1.json", b);
+                var b = elementAsJsonString = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true });
+                //File.WriteAllText($@"d:\X\{x}-1.json", b);
 
 
                 trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");

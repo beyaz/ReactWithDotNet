@@ -692,7 +692,7 @@ function DefineComponent(componentDeclaration)
             this.state =
             {
                 $rootNode: NotNull(props.$jsonNode[RootNode]),
-                $state   : NotNull(props.$jsonNode)
+                $state   : NotNull(props.$jsonNode.state)
             };
 
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
