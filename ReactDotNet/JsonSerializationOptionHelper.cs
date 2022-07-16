@@ -116,7 +116,7 @@ public class JsonWriterContext
 
 public class InnerElementInfo
 {
-    public Element Element { get; set; }
+    public object Element { get; set; }
 
     [JsonPropertyName("$isElement")]
     public bool IsElement { get; set; }

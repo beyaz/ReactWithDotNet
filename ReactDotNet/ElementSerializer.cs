@@ -76,7 +76,7 @@ public static class ElementSerializer
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
-            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, GetPropertyName(propertyInfo));
+            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, GetPropertyName(propertyInfo), stateTree);
             if (noNeedToExport)
             {
                 continue;
@@ -173,7 +173,7 @@ public static class ElementSerializer
         return propertyName;
     }
 
-    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, string propertyName)
+    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, string propertyName, StateTree stateTree)
     {
         var propertyValue = propertyInfo.GetValue(instance);
 
@@ -249,7 +249,7 @@ public static class ElementSerializer
             propertyValue = new InnerElementInfo
             {
                 IsElement = true,
-                Element   = element
+                Element   = element.ToMap(stateTree)
             };
         }
 
