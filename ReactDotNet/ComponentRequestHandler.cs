@@ -257,13 +257,13 @@ public static class ComponentRequestHandler
 
 }
 
-static class Json
+public static class Json
 {
     public static object DeserializeJson(string json, Type returnType)
     {
         try
         {
-            return JsonSerializer.Deserialize(json, returnType);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject(json, returnType);
         }
         catch (Exception exception)
         {

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Linq.Expressions;
+using Newtonsoft.Json.Linq;
 
 namespace ReactDotNet.PrimeReact;
 
 public class AutoComplete : ElementBase
 {
     [React]
-    public string value { get; set; }
+    public object value { get; set; }
 
     [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
@@ -53,7 +54,28 @@ public class AutoComplete : ElementBase
 
 public class AutoCompleteChangeParams
 {
-    public string value { get; set; }
+    //public JObject value { get; set; }
+    public object value { get; set; }
+
+    public T GetValue<T>()
+    {
+        if (value is JValue jValue)
+        {
+            return jValue.ToObject<T>();
+        }
+
+        if (value is JObject jObject)
+        {
+            return jObject.ToObject<T>();
+        }
+
+        if (value is string && typeof(T) != typeof(string))
+        {
+            return default;
+        }
+        
+        return (T)value;
+    }
 }
 
 public class AutoCompleteCompleteMethodParams

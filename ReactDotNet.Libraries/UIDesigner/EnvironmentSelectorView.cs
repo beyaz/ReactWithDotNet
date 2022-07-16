@@ -14,6 +14,8 @@ class EnvironmentSelectorModel
     public IReadOnlyList<EnvironmentInfo> ItemsSource { get; set; }
     public IReadOnlyList<EnvironmentInfo> Suggestions { get; set; }
     public string SelectedEnvironmentName { get; set; }
+
+    public EnvironmentInfo SelectedEnvironment { get; set; }
 }
 
 class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
@@ -34,9 +36,9 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
             dropdown       = true,
             field          = nameof(EnvironmentInfo.Name),
             
-            value          = state.SelectedEnvironmentName,
-            onChange       = e => { state.SelectedEnvironmentName = e.value;  },
-            completeMethod = e => { state.Suggestions             = state.ItemsSource.Where(x => x.Name.Contains(e.query)).ToList(); }
+            value          = state.SelectedEnvironment,
+            onChange       = e => { state.SelectedEnvironment = e.GetValue<EnvironmentInfo>();  },
+            completeMethod = e => { state.Suggestions         = state.ItemsSource.Where(x => x.Name.Contains(e.query)).ToList(); }
         };
     }
 }
