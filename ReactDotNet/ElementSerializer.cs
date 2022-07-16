@@ -35,8 +35,6 @@ public static class ElementSerializer
 
         if (element is IReactStatefulComponent reactStatefulComponent)
         {
-            reactStatefulComponent.Context = stateTree.Context;
-            
             if (stateTree.BreadCrumpPath != "0")
             {
                 if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
@@ -54,6 +52,9 @@ public static class ElementSerializer
                     }
                 }
             }
+
+            reactStatefulComponent.Context = stateTree.Context;
+            ((ReactStatefulComponent)reactStatefulComponent).OnStateInitialized();
 
             map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
 
