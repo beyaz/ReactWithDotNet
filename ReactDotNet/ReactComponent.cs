@@ -54,6 +54,8 @@ public sealed class ReactContext
         map.Add(key, value);
 
     }
+    
+    public IReadOnlyList<object> ClientTasks { get; set; }
 }
 
 
@@ -76,7 +78,12 @@ public static class BrowserInformation
     public static ReactContextKey<double> AvailableWidth = new(nameof(AvailableWidth));
     public static ReactContextKey<double> AvailableHeight = new(nameof(AvailableHeight));
     public static ReactContextKey<IReadOnlyDictionary<string, string>> UrlParameters = new(nameof(UrlParameters));
+
 }
+
+
+
+
 
 
 public interface IReactStatefulComponent

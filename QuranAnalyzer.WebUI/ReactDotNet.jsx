@@ -218,16 +218,6 @@ function NotNull(value)
     return value;
 }
 
-function NotFrozen(value)
-{
-    if (Object.isFrozen(value))
-    {
-        throw Error("value cannot be frozen.");
-    }
-
-    return value;
-}
-
 function NVL(a, b)
 {
     if (a == null)
@@ -529,7 +519,7 @@ function HandleAction(data)
             throw response.ErrorMessage;
         }
 
-        var element = JSON.parse(response.ElementAsJsonString);
+        const element = response.ElementAsJson;
         
         function restoreState(onStateReady)
         {
@@ -539,116 +529,106 @@ function HandleAction(data)
             }, onStateReady);
         }
 
-        const clientTask = element.state.ClientTask;
-
-        element.state.ClientTask = null;
-
-        const afterSetState = processClientTask(clientTask);
-
-        if (afterSetState)
+        const clientTasks = response.ClientTasks;
+        
+        if (clientTasks != null)
         {
-            EventQueue.push(afterSetState);
+            for (let i = 0; i < clientTasks.length; i++)
+            {
+                const clientTask = clientTasks[i];
+
+                if (clientTask.TaskId === ClientTaskId.ComebackWithLastAction)
+                {
+                    EventQueue.push(() =>
+                    {
+                        setTimeout(() =>
+                        {
+                            request.CapturedStateTree = component.CaptureStateTree();
+                            SendRequest(request, onSuccess);
+
+                        }, clientTask.Timeout);
+                    });
+
+                    continue;
+                }
+
+                if (clientTask.TaskId === ClientTaskId.GotoMethod)
+                {
+                    if (clientTask.After != null)
+                    {
+                        throw new Error("ClientTask.After can not be use after this task");
+                    }
+
+                    EventQueue.push(() =>
+                    {
+                        setTimeout(() =>
+                        {
+                            HandleAction({ remoteMethodName: clientTask.MethodName, component: component, eventArguments: clientTask.MethodArguments || [] });
+
+                        }, clientTask.Timeout);
+                    });
+
+                    continue;
+                }
+
+                if (clientTask.TaskId === ClientTaskId.PushHistory)
+                {
+                    window.history.replaceState({}, clientTask.Title, clientTask.Url);
+
+                    continue;
+                }
+
+                if (clientTask.TaskId === ClientTaskId.DispatchEvent)
+                {
+                    EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
+
+                    continue;
+                }
+
+                if (clientTask.TaskId === ClientTaskId.ListenEvent)
+                {
+                    EventBus.On(clientTask.EventName, function()
+                    {
+                        HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: arguments[0] });
+                    });
+
+                    continue;
+                }
+
+                if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
+                {
+                    ListenComponentEvent(clientTask, component[DotNetTypeOfReactComponent]);
+
+                    continue;
+                }
+
+                if (clientTask.TaskId === ClientTaskId.CallJsFunction)
+                {
+                    if (clientTask.After != null)
+                    {
+                        throw new Error("ClientTask.After can not be use after this task");
+                    }
+
+                    EventQueue.push(() =>
+                    {
+                        CallJsFunctionInPath(clientTask);
+                    });
+
+                    continue;
+                }
+
+                if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
+                {
+                    window.location.replace(location.origin + clientTask.Url);
+
+                    continue;
+                }
+
+                throw Error("ClientTask not recognized.");
+            }    
         }
         
         restoreState(OnReactStateReady);
-
-        function processClientTask(clientTask)
-        {
-            if (clientTask == null)
-            {
-                return null;
-            }
-
-            if (clientTask.TaskId === ClientTaskId.ComebackWithLastAction)
-            {
-                if (clientTask.After != null)
-                {
-                    throw new Error("ClientTask.After can not be use after this task");
-                }
-
-                return function()
-                {
-                    setTimeout(function()
-                    {
-                        request.CapturedStateTree = component.CaptureStateTree();
-                        SendRequest(request, onSuccess);
-
-                    }, clientTask.Timeout);
-                };
-            }
-
-            if (clientTask.TaskId === ClientTaskId.GotoMethod)
-            {
-                if (clientTask.After != null)
-                {
-                    throw new Error("ClientTask.After can not be use after this task");
-                }
-
-                return function ()
-                {
-                    setTimeout(function ()
-                    {
-                        HandleAction({ remoteMethodName: clientTask.MethodName, component: component, eventArguments: clientTask.MethodArguments || [] });
-
-                    }, clientTask.Timeout);
-                };
-                
-            }
-
-            if (clientTask.TaskId === ClientTaskId.PushHistory)
-            {
-                window.history.replaceState({}, clientTask.Title, clientTask.Url);
-
-                return processClientTask(clientTask.After);
-            }
-
-            if (clientTask.TaskId === ClientTaskId.DispatchEvent)
-            {
-                EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
-
-                return processClientTask(clientTask.After);
-            }
-
-            if (clientTask.TaskId === ClientTaskId.ListenEvent)
-            {
-                EventBus.On(clientTask.EventName, function()
-                {
-                    HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: arguments[0] });
-                });
-
-                return processClientTask(clientTask.After);
-            }
-
-            if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
-            {
-                ListenComponentEvent(clientTask, component[DotNetTypeOfReactComponent]);
-
-                return processClientTask(clientTask.After);
-            }
-
-            if (clientTask.TaskId === ClientTaskId.CallJsFunction)
-            {
-                if (clientTask.After != null)
-                {
-                    throw new Error("ClientTask.After can not be use after this task");
-                }
-
-                return function ()
-                {
-                    CallJsFunctionInPath(clientTask);
-                };
-            }
-
-            if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
-            {
-                window.location.replace(location.origin + clientTask.Url);
-
-                return processClientTask(clientTask.After);
-            }
-
-            throw Error("ClientTask not recognized.");
-        }
-
     }
     SendRequest(request, onSuccess);
 }
@@ -665,13 +645,13 @@ function RegisterActionToComponent(parameterObject)
     componentActions[GetComponentActionLocation(parameterObject.typeNameOfComponent, parameterObject.actionName)] = parameterObject.handlerFunction;
 }
 
+// todo: fix me
 function TryDispatchComponentAction(component, actionName)
 {
     EventBus.Dispatch(GetComponentActionLocation(component[DotNetTypeOfReactComponent], actionName), component);
 }
 
-var ComponentDefinitions = {
-};
+const ComponentDefinitions = {};
 
 function DefineComponent(componentDeclaration)
 {
@@ -809,48 +789,41 @@ function RenderComponentIn(obj)
                 throw response.ErrorMessage;
             }
 
-            const element = JSON.parse(response.ElementAsJsonString);
+            const element = response.ElementAsJson;
 
             const component = DefineComponent(element);
-
-            const clientTask = element.state.ClientTask;
             
-            element.state.ClientTask = null;
-            
-            const reactElement = React.createElement(component, {key: '0', $jsonNode: element});
+            const reactElement = React.createElement(component, { key: '0', $jsonNode: element });
 
-            function processClientTask(clientTask)
+            const clientTasks = response.ClientTasks;
+
+            if (clientTasks != null)
             {
-                if (clientTask == null)
+                for (let i = 0; i < clientTasks.length; i++)
                 {
-                    return null;
-                }
+                    const clientTask = clientTasks[i];
 
-                if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
-                {
-                    ListenComponentEvent(clientTask, fullTypeNameOfReactComponent);
-
-                    return processClientTask(clientTask.After);
-                }
-
-                if (clientTask.TaskId === ClientTaskId.CallJsFunction)
-                {
-                    CallJsFunctionInPath(clientTask);
-
-                    if (clientTask.After == null)
+                    if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
                     {
-                        // todo: fix
-                        OnReactStateReady();
+                        ListenComponentEvent(clientTask, fullTypeNameOfReactComponent);
+
+                        continue;
                     }
-                    return processClientTask(clientTask.After);
-                }
 
-                throw new Error("Client Task not recognized");
+                    if (clientTask.TaskId === ClientTaskId.CallJsFunction)
+                    {
+                        CallJsFunctionInPath(clientTask);
+
+                        continue;
+                    }
+
+                    throw new Error("Client Task not recognized");
+                }    
             }
-
-            processClientTask(clientTask);
-
+            
             createRoot(document.getElementById(containerHtmlElementId)).render(reactElement);
+
+            OnReactStateReady();
         }
         
         SendRequest(request, onSuccess);

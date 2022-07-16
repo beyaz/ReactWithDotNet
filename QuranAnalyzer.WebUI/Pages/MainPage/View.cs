@@ -32,7 +32,6 @@ public class MainViewModel
     public string SelectedFact { get; set; }
     public string SummaryText { get; set; }
 
-    public ClientTask ClientTask { get; set; }
     public string OperationName { get; set; }
     public bool IsBlocked { get; set; }
 
@@ -62,11 +61,15 @@ class View : ReactComponent<MainViewModel>
         {
             state.PageId = pageId;
 
-            state.ClientTask = new ClientTaskListenEvent
+            Context.ClientTasks = new object[]
             {
-                EventName     = "MainContentDivScrollChanged",
-                RouteToMethod = nameof(OnMainContentDivScrollChanged),
-                After = new ClientTaskCallJsFunction
+                new ClientTaskListenEvent
+                {
+                    EventName     = "MainContentDivScrollChanged",
+                    RouteToMethod = nameof(OnMainContentDivScrollChanged),
+
+                },
+                new ClientTaskCallJsFunction
                 {
                     JsFunctionPath = "RegisterScrollEvents"
                 }
@@ -83,10 +86,13 @@ class View : ReactComponent<MainViewModel>
     {
         state.LastClickedMenuId = menuId;
 
-        state.ClientTask = new ClientTaskDispatchEvent
+        Context.ClientTasks = new[]
         {
-            EventName       = nameof(OnMainMenuItemClicked),
-            EventArguments = new object[] {menuId}
+            new ClientTaskDispatchEvent
+            {
+                EventName      = nameof(OnMainMenuItemClicked),
+                EventArguments = new object[] { menuId }
+            }
         };
     }
     

@@ -2,23 +2,16 @@
 
 namespace ReactDotNet;
 
-
 [Serializable]
-public abstract class ClientTask
-{
-    public ClientTask After { get; set; } 
-}
-
-[Serializable]
-public sealed class ClientTaskCallJsFunction : ClientTask
+public sealed class ClientTaskCallJsFunction
 {
     public int TaskId => 0;
-    public string JsFunctionPath{ get; set; }
+    public string JsFunctionPath { get; set; }
     public object[] JsFunctionArguments { get; set; }
 }
 
 [Serializable]
-public sealed class ClientTaskListenEvent : ClientTask
+public sealed class ClientTaskListenEvent
 {
     public int TaskId => 1;
     public string EventName { get; set; }
@@ -26,7 +19,7 @@ public sealed class ClientTaskListenEvent : ClientTask
 }
 
 [Serializable]
-public sealed class ClientTaskDispatchEvent: ClientTask
+public sealed class ClientTaskDispatchEvent
 {
     public int TaskId => 2;
     public string EventName { get; set; }
@@ -34,7 +27,7 @@ public sealed class ClientTaskDispatchEvent: ClientTask
 }
 
 [Serializable]
-public sealed class ClientTaskListenComponentEvent : ClientTask
+public sealed class ClientTaskListenComponentEvent
 {
     public int TaskId => 3;
     public string EventName { get; set; }
@@ -42,7 +35,7 @@ public sealed class ClientTaskListenComponentEvent : ClientTask
 }
 
 [Serializable]
-public sealed class ClientTaskPushHistory: ClientTask
+public sealed class ClientTaskPushHistory
 {
     public int TaskId => 4;
     public string Title { get; set; }
@@ -50,24 +43,24 @@ public sealed class ClientTaskPushHistory: ClientTask
 }
 
 [Serializable]
-public sealed class ClientTaskComebackWithLastAction: ClientTask
+public sealed class ClientTaskComebackWithLastAction
 {
     public int TaskId => 5;
     public int Timeout { get; set; }
 }
+
 [Serializable]
-public sealed class ClientTaskGotoMethod : ClientTask
+public sealed class ClientTaskGotoMethod
 {
     public int TaskId => 6;
     public int Timeout { get; set; }
-    public string  MethodName { get; set; }
+    public string MethodName { get; set; }
     public object[] MethodArguments { get; set; }
 }
 
 [Serializable]
-public sealed class ClientTaskNavigateToUrl : ClientTask
+public sealed class ClientTaskNavigateToUrl
 {
     public int TaskId => 7;
     public string Url { get; set; }
 }
-

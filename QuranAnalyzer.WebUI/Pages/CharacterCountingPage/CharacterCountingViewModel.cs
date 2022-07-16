@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ReactDotNet;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -10,7 +9,7 @@ public class CharacterCountingViewModel
     public string SelectedFact { get; set; }
     public string SummaryText { get; set; }
 
-    public ClientTask ClientTask { get; set; }
+    
     public string OperationName { get; set; }
     public bool IsBlocked { get; set; }
 

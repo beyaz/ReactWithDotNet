@@ -36,9 +36,14 @@ public class ComponentResponse
 {
     #region Public Properties
     public string ElementAsJsonString { get; set; }
+
+    public IReadOnlyList<object> ClientTasks { get; set; }
+
     public string ErrorMessage { get; set; }
 
     public string NavigateToUrl { get; set; }
+
+    public object ElementAsJson { get; set; }
 
     public IReadOnlyList<string> Trace { get; set; }
     #endregion
@@ -52,6 +57,17 @@ public static class ComponentRequestHandler
         return $"{type.FullName},{type.Assembly.GetName().Name}";
     }
 
+    static  ReactContext CreateContext(ComponentRequest request)
+    {
+        var context = new ReactContext();
+
+        context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
+        context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
+        context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
+
+        return context;
+    }
+
     public static ComponentResponse HandleRequest(ComponentRequest request, Func<string, Type> findType)
     {
         var trace = new List<string>();
@@ -62,11 +78,7 @@ public static class ComponentRequestHandler
 
         trace.Add($"BEGIN {stopwatch.ElapsedMilliseconds}");
 
-        var context = new ReactContext();
-
-        context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
-        context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
-        context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
+        var context = CreateContext(request);
         
 
         if (request.MethodName == "FetchComponent")
@@ -95,34 +107,27 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
-            // Call contstructor
+            var stateTree = new StateTree
             {
-                trace.Add($"Calling constructor started at {stopwatch.ElapsedMilliseconds}");
+                ChildStates    = request.CapturedStateTree,
+                BreadCrumpPath = "0",
+                RootElement    = instance,
+                Context        = context
+            };
 
-                if (instance is IReactStatefulComponent reactStatefulComponent)
-                {
-                    initializeBrowserInformation(reactStatefulComponent);
-                }
-
-                trace.Add($"Calling constructor finished at {stopwatch.ElapsedMilliseconds}");
-            }
-
-            string elementAsJsonString;
+            trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
             
-            // Serialize
-            {
-                trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
+            var map = instance.ToMap(stateTree);
 
-                elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.CapturedStateTree);
-
-                trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
-            }
+            trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
+            
             trace.Add($"END {stopwatch.ElapsedMilliseconds}");
 
             return new ComponentResponse
             {
-                ElementAsJsonString = elementAsJsonString,
-                Trace               = trace
+                ElementAsJson = map,
+                Trace         = trace,
+                ClientTasks = context.ClientTasks
             };
         }
 
@@ -140,11 +145,8 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
+           
             
-            if (instance is IReactStatefulComponent reactStatefulComponent)
-            {
-                initializeBrowserInformation(reactStatefulComponent);
-            }
             
             // Init state
             {
@@ -156,9 +158,10 @@ public static class ComponentRequestHandler
 
                 if (instance is ReactStatefulComponent reactStatefulComponent2)
                 {
+                    reactStatefulComponent2.Context = context;
+                    
                     reactStatefulComponent2.OnStateInitialized();
                 }
-                
             }
 
             // Find method
@@ -183,55 +186,37 @@ public static class ComponentRequestHandler
                 trace.Add($"Method '{methodInfo.Name}' invocation finished at {stopwatch.ElapsedMilliseconds}");
             }
 
-            string elementAsJsonString;
 
             // Serialize to json
-            {
+            
                 trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
                 var stateTree = new StateTree
                 {
                     ChildStates    = request.CapturedStateTree,
                     BreadCrumpPath = "0",
-                    RootElement    = instance
+                    RootElement    = instance,
+                    Context = context
                 };
 
                 var map = instance.ToMap(stateTree);
 
-
-                x++;
-
-                elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.CapturedStateTree);
-
-                //File.WriteAllText($@"d:\X\{x}.json",elementAsJsonString);
-                
-
-                var b = elementAsJsonString = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true });
-                //File.WriteAllText($@"d:\X\{x}-1.json", b);
-
-
                 trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
-            }
+            
 
             trace.Add($"END {stopwatch.ElapsedMilliseconds}");
 
             return new ComponentResponse
             {
-                ElementAsJsonString = elementAsJsonString,
-                Trace               = trace
+                ElementAsJson = map,
+                Trace         = trace,
+                ClientTasks   = context.ClientTasks
             };
         }
 
         
         
-        void initializeBrowserInformation(IReactStatefulComponent reactStatefulComponent)
-        {
-            var context = reactStatefulComponent.Context ??= new ReactContext();
-
-            context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
-            context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
-            context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
-        }
+        
 
         string setState(Type typeOfInstance, object instance, string stateAsJson)
         {
@@ -268,7 +253,6 @@ public static class ComponentRequestHandler
     }
     #endregion
 
-    static int x;
 }
 
 public class StateTree

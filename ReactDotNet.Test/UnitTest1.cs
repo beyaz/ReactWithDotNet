@@ -128,25 +128,9 @@ public class UnitTest1
     }
     
 
-    [TestMethod]
-    public void SerializeClientTask()
-    {
-        var a = new SerializeClientTaskModel
-        {
-            ClientTask = new ClientTaskCallJsFunction
-            {
-                JsFunctionArguments = new [] {(object)2},
-                JsFunctionPath      = "A.B"
-            }
-        };
+    
 
-        var json = ToJson(a);
-    }
-
-    class SerializeClientTaskModel
-    {
-        public ClientTask ClientTask { get; set; }
-    }
+   
 
 
    

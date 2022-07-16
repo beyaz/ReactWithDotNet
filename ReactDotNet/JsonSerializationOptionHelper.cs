@@ -15,7 +15,7 @@ static class JsonSerializationOptionHelper
     #region Public Methods
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
     {
-        // options.WriteIndented    = true;
+        options.WriteIndented    = true;
         options.IgnoreNullValues = true;
 
         options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
@@ -23,7 +23,6 @@ static class JsonSerializationOptionHelper
 
         options.Converters.Add(new JsonConverterForEnum());
 
-        options.Converters.Add(new ClientTaskConverter());
 
         return options;
     }
@@ -212,52 +211,9 @@ static class JsonSerializationOptionHelper
         #endregion
     }
 
-    public class ClientTaskConverter : JsonConverterFactory
-    {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            return typeToConvert.IsAssignableFrom(typeof(ClientTask));
-        }
+  
 
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            return (JsonConverter)Activator.CreateInstance(typeof(PolymorphicJsonConverter<>).MakeGenericType(typeToConvert));
-        }
-    }
-
-    class PolymorphicJsonConverter<T> : JsonConverter<T>
-    {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            return typeof(T).IsAssignableFrom(typeToConvert);
-        }
-
-        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-        {
-            if (value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            writer.WriteStartObject();
-            foreach (var property in value.GetType().GetProperties())
-            {
-                if (!property.CanRead)
-                    continue;
-                var propertyValue = property.GetValue(value);
-                writer.WritePropertyName(property.Name);
-                JsonSerializer.Serialize(writer, propertyValue, options);
-            }
-
-            writer.WriteEndObject();
-        }
-    }
+    
 
 
 
@@ -343,13 +299,8 @@ public static class ElementSerializer
 
     
 
-    public static IReadOnlyDictionary<string, object> ToMap(this Element element, StateTree stateTree = null)
+    public static IReadOnlyDictionary<string, object> ToMap(this Element element, StateTree stateTree)
     {
-        if (stateTree == null)
-        {
-            stateTree = new StateTree();
-            
-        }
         // maybe root element is inherits from ReactElement
         if (element is ReactComponent reactComponent)
         {
@@ -374,8 +325,6 @@ public static class ElementSerializer
 
         if (element is IReactStatefulComponent reactStatefulComponent)
         {
-            
-
             reactStatefulComponent.Context = stateTree.Context;
             
             TryInitStateProperty(element, stateTree);
@@ -579,7 +528,7 @@ public static class ElementSerializer
             return;
         }
         
-        if (element is IReactStatefulComponent)
+        if (element is ReactStatefulComponent statefulComponent)
         {
             if (stateTree.BreadCrumpPath != "0")
             {
@@ -595,6 +544,8 @@ public static class ElementSerializer
                     {
                         var stateValue = JsonSerializer.Deserialize(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
                         statePropertyInfo.SetValue(element, stateValue);
+                        
+                        
                     }
                 }
             }

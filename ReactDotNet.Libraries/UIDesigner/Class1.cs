@@ -9,7 +9,6 @@ namespace ReactDotNet.UIDesigner;
 class UIDesignerModel
 {
     #region Public Properties
-    public ClientTask ClientTask { get; set; }
 
     public IReadOnlyList<DotNetObjectPropertyValue> Properties { get; set; }
 

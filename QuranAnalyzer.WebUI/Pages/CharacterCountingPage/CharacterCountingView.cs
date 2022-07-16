@@ -40,7 +40,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             state.ResultRecords = null;
             state.OperationName = "Hesaplanıyor...";
             state.IsBlocked     = true;
-            state.ClientTask    = new ClientTaskComebackWithLastAction {Timeout = 5};
+            Context.ClientTasks = new[] { new ClientTaskComebackWithLastAction { Timeout = 5 } };
             return;
         }
 
