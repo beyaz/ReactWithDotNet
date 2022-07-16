@@ -14,6 +14,10 @@ import { Checkbox } from 'primereact/Checkbox';
 import { InputMask } from 'primereact/InputMask';
 import Xarrow from "react-xarrows";
 
+// designer
+
+import { AutoComplete } from 'primereact/autocomplete';
+
         
 
 
@@ -82,7 +86,10 @@ var componentMap = {
     "ReactDotNet.PrimeReact.DataTable": DataTable,
     "ReactDotNet.PrimeReact.Checkbox": Checkbox,
     "ReactDotNet.PrimeReact.InputMask": InputMask,
-    "ReactDotNet.react_xarrows.Xarrow": Xarrow
+    "ReactDotNet.react_xarrows.Xarrow": Xarrow,
+
+    // designer
+    "ReactDotNet.PrimeReact.AutoComplete": AutoComplete
 };
 
 ReactDotNet.FindComponentByFullName = function (componentFullName)

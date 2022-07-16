@@ -43,6 +43,12 @@ public class AutoComplete : ElementBase
     /// </summary>
     [React]
     public bool forceSelection { get; set; }
+
+    /// <summary>
+    /// Displays a button next to the input field when enabled.
+    /// </summary>
+    [React]
+    public bool dropdown { get; set; }
 }
 
 public class AutoCompleteChangeParams

@@ -196,6 +196,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                         size = 2,
                                         children =
                                         {
+                                            new EnvironmentSelectorView(),
                                             componentSelector
                                         }
                                     },
@@ -344,7 +345,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
         SaveState();
 
-        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 1000, MethodName = nameof(Refresh) } };
+        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 10000, MethodName = nameof(Refresh) } };
     }
     void OnSelectedPropertyChanged(ListBoxChangeParams e)
     {
