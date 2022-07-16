@@ -356,11 +356,15 @@ public static class ElementSerializer
             return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent), stateTree);
         }
 
+
+        element.BeforeSerialize();
+        
         var map = new Dictionary<string, object>();
 
         if (element is HtmlElement htmlElement)
         {
             map.Add("$type", htmlElement.Type);
+            
         }
 
         if (element is ThirdPartyReactComponent thirdPartyReactComponent)
@@ -370,6 +374,17 @@ public static class ElementSerializer
 
         if (element is IReactStatefulComponent reactStatefulComponent)
         {
+            
+
+            reactStatefulComponent.Context = stateTree.Context;
+            
+            TryInitStateProperty(element, stateTree);
+
+
+            map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
+            
+            map.Add(nameof(reactStatefulComponent.___RootNode___), ToMap(reactStatefulComponent.render(), stateTree));
+
             map.Add(nameof(reactStatefulComponent.___Type___), reactStatefulComponent.___Type___);
             map.Add(nameof(reactStatefulComponent.___TypeOfState___), reactStatefulComponent.___TypeOfState___);
             if (reactStatefulComponent.___HasComponentDidMountMethod___)
@@ -377,18 +392,12 @@ public static class ElementSerializer
                 map.Add(nameof(reactStatefulComponent.___HasComponentDidMountMethod___), reactStatefulComponent.___HasComponentDidMountMethod___);
             }
 
-            reactStatefulComponent.Context = stateTree.Context;
-            
-            TryInitStateProperty(element, stateTree);
-
-            map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
-
-            map.Add(nameof(reactStatefulComponent.___RootNode___), ToMap(reactStatefulComponent.render(), stateTree));
+            map.Add(nameof(element.key), element.key);
 
             return map;
 
         }
-        
+
 
         var reactAttributes = new List<string>();
         
@@ -405,6 +414,15 @@ public static class ElementSerializer
             map.Add(GetPropertyName(propertyInfo), propertyValue);
         }
 
+        if (element is HtmlElement htmlElement2)
+        {
+            if (htmlElement2.innerText != null)
+            {
+                map.Add("innerText", htmlElement2.innerText);
+            }
+
+        }
+        
         if (reactAttributes.Count > 0)
         {
             map.Add(nameof(reactAttributes), reactAttributes);

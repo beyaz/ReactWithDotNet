@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -190,15 +191,19 @@ public static class ComponentRequestHandler
                 };
 
                 var map = instance.ToMap(stateTree);
-                
 
+
+                x++;
 
                 elementAsJsonString = ComponentSerializer.SerializeComponent(instance, request.CapturedStateTree);
 
+                File.WriteAllText($@"d:\X\{x}.json",elementAsJsonString);
+                
 
-                // elementAsJsonString = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true });
-                
-                
+                var b = JsonSerializer.Serialize(map, new JsonSerializerOptions { IgnoreNullValues = true, WriteIndented = true });
+                File.WriteAllText($@"d:\X\{x}-1.json", b);
+
+
                 trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             }
 
@@ -211,6 +216,8 @@ public static class ComponentRequestHandler
             };
         }
 
+        
+        
         void initializeBrowserInformation(IReactStatefulComponent reactStatefulComponent)
         {
             var context = reactStatefulComponent.Context ??= new ReactContext();
@@ -254,6 +261,8 @@ public static class ComponentRequestHandler
         }
     }
     #endregion
+
+    static int x;
 }
 
 public class StateTree
@@ -279,6 +288,8 @@ static class ComponentSerializer
     {
         var jsonSerializerOptions = new JsonSerializerOptions
         {
+            IgnoreNullValues = true,
+            WriteIndented = true,
             Converters =
             {
                 new DummyConverter
