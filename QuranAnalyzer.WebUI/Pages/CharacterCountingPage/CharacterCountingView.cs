@@ -19,14 +19,19 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         state = new CharacterCountingViewModel();
 
-        if (Context != null &&  Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q",out var value))
+        StateInitialized += () =>
         {
-            state.ChapterFilter = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
-            state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];
-        }
+            if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q", out var value))
+            {
+                state.ChapterFilter    = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
+                state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];
+            }
+        };
+        
+      
     }
 
-    
+     
 
     void OnCaclculateClicked(string _)
     {

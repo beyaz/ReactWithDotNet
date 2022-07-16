@@ -153,6 +153,12 @@ public static class ComponentRequestHandler
                 {
                     return new ComponentResponse { ErrorMessage = errorMessage };
                 }
+
+                if (instance is ReactStatefulComponent reactStatefulComponent2)
+                {
+                    reactStatefulComponent2.OnStateInitialized();
+                }
+                
             }
 
             // Find method
