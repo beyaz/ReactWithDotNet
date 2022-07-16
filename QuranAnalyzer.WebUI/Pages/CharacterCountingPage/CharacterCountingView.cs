@@ -21,11 +21,15 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         StateInitialized += () =>
         {
-            if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q", out var value))
+            if (state.ChapterFilter == null)
             {
-                state.ChapterFilter    = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
-                state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];
+                if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q", out var value))
+                {
+                    state.ChapterFilter    = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
+                    state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];
+                }
             }
+            
         };
         
       
@@ -40,7 +44,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             state.ResultRecords = null;
             state.OperationName = "Hesaplanıyor...";
             state.IsBlocked     = true;
-            Context.ClientTasks = new[] { new ClientTaskComebackWithLastAction { Timeout = 5 } };
+            Context.ClientTasks = new object[]
+            {
+                new ClientTaskPushHistory{ Url = $"/index.html?page=CharacterCounting&q={state.ChapterFilter}|{state.SearchCharacters}"},
+                new ClientTaskComebackWithLastAction { Timeout = 5 }
+            };
             return;
         }
 

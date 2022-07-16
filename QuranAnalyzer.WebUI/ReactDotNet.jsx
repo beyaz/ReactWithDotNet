@@ -586,9 +586,9 @@ function HandleAction(data)
 
                 if (clientTask.TaskId === ClientTaskId.ListenEvent)
                 {
-                    EventBus.On(clientTask.EventName, function()
+                    EventBus.On(clientTask.EventName, (eventArgumentsAsArray)=>
                     {
-                        HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: arguments[0] });
+                        HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
                     });
 
                     continue;
@@ -788,37 +788,50 @@ function RenderComponentIn(obj)
 
             const component = DefineComponent(element);
             
-            const reactElement = React.createElement(component, { key: '0', $jsonNode: element });
-
             const clientTasks = response.ClientTasks;
 
-            if (clientTasks != null)
+            function renderCallback(component)
             {
-                for (let i = 0; i < clientTasks.length; i++)
+                if (clientTasks != null)
                 {
-                    const clientTask = clientTasks[i];
-
-                    if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
+                    for (let i = 0; i < clientTasks.length; i++)
                     {
-                        ListenComponentEvent(clientTask, fullTypeNameOfReactComponent);
+                        const clientTask = clientTasks[i];
 
-                        continue;
-                    }
+                        if (clientTask.TaskId === ClientTaskId.ListenEvent)
+                        {
+                            EventBus.On(clientTask.EventName, (eventArgumentsAsArray)=>
+                            {
+                                HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
+                            });
 
-                    if (clientTask.TaskId === ClientTaskId.CallJsFunction)
-                    {
-                        CallJsFunctionInPath(clientTask);
+                            continue;
+                        }
+                    
+                        if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
+                        {
+                            ListenComponentEvent(clientTask, fullTypeNameOfReactComponent);
 
-                        continue;
-                    }
+                            continue;
+                        }
 
-                    throw new Error("Client Task not recognized");
-                }    
+                        if (clientTask.TaskId === ClientTaskId.CallJsFunction)
+                        {
+                            CallJsFunctionInPath(clientTask);
+
+                            continue;
+                        }
+
+                        throw new Error("Client Task not recognized");
+                    }    
+                }
+                
+                OnReactStateReady();
             }
+
+            const reactElement = React.createElement(component, { key: '0', $jsonNode: element, ref: renderCallback });
             
             createRoot(document.getElementById(containerHtmlElementId)).render(reactElement);
-
-            OnReactStateReady();
         }
         
         SendRequest(request, onSuccess);

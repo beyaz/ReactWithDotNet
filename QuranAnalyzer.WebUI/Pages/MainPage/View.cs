@@ -53,28 +53,27 @@ class View : ReactComponent<MainViewModel>
     public View()
     {
         state = new MainViewModel();
-    }
-
-    public void ComponentDidMount()
-    {
-        if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("page", out var pageId))
+        
+        StateInitialized += () =>
         {
-            state.PageId = pageId;
-
-            Context.ClientTasks = new object[]
+            if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("page", out var pageId))
             {
-                new ClientTaskListenEvent
-                {
-                    EventName     = "MainContentDivScrollChanged",
-                    RouteToMethod = nameof(OnMainContentDivScrollChanged),
+                state.PageId = pageId;
 
-                },
-                new ClientTaskCallJsFunction
+                Context.ClientTasks = new object[]
                 {
-                    JsFunctionPath = "RegisterScrollEvents"
-                }
-            };
-        }
+                    new ClientTaskListenEvent
+                    {
+                        EventName     = "MainContentDivScrollChanged",
+                        RouteToMethod = nameof(OnMainContentDivScrollChanged)
+                    },
+                    new ClientTaskCallJsFunction
+                    {
+                        JsFunctionPath = "RegisterScrollEvents"
+                    }
+                };
+            }
+        };
     }
     
     public void OnMainContentDivScrollChanged(double mainDivScrollY)
