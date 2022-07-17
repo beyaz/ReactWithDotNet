@@ -256,13 +256,14 @@ public static class ElementSerializer
 
         if (propertyValue is ItemTemplateInfo itemTemplateInfo)
         {
-            var map = new Dictionary<object, object>();
+            var map = new List<KeyValuePair<object, object>>();
+            
             foreach (var item in itemTemplateInfo._items)
             {
-                map.Add(item, itemTemplateInfo._template(item).ToMap(stateTree));
+                map.Add(new KeyValuePair<object, object>(item, itemTemplateInfo._template(item).ToMap(stateTree)));
             }
 
-            return (new ItemTemplate { ___ItemTemplates___ = map }, false);
+            return (new ItemTemplate { ___ItemTemplates___ = map, ___TemplateForNull___ = itemTemplateInfo.TemplateForNull?.ToMap(stateTree) }, false);
         }
 
         return (propertyValue, false);
@@ -284,13 +285,15 @@ public static class ElementSerializer
 
 class ItemTemplate
 {
-    public Dictionary<object,object> ___ItemTemplates___{ get; set; }
+    public List<KeyValuePair<object, object>>  ___ItemTemplates___ { get; set; }
+    public object ___TemplateForNull___ { get; set; }
 }
 
 public class ItemTemplateInfo
 {
     internal IEnumerable _items;
     internal Func<object, Element> _template;
+    public Element TemplateForNull { get; set; }
 }
 public class ItemTemplates<T>: ItemTemplateInfo
 {
@@ -302,5 +305,6 @@ public class ItemTemplates<T>: ItemTemplateInfo
     {
         set => _template = item => value((T)item);
     }
+
     
 }

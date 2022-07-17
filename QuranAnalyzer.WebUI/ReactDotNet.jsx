@@ -246,7 +246,7 @@ var ClientTaskId =
 }
 
 function ConvertToReactElement(jsonNode, component)
-{
+{   
     // is ReactDotNet component
     if (jsonNode[DotNetTypeOfReactComponent])
     {
@@ -330,6 +330,38 @@ function ConvertToReactElement(jsonNode, component)
         return false;
     }
 
+    function tryProcessAsItemsTemplate(propName)
+    {
+        const value = jsonNode[propName];
+        if (value != null && value.___ItemTemplates___)
+        {
+            props[propName] = function (item)
+            {
+                if (item == null && value.___TemplateForNull___)
+                {
+                    return ConvertToReactElement(value.___TemplateForNull___);
+                }
+                
+                const length = value.___ItemTemplates___.length;
+                for (let j = 0; j < length; j++)
+                {
+                    const key = value.___ItemTemplates___[j].Key;
+
+                    if (JSON.stringify(key) === JSON.stringify(item))
+                    {
+                        return ConvertToReactElement(value.___ItemTemplates___[j].Value);
+                    }
+                }
+
+                throw 'item template not found';
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+    
     function tryProcessAsElement(propName)
     {
         var value = jsonNode[propName];
@@ -418,6 +450,12 @@ function ConvertToReactElement(jsonNode, component)
             continue;
         }
 
+        if (tryProcessAsItemsTemplate(propName))
+        {
+            continue;
+        }
+        
+
         if (tryTransformValue(propName))
         {
             continue;
@@ -436,10 +474,7 @@ function ConvertToReactElement(jsonNode, component)
         return createElement(constructorFunction, props, jsonNode.innerText);
     }
 
-    if (jsonNode.___ItemTemplates___)
-    {
-        const items = jsonNode.___ItemTemplates___;
-    }
+  
 
     if (childrenLength > 0)
     {

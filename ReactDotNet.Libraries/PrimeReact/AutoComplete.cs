@@ -54,7 +54,11 @@ public class AutoComplete : ElementBase
 
     [React]
     public ItemTemplateInfo itemTemplate { get; set; }
+
+    [React]
+    public ItemTemplateInfo selectedItemTemplate { get; set; }
     
+
 }
 
 public class AutoCompleteChangeParams

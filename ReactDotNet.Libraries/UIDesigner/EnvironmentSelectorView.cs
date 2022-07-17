@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ReactDotNet.PrimeReact;
 
@@ -32,14 +33,11 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
     }
     public override Element render()
     {
-        return new AutoComplete
+        return new Dropdown
         {
-            suggestions    = state.Suggestions,//.Select(x=>x.Name),
-            dropdown       = true,
-            field          = nameof(EnvironmentInfo.Name),
-            
-            value          = state.SelectedEnvironment ?? (object)state.SelectedEnvironmentAsString,
-            onChange       = e =>
+            options = state.ItemsSource,
+            value = state.SelectedEnvironment ?? (object)state.SelectedEnvironmentAsString,
+            onChange = e =>
             {
                 state.SelectedEnvironment = e.GetValue<EnvironmentInfo>();
                 if (state.SelectedEnvironment == null)
@@ -51,13 +49,70 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
                     state.SelectedEnvironmentAsString = null;
                 }
             },
-            completeMethod = e =>
-            {
-                state.Suggestions = state.ItemsSource.Where(x => x.Name.Contains(e.query)).ToList();
-            },
-            itemTemplate = new ItemTemplates<EnvironmentInfo> { Items = state.ItemsSource, Template = item => new div { innerText = item.Name + "aloha" } }
 
+            optionLabel = nameof(EnvironmentInfo.Name),
+            placeholder = "Select environment",
+            itemTemplate = new ItemTemplates<EnvironmentInfo>
+            {
+                Items = state.ItemsSource,
+                Template = item => new HPanel
+                {
+                    new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
+                }
+            },
+
+            valueTemplate = new ItemTemplates<EnvironmentInfo>
+            {
+                Items = state.ItemsSource,
+                Template = item => new HPanel
+                {
+                    new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
+                },
+                TemplateForNull = new HPanel
+                {
+                     new div("Seçiniz"){style = { margin = "5px"}}
+                }
+            },
+            filterBy  = nameof(EnvironmentInfo.Name),
+            showClear = true,
+            filter    = true,
+            style = { width = "400px"}
 
         };
+        // 
+
+
+        //return new AutoComplete
+        //{
+        //    suggestions = state.Suggestions, //.Select(x=>x.Name),
+        //    dropdown = true,
+        //    field = nameof(EnvironmentInfo.Name),
+
+        //    value = state.SelectedEnvironment ?? (object)state.SelectedEnvironmentAsString,
+        //    onChange = e =>
+        //    {
+        //        state.SelectedEnvironment = e.GetValue<EnvironmentInfo>();
+        //        if (state.SelectedEnvironment == null)
+        //        {
+        //            state.SelectedEnvironmentAsString = e.GetValue<string>();
+        //        }
+        //        else
+        //        {
+        //            state.SelectedEnvironmentAsString = null;
+        //        }
+        //    },
+        //    completeMethod = e =>
+        //    {
+        //        state.Suggestions = state.ItemsSource.Where(x => x.Name.Contains(e.query, StringComparison.OrdinalIgnoreCase)).ToList();
+        //    },
+        //    itemTemplate = new ItemTemplates<EnvironmentInfo>
+        //    {
+        //        Items = state.ItemsSource,
+        //        Template = item => new HPanel
+        //        {
+        //            new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
+        //        }
+        //    }
+        //};
     }
 }
