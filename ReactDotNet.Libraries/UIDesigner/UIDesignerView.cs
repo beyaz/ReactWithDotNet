@@ -197,6 +197,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                         children =
                                         {
                                             new EnvironmentSelectorView(),
+                                            new FolderSelectionView(),
+                                            new AssemblySelectionView(),
                                             componentSelector
                                         }
                                     },
