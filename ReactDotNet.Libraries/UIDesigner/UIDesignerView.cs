@@ -35,7 +35,16 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             onChange    = OnSelectedComponentChanged,
             filter      = true,
             listStyle   = {maxHeight = "400px" },
-            style = { height = "100%" }
+            style = { height = "100%" },
+            itemTemplate = new ItemTemplates<ReactComponentInfo>
+            {
+                Items = GetComponents(Assembly.Load(state.ComponentsLocatedAssemblyName)),
+                Template = item => new HPanel
+                {
+                    style    = { alignItems = "center"},
+                    children = { new img { src = "img/Class.svg", width = 15, height = 15 }, new div(item.Name) { style = { marginLeft = "5px" } } }
+                }
+            },
         };
 
         var propertyList = new ListBox

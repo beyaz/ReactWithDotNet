@@ -70,8 +70,11 @@ namespace ReactDotNet.PrimeReact
         /// </summary>
         [React]
         public Style listStyle { get; } = new Style();
-        
 
+        [React]
+        public ItemTemplateInfo itemTemplate { get; set; }
+
+        
 
     }
 }
