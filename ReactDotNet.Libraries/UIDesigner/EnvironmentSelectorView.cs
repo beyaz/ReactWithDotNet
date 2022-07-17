@@ -16,6 +16,8 @@ class EnvironmentSelectorModel
     public string SelectedEnvironmentName { get; set; }
 
     public EnvironmentInfo SelectedEnvironment { get; set; }
+
+    public string SelectedEnvironmentAsString { get; set; }
 }
 
 class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
@@ -36,8 +38,19 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
             dropdown       = true,
             field          = nameof(EnvironmentInfo.Name),
             
-            value          = state.SelectedEnvironment,
-            onChange       = e => { state.SelectedEnvironment = e.GetValue<EnvironmentInfo>();  },
+            value          = state.SelectedEnvironment ?? (object)state.SelectedEnvironmentAsString,
+            onChange       = e =>
+            {
+                state.SelectedEnvironment = e.GetValue<EnvironmentInfo>();
+                if (state.SelectedEnvironment == null)
+                {
+                    state.SelectedEnvironmentAsString = e.GetValue<string>();
+                }
+                else
+                {
+                    state.SelectedEnvironmentAsString = null;
+                }
+            },
             completeMethod = e => { state.Suggestions         = state.ItemsSource.Where(x => x.Name.Contains(e.query)).ToList(); }
         };
     }

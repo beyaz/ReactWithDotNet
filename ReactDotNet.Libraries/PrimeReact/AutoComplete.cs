@@ -50,6 +50,10 @@ public class AutoComplete : ElementBase
     /// </summary>
     [React]
     public bool dropdown { get; set; }
+
+    [React]
+    public Func<object,Element> itemTemplate { get; set; }
+    
 }
 
 public class AutoCompleteChangeParams
