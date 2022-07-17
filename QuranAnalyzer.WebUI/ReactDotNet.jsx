@@ -436,6 +436,11 @@ function ConvertToReactElement(jsonNode, component)
         return createElement(constructorFunction, props, jsonNode.innerText);
     }
 
+    if (jsonNode.___ItemTemplates___)
+    {
+        const items = jsonNode.___ItemTemplates___;
+    }
+
     if (childrenLength > 0)
     {
         var newChildren = [];

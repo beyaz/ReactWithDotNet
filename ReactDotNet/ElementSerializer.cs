@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -253,6 +254,17 @@ public static class ElementSerializer
             };
         }
 
+        if (propertyValue is ItemTemplateInfo itemTemplateInfo)
+        {
+            var map = new Dictionary<object, object>();
+            foreach (var item in itemTemplateInfo._items)
+            {
+                map.Add(item, itemTemplateInfo._template(item).ToMap(stateTree));
+            }
+
+            return (new ItemTemplate { ___ItemTemplates___ = map }, false);
+        }
+
         return (propertyValue, false);
     }
 
@@ -268,4 +280,27 @@ public static class ElementSerializer
 
     
     #endregion
+}
+
+class ItemTemplate
+{
+    public Dictionary<object,object> ___ItemTemplates___{ get; set; }
+}
+
+public class ItemTemplateInfo
+{
+    internal IEnumerable _items;
+    internal Func<object, Element> _template;
+}
+public class ItemTemplates<T>: ItemTemplateInfo
+{
+    public IEnumerable<T> Items
+    {
+        set => _items = value;
+    }
+    public  Func<T,Element> Template
+    {
+        set => _template = item => value((T)item);
+    }
+    
 }

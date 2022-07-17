@@ -51,7 +51,13 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
                     state.SelectedEnvironmentAsString = null;
                 }
             },
-            completeMethod = e => { state.Suggestions         = state.ItemsSource.Where(x => x.Name.Contains(e.query)).ToList(); }
+            completeMethod = e =>
+            {
+                state.Suggestions = state.ItemsSource.Where(x => x.Name.Contains(e.query)).ToList();
+            },
+            itemTemplate = new ItemTemplates<EnvironmentInfo> { Items = state.ItemsSource, Template = item => new div { innerText = item.Name + "aloha" } }
+
+
         };
     }
 }

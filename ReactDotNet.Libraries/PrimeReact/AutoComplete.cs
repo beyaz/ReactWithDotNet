@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
 
@@ -52,7 +53,7 @@ public class AutoComplete : ElementBase
     public bool dropdown { get; set; }
 
     [React]
-    public Func<object,Element> itemTemplate { get; set; }
+    public ItemTemplateInfo itemTemplate { get; set; }
     
 }
 
