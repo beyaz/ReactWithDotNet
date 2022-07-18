@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using QuranAnalyzer.WebUI.Components;
-using ReactDotNet;
-using ReactDotNet.PrimeReact;
+using ReactWithDotNet;
+using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 

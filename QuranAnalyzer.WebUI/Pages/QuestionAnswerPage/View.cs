@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ReactDotNet;
+using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
 

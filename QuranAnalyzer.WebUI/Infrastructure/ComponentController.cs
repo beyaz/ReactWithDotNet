@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ReactDotNet.Demo
+namespace ReactWithDotNet.Demo
 {
     [ApiController]
     [Route("[controller]")]

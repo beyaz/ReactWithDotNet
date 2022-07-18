@@ -1,5 +1,5 @@
 ﻿using QuranAnalyzer.WebUI.Components;
-using ReactDotNet;
+using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 

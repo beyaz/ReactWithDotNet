@@ -1,4 +1,4 @@
-﻿namespace ReactDotNet;
+﻿namespace ReactWithDotNet;
 
 class ModelA
 {

@@ -22,7 +22,7 @@ import { Tree } from 'primereact/tree';
         
 
 
-import ReactDotNet from "./ReactDotNet";
+import ReactWithDotNet from "./ReactWithDotNet";
 
 
 
@@ -71,31 +71,31 @@ window.primereact =
 window.Xarrow = Xarrow;
 
 var componentMap = {
-    "ReactDotNet.PrimeReact.Button": Button,
-    "ReactDotNet.PrimeReact.InputText": InputText,
-    "ReactDotNet.PrimeReact.InputTextarea": InputTextarea,
-    "ReactDotNet.PrimeReact.BlockUI": BlockUI,
-    "ReactDotNet.PrimeReact.Card": Card,
-    "ReactDotNet.PrimeReact.TabView": TabView,
-    "ReactDotNet.PrimeReact.TabPanel": TabPanel,
-    "ReactDotNet.PrimeReact.SplitterPanel": SplitterPanel,
-    "ReactDotNet.PrimeReact.Splitter": Splitter,
-    "ReactDotNet.PrimeReact.Slider": Slider,
-    "ReactDotNet.PrimeReact.ListBox": ListBox,
-    "ReactDotNet.PrimeReact.Dropdown": Dropdown,
-    "ReactDotNet.PrimeReact.Column": Column,
-    "ReactDotNet.PrimeReact.DataTable": DataTable,
-    "ReactDotNet.PrimeReact.Checkbox": Checkbox,
-    "ReactDotNet.PrimeReact.InputMask": InputMask,
-    "ReactDotNet.react_xarrows.Xarrow": Xarrow,
+    "ReactWithDotNet.PrimeReact.Button": Button,
+    "ReactWithDotNet.PrimeReact.InputText": InputText,
+    "ReactWithDotNet.PrimeReact.InputTextarea": InputTextarea,
+    "ReactWithDotNet.PrimeReact.BlockUI": BlockUI,
+    "ReactWithDotNet.PrimeReact.Card": Card,
+    "ReactWithDotNet.PrimeReact.TabView": TabView,
+    "ReactWithDotNet.PrimeReact.TabPanel": TabPanel,
+    "ReactWithDotNet.PrimeReact.SplitterPanel": SplitterPanel,
+    "ReactWithDotNet.PrimeReact.Splitter": Splitter,
+    "ReactWithDotNet.PrimeReact.Slider": Slider,
+    "ReactWithDotNet.PrimeReact.ListBox": ListBox,
+    "ReactWithDotNet.PrimeReact.Dropdown": Dropdown,
+    "ReactWithDotNet.PrimeReact.Column": Column,
+    "ReactWithDotNet.PrimeReact.DataTable": DataTable,
+    "ReactWithDotNet.PrimeReact.Checkbox": Checkbox,
+    "ReactWithDotNet.PrimeReact.InputMask": InputMask,
+    "ReactWithDotNet.react_xarrows.Xarrow": Xarrow,
 
     // designer
-    "ReactDotNet.PrimeReact.AutoComplete": AutoComplete,
-    "ReactDotNet.PrimeReact.Tree": Tree
+    "ReactWithDotNet.PrimeReact.AutoComplete": AutoComplete,
+    "ReactWithDotNet.PrimeReact.Tree": Tree
     
 };
 
-ReactDotNet.FindComponentByFullName = function (componentFullName)
+ReactWithDotNet.FindComponentByFullName = function (componentFullName)
 {
     var component = componentMap[componentFullName];
     if (component !== undefined)
@@ -133,7 +133,7 @@ window.RegisterScrollEvents = function()
         {
             currentScrollY = scrollY;
 
-            ReactDotNet.DispatchEvent('MainContentDivScrollChanged', [scrollY]);
+            ReactWithDotNet.DispatchEvent('MainContentDivScrollChanged', [scrollY]);
         }
         else
         {
@@ -141,7 +141,7 @@ window.RegisterScrollEvents = function()
         }
     }
 
-    ReactDotNet.OnDocumentReady(function()
+    ReactWithDotNet.OnDocumentReady(function()
     {
         document.getElementById("main").addEventListener('scroll', handleScroll);
     });

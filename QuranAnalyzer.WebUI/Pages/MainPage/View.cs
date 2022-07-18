@@ -2,7 +2,7 @@
 using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
-using ReactDotNet;
+using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 

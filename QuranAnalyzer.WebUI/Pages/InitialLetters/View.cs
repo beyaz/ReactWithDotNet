@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using ReactDotNet;
-using ReactDotNet.react_xarrows;
+using ReactWithDotNet;
+using ReactWithDotNet.react_xarrows;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 

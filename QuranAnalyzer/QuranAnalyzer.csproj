@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ReactDotNet\ReactDotNet.csproj" />
+      <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
     </ItemGroup>
 
 </Project>

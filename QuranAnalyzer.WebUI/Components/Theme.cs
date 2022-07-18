@@ -1,4 +1,4 @@
-﻿using ReactDotNet;
+﻿using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI.Components;
 

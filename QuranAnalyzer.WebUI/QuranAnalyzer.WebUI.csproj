@@ -14,14 +14,13 @@
     <None Remove="Pages\QuestionAnswerPage\Data.yaml" />
     <None Remove="MainPage.yaml" />
     <None Remove="QuestionAnswerPage.yaml" />
-    <None Remove="ReactDotNet.js" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Pages\QuestionAnswerPage\Data.yaml" />
     <EmbeddedResource Include="Pages\ContactPage\Data.yaml" />
     <Content Include="Pages\MainPage\Data.yaml" />
-    <Content Include="ReactDotNet.js">
+    <Content Include="ReactWithDotNet.js">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -38,8 +37,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuranAnalyzer\QuranAnalyzer.csproj" />
-    <ProjectReference Include="..\ReactDotNet.Libraries\ReactDotNet.Libraries.csproj" />
-    <ProjectReference Include="..\ReactDotNet\ReactDotNet.csproj" />
+    <ProjectReference Include="..\ReactWithDotNet.Libraries\ReactWithDotNet.Libraries.csproj" />
+    <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
   </ItemGroup>
 
     <PropertyGroup>

@@ -1,2 +1,2 @@
-# ReactDotNet
+# ReactWithDotNet
 React with c# wrappers.

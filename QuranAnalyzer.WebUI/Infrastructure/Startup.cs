@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.FileProviders;
 
-namespace ReactDotNet.Demo
+namespace ReactWithDotNet.Demo
 {
 
     
@@ -28,7 +28,7 @@ namespace ReactDotNet.Demo
             
             services.AddControllers().AddJsonOptions(j =>
             {
-                j.JsonSerializerOptions.ModifyForReactDotNet();
+                j.JsonSerializerOptions.ModifyForReactWithDotNet();
             });
 
         }
