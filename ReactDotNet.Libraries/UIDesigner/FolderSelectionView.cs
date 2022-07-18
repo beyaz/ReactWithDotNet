@@ -11,7 +11,7 @@ class FolderSelectionViewModel
 {
     public string SelectedFolder{ get; set; }
 
-    public IReadOnlyList<string> Suggestions { get; set; } = new[] {@"d:\boa\server\bin", @"d:\boa\client\bin" };
+    public IReadOnlyList<string> Suggestions { get; set; } = new[] {@"d:\boa\server\bin\", @"d:\boa\client\bin\" };
 
     public string LastQuery { get; set; }
 
@@ -37,6 +37,14 @@ class FolderSelectionView : ReactComponent<FolderSelectionViewModel>
             completeMethod = e =>
             {
                 state.LastQuery = e.query;
+            },
+            itemTemplate = item => new div
+            {
+                style = { display = "flex", alignItems = "center"},
+                children =
+                {
+                    new img { src = "img/Folder.svg", width = 20, height = 20 }, new div(item) { style = { marginLeft = "7px" } }
+                }
             }
         };
     }

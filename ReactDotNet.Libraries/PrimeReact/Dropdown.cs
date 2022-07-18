@@ -62,7 +62,6 @@ public class Dropdown<TOption> : Dropdown
     [ReactTemplateForNull]
     public  Func<TOption, Element> valueTemplate { get; set; }
 
-
     internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
     {
         var map = new List<KeyValuePair<object, object>>();
