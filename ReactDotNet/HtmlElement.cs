@@ -44,6 +44,14 @@ public abstract class HtmlElement : Element
     /// </summary>
     public string innerText { get; set; }
 
+    /// <summary>
+    ///     'innerText' property of element.
+    /// </summary>
+    public string text
+    {
+        set => innerText = value;
+    }
+
     [React]
     public virtual string id { get; set; }
 

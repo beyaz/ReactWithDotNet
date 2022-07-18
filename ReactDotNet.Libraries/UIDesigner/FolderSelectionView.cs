@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ReactDotNet.PrimeReact;
+using static ReactDotNet.UIDesigner.DOM;
 
 namespace ReactDotNet.UIDesigner;
 
@@ -43,9 +44,12 @@ class FolderSelectionView : ReactComponent<FolderSelectionViewModel>
                 style = { display = "flex", alignItems = "center"},
                 children =
                 {
-                    new img { src = "img/Folder.svg", width = 20, height = 20 }, new div(item) { style = { marginLeft = "7px" } }
+                    new img { src = "img/Folder.svg", width = 20, height = 20 }, 
+                    new div { text = item, style = { marginLeft = "7px" } }
                 }
             }
         };
     }
 }
+
+
