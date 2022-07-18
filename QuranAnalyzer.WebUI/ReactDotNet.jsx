@@ -347,6 +347,12 @@ function ConvertToReactElement(jsonNode, component)
                 {
                     const key = value.___ItemTemplates___[j].Key;
 
+                    // try find as TreeNode
+                    if (key.key != null && item && item.key != null && key.key === item.key)
+                    {
+                        return ConvertToReactElement(value.___ItemTemplates___[j].Value);
+                    }
+
                     if (JSON.stringify(key) === JSON.stringify(item))
                     {
                         return ConvertToReactElement(value.___ItemTemplates___[j].Value);

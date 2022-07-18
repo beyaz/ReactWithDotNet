@@ -38,7 +38,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             style = { height = "100%" },
             itemTemplate = new ItemTemplates<ReactComponentInfo>
             {
-                Items = GetComponents(Assembly.Load(state.ComponentsLocatedAssemblyName)),
                 Template = item => new HPanel
                 {
                     style    = { alignItems = "center"},

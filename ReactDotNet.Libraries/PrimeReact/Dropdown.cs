@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
 
@@ -56,6 +57,18 @@ public class Dropdown : ElementBase
     /// </summary>
     [React]
     public bool filter { get; set; }
+
+    internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
+    {
+        var map = new List<KeyValuePair<object, object>>();
+
+        foreach (var option in options)
+        {
+            map.Add(new KeyValuePair<object, object>(option, toMap(option)));
+        }
+
+        return map;
+    }
 }
 
 public class DropdownChangeParams

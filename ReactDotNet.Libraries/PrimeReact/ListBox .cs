@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ReactDotNet.PrimeReact
 {
@@ -74,7 +75,19 @@ namespace ReactDotNet.PrimeReact
         [React]
         public ItemTemplateInfo itemTemplate { get; set; }
 
-        
+
+        internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
+        {
+            var map = new List<KeyValuePair<object, object>>();
+
+            foreach (var option in options)
+            {
+                map.Add(new KeyValuePair<object, object>(option, toMap(option)));
+            }
+
+            return map;
+        }
+
 
     }
 }

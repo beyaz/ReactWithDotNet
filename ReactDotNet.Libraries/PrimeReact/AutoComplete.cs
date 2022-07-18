@@ -57,7 +57,19 @@ public class AutoComplete : ElementBase
 
     [React]
     public ItemTemplateInfo selectedItemTemplate { get; set; }
-    
+
+
+    internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
+    {
+        var map = new List<KeyValuePair<object, object>>();
+
+        foreach (var suggestion in suggestions)
+        {
+            map.Add(new KeyValuePair<object, object>(suggestion, toMap(suggestion)));
+        }
+
+        return map;
+    }
 
 }
 

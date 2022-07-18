@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ReactDotNet;
@@ -77,6 +76,9 @@ public static class ElementSerializer
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
+            
+            
+            
             var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, GetPropertyName(propertyInfo), stateTree);
             if (noNeedToExport)
             {
@@ -256,14 +258,21 @@ public static class ElementSerializer
 
         if (propertyValue is ItemTemplateInfo itemTemplateInfo)
         {
-            var map = new List<KeyValuePair<object, object>>();
-            
-            foreach (var item in itemTemplateInfo._items)
+            var method = instance.GetType().GetMethod("GetItemTemplates", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (method == null)
             {
-                map.Add(new KeyValuePair<object, object>(item, itemTemplateInfo._template(item).ToMap(stateTree)));
+                throw new MissingMethodException("GetItemTemplates");
             }
 
-            return (new ItemTemplate { ___ItemTemplates___ = map, ___TemplateForNull___ = itemTemplateInfo.TemplateForNull?.ToMap(stateTree) }, false);
+            Func<object, IReadOnlyDictionary<string, object>> toMapFn = item => itemTemplateInfo._template(item).ToMap(stateTree);
+
+            var response = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[] { toMapFn });
+
+            return (new ItemTemplate
+            {
+                ___ItemTemplates___ = response, 
+                ___TemplateForNull___ = itemTemplateInfo.TemplateForNull?.ToMap(stateTree)
+            }, false);
         }
 
         return (propertyValue, false);
@@ -280,10 +289,11 @@ public static class ElementSerializer
     }
 
     
+    
     #endregion
 }
 
-class ItemTemplate
+public class ItemTemplate
 {
     public List<KeyValuePair<object, object>>  ___ItemTemplates___ { get; set; }
     public object ___TemplateForNull___ { get; set; }
@@ -291,20 +301,14 @@ class ItemTemplate
 
 public class ItemTemplateInfo
 {
-    internal IEnumerable _items;
     internal Func<object, Element> _template;
+    
     public Element TemplateForNull { get; set; }
 }
 public class ItemTemplates<T>: ItemTemplateInfo
 {
-    public IEnumerable<T> Items
-    {
-        set => _items = value;
-    }
     public  Func<T,Element> Template
     {
         set => _template = item => value((T)item);
     }
-
-    
 }

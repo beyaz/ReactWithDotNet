@@ -17,6 +17,7 @@ import Xarrow from "react-xarrows";
 // designer
 
 import { AutoComplete } from 'primereact/autocomplete';
+import { Tree } from 'primereact/tree';
 
         
 
@@ -89,7 +90,9 @@ var componentMap = {
     "ReactDotNet.react_xarrows.Xarrow": Xarrow,
 
     // designer
-    "ReactDotNet.PrimeReact.AutoComplete": AutoComplete
+    "ReactDotNet.PrimeReact.AutoComplete": AutoComplete,
+    "ReactDotNet.PrimeReact.Tree": Tree
+    
 };
 
 ReactDotNet.FindComponentByFullName = function (componentFullName)
