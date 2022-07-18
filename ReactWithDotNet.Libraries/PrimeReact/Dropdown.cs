@@ -38,12 +38,9 @@ public abstract class Dropdown : ElementBase
     public bool filter { get; set; }
 }
 
-
+[ReactRealType(typeof(Dropdown))]
 public class Dropdown<TOption> : Dropdown
 {
-    [JsonPropertyName("$type")]
-    public override string Type => typeof(Dropdown).FullName;
-    
     [React]
     public  Action<DropdownChangeParams<TOption>> onChange { get; set; }
 

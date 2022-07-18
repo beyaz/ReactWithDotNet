@@ -1,11 +1,23 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Linq;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
 public abstract class ThirdPartyReactComponent : Element
 {
     [JsonPropertyName("$type")]
-    public virtual string Type => GetType().FullName;
+    public virtual string Type
+    {
+        get
+        {
+            var type = GetType();
+
+            var reactRealType = type.GetCustomAttributes<ReactRealTypeAttribute>().FirstOrDefault()?.Type;
+            
+            return (reactRealType ?? type).FullName;
+        }
+    }
 
     /// <summary>
     ///     Gets the style.

@@ -31,3 +31,14 @@ public class ReactTemplateAttribute : Attribute
 public class ReactTemplateForNullAttribute : Attribute
 {
 }
+
+[AttributeUsage(AttributeTargets.Class)]
+public class ReactRealTypeAttribute : Attribute
+{
+    public Type Type { get; }
+
+    public ReactRealTypeAttribute(Type type)
+    {
+        Type = type;
+    }
+}

@@ -78,11 +78,9 @@ public class AutoComplete : ElementBase
 
 
 
+[ReactRealType(typeof(AutoComplete))]
 public class AutoComplete<TSuggestion> : ElementBase
 {
-    [JsonPropertyName("$type")]
-    public override string Type => typeof(AutoComplete).FullName;
-
     [React]
     public object value { get; set; }
     

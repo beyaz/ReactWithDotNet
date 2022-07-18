@@ -24,10 +24,10 @@ public class Tree : ElementBase
 {
 }
 
+[ReactRealType(typeof(Tree))]
 public class SingleSelectionTree : Tree
 {
-    [JsonPropertyName("$type")]
-    public override string Type => GetType().FullName?.Replace(nameof(SingleSelectionTree), nameof(Tree));
+   
 
     /// <summary>
     ///     Selected value to display.
