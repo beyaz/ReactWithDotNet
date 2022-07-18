@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Serialization;
 
 namespace ReactDotNet.PrimeReact;
 
-public class Dropdown : ElementBase
+public abstract class Dropdown : ElementBase
 {
-    [React]
-    public Action<DropdownChangeParams> onChange { get; set; }
-
     [React]
     public string optionLabel { get; set; }
     
@@ -19,26 +14,10 @@ public class Dropdown : ElementBase
 
     [React]
     public string placeholder { get; set; }
-
-    [React]
-    public IEnumerable options { get; set; }
-
-    [React]
-    public object value { get; set; }
-
-    [React]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    public Expression<Func<string>> valueBind { get; set; }
-
+    
     [React]
     public bool? autoFocus { get; set; }
-
-    [React]
-    public ItemTemplateInfo itemTemplate { get; set; }
-
-    [React]
-    public ItemTemplateInfo valueTemplate { get; set; }
-
+    
     /// <summary>
     /// When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
     /// <para>Default: label</para>
@@ -57,6 +36,32 @@ public class Dropdown : ElementBase
     /// </summary>
     [React]
     public bool filter { get; set; }
+}
+
+
+public class Dropdown<TOption> : Dropdown
+{
+    [JsonPropertyName("$type")]
+    public override string Type => typeof(Dropdown).FullName;
+    
+    [React]
+    public  Action<DropdownChangeParams<TOption>> onChange { get; set; }
+
+    [React]
+    public  IEnumerable<TOption> options { get; set; }
+    
+    [React]
+    public  TOption value { get; set; }
+
+    [React]
+    [ReactTemplate]
+    public  Func<TOption,Element> itemTemplate { get; set; }
+
+    [React]
+    [ReactTemplate]
+    [ReactTemplateForNull]
+    public  Func<TOption, Element> valueTemplate { get; set; }
+
 
     internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
     {
@@ -71,28 +76,9 @@ public class Dropdown : ElementBase
     }
 }
 
-public class DropdownChangeParams
+[Serializable]
+public sealed class DropdownChangeParams<TOption>
 {
-    public object value { get; set; }
-
-    public T GetValue<T>()
-    {
-        if (value is JValue jValue)
-        {
-            return jValue.ToObject<T>();
-        }
-
-        if (value is JObject jObject)
-        {
-            return jObject.ToObject<T>();
-        }
-
-        if (value is string && typeof(T) != typeof(string))
-        {
-            return default;
-        }
-
-        return (T)value;
-    }
+    public TOption value { get; set; }
 }
 

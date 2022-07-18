@@ -256,7 +256,7 @@ public static class ElementSerializer
             };
         }
 
-        if (propertyValue is ItemTemplateInfo itemTemplateInfo)
+        if (propertyInfo.GetCustomAttribute<ReactTemplateAttribute>() is not null)
         {
             var method = instance.GetType().GetMethod("GetItemTemplates", BindingFlags.Instance | BindingFlags.NonPublic);
             if (method == null)
@@ -264,15 +264,24 @@ public static class ElementSerializer
                 throw new MissingMethodException("GetItemTemplates");
             }
 
-            Func<object, IReadOnlyDictionary<string, object>> toMapFn = item => itemTemplateInfo._template(item).ToMap(stateTree);
+            var func = (Delegate)propertyInfo.GetValue(instance);
+
+            Func<object, IReadOnlyDictionary<string, object>> toMapFn = item => ((Element)func?.DynamicInvoke(item)).ToMap(stateTree);
 
             var response = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[] { toMapFn });
 
-            return (new ItemTemplate
+            var template = new ItemTemplate
             {
-                ___ItemTemplates___ = response, 
-                ___TemplateForNull___ = itemTemplateInfo.TemplateForNull?.ToMap(stateTree)
-            }, false);
+                ___ItemTemplates___   = response
+            };
+
+            if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
+            {
+                template.___TemplateForNull___ = Try(() => ((Element)func?.DynamicInvoke((object)null))?.ToMap(stateTree)).value;
+            }
+
+            return (template, false);
+
         }
 
         return (propertyValue, false);
@@ -288,27 +297,24 @@ public static class ElementSerializer
         return false;
     }
 
-    
+    static (T value, Exception exception) Try<T>(Func<T> func)
+    {
+        try
+        {
+            return (func(), null);
+        }
+        catch (Exception exception)
+        {
+            return (default, exception);
+        }
+    }
     
     #endregion
 }
 
-public class ItemTemplate
+class ItemTemplate
 {
     public List<KeyValuePair<object, object>>  ___ItemTemplates___ { get; set; }
     public object ___TemplateForNull___ { get; set; }
 }
 
-public class ItemTemplateInfo
-{
-    internal Func<object, Element> _template;
-    
-    public Element TemplateForNull { get; set; }
-}
-public class ItemTemplates<T>: ItemTemplateInfo
-{
-    public  Func<T,Element> Template
-    {
-        set => _template = item => value((T)item);
-    }
-}

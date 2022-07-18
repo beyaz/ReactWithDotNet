@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json.Linq;
 
 namespace ReactDotNet.PrimeReact;
@@ -53,10 +54,12 @@ public class AutoComplete : ElementBase
     public bool dropdown { get; set; }
 
     [React]
-    public ItemTemplateInfo itemTemplate { get; set; }
+    [ReactTemplate]
+    public Func<string, Element> itemTemplate { get; set; }
 
     [React]
-    public ItemTemplateInfo selectedItemTemplate { get; set; }
+    [ReactTemplate]
+    public Func<string, Element> selectedItemTemplate { get; set; }
 
 
     internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
@@ -72,6 +75,77 @@ public class AutoComplete : ElementBase
     }
 
 }
+
+
+
+public class AutoComplete<TSuggestion> : ElementBase
+{
+    [JsonPropertyName("$type")]
+    public override string Type => typeof(AutoComplete).FullName;
+
+    [React]
+    public object value { get; set; }
+    
+    /// <summary>
+    ///     An array of suggestions to display.
+    /// </summary>
+    [React]
+    public IEnumerable<TSuggestion> suggestions { get; set; }
+
+    /// <summary>
+    ///     Callback to invoke when autocomplete value changes.
+    /// </summary>
+    [React]
+    public Action<AutoCompleteChangeParams> onChange { get; set; }
+
+    /// <summary>
+    ///     Callback to invoke to search for suggestions.
+    /// </summary>
+    [React]
+    public Action<AutoCompleteCompleteMethodParams> completeMethod { get; set; }
+
+    /// <summary>
+    ///     Field of a suggested object to resolve and display.
+    /// </summary>
+    [React]
+    public string field { get; set; }
+
+    /// <summary>
+    ///     When present, autocomplete clears the manual input if it does not match of the suggestions to force only accepting
+    ///     values from the suggestions.
+    /// </summary>
+    [React]
+    public bool forceSelection { get; set; }
+
+    /// <summary>
+    /// Displays a button next to the input field when enabled.
+    /// </summary>
+    [React]
+    public bool dropdown { get; set; }
+
+    [React]
+    [ReactTemplate]
+    public Func<TSuggestion, Element> itemTemplate { get; set; }
+
+    [React]
+    [ReactTemplate]
+    public Func<TSuggestion, Element> selectedItemTemplate { get; set; }
+
+
+    internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
+    {
+        var map = new List<KeyValuePair<object, object>>();
+
+        foreach (var suggestion in suggestions)
+        {
+            map.Add(new KeyValuePair<object, object>(suggestion, toMap(suggestion)));
+        }
+
+        return map;
+    }
+
+}
+
 
 public class AutoCompleteChangeParams
 {

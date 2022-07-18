@@ -75,64 +75,38 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
                 {
                     filter            = true,
                     filterPlaceholder = "Search Method",
-                    nodeTemplate = new ItemTemplates<TreeNode>
+                    nodeTemplate = item => new HPanel
                     {
-                        Template = item => new HPanel
-                        {
-                            new img { src = "dll.svg", width = 30, height = 30 }, new div(item.label) { style = { marginLeft = "5px" } }
-                        }
+                        new img { src = "dll.svg", width = 30, height = 30 }, new div(item.label) { style = { marginLeft = "5px" } }
                     },
                     value             = GetNodes(),
                     onSelectionChange = e => { state.SelectedTreeNodeKeys = e.value; },
                     selectionKeys     = state.SelectedTreeNodeKeys
                 },
 
-                new Dropdown
+                new Dropdown<EnvironmentInfo>
                 {
-                    options = state.ItemsSource,
-                    value   = state.SelectedEnvironment ?? (object)state.SelectedEnvironmentAsString,
-                    onChange = e =>
-                    {
-                        state.SelectedEnvironment = e.GetValue<EnvironmentInfo>();
-                        if (state.SelectedEnvironment == null)
-                        {
-                            state.SelectedEnvironmentAsString = e.GetValue<string>();
-                        }
-                        else
-                        {
-                            state.SelectedEnvironmentAsString = null;
-                        }
-                    },
-
+                    options     = state.ItemsSource,
+                    value       = state.SelectedEnvironment,
+                    onChange    = e => { state.SelectedEnvironment = e.value; },
                     optionLabel = nameof(EnvironmentInfo.Name),
                     placeholder = "Select environment",
-                    itemTemplate = new ItemTemplates<EnvironmentInfo>
+                    itemTemplate = item => new HPanel
                     {
-                        Template = item => new HPanel
-                        {
-                            new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
-                        }
+                        new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
                     },
 
-                    valueTemplate = new ItemTemplates<EnvironmentInfo>
-                    {
-                        Template = item => new HPanel
-                        {
-                            new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
-                        },
-                        TemplateForNull = new HPanel
-                        {
-                            new div("Seçiniz"){style = { margin = "5px"}}
-                        }
-                    },
+                    valueTemplate = item => item == null ? new HPanel { new div("Seçiniz"){style = { margin = "5px"}} } :
+                                                           new HPanel { new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } } },
                     filterBy  = nameof(EnvironmentInfo.Name),
                     showClear = true,
                     filter    = true,
-                    style     = { width = "400px" }
+                    style     = { width = "300px" }
 
                 },
 
-                new AutoComplete
+
+                new AutoComplete<EnvironmentInfo>
                 {
                     suggestions = state.Suggestions, //.Select(x=>x.Name),
                     dropdown    = true,
@@ -155,12 +129,9 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
                     {
                         state.Suggestions = state.ItemsSource.Where(x => x.Name.Contains(e.query, StringComparison.OrdinalIgnoreCase)).ToList();
                     },
-                    itemTemplate = new ItemTemplates<EnvironmentInfo>
+                    itemTemplate = item => new HPanel
                     {
-                        Template = item => new HPanel
-                        {
-                            new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
-                        }
+                        new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
                     }
                 }
             }

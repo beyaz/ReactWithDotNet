@@ -61,7 +61,8 @@ public class SingleSelectionTree : Tree
     public string filterBy { get; set; }
 
     [React]
-    public ItemTemplateInfo nodeTemplate { get; set; }
+    [ReactTemplate]
+    public Func<TreeNode, Element> nodeTemplate { get; set; }
 
     [React]
     public Action<SingleSelectionTreeSelectionParams> onSelectionChange { get; set; }

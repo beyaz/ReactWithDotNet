@@ -73,7 +73,8 @@ namespace ReactDotNet.PrimeReact
         public Style listStyle { get; } = new Style();
 
         [React]
-        public ItemTemplateInfo itemTemplate { get; set; }
+        [ReactTemplate]
+        public Func<string, Element> itemTemplate { get; set; }
 
 
         internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)

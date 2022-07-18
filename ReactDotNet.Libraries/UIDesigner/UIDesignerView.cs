@@ -36,14 +36,11 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             filter      = true,
             listStyle   = {maxHeight = "400px" },
             style = { height = "100%" },
-            itemTemplate = new ItemTemplates<ReactComponentInfo>
-            {
-                Template = item => new HPanel
-                {
-                    style    = { alignItems = "center"},
-                    children = { new img { src = "img/Class.svg", width = 15, height = 15 }, new div(item.Name) { style = { marginLeft = "5px" } } }
-                }
-            },
+            //itemTemplate = item => new HPanel // TODO: open
+            //{
+            //    style    = { alignItems = "center" },
+            //    children = { new img { src = "img/Class.svg", width = 15, height = 15 }, new div(item.Name) { style = { marginLeft = "5px" } } }
+            //}
         };
 
         var propertyList = new ListBox
