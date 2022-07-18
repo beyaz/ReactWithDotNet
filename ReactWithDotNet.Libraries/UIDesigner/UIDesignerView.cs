@@ -24,8 +24,41 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         Refresh();
     }
 
+    public bool A { get; set; } = true;
+    
     public override Element render()
     {
+        if (A)
+        {
+            return new VPanel
+            {
+                new div
+                {
+                    style = {  display = "flex", flexDirection = "column"},
+                    children=
+                    {
+                        new label{text = "Folder", style = { marginBottom = "5px", fontWeight = "bold"}},
+                        new FolderSelectionView(),
+                    }
+                },
+                new VSpace(10),
+                new div
+                {
+                    style = {  display = "flex", flexDirection = "column"},
+                    children =
+                    {
+                        new label{text = "Assembly", style = { marginBottom = "5px", fontWeight = "bold"}},
+                        new AssemblySelectionView()
+                    }
+                },
+                
+                new MethodSelectionView()
+
+
+            };
+        }
+        
+        
         var componentSelector = new ListBox
         {
             options     = GetComponents(Assembly.Load(state.ComponentsLocatedAssemblyName)),

@@ -556,7 +556,7 @@ function HandleAction(data)
     {
         MethodName: "HandleComponentEvent",
 
-        EventHandlerMethodName: remoteMethodName,
+        EventHandlerMethodName: NotNull(remoteMethodName),
         FullName   : component.constructor[DotNetTypeOfReactComponent],
         CapturedStateTree: component.CaptureStateTree()
     };

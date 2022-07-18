@@ -10,6 +10,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="System.Reflection.MetadataLoadContext" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
     </ItemGroup>   
     

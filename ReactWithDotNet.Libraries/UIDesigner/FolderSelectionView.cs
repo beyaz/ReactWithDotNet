@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
 
-
+class Events
+{
+    public const string FolderChanged = nameof(FolderChanged);
+    public const string AssemblyChanged = nameof(AssemblyChanged);
+}
 
 class FolderSelectionViewModel
 {
@@ -22,7 +27,14 @@ class FolderSelectionView : ReactComponent<FolderSelectionViewModel>
     public FolderSelectionView()
     {
         state = new FolderSelectionViewModel();
+        
+        StateInitialized += () =>
+        {
+            
+        };
+
     }
+    
     public override Element render()
     {
         return new AutoComplete
@@ -33,6 +45,11 @@ class FolderSelectionView : ReactComponent<FolderSelectionViewModel>
             onChange = e =>
             {
                 state.SelectedFolder = e.GetValue<string>();
+                if (Directory.Exists(state.SelectedFolder))
+                {
+                    Context.ClientTasks = new[] { new ClientTaskDispatchEvent { EventName = Events.FolderChanged, EventArguments = new object[] { state.SelectedFolder } } };
+                }
+                
             },
             completeMethod = e =>
             {
