@@ -251,7 +251,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                             AssemblyFilePath = Path.Combine(state.SelectedFolder,state.SelectedAssembly)
                                                         },
                                                         new InputTextarea{ rows = 4, valueBind = ()=>state.ReactWithDotnetComponentAsJson},
-                                                        new div{text = "MetadataToken" + MethodSelectionView.FindTreeNode(Path.Combine(state.SelectedFolder,state.SelectedAssembly),state.SelectedMethodTreeNodeKey)},
+                                                        new div{text = "MetadataToken: " + MethodSelectionView.FindTreeNode(Path.Combine(state.SelectedFolder,state.SelectedAssembly),state.SelectedMethodTreeNodeKey).MetadataToken},
                                                         componentSelector
                                                     }
                                                 }
