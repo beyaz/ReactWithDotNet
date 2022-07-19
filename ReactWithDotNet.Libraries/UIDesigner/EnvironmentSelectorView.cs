@@ -72,18 +72,7 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
             style = { display = "flex", flexDirection = "column"},
             children =
             {
-                new SingleSelectionTree
-                {
-                    filter            = true,
-                    filterPlaceholder = "Search Method",
-                    nodeTemplate = item => new HPanel
-                    {
-                        new img { src = "dll.svg", width = 30, height = 30 }, new div(item.label) { style = { marginLeft = "5px" } }
-                    },
-                    value             = GetNodes(),
-                    onSelectionChange = e => { state.SelectedTreeNodeKeys = e.value; },
-                    selectionKeys     = state.SelectedTreeNodeKeys
-                },
+                
 
                 new Dropdown<EnvironmentInfo>
                 {

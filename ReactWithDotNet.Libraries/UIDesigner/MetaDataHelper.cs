@@ -12,10 +12,16 @@ class MetaDataHelper
 {
     public static MetadataNode[] GetMetadataNodes(string assemblyFilePath)
     {
-		var resolver = new PathAssemblyResolver(new List<string>(Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll"))
-        {
-            assemblyFilePath
-        });
+        var coreAssemblies = Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll");
+        var optionalLibraries = Directory.GetFiles(Path.GetDirectoryName(assemblyFilePath), "*.dll");
+
+        var libraries = new List<string>();
+        libraries.AddRange(coreAssemblies);
+        libraries.AddRange(optionalLibraries);
+
+
+        var resolver = new PathAssemblyResolver(libraries);
+        
 
 
         var items = new List<MetadataNode>();
@@ -35,9 +41,7 @@ class MetaDataHelper
                     IsNamespace = true
                 };
                 
-                nodeForNamespace.children.AddRange(types.Where(x => x.Namespace == namespaceName).Select(x => new MetadataNode { IsClass = true,
-                                                                                                             label                       = x.Name,
-                                                                                                             Name = x.Name }));
+                nodeForNamespace.children.AddRange(types.Where(x => x.Namespace == namespaceName).Select(classToMetaData));
                 
                 items.Add(nodeForNamespace);
             }
@@ -65,5 +69,34 @@ class MetaDataHelper
                 add(types,nestedType);
             }
         }
+
+        static MetadataNode classToMetaData(Type x)
+        {
+            var classNode = new MetadataNode
+            {
+                IsClass = true,
+                label   = x.Name,
+                Name    = x.Name
+            };
+
+            foreach (var methodInfo in x.GetMethods(BindingFlags.Instance| BindingFlags.Static| BindingFlags.Public| BindingFlags.NonPublic))
+            {
+                classNode.children.Add(createFromMethod(methodInfo));
+            }
+            
+            return classNode;
+        }
+
+        static MetadataNode createFromMethod(MethodInfo methodInfo)
+        {
+            return new MetadataNode
+            {
+                IsMethod = true,
+                label    = methodInfo.Name,
+                Name     = methodInfo.Name
+            };
+        }
     }
+
+    
 }

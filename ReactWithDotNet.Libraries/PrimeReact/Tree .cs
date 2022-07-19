@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet.PrimeReact;
+
 
 [Serializable]
 public class TreeNode
@@ -11,8 +11,10 @@ public class TreeNode
     public string label { get; set; }
     public string data { get; set; }
     public string icon { get; set; }
-    public List<TreeNode> children { get; } = new List<TreeNode>();
+
+    public List<TreeNode> children { get; } = new();
 }
+
 
 [Serializable]
 public sealed class SingleSelectionTreeSelectionParams
@@ -25,15 +27,13 @@ public class Tree : ElementBase
 }
 
 [ReactRealType(typeof(Tree))]
-public class SingleSelectionTree : Tree
+public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, new()
 {
-   
-
     /// <summary>
     ///     Selected value to display.
     /// </summary>
     [React]
-    public IEnumerable<TreeNode> value { get; set; }
+    public IEnumerable<TTreeNode> value { get; set; }
 
     /// <summary>
     ///     When specified, displays an input field to filter the items.
@@ -62,7 +62,7 @@ public class SingleSelectionTree : Tree
 
     [React]
     [ReactTemplate]
-    public Func<TreeNode, Element> nodeTemplate { get; set; }
+    public Func<TTreeNode, Element> nodeTemplate { get; set; }
 
     [React]
     public Action<SingleSelectionTreeSelectionParams> onSelectionChange { get; set; }

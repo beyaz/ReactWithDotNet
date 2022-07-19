@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -10,6 +8,7 @@ class MetadataNode:TreeNode
     public string Name { get; set; }
     public bool IsNamespace { get; set; }
     public bool IsClass { get; set; }
+    public bool IsMethod { get; set; }
 }
 
 class MethodSelectionViewModel
@@ -48,31 +47,39 @@ class MethodSelectionView : ReactComponent<MethodSelectionViewModel>
     }
 
 
-    Element nodeTemplate(TreeNode nodee)
+    Element nodeTemplate(MetadataNode node)
     {
-        var node = nodee as MetadataNode;
-        
-        if (node?.IsClass == true)
+
+        if (node.IsMethod)
         {
             return new HPanel
             {
-                new img { src = "img/Class.svg", width = 30, height = 30 }, 
+                new img { src              = "img/Method.svg", width = 20, height = 20 },
+                new div(node.Name) { style = { marginLeft = "5px" } }
+            };
+        }
+        
+        if (node.IsClass == true)
+        {
+            return new HPanel
+            {
+                new img { src              = "img/Class.svg", width = 20, height = 20 }, 
                 new div(node.Name) { style = { marginLeft = "5px" } }
             };
         }
 
-        if (node?.IsNamespace == true)
+        if (node.IsNamespace == true)
         {
             return new HPanel
             {
-                new img { src = "img/Namespace.svg", width = 30, height = 30 },
+                new img { src              = "img/Namespace.svg", width = 20, height = 20 },
                 new div(node.Name) { style = { marginLeft = "5px" } }
             };
         }
 
         return new HPanel
         {
-            new img { src = "img/Namespace.svg", width = 30, height = 30 },
+            new img { src            = "img/Namespace.svg", width = 20, height = 20 },
             new div("aloha") { style = { marginLeft = "5px" } }
         };
     }
@@ -84,11 +91,11 @@ class MethodSelectionView : ReactComponent<MethodSelectionViewModel>
             style = { display = "flex", flexDirection = "column"},
             children =
             {
-                new SingleSelectionTree
+                new SingleSelectionTree<MetadataNode>
                 {
                     
                     filter            = true,
-                    // filterBy          = nameof(MetadataNode.Name),
+                    filterBy          = nameof(MetadataNode.Name),
                     //filterValue          = nameof(MetadataNode.Name),
                     filterPlaceholder = "Search Method",
                     nodeTemplate      = nodeTemplate,
