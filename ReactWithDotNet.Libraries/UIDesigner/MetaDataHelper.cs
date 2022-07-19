@@ -37,7 +37,6 @@ class MetaDataHelper
                 var nodeForNamespace = new MetadataNode
                 {
                     Name        = namespaceName,
-                    label        = namespaceName,
                     IsNamespace = true
                 };
                 
@@ -75,12 +74,15 @@ class MetaDataHelper
             var classNode = new MetadataNode
             {
                 IsClass = true,
-                label   = x.Name,
                 Name    = x.Name
             };
 
-            foreach (var methodInfo in x.GetMethods(BindingFlags.Instance| BindingFlags.Static| BindingFlags.Public| BindingFlags.NonPublic))
+            foreach (var methodInfo in x.GetMethods(BindingFlags.Instance| BindingFlags.Static| BindingFlags.Public| BindingFlags.NonPublic ))
             {
+                if (methodInfo.Name.StartsWith("get_") || methodInfo.Name.StartsWith("set_"))
+                {
+                    continue;
+                }
                 classNode.children.Add(createFromMethod(methodInfo));
             }
             
@@ -91,9 +93,10 @@ class MetaDataHelper
         {
             return new MetadataNode
             {
-                IsMethod = true,
-                label    = methodInfo.Name,
-                Name     = methodInfo.Name
+                IsMethod                  = true,
+                Name                      = methodInfo.Name,
+                FullNameWithoutReturnType = methodInfo.ToString()?.Split(new[]{' ' })[1],
+                MetadataToken             = methodInfo.MetadataToken,
             };
         }
     }

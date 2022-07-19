@@ -22,9 +22,17 @@ class AssemblySelectionViewModel
 
 class AssemblySelectionView : ReactComponent<AssemblySelectionViewModel>
 {
+    public string SelectedFolder { get; set; }
+    public string SelectedAssembly { get; set; }
+    
     public AssemblySelectionView()
     {
-        state = new AssemblySelectionViewModel();
+        state            =  new AssemblySelectionViewModel();
+        StateInitialized += () =>
+        {
+            state.SelectedFolder   = SelectedFolder ?? state.SelectedFolder;
+            state.SelectedAssembly = SelectedAssembly ?? state.SelectedAssembly;
+        };
     }
 
     public void ComponentDidMount()

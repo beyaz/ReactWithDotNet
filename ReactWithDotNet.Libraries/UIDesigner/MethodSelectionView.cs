@@ -9,6 +9,8 @@ class MetadataNode:TreeNode
     public bool IsNamespace { get; set; }
     public bool IsClass { get; set; }
     public bool IsMethod { get; set; }
+    public string FullNameWithoutReturnType { get; set; }
+    public int MetadataToken { get; set; }
 }
 
 class MethodSelectionViewModel
@@ -54,8 +56,9 @@ class MethodSelectionView : ReactComponent<MethodSelectionViewModel>
         {
             return new HPanel
             {
-                new img { src              = "img/Method.svg", width = 20, height = 20 },
-                new div(node.Name) { style = { marginLeft = "5px" } }
+                new img { src                  = "img/Method.svg", width = 20, height = 20 },
+                new div(node.FullNameWithoutReturnType) { style = { marginLeft = "5px" } },
+                //new div(node.FullName) { style = { marginLeft = "5px", fontSize = "10px"} }
             };
         }
         

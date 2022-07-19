@@ -16,6 +16,7 @@ public static class ElementSerializer
         // maybe root element is inherits from ReactElement
         if (element is ReactComponent reactComponent)
         {
+            reactComponent.Context = stateTree.Context;
             return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent), stateTree);
         }
 

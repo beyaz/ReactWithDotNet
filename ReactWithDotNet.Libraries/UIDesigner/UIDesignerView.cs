@@ -24,7 +24,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         Refresh();
     }
 
-    public bool A { get; set; } = true;
+    public bool A { get; set; } 
     
     public override Element render()
     {
@@ -38,7 +38,27 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     children=
                     {
                         new label{text = "Folder", style = { marginBottom = "5px", fontWeight = "bold"}},
-                        new FolderSelectionView(),
+
+
+                         new FolderSelectionViewPure
+                         {
+                             selectedFolder     = state.SelectedFolder,
+                             lastQuery          = state.SelectedFolderLastQuery,
+                             suggestions        = state.SelectedFolderSuggestions,
+                                 onChange = e =>
+                                 {
+                                     state.SelectedFolder = e.GetValue<string>();
+                                     if (Directory.Exists(state.SelectedFolder))
+                                     {
+                                         Context.ClientTasks = new[] { new ClientTaskDispatchEvent { EventName = Events.FolderChanged, EventArguments = new object[] { state.SelectedFolder } } };
+                                     }
+                                 },
+                                 completeMethod = e =>
+                                 {
+                                     state.SelectedFolderLastQuery = e.query;
+                                 },
+
+                         }
                     }
                 },
                 new VSpace(10),
@@ -48,7 +68,11 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     children =
                     {
                         new label{text = "Assembly", style = { marginBottom = "5px", fontWeight = "bold"}},
-                        new AssemblySelectionView()
+                        new AssemblySelectionView
+                        {
+                            SelectedFolder = state.SelectedFolder,
+                            SelectedAssembly = state.SelectedAssembly
+                        }
                     }
                 },
                 
@@ -234,9 +258,53 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                         size = 2,
                                         children =
                                         {
-                                            new EnvironmentSelectorView(),
-                                            new FolderSelectionView(),
-                                            new AssemblySelectionView(),
+                                            new VPanel
+                                            {
+                                                new div
+                                                {
+                                                    style = {  display = "flex", flexDirection = "column"},
+                                                    children =
+                                                    {
+                                                        new label{text = "Folder", style = { marginBottom = "5px", fontWeight = "bold"}},
+                                                        new FolderSelectionViewPure
+                                                        {
+                                                            selectedFolder = state.SelectedFolder,
+                                                            lastQuery      = state.SelectedFolderLastQuery,
+                                                            suggestions    = state.SelectedFolderSuggestions,
+                                                            onChange = e =>
+                                                            {
+                                                                state.SelectedFolder = e.GetValue<string>();
+                                                                if (Directory.Exists(state.SelectedFolder))
+                                                                {
+                                                                    Context.ClientTasks = new[] { new ClientTaskDispatchEvent { EventName = Events.FolderChanged, EventArguments = new object[] { state.SelectedFolder } } };
+                                                                }
+                                                            },
+                                                            completeMethod = e =>
+                                                            {
+                                                                state.SelectedFolderLastQuery = e.query;
+                                                            },
+
+                                                        }
+                                                    }
+                                                },
+                                                new VSpace(10),
+                                                new div
+                                                {
+                                                    style = {  display = "flex", flexDirection = "column"},
+                                                    children =
+                                                    {
+                                                        new label{text = "Assembly", style = { marginBottom = "5px", fontWeight = "bold"}},
+                                                        new AssemblySelectionView()
+                                                    }
+                                                },
+
+                                                new MethodSelectionView()
+
+
+                                            },
+                                            //new EnvironmentSelectorView(),
+                                            //new FolderSelectionView(),
+                                            //new AssemblySelectionView(),
                                             componentSelector
                                         }
                                     },
