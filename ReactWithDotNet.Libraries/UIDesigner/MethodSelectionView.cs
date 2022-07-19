@@ -42,8 +42,8 @@ class MethodSelectionView : ReactComponent
         var path = treeNodeKey.Split('|').Select(int.Parse).ToList();
         
         var node = MetaDataHelper.GetMetadataNodes(AssemblyFilePath);
-        
-        
+
+        return null;
     }
     
     IEnumerable<MetadataNode> GetNodes()

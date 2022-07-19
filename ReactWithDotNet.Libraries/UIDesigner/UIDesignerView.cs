@@ -218,10 +218,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                             OnChange = e =>
                                                             {
                                                                 state.SelectedFolder = e.GetValue<string>();
-                                                                if (Directory.Exists(state.SelectedFolder))
-                                                                {
-                                                                    Context.ClientTasks = new[] { new ClientTaskDispatchEvent { EventName = Events.FolderChanged, EventArguments = new object[] { state.SelectedFolder } } };
-                                                                }
                                                             },
                                                             CompleteMethod = e =>
                                                             {
