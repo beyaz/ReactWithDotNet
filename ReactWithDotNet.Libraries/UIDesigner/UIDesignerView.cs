@@ -40,12 +40,12 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         new label{text = "Folder", style = { marginBottom = "5px", fontWeight = "bold"}},
 
 
-                         new FolderSelectionViewPure
+                         new FolderSelectionView
                          {
-                             selectedFolder     = state.SelectedFolder,
-                             lastQuery          = state.SelectedFolderLastQuery,
-                             suggestions        = state.SelectedFolderSuggestions,
-                                 onChange = e =>
+                             SelectedFolder     = state.SelectedFolder,
+                             LastQuery          = state.SelectedFolderLastQuery,
+                             Suggestions        = state.SelectedFolderSuggestions,
+                                 OnChange = e =>
                                  {
                                      state.SelectedFolder = e.GetValue<string>();
                                      if (Directory.Exists(state.SelectedFolder))
@@ -53,7 +53,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                          Context.ClientTasks = new[] { new ClientTaskDispatchEvent { EventName = Events.FolderChanged, EventArguments = new object[] { state.SelectedFolder } } };
                                      }
                                  },
-                                 completeMethod = e =>
+                                 CompleteMethod = e =>
                                  {
                                      state.SelectedFolderLastQuery = e.query;
                                  },
@@ -266,12 +266,12 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                     children =
                                                     {
                                                         new label{text = "Folder", style = { marginBottom = "5px", fontWeight = "bold"}},
-                                                        new FolderSelectionViewPure
+                                                        new FolderSelectionView
                                                         {
-                                                            selectedFolder = state.SelectedFolder,
-                                                            lastQuery      = state.SelectedFolderLastQuery,
-                                                            suggestions    = state.SelectedFolderSuggestions,
-                                                            onChange = e =>
+                                                            SelectedFolder = state.SelectedFolder,
+                                                            LastQuery      = state.SelectedFolderLastQuery,
+                                                            Suggestions    = state.SelectedFolderSuggestions,
+                                                            OnChange = e =>
                                                             {
                                                                 state.SelectedFolder = e.GetValue<string>();
                                                                 if (Directory.Exists(state.SelectedFolder))
@@ -279,7 +279,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                                     Context.ClientTasks = new[] { new ClientTaskDispatchEvent { EventName = Events.FolderChanged, EventArguments = new object[] { state.SelectedFolder } } };
                                                                 }
                                                             },
-                                                            completeMethod = e =>
+                                                            CompleteMethod = e =>
                                                             {
                                                                 state.SelectedFolderLastQuery = e.query;
                                                             },
