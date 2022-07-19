@@ -95,7 +95,7 @@ class MetaDataHelper
             {
                 IsMethod                  = true,
                 Name                      = methodInfo.Name,
-                FullNameWithoutReturnType = methodInfo.ToString()?.Split(new[]{' ' })[1],
+                FullNameWithoutReturnType =string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
                 MetadataToken             = methodInfo.MetadataToken,
             };
         }

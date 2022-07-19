@@ -61,6 +61,12 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     [React]
     public string selectionKeys { get; set; }
 
+    /// <summary>
+    /// An array of keys to represent the state of the tree expansion state in controlled mode.
+    /// </summary>
+    [React]
+    public IEnumerable<string> expandedKeys { get; set; }
+
     [React]
     public string selectionMode { get; set; } = "single";
 

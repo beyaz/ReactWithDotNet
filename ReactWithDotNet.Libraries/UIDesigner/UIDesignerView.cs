@@ -205,9 +205,9 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                         size = 2,
                                         children =
                                         {
-                                           new div
+                                           new VPanel
                                            {
-                                                    style = {  display = "flex", flexDirection = "column"},
+                                                    //style = {  display = "flex", flexDirection = "column"},
                                                     children =
                                                     {
                                                         new FolderSelectionView
@@ -247,9 +247,10 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                         new MethodSelectionView
                                                         {
                                                             SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
-                                                            OnSelectionChange         = e => { state.SelectedMethodTreeNodeKey = e.value; },
+                                                            OnSelectionChange         = e => { state.SelectedMethodTreeNodeKey = e.value; SaveState(); },
                                                             AssemblyFilePath = Path.Combine(state.SelectedFolder,state.SelectedAssembly)
                                                         },
+                                                        new InputTextarea{ rows = 4, valueBind = ()=>state.ReactWithDotnetComponentAsJson},
                                                         componentSelector
                                                     }
                                                 }

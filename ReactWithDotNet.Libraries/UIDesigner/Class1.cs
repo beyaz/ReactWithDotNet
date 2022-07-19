@@ -10,6 +10,9 @@ namespace ReactWithDotNet.UIDesigner;
 [Serializable]
 class UIDesignerModel
 {
+
+    public string ReactWithDotnetComponentAsJson { get; set; }
+
     public string SelectedMethodTreeNodeKey { get; set; }
 
     public string SelectedFolderLastQuery { get; set; }

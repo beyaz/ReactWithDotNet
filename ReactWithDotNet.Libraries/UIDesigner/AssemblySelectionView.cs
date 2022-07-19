@@ -37,15 +37,23 @@ class AssemblySelectionView : ReactComponent
             children =
             {
                 new label { text = "Search Assembly", style = { marginBottom = "5px", fontWeight = "bold" } },
-
-                new AutoComplete
+                
+                new span
                 {
-                    suggestions = suggestions,
+                    className = "p-fluid",
+                    children =
+                    {
+                        new AutoComplete
+                        {
+                            suggestions = suggestions,
 
-                    value          = SelectedAssembly,
-                    onChange       = OnChange,
-                    completeMethod = CompleteMethod
+                            value          = SelectedAssembly,
+                            onChange       = OnChange,
+                            completeMethod = CompleteMethod
+                        }
+                    }
                 }
+               
             }
         };
     }

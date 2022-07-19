@@ -18,25 +18,31 @@ class FolderSelectionView : ReactComponent
     {
         return new div
         {
-            style = { display = "flex", flexDirection = "column" },
+            style = { display = "flex", flexDirection = "column", alignItems = "stretch" },
             children =
             {
                 new label { text = "Search Folder", style = { marginBottom = "5px", fontWeight = "bold" } },
 
-                new AutoComplete
+                new span
                 {
-                    suggestions = Suggestions.Where(x => x.Contains(LastQuery ?? "", StringComparison.OrdinalIgnoreCase)).ToList(),
-
-                    value          = SelectedFolder,
-                    onChange       = OnChange,
-                    completeMethod = CompleteMethod,
-                    itemTemplate = item => new div
+                    className = "p-fluid", 
+                    children =
                     {
-                        style = { display = "flex", alignItems = "center" },
-                        children =
+                        new AutoComplete
                         {
-                            new img { src  = "img/Folder.svg", width = 20, height = 20 },
-                            new div { text = item, style             = { marginLeft = "7px" } }
+                            suggestions    = Suggestions.Where(x => x.Contains(LastQuery ?? "", StringComparison.OrdinalIgnoreCase)).ToList(),
+                            value          = SelectedFolder,
+                            onChange       = OnChange,
+                            completeMethod = CompleteMethod,
+                            itemTemplate = item => new div
+                            {
+                                style = { display = "flex", alignItems = "center" },
+                                children =
+                                {
+                                    new img { src  = "img/Folder.svg", width = 20, height = 20 },
+                                    new div { text = item, style             = { marginLeft = "7px" } }
+                                }
+                            }
                         }
                     }
                 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -23,6 +25,27 @@ class MethodSelectionView : ReactComponent
 
     public string AssemblyFilePath { get; set; }
 
+
+    public static MethodInfo GetMethod(string AssemblyFilePath, string treeNodeKey)
+    {
+        if (string.IsNullOrWhiteSpace(AssemblyFilePath) || string.IsNullOrWhiteSpace(treeNodeKey))
+        {
+            return null;
+        }
+        
+        if (!File.Exists(AssemblyFilePath))
+        {
+            return null;
+            
+        }
+
+        var path = treeNodeKey.Split('|').Select(int.Parse).ToList();
+        
+        var node = MetaDataHelper.GetMetadataNodes(AssemblyFilePath);
+        
+        
+    }
+    
     IEnumerable<MetadataNode> GetNodes()
     {
         if (!string.IsNullOrWhiteSpace(AssemblyFilePath) && File.Exists(AssemblyFilePath))
