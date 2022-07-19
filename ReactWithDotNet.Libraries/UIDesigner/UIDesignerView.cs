@@ -32,36 +32,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         {
             return new VPanel
             {
-                new div
-                {
-                    style = {  display = "flex", flexDirection = "column"},
-                    children=
-                    {
-                        new label{text = "Folder", style = { marginBottom = "5px", fontWeight = "bold"}},
-
-
-                         new FolderSelectionView
-                         {
-                             SelectedFolder     = state.SelectedFolder,
-                             LastQuery          = state.SelectedFolderLastQuery,
-                             Suggestions        = state.SelectedFolderSuggestions,
-                                 OnChange = e =>
-                                 {
-                                     state.SelectedFolder = e.GetValue<string>();
-                                     if (Directory.Exists(state.SelectedFolder))
-                                     {
-                                         Context.ClientTasks = new[] { new ClientTaskDispatchEvent { EventName = Events.FolderChanged, EventArguments = new object[] { state.SelectedFolder } } };
-                                     }
-                                 },
-                                 CompleteMethod = e =>
-                                 {
-                                     state.SelectedFolderLastQuery = e.query;
-                                 },
-
-                         }
-                    }
-                },
-                new VSpace(10),
+                
+                
                 new div
                 {
                     style = {  display = "flex", flexDirection = "column"},
@@ -297,8 +269,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                         new AssemblySelectionView()
                                                     }
                                                 },
-
-                                                new MethodSelectionView()
+                                                
 
 
                                             },
