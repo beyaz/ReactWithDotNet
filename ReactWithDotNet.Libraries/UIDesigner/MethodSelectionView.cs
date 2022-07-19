@@ -96,7 +96,6 @@ class MethodSelectionView : ReactComponent<MethodSelectionViewModel>
                     
                     filter            = true,
                     filterBy          = nameof(MetadataNode.Name),
-                    //filterValue          = nameof(MetadataNode.Name),
                     filterPlaceholder = "Search Method",
                     nodeTemplate      = nodeTemplate,
                     value             = GetNodes(),
