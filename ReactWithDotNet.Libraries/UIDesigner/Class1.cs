@@ -13,7 +13,9 @@ class UIDesignerModel
 
     public string SelectedFolderLastQuery { get; set; }
     public string SelectedFolder { get; set; }
+    
     public string SelectedAssembly { get; set; }
+    public string SelectedAssemblyLastQuery { get; set; }
 
     public IReadOnlyList<string> SelectedFolderSuggestions { get; set; } = new[] { @"d:\boa\server\bin\", @"d:\boa\client\bin\" };
 

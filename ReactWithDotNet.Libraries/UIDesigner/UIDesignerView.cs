@@ -23,36 +23,11 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     {
         Refresh();
     }
-
-    public bool A { get; set; } 
+    
     
     public override Element render()
     {
-        if (A)
-        {
-            return new VPanel
-            {
-                
-                
-                new div
-                {
-                    style = {  display = "flex", flexDirection = "column"},
-                    children =
-                    {
-                        new label{text = "Assembly", style = { marginBottom = "5px", fontWeight = "bold"}},
-                        new AssemblySelectionView
-                        {
-                            SelectedFolder = state.SelectedFolder,
-                            SelectedAssembly = state.SelectedAssembly
-                        }
-                    }
-                },
-                
-                new MethodSelectionView()
-
-
-            };
-        }
+       
         
         
         var componentSelector = new ListBox
@@ -230,14 +205,11 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                         size = 2,
                                         children =
                                         {
-                                            new VPanel
-                                            {
-                                                new div
-                                                {
+                                           new div
+                                           {
                                                     style = {  display = "flex", flexDirection = "column"},
                                                     children =
                                                     {
-                                                        new label{text = "Folder", style = { marginBottom = "5px", fontWeight = "bold"}},
                                                         new FolderSelectionView
                                                         {
                                                             SelectedFolder = state.SelectedFolder,
@@ -254,29 +226,28 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                             CompleteMethod = e =>
                                                             {
                                                                 state.SelectedFolderLastQuery = e.query;
+                                                            }
+
+                                                        },
+                                                        new VSpace(10),
+                                                        new AssemblySelectionView
+                                                        {
+                                                            SelectedFolder = state.SelectedFolder,
+                                                            SelectedAssembly = state.SelectedAssembly,
+                                                            LastQuery = state.SelectedAssemblyLastQuery,
+                                                            OnChange = e =>
+                                                            {
+                                                                state.SelectedAssembly = e.GetValue<string>();
                                                             },
-
-                                                        }
+                                                            CompleteMethod = e =>
+                                                            {
+                                                                state.SelectedAssemblyLastQuery = e.query;
+                                                            }
+                                                        },
+                                                        componentSelector
                                                     }
-                                                },
-                                                new VSpace(10),
-                                                new div
-                                                {
-                                                    style = {  display = "flex", flexDirection = "column"},
-                                                    children =
-                                                    {
-                                                        new label{text = "Assembly", style = { marginBottom = "5px", fontWeight = "bold"}},
-                                                        new AssemblySelectionView()
-                                                    }
-                                                },
-                                                
+                                                }
 
-
-                                            },
-                                            //new EnvironmentSelectorView(),
-                                            //new FolderSelectionView(),
-                                            //new AssemblySelectionView(),
-                                            componentSelector
                                         }
                                     },
 

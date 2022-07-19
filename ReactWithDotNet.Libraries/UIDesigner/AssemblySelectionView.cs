@@ -6,92 +6,46 @@ using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
 
-
-
-class AssemblySelectionViewModel
+class AssemblySelectionView : ReactComponent
 {
-    public string SelectedFolder{ get; set; }
-
-    public string SelectedAssembly { get; set; }
-
-    public IReadOnlyList<string> Suggestions { get; set; } = new[] {@"d:\boa\server\bin", @"d:\boa\client\bin" };
-
     public string LastQuery { get; set; }
-
-}
-
-class AssemblySelectionView : ReactComponent<AssemblySelectionViewModel>
-{
     public string SelectedFolder { get; set; }
     public string SelectedAssembly { get; set; }
-    
-    public AssemblySelectionView()
-    {
-        state            =  new AssemblySelectionViewModel();
-        StateInitialized += () =>
-        {
-            state.SelectedFolder   = SelectedFolder ?? state.SelectedFolder;
-            state.SelectedAssembly = SelectedAssembly ?? state.SelectedAssembly;
-        };
-    }
 
-    public void ComponentDidMount()
-    {
-        Context.ClientTasks = new[] { new ClientTaskListenEvent { EventName = Events.FolderChanged, RouteToMethod = nameof(OnFolderChanged) } };
-    }
-
-    public void OnFolderChanged(string folderPath)
-    {
-        state.SelectedFolder = folderPath;
-    }
-
-    static (T value, Exception exception) Try<T>(Func<T> func)
-    {
-        try
-        {
-            return (func(), null);
-        }
-        catch (Exception exception)
-        {
-            return (default, exception);
-        }
-    }
+    public Action<AutoCompleteChangeParams> OnChange { get; set; }
+    public Action<AutoCompleteCompleteMethodParams> CompleteMethod { get; set; }
 
     public override Element render()
     {
         var suggestions = new List<string>();
 
-        if (!string.IsNullOrWhiteSpace(state.SelectedFolder))
+        if (!string.IsNullOrWhiteSpace(SelectedFolder))
         {
             try
             {
-                suggestions = Directory.EnumerateFiles(state.SelectedFolder).Select(Path.GetFileName).Where(x => x.Contains(state.LastQuery ?? "", StringComparison.OrdinalIgnoreCase)).Take(10).ToList();
+                suggestions = Directory.EnumerateFiles(SelectedFolder).Select(Path.GetFileName).Where(x => x.Contains(LastQuery ?? "", StringComparison.OrdinalIgnoreCase)).Take(10).ToList();
             }
             catch (Exception)
             {
                 // ignored
             }
         }
-        
-            
-            
-        return new AutoComplete
+
+        return new div
         {
-            suggestions = suggestions,
-
-            value = state.SelectedAssembly,
-            onChange = e =>
+            style = { display = "flex", flexDirection = "column" },
+            children =
             {
-                state.SelectedAssembly = e.GetValue<string>();
+                new label { text = "Search Assembly", style = { marginBottom = "5px", fontWeight = "bold" } },
 
-                if (File.Exists(Path.Combine(state.SelectedFolder, state.SelectedAssembly)))
+                new AutoComplete
                 {
-                    Context.ClientTasks = new[] { new ClientTaskDispatchEvent { EventName = Events.AssemblyChanged, EventArguments = new object[] { Path.Combine(state.SelectedFolder, state.SelectedAssembly) } } };
+                    suggestions = suggestions,
+
+                    value          = SelectedAssembly,
+                    onChange       = OnChange,
+                    completeMethod = CompleteMethod
                 }
-            },
-            completeMethod = e =>
-            {
-                state.LastQuery = e.query;
             }
         };
     }
