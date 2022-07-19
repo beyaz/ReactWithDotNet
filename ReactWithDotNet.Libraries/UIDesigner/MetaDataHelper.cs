@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class MetaDataHelper
+class MetadataHelper
 {
     public static List<Type> getAllTypes(Assembly assembly)
     {

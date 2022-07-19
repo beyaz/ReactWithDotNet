@@ -38,7 +38,7 @@ class MethodSelectionView : ReactComponent
             return null;
         }
 
-        var nodes = MetaDataHelper.GetMetadataNodes(AssemblyFilePath);
+        var nodes = MetadataHelper.GetMetadataNodes(AssemblyFilePath);
 
         MetadataNode current = null;
         foreach (var index in treeNodeKey.Split('|').Select(int.Parse))
@@ -54,7 +54,7 @@ class MethodSelectionView : ReactComponent
     {
         if (!string.IsNullOrWhiteSpace(AssemblyFilePath) && File.Exists(AssemblyFilePath))
         {
-            return MetaDataHelper.GetMetadataNodes(AssemblyFilePath);
+            return MetadataHelper.GetMetadataNodes(AssemblyFilePath);
         }
 
         return new List<MetadataNode>();
