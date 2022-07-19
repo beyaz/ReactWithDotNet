@@ -26,7 +26,7 @@ class MethodSelectionView : ReactComponent
     public string AssemblyFilePath { get; set; }
 
 
-    public static MethodInfo GetMethod(string AssemblyFilePath, string treeNodeKey)
+    public static MetadataNode FindTreeNode(string AssemblyFilePath, string treeNodeKey)
     {
         if (string.IsNullOrWhiteSpace(AssemblyFilePath) || string.IsNullOrWhiteSpace(treeNodeKey))
         {
@@ -36,14 +36,18 @@ class MethodSelectionView : ReactComponent
         if (!File.Exists(AssemblyFilePath))
         {
             return null;
-            
         }
 
-        var path = treeNodeKey.Split('|').Select(int.Parse).ToList();
-        
-        var node = MetaDataHelper.GetMetadataNodes(AssemblyFilePath);
+        var nodes = MetaDataHelper.GetMetadataNodes(AssemblyFilePath);
 
-        return null;
+        MetadataNode current = null;
+        foreach (var index in treeNodeKey.Split('|').Select(int.Parse))
+        {
+            current = nodes[index];
+            nodes   = current.children.Select(x=>(MetadataNode)x).ToArray();
+        }
+
+        return current;
     }
     
     IEnumerable<MetadataNode> GetNodes()

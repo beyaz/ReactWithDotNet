@@ -243,10 +243,15 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                         new MethodSelectionView
                                                         {
                                                             SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
-                                                            OnSelectionChange         = e => { state.SelectedMethodTreeNodeKey = e.value; SaveState(); },
+                                                            OnSelectionChange         = e => 
+                                                            {
+                                                                state.SelectedMethodTreeNodeKey = e.value;
+                                                                SaveState(); 
+                                                            },
                                                             AssemblyFilePath = Path.Combine(state.SelectedFolder,state.SelectedAssembly)
                                                         },
                                                         new InputTextarea{ rows = 4, valueBind = ()=>state.ReactWithDotnetComponentAsJson},
+                                                        new div{text = "MetadataToken" + MethodSelectionView.FindTreeNode(Path.Combine(state.SelectedFolder,state.SelectedAssembly),state.SelectedMethodTreeNodeKey)},
                                                         componentSelector
                                                     }
                                                 }

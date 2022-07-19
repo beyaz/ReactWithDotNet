@@ -10,6 +10,27 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetaDataHelper
 {
+    public static List<Type> getAllTypes(Assembly assembly)
+    {
+        List<Type> types = new List<Type>();
+
+        foreach (var type in assembly.GetTypes())
+        {
+            add(types, type);
+        }
+
+        return types;
+
+        static void add(List<Type> types, Type type)
+        {
+            types.Add(type);
+            foreach (var nestedType in type.GetNestedTypes())
+            {
+                add(types, nestedType);
+            }
+        }
+    }
+    
     public static MetadataNode[] GetMetadataNodes(string assemblyFilePath)
     {
         var coreAssemblies = Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll");
@@ -21,8 +42,6 @@ class MetaDataHelper
 
 
         var resolver = new PathAssemblyResolver(libraries);
-        
-
 
         var items = new List<MetadataNode>();
         
@@ -48,26 +67,9 @@ class MetaDataHelper
 
         return items.ToArray();
 
-        static List<Type> getAllTypes(Assembly assembly)
-        {
-            List<Type> types = new List<Type>();
+ 
 
-            foreach (var type in assembly.GetTypes())
-            {
-                add(types,type);
-            }
-
-            return types;
-        }
-
-        static void add(List<Type> types, Type type)
-        {
-            types.Add(type);
-            foreach (var nestedType in type.GetNestedTypes())
-            {
-                add(types,nestedType);
-            }
-        }
+       
 
         static MetadataNode classToMetaData(Type x)
         {
