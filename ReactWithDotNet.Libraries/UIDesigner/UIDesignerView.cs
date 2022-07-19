@@ -244,6 +244,12 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                                 state.SelectedAssemblyLastQuery = e.query;
                                                             }
                                                         },
+                                                        new MethodSelectionView
+                                                        {
+                                                            SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
+                                                            OnSelectionChange         = e => { state.SelectedMethodTreeNodeKey = e.value; },
+                                                            AssemblyFilePath = Path.Combine(state.SelectedFolder,state.SelectedAssembly)
+                                                        },
                                                         componentSelector
                                                     }
                                                 }

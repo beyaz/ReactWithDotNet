@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class MetadataNode:TreeNode
+class MetadataNode : TreeNode
 {
     public string Name { get; set; }
     public bool IsNamespace { get; set; }
@@ -13,65 +15,46 @@ class MetadataNode:TreeNode
     public int MetadataToken { get; set; }
 }
 
-class MethodSelectionViewModel
+class MethodSelectionView : ReactComponent
 {
+    public Action<SingleSelectionTreeSelectionParams> OnSelectionChange { get; set; }
+
+    public string SelectedMethodTreeNodeKey { get; set; }
+
     public string AssemblyFilePath { get; set; }
-
-    public string SelectedTreeNodeKeys { get; set; }
-}
-
-class MethodSelectionView : ReactComponent<MethodSelectionViewModel>
-{
-    public MethodSelectionView()
-    {
-        state = new MethodSelectionViewModel();
-    }
 
     IEnumerable<MetadataNode> GetNodes()
     {
-        if (!string.IsNullOrWhiteSpace(state.AssemblyFilePath))
+        if (!string.IsNullOrWhiteSpace(AssemblyFilePath) && File.Exists(AssemblyFilePath))
         {
-            return MetaDataHelper.GetMetadataNodes(state.AssemblyFilePath);
+            return MetaDataHelper.GetMetadataNodes(AssemblyFilePath);
         }
 
         return new List<MetadataNode>();
     }
 
-
-    public void ComponentDidMount()
+    static Element nodeTemplate(MetadataNode node)
     {
-        Context.ClientTasks = new[] { new ClientTaskListenEvent { EventName = Events.AssemblyChanged, RouteToMethod = nameof(OnAssemblyFileChanged) } };
-    }
-
-    public void OnAssemblyFileChanged(string assemblyFilePath)
-    {
-        state.AssemblyFilePath = assemblyFilePath;
-    }
-
-
-    Element nodeTemplate(MetadataNode node)
-    {
-
         if (node.IsMethod)
         {
             return new HPanel
             {
-                new img { src                  = "img/Method.svg", width = 20, height = 20 },
+                new img { src                                   = "img/Method.svg", width = 20, height = 20 },
                 new div(node.FullNameWithoutReturnType) { style = { marginLeft = "5px" } },
                 //new div(node.FullName) { style = { marginLeft = "5px", fontSize = "10px"} }
             };
         }
-        
-        if (node.IsClass == true)
+
+        if (node.IsClass)
         {
             return new HPanel
             {
-                new img { src              = "img/Class.svg", width = 20, height = 20 }, 
+                new img { src              = "img/Class.svg", width = 20, height = 20 },
                 new div(node.Name) { style = { marginLeft = "5px" } }
             };
         }
 
-        if (node.IsNamespace == true)
+        if (node.IsNamespace)
         {
             return new HPanel
             {
@@ -91,29 +74,20 @@ class MethodSelectionView : ReactComponent<MethodSelectionViewModel>
     {
         return new div
         {
-            style = { display = "flex", flexDirection = "column"},
+            style = { padding = "3px" },
             children =
             {
                 new SingleSelectionTree<MetadataNode>
                 {
-                    
                     filter            = true,
                     filterBy          = nameof(MetadataNode.Name),
                     filterPlaceholder = "Search Method",
                     nodeTemplate      = nodeTemplate,
                     value             = GetNodes(),
-                    onSelectionChange = e => { state.SelectedTreeNodeKeys = e.value; },
-                    selectionKeys     = state.SelectedTreeNodeKeys
+                    onSelectionChange = OnSelectionChange,
+                    selectionKeys     = SelectedMethodTreeNodeKey
                 }
-
             }
         };
-
-
-
-        
-
-
-        
     }
 }
