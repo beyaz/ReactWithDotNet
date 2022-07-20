@@ -54,7 +54,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     AssemblyFilePath = Path.Combine(state.SelectedFolder, state.SelectedAssembly)
                 },
                 new VSpace(10),
-                new Slider { value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
+                new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
 
                 new div { text = state.SelectedComponentTypeReference },
                 new InputTextarea
