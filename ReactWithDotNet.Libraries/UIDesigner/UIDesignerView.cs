@@ -51,7 +51,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         state.SelectedMethodTreeNodeKey = e.value;
                         
                         state.SelectedComponentTypeReference = $"{getFullClassName()},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
-                        SaveState();
+                        
 
                         state.ReactWithDotnetComponentAsJson = StateCache.ReadFromCache(state.SelectedComponentTypeReference);
                     },
@@ -102,7 +102,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 if (instance is ReactComponent reactComponent)
                 {
                     reactComponent.Context = new ReactContext();
-                    
                     return reactComponent.render();
                 }
 
