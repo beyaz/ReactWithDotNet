@@ -8,13 +8,7 @@ using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
 
-static class Deneme
-{
-    public static string AAA(string a)
-    {
-        return "ACalled With:" + a;
-    }
-}
+
 
 
 class UIDesignerView : ReactComponent<UIDesignerModel>
