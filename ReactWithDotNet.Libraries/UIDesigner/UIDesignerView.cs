@@ -8,6 +8,15 @@ using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
 
+static class Deneme
+{
+    public static string AAA(string a)
+    {
+        return "ACalled With:" + a;
+    }
+}
+
+
 class UIDesignerView : ReactComponent<UIDesignerModel>
 {
     #region Static Fields
@@ -251,7 +260,19 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                             AssemblyFilePath = Path.Combine(state.SelectedFolder,state.SelectedAssembly)
                                                         },
                                                         new InputTextarea{ rows = 4, valueBind = ()=>state.ReactWithDotnetComponentAsJson},
-                                                        new div{text = "MetadataToken: " + MethodSelectionView.FindTreeNode(Path.Combine(state.SelectedFolder,state.SelectedAssembly),state.SelectedMethodTreeNodeKey).MetadataToken},
+                                                        new div{text = "MetadataToken: " + findMethod()?.Name},
+                                                        new Button{ label = "Invoke",onClick = e =>
+                                                        {
+                                                            var method = findMethod();
+                                                            if (method != null)
+                                                            {
+                                                                state.InvocationResponseAsJson = method.Invoke(null, new[] { state.ReactWithDotnetComponentAsJson }) as string;
+                                                                
+                                                            }
+                                                        }},
+
+                                                        new div{text = state.InvocationResponseAsJson},
+                                                        
                                                         componentSelector
                                                     }
                                                 }
@@ -275,6 +296,30 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             }
         };
 
+        string getAssemblyPath() => Path.Combine(state.SelectedFolder, state.SelectedAssembly);
+
+        bool isAssemblyExists() => File.Exists(getAssemblyPath());
+
+        MethodInfo findMethod()
+        {
+            var metadataToken = MethodSelectionView.FindTreeNode(Path.Combine(state.SelectedFolder, state.SelectedAssembly), state.SelectedMethodTreeNodeKey).MetadataToken;
+            if (metadataToken > 0)
+            {
+                if (isAssemblyExists())
+                {
+                    var (assembly, metadataLoadContext) = MetadataHelper.ReadAssembly(getAssemblyPath());
+                    
+                    using (metadataLoadContext)
+                    {
+                        return MetadataHelper.FindMethodInfo(assembly, metadataToken);
+                    }
+                }
+                
+            }
+
+            return null;
+        }
+        
         return new div
         {
             children=

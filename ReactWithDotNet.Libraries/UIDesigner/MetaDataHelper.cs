@@ -9,23 +9,57 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataHelper
 {
-    public static List<Type> GetAllTypes(Assembly assembly)
-    {
-        List<Type> types = new List<Type>();
 
-        foreach (var type in assembly.GetTypes())
+    public static MethodInfo FindMethodInfo(Assembly assembly, int metadataToken)
+    {
+        MethodInfo returnMethodInfo = null;
+
+
+        VisitTypes(assembly, visitType);
+
+        void visitType(Type type)
         {
-            add(types, type);
+            if (returnMethodInfo == null)
+            {
+              VisitMethods(type,visitMethodInfo);
+            }
         }
 
-        return types;
-
-        static void add(List<Type> types, Type type)
+        void visitMethodInfo(MethodInfo methodInfo)
         {
-            types.Add(type);
+            if (returnMethodInfo == null)
+            {
+                if (methodInfo.MetadataToken == metadataToken)
+                {
+                    returnMethodInfo = methodInfo;
+                }
+            }
+            
+        }
+
+
+        return returnMethodInfo;
+    }
+
+    public static List<Type> GetAllTypes(Assembly assembly)
+    {
+        var types = new List<Type>();
+
+        void visit(Type type) => types.Add(type);
+
+        VisitTypes(assembly, visit);
+
+        return types;
+    }
+
+    static void VisitTypes(Assembly assembly, Action<Type> visit)
+    {
+        foreach (var type in assembly.GetTypes())
+        {
+            visit(type);
             foreach (var nestedType in type.GetNestedTypes())
             {
-                add(types, nestedType);
+                visit(nestedType);
             }
         }
     }
@@ -64,15 +98,9 @@ class MetadataHelper
                 Name    = x.Name
             };
 
-            foreach (var methodInfo in x.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
-            {
-                if (methodInfo.Name.StartsWith("get_") || methodInfo.Name.StartsWith("set_"))
-                {
-                    continue;
-                }
 
-                classNode.children.Add(createFromMethod(methodInfo));
-            }
+            VisitMethods(x, m => classNode.children.Add(createFromMethod(m)));
+            
 
             return classNode;
         }
@@ -86,6 +114,20 @@ class MetadataHelper
                 FullNameWithoutReturnType = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
                 MetadataToken             = methodInfo.MetadataToken,
             };
+        }
+    }
+
+
+    static void VisitMethods(Type type, Action<MethodInfo> visit)
+    {
+        foreach (var methodInfo in type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            if (methodInfo.Name.StartsWith("get_") || methodInfo.Name.StartsWith("set_"))
+            {
+                continue;
+            }
+
+            visit(methodInfo);
         }
     }
 

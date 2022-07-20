@@ -11,6 +11,8 @@ namespace ReactWithDotNet.UIDesigner;
 class UIDesignerModel
 {
 
+    public string InvocationResponseAsJson { get; set; }
+
     public string ReactWithDotnetComponentAsJson { get; set; }
 
     public string SelectedMethodTreeNodeKey { get; set; }
