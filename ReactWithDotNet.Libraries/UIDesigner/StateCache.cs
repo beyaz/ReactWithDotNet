@@ -6,12 +6,32 @@ namespace ReactWithDotNet.UIDesigner;
 
 class StateCache
 {
+    #region Static Fields
+    static readonly string CacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReactWithDotNet.UIDesigner") + Path.DirectorySeparatorChar;
+
+    static readonly object fileLock = new();
+    #endregion
+
+    #region Properties
+    static string StateFilePath => Path.Combine(CacheDirectory, $@"{nameof(UIDesignerModel)}.json");
+    #endregion
+
+    #region Public Methods
+    public static string ReadFromCache(string type)
+    {
+        if (File.Exists(GetCacheFilePath(type)))
+        {
+            return File.ReadAllText(GetCacheFilePath(type));
+        }
+
+        return null;
+    }
 
     public static UIDesignerModel ReadState()
     {
-        if (File.Exists(@"d:\\temp\\UIDesignerModel.json"))
+        if (File.Exists(StateFilePath))
         {
-            var json = File.ReadAllText(@"d:\\temp\\UIDesignerModel.json");
+            var json = File.ReadAllText(StateFilePath);
 
             try
             {
@@ -26,12 +46,35 @@ class StateCache
         return new UIDesignerModel();
     }
 
-    static readonly object fileLock = new();
-    public static  void SaveState(object state)
+    public static void SaveState(UIDesignerModel state)
     {
         lock (fileLock)
         {
-            File.WriteAllText(@"d:\\temp\\UIDesignerModel.json", JsonSerializer.Serialize(state));
+            WriteAllText(StateFilePath, JsonSerializer.Serialize(state));
         }
     }
+
+    public static void SaveToCache(string type, string json)
+    {
+        lock (fileLock)
+        {
+            WriteAllText(GetCacheFilePath(type), json);
+        }
+    }
+    #endregion
+
+    #region Methods
+    static string GetCacheFilePath(string type) => $@"{CacheDirectory}{type}.json";
+
+    static void WriteAllText(string path, string contents)
+    {
+        
+        if (!Directory.Exists(Path.GetDirectoryName(path)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+        }
+        
+        File.WriteAllText(path,contents);
+    }
+    #endregion
 }

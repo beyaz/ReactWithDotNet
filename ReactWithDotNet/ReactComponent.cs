@@ -15,6 +15,8 @@ public interface IReactStatelessComponent
     Element render();
 }
 
+
+
 public abstract class ReactComponent : Element, IReactStatelessComponent
 {
     [JsonIgnore]

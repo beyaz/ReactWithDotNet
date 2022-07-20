@@ -279,7 +279,7 @@ public class SummaryInfo
 [Serializable]
 class CountsSummaryView: ReactComponent
 {
-    public IReadOnlyList<SummaryInfo> Counts { get; set; }
+    public IReadOnlyList<SummaryInfo> Counts { get; set; } = new List<SummaryInfo>();
 
     public override Element render()
     {

@@ -8,7 +8,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 {
     public UIDesignerView()
     {
-        state = StateCache.ReadState();
+        state = StateCache.ReadState() ?? new UIDesignerModel();
     }
 
     public void ComponentDidMount()
@@ -46,12 +46,16 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
                     OnSelectionChange = e =>
                     {
+                        SaveState();
+                        
                         state.SelectedMethodTreeNodeKey = e.value;
-
+                        
                         state.SelectedComponentTypeReference = $"{getFullClassName()},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
                         SaveState();
+
+                        state.ReactWithDotnetComponentAsJson = StateCache.ReadFromCache(state.SelectedComponentTypeReference);
                     },
-                    AssemblyFilePath = Path.Combine(state.SelectedFolder, state.SelectedAssembly)
+                    AssemblyFilePath = state.SelectedFolder.HasValue() && state.SelectedAssembly.HasValue() ? Path.Combine(state.SelectedFolder, state.SelectedAssembly) : null
                 },
                 new VSpace(10),
                 new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
@@ -93,9 +97,23 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     return new div("type not found.@"+ state.SelectedComponentTypeReference);
                 }
 
-                var instance = Json.DeserializeJsonByNewtonsoft(state.ReactWithDotnetComponentAsJson.HasValue() ? state.ReactWithDotnetComponentAsJson : "{}", type);
+                var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.ReactWithDotnetComponentAsJson.HasValue() ? state.ReactWithDotnetComponentAsJson : "{}", type);
                 
-                return instance as Element;
+                if (instance is ReactComponent reactComponent)
+                {
+                    reactComponent.Context = new ReactContext();
+                    
+                    return reactComponent.render();
+                }
+
+                if (instance is ReactStatefulComponent reactStatefulComponent)
+                {
+                    reactStatefulComponent.Context = new ReactContext();
+
+                    return reactStatefulComponent.render();
+                }
+
+                return new div(instance.ToString());
             }
             catch (Exception exception)
             {
@@ -191,6 +209,14 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         state.ScreenWidth = e.value;
     }
 
-    void SaveState() => StateCache.SaveState(state);
+    void SaveState()
+    {
+        if (state.SelectedComponentTypeReference.HasValue())
+        {
+            StateCache.SaveToCache(state.SelectedComponentTypeReference, state.ReactWithDotnetComponentAsJson);
+        }
+        
+        StateCache.SaveState(state);
+    }
     #endregion
 }
