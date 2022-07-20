@@ -25,51 +25,6 @@ import { Tree } from 'primereact/tree';
 import ReactWithDotNet from "./ReactWithDotNet";
 
 
-
-//const boxStyle = {border: "grey solid 2px", borderRadius: "10px", padding: "5px"};
-
-//function SimpleExample() {
-
-//    return (
-//        <div>
-//            <div style={{display: "flex", justifyContent: "space-evenly", width: "100%"}}>
-//                        <div id="One" style={boxStyle}>hey</div>
-//                        <p id="elem2" style={boxStyle}>hey25</p>
-
-//                        <div id="two" style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px", marginTop:"41px"}}>hey</div>
-//                        <div id="three" style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px", marginTop:"231px"}}>hey</div>
-                        
-//                        <Button label="Prime button"/>
-//                    </div>
-
-//                    <Xarrow start="One" //can be react ref
-//                            end="elem2" //or an id
-//                            labels = "Aloha"
-//                            color="red" />
-
-//                    <Xarrow start="two" //can be react ref
-//                            end="elem2" //or an id
-//                            labels = "Aloha"
-//                            color="red" />
-
-//<Xarrow start="three"  curveness={0.2}
-//                            end="elem2" //or an id
-//                            labels = "Aloha"
-//                            color="red" />
-//        </div>
-       
-//    );
-//}
-
-window.primereact =
-{
-    "Button": Button,
-    "InputText": InputText,
-    "InputTextarea": InputTextarea,
-    "BlockUI": BlockUI
-};
-window.Xarrow = Xarrow;
-
 var componentMap = {
     "ReactWithDotNet.PrimeReact.Button": Button,
     "ReactWithDotNet.PrimeReact.InputText": InputText,
