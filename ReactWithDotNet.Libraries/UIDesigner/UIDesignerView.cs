@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -95,31 +96,10 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     return new div("type not found.");
                 }
 
-                var instance = Activator.CreateInstance(type);
-                if (instance == null)
-                {
-                    return new div("instance is null.");
-                }
+                var targetType = type;
 
-                if (MetadataHelper.IsReactStatefulComponent(type))
-                {
-                    var statePropertyInfo = type.GetProperty("state");
-                    if (statePropertyInfo is not null)
-                    {
-                        var stateInstance = statePropertyInfo.GetValue(instance);
-                        if (stateInstance == null)
-                        {
-                            stateInstance = Activator.CreateInstance(statePropertyInfo.PropertyType);
-
-                            statePropertyInfo.SetValue(instance, stateInstance);
-                        }
-
-                        UIDesignerViewExtension.OpenNullProperties(stateInstance);
-                    }
-
-                    return ((IReactStatefulComponent)instance).___RootNode___;
-                }
-
+                var instance = Json.DeserializeJsonByNewtonsoft(state.ReactWithDotnetComponentAsJson.HasValue() ? state.ReactWithDotnetComponentAsJson : "{}", targetType);
+                
                 return instance as Element;
             }
             catch (Exception exception)

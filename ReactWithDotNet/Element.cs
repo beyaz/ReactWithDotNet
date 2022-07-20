@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
 /// <summary>
 ///     The element
 /// </summary>
+[JsonObject]
 public abstract class Element : IEnumerable<Element>
 {
     #region Fields
@@ -22,7 +23,7 @@ public abstract class Element : IEnumerable<Element>
     /// <summary>
     ///     Imports filled values given style
     /// </summary>
-    [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public IEnumerable<Element> Children
     {
         set => children.AddRange(value);

@@ -109,13 +109,13 @@ public interface IReactStatefulComponent
 public abstract class ReactStatefulComponent : Element
 {
     [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public ReactContext Context { get; set; }
 
     public Element ___RootNode___ => render();
 
     public string ___Type___ => GetType().GetFullName();
 
-    
 
     public bool ___HasComponentDidMountMethod___ => GetType().GetMethod("ComponentDidMount") != null;
 
