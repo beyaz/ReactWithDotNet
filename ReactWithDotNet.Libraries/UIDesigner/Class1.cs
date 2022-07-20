@@ -11,7 +11,6 @@ namespace ReactWithDotNet.UIDesigner;
 class UIDesignerModel
 {
 
-    public string InvocationResponseAsJson { get; set; }
 
     public string ReactWithDotnetComponentAsJson { get; set; }
 
@@ -30,47 +29,22 @@ class UIDesignerModel
 
     
 
-    public string SaveDirectoryPath { get; set; } = @"d:\\temp\\";
 
     public int ScreenWidth { get; set; } = 100;
     public string SelectedComponentTypeReference { get; set; }
 
-    public string SelectedPropertyName { get; set; }
-    public string SelectedPropertyValue { get; set; }
 
-    public string ComponentsLocatedAssemblyName { get; set; } = "QuranAnalyzer.WebUI";
     #endregion
 }
 
-class ReactComponentInfo
-{
-    #region Public Properties
-    public string Name { get; set; }
-    public string Value { get; set; }
-    #endregion
-}
 
- class Pair
-{
-    #region Public Properties
-    public string Key { get; set; }
-    public string Value { get; set; }
-    #endregion
-}
 
 
 
 static class UIDesignerViewExtension
 {
     #region Public Methods
-    public static void TryUpdateFirst<T>(this IEnumerable<T> enumerable, Func<T, bool> findFunction, Action<T> update)
-    {
-        var value = enumerable.FirstOrDefault(findFunction);
-        if (value is not null)
-        {
-            update(value);
-        }
-    }
+    
 
     public static Exception SaveValueToPropertyPath(object value, object instance, string propertyPath)
     {

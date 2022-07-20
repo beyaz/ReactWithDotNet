@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -93,12 +90,10 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 var type = FindType(state.SelectedComponentTypeReference);
                 if (type == null)
                 {
-                    return new div("type not found.");
+                    return new div("type not found.@"+ state.SelectedComponentTypeReference);
                 }
 
-                var targetType = type;
-
-                var instance = Json.DeserializeJsonByNewtonsoft(state.ReactWithDotnetComponentAsJson.HasValue() ? state.ReactWithDotnetComponentAsJson : "{}", targetType);
+                var instance = Json.DeserializeJsonByNewtonsoft(state.ReactWithDotnetComponentAsJson.HasValue() ? state.ReactWithDotnetComponentAsJson : "{}", type);
                 
                 return instance as Element;
             }
@@ -121,7 +116,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             {
                 new SplitterPanel
                 {
-                    size = 30,
+                    size = 40,
                     children =
                     {
                        propertyPanel
@@ -129,7 +124,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 },
                 new SplitterPanel
                 {
-                    size = 70,
+                    size = 60,
                     children =
                     {
                         outputPanel
@@ -138,9 +133,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             }
         };
 
-        string getAssemblyPath() => Path.Combine(state.SelectedFolder, state.SelectedAssembly);
-
-        bool isAssemblyExists() => File.Exists(getAssemblyPath());
 
         string getFullClassName()
         {
@@ -154,6 +146,11 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             }
 
             return null;
+
+
+            string getAssemblyPath() => Path.Combine(state.SelectedFolder, state.SelectedAssembly);
+
+            bool isAssemblyExists() => File.Exists(getAssemblyPath());
         }
 
         return new div
@@ -164,7 +161,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             },
             style =
             {
-                width = "100%", height = "100%", padding = "10px"
+                width = "100%", height = "100%", padding = "7px"
             }
         };
     }
@@ -186,7 +183,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     {
         SaveState();
 
-        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 100000, MethodName = nameof(Refresh) } };
+        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 1000, MethodName = nameof(Refresh) } };
     }
 
     void OnWidthChanged(SliderChangeParams e)

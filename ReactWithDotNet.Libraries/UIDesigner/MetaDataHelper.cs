@@ -9,21 +9,7 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataHelper
 {
-    static IEnumerable<ReactComponentInfo> GetComponents(Assembly assembly)
-    {
-        foreach (var type in assembly.GetTypes())
-        {
-            if (type.IsAbstract)
-            {
-                continue;
-            }
-
-            if (IsReactComponent(type))
-            {
-                yield return new ReactComponentInfo { Name = type.GetFullName(), Value = type.GetFullName() };
-            }
-        }
-    }
+   
 
     static bool IsReactComponent(Type type)
     {
@@ -97,9 +83,24 @@ class MetadataHelper
     {
         foreach (var type in assembly.GetTypes())
         {
+            if (type.IsAbstract)
+            {
+                continue;
+            }
+
+            if (!IsReactComponent(type))
+            {
+                continue;
+            }
+
             visit(type);
             foreach (var nestedType in type.GetNestedTypes())
             {
+                if (!IsReactComponent(nestedType))
+                {
+                    continue;
+                }
+                
                 visit(nestedType);
             }
         }
