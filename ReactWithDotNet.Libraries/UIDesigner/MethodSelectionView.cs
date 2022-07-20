@@ -39,7 +39,7 @@ class MethodSelectionView : ReactComponent
             return null;
         }
 
-        var nodes = MetadataHelper.GetMetadataNodes(AssemblyFilePath);
+        var nodes = MetadataHelper.GetMetadataNodes(AssemblyFilePath).ToArray();
 
         MetadataNode current = null;
         foreach (var index in treeNodeKey.Split('|').Select(int.Parse))

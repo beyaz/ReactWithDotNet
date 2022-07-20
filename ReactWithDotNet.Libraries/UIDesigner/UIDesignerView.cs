@@ -20,7 +20,58 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public override Element render()
     {
-        var dataPanel = new div
+        var propertyPanel = new VPanel
+        {
+            style = { margin = "5px" },
+            children =
+            {
+                new FolderSelectionView
+                {
+                    SelectedFolder = state.SelectedFolder,
+                    LastQuery      = state.SelectedFolderLastQuery,
+                    Suggestions    = state.SelectedFolderSuggestions,
+                    OnChange       = e => { state.SelectedFolder          = e.GetValue<string>(); },
+                    CompleteMethod = e => { state.SelectedFolderLastQuery = e.query; }
+                },
+                new VSpace(10),
+                new AssemblySelectionView
+                {
+                    SelectedFolder   = state.SelectedFolder,
+                    SelectedAssembly = state.SelectedAssembly,
+                    LastQuery        = state.SelectedAssemblyLastQuery,
+                    OnChange         = e => { state.SelectedAssembly          = e.GetValue<string>(); },
+                    CompleteMethod   = e => { state.SelectedAssemblyLastQuery = e.query; }
+                },
+                new VSpace(10),
+                new MethodSelectionView
+                {
+                    SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
+                    OnSelectionChange = e =>
+                    {
+                        state.SelectedMethodTreeNodeKey = e.value;
+
+                        state.SelectedComponentTypeReference = $"{getFullClassName()},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
+                        SaveState();
+                    },
+                    AssemblyFilePath = Path.Combine(state.SelectedFolder, state.SelectedAssembly)
+                },
+                new VSpace(10),
+                new Slider { value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
+
+                new div { text = state.SelectedComponentTypeReference },
+                new InputTextarea
+                {
+                    valueBind = () => state.ReactWithDotnetComponentAsJson,
+                    style =
+                    {
+                        width = "100%", height = "100%"
+                    }
+                }
+            }
+        };
+
+
+        var outputPanel = new div
         {
             children =
             {
@@ -93,53 +144,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     size = 30,
                     children =
                     {
-                        new VPanel
-                        {
-                            //style = {  display = "flex", flexDirection = "column"},
-                            children =
-                            {
-                                new FolderSelectionView
-                                {
-                                    SelectedFolder = state.SelectedFolder,
-                                    LastQuery      = state.SelectedFolderLastQuery,
-                                    Suggestions    = state.SelectedFolderSuggestions,
-                                    OnChange       = e => { state.SelectedFolder          = e.GetValue<string>(); },
-                                    CompleteMethod = e => { state.SelectedFolderLastQuery = e.query; }
-                                },
-                                new VSpace(10),
-                                new AssemblySelectionView
-                                {
-                                    SelectedFolder   = state.SelectedFolder,
-                                    SelectedAssembly = state.SelectedAssembly,
-                                    LastQuery        = state.SelectedAssemblyLastQuery,
-                                    OnChange         = e => { state.SelectedAssembly          = e.GetValue<string>(); },
-                                    CompleteMethod   = e => { state.SelectedAssemblyLastQuery = e.query; }
-                                },
-                                new MethodSelectionView
-                                {
-                                    SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
-                                    OnSelectionChange = e =>
-                                    {
-                                        state.SelectedMethodTreeNodeKey = e.value;
-
-                                        state.SelectedComponentTypeReference = $"{getFullClassName()},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
-                                        SaveState();
-                                    },
-                                    AssemblyFilePath = Path.Combine(state.SelectedFolder, state.SelectedAssembly)
-                                },
-                                new Slider { value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
-
-                                new div { text = state.SelectedComponentTypeReference },
-                                new InputTextarea
-                                {
-                                    valueBind = () => state.ReactWithDotnetComponentAsJson,
-                                    style =
-                                    {
-                                        width = "100%", height = "100%"
-                                    }
-                                }
-                            }
-                        }
+                       propertyPanel
                     }
                 },
                 new SplitterPanel
@@ -147,7 +152,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     size = 70,
                     children =
                     {
-                        dataPanel
+                        outputPanel
                     }
                 }
             }

@@ -105,15 +105,20 @@ class MetadataHelper
         }
     }
 
-    public static MetadataNode[] GetMetadataNodes(string assemblyFilePath)
+    public static IEnumerable<MetadataNode> GetMetadataNodes(string assemblyFilePath)
     {
         var (assembly, metadataLoadContext) = ReadAssembly(assemblyFilePath);
 
-        var items = new List<MetadataNode>();
 
         using (metadataLoadContext)
         {
-            var types = GetAllTypes(assembly);
+            return getNamespaceNodes(GetAllTypes(assembly));
+        }
+
+
+        static IReadOnlyList<MetadataNode> getNamespaceNodes(IReadOnlyList<Type> types)
+        {
+            var items = new List<MetadataNode>();
 
             foreach (var namespaceName in types.Select(t => t.Namespace).Distinct())
             {
@@ -127,9 +132,11 @@ class MetadataHelper
 
                 items.Add(nodeForNamespace);
             }
+
+            return items;
         }
 
-        return items.ToArray();
+
 
         static MetadataNode classToMetaData(Type x)
         {
@@ -142,7 +149,6 @@ class MetadataHelper
 
 
             VisitMethods(x, m => classNode.children.Add(createFromMethod(m)));
-            
 
             return classNode;
         }
