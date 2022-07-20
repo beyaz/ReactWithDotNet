@@ -107,14 +107,7 @@ class MetadataHelper
 
     public static IEnumerable<MetadataNode> GetMetadataNodes(string assemblyFilePath)
     {
-        var (assembly, metadataLoadContext) = ReadAssembly(assemblyFilePath);
-
-
-        using (metadataLoadContext)
-        {
-            return getNamespaceNodes(GetAllTypes(assembly));
-        }
-
+        return getNamespaceNodes(GetAllTypes(LoadAssembly(assemblyFilePath)));
 
         static IReadOnlyList<MetadataNode> getNamespaceNodes(IReadOnlyList<Type> types)
         {
@@ -148,7 +141,7 @@ class MetadataHelper
             };
 
 
-            VisitMethods(x, m => classNode.children.Add(createFromMethod(m)));
+            // VisitMethods(x, m => classNode.children.Add(createFromMethod(m)));
 
             return classNode;
         }
@@ -179,6 +172,11 @@ class MetadataHelper
         }
     }
 
+    public static Assembly LoadAssembly(string assemblyFilePath)
+    {
+        return Assembly.LoadFile(assemblyFilePath);
+    }
+    
     public static (Assembly assembly, MetadataLoadContext metadataLoadContext) ReadAssembly(string assemblyFilePath)
     {
         var coreAssemblies = Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll");
