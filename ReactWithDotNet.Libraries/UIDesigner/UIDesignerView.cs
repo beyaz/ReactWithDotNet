@@ -249,23 +249,16 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                                             OnSelectionChange         = e => 
                                                             {
                                                                 state.SelectedMethodTreeNodeKey = e.value;
+
+                                                                state.SelectedComponentTypeReference = $"{getFullClassName()},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
                                                                 SaveState(); 
                                                             },
                                                             AssemblyFilePath = Path.Combine(state.SelectedFolder,state.SelectedAssembly)
                                                         },
                                                         new InputTextarea{ rows = 4, valueBind = ()=>state.ReactWithDotnetComponentAsJson},
                                                         new div{text = "MetadataToken: " + findMethod()?.Name},
-                                                        new Button{ label = "Invoke",onClick = e =>
-                                                        {
-                                                            var method = findMethod();
-                                                            if (method != null)
-                                                            {
-                                                                state.InvocationResponseAsJson = method.Invoke(null, new[] { state.ReactWithDotnetComponentAsJson }) as string;
-                                                                
-                                                            }
-                                                        }},
-
-                                                        new div{text = state.InvocationResponseAsJson},
+                                                       
+                                                        
                                                         
                                                         componentSelector
                                                     }
@@ -313,7 +306,22 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
             return null;
         }
-        
+
+        string getFullClassName()
+        {
+            var node = MethodSelectionView.FindTreeNode(Path.Combine(state.SelectedFolder, state.SelectedAssembly), state.SelectedMethodTreeNodeKey);
+            if (node is not null && node.IsClass)
+            {
+                if (isAssemblyExists())
+                {
+                    return $"{node.NamespaceName}.{node.Name}";
+                }
+
+            }
+
+            return null;
+        }
+
         return new div
         {
             children=

@@ -15,6 +15,7 @@ class MetadataNode : TreeNode
     public bool IsMethod { get; set; }
     public string FullNameWithoutReturnType { get; set; }
     public int MetadataToken { get; set; }
+    public string NamespaceName { get; set; }
 }
 
 class MethodSelectionView : ReactComponent

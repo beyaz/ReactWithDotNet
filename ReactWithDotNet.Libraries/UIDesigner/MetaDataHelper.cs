@@ -95,7 +95,8 @@ class MetadataHelper
             var classNode = new MetadataNode
             {
                 IsClass = true,
-                Name    = x.Name
+                Name    = x.Name,
+                NamespaceName = x.Namespace
             };
 
 
