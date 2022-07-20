@@ -1,90 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text.Json;
 using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
 
-
-
-
 class UIDesignerView : ReactComponent<UIDesignerModel>
 {
-    #region Static Fields
-    static readonly object fileLock = new();
-    #endregion
-
     public UIDesignerView()
     {
-        state = ReadState();
+        state = StateCache.ReadState();
     }
-    
+
     public void ComponentDidMount()
     {
         Refresh();
     }
-    
-    
+
     public override Element render()
     {
-       
-        
-        
-        var componentSelector = new ListBox
-        {
-            options     = GetComponents(Assembly.Load(state.ComponentsLocatedAssemblyName)),
-            optionLabel = nameof(ReactComponentInfo.Name),
-            optionValue = nameof(ReactComponentInfo.Value),
-            value       = state.SelectedComponentTypeReference,
-            onChange    = OnSelectedComponentChanged,
-            filter      = true,
-            listStyle   = {maxHeight = "400px" },
-            style = { height = "100%" },
-            //itemTemplate = item => new HPanel // TODO: open
-            //{
-            //    style    = { alignItems = "center" },
-            //    children = { new img { src = "img/Class.svg", width = 15, height = 15 }, new div(item.Name) { style = { marginLeft = "5px" } } }
-            //}
-        };
-
-        var propertyList = new ListBox
-        {
-            options     = (state.Properties ?? Enumerable.Empty<DotNetObjectPropertyValue>()).OrderBy(x => string.IsNullOrWhiteSpace(x.Value)).Select(x => new Pair {Key = x.Path, Value = x.Path}),
-            optionLabel = nameof(Pair.Key),
-            optionValue = nameof(Pair.Value),
-            value       = state.SelectedPropertyName,
-            onChange    = OnSelectedPropertyChanged,
-            filter      = true,
-            listStyle   = {maxHeight = "400px" }
-        };
-
-        var dataPanel = new Splitter
+        var dataPanel = new div
         {
             children =
             {
-                new SplitterPanel
-                {
-                    propertyList
-                },
-                new SplitterPanel
-                {
-                    new InputTextarea
-                    {
-                        valueBind = () => state.SelectedPropertyValue,
-                        style =
-                        {
-                            width = "100%", height = "100%"
-                        }
-                    }
-                }
+                createElement()
             },
             style =
             {
-                height = "100%",
-                width  = "100%"
+                border = "1px dashed #e0e0e0",
+                width  = state.ScreenWidth + "%",
+                height = "100%"
             }
         };
 
@@ -104,32 +50,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     return new div("instance is null.");
                 }
 
-                
-
-                foreach (var dotNetObjectPropertyValue in state.Properties.Where(x => !string.IsNullOrWhiteSpace(x.Value)))
-                {
-                    var path      = dotNetObjectPropertyValue.Path;
-                    var jsonValue = dotNetObjectPropertyValue.Value;
-
-                    var propertyInfo = type.GetProperty(path);
-
-                    if (propertyInfo is not null)
-                    {
-                        object propertyValue = null;
-                        if (propertyInfo.PropertyType == typeof(string))
-                        {
-                            propertyValue = jsonValue;
-                        }
-                        else
-                        {
-                            propertyValue = JsonSerializer.Deserialize(jsonValue, propertyInfo.PropertyType);
-                        }
-
-                        UIDesignerViewExtension.SaveValueToPropertyPath(propertyValue, instance, path);
-                    }
-                }
-
-                if (IsReactStatefulComponent(type))
+                if (MetadataHelper.IsReactStatefulComponent(type))
                 {
                     var statePropertyInfo = type.GetProperty("state");
                     if (statePropertyInfo is not null)
@@ -145,7 +66,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         UIDesignerViewExtension.OpenNullProperties(stateInstance);
                     }
 
-                    return ((IReactStatefulComponent) instance).___RootNode___;
+                    return ((IReactStatefulComponent)instance).___RootNode___;
                 }
 
                 return instance as Element;
@@ -156,11 +77,9 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             }
         }
 
-        
-
         var mainPanel = new Splitter
         {
-            layout = SplitterLayoutType.vertical,
+            layout = SplitterLayoutType.horizontal,
             style =
             {
                 width  = "100%",
@@ -171,113 +90,64 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             {
                 new SplitterPanel
                 {
-                    size = 70,
-                    children =
-                    {
-                        new div
-                        {
-                           children=
-                           {
-                               createElement()
-                           },
-                           style =
-                           {
-                               border = "1px dashed #e0e0e0",
-                               width = state.ScreenWidth + "%",
-                               height = "100%"
-                           }
-                        }
-                    }
-                },
-
-                new SplitterPanel
-                {
                     size = 30,
                     children =
                     {
-                        new div
+                        new VPanel
                         {
-                            style={ display = "flex", flexDirection = "column", width = "100%"},
-                            children=
+                            //style = {  display = "flex", flexDirection = "column"},
+                            children =
                             {
-                                new Slider {value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px"}},
-                                new Splitter
+                                new FolderSelectionView
                                 {
-                                    new SplitterPanel
+                                    SelectedFolder = state.SelectedFolder,
+                                    LastQuery      = state.SelectedFolderLastQuery,
+                                    Suggestions    = state.SelectedFolderSuggestions,
+                                    OnChange       = e => { state.SelectedFolder          = e.GetValue<string>(); },
+                                    CompleteMethod = e => { state.SelectedFolderLastQuery = e.query; }
+                                },
+                                new VSpace(10),
+                                new AssemblySelectionView
+                                {
+                                    SelectedFolder   = state.SelectedFolder,
+                                    SelectedAssembly = state.SelectedAssembly,
+                                    LastQuery        = state.SelectedAssemblyLastQuery,
+                                    OnChange         = e => { state.SelectedAssembly          = e.GetValue<string>(); },
+                                    CompleteMethod   = e => { state.SelectedAssemblyLastQuery = e.query; }
+                                },
+                                new MethodSelectionView
+                                {
+                                    SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
+                                    OnSelectionChange = e =>
                                     {
-                                        size = 2,
-                                        children =
-                                        {
-                                           new VPanel
-                                           {
-                                                    //style = {  display = "flex", flexDirection = "column"},
-                                                    children =
-                                                    {
-                                                        new FolderSelectionView
-                                                        {
-                                                            SelectedFolder = state.SelectedFolder,
-                                                            LastQuery      = state.SelectedFolderLastQuery,
-                                                            Suggestions    = state.SelectedFolderSuggestions,
-                                                            OnChange = e =>
-                                                            {
-                                                                state.SelectedFolder = e.GetValue<string>();
-                                                            },
-                                                            CompleteMethod = e =>
-                                                            {
-                                                                state.SelectedFolderLastQuery = e.query;
-                                                            }
+                                        state.SelectedMethodTreeNodeKey = e.value;
 
-                                                        },
-                                                        new VSpace(10),
-                                                        new AssemblySelectionView
-                                                        {
-                                                            SelectedFolder = state.SelectedFolder,
-                                                            SelectedAssembly = state.SelectedAssembly,
-                                                            LastQuery = state.SelectedAssemblyLastQuery,
-                                                            OnChange = e =>
-                                                            {
-                                                                state.SelectedAssembly = e.GetValue<string>();
-                                                            },
-                                                            CompleteMethod = e =>
-                                                            {
-                                                                state.SelectedAssemblyLastQuery = e.query;
-                                                            }
-                                                        },
-                                                        new MethodSelectionView
-                                                        {
-                                                            SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
-                                                            OnSelectionChange         = e => 
-                                                            {
-                                                                state.SelectedMethodTreeNodeKey = e.value;
-
-                                                                state.SelectedComponentTypeReference = $"{getFullClassName()},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
-                                                                SaveState(); 
-                                                            },
-                                                            AssemblyFilePath = Path.Combine(state.SelectedFolder,state.SelectedAssembly)
-                                                        },
-                                                        new InputTextarea{ rows = 4, valueBind = ()=>state.ReactWithDotnetComponentAsJson},
-                                                        new div{text = "MetadataToken: " + findMethod()?.Name},
-                                                       
-                                                        
-                                                        
-                                                        componentSelector
-                                                    }
-                                                }
-
-                                        }
+                                        state.SelectedComponentTypeReference = $"{getFullClassName()},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
+                                        SaveState();
                                     },
+                                    AssemblyFilePath = Path.Combine(state.SelectedFolder, state.SelectedAssembly)
+                                },
+                                new Slider { value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
 
-                                    new SplitterPanel
+                                new div { text = state.SelectedComponentTypeReference },
+                                new InputTextarea
+                                {
+                                    valueBind = () => state.ReactWithDotnetComponentAsJson,
+                                    style =
                                     {
-                                        size = 6,
-                                        children =
-                                        {
-                                            dataPanel
-                                        }
+                                        width = "100%", height = "100%"
                                     }
                                 }
                             }
                         }
+                    }
+                },
+                new SplitterPanel
+                {
+                    size = 70,
+                    children =
+                    {
+                        dataPanel
                     }
                 }
             }
@@ -286,26 +156,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         string getAssemblyPath() => Path.Combine(state.SelectedFolder, state.SelectedAssembly);
 
         bool isAssemblyExists() => File.Exists(getAssemblyPath());
-
-        MethodInfo findMethod()
-        {
-            var metadataToken = MethodSelectionView.FindTreeNode(Path.Combine(state.SelectedFolder, state.SelectedAssembly), state.SelectedMethodTreeNodeKey).MetadataToken;
-            if (metadataToken > 0)
-            {
-                if (isAssemblyExists())
-                {
-                    var (assembly, metadataLoadContext) = MetadataHelper.ReadAssembly(getAssemblyPath());
-                    
-                    using (metadataLoadContext)
-                    {
-                        return MetadataHelper.FindMethodInfo(assembly, metadataToken);
-                    }
-                }
-                
-            }
-
-            return null;
-        }
 
         string getFullClassName()
         {
@@ -316,7 +166,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 {
                     return $"{node.NamespaceName}.{node.Name}";
                 }
-
             }
 
             return null;
@@ -324,7 +173,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
         return new div
         {
-            children=
+            children =
             {
                 mainPanel
             },
@@ -333,9 +182,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 width = "100%", height = "100%", padding = "10px"
             }
         };
-
-
-        
     }
 
     #region Methods
@@ -349,181 +195,20 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         return null;
     }
 
-    static IEnumerable<ReactComponentInfo> GetComponents(Assembly assembly)
-    {
-        foreach (var type in assembly.GetTypes())
-        {
-            if (type.IsAbstract)
-            {
-                continue;
-            }
-
-            if (IsReactComponent(type))
-            {
-                yield return new ReactComponentInfo {Name = type.GetFullName(), Value = type.GetFullName()};
-            }
-        }
-    }
-
-    static IEnumerable<DotNetObjectPropertyValue> GetProperties(Type type)
-    {
-        foreach (var propertyInfo in type.GetProperties())
-        {
-            var propertyType = propertyInfo.PropertyType;
-            
-            if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(IReadOnlyList<>))
-            {
-                yield return new DotNetObjectPropertyValue { Path = propertyInfo.Name };
-            }
-            
-            if (propertyType.IsAbstract)
-            {
-                continue;
-            }
-
-            yield return new DotNetObjectPropertyValue {Path = propertyInfo.Name};
-        }
-    }
-
-    static bool IsReactComponent(Type type)
-    {
-        if (type.IsSubclassOf(typeof(ReactComponent)))
-        {
-            return true;
-        }
-
-        return IsReactStatefulComponent(type);
-    }
-
-    static bool IsReactStatefulComponent(Type type)
-    {
-        type = type.BaseType;
-
-        if (type?.IsGenericType == true)
-        {
-            var typeDefinition = type.GetGenericTypeDefinition();
-            if (typeDefinition == typeof(ReactComponent<>) || typeDefinition.IsSubclassOf(typeof(ReactComponent<>)))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-   
-
-    string GetCacheFilePath(string typeReference) => state.SaveDirectoryPath + typeReference + ".json";
-
-    void OnSelectedComponentChanged(ListBoxChangeParams e)
-    {
-        if (!string.IsNullOrWhiteSpace(state.SelectedComponentTypeReference) && state.Properties?.Count > 0)
-        {
-            SaveProperties(state.SelectedComponentTypeReference, state.Properties);
-        }
-
-        state.SelectedComponentTypeReference = e.value;
-
-        state.Properties = null;
-
-        var type = FindType(state.SelectedComponentTypeReference);
-        if (type != null)
-        {
-            state.Properties = GetProperties(type).ToList();
-
-            foreach (var item in ReadProperties(state.SelectedComponentTypeReference))
-            {
-                var entry = state.Properties.FirstOrDefault(x => x.Path == item.Path);
-                if (entry != null)
-                {
-                    entry.Value = item.Value;
-                }
-            }
-        }
-
-        SaveState();
-    }
+    
 
     public void Refresh()
     {
-        TransferPropertyValueToPropertyMap();
-
         SaveState();
 
         Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 100000, MethodName = nameof(Refresh) } };
     }
-    void OnSelectedPropertyChanged(ListBoxChangeParams e)
-    {
-        state.SelectedPropertyName = e.value;
-
-        state.SelectedPropertyValue = state.Properties.FirstOrDefault(x => x.Path == state.SelectedPropertyName)?.Value;
-
-        SaveState();
-    }
-
-    
-   
-
-    void TransferPropertyValueToPropertyMap()
-    {
-        if (state.SelectedPropertyName is not null)
-        {
-            state.Properties.TryUpdateFirst(x => x.Path == state.SelectedPropertyName, x => x.Value = state.SelectedPropertyValue);
-        }
-    }
-    
 
     void OnWidthChanged(SliderChangeParams e)
     {
         state.ScreenWidth = e.value;
     }
 
-    IEnumerable<DotNetObjectPropertyValue> ReadProperties(string typeReference)
-    {
-        var filePath = GetCacheFilePath(typeReference);
-
-        if (!File.Exists(filePath))
-        {
-            return Enumerable.Empty<DotNetObjectPropertyValue>();
-        }
-
-        var json = File.ReadAllText(filePath);
-
-        return JsonSerializer.Deserialize<IEnumerable<DotNetObjectPropertyValue>>(json);
-    }
-
-    UIDesignerModel ReadState()
-    {
-        if (File.Exists(@"d:\\temp\\UIDesignerModel.json"))
-        {
-            var json = File.ReadAllText(@"d:\\temp\\UIDesignerModel.json");
-
-            try
-            {
-                return JsonSerializer.Deserialize<UIDesignerModel>(json);
-            }
-            catch (Exception)
-            {
-                return new UIDesignerModel();
-            }
-        }
-
-        return new UIDesignerModel();
-    }
-
-    void SaveProperties(string typeReference, IEnumerable<DotNetObjectPropertyValue> items)
-    {
-        var filePath = GetCacheFilePath(typeReference);
-
-        File.WriteAllText(filePath, JsonSerializer.Serialize(items, new JsonSerializerOptions {WriteIndented = true}));
-    }
-
-    void SaveState()
-    {
-        lock (fileLock)
-        {
-            File.WriteAllText(@"d:\\temp\\UIDesignerModel.json", JsonSerializer.Serialize(state));
-        }
-    }
+    void SaveState() => StateCache.SaveState(state);
     #endregion
 }

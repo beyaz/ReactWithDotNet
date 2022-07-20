@@ -28,7 +28,7 @@ class UIDesignerModel
 
     #region Public Properties
 
-    public IReadOnlyList<DotNetObjectPropertyValue> Properties { get; set; }
+    
 
     public string SaveDirectoryPath { get; set; } = @"d:\\temp\\";
 
@@ -58,14 +58,7 @@ class ReactComponentInfo
     #endregion
 }
 
-[Serializable]
- sealed class DotNetObjectPropertyValue
-{
-    #region Public Properties
-    public string Path { get; set; }
-    public string Value { get; set; }
-    #endregion
-}
+
 
 static class UIDesignerViewExtension
 {

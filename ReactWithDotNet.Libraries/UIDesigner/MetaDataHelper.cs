@@ -9,6 +9,47 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataHelper
 {
+    static IEnumerable<ReactComponentInfo> GetComponents(Assembly assembly)
+    {
+        foreach (var type in assembly.GetTypes())
+        {
+            if (type.IsAbstract)
+            {
+                continue;
+            }
+
+            if (IsReactComponent(type))
+            {
+                yield return new ReactComponentInfo { Name = type.GetFullName(), Value = type.GetFullName() };
+            }
+        }
+    }
+
+    static bool IsReactComponent(Type type)
+    {
+        if (type.IsSubclassOf(typeof(ReactComponent)))
+        {
+            return true;
+        }
+
+        return IsReactStatefulComponent(type);
+    }
+
+    public static bool IsReactStatefulComponent(Type type)
+    {
+        type = type.BaseType;
+
+        if (type?.IsGenericType == true)
+        {
+            var typeDefinition = type.GetGenericTypeDefinition();
+            if (typeDefinition == typeof(ReactComponent<>) || typeDefinition.IsSubclassOf(typeof(ReactComponent<>)))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public static MethodInfo FindMethodInfo(Assembly assembly, int metadataToken)
     {
