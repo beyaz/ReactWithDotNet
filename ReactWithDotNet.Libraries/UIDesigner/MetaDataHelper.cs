@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -37,7 +38,7 @@ class MetadataHelper
         return false;
     }
 
-    public static MethodInfo FindMethodInfo(Assembly assembly, int metadataToken)
+    public static MethodInfo FindMethodInfo(Assembly assembly, MetadataNode node)
     {
         MethodInfo returnMethodInfo = null;
 
@@ -56,7 +57,7 @@ class MetadataHelper
         {
             if (returnMethodInfo == null)
             {
-                if (methodInfo.MetadataToken == metadataToken)
+                if (JsonConvert.SerializeObject(createFromMethod(methodInfo)) == JsonConvert.SerializeObject(node))
                 {
                     returnMethodInfo = methodInfo;
                 }
@@ -155,26 +156,27 @@ class MetadataHelper
             return classNode;
         }
 
-        static MetadataNode createFromMethod(MethodInfo methodInfo)
-        {
-            // is function component
-            if (methodInfo.IsStatic && methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
-            {
-                return new MetadataNode
-                {
-                    IsMethod                   = true,
-                    Name                       = methodInfo.Name,
-                    FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
-                    MetadataToken              = methodInfo.MetadataToken,
-                    DeclaringTypeFullName      = methodInfo.DeclaringType?.FullName,
-                    DeclaringTypeNamespaceName = methodInfo.DeclaringType?.Namespace
-                };
-            }
 
-            return null;
-        }
     }
 
+    static MetadataNode createFromMethod(MethodInfo methodInfo)
+    {
+        // is function component
+        if (methodInfo.IsStatic && methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
+        {
+            return new MetadataNode
+            {
+                IsMethod                   = true,
+                Name                       = methodInfo.Name,
+                FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
+                MetadataToken              = methodInfo.MetadataToken,
+                DeclaringTypeFullName      = methodInfo.DeclaringType?.FullName,
+                DeclaringTypeNamespaceName = methodInfo.DeclaringType?.Namespace
+            };
+        }
+
+        return null;
+    }
 
     static void VisitMethods(Type type, Action<MethodInfo> visit)
     {

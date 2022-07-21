@@ -28,5 +28,4 @@ static class ResourceHelper
         }
     }
 
-    public static T ReadPageData<T>(string pageName) => Read<T>($"Pages.{pageName}.Data.yaml");
 }

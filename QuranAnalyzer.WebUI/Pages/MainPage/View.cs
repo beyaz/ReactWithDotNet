@@ -7,23 +7,6 @@ using ReactWithDotNet;
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
 
-[Serializable]
-public sealed class MainMenuModel
-{
-    public string Text { get; set; }
-    public string Id { get; set; }
-}
-
-[Serializable]
-public sealed class MainPageModel
-{
-    public string Content { get; set; }
-
-    public string Title { get; set; }
-    public MainMenuModel[] MenuItems { get; set; }
-}
-
-
 static class PageId
 {
     public const string MainPage = nameof(MainPage);
@@ -56,7 +39,6 @@ public class MainViewModel
 class View : ReactComponent<MainViewModel>
 {
 
-    static readonly MainPageModel ConstantData = ResourceHelper.ReadPageData<MainPageModel>(nameof(MainPage));
 
     public View()
     {
@@ -87,8 +69,6 @@ class View : ReactComponent<MainViewModel>
 
     public override Element render()
     {
-        var mainMenuModels = ConstantData.MenuItems;
-
         return new Components.MainPage
         {
             topContent     = buildTopNav(),
@@ -147,7 +127,7 @@ class View : ReactComponent<MainViewModel>
         Element buildLeftMenu()
         {
             
-            return BuildLeftMenu(mainMenuModels, state.HamburgerMenuIsOpen);
+            return BuildLeftMenu(state.HamburgerMenuIsOpen);
 
 
         }
@@ -157,12 +137,22 @@ class View : ReactComponent<MainViewModel>
         
          
     }
+    
+    
 
-    static Element BuildLeftMenu(MainMenuModel[] items, bool HamburgerMenuIsOpen)
+    static Element BuildLeftMenu(bool HamburgerMenuIsOpen)
     {
         return new div
         {
-            Children= items.Select(ToSidebarMenuItem),
+            children =
+            {
+                toSidebarMenuItem("1 - Anasayfa",PageId.MainPage),
+                toSidebarMenuItem("2 - Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.MainPage),
+                toSidebarMenuItem("3 - Ön Bilgiler",PageId.MainPage),
+                toSidebarMenuItem("4 - Başlangıç Harfleri",PageId.MainPage),
+                toSidebarMenuItem("5 - Soru - Cevap",PageId.MainPage),
+                toSidebarMenuItem("6 - İletişim",PageId.ContactPage),
+            },
             style =
             {
                 position      = "fixed",
@@ -182,18 +172,20 @@ class View : ReactComponent<MainViewModel>
             }
         };
 
+        static Element toSidebarMenuItem(string text, string id)
+        {
+            return new a
+            {
+                innerText = text,
+                href      = "/index.html?page=" + id,
+                style     = { padding = "10px", textDecoration = "none", color = "Black", overflowWrap = "break-word"}
+            };
+        }
+
 
     }
     
-    static Element ToSidebarMenuItem(MainMenuModel m)
-    {
-        return new a
-        {
-            innerText = m.Text,
-            href      = "/index.html?page=" + m.Id,
-            style     = { padding = "10px", textDecoration = "none", color = "Black"}
-        };
-    }
+  
 
 }
 

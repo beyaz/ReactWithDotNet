@@ -104,7 +104,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 {
                     valueBind=()=> state.JsonText,
                     highlight= "json",
-                    style = { fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                    style = { minHeight = "200px", border = "1px dashed blue",fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                 }
             }
         };
@@ -139,9 +139,9 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         {
                             if (node.IsMethod)
                             {
-                                var methodInfo = MetadataHelper.FindMethodInfo(MetadataHelper.LoadAssembly(fullAssemblyPath), node.MetadataToken);
+                                var methodInfo = MetadataHelper.FindMethodInfo(MetadataHelper.LoadAssembly(fullAssemblyPath), node);
                                 if (methodInfo != null)
-                                {
+                                { 
                                     var invocationParameters = new List<object>();
 
                                     var methodParameters = methodInfo.GetParameters();
