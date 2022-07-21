@@ -1,4 +1,6 @@
 
+import './app.css'
+
 import ReactWithDotNet from "./ReactWithDotNet";
 
 // primereact

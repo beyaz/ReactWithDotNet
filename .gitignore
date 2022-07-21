@@ -352,4 +352,5 @@ MigrationBackup/
 /.local-chromium/Win64-884014/chrome-win
 /ReactDotNet.ComponentPreviewVsExtension/.local-chromium/Win64-884014/chrome-win
 /QuranAnalyzer.WebUI/index.js
+/QuranAnalyzer.WebUI/index.css
 /QuranAnalyzer.WebUI/package-lock.json
