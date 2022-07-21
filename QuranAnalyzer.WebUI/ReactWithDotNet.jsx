@@ -286,7 +286,7 @@ function ConvertToReactElement(jsonNode, component)
     
     if (/* is component */constructorFunction.indexOf('.') > 0)
     {
-        constructorFunction = GetComponentByFullName(constructorFunction);
+        constructorFunction = GetExternalJsObject(constructorFunction);
     }
 
     const children = jsonNode.children;
@@ -311,7 +311,7 @@ function ConvertToReactElement(jsonNode, component)
 
         if (value != null && value.$transformValueFunction)
         {
-            var fn = ReactWithDotNet.FindComponentByFullName(value.$transformValueFunction);
+            var fn = ExternalJsObjectMap[value.$transformValueFunction];
             
             props[propName] = fn(value.RawValue);
             return true;
@@ -901,13 +901,7 @@ function RenderComponentIn(obj)
 
 function CallJsFunctionInPath(clientTask)
 {
-    const fn = GetValueInPath(window, clientTask.JsFunctionPath.split("."));
-    if (fn == null)
-    {
-        throw Error("Function not found. Function is " + clientTask.JsFunctionPath);
-    }
-
-    fn.apply(null, clientTask.JsFunctionArguments);
+    GetExternalJsObject(clientTask.JsFunctionPath).apply(null, clientTask.JsFunctionArguments);
 }
 
 function ListenComponentEvent(clientTask, fullTypeNameOfReactComponent)
@@ -936,15 +930,29 @@ function Fetch(url, options, processResponse, callback)
     //});
 }
 
-function GetComponentByFullName(componentFullName)
+const ExternalJsObjectMap = {};
+function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {
-    var component = ReactWithDotNet.FindComponentByFullName(componentFullName);
-    if (component == null)
+    if (ExternalJsObjectMap[key] != null)
     {
-        throw 'Component not found. Component name is ' + componentFullName;
+        console.log(key + ' already registered.');
+    }
+    return ExternalJsObjectMap[key] = value;
+}
+function GetExternalJsObject(key)
+{
+    const value = ExternalJsObjectMap[key];
+    if (value == null)
+    {
+        throw CreateNewDeveloperError(key + ' External js object not not found. You should register by using method: ReactWithDotNet.RegisterExternalJsObject');
     }
 
     return component;
+}
+
+function CreateNewDeveloperError(message)
+{
+    throw new Error('ReactWithDotNet developer error occured.' + message);
 }
 
 var ReactWithDotNet =
@@ -969,10 +977,7 @@ var ReactWithDotNet =
             json => callback(json)
         );
     },
-    FindComponentByFullName: function()
-    {
-        throw 'Override this method.';
-    }
+    RegisterExternalJsObject : RegisterExternalJsObject
 };
 
 window.ReactWithDotNet = ReactWithDotNet;

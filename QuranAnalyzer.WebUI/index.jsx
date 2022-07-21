@@ -26,93 +26,51 @@ import Xarrow from "react-xarrows";
 
 
 // react-simple-code-editor
-
-    
-
 import Editor  from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-json';
-import 'prismjs/themes/prism.css'; //Example style, you can use another
+import 'prismjs/themes/prism.css';
 
 const GetHighlightFunction = (language) => code => highlight(code, languages[language]);
 
 
-
-
-
-
-
-
-
-function GetComponentMap()
+if (process.env.NODE_ENV === 'production')
 {
-    // ReSharper disable once UseOfImplicitGlobalInFunctionScope
-    if (process.env.NODE_ENV === 'production')
-    {
-        // specify your production required components
-        return {
-            // primereact
-            "ReactWithDotNet.PrimeReact.Button": Button,
-            "ReactWithDotNet.PrimeReact.InputText": InputText,
-            "ReactWithDotNet.PrimeReact.InputTextarea": InputTextarea,
-            "ReactWithDotNet.PrimeReact.BlockUI": BlockUI,
-            "ReactWithDotNet.PrimeReact.Card": Card,
-            "ReactWithDotNet.PrimeReact.TabView": TabView,
-            "ReactWithDotNet.PrimeReact.TabPanel": TabPanel,
-            "ReactWithDotNet.PrimeReact.Dropdown": Dropdown,
-            "ReactWithDotNet.PrimeReact.Column": Column,
-            "ReactWithDotNet.PrimeReact.DataTable": DataTable,
-            "ReactWithDotNet.PrimeReact.Checkbox": Checkbox,
-            "ReactWithDotNet.PrimeReact.InputMask": InputMask,
+    // specify your production required components or functions
+}
+else
+{
+    // primereact
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Button", Button);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputText", InputText);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputTextarea", InputTextarea);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.BlockUI", BlockUI);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Card", Card);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabView", TabView);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabPanel", TabPanel);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.SplitterPanel", SplitterPanel);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Splitter", Splitter);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ListBox", ListBox);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Dropdown", Dropdown);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Column", Column);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.DataTable", DataTable);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Checkbox", Checkbox);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputMask", InputMask);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.AutoComplete", AutoComplete);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
 
-            // react-xarrows
-            "ReactWithDotNet.react_xarrows.Xarrow": Xarrow,
+    // react-xarrows
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.react_xarrows.Xarrow", Xarrow);
 
-            // react-prism-editor
-            "ReactWithDotNet.react_simple_code_editor.Editor": Editor,
-            "ReactWithDotNet.react_simple_code_editor.highlight": GetHighlightFunction
-        };
-    }
+    // react-prism-editor
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.react_simple_code_editor.Editor", Editor);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.react_simple_code_editor.highlight", GetHighlightFunction);
 
-    // All components
-    return {
-        // primereact
-        "ReactWithDotNet.PrimeReact.Button": Button,
-        "ReactWithDotNet.PrimeReact.InputText": InputText,
-        "ReactWithDotNet.PrimeReact.InputTextarea": InputTextarea,
-        "ReactWithDotNet.PrimeReact.BlockUI": BlockUI,
-        "ReactWithDotNet.PrimeReact.Card": Card,
-        "ReactWithDotNet.PrimeReact.TabView": TabView,
-        "ReactWithDotNet.PrimeReact.TabPanel": TabPanel,
-        "ReactWithDotNet.PrimeReact.SplitterPanel": SplitterPanel,
-        "ReactWithDotNet.PrimeReact.Splitter": Splitter,
-        "ReactWithDotNet.PrimeReact.Slider": Slider,
-        "ReactWithDotNet.PrimeReact.ListBox": ListBox,
-        "ReactWithDotNet.PrimeReact.Dropdown": Dropdown,
-        "ReactWithDotNet.PrimeReact.Column": Column,
-        "ReactWithDotNet.PrimeReact.DataTable": DataTable,
-        "ReactWithDotNet.PrimeReact.Checkbox": Checkbox,
-        "ReactWithDotNet.PrimeReact.InputMask": InputMask,
-        "ReactWithDotNet.PrimeReact.AutoComplete": AutoComplete,
-        "ReactWithDotNet.PrimeReact.Tree": Tree,
-
-        // react-xarrows
-        "ReactWithDotNet.react_xarrows.Xarrow": Xarrow,
-
-        // react-prism-editor
-        "ReactWithDotNet.react_simple_code_editor.Editor": Editor,
-        "ReactWithDotNet.react_simple_code_editor.highlight": GetHighlightFunction
-    };
+    ReactWithDotNet.RegisterExternalJsObject("RegisterScrollEvents", RegisterScrollEvents);
 }
 
-const componentMap = GetComponentMap();
-
-ReactWithDotNet.FindComponentByFullName = function (componentFullName)
-{
-    return componentMap[componentFullName];
-}
-
-window.RegisterScrollEvents = function()
+RegisterScrollEvents = function()
 {
     var currentScrollY = 0;
 
@@ -152,5 +110,3 @@ window.RegisterScrollEvents = function()
         document.getElementById("main").addEventListener('scroll', handleScroll);
     });
 }
-
-
