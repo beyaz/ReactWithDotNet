@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
@@ -52,7 +53,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     {
                         SaveState();
 
-                        state.MetadataToken = null;
+                        state.SelectedMethodName = null;
+                        state.MetadataToken      = null;
 
                         state.SelectedMethodTreeNodeKey = e.value;
 
@@ -74,7 +76,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                             {
                                 fullClassName = $"{node.DeclaringTypeFullName}";
                                 
-                                state.MetadataToken = node.MetadataToken;
+                                state.MetadataToken      = node.MetadataToken;
+                                state.SelectedMethodName = node.Name;
                             }
                         }
 
@@ -95,12 +98,13 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 new VSpace(10),
                 new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
 
-                new div { text = state.SelectedComponentTypeReference },
+                new div { text = state.SelectedComponentTypeReference + (state.SelectedMethodName.HasValue() ? $"::{state.SelectedMethodName}" : null) },
                 
                 new Editor
                 {
                     valueBind=()=> state.JsonText,
-                    highlight= "json"
+                    highlight= "json",
+                    style = { fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                 }
             }
         };
@@ -127,7 +131,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
                 // try invoke as static function
                 {
-                    var fullAssemblyPath = Path.Combine(state.SelectedFolder??string.Empty, state.SelectedAssembly?? string.Empty);
+                    var fullAssemblyPath = Path.Combine(state.SelectedFolder ?? string.Empty, state.SelectedAssembly ?? string.Empty);
                     if (File.Exists(fullAssemblyPath))
                     {
                         var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
@@ -139,13 +143,28 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                 if (methodInfo != null)
                                 {
                                     var invocationParameters = new List<object>();
-                                    
+
                                     var methodParameters = methodInfo.GetParameters();
 
-                                    var jsonArray = (JObject)Json.DeserializeJsonByNewtonsoft(state.JsonText.HasValue() ? state.JsonText : "[]", typeof(JArray));
-                                    for (var i = 0; i < methodParameters.Length; i++)
+                                    var jsObject = (JObject)Json.DeserializeJsonByNewtonsoft(state.JsonText.HasValue() ? state.JsonText : "{}", typeof(JObject));
+                                    foreach (var parameterInfo in methodParameters)
                                     {
-                                        invocationParameters.Add(jsonArray[i].ToObject(methodParameters[i].ParameterType));
+                                        var parameterName = parameterInfo.Name;
+                                        var parameterType = parameterInfo.ParameterType;
+
+                                        if (parameterName is not null)
+                                        {
+                                            var parameterValueAsJsonObject = jsObject[parameterName];
+                                            if (parameterValueAsJsonObject is not null)
+                                            {
+                                                invocationParameters.Add(parameterValueAsJsonObject.ToObject(parameterType));
+                                                continue;
+                                            }
+
+                                            return new div { text = $"Missing parameter {parameterName}" };
+                                        }
+
+                                        return new div { text = "parameterName not be evaluated" };
                                     }
 
                                     return (Element)methodInfo.Invoke(null, invocationParameters.ToArray());
@@ -154,7 +173,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         }
                     }
 
-                    
+
                 }
 
 

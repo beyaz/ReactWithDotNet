@@ -8,7 +8,7 @@ namespace ReactWithDotNet.UIDesigner;
 [Serializable]
 class UIDesignerModel
 {
-    public string JsonText { get; set; } = "";
+    public string JsonText { get; set; }
 
     public int ScreenWidth { get; set; } = 100;
 
@@ -27,4 +27,6 @@ class UIDesignerModel
     public string SelectedMethodTreeNodeKey { get; set; }
 
     public int? MetadataToken { get; set; }
+    
+    public string SelectedMethodName { get; set; }
 }

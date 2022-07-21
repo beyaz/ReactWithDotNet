@@ -24,6 +24,14 @@ public sealed class MainPageModel
 }
 
 
+static class PageId
+{
+    public const string MainPage = nameof(MainPage);
+    public const string InitialLetters = nameof(InitialLetters);
+    public const string QuestionAnswerPage = nameof(QuestionAnswerPage);
+    public const string ContactPage = nameof(ContactPage);
+    public const string CharacterCounting = nameof(CharacterCounting);
+}
 
 [Serializable]
 public class MainViewModel
@@ -91,22 +99,22 @@ class View : ReactComponent<MainViewModel>
 
         Element buildMainContent()
         {
-            if (state.PageId == "QuestionAnswerPage")
+            if (state.PageId == PageId.QuestionAnswerPage)
             {
                 return new QuestionAnswerPage.View();
             }
 
-            if (state.PageId == "ContactPage")
+            if (state.PageId == PageId.ContactPage)
             {
                 return new ContactPage.View();
             }
 
-            if (state.PageId == "InitialLetters")
+            if (state.PageId == PageId.InitialLetters)
             {
                 return new InitialLetters.View();
             }
 
-            if (state.PageId == "CharacterCounting")
+            if (state.PageId == PageId.CharacterCounting)
             {
                 return new CharacterCountingView();
             }
@@ -124,7 +132,7 @@ class View : ReactComponent<MainViewModel>
                     new SvgHamburgerIcon { HamburgerMenuIsOpen = state.HamburgerMenuIsOpen, onClick = hamburgerMenuClicked },
                     new div
                     {
-                        new SiteTitle(ConstantData.Title)
+                        new SiteTitle("19 Sistemi Nedir")
                     }
                 },
                 style =

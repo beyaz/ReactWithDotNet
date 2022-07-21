@@ -50,7 +50,7 @@ class StateCache
     {
         lock (fileLock)
         {
-            WriteAllText(StateFilePath, JsonSerializer.Serialize(state));
+            WriteAllText(StateFilePath, JsonSerializer.Serialize(state, new JsonSerializerOptions{ WriteIndented = true, IgnoreNullValues = true}));
         }
     }
 
