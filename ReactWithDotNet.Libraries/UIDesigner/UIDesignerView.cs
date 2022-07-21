@@ -18,7 +18,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     {
         Context.ClientTasks = new object[]
         {
-            new ClientTaskListenEvent()
+            new ClientTaskListenEvent
             {
                 EventName = "OnBrowserInactive", RouteToMethod = nameof(Refresh)
 
@@ -268,8 +268,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     public void Refresh()
     {
         SaveState();
-        
-        // Context.ClientTasks = new[] { new ClientTaskListenEvent { EventName = "OnBrowserInactive", RouteToMethod = nameof(Refresh) } };
     }
 
     void OnWidthChanged(SliderChangeParams e)
