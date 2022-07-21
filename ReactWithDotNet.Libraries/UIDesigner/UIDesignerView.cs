@@ -16,8 +16,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTasks.ListenEvent("OnBrowserInactive", nameof(Refresh));
-        Context.ClientTasks.CallJsFunction("InitializeUIDesignerEvents", new object[] { 1000 });
+        Context.ClientTask.ListenEvent("OnBrowserInactive", nameof(Refresh));
+        Context.ClientTask.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
 
     public override Element render()
@@ -87,7 +87,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
                         if (typeReference != null)
                         {
-                            state.ReactWithDotnetComponentAsJson = StateCache.ReadFromCache(typeReference + state.MetadataToken);
+                            state.JsonText = StateCache.ReadFromCache(typeReference + state.MetadataToken);
                         }
                     },
                     AssemblyFilePath = state.SelectedFolder.HasValue() && state.SelectedAssembly.HasValue() ? Path.Combine(state.SelectedFolder, state.SelectedAssembly) : null
@@ -99,21 +99,9 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 
                 new Editor
                 {
-                    valueBind=()=> state.ReactWithDotnetComponentAsJson,
-                    highlight= "json",
-                    //theme = "default",
-                    //clipboard = true,
-                    // onValueChange = code=>state.ReactWithDotnetComponentAsJson = code
-                },
-                //new InputTextarea
-                //{
-                //    valueBind = () => state.ReactWithDotnetComponentAsJson,
-                //    style =
-                //    {
-                //        width = "100%", height = "100%",  fontWeight = "500"
-                        
-                //    }
-                //}
+                    valueBind=()=> state.JsonText,
+                    highlight= "json"
+                }
             }
         };
 
@@ -154,7 +142,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                                     
                                     var methodParameters = methodInfo.GetParameters();
 
-                                    var jsonArray = (JArray)Json.DeserializeJsonByNewtonsoft(state.ReactWithDotnetComponentAsJson.HasValue() ? state.ReactWithDotnetComponentAsJson : "[]", typeof(JArray));
+                                    var jsonArray = (JObject)Json.DeserializeJsonByNewtonsoft(state.JsonText.HasValue() ? state.JsonText : "[]", typeof(JArray));
                                     for (var i = 0; i < methodParameters.Length; i++)
                                     {
                                         invocationParameters.Add(jsonArray[i].ToObject(methodParameters[i].ParameterType));
@@ -176,7 +164,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     return new div("type not found.@"+ state.SelectedComponentTypeReference);
                 }
 
-                var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.ReactWithDotnetComponentAsJson.HasValue() ? state.ReactWithDotnetComponentAsJson : "{}", type);
+                var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.JsonText.HasValue() ? state.JsonText : "{}", type);
                 
                 if (instance is ReactComponent reactComponent)
                 {
@@ -272,7 +260,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     {
         if (state.SelectedComponentTypeReference.HasValue())
         {
-            StateCache.SaveToCache(state.SelectedComponentTypeReference+ state.MetadataToken, state.ReactWithDotnetComponentAsJson);
+            StateCache.SaveToCache(state.SelectedComponentTypeReference+ state.MetadataToken, state.JsonText);
         }
         
         StateCache.SaveState(state);

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
 class UIDesignerModel
 {
-    public string ReactWithDotnetComponentAsJson { get; set; }
+    public string JsonText { get; set; } = "";
 
     public int ScreenWidth { get; set; } = 100;
 
@@ -17,7 +19,10 @@ class UIDesignerModel
 
     public string SelectedFolderLastQuery { get; set; }
 
-    public IReadOnlyList<string> SelectedFolderSuggestions { get; set; } = new[] { @"d:\boa\server\bin\", @"d:\boa\client\bin\" };
+    public IReadOnlyList<string> SelectedFolderSuggestions { get; set; } = new[]
+    {
+        Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar
+    };
 
     public string SelectedMethodTreeNodeKey { get; set; }
 

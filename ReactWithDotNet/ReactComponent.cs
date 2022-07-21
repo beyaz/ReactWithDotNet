@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -61,7 +60,7 @@ public sealed class ReactContext
 
     }
 
-    public ClientTaskCollection ClientTasks { get;  } = new();
+    public ClientTaskCollection ClientTask { get;  } = new();
 
 
 }

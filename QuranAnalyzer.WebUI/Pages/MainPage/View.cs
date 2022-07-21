@@ -60,8 +60,8 @@ class View : ReactComponent<MainViewModel>
             {
                 state.PageId = pageId;
 
-                Context.ClientTasks.ListenEvent("MainContentDivScrollChanged", nameof(OnMainContentDivScrollChanged));
-                Context.ClientTasks.CallJsFunction("RegisterScrollEvents");
+                Context.ClientTask.ListenEvent("MainContentDivScrollChanged", nameof(OnMainContentDivScrollChanged));
+                Context.ClientTask.CallJsFunction("RegisterScrollEvents");
 
                 
             }
