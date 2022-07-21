@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -47,13 +50,44 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     OnSelectionChange = e =>
                     {
                         SaveState();
-                        
-                        state.SelectedMethodTreeNodeKey = e.value;
-                        
-                        state.SelectedComponentTypeReference = $"{getFullClassName()},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
-                        
 
-                        state.ReactWithDotnetComponentAsJson = StateCache.ReadFromCache(state.SelectedComponentTypeReference);
+                        state.MetadataToken = null;
+
+                        state.SelectedMethodTreeNodeKey = e.value;
+
+                        string typeReference = null;
+                        
+                        var fullAssemblyPath = Path.Combine(state.SelectedFolder, state.SelectedAssembly);
+
+                        string fullClassName = null;
+                        
+                        var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
+                        if (node is not null)
+                        {
+                            if (node.IsClass)
+                            {
+                                fullClassName = $"{node.NamespaceName}.{node.Name}";
+                            }
+
+                            if (node.IsMethod)
+                            {
+                                fullClassName = $"{node.DeclaringTypeFullName}";
+                                
+                                state.MetadataToken = node.MetadataToken;
+                            }
+                        }
+
+                        if (fullClassName is not null)
+                        {
+                            typeReference = $"{fullClassName},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
+                        }
+
+                        state.SelectedComponentTypeReference = typeReference;
+
+                        if (typeReference != null)
+                        {
+                            state.ReactWithDotnetComponentAsJson = StateCache.ReadFromCache(typeReference + state.MetadataToken);
+                        }
                     },
                     AssemblyFilePath = state.SelectedFolder.HasValue() && state.SelectedAssembly.HasValue() ? Path.Combine(state.SelectedFolder, state.SelectedAssembly) : null
                 },
@@ -92,6 +126,40 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         {
             try
             {
+
+                // try invoke as static function
+                {
+                    var fullAssemblyPath = Path.Combine(state.SelectedFolder??string.Empty, state.SelectedAssembly?? string.Empty);
+                    if (File.Exists(fullAssemblyPath))
+                    {
+                        var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
+                        if (node is not null)
+                        {
+                            if (node.IsMethod)
+                            {
+                                var methodInfo = MetadataHelper.FindMethodInfo(MetadataHelper.LoadAssembly(fullAssemblyPath), node.MetadataToken);
+                                if (methodInfo != null)
+                                {
+                                    var invocationParameters = new List<object>();
+                                    
+                                    var methodParameters = methodInfo.GetParameters();
+
+                                    var jsonArray = (JArray)Json.DeserializeJsonByNewtonsoft(state.ReactWithDotnetComponentAsJson.HasValue() ? state.ReactWithDotnetComponentAsJson : "[]", typeof(JArray));
+                                    for (var i = 0; i < methodParameters.Length; i++)
+                                    {
+                                        invocationParameters.Add(jsonArray[i].ToObject(methodParameters[i].ParameterType));
+                                    }
+
+                                    return (Element)methodInfo.Invoke(null, invocationParameters.ToArray());
+                                }
+                            }
+                        }
+                    }
+
+                    
+                }
+
+
                 var type = FindType(state.SelectedComponentTypeReference);
                 if (type == null)
                 {
@@ -152,24 +220,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         };
 
 
-        string getFullClassName()
-        {
-            var node = MethodSelectionView.FindTreeNode(Path.Combine(state.SelectedFolder, state.SelectedAssembly), state.SelectedMethodTreeNodeKey);
-            if (node is not null && node.IsClass)
-            {
-                if (isAssemblyExists())
-                {
-                    return $"{node.NamespaceName}.{node.Name}";
-                }
-            }
-
-            return null;
-
-
-            string getAssemblyPath() => Path.Combine(state.SelectedFolder, state.SelectedAssembly);
-
-            bool isAssemblyExists() => File.Exists(getAssemblyPath());
-        }
+      
 
         return new div
         {
@@ -213,7 +264,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     {
         if (state.SelectedComponentTypeReference.HasValue())
         {
-            StateCache.SaveToCache(state.SelectedComponentTypeReference, state.ReactWithDotnetComponentAsJson);
+            StateCache.SaveToCache(state.SelectedComponentTypeReference+ state.MetadataToken, state.ReactWithDotnetComponentAsJson);
         }
         
         StateCache.SaveState(state);

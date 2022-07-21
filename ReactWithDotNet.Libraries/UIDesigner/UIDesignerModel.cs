@@ -20,4 +20,6 @@ class UIDesignerModel
     public IReadOnlyList<string> SelectedFolderSuggestions { get; set; } = new[] { @"d:\boa\server\bin\", @"d:\boa\client\bin\" };
 
     public string SelectedMethodTreeNodeKey { get; set; }
+
+    public int? MetadataToken { get; set; }
 }

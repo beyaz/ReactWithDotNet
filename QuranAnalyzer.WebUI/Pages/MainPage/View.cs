@@ -81,19 +81,7 @@ class View : ReactComponent<MainViewModel>
         state.MainDivScrollY = mainDivScrollY;
     }
 
-    void OnMainMenuItemClicked(string menuId)
-    {
-        state.LastClickedMenuId = menuId;
 
-        Context.ClientTasks = new[]
-        {
-            new ClientTaskDispatchEvent
-            {
-                EventName      = nameof(OnMainMenuItemClicked),
-                EventArguments = new object[] { menuId }
-            }
-        };
-    }
     
     void hamburgerMenuClicked(string _) => state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
 
@@ -158,36 +146,10 @@ class View : ReactComponent<MainViewModel>
 
         Element buildLeftMenu()
         {
-            return new div(mainMenuModels.Select(toMenuItem))
-            {
-                style =
-                {
-                    position      = "fixed",
-                    height        = "100%",
-                    width         = "70%",
-                    maxWidth = "400px",
-                    top           = "50px",
-                    background    = "white",
-                    boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
-                    zIndex        = "1",
-                    display       = state.HamburgerMenuIsOpen ? "flex" : "none",
-                    transition    = "visibility 0s linear 1000ms, opacity 500ms",
-                    flexDirection = "column",
-                    alignItems    = "center",
-                    fontSize      = "18px"
-                }
-            };
+            
+            return BuildLeftMenu(mainMenuModels, state.HamburgerMenuIsOpen);
 
-            Element toMenuItem(MainMenuModel m)
-            {
-                return new a
-                       {
-                           innerText    = m.Text,
-                           href    = "/index.html?page=" + m.Id,
-                           onClick = _ => OnMainMenuItemClicked(m.Id),
-                           style = { fontSize = "17px", marginTop = "50px" }
-                       };
-            }
+
         }
 
        
@@ -195,6 +157,43 @@ class View : ReactComponent<MainViewModel>
         
          
     }
+
+    static Element BuildLeftMenu(MainMenuModel[] items, bool HamburgerMenuIsOpen)
+    {
+        return new div
+        {
+            Children= items.Select(ToSidebarMenuItem),
+            style =
+            {
+                position      = "fixed",
+                height        = "100%",
+                width         = "70%",
+                maxWidth      = "400px",
+                top           = "50px",
+                background    = "white",
+                boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
+                zIndex        = "1",
+                display       = HamburgerMenuIsOpen ? "flex" : "none",
+                justifyContent = "space-evenly",
+                transition    = "visibility 0s linear 1000ms, opacity 500ms",
+                flexDirection = "column",
+                alignItems    = "center",
+                fontSize      = "18px"
+            }
+        };
+
+
+    }
     
+    static Element ToSidebarMenuItem(MainMenuModel m)
+    {
+        return new a
+        {
+            innerText = m.Text,
+            href      = "/index.html?page=" + m.Id,
+            style     = { padding = "10px", textDecoration = "none", color = "Black"}
+        };
+    }
+
 }
 

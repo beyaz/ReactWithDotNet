@@ -16,6 +16,8 @@ class MetadataNode : TreeNode
     public string FullNameWithoutReturnType { get; set; }
     public int MetadataToken { get; set; }
     public string NamespaceName { get; set; }
+    public string DeclaringTypeFullName { get; set; }
+    public string DeclaringTypeNamespaceName { get; set; }
 }
 
 class MethodSelectionView : ReactComponent

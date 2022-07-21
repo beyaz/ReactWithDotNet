@@ -1,3 +1,7 @@
+
+import ReactWithDotNet from "./ReactWithDotNet";
+
+// primereact
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/InputText';
 import { InputTextarea } from 'primereact/InputTextarea';
@@ -12,53 +16,71 @@ import { Column } from 'primereact/Column';
 import { DataTable } from 'primereact/DataTable';
 import { Checkbox } from 'primereact/Checkbox';
 import { InputMask } from 'primereact/InputMask';
-import Xarrow from "react-xarrows";
-
-// designer
-
 import { AutoComplete } from 'primereact/autocomplete';
 import { Tree } from 'primereact/tree';
 
-        
+// react-xarrows
+import Xarrow from "react-xarrows";
 
 
-import ReactWithDotNet from "./ReactWithDotNet";
+function GetComponentMap()
+{
+    // ReSharper disable once UseOfImplicitGlobalInFunctionScope
+    if (process.env.NODE_ENV === 'production')
+    {
+        // specify your production required components
+        return {
+            // primereact
+            "ReactWithDotNet.PrimeReact.Button": Button,
+            "ReactWithDotNet.PrimeReact.InputText": InputText,
+            "ReactWithDotNet.PrimeReact.InputTextarea": InputTextarea,
+            "ReactWithDotNet.PrimeReact.BlockUI": BlockUI,
+            "ReactWithDotNet.PrimeReact.Card": Card,
+            "ReactWithDotNet.PrimeReact.TabView": TabView,
+            "ReactWithDotNet.PrimeReact.TabPanel": TabPanel,
+            "ReactWithDotNet.PrimeReact.Dropdown": Dropdown,
+            "ReactWithDotNet.PrimeReact.Column": Column,
+            "ReactWithDotNet.PrimeReact.DataTable": DataTable,
+            "ReactWithDotNet.PrimeReact.Checkbox": Checkbox,
+            "ReactWithDotNet.PrimeReact.InputMask": InputMask,
 
+            // react-xarrows
+            "ReactWithDotNet.react_xarrows.Xarrow": Xarrow
+        };
+    }
 
-var componentMap = {
-    "ReactWithDotNet.PrimeReact.Button": Button,
-    "ReactWithDotNet.PrimeReact.InputText": InputText,
-    "ReactWithDotNet.PrimeReact.InputTextarea": InputTextarea,
-    "ReactWithDotNet.PrimeReact.BlockUI": BlockUI,
-    "ReactWithDotNet.PrimeReact.Card": Card,
-    "ReactWithDotNet.PrimeReact.TabView": TabView,
-    "ReactWithDotNet.PrimeReact.TabPanel": TabPanel,
-    "ReactWithDotNet.PrimeReact.SplitterPanel": SplitterPanel,
-    "ReactWithDotNet.PrimeReact.Splitter": Splitter,
-    "ReactWithDotNet.PrimeReact.Slider": Slider,
-    "ReactWithDotNet.PrimeReact.ListBox": ListBox,
-    "ReactWithDotNet.PrimeReact.Dropdown": Dropdown,
-    "ReactWithDotNet.PrimeReact.Column": Column,
-    "ReactWithDotNet.PrimeReact.DataTable": DataTable,
-    "ReactWithDotNet.PrimeReact.Checkbox": Checkbox,
-    "ReactWithDotNet.PrimeReact.InputMask": InputMask,
-    "ReactWithDotNet.react_xarrows.Xarrow": Xarrow,
+    // All components
+    return {
+        // primereact
+        "ReactWithDotNet.PrimeReact.Button": Button,
+        "ReactWithDotNet.PrimeReact.InputText": InputText,
+        "ReactWithDotNet.PrimeReact.InputTextarea": InputTextarea,
+        "ReactWithDotNet.PrimeReact.BlockUI": BlockUI,
+        "ReactWithDotNet.PrimeReact.Card": Card,
+        "ReactWithDotNet.PrimeReact.TabView": TabView,
+        "ReactWithDotNet.PrimeReact.TabPanel": TabPanel,
+        "ReactWithDotNet.PrimeReact.SplitterPanel": SplitterPanel,
+        "ReactWithDotNet.PrimeReact.Splitter": Splitter,
+        "ReactWithDotNet.PrimeReact.Slider": Slider,
+        "ReactWithDotNet.PrimeReact.ListBox": ListBox,
+        "ReactWithDotNet.PrimeReact.Dropdown": Dropdown,
+        "ReactWithDotNet.PrimeReact.Column": Column,
+        "ReactWithDotNet.PrimeReact.DataTable": DataTable,
+        "ReactWithDotNet.PrimeReact.Checkbox": Checkbox,
+        "ReactWithDotNet.PrimeReact.InputMask": InputMask,
+        "ReactWithDotNet.PrimeReact.AutoComplete": AutoComplete,
+        "ReactWithDotNet.PrimeReact.Tree": Tree,
 
-    // designer
-    "ReactWithDotNet.PrimeReact.AutoComplete": AutoComplete,
-    "ReactWithDotNet.PrimeReact.Tree": Tree
-    
-};
+        // react-xarrows
+        "ReactWithDotNet.react_xarrows.Xarrow": Xarrow
+    };
+}
+
+const componentMap = GetComponentMap();
 
 ReactWithDotNet.FindComponentByFullName = function (componentFullName)
 {
-    var component = componentMap[componentFullName];
-    if (component !== undefined)
-    {
-        return component;
-    }
-
-    return null;
+    return componentMap[componentFullName];
 }
 
 window.RegisterScrollEvents = function()

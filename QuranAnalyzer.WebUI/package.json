@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "build": "esbuild index.jsx --bundle --outfile=index.js",
-        "build-for-production": "esbuild index.jsx --bundle --outfile=index.js --minify --analyze"
+        "build-for-production": "esbuild index.jsx --bundle --outfile=index.js --minify --analyze --define:process.env.NODE_ENV=\\\"production\\\""
     },
     "dependencies": {
         "esbuild": "^0.14.48",

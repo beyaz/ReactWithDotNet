@@ -142,20 +142,36 @@ class MetadataHelper
             };
 
 
-            // VisitMethods(x, m => classNode.children.Add(createFromMethod(m)));
+            VisitMethods(x, m =>
+            {
+                var node = createFromMethod(m);
+                if (node != null)
+                {
+                    classNode.children.Add(node);
+                }
+                
+            });
 
             return classNode;
         }
 
         static MetadataNode createFromMethod(MethodInfo methodInfo)
         {
-            return new MetadataNode
+            // is function component
+            if (methodInfo.IsStatic && methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
             {
-                IsMethod                  = true,
-                Name                      = methodInfo.Name,
-                FullNameWithoutReturnType = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
-                MetadataToken             = methodInfo.MetadataToken,
-            };
+                return new MetadataNode
+                {
+                    IsMethod                   = true,
+                    Name                       = methodInfo.Name,
+                    FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
+                    MetadataToken              = methodInfo.MetadataToken,
+                    DeclaringTypeFullName      = methodInfo.DeclaringType?.FullName,
+                    DeclaringTypeNamespaceName = methodInfo.DeclaringType?.Namespace
+                };
+            }
+
+            return null;
         }
     }
 
