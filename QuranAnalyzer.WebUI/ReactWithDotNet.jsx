@@ -947,7 +947,7 @@ function GetExternalJsObject(key)
         throw CreateNewDeveloperError(key + ' External js object not not found. You should register by using method: ReactWithDotNet.RegisterExternalJsObject');
     }
 
-    return component;
+    return value;
 }
 
 function CreateNewDeveloperError(message)
