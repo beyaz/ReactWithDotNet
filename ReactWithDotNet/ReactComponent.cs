@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -59,55 +60,12 @@ public sealed class ReactContext
         map.Add(key, value);
 
     }
-    
-    public IReadOnlyList<object> ClientTasks { get; set; }
 
-    #region Add to Client task
-
-    internal readonly  List<ClientTask> ClientTasks_ = new();
-
-    public void AddClientTaskCallJsFunction(string JsFunctionPath, object[] JsFunctionArguments)
-    {
-        ClientTasks_.Add(new ClientTask{ TaskId = 0, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments});
-    }
-    public void AddClientTaskListenEvent(string eventName, string routeToMethod)
-    {
-        ClientTasks_.Add(new ClientTask { TaskId = 1, EventName = eventName, RouteToMethod = routeToMethod });
-    }
+    public ClientTaskCollection ClientTasks { get;  } = new();
 
 
-    public void AddClientTaskDispatchEvent(string eventName, object[] eventArguments)
-    {
-        ClientTasks_.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
-    }
-
-    public void AddClientTaskListenComponentEvent(string eventName, string routeToMethod)
-    {
-        ClientTasks_.Add(new ClientTask { TaskId = 3, EventName = eventName, RouteToMethod = routeToMethod });
-    }
-
-    public void AddClientTaskPushHistory(string title, string url)
-    {
-        ClientTasks_.Add(new ClientTask { TaskId = 4, Title = title, Url = url });
-    }
-
-    public void AddClientTaskComebackWithLastAction(int timeout)
-    {
-        ClientTasks_.Add(new ClientTask { TaskId = 5, Timeout = timeout });
-    }
-
-    public void AddClientTaskGotoMethod(string methodName, object[] methodArguments, int timeout)
-    {
-        ClientTasks_.Add(new ClientTask { TaskId = 6, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });
-    }
-
-    public void AddClientTaskNavigateToUrl(string url)
-    {
-        ClientTasks_.Add(new ClientTask { TaskId = 7, Url = url });
-    }
-
-    #endregion
 }
+
 
 
 
@@ -134,6 +92,55 @@ public static class BrowserInformation
 
 
 
+public sealed class ClientTaskCollection
+{
+    readonly List<ClientTask> taskList = new();
+
+
+    internal ClientTask[] ToArray() => taskList.ToArray();
+
+    public void CallJsFunction(string JsFunctionPath, params object[] JsFunctionArguments)
+    {
+        taskList.Add(new ClientTask { TaskId = 0, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
+    }
+    public void ListenEvent(string eventName, string routeToMethod)
+    {
+        taskList.Add(new ClientTask { TaskId = 1, EventName = eventName, RouteToMethod = routeToMethod });
+    }
+
+
+    public void DispatchEvent(string eventName, object[] eventArguments)
+    {
+        taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
+    }
+
+    public void ListenComponentEvent(string eventName, string routeToMethod)
+    {
+        taskList.Add(new ClientTask { TaskId = 3, EventName = eventName, RouteToMethod = routeToMethod });
+    }
+
+    public void PushHistory(string title, string url)
+    {
+        taskList.Add(new ClientTask { TaskId = 4, Title = title, Url = url });
+    }
+
+    public void ComebackWithLastAction(int timeout)
+    {
+        taskList.Add(new ClientTask { TaskId = 5, Timeout = timeout });
+    }
+
+    public void GotoMethod(string methodName, object[] methodArguments, int timeout)
+    {
+        taskList.Add(new ClientTask { TaskId = 6, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });
+    }
+
+    public void NavigateToUrl(string url)
+    {
+        taskList.Add(new ClientTask { TaskId = 7, Url = url });
+    }
+
+    
+}
 
 
 

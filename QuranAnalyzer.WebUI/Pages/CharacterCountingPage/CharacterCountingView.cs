@@ -44,11 +44,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             state.ResultRecords = null;
             state.OperationName = "Hesaplanıyor...";
             state.IsBlocked     = true;
-            Context.ClientTasks = new object[]
-            {
-                new ClientTaskPushHistory{ Url = $"/index.html?page=CharacterCounting&q={state.ChapterFilter}|{state.SearchCharacters}"},
-                new ClientTaskComebackWithLastAction { Timeout = 5 }
-            };
+            Context.ClientTasks.PushHistory("", $"/index.html?page=CharacterCounting&q={state.ChapterFilter}|{state.SearchCharacters}");
+            Context.ClientTasks.ComebackWithLastAction(5);
             return;
         }
 

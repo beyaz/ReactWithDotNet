@@ -16,15 +16,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTasks = new object[]
-        {
-            new ClientTaskListenEvent
-            {
-                EventName = "OnBrowserInactive", RouteToMethod = nameof(Refresh)
-
-            },
-            new ClientTaskCallJsFunction { JsFunctionPath = "InitializeUIDesignerEvents", JsFunctionArguments = new object[]{1000} }
-        };
+        Context.ClientTasks.ListenEvent("OnBrowserInactive", nameof(Refresh));
+        Context.ClientTasks.CallJsFunction("InitializeUIDesignerEvents", new object[] { 1000 });
     }
 
     public override Element render()

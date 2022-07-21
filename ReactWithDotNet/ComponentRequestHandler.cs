@@ -127,7 +127,7 @@ public static class ComponentRequestHandler
             {
                 ElementAsJson = map,
                 Trace         = trace,
-                ClientTasks = context.ClientTasks
+                ClientTasks = context.ClientTasks.ToArray()
             };
         }
 
@@ -210,7 +210,7 @@ public static class ComponentRequestHandler
             {
                 ElementAsJson = map,
                 Trace         = trace,
-                ClientTasks   = context.ClientTasks
+                ClientTasks   = context.ClientTasks.ToArray()
             };
         }
 

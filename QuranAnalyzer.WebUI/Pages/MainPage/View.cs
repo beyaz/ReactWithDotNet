@@ -60,18 +60,10 @@ class View : ReactComponent<MainViewModel>
             {
                 state.PageId = pageId;
 
-                Context.ClientTasks = new object[]
-                {
-                    new ClientTaskListenEvent
-                    {
-                        EventName     = "MainContentDivScrollChanged",
-                        RouteToMethod = nameof(OnMainContentDivScrollChanged)
-                    },
-                    new ClientTaskCallJsFunction
-                    {
-                        JsFunctionPath = "RegisterScrollEvents"
-                    }
-                };
+                Context.ClientTasks.ListenEvent("MainContentDivScrollChanged", nameof(OnMainContentDivScrollChanged));
+                Context.ClientTasks.CallJsFunction("RegisterScrollEvents");
+
+                
             }
         };
     }
