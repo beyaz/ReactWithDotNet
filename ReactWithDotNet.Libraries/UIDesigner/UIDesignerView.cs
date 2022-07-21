@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
@@ -17,7 +16,15 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public void ComponentDidMount()
     {
-        Refresh();
+        Context.ClientTasks = new object[]
+        {
+            new ClientTaskListenEvent()
+            {
+                EventName = "OnBrowserInactive", RouteToMethod = nameof(Refresh)
+
+            },
+            new ClientTaskCallJsFunction { JsFunctionPath = "InitializeUIDesignerEvents", JsFunctionArguments = new object[]{1000} }
+        };
     }
 
     public override Element render()
@@ -261,8 +268,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     public void Refresh()
     {
         SaveState();
-
-        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 5000, MethodName = nameof(Refresh) } };
+        
+        // Context.ClientTasks = new[] { new ClientTaskListenEvent { EventName = "OnBrowserInactive", RouteToMethod = nameof(Refresh) } };
     }
 
     void OnWidthChanged(SliderChangeParams e)

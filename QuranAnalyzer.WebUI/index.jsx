@@ -75,6 +75,27 @@ RegisterScrollEvents = function()
     });
 }
 
+
+
+function InitializeUIDesignerEvents(timeoutInMilliseconds)
+{
+    OnBrowserInactive(timeoutInMilliseconds, () =>
+    {
+        ReactWithDotNet.DispatchEvent('OnBrowserInactive',[]);
+    });
+}
+
+function OnBrowserInactive(timeoutInMilliseconds, callback)
+{
+    var wait = setTimeout(callback, timeoutInMilliseconds);
+    document.onmousemove = document.mousedown = document.mouseup = document.onkeydown = document.onkeyup = document.focus = function ()
+    {
+        clearTimeout(wait);
+        wait = setTimeout(callback, timeoutInMilliseconds);
+    };
+}
+
+
 if (process.env.NODE_ENV === 'production')
 {
     // specify your production required components or functions
@@ -109,6 +130,5 @@ else
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.react_simple_code_editor.highlight", GetHighlightFunction);
 
     ReactWithDotNet.RegisterExternalJsObject("RegisterScrollEvents", RegisterScrollEvents);
+    ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", InitializeUIDesignerEvents);
 }
-
-
