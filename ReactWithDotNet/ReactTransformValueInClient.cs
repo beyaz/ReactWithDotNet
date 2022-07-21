@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace ReactWithDotNet;
 
 [Serializable]
-public  class ReactTransformValueInClient
+public  class ReactTransformValueInClient2
 {
     [JsonPropertyName("$JsTransformFunctionLocation")]
     public string JsTransformFunctionLocation { get; set; }
@@ -12,7 +12,7 @@ public  class ReactTransformValueInClient
 }
 
 [Serializable]
-public sealed class ReactTransformValueInClient_Regex : ReactTransformValueInClient
+public sealed class ReactTransformValueInClient_Regex : ReactTransformValueInClient2
 {
     public static implicit operator ReactTransformValueInClient_Regex(string regex)
     {

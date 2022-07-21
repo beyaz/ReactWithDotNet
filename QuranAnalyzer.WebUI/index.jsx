@@ -23,6 +23,25 @@ import { Tree } from 'primereact/tree';
 import Xarrow from "react-xarrows";
 
 
+// react-simple-code-editor
+
+    
+
+import Editor  from 'react-simple-code-editor';
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-json';
+import 'prismjs/themes/prism.css'; //Example style, you can use another
+
+const GetHighlightFunction = (language) => code => highlight(code, languages[language]);
+
+
+
+
+
+
+
+
+
 function GetComponentMap()
 {
     // ReSharper disable once UseOfImplicitGlobalInFunctionScope
@@ -45,7 +64,11 @@ function GetComponentMap()
             "ReactWithDotNet.PrimeReact.InputMask": InputMask,
 
             // react-xarrows
-            "ReactWithDotNet.react_xarrows.Xarrow": Xarrow
+            "ReactWithDotNet.react_xarrows.Xarrow": Xarrow,
+
+            // react-prism-editor
+            "ReactWithDotNet.react_simple_code_editor.Editor": Editor,
+            "ReactWithDotNet.react_simple_code_editor.highlight": GetHighlightFunction
         };
     }
 
@@ -72,7 +95,11 @@ function GetComponentMap()
         "ReactWithDotNet.PrimeReact.Tree": Tree,
 
         // react-xarrows
-        "ReactWithDotNet.react_xarrows.Xarrow": Xarrow
+        "ReactWithDotNet.react_xarrows.Xarrow": Xarrow,
+
+        // react-prism-editor
+        "ReactWithDotNet.react_simple_code_editor.Editor": Editor,
+        "ReactWithDotNet.react_simple_code_editor.highlight": GetHighlightFunction
     };
 }
 

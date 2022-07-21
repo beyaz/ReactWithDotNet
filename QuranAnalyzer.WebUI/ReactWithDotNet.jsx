@@ -302,12 +302,22 @@ function ConvertToReactElement(jsonNode, component)
 
     function tryTransformValue(propName)
     {
-        var value = jsonNode[propName];
+        const value = jsonNode[propName];
         if (value != null && value.$JsTransformFunctionLocation)
         {
             props[propName] = GetValueInPath(window, value.$JsTransformFunctionLocation)(value.RawValue);
             return true;
         }
+
+        if (value != null && value.$transformValueFunction)
+        {
+            var fn = ReactWithDotNet.FindComponentByFullName(value.$transformValueFunction);
+            
+            props[propName] = fn(value.RawValue);
+            return true;
+        }
+
+        
 
         return false;
     }

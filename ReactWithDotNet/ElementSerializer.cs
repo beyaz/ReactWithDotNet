@@ -285,6 +285,20 @@ public static class ElementSerializer
 
         }
 
+        
+        var reactTransformValueInClient= propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
+        if (reactTransformValueInClient is not null)
+        {
+            var dictionary = new Dictionary<string,object>
+            {
+                { "$transformValueFunction", reactTransformValueInClient.TransformFunction },
+                { "RawValue", propertyValue }
+            };
+
+            return (dictionary, false);
+        }
+        
+
         return (propertyValue, false);
     }
 

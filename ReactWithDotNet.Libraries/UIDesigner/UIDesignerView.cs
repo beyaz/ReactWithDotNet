@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using ReactWithDotNet.PrimeReact;
+using ReactWithDotNet.react_simple_code_editor;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -95,15 +96,24 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
 
                 new div { text = state.SelectedComponentTypeReference },
-                new InputTextarea
+                
+                new Editor
                 {
-                    valueBind = () => state.ReactWithDotnetComponentAsJson,
-                    style =
-                    {
-                        width = "100%", height = "100%",  fontWeight = "500"
+                    valueBind=()=> state.ReactWithDotnetComponentAsJson,
+                    highlight= "json",
+                    //theme = "default",
+                    //clipboard = true,
+                    // onValueChange = code=>state.ReactWithDotnetComponentAsJson = code
+                },
+                //new InputTextarea
+                //{
+                //    valueBind = () => state.ReactWithDotnetComponentAsJson,
+                //    style =
+                //    {
+                //        width = "100%", height = "100%",  fontWeight = "500"
                         
-                    }
-                }
+                //    }
+                //}
             }
         };
 
@@ -252,7 +262,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     {
         SaveState();
 
-        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 1000, MethodName = nameof(Refresh) } };
+        Context.ClientTasks = new[] { new ClientTaskGotoMethod { Timeout = 5000, MethodName = nameof(Refresh) } };
     }
 
     void OnWidthChanged(SliderChangeParams e)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
@@ -40,5 +41,17 @@ public class ReactRealTypeAttribute : Attribute
     public ReactRealTypeAttribute(Type type)
     {
         Type = type;
+    }
+}
+
+
+[AttributeUsage(AttributeTargets.Property)]
+public class ReactTransformValueInClientAttribute : Attribute
+{
+    public string TransformFunction { get; }
+
+    public ReactTransformValueInClientAttribute(string transformFunction)
+    {
+        this.TransformFunction = transformFunction;
     }
 }
