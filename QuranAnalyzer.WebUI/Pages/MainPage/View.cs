@@ -137,38 +137,57 @@ class View : ReactComponent<MainViewModel>
         
          
     }
-    
-    
 
-    static Element BuildLeftMenu(bool HamburgerMenuIsOpen)
+    static Element BuildLeftMenu(bool hamburgerMenuIsOpen)
     {
         return new div
         {
             children =
             {
+                BuildLeftMenuContent()
+            },
+            style =
+            {
+                position       = "fixed",
+                height         = "100%",
+                width          = "70%",
+                maxWidth       = "400px",
+                top            = "50px",
+                background     = "white",
+                boxShadow      = "5px 0 5px -5px rgb(0 0 0 / 28%)",
+                zIndex         = "1",
+                display        = hamburgerMenuIsOpen ? "flex" : "none",
+                
+            }
+        };
+    }
+    
+    static Element BuildLeftMenuContent()
+    {
+        return new div
+        {
+            children =
+            {
+                new VSpace(20),
                 toSidebarMenuItem("1 - Anasayfa",PageId.MainPage),
+                new VSpace(20),
                 toSidebarMenuItem("2 - Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.MainPage),
+                new VSpace(20),
                 toSidebarMenuItem("3 - Ön Bilgiler",PageId.MainPage),
+                new VSpace(20),
                 toSidebarMenuItem("4 - Başlangıç Harfleri",PageId.MainPage),
+                new VSpace(20),
                 toSidebarMenuItem("5 - Soru - Cevap",PageId.MainPage),
+                new VSpace(20),
                 toSidebarMenuItem("6 - İletişim",PageId.ContactPage),
             },
             style =
             {
-                position      = "fixed",
-                height        = "100%",
-                width         = "70%",
-                maxWidth      = "400px",
-                top           = "50px",
-                background    = "white",
-                boxShadow     = "5px 0 5px -5px rgb(0 0 0 / 28%)",
-                zIndex        = "1",
-                display       = HamburgerMenuIsOpen ? "flex" : "none",
-                justifyContent = "space-evenly",
-                transition    = "visibility 0s linear 1000ms, opacity 500ms",
+                width_height = "100%",
+                display = "flex",
                 flexDirection = "column",
-                alignItems    = "center",
-                fontSize      = "18px"
+                alignItems = "center",
+                textAlign = "center"
             }
         };
 
@@ -176,6 +195,7 @@ class View : ReactComponent<MainViewModel>
         {
             return new a
             {
+                className = "q-sidebarlink",
                 innerText = text,
                 href      = "/index.html?page=" + id,
                 style     = { padding = "10px", textDecoration = "none", color = "Black", overflowWrap = "break-word"}

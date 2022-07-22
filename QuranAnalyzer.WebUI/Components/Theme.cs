@@ -19,7 +19,7 @@ class SiteTitle : div
     {
         this.innerText = innerText;
         
-        style.fontSize = "22px";
+        style.fontSize = "20px";
     }
 }
 
