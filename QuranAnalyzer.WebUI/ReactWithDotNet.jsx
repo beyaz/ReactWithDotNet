@@ -72,6 +72,24 @@ function OnDocumentReady(callback)
     }, 10);
 }
 
+function PickupPropertiesToNewObject(obj, dotSeperatedPropertyNames)
+{
+    const returnObj = {};
+
+    for (let key in obj)
+    {
+        if (obj.hasOwnProperty(key))
+        {
+            if (dotSeperatedPropertyNames.indexOf('.' + key + '.') >= 0)
+            {
+                returnObj[key] = obj[key];
+            }
+        }
+    }
+
+    return returnObj;
+}
+
 function PickPropertiesToNewObject(obj, fn_bool__CanPick__stringKey_objectValue)
 {
     var returnObj = {};
@@ -530,6 +548,11 @@ function NormalizeEventArguments(eventArguments)
                     selectionStart: obj.target.selectionStart
                 }
             };
+        }
+
+        if (obj && (obj._reactName === "onMouseLeave" || obj._reactName === "onMouseEnter"))
+        {
+            return PickupPropertiesToNewObject(obj, '.clientX.clientY.pageX.pageY.screenX.screenY.timeStamp.type.');
         }
 
         // ReSharper disable once UnusedParameter

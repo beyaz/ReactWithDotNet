@@ -27,6 +27,12 @@ public abstract class HtmlElement : Element
     [React]
     public Action<string> onClick { get; set; }
 
+    [React]
+    public Action<MouseEvent> onMouseEnter { get; set; }
+    
+    [React]
+    public Action<MouseEvent> onMouseLeave { get; set; }
+
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();
 

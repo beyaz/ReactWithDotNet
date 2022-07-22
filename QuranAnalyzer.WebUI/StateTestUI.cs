@@ -4,6 +4,8 @@ class ModelA
 {
     public string PropA { get; set; }
     public int ClickCount { get; set; }
+
+    public bool isMouseEntered { get; set; }
 }
 
 class ComponentA : ReactComponent<ModelA>
@@ -17,9 +19,11 @@ class ComponentA : ReactComponent<ModelA>
     {
         return new div
         {
-            style     = { width = "200px", height = "100px", border = "1px solid blue", textAlign = "center", paddingTop = "20px" },
-            innerText = state.PropA + state.ClickCount,
-            onClick   = _ => state.ClickCount++
+            style        = { width = "200px", height = state.isMouseEntered ? "200px" : "100px", border = "1px solid blue", textAlign = "center", paddingTop = "20px" },
+            innerText    = state.PropA + state.ClickCount,
+            onClick      = _ => state.ClickCount++,
+            onMouseEnter = _ => { state.isMouseEntered = true; },
+            onMouseLeave = _ => { state.isMouseEntered = false; }
         };
     }
 
