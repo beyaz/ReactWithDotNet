@@ -4,6 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
+public class br : HtmlElement
+{
+}
+
 public class strong : HtmlElement
 {
     public override string ToString() => this.ToHTML();

@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Pages\MainPage\Data.yaml" />
     <None Remove="Pages\QuestionAnswerPage\Data.yaml" />
     <None Remove="MainPage.yaml" />
     <None Remove="QuestionAnswerPage.yaml" />
@@ -18,17 +17,11 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Pages\QuestionAnswerPage\Data.yaml" />
-    <EmbeddedResource Include="Pages\ContactPage\Data.yaml" />
-    <Content Include="Pages\MainPage\Data.yaml" />
     <Content Include="ReactWithDotNet.js">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MainPage\Data.yaml" />
   </ItemGroup>
 
   <ItemGroup>

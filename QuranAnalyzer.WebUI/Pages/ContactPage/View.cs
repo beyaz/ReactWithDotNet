@@ -4,24 +4,16 @@ using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.ContactPage;
 
-[Serializable]
-public sealed class Model
-{
-    public string Header { get; set; }
-    public string Note { get; set; }
-}
 
 public class View : ReactComponent
 {
     public override Element render()
     {
-        var model = ResourceHelper.Read<Model>("Pages.ContactPage.Data.yaml");
-
         return new div
         {
             new div
             {
-                innerText = model.Header,
+                innerText = "İletişim",
                 style     =
                 {
                     display = "flex", alignItems = "center", justifyContent = "center",
@@ -34,7 +26,7 @@ public class View : ReactComponent
             new div
             {
                 
-                innerText = model.Note,
+                innerText = "Yazılım, Felsefe, Kuran bu üç konuda istediğiniz kadar fikir alışverişine açığım.",
                 style = { fontSize = "17px", marginLeftRight = "10px"}
             },
 

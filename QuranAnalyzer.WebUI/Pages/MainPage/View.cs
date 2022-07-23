@@ -10,6 +10,7 @@ namespace QuranAnalyzer.WebUI.Pages.MainPage;
 static class PageId
 {
     public const string MainPage = nameof(MainPage);
+    public const string SecuringDataWithCurrentTechnology = nameof(SecuringDataWithCurrentTechnology);
     public const string InitialLetters = nameof(InitialLetters);
     public const string QuestionAnswerPage = nameof(QuestionAnswerPage);
     public const string ContactPage = nameof(ContactPage);
@@ -99,6 +100,12 @@ class View : ReactComponent<MainViewModel>
                 return new CharacterCountingView();
             }
 
+            if (state.PageId == PageId.SecuringDataWithCurrentTechnology)
+            {
+                return new SecuringDataWithCurrentTechnology.View();
+            }
+            
+
             return new MainPageContent();
         }
 
@@ -171,7 +178,7 @@ class View : ReactComponent<MainViewModel>
                 new VSpace(20),
                 toSidebarMenuItem("1 - Anasayfa",PageId.MainPage),
                 new VSpace(20),
-                toSidebarMenuItem("2 - Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.MainPage),
+                toSidebarMenuItem("2 - Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.SecuringDataWithCurrentTechnology),
                 new VSpace(20),
                 toSidebarMenuItem("3 - Ön Bilgiler",PageId.MainPage),
                 new VSpace(20),

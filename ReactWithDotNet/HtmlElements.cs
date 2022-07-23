@@ -40,7 +40,9 @@ public class input : HtmlElement
 public class i : HtmlElement
 {
 }
-
+public class b : HtmlElement
+{
+}
 public class p : HtmlElement
 {
     public p()
@@ -115,7 +117,9 @@ public class a : HtmlElement
     [React]
     public string href { get; set; }
 }
-
+public class lu : HtmlElement
+{
+}
 public class li : HtmlElement
 {
 }

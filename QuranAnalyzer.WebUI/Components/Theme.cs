@@ -29,7 +29,8 @@ class LargeTitle : div
     {
         this.innerText = innerText;
 
-        style.fontSize = "20px";
+        style.fontSize  = "20px";
+        style.textAlign = "center";
     }
 }
 
@@ -39,7 +40,8 @@ class Title : div
     {
         this.innerText = innerText;
 
-        style.fontSize = "18px";
+        style.fontSize  = "18px";
+        style.textAlign = "center";
     }
 }
 
@@ -49,7 +51,8 @@ class SubTitle : div
     {
         this.innerText = innerText;
 
-        style.fontSize = "16px";
+        style.fontSize  = "16px";
+        style.textAlign = "center";
     }
 }
 
