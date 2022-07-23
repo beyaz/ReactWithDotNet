@@ -144,6 +144,10 @@ public sealed partial class Style
     public string columnFill { get; set; }
 
     public string columnGap { get; set; }
+    
+    public string rowGap { get; set; }
+
+    public string gap { get; set; }
 
     public string columnRule { get; set; }
 

@@ -222,7 +222,8 @@ public static class ElementSerializer
         }
 
         if (propertyValue is Expression<Func<int>> ||
-            propertyValue is Expression<Func<string>>)
+            propertyValue is Expression<Func<string>>||
+            propertyValue is Expression<Func<bool>>)
         {
             string[] calculateSourcePathFunc()
             {
@@ -234,6 +235,11 @@ public static class ElementSerializer
                 if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
                 {
                     return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
+                }
+
+                if (propertyValue is Expression<Func<bool>> bindingExpressionAsBoolean)
+                {
+                    return bindingExpressionAsBoolean.AsBindingSourcePathInState().Split(".".ToCharArray());
                 }
 
                 throw new NotImplementedException();

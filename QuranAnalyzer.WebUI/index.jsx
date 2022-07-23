@@ -20,6 +20,8 @@ import { Checkbox } from 'primereact/Checkbox';
 import { InputMask } from 'primereact/InputMask';
 import { AutoComplete } from 'primereact/autocomplete';
 import { Tree } from 'primereact/tree';
+import { InputSwitch } from 'primereact/inputswitch';
+import { Panel } from 'primereact/panel';
 
 // react-xarrows
 import Xarrow from "react-xarrows";
@@ -133,6 +135,10 @@ else
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputMask", InputMask);
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.AutoComplete", AutoComplete);
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
+    
+    
 
     // react-xarrows
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.react_xarrows.Xarrow", Xarrow);

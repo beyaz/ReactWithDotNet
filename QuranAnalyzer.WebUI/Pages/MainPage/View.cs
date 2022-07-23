@@ -3,6 +3,7 @@ using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using ReactWithDotNet;
+using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -15,6 +16,8 @@ static class PageId
     public const string QuestionAnswerPage = nameof(QuestionAnswerPage);
     public const string ContactPage = nameof(ContactPage);
     public const string CharacterCounting = nameof(CharacterCounting);
+
+    public const string PageIdOfMushafOptionsDetail = nameof(PageIdOfMushafOptionsDetail);
 }
 
 [Serializable]
@@ -50,13 +53,14 @@ class View : ReactComponent<MainViewModel>
             if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("page", out var pageId))
             {
                 state.PageId = pageId;
-
-                Context.ClientTask.ListenEvent("MainContentDivScrollChanged", nameof(OnMainContentDivScrollChanged));
-                Context.ClientTask.CallJsFunction("RegisterScrollEvents");
-
-                
             }
         };
+    }
+
+    public void ComponentDidMount()
+    {
+        Context.ClientTask.ListenEvent("MainContentDivScrollChanged", nameof(OnMainContentDivScrollChanged));
+        Context.ClientTask.CallJsFunction("RegisterScrollEvents");
     }
     
     public void OnMainContentDivScrollChanged(double mainDivScrollY)
@@ -182,7 +186,7 @@ class View : ReactComponent<MainViewModel>
                 new VSpace(20),
                 toSidebarMenuItem("3 - Ön Bilgiler",PageId.MainPage),
                 new VSpace(20),
-                toSidebarMenuItem("4 - Başlangıç Harfleri",PageId.MainPage),
+                toSidebarMenuItem("4 - Başlangıç Harfleri",PageId.InitialLetters),
                 new VSpace(20),
                 toSidebarMenuItem("5 - Soru - Cevap",PageId.MainPage),
                 new VSpace(20),
@@ -204,7 +208,7 @@ class View : ReactComponent<MainViewModel>
             {
                 className = "q-sidebarlink",
                 innerText = text,
-                href      = "/index.html?page=" + id,
+                href      = GetPageLink(id),
                 style     = { padding = "10px", textDecoration = "none", color = "Black", overflowWrap = "break-word"}
             };
         }

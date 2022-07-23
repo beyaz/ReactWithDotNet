@@ -27,6 +27,8 @@ public class CharacterCountingViewModel
 
     public double AvailableWidth { get; set; }
     public IReadOnlyList<SummaryInfo> SummaryInfoList { get; set; }
+
+    public CountingOption CountingOption { get; set; } = new();
 }
 
 [Serializable]

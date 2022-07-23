@@ -2,16 +2,58 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using QuranAnalyzer.WebUI.Components;
+using QuranAnalyzer.WebUI.Pages.MainPage;
 using ReactWithDotNet;
 using ReactWithDotNet.PrimeReact;
+using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 
 
+class MushafOptionsView:ReactComponent
+{
+    public bool MushafOptionsPanelIsVisible { get; set; }
 
+    public CountingOption MushafOption { get; set; }
+
+    public Expression<Func<bool>> Bestaten_7_69 { get; set; }
+    
+    public override Element render()
+    {
+        return new Panel
+        {
+            toggleable = true,
+            collapsed = true,
+            header     = "Mushaf Ayarları",
+            children =
+            {
+                new HPanel
+                {
+                    new InputSwitch{ @checked = MushafOption.UseElifCountsSpecifiedByRK},
+                    new h5{text               = "Elif sayımları için Tanzil.net'i referans al"}
+                },
+                new div
+                {
+                    style = {  display = "flex", flexDirection = "row", alignItems = "center"},
+                    children =
+                    {
+                        new InputSwitch
+                        {
+                            @checkedBind = Bestaten_7_69
+                        },
+                        new HSpace(15),
+                        new h5{text = "7:69 daki bestaten'i Sad olarak say"}
+                    }
+                },
+                new a{text = "Mushaf ayarları hakkında detaylı bilgi", href =  GetPageLink(PageId.PageIdOfMushafOptionsDetail), }
+            }
+        };
+    }
+}
 
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
@@ -125,7 +167,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var searchPanel = new divWithBorder
         {
-            style = { padding = "15px"},
+            style = { padding = "15px", minWidth = "300px"},
             children =
             {
                 new h4("Arama"),
@@ -153,14 +195,19 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                         onClick   = OnCaclculateClicked,
                         className ="p-button-outlined",
                         style     = {alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px"}
-                    }
+                    },
+
+                    new VSpace(20),
+                    new MushafOptionsView{ MushafOption = state.CountingOption, Bestaten_7_69 = ()=>state.CountingOption.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten}
+
+
                 }
             }
         };
 
         if (state.SummaryText.HasNoValue())
         {
-            return Extensions.BlockUI(searchPanel, state.IsBlocked, state.OperationName);
+            return BlockUI(searchPanel, state.IsBlocked, state.OperationName);
         }
 
         var summaryContent = new HPanel
@@ -262,7 +309,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         }
 
 
-        return Extensions.BlockUI( new VPanel{searchPanel, results}, state.IsBlocked, state.OperationName);
+        return BlockUI( new VPanel{searchPanel, results}, state.IsBlocked, state.OperationName);
     }
 }
 

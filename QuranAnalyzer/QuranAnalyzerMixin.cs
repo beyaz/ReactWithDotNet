@@ -38,6 +38,7 @@ public class MatchInfo
     #endregion
 }
 
+[Serializable]
 public sealed class CountingOption
 {
     #region Public Properties

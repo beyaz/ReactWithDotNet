@@ -7,6 +7,9 @@ namespace QuranAnalyzer.WebUI;
 
 static class Extensions
 {
+
+    public static string GetPageLink(string pageId) => "/index.html?page=" + pageId;
+    
     public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
 
     public static Element BlockUI(Element content, bool isBlocked, string operationMessage)
