@@ -20,6 +20,7 @@ public interface IReactStatelessComponent
 public abstract class ReactComponent : Element, IReactStatelessComponent
 {
     [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; set; }
     
     public abstract Element render();
