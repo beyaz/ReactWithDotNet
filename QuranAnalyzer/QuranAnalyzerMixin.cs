@@ -98,7 +98,7 @@ public static class QuranAnalyzerMixin
 
     static string IdOf(Verse verse)
     {
-        return $"{verse.ChapterNumber}:{verse._index}";
+        return verse.Id;
     }
 
     static List<MatchInfo> RecalculateWithOptions(List<MatchInfo> mathInfoList, MushafOptions mushafOptions, int arabicCharacterIndex)
