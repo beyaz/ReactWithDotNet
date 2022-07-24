@@ -122,7 +122,7 @@ public static class ElementSerializer
 
             stateTree.BreadCrumpPath = breadCrumpPath;
 
-            map.Add(nameof(element.children), childElements);
+            map.Add("$children", childElements);
         }
 
         return map;

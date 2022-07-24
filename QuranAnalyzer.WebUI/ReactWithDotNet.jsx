@@ -307,7 +307,7 @@ function ConvertToReactElement(jsonNode, component)
         constructorFunction = GetExternalJsObject(constructorFunction);
     }
 
-    const children = jsonNode.children;
+    const children = jsonNode.$children;
 
     var childrenLength = 0;
     if (children)
