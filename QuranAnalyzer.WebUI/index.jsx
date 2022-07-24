@@ -22,6 +22,7 @@ import { AutoComplete } from 'primereact/autocomplete';
 import { Tree } from 'primereact/tree';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Panel } from 'primereact/panel';
+import { Tooltip } from 'primereact/tooltip';
 
 // react-xarrows
 import Xarrow from "react-xarrows";
@@ -137,6 +138,8 @@ else
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tooltip", Tooltip);
+    
     
     
 

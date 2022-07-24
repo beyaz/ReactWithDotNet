@@ -45,10 +45,11 @@ namespace ReactWithDotNet.PrimeReact
         [React]
         public string loadingIcon { get; set; }
 
+        [React]
+        public string id { get; set; }
 
 
-      
-        
+
         [React]
         public string badge { get; set; }
 

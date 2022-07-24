@@ -4,8 +4,20 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using ReactWithDotNet;
+using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer;
+
+[ReactRealType(typeof(div))]
+class FlexRowAlignItemsCenter : div
+{
+    public FlexRowAlignItemsCenter()
+    {
+        style.display       = "flex";
+        style.flexDirection = "row";
+        style.alignItems    = "center";
+    }
+}
 
 public static class CharachterSearchResultColorizer
 {
@@ -34,11 +46,22 @@ public static class CharachterSearchResultColorizer
             {
                 var el = ColorizeCharachterSearchResult(items[0].Verse._bismillah + items[0].Verse._text, items, getColor);
 
-                container.Add(new HPanel
+                container.Add(new FlexRowAlignItemsCenter
                 {
                     new div
                     {
-                        innerText = $"[{items[0].Verse.ChapterNumber}:{items[0].Verse._index}]",
+                        innerHTML     = "+3 م - Mim",
+                        style     =
+                        {
+                            direction = "ltr",
+                            fontSize   = "0.8rem",
+                            color = "blue",
+                        }
+                    },
+                    new HSpace(10),
+                    new div
+                    {
+                        text = $"[{items[0].Verse.ChapterNumber}:{items[0].Verse._index}]",
                         style =
                         {
                             marginLeft = "5px",
