@@ -336,43 +336,41 @@ function ConvertToReactElement(jsonNode, component)
         
         const propValue = jsonNode[propName];
 
-        // tryProcessAsEventHandler
+        if (propValue != null)
         {
-            if (propValue != null && propValue.$isRemoteMethod === true)
+            // tryProcessAsEventHandler
+            if (propValue.$isRemoteMethod === true)
             {
                 const remoteMethodName = propValue.remoteMethodName;
 
-                props[propName] = function ()
+                props[propName] = function()
                 {
-                    PushToEventQueue( () => HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: Array.prototype.slice.call(arguments) }) );
+                    PushToEventQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: Array.prototype.slice.call(arguments) }));
                 }
 
                 continue;
             }
-        }
-        
-        // tryProcessAsBinding
-        {
+
+            // tryProcessAsBinding
             /*
-            "valueBind": {
-                "eventName": "onChange",
-                "$isBinding": true,
-                "jsValueAccess": ["e","target","value"],
-                "sourcePath": ["innerA","innerB","text"],
-                "targetProp": "value"
-              }
-             */
-            
-            if (propValue != null && propValue.$isBinding === true)
+                "valueBind": {
+                    "eventName": "onChange",
+                    "$isBinding": true,
+                    "jsValueAccess": ["e","target","value"],
+                    "sourcePath": ["innerA","innerB","text"],
+                    "targetProp": "value"
+                  }
+                 */
+            if (propValue.$isBinding === true)
             {
-                const targetProp    = propValue.targetProp;
-                const eventName     = propValue.eventName;
-                const sourcePath    = propValue.sourcePath;
+                const targetProp = propValue.targetProp;
+                const eventName = propValue.eventName;
+                const sourcePath = propValue.sourcePath;
                 const jsValueAccess = propValue.jsValueAccess;
-                const defaultValue  = propValue.defaultValue;
+                const defaultValue = propValue.defaultValue;
 
                 props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
-                props[eventName] = function (e)
+                props[eventName] = function(e)
                 {
                     const state = Clone(component.state.$state);
 
@@ -383,29 +381,25 @@ function ConvertToReactElement(jsonNode, component)
 
                 continue;
             }
-        }
 
-        // tryProcessAsElement
-        {
-            if (propValue != null && propValue.$isElement === true)
+            // tryProcessAsElement
+            if (propValue.$isElement === true)
             {
                 props[propName] = ConvertToReactElement(propValue.Element, component);
 
                 continue;
             }
-        }
 
-        // tryProcessAsItemsTemplate
-        {
-            if (propValue != null && propValue.___ItemTemplates___)
+            // tryProcessAsItemsTemplate
+            if (propValue.___ItemTemplates___)
             {
-                props[propName] = function (item)
+                props[propName] = function(item)
                 {
                     if (item == null && propValue.___TemplateForNull___)
                     {
                         return ConvertToReactElement(propValue.___TemplateForNull___);
                     }
-                
+
                     const length = propValue.___ItemTemplates___.length;
                     for (let j = 0; j < length; j++)
                     {
@@ -428,21 +422,18 @@ function ConvertToReactElement(jsonNode, component)
 
                 continue;
             }
-        }
-        
 
-        // tryTransformValue
-        {
-            if (propValue != null && propValue.$JsTransformFunctionLocation)
+
+            // tryTransformValue
+            if (propValue.$JsTransformFunctionLocation)
             {
                 props[propName] = GetValueInPath(window, propValue.$JsTransformFunctionLocation)(propValue.RawValue);
                 continue;
             }
-
-            if (propValue != null && propValue.$transformValueFunction)
+            if (propValue.$transformValueFunction)
             {
                 const transformFunction = ExternalJsObjectMap[propValue.$transformValueFunction];
-            
+
                 props[propName] = transformFunction(propValue.RawValue);
                 continue;
             }
