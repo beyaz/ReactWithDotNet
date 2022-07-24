@@ -353,7 +353,9 @@ public static class ElementSerializer
 
     const string ___Type___ = nameof(___Type___);
     const string ___TypeOfState___ = nameof(___TypeOfState___);
+    const string ___RootNode___ = nameof(___RootNode___);
     
+
 
 }
 
