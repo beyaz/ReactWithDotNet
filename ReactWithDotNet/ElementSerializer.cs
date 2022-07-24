@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -61,17 +60,19 @@ public static class ElementSerializer
 
             map.Add(nameof(reactStatefulComponent.___RootNode___), ToMap(reactStatefulComponent.render(), stateTree));
 
-            map.Add(nameof(reactStatefulComponent.___Type___), reactStatefulComponent.___Type___);
+            map.Add(nameof(___Type___), GetReactComponentTypeInfo(reactStatefulComponent));
             map.Add(nameof(reactStatefulComponent.___TypeOfState___), reactStatefulComponent.___TypeOfState___);
-            if (reactStatefulComponent.___HasComponentDidMountMethod___)
+            if (HasComponentDidMountMethod(reactStatefulComponent))
             {
-                map.Add(nameof(reactStatefulComponent.___HasComponentDidMountMethod___), reactStatefulComponent.___HasComponentDidMountMethod___);
+                map.Add(nameof(___HasComponentDidMountMethod___), true);
             }
 
             map.Add(nameof(element.key), element.key);
 
             return map;
         }
+
+       
 
         var reactAttributes = new List<string>();
 
@@ -329,8 +330,24 @@ public static class ElementSerializer
             return (default, exception);
         }
     }
-    
+
     #endregion
+
+    static bool HasComponentDidMountMethod(object reactStatefulComponent)
+    {
+        return reactStatefulComponent.GetType().GetMethod("ComponentDidMount", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
+    }
+
+    const string ___HasComponentDidMountMethod___ = nameof(___HasComponentDidMountMethod___);
+
+
+    static string GetReactComponentTypeInfo(object reactStatefulComponent)
+    {
+        return reactStatefulComponent.GetType().GetFullName();
+    }
+
+    const string ___Type___ = nameof(___Type___);
+
 }
 
 class ItemTemplate

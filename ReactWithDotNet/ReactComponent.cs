@@ -149,11 +149,8 @@ public interface IReactStatefulComponent
 
     ReactContext Context { get; set; }
         
-    string ___Type___ { get; }
-
     string ___TypeOfState___ { get; }
 
-    bool ___HasComponentDidMountMethod___ { get; }
         
     Element render();
 
@@ -167,12 +164,6 @@ public abstract class ReactStatefulComponent : Element
     public ReactContext Context { get; set; }
 
     public Element ___RootNode___ => render();
-
-    public string ___Type___ => GetType().GetFullName();
-
-
-    public bool ___HasComponentDidMountMethod___ => GetType().GetMethod("ComponentDidMount") != null;
-
 
     public abstract Element render();
 
