@@ -314,101 +314,7 @@ function ConvertToReactElement(jsonNode, component)
     {
         childrenLength = children.length;
     }
-
-
-    // collect props
-
-    function tryTransformValue(propName)
-    {
-        const value = jsonNode[propName];
-        if (value != null && value.$JsTransformFunctionLocation)
-        {
-            props[propName] = GetValueInPath(window, value.$JsTransformFunctionLocation)(value.RawValue);
-            return true;
-        }
-
-        if (value != null && value.$transformValueFunction)
-        {
-            var fn = ExternalJsObjectMap[value.$transformValueFunction];
-            
-            props[propName] = fn(value.RawValue);
-            return true;
-        }
-
-        
-
-        return false;
-    }
-
-    function tryProcessAsEventHandler(propName)
-    {
-        var value = jsonNode[propName];
-        if (value != null && value.$isRemoteMethod === true)
-        {
-            var remoteMethodName = value.remoteMethodName;
-
-            props[propName] = function ()
-            {
-                PushToEventQueue( () => HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: Array.prototype.slice.call(arguments) }) );
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    function tryProcessAsItemsTemplate(propName)
-    {
-        const value = jsonNode[propName];
-        if (value != null && value.___ItemTemplates___)
-        {
-            props[propName] = function (item)
-            {
-                if (item == null && value.___TemplateForNull___)
-                {
-                    return ConvertToReactElement(value.___TemplateForNull___);
-                }
-                
-                const length = value.___ItemTemplates___.length;
-                for (let j = 0; j < length; j++)
-                {
-                    const key = value.___ItemTemplates___[j].Key;
-
-                    // try find as TreeNode
-                    if (key.key != null && item && item.key != null && key.key === item.key)
-                    {
-                        return ConvertToReactElement(value.___ItemTemplates___[j].Value);
-                    }
-
-                    if (JSON.stringify(key) === JSON.stringify(item))
-                    {
-                        return ConvertToReactElement(value.___ItemTemplates___[j].Value);
-                    }
-                }
-
-                throw 'item template not found';
-            }
-
-            return true;
-        }
-
-        return false;
-    }
     
-    function tryProcessAsElement(propName)
-    {
-        var value = jsonNode[propName];
-        if (value != null && value.$isElement === true)
-        {
-            props[propName] = ConvertToReactElement(value.Element, component);
-
-            return true;
-        }
-
-        return false;
-    }
-
     function IfNull(value, defaultValue)
     {
         if (defaultValue === undefined)
@@ -423,81 +329,123 @@ function ConvertToReactElement(jsonNode, component)
 
         return value;
     }
-
-    function tryProcessAsBinding(propName)
-    {
-        /*
-        "valueBind": {
-            "eventName": "onChange",
-            "$isBinding": true,
-            "jsValueAccess": ["e","target","value"],
-            "sourcePath": ["innerA","innerB","text"],
-            "targetProp": "value"
-          }
-         */
-
-        const propValue = jsonNode[propName];
-
-        if (propValue != null && propValue.$isBinding === true)
-        {
-            const targetProp    = propValue.targetProp;
-            const eventName     = propValue.eventName;
-            const sourcePath    = propValue.sourcePath;
-            const jsValueAccess = propValue.jsValueAccess;
-            const defaultValue  = propValue.defaultValue;
-
-            props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
-            props[eventName] = function (e)
-            {
-                const state = Clone(component.state.$state);
-
-                SetValueInPath(state, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
-
-                component.setState({ $state: state });
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
+    
     for (i = 0; i < reactAttributesLength; i++)
     {
         const propName = reactAttributes[i];
+        
+        const propValue = jsonNode[propName];
 
-        const isProcessedAsEvent = tryProcessAsEventHandler(propName);
-        if (isProcessedAsEvent)
+        // tryProcessAsEventHandler
         {
-            continue;
+            if (propValue != null && propValue.$isRemoteMethod === true)
+            {
+                const remoteMethodName = propValue.remoteMethodName;
+
+                props[propName] = function ()
+                {
+                    PushToEventQueue( () => HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: Array.prototype.slice.call(arguments) }) );
+                }
+
+                continue;
+            }
+        }
+        
+        // tryProcessAsBinding
+        {
+            /*
+            "valueBind": {
+                "eventName": "onChange",
+                "$isBinding": true,
+                "jsValueAccess": ["e","target","value"],
+                "sourcePath": ["innerA","innerB","text"],
+                "targetProp": "value"
+              }
+             */
+            
+            if (propValue != null && propValue.$isBinding === true)
+            {
+                const targetProp    = propValue.targetProp;
+                const eventName     = propValue.eventName;
+                const sourcePath    = propValue.sourcePath;
+                const jsValueAccess = propValue.jsValueAccess;
+                const defaultValue  = propValue.defaultValue;
+
+                props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
+                props[eventName] = function (e)
+                {
+                    const state = Clone(component.state.$state);
+
+                    SetValueInPath(state, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
+
+                    component.setState({ $state: state });
+                }
+
+                continue;
+            }
         }
 
-        const isProcessedAsBinding = tryProcessAsBinding(propName);
-        if (isProcessedAsBinding)
+        // tryProcessAsElement
         {
-            continue;
+            if (propValue != null && propValue.$isElement === true)
+            {
+                props[propName] = ConvertToReactElement(propValue.Element, component);
+
+                continue;
+            }
         }
 
-        const processedAsTemplate = tryProcessAsElement(propName);
-        if (processedAsTemplate)
+        // tryProcessAsItemsTemplate
         {
-            continue;
-        }
+            if (propValue != null && propValue.___ItemTemplates___)
+            {
+                props[propName] = function (item)
+                {
+                    if (item == null && propValue.___TemplateForNull___)
+                    {
+                        return ConvertToReactElement(propValue.___TemplateForNull___);
+                    }
+                
+                    const length = propValue.___ItemTemplates___.length;
+                    for (let j = 0; j < length; j++)
+                    {
+                        const key = propValue.___ItemTemplates___[j].Key;
 
-        if (tryProcessAsItemsTemplate(propName))
-        {
-            continue;
+                        // try find as TreeNode
+                        if (key.key != null && item && item.key != null && key.key === item.key)
+                        {
+                            return ConvertToReactElement(propValue.___ItemTemplates___[j].Value);
+                        }
+
+                        if (JSON.stringify(key) === JSON.stringify(item))
+                        {
+                            return ConvertToReactElement(propValue.___ItemTemplates___[j].Value);
+                        }
+                    }
+
+                    throw 'item template not found';
+                }
+
+                continue;
+            }
         }
         
 
-        if (tryTransformValue(propName))
+        // tryTransformValue
         {
-            continue;
-        }
+            if (propValue != null && propValue.$JsTransformFunctionLocation)
+            {
+                props[propName] = GetValueInPath(window, propValue.$JsTransformFunctionLocation)(propValue.RawValue);
+                continue;
+            }
 
-        if (name.indexOf("bind$") === 0)
-        {
-            continue;
+            if (propValue != null && propValue.$transformValueFunction)
+            {
+                const fn = ExternalJsObjectMap[propValue.$transformValueFunction];
+            
+                props[propName] = fn(propValue.RawValue);
+                continue;
+            }
         }
 
         props[propName] = jsonNode[propName];
