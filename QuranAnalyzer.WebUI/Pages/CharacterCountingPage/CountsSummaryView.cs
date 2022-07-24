@@ -7,57 +7,69 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 public class SummaryInfo
 {
-    public string Name { get; set; }
+    #region Public Properties
     public int Count { get; set; }
+    public string Name { get; set; }
+    #endregion
 }
 
-
 [Serializable]
-class CountsSummaryView: ReactComponent
+class CountsSummaryView : ReactComponent
 {
+    #region Public Properties
     public IReadOnlyList<SummaryInfo> Counts { get; set; } = new List<SummaryInfo>();
+    #endregion
 
+    #region Public Methods
     public override Element render()
     {
-        static Element toElement(SummaryInfo x)
-        {
-            return new div
-            {
-                innerHTML = $"<strong>{x.Count}</strong> adet <strong>{x.Name}</strong> harfi bulundu."
-            };
-        }
-        
+        var counts = Counts ?? new List<SummaryInfo>();
+
         var returnDiv = new div
         {
             new div
             {
-                Children = Counts?.Select(toElement)
+                Children = counts.Select(ToElement)
             }
         };
 
-        var total = Counts.Select(x => x.Count).Sum();
+        var total = counts.Select(x => x.Count).Sum();
 
-        if (total % 19 == 0)
+        if (total > 0)
         {
-            returnDiv.appendChild(new div
+            if (total % 19 == 0)
             {
-                children =
+                returnDiv.appendChild(new div
                 {
-                    new div {innerHTML = $"Toplam: <strong>{total}</strong> ("},
-                    new div {innerText = "19 x " + total / 19, style = {color = "red", marginLeftRight = "5px"}},
-                    new div {innerText = ")"}
-                },
-                style = { display = "flex", flexDirection = "row"},
-            });
-        }
-        else
-        {
-            returnDiv.appendChild(new div
+                    children =
+                    {
+                        new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
+                        new div { innerText = "19 x " + total / 19, style = { color = "red", marginLeftRight = "5px" } },
+                        new div { innerText = ")" }
+                    },
+                    style = { display = "flex", flexDirection = "row" },
+                });
+            }
+            else
             {
-                new div{innerHTML = $"Toplam: <strong>{total}</strong>"}
-            });
+                returnDiv.appendChild(new div
+                {
+                    new div { innerHTML = $"Toplam: <strong>{total}</strong>" }
+                });
+            }
         }
 
         return returnDiv;
     }
+    #endregion
+
+    #region Methods
+    static Element ToElement(SummaryInfo x)
+    {
+        return new div
+        {
+            innerHTML = $"<strong>{x.Count}</strong> adet <strong>{x.Name}</strong> harfi bulundu."
+        };
+    }
+    #endregion
 }

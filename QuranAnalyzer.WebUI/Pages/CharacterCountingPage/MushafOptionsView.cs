@@ -13,7 +13,10 @@ class MushafOptionsView:ReactComponent
     public MushafOptions MushafOption { get; set; }
 
     public Expression<Func<bool>> Bestaten_7_69 { get; set; }
+
+    public Expression<Func<bool>> UseElifReferencesFromTanzil { get; set; }
     
+
     public override Element render()
     {
         return new Panel
@@ -23,10 +26,18 @@ class MushafOptionsView:ReactComponent
             header     = "Mushaf Ayarları",
             children =
             {
-                new HPanel
+                new div
                 {
-                    new InputSwitch{ @checked = MushafOption.UseElifCountsSpecifiedByRK},
-                    new h5{text               = "Elif sayımları için Tanzil.net'i referans al"}
+                    style = {  display = "flex", flexDirection = "row", alignItems = "center"},
+                    children =
+                    {
+                        new InputSwitch
+                        {
+                            checkedBind = UseElifReferencesFromTanzil
+                        },
+                        new HSpace(15),
+                        new h5{text = "Elif sayımları için Tanzil.net'i referans al"}
+                    }
                 },
                 new div
                 {

@@ -47,7 +47,7 @@ public sealed class Occurence
     public int? Charachter8 { get; set; }
     public int? Charachter9 { get; set; }
 
-    public string VerseNumber { get; set; }
+    public string VerseId { get; set; }
 
 
 

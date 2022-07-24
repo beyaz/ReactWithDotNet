@@ -67,7 +67,12 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     },
 
                     new VSpace(20),
-                    new MushafOptionsView { MushafOption = state.MushafOptions, Bestaten_7_69 = () => state.MushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten }
+                    new MushafOptionsView
+                    {
+                        MushafOption = state.MushafOptions, 
+                        Bestaten_7_69 = () => state.MushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
+                        UseElifReferencesFromTanzil = ()=>state.MushafOptions.UseElifReferencesFromTanzil
+                    }
                 }
             }
         };
@@ -97,7 +102,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var resultColumns = new List<Column>
         {
-            new() { field = nameof(Occurence.VerseNumber), header = "Ayet No" }
+            new() { field = nameof(Occurence.VerseId), header = "Ayet No" }
         };
 
         foreach (var charachter in state.SearchCharacters.AsClearArabicCharacterList())
@@ -211,10 +216,10 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             var occurence = new Occurence
             {
-                VerseNumber = record.Verse._index
+                VerseId = record.Verse.Id
             };
 
-            if (results.Any(x => x.VerseNumber == occurence.VerseNumber))
+            if (results.Any(x => x.VerseId == occurence.VerseId))
             {
                 continue;
             }
