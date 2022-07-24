@@ -23,6 +23,8 @@ public sealed class Verse
     public string _text { get; set; }
     public string _bismillah { get; set; }
     public int ChapterNumber { get; set; }
+
+    public string Id=> $"{ChapterNumber}:{_index}";
 }
 
 public static class DataAccess

@@ -26,9 +26,12 @@ public class CharacterCountingViewModel
     public Occurence[] ResultRecords;
 
     public double AvailableWidth { get; set; }
-    public IReadOnlyList<SummaryInfo> SummaryInfoList { get; set; }
 
-    public CountingOption CountingOption { get; set; } = new();
+    [NonSerialized] public IReadOnlyList<SummaryInfo> SummaryInfoList;
+
+    public MushafOptions MushafOptions { get; set; } = new();
+
+    public int ClickCount { get; set; }
 }
 
 [Serializable]
