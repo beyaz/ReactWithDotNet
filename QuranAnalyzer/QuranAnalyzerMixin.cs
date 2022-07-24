@@ -107,10 +107,16 @@ public static class QuranAnalyzerMixin
 
             if (mushafOptions.UseElifCountsSpecifiedByRK)
             {
-                var alif = ArabicCharacters.Elif.AsArabicCharacterIndex().Value;
-                if (alif == arabicCharacterIndex)
+                if (ArabicCharacterIndex.Elif == arabicCharacterIndex)
                 {
-                    mathInfoList.RemoveAll(x => SpecifiedByRK.RealElifCounts.ContainsKey(x.Verse.Id));
+                    foreach (var key in SpecifiedByRK.RealElifCounts.Keys)
+                    {
+                        var match = mathInfoList.FirstOrDefault(x=>x.Verse.Id == key && x.ArabicCharacterIndex == arabicCharacterIndex);
+                        if (match is not null)
+                        {
+                            
+                        }
+                    }
                 }
             }
         }

@@ -23,3 +23,9 @@ public static class ArabicCharacters
     public const string Nun = "ن";
     #endregion
 }
+
+
+public static class ArabicCharacterIndex
+{
+    public static int Elif => DataAccess.harfler.GetIndex(ArabicCharacters.Elif).Value;
+}
