@@ -440,11 +440,11 @@ function ConvertToReactElement(jsonNode, component)
 
         if (value != null && value.$isBinding === true)
         {
-            var targetProp    = value.targetProp;
-            var eventName     = value.eventName;
-            var sourcePath    = value.sourcePath;
-            var jsValueAccess = value.jsValueAccess;
-            var defaultValue  = value.defaultValue;
+            const targetProp = value.targetProp;
+            const eventName     = value.eventName;
+            const sourcePath    = value.sourcePath;
+            const jsValueAccess = value.jsValueAccess;
+            const defaultValue  = value.defaultValue;
 
             props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
             props[eventName] = function (e)
@@ -464,21 +464,21 @@ function ConvertToReactElement(jsonNode, component)
 
     for (i = 0; i < reactAttributesLength; i++)
     {
-        var propName = reactAttributes[i];
+        const propName = reactAttributes[i];
 
-        var isProcessedAsEvent = tryProcessAsEventHandler(propName);
+        const isProcessedAsEvent = tryProcessAsEventHandler(propName);
         if (isProcessedAsEvent)
         {
             continue;
         }
 
-        var isProcessedAsBinding = tryProcessAsBinding(propName);
+        const isProcessedAsBinding = tryProcessAsBinding(propName);
         if (isProcessedAsBinding)
         {
             continue;
         }
 
-        var processedAsTemplate = tryProcessAsElement(propName);
+        const processedAsTemplate = tryProcessAsElement(propName);
         if (processedAsTemplate)
         {
             continue;
@@ -508,11 +508,9 @@ function ConvertToReactElement(jsonNode, component)
         return createElement(constructorFunction, props, jsonNode.$text);
     }
 
-  
-
     if (childrenLength > 0)
     {
-        var newChildren = [];
+        const newChildren = [];
 
         for (i = 0; i < childrenLength; i++)
         {
