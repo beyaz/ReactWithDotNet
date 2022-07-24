@@ -33,7 +33,7 @@ public static class ElementSerializer
             map.Add("$type", thirdPartyReactComponent.Type);
         }
 
-        if (element is IReactStatefulComponent reactStatefulComponent)
+        if (element is ReactStatefulComponent reactStatefulComponent)
         {
             if (stateTree.BreadCrumpPath != "0")
             {
