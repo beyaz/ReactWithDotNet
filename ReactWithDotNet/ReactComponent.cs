@@ -149,8 +149,6 @@ public interface IReactStatefulComponent
 
     ReactContext Context { get; set; }
         
-    string ___TypeOfState___ { get; }
-
         
     Element render();
 
@@ -177,7 +175,5 @@ public abstract class ReactStatefulComponent : Element
 
 public abstract class ReactComponent<TState> : ReactStatefulComponent, IReactStatefulComponent where TState : new()
 {
-    public string ___TypeOfState___ => typeof(TState).GetFullName();
-
     public  TState state { get; protected set; }
 }
