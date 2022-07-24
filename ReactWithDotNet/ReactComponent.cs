@@ -142,21 +142,13 @@ public sealed class ClientTaskCollection
     
 }
 
-
-
-public interface IReactStatefulComponent
-{
-    Element render();
-
-    event Action StateInitialized;
-}
-
 public abstract class ReactStatefulComponent : Element
 {
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; set; }
 
+    
     public abstract Element render();
 
     public event Action StateInitialized;
@@ -167,7 +159,7 @@ public abstract class ReactStatefulComponent : Element
     }
 }
 
-public abstract class ReactComponent<TState> : ReactStatefulComponent, IReactStatefulComponent where TState : new()
+public abstract class ReactComponent<TState> : ReactStatefulComponent where TState : new()
 {
     public  TState state { get; protected set; }
 }
