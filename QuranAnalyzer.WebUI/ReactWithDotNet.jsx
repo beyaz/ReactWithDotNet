@@ -436,15 +436,15 @@ function ConvertToReactElement(jsonNode, component)
           }
          */
 
-        const value = jsonNode[propName];
+        const propValue = jsonNode[propName];
 
-        if (value != null && value.$isBinding === true)
+        if (propValue != null && propValue.$isBinding === true)
         {
-            const targetProp = value.targetProp;
-            const eventName     = value.eventName;
-            const sourcePath    = value.sourcePath;
-            const jsValueAccess = value.jsValueAccess;
-            const defaultValue  = value.defaultValue;
+            const targetProp    = propValue.targetProp;
+            const eventName     = propValue.eventName;
+            const sourcePath    = propValue.sourcePath;
+            const jsValueAccess = propValue.jsValueAccess;
+            const defaultValue  = propValue.defaultValue;
 
             props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
             props[eventName] = function (e)
