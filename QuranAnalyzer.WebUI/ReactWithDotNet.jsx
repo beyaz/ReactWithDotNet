@@ -441,9 +441,9 @@ function ConvertToReactElement(jsonNode, component)
 
             if (propValue != null && propValue.$transformValueFunction)
             {
-                const fn = ExternalJsObjectMap[propValue.$transformValueFunction];
+                const transformFunction = ExternalJsObjectMap[propValue.$transformValueFunction];
             
-                props[propName] = fn(propValue.RawValue);
+                props[propName] = transformFunction(propValue.RawValue);
                 continue;
             }
         }
