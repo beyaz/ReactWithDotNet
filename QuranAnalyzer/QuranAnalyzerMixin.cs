@@ -115,9 +115,20 @@ public static class QuranAnalyzerMixin
         {
             if (mushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten)
             {
-                if (arabicCharacterIndex.AsArabicCharacter().Value == ArabicCharacters.Sad)
+                var sadIndex = ArabicCharacters.Sad.AsArabicCharacterIndex().Value;
+                
+                if (arabicCharacterIndex == sadIndex)
                 {
-                    mathInfoList.RemoveAll(x => x.Verse.Id == "7:69" && x.ArabicCharacterIndex == ArabicCharacters.Sad.AsArabicCharacterIndex().Value);
+                    mathInfoList.RemoveAll(x => x.Verse.Id == "7:69" && x.ArabicCharacterIndex == sadIndex);
+                }
+            }
+
+            if (mushafOptions.UseElifCountsSpecifiedByRK)
+            {
+                var alif = ArabicCharacters.Elif.AsArabicCharacterIndex().Value;
+                if (alif == arabicCharacterIndex)
+                {
+                    mathInfoList.RemoveAll(x => SpecifiedByRK.RealElifCounts.ContainsKey(x.Verse.Id));
                 }
             }
         }

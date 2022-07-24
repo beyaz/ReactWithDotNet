@@ -9,14 +9,6 @@ namespace QuranAnalyzer;
 [TestClass]
 public class CharacterCountingTests
 {
-
-    [TestMethod]
-    public void AAA()
-    {
-        var aa = SearchCharachters("7:*,19:*,38:*", "ص").Value;
-        aa.ToString();
-    }
-
     #region Public Methods
     [TestMethod]
     public void AnalyzeVerseTest()

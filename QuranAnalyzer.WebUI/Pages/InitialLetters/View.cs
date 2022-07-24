@@ -165,7 +165,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "2-counts", MultipleOf = 521 } }
+                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = $"2:*|{ArabicCharacters.Elif},{ArabicCharacters.Lam},{ArabicCharacters.Mim}" } }
                 },
 
                 new tr
