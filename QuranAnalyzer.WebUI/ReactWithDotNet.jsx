@@ -649,24 +649,6 @@ function HandleAction(data)
     SendRequest(request, onSuccess);
 }
 
-var componentActions = {};
-
-function GetComponentActionLocation(fullName, actionName)
-{
-    return fullName + "$" + actionName;
-}
-
-function RegisterActionToComponent(parameterObject)
-{
-    componentActions[GetComponentActionLocation(parameterObject.typeNameOfComponent, parameterObject.actionName)] = parameterObject.handlerFunction;
-}
-
-// todo: fix me
-function TryDispatchComponentAction(component, actionName)
-{
-    EventBus.Dispatch(GetComponentActionLocation(component[DotNetTypeOfReactComponent], actionName), component);
-}
-
 const ComponentDefinitions = {};
 
 function DefineComponent(componentDeclaration)
@@ -866,7 +848,7 @@ function CallJsFunctionInPath(clientTask)
 
 function ListenComponentEvent(clientTask, fullTypeNameOfReactComponent)
 {
-    EventBus.On(GetComponentActionLocation(fullTypeNameOfReactComponent, clientTask.EventName), function (cmp)
+    EventBus.On(clientTask.EventName, function (cmp)
     {
         HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: cmp, eventArguments: [] });
     });
@@ -918,7 +900,6 @@ function CreateNewDeveloperError(message)
 var ReactWithDotNet =
 {
     OnDocumentReady: OnDocumentReady,
-    RegisterActionToComponent: RegisterActionToComponent,
     HandleAction: HandleAction,
     DispatchEvent: EventBus.Dispatch,
     RenderComponentIn: RenderComponentIn,
