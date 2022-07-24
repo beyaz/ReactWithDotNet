@@ -96,7 +96,7 @@ public static class ElementSerializer
         {
             if (htmlElement2.innerText != null)
             {
-                map.Add("innerText", htmlElement2.innerText);
+                map.Add("$text", htmlElement2.innerText);
             }
         }
 

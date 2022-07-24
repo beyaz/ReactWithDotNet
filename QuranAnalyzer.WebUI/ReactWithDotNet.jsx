@@ -503,9 +503,9 @@ function ConvertToReactElement(jsonNode, component)
         props[propName] = jsonNode[propName];
     }
 
-    if (jsonNode.innerText != null)
+    if (jsonNode.$text != null)
     {
-        return createElement(constructorFunction, props, jsonNode.innerText);
+        return createElement(constructorFunction, props, jsonNode.$text);
     }
 
   
