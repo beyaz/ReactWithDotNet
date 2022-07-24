@@ -146,8 +146,6 @@ public sealed class ClientTaskCollection
 
 public interface IReactStatefulComponent
 {
-    Element ___RootNode___ { get; }
-        
     Element render();
 
     event Action StateInitialized;
@@ -158,8 +156,6 @@ public abstract class ReactStatefulComponent : Element
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; set; }
-
-    public Element ___RootNode___ => render();
 
     public abstract Element render();
 

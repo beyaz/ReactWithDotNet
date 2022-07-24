@@ -58,7 +58,7 @@ public static class ElementSerializer
 
             map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
 
-            map.Add(nameof(reactStatefulComponent.___RootNode___), ToMap(reactStatefulComponent.render(), stateTree));
+            map.Add(nameof(___RootNode___), ToMap(reactStatefulComponent.render(), stateTree));
 
             map.Add(nameof(___Type___), GetReactComponentTypeInfo(reactStatefulComponent));
             map.Add(nameof(___TypeOfState___), GetTypeFullNameOfState(reactStatefulComponent));
@@ -255,7 +255,7 @@ public static class ElementSerializer
             return (bindInfo, false);
         }
 
-        if (propertyName != nameof(IReactStatefulComponent.___RootNode___) && propertyValue is Element element)
+        if (propertyValue is Element element)
         {
             propertyValue = new InnerElementInfo
             {
