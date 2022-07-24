@@ -11,12 +11,7 @@ public static class QuranAnalyzerMixin
     #region Public Methods
     public static Response<string> AsArabicCharacter(this int arabicCharacterIndex)
     {
-        if (arabicCharacterIndex >= 0 && arabicCharacterIndex < harfler.Length)
-        {
-            return new Response<string> { Value = harfler[arabicCharacterIndex] };
-        }
-
-        return (Error)("İndex out of range for arabic letters. @index: " + arabicCharacterIndex);
+        return harfler.GetValueAt(arabicCharacterIndex);
     }
 
     public static Response<int> AsArabicCharacterIndex(this string character)

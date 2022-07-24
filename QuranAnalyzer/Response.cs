@@ -231,6 +231,21 @@ public static class FpExtensions
         return index;
     }
 
+    public static Response<T> GetValueAt<T>(this T[] array, int index)
+    {
+        if (array is null)
+        {
+            return new ArgumentNullException(nameof(array));
+        }
+
+        if (index >= 0 && index < array.Length)
+        {
+            return new Response<T> { Value = array[index] };
+        }
+
+        return new IndexOutOfRangeException("index:" + index);
+    }
+
 
     public static Response<int> ParseInt(string value)
     {
