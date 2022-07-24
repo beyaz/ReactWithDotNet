@@ -4,6 +4,19 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
+public class aside : HtmlElement
+{
+}
+public class section : HtmlElement
+{
+}
+public class small : HtmlElement
+{
+}
+
+public class ul : HtmlElement
+{
+}
 public class br : HtmlElement
 {
 }
@@ -25,6 +38,8 @@ public class span : HtmlElement
 
     public override string ToString() => this.ToHTML();
 }
+
+
 
 static class HtmlTextWriter
 {
