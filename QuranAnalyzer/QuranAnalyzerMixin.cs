@@ -30,19 +30,19 @@ public static class QuranAnalyzerMixin
 
         Response<int> calculateCount(Verse verse)
         {
-            if (character == ArabicCharacters.Elif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(IdOf(verse)))
+            if (character == ArabicCharacters.Elif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
             {
-                return SpecifiedByRK.RealElifCounts[IdOf(verse)];
+                return SpecifiedByRK.RealElifCounts[verse.Id];
             }
 
-            if (character == ArabicCharacters.Sad && option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten && IdOf(verse) == "7:69")
+            if (character == ArabicCharacters.Sad && option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten && verse.Id == "7:69")
             {
-                return SpecifiedByRK.SS[IdOf(verse)];
+                return SpecifiedByRK.SS[verse.Id];
             }
 
-            if (character == ArabicCharacters.Lam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(IdOf(verse)))
+            if (character == ArabicCharacters.Lam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(verse.Id))
             {
-                return SpecifiedByRK.Lam[IdOf(verse)];
+                return SpecifiedByRK.Lam[verse.Id];
             }
 
             return AnalyzeVerse(verse).GetCountOf(character);
@@ -94,11 +94,6 @@ public static class QuranAnalyzerMixin
     static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
         return character.AsArabicCharacterIndex().Then(arabicCharacterIndex => matchList.Count(x => x.ArabicCharacterIndex == arabicCharacterIndex));
-    }
-
-    static string IdOf(Verse verse)
-    {
-        return verse.Id;
     }
 
     static List<MatchInfo> RecalculateWithOptions(List<MatchInfo> mathInfoList, MushafOptions mushafOptions, int arabicCharacterIndex)
