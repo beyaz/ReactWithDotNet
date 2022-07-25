@@ -28,7 +28,8 @@ public class InputText : ElementBase
     /// <para>Type: string/regex</para>
     /// </summary>
     [React]
-    public ReactTransformValueInClient_Regex keyfilter { get; set; }
+    [ReactTransformValueInClient("RegExp")]
+    public string keyfilter { get; set; }
 
     [React]
     public bool? autoFocus { get; set; }

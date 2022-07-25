@@ -421,18 +421,10 @@ function ConvertToReactElement(jsonNode, component)
                 continue;
             }
 
-
             // tryTransformValue
-            if (propValue.$JsTransformFunctionLocation)
-            {
-                props[propName] = GetValueInPath(window, propValue.$JsTransformFunctionLocation)(propValue.RawValue);
-                continue;
-            }
             if (propValue.$transformValueFunction)
             {
-                const transformFunction = ExternalJsObjectMap[propValue.$transformValueFunction];
-
-                props[propName] = transformFunction(propValue.RawValue);
+                props[propName] = GetExternalJsObject(propValue.$transformValueFunction)(propValue.RawValue);
                 continue;
             }
         }
@@ -848,7 +840,9 @@ function Fetch(url, options, processResponse, callback)
     //});
 }
 
-const ExternalJsObjectMap = {};
+const ExternalJsObjectMap = {
+    'RegExp': (x) => new RegExp(x)
+};
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {
     if (ExternalJsObjectMap[key] != null)
