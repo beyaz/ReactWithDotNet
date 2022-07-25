@@ -113,12 +113,7 @@ public sealed class ClientTaskCollection
     {
         taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
     }
-
-    public void ListenComponentEvent(string eventName, string routeToMethod)
-    {
-        taskList.Add(new ClientTask { TaskId = 3, EventName = eventName, RouteToMethod = routeToMethod });
-    }
-
+    
     public void PushHistory(string title, string url)
     {
         taskList.Add(new ClientTask { TaskId = 4, Title = title, Url = url });

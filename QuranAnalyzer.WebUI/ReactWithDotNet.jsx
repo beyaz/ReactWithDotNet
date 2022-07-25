@@ -256,7 +256,7 @@ var ClientTaskId =
     CallJsFunction: 0,
     ListenEvent: 1,
     DispatchEvent: 2,        
-    ListenComponentEvent: 3,
+    
     PushHistory: 4,
     ComebackWithLastAction: 5,
     GotoMethod: 6,
@@ -614,14 +614,7 @@ function HandleAction(data)
 
                     continue;
                 }
-
-                if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
-                {
-                    ListenComponentEvent(clientTask, component[DotNetTypeOfReactComponent]);
-
-                    continue;
-                }
-
+                
                 if (clientTask.TaskId === ClientTaskId.CallJsFunction)
                 {
                     EventQueue.push(() =>
@@ -810,13 +803,6 @@ function RenderComponentIn(obj)
 
                             continue;
                         }
-                    
-                        if (clientTask.TaskId === ClientTaskId.ListenComponentEvent)
-                        {
-                            ListenComponentEvent(clientTask, fullTypeNameOfReactComponent);
-
-                            continue;
-                        }
 
                         if (clientTask.TaskId === ClientTaskId.CallJsFunction)
                         {
@@ -844,14 +830,6 @@ function RenderComponentIn(obj)
 function CallJsFunctionInPath(clientTask)
 {
     GetExternalJsObject(clientTask.JsFunctionPath).apply(null, clientTask.JsFunctionArguments);
-}
-
-function ListenComponentEvent(clientTask, fullTypeNameOfReactComponent)
-{
-    EventBus.On(clientTask.EventName, function (cmp)
-    {
-        HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: cmp, eventArguments: [] });
-    });
 }
 
 function Fetch(url, options, processResponse, callback)
