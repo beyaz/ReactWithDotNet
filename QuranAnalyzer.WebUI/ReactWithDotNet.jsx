@@ -294,7 +294,7 @@ function ConvertToReactElement(jsonNode, component)
         props = {};
     }
     
-    var constructorFunction = jsonNode.$type;
+    var constructorFunction = jsonNode.$tag;
     if (!constructorFunction)
     {
         throw CreateNewDeveloperError('ReactNode is not recognized');

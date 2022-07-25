@@ -19,14 +19,15 @@ public static class ElementSerializer
 
         var map = new Dictionary<string, object>();
 
-        if (element is HtmlElement htmlElement)
-        {
-            map.Add("$type", htmlElement.Type);
-        }
+       
 
         if (element is ThirdPartyReactComponent thirdPartyReactComponent)
         {
-            map.Add("$type", thirdPartyReactComponent.Type);
+            map.Add("$tag", thirdPartyReactComponent.Type);
+        }
+        else if (element is HtmlElement htmlElement)
+        {
+            map.Add("$tag", htmlElement.Type);
         }
 
         if (element is ReactStatefulComponent reactStatefulComponent)
