@@ -263,6 +263,21 @@ var ClientTaskId =
     NavigateToUrl : 7
 }
 
+function IfNull(value, defaultValue)
+{
+    if (defaultValue === undefined)
+    {
+        return value;
+    }
+
+    if (value == null)
+    {
+        return defaultValue;
+    }
+
+    return value;
+}
+
 function ConvertToReactElement(jsonNode, component)
 {   
     // is ReactWithDotNet component
@@ -279,7 +294,7 @@ function ConvertToReactElement(jsonNode, component)
     }
 
     var reactAttributes = jsonNode.reactAttributes;
-
+    
     var reactAttributesLength = 0;
 
     var props = null;
@@ -313,21 +328,7 @@ function ConvertToReactElement(jsonNode, component)
         childrenLength = children.length;
     }
     
-    function IfNull(value, defaultValue)
-    {
-        if (defaultValue === undefined)
-        {
-            return value;
-        }
-
-        if (value == null)
-        {
-            return defaultValue;
-        }
-
-        return value;
-    }
-    
+    // calculate props
     for (let i = 0; i < reactAttributesLength; i++)
     {
         const propName = reactAttributes[i];
