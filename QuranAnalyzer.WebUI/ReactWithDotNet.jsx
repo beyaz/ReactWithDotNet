@@ -293,21 +293,7 @@ function ConvertToReactElement(jsonNode, component)
             });
     }
 
-    var reactAttributes = jsonNode.reactAttributes;
-    
-    var reactAttributesLength = 0;
-
-    var props = null;
-
-    if (reactAttributes)
-    {
-        reactAttributesLength = reactAttributes.length;
-    }
-
-    if (reactAttributesLength > 0)
-    {
-        props = {};
-    }
+    let props = null;
     
     var constructorFunction = jsonNode.$tag;
     if (!constructorFunction)
@@ -321,9 +307,25 @@ function ConvertToReactElement(jsonNode, component)
     }
 
     // calculate props
-    for (let i = 0; i < reactAttributesLength; i++)
+    for (let key in jsonNode)
     {
-        const propName = reactAttributes[i];
+        if (!jsonNode.hasOwnProperty(key))
+        {
+            continue;
+        }
+
+        // is related information with .net
+        if (key[0] === '$')
+        {
+            continue;
+        }
+
+        if (props === null)
+        {
+            props = {};
+        }
+        
+        const propName = key;
         
         const propValue = jsonNode[propName];
 

@@ -71,20 +71,14 @@ public static class ElementSerializer
 
        
 
-        var reactAttributes = new List<string>();
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
-            
-            
-            
             var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, GetPropertyName(propertyInfo), stateTree);
             if (noNeedToExport)
             {
                 continue;
             }
-
-            reactAttributes.Add(GetPropertyName(propertyInfo));
 
             map.Add(GetPropertyName(propertyInfo), propertyValue);
         }
@@ -97,10 +91,7 @@ public static class ElementSerializer
             }
         }
 
-        if (reactAttributes.Count > 0)
-        {
-            map.Add(nameof(reactAttributes), reactAttributes);
-        }
+        
 
         if (element.children.Count > 0)
         {
