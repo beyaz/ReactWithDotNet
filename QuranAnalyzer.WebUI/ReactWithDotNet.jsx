@@ -320,14 +320,6 @@ function ConvertToReactElement(jsonNode, component)
         constructorFunction = GetExternalJsObject(constructorFunction);
     }
 
-    const children = jsonNode.$children;
-
-    var childrenLength = 0;
-    if (children)
-    {
-        childrenLength = children.length;
-    }
-    
     // calculate props
     for (let i = 0; i < reactAttributesLength; i++)
     {
@@ -438,8 +430,11 @@ function ConvertToReactElement(jsonNode, component)
         return createElement(constructorFunction, props, jsonNode.$text);
     }
 
-    if (childrenLength > 0)
+    const children = jsonNode.$children;
+    if (children)
     {
+        const childrenLength = children.length;
+        
         const newChildren = [];
 
         for (let childIndex = 0; childIndex < childrenLength; childIndex++)
