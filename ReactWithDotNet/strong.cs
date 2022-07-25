@@ -20,7 +20,9 @@ public class ul : HtmlElement
 public class br : HtmlElement
 {
 }
-
+public class article : HtmlElement
+{
+}
 public class strong : HtmlElement
 {
     public override string ToString() => this.ToHTML();

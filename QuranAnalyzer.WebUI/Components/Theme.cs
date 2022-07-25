@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet;
+﻿using System.Net.Mime;
+using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI.Components;
 
@@ -23,16 +24,45 @@ class SiteTitle : div
     }
 }
 
-class LargeTitle : div
+class LargeTitle : ReactComponent
 {
-    public LargeTitle(string innerText)
-    {
-        this.innerText = innerText;
+    readonly string text;
 
-        style.fontSize  = "20px";
-        style.textAlign = "center";
+    public LargeTitle(string text)
+    {
+        this.text = text;
+    }
+    
+    public override Element render()
+    {
+        return new div
+        {
+            style    = { fontSize = "18px", textAlign = "center", fontWeight = "500"},
+            text = text
+        };
     }
 }
+
+
+class Important : ReactComponent
+{
+    readonly string text;
+
+    public Important(string text)
+    {
+        this.text = text;
+    }
+
+    public override Element render()
+    {
+        return new div
+        {
+            style = { fontWeight = "500" },
+            text  = text
+        };
+    }
+}
+
 
 class Title : div
 {
@@ -53,6 +83,18 @@ class SubTitle : div
 
         style.fontSize  = "16px";
         style.textAlign = "center";
+    }
+}
+
+class Article : ReactComponent
+{
+    public override Element render()
+    {
+        return new article
+        {
+            style = { marginLeftRight = "8px", paddingLeftRight = "16px"},
+            Children = children
+        };
     }
 }
 

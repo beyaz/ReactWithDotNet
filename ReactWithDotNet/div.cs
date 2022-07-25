@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
-
+﻿
 namespace ReactWithDotNet;
 
 public class div : HtmlElement
 {
-
-    [JsonPropertyName("$type")]
     public override string Type => nameof(div);
 
     public div()

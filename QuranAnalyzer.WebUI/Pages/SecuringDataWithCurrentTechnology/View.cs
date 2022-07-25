@@ -12,37 +12,41 @@ public class View : ReactComponent
     {
 
 
-        return new div
+        return new Article
         {
-            new LargeTitle("Günümüzde Veri Nasıl Korunur Doğruluğu nasıl teyit edilir"){ style ={marginTopBottom = "10px"}},
+            new LargeTitle("Günümüzde Veri Nasıl Korunur Doğruluğu nasıl teyit edilir"),
+            new VSpace(15),
             new div(@"
-Hiç farkettiniz mi ? TC kimlik numaranızda bulunan rakamlar sizce rastgele rakamlar mı? Yoksa belli bir düzeni / mantığı mı var ?
+TC kimlik numaranızda bulunan rakamlar sizce rastgele rakamlar mı? Yoksa belli bir düzeni / mantığı mı var ?
 "),
-            new br(),
+            
             new p{text         = "Mesela aşağıdaki TC Kimlik noları inceleyelim."},
             new div{ innerHTML = "1056227229<b>6<b>"},
             
             new div{ innerHTML = "2569375209<b>8<b>"},
             
             new div{ innerHTML = "7547453160<b>2<b>"},
-            new br(),
-            new p{innerHTML = @"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkda oluşmuş. 
+            
+            new p{text = @"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkda oluşmuş. 
 11 hane olan TC kimlik numaranızın ilk 10 hanesinin rakamlarının toplamının 10'a bölümünden kalan sayı 11. hanedeki sayı ile hep aynıdır.
-Özetle şunu söyleyebiliriz <b>TC kimlik numaranızdaki ilk 10 rakamın toplamını 10'a bölerseniz elinizde kalan sayı 11.hanedeki rakamı verir</b>. 
-Bu kural bütün TC kimlik numaraları için geçerlidir. Hatta TC kimlik numarası aslında 9 hanedir. 
+Özetle şunu söyleyebiliriz"},
+
+            new Important(@"TC kimlik numaranızdaki ilk 10 rakamın toplamını 10'a bölerseniz elinizde kalan sayı 11.hanedeki rakamı verir."),
+
+            new p{text = @"Bu kural bütün TC kimlik numaraları için geçerlidir. Hatta TC kimlik numarası aslında 9 hanedir. 
 İlk 9 rakam belli bir hesaplama / yöntem / algoritma sonucu 10. hanedeki rakamı verir. 
 İlk 10 hanedeki rakam da yukarıda detaylarını incelediğimiz yöntem ile 11. hanedeki rakamı verir.
 Sondan iki rakam aslında doğrulama rakamlarıdır.
 Böylelikle bir 11 haneden oluşan bir sayının TC kimlik numarası olup olmadığı tespit edilebilir.
 
 "},
-            new br(),
-            new br(),
 
-            new SubTitle("IBAN"),
+
+
+            new LargeTitle("IBAN"),
             
             new p{text = "Peki ya bankanızın size vermiş oluğu IBAN bilgisinde buna benzer bir şey olabilir mi ?"},
-            new img{src = "img/IBAN.jpg", width = 500, height = 330},
+            new img{src = "img/IBAN.jpg", width = 500, height = 330, style = { textAlign = "center", display = "block"}},
             new p{text = @"Yukarıdaki resimde gördüğünüz 'Kontrol Basamakları' diye işaret edilen 56 rakamı 
 rastgele olşturulmuş bir sayı değildir.
 Hatta mobil şubenizden bir ibana para gönderirken ibandaki herhangi bir rakamı bilerek yanlış girin.
