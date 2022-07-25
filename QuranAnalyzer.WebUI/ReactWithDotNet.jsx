@@ -307,15 +307,15 @@ function ConvertToReactElement(jsonNode, component)
     }
 
     // calculate props
-    for (let key in jsonNode)
+    for (let propName in jsonNode)
     {
-        if (!jsonNode.hasOwnProperty(key))
+        if (!jsonNode.hasOwnProperty(propName))
         {
             continue;
         }
 
         // is related information with .net
-        if (key[0] === '$')
+        if (propName[0] === '$')
         {
             continue;
         }
@@ -324,8 +324,6 @@ function ConvertToReactElement(jsonNode, component)
         {
             props = {};
         }
-        
-        const propName = key;
         
         const propValue = jsonNode[propName];
 
