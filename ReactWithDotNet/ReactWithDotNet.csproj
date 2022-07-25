@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>    
   </PropertyGroup>  
 
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>  
 
     <ItemGroup>

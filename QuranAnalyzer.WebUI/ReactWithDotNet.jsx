@@ -145,7 +145,7 @@ function EmitNextEvent()
 {
     if (IsExecutingEvent)
     {
-        throw "ReactWithDotNet event queue problem occured.";
+        throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
     }
     
     if (EventQueue.length > 0)
@@ -188,7 +188,7 @@ function GetValueInPath(obj, steps)
     {
         if (obj == null)
         {
-            throw "Path is not read. Path:" + steps.join(".");
+            throw CreateNewDeveloperError("Path is not read. Path:" + steps.join("."));
         }
 
         obj = obj[steps[i]];
@@ -201,7 +201,7 @@ function SetValueInPath(obj, steps, value)
 {
     if (obj == null)
     {
-        throw Error("SetValueInPath->" + value);
+        throw CreateNewDeveloperError("SetValueInPath->" + value);
     }
 
     var len = steps.length;
@@ -230,7 +230,7 @@ function NotNull(value)
 {
     if (value == null)
     {
-        throw Error("value cannot be null.");
+        throw CreateNewDeveloperError("value cannot be null.");
     }
 
     return value;
@@ -297,7 +297,7 @@ function ConvertToReactElement(jsonNode, component)
     var constructorFunction = jsonNode.$type;
     if (!constructorFunction)
     {
-        throw 'ReactNode is not recognized';
+        throw CreateNewDeveloperError('ReactNode is not recognized');
     }
     
     if (/* is component */constructorFunction.indexOf('.') > 0)
@@ -415,7 +415,7 @@ function ConvertToReactElement(jsonNode, component)
                         }
                     }
 
-                    throw 'item template not found';
+                    throw CreateNewDeveloperError('item template not found');
                 }
 
                 continue;
@@ -510,9 +510,9 @@ function NormalizeEventArguments(eventArguments)
 function HandleAction(data)
 {
     const remoteMethodName = data.remoteMethodName;
-    var component = data.component;
+    const component = data.component;
     
-    var request =
+    const request =
     {
         MethodName: "HandleComponentEvent",
 
@@ -527,7 +527,7 @@ function HandleAction(data)
     {
         if (response.ErrorMessage != null)
         {
-            throw response.ErrorMessage;
+            throw CreateNewDeveloperError(response.ErrorMessage);
         }
 
         const element = response.ElementAsJson;
@@ -623,12 +623,13 @@ function HandleAction(data)
                     continue;
                 }
 
-                throw Error("ClientTask not recognized.");
+                throw CreateNewDeveloperError("ClientTask not recognized.");
             }    
         }
         
         restoreState(OnReactStateReady);
     }
+
     SendRequest(request, onSuccess);
 }
 
@@ -801,7 +802,7 @@ function RenderComponentIn(obj)
                             continue;
                         }
 
-                        throw new Error("Client Task not recognized");
+                        throw CreateNewDeveloperError("Client Task not recognized");
                     }    
                 }
                 
@@ -864,7 +865,7 @@ function GetExternalJsObject(key)
 
 function CreateNewDeveloperError(message)
 {
-    throw new Error('ReactWithDotNet developer error occured.' + message);
+    return new Error('ReactWithDotNet developer error occured.' + message);
 }
 
 var ReactWithDotNet =

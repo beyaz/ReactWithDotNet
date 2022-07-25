@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace ReactWithDotNet
+﻿namespace ReactWithDotNet
 {
     static class Extensions
     {
