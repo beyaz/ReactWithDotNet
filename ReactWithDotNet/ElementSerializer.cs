@@ -55,13 +55,13 @@ public static class ElementSerializer
 
             map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
 
-            map.Add(nameof(___RootNode___), ToMap(reactStatefulComponent.render(), stateTree));
+            map.Add(___RootNode___, ToMap(reactStatefulComponent.render(), stateTree));
 
-            map.Add(nameof(___Type___), GetReactComponentTypeInfo(reactStatefulComponent));
-            map.Add(nameof(___TypeOfState___), GetTypeFullNameOfState(reactStatefulComponent));
+            map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
+            map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
             if (HasComponentDidMountMethod(reactStatefulComponent))
             {
-                map.Add(nameof(___HasComponentDidMountMethod___), true);
+                map.Add(___HasComponentDidMountMethod___, true);
             }
 
             map.Add(nameof(element.key), element.key);
@@ -335,7 +335,7 @@ public static class ElementSerializer
         return reactStatefulComponent.GetType().GetMethod("ComponentDidMount", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
     }
 
-    const string ___HasComponentDidMountMethod___ = nameof(___HasComponentDidMountMethod___);
+    
 
 
     static string GetReactComponentTypeInfo(object reactStatefulComponent)
@@ -348,10 +348,10 @@ public static class ElementSerializer
         return reactStatefulComponent.GetType().GetProperty("state")!.PropertyType.GetFullName();
     }
 
-    const string ___Type___ = nameof(___Type___);
-    const string ___TypeOfState___ = nameof(___TypeOfState___);
-    const string ___RootNode___ = nameof(___RootNode___);
-    
+    const string ___Type___ = "$Type";
+    const string ___TypeOfState___ = "$TypeOfState";
+    const string ___RootNode___ = "$RootNode";
+    const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
 
 
 }

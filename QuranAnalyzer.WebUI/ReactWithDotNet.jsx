@@ -8,9 +8,9 @@ import {createRoot} from 'react-dom/client';
 
 var createElement = React.createElement;
 
-const DotNetTypeOfReactComponent = '___Type___';
-const FullTypeNameOfState = '___TypeOfState___';
-const RootNode = '___RootNode___';
+const DotNetTypeOfReactComponent = '$Type';
+const FullTypeNameOfState = '$TypeOfState';
+const RootNode = '$RootNode';
 
 const EventBus =
 {
@@ -711,7 +711,7 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
-            if (this.props.$jsonNode.___HasComponentDidMountMethod___)
+            if (this.props.$jsonNode.$HasComponentDidMountMethod)
             {
                 HandleAction({ remoteMethodName: 'ComponentDidMount', component: this, eventArguments: [] });
                 return;
