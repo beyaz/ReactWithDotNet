@@ -278,8 +278,6 @@ function ConvertToReactElement(jsonNode, component)
             });
     }
 
-    var i;
-
     var reactAttributes = jsonNode.reactAttributes;
 
     var reactAttributesLength = 0;
@@ -330,7 +328,7 @@ function ConvertToReactElement(jsonNode, component)
         return value;
     }
     
-    for (i = 0; i < reactAttributesLength; i++)
+    for (let i = 0; i < reactAttributesLength; i++)
     {
         const propName = reactAttributes[i];
         
@@ -451,9 +449,9 @@ function ConvertToReactElement(jsonNode, component)
     {
         const newChildren = [];
 
-        for (i = 0; i < childrenLength; i++)
+        for (let childIndex = 0; childIndex < childrenLength; childIndex++)
         {
-            newChildren.push(ConvertToReactElement(children[i], component));
+            newChildren.push(ConvertToReactElement(children[childIndex], component));
         }
 
         return createElement(constructorFunction, props, newChildren);
