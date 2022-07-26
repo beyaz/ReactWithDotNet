@@ -159,17 +159,17 @@ class View : ReactComponent<MainViewModel>
             },
             style =
             {
-                position       = "fixed",
-                height         = "100%",
-                width          = "70%",
-                maxWidth       = "400px",
-                top            = "50px",
-                background     = "white",
-                boxShadow      = "5px 0 5px -5px rgb(0 0 0 / 28%)",
-                zIndex         = "1",
-                display        = hamburgerMenuIsOpen ? "flex" : "none",
-                // transition = "display 1.4s cubic-bezier(.165, .84, .44, 1),box-shadow 2.3s ease"
-
+                position   = "fixed",
+                height     = "calc(100% - 50px)",
+                width      =  "70%",
+                maxWidth   = "400px",
+                top        = "50px",
+                background = "white",
+                boxShadow  = "5px 0 5px -5px rgb(0 0 0 / 28%)",
+                zIndex     = "1",
+                visibility = hamburgerMenuIsOpen ? "visible" : "collapsed",
+                opacity    = hamburgerMenuIsOpen ? "1" : "0",
+                transition = "0.5s"
             }
         };
     }

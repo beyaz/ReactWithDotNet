@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Net.Mime;
 using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI.Components;
@@ -97,6 +98,32 @@ class Article : ReactComponent
         };
     }
 }
+
+class Backdrop: ReactComponent
+{
+    public Action<string> onClick { get; set; }
+    
+    public override Element render()
+    {
+        return new div
+        {
+            onClick = onClick,
+            style =
+            {
+                position = "absolute",
+                top="0",
+                left="0",
+                zIndex = "1040",
+                width = "100vw",
+                height = "100vh",
+                background = "#f6fbff",
+                opacity = "0.3"
+            },
+            Children = children
+        };
+    }
+}
+
 
 class MainPage : ReactComponent
 {

@@ -19,7 +19,15 @@ class ComponentA : ReactComponent<ModelA>
     {
         return new div
         {
-            style        = { width = "200px", height = state.isMouseEntered ? "200px" : "100px", border = "1px solid blue", textAlign = "center", paddingTop = "20px" },
+            style =
+            {
+                width      = "200px",
+                height     = state.isMouseEntered ? "200px" : "100px",
+                border     = "1px solid blue", 
+                textAlign  = "center", 
+                paddingTop = "20px",
+                transition = "height 3s cubic-bezier(.165, .84, .44, 1),box-shadow 2.3s ease"
+            },
             innerText    = state.PropA + state.ClickCount,
             onClick      = _ => state.ClickCount++,
             onMouseEnter = _ => { state.isMouseEntered = true; },
