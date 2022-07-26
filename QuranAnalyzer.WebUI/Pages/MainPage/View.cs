@@ -168,7 +168,8 @@ class View : ReactComponent<MainViewModel>
                 boxShadow      = "5px 0 5px -5px rgb(0 0 0 / 28%)",
                 zIndex         = "1",
                 display        = hamburgerMenuIsOpen ? "flex" : "none",
-                
+                // transition = "display 1.4s cubic-bezier(.165, .84, .44, 1),box-shadow 2.3s ease"
+
             }
         };
     }
