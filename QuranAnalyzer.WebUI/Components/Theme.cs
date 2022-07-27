@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Mime;
 using ReactWithDotNet;
+using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Components;
 
@@ -131,7 +132,8 @@ class MainPage : ReactComponent
    public Element mainContent;
    public Element menu;
    public double mainDivScrollY;
-
+    
+   
     public override Element render()
     {
         var top = new div
@@ -188,7 +190,7 @@ class MainPage : ReactComponent
                 overflowY = "auto"
             }
         };
-
+        
         return new div { children ={ top, menu, main }, style = { height = "100vh", width = "100%" } };
     }
 }

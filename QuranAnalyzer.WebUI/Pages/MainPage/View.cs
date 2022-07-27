@@ -3,6 +3,7 @@ using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using ReactWithDotNet;
+using ReactWithDotNet.PrimeReact;
 using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
@@ -77,7 +78,7 @@ class View : ReactComponent<MainViewModel>
         return new Components.MainPage
         {
             topContent     = buildTopNav(),
-            mainContent    = buildMainContent(),
+            mainContent    = state.HamburgerMenuIsOpen ? new BlockUI{   blocked = true, children = { buildMainContent() } } : buildMainContent(),
             menu           = buildLeftMenu(),
             mainDivScrollY = state.MainDivScrollY
         };
