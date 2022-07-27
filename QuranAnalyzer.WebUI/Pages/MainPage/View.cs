@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
+using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using ReactWithDotNet;
-using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -70,7 +69,7 @@ class View : ReactComponent<MainViewModel>
 
     public override Element render()
     {
-        return new Components.MainPage
+        return new ApplicationLayout
         {
             topContent     = new TopNavigationPanel
             {
@@ -78,7 +77,11 @@ class View : ReactComponent<MainViewModel>
                 OnHamburgerMenuClicked = hamburgerMenuClicked
             },
             mainContent    = buildMainContent(),
-            menu           = buildLeftMenu(),
+            menu           = new FixedLeftMenuContainer
+            {
+                IsOpen   = state.HamburgerMenuIsOpen,
+                children = { new LeftMenuContent() }
+            },
             mainDivScrollY = state.MainDivScrollY,
             IsBackDropActive = state.HamburgerMenuIsOpen
         };
@@ -115,13 +118,7 @@ class View : ReactComponent<MainViewModel>
         }
         
 
-        Element buildLeftMenu()
-        {
-            
-            return BuildLeftMenu(state.HamburgerMenuIsOpen);
-
-
-        }
+       
 
        
 
@@ -129,28 +126,5 @@ class View : ReactComponent<MainViewModel>
          
     }
 
-    static Element BuildLeftMenu(bool hamburgerMenuIsOpen)
-    {
-        return new div
-        {
-            children =
-            {
-                new LeftMenuContent()
-            },
-            style =
-            {
-                position   = "fixed",
-                height     = "calc(100% - 50px)",
-                width      =  hamburgerMenuIsOpen ? "70%" : "0px",
-                maxWidth   = "400px",
-                top        = "50px",
-                background = "white",
-                boxShadow  = "5px 0 5px -5px rgb(0 0 0 / 28%)",
-                zIndex     = "1",
-                visibility = hamburgerMenuIsOpen ? "visible" : "collapsed",
-                opacity    = hamburgerMenuIsOpen ? "1" : "0",
-                transition = "0.5s"
-            }
-        };
-    }
+    
 }
