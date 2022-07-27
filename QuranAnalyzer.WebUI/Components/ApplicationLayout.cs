@@ -54,6 +54,10 @@ class ApplicationLayout : ReactComponent
             }
         };
         
-        return new div { children ={ top, menu, main }, style = { height = "100vh", width = "100%" } };
+        return new div
+        {
+            children ={ top, menu, main }, 
+            style = { height = "100vh", width = "100%" }
+        };
     }
 }
