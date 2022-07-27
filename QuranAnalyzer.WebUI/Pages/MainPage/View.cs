@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using ReactWithDotNet;
 using ReactWithDotNet.PrimeReact;
-using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -74,7 +72,11 @@ class View : ReactComponent<MainViewModel>
     {
         return new Components.MainPage
         {
-            topContent     = buildTopNav(),
+            topContent     = new TopNavigationPanel
+            {
+                HamburgerMenuIsOpen    = state.HamburgerMenuIsOpen,
+                OnHamburgerMenuClicked = hamburgerMenuClicked
+            },
             mainContent    = buildMainContent(),
             menu           = buildLeftMenu(),
             mainDivScrollY = state.MainDivScrollY,
@@ -111,28 +113,7 @@ class View : ReactComponent<MainViewModel>
 
             return new MainPageContent();
         }
-
-
-        Element buildTopNav()
-        {
-            return new nav
-            {
-                children =
-                {
-                    new SvgHamburgerIcon { HamburgerMenuIsOpen = state.HamburgerMenuIsOpen, onClick = hamburgerMenuClicked },
-                    new div
-                    {
-                        new SiteTitle("19 Sistemi Nedir")
-                    }
-                },
-                style =
-                {
-                    display        = "flex",
-                    justifyContent = "flex-start",
-                    alignItems     = "center"
-                }
-            };
-        }
+        
 
         Element buildLeftMenu()
         {
@@ -154,7 +135,7 @@ class View : ReactComponent<MainViewModel>
         {
             children =
             {
-                BuildLeftMenuContent()
+                new LeftMenuContent()
             },
             style =
             {
@@ -172,51 +153,4 @@ class View : ReactComponent<MainViewModel>
             }
         };
     }
-    
-    static Element BuildLeftMenuContent()
-    {
-        return new div
-        {
-            children =
-            {
-                new VSpace(20),
-                toSidebarMenuItem("1 - Anasayfa",PageId.MainPage),
-                new VSpace(20),
-                toSidebarMenuItem("2 - Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.SecuringDataWithCurrentTechnology),
-                new VSpace(20),
-                toSidebarMenuItem("3 - Ön Bilgiler",PageId.MainPage),
-                new VSpace(20),
-                toSidebarMenuItem("4 - Başlangıç Harfleri",PageId.InitialLetters),
-                new VSpace(20),
-                toSidebarMenuItem("5 - Soru - Cevap",PageId.MainPage),
-                new VSpace(20),
-                toSidebarMenuItem("6 - İletişim",PageId.ContactPage),
-            },
-            style =
-            {
-                width_height = "100%",
-                display = "flex",
-                flexDirection = "column",
-                alignItems = "center",
-                textAlign = "center"
-            }
-        };
-
-        static Element toSidebarMenuItem(string text, string id)
-        {
-            return new a
-            {
-                className = "q-sidebarlink",
-                innerText = text,
-                href      = GetPageLink(id),
-                style     = { padding = "10px", textDecoration = "none", color = "Black", overflowWrap = "break-word"}
-            };
-        }
-
-
-    }
-    
-  
-
 }
-
