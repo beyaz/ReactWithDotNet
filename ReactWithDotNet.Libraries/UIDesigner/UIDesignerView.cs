@@ -25,7 +25,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     {
         var propertyPanel = new VPanel
         {
-            style = { margin = "5px" },
+            style = { margin = "5px"},
             children =
             {
                 new FolderSelectionView
