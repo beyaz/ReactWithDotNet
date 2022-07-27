@@ -6,7 +6,6 @@ using System.Text;
 using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet;
 using ReactWithDotNet.PrimeReact;
-using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -84,7 +83,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         if (state.IsBlocked)
         {
-            return BlockUI(searchPanel, state.IsBlocked, state.OperationName);
+            return new CalculatingComponent { searchPanel };
         }
 
         var summaryContent = new HPanel
@@ -176,7 +175,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return el;
         }
 
-        return BlockUI(new VPanel { searchPanel, results }, state.IsBlocked, state.OperationName);
+        return new div
+        {
+            children = { searchPanel, results },
+            style =
+            {
+                display = "flex", flexDirection = "column", alignItems = "stretch"
+            }
+        };
     }
     #endregion
 
@@ -188,7 +194,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (state.IsBlocked == false)
         {
             state.ResultRecords = null;
-            state.OperationName = "Hesaplanıyor...";
             state.IsBlocked     = true;
             Context.ClientTask.PushHistory("", $"/index.html?page=CharacterCounting&q={state.ChapterFilter}|{state.SearchCharacters}");
             Context.ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
@@ -247,7 +252,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         state.CountOfCharacters = matchRecords.Count;
 
         state.IsBlocked     = false;
-        state.OperationName = null;
 
         var sb = new StringBuilder();
         foreach (var (charachter, count) in counts)

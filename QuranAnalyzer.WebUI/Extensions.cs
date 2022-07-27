@@ -5,24 +5,19 @@ using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI;
 
-static class Extensions
+class CalculatingComponent : ReactComponent
 {
-
-    public static string GetPageLink(string pageId) => "/index.html?page=" + pageId;
-    
-    public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
-
-    public static Element BlockUI(Element content, bool isBlocked, string operationMessage)
+    public override Element render()
     {
         return new BlockUI
         {
-            blocked = isBlocked,
+            blocked = true,
             template = new div
             {
                 children =
                 {
                     new i { className   = "pi pi-spin pi-spinner" },
-                    new div { innerText = operationMessage, style = { color = "White", marginLeft = "5px"} }
+                    new div { innerText = "Hesaplanıyor...", style = { color = "White", marginLeft = "5px"} }
                 },
                 style =
                 {
@@ -32,10 +27,14 @@ static class Extensions
                 }
             },
 
-            children =
-            {
-                content
-            }
+            Children = children
         };
     }
+}
+
+static class Extensions
+{
+    public static string GetPageLink(string pageId) => "/index.html?page=" + pageId;
+    
+    public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
 }

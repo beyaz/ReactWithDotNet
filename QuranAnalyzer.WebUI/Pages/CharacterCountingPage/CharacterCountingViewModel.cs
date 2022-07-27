@@ -10,7 +10,6 @@ public class CharacterCountingViewModel
     public string SummaryText { get; set; }
 
     
-    public string OperationName { get; set; }
     public bool IsBlocked { get; set; }
 
     public string ChapterFilter { get; set; }

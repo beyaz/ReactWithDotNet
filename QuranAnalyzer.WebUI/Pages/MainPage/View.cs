@@ -161,7 +161,7 @@ class View : ReactComponent<MainViewModel>
             {
                 position   = "fixed",
                 height     = "calc(100% - 50px)",
-                width      =  "70%",
+                width      =  hamburgerMenuIsOpen ? "70%" : "0px",
                 maxWidth   = "400px",
                 top        = "50px",
                 background = "white",
