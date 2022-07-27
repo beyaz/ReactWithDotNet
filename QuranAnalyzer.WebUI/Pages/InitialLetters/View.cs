@@ -678,7 +678,7 @@ public class View : ReactComponent
 
         return new div
         {
-           style={ display = "flex", flexDirection = "row" , fontSize = Context.AvailableWidth < 400 ? "5px": null },
+           style={ display = "flex", flexDirection = "row" , fontSize = Context.ClientWidth < 400 ? "5px": null },
            children =
            {
                table,

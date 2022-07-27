@@ -59,8 +59,8 @@ public sealed class ReactContext
 
     public ClientTaskCollection ClientTask { get;  } = new();
 
-    public double AvailableWidth { get; internal set; }
-    public double AvailableHeight { get; internal set; }
+    public double ClientWidth { get; internal set; }
+    public double ClientHeight { get; internal set; }
     public NameValueCollection Query { get; internal set; }
 
 }

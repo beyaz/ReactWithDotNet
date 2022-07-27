@@ -22,8 +22,8 @@ public sealed class ClientStateInfo
 [Serializable]
 public class ComponentRequest
 {
-    public double AvailableHeight { get; set; }
-    public double AvailableWidth { get; set; }
+    public double ClientHeight { get; set; }
+    public double ClientWidth { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
     public string EventHandlerMethodName { get; set; }
@@ -64,8 +64,8 @@ public static class ComponentRequestHandler
         var context = new ReactContext
         {
             Query = string.IsNullOrWhiteSpace(request.SearchPartOfUrl) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.SearchPartOfUrl),
-            AvailableWidth = request.AvailableWidth,
-            AvailableHeight = request.AvailableHeight
+            ClientWidth = request.ClientWidth,
+            ClientHeight = request.ClientHeight
         };
 
         return context;

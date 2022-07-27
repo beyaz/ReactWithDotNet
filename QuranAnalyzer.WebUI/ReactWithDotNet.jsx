@@ -735,8 +735,8 @@ function SendRequest(request, onSuccess)
 
     function BeforeSendRequest(request)
     {
-        request.AvailableWidth  = document.documentElement.clientWidth;
-        request.AvailableHeight = document.documentElement.clientHeight;
+        request.ClientWidth  = document.documentElement.clientWidth;
+        request.ClientHeight = document.documentElement.clientHeight;
         request.SearchPartOfUrl = window.location.search;
     }
 }
