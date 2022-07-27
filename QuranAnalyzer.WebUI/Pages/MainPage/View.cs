@@ -51,10 +51,7 @@ class View : ReactComponent<MainViewModel>
         
         StateInitialized += () =>
         {
-            if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("page", out var pageId))
-            {
-                state.PageId = pageId;
-            }
+            state.PageId = Context.Query["page"];
         };
     }
 

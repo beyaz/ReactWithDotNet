@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Web;
 
 namespace ReactWithDotNet;
 
@@ -59,11 +61,12 @@ public static class ComponentRequestHandler
 
     static  ReactContext CreateContext(ComponentRequest request)
     {
-        var context = new ReactContext();
-
-        context.Insert(BrowserInformation.UrlParameters, Mixin.ParseQueryString(request.SearchPartOfUrl));
-        context.Insert(BrowserInformation.AvailableWidth, request.AvailableWidth);
-        context.Insert(BrowserInformation.AvailableHeight, request.AvailableHeight);
+        var context = new ReactContext
+        {
+            Query = string.IsNullOrWhiteSpace(request.SearchPartOfUrl) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.SearchPartOfUrl),
+            AvailableWidth = request.AvailableWidth,
+            AvailableHeight = request.AvailableHeight
+        };
 
         return context;
     }

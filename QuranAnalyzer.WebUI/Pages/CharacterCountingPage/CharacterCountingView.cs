@@ -20,7 +20,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             if (state.ChapterFilter == null)
             {
-                if (Context.TryGetValue(BrowserInformation.UrlParameters).TryGetValue("q", out var value))
+                var value = Context.Query["q"];
+                if (value is not null)
                 {
                     state.ChapterFilter    = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
                     state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];

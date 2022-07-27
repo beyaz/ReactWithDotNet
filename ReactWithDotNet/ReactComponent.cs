@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
@@ -26,11 +27,8 @@ public abstract class ReactComponent : Element, IReactStatelessComponent
     public abstract Element render();
 }
 
-
 public sealed class ReactContext
 {
-    
-    
     readonly Dictionary<string, object> map = new();
 
     public TValue TryGetValue<TValue>(ReactContextKey<TValue> key)
@@ -56,13 +54,14 @@ public sealed class ReactContext
             return;
         }
 
-
         map.Add(key, value);
-
     }
 
     public ClientTaskCollection ClientTask { get;  } = new();
 
+    public double AvailableWidth { get; internal set; }
+    public double AvailableHeight { get; internal set; }
+    public NameValueCollection Query { get; internal set; }
 
 }
 
@@ -79,18 +78,6 @@ public sealed class ReactContextKey<TValue>
         Key = key;
     }
 }
-
-
-
-public static class BrowserInformation
-{
-    public static ReactContextKey<double> AvailableWidth = new(nameof(AvailableWidth));
-    public static ReactContextKey<double> AvailableHeight = new(nameof(AvailableHeight));
-    public static ReactContextKey<IReadOnlyDictionary<string, string>> UrlParameters = new(nameof(UrlParameters));
-
-}
-
-
 
 public sealed class ClientTaskCollection
 {
