@@ -132,7 +132,8 @@ class MainPage : ReactComponent
    public Element mainContent;
    public Element menu;
    public double mainDivScrollY;
-    
+
+   public bool IsBackDropActive { get; set; }
    
     public override Element render()
     {
@@ -158,6 +159,7 @@ class MainPage : ReactComponent
             top.style.boxShadow    = "0 1px 2px hsla(0,0%,0%,0.05),0 1px 4px hsla(0,0%,0%,0.05),0 2px 8px hsla(0,0%,0%,0.05)";
         }
 
+        var backDrop = new div { className = "p-blockui p-component-overlay p-component-overlay-enter",style = { zIndex = "3"}};
         var main = new div
         {
             id = "main",
@@ -165,9 +167,10 @@ class MainPage : ReactComponent
             {
                 new div
                 {
-                    style = { display = "flex", justifyContent = "center" },
+                    style = { display = "flex", justifyContent = "center", height = "100%"},
                     children =
                     {
+                        IsBackDropActive ? backDrop : null,
                         new div
                         {
                             style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px" },

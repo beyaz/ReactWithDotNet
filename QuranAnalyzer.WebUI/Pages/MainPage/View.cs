@@ -77,7 +77,8 @@ class View : ReactComponent<MainViewModel>
             topContent     = buildTopNav(),
             mainContent    = state.HamburgerMenuIsOpen ? new BlockUI{   blocked = true, children = { buildMainContent() } } : buildMainContent(),
             menu           = buildLeftMenu(),
-            mainDivScrollY = state.MainDivScrollY
+            mainDivScrollY = state.MainDivScrollY,
+            IsBackDropActive = state.HamburgerMenuIsOpen
         };
 
         Element buildMainContent()
