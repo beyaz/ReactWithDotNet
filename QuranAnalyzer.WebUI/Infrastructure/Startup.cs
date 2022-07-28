@@ -6,8 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using ReactWithDotNet;
 
-namespace ReactWithDotNet.Demo;
+namespace QuranAnalyzer.WebUI;
 
 public class Startup
 {

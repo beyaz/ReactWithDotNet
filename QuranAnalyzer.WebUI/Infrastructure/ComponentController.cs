@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using ReactWithDotNet;
 
-namespace ReactWithDotNet.Demo;
+namespace QuranAnalyzer.WebUI;
 
 [ApiController]
 [Route("[controller]")]
@@ -12,21 +13,5 @@ public class ComponentController : ControllerBase
     public ComponentResponse HandleRequest(ComponentRequest request)
     {
         return ComponentRequestHandler.HandleRequest(request, Type.GetType);
-    }
-}
-
-[ApiController]
-[Route("[controller]")]
-public class HomeController : ControllerBase
-{
-    [HttpGet]
-    public ContentResult Index()
-    {
-        var html = System.IO.File.ReadAllText("index.html");
-        return new ContentResult
-        {
-            Content     = html,
-            ContentType = "text/html"
-        };
     }
 }
