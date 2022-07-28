@@ -1,72 +1,54 @@
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 
-namespace ReactWithDotNet.Demo
+namespace ReactWithDotNet.Demo;
+
+public class Startup
 {
-
-    
-
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllers();
+
+        services.AddControllers().AddJsonOptions(j => { j.JsonSerializerOptions.ModifyForReactWithDotNet(); });
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
         {
-            Configuration = configuration;
+            app.UseDeveloperExceptionPage();
         }
 
-        public IConfiguration Configuration { get; }
+        app.UseHttpsRedirection();
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        app.UseRouting();
+
+        app.UseFileServer(new FileServerOptions
         {
-            services.AddControllers();
-
-            
-            services.AddControllers().AddJsonOptions(j =>
+            FileProvider       = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "")),
+            EnableDefaultFiles = true,
+            StaticFileOptions =
             {
-                j.JsonSerializerOptions.ModifyForReactWithDotNet();
-            });
-
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
+                HttpsCompression  = HttpsCompressionMode.Compress,
+                OnPrepareResponse = _ => { }
             }
+        });
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseFileServer(new FileServerOptions
-            {
-                FileProvider       = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "")),
-                EnableDefaultFiles = true,
-                StaticFileOptions =
-                {
-                    HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
-                    OnPrepareResponse = (e) =>
-                    {
-                        e.ToString();
-                    }
-                }
-            });
-
-            // app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
-            
-        }
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 }
