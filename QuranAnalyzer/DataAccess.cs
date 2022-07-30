@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using static QuranAnalyzer.ArabicCharacters;
 
 namespace QuranAnalyzer;
 
@@ -34,10 +35,10 @@ public static class DataAccess
     public static string[] harfler =
     {
         ArabicCharacters.Alif,
-        ArabicCharacters.Baa,
-        ArabicCharacters.Taa,
-        ArabicCharacters.Thaa,
-        ArabicCharacters.Jiim,
+        Baa,
+        Taa,
+        Thaa,
+        Jiim,
         "ح",
         "خ",
         "د",
@@ -95,8 +96,8 @@ public static class DataAccess
         10
     };
 
-    static readonly string[] Alif = { "ٱ", "إ", "أ", "ﺍ" };
-    static readonly string[] AlifWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
+    static readonly string[] AlifCombination = { "ٱ", "إ", "أ", "ﺍ" };
+    static readonly string[] AlifCombinationWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
 
 
     public static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
@@ -131,7 +132,7 @@ public static class DataAccess
             //Elif harfi için ayrıca tarama (+)
             if (i == 0)
             {
-                foreach (var item in isHemzeActive ? AlifWithHamza : Alif)
+                foreach (var item in isHemzeActive ? AlifCombinationWithHamza : AlifCombination)
                 {
                     var matchInfo = tryMatch(item);
                     if (matchInfo != null)
