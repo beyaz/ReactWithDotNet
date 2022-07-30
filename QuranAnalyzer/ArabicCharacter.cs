@@ -33,10 +33,7 @@ public static class ArabicCharacter
     public const string Waaw  = "و";
     public const string Yaa   = "ي";
     // @formatter:on
-}
 
-public static partial class DataAccess
-{
     public static string[] AllArabicLetters =
     {
         Alif,

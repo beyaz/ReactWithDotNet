@@ -11,12 +11,12 @@ public static class QuranAnalyzerMixin
     #region Public Methods
     public static Response<string> AsArabicCharacter(this int arabicCharacterIndex)
     {
-        return AllArabicLetters.GetValueAt(arabicCharacterIndex);
+        return ArabicCharacter.AllArabicLetters.GetValueAt(arabicCharacterIndex);
     }
 
     public static Response<int> AsArabicCharacterIndex(this string character)
     {
-        return AllArabicLetters.GetIndex(character);
+        return ArabicCharacter.AllArabicLetters.GetIndex(character);
     }
 
     public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, string character, MushafOptions option = null)
@@ -50,7 +50,7 @@ public static class QuranAnalyzerMixin
     {
         var charachterList = searchCharachters.AsClearArabicCharacterList();
 
-        var indexList = charachterList.Select(x => Array.IndexOf(AllArabicLetters, x)).ToList();
+        var indexList = charachterList.Select(x => Array.IndexOf(ArabicCharacter.AllArabicLetters, x)).ToList();
         if (indexList.Count == 0)
         {
             return "En az bir harf girilmelidir.";

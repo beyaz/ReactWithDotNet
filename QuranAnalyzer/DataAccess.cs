@@ -28,7 +28,7 @@ public sealed class Verse
     public string Id=> $"{ChapterNumber}:{_index}";
 }
 
-public static partial class DataAccess
+public static  class DataAccess
 {
     public static readonly Surah[] AllSurahs = JsonSerializer.Deserialize<Surah[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
 
