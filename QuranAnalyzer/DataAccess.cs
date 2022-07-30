@@ -95,6 +95,10 @@ public static class DataAccess
         10
     };
 
+    static readonly string[] Alif = { "ٱ", "إ", "أ", "ﺍ" };
+    static readonly string[] AlifWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
+
+
     public static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
     {
         string line = verse._bismillah + verse._text;
@@ -127,19 +131,7 @@ public static class DataAccess
             //Elif harfi için ayrıca tarama (+)
             if (i == 0)
             {
-                string[] arr = null;
-
-                //Hemze dahil ediliyor. Elif olarak
-                if (isHemzeActive)
-                {
-                    arr = new[] {"ٱ", "إ", "أ", "ﺍ", "ء", "ٔ"};
-                }
-                else
-                {
-                    arr = new[] {"ٱ", "إ", "أ", "ﺍ"};
-                }
-
-                foreach (var item in arr)
+                foreach (var item in isHemzeActive ? AlifWithHamza : Alif)
                 {
                     var matchInfo = tryMatch(item);
                     if (matchInfo != null)
