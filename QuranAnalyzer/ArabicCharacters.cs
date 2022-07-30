@@ -2,8 +2,6 @@
 
 public static class ArabicCharacters
 {
-    #region Static Fields
-    
     // @formatter:off
     public const string Alif = "ا";
     public const string Baa = "ب";
@@ -34,23 +32,11 @@ public static class ArabicCharacters
     public const string Waaw = "و";
     public const string Yaa = "ي";
     // @formatter:on
-
-
-
-
-
-
-
-
-
-
-
-
-    #endregion
 }
-
 
 public static class ArabicCharacterIndex
 {
+    #region Public Properties
     public static int Elif => DataAccess.harfler.GetIndex(ArabicCharacters.Alif).Value;
+    #endregion
 }
