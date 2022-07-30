@@ -11,6 +11,16 @@ public static class VerseFilter
     #region Public Methods
     public static Response<IReadOnlyList<Verse>> GetVerseList(string searchScript)
     {
+        if (string.IsNullOrWhiteSpace(searchScript))
+        {
+            return "Arama kriteri boş olamaz";
+        }
+
+        if (searchScript.Trim() == "*")
+        {
+            return AllSurahs.SelectMany(x => x.Verses).ToList();
+        }
+        
         var returnList = new List<Verse>();
 
         var items = searchScript.Split(',', StringSplitOptions.RemoveEmptyEntries);

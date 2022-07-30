@@ -10,9 +10,13 @@ namespace QuranAnalyzer;
 public class CharacterCountingTests
 {
     #region Public Methods
+    
+    
     [TestMethod]
     public void AnalyzeVerseTest()
     {
+        CountShouldBe("*", Daad, 1686);
+
         Analyzer.AnalyzeVerse(new Verse { _text = "طه" }).Count.Should().Be(2);
         Analyzer.AnalyzeVerse(new Verse { _text = "طه" })[0].ArabicCharacterIndex.Should().Be(15);
         Analyzer.AnalyzeVerse(new Verse { _text = "طه" })[1].ArabicCharacterIndex.Should().Be(25);

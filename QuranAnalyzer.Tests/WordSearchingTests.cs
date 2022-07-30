@@ -17,6 +17,9 @@ namespace QuranAnalyzer
     [TestClass]
     public class WordSearchingTests
     {
+        
+
+
         static int GetCountOfWord(string searchWord)
         {
             var searchList = WordSearcher.AsClearArabicCharacterList(searchWord);

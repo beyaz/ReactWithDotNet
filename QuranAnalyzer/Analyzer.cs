@@ -1,4 +1,6 @@
-﻿namespace QuranAnalyzer;
+﻿using System.Globalization;
+
+namespace QuranAnalyzer;
 
 public static class Analyzer
 {
@@ -48,9 +50,24 @@ public static class Analyzer
                 continue;
             }
 
-            items.Add(new MatchInfo { ArabicCharacterIndex = -1, StartIndexInVerseText = cursor, Verse = verse });
+            // check is special char like space or
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(line[cursor]);
 
-            cursor++;
+                if (unicodeCategory == UnicodeCategory.NonSpacingMark ||
+                    unicodeCategory == UnicodeCategory.SpaceSeparator ||
+                    unicodeCategory == UnicodeCategory.ModifierLetter ||
+                    line[cursor] == '۩')
+                {
+                    items.Add(new MatchInfo { ArabicCharacterIndex = -1, StartIndexInVerseText = cursor, Verse = verse });
+
+                    cursor++;
+
+                    continue;
+                }
+            }
+
+            throw new InvalidOperationException("Arabic letter is not recognized.");
         }
 
         return items;
