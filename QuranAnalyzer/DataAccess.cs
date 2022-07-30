@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using static QuranAnalyzer.ArabicCharacter;
+using static QuranAnalyzer.ArabicLetter;
 
 namespace QuranAnalyzer;
 

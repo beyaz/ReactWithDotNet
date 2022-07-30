@@ -1,7 +1,6 @@
 ﻿namespace QuranAnalyzer;
-using static QuranAnalyzer.ArabicCharacter;
 
-public static class ArabicCharacter
+public static class ArabicLetter
 {
     // @formatter:off
     public const string Alif  = "ا";

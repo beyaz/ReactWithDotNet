@@ -11,12 +11,12 @@ public static class QuranAnalyzerMixin
     #region Public Methods
     public static Response<string> AsArabicCharacter(this int arabicCharacterIndex)
     {
-        return ArabicCharacter.AllArabicLetters.GetValueAt(arabicCharacterIndex);
+        return ArabicLetter.AllArabicLetters.GetValueAt(arabicCharacterIndex);
     }
 
     public static Response<int> AsArabicCharacterIndex(this string character)
     {
-        return ArabicCharacter.AllArabicLetters.GetIndex(character);
+        return ArabicLetter.AllArabicLetters.GetIndex(character);
     }
 
     public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, string character, MushafOptions option = null)
@@ -25,17 +25,17 @@ public static class QuranAnalyzerMixin
 
         Response<int> calculateCount(Verse verse)
         {
-            if (character == ArabicCharacter.Alif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
+            if (character == ArabicLetter.Alif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
             {
                 return SpecifiedByRK.RealElifCounts[verse.Id];
             }
 
-            if (character == ArabicCharacter.Saad && option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten && verse.Id == "7:69")
+            if (character == ArabicLetter.Saad && option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten && verse.Id == "7:69")
             {
                 return SpecifiedByRK.SS[verse.Id];
             }
 
-            if (character == ArabicCharacter.Laam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(verse.Id))
+            if (character == ArabicLetter.Laam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(verse.Id))
             {
                 return SpecifiedByRK.Lam[verse.Id];
             }
@@ -50,7 +50,7 @@ public static class QuranAnalyzerMixin
     {
         var charachterList = searchCharachters.AsClearArabicCharacterList();
 
-        var indexList = charachterList.Select(x => Array.IndexOf(ArabicCharacter.AllArabicLetters, x)).ToList();
+        var indexList = charachterList.Select(x => Array.IndexOf(ArabicLetter.AllArabicLetters, x)).ToList();
         if (indexList.Count == 0)
         {
             return "En az bir harf girilmelidir.";
@@ -97,7 +97,7 @@ public static class QuranAnalyzerMixin
         {
             if (mushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten)
             {
-                var sadIndex = ArabicCharacter.Saad.AsArabicCharacterIndex().Value;
+                var sadIndex = ArabicLetter.Saad.AsArabicCharacterIndex().Value;
 
                 if (arabicCharacterIndex == sadIndex)
                 {

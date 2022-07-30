@@ -3,6 +3,6 @@
 public static class ArabicCharacterIndex
 {
     #region Public Properties
-    public static int Elif => ArabicCharacter.AllArabicLetters.GetIndex(ArabicCharacter.Alif).Value;
+    public static int Elif => ArabicLetter.AllArabicLetters.GetIndex(ArabicLetter.Alif).Value;
     #endregion
 }

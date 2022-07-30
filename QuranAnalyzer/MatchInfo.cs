@@ -22,7 +22,7 @@ public class MatchInfo
         {
             if (ArabicCharacterIndex >= 0)
             {
-                return ArabicCharacter.AllArabicLetters[ArabicCharacterIndex];
+                return ArabicLetter.AllArabicLetters[ArabicCharacterIndex];
             }
 
             return Verse._text[StartIndexInVerseText].ToString();
