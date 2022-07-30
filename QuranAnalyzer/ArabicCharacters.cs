@@ -19,6 +19,10 @@ public static class ArabicCharacters
     public const string Saad = "ص";
     public const string Daad = "ض";
 
+    public const string Zaa = "ظ";
+    public const string Ayn = "ع";
+    public const string Ghayn = "غ";
+
 
     public const string Kaf = "ق";
     
@@ -30,7 +34,7 @@ public static class ArabicCharacters
 
     public const string Kef = "ك";
     public const string Ha = "ه";
-    public const string Ayn = "ع";
+    
 
     
 
