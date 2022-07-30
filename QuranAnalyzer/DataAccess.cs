@@ -34,7 +34,7 @@ public static class DataAccess
 
     public static string[] harfler =
     {
-        ArabicCharacters.Alif,
+        Alif,
         Baa,
         Taa,
         Thaa,
