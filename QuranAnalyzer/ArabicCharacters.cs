@@ -3,6 +3,8 @@
 public static class ArabicCharacters
 {
     #region Static Fields
+    
+    // @formatter:off
     public const string Alif = "ا";
     public const string Baa = "ب";
     public const string Taa = "ت";
@@ -31,19 +33,19 @@ public static class ArabicCharacters
     public const string Haa_ = "ه";
     public const string Waaw = "و";
     public const string Yaa = "ي";
-    
-    
-    
+    // @formatter:on
 
-    
-    
-    
 
-    
 
-    
 
-    
+
+
+
+
+
+
+
+
     #endregion
 }
 
