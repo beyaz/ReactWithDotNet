@@ -28,6 +28,7 @@ public static class ArabicCharacters
     public const string Laam = "ل";
     public const string Miim = "م";
     public const string Nun = "ن";
+    public const string Haa_ = "ه";
     public const string Waaw = "و";
     public const string Yaa = "ي";
     
@@ -35,7 +36,7 @@ public static class ArabicCharacters
     
 
     
-    public const string Ha = "ه";
+    
     
 
     

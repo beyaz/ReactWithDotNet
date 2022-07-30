@@ -78,7 +78,7 @@ public class CharacterCountingTests
     public void Chapter_19()
     {
         CountShouldBe("19:*", Kaaf, 137);
-        CountShouldBe("19:*", Ha, 175);
+        CountShouldBe("19:*", Haa_, 175);
         CountShouldBe("19:*", Yaa, 343);
         CountShouldBe("19:*", Ayn, 117);
         CountShouldBe("19:*", Saad, 26);
@@ -96,8 +96,8 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_20_26_27_28()
     {
-        CountShouldBe("19:*", Ha, 175);
-        CountShouldBe("20:*", Ha, 251);
+        CountShouldBe("19:*", Haa_, 175);
+        CountShouldBe("20:*", Haa_, 251);
 
         CountShouldBe("20:*", T, 28);
         CountShouldBe("26:*", T, 33);
