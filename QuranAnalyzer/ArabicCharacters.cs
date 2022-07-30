@@ -22,9 +22,8 @@ public static class ArabicCharacters
     public const string Zaa = "ظ";
     public const string Ayn = "ع";
     public const string Ghayn = "غ";
-
-
-    public const string Kaf = "ق";
+    public const string Faa = "ف";
+    public const string Qaaf = "ق";
     
     
     public const string Ya = "ي";
