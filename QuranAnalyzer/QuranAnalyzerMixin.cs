@@ -107,7 +107,7 @@ public static class QuranAnalyzerMixin
 
             if (mushafOptions.UseElifCountsSpecifiedByRK)
             {
-                if (ArabicCharacterIndex.Elif == arabicCharacterIndex)
+                if (ArabicLetterIndex.Alif == arabicCharacterIndex)
                 {
                     foreach (var key in SpecifiedByRK.RealElifCounts.Keys)
                     {
