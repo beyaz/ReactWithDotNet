@@ -1,7 +1,7 @@
 ﻿using ReactWithDotNet;
 using ReactWithDotNet.PrimeReact;
 
-namespace QuranAnalyzer.WebUI;
+namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 class CalculatingComponent : ReactComponent
 {
