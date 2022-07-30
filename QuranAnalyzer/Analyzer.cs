@@ -79,6 +79,8 @@ public static class Analyzer
 
         var line = verse._bismillah + verse._text;
 
+        TryRead(line, startIndex, isHemzeActive);
+
         for (var arabicLetterIndex = 0; arabicLetterIndex < ArabicLetter.AllArabicLetters.Length; arabicLetterIndex++)
         {
             foreach (var alternativeForm in alternativeForms)
@@ -124,6 +126,42 @@ public static class Analyzer
                 Verse                 = verse,
             };
         }
+    }
+
+    static LetterMatchInfo TryRead(string line, int startIndex, bool isHemzeActive)
+    {
+        var alternativeForms = GetAlternativeForms(isHemzeActive);
+
+        for (var arabicLetterIndex = 0; arabicLetterIndex < ArabicLetter.AllArabicLetters.Length; arabicLetterIndex++)
+        {
+            foreach (var alternativeForm in alternativeForms)
+            {
+                if (alternativeForm.ArabicLetterIndex == arabicLetterIndex)
+                {
+                    foreach (var form in alternativeForm.Forms)
+                    {
+                        var matchInfo = tryMatch(form, arabicLetterIndex);
+                        if (matchInfo != null)
+                        {
+                            return matchInfo;
+                        }
+                    }
+                }
+            }
+
+            // normal match
+            {
+                var matchInfo = tryMatch(ArabicLetter.AllArabicLetters[arabicLetterIndex], arabicLetterIndex);
+                if (matchInfo != null)
+                {
+                    return matchInfo;
+                }
+            }
+        }
+
+        return null;
+
+        LetterMatchInfo tryMatch(string searchCharacter, int arabicCharacterIndex)=> TryMatch(line, startIndex, searchCharacter, arabicCharacterIndex);
     }
 
     static LetterMatchInfo TryMatch(string line, int startIndex, string searchLetter, int arabicLetterIndex)
