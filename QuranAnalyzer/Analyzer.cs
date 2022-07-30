@@ -33,7 +33,7 @@ public static class Analyzer
     
     static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
     {
-        string line = verse._bismillah + verse._text;
+        var line = verse._bismillah + verse._text;
 
         for (var i = 0; i < ArabicLetter.AllArabicLetters.Length; i++)
         {
