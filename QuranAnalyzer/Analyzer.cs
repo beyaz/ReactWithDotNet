@@ -64,33 +64,35 @@ public static class Analyzer
         var alternativeForms  = GetAlternativeForms(isHemzeActive);
 
         var line = verse._bismillah + verse._text;
-        
+
+
+        MatchInfo tryMatch(string searchCharacter, int arabicCharacterIndex)
+        {
+            if (startIndex + searchCharacter.Length > line.Length)
+            {
+                return null;
+            }
+
+            var value = line.Substring(startIndex, searchCharacter.Length);
+
+            var isMatch = value == searchCharacter;
+            if (isMatch)
+            {
+                return new MatchInfo
+                {
+                    StartIndexInVerseText = startIndex,
+                    ArabicCharacterIndex  = arabicCharacterIndex,
+                    Verse                 = verse,
+                    MatchedLetter         = value
+                };
+            }
+
+            return null;
+        }
 
         for (var i = 0; i < ArabicLetter.AllArabicLetters.Length; i++)
         {
-            MatchInfo tryMatch(string searchCharacter)
-            {
-                if (startIndex + searchCharacter.Length > line.Length)
-                {
-                    return null;
-                }
-
-                var value = line.Substring(startIndex, searchCharacter.Length);
-
-                var isMatch = value == searchCharacter;
-                if (isMatch)
-                {
-                    return new MatchInfo
-                    {
-                        StartIndexInVerseText = startIndex,
-                        ArabicCharacterIndex  = i,
-                        Verse                 = verse,
-                        MatchedLetter         = value
-                    };
-                }
-
-                return null;
-            }
+            
 
             foreach (var alternativeForm in alternativeForms)
             {
@@ -98,7 +100,7 @@ public static class Analyzer
                 {
                     foreach (var form in alternativeForm.Forms)
                     {
-                        var matchInfo = tryMatch(form);
+                        var matchInfo = tryMatch(form, i);
                         if (matchInfo != null)
                         {
                             return matchInfo;
@@ -110,7 +112,7 @@ public static class Analyzer
 
             // normal match
             {
-                var matchInfo = tryMatch(ArabicLetter.AllArabicLetters[i]);
+                var matchInfo = tryMatch(ArabicLetter.AllArabicLetters[i], i);
                 if (matchInfo != null)
                 {
                     return matchInfo;
