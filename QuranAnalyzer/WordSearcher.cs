@@ -188,6 +188,19 @@ namespace QuranAnalyzer
                 int a               = data[position];
                 var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(data[position]);
 
+
+                if (a != ' ' && a != '۩' )
+                {
+                    if (UnicodeCategory.NonSpacingMark != unicodeCategory && UnicodeCategory.ModifierLetter != unicodeCategory)
+                    {
+                        unicodeCategory.ToString();
+                    }
+                }
+                
+                
+              
+                
+                
                 var digitValue = CharUnicodeInfo.GetDigitValue(data[position]);
 
 
