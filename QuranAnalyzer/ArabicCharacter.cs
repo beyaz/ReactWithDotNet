@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer;
 
-public static class ArabicCharacters
+public static class ArabicCharacter
 {
     // @formatter:off
     public const string Alif  = "ا";
@@ -37,6 +37,6 @@ public static class ArabicCharacters
 public static class ArabicCharacterIndex
 {
     #region Public Properties
-    public static int Elif => DataAccess.harfler.GetIndex(ArabicCharacters.Alif).Value;
+    public static int Elif => DataAccess.harfler.GetIndex(ArabicCharacter.Alif).Value;
     #endregion
 }

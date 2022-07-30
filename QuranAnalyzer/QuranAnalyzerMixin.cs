@@ -25,17 +25,17 @@ public static class QuranAnalyzerMixin
 
         Response<int> calculateCount(Verse verse)
         {
-            if (character == ArabicCharacters.Alif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
+            if (character == ArabicCharacter.Alif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
             {
                 return SpecifiedByRK.RealElifCounts[verse.Id];
             }
 
-            if (character == ArabicCharacters.Saad && option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten && verse.Id == "7:69")
+            if (character == ArabicCharacter.Saad && option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten && verse.Id == "7:69")
             {
                 return SpecifiedByRK.SS[verse.Id];
             }
 
-            if (character == ArabicCharacters.Laam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(verse.Id))
+            if (character == ArabicCharacter.Laam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(verse.Id))
             {
                 return SpecifiedByRK.Lam[verse.Id];
             }
@@ -97,7 +97,7 @@ public static class QuranAnalyzerMixin
         {
             if (mushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten)
             {
-                var sadIndex = ArabicCharacters.Saad.AsArabicCharacterIndex().Value;
+                var sadIndex = ArabicCharacter.Saad.AsArabicCharacterIndex().Value;
 
                 if (arabicCharacterIndex == sadIndex)
                 {

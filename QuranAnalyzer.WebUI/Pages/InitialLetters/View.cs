@@ -125,18 +125,18 @@ public class View : ReactComponent
 {
     public override Element render()
     {
-        const string Elif = "Elif-" + ArabicCharacters.Alif;
-        const string Lam  = "Lam-" + ArabicCharacters.Laam;
-        const string Mim  = "Mim-" + ArabicCharacters.Miim;
-        const string Sad  = "Sad-" + ArabicCharacters.Saad;
-        const string Kaf  = "Kāf-"+ ArabicCharacters.Qaaf;
-        const string Ha   = "Hā-" + ArabicCharacters.Haa;
-        const string Ya   = "Yāʾ-" + ArabicCharacters.Yaa;
-        const string Ain  = "ʿAin-" + ArabicCharacters.Ayn;
-        const string Ra   = "Rāʾ-" + ArabicCharacters.Raa;
-        const string Ta   = "Ṭāʾ-" + ArabicCharacters.Taa_;
-        const string Sin  = "Sīn-" + ArabicCharacters.Siin;
-        const string Nun  = "Nūn-" + ArabicCharacters.Nun;
+        const string Elif = "Elif-" + ArabicCharacter.Alif;
+        const string Lam  = "Lam-" + ArabicCharacter.Laam;
+        const string Mim  = "Mim-" + ArabicCharacter.Miim;
+        const string Sad  = "Sad-" + ArabicCharacter.Saad;
+        const string Kaf  = "Kāf-"+ ArabicCharacter.Qaaf;
+        const string Ha   = "Hā-" + ArabicCharacter.Haa;
+        const string Ya   = "Yāʾ-" + ArabicCharacter.Yaa;
+        const string Ain  = "ʿAin-" + ArabicCharacter.Ayn;
+        const string Ra   = "Rāʾ-" + ArabicCharacter.Raa;
+        const string Ta   = "Ṭāʾ-" + ArabicCharacter.Taa_;
+        const string Sin  = "Sīn-" + ArabicCharacter.Siin;
+        const string Nun  = "Nūn-" + ArabicCharacter.Nun;
 
 
         var table = new table
@@ -165,7 +165,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = $"2:*|{ArabicCharacters.Alif},{ArabicCharacters.Laam},{ArabicCharacters.Miim}" } }
+                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = $"2:*|{ArabicCharacter.Alif},{ArabicCharacter.Laam},{ArabicCharacter.Miim}" } }
                 },
 
                 new tr
@@ -407,7 +407,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = $"7:*,19:*,38:*|{ArabicCharacters.Saad}" } }
+                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = $"7:*,19:*,38:*|{ArabicCharacter.Saad}" } }
                 },
 
                 new tr

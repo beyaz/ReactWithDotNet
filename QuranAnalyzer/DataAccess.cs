@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using static QuranAnalyzer.ArabicCharacters;
+using static QuranAnalyzer.ArabicCharacter;
 
 namespace QuranAnalyzer;
 
@@ -64,37 +64,7 @@ public static class DataAccess
         Yaa
     };
 
-    public static int[] harflerebced =
-    {
-        1,
-        2,
-        400,
-        500,
-        3,
-        8,
-        600,
-        4,
-        700,
-        200,
-        7,
-        60,
-        300,
-        90,
-        800,
-        9,
-        900,
-        70,
-        1000,
-        80,
-        100,
-        20,
-        30,
-        40,
-        50,
-        5,
-        6,
-        10
-    };
+  
 
     static readonly string[] AlifCombination = { "ٱ", "إ", "أ", "ﺍ" };
     static readonly string[] AlifCombinationWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
