@@ -15,7 +15,7 @@ class MushafOptionsView:ReactComponent
     public Expression<Func<bool>> Bestaten_7_69 { get; set; }
 
     public Expression<Func<bool>> UseElifReferencesFromTanzil { get; set; }
-    
+    public Expression<Func<bool>> CountHamzaAsAlif { get; set; }
 
     public override Element render()
     {
@@ -50,6 +50,19 @@ class MushafOptionsView:ReactComponent
                         },
                         new HSpace(15),
                         new h5{text = "7:69 daki bestaten'i Sad olarak say"}
+                    }
+                },
+                new div
+                {
+                    style = {  display = "flex", flexDirection = "row", alignItems = "center"},
+                    children =
+                    {
+                        new InputSwitch
+                        {
+                            checkedBind = CountHamzaAsAlif
+                        },
+                        new HSpace(15),
+                        new h5{text = "Hemzeleri Elif(ﺍ) olarak say"}
                     }
                 },
                 new a{text = "Mushaf ayarları hakkında detaylı bilgi", href =  Extensions.GetPageLink(PageId.PageIdOfMushafOptionsDetail), }

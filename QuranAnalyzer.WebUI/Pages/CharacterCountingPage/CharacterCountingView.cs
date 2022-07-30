@@ -69,9 +69,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VSpace(20),
                     new MushafOptionsView
                     {
-                        MushafOption = state.MushafOptions, 
-                        Bestaten_7_69 = () => state.MushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
-                        UseElifReferencesFromTanzil = ()=>state.MushafOptions.UseElifReferencesFromTanzil
+                        MushafOption                = state.MushafOptions, 
+                        Bestaten_7_69               = () => state.MushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
+                        UseElifReferencesFromTanzil = ()=>state.MushafOptions.UseElifReferencesFromTanzil,
+                        CountHamzaAsAlif            = ()=>state.MushafOptions.CountHamzaAsAlif,
+
                     }
                 }
             }

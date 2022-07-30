@@ -69,7 +69,7 @@ public static class QuranAnalyzerMixin
 
         foreach (var verse in verseList)
         {
-            items.AddRange(Analyzer.AnalyzeVerse(verse).Where(canSelect));
+            items.AddRange(Analyzer.AnalyzeVerse(verse, mushafOptions?.CountHamzaAsAlif ?? true).Where(canSelect));
         }
 
         foreach (var arabicCharacterIndex in indexList)
