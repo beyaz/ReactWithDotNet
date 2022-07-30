@@ -1,19 +1,18 @@
-﻿
-namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer;
 
 [Serializable]
 public class MatchInfo
 {
     #region Public Properties
-    public int ArabicLetterIndex { get; set; }
+    public int ArabicLetterIndex { get; init; }
 
     public bool HasNoMatch => ArabicLetterIndex == -1;
-    
-    public int StartIndexInVerseText { get; set; }
 
-    public Verse Verse { get; set; }
-    
-    public string MatchedLetter { get; set; }
+    public string MatchedLetter { get; init; }
+
+    public int StartIndexInVerseText { get; init; }
+
+    public Verse Verse { get; init; }
     #endregion
 
     #region Public Methods
@@ -23,7 +22,7 @@ public class MatchInfo
         {
             return MatchedLetter;
         }
-        
+
         if (Verse != null)
         {
             if (ArabicLetterIndex >= 0)
@@ -38,5 +37,3 @@ public class MatchInfo
     }
     #endregion
 }
-
-
