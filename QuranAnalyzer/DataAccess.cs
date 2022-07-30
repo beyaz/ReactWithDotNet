@@ -60,8 +60,8 @@ public static class DataAccess
         Miim,
         Nun,
         "ه",
-        "و",
-        "ي"
+        Waaw,
+        Yaa
     };
 
     public static int[] harflerebced =

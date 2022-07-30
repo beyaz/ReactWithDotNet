@@ -28,9 +28,8 @@ public static class ArabicCharacters
     public const string Laam = "ل";
     public const string Miim = "م";
     public const string Nun = "ن";
-    
-
-    public const string Ya = "ي";
+    public const string Waaw = "و";
+    public const string Yaa = "ي";
     
     
     

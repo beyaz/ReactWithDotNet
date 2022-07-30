@@ -131,7 +131,7 @@ public class View : ReactComponent
         const string Sad  = "Sad-" + ArabicCharacters.Saad;
         const string Kaf  = "Kāf-"+ ArabicCharacters.Qaaf;
         const string Ha   = "Hā-" + ArabicCharacters.Haa;
-        const string Ya   = "Yāʾ-" + ArabicCharacters.Ya;
+        const string Ya   = "Yāʾ-" + ArabicCharacters.Yaa;
         const string Ain  = "ʿAin-" + ArabicCharacters.Ayn;
         const string Ra   = "Rāʾ-" + ArabicCharacters.Raa;
         const string Ta   = "Ṭāʾ-" + ArabicCharacters.T;
