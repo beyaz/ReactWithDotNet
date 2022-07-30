@@ -18,8 +18,8 @@ public class CharacterCountingTests
         CountShouldBe("*", Daad, 1686);
 
         Analyzer.AnalyzeVerse(new Verse { _text = "طه" }).Count.Should().Be(2);
-        Analyzer.AnalyzeVerse(new Verse { _text = "طه" })[0].ArabicCharacterIndex.Should().Be(15);
-        Analyzer.AnalyzeVerse(new Verse { _text = "طه" })[1].ArabicCharacterIndex.Should().Be(25);
+        Analyzer.AnalyzeVerse(new Verse { _text = "طه" })[0].ArabicLetterIndex.Should().Be(15);
+        Analyzer.AnalyzeVerse(new Verse { _text = "طه" })[1].ArabicLetterIndex.Should().Be(25);
     }
 
     [TestMethod]

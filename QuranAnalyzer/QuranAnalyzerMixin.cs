@@ -64,7 +64,7 @@ public static class QuranAnalyzerMixin
 
         bool canSelect(MatchInfo matchInfo)
         {
-            return indexList.Contains(matchInfo.ArabicCharacterIndex);
+            return indexList.Contains(matchInfo.ArabicLetterIndex);
         }
 
         foreach (var verse in verseList)
@@ -84,7 +84,7 @@ public static class QuranAnalyzerMixin
     #region Methods
     static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
-        return character.AsArabicCharacterIndex().Then(arabicCharacterIndex => matchList.Count(x => x.ArabicCharacterIndex == arabicCharacterIndex));
+        return character.AsArabicCharacterIndex().Then(arabicCharacterIndex => matchList.Count(x => x.ArabicLetterIndex == arabicCharacterIndex));
     }
 
     static List<MatchInfo> RecalculateWithOptions(List<MatchInfo> mathInfoList, MushafOptions mushafOptions, int arabicCharacterIndex)
@@ -97,7 +97,7 @@ public static class QuranAnalyzerMixin
 
                 if (arabicCharacterIndex == sadIndex)
                 {
-                    mathInfoList.RemoveAll(x => x.Verse.Id == "7:69" && x.ArabicCharacterIndex == sadIndex);
+                    mathInfoList.RemoveAll(x => x.Verse.Id == "7:69" && x.ArabicLetterIndex == sadIndex);
                 }
             }
 
@@ -107,7 +107,7 @@ public static class QuranAnalyzerMixin
                 {
                     foreach (var key in SpecifiedByRK.RealElifCounts.Keys)
                     {
-                        var match = mathInfoList.FirstOrDefault(x=>x.Verse.Id == key && x.ArabicCharacterIndex == arabicCharacterIndex);
+                        var match = mathInfoList.FirstOrDefault(x=>x.Verse.Id == key && x.ArabicLetterIndex == arabicCharacterIndex);
                         if (match is not null)
                         {
                             

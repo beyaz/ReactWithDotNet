@@ -46,7 +46,7 @@ public static class Analyzer
             if (item != null)
             {
                 items.Add(item);
-                cursor += ArabicLetter.AllArabicLetters[item.ArabicCharacterIndex].Length;
+                cursor += ArabicLetter.AllArabicLetters[item.ArabicLetterIndex].Length;
                 continue;
             }
 
@@ -59,7 +59,7 @@ public static class Analyzer
                     unicodeCategory == UnicodeCategory.ModifierLetter ||
                     line[cursor] == '۩')
                 {
-                    items.Add(new MatchInfo { ArabicCharacterIndex = -1, StartIndexInVerseText = cursor, Verse = verse });
+                    items.Add(new MatchInfo { ArabicLetterIndex = -1, StartIndexInVerseText = cursor, Verse = verse });
 
                     cursor++;
 
@@ -119,7 +119,7 @@ public static class Analyzer
             return new MatchInfo
             {
                 StartIndexInVerseText = matchInfo.StartIndex,
-                ArabicCharacterIndex  = matchInfo.ArabicLetterIndex,
+                ArabicLetterIndex  = matchInfo.ArabicLetterIndex,
                 Verse                 = verse,
                 MatchedLetter         = matchInfo.Value
             };

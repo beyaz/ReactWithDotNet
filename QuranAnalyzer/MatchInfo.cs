@@ -5,9 +5,9 @@ namespace QuranAnalyzer;
 public class MatchInfo
 {
     #region Public Properties
-    public int ArabicCharacterIndex { get; set; }
+    public int ArabicLetterIndex { get; set; }
 
-    public bool HasNoMatch => ArabicCharacterIndex == -1;
+    public bool HasNoMatch => ArabicLetterIndex == -1;
     
     public int StartIndexInVerseText { get; set; }
 
@@ -26,9 +26,9 @@ public class MatchInfo
         
         if (Verse != null)
         {
-            if (ArabicCharacterIndex >= 0)
+            if (ArabicLetterIndex >= 0)
             {
-                return ArabicLetter.AllArabicLetters[ArabicCharacterIndex];
+                return ArabicLetter.AllArabicLetters[ArabicLetterIndex];
             }
 
             return Verse._text[StartIndexInVerseText].ToString();

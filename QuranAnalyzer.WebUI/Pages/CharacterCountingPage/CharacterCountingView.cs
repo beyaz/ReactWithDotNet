@@ -211,7 +211,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
             return new SummaryInfo
             {
-                Count = matchRecords.Count(x => x.ArabicCharacterIndex == arabicCharacterIndex),
+                Count = matchRecords.Count(x => x.ArabicLetterIndex == arabicCharacterIndex),
                 Name  = arabicCharcter
             };
         }).ToList();
