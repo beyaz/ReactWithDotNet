@@ -99,10 +99,10 @@ public class CharacterCountingTests
         CountShouldBe("19:*", Haa_, 175);
         CountShouldBe("20:*", Haa_, 251);
 
-        CountShouldBe("20:*", Taa, 28);
-        CountShouldBe("26:*", Taa, 33);
-        CountShouldBe("27:*", Taa, 27);
-        CountShouldBe("28:*", Taa, 19);
+        CountShouldBe("20:*", Taa_, 28);
+        CountShouldBe("26:*", Taa_, 33);
+        CountShouldBe("27:*", Taa_, 27);
+        CountShouldBe("28:*", Taa_, 19);
 
         CountShouldBe("26:*", Siin, 94);
         CountShouldBe("27:*", Siin, 94);

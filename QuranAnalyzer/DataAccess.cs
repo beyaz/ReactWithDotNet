@@ -36,7 +36,7 @@ public static class DataAccess
     {
         Alif,
         Baa,
-        Taa_,
+        Taa,
         Thaa,
         Jiim,
         Haa,
@@ -49,7 +49,7 @@ public static class DataAccess
         Shiin,
         Saad,
         Daad,
-        Taa,
+        Taa_,
         Zaa,
         Ayn,
         Ghayn,
