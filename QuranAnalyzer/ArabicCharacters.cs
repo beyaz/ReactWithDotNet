@@ -26,10 +26,12 @@ public static class ArabicCharacters
     public const string Qaaf = "ق";
     public const string Kaaf = "ك";
     public const string Laam = "ل";
+    public const string Miim = "م";
+    public const string Nun = "ن";
     
 
     public const string Ya = "ي";
-    public const string Mim = "م";
+    
     
     
 
@@ -41,7 +43,7 @@ public static class ArabicCharacters
 
     public const string T = "ط";
 
-    public const string Nun = "ن";
+    
     #endregion
 }
 

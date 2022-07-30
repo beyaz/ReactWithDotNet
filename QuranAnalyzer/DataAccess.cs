@@ -57,8 +57,8 @@ public static class DataAccess
         Qaaf,
         Kaaf,
         Laam,
-        "م",
-        "ن",
+        Miim,
+        Nun,
         "ه",
         "و",
         "ي"

@@ -50,7 +50,7 @@ public class CharacterCountingTests
     public void Chapter_13()
     {
         CountShouldBe("13:*", Raa, 137);
-        CountShouldBe("13:*", Mim, 260);
+        CountShouldBe("13:*", Miim, 260);
         CountShouldBe("13:*", Laam, 480);
         CountShouldBe("13:*", Alif, 610);
         CountShouldBe("13:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 605);
@@ -108,8 +108,8 @@ public class CharacterCountingTests
         CountShouldBe("27:*", Siin, 94);
         CountShouldBe("28:*", Siin, 102);
 
-        CountShouldBe("26:*", Mim, 484);
-        CountShouldBe("28:*", Mim, 460);
+        CountShouldBe("26:*", Miim, 484);
+        CountShouldBe("28:*", Miim, 460);
     }
 
     [TestMethod]
@@ -132,7 +132,7 @@ public class CharacterCountingTests
     public void Chapter_40_41_42_43_44_45_46_Ha_Mim()
     {
         CountShouldBe("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Haa, 292);
-        CountShouldBe("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Mim, 1855);
+        CountShouldBe("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Miim, 1855);
     }
 
     [TestMethod]
@@ -153,7 +153,7 @@ public class CharacterCountingTests
         CountShouldBe("7:*", Saad, 98);
         CountShouldBe("7:*", Saad, new MushafOptions { Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = true }, 97);
 
-        CountShouldBe("7:*", Mim, 1164);
+        CountShouldBe("7:*", Miim, 1164);
         CountShouldBe("7:*", Laam, 1530);
         CountShouldBe("7:*", Alif, 2521);
         CountShouldBe("7:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 2529);
@@ -175,10 +175,10 @@ public class CharacterCountingTests
         CountShouldBe("45:*", Haa, 31);
         CountShouldBe("46:*", Haa, 36);
 
-        CountShouldBe("40:*", Mim, 380);
-        CountShouldBe("44:*", Mim, 150);
-        CountShouldBe("45:*", Mim, 200);
-        CountShouldBe("46:*", Mim, 225);
+        CountShouldBe("40:*", Miim, 380);
+        CountShouldBe("44:*", Miim, 150);
+        CountShouldBe("45:*", Miim, 200);
+        CountShouldBe("46:*", Miim, 225);
     }
 
     [TestMethod]
