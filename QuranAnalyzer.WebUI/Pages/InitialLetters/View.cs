@@ -128,7 +128,7 @@ public class View : ReactComponent
         const string Elif = "Elif-" + ArabicCharacters.Alif;
         const string Lam  = "Lam-" + ArabicCharacters.Lam;
         const string Mim  = "Mim-" + ArabicCharacters.Mim;
-        const string Sad  = "Sad-" + ArabicCharacters.Sad;
+        const string Sad  = "Sad-" + ArabicCharacters.Saad;
         const string Kaf  = "Kāf-"+ ArabicCharacters.Kaf;
         const string Ha   = "Hā-" + ArabicCharacters.Haa;
         const string Ya   = "Yāʾ-" + ArabicCharacters.Ya;
@@ -407,7 +407,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = $"7:*,19:*,38:*|{ArabicCharacters.Sad}" } }
+                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = $"7:*,19:*,38:*|{ArabicCharacters.Saad}" } }
                 },
 
                 new tr

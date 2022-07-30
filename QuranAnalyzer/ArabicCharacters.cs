@@ -15,9 +15,13 @@ public static class ArabicCharacters
     public const string Raa = "ر";
     public const string Zay = "ز‎";
     public const string Siin = "س";
+    public const string Shiin = "ش";
+    public const string Saad = "ص";
+    public const string Daad = "ض";
+
 
     public const string Kaf = "ق";
-    public const string Sad = "ص";
+    
     
     public const string Ya = "ي";
     public const string Mim = "م";
