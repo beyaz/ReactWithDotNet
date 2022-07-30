@@ -24,14 +24,16 @@ public static class ArabicCharacters
     public const string Ghayn = "غ";
     public const string Faa = "ف";
     public const string Qaaf = "ق";
-    
-    
-    public const string Ya = "ي";
-    public const string Mim = "م";
-    public const string Lam = "ل";
+    public const string Kaaf = "ك";
+    public const string Laam = "ل";
     
 
-    public const string Kef = "ك";
+    public const string Ya = "ي";
+    public const string Mim = "م";
+    
+    
+
+    
     public const string Ha = "ه";
     
 

@@ -126,7 +126,7 @@ public class View : ReactComponent
     public override Element render()
     {
         const string Elif = "Elif-" + ArabicCharacters.Alif;
-        const string Lam  = "Lam-" + ArabicCharacters.Lam;
+        const string Lam  = "Lam-" + ArabicCharacters.Laam;
         const string Mim  = "Mim-" + ArabicCharacters.Mim;
         const string Sad  = "Sad-" + ArabicCharacters.Saad;
         const string Kaf  = "Kāf-"+ ArabicCharacters.Qaaf;
@@ -165,7 +165,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = $"2:*|{ArabicCharacters.Alif},{ArabicCharacters.Lam},{ArabicCharacters.Mim}" } }
+                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = $"2:*|{ArabicCharacters.Alif},{ArabicCharacters.Laam},{ArabicCharacters.Mim}" } }
                 },
 
                 new tr

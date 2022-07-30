@@ -35,7 +35,7 @@ public static class QuranAnalyzerMixin
                 return SpecifiedByRK.SS[verse.Id];
             }
 
-            if (character == ArabicCharacters.Lam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(verse.Id))
+            if (character == ArabicCharacters.Laam && option.Use_Lam_SpecifiedByRK && SpecifiedByRK.Lam.ContainsKey(verse.Id))
             {
                 return SpecifiedByRK.Lam[verse.Id];
             }
