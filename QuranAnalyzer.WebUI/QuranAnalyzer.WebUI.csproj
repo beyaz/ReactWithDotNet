@@ -45,7 +45,7 @@
     <None Include="wwwroot\index.jsx" />
     <None Include="wwwroot\ReactWithDotNet.js" />
     <None Include="wwwroot\ReactWithDotNet.jsx" />
-    <None Include="wwwroot\StateTestUI.html" />
+    <None Include="wwwroot\UI-Designer-ComponentPreivew.html" />
     <None Include="wwwroot\UI-Designer.html" />
   </ItemGroup>
 

@@ -124,7 +124,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
         Element createElement()
         {
-            return new iframe { src = "/component/PreviewComponentForDesigner", style = { width_height = "100%", border = "none"}};
+            return new iframe { src = "/wwwroot/UI-Designer-ComponentPreivew.html", style = { width_height = "100%", border = "none"}};
         }
 
         var mainPanel = new Splitter

@@ -99,7 +99,9 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
             {
                 reactStatefulComponent.Context = new ReactContext();
 
-                return reactStatefulComponent.render();
+                reactStatefulComponent.key = "root";
+                
+                return reactStatefulComponent;
             }
 
             return new div(instance.ToString());
