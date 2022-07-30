@@ -8,24 +8,24 @@ public static class Analyzer
         public string[] Forms { get; set; }
     }
 
-    static readonly AlternativeForm[] AlternativeForms = 
+    static readonly AlternativeForm[] AlternativeForms =
     {
-        new(){ ArabicLetterIndex  = ArabicLetterIndex.Alif, Forms = new []{ "ٱ", "إ", "أ", "ﺍ" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new []{ "ز" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new []{ "ج" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new []{ "ة" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new []{ "ى", "ئ" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms  = new []{ "ٯ", "ؤ" } }
+        new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new[] { "ز" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new[] { "ج" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new[] { "ة" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new[] { "ى", "ئ" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
-    
+
     static readonly AlternativeForm[] AlternativeFormsWithHamza =
     {
-        new(){ ArabicLetterIndex  = ArabicLetterIndex.Alif, Forms = new []{ "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new []{ "ز" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new []{ "ج" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new []{ "ة" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new []{ "ى", "ئ" } },
-        new (){ ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new []{ "ٯ", "ؤ" } }
+        new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new[] { "ز" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new[] { "ج" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new[] { "ة" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new[] { "ى", "ئ" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
 
     static AlternativeForm[] GetAlternativeForms(bool isHemzeActive) => isHemzeActive ? AlternativeFormsWithHamza : AlternativeForms;
@@ -55,13 +55,41 @@ public static class Analyzer
 
         return items;
     }
-    
+
     static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
     {
-        var alternativeForms  = GetAlternativeForms(isHemzeActive);
+        var alternativeForms = GetAlternativeForms(isHemzeActive);
 
         var line = verse._bismillah + verse._text;
 
+        for (var arabicLetterIndex = 0; arabicLetterIndex < ArabicLetter.AllArabicLetters.Length; arabicLetterIndex++)
+        {
+            foreach (var alternativeForm in alternativeForms)
+            {
+                if (alternativeForm.ArabicLetterIndex == arabicLetterIndex)
+                {
+                    foreach (var form in alternativeForm.Forms)
+                    {
+                        var matchInfo = tryMatch(form, arabicLetterIndex);
+                        if (matchInfo != null)
+                        {
+                            return matchInfo;
+                        }
+                    }
+                }
+            }
+
+            // normal match
+            {
+                var matchInfo = tryMatch(ArabicLetter.AllArabicLetters[arabicLetterIndex], arabicLetterIndex);
+                if (matchInfo != null)
+                {
+                    return matchInfo;
+                }
+            }
+        }
+
+        return null;
 
         MatchInfo tryMatch(string searchCharacter, int arabicCharacterIndex)
         {
@@ -86,35 +114,5 @@ public static class Analyzer
 
             return null;
         }
-
-        for (var arabicLetterIndex = 0; arabicLetterIndex < ArabicLetter.AllArabicLetters.Length; arabicLetterIndex++)
-        {
-            foreach (var alternativeForm in alternativeForms)
-            {
-                if (alternativeForm.ArabicLetterIndex == arabicLetterIndex)
-                {
-                    foreach (var form in alternativeForm.Forms)
-                    {
-                        var matchInfo = tryMatch(form, arabicLetterIndex);
-                        if (matchInfo != null)
-                        {
-                            return matchInfo;
-                        }
-                    }
-                }
-                
-            }
-
-            // normal match
-            {
-                var matchInfo = tryMatch(ArabicLetter.AllArabicLetters[arabicLetterIndex], arabicLetterIndex);
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
-            }
-        }
-
-        return null;
     }
 }
