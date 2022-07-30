@@ -23,6 +23,12 @@ public class br : HtmlElement
 public class article : HtmlElement
 {
 }
+
+public class iframe : HtmlElement
+{
+    [React]
+    public string src { get; set; }
+}
 public class strong : HtmlElement
 {
     public override string ToString() => this.ToHTML();

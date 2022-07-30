@@ -17,11 +17,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Pages\QuestionAnswerPage\Data.yaml" />
-    <Content Include="ReactWithDotNet.js">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +27,32 @@
     <ProjectReference Include="..\QuranAnalyzer\QuranAnalyzer.csproj" />
     <ProjectReference Include="..\ReactWithDotNet.Libraries\ReactWithDotNet.Libraries.csproj" />
     <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\app.css" />
+    <None Include="wwwroot\img\Class.svg" />
+    <None Include="wwwroot\img\dll.svg" />
+    <None Include="wwwroot\img\Folder.svg" />
+    <None Include="wwwroot\img\IBAN.jpg" />
+    <None Include="wwwroot\img\Method.svg" />
+    <None Include="wwwroot\img\Namespace.svg" />
+    <None Include="wwwroot\img\Options.svg" />
+    <None Include="wwwroot\img\ParityBit.PNG" />
+    <None Include="wwwroot\index.css" />
+    <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\index.js" />
+    <None Include="wwwroot\index.jsx" />
+    <None Include="wwwroot\ReactWithDotNet.js" />
+    <None Include="wwwroot\ReactWithDotNet.jsx" />
+    <None Include="wwwroot\StateTestUI.html" />
+    <None Include="wwwroot\UI-Designer.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\ReactWithDotNet.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
     <PropertyGroup>

@@ -1,6 +1,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,16 +39,18 @@ public class Startup
         app.UseHttpsRedirection();
 
         app.UseRouting();
+        
 
         app.UseFileServer(new FileServerOptions
         {
-            FileProvider       = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "")),
+            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
             EnableDefaultFiles = true,
             StaticFileOptions =
             {
                 HttpsCompression  = HttpsCompressionMode.Compress,
                 OnPrepareResponse = _ => { }
-            }
+            },
+            RequestPath = new PathString("/wwwroot")
         });
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
