@@ -4,12 +4,6 @@ namespace QuranAnalyzer;
 
 public static class Analyzer
 {
-    class AlternativeForm
-    {
-        public int ArabicLetterIndex { get; set; }
-        public string[] Forms { get; set; }
-    }
-
     static readonly AlternativeForm[] AlternativeForms =
     {
         new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ" } },
@@ -29,20 +23,15 @@ public static class Analyzer
         new() { ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new[] { "ى", "ئ" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
-
-    static AlternativeForm[] GetAlternativeForms(bool isHemzeActive) => isHemzeActive ? AlternativeFormsWithHamza : AlternativeForms;
-
-    public static IReadOnlyList<MatchInfo> AnalyzeVerse(Verse verse, bool isHemzeActive = true)
+    public static IReadOnlyList<LetterMatchInfo> AnalyzeText(string line, bool isHemzeActive = true)
     {
-        var line = verse._bismillah + verse._text;
-
-        var items = new List<MatchInfo>();
+        var items = new List<LetterMatchInfo>();
 
         var cursor = 0;
 
         while (cursor < line.Length)
         {
-            var item = TryRead(verse, cursor, isHemzeActive);
+            var item = TryRead(line, cursor, isHemzeActive);
             if (item != null)
             {
                 items.Add(item);
@@ -59,7 +48,7 @@ public static class Analyzer
                     unicodeCategory == UnicodeCategory.ModifierLetter ||
                     line[cursor] == '۩')
                 {
-                    items.Add(new MatchInfo { ArabicLetterIndex = -1, StartIndexInVerseText = cursor, Verse = verse });
+                    items.Add(new LetterMatchInfo { ArabicLetterIndex = -1, StartIndex = cursor, MatchedLetter = line[cursor].ToString() });
 
                     cursor++;
 
@@ -73,59 +62,46 @@ public static class Analyzer
         return items;
     }
 
-    static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
+    public static IReadOnlyList<MatchInfo> AnalyzeVerse(Verse verse, bool isHemzeActive = true)
     {
-        var alternativeForms = GetAlternativeForms(isHemzeActive);
-
         var line = verse._bismillah + verse._text;
 
-        TryRead(line, startIndex, isHemzeActive);
+        return AnalyzeText(line, isHemzeActive).Select(asMatchInfo).ToList();
 
-        for (var arabicLetterIndex = 0; arabicLetterIndex < ArabicLetter.AllArabicLetters.Length; arabicLetterIndex++)
+        MatchInfo asMatchInfo(LetterMatchInfo x)
         {
-            foreach (var alternativeForm in alternativeForms)
+            return new MatchInfo
             {
-                if (alternativeForm.ArabicLetterIndex == arabicLetterIndex)
-                {
-                    foreach (var form in alternativeForm.Forms)
-                    {
-                        var matchInfo = tryMatch(form, arabicLetterIndex);
-                        if (matchInfo != null)
-                        {
-                            return matchInfo;
-                        }
-                    }
-                }
-            }
+                ArabicLetterIndex     = x.ArabicLetterIndex,
+                MatchedLetter         = x.MatchedLetter,
+                StartIndexInVerseText = x.StartIndex,
+                Verse                 = verse
+            };
+        }
+    }
+    static AlternativeForm[] GetAlternativeForms(bool isHemzeActive) => isHemzeActive ? AlternativeFormsWithHamza : AlternativeForms;
 
-            // normal match
+    static LetterMatchInfo TryMatch(string line, int startIndex, string searchLetter, int arabicLetterIndex)
+    {
+        if (startIndex + searchLetter.Length > line.Length)
+        {
+            return null;
+        }
+
+        var value = line.Substring(startIndex, searchLetter.Length);
+
+        var isMatch = value == searchLetter;
+        if (isMatch)
+        {
+            return new LetterMatchInfo
             {
-                var matchInfo = tryMatch(ArabicLetter.AllArabicLetters[arabicLetterIndex], arabicLetterIndex);
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
-            }
+                ArabicLetterIndex = arabicLetterIndex,
+                MatchedLetter     = value,
+                StartIndex        = startIndex,
+            };
         }
 
         return null;
-
-        MatchInfo tryMatch(string searchCharacter, int arabicCharacterIndex)
-        {
-            var matchInfo = TryMatch(line, startIndex, searchCharacter, arabicCharacterIndex);
-            if (matchInfo == null)
-            {
-                return null;
-            }
-
-            return new MatchInfo
-            {
-                ArabicLetterIndex     = matchInfo.ArabicLetterIndex,
-                MatchedLetter         = matchInfo.MatchedLetter,
-                StartIndexInVerseText = matchInfo.StartIndex,
-                Verse                 = verse,
-            };
-        }
     }
 
     static LetterMatchInfo TryRead(string line, int startIndex, bool isHemzeActive)
@@ -161,40 +137,20 @@ public static class Analyzer
 
         return null;
 
-        LetterMatchInfo tryMatch(string searchCharacter, int arabicCharacterIndex)=> TryMatch(line, startIndex, searchCharacter, arabicCharacterIndex);
+        LetterMatchInfo tryMatch(string searchCharacter, int arabicCharacterIndex) => TryMatch(line, startIndex, searchCharacter, arabicCharacterIndex);
     }
-
-    static LetterMatchInfo TryMatch(string line, int startIndex, string searchLetter, int arabicLetterIndex)
+    class AlternativeForm
     {
-        if (startIndex + searchLetter.Length > line.Length)
-        {
-            return null;
-        }
-
-        var value = line.Substring(startIndex, searchLetter.Length);
-
-        var isMatch = value == searchLetter;
-        if (isMatch)
-        {
-            return new LetterMatchInfo
-            {
-                ArabicLetterIndex  = arabicLetterIndex,
-                MatchedLetter         = value,
-                StartIndex = startIndex,
-            };
-        }
-
-        return null;
+        public int ArabicLetterIndex { get; set; }
+        public string[] Forms { get; set; }
     }
 }
-
 
 public sealed class LetterMatchInfo
 {
     public int ArabicLetterIndex { get; init; }
     public string MatchedLetter { get; init; }
     public int StartIndex { get; init; }
-
     public override string ToString()
     {
         return MatchedLetter;
