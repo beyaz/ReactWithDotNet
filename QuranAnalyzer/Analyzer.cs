@@ -110,26 +110,55 @@ public static class Analyzer
 
         MatchInfo tryMatch(string searchCharacter, int arabicCharacterIndex)
         {
-            if (startIndex + searchCharacter.Length > line.Length)
+            var matchInfo = TryMatch(line, startIndex, searchCharacter, arabicCharacterIndex);
+            if (matchInfo == null)
             {
                 return null;
             }
-
-            var value = line.Substring(startIndex, searchCharacter.Length);
-
-            var isMatch = value == searchCharacter;
-            if (isMatch)
+            
+            return new MatchInfo
             {
-                return new MatchInfo
-                {
-                    StartIndexInVerseText = startIndex,
-                    ArabicCharacterIndex  = arabicCharacterIndex,
-                    Verse                 = verse,
-                    MatchedLetter         = value
-                };
-            }
+                StartIndexInVerseText = matchInfo.StartIndex,
+                ArabicCharacterIndex  = matchInfo.ArabicLetterIndex,
+                Verse                 = verse,
+                MatchedLetter         = matchInfo.Value
+            };
+        }
+    }
 
+    static LetterMatchInfo TryMatch(string line, int startIndex, string searchLetter, int arabicLetterIndex)
+    {
+        if (startIndex + searchLetter.Length > line.Length)
+        {
             return null;
         }
+
+        var value = line.Substring(startIndex, searchLetter.Length);
+
+        var isMatch = value == searchLetter;
+        if (isMatch)
+        {
+            return new LetterMatchInfo
+            {
+                StartIndex = startIndex,
+                ArabicLetterIndex  = arabicLetterIndex,
+                Value         = value
+            };
+        }
+
+        return null;
+    }
+}
+
+
+public sealed class LetterMatchInfo
+{
+    public int StartIndex { get; init; }
+    public int ArabicLetterIndex { get; init; }
+    public string Value { get; init; }
+
+    public override string ToString()
+    {
+        return Value;
     }
 }
