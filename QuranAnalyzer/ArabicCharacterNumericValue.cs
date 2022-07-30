@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer;
 
-class ArabicCharacterNumericValues
+class ArabicCharacterNumericValue
 {
     // @formatter:off
     public const int Alif = 1;
