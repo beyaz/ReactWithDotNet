@@ -53,7 +53,8 @@ public static class Analyzer
                     {
                         StartIndexInVerseText = startIndex,
                         ArabicCharacterIndex  = i,
-                        Verse                 = verse
+                        Verse                 = verse,
+                        MatchedLetter      = value
                     };
                 }
 

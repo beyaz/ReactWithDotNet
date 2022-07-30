@@ -82,7 +82,9 @@ public static class CharachterSearchResultColorizer
 
         string getColor(string charachter)
         {
-            var index = searchCharachterList.IndexOf(charachter);
+            var normalizedLetter = ArabicLetter.AllArabicLetters[charachter.AsArabicCharacterIndex().Value];
+                
+            var index = searchCharachterList.IndexOf(normalizedLetter);
             if (index >=0 && index < colors.Length)
             {
                 return colors[index];
