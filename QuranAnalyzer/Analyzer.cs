@@ -118,10 +118,10 @@ public static class Analyzer
 
             return new MatchInfo
             {
-                StartIndexInVerseText = matchInfo.StartIndex,
                 ArabicLetterIndex     = matchInfo.ArabicLetterIndex,
+                MatchedLetter         = matchInfo.MatchedLetter,
+                StartIndexInVerseText = matchInfo.StartIndex,
                 Verse                 = verse,
-                MatchedLetter         = matchInfo.MatchedLetter
             };
         }
     }
@@ -140,9 +140,9 @@ public static class Analyzer
         {
             return new LetterMatchInfo
             {
-                StartIndex = startIndex,
                 ArabicLetterIndex  = arabicLetterIndex,
-                MatchedLetter         = value
+                MatchedLetter         = value,
+                StartIndex = startIndex,
             };
         }
 
@@ -153,9 +153,9 @@ public static class Analyzer
 
 public sealed class LetterMatchInfo
 {
-    public int StartIndex { get; init; }
     public int ArabicLetterIndex { get; init; }
     public string MatchedLetter { get; init; }
+    public int StartIndex { get; init; }
 
     public override string ToString()
     {
