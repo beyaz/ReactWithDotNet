@@ -25,7 +25,7 @@ public static class QuranAnalyzerMixin
 
         Response<int> calculateCount(Verse verse)
         {
-            if (character == ArabicCharacters.Elif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
+            if (character == ArabicCharacters.Alif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
             {
                 return SpecifiedByRK.RealElifCounts[verse.Id];
             }

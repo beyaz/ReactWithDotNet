@@ -23,8 +23,8 @@ public class CharacterCountingTests
     {
         CountShouldBe("10:*", Ra, 257);
         CountShouldBe("10:*", Lam, 913);
-        CountShouldBe("10:*", Elif, 1323);
-        CountShouldBe("10:*", Elif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1319);
+        CountShouldBe("10:*", Alif, 1323);
+        CountShouldBe("10:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1319);
     }
 
     [TestMethod]
@@ -33,8 +33,8 @@ public class CharacterCountingTests
         CountShouldBe("11:*", Ra, 325);
         CountShouldBe("11:*", Lam, 795);
         CountShouldBe("11:*", Lam, new MushafOptions { Use_Lam_SpecifiedByRK = true }, 794);
-        CountShouldBe("11:*", Elif, 1373);
-        CountShouldBe("11:*", Elif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1370);
+        CountShouldBe("11:*", Alif, 1373);
+        CountShouldBe("11:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1370);
     }
 
     [TestMethod]
@@ -42,8 +42,8 @@ public class CharacterCountingTests
     {
         CountShouldBe("12:*", Ra, 257);
         CountShouldBe("12:*", Lam, 812);
-        CountShouldBe("12:*", Elif, 1315);
-        CountShouldBe("12:*", Elif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1306);
+        CountShouldBe("12:*", Alif, 1315);
+        CountShouldBe("12:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1306);
     }
 
     [TestMethod]
@@ -52,8 +52,8 @@ public class CharacterCountingTests
         CountShouldBe("13:*", Ra, 137);
         CountShouldBe("13:*", Mim, 260);
         CountShouldBe("13:*", Lam, 480);
-        CountShouldBe("13:*", Elif, 610);
-        CountShouldBe("13:*", Elif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 605);
+        CountShouldBe("13:*", Alif, 610);
+        CountShouldBe("13:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 605);
     }
 
     [TestMethod]
@@ -61,8 +61,8 @@ public class CharacterCountingTests
     {
         CountShouldBe("14:*", Ra, 160);
         CountShouldBe("14:*", Lam, 452);
-        CountShouldBe("14:*", Elif, 589);
-        CountShouldBe("14:*", Elif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 585);
+        CountShouldBe("14:*", Alif, 589);
+        CountShouldBe("14:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 585);
     }
 
     [TestMethod]
@@ -70,8 +70,8 @@ public class CharacterCountingTests
     {
         CountShouldBe("15:*", Ra, 96);
         CountShouldBe("15:*", Lam, 323);
-        CountShouldBe("15:*", Elif, 493);
-        CountShouldBe("15:*", Elif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 493);
+        CountShouldBe("15:*", Alif, 493);
+        CountShouldBe("15:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 493);
     }
 
     [TestMethod]
@@ -155,8 +155,8 @@ public class CharacterCountingTests
 
         CountShouldBe("7:*", Mim, 1164);
         CountShouldBe("7:*", Lam, 1530);
-        CountShouldBe("7:*", Elif, 2521);
-        CountShouldBe("7:*", Elif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 2529);
+        CountShouldBe("7:*", Alif, 2521);
+        CountShouldBe("7:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 2529);
     }
 
     [TestMethod]

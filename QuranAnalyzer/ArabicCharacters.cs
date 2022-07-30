@@ -3,11 +3,13 @@
 public static class ArabicCharacters
 {
     #region Static Fields
+    public const string Alif = "ا";
+    public const string Ba = "ب";
+    
     public const string Kaf = "ق";
     public const string Sad = "ص";
     public const string Sin = "س";
     public const string Ya = "ي";
-    public const string Elif = "ا";
     public const string Mim = "م";
     public const string Lam = "ل";
     public const string Ra = "ر";
@@ -27,5 +29,5 @@ public static class ArabicCharacters
 
 public static class ArabicCharacterIndex
 {
-    public static int Elif => DataAccess.harfler.GetIndex(ArabicCharacters.Elif).Value;
+    public static int Elif => DataAccess.harfler.GetIndex(ArabicCharacters.Alif).Value;
 }
