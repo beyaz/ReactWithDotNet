@@ -2,9 +2,6 @@
 
 public static class Analyzer
 {
-    static readonly string[] AlifCombination = { "ٱ", "إ", "أ", "ﺍ" };
-    static readonly string[] AlifCombinationWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
-
     class AlternativeForm
     {
         public int ArabicLetterIndex { get; set; }
@@ -90,17 +87,15 @@ public static class Analyzer
             return null;
         }
 
-        for (var i = 0; i < ArabicLetter.AllArabicLetters.Length; i++)
+        for (var arabicLetterIndex = 0; arabicLetterIndex < ArabicLetter.AllArabicLetters.Length; arabicLetterIndex++)
         {
-            
-
             foreach (var alternativeForm in alternativeForms)
             {
-                if (alternativeForm.ArabicLetterIndex == i)
+                if (alternativeForm.ArabicLetterIndex == arabicLetterIndex)
                 {
                     foreach (var form in alternativeForm.Forms)
                     {
-                        var matchInfo = tryMatch(form, i);
+                        var matchInfo = tryMatch(form, arabicLetterIndex);
                         if (matchInfo != null)
                         {
                             return matchInfo;
@@ -112,7 +107,7 @@ public static class Analyzer
 
             // normal match
             {
-                var matchInfo = tryMatch(ArabicLetter.AllArabicLetters[i], i);
+                var matchInfo = tryMatch(ArabicLetter.AllArabicLetters[arabicLetterIndex], arabicLetterIndex);
                 if (matchInfo != null)
                 {
                     return matchInfo;
