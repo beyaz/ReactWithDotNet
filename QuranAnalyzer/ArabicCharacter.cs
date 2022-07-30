@@ -37,7 +37,7 @@ public static class ArabicCharacter
 
 public static partial class DataAccess
 {
-    public static string[] harfler =
+    public static string[] AllArabicLetters =
     {
         Alif,
         Baa,

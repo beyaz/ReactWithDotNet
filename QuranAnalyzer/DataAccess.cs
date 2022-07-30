@@ -44,7 +44,7 @@ public static partial class DataAccess
     {
         string line = verse._bismillah + verse._text;
 
-        for (var i = 0; i < harfler.Length; i++)
+        for (var i = 0; i < AllArabicLetters.Length; i++)
         {
             MatchInfo tryMatch(string searchCharacter)
             {
@@ -146,7 +146,7 @@ public static partial class DataAccess
 
             // normal match
             {
-                var matchInfo = tryMatch(harfler[i]);
+                var matchInfo = tryMatch(AllArabicLetters[i]);
                 if (matchInfo != null)
                 {
                     return matchInfo;
@@ -171,7 +171,7 @@ public static partial class DataAccess
             if (item != null)
             {
                 items.Add(item);
-                cursor += harfler[item.ArabicCharacterIndex].Length;
+                cursor += AllArabicLetters[item.ArabicCharacterIndex].Length;
                 continue;
             }
 
