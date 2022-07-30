@@ -1,4 +1,5 @@
 ﻿using ReactWithDotNet;
+using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -37,10 +38,16 @@ class LeftMenuContent: ReactComponent
         {
             return new a
             {
-                className = "q-sidebarlink",
                 innerText = text,
-                href      = Extensions.GetPageLink(id),
-                style     = { padding = "10px", textDecoration = "none", color = "Black", overflowWrap = "break-word" }
+                href      = GetPageLink(id),
+                style     = 
+                {
+                    padding        = "10px",
+                    textDecoration = "none",
+                    color          = "Black", 
+                    overflowWrap   = "break-word",
+                    borderBottom   = "1px solid #e9e9f2"
+                }
             };
         }
     }
