@@ -23,6 +23,7 @@ public static class Analyzer
         new() { ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new[] { "ى", "ئ" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
+    
     public static IReadOnlyList<LetterMatchInfo> AnalyzeText(string line, bool isHemzeActive = true)
     {
         var items = new List<LetterMatchInfo>();
@@ -79,7 +80,7 @@ public static class Analyzer
             };
         }
     }
-    static AlternativeForm[] GetAlternativeForms(bool isHemzeActive) => isHemzeActive ? AlternativeFormsWithHamza : AlternativeForms;
+    
 
     static LetterMatchInfo TryMatch(string line, int startIndex, string searchLetter, int arabicLetterIndex)
     {
@@ -106,7 +107,7 @@ public static class Analyzer
 
     static LetterMatchInfo TryRead(string line, int startIndex, bool isHemzeActive)
     {
-        var alternativeForms = GetAlternativeForms(isHemzeActive);
+        var alternativeForms = getAlternativeForms(isHemzeActive);
 
         for (var arabicLetterIndex = 0; arabicLetterIndex < ArabicLetter.AllArabicLetters.Length; arabicLetterIndex++)
         {
@@ -138,11 +139,13 @@ public static class Analyzer
         return null;
 
         LetterMatchInfo tryMatch(string searchCharacter, int arabicCharacterIndex) => TryMatch(line, startIndex, searchCharacter, arabicCharacterIndex);
+        static AlternativeForm[] getAlternativeForms(bool isHemzeActive) => isHemzeActive ? AlternativeFormsWithHamza : AlternativeForms;
     }
+    
     class AlternativeForm
     {
-        public int ArabicLetterIndex { get; set; }
-        public string[] Forms { get; set; }
+        public int ArabicLetterIndex { get; init; }
+        public string[] Forms { get; init; }
     }
 }
 
@@ -151,6 +154,7 @@ public sealed class LetterMatchInfo
     public int ArabicLetterIndex { get; init; }
     public string MatchedLetter { get; init; }
     public int StartIndex { get; init; }
+    
     public override string ToString()
     {
         return MatchedLetter;
