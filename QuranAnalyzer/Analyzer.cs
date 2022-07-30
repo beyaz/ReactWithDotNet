@@ -62,7 +62,7 @@ public static class Analyzer
             }
 
             //Elif harfi için ayrıca tarama (+)
-            if (i == 0)
+            if (i == ArabicLetterIndex.Alif)
             {
                 foreach (var item in isHemzeActive ? AlifCombinationWithHamza : AlifCombination)
                 {
@@ -75,7 +75,7 @@ public static class Analyzer
             }
 
             //harfi için ayrıca tarama (+)"ز"
-            if (i == 10)
+            if (i == ArabicLetterIndex.Zay)
             {
                 var matchInfo = tryMatch("ز");
                 if (matchInfo != null)
@@ -85,7 +85,7 @@ public static class Analyzer
             }
 
             // harfi için ayrıca tarama (+) "ج"
-            if (i == 4)
+            if (i == ArabicLetterIndex.Jiim)
             {
                 var matchInfo = tryMatch("ج");
                 if (matchInfo != null)
@@ -95,7 +95,7 @@ public static class Analyzer
             }
 
             // harfi için ayrıca tarama (+) "ة"
-            if (i == 25)
+            if (i == ArabicLetterIndex.Haa_)
             {
                 var matchInfo = tryMatch("ة");
                 if (matchInfo != null)
@@ -105,7 +105,7 @@ public static class Analyzer
             }
 
             // harfi için ayrıca tarama (+) "ى" ve "ئ"
-            if (i == 27)
+            if (i == ArabicLetterIndex.Yaa)
             {
                 var matchInfo = tryMatch("ى");
                 if (matchInfo != null)
@@ -121,7 +121,7 @@ public static class Analyzer
             }
 
             // harfi için ayrıca tarama (+) "ٯ" ve "ؤ"
-            if (i == 26)
+            if (i == ArabicLetterIndex.Waaw)
             {
                 var matchInfo = tryMatch("ٯ");
                 if (matchInfo != null)
