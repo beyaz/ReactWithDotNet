@@ -10,6 +10,7 @@ public static class ArabicCharacters
     public const string Jiim = "ج‎";
     public const string Haa = "ح";
     public const string Khaa = "خ";
+    public const string Daal = "د";
 
 
 

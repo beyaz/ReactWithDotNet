@@ -41,7 +41,7 @@ public static class DataAccess
         Jiim,
         Haa,
         Khaa,
-        "د",
+        Daal,
         "ذ",
         "ر",
         "ز‎",
