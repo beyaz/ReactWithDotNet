@@ -29,15 +29,8 @@ public sealed class Verse
 }
 
 
-static class Analyzer
+public static class Analyzer
 {
-    
-}
-
-public static class DataAccess
-{
-    public static readonly Surah[] AllSurahs = JsonSerializer.Deserialize<Surah[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
-
     public static readonly string[] AlifCombination = { "ٱ", "إ", "أ", "ﺍ" };
     public static readonly string[] AlifCombinationWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
 
@@ -183,4 +176,9 @@ public static class DataAccess
 
         return items;
     }
+}
+
+public static class DataAccess
+{
+    public static readonly Surah[] AllSurahs = JsonSerializer.Deserialize<Surah[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
 }

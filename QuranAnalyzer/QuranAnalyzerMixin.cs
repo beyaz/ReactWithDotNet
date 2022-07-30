@@ -40,7 +40,7 @@ public static class QuranAnalyzerMixin
                 return SpecifiedByRK.Lam[verse.Id];
             }
 
-            return AnalyzeVerse(verse).GetCountOf(character);
+            return Analyzer.AnalyzeVerse(verse).GetCountOf(character);
         }
 
         return verseList.Sum(calculateCount);
@@ -73,7 +73,7 @@ public static class QuranAnalyzerMixin
 
         foreach (var verse in verseList)
         {
-            items.AddRange(AnalyzeVerse(verse).Where(canSelect));
+            items.AddRange(Analyzer.AnalyzeVerse(verse).Where(canSelect));
         }
 
         foreach (var arabicCharacterIndex in indexList)
