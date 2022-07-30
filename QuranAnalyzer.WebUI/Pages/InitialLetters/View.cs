@@ -135,7 +135,7 @@ public class View : ReactComponent
         const string Ain  = "ʿAin-" + ArabicCharacters.Ayn;
         const string Ra   = "Rāʾ-" + ArabicCharacters.Raa;
         const string Ta   = "Ṭāʾ-" + ArabicCharacters.T;
-        const string Sin  = "Sīn-" + ArabicCharacters.Sin;
+        const string Sin  = "Sīn-" + ArabicCharacters.Siin;
         const string Nun  = "Nūn-" + ArabicCharacters.Nun;
 
 

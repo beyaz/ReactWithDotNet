@@ -104,9 +104,9 @@ public class CharacterCountingTests
         CountShouldBe("27:*", T, 27);
         CountShouldBe("28:*", T, 19);
 
-        CountShouldBe("26:*", Sin, 94);
-        CountShouldBe("27:*", Sin, 94);
-        CountShouldBe("28:*", Sin, 102);
+        CountShouldBe("26:*", Siin, 94);
+        CountShouldBe("27:*", Siin, 94);
+        CountShouldBe("28:*", Siin, 102);
 
         CountShouldBe("26:*", Mim, 484);
         CountShouldBe("28:*", Mim, 460);
@@ -125,7 +125,7 @@ public class CharacterCountingTests
     public void Chapter_36()
     {
         CountShouldBe("36:*", Ya, 237);
-        CountShouldBe("36:*", Sin, 48);
+        CountShouldBe("36:*", Siin, 48);
     }
 
     [TestMethod]
@@ -185,7 +185,7 @@ public class CharacterCountingTests
     public void Section_38()
     {
         CountShouldBe("42:*", Ayn, 98);
-        CountShouldBe("42:*", Sin, 54);
+        CountShouldBe("42:*", Siin, 54);
         CountShouldBe("42:*", Kaf, 57);
     }
     #endregion
