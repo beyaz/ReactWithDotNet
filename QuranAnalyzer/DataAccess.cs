@@ -28,14 +28,20 @@ public sealed class Verse
     public string Id => $"{ChapterNumber}:{_index}";
 }
 
+
+static class Analyzer
+{
+    
+}
+
 public static class DataAccess
 {
     public static readonly Surah[] AllSurahs = JsonSerializer.Deserialize<Surah[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
 
-    static readonly string[] AlifCombination = { "ٱ", "إ", "أ", "ﺍ" };
-    static readonly string[] AlifCombinationWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
+    public static readonly string[] AlifCombination = { "ٱ", "إ", "أ", "ﺍ" };
+    public static readonly string[] AlifCombinationWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
 
-    static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
+    public static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
     {
         string line = verse._bismillah + verse._text;
 
