@@ -5,7 +5,8 @@ public static class ArabicCharacters
     #region Static Fields
     public const string Alif = "ا";
     public const string Ba = "ب";
-    
+    public const string Ta = "ت";
+
     public const string Kaf = "ق";
     public const string Sad = "ص";
     public const string Sin = "س";

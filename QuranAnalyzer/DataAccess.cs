@@ -35,7 +35,7 @@ public static class DataAccess
     {
         ArabicCharacters.Alif,
         ArabicCharacters.Ba,
-        "ت",
+        ArabicCharacters.Ta,
         "ث",
         "ج‎",
         "ح",
