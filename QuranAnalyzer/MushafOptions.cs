@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace QuranAnalyzer;
 
 [Serializable]
@@ -11,6 +10,8 @@ public sealed class MushafOptions
     public bool Use_Lam_SpecifiedByRK { get; set; }
 
     public bool UseElifReferencesFromTanzil { get; set; }
+
+    public bool CountHamzaAsAlif { get; set; } = true;
 
     #endregion
 }

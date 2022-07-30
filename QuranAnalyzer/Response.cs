@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-
-namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer;
 
 /// <summary>
 ///     The error

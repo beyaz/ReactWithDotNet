@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer;
 
 public static class Analyzer
 {
