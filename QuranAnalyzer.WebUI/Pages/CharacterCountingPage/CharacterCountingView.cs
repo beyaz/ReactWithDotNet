@@ -23,8 +23,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 var value = Context.Query["q"];
                 if (value is not null)
                 {
-                    state.ChapterFilter    = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
-                    state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1];
+                    state.ChapterFilter    = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(0);
+                    state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(1);
                 }
             }
         };
