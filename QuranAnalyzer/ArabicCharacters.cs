@@ -13,7 +13,7 @@ public static class ArabicCharacters
     public const string Daal = "د";
     public const string Dhaal = "ذ";
     public const string Raa = "ر";
-
+    public const string Zay = "ز‎";
 
     public const string Kaf = "ق";
     public const string Sad = "ص";

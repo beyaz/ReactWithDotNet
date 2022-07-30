@@ -44,7 +44,7 @@ public static class DataAccess
         Daal,
         Dhaal,
         Raa,
-        "ز‎",
+        Zay,
         "س",
         "ش",
         "ص",
