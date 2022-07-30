@@ -92,9 +92,16 @@ public static class Analyzer
                 return null;
             }
 
-            foreach (var VARIABLE in line)
+            foreach (var alternativeForm in alternativeForms.Where(x=>x.ArabicLetterIndex == i))
             {
-                
+                foreach (var form in alternativeForm.Forms)
+                {
+                    var matchInfo = tryMatch(form);
+                    if (matchInfo != null)
+                    {
+                        return matchInfo;
+                    }
+                }
             }
             
             //Elif harfi için ayrıca tarama (+)
