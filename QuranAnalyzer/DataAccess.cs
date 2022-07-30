@@ -37,7 +37,7 @@ public static class DataAccess
         ArabicCharacters.Baa,
         ArabicCharacters.Taa,
         ArabicCharacters.Thaa,
-        "ج‎",
+        ArabicCharacters.Jiim,
         "ح",
         "خ",
         "د",
