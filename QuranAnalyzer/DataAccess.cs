@@ -28,41 +28,11 @@ public sealed class Verse
     public string Id=> $"{ChapterNumber}:{_index}";
 }
 
-public static class DataAccess
+public static partial class DataAccess
 {
     public static readonly Surah[] AllSurahs = JsonSerializer.Deserialize<Surah[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
 
-    public static string[] harfler =
-    {
-        Alif,
-        Baa,
-        Taa,
-        Thaa,
-        Jiim,
-        Haa,
-        Khaa,
-        Daal,
-        Dhaal,
-        Raa,
-        Zay,
-        Siin,
-        Shiin,
-        Saad,
-        Daad,
-        Taa_,
-        Zaa,
-        Ayn,
-        Ghayn,
-        Faa,
-        Qaaf,
-        Kaaf,
-        Laam,
-        Miim,
-        Nun,
-        Haa_,
-        Waaw,
-        Yaa
-    };
+    
 
   
 

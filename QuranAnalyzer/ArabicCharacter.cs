@@ -1,4 +1,5 @@
 ﻿namespace QuranAnalyzer;
+using static QuranAnalyzer.ArabicCharacter;
 
 public static class ArabicCharacter
 {
@@ -32,4 +33,39 @@ public static class ArabicCharacter
     public const string Waaw  = "و";
     public const string Yaa   = "ي";
     // @formatter:on
+}
+
+public static partial class DataAccess
+{
+    public static string[] harfler =
+    {
+        Alif,
+        Baa,
+        Taa,
+        Thaa,
+        Jiim,
+        Haa,
+        Khaa,
+        Daal,
+        Dhaal,
+        Raa,
+        Zay,
+        Siin,
+        Shiin,
+        Saad,
+        Daad,
+        Taa_,
+        Zaa,
+        Ayn,
+        Ghayn,
+        Faa,
+        Qaaf,
+        Kaaf,
+        Laam,
+        Miim,
+        Nun,
+        Haa_,
+        Waaw,
+        Yaa
+    };
 }
