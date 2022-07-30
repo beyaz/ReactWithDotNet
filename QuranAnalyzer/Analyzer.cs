@@ -4,7 +4,35 @@ public static class Analyzer
 {
     static readonly string[] AlifCombination = { "ٱ", "إ", "أ", "ﺍ" };
     static readonly string[] AlifCombinationWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
+
+    class AlternativeForm
+    {
+        public int ArabicLetterIndex { get; set; }
+        public string[] Forms { get; set; }
+    }
+
+    static readonly AlternativeForm[] AlternativeForms = 
+    {
+        new(){ ArabicLetterIndex  = ArabicLetterIndex.Alif, Forms = new []{ "ٱ", "إ", "أ", "ﺍ" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new []{ "ز" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new []{ "ج" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new []{ "ة" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new []{ "ى", "ئ" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms  = new []{ "ٯ", "ؤ" } }
+    };
     
+    static readonly AlternativeForm[] AlternativeFormsWithHamza =
+    {
+        new(){ ArabicLetterIndex  = ArabicLetterIndex.Alif, Forms = new []{ "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new []{ "ز" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new []{ "ج" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new []{ "ة" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new []{ "ى", "ئ" } },
+        new (){ ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new []{ "ٯ", "ؤ" } }
+    };
+
+    static AlternativeForm[] GetAlternativeForms(bool isHemzeActive) => isHemzeActive ? AlternativeFormsWithHamza : AlternativeForms;
+
     public static IReadOnlyList<MatchInfo> AnalyzeVerse(Verse verse, bool isHemzeActive = true)
     {
         var line = verse._bismillah + verse._text;
@@ -33,7 +61,10 @@ public static class Analyzer
     
     static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
     {
+        var alternativeForms  = GetAlternativeForms(isHemzeActive);
+
         var line = verse._bismillah + verse._text;
+        
 
         for (var i = 0; i < ArabicLetter.AllArabicLetters.Length; i++)
         {
@@ -61,6 +92,11 @@ public static class Analyzer
                 return null;
             }
 
+            foreach (var VARIABLE in line)
+            {
+                
+            }
+            
             //Elif harfi için ayrıca tarama (+)
             if (i == ArabicLetterIndex.Alif)
             {
