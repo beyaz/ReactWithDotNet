@@ -25,22 +25,17 @@ public sealed class Verse
     public string _bismillah { get; set; }
     public int ChapterNumber { get; set; }
 
-    public string Id=> $"{ChapterNumber}:{_index}";
+    public string Id => $"{ChapterNumber}:{_index}";
 }
 
-public static  class DataAccess
+public static class DataAccess
 {
     public static readonly Surah[] AllSurahs = JsonSerializer.Deserialize<Surah[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
-
-    
-
-  
 
     static readonly string[] AlifCombination = { "ٱ", "إ", "أ", "ﺍ" };
     static readonly string[] AlifCombinationWithHamza = { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" };
 
-
-    public static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
+    static MatchInfo TryRead(Verse verse, int startIndex, bool isHemzeActive)
     {
         string line = verse._bismillah + verse._text;
 
@@ -62,7 +57,7 @@ public static  class DataAccess
                     {
                         StartIndexInVerseText = startIndex,
                         ArabicCharacterIndex  = i,
-                        Verse      = verse
+                        Verse                 = verse
                     };
                 }
 
@@ -175,7 +170,7 @@ public static  class DataAccess
                 continue;
             }
 
-            items.Add(new MatchInfo {ArabicCharacterIndex = -1, StartIndexInVerseText = cursor, Verse = verse});
+            items.Add(new MatchInfo { ArabicCharacterIndex = -1, StartIndexInVerseText = cursor, Verse = verse });
 
             cursor++;
         }
