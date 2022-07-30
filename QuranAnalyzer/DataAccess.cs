@@ -49,7 +49,7 @@ public static class DataAccess
         Shiin,
         Saad,
         Daad,
-        "ط",
+        Taa,
         Zaa,
         Ayn,
         Ghayn,
@@ -59,7 +59,7 @@ public static class DataAccess
         Laam,
         Miim,
         Nun,
-        "ه",
+        Haa_,
         Waaw,
         Yaa
     };

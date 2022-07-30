@@ -18,7 +18,7 @@ public static class ArabicCharacters
     public const string Shiin = "ش";
     public const string Saad = "ص";
     public const string Daad = "ض";
-
+    public const string Taa = "ط";
     public const string Zaa = "ظ";
     public const string Ayn = "ع";
     public const string Ghayn = "غ";
@@ -41,7 +41,7 @@ public static class ArabicCharacters
 
     
 
-    public const string T = "ط";
+    
 
     
     #endregion
