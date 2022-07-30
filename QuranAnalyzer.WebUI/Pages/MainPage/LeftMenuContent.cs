@@ -36,19 +36,49 @@ class LeftMenuContent: ReactComponent
 
         static Element toSidebarMenuItem(string text, string id)
         {
-            return new a
-            {
-                innerText = text,
-                href      = GetPageLink(id),
-                style     = 
-                {
-                    padding        = "10px",
-                    textDecoration = "none",
-                    color          = "Black", 
-                    overflowWrap   = "break-word",
-                    borderBottom   = "1px solid #e9e9f2"
-                }
-            };
+            return new LeftMenuItem { Text = text, PageId = id };
         }
+    }
+}
+
+class LeftMenuItemState
+{
+    public bool IsMouseEntered { get; set; }
+    public string Text { get; set; }
+    public string PageId { get; set; }
+}
+
+class LeftMenuItem: ReactComponent<LeftMenuItemState>
+{
+    public string Text { get; set; }
+    public string PageId { get; set; }
+
+    public LeftMenuItem()
+    {
+        state = new LeftMenuItemState();
+        StateInitialized += () =>
+        {
+            state.PageId ??= PageId;
+            state.Text ??= Text;
+        };
+    }
+    
+    public override Element render()
+    {
+        return new a
+        {
+            innerText = state.Text,
+            href      = GetPageLink(state.PageId),
+            style =
+            {
+                padding        = "10px",
+                textDecoration = "none",
+                color          = "Black",
+                overflowWrap   = "break-word",
+                borderBottom   = state.IsMouseEntered ? "1px solid red" : "1px solid #e9e9f2"
+            },
+            onMouseEnter = _=> state.IsMouseEntered = true,
+            onMouseLeave = _ => state.IsMouseEntered = false
+        };
     }
 }

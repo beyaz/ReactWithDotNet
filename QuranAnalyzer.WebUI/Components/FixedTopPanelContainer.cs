@@ -27,7 +27,7 @@ class FixedTopPanelContainer : ReactComponent
         if (HasShadow)
         {
             top.style.borderBottom = "";
-            top.style.boxShadow    = "0 1px 2px hsla(0,0%,0%,0.05),0 1px 4px hsla(0,0%,0%,0.05),0 2px 8px hsla(0,0%,0%,0.05)";
+            top.style.boxShadow  = "0px 0px 8px rgb(0 0 0 / 20%)";
         }
         
         return top;
