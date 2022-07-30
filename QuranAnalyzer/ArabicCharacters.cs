@@ -11,8 +11,8 @@ public static class ArabicCharacters
     public const string Haa = "ح";
     public const string Khaa = "خ";
     public const string Daal = "د";
-
-
+    public const string Dhaal = "ذ";
+    public const string Raa = "ر";
 
 
     public const string Kaf = "ق";
@@ -21,7 +21,7 @@ public static class ArabicCharacters
     public const string Ya = "ي";
     public const string Mim = "م";
     public const string Lam = "ل";
-    public const string Ra = "ر";
+    
 
     public const string Kef = "ك";
     public const string Ha = "ه";

@@ -21,7 +21,7 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_10()
     {
-        CountShouldBe("10:*", Ra, 257);
+        CountShouldBe("10:*", Raa, 257);
         CountShouldBe("10:*", Lam, 913);
         CountShouldBe("10:*", Alif, 1323);
         CountShouldBe("10:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1319);
@@ -30,7 +30,7 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_11()
     {
-        CountShouldBe("11:*", Ra, 325);
+        CountShouldBe("11:*", Raa, 325);
         CountShouldBe("11:*", Lam, 795);
         CountShouldBe("11:*", Lam, new MushafOptions { Use_Lam_SpecifiedByRK = true }, 794);
         CountShouldBe("11:*", Alif, 1373);
@@ -40,7 +40,7 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_12()
     {
-        CountShouldBe("12:*", Ra, 257);
+        CountShouldBe("12:*", Raa, 257);
         CountShouldBe("12:*", Lam, 812);
         CountShouldBe("12:*", Alif, 1315);
         CountShouldBe("12:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1306);
@@ -49,7 +49,7 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_13()
     {
-        CountShouldBe("13:*", Ra, 137);
+        CountShouldBe("13:*", Raa, 137);
         CountShouldBe("13:*", Mim, 260);
         CountShouldBe("13:*", Lam, 480);
         CountShouldBe("13:*", Alif, 610);
@@ -59,7 +59,7 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_14()
     {
-        CountShouldBe("14:*", Ra, 160);
+        CountShouldBe("14:*", Raa, 160);
         CountShouldBe("14:*", Lam, 452);
         CountShouldBe("14:*", Alif, 589);
         CountShouldBe("14:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 585);
@@ -68,7 +68,7 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_15()
     {
-        CountShouldBe("15:*", Ra, 96);
+        CountShouldBe("15:*", Raa, 96);
         CountShouldBe("15:*", Lam, 323);
         CountShouldBe("15:*", Alif, 493);
         CountShouldBe("15:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 493);
