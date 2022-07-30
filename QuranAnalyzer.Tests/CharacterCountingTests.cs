@@ -131,7 +131,7 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_40_41_42_43_44_45_46_Ha_Mim()
     {
-        CountShouldBe("40:*,41:*,42:*,43:*,44:*,45:*,46:*", HH, 292);
+        CountShouldBe("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Haa, 292);
         CountShouldBe("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Mim, 1855);
     }
 
@@ -170,10 +170,10 @@ public class CharacterCountingTests
     [TestMethod]
     public void Section_37()
     {
-        CountShouldBe("40:*", HH, 64);
-        CountShouldBe("44:*", HH, 16);
-        CountShouldBe("45:*", HH, 31);
-        CountShouldBe("46:*", HH, 36);
+        CountShouldBe("40:*", Haa, 64);
+        CountShouldBe("44:*", Haa, 16);
+        CountShouldBe("45:*", Haa, 31);
+        CountShouldBe("46:*", Haa, 36);
 
         CountShouldBe("40:*", Mim, 380);
         CountShouldBe("44:*", Mim, 150);

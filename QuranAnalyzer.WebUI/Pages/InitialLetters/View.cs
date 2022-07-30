@@ -130,7 +130,7 @@ public class View : ReactComponent
         const string Mim  = "Mim-" + ArabicCharacters.Mim;
         const string Sad  = "Sad-" + ArabicCharacters.Sad;
         const string Kaf  = "Kāf-"+ ArabicCharacters.Kaf;
-        const string Ha   = "Hā-" + ArabicCharacters.HH;
+        const string Ha   = "Hā-" + ArabicCharacters.Haa;
         const string Ya   = "Yāʾ-" + ArabicCharacters.Ya;
         const string Ain  = "ʿAin-" + ArabicCharacters.Ayn;
         const string Ra   = "Rāʾ-" + ArabicCharacters.Ra;
