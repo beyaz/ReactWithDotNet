@@ -85,98 +85,27 @@ public static class Analyzer
                         StartIndexInVerseText = startIndex,
                         ArabicCharacterIndex  = i,
                         Verse                 = verse,
-                        MatchedLetter      = value
+                        MatchedLetter         = value
                     };
                 }
 
                 return null;
             }
 
-            foreach (var alternativeForm in alternativeForms.Where(x=>x.ArabicLetterIndex == i))
+            foreach (var alternativeForm in alternativeForms)
             {
-                foreach (var form in alternativeForm.Forms)
+                if (alternativeForm.ArabicLetterIndex == i)
                 {
-                    var matchInfo = tryMatch(form);
-                    if (matchInfo != null)
+                    foreach (var form in alternativeForm.Forms)
                     {
-                        return matchInfo;
+                        var matchInfo = tryMatch(form);
+                        if (matchInfo != null)
+                        {
+                            return matchInfo;
+                        }
                     }
                 }
-            }
-            
-            //Elif harfi için ayrıca tarama (+)
-            if (i == ArabicLetterIndex.Alif)
-            {
-                foreach (var item in isHemzeActive ? AlifCombinationWithHamza : AlifCombination)
-                {
-                    var matchInfo = tryMatch(item);
-                    if (matchInfo != null)
-                    {
-                        return matchInfo;
-                    }
-                }
-            }
-
-            //harfi için ayrıca tarama (+)"ز"
-            if (i == ArabicLetterIndex.Zay)
-            {
-                var matchInfo = tryMatch("ز");
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
-            }
-
-            // harfi için ayrıca tarama (+) "ج"
-            if (i == ArabicLetterIndex.Jiim)
-            {
-                var matchInfo = tryMatch("ج");
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
-            }
-
-            // harfi için ayrıca tarama (+) "ة"
-            if (i == ArabicLetterIndex.Haa_)
-            {
-                var matchInfo = tryMatch("ة");
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
-            }
-
-            // harfi için ayrıca tarama (+) "ى" ve "ئ"
-            if (i == ArabicLetterIndex.Yaa)
-            {
-                var matchInfo = tryMatch("ى");
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
-
-                matchInfo = tryMatch("ئ");
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
-            }
-
-            // harfi için ayrıca tarama (+) "ٯ" ve "ؤ"
-            if (i == ArabicLetterIndex.Waaw)
-            {
-                var matchInfo = tryMatch("ٯ");
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
-
-                matchInfo = tryMatch("ؤ");
-                if (matchInfo != null)
-                {
-                    return matchInfo;
-                }
+                
             }
 
             // normal match
