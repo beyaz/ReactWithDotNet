@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static QuranAnalyzer.QuranAnalyzerMixin;
+﻿using static QuranAnalyzer.QuranAnalyzerMixin;
 using static QuranAnalyzer.ArabicLetter;
 using static QuranAnalyzer.VerseFilter;
 

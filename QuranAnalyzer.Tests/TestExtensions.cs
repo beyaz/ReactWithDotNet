@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-
-namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer;
 
 static class TestExtensions
 {
