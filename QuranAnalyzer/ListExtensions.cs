@@ -234,9 +234,26 @@ public static class ListExtensions
 
         return source.Aggregate(0, selector, (total, value) => total + value);
     }
+
+    public static IReadOnlyList<TTarget> AsListOf<TSource,TTarget>(this IEnumerable<TSource> source, Func<TSource, TTarget> convertFunc)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (convertFunc == null)
+        {
+            throw new ArgumentNullException(nameof(convertFunc));
+        }
+
+        return source.Select(convertFunc).ToList();
+    }
+    
+    
     #endregion
 
 
-    
+
 
 }

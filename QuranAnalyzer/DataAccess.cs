@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
+using static QuranAnalyzer.Analyzer;
 
 namespace QuranAnalyzer;
 
@@ -29,22 +30,24 @@ public static class DataAccess
     {
         var chapters    = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
 
-        AllSurahs = chapters.Select(chapter => new Surah
+        AllSurahs = chapters.AsListOf(chapter => new Surah
         {
             _index = chapter._index,
             _name  = chapter._name,
             Index  = int.Parse(chapter._index),
-            Verses = chapter.aya.Select(v => new Verse
+            Verses = chapter.aya.AsListOf(v => new Verse
             {
-                _index        = v._index,
-                _bismillah    = v._bismillah,
-                _text         = v._text,
-                ChapterNumber = int.Parse(chapter._index),
-                Id            = $"{chapter._index}:{v._index}",
-                WordList = v._text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(word=>Analyzer.AnalyzeText(word)).ToList()
-    }).ToList()
+                _index           = v._index,
+                _bismillah       = v._bismillah,
+                _text            = v._text,
+                ChapterNumber    = int.Parse(chapter._index),
+                Id               = $"{chapter._index}:{v._index}",
+                WordList         = v._text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).AsListOf(word=>AnalyzeText(word)),
+                AnalyzedFullText = AnalyzeText(v._bismillah + v._text)
+                
+            })
 
-        }).ToList();
+        });
 
     }
     
@@ -70,4 +73,9 @@ public sealed class Verse
     public string Id { get; init; }
 
     public IReadOnlyList<IReadOnlyList<LetterMatchInfo>> WordList { get; init; }
+
+    /// <summary>
+    ///     bismillah + text
+    /// </summary>
+    public IReadOnlyList<LetterMatchInfo> AnalyzedFullText { get; init; }
 }
