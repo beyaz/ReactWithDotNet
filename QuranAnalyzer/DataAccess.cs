@@ -40,8 +40,9 @@ public static class DataAccess
                 _bismillah    = v._bismillah,
                 _text         = v._text,
                 ChapterNumber = int.Parse(chapter._index),
-                Id            = $"{chapter._index}:{v._index}"
-            }).ToList()
+                Id            = $"{chapter._index}:{v._index}",
+                WordList = v._text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(word=>Analyzer.AnalyzeText(word)).ToList()
+    }).ToList()
 
         }).ToList();
 
@@ -67,4 +68,6 @@ public sealed class Verse
     public int ChapterNumber { get; init; }
 
     public string Id { get; init; }
+
+    public IReadOnlyList<IReadOnlyList<LetterMatchInfo>> WordList { get; init; }
 }
