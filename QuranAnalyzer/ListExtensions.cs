@@ -125,7 +125,7 @@ public static class ListExtensions
         {
             return false;
         }
-        
+
         var length = a.Count;
 
         for (var i = 0; i < length; i++)

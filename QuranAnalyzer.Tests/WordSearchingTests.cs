@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static QuranAnalyzer.Analyzer;
 using static QuranAnalyzer.DataAccess;
 
 
@@ -23,7 +24,7 @@ namespace QuranAnalyzer
             var source = "ءَادَمَ";
             var adem   = "اادم";
 
-            Analyzer.AnalyzeText(source).HasValueAndSame(Analyzer.AnalyzeText(adem)).Should().BeTrue();
+            AnalyzeText(source).HasValueAndSame(AnalyzeText(adem)).Should().BeTrue();
 
 
             source  = "يَـٰٓـَٔادَمُ";
@@ -33,7 +34,7 @@ namespace QuranAnalyzer
             var arr = WordSearcher.AsClearArabicCharacterList(source);
 
 
-            Analyzer.AnalyzeText(source).HasValueAndSame(Analyzer.AnalyzeText(ya_adem)).Should().BeTrue();
+            AnalyzeText(source).HasValueAndSame(AnalyzeText(ya_adem)).Should().BeTrue();
 
         }
 
@@ -51,7 +52,6 @@ namespace QuranAnalyzer
                     foreach (var word in aya._text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                     {
                         var isSame = WordSearcher.AsClearArabicCharacterList(word).HasValueAndSame(searchList);
-
                         if (isSame)
                         {
                             total++;
@@ -179,7 +179,7 @@ namespace QuranAnalyzer
             {
                 foreach (var aya in sura.Verses)
                 {
-                    var matchInfoList = Analyzer.AnalyzeVerse(aya);
+                    var matchInfoList = AnalyzeVerse(aya);
 
 
                     foreach (var matchInfo in matchInfoList.Where(x => x.HasNoMatch))
