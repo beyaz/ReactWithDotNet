@@ -23,17 +23,15 @@ namespace QuranAnalyzer
         [TestMethod]
         public void Day_365()
         {
-            const string yevm    = "يوم";
-            const string ve_yevm = "ويوم";
-
-            const string el_yevm = "اليوم";
-            const string vel_yevm = "واليوم";
-            const string yevmen = "يوما";
-            const string li_yevm = "ليوم";
-            const string fel_yevm = "فاليوم";
-
-            const string bi_yevm = "بيوم";
-            const string bil_yevm = "باليوم";
+            const string yevm       = "يوم";
+            const string ve_yevm    = "ويوم";
+            const string el_yevm    = "اليوم";
+            const string vel_yevm   = "واليوم";
+            const string yevmen     = "يوما";
+            const string li_yevm    = "ليوم";
+            const string fel_yevm   = "فاليوم";
+            const string bi_yevm    = "بيوم";
+            const string bil_yevm   = "باليوم";
             const string vebil_yevm = "وباليوم";
             
 
@@ -47,30 +45,12 @@ namespace QuranAnalyzer
             getCountInAllChapter(bi_yevm).Should().Be(5);
             getCountInAllChapter(bil_yevm).Should().Be(2);
             getCountInAllChapter(vebil_yevm).Should().Be(1);
-
-
-
-
-            //static int getCountInAllChapter(string searchWord)
-            //{
-            //    return VerseFilter.GetVerseList("*").Value.Sum(x => ToWordList(x._text).Count(word => isSame(word, searchWord))).Value;
-            //}
-
+            
             static int getCountInAllChapter(string searchWord)
             {
                 var search = AnalyzeText(searchWord);
 
-                return VerseFilter.GetVerseList("*").Value.Sum(x => ToWordList(x._text).Count(word => isSame(word, searchWord))).Value;
-            }
-
-            static IReadOnlyList<string> ToWordList(string sentence)
-            {
-                return sentence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            }
-            
-            static bool isSame(string word, string search)
-            {
-                return AnalyzeText(word).HasValueAndSame(AnalyzeText(search));
+                return VerseFilter.GetVerseList("*").Value.Sum(v=>v.WordList.Count(w=>w.HasValueAndSame(search))).Value;
             }
         }
 
@@ -141,7 +121,7 @@ namespace QuranAnalyzer
         }
 
         [TestMethod]
-        public void Adem_İsa()
+        public void Adem_İsa__()
         {
 
             
