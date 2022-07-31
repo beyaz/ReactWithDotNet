@@ -15,8 +15,8 @@ public static class Analyzer
         new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
 
-    const string Hamza = "ء";
-    const string HamzaAbove = "ٔ";
+    public const string Hamza = "ء";
+    public const string HamzaAbove = "ٔ";
 
     static readonly AlternativeForm[] AlternativeFormsWithHamza =
     {
@@ -117,12 +117,14 @@ public static class Analyzer
             {
                 ArabicLetterIndex = arabicLetterIndex,
                 MatchedLetter     = value,
-                StartIndex        = startIndex,
+                StartIndex        = startIndex
             };
         }
 
         return null;
     }
+
+   
 
     static LetterMatchInfo TryRead(string line, int startIndex, bool isHemzeActive)
     {
@@ -173,7 +175,7 @@ public sealed class LetterMatchInfo
     public int ArabicLetterIndex { get; init; }
     public string MatchedLetter { get; init; }
     public int StartIndex { get; init; }
-    
+
     public override string ToString()
     {
         return MatchedLetter;

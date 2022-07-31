@@ -1,43 +1,125 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace QuranAnalyzer;
 
 public static class QuranQuery
 {
-    public static IEnumerable<Verse> ListOfVerseEndsWith(string value)
+    static bool IsValidForWordSearch(LetterMatchInfo matchInfo)
     {
-        var valueList = value.AsClearArabicCharacterList();
-
-        foreach (var sura in DataAccess.AllSurahs)
+        if (matchInfo.ArabicLetterIndex >= 0 && matchInfo.MatchedLetter != Analyzer.HamzaAbove)
         {
-            foreach (var aya in sura.Verses)
-            {
-                var list = aya._text.AsClearArabicCharacterList();
-                if (list.EndsWith(valueList))
-                {
-                    yield return aya;
-                }
-            }
+            return true;
         }
+
+        return false;
     }
 
-
-    public static IEnumerable<(Verse verse, int count)> ListOfVerseContains(string value)
+    public static bool HasValueAndSame(this IReadOnlyList<LetterMatchInfo> a, IReadOnlyList<LetterMatchInfo> b)
     {
-        var valueList = value.AsClearArabicCharacterList();
-
-        foreach (var sura in DataAccess.AllSurahs)
+        if (a == null || b == null)
         {
-            foreach (var aya in sura.Verses)
-            {
-                var list = aya._text.AsClearArabicCharacterList();
+            return false;
+        }
 
-                var count = list.Contains(valueList);
-                if ( count> 0)
-                {
-                    yield return (aya,count);
-                }
+        a = a.Where(IsValidForWordSearch).ToList();
+        b = b.Where(IsValidForWordSearch).ToList();
+
+        if (a.Count != b.Count)
+        {
+            return false;
+        }
+
+        var length = a.Count;
+
+        for (var i = 0; i < length; i++)
+        {
+            if (!a[i].HasValueAndSameAs(b[i]))
+            {
+                return false;
             }
         }
+
+        return true;
+    }
+
+    public static bool EndsWith(this IReadOnlyList<LetterMatchInfo> source, IReadOnlyList<LetterMatchInfo> search)
+    {
+        if (source is null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (search is null)
+        {
+            throw new ArgumentNullException(nameof(search));
+        }
+
+        source = source.Where(IsValidForWordSearch).ToList();
+        search = search.Where(IsValidForWordSearch).ToList();
+
+        if (search.Count > source.Count)
+        {
+            return false;
+        }
+
+        var sourceIndex = source.Count - search.Count;
+
+        for (var i = 0; i < search.Count; i++)
+        {
+            if (source[sourceIndex + i].ArabicLetterIndex != search[i].ArabicLetterIndex)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static int Contains(this IReadOnlyList<LetterMatchInfo> source, IReadOnlyList<LetterMatchInfo> search)
+    {
+        if (source is null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (search is null)
+        {
+            throw new ArgumentNullException(nameof(search));
+        }
+
+        source = source.Where(IsValidForWordSearch).ToList();
+        search = search.Where(IsValidForWordSearch).ToList();
+
+        if (search.Count > source.Count)
+        {
+            return 0;
+        }
+
+        var count = 0;
+        for (var i = 0; i < source.Count; i++)
+        {
+            if (i + search.Count >= source.Count)
+            {
+                return count;
+            }
+
+            var difference = i;
+
+            var isMatch = true;
+            for (var j = 0; j < search.Count; j++)
+            {
+                if (source[difference + j].ArabicLetterIndex != search[j].ArabicLetterIndex)
+                {
+                    isMatch = false;
+                    break;
+                }
+            }
+
+            if (isMatch)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 }
