@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ReactWithDotNet;
 using ReactWithDotNet.react_xarrows;
+using static QuranAnalyzer.ArabicLetter;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
@@ -125,17 +126,17 @@ public class View : ReactComponent
 {
     public override Element render()
     {
-        const string Elif = "Elif-" + ArabicLetter.Alif;
-        const string Lam  = "Lam-" + ArabicLetter.Laam;
-        const string Mim  = "Mim-" + ArabicLetter.Miim;
-        const string Sad  = "Sad-" + ArabicLetter.Saad;
-        const string Kaf  = "Kāf-"+ ArabicLetter.Qaaf;
-        const string Ha   = "Hā-" + ArabicLetter.Haa;
-        const string Ya   = "Yāʾ-" + ArabicLetter.Yaa;
-        const string Ain  = "ʿAin-" + ArabicLetter.Ayn;
-        const string Ra   = "Rāʾ-" + ArabicLetter.Raa;
-        const string Ta   = "Ṭāʾ-" + ArabicLetter.Taa_;
-        const string Sin  = "Sīn-" + ArabicLetter.Siin;
+        const string Elif = "Elif-" + Alif;
+        const string Lam  = "Lam-" + Laam;
+        const string Mim  = "Mim-" + Miim;
+        const string Sad  = "Sad-" + Saad;
+        const string Kaf  = "Kāf-"+ Qaaf;
+        const string Ha   = "Hā-" + Haa;
+        const string Ya   = "Yāʾ-" + Yaa;
+        const string Ain  = "ʿAin-" + Ayn;
+        const string Ra   = "Rāʾ-" + Raa;
+        const string Ta   = "Ṭāʾ-" + Taa_;
+        const string Sin  = "Sīn-" + Siin;
         const string Nun  = "Nūn-" + ArabicLetter.Nun;
 
 
@@ -165,7 +166,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = $"2:*|{ArabicLetter.Alif},{ArabicLetter.Laam},{ArabicLetter.Miim}" } }
+                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = $"2:*|{Alif},{Laam},{Miim}" } }
                 },
 
                 new tr
@@ -339,7 +340,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "19-counts", MultipleOf = 42 } }
+                    new td { new CountingResult { id = "19-counts", MultipleOf = 42, SearchScript = $"19:*|{Kaaf} {Haa_} {Yaa} {Ayn} {Saad}" } }
                 },
 
                 new tr
@@ -407,7 +408,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = $"7:*,19:*,38:*|{ArabicLetter.Saad}" } }
+                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = $"7:*,19:*,38:*|{Saad}" } }
                 },
 
                 new tr
