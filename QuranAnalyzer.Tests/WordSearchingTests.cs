@@ -51,8 +51,15 @@ namespace QuranAnalyzer
 
 
 
+            //static int getCountInAllChapter(string searchWord)
+            //{
+            //    return VerseFilter.GetVerseList("*").Value.Sum(x => ToWordList(x._text).Count(word => isSame(word, searchWord))).Value;
+            //}
+
             static int getCountInAllChapter(string searchWord)
             {
+                var search = AnalyzeText(searchWord);
+
                 return VerseFilter.GetVerseList("*").Value.Sum(x => ToWordList(x._text).Count(word => isSame(word, searchWord))).Value;
             }
 
