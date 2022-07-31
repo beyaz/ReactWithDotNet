@@ -21,6 +21,25 @@ namespace QuranAnalyzer
         [TestMethod]
         public void AnalyzerTest()
         {
+            var nunVavNun = AnalyzeText("نون");
+
+            var total = 0;
+            foreach (var sura in AllSurahs)
+            {
+                foreach (var aya in sura.Verses)
+                {
+                    var lastWord  = aya._text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Last();
+
+                    var isEndsWith = AnalyzeText(lastWord).EndsWith(nunVavNun);
+                    if (isEndsWith)
+                    {
+                        total++;
+                    }
+                }
+            }
+
+            total.Should().Be(133);
+
             var source = "ءَادَمَ";
             var adem   = "اادم";
 
