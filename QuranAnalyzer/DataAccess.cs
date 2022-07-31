@@ -30,4 +30,6 @@ public sealed class Verse
 public static class DataAccess
 {
     public static readonly Surah[] AllSurahs = JsonSerializer.Deserialize<Surah[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
+    
+    
 }
