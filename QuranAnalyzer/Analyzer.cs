@@ -168,6 +168,11 @@ public static class Analyzer
         public int ArabicLetterIndex { get; init; }
         public string[] Forms { get; init; }
     }
+
+    public static IReadOnlyList<string> AsClearArabicCharacterList(this string value)
+    {
+        return AnalyzeText(value).Where(x => x.ArabicLetterIndex >= 0).Select(x => ArabicLetter.AllArabicLetters[x.ArabicLetterIndex]).ToList();
+    }
 }
 
 public sealed class LetterMatchInfo

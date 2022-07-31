@@ -44,9 +44,7 @@ public static class QuranAnalyzerMixin
 
     public static Response<IReadOnlyList<MatchInfo>> SearchCharachters(string searchScript, string searchCharachters, MushafOptions mushafOptions = null)
     {
-        var charachterList = searchCharachters.AsClearArabicCharacterList();
-
-        var indexList = charachterList.Select(x => Array.IndexOf(ArabicLetter.AllArabicLetters, x)).ToList();
+        var indexList = Analyzer.AnalyzeText(searchCharachters).Where(x => x.ArabicLetterIndex >= 0).Select(x => x.ArabicLetterIndex).ToList();
         if (indexList.Count == 0)
         {
             return "En az bir harf girilmelidir.";

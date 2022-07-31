@@ -1,5 +1,4 @@
-﻿using System.IO;
-
+﻿
 namespace QuranAnalyzer;
 
 [TestClass]
@@ -65,28 +64,5 @@ public class VerseFilterTest
     public void FilterWithStarWithManyWithSpecificAyahNumber_with_Error()
     {
         VerseFilter.GetVerseList(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
-    }
-
-    [TestMethod]
-    public void YaSin()
-    {
-        var records = QuranAnalyzerMixin.SearchCharachters("36 : *", "ي , سٓ").Value;
-
-        records.Count.Should().Be(285);
-    }
-
-    //[TestMethod]
-    public void Export()
-    {
-        using StreamWriter w = File.AppendText("d:\\A.txt");
-
-        var total = 1;
-        foreach (var sura in DataAccess.AllSurahs)
-        {
-            foreach (var aya in sura.Verses)
-            {
-                w.WriteLine(total++ + "|" + sura.Index + "|" + aya._index + "|" + aya._text);
-            }
-        }
     }
 }

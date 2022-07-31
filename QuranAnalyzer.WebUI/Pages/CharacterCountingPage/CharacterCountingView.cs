@@ -107,11 +107,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             new() { field = nameof(Occurence.VerseId), header = "Ayet No" }
         };
 
-        foreach (var charachter in state.SearchCharacters.AsClearArabicCharacterList())
+        foreach (var charachter in Analyzer.AnalyzeText(state.SearchCharacters).Where(x=>x.ArabicLetterIndex>=0))
         {
-            var propertyName = "Charachter" + (state.SearchCharacters.AsClearArabicCharacterList().ToList().IndexOf(charachter) + 1);
+            var propertyName = "Charachter" + (Analyzer.AnalyzeText(state.SearchCharacters).Where(x => x.ArabicLetterIndex >= 0).ToList().IndexOf(charachter) + 1);
 
-            resultColumns.Add(new Column { field = propertyName, header = charachter });
+            resultColumns.Add(new Column { field = propertyName, header = charachter.MatchedLetter });
         }
 
         var dt = new DataTable
@@ -157,7 +157,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             header = "Mushaf Üzerinde Göster",
                             children =
                             {
-                                applyFontSize(CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords, state.SearchCharacters.AsClearArabicCharacterList()))
+                                applyFontSize(CharachterSearchResultColorizer.ColorizeCharachterSearchResults(matchRecords, Analyzer.AnalyzeText(state.SearchCharacters).Where(x => x.ArabicLetterIndex >= 0).Select(x=>x.MatchedLetter).ToList()))
                             }
                         }
                     }
