@@ -2,40 +2,39 @@
 
 static class WordSearcher
 {
-    public static int Contains(IReadOnlyList<LetterMatchInfo> source, int startIndex, IReadOnlyList<LetterMatchInfo> search)
+    public static IReadOnlyList<int> Contains(IReadOnlyList<LetterMatchInfo> sourceWord, IReadOnlyList<LetterMatchInfo> searchWord)
     {
-        if (source is null)
+        if (sourceWord is null)
         {
-            throw new ArgumentNullException(nameof(source));
+            throw new ArgumentNullException(nameof(sourceWord));
         }
 
-        if (search is null)
+        if (searchWord is null)
         {
-            throw new ArgumentNullException(nameof(search));
+            throw new ArgumentNullException(nameof(searchWord));
         }
 
-        source = source.Where(x => x.ArabicLetterIndex >= 0).ToList();
-        search = search.Where(x => x.ArabicLetterIndex >= 0).ToList();
+        sourceWord = sourceWord.Where(x => x.ArabicLetterIndex >= 0).ToList();
+        searchWord = searchWord.Where(x => x.ArabicLetterIndex >= 0).ToList();
 
-        if (search.Count > source.Count)
+        if (searchWord.Count > sourceWord.Count)
         {
-            return 0;
+            return Array.Empty<int>();
         }
 
-        var count = 0;
-        for (var i = 0; i < source.Count; i++)
+        var matchStartIndexList = new List<int>();
+
+        for (var i = 0; i < sourceWord.Count; i++)
         {
-            if (i + search.Count >= source.Count)
+            if (i + searchWord.Count >= sourceWord.Count)
             {
-                return count;
+                return matchStartIndexList;
             }
 
-            var difference = i;
-
             var isMatch = true;
-            for (var j = 0; j < search.Count; j++)
+            for (var j = 0; j < searchWord.Count; j++)
             {
-                if (source[difference + j].ArabicLetterIndex != search[j].ArabicLetterIndex)
+                if (sourceWord[i + j].ArabicLetterIndex != searchWord[j].ArabicLetterIndex)
                 {
                     isMatch = false;
                     break;
@@ -44,10 +43,10 @@ static class WordSearcher
 
             if (isMatch)
             {
-                count++;
+                matchStartIndexList.Add(i);
             }
         }
 
-        return count;
+        return matchStartIndexList;
     }
 }
