@@ -111,6 +111,34 @@ public static class ListExtensions
         return true;
     }
 
+    public static bool HasValueAndSame(this IReadOnlyList<LetterMatchInfo> a, IReadOnlyList<LetterMatchInfo> b)
+    {
+        if (a == null || b == null)
+        {
+            return false;
+        }
+
+        a = a.Where(x => x.ArabicLetterIndex >= 0).ToList();
+        b = b.Where(x => x.ArabicLetterIndex >= 0).ToList();
+
+        if (a.Count != b.Count)
+        {
+            return false;
+        }
+        
+        var length = a.Count;
+
+        for (var i = 0; i < length; i++)
+        {
+            if (!a[i].HasValueAndSameAs(b[i]))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static Response<int> Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, Response<int>> selector)
     {
         if (source == null)

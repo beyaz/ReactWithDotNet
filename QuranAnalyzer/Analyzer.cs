@@ -16,13 +16,28 @@ public static class Analyzer
 
     static readonly AlternativeForm[] AlternativeFormsWithHamza =
     {
-        new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ", "ء", "ٔ" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ", "ء" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new[] { "ز" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new[] { "ج" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new[] { "ة" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Yaa, Forms  = new[] { "ى", "ئ" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
+
+    public static bool HasValueAndSameAs(this LetterMatchInfo a, LetterMatchInfo b)
+    {
+        if (a is null || b is null)
+        {
+            return false;
+        }
+
+        if (a.ArabicLetterIndex >= 0 && a.ArabicLetterIndex == b.ArabicLetterIndex)
+        {
+            return true;
+        }
+
+        return false;
+    }
     
     public static IReadOnlyList<LetterMatchInfo> AnalyzeText(string line, bool isHemzeActive = true)
     {

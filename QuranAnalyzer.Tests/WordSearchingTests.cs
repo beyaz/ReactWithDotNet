@@ -17,8 +17,27 @@ namespace QuranAnalyzer
     [TestClass]
     public class WordSearchingTests
     {
-        
+        [TestMethod]
+        public void AnalyzerTest()
+        {
+            var source = "ءَادَمَ";
+            var adem   = "اادم";
 
+            Analyzer.AnalyzeText(source).HasValueAndSame(Analyzer.AnalyzeText(adem)).Should().BeTrue();
+
+
+            source  = "يَـٰٓـَٔادَمُ";
+            var ya_adem = "يادم";
+
+
+            var arr = WordSearcher.AsClearArabicCharacterList(source);
+
+
+            Analyzer.AnalyzeText(source).HasValueAndSame(Analyzer.AnalyzeText(ya_adem)).Should().BeTrue();
+
+        }
+
+       
 
         static int GetCountOfWord(string searchWord)
         {
@@ -41,6 +60,7 @@ namespace QuranAnalyzer
                 }
             }
 
+            
             return total;
         }
 
