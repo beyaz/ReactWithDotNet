@@ -18,6 +18,56 @@ namespace QuranAnalyzer
     [TestClass]
     public class WordSearchingTests
     {
+
+
+        [TestMethod]
+        public void Day_365()
+        {
+            const string yevm    = "يوم";
+            const string ve_yevm = "ويوم";
+
+            const string el_yevm = "اليوم";
+            const string vel_yevm = "واليوم";
+            const string yevmen = "يوما";
+            const string li_yevm = "ليوم";
+            const string fel_yevm = "فاليوم";
+
+            const string bi_yevm = "بيوم";
+            const string bil_yevm = "باليوم";
+            const string vebil_yevm = "وباليوم";
+            
+
+            getCountInAllChapter(yevm).Should().Be(217);
+            getCountInAllChapter(ve_yevm).Should().Be(44);
+            getCountInAllChapter(el_yevm).Should().Be(41);
+            getCountInAllChapter(vel_yevm).Should().Be(23);
+            getCountInAllChapter(yevmen).Should().Be(16);
+            getCountInAllChapter(li_yevm).Should().Be(8);
+            getCountInAllChapter(fel_yevm).Should().Be(8);
+            getCountInAllChapter(bi_yevm).Should().Be(5);
+            getCountInAllChapter(bil_yevm).Should().Be(2);
+            getCountInAllChapter(vebil_yevm).Should().Be(1);
+
+
+
+
+            static int getCountInAllChapter(string searchWord)
+            {
+                return VerseFilter.GetVerseList("*").Value.Sum(x => ToWordList(x._text).Count(word => isSame(word, searchWord))).Value;
+            }
+
+            static IReadOnlyList<string> ToWordList(string sentence)
+            {
+                return sentence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            }
+            
+            static bool isSame(string word, string search)
+            {
+                return AnalyzeText(word).HasValueAndSame(AnalyzeText(search));
+            }
+        }
+
+
         [TestMethod]
         public void AnalyzerTest()
         {
