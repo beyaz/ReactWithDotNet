@@ -125,3 +125,16 @@ public static class CharachterSearchResultColorizer
         };
     }
 }
+
+class LetterColorizer : ReactComponent
+{
+    public string Text { get; set; }
+
+    public string LettersForColorize { get; set; }
+
+
+    public override Element render()
+    {
+        throw new NotImplementedException();
+    }
+}
