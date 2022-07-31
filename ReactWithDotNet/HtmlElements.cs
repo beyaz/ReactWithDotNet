@@ -140,20 +140,35 @@ public class img : HtmlElement
 
 public class HStack : div
 {
-    static void InitializeStyle(Style style)
-    {
-        style.display = "flex";
-        style.flexDirection = "row";
-        style.alignItems = "stretch";
-        style.width = "100%";
-
-    }
     public HStack()
     {
-        InitializeStyle(style);
+        style.display       = "flex";
+        style.flexDirection = "row";
+        style.alignItems    = "stretch";
+        style.width         = "100%";
     }
-
 }
+
+public class HPanel : div
+{
+    public HPanel()
+    {
+        style.display       = "flex";
+        style.flexDirection = "row";
+        style.alignItems    = "center";
+    }
+}
+
+public class VPanel : div
+{
+    public VPanel()
+    {
+        style.display       = "flex";
+        style.flexDirection = "column";
+        style.alignItems    = "center";
+    }
+}
+
 
 public sealed class VStack : div
 {
