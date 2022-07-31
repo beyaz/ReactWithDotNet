@@ -50,7 +50,7 @@ namespace QuranAnalyzer
             var ya_adem = "يادم";
 
 
-            var arr = WordSearcher.AsClearArabicCharacterList(source);
+            var arr = WordSearcher_old.AsClearArabicCharacterList(source);
 
 
             AnalyzeText(source).HasValueAndSame(AnalyzeText(ya_adem)).Should().BeTrue();
@@ -61,7 +61,7 @@ namespace QuranAnalyzer
 
         static int GetCountOfWord(string searchWord)
         {
-            var searchList = WordSearcher.AsClearArabicCharacterList(searchWord);
+            var searchList = WordSearcher_old.AsClearArabicCharacterList(searchWord);
 
             var total = 0;
             foreach (var sura in AllSurahs)
@@ -70,7 +70,7 @@ namespace QuranAnalyzer
                 {
                     foreach (var word in aya._text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                     {
-                        var isSame = WordSearcher.AsClearArabicCharacterList(word).HasValueAndSame(searchList);
+                        var isSame = WordSearcher_old.AsClearArabicCharacterList(word).HasValueAndSame(searchList);
                         if (isSame)
                         {
                             total++;
@@ -87,6 +87,7 @@ namespace QuranAnalyzer
         public void Adem_İsa()
         {
 
+            
 
             {
                 var adem = "اادم";
@@ -163,7 +164,7 @@ namespace QuranAnalyzer
             var searchText = "شَهْرٌ";
 
 
-            var kelime_arindirilmis_array = WordSearcher.AsClearArabicCharacterList(text);
+            var kelime_arindirilmis_array = WordSearcher_old.AsClearArabicCharacterList(text);
 
             string.Join(Environment.NewLine, kelime_arindirilmis_array);
 
@@ -175,7 +176,7 @@ namespace QuranAnalyzer
 
             foreach (var searchItem in searchItems)
             {
-                var search = WordSearcher.AsClearArabicCharacterList(searchItem);
+                var search = WordSearcher_old.AsClearArabicCharacterList(searchItem);
 
                 var count = ListExtensions.Contains(kelime_arindirilmis_array, search);
             }
