@@ -238,7 +238,7 @@ namespace QuranAnalyzer
         [TestMethod]
         public void TestMethod1()
         {
-            AllSurahs.Length.Should().Be(114);
+            AllSurahs.Count.Should().Be(114);
             AllSurahs[0].Index.Should().Be(1);
             AllSurahs[113].Index.Should().Be(114);
 

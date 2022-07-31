@@ -57,7 +57,7 @@ public static class VerseFilter
 
             Response<Surah> findSurahByNumber(int surahNumber)
             {
-                if (surahNumber <= 0 || surahNumber > AllSurahs.Length)
+                if (surahNumber <= 0 || surahNumber > AllSurahs.Count)
                 {
                     return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
                 }
@@ -67,11 +67,6 @@ public static class VerseFilter
 
             Response<IReadOnlyList<Verse>> collectVerseList(Surah sura, string ayaFilter)
             {
-                foreach (var aya in sura.Verses)
-                {
-                    aya.ChapterNumber = sura.Index;
-                }
-
                 var filters = ayaFilter.Split("-".ToCharArray()).Where(x=>!string.IsNullOrWhiteSpace(x)).Select(x=>x.Trim()).ToArray();
 
 
