@@ -138,7 +138,7 @@ public class img : HtmlElement
     public int height { get; set; }
 }
 
-public class HPanel : div
+public class HStack : div
 {
     static void InitializeStyle(Style style)
     {
@@ -148,16 +148,16 @@ public class HPanel : div
         style.width = "100%";
 
     }
-    public HPanel()
+    public HStack()
     {
         InitializeStyle(style);
     }
 
 }
 
-public sealed class VPanel : div
+public sealed class VStack : div
 {
-    public VPanel()
+    public VStack()
     {
         style.display = "flex";
         style.flexDirection = "column";

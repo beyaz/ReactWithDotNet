@@ -81,13 +81,13 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
                     onChange    = e => { state.SelectedEnvironment = e.value; },
                     optionLabel = nameof(EnvironmentInfo.Name),
                     placeholder = "Select environment",
-                    itemTemplate = item => new HPanel
+                    itemTemplate = item => new HStack
                     {
                         new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
                     },
 
-                    valueTemplate = item => item == null ? new HPanel { new div("Seçiniz"){style = { margin = "5px"}} } :
-                                                           new HPanel { new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } } },
+                    valueTemplate = item => item == null ? new HStack { new div("Seçiniz"){style = { margin = "5px"}} } :
+                                                           new HStack { new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } } },
                     filterBy  = nameof(EnvironmentInfo.Name),
                     showClear = true,
                     filter    = true,
@@ -119,7 +119,7 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
                     {
                         state.Suggestions = state.ItemsSource.Where(x => x.Name.Contains(e.query, StringComparison.OrdinalIgnoreCase)).ToList();
                     },
-                    itemTemplate = item => new HPanel
+                    itemTemplate = item => new HStack
                     {
                         new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
                     }

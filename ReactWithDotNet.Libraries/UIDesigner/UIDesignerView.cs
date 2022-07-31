@@ -19,7 +19,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public override Element render()
     {
-        var propertyPanel = new VPanel
+        var propertyPanel = new VStack
         {
             style = { margin = "5px"},
             children =

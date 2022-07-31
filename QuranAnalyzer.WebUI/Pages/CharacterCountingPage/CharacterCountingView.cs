@@ -40,9 +40,9 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             children =
             {
                 new h4("Arama"),
-                new VPanel
+                new VStack
                 {
-                    new VPanel
+                    new VStack
                     {
                         new div { innerText       = "Sure:" },
                         new InputText { valueBind = () => state.ChapterFilter }
@@ -50,7 +50,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                     new VSpace(10),
 
-                    new VPanel
+                    new VStack
                     {
                         new div { innerText       = "Aranacak Karakterlerler" },
                         new InputText { valueBind = () => state.SearchCharacters }
@@ -89,7 +89,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return new CalculatingComponent { searchPanel };
         }
 
-        var summaryContent = new HPanel
+        var summaryContent = new HStack
         {
             new div { innerText = state.SummaryText },
             new div { innerText = state.CountOfCharacters.ToString(), style = { marginLeft = "5px", marginRight = "5px" } },

@@ -107,7 +107,7 @@ class Chapter : ReactComponent
             children =
             {
                 new div{innerText  = $"Sure - {ChapterNo}"},
-                new HPanel
+                new HStack
                 {
                     style={fontWeight = "600"},
                     children=

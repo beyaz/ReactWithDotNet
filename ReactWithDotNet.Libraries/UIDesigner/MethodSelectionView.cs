@@ -67,7 +67,7 @@ class MethodSelectionView : ReactComponent
     {
         if (node.IsMethod)
         {
-            return new HPanel
+            return new HStack
             {
                 new img { src                                   = "img/Method.svg", width = 20, height = 20 },
                 new div(node.FullNameWithoutReturnType) { style = { marginLeft = "5px" } },
@@ -77,7 +77,7 @@ class MethodSelectionView : ReactComponent
 
         if (node.IsClass)
         {
-            return new HPanel
+            return new HStack
             {
                 new img { src              = "img/Class.svg", width = 20, height = 20 },
                 new div(node.Name) { style = { marginLeft = "5px" } }
@@ -86,14 +86,14 @@ class MethodSelectionView : ReactComponent
 
         if (node.IsNamespace)
         {
-            return new HPanel
+            return new HStack
             {
                 new img { src              = "img/Namespace.svg", width = 20, height = 20 },
                 new div(node.Name) { style = { marginLeft = "5px" } }
             };
         }
 
-        return new HPanel
+        return new HStack
         {
             new img { src            = "img/Namespace.svg", width = 20, height = 20 },
             new div("aloha") { style = { marginLeft = "5px" } }

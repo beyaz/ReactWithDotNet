@@ -30,7 +30,7 @@ public class View : ReactComponent
                 style = { fontSize = "17px", marginLeftRight = "10px"}
             },
 
-            new VPanel
+            new VStack
             {
                 style={marginTop = "22px"},
                children=

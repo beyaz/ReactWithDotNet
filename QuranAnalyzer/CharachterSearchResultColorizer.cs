@@ -30,7 +30,7 @@ public static class CharachterSearchResultColorizer
 
         var searchCharachterList = searchCharachterList_.ToImmutableList();
 
-        var container = new VPanel
+        var container = new VStack
         {
             style =
             {
