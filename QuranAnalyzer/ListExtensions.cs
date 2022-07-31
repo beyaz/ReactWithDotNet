@@ -1,4 +1,6 @@
-﻿namespace QuranAnalyzer;
+﻿using ReactWithDotNet;
+
+namespace QuranAnalyzer;
 
 public static class ListExtensions
 {
@@ -131,6 +133,39 @@ public static class ListExtensions
         for (var i = 0; i < length; i++)
         {
             if (!a[i].HasValueAndSameAs(b[i]))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static bool EndsWith(this IReadOnlyList<LetterMatchInfo> source, IReadOnlyList<LetterMatchInfo> search)
+    {
+        if (source is null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (search is null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        a = a.Where(x => x.ArabicLetterIndex >= 0).ToList();
+        b = b.Where(x => x.ArabicLetterIndex >= 0).ToList();
+
+        if (search.Count > source.Count)
+        {
+            return false;
+        }
+
+        var sourceIndex = source.Count - search.Count;
+
+        for (var i = 0; i < search.Count; i++)
+        {
+            if (source[sourceIndex + i] != search[i])
             {
                 return false;
             }
