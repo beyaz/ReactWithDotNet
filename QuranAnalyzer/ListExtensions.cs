@@ -68,6 +68,8 @@ public static class ListExtensions
         return count;
     }
 
+    
+
     public static bool EndsWith(this IReadOnlyList<string> source, IReadOnlyList<string> search)
     {
         if (search.Count > source.Count)
@@ -172,6 +174,55 @@ public static class ListExtensions
         }
 
         return true;
+    }
+
+    public static int Contains(this IReadOnlyList<LetterMatchInfo> source, IReadOnlyList<LetterMatchInfo> search)
+    {
+        if (source is null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (search is null)
+        {
+            throw new ArgumentNullException(nameof(search));
+        }
+
+        source = source.Where(x => x.ArabicLetterIndex >= 0).ToList();
+        search = search.Where(x => x.ArabicLetterIndex >= 0).ToList();
+        
+        if (search.Count > source.Count)
+        {
+            return 0;
+        }
+
+        var count = 0;
+        for (var i = 0; i < source.Count; i++)
+        {
+            if (i + search.Count >= source.Count)
+            {
+                return count;
+            }
+
+            var difference = i;
+
+            var isMatch = true;
+            for (var j = 0; j < search.Count; j++)
+            {
+                if (source[difference + j].ArabicLetterIndex != search[j].ArabicLetterIndex)
+                {
+                    isMatch = false;
+                    break;
+                }
+            }
+
+            if (isMatch)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     public static Response<int> Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, Response<int>> selector)
