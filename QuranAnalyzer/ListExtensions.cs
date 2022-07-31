@@ -150,11 +150,11 @@ public static class ListExtensions
 
         if (search is null)
         {
-            throw new ArgumentNullException(nameof(source));
+            throw new ArgumentNullException(nameof(search));
         }
 
-        a = a.Where(x => x.ArabicLetterIndex >= 0).ToList();
-        b = b.Where(x => x.ArabicLetterIndex >= 0).ToList();
+        source = source.Where(x => x.ArabicLetterIndex >= 0).ToList();
+        search = search.Where(x => x.ArabicLetterIndex >= 0).ToList();
 
         if (search.Count > source.Count)
         {
@@ -165,7 +165,7 @@ public static class ListExtensions
 
         for (var i = 0; i < search.Count; i++)
         {
-            if (source[sourceIndex + i] != search[i])
+            if (source[sourceIndex + i].ArabicLetterIndex != search[i].ArabicLetterIndex)
             {
                 return false;
             }
