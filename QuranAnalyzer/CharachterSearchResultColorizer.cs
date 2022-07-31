@@ -1,23 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Collections.Immutable;
 using System.Text;
 using ReactWithDotNet;
-using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer;
-
-[ReactRealType(typeof(div))]
-class FlexRowAlignItemsCenter : div
-{
-    public FlexRowAlignItemsCenter()
-    {
-        style.display       = "flex";
-        style.flexDirection = "row";
-        style.alignItems    = "center";
-    }
-}
 
 public static class CharachterSearchResultColorizer
 {
@@ -46,7 +31,7 @@ public static class CharachterSearchResultColorizer
             {
                 var el = ColorizeCharachterSearchResult(items[0].Verse._bismillah + items[0].Verse._text, items, getColor);
 
-                container.Add(new FlexRowAlignItemsCenter
+                container.Add(new HPanel
                 {
                     new div
                     {
