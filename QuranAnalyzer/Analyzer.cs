@@ -4,6 +4,7 @@ namespace QuranAnalyzer;
 
 public static class Analyzer
 {
+    
     static readonly AlternativeForm[] AlternativeForms =
     {
         new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ" } },
@@ -14,9 +15,12 @@ public static class Analyzer
         new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
 
+    const string Hamza = "ء";
+    const string HamzaAbove = "ٔ";
+
     static readonly AlternativeForm[] AlternativeFormsWithHamza =
     {
-        new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ", "ء" } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ", Hamza,HamzaAbove } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new[] { "ز" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new[] { "ج" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new[] { "ة" } },
