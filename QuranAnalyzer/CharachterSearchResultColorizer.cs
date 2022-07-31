@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Text;
 using ReactWithDotNet;
+using static QuranAnalyzer.Analyzer;
 
 namespace QuranAnalyzer;
 
@@ -81,7 +82,9 @@ public static class CharachterSearchResultColorizer
 
     static Element ColorizeCharachterSearchResult(string ayahText, IReadOnlyList<MatchInfo> matchRecords, Func<string,string> getColor)
     {
-        var startPosition    = 0;
+       
+
+        var startPosition = 0;
 
         var html = new StringBuilder();
 
@@ -128,13 +131,83 @@ public static class CharachterSearchResultColorizer
 
 class LetterColorizer : ReactComponent
 {
-    public string Text { get; set; }
+    public string VerseText { get; set; }
 
     public string LettersForColorize { get; set; }
 
 
     public override Element render()
     {
-        throw new NotImplementedException();
+
+        var colors = new[] { "blue", "red", "#E0B4E8", "D4D925", "#159E09" };
+
+        string getColor(int index)
+        {
+            if (index >= 0 && index < colors.Length)
+            {
+                return colors[index];
+            }
+
+            return "red";
+        }
+
+        
+        
+        var verseText          = AnalyzeText(VerseText).Where(x=>x.ArabicLetterIndex >=0).ToList();
+        var lettersForColorize = AnalyzeText(LettersForColorize).Where(x => x.ArabicLetterIndex >= 0).ToList();
+        
+
+        var cursor = 0;
+        
+
+        var html = new StringBuilder();
+
+        for (var i = 0; i < verseText.Count; i++)
+        {
+            for (var j = 0; j < lettersForColorize.Count; j++)
+            {
+                if (verseText[i].ArabicLetterIndex == lettersForColorize[j].ArabicLetterIndex)
+                {
+                    var len = verseText[i].MatchedLetter.Length;
+
+                    html.Append(VerseText.Substring(cursor, verseText[i].StartIndex - cursor));
+
+                    var span = new span
+                    {
+                        innerText = verseText[i].MatchedLetter,
+                        style =
+                        {
+                            color        = getColor(j),
+                            //marginLeft   = "1px",
+                            //marginRight  = "1px",
+                            border       = "1px solid rgb(218, 220, 224)",
+                            borderRadius = "4px"
+                        }
+                    };
+
+                    html.Append(span);
+
+                    cursor = verseText[i].StartIndex + len;
+                    
+                    break;
+                }
+            }
+        }
+
+        if (cursor < VerseText.Length - 1)
+        {
+            html.Append(VerseText.Substring(cursor));
+        }
+        
+        return new div
+        {
+            innerHTML = html.ToString(),
+            style =
+            {
+                fontSize = "1.4rem"
+            }
+        };
+
+
     }
 }
