@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet;
 using ReactWithDotNet.PrimeReact;
+using static QuranAnalyzer.Analyzer;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -107,9 +109,21 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return new CalculatingComponent { searchPanel };
         }
 
-       
+        var searchLetters = AnalyzeText(state.SearchCharacters).Where(IsArabicLetter).ToList();
 
-      
+        var matchRecords = QuranAnalyzerMixin.SearchCharachters(state.ChapterFilter, state.SearchCharacters, state.MushafOptions).Value;
+
+        state.SummaryInfoList = state.SearchCharacters.AsClearArabicCharacterList().Select(arabicCharcter =>
+        {
+            var arabicCharacterIndex = arabicCharcter.AsArabicCharacterIndex().Value;
+
+            return new SummaryInfo
+            {
+                Count = matchRecords.Count(x => x.ArabicLetterIndex == arabicCharacterIndex),
+                Name  = arabicCharcter
+            };
+        }).ToList();
+
 
 
 
