@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 [Serializable]
-public class CharacterCountingViewModel
+public class CharacterCountingViewModel2
 {
     public string SelectedFact { get; set; }
     public string SummaryText { get; set; }
