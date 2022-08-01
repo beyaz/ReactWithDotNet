@@ -99,7 +99,11 @@ public static class Analyzer
             };
         }
     }
-    
+
+    public static bool IsArabicLetter(LetterMatchInfo matchInfo)
+    {
+        return matchInfo.ArabicLetterIndex >= 0;
+    }
 
     static LetterMatchInfo TryMatch(string line, int startIndex, string searchLetter, int arabicLetterIndex)
     {
@@ -180,6 +184,7 @@ public sealed class LetterMatchInfo
     public int ArabicLetterIndex { get; init; }
     public string MatchedLetter { get; init; }
     public int StartIndex { get; init; }
+    
 
     public override string ToString()
     {
