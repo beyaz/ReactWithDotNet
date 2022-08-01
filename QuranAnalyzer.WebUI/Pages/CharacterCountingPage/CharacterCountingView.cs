@@ -240,7 +240,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                 var property = typeof(Occurence).GetProperty(propertyName);
 
-                var count = matchRecords.Count(m => record.Verse._index == m.Verse._index && m.ToString() == charachter);
+                var count = matchRecords.Count(m => record.Verse.Index == m.Verse.Index && m.ToString() == charachter);
 
                 counts.Add((charachter, count));
 

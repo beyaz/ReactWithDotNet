@@ -30,7 +30,7 @@ public class MatchInfo
                 return ArabicLetter.AllArabicLetters[ArabicLetterIndex];
             }
 
-            return Verse._text[StartIndexInVerseText].ToString();
+            return Verse.Text[StartIndexInVerseText].ToString();
         }
 
         return string.Empty;

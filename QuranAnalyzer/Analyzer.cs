@@ -84,7 +84,7 @@ public static class Analyzer
 
     public static IReadOnlyList<MatchInfo> AnalyzeVerse(Verse verse, bool isHemzeActive = true)
     {
-        var line = verse._bismillah + verse._text;
+        var line = verse.Bismillah + verse.Text;
 
         return AnalyzeText(line, isHemzeActive).Select(asMatchInfo).ToList();
 

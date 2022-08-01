@@ -15,9 +15,9 @@ public class CharacterCountingTests
     {
         CountShouldBe("*", Daad, 1686);
 
-        Analyzer.AnalyzeVerse(new Verse { _text = "طه" }).Count.Should().Be(2);
-        Analyzer.AnalyzeVerse(new Verse { _text = "طه" })[0].ArabicLetterIndex.Should().Be(15);
-        Analyzer.AnalyzeVerse(new Verse { _text = "طه" })[1].ArabicLetterIndex.Should().Be(25);
+        Analyzer.AnalyzeVerse(new Verse { Text = "طه" }).Count.Should().Be(2);
+        Analyzer.AnalyzeVerse(new Verse { Text = "طه" })[0].ArabicLetterIndex.Should().Be(15);
+        Analyzer.AnalyzeVerse(new Verse { Text = "طه" })[1].ArabicLetterIndex.Should().Be(25);
     }
 
     [TestMethod]

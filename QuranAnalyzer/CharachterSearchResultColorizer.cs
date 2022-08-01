@@ -27,9 +27,9 @@ public static class CharachterSearchResultColorizer
 
         foreach (var itemsInChapter in from m in matchRecords group m by m.Verse.ChapterNumber into mgroup select mgroup.ToList())
         {
-            foreach (var items in from m in itemsInChapter group m by m.Verse._index into mgroup select mgroup.ToList())
+            foreach (var items in from m in itemsInChapter group m by m.Verse.Index into mgroup select mgroup.ToList())
             {
-                var el = ColorizeCharachterSearchResult(items[0].Verse._bismillah + items[0].Verse._text, items, getColor);
+                var el = ColorizeCharachterSearchResult(items[0].Verse.Bismillah + items[0].Verse.Text, items, getColor);
 
                 container.Add(new HPanel
                 {
@@ -46,7 +46,7 @@ public static class CharachterSearchResultColorizer
                     new HSpace(10),
                     new div
                     {
-                        text = $"[{items[0].Verse.ChapterNumber}:{items[0].Verse._index}]",
+                        text = $"[{items[0].Verse.ChapterNumber}:{items[0].Verse.Index}]",
                         style =
                         {
                             marginLeft = "5px",

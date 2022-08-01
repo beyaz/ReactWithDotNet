@@ -37,9 +37,9 @@ public static class DataAccess
             Index  = int.Parse(chapter._index),
             Verses = chapter.aya.AsListOf(v => new Verse
             {
-                _index           = v._index,
-                _bismillah       = v._bismillah,
-                _text            = v._text,
+                Index           = v._index,
+                Bismillah       = v._bismillah,
+                Text            = v._text,
                 ChapterNumber    = int.Parse(chapter._index),
                 Id               = $"{chapter._index}:{v._index}",
                 WordList         = v._text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).AsListOf(word=>AnalyzeText(word)),
@@ -65,9 +65,9 @@ public sealed class Surah
 [Serializable]
 public sealed class Verse
 {
-    public string _index { get; init; }
-    public string _text { get; init; }
-    public string _bismillah { get; init; }
+    public string Index { get; init; }
+    public string Text { get; init; }
+    public string Bismillah { get; init; }
     public int ChapterNumber { get; init; }
 
     public string Id { get; init; }
