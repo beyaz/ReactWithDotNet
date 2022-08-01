@@ -154,6 +154,7 @@ class LetterColorizer : ReactComponent
         
         
         var verseText          = AnalyzeText(VerseText).Where(x=>x.ArabicLetterIndex >=0).ToList();
+        
         var lettersForColorize = AnalyzeText(LettersForColorize).Where(x => x.ArabicLetterIndex >= 0).ToList();
         
 
