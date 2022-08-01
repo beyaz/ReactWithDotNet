@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
@@ -128,78 +122,6 @@ partial class Style
             paddingTop   = value;
             paddingRight = value;
         }
-    }
-
-
-    public string ToCss()
-    {
-
-        var lines = File.ReadAllLines("D:\\A.txt");
-
-        
-        var sb = new StringBuilder();
-        foreach (var name in lines)
-        {
-            sb.AppendLine("if(" + name + " != null )");
-            sb.AppendLine("{");
-            sb.AppendLine("sb.Append(" + '"' + getRealCssKey(name) + '"' + ");");
-            sb.AppendLine("sb.Append(\": \"" + ");");
-            sb.AppendLine("sb.Append(" + name+");");
-            sb.AppendLine("sb.Append(\";\"" + ");");
-            sb.AppendLine("}");
-            sb.AppendLine("");
-        }
-        
-        
-        var json = JsonSerializer.Serialize(this, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
-
-        var map = JsonSerializer.Deserialize<Dictionary<string,string>>(json);
-
-        if (map.Count == 0)
-        {
-            return null;
-        }
-
-        return string.Join(" ", map.Select(kvp => $"{getRealCssKey(kvp.Key)}: {kvp.Value};"));
-        
-
-        static string getRealCssKey(string key)
-        {
-            return string.Join("-", SplitByCamelCase(key).Select(x => x.ToLower()));
-        }
-        static string[] SplitByCamelCase(string stringtosplit)
-        {
-            string words = string.Empty;
-            
-            if (!string.IsNullOrEmpty(stringtosplit))
-            {
-                foreach (char ch in stringtosplit)
-                {
-                    if (char.IsLower(ch))
-                    {
-                        words += ch.ToString();
-                    }
-                    else
-                    {
-                        words += " " + ch.ToString().ToLower(new CultureInfo("en-US"));
-                    }
-
-                }
-                return words.Split(" ".ToCharArray(),StringSplitOptions.RemoveEmptyEntries);
-            }
-
-            return Array.Empty<string>();
-        }
-    }
-
-
-    public string ToCss2()
-    {
-        var sb = new StringBuilder();
-
-        
-        
-        return sb.ToString();
     }
     #endregion
 }
