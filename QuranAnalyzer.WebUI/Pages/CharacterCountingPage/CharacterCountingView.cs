@@ -55,7 +55,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         var searchPanel = new divWithBorder
         {
-            style = { padding = "15px", minWidth = "300px" },
+            style = { padding = "15px", minWidth = "300px", width = Context.ClientWidth >1000 ? "700px":"400px"},
             
             children =
             {
@@ -111,19 +111,34 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var searchLetters = AnalyzeText(state.SearchCharacters).Where(IsArabicLetter).ToList();
 
-        var matchRecords = QuranAnalyzerMixin.SearchCharachters(state.ChapterFilter, state.SearchCharacters, state.MushafOptions).Value;
-
-        state.SummaryInfoList = state.SearchCharacters.AsClearArabicCharacterList().Select(arabicCharcter =>
+        state.SummaryInfoList = searchLetters.AsListOf(x => new SummaryInfo
         {
-            var arabicCharacterIndex = arabicCharcter.AsArabicCharacterIndex().Value;
+            Count = VerseFilter.GetVerseList(state.ChapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfCharacter(verses, x.MatchedLetter)).Value,
+            Name  = x.MatchedLetter
+        });
 
-            return new SummaryInfo
+
+        var mushafVerse = new List<LetterColorizer>();
+        
+        foreach (var verse in VerseFilter.GetVerseList(state.ChapterFilter).Value)
+        {
+            if (verse.AnalyzedFullText.Any(x => searchLetters.Any(l=>l.ArabicLetterIndex == x.ArabicLetterIndex)))
             {
-                Count = matchRecords.Count(x => x.ArabicLetterIndex == arabicCharacterIndex),
-                Name  = arabicCharcter
-            };
-        }).ToList();
-
+                var letterColorizer = new LetterColorizer
+                {
+                    VerseTextNodes = verse.AnalyzedFullText,
+                    ChapterNumber = verse.ChapterNumber.ToString(),
+                    VerseNumber = verse.Index,
+                    LettersForColorizeNodes = searchLetters,
+                    VerseText = verse.TextWithBismillah,
+                    
+                };
+                
+                mushafVerse.Add(letterColorizer);
+            }
+            
+            
+        }
 
 
 
@@ -149,10 +164,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                         new TabPanel
                         {
                             header = "Mushaf Üzerinde Göster",
-                            children =
-                            {
-                                new div("aloha")
-                            }
+                            Children = mushafVerse
                         }
                     }
                 }

@@ -3,7 +3,7 @@ using ReactWithDotNet;
 
 namespace QuranAnalyzer;
 
-class LetterColorizer : ReactComponent
+public class LetterColorizer : ReactComponent
 {
     #region Static Fields
     static readonly string[] Colors = { "blue", "red", "#E0B4E8", "#D4D925", "#159E09" };
@@ -76,10 +76,12 @@ class LetterColorizer : ReactComponent
         {
             style =
             {
-                border = "1px dashed rgb(218, 220, 224)",
-                padding = "5px"
+                // border = "1px dashed rgb(218, 220, 224)",
+                padding        = "5px",
+                justifyContent = "space-between",
+                fontSize       = "0.7rem"
             },
-            children = { new div($"Ayet: {ChapterNumber} - {VerseNumber}"){style = { marginLeftRight = "10px"}} }
+            children = { new div($"{ChapterNumber}:{VerseNumber}"){style = { marginLeftRight = "10px" , }} }
         };
         
         for (var j = 0; j < lettersForColorize.Count; j++)
@@ -107,7 +109,7 @@ class LetterColorizer : ReactComponent
             style =
             {
                 fontSize   = "1.4rem",
-                border     = "1px dashed rgb(218, 220, 224)",
+                
                 padding    = "5px",
                 fontFamily = "Lateef, cursive", 
                 direction  = "rtl"
@@ -116,7 +118,13 @@ class LetterColorizer : ReactComponent
 
         return new VStack
         {
-            textView, countsView
+            children={ textView, countsView },
+            style =
+            {
+                marginTop = "40px",
+                border    = "1px dashed rgb(218, 220, 224)",
+                borderRadius = "4px"
+            }
         };
     }
     #endregion

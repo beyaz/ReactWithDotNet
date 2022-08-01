@@ -24,7 +24,8 @@ public static class DataAccess
                 ChapterNumber    = int.Parse(chapter._index),
                 Id               = $"{chapter._index}:{v._index}",
                 WordList         = v._text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).AsListOf(word => AnalyzeText(word)),
-                AnalyzedFullText = AnalyzeText(v._bismillah + v._text)
+                AnalyzedFullText = AnalyzeText(v._bismillah + v._text),
+                TextWithBismillah = v._bismillah + v._text,
             })
         });
     }
@@ -65,6 +66,7 @@ public sealed class Verse
     public string Id { get; init; }
     public string Index { get; init; }
     public string Text { get; init; }
+    public string TextWithBismillah { get; init; }
 
     public IReadOnlyList<IReadOnlyList<LetterMatchInfo>> WordList { get; init; }
 }
