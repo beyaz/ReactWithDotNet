@@ -33,7 +33,7 @@ public static class DataAccess
         AllSurahs = chapters.AsListOf(chapter => new Surah
         {
             _index = chapter._index,
-            _name  = chapter._name,
+            Name  = chapter._name,
             Index  = int.Parse(chapter._index),
             Verses = chapter.aya.AsListOf(v => new Verse
             {
@@ -57,7 +57,7 @@ public static class DataAccess
 public sealed class Surah
 {
     public string _index { get; init; }
-    public string _name { get; init; }
+    public string Name { get; init; }
     public int Index { get; init; }
     public IReadOnlyList<Verse> Verses { get; init; }
 }
