@@ -178,8 +178,6 @@ class LetterColorizer : ReactComponent
                         style =
                         {
                             color        = getColor(j),
-                            //marginLeft   = "1px",
-                            //marginRight  = "1px",
                             border       = "1px dashed rgb(218, 220, 224)",
                             borderRadius = "4px",
                             fontWeight = "bold"
