@@ -139,7 +139,7 @@ class LetterColorizer : ReactComponent
     public override Element render()
     {
 
-        var colors = new[] { "blue", "red", "#E0B4E8", "D4D925", "#159E09" };
+        var colors = new[] { "blue", "red", "#E0B4E8", "#D4D925", "#159E09" };
 
         string getColor(int index)
         {
@@ -180,8 +180,9 @@ class LetterColorizer : ReactComponent
                             color        = getColor(j),
                             //marginLeft   = "1px",
                             //marginRight  = "1px",
-                            border       = "1px solid rgb(218, 220, 224)",
-                            borderRadius = "4px"
+                            border       = "1px dashed rgb(218, 220, 224)",
+                            borderRadius = "4px",
+                            fontWeight = "bold"
                         }
                     };
 
