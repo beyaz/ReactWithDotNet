@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -131,6 +133,24 @@ partial class Style
 
     public string ToCss()
     {
+
+        var lines = File.ReadAllLines("D:\\A.txt");
+
+        
+        var sb = new StringBuilder();
+        foreach (var name in lines)
+        {
+            sb.AppendLine("if(" + name + " != null )");
+            sb.AppendLine("{");
+            sb.AppendLine("sb.Append(" + '"' + getRealCssKey(name) + '"' + ");");
+            sb.AppendLine("sb.Append(\": \"" + ");");
+            sb.AppendLine("sb.Append(" + name+");");
+            sb.AppendLine("sb.Append(\";\"" + ");");
+            sb.AppendLine("}");
+            sb.AppendLine("");
+        }
+        
+        
         var json = JsonSerializer.Serialize(this, JsonSerializationOptionHelper.Modify(new JsonSerializerOptions()));
 
         var map = JsonSerializer.Deserialize<Dictionary<string,string>>(json);
@@ -161,7 +181,7 @@ partial class Style
                     }
                     else
                     {
-                        words += " " + ch.ToString();
+                        words += " " + ch.ToString().ToLower(new CultureInfo("en-US"));
                     }
 
                 }
@@ -170,6 +190,16 @@ partial class Style
 
             return Array.Empty<string>();
         }
+    }
+
+
+    public string ToCss2()
+    {
+        var sb = new StringBuilder();
+
+        
+        
+        return sb.ToString();
     }
     #endregion
 }
