@@ -95,7 +95,8 @@ public static class Analyzer
                 ArabicLetterIndex     = x.ArabicLetterIndex,
                 MatchedLetter         = x.MatchedLetter,
                 StartIndexInVerseText = x.StartIndex,
-                Verse                 = verse
+                Verse                 = verse,
+                
             };
         }
     }

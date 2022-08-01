@@ -106,9 +106,11 @@ class LetterColorizer : ReactComponent
             innerHTML = html.ToString(),
             style =
             {
-                fontSize = "1.4rem",
-                border   = "1px dashed rgb(218, 220, 224)",
-                padding = "5px"
+                fontSize   = "1.4rem",
+                border     = "1px dashed rgb(218, 220, 224)",
+                padding    = "5px",
+                fontFamily = "Lateef, cursive", 
+                direction  = "rtl"
             }
         };
 
