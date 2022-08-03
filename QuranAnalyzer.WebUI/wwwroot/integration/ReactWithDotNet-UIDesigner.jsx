@@ -1,7 +1,9 @@
 
 import ReactWithDotNet from "../ReactWithDotNet.jsx";
 
-export function InitializeUIDesignerEvents(timeoutInMilliseconds)
+import "./react-simple-code-editor";
+
+function InitializeUIDesignerEvents(timeoutInMilliseconds)
 {
     OnBrowserInactive(timeoutInMilliseconds, () =>
     {
@@ -18,3 +20,5 @@ function OnBrowserInactive(timeoutInMilliseconds, callback)
         wait = setTimeout(callback, timeoutInMilliseconds);
     };
 }
+
+ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", InitializeUIDesignerEvents);
