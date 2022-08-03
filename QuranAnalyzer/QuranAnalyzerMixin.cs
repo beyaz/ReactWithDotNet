@@ -1,20 +1,8 @@
-﻿using static QuranAnalyzer.VerseFilter;
-
-namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer;
 
 public static class QuranAnalyzerMixin
 {
     #region Public Methods
-    public static Response<string> AsArabicCharacter(this int arabicCharacterIndex)
-    {
-        return ArabicLetter.AllArabicLetters.GetValueAt(arabicCharacterIndex);
-    }
-
-    public static Response<int> AsArabicCharacterIndex(this string character)
-    {
-        return ArabicLetter.AllArabicLetters.GetIndex(character);
-    }
-
     public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, string character, MushafOptions option = null)
     {
         option ??= new MushafOptions();
@@ -41,16 +29,17 @@ public static class QuranAnalyzerMixin
 
         return verseList.Sum(calculateCount);
     }
-
- 
     #endregion
 
     #region Methods
+    static Response<int> AsArabicCharacterIndex(this string character)
+    {
+        return ArabicLetter.AllArabicLetters.GetIndex(character);
+    }
+
     static Response<int> GetCountOf(this IReadOnlyList<MatchInfo> matchList, string character)
     {
         return character.AsArabicCharacterIndex().Then(arabicCharacterIndex => matchList.Count(x => x.ArabicLetterIndex == arabicCharacterIndex));
     }
-
-  
     #endregion
 }
