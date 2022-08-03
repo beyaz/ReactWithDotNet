@@ -54,7 +54,6 @@
     <None Include="wwwroot\integration\react-xarrows.jsx" />
     <None Include="wwwroot\integration\primereact.js" />
     <None Include="wwwroot\integration\primereact.jsx" />
-    <None Include="wwwroot\index.css" />
     <None Include="wwwroot\index.html" />
     <None Include="wwwroot\index.js" />
     <None Include="wwwroot\index.jsx" />
