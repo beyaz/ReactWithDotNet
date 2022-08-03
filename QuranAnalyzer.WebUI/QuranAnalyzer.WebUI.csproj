@@ -7,6 +7,8 @@
   <ItemGroup>
     <Content Remove="CommonData.json" />
     <Content Remove="Facts.json" />
+    <Content Remove="wwwroot\index - Copy.js" />
+    <Content Remove="wwwroot\integration-primereact.jsx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +41,8 @@
     <None Include="wwwroot\img\Namespace.svg" />
     <None Include="wwwroot\img\Options.svg" />
     <None Include="wwwroot\img\ParityBit.PNG" />
+    <None Include="wwwroot\integration\primereact.js" />
+    <None Include="wwwroot\integration\primereact.jsx" />
     <None Include="wwwroot\index.css" />
     <None Include="wwwroot\index.html" />
     <None Include="wwwroot\index.js" />

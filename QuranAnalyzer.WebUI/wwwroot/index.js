@@ -50022,6 +50022,29 @@
     onToggle: null
   };
 
+  // integration/primereact.jsx
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Button", Button);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputText", InputText);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputTextarea", InputTextarea);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.BlockUI", BlockUI);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Card", Card);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabView", TabView);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabPanel", TabPanel);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.SplitterPanel", SplitterPanel);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Splitter", Splitter);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ListBox", ListBox);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Dropdown", Dropdown);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Column", Column);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.DataTable", DataTable);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Checkbox", Checkbox);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputMask", InputMask);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.AutoComplete", AutoComplete);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
+  ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tooltip", Tooltip);
+
   // index.jsx
   var import_react_xarrows = __toESM(require_lib());
   var import_react_simple_code_editor = __toESM(require_lib2());
@@ -50102,27 +50125,6 @@
   }
   if (false) {
   } else {
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Button", Button);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputText", InputText);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputTextarea", InputTextarea);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.BlockUI", BlockUI);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Card", Card);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabView", TabView);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabPanel", TabPanel);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.SplitterPanel", SplitterPanel);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Splitter", Splitter);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ListBox", ListBox);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Dropdown", Dropdown);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Column", Column);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.DataTable", DataTable);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Checkbox", Checkbox);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputMask", InputMask);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.AutoComplete", AutoComplete);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
-    ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tooltip", Tooltip);
     ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.react_xarrows.Xarrow", import_react_xarrows.default);
     ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.react_simple_code_editor.Editor", import_react_simple_code_editor.default);
     ReactWithDotNet_default.RegisterExternalJsObject("ReactWithDotNet.react_simple_code_editor.highlight", GetHighlightFunction);

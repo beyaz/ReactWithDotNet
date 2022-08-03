@@ -351,6 +351,8 @@ MigrationBackup/
 /ReactDotNet.Demo/.local-chromium/Win64-884014/chrome-win
 /.local-chromium/Win64-884014/chrome-win
 /ReactDotNet.ComponentPreviewVsExtension/.local-chromium/Win64-884014/chrome-win
-/QuranAnalyzer.WebUI/index.js
+
 /QuranAnalyzer.WebUI/index.css
 /QuranAnalyzer.WebUI/package-lock.json
+/QuranAnalyzer.WebUI/wwwroot/integration/primereact.js
+/QuranAnalyzer.WebUI/wwwroot/index.js
