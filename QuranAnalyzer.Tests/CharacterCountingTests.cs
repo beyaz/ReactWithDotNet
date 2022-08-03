@@ -1,5 +1,5 @@
 ﻿using static QuranAnalyzer.QuranAnalyzerMixin;
-using static QuranAnalyzer.ArabicLetter;
+using static QuranAnalyzer.ArabicLetterIndex;
 using static QuranAnalyzer.VerseFilter;
 
 namespace QuranAnalyzer;
@@ -89,10 +89,10 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_2()
     {
-        CountShouldBe("2:*", "م", 2195);
-        CountShouldBe("2:*", "ل", 3202);
-        CountShouldBe("2:*", "ا", 4504);
-        CountShouldBe("2:*", "ا", new MushafOptions { UseElifCountsSpecifiedByRK = true }, 4502);
+        CountShouldBe("2:*", Miim, 2195);
+        CountShouldBe("2:*", Laam, 3202);
+        CountShouldBe("2:*", Alif, 4504);
+        CountShouldBe("2:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 4502);
     }
 
     [TestMethod]
@@ -117,10 +117,10 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_3()
     {
-        CountShouldBe("3:*", "م", 1249);
-        CountShouldBe("3:*", "ل", 1892);
-        CountShouldBe("3:*", "ا", 2511);
-        CountShouldBe("3:*", "ا", new MushafOptions { UseElifCountsSpecifiedByRK = true }, 2521);
+        CountShouldBe("3:*", Miim, 1249);
+        CountShouldBe("3:*", Laam, 1892);
+        CountShouldBe("3:*", Alif, 2511);
+        CountShouldBe("3:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 2521);
     }
 
     [TestMethod]
@@ -193,17 +193,7 @@ public class CharacterCountingTests
     #endregion
 
     #region Methods
-    static void CountShouldBe(string searchScript, string character, int expectedCount)
-    {
-        GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, character)).ShouldBe(expectedCount);
-    }
-
-    static void CountShouldBe(string searchScript, string character, MushafOptions option, int expectedCount)
-    {
-        GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, character, option)).ShouldBe(expectedCount);
-    }
-
-
+    
     static void CountShouldBe(string searchScript, int arabicLetterIndex, int expectedCount)
     {
         GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, arabicLetterIndex)).ShouldBe(expectedCount);
