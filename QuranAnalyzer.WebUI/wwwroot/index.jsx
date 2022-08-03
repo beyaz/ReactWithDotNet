@@ -1,34 +1,19 @@
+const isProduction = process.env.NODE_ENV === 'production';
 
-import './app.css'
-
+// import core library
 import ReactWithDotNet from "./ReactWithDotNet";
 
+// import helper tool for design your component in hotreload mode
+import "./integration/ReactWithDotNet-UIDesigner";
+
+
+// import libraries which you use in your porject
 import "./integration/primereact";
-
-// react-xarrows
-import Xarrow from "react-xarrows";
+import "./integration/react-xarrows";
 
 
-// react-simple-code-editor
-import Editor  from 'react-simple-code-editor';
-import { highlight, languages } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-json';
-import 'prismjs/themes/prism.css';
-
-const GetHighlightFunction = (language) =>
-{
-    const lang = languages[language];
-    
-     return code =>
-     {
-         if (code == null)
-         {
-             return "";
-         }
-         return highlight(code, lang);
-     };
-};
-
+// your app specific imports and codes
+import './app.css'
 
 RegisterScrollEvents = function()
 {
@@ -71,40 +56,4 @@ RegisterScrollEvents = function()
     });
 }
 
-
-
-function InitializeUIDesignerEvents(timeoutInMilliseconds)
-{
-    OnBrowserInactive(timeoutInMilliseconds, () =>
-    {
-        ReactWithDotNet.DispatchEvent('OnBrowserInactive',[]);
-    });
-}
-
-function OnBrowserInactive(timeoutInMilliseconds, callback)
-{
-    var wait = setTimeout(callback, timeoutInMilliseconds);
-    document.onmousemove = document.mousedown = document.mouseup = document.onkeydown = document.onkeyup = document.focus = function ()
-    {
-        clearTimeout(wait);
-        wait = setTimeout(callback, timeoutInMilliseconds);
-    };
-}
-
-
-if (process.env.NODE_ENV === 'production')
-{
-    // specify your production required components or functions
-}
-else
-{
-    // react-xarrows
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.react_xarrows.Xarrow", Xarrow);
-
-    // react-prism-editor
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.react_simple_code_editor.Editor", Editor);
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.react_simple_code_editor.highlight", GetHighlightFunction);
-
-    ReactWithDotNet.RegisterExternalJsObject("RegisterScrollEvents", RegisterScrollEvents);
-    ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", InitializeUIDesignerEvents);
-}
+ReactWithDotNet.RegisterExternalJsObject("RegisterScrollEvents", RegisterScrollEvents);

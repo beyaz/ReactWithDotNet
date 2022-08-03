@@ -9,6 +9,11 @@
     <Content Remove="Facts.json" />
     <Content Remove="wwwroot\index - Copy.js" />
     <Content Remove="wwwroot\integration-primereact.jsx" />
+    <Content Remove="wwwroot\integration\primereact - Copy.js" />
+    <Content Remove="wwwroot\integration\react-simple-code-editor.jsx" />
+    <Content Remove="wwwroot\integration\react-xarrows - Copy.js" />
+    <Content Remove="wwwroot\integration\react-xarrows.jsx" />
+    <Content Remove="wwwroot\integration\ReactWithDotNet-UIDesigner.jsx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +46,12 @@
     <None Include="wwwroot\img\Namespace.svg" />
     <None Include="wwwroot\img\Options.svg" />
     <None Include="wwwroot\img\ParityBit.PNG" />
+    <None Include="wwwroot\integration\react-simple-code-editor.js" />
+    <None Include="wwwroot\integration\react-simple-code-editor.jsx" />
+    <None Include="wwwroot\integration\ReactWithDotNet-UIDesigner.js" />
+    <None Include="wwwroot\integration\ReactWithDotNet-UIDesigner.jsx" />
+    <None Include="wwwroot\integration\react-xarrows.js" />
+    <None Include="wwwroot\integration\react-xarrows.jsx" />
     <None Include="wwwroot\integration\primereact.js" />
     <None Include="wwwroot\integration\primereact.jsx" />
     <None Include="wwwroot\index.css" />

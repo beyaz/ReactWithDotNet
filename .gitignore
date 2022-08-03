@@ -355,4 +355,6 @@ MigrationBackup/
 /QuranAnalyzer.WebUI/index.css
 /QuranAnalyzer.WebUI/package-lock.json
 /QuranAnalyzer.WebUI/wwwroot/integration/primereact.js
-/QuranAnalyzer.WebUI/wwwroot/index.js
+/QuranAnalyzer.WebUI/wwwroot/integration/react-xarrows.js
+/QuranAnalyzer.WebUI/wwwroot/integration/react-simple-code-editor.js
+/QuranAnalyzer.WebUI/wwwroot/integration/ReactWithDotNet-UIDesigner.js
