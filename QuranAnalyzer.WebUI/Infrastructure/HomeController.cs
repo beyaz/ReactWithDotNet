@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting.Internal;
 using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI;
@@ -23,6 +25,7 @@ public class HomeController : ControllerBase
     public ContentResult Index()
     {
         var html = System.IO.File.ReadAllText(Path.Combine("wwwroot", "index.html"));
+        
         return new ContentResult
         {
             
