@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using QuranAnalyzer.WebUI.Components;
+using QuranAnalyzer.WebUI.Pages.MainPage;
 using ReactWithDotNet;
 using ReactWithDotNet.PrimeReact;
 using static QuranAnalyzer.Analyzer;
@@ -39,7 +40,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             if (state.ChapterFilter == null)
             {
-                var value = Context.Query["q"];
+                var value = Context.Query[QueryKey.SearchQuery];
                 if (value is not null)
                 {
                     state.ChapterFilter    = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(0);
