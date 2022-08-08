@@ -140,6 +140,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         });
 
 
+        
+
         var mushafVerse = new List<LetterColorizer>();
         
         foreach (var verse in VerseFilter.GetVerseList(state.ChapterFilter).Value)
@@ -148,12 +150,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             {
                 var letterColorizer = new LetterColorizer
                 {
-                    VerseTextNodes = verse.AnalyzedFullText,
-                    ChapterNumber = verse.ChapterNumber.ToString(),
-                    VerseNumber = verse.Index,
+                    VerseTextNodes          = verse.AnalyzedFullText,
+                    ChapterNumber           = verse.ChapterNumber.ToString(),
+                    VerseNumber             = verse.Index,
                     LettersForColorizeNodes = searchLetters,
-                    VerseText = verse.TextWithBismillah,
-                    
+                    VerseText               = verse.TextWithBismillah
                 };
                 
                 mushafVerse.Add(letterColorizer);
