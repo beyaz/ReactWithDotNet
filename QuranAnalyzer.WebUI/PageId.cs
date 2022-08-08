@@ -1,4 +1,4 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.MainPage;
+﻿namespace QuranAnalyzer.WebUI;
 
 static class PageId
 {
