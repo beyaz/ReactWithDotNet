@@ -96,7 +96,7 @@ public sealed class ClientTaskCollection
     }
 
 
-    public void DispatchEvent(string eventName, object[] eventArguments)
+    public void DispatchEvent(string eventName, params object[] eventArguments)
     {
         taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
     }

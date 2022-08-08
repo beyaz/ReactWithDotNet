@@ -51,6 +51,16 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     }
     #endregion
 
+    public void ComponentDidMount()
+    {
+        Context.ClientTask.ListenEvent("ArabicKeyboardPressed", nameof(ArabicKeyboardPressed));
+    }
+
+    public void ArabicKeyboardPressed(string letter)
+    {
+        state.SearchCharacters += " " + letter;
+    }
+
     #region Public Methods
     public override Element render()
     {
@@ -74,9 +84,20 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VStack
                     {
                         new div { innerText       = "Aranacak Karakterlerler" },
-                        new InputText { valueBind = () => state.SearchCharacters }
+                        new InputText { valueBind = () => state.SearchCharacters, style = { direction = "ltr"}},
+                        
                     },
-
+                    new VSpace(3),
+                    new Panel
+                    {
+                        header = "Arapça Klavye",
+                        collapsed = true,
+                        toggleable = true,
+                        children =
+                        {
+                            new ArabicKeyboard()
+                        }
+                    },
                     new VSpace(20),
 
                     new Button

@@ -15,12 +15,12 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
     public void Refresh()
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
-        Context.ClientTask.GotoMethod(100*1000, nameof(Refresh));
     }
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.GotoMethod(100 * 1000, nameof(Refresh));
+        Context.ClientTask.ListenEvent("OnBrowserInactive", nameof(Refresh));
+        Context.ClientTask.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
     
     public override Element render()
