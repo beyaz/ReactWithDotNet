@@ -66,7 +66,7 @@ class CountingResult: ReactComponent
                 new a
                 {
                     innerText = "incele",
-                    href      = $"?page=CharacterCounting&q={SearchScript}",
+                    href      = $"?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={SearchScript}",
                     style     = { marginLeft = "5px" }
                 }
             }
