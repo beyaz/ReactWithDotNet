@@ -35,6 +35,8 @@ public class Startup
             endpoints.MapGet("/", HomePage);
             endpoints.MapPost("/HandleReactWithDotNetRequest", HandleReactWithDotNetRequest);
             endpoints.MapGet("/ReactWithDotNetDesigner", UIDesignerPage);
+            endpoints.MapGet("/ReactWithDotNetDesigner.ComponentPreview", UIDesignerComponentPreview);
+            
 
             endpoints.MapControllers();
         });

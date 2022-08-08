@@ -50,6 +50,32 @@ static class ReactWithDotNetIntegration
         }
     }
 
+    public static async Task UIDesignerComponentPreview(HttpContext context)
+    {
+        var filePath = Path.Combine(RootFolderName, "index.html");
+
+        var htmlContent = await File.ReadAllTextAsync(filePath);
+
+        htmlContent = htmlContent.Replace("~/", RootFolderName + "/");
+
+        htmlContent = changeComponent();
+
+        await context.Response.WriteAsync(htmlContent);
+
+        string changeComponent()
+        {
+            return string.Join(Environment.NewLine, htmlContent.Split(Environment.NewLine).Select(line =>
+            {
+                if (line.Trim().Contains("fullTypeNameOfReactComponent"))
+                {
+                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ComponentPreivew,ReactWithDotNet.Libraries',";
+                }
+
+                return line;
+            }));
+        }
+    }
+
     public static async Task HandleReactWithDotNetRequest(HttpContext context)
     {
         ComponentRequest componentRequest = null;
