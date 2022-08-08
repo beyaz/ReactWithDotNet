@@ -2,6 +2,7 @@
 using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet;
 using ReactWithDotNet.PrimeReact;
+using static QuranAnalyzer.WebUI.ResourceAccess;
 
 namespace QuranAnalyzer.WebUI.Pages.SecuringDataWithCurrentTechnology;
 
@@ -45,8 +46,8 @@ Böylelikle bir 11 haneden oluşan bir sayının TC kimlik numarası olup olmad�
 
             new LargeTitle("IBAN"),
             
-            new p{text = "Peki ya bankanızın size vermiş oluğu IBAN bilgisinde buna benzer bir şey olabilir mi ?"},
-            new img{src = "img/IBAN.jpg", width = 500, height = 330, style = { textAlign = "center", display = "block"}},
+            new p{text  = "Peki ya bankanızın size vermiş oluğu IBAN bilgisinde buna benzer bir şey olabilir mi ?"},
+            new img{src = Img("IBAN.jpg"), width = 500, height = 330, style = { textAlign = "center", display = "block"}},
             new p{text = @"Yukarıdaki resimde gördüğünüz 'Kontrol Basamakları' diye işaret edilen 56 rakamı 
 rastgele olşturulmuş bir sayı değildir.
 Hatta mobil şubenizden bir ibana para gönderirken ibandaki herhangi bir rakamı bilerek yanlış girin.
@@ -71,7 +72,7 @@ her bir paketin içinde de binlerce byte ismini verdikleri 8 haneli rakamlar var
                  
              },
 
-             new img{src = "img/ParityBit.PNG", width = 300, height = 150},
+             new img{src = Img("ParityBit.PNG"), width = 300, height = 150},
 
              new p{text = @"Dikkat edilir ise sağındaki rakamların toplamı çift ise en baştaki değer 0 olur tek ise 1 olur.
 Bu sayede A cihazı B cihazından gelen verileri kontrol eder ve duruma göre bozuk gelen paketler tekrar istenir.

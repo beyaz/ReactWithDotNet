@@ -16,3 +16,8 @@ static class QueryKey
     public static string Page = "p";
     public static string SearchQuery = "q";
 }
+
+static class ResourceAccess
+{
+    public static string Img(string fileName) => ReactWithDotNetIntegration.RootFolderName + "/img/" +fileName;
+}

@@ -10,7 +10,7 @@ namespace QuranAnalyzer.WebUI;
 
 static class ReactWithDotNetIntegration
 {
-    const string RootFolderName = "wwwroot";
+    public const string RootFolderName = "wwwroot";
 
 
     public static async Task HomePage(HttpContext context)
