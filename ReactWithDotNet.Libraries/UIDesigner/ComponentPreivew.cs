@@ -15,12 +15,12 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
     public void Refresh()
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
-        Context.ClientTask.GotoMethod(1*1000, nameof(Refresh));
+        Context.ClientTask.GotoMethod(100*1000, nameof(Refresh));
     }
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.GotoMethod(1 * 1000, nameof(Refresh));
+        Context.ClientTask.GotoMethod(100 * 1000, nameof(Refresh));
     }
     
     public override Element render()

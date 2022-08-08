@@ -90,7 +90,7 @@ class ArabicKeyboardLetterView: ReactComponent<ArabicKeyboardLetterViewModel>
                 flexDirection = "column",
                 alignItems    = "center",
                 margin        = "5px", 
-                border  = state.IsMouseEntered ? "px solid blue" : "1px solid #dee2e6",
+                border  = state.IsMouseEntered ? "1px solid red" : "1px solid #dee2e6",
 
 
                 borderRadius = "5px", 
