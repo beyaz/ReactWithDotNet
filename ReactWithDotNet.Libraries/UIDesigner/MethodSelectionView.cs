@@ -69,7 +69,7 @@ class MethodSelectionView : ReactComponent
         {
             return new HStack
             {
-                new img { src                                   = "img/Method.svg", width = 20, height = 20 },
+                new img { src                                   = "wwwroot/img/Method.svg", width = 20, height = 20 },
                 new div(node.FullNameWithoutReturnType) { style = { marginLeft = "5px" } },
                 //new div(node.FullName) { style = { marginLeft = "5px", fontSize = "10px"} }
             };
@@ -79,7 +79,7 @@ class MethodSelectionView : ReactComponent
         {
             return new HStack
             {
-                new img { src              = "img/Class.svg", width = 20, height = 20 },
+                new img { src              = "wwwroot/img/Class.svg", width = 20, height = 20 },
                 new div(node.Name) { style = { marginLeft = "5px" } }
             };
         }
@@ -88,14 +88,14 @@ class MethodSelectionView : ReactComponent
         {
             return new HStack
             {
-                new img { src              = "img/Namespace.svg", width = 20, height = 20 },
+                new img { src              = "wwwroot/img/Namespace.svg", width = 20, height = 20 },
                 new div(node.Name) { style = { marginLeft = "5px" } }
             };
         }
 
         return new HStack
         {
-            new img { src            = "img/Namespace.svg", width = 20, height = 20 },
+            new img { src            = "wwwroot/img/Namespace.svg", width = 20, height = 20 },
             new div("aloha") { style = { marginLeft = "5px" } }
         };
     }

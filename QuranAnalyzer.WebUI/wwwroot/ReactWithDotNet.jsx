@@ -872,7 +872,7 @@ var ReactWithDotNet =
     RenderComponentIn: RenderComponentIn,
     SendRequest: function (request, callback)
     {
-        Fetch("/Home/HandleRequest", {
+        Fetch("/HandleReactWithDotNetRequest", {
                 method: "POST",
                 headers:
                 {

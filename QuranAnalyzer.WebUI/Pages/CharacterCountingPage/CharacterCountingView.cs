@@ -192,7 +192,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (state.IsBlocked == false)
         {
             state.IsBlocked     = true;
-            Context.ClientTask.PushHistory("", $"/wwwroot/index.html?page=CharacterCounting&q={state.ChapterFilter}|{state.SearchCharacters}");
+            Context.ClientTask.PushHistory("", $"/?page=CharacterCounting&q={state.ChapterFilter}|{state.SearchCharacters}");
             Context.ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
             return;
         }

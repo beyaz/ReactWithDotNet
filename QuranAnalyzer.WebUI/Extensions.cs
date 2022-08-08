@@ -4,7 +4,7 @@ namespace QuranAnalyzer.WebUI;
 
 static class Extensions
 {
-    public static string GetPageLink(string pageId) => "/wwwroot/index.html?page=" + pageId;
+    public static string GetPageLink(string pageId) => "/?page=" + pageId;
     
     public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
 

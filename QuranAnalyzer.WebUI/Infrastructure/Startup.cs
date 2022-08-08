@@ -1,13 +1,10 @@
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using ReactWithDotNet;
+using static QuranAnalyzer.WebUI.ReactWithDotNetIntegration;
 
 namespace QuranAnalyzer.WebUI;
 
@@ -17,18 +14,9 @@ public class Startup
     {
         Configuration = configuration;
     }
-
+    
     public IConfiguration Configuration { get; }
-
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddControllers();
-
-        services.AddControllers().AddJsonOptions(j => { j.JsonSerializerOptions.ModifyForReactWithDotNet(); });
-    }
-
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())
@@ -39,20 +27,23 @@ public class Startup
         app.UseHttpsRedirection();
 
         app.UseRouting();
-        
 
-        app.UseFileServer(new FileServerOptions
+        app.UseStaticFiles("/wwwroot");
+
+        app.UseEndpoints(endpoints =>
         {
-            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
-            EnableDefaultFiles = true,
-            StaticFileOptions =
-            {
-                HttpsCompression  = HttpsCompressionMode.Compress,
-                OnPrepareResponse = _ => { }
-            },
-            RequestPath = new PathString("/wwwroot")
-        });
+            endpoints.MapGet("/", HomePage);
+            endpoints.MapPost("/HandleReactWithDotNetRequest", HandleReactWithDotNetRequest);
+            endpoints.MapGet("/ReactWithDotNetDesigner", UIDesignerPage);
 
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            endpoints.MapControllers();
+        });
+    }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllers();
+
+        services.AddControllers().AddJsonOptions(j => { j.JsonSerializerOptions.ModifyForReactWithDotNet(); });
     }
 }

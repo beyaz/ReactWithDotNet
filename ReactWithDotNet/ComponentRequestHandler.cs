@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Web;
@@ -54,10 +55,14 @@ public class ComponentResponse
 public static class ComponentRequestHandler
 {
     #region Public Methods
+   
+
     public static string GetFullName(this Type type)
     {
         return $"{type.FullName},{type.Assembly.GetName().Name}";
     }
+    
+    
 
     static  ReactContext CreateContext(ComponentRequest request)
     {
