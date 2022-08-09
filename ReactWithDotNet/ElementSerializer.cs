@@ -5,6 +5,15 @@ namespace ReactWithDotNet;
 
 public static class ElementSerializer
 {
+    #region Constants
+    const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
+    const string ___RootNode___ = "$RootNode";
+
+    const string ___Type___ = "$Type";
+    const string ___TypeOfState___ = "$TypeOfState";
+    #endregion
+
+    #region Public Methods
     public static IReadOnlyDictionary<string, object> ToMap(this Element element, StateTree stateTree)
     {
         // maybe root element is inherits from ReactElement
@@ -15,6 +24,11 @@ public static class ElementSerializer
         }
 
         element.BeforeSerialize();
+
+        if (element is ReactStatefulComponent reactStatefulComponent)
+        {
+            return ToMap(reactStatefulComponent, stateTree);
+        }
 
         var map = new Dictionary<string, object>();
 
@@ -27,45 +41,6 @@ public static class ElementSerializer
         else if (htmlElement is not null)
         {
             map.Add("$tag", htmlElement.Type);
-        }
-
-        if (element is ReactStatefulComponent reactStatefulComponent)
-        {
-            if (stateTree.BreadCrumpPath != "0")
-            {
-                if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
-                {
-                    var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
-                    if (statePropertyInfo == null)
-                    {
-                        throw new MissingMemberException(reactStatefulComponent.GetType().GetFullName(), "state");
-                    }
-
-                    if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
-                    {
-                        var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                        statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
-                    }
-                }
-            }
-
-            reactStatefulComponent.Context = stateTree.Context;
-            reactStatefulComponent.OnStateInitialized();
-
-            map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
-
-            map.Add(___RootNode___, ToMap(reactStatefulComponent.render(), stateTree));
-
-            map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
-            map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
-            if (HasComponentDidMountMethod(reactStatefulComponent))
-            {
-                map.Add(___HasComponentDidMountMethod___, true);
-            }
-
-            map.Add(nameof(reactStatefulComponent.key), reactStatefulComponent.key);
-
-            return map;
         }
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
@@ -106,6 +81,9 @@ public static class ElementSerializer
 
         return map;
     }
+    #endregion
+
+    #region Methods
     static Element GetElementTreeOfStatelessReactComponent(ReactComponent reactComponent)
     {
         var rootElement = reactComponent.render();
@@ -288,6 +266,21 @@ public static class ElementSerializer
         return (propertyValue, false);
     }
 
+    static string GetReactComponentTypeInfo(object reactStatefulComponent)
+    {
+        return reactStatefulComponent.GetType().GetFullName();
+    }
+
+    static string GetTypeFullNameOfState(object reactStatefulComponent)
+    {
+        return reactStatefulComponent.GetType().GetProperty("state")!.PropertyType.GetFullName();
+    }
+
+    static bool HasComponentDidMountMethod(object reactStatefulComponent)
+    {
+        return reactStatefulComponent.GetType().GetMethod("ComponentDidMount", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
+    }
+
     static bool IsEmptyStyle(object value)
     {
         if (value is Style style)
@@ -296,6 +289,47 @@ public static class ElementSerializer
         }
 
         return false;
+    }
+
+    static IReadOnlyDictionary<string, object> ToMap(ReactStatefulComponent reactStatefulComponent, StateTree stateTree)
+    {
+        var map = new Dictionary<string, object>();
+
+        if (stateTree.BreadCrumpPath != "0")
+        {
+            if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
+            {
+                var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
+                if (statePropertyInfo == null)
+                {
+                    throw new MissingMemberException(reactStatefulComponent.GetType().GetFullName(), "state");
+                }
+
+                if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
+                {
+                    var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                    statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
+                }
+            }
+        }
+
+        reactStatefulComponent.Context = stateTree.Context;
+        reactStatefulComponent.OnStateInitialized();
+
+        map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
+
+        map.Add(___RootNode___, ToMap(reactStatefulComponent.render(), stateTree));
+
+        map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
+        map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
+        if (HasComponentDidMountMethod(reactStatefulComponent))
+        {
+            map.Add(___HasComponentDidMountMethod___, true);
+        }
+
+        map.Add(nameof(reactStatefulComponent.key), reactStatefulComponent.key);
+
+        return map;
     }
 
     static (T value, Exception exception) Try<T>(Func<T> func)
@@ -309,29 +343,13 @@ public static class ElementSerializer
             return (default, exception);
         }
     }
-    static bool HasComponentDidMountMethod(object reactStatefulComponent)
-    {
-        return reactStatefulComponent.GetType().GetMethod("ComponentDidMount", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
-    }
-
-    static string GetReactComponentTypeInfo(object reactStatefulComponent)
-    {
-        return reactStatefulComponent.GetType().GetFullName();
-    }
-
-    static string GetTypeFullNameOfState(object reactStatefulComponent)
-    {
-        return reactStatefulComponent.GetType().GetProperty("state")!.PropertyType.GetFullName();
-    }
-
-    const string ___Type___ = "$Type";
-    const string ___TypeOfState___ = "$TypeOfState";
-    const string ___RootNode___ = "$RootNode";
-    const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
+    #endregion
 }
 
 class ItemTemplate
 {
+    #region Public Properties
     public List<KeyValuePair<object, object>> ___ItemTemplates___ { get; set; }
     public object ___TemplateForNull___ { get; set; }
+    #endregion
 }
