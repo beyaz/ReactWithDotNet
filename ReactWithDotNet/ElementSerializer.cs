@@ -329,6 +329,13 @@ public static class ElementSerializer
 
         map.Add(nameof(reactStatefulComponent.key), reactStatefulComponent.key);
 
+        if (reactStatefulComponent is ISupportMouseEnter supportMouseEnter)
+        {
+            supportMouseEnter.IsMouseEntered = true;
+
+            map.Add("$RootNodeOnMouseEnter", ToMap(reactStatefulComponent.render(), stateTree));
+        }
+
         return map;
     }
 
@@ -352,4 +359,21 @@ class ItemTemplate
     public List<KeyValuePair<object, object>> ___ItemTemplates___ { get; set; }
     public object ___TemplateForNull___ { get; set; }
     #endregion
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+public interface ISupportMouseEnter
+{
+    public bool IsMouseEntered { get; set; }
 }

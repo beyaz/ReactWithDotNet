@@ -47,17 +47,19 @@ class ArabicKeyboard : ReactComponent
     }
 }
 
-class ArabicKeyboardLetterViewModel
+
+public class ArabicKeyboardLetterViewModel
 {
     public string ArabicLetter { get; set; }
     public string English { get; set; }
-    public bool IsMouseEntered { get; set; }
 }
 
-class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewModel>
+public class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewModel>, ISupportMouseEnter
 {
     public string ArabicLetter { get; set; }
     public string English { get; set; }
+
+    public bool IsMouseEntered { get; set; }
 
     public ArabicKeyboardLetterView()
     {
@@ -79,7 +81,7 @@ class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewModel>
                 flexDirection = "column",
                 alignItems    = "center",
                 margin        = "5px",
-                border        = state.IsMouseEntered ? "1px solid red" : "1px solid #dee2e6",
+                border        = IsMouseEntered ? "1px solid #7daee7" : "1px solid #dee2e6",
 
                 borderRadius = "5px",
                 background   = "rgb(248 249 251)",
@@ -90,14 +92,11 @@ class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewModel>
                 new div
                 {
                     text  = state.ArabicLetter,
-                    style = { fontSize = "45px", padding = "5px", }
+                    style = { fontSize = "35px", paddingLeftRight = "5px", fontFamily = "Lateef, cursive" }
                 },
-                new div(state.English),
-                // new i { className = "pi pi-copy", style = { fontSize = "20px", marginBottom = "3px"}}
+                new div(state.English){style = { marginLeftRight = "2px", fontSize = "0.8rem"}}
             },
 
-            //onMouseEnter = _ => state.IsMouseEntered = true,
-            //onMouseLeave = _ => state.IsMouseEntered = false,
             onClick = _ => Context.ClientTask.DispatchEvent("ArabicKeyboardPressed", state.ArabicLetter)
         };
     }

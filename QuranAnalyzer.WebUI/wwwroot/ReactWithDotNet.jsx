@@ -278,7 +278,7 @@ function IfNull(value, defaultValue)
     return value;
 }
 
-function ConvertToReactElement(jsonNode, component)
+function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
 {   
     // is ReactWithDotNet component
     if (jsonNode[DotNetTypeOfReactComponent])
@@ -430,6 +430,20 @@ function ConvertToReactElement(jsonNode, component)
         return createElement(constructorFunction, props, jsonNode.$text);
     }
 
+    if (isConvertingRootNode === true && component.state.$RootNodeOnMouseEnter)
+    {
+        NotNull(props);
+        
+        props['onMouseEnter'] = function()
+        {
+            component.setState({ $onMouseEnter: true });
+        }
+        props['onMouseLeave'] = function()
+        {
+            component.setState({ $onMouseEnter: false });
+        }
+    }
+
     const children = jsonNode.$children;
     if (children)
     {
@@ -530,10 +544,18 @@ function HandleAction(data)
         
         function restoreState(onStateReady)
         {
-            data.component.setState({
-                $rootNode: element[RootNode],
-                $state   : element.state
-            }, onStateReady);
+            const newState = {
+                $rootNode: NotNull(element[RootNode]),
+                $state   : NotNull(element.state)
+            };
+
+            if (element.$RootNodeOnMouseEnter)
+            {
+                newState.$onMouseEnter = false;
+                newState.$RootNodeOnMouseEnter = element.$RootNodeOnMouseEnter;
+            }
+            
+            data.component.setState(newState, onStateReady);
         }
 
         const clientTasks = response.ClientTasks;
@@ -653,6 +675,11 @@ function DefineComponent(componentDeclaration)
                 $state   : NotNull(props.$jsonNode.state)
             };
 
+            if (props.$jsonNode.$RootNodeOnMouseEnter)
+            {
+                this.state.$RootNodeOnMouseEnter = props.$jsonNode.$RootNodeOnMouseEnter;
+            }
+
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
             if (props.ParentReactWithDotNetManagedComponent)
@@ -701,8 +728,15 @@ function DefineComponent(componentDeclaration)
         render()
         {
             this.ReactWithDotNetManagedChildComponents = [];
+
+            const state = this.state;
             
-            return ConvertToReactElement(this.state.$rootNode, this);
+            if (state.$onMouseEnter === true)
+            {
+                return ConvertToReactElement(state.$RootNodeOnMouseEnter, this, /*isConvertingRootNode*/true);    
+            }
+            
+            return ConvertToReactElement(state.$rootNode, this, /*isConvertingRootNode*/true);
         }
 
         componentDidMount()
