@@ -19,8 +19,6 @@ public static class ElementSerializer
 
         var map = new Dictionary<string, object>();
 
-       
-
         if (element is ThirdPartyReactComponent thirdPartyReactComponent)
         {
             map.Add("$tag", thirdPartyReactComponent.Type);
@@ -69,9 +67,6 @@ public static class ElementSerializer
             return map;
         }
 
-       
-
-
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
             var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, stateTree);
@@ -90,8 +85,6 @@ public static class ElementSerializer
                 map.Add("$text", htmlElement2.innerText);
             }
         }
-
-        
 
         if (element.children.Count > 0)
         {
@@ -211,7 +204,7 @@ public static class ElementSerializer
         }
 
         if (propertyValue is Expression<Func<int>> ||
-            propertyValue is Expression<Func<string>>||
+            propertyValue is Expression<Func<string>> ||
             propertyValue is Expression<Func<bool>>)
         {
             string[] calculateSourcePathFunc()
@@ -267,14 +260,14 @@ public static class ElementSerializer
                 return (null, true);
             }
 
-            var itemTemplates = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[] 
+            var itemTemplates = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[]
             {
-                (Func<object, IReadOnlyDictionary<string, object>>)( item => ((Element)func.DynamicInvoke(item)).ToMap(stateTree)  )
+                (Func<object, IReadOnlyDictionary<string, object>>)(item => ((Element)func.DynamicInvoke(item)).ToMap(stateTree))
             });
 
             var template = new ItemTemplate
             {
-                ___ItemTemplates___   = itemTemplates
+                ___ItemTemplates___ = itemTemplates
             };
 
             if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
@@ -283,14 +276,12 @@ public static class ElementSerializer
             }
 
             return (template, false);
-
         }
 
-        
-        var reactTransformValueInClient= propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
+        var reactTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
         if (reactTransformValueInClient is not null)
         {
-            var dictionary = new Dictionary<string,object>
+            var dictionary = new Dictionary<string, object>
             {
                 { "$transformValueFunction", reactTransformValueInClient.TransformFunction },
                 { "RawValue", propertyValue }
@@ -298,7 +289,6 @@ public static class ElementSerializer
 
             return (dictionary, false);
         }
-        
 
         return (propertyValue, false);
     }
@@ -324,16 +314,12 @@ public static class ElementSerializer
             return (default, exception);
         }
     }
-
     #endregion
 
     static bool HasComponentDidMountMethod(object reactStatefulComponent)
     {
         return reactStatefulComponent.GetType().GetMethod("ComponentDidMount", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
     }
-
-    
-
 
     static string GetReactComponentTypeInfo(object reactStatefulComponent)
     {
@@ -349,13 +335,10 @@ public static class ElementSerializer
     const string ___TypeOfState___ = "$TypeOfState";
     const string ___RootNode___ = "$RootNode";
     const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
-
-
 }
 
 class ItemTemplate
 {
-    public List<KeyValuePair<object, object>>  ___ItemTemplates___ { get; set; }
+    public List<KeyValuePair<object, object>> ___ItemTemplates___ { get; set; }
     public object ___TemplateForNull___ { get; set; }
 }
-
