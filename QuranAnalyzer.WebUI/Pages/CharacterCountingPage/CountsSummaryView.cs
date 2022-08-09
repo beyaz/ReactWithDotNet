@@ -27,10 +27,7 @@ class CountsSummaryView : ReactComponent
 
         var returnDiv = new div
         {
-            new div
-            {
-                Children = counts.Select(ToElement)
-            }
+            style = { display = "flex", flexDirection = "row" }
         };
 
         var total = counts.Select(x => x.Count).Sum();
@@ -39,16 +36,7 @@ class CountsSummaryView : ReactComponent
         {
             if (total % 19 == 0)
             {
-                returnDiv.appendChild(new div
-                {
-                    children =
-                    {
-                        new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
-                        new div { innerText = "19 x " + total / 19, style = { color = "red", marginLeftRight = "5px" } },
-                        new div { innerText = ")" }
-                    },
-                    style = { display = "flex", flexDirection = "row" },
-                });
+                returnDiv.appendChild(MultipleOf(total));
             }
             else
             {
@@ -59,16 +47,36 @@ class CountsSummaryView : ReactComponent
             }
         }
 
+        returnDiv.appendChild(new div
+        {
+            Children = counts.Select(ToElement),
+            style    = { display = "flex", flexDirection = "row" }
+        });
+
         return returnDiv;
     }
     #endregion
 
+    static Element MultipleOf(int total)
+    {
+        return new div
+        {
+            children =
+            {
+                new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
+                new div { innerText = "19 x " + total / 19, style = { color = "red", marginLeftRight = "5px" } },
+                new div { innerText = ")" }
+            },
+            style = { display = "flex", flexDirection = "row" },
+        };
+    }
     #region Methods
     static Element ToElement(SummaryInfo x)
     {
         return new div
         {
-            innerHTML = $"<strong>{x.Count}</strong> adet <strong>{x.Name}</strong> harfi bulundu."
+            innerHTML = $"<strong>{x.Count}</strong> adet <strong>{x.Name}</strong>",
+            style = { marginLeftRight = "15px"}
         };
     }
     #endregion

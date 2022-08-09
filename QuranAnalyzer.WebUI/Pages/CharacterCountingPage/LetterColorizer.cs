@@ -133,7 +133,7 @@ public class LetterColorizer : ReactComponent
             children = { verseId, new VSpace(5), textView, countsView },
             style =
             {
-                marginTop    = "10px",
+                marginTop    = "5px",
                 border       = "1px dashed rgb(218, 220, 224)",
                 borderRadius = "4px",
 

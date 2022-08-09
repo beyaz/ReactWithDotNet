@@ -174,24 +174,12 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             style = { marginTop = "5px" },
             children =
             {
-                new TabView
+                new div
                 {
-                    activeIndexBind = () => state.SelectedTabIndex,
-                    children =
+                    new CountsSummaryView { Counts = state.SummaryInfoList },
+                    new div
                     {
-                        new TabPanel
-                        {
-                            header = "Özet",
-                            children =
-                            {
-                                new CountsSummaryView { Counts = state.SummaryInfoList }
-                            }
-                        },
-                        new TabPanel
-                        {
-                            header = "Mushaf Üzerinde Göster",
-                            Children = mushafVerse
-                        }
+                        Children = mushafVerse
                     }
                 }
             }
