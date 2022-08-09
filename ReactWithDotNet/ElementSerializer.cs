@@ -267,13 +267,14 @@ public static class ElementSerializer
                 return (null, true);
             }
 
-            Func<object, IReadOnlyDictionary<string, object>> toMapFn = item => ((Element)func.DynamicInvoke(item)).ToMap(stateTree);
-
-            var response = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[] { toMapFn });
+            var itemTemplates = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[] 
+            {
+                (Func<object, IReadOnlyDictionary<string, object>>)( item => ((Element)func.DynamicInvoke(item)).ToMap(stateTree)  )
+            });
 
             var template = new ItemTemplate
             {
-                ___ItemTemplates___   = response
+                ___ItemTemplates___   = itemTemplates
             };
 
             if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
