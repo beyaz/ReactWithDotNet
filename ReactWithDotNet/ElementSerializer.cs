@@ -51,7 +51,7 @@ public static class ElementSerializer
             }
 
             reactStatefulComponent.Context = stateTree.Context;
-            ((ReactStatefulComponent)reactStatefulComponent).OnStateInitialized();
+            reactStatefulComponent.OnStateInitialized();
 
             map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
 
@@ -74,7 +74,7 @@ public static class ElementSerializer
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
-            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, GetPropertyName(propertyInfo), stateTree);
+            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, stateTree);
             if (noNeedToExport)
             {
                 continue;
@@ -166,7 +166,7 @@ public static class ElementSerializer
         return propertyName;
     }
 
-    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, string propertyName, StateTree stateTree)
+    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, StateTree stateTree)
     {
         var propertyValue = propertyInfo.GetValue(instance);
 
