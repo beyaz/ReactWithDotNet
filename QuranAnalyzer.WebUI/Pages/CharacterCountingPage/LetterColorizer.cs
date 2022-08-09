@@ -71,16 +71,17 @@ public class LetterColorizer : ReactComponent
             html.Append(VerseText.Substring(cursor));
         }
 
-        var verseId = new div($"{ChapterNumber}:{VerseNumber}")
+        var verseId = new legend
         {
+            text = $"{ChapterNumber}:{VerseNumber}",
             style =
             {
-                position         = "absolute",
-                marginLeft       = "10px", 
-                marginTop        = "-8px",
-                background       = "white",
-                paddingLeftRight = "5px",
-                fontSize         = "0.8rem"
+                //marginLeft       = "10px", 
+                //marginTop        = "-8px",
+                //background       = "white",
+                //paddingLeftRight = "5px",
+                fontSize         = "0.8rem",
+                marginLeft = "1px"
             }
         };
         
@@ -127,14 +128,19 @@ public class LetterColorizer : ReactComponent
             }
         };
 
-        return new VStack
+        return new fieldset
         {
-            children={ verseId, new VSpace(5), textView, countsView },
+            children = { verseId, new VSpace(5), textView, countsView },
             style =
             {
-                marginTop = "40px",
-                border    = "1px dashed rgb(218, 220, 224)",
-                borderRadius = "4px"
+                marginTop    = "10px",
+                border       = "1px dashed rgb(218, 220, 224)",
+                borderRadius = "4px",
+
+                display       = "flex",
+                flexDirection = "column",
+                alignItems    = "flex-start"
+
             }
         };
     }

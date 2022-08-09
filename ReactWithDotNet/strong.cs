@@ -24,6 +24,15 @@ public class article : HtmlElement
 {
 }
 
+public class fieldset : HtmlElement
+{
+}
+
+public class legend : HtmlElement
+{
+}
+
+
 public class iframe : HtmlElement
 {
     [React]
