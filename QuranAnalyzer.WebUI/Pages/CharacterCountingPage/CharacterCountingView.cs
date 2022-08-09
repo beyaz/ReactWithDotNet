@@ -98,6 +98,17 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             new ArabicKeyboard()
                         }
                     },
+
+                    new VSpace(3),
+                    new MushafOptionsView
+                    {
+                        MushafOption                = state.MushafOptions,
+                        Bestaten_7_69               = () => state.MushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
+                        UseElifReferencesFromTanzil = ()=>state.MushafOptions.UseElifReferencesFromTanzil,
+                        CountHamzaAsAlif            = ()=>state.MushafOptions.CountHamzaAsAlif,
+
+                    },
+                    
                     new VSpace(20),
 
                     new Button
@@ -108,15 +119,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                         style     = { alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px" }
                     },
 
-                    new VSpace(20),
-                    new MushafOptionsView
-                    {
-                        MushafOption                = state.MushafOptions, 
-                        Bestaten_7_69               = () => state.MushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
-                        UseElifReferencesFromTanzil = ()=>state.MushafOptions.UseElifReferencesFromTanzil,
-                        CountHamzaAsAlif            = ()=>state.MushafOptions.CountHamzaAsAlif,
-
-                    }
+                    
                 }
             }
         };
