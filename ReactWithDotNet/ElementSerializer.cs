@@ -5,7 +5,6 @@ namespace ReactWithDotNet;
 
 public static class ElementSerializer
 {
-    #region Public Methods
     public static IReadOnlyDictionary<string, object> ToMap(this Element element, StateTree stateTree)
     {
         // maybe root element is inherits from ReactElement
@@ -107,9 +106,6 @@ public static class ElementSerializer
 
         return map;
     }
-    #endregion
-
-    #region Methods
     static Element GetElementTreeOfStatelessReactComponent(ReactComponent reactComponent)
     {
         var rootElement = reactComponent.render();
@@ -313,8 +309,6 @@ public static class ElementSerializer
             return (default, exception);
         }
     }
-    #endregion
-
     static bool HasComponentDidMountMethod(object reactStatefulComponent)
     {
         return reactStatefulComponent.GetType().GetMethod("ComponentDidMount", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
