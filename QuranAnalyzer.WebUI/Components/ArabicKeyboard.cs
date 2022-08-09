@@ -39,16 +39,11 @@ class ArabicKeyboard : ReactComponent
                 LetterToElement(ArabicLetter.Yaa, nameof(ArabicLetter.Yaa))
             }
         };
-
-
-
-
     }
 
-    static Element LetterToElement(string arabicLetter, string englistText )
+    static Element LetterToElement(string arabicLetter, string englistText)
     {
         return new ArabicKeyboardLetterView { ArabicLetter = arabicLetter, English = englistText };
-       
     }
 }
 
@@ -57,11 +52,9 @@ class ArabicKeyboardLetterViewModel
     public string ArabicLetter { get; set; }
     public string English { get; set; }
     public bool IsMouseEntered { get; set; }
-
-
 }
 
-class ArabicKeyboardLetterView: ReactComponent<ArabicKeyboardLetterViewModel>
+class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewModel>
 {
     public string ArabicLetter { get; set; }
     public string English { get; set; }
@@ -76,25 +69,21 @@ class ArabicKeyboardLetterView: ReactComponent<ArabicKeyboardLetterViewModel>
         };
     }
 
-   
-
     public override Element render()
     {
         return new div
         {
-
             style =
             {
                 display       = "flex",
                 flexDirection = "column",
                 alignItems    = "center",
-                margin        = "5px", 
-                border  = state.IsMouseEntered ? "1px solid red" : "1px solid #dee2e6",
+                margin        = "5px",
+                border        = state.IsMouseEntered ? "1px solid red" : "1px solid #dee2e6",
 
-
-                borderRadius = "5px", 
-                background = "rgb(248 249 251)",
-                cursor = "pointer"
+                borderRadius = "5px",
+                background   = "rgb(248 249 251)",
+                cursor       = "pointer"
             },
             children =
             {
@@ -109,7 +98,7 @@ class ArabicKeyboardLetterView: ReactComponent<ArabicKeyboardLetterViewModel>
 
             //onMouseEnter = _ => state.IsMouseEntered = true,
             //onMouseLeave = _ => state.IsMouseEntered = false,
-            onClick = _=> Context.ClientTask.DispatchEvent("ArabicKeyboardPressed", state.ArabicLetter)
+            onClick = _ => Context.ClientTask.DispatchEvent("ArabicKeyboardPressed", state.ArabicLetter)
         };
     }
 }
