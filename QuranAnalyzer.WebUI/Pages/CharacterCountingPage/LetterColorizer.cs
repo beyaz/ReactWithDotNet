@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using ReactWithDotNet;
 
 namespace QuranAnalyzer;
 
@@ -72,6 +71,19 @@ public class LetterColorizer : ReactComponent
             html.Append(VerseText.Substring(cursor));
         }
 
+        var verseId = new div($"{ChapterNumber}:{VerseNumber}")
+        {
+            style =
+            {
+                position         = "absolute",
+                marginLeft       = "10px", 
+                marginTop        = "-8px",
+                background       = "white",
+                paddingLeftRight = "5px",
+                fontSize         = "0.8rem"
+            }
+        };
+        
         var countsView = new HPanel
         {
             style =
@@ -81,7 +93,7 @@ public class LetterColorizer : ReactComponent
                 justifyContent = "space-between",
                 fontSize       = "0.7rem"
             },
-            children = { new div($"{ChapterNumber}:{VerseNumber}"){style = { marginLeftRight = "10px" , }} }
+            children = { }
         };
         
         for (var j = 0; j < lettersForColorize.Count; j++)
@@ -109,7 +121,6 @@ public class LetterColorizer : ReactComponent
             style =
             {
                 fontSize   = "1.4rem",
-                
                 padding    = "5px",
                 fontFamily = "Lateef, cursive", 
                 direction  = "rtl"
@@ -118,7 +129,7 @@ public class LetterColorizer : ReactComponent
 
         return new VStack
         {
-            children={ textView, countsView },
+            children={ verseId, new VSpace(5), textView, countsView },
             style =
             {
                 marginTop = "40px",
