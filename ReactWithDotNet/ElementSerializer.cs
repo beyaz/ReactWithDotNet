@@ -262,7 +262,12 @@ public static class ElementSerializer
 
             var func = (Delegate)propertyInfo.GetValue(instance);
 
-            Func<object, IReadOnlyDictionary<string, object>> toMapFn = item => ((Element)func?.DynamicInvoke(item)).ToMap(stateTree);
+            if (func == null)
+            {
+                return (null, true);
+            }
+
+            Func<object, IReadOnlyDictionary<string, object>> toMapFn = item => ((Element)func.DynamicInvoke(item)).ToMap(stateTree);
 
             var response = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[] { toMapFn });
 
@@ -273,7 +278,7 @@ public static class ElementSerializer
 
             if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
             {
-                template.___TemplateForNull___ = Try(() => ((Element)func?.DynamicInvoke((object)null))?.ToMap(stateTree)).value;
+                template.___TemplateForNull___ = Try(() => ((Element)func.DynamicInvoke((object)null))?.ToMap(stateTree)).value;
             }
 
             return (template, false);
