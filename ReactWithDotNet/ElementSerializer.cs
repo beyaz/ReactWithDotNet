@@ -36,16 +36,16 @@ public static class ElementSerializer
             {
                 if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
                 {
-                    var statePropertyInfo = element.GetType().GetProperty("state");
+                    var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
                     if (statePropertyInfo == null)
                     {
-                        throw new MissingMemberException(element.GetType().GetFullName(), "state");
+                        throw new MissingMemberException(reactStatefulComponent.GetType().GetFullName(), "state");
                     }
 
                     if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
                     {
                         var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                        statePropertyInfo.SetValue(element, stateValue);
+                        statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
                     }
                 }
             }
@@ -64,7 +64,7 @@ public static class ElementSerializer
                 map.Add(___HasComponentDidMountMethod___, true);
             }
 
-            map.Add(nameof(element.key), element.key);
+            map.Add(nameof(reactStatefulComponent.key), reactStatefulComponent.key);
 
             return map;
         }
