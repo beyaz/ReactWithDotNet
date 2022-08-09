@@ -19,11 +19,13 @@ public static class ElementSerializer
 
         var map = new Dictionary<string, object>();
 
+        var htmlElement = element as HtmlElement;
+
         if (element is ThirdPartyReactComponent thirdPartyReactComponent)
         {
             map.Add("$tag", thirdPartyReactComponent.Type);
         }
-        else if (element is HtmlElement htmlElement)
+        else if (htmlElement is not null)
         {
             map.Add("$tag", htmlElement.Type);
         }
@@ -78,12 +80,9 @@ public static class ElementSerializer
             map.Add(GetPropertyName(propertyInfo), propertyValue);
         }
 
-        if (element is HtmlElement htmlElement2)
+        if (htmlElement?.innerText is not null)
         {
-            if (htmlElement2.innerText != null)
-            {
-                map.Add("$text", htmlElement2.innerText);
-            }
+            map.Add("$text", htmlElement.innerText);
         }
 
         if (element.children.Count > 0)
