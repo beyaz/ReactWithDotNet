@@ -104,7 +104,6 @@ class CountsSummaryView : ReactComponent
                 strokeWidth = 1,
                 startAnchor = "bottom",
                 dashness = true,
-                curveness = 1,
                 endAnchor = "top"
 
             });
