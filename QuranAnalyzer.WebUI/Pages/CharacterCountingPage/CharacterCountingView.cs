@@ -157,7 +157,9 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     ChapterNumber           = verse.ChapterNumber.ToString(),
                     VerseNumber             = verse.Index,
                     LettersForColorizeNodes = searchLetters,
-                    VerseText               = verse.TextWithBismillah
+                    VerseText               = verse.TextWithBismillah,
+                    Verse = verse,
+                    option = state.MushafOptions
                 };
                 
                 mushafVerse.Add(letterColorizer);
