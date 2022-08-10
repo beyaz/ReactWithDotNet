@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using ReactWithDotNet;
-using ReactWithDotNet.react_xarrows;
+﻿using ReactWithDotNet.react_xarrows;
 using static QuranAnalyzer.ArabicLetter;
 using static QuranAnalyzer.WebUI.Extensions;
 
@@ -186,7 +184,7 @@ public class View : ReactComponent
                             }
                         },
                     },
-                    new td { new CountingResult { id = "3-counts", MultipleOf = 298 } }
+                    new td { new CountingResult { id = "3-counts", MultipleOf = 298, SearchScript = GetLetterCountingScript("3:*", Alif, Laam, Miim) } }
                 },
 
                 new tr
@@ -206,7 +204,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "7-counts", MultipleOf = 280 } }
+                    new td { new CountingResult { id = "7-counts", MultipleOf = 280, SearchScript = GetLetterCountingScript("7:*", Alif, Laam, Miim,Saad) } }
                 },
 
                 new tr
@@ -225,7 +223,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "10-counts", MultipleOf = 131 } }
+                    new td { new CountingResult { id = "10-counts", MultipleOf = 131, SearchScript = GetLetterCountingScript("10:*", Alif, Laam, Raa) } }
                 },
                 new tr
                 {
@@ -243,7 +241,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "11-counts", MultipleOf = 131 } }
+                    new td { new CountingResult { id = "11-counts", MultipleOf = 131, SearchScript = GetLetterCountingScript("11:*", Alif, Laam, Raa) } }
                 },
 
                 new tr
@@ -262,7 +260,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "12-counts", MultipleOf = 125 } }
+                    new td { new CountingResult { id = "12-counts", MultipleOf = 125, SearchScript = GetLetterCountingScript("12:*", Alif, Laam, Raa) } }
                 },
 
                 new tr
@@ -282,7 +280,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "13-counts", MultipleOf = 78 } }
+                    new td { new CountingResult { id = "13-counts", MultipleOf = 78, SearchScript = GetLetterCountingScript("13:*", Alif, Laam,Miim, Raa) } }
                 },
 
                 new tr
@@ -301,7 +299,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "14-counts", MultipleOf = 63 } }
+                    new td { new CountingResult { id = "14-counts", MultipleOf = 63, SearchScript = GetLetterCountingScript("14:*", Alif, Laam, Raa) } }
                 },
 
                 new tr
@@ -320,7 +318,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "15-counts", MultipleOf = 48 } }
+                    new td { new CountingResult { id = "15-counts", MultipleOf = 48, SearchScript = GetLetterCountingScript("15:*", Alif, Laam, Raa) } }
                 },
 
                 new tr
@@ -375,7 +373,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "TaSinMim", MultipleOf = 93 } }
+                    new td { new CountingResult { id = "TaSinMim", MultipleOf = 93, SearchScript = GetLetterCountingScript("19:*,20:*,26:*,27:*,28:*", Taa, Haa, Siin, Miim) } }
                 },
 
                 new tr
@@ -428,7 +426,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "29-counts", MultipleOf = 88 } }
+                    new td { new CountingResult { id = "29-counts", MultipleOf = 88, SearchScript = GetLetterCountingScript("29:*", Alif, Laam, Miim) } }
                 },
 
                 new tr
@@ -447,7 +445,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "30-counts", MultipleOf = 66 } }
+                    new td { new CountingResult { id = "30-counts", MultipleOf = 66, SearchScript = GetLetterCountingScript("30:*", Alif, Laam, Miim) } }
                 },
 
                 new tr
@@ -466,7 +464,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "31-counts", MultipleOf = 43 } }
+                    new td { new CountingResult { id = "31-counts", MultipleOf = 43, SearchScript = GetLetterCountingScript("31:*", Alif, Laam, Miim) } }
                 },
                 
                 new tr
@@ -485,7 +483,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "32-counts", MultipleOf = 30 } }
+                    new td { new CountingResult { id = "32-counts", MultipleOf = 30, SearchScript = GetLetterCountingScript("32:*", Alif, Laam, Miim) } }
                 },
 
                 new tr
@@ -502,7 +500,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "36-counts", MultipleOf = 15 } }
+                    new td { new CountingResult { id = "36-counts", MultipleOf = 15, SearchScript = GetLetterCountingScript("36:*", Yaa, Siin) } }
                 },
 
                 new tr
@@ -550,7 +548,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "42-Ain-Sin-Kaf", MultipleOf = 11 } }
+                    new td { new CountingResult { id = "42-Ain-Sin-Kaf", MultipleOf = 11, SearchScript = GetLetterCountingScript("42:*", Ain, Siin, Kaaf) } }
                 },
 
                 new tr
@@ -570,7 +568,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = $"42-{Kaf}-counts", MultipleOf = 3 } }
+                    new td { new CountingResult { id = $"42-{Kaf}-counts", MultipleOf = 3, SearchScript = GetLetterCountingScript("42:*", Kaaf) } }
                 },
 
                 new tr
@@ -587,7 +585,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "Ha-Mim", MultipleOf = 113 } }
+                    new td { new CountingResult { id = "Ha-Mim", MultipleOf = 113, SearchScript = GetLetterCountingScript("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Haa_, Miim) } }
                 },
 
                 new tr
@@ -667,7 +665,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "68-counts", MultipleOf = 7 } }
+                    new td { new CountingResult { id = "68-counts", MultipleOf = 7, SearchScript = GetLetterCountingScript("68:*", Nun) } }
                 }
             }
 
