@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ReactWithDotNet;
+using ReactWithDotNet.react_xarrows;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -66,7 +67,8 @@ class CountsSummaryView : ReactComponent
                 padding        = "5px",
                 justifyContent = "space-between",
                 fontSize       = "0.7rem",
-                flexWrap       = "wrap"
+                flexWrap       = "wrap",
+                marginTop = "20px"
             },
         };
 
@@ -78,16 +80,33 @@ class CountsSummaryView : ReactComponent
                 {
                     new div { text = counts[j].Name ,style = { color           = LetterColorizer.GetColor(j) } },
                     new div { text = ":", style            = { marginLeftRight = "4px" } },
-                    new div{text   = counts[j].Count.ToString()}
+                    new div{text   = counts[j].Count.ToString(), id = "subTotal-"+j}
                 },
                 style = { marginLeft = "10px" }
             };
 
 
             countsView.appendChild(countView);
+
+
+            returnDiv.appendChild(new Xarrow
+            {
+                start       = "GrandTotal",
+                end         = "subTotal-"+j,
+                path        = "smooth",
+                color       = "rgb(218, 220, 224)",
+                strokeWidth = 1,
+                startAnchor = "bottom",
+                dashness    = true,
+                //curveness  = 1.02,
+                endAnchor = "top"
+
+            });
         }
 
         returnDiv.appendChild(countsView);
+
+        
 
         return returnDiv;
     }
@@ -104,6 +123,7 @@ class CountsSummaryView : ReactComponent
                 new div { innerText = ")" }
             },
             style = { display = "flex", flexDirection = "row" },
+            id = "GrandTotal"
         };
     }
     #region Methods
