@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ReactWithDotNet;
-using ReactWithDotNet.react_xarrows;
+﻿using ReactWithDotNet.react_xarrows;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -133,14 +129,4 @@ class CountsSummaryView : ReactComponent
             id = "GrandTotal"
         };
     }
-    #region Methods
-    static Element ToElement(SummaryInfo x)
-    {
-        return new div
-        {
-            innerHTML = $"<strong>{x.Count}</strong> adet <strong>{x.Name}</strong>",
-            style = { marginLeftRight = "15px"}
-        };
-    }
-    #endregion
 }

@@ -2,6 +2,7 @@
 using ReactWithDotNet;
 using ReactWithDotNet.react_xarrows;
 using static QuranAnalyzer.ArabicLetter;
+using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
@@ -166,7 +167,7 @@ public class View : ReactComponent
                         }
                     },
 
-                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = $"2:*|{Alif},{Laam},{Miim}" } }
+                    new td { new CountingResult { id = "2-counts", MultipleOf = 521, SearchScript = GetLetterCountingScript("2:*", Alif, Laam, Miim) } }
                 },
 
                 new tr
@@ -340,7 +341,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "19-counts", MultipleOf = 42, SearchScript = $"19:*|{Kaaf} {Haa_} {Yaa} {Ayn} {Saad}" } }
+                    new td { new CountingResult { id = "19-counts", MultipleOf = 42, SearchScript = GetLetterCountingScript("19:*", Kaaf, Haa_, Yaa, Ayn, Saad) } }
                 },
 
                 new tr
@@ -408,7 +409,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = $"7:*,19:*,38:*|{Saad}" } }
+                    new td { new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript  = GetLetterCountingScript("7:*,19:*,38:*", Saad) } }
                 },
 
                 new tr
@@ -650,7 +651,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "50-counts", MultipleOf = 3 } }
+                    new td { new CountingResult { id = "50-counts", MultipleOf = 3, SearchScript = GetLetterCountingScript("50:*", Qaaf) } }
                 },
 
                 new tr

@@ -22,4 +22,16 @@ static class Extensions
             return default;
         }
     }
+
+    public static (string ChapterFilter, string searchLetters) ParseLetterCountingScript(string value)
+    {
+        var arr = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+        return (arr.TryGet(0), arr.TryGet(1));
+    }
+
+    public static string GetLetterCountingScript(string chapterFilter, params string[] arabicLetters)
+    {
+        return chapterFilter + "|" + string.Join(string.Empty, arabicLetters);
+    }
 }
