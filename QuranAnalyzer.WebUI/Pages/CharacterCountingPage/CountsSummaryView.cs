@@ -53,7 +53,13 @@ class CountsSummaryView : ReactComponent
             {
                 returnDiv.appendChild(new legend
                 {
-                    new div { innerHTML = $"Toplam: <strong>{total}</strong>" }
+                    style = { display = "flex", flexDirection = "row"},
+                    children =
+                    {
+                        new div { text = "Toplam:"},
+                        new HSpace(4),
+                        new strong { text = total.ToString(), id ="GrandTotal" }
+                    }
                 });
             }
         }
@@ -66,7 +72,7 @@ class CountsSummaryView : ReactComponent
             {
                 padding        = "5px",
                 justifyContent = "space-between",
-                fontSize       = "0.7rem",
+                fontSize       = "0.9rem",
                 flexWrap       = "wrap",
                 marginTop = "20px"
             },
@@ -91,17 +97,19 @@ class CountsSummaryView : ReactComponent
 
             returnDiv.appendChild(new Xarrow
             {
-                start       = "GrandTotal",
-                end         = "subTotal-"+j,
-                path        = "smooth",
-                color       = "rgb(218, 220, 224)",
+                start = "GrandTotal",
+                end = "subTotal-" + j,
+                path = "smooth",
+                color = "rgb(218, 220, 224)",
                 strokeWidth = 1,
                 startAnchor = "bottom",
-                dashness    = true,
-                //curveness  = 1.02,
+                dashness = true,
+                curveness = 1,
                 endAnchor = "top"
 
             });
+
+
         }
 
         returnDiv.appendChild(countsView);

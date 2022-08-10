@@ -75,15 +75,15 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 {
                     new VStack
                     {
-                        new div { innerText       = "Sure:" },
+                        new div { text = "Sure:", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px"}},
                         new InputText { valueBind = () => state.ChapterFilter }
                     },
 
-                    new VSpace(10),
+                    new VSpace(15),
 
                     new VStack
                     {
-                        new div { innerText       = "Aranacak Karakterlerler" },
+                        new div { text = "Aranacak Karakterlerler" , style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px"}},
                         new InputText { valueBind = () => state.SearchCharacters, style = { direction = "ltr"}},
                         
                     },
@@ -134,7 +134,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return new CalculatingComponent { searchPanel };
         }
 
-        var searchLetters = AnalyzeText(state.SearchCharacters).Where(IsArabicLetter).ToList();
+        var searchLetters = AnalyzeText(state.SearchCharacters).Where(IsArabicLetter).GroupBy(x=>x.ArabicLetterIndex).Select(grp=>grp.FirstOrDefault()).Distinct().ToList();
 
         state.SummaryInfoList = searchLetters.AsListOf(x => new SummaryInfo
         {

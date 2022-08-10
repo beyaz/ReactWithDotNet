@@ -80,7 +80,7 @@ public class LetterColorizer : ReactComponent
                 //marginTop        = "-8px",
                 //background       = "white",
                 //paddingLeftRight = "5px",
-                fontSize         = "0.8rem",
+                fontSize         = "0.9rem",
                 marginLeft = "1px"
             }
         };
@@ -94,7 +94,7 @@ var countsView = new HPanel
             {
                 padding        = "5px",
                 justifyContent = "space-between",
-                fontSize       = "0.7rem",
+                fontSize       = "0.9rem",
                 flexWrap       = "wrap"
             },
         };
