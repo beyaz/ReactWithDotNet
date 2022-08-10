@@ -47,7 +47,7 @@ public class LetterColorizer : ReactComponent
                         innerText = verseText[i].MatchedLetter,
                         style =
                         {
-                            color        = getColor(j),
+                            color        = GetColor(j),
                             border       = "1px dashed rgb(218, 220, 224)",
                             borderRadius = "4px",
                             fontWeight   = "bold"
@@ -71,7 +71,7 @@ public class LetterColorizer : ReactComponent
             html.Append(VerseText.Substring(cursor));
         }
 
-        var verseId = new legend
+        Element verseId = new legend
         {
             text = $"{ChapterNumber}:{VerseNumber}",
             style =
@@ -84,37 +84,39 @@ public class LetterColorizer : ReactComponent
                 marginLeft = "1px"
             }
         };
+
+
         
-        var countsView = new HPanel
+
+var countsView = new HPanel
         {
             style =
             {
-                // border = "1px dashed rgb(218, 220, 224)",
                 padding        = "5px",
                 justifyContent = "space-between",
-                fontSize       = "0.7rem"
+                fontSize       = "0.7rem",
+                flexWrap       = "wrap"
             },
-            children = { }
         };
         
         for (var j = 0; j < lettersForColorize.Count; j++)
         {
-            var letter = new div(lettersForColorize[j].MatchedLetter) { style = { color = getColor(j) } };
-
             var countView = new HPanel
             {
                 children =
                 {
-                    letter,
-                    new div(":") { style = { marginLeftRight = "4px" } },
-                    new div(counts[j].ToString())
+                    new div { text = lettersForColorize[j].MatchedLetter ,style = { color = GetColor(j) } },
+                    new div { text = ":", style = { marginLeftRight = "4px" } },
+                    new div{text   = counts[j].ToString()}
                 },
-                style = { marginLeftRight = "10px" }
+                style = { marginLeft = "10px" }
             };
 
 
             countsView.appendChild(countView);
         }
+        
+        
 
         var textView = new div
         {
@@ -124,13 +126,35 @@ public class LetterColorizer : ReactComponent
                 fontSize   = "1.4rem",
                 padding    = "5px",
                 fontFamily = "Lateef, cursive", 
-                direction  = "rtl"
+                direction  = "rtl",
+                marginRight = "auto"
             }
         };
 
+
+
+        verseId = new legend
+        {
+            style = { display = "flex", flexDirection = "row", alignItems = "center"},
+            children =
+            {
+                new div
+                {
+                    text = $"{ChapterNumber}:{VerseNumber}",
+                    style =
+                    {
+                        fontSize   = "0.8rem",
+                        marginLeft = "1px"
+                    }
+                },
+                countsView
+            }
+        };
+        
+        
         return new fieldset
         {
-            children = { verseId, new VSpace(5), textView, countsView },
+            children = { verseId, new VSpace(5), textView },
             style =
             {
                 marginTop    = "5px",
@@ -147,7 +171,7 @@ public class LetterColorizer : ReactComponent
     #endregion
 
     #region Methods
-    static string getColor(int index)
+    public static string GetColor(int index)
     {
         if (index >= 0 && index < Colors.Length)
         {

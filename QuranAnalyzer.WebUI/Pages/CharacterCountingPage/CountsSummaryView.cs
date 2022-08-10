@@ -25,9 +25,19 @@ class CountsSummaryView : ReactComponent
     {
         var counts = Counts ?? new List<SummaryInfo>();
 
-        var returnDiv = new div
+        var returnDiv = new fieldset
         {
-            style = { display = "flex", flexDirection = "row" }
+            style =
+            {
+                marginTop    = "5px",
+                border       = "1px dashed rgb(218, 220, 224)",
+                borderRadius = "4px",
+
+                display       = "flex",
+                flexDirection = "column",
+                alignItems    = "flex-start"
+
+            }
         };
 
         var total = counts.Select(x => x.Count).Sum();
@@ -40,18 +50,44 @@ class CountsSummaryView : ReactComponent
             }
             else
             {
-                returnDiv.appendChild(new div
+                returnDiv.appendChild(new legend
                 {
                     new div { innerHTML = $"Toplam: <strong>{total}</strong>" }
                 });
             }
         }
 
-        returnDiv.appendChild(new div
+     
+
+        var countsView = new HPanel
         {
-            Children = counts.Select(ToElement),
-            style    = { display = "flex", flexDirection = "row" }
-        });
+            style =
+            {
+                padding        = "5px",
+                justifyContent = "space-between",
+                fontSize       = "0.7rem",
+                flexWrap       = "wrap"
+            },
+        };
+
+        for (var j = 0; j < counts.Count; j++)
+        {
+            var countView = new HPanel
+            {
+                children =
+                {
+                    new div { text = counts[j].Name ,style = { color           = LetterColorizer.GetColor(j) } },
+                    new div { text = ":", style            = { marginLeftRight = "4px" } },
+                    new div{text   = counts[j].Count.ToString()}
+                },
+                style = { marginLeft = "10px" }
+            };
+
+
+            countsView.appendChild(countView);
+        }
+
+        returnDiv.appendChild(countsView);
 
         return returnDiv;
     }
@@ -59,7 +95,7 @@ class CountsSummaryView : ReactComponent
 
     static Element MultipleOf(int total)
     {
-        return new div
+        return new legend
         {
             children =
             {

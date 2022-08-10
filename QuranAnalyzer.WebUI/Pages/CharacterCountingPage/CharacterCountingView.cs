@@ -66,11 +66,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         var searchPanel = new divWithBorder
         {
-            style = { padding = "15px", minWidth = "300px", width = Context.ClientWidth >1000 ? "700px":"400px"},
+            style = { paddingLeftRight = "15px", paddingBottom = "15px"},
             
             children =
             {
-                new h4("Arama"),
+                new h4{text = "Harf Arama"},
                 new VStack
                 {
                     new VStack
@@ -168,24 +168,24 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
 
 
-        var results = new Card
+        var results = new divWithBorder
         {
-            title = "Sonuçlar",
-            style = { marginTop = "5px" },
+            style = { paddingLeftRight = "15px", paddingBottom = "15px" , marginTop = "5px"},
             children =
             {
+                new h4("Sonuçlar"),
+                
+                new CountsSummaryView { Counts = state.SummaryInfoList },
+                new VSpace(30),
                 new div
                 {
-                    new CountsSummaryView { Counts = state.SummaryInfoList },
-                    new div
-                    {
-                        Children = mushafVerse
-                    }
+                    Children = mushafVerse
                 }
             }
         };
 
-       
+
+
 
         return new div
         {

@@ -33,7 +33,7 @@ class ApplicationLayout : ReactComponent
                         IsBackDropActive ? backDrop : null,
                         new div
                         {
-                            style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px" },
+                            style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px", width = "100%"},
                             children = { mainContent }
                         }
                     }
