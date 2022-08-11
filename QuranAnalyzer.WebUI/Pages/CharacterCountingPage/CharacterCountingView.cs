@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using QuranAnalyzer.WebUI.Components;
-using QuranAnalyzer.WebUI.Pages.MainPage;
-using ReactWithDotNet;
+﻿using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.PrimeReact;
 using static QuranAnalyzer.Analyzer;
 
@@ -22,10 +17,6 @@ public class CharacterCountingViewModel
     public int ClickCount { get; set; }
 
     public bool IsBlocked { get; set; }
-
-    public int SelectedTabIndex { get; set; }
-
-    [NonSerialized] public IReadOnlyList<SummaryInfo> SummaryInfoList;
 }
 
 
@@ -138,7 +129,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var searchLetters = AnalyzeText(state.SearchCharacters).Where(IsArabicLetter).GroupBy(x=>x.ArabicLetterIndex).Select(grp=>grp.FirstOrDefault()).Distinct().ToList();
 
-        state.SummaryInfoList = searchLetters.AsListOf(x => new SummaryInfo
+        var summaryInfoList = searchLetters.AsListOf(x => new SummaryInfo
         {
             Count = VerseFilter.GetVerseList(state.ChapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfCharacter(verses, x.ArabicLetterIndex,state.MushafOptions)).Value,
             Name  = x.MatchedLetter
@@ -179,7 +170,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             {
                 new h4("Sonuçlar"),
                 
-                new CountsSummaryView { Counts = state.SummaryInfoList },
+                new CountsSummaryView { Counts = summaryInfoList },
                 new VSpace(30),
                 new div
                 {
