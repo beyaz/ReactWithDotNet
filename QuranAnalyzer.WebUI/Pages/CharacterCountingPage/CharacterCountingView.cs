@@ -10,7 +10,7 @@ public class CharacterCountingViewModel
 {
     public string ChapterFilter { get; set; }
 
-    public string SearchCharacters { get; set; }
+    public string SearchLetters { get; set; }
     
     public MushafOptions MushafOptions { get; set; } = new();
 
@@ -35,7 +35,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 if (value is not null)
                 {
                     state.ChapterFilter    = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(0);
-                    state.SearchCharacters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(1);
+                    state.SearchLetters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(1);
                 }
             }
         };
@@ -50,7 +50,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     public void ArabicKeyboardPressed(string letter)
     {
         state.ClickCount = 0;
-        state.SearchCharacters += " " + letter;
+        state.SearchLetters += " " + letter;
     }
 
     #region Public Methods
@@ -76,7 +76,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VStack
                     {
                         new div { text = "Aranacak Karakterlerler" , style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px"}},
-                        new InputText { valueBind = () => state.SearchCharacters, style = { direction = "ltr"}},
+                        new InputText { valueBind = () => state.SearchLetters, style = { direction = "ltr"}},
                         
                     },
                     new VSpace(3),
@@ -127,7 +127,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return new CalculatingComponent { searchPanel };
         }
 
-        var searchLetters = AnalyzeText(state.SearchCharacters).Where(IsArabicLetter).GroupBy(x=>x.ArabicLetterIndex).Select(grp=>grp.FirstOrDefault()).Distinct().ToList();
+        var searchLetters = AnalyzeText(state.SearchLetters).Where(IsArabicLetter).GroupBy(x=>x.ArabicLetterIndex).Select(grp=>grp.FirstOrDefault()).Distinct().ToList();
 
         var summaryInfoList = searchLetters.AsListOf(x => new SummaryInfo
         {
@@ -201,7 +201,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (state.IsBlocked == false)
         {
             state.IsBlocked     = true;
-            Context.ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={state.ChapterFilter}|{state.SearchCharacters}");
+            Context.ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={state.ChapterFilter}|{state.SearchLetters}");
             Context.ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
             return;
         }
