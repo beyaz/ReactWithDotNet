@@ -424,12 +424,7 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
 
         props[propName] = jsonNode[propName];
     }
-
-    if (jsonNode.$text != null)
-    {
-        return createElement(constructorFunction, props, jsonNode.$text);
-    }
-
+    
     if (isConvertingRootNode === true && component.state.$RootNodeOnMouseEnter)
     {
         NotNull(props);
@@ -444,6 +439,11 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
         }
     }
 
+    if (jsonNode.$text != null)
+    {
+        return createElement(constructorFunction, props, jsonNode.$text);
+    }
+    
     const children = jsonNode.$children;
     if (children)
     {

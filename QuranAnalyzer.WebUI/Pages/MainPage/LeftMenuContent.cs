@@ -43,12 +43,11 @@ class LeftMenuContent: ReactComponent
 
 class LeftMenuItemState
 {
-    public bool IsMouseEntered { get; set; }
     public string Text { get; set; }
     public string PageId { get; set; }
 }
 
-class LeftMenuItem: ReactComponent<LeftMenuItemState>
+class LeftMenuItem: ReactComponent<LeftMenuItemState>,ISupportMouseEnter
 {
     public string Text { get; set; }
     public string PageId { get; set; }
@@ -65,7 +64,7 @@ class LeftMenuItem: ReactComponent<LeftMenuItemState>
     
     public override Element render()
     {
-        return new a
+        var link = new a
         {
             innerText = state.Text,
             href      = GetPageLink(state.PageId),
@@ -73,12 +72,20 @@ class LeftMenuItem: ReactComponent<LeftMenuItemState>
             {
                 padding        = "10px",
                 textDecoration = "none",
-                color          = "Black",
+                color          =  "black",
                 overflowWrap   = "break-word",
-                borderBottom   = state.IsMouseEntered ? "1px solid red" : "1px solid #e9e9f2"
-            },
-            onMouseEnter = _=> state.IsMouseEntered = true,
-            onMouseLeave = _ => state.IsMouseEntered = false
+                borderBottom   = "1px solid #e9e9f2"
+            }
         };
+
+        if (IsMouseEntered)
+        {
+            link.style.color        = "#4e6579";
+            link.style.borderBottom = "1px solid red";
+        }
+
+        return link;
     }
+
+    public bool IsMouseEntered { get; set; }
 }
