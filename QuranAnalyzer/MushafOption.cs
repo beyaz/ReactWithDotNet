@@ -2,7 +2,7 @@
 namespace QuranAnalyzer;
 
 [Serializable]
-public sealed class MushafOptions
+public sealed class MushafOption
 {
     #region Public Properties
     public bool UseElifCountsSpecifiedByRK  =>!UseElifReferencesFromTanzil;

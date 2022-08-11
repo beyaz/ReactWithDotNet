@@ -10,7 +10,7 @@ class MushafOptionsView:ReactComponent
 {
     public bool MushafOptionsPanelIsVisible { get; set; }
 
-    public MushafOptions MushafOption { get; set; }
+    public MushafOption MushafOption { get; set; }
 
     public Expression<Func<bool>> Bestaten_7_69 { get; set; }
 

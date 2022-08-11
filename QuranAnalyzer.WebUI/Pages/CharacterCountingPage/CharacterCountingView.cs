@@ -12,7 +12,7 @@ public class CharacterCountingViewModel
 
     public string SearchLetters { get; set; }
     
-    public MushafOptions MushafOptions { get; set; } = new();
+    public MushafOption mushafOption { get; set; } = new();
 
     public int ClickCount { get; set; }
 
@@ -95,10 +95,10 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VSpace(3),
                     new MushafOptionsView
                     {
-                        MushafOption                = state.MushafOptions,
-                        Bestaten_7_69               = () => state.MushafOptions.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
-                        UseElifReferencesFromTanzil = ()=>state.MushafOptions.UseElifReferencesFromTanzil,
-                        CountHamzaAsAlif            = ()=>state.MushafOptions.CountHamzaAsAlif,
+                        MushafOption                = state.mushafOption,
+                        Bestaten_7_69               = () => state.mushafOption.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
+                        UseElifReferencesFromTanzil = ()=>state.mushafOption.UseElifReferencesFromTanzil,
+                        CountHamzaAsAlif            = ()=>state.mushafOption.CountHamzaAsAlif,
 
                     },
                     
@@ -131,7 +131,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var summaryInfoList = searchLetters.AsListOf(x => new SummaryInfo
         {
-            Count = VerseFilter.GetVerseList(state.ChapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfCharacter(verses, x.ArabicLetterIndex,state.MushafOptions)).Value,
+            Count = VerseFilter.GetVerseList(state.ChapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfCharacter(verses, x.ArabicLetterIndex,state.mushafOption)).Value,
             Name  = x.MatchedLetter
         });
 
@@ -152,7 +152,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     LettersForColorizeNodes = searchLetters,
                     VerseText               = verse.TextWithBismillah,
                     Verse = verse,
-                    option = state.MushafOptions
+                    option = state.mushafOption
                 };
                 
                 mushafVerse.Add(letterColorizer);

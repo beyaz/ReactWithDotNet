@@ -26,7 +26,7 @@ public class CharacterCountingTests
         CountShouldBe("10:*", Raa, 257);
         CountShouldBe("10:*", Laam, 913);
         CountShouldBe("10:*", Alif, 1323);
-        CountShouldBe("10:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1319);
+        CountShouldBe("10:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 1319);
     }
 
     [TestMethod]
@@ -34,9 +34,9 @@ public class CharacterCountingTests
     {
         CountShouldBe("11:*", Raa, 325);
         CountShouldBe("11:*", Laam, 795);
-        CountShouldBe("11:*", Laam, new MushafOptions { Use_Lam_SpecifiedByRK = true }, 794);
+        CountShouldBe("11:*", Laam, new MushafOption { Use_Lam_SpecifiedByRK = true }, 794);
         CountShouldBe("11:*", Alif, 1373);
-        CountShouldBe("11:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1370);
+        CountShouldBe("11:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 1370);
     }
 
     [TestMethod]
@@ -45,7 +45,7 @@ public class CharacterCountingTests
         CountShouldBe("12:*", Raa, 257);
         CountShouldBe("12:*", Laam, 812);
         CountShouldBe("12:*", Alif, 1315);
-        CountShouldBe("12:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 1306);
+        CountShouldBe("12:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 1306);
     }
 
     [TestMethod]
@@ -55,7 +55,7 @@ public class CharacterCountingTests
         CountShouldBe("13:*", Miim, 260);
         CountShouldBe("13:*", Laam, 480);
         CountShouldBe("13:*", Alif, 610);
-        CountShouldBe("13:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 605);
+        CountShouldBe("13:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 605);
     }
 
     [TestMethod]
@@ -64,7 +64,7 @@ public class CharacterCountingTests
         CountShouldBe("14:*", Raa, 160);
         CountShouldBe("14:*", Laam, 452);
         CountShouldBe("14:*", Alif, 589);
-        CountShouldBe("14:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 585);
+        CountShouldBe("14:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 585);
     }
 
     [TestMethod]
@@ -73,7 +73,7 @@ public class CharacterCountingTests
         CountShouldBe("15:*", Raa, 96);
         CountShouldBe("15:*", Laam, 323);
         CountShouldBe("15:*", Alif, 493);
-        CountShouldBe("15:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 493);
+        CountShouldBe("15:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 493);
     }
 
     [TestMethod]
@@ -92,7 +92,7 @@ public class CharacterCountingTests
         CountShouldBe("2:*", Miim, 2195);
         CountShouldBe("2:*", Laam, 3202);
         CountShouldBe("2:*", Alif, 4504);
-        CountShouldBe("2:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 4502);
+        CountShouldBe("2:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 4502);
     }
 
     [TestMethod]
@@ -120,7 +120,7 @@ public class CharacterCountingTests
         CountShouldBe("3:*", Miim, 1249);
         CountShouldBe("3:*", Laam, 1892);
         CountShouldBe("3:*", Alif, 2511);
-        CountShouldBe("3:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 2521);
+        CountShouldBe("3:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 2521);
     }
 
     [TestMethod]
@@ -153,12 +153,12 @@ public class CharacterCountingTests
     public void Chapter_7()
     {
         CountShouldBe("7:*", Saad, 98);
-        CountShouldBe("7:*", Saad, new MushafOptions { Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = true }, 97);
+        CountShouldBe("7:*", Saad, new MushafOption { Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = true }, 97);
 
         CountShouldBe("7:*", Miim, 1164);
         CountShouldBe("7:*", Laam, 1530);
         CountShouldBe("7:*", Alif, 2521);
-        CountShouldBe("7:*", Alif, new MushafOptions { UseElifCountsSpecifiedByRK = true }, 2529);
+        CountShouldBe("7:*", Alif, new MushafOption { UseElifCountsSpecifiedByRK = true }, 2529);
     }
 
     [TestMethod]
@@ -199,7 +199,7 @@ public class CharacterCountingTests
         GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, arabicLetterIndex)).ShouldBe(expectedCount);
     }
 
-    static void CountShouldBe(string searchScript, int arabicLetterIndex, MushafOptions option, int expectedCount)
+    static void CountShouldBe(string searchScript, int arabicLetterIndex, MushafOption option, int expectedCount)
     {
         GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, arabicLetterIndex, option)).ShouldBe(expectedCount);
     }

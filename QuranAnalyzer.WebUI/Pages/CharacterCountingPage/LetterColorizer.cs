@@ -21,7 +21,7 @@ public class LetterColorizer : ReactComponent
     #region Public Methods
 
     public Verse Verse { get; set; }
-    public MushafOptions option { get; set; }
+    public MushafOption option { get; set; }
     
     Element GetExtra(int arabicLetterIndex)
     {

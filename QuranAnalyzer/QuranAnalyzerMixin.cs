@@ -3,9 +3,9 @@
 public static class QuranAnalyzerMixin
 {
     #region Public Methods
-    public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, int arabicLetterIndex, MushafOptions option = null)
+    public static Response<int> GetCountOfCharacter(IReadOnlyList<Verse> verseList, int arabicLetterIndex, MushafOption option = null)
     {
-        option ??= new MushafOptions();
+        option ??= new MushafOption();
 
         Response<int> calculateCount(Verse verse)
         {
