@@ -96,7 +96,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                         children =
                         {
                             new ArabicKeyboard()
-                        }
+                        },
+                        headerTemplate = new div{text = "Aloha"}
                     },
 
                     new VSpace(3),
