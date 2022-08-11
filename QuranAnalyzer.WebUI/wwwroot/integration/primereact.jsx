@@ -45,3 +45,4 @@ ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tooltip", Tooltip);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel::GetHeaderTemplate", (key)=> ReactWithDotNet.GetExternalJsObject(key) );

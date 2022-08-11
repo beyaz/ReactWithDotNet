@@ -919,7 +919,8 @@ var ReactWithDotNet =
             json => callback(json)
         );
     },
-    RegisterExternalJsObject : RegisterExternalJsObject
+    RegisterExternalJsObject: RegisterExternalJsObject,
+    GetExternalJsObject: GetExternalJsObject
 };
 
 window.ReactWithDotNet = ReactWithDotNet;

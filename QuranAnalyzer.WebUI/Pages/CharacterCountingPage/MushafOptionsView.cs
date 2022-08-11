@@ -21,9 +21,10 @@ class MushafOptionsView:ReactComponent
     {
         return new Panel
         {
-            toggleable = true,
-            collapsed  = true,
-            header     = "Mushaf Ayarları",
+            toggleable     = true,
+            collapsed      = true,
+            header         = "Mushaf Ayarları",
+            headerTemplate = "QuranAnalyzer_WebUI_PanelHeaderTemplate",
             children =
             {
                 new div

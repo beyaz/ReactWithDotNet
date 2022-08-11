@@ -58,6 +58,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     public void ArabicKeyboardPressed(string letter)
     {
+        state.ClickCount = 0;
         state.SearchCharacters += " " + letter;
     }
 
@@ -97,7 +98,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                         {
                             new ArabicKeyboard()
                         },
-                        headerTemplate = new div{text = "Aloha"}
+                        headerTemplate = "QuranAnalyzer_WebUI_PanelHeaderTemplate"
                     },
 
                     new VSpace(3),

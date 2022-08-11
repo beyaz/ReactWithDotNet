@@ -29,7 +29,8 @@ public class Panel : ElementBase
     ///    Header template of the panel to customize more.
     /// </summary>
     [React]
-    public Element headerTemplate { get; set; }
+    [ReactTransformValueInClient("ReactWithDotNet.PrimeReact.Panel::GetHeaderTemplate")]
+    public string headerTemplate { get; set; }
 
     /// <summary>
     ///     Callback to invoke when a tab gets expanded.
