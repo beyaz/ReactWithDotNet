@@ -35,7 +35,9 @@ public class LetterColorizer : ReactComponent
             return null;
         }
         
-        if (arabicLetterIndex == ArabicLetterIndex.Alif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(Verse.Id))
+        if (arabicLetterIndex == ArabicLetterIndex.Alif && 
+            option.UseElifReferencesFromTanzil == false && 
+            SpecifiedByRK.RealElifCounts.ContainsKey(Verse.Id))
         {
             var r =  SpecifiedByRK.RealElifCounts[Verse.Id];
 

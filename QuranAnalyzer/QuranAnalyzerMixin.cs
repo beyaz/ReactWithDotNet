@@ -9,7 +9,9 @@ public static class QuranAnalyzerMixin
 
         Response<int> calculateCount(Verse verse)
         {
-            if (arabicLetterIndex == ArabicLetterIndex.Alif && option.UseElifCountsSpecifiedByRK && SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
+            if (arabicLetterIndex == ArabicLetterIndex.Alif && 
+                option.UseElifReferencesFromTanzil == false &&
+                SpecifiedByRK.RealElifCounts.ContainsKey(verse.Id))
             {
                 return SpecifiedByRK.RealElifCounts[verse.Id];
             }
