@@ -65,19 +65,7 @@ public class LetterColorizer : ReactComponent
             html.Append(VerseText.Substring(cursor));
         }
 
-        Element verseId = new legend
-        {
-            text = $"{ChapterNumber}:{VerseNumber}",
-            style =
-            {
-                //marginLeft       = "10px", 
-                //marginTop        = "-8px",
-                //background       = "white",
-                //paddingLeftRight = "5px",
-                fontSize   = "0.9rem",
-                marginLeft = "1px"
-            }
-        };
+      
 
         var countsView = new HPanel
         {
@@ -120,7 +108,7 @@ public class LetterColorizer : ReactComponent
             }
         };
 
-        verseId = new legend
+        var verseId = new legend
         {
             style = { display = "flex", flexDirection = "row", alignItems = "center" },
             children =
