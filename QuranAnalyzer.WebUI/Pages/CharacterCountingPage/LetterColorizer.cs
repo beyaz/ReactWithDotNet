@@ -14,7 +14,7 @@ public class LetterColorizer : ReactComponent
     public string VerseNumber { get; set; }
     public string VerseText { get; set; }
     public IReadOnlyList<LetterInfo> VerseTextNodes { get; set; }
-    
+
     public override Element render()
     {
         var verseText = VerseTextNodes ??= Analyzer.AnalyzeText(VerseText).Where(Analyzer.IsArabicLetter).ToList();
@@ -64,8 +64,6 @@ public class LetterColorizer : ReactComponent
         {
             html.Append(VerseText.Substring(cursor));
         }
-
-      
 
         var countsView = new HPanel
         {
@@ -141,6 +139,7 @@ public class LetterColorizer : ReactComponent
             }
         };
     }
+
     Element GetExtra(int arabicLetterIndex)
     {
         if (Verse == null)
