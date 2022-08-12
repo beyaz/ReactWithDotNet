@@ -58,7 +58,7 @@ public sealed class Verse
     /// <summary>
     ///     bismillah + text
     /// </summary>
-    public IReadOnlyList<LetterMatchInfo> AnalyzedFullText { get; init; }
+    public IReadOnlyList<LetterInfo> AnalyzedFullText { get; init; }
 
     public string Bismillah { get; init; }
     public int ChapterNumber { get; init; }
@@ -68,5 +68,5 @@ public sealed class Verse
     public string Text { get; init; }
     public string TextWithBismillah { get; init; }
 
-    public IReadOnlyList<IReadOnlyList<LetterMatchInfo>> WordList { get; init; }
+    public IReadOnlyList<IReadOnlyList<LetterInfo>> WordList { get; init; }
 }

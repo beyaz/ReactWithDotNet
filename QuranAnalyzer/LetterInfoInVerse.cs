@@ -1,7 +1,7 @@
 ﻿namespace QuranAnalyzer;
 
 [Serializable]
-public class MatchInfo
+public class LetterInfoInVerse
 {
     #region Public Properties
     public int ArabicLetterIndex { get; init; }

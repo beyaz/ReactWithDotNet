@@ -2,7 +2,7 @@
 
 static class WordSearcher
 {
-    public static IReadOnlyList<int> Contains(IReadOnlyList<LetterMatchInfo> sourceWord, IReadOnlyList<LetterMatchInfo> searchWord)
+    public static IReadOnlyList<int> Contains(IReadOnlyList<LetterInfo> sourceWord, IReadOnlyList<LetterInfo> searchWord)
     {
         if (sourceWord is null)
         {

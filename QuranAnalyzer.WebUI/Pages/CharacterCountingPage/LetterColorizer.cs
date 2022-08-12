@@ -10,9 +10,9 @@ public class LetterColorizer : ReactComponent
 
     #region Public Properties
     public string LettersForColorize { get; set; }
-    public IReadOnlyList<LetterMatchInfo> LettersForColorizeNodes { get; set; }
+    public IReadOnlyList<LetterInfo> LettersForColorizeNodes { get; set; }
     public string VerseText { get; set; }
-    public IReadOnlyList<LetterMatchInfo> VerseTextNodes { get; set; }
+    public IReadOnlyList<LetterInfo> VerseTextNodes { get; set; }
 
     public string ChapterNumber { get; set; }
     public string VerseNumber { get; set; }

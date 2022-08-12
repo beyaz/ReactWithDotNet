@@ -3,9 +3,9 @@ namespace QuranAnalyzer;
 
 public static class QuranQuery
 {
-    static bool IsValidForWordSearch(LetterMatchInfo matchInfo)
+    static bool IsValidForWordSearch(LetterInfo info)
     {
-        if (matchInfo.ArabicLetterIndex >= 0 && matchInfo.MatchedLetter != Analyzer.HamzaAbove)
+        if (info.ArabicLetterIndex >= 0 && info.MatchedLetter != Analyzer.HamzaAbove)
         {
             return true;
         }
@@ -13,7 +13,7 @@ public static class QuranQuery
         return false;
     }
 
-    public static bool HasValueAndSame(this IReadOnlyList<LetterMatchInfo> a, IReadOnlyList<LetterMatchInfo> b)
+    public static bool HasValueAndSame(this IReadOnlyList<LetterInfo> a, IReadOnlyList<LetterInfo> b)
     {
         if (a == null || b == null)
         {
@@ -41,7 +41,7 @@ public static class QuranQuery
         return true;
     }
 
-    public static bool EndsWith(this IReadOnlyList<LetterMatchInfo> source, IReadOnlyList<LetterMatchInfo> search)
+    public static bool EndsWith(this IReadOnlyList<LetterInfo> source, IReadOnlyList<LetterInfo> search)
     {
         if (source is null)
         {
@@ -74,7 +74,7 @@ public static class QuranQuery
         return true;
     }
 
-    public static int Contains(this IReadOnlyList<LetterMatchInfo> source, IReadOnlyList<LetterMatchInfo> search)
+    public static int Contains(this IReadOnlyList<LetterInfo> source, IReadOnlyList<LetterInfo> search)
     {
         if (source is null)
         {
