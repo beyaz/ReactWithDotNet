@@ -80,8 +80,8 @@ class CountsSummaryView : ReactComponent
             {
                 children =
                 {
-                    new div { text = counts[j].Name ,style = { color           = LetterColorizer.GetColor(j) } },
-                    new div { text = ":", style            = { marginLeftRight = "4px" } },
+                    new div { text = counts[j].Name ,style          = { color           = LetterColor.GetColor(j) } },
+                    new div { text = ":", style                     = { marginLeftRight = "4px" } },
                     new div{text   = counts[j].Count.ToString(), id = "subTotal-"+j}
                 },
                 style = { marginLeft = "10px" }
