@@ -70,8 +70,7 @@ public class LetterColorizer : ReactComponent
             style =
             {
                 padding        = "5px",
-                justifyContent = "space-between",
-                fontSize       = "0.9rem",
+                justifyContent = "center",
                 flexWrap       = "wrap"
             },
         };
@@ -82,9 +81,12 @@ public class LetterColorizer : ReactComponent
             {
                 children =
                 {
-                    new div { text = lettersForColorize[j].MatchedLetter, style = { color           = GetColor(j) } },
-                    new div { text = ":", style                                 = { marginLeftRight = "4px" } },
-                    new div { text = counts[j].ToString() },
+                    new div { text = lettersForColorize[j].MatchedLetter, style = { color = GetColor(j), fontWeight = "bold"} },
+                    
+                    new div { text = ":", style = { marginLeftRight = "4px" } },
+                    
+                    new div { text = counts[j].ToString(), style = { fontSize = "0.78rem" }},
+                    
                     GetExtra(lettersForColorize[j].ArabicLetterIndex)
                 },
                 style = { marginLeft = "10px" }
@@ -106,27 +108,30 @@ public class LetterColorizer : ReactComponent
             }
         };
 
-        var verseId = new legend
+        var verseId = new div
+        {
+            text = $"{ChapterNumber}:{VerseNumber}",
+            style =
+            {
+                fontSize   = "0.8rem",
+                fontWeight = "bold",
+                marginLeft = "2px"
+            }
+        };
+        
+        var topLegend = new legend
         {
             style = { display = "flex", flexDirection = "row", alignItems = "center" },
             children =
             {
-                new div
-                {
-                    text = $"{ChapterNumber}:{VerseNumber}",
-                    style =
-                    {
-                        fontSize   = "0.8rem",
-                        marginLeft = "1px"
-                    }
-                },
+                verseId,
                 countsView
             }
         };
 
         return new fieldset
         {
-            children = { verseId, new VSpace(5), textView },
+            children = { topLegend, new VSpace(5), textView },
             style =
             {
                 marginTop    = "5px",
@@ -156,16 +161,16 @@ public class LetterColorizer : ReactComponent
             MushafOption.UseElifReferencesFromTanzil == false &&
             SpecifiedByRK.RealElifCounts.ContainsKey(Verse.Id))
         {
-            var r = SpecifiedByRK.RealElifCounts[Verse.Id];
+            var alifCount = SpecifiedByRK.RealElifCounts[Verse.Id];
 
-            var tanzil = SpecifiedByRK.TanzilElifCounts[Verse.Id];
+            var alifCountAccordingToTanzil = SpecifiedByRK.TanzilElifCounts[Verse.Id];
 
-            if (tanzil > r)
+            if (alifCountAccordingToTanzil > alifCount)
             {
-                return new div { text = "+" + (tanzil - r) };
+                return new div { text = "+" + (alifCountAccordingToTanzil - alifCount) };
             }
 
-            return new div { text = "-" + (r - tanzil) };
+            return new div { text = "-" + (alifCount - alifCountAccordingToTanzil) };
         }
 
         return null;
