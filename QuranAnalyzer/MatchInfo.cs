@@ -5,9 +5,7 @@ public class MatchInfo
 {
     #region Public Properties
     public int ArabicLetterIndex { get; init; }
-
-    public bool HasNoMatch => ArabicLetterIndex == -1;
-
+    
     public string MatchedLetter { get; init; }
 
     public int StartIndexInVerseText { get; init; }
