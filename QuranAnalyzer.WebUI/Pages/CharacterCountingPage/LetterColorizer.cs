@@ -8,12 +8,13 @@ public class LetterColorizer : ReactComponent
     public string ChapterNumber { get; set; }
     public string LettersForColorize { get; set; }
     public IReadOnlyList<LetterInfo> LettersForColorizeNodes { get; set; }
-    public MushafOption option { get; set; }
+    public MushafOption MushafOption { get; set; }
 
     public Verse Verse { get; set; }
     public string VerseNumber { get; set; }
     public string VerseText { get; set; }
     public IReadOnlyList<LetterInfo> VerseTextNodes { get; set; }
+    
     public override Element render()
     {
         var verseText = VerseTextNodes ??= Analyzer.AnalyzeText(VerseText).Where(Analyzer.IsArabicLetter).ToList();
@@ -159,13 +160,13 @@ public class LetterColorizer : ReactComponent
             return null;
         }
 
-        if (option == null)
+        if (MushafOption == null)
         {
             return null;
         }
 
         if (arabicLetterIndex == ArabicLetterIndex.Alif &&
-            option.UseElifReferencesFromTanzil == false &&
+            MushafOption.UseElifReferencesFromTanzil == false &&
             SpecifiedByRK.RealElifCounts.ContainsKey(Verse.Id))
         {
             var r = SpecifiedByRK.RealElifCounts[Verse.Id];
