@@ -27,19 +27,19 @@ public class LetterColorizer : ReactComponent
 
         var html = new StringBuilder();
 
-        for (var i = 0; i < verseText.Count; i++)
+        foreach (var letterInfo in verseText)
         {
             for (var j = 0; j < lettersForColorize.Count; j++)
             {
-                if (verseText[i].ArabicLetterIndex == lettersForColorize[j].ArabicLetterIndex)
+                if (letterInfo.ArabicLetterIndex == lettersForColorize[j].ArabicLetterIndex)
                 {
-                    var len = verseText[i].MatchedLetter.Length;
+                    var len = letterInfo.MatchedLetter.Length;
 
-                    html.Append(VerseText.Substring(cursor, verseText[i].StartIndex - cursor));
+                    html.Append(VerseText.Substring(cursor, letterInfo.StartIndex - cursor));
 
                     var span = new span
                     {
-                        innerText = verseText[i].MatchedLetter,
+                        innerText = letterInfo.MatchedLetter,
                         style =
                         {
                             color        = GetColor(j),
@@ -51,7 +51,7 @@ public class LetterColorizer : ReactComponent
 
                     html.Append(span);
 
-                    cursor = verseText[i].StartIndex + len;
+                    cursor = letterInfo.StartIndex + len;
 
                     counts[j]++;
 
