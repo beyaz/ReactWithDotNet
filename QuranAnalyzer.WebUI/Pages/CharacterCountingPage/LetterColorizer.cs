@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using static QuranAnalyzer.ArabicLetterIndex;
 using static QuranAnalyzer.LetterColor;
+using static QuranAnalyzer.QuranAnalyzerMixin;
 
 namespace QuranAnalyzer;
 
@@ -157,20 +159,23 @@ public class LetterColorizer : ReactComponent
             return null;
         }
 
-        if (arabicLetterIndex == ArabicLetterIndex.Alif &&
-            MushafOption.UseElifReferencesFromTanzil == false &&
-            SpecifiedByRK.RealElifCounts.ContainsKey(Verse.Id))
+        if (arabicLetterIndex == Alif)
         {
-            var alifCount = SpecifiedByRK.RealElifCounts[Verse.Id];
-
-            var alifCountAccordingToTanzil = SpecifiedByRK.TanzilElifCounts[Verse.Id];
-
-            if (alifCountAccordingToTanzil > alifCount)
+            if (MushafOption.UseElifReferencesFromTanzil == false)
             {
-                return new div { text = "+" + (alifCountAccordingToTanzil - alifCount) };
-            }
+                if (MushafTotalCountPerVerseDifference[Alif].TryGetValue(GetDifferencesKeyForRK(Verse.Id), out var alifCount))
+                {
+                    if (MushafTotalCountPerVerseDifference[Alif].TryGetValue(GetDifferencesKeyForTanzil(Verse.Id), out var alifCountAccordingToTanzil))
+                    {
+                        if (alifCount > alifCountAccordingToTanzil)
+                        {
+                            return new div { text = "+" + (alifCount - alifCountAccordingToTanzil) };
+                        }
 
-            return new div { text = "-" + (alifCount - alifCountAccordingToTanzil) };
+                        return new div { text = "-" + (alifCountAccordingToTanzil - alifCount) };
+                    }
+                }
+            }
         }
 
         return null;

@@ -154,8 +154,8 @@ public class CharacterCountingTests
     [TestMethod]
     public void Chapter_7()
     {
-        CountShouldBe("7:*", Saad, 98);
-        CountShouldBe("7:*", Saad, new MushafOption { Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = true }, 97);
+        CountShouldBe("7:*", Saad, 97);
+        CountShouldBe("7:*", Saad, new MushafOption { Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = true }, 98);
 
         CountShouldBe("7:*", Miim, 1164);
         CountShouldBe("7:*", Laam, 1530);
@@ -164,11 +164,11 @@ public class CharacterCountingTests
     }
 
     [TestMethod]
-    public void Sad_in_38_and_19_and_98()
+    public void Sad_in_38_and_19_and_7()
     {
         CountShouldBe("38:*", Saad, 29);
         CountShouldBe("19:*", Saad, 26);
-        CountShouldBe("7:* ", Saad, 98);
+        CountShouldBe("7:* ", Saad, 97);
     }
 
     [TestMethod]
