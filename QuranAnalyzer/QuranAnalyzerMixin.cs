@@ -7,7 +7,7 @@ public static class QuranAnalyzerMixin
     {
         option ??= new MushafOption();
 
-        return verseList.Sum(x => GetCountOfLetterInVerse(x, arabicLetterIndex, option));
+        return verseList.Select(x => GetCountOfLetterInVerse(x, arabicLetterIndex, option)).Sum();
     }
 
     public static int GetCountOfLetterInVerse(Verse verse, int arabicLetterIndex, MushafOption option)
