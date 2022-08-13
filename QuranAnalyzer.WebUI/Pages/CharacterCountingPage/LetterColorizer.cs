@@ -163,16 +163,54 @@ public class LetterColorizer : ReactComponent
         {
             if (MushafOption.UseElifReferencesFromTanzil == false)
             {
-                if (MushafTotalCountPerVerseDifference[Alif].TryGetValue(GetDifferencesKeyForRK(Verse.Id), out var alifCount))
+                if (MushafTotalCountPerVerseDifference[Alif].TryGetValue(GetDifferencesKeyForRK(Verse.Id), out var count))
                 {
-                    if (MushafTotalCountPerVerseDifference[Alif].TryGetValue(GetDifferencesKeyForTanzil(Verse.Id), out var alifCountAccordingToTanzil))
+                    if (MushafTotalCountPerVerseDifference[Alif].TryGetValue(GetDifferencesKeyForTanzil(Verse.Id), out var countAccordingToTanzil))
                     {
-                        if (alifCount > alifCountAccordingToTanzil)
+                        if (count > countAccordingToTanzil)
                         {
-                            return new div { text = "+" + (alifCount - alifCountAccordingToTanzil) };
+                            return new div { text = "+" + (count - countAccordingToTanzil) };
                         }
 
-                        return new div { text = "-" + (alifCountAccordingToTanzil - alifCount) };
+                        return new div { text = "-" + (countAccordingToTanzil - count) };
+                    }
+                }
+            }
+        }
+
+        if (arabicLetterIndex == Laam)
+        {
+            if (MushafOption.Use_Laam_SpecifiedByTanzil == false)
+            {
+                if (MushafTotalCountPerVerseDifference[Laam].TryGetValue(GetDifferencesKeyForRK(Verse.Id), out var count))
+                {
+                    if (MushafTotalCountPerVerseDifference[Laam].TryGetValue(GetDifferencesKeyForTanzil(Verse.Id), out var countAccordingToTanzil))
+                    {
+                        if (count > countAccordingToTanzil)
+                        {
+                            return new div { text = "+" + (count - countAccordingToTanzil) };
+                        }
+
+                        return new div { text = "-" + (countAccordingToTanzil - count) };
+                    }
+                }
+            }
+        }
+
+        if (arabicLetterIndex == Saad)
+        {
+            if (MushafOption.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten == false)
+            {
+                if (MushafTotalCountPerVerseDifference[Saad].TryGetValue(GetDifferencesKeyForRK(Verse.Id), out var count))
+                {
+                    if (MushafTotalCountPerVerseDifference[Saad].TryGetValue(GetDifferencesKeyForTanzil(Verse.Id), out var countAccordingToTanzil))
+                    {
+                        if (count > countAccordingToTanzil)
+                        {
+                            return new div { text = "+" + (count - countAccordingToTanzil) };
+                        }
+
+                        return new div { text = "-" + (countAccordingToTanzil - count) };
                     }
                 }
             }

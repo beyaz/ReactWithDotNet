@@ -1,12 +1,12 @@
-﻿namespace QuranAnalyzer;
+﻿using static QuranAnalyzer.ArabicLetterIndex;
+
+namespace QuranAnalyzer;
 
 public enum MushafId
 {
     Tanzil = 1,
     RK = 2
 }
-
-
 
 public static class QuranAnalyzerMixin
 {
@@ -23,7 +23,7 @@ public static class QuranAnalyzerMixin
     public static readonly IReadOnlyDictionary<int, Dictionary<string, int>> MushafTotalCountPerVerseDifference = new Dictionary<int, Dictionary<string, int>>
     {
         {
-            ArabicLetterIndex.Saad, new()
+            Saad, new()
             {
                 { GetDifferencesKeyForTanzil("7:69"), 1 }, // bestaten: *بَسْطَةً*
                 { GetDifferencesKeyForRK("7:69"), 0 } // bestaten: *بَصْۜطَةً*
@@ -31,7 +31,7 @@ public static class QuranAnalyzerMixin
         },
 
         {
-            ArabicLetterIndex.Laam, new()
+            Laam, new()
             {
                 { GetDifferencesKeyForTanzil("11:70"), 9 },
                 { GetDifferencesKeyForRK("11:70"), 8 }
@@ -39,7 +39,7 @@ public static class QuranAnalyzerMixin
         },
 
         {
-            ArabicLetterIndex.Alif, new()
+            Alif, new()
             {
                 // Chapter 2
                 { GetDifferencesKeyForTanzil("2:31"), 17 },
@@ -122,8 +122,6 @@ public static class QuranAnalyzerMixin
                 { GetDifferencesKeyForTanzil("15:68"), 5 },
                 { GetDifferencesKeyForTanzil("15:19"), 10 },
 
-
-
                 // ------------------ RK --------------------
 
                 // Chapter 2
@@ -177,7 +175,6 @@ public static class QuranAnalyzerMixin
                 { GetDifferencesKeyForRK("11:29"), 21 },
                 { GetDifferencesKeyForRK("11:9"), 7 },
 
-
                 // Chapter 12 
                 { GetDifferencesKeyForRK("12:109"), 24 },
                 { GetDifferencesKeyForRK("12:105"), 7 },
@@ -212,9 +209,6 @@ public static class QuranAnalyzerMixin
         }
     };
 
-
-
-
     #region Public Methods
     public static int GetCountOfLetter(IReadOnlyList<Verse> verseList, int arabicLetterIndex, MushafOption option = null)
     {
@@ -235,37 +229,33 @@ public static class QuranAnalyzerMixin
             throw new ArgumentNullException(nameof(option));
         }
 
-        if (arabicLetterIndex == ArabicLetterIndex.Alif)
+        if (arabicLetterIndex == Alif)
         {
             if (option.UseElifReferencesFromTanzil == false)
             {
-                if (MushafTotalCountPerVerseDifference[ArabicLetterIndex.Alif].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
+                if (MushafTotalCountPerVerseDifference[Alif].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
                 {
                     return totalCount;
                 }
             }
         }
 
-        if (arabicLetterIndex == ArabicLetterIndex.Saad)
+        if (arabicLetterIndex == Saad)
         {
             if (option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten == false)
             {
-                if (verse.Id == "7:69")
+                if (MushafTotalCountPerVerseDifference[Saad].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
                 {
-                    if (MushafTotalCountPerVerseDifference[ArabicLetterIndex.Saad].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
-                    {
-                        return totalCount;
-                    }
+                    return totalCount;
                 }
-               
             }
         }
 
-        if (arabicLetterIndex == ArabicLetterIndex.Laam)
+        if (arabicLetterIndex == Laam)
         {
-            if (option.Use_Lam_SpecifiedByRK)
+            if (option.Use_Laam_SpecifiedByTanzil == false)
             {
-                if (MushafTotalCountPerVerseDifference[ArabicLetterIndex.Laam].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
+                if (MushafTotalCountPerVerseDifference[Laam].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
                 {
                     return totalCount;
                 }

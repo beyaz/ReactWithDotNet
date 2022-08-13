@@ -34,6 +34,10 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 {
                     state.ChapterFilter = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(0);
                     state.SearchLetters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(1);
+                    if (state.SearchLetters is not null)
+                    {
+                        state.SearchLetters = string.Join(" ", AnalyzeText(state.SearchLetters).Where(IsArabicLetter));
+                    }
                 }
             }
         };
@@ -185,7 +189,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            Context.ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={state.ChapterFilter}|{state.SearchLetters}");
+            Context.ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={state.ChapterFilter}|{state.SearchLetters?.Replace(" ",string.Empty)}");
             Context.ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
             return;
         }

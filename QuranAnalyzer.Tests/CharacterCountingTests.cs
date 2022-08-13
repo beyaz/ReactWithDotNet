@@ -35,8 +35,8 @@ public class CharacterCountingTests
     public void Chapter_11()
     {
         CountShouldBe("11:*", Raa, 325);
-        CountShouldBe("11:*", Laam, 795);
-        CountShouldBe("11:*", Laam, new MushafOption { Use_Lam_SpecifiedByRK = true }, 794);
+        CountShouldBe("11:*", Laam, new MushafOption { Use_Laam_SpecifiedByTanzil = true }, 795);
+        CountShouldBe("11:*", Laam,  794);
         CountShouldBe("11:*", Alif, AlifAccordingToTanzil, 1373);
         CountShouldBe("11:*", Alif,  1370);
     }
