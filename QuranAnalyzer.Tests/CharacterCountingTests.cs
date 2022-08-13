@@ -198,12 +198,12 @@ public class CharacterCountingTests
     
     static void CountShouldBe(string searchScript, int arabicLetterIndex, int expectedCount)
     {
-        GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, arabicLetterIndex)).ShouldBe(expectedCount);
+        GetVerseList(searchScript).Then(verses => GetCountOfLetter(verses, arabicLetterIndex)).ShouldBe(expectedCount);
     }
 
     static void CountShouldBe(string searchScript, int arabicLetterIndex, MushafOption option, int expectedCount)
     {
-        GetVerseList(searchScript).Then(verses => GetCountOfCharacter(verses, arabicLetterIndex, option)).ShouldBe(expectedCount);
+        GetVerseList(searchScript).Then(verses => GetCountOfLetter(verses, arabicLetterIndex, option)).ShouldBe(expectedCount);
     }
     
     #endregion

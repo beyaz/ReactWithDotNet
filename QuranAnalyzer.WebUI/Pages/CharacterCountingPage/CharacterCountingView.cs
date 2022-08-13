@@ -125,7 +125,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var summaryInfoList = searchLetters.AsListOf(x => new SummaryInfo
         {
-            Count = VerseFilter.GetVerseList(state.ChapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfCharacter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
+            Count = VerseFilter.GetVerseList(state.ChapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
             Name  = x.MatchedLetter
         });
 
