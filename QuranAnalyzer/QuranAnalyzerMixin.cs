@@ -3,7 +3,7 @@
 public static class QuranAnalyzerMixin
 {
     #region Public Methods
-    public static Response<int> GetCountOfLetter(IReadOnlyList<Verse> verseList, int arabicLetterIndex, MushafOption option = null)
+    public static int GetCountOfLetter(IReadOnlyList<Verse> verseList, int arabicLetterIndex, MushafOption option = null)
     {
         option ??= new MushafOption();
 
