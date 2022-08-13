@@ -179,16 +179,3 @@ public static class Analyzer
         return AnalyzeText(value).Where(x => x.ArabicLetterIndex >= 0).Select(x => ArabicLetter.AllArabicLetters[x.ArabicLetterIndex]).ToList();
     }
 }
-
-public sealed class LetterInfo
-{
-    public int ArabicLetterIndex { get; init; }
-    public string MatchedLetter { get; init; }
-    public int StartIndex { get; init; }
-    
-
-    public override string ToString()
-    {
-        return MatchedLetter;
-    }
-}
