@@ -205,6 +205,24 @@ public static class QuranAnalyzerMixin
                 // Chapter 15
                 { GetDifferencesKeyForRK("15:68"), 6 },
                 { GetDifferencesKeyForRK("15:19"), 9 },
+                
+                
+                
+                
+                
+                // Chapter 29
+                { GetDifferencesKeyForTanzil("29:10"), 24 },
+                { GetDifferencesKeyForTanzil("29:20"), 16 },
+                { GetDifferencesKeyForTanzil("29:23"), 11 },
+                { GetDifferencesKeyForTanzil("29:61"), 8 },
+                { GetDifferencesKeyForTanzil("29:63"), 15 },
+                
+                { GetDifferencesKeyForRK("29:10"), 25 },
+                { GetDifferencesKeyForRK("29:20"), 15 },
+                { GetDifferencesKeyForRK("29:23"), 12 },
+                { GetDifferencesKeyForRK("29:61"), 9 },
+                { GetDifferencesKeyForRK("29:63"), 16 },
+
             }
         }
     };

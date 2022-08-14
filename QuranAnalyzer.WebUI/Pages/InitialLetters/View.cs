@@ -585,7 +585,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "Ha-Mim", MultipleOf = 113, SearchScript = GetLetterCountingScript("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Haa_, Miim) } }
+                    new td { new CountingResult { id = "Ha-Mim", MultipleOf = 113, SearchScript = GetLetterCountingScript("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Haa, Miim) } }
                 },
 
                 new tr
