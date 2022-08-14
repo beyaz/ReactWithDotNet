@@ -548,7 +548,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "42-Ain-Sin-Kaf", MultipleOf = 11, SearchScript = GetLetterCountingScript("42:*", Ain, Siin, Kaaf) } }
+                    new td { new CountingResult { id = "42-Ain-Sin-Kaf", MultipleOf = 11, SearchScript = GetLetterCountingScript("42:*", Ayn, Siin, Qaaf) } }
                 },
 
                 new tr
@@ -568,7 +568,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = $"42-{Kaf}-counts", MultipleOf = 3, SearchScript = GetLetterCountingScript("42:*", Kaaf) } }
+                    new td { new CountingResult { id = $"42-{Kaf}-counts", MultipleOf = 3, SearchScript = GetLetterCountingScript("42:*", Qaaf) } }
                 },
 
                 new tr

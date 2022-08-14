@@ -33,8 +33,14 @@ public static class QuranAnalyzerMixin
         {
             Laam, new()
             {
+                // Chapter 11
                 { GetDifferencesKeyForTanzil("11:70"), 9 },
-                { GetDifferencesKeyForRK("11:70"), 8 }
+                { GetDifferencesKeyForRK("11:70"), 8 },
+                
+                
+                // Chapter 30
+                { GetDifferencesKeyForTanzil("30:21"), 8 },
+                { GetDifferencesKeyForRK("30:21"), 7 },
             }
         },
 
@@ -222,6 +228,43 @@ public static class QuranAnalyzerMixin
                 { GetDifferencesKeyForRK("29:23"), 12 },
                 { GetDifferencesKeyForRK("29:61"), 9 },
                 { GetDifferencesKeyForRK("29:63"), 16 },
+                
+                
+                // Chapter 30
+                { GetDifferencesKeyForTanzil("30:53"), 9 },
+                { GetDifferencesKeyForTanzil("30:58"), 14 },
+
+                { GetDifferencesKeyForRK("30:53"), 10 },
+                { GetDifferencesKeyForRK("30:58"), 15 },
+                
+                
+                // Chapter 31
+                { GetDifferencesKeyForTanzil("31:12"), 10 },
+                { GetDifferencesKeyForTanzil("31:21"), 22 },
+                { GetDifferencesKeyForTanzil("31:31"), 11 },
+                { GetDifferencesKeyForTanzil("31:32"), 16 },
+                { GetDifferencesKeyForTanzil("31:33"), 25 },
+
+                { GetDifferencesKeyForRK("31:12"), 9 },
+                { GetDifferencesKeyForRK("31:21"), 21 },
+                { GetDifferencesKeyForRK("31:31"), 9 },
+                { GetDifferencesKeyForRK("31:32"), 15 },
+                { GetDifferencesKeyForRK("31:33"), 24 },
+                
+                // Chapter 32
+                { GetDifferencesKeyForTanzil("32:7"), 6 },
+                { GetDifferencesKeyForTanzil("32:9"), 8 },
+                { GetDifferencesKeyForTanzil("32:10"), 13 },
+                { GetDifferencesKeyForTanzil("32:13"), 12 },
+                { GetDifferencesKeyForTanzil("32:15"), 14 },
+                { GetDifferencesKeyForTanzil("32:22"), 8 },
+
+                { GetDifferencesKeyForRK("32:7"), 5 },
+                { GetDifferencesKeyForRK("32:9"), 7 },
+                { GetDifferencesKeyForRK("32:10"), 11 },
+                { GetDifferencesKeyForRK("32:13"), 11 },
+                { GetDifferencesKeyForRK("32:15"), 13 },
+                { GetDifferencesKeyForRK("32:22"), 7 },
 
             }
         }
