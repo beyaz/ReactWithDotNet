@@ -373,7 +373,15 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "TaSinMim", MultipleOf = 93, SearchScript = GetLetterCountingScript("19:*,20:*,26:*,27:*,28:*", Taa_, Haa_, Siin, Miim) } }
+                    new td { new CountingResult { 
+                        id = "TaSinMim", MultipleOf = 93, 
+                        
+                        SearchScript = GetLetterCountingScript("19:*",  Haa_) + ";" +
+                                       GetLetterCountingScript("20:*", Taa_, Haa_) + ";" +
+                                       GetLetterCountingScript("26:*", Taa_, Siin, Miim) + ";" +
+                                       GetLetterCountingScript("27:*", Taa_, Siin) + ";"+
+                                       GetLetterCountingScript("28:*", Taa_, Siin, Miim)
+                    } }
                 },
 
                 new tr

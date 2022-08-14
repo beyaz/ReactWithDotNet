@@ -1,4 +1,5 @@
-﻿using QuranAnalyzer.WebUI.Components;
+﻿using System.Text;
+using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.PrimeReact;
 using static QuranAnalyzer.Analyzer;
 
@@ -16,6 +17,42 @@ public class CharacterCountingViewModel
     public int ClickCount { get; set; }
 
     public bool IsBlocked { get; set; }
+
+    public string SearchScript { get; set; }
+}
+
+class SearchScript
+{
+    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<string> SearchLetters)> Lines { get; private set; }
+
+    public static SearchScript ParseScript(string value)
+    {
+
+        var lines = value.Split(';', StringSplitOptions.RemoveEmptyEntries)
+                         .AsListOf(line => (line.Split('|', StringSplitOptions.RemoveEmptyEntries).TryGet(0),
+                                         AnalyzeText(line.Split('|', StringSplitOptions.RemoveEmptyEntries).TryGet(1))
+                                            .Where(IsArabicLetter)
+                                            .AsListOf(x => x.MatchedLetter)));
+
+        return new SearchScript
+        {
+            Lines = lines
+        };
+
+
+    }
+
+    public string AsReadibleString()
+    {
+        var sb = new StringBuilder();
+
+        foreach (var line in Lines)
+        {
+            sb.AppendLine(line.ChapterFilter + " | " + string.Join(" ", line.SearchLetters));
+        }
+
+        return sb.ToString();
+    }
 }
 
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
@@ -36,8 +73,10 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     state.SearchLetters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(1);
                     if (state.SearchLetters is not null)
                     {
-                        state.SearchLetters = string.Join(" ", AnalyzeText(state.SearchLetters).Where(IsArabicLetter));
+                        // state.SearchLetters = string.Join(" ", AnalyzeText(state.SearchLetters).Where(IsArabicLetter));
                     }
+
+                    state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
                 }
             }
         };
@@ -64,9 +103,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
             children =
             {
-                new h4 { text = "Harf Arama" },
+                new h4 { text = "Harf Arama" , style = { textAlign = "center"}},
                 new VStack
                 {
+                    new VStack
+                    {
+                        new div { text = "Sorgulama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                        new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true}
+                    },
                     new VStack
                     {
                         new div { text            = "Sure:", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },

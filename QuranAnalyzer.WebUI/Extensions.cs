@@ -30,6 +30,11 @@ static class Extensions
         return (arr.TryGet(0), arr.TryGet(1));
     }
 
+    public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> items)
+    {
+        return items.ToList().AsReadOnly();
+    }
+
     public static string GetLetterCountingScript(string chapterFilter, params string[] arabicLetters)
     {
         return chapterFilter + "|" + string.Join(string.Empty, arabicLetters);
