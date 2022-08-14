@@ -331,8 +331,8 @@ public class View : ReactComponent
                             Items =
                             {
                                 new InitialLetter { id = $"19-{Kaf}", innerText = Kaf },
-                                new InitialLetter { id = $"19-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"19-{Yaa}", innerText  = Yaa },
+                                new InitialLetter { id = $"19-{Ha}", innerText  = Haa_ },
+                                new InitialLetter { id = $"19-{Yaa}", innerText = Yaa },
                                 new InitialLetter { id = $"19-{Ain}", innerText = Ain },
                                 new InitialLetter { id = $"19-{Sad}", innerText = Sad }
 
@@ -373,7 +373,7 @@ public class View : ReactComponent
                             }
                         }
                     },
-                    new td { new CountingResult { id = "TaSinMim", MultipleOf = 93, SearchScript = GetLetterCountingScript("19:*,20:*,26:*,27:*,28:*", Taa, Haa, Siin, Miim) } }
+                    new td { new CountingResult { id = "TaSinMim", MultipleOf = 93, SearchScript = GetLetterCountingScript("19:*,20:*,26:*,27:*,28:*", Taa_, Haa_, Siin, Miim) } }
                 },
 
                 new tr
