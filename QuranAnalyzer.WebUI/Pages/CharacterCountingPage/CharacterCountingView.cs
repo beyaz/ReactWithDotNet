@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.PrimeReact;
 using static QuranAnalyzer.Analyzer;
@@ -8,10 +9,6 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 [Serializable]
 public class CharacterCountingViewModel
 {
-    public string ChapterFilter { get; set; }
-
-    public string SearchLetters { get; set; }
-
     public MushafOption MushafOption { get; set; } = new();
 
     public int ClickCount { get; set; }
@@ -27,18 +24,29 @@ class SearchScript
 
     public static SearchScript ParseScript(string value)
     {
-
-        var lines = value.Split(';', StringSplitOptions.RemoveEmptyEntries)
-                         .AsListOf(line => (line.Split('|', StringSplitOptions.RemoveEmptyEntries).TryGet(0),
-                                         AnalyzeText(line.Split('|', StringSplitOptions.RemoveEmptyEntries).TryGet(1))
-                                            .Where(IsArabicLetter)
-                                            .AsListOf(x => x.MatchedLetter)));
+        var lines = parseToLines(value).AsListOf(parseLine);
 
         return new SearchScript
         {
             Lines = lines
         };
 
+
+        static IEnumerable<string> parseToLines(string value)
+        {
+            value = value.Replace(Environment.NewLine, ";");
+            
+            return value.Split(';', StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        static (string ChapterFilter, IReadOnlyList<string> SearchLetters) parseLine(string line)
+        {
+            var arr = line.Split('|', StringSplitOptions.RemoveEmptyEntries);
+
+            return (arr[0].Trim(), AnalyzeText(clearText(arr[1])).Where(IsArabicLetter).AsListOf(x => x.MatchedLetter));
+        }
+
+        static string clearText(string str) => Regex.Replace(str, @"\s+", String.Empty);
 
     }
 
@@ -53,6 +61,11 @@ class SearchScript
 
         return sb.ToString();
     }
+
+    public string AsString()
+    {
+        return string.Join(";", Lines.Select(line => line.ChapterFilter + "|" + string.Join("", line.SearchLetters)));
+    }
 }
 
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
@@ -64,18 +77,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         StateInitialized += () =>
         {
-            if (state.ChapterFilter == null)
+            if (state.SearchScript == null)
             {
                 var value = Context.Query[QueryKey.SearchQuery];
                 if (value is not null)
                 {
-                    state.ChapterFilter = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(0);
-                    state.SearchLetters = value.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).TryGet(1);
-                    if (state.SearchLetters is not null)
-                    {
-                        // state.SearchLetters = string.Join(" ", AnalyzeText(state.SearchLetters).Where(IsArabicLetter));
-                    }
-
                     state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
                 }
             }
@@ -91,7 +97,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     public void ArabicKeyboardPressed(string letter)
     {
         state.ClickCount    =  0;
-        state.SearchLetters += " " + letter;
+        state.SearchScript += " " + letter;
     }
 
     #region Public Methods
@@ -108,22 +114,10 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 {
                     new VStack
                     {
-                        new div { text = "Sorgulama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                        new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
                         new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true}
                     },
-                    new VStack
-                    {
-                        new div { text            = "Sure:", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
-                        new InputText { valueBind = () => state.ChapterFilter }
-                    },
-
-                    new VSpace(15),
-
-                    new VStack
-                    {
-                        new div { text            = "Aranacak Karakterlerler", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
-                        new InputText { valueBind = () => state.SearchLetters, style = { direction  = "ltr" } },
-                    },
+                   
                     new VSpace(3),
                     new Panel
                     {
@@ -169,34 +163,46 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return new CalculatingComponent { searchPanel };
         }
 
-        var searchLetters = AnalyzeText(state.SearchLetters).Where(IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
+        var mushafVerse           = new List<LetterColorizer>();
 
-        var summaryInfoList = searchLetters.AsListOf(x => new SummaryInfo
+        var summaryInfoList = new List<SummaryInfo>();
+
+        foreach (var (ChapterFilter, SearchLetters) in SearchScript.ParseScript(state.SearchScript).Lines)
         {
-            Count = VerseFilter.GetVerseList(state.ChapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
-            Name  = x.MatchedLetter
-        });
+            var chapterFilter         = ChapterFilter;
+            var searchLettersAsString = string.Join("", SearchLetters);
 
-        var mushafVerse = new List<LetterColorizer>();
+            var searchLetters = AnalyzeText(searchLettersAsString).Where(IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
 
-        foreach (var verse in VerseFilter.GetVerseList(state.ChapterFilter).Value)
-        {
-            if (verse.AnalyzedFullText.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
+            summaryInfoList.AddRange(searchLetters.AsListOf(x => new SummaryInfo
             {
-                var letterColorizer = new LetterColorizer
-                {
-                    VerseTextNodes          = verse.AnalyzedFullText,
-                    ChapterNumber           = verse.ChapterNumber.ToString(),
-                    VerseNumber             = verse.Index,
-                    LettersForColorizeNodes = searchLetters,
-                    VerseText               = verse.TextWithBismillah,
-                    Verse                   = verse,
-                    MushafOption            = state.MushafOption
-                };
+                Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
+                Name  = x.MatchedLetter
+            }));
 
-                mushafVerse.Add(letterColorizer);
+
+
+            foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
+            {
+                if (verse.AnalyzedFullText.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
+                {
+                    var letterColorizer = new LetterColorizer
+                    {
+                        VerseTextNodes          = verse.AnalyzedFullText,
+                        ChapterNumber           = verse.ChapterNumber.ToString(),
+                        VerseNumber             = verse.Index,
+                        LettersForColorizeNodes = searchLetters,
+                        VerseText               = verse.TextWithBismillah,
+                        Verse                   = verse,
+                        MushafOption            = state.MushafOption
+                    };
+
+                    mushafVerse.Add(letterColorizer);
+                }
             }
         }
+
+        
 
         var results = new divWithBorder
         {
@@ -233,7 +239,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            Context.ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={state.ChapterFilter}|{state.SearchLetters?.Replace(" ",string.Empty)}");
+            Context.ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
             Context.ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
             return;
         }
