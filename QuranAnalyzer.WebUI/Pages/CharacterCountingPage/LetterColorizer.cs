@@ -216,6 +216,45 @@ public class LetterColorizer : ReactComponent
             }
         }
 
+
+        if (arabicLetterIndex == Nun)
+        {
+            if (MushafOption.Chapter_68_Should_Single_Nun == false)
+            {
+                if (MushafTotalCountPerVerseDifference[Nun].TryGetValue(GetDifferencesKeyForRK(Verse.Id), out var count))
+                {
+                    if (MushafTotalCountPerVerseDifference[Nun].TryGetValue(GetDifferencesKeyForTanzil(Verse.Id), out var countAccordingToTanzil))
+                    {
+                        if (count > countAccordingToTanzil)
+                        {
+                            return new div { text = "+" + (count - countAccordingToTanzil) };
+                        }
+
+                        return new div { text = "-" + (countAccordingToTanzil - count) };
+                    }
+                }
+            }
+        }
+
+        if (arabicLetterIndex == Waaw)
+        {
+            if (MushafOption.Chapter_68_Should_Single_Nun == false)
+            {
+                if (MushafTotalCountPerVerseDifference[Waaw].TryGetValue(GetDifferencesKeyForRK(Verse.Id), out var count))
+                {
+                    if (MushafTotalCountPerVerseDifference[Waaw].TryGetValue(GetDifferencesKeyForTanzil(Verse.Id), out var countAccordingToTanzil))
+                    {
+                        if (count > countAccordingToTanzil)
+                        {
+                            return new div { text = "+" + (count - countAccordingToTanzil) };
+                        }
+
+                        return new div { text = "-" + (countAccordingToTanzil - count) };
+                    }
+                }
+            }
+        }
+
         return null;
     }
 }

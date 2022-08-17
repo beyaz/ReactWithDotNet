@@ -23,6 +23,24 @@ public static class QuranAnalyzerMixin
     public static readonly IReadOnlyDictionary<int, Dictionary<string, int>> MushafTotalCountPerVerseDifference = new Dictionary<int, Dictionary<string, int>>
     {
         {
+            Nun, new()
+            {
+                // Chapter 68
+                { GetDifferencesKeyForTanzil("68:1"), 3 },
+                { GetDifferencesKeyForRK("68:1"), 4 }
+            }
+        },
+
+         {
+             Waaw, new()
+             {
+                 // Chapter 68
+                 { GetDifferencesKeyForTanzil("68:1"), 3 },
+                 { GetDifferencesKeyForRK("68:1"), 4 }
+             }
+         },
+
+        {
             Saad, new()
             {
                 { GetDifferencesKeyForTanzil("7:69"), 1 }, // bestaten: *بَسْطَةً*
@@ -317,6 +335,28 @@ public static class QuranAnalyzerMixin
             if (option.Use_Laam_SpecifiedByTanzil == false)
             {
                 if (MushafTotalCountPerVerseDifference[Laam].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
+                {
+                    return totalCount;
+                }
+            }
+        }
+
+        if (arabicLetterIndex == Nun)
+        {
+            if (option.Chapter_68_Should_Single_Nun == false)
+            {
+                if (MushafTotalCountPerVerseDifference[Nun].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
+                {
+                    return totalCount;
+                }
+            }
+        }
+
+        if (arabicLetterIndex == Waaw)
+        {
+            if (option.Chapter_68_Should_Single_Nun == false)
+            {
+                if (MushafTotalCountPerVerseDifference[Waaw].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
                 {
                     return totalCount;
                 }

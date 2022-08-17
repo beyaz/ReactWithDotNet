@@ -136,7 +136,7 @@ public class View : ReactComponent
         const string Ra   = "Rāʾ-" + Raa;
         const string Ta   = "Ṭāʾ-" + Taa_;
         
-        const string Nun  = "Nūn-" + ArabicLetter.Nun;
+        
 
 
         var table = new table

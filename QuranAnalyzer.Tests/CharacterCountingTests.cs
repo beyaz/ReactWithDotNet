@@ -146,6 +146,13 @@ public class CharacterCountingTests
     }
 
     [TestMethod]
+    public void Chapter_68()
+    {
+        CountShouldBe("68:*", Nun, 133);
+        CountShouldBe("68:*", Nun, new MushafOption{Chapter_68_Should_Single_Nun = true} ,132);
+    }
+
+    [TestMethod]
     public void Chapter_50()
     {
         CountShouldBe("50:*", Qaaf, 57);
