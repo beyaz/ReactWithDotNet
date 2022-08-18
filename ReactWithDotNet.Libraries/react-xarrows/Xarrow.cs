@@ -52,7 +52,7 @@
         ///     to the strokeWidth
         /// </summary>
         [React]
-        public int? strokeWidth { get; set; }
+        public double? strokeWidth { get; set; }
 
         [React]
         public int? headSize { get; set; }

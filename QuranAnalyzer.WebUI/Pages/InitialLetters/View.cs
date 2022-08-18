@@ -53,11 +53,13 @@ class CountingResult: ReactComponent
 
     public string SearchScript { get; set; }
 
+    public bool DirectionIsColumn { get; set; }
+
     public override Element render()
     {
         return new div
         {
-            style = { display = "flex", flexDirection = "row", marginLeft = "5px", marginTop = "60px" },
+            style = { display = "flex", flexDirection = DirectionIsColumn ? "column":"row", flexWrap = "wrap", marginLeft = "5px", marginTop = "60px" },
             id    = id,
             children =
             {
@@ -84,7 +86,7 @@ class InitialLetterLineGroup: ReactComponent
         {
             style =
             {
-                display = "flex", margin = "6px"
+                display = "flex", margin = "1px"
             },
             Children = Items
         };
@@ -101,7 +103,7 @@ class Chapter : ReactComponent
     {
         return new div
         {
-            style = { margin = "5px" },
+            style = { margin = "3px" },
             
             children =
             {
@@ -111,9 +113,7 @@ class Chapter : ReactComponent
                     style={fontWeight = "600"},
                     children=
                     {
-                        new div{ innerText = "("},
-                        new div{ innerText = ChapterName, style = { fontStyle = "bold"}},
-                        new div{ innerText = ")"}
+                        new div{ innerText = $"({ChapterName})"}
                     }
                 }
             }
@@ -125,20 +125,6 @@ public class View : ReactComponent
 {
     public override Element render()
     {
-        const string Elif = "Elif-" + Alif;
-        const string Lam  = "Lam-" + Laam;
-        const string Mim  = "Mim-" + Miim;
-        const string Sad  = "Sad-" + Saad;
-        const string Kaf  = "Kāf-"+ Qaaf;
-        const string Ha   = "Hā-" + Haa;
-        
-        const string Ain  = "ʿAin-" + Ayn;
-        const string Ra   = "Rāʾ-" + Raa;
-        const string Ta   = "Ṭāʾ-" + Taa_;
-        
-        
-
-
         var table = new table
         {
             new tbody
@@ -158,9 +144,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"2-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"2-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"2-{Mim}", innerText  = Mim }
+                                new InitialLetter { id = $"2-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"2-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"2-{Miim}", innerText  = Miim }
                             }
                         }
                     },
@@ -178,9 +164,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"3-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"3-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"3-{Mim}", innerText  = Mim }
+                                new InitialLetter { id = $"3-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"3-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"3-{Miim}", innerText  = Miim }
                             }
                         },
                     },
@@ -196,10 +182,10 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"7-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"7-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"7-{Mim}", innerText  = Mim },
-                                new InitialLetter { id = $"7-{Sad}", innerText  = Sad}
+                                new InitialLetter { id = $"7-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"7-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"7-{Miim}", innerText  = Miim },
+                                new InitialLetter { id = $"7-{Saad}", innerText  = Saad}
                             }
                         }
                     },
@@ -216,9 +202,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"10-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"10-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"10-{Ra}", innerText   = Ra }
+                                new InitialLetter { id = $"10-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"10-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"10-{Raa}", innerText   = Raa }
                             }
                         }
                     },
@@ -234,9 +220,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"11-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"11-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"11-{Ra}", innerText   = Ra }
+                                new InitialLetter { id = $"11-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"11-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"11-{Raa}", innerText   = Raa }
                             }
                         }
                     },
@@ -253,9 +239,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"12-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"12-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"12-{Ra}", innerText   = Ra }
+                                new InitialLetter { id = $"12-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"12-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"12-{Raa}", innerText   = Raa }
                             }
                         }
                     },
@@ -272,10 +258,10 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"13-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"13-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"13-{Mim}", innerText  = Mim },
-                                new InitialLetter { id = $"13-{Ra}", innerText   = Ra }
+                                new InitialLetter { id = $"13-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"13-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"13-{Miim}", innerText  = Miim },
+                                new InitialLetter { id = $"13-{Raa}", innerText   = Raa }
                             }
                         }
                     },
@@ -292,9 +278,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"14-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"14-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"14-{Ra}", innerText   = Ra }
+                                new InitialLetter { id = $"14-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"14-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"14-{Raa}", innerText   = Raa }
                             }
                         }
                     },
@@ -311,9 +297,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"15-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"15-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"15-{Ra}", innerText   = Ra }
+                                new InitialLetter { id = $"15-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"15-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"15-{Raa}", innerText   = Raa }
                             }
                         }
                     },
@@ -330,11 +316,11 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"19-{Kaf}", innerText = Kaf },
-                                new InitialLetter { id = $"19-{Ha}", innerText  = Haa_ },
+                                new InitialLetter { id = $"19-{Qaaf}", innerText = Qaaf },
+                                new InitialLetter { id = $"19-{Haa}", innerText  = Haa_ },
                                 new InitialLetter { id = $"19-{Yaa}", innerText = Yaa },
-                                new InitialLetter { id = $"19-{Ain}", innerText = Ain },
-                                new InitialLetter { id = $"19-{Sad}", innerText = Sad }
+                                new InitialLetter { id = $"19-{Ayn}", innerText = Ayn },
+                                new InitialLetter { id = $"19-{Saad}", innerText = Saad }
 
                             }
                         }
@@ -351,8 +337,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"20-{Ta}", innerText = Ta },
-                                new InitialLetter { id = $"20-{Ha}", innerText = Ha }
+                                new InitialLetter { id = $"20-{Taa_}", innerText = Taa_ },
+                                new InitialLetter { id = $"20-{Haa}", innerText = Haa }
                             }
                         }
                     }
@@ -367,9 +353,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"26-{Ta}", innerText  = Ta },
+                                new InitialLetter { id = $"26-{Taa_}", innerText  = Taa_ },
                                 new InitialLetter { id = $"26-{Siin}", innerText = Siin },
-                                new InitialLetter { id = $"26-{Mim}", innerText = Mim }
+                                new InitialLetter { id = $"26-{Miim}", innerText = Miim }
                             }
                         }
                     },
@@ -393,7 +379,7 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"27-{Ta}", innerText  = Ta },
+                                new InitialLetter { id = $"27-{Taa_}", innerText  = Taa_ },
                                 new InitialLetter { id = $"27-{Siin}", innerText = Siin }
                             }
                         }
@@ -409,9 +395,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"28-{Ta}", innerText  = Ta },
+                                new InitialLetter { id = $"28-{Taa_}", innerText  = Taa_ },
                                 new InitialLetter { id = $"28-{Siin}", innerText = Siin },
-                                new InitialLetter { id = $"28-{Mim}", innerText = Mim }
+                                new InitialLetter { id = $"28-{Miim}", innerText = Miim }
                             }
                         }
                     },
@@ -427,9 +413,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"29-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"29-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"29-{Mim}", innerText  = Mim }
+                                new InitialLetter { id = $"29-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"29-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"29-{Miim}", innerText  = Miim }
                             }
                         }
                     },
@@ -446,9 +432,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"30-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"30-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"30-{Mim}", innerText  = Mim }
+                                new InitialLetter { id = $"30-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"30-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"30-{Miim}", innerText  = Miim }
                             }
                         }
                     },
@@ -465,9 +451,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"31-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"31-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"31-{Mim}", innerText  = Mim }
+                                new InitialLetter { id = $"31-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"31-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"31-{Miim}", innerText  = Miim }
                             }
                         }
                     },
@@ -484,9 +470,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"32-{Elif}", innerText = Elif },
-                                new InitialLetter { id = $"32-{Lam}", innerText  = Lam },
-                                new InitialLetter { id = $"32-{Mim}", innerText  = Mim }
+                                new InitialLetter { id = $"32-{Alif}", innerText = Alif },
+                                new InitialLetter { id = $"32-{Laam}", innerText  = Laam },
+                                new InitialLetter { id = $"32-{Miim}", innerText  = Miim }
                             }
                         }
                     },
@@ -520,7 +506,7 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"38-{Sad}", innerText = Sad }
+                                new InitialLetter { id = $"38-{Saad}", innerText = Saad }
                             }
                         }
                     }
@@ -535,24 +521,38 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"40-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"40-{Mim}", innerText = Mim }
+                                new InitialLetter { id = $"40-{Haa}", innerText  = Haa },
+                                new InitialLetter { id = $"40-{Miim}", innerText = Miim }
                             }
                         }
+                    },
+                    new td
+                    {
+                        
+                        new CountingResult { id = "40-41-42", MultipleOf = 59, SearchScript = GetLetterCountingScript("40:*,41:*,42:*", Haa, Miim) },
+                        new CountingResult { id = "41-42-43", MultipleOf = 55, SearchScript = GetLetterCountingScript("41:*,42:*,43:*", Haa, Miim)},
                     }
                 },
                 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 41, ChapterName = "Fussilet" } },
+                    new td
+                    {
+                        new div
+                        {
+                            new Chapter { ChapterNo = 41, ChapterName        = "Fussilet" },
+                            
+                        }
+                        
+                    },
                     new td
                     {
                         new InitialLetterLineGroup
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"41-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"41-{Mim}", innerText = Mim }
+                                new InitialLetter { id = $"41-{Haa}", innerText  = Haa },
+                                new InitialLetter { id = $"41-{Miim}", innerText = Miim }
                             }
                         }
                     },
@@ -568,15 +568,15 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"42-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"42-{Mim}", innerText = Mim },
-                                new InitialLetter { id = $"42-{Ain}", innerText = Ain },
+                                new InitialLetter { id = $"42-{Haa}", innerText  = Haa },
+                                new InitialLetter { id = $"42-{Miim}", innerText = Miim },
+                                new InitialLetter { id = $"42-{Ayn}", innerText = Ayn },
                                 new InitialLetter { id = $"42-{Siin}", innerText = Siin },
-                                new InitialLetter { id = $"42-{Kaf}", innerText = Kaf }
+                                new InitialLetter { id = $"42-{Qaaf}", innerText = Qaaf }
                             }
                         }
                     },
-                    new td { new CountingResult { id = $"42-{Kaf}-counts", MultipleOf = 3, SearchScript = GetLetterCountingScript("42:*", Qaaf) } }
+                    new td { new CountingResult { id = $"42-{Qaaf}-counts", MultipleOf = 3, SearchScript = GetLetterCountingScript("42:*", Qaaf) } }
                 },
 
                 new tr
@@ -588,8 +588,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"43-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"43-{Mim}", innerText = Mim }
+                                new InitialLetter { id = $"43-{Haa}", innerText  = Haa },
+                                new InitialLetter { id = $"43-{Miim}", innerText = Miim }
                             }
                         }
                     },
@@ -605,11 +605,13 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"44-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"44-{Mim}", innerText = Mim }
+                                new InitialLetter { id = $"44-{Haa}", innerText  = Haa },
+                                new InitialLetter { id = $"44-{Miim}", innerText = Miim }
                             }
                         }
-                    }
+                    },
+                    new td{ new CountingResult { id = "43-44-45-46", MultipleOf = 54, SearchScript = GetLetterCountingScript("43:*,44:*,45:*,46:*", Haa, Miim) } }
+                    
                 },
                 
                 new tr
@@ -621,11 +623,12 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"45-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"45-{Mim}", innerText = Mim }
+                                new InitialLetter { id = $"45-{Haa}", innerText  = Haa },
+                                new InitialLetter { id = $"45-{Miim}", innerText = Miim }
                             }
                         }
-                    }
+                    },
+                    new td { new CountingResult { id = "40-44-45-46", MultipleOf = 58, SearchScript = GetLetterCountingScript("40:*,44:*,45:*,46:*", Haa, Miim) } }
                 },
 
                 new tr
@@ -637,8 +640,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"46-{Ha}", innerText  = Ha },
-                                new InitialLetter { id = $"46-{Mim}", innerText = Mim }
+                                new InitialLetter { id = $"46-{Haa}", innerText  = Haa },
+                                new InitialLetter { id = $"46-{Miim}", innerText = Miim }
                             }
                         }
                     }
@@ -653,7 +656,7 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"50-{Kaf}", innerText = Kaf }
+                                new InitialLetter { id = $"50-{Qaaf}", innerText = Qaaf }
                             }
                         }
                     },
@@ -686,116 +689,141 @@ public class View : ReactComponent
 
         return new div
         {
-           style={ display = "flex", flexDirection = "row" , fontSize = Context.ClientWidth < 400 ? "5px": null },
+           style={ display = "flex", justifyContent = "center", fontSize = Context.ClientWidth < 400 ? "9px": null },
            children =
            {
                table,
 
-               new Arrow{startElementId=$"2-{Elif}", endElementId = "2-counts"},
-               new Arrow{startElementId=$"2-{Lam}",endElementId = "2-counts"},
-               new Arrow{startElementId=$"2-{Mim}",endElementId = "2-counts"},
+               new Arrow{startElementId=$"2-{Alif}", endElementId = "2-counts"},
+               new Arrow{startElementId=$"2-{Laam}",endElementId = "2-counts"},
+               new Arrow{startElementId=$"2-{Miim}",endElementId = "2-counts"},
 
 
-               new Arrow{startElementId=$"3-{Elif}",endElementId = "3-counts"},
-               new Arrow{startElementId=$"3-{Lam}",endElementId = "3-counts"},
-               new Arrow{startElementId=$"3-{Mim}",endElementId = "3-counts"},
+               new Arrow{startElementId=$"3-{Alif}",endElementId = "3-counts"},
+               new Arrow{startElementId=$"3-{Laam}",endElementId = "3-counts"},
+               new Arrow{startElementId=$"3-{Miim}",endElementId = "3-counts"},
 
-               new Arrow{startElementId =$"7-{Elif}",endElementId = "7-counts"},
-               new Arrow{startElementId =$"7-{Lam}",endElementId  = "7-counts"},
-               new Arrow{startElementId =$"7-{Mim}",endElementId  = "7-counts"},
-               new Arrow{startElementId =$"7-{Sad}",endElementId  = "7-counts"},
+               new Arrow{startElementId =$"7-{Alif}",endElementId = "7-counts"},
+               new Arrow{startElementId =$"7-{Laam}",endElementId  = "7-counts"},
+               new Arrow{startElementId =$"7-{Miim}",endElementId  = "7-counts"},
+               new Arrow{startElementId =$"7-{Saad}",endElementId  = "7-counts"},
 
-               new Arrow{startElementId =$"10-{Elif}",endElementId = "10-counts"},
-               new Arrow{startElementId =$"10-{Lam}",endElementId  = "10-counts"},
-               new Arrow{startElementId =$"10-{Ra}", endElementId  = "10-counts"},
+               new Arrow{startElementId =$"10-{Alif}",endElementId = "10-counts"},
+               new Arrow{startElementId =$"10-{Laam}",endElementId  = "10-counts"},
+               new Arrow{startElementId =$"10-{Raa}", endElementId  = "10-counts"},
 
-               new Arrow{startElementId =$"11-{Elif}",endElementId = "11-counts"},
-               new Arrow{startElementId =$"11-{Lam}",endElementId  = "11-counts"},
-               new Arrow{startElementId =$"11-{Ra}", endElementId  = "11-counts"},
+               new Arrow{startElementId =$"11-{Alif}",endElementId = "11-counts"},
+               new Arrow{startElementId =$"11-{Laam}",endElementId  = "11-counts"},
+               new Arrow{startElementId =$"11-{Raa}", endElementId  = "11-counts"},
 
-               new Arrow{startElementId =$"12-{Elif}",endElementId = "12-counts"},
-               new Arrow{startElementId =$"12-{Lam}",endElementId  = "12-counts"},
-               new Arrow{startElementId =$"12-{Ra}", endElementId  = "12-counts"},
+               new Arrow{startElementId =$"12-{Alif}",endElementId = "12-counts"},
+               new Arrow{startElementId =$"12-{Laam}",endElementId  = "12-counts"},
+               new Arrow{startElementId =$"12-{Raa}", endElementId  = "12-counts"},
 
-               new Arrow{startElementId =$"13-{Elif}",endElementId = "13-counts"},
-               new Arrow{startElementId =$"13-{Lam}",endElementId  = "13-counts"},
-               new Arrow{startElementId =$"13-{Mim}",endElementId  = "13-counts"},
-               new Arrow{startElementId =$"13-{Ra}",endElementId  =  "13-counts"},
+               new Arrow{startElementId =$"13-{Alif}",endElementId = "13-counts"},
+               new Arrow{startElementId =$"13-{Laam}",endElementId  = "13-counts"},
+               new Arrow{startElementId =$"13-{Miim}",endElementId  = "13-counts"},
+               new Arrow{startElementId =$"13-{Raa}",endElementId  =  "13-counts"},
 
-               new Arrow{startElementId =$"14-{Elif}",endElementId = "14-counts"},
-               new Arrow{startElementId =$"14-{Lam}",endElementId  = "14-counts"},
-               new Arrow{startElementId =$"14-{Ra}",endElementId   = "14-counts"},
+               new Arrow{startElementId =$"14-{Alif}",endElementId = "14-counts"},
+               new Arrow{startElementId =$"14-{Laam}",endElementId  = "14-counts"},
+               new Arrow{startElementId =$"14-{Raa}",endElementId   = "14-counts"},
 
-               new Arrow{startElementId =$"15-{Elif}",endElementId = "15-counts"},
-               new Arrow{startElementId =$"15-{Lam}",endElementId  = "15-counts"},
-               new Arrow{startElementId =$"15-{Ra}",endElementId   = "15-counts"},
+               new Arrow{startElementId =$"15-{Alif}",endElementId = "15-counts"},
+               new Arrow{startElementId =$"15-{Laam}",endElementId  = "15-counts"},
+               new Arrow{startElementId =$"15-{Raa}",endElementId   = "15-counts"},
 
-               new Arrow{startElementId=$"19-{Kaf}",endElementId = "19-counts"},
-               new Arrow{startElementId=$"19-{Ha}",endElementId =  "19-counts"},
+               new Arrow{startElementId=$"19-{Qaaf}",endElementId = "19-counts"},
+               new Arrow{startElementId=$"19-{Haa}",endElementId =  "19-counts"},
                new Arrow{startElementId=$"19-{Yaa}",endElementId =  "19-counts"},
-               new Arrow{startElementId=$"19-{Ain}",endElementId = "19-counts"},
-               new Arrow{startElementId=$"19-{Sad}",endElementId = "19-counts"},
+               new Arrow{startElementId=$"19-{Ayn}",endElementId = "19-counts"},
+               new Arrow{startElementId=$"19-{Saad}",endElementId = "19-counts"},
 
-               new Arrow{startElementId =$"19-{Ha}",endElementId  = "TaSinMim"},
-               new Arrow{startElementId =$"20-{Ta}",endElementId  = "TaSinMim"},
-               new Arrow{startElementId =$"20-{Ha}",endElementId  = "TaSinMim"},
-               new Arrow{startElementId =$"26-{Ta}",endElementId  = "TaSinMim"},
+               new Arrow{startElementId =$"19-{Haa}",endElementId  = "TaSinMim"},
+               new Arrow{startElementId =$"20-{Taa_}",endElementId  = "TaSinMim"},
+               new Arrow{startElementId =$"20-{Haa}",endElementId  = "TaSinMim"},
+               new Arrow{startElementId =$"26-{Taa_}",endElementId  = "TaSinMim"},
                new Arrow{startElementId =$"26-{Siin}",endElementId = "TaSinMim"},
-               new Arrow{startElementId =$"26-{Mim}",endElementId = "TaSinMim"},
-               new Arrow{startElementId =$"27-{Ta}",endElementId  = "TaSinMim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"26-{Miim}",endElementId = "TaSinMim"},
+               new Arrow{startElementId =$"27-{Taa_}",endElementId  = "TaSinMim", StartAnchorFromTop = true},
                new Arrow{startElementId =$"27-{Siin}",endElementId = "TaSinMim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"28-{Ta}",endElementId  = "TaSinMim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"28-{Taa_}",endElementId  = "TaSinMim", StartAnchorFromTop = true},
                new Arrow{startElementId =$"28-{Siin}",endElementId = "TaSinMim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"28-{Mim}",endElementId = "TaSinMim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"28-{Miim}",endElementId = "TaSinMim", StartAnchorFromTop = true},
 
-               new Arrow{startElementId =$"29-{Elif}", endElementId  = "29-counts"},
-               new Arrow{startElementId =$"29-{Lam}", endElementId   = "29-counts"},
-               new Arrow{startElementId =$"29-{Mim}", endElementId   = "29-counts"},
+               new Arrow{startElementId =$"29-{Alif}", endElementId  = "29-counts"},
+               new Arrow{startElementId =$"29-{Laam}", endElementId   = "29-counts"},
+               new Arrow{startElementId =$"29-{Miim}", endElementId   = "29-counts"},
 
-               new Arrow{startElementId =$"30-{Elif}", endElementId = "30-counts"},
-               new Arrow{startElementId =$"30-{Lam}", endElementId  = "30-counts"},
-               new Arrow{startElementId =$"30-{Mim}", endElementId  = "30-counts"},
+               new Arrow{startElementId =$"30-{Alif}", endElementId = "30-counts"},
+               new Arrow{startElementId =$"30-{Laam}", endElementId  = "30-counts"},
+               new Arrow{startElementId =$"30-{Miim}", endElementId  = "30-counts"},
 
-               new Arrow{startElementId =$"31-{Elif}", endElementId = "31-counts"},
-               new Arrow{startElementId =$"31-{Lam}", endElementId  = "31-counts"},
-               new Arrow{startElementId =$"31-{Mim}", endElementId  = "31-counts"},
+               new Arrow{startElementId =$"31-{Alif}", endElementId = "31-counts"},
+               new Arrow{startElementId =$"31-{Laam}", endElementId  = "31-counts"},
+               new Arrow{startElementId =$"31-{Miim}", endElementId  = "31-counts"},
 
 
-               new Arrow{startElementId =$"32-{Elif}", endElementId = "32-counts"},
-               new Arrow{startElementId =$"32-{Lam}", endElementId  = "32-counts"},
-               new Arrow{startElementId =$"32-{Mim}", endElementId  = "32-counts"},
+               new Arrow{startElementId =$"32-{Alif}", endElementId = "32-counts"},
+               new Arrow{startElementId =$"32-{Laam}", endElementId  = "32-counts"},
+               new Arrow{startElementId =$"32-{Miim}", endElementId  = "32-counts"},
 
                new Arrow{startElementId =$"36-{Yaa}", endElementId = "36-counts"},
                new Arrow{startElementId =$"36-{Siin}", endElementId = "36-counts"},
 
-               new Arrow{startElementId =$"7-{Sad}",  endElementId = "Three-Sad", Dashness = true,StartAnchorFromRight  = true,color=colorForConnectedFromOtherChapters},
-               new Arrow{startElementId =$"19-{Sad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
-               new Arrow{startElementId =$"38-{Sad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
+               new Arrow{startElementId =$"7-{Saad}",  endElementId = "Three-Sad", Dashness = true,StartAnchorFromRight  = true,color=colorForConnectedFromOtherChapters},
+               new Arrow{startElementId =$"19-{Saad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
+               new Arrow{startElementId =$"38-{Saad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
                
-               new Arrow{startElementId =$"42-{Ain}", endElementId = "42-Ain-Sin-Kaf", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"42-{Ayn}", endElementId = "42-Ain-Sin-Kaf", StartAnchorFromTop = true},
                new Arrow{startElementId =$"42-{Siin}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
-               new Arrow{startElementId =$"42-{Kaf}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
+               new Arrow{startElementId =$"42-{Qaaf}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
 
-               new Arrow{startElementId =$"42-{Kaf}", endElementId = $"42-{Kaf}-counts"},
+               new Arrow{startElementId =$"42-{Qaaf}", endElementId = $"42-{Qaaf}-counts"},
 
-               new Arrow{startElementId =$"40-{Ha}", endElementId  = "Ha-Mim"},
-               new Arrow{startElementId =$"40-{Mim}", endElementId = "Ha-Mim"},
-               new Arrow{startElementId =$"41-{Ha}", endElementId  = "Ha-Mim"},
-               new Arrow{startElementId =$"41-{Mim}", endElementId = "Ha-Mim"},
-               new Arrow{startElementId =$"42-{Ha}", endElementId  = "Ha-Mim"},
-               new Arrow{startElementId =$"42-{Mim}", endElementId = "Ha-Mim"},
-               new Arrow{startElementId =$"43-{Ha}", endElementId  = "Ha-Mim"},
-               new Arrow{startElementId =$"43-{Mim}", endElementId = "Ha-Mim"},
-               new Arrow{startElementId =$"44-{Ha}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"44-{Mim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"45-{Ha}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"45-{Mim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"46-{Ha}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"46-{Mim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"46-{Mim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"40-{Haa}", endElementId  = "Ha-Mim"},
+               new Arrow{startElementId =$"40-{Miim}", endElementId = "Ha-Mim"},
+               new Arrow{startElementId =$"41-{Haa}", endElementId  = "Ha-Mim"},
+               new Arrow{startElementId =$"41-{Miim}", endElementId = "Ha-Mim"},
+               new Arrow{startElementId =$"42-{Haa}", endElementId  = "Ha-Mim"},
+               new Arrow{startElementId =$"42-{Miim}", endElementId = "Ha-Mim"},
+               new Arrow{startElementId =$"43-{Haa}", endElementId  = "Ha-Mim"},
+               new Arrow{startElementId =$"43-{Miim}", endElementId = "Ha-Mim"},
+               new Arrow{startElementId =$"44-{Haa}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"44-{Miim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"45-{Haa}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"45-{Miim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"46-{Haa}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"46-{Miim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{startElementId =$"46-{Miim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
 
-               new Arrow{startElementId =$"50-{Kaf}", endElementId  = "50-counts"},
+               new Arrow{startElementId =$"50-{Qaaf}", endElementId  = "50-counts"},
                new Arrow{startElementId =$"68-{Nun}", endElementId = "68-counts"},
+
+
+               new Arrow{startElementId =$"40-{Haa}", endElementId  = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"40-{Miim}", endElementId = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"41-{Haa}", endElementId  = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"41-{Miim}", endElementId = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"42-{Haa}", endElementId  = "40-41-42", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"42-{Miim}", endElementId = "40-41-42", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+
+               new Arrow{startElementId =$"43-{Haa}", endElementId  = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"43-{Miim}", endElementId = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"44-{Haa}", endElementId  = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"44-{Miim}", endElementId = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"45-{Haa}", endElementId  = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"45-{Miim}", endElementId = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"46-{Haa}", endElementId  = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{startElementId =$"46-{Miim}", endElementId = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+
+
+               new Xarrow{start =$"41-{Haa}",  end  = "41-42-43", startAnchor="top",endAnchor="left", color = "red",strokeWidth = 1},
+               new Xarrow{start =$"41-{Miim}", end = "41-42-43",  startAnchor="top",endAnchor="left", color = "red",strokeWidth = 1},
+               new Xarrow{start =$"42-{Haa}",  end  = "41-42-43", startAnchor="top",endAnchor="left", color = "red",strokeWidth = 1},
+               new Xarrow{start =$"42-{Miim}", end = "41-42-43",  startAnchor="top",endAnchor="left", color = "red",strokeWidth = 1},
+               new Xarrow{start =$"43-{Haa}",  end  = "41-42-43", startAnchor="top",endAnchor="left", color = "red",strokeWidth = 1},
+               new Xarrow{start =$"43-{Miim}", end = "41-42-43",  startAnchor="top",endAnchor="left", color = "red",strokeWidth = 1},
            }
         };
         
@@ -821,6 +849,8 @@ class Arrow: ReactComponent
 
     public bool Dashness { get; set; }
 
+    public double? strokeWidth { get; set; } = 1;
+
     public override Element render()
     {
         color ??= "#a9acaa";
@@ -831,7 +861,7 @@ class Arrow: ReactComponent
             end         = endElementId,
             path        = "smooth",
             color       = color,
-            strokeWidth = 1,
+            strokeWidth = strokeWidth,
             startAnchor = StartAnchorFromTop ? "top" : StartAnchorFromRight ? "right" : "bottom",
             dashness    = true,
             //curveness  = 1.02,
