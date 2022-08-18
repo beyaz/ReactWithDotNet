@@ -703,6 +703,42 @@ function DefineComponent(componentDeclaration)
             }
             
             map[prefix] = { StateAsJson: JSON.stringify(this.state.$state), FullTypeNameOfState: NotNull(this.props.$jsonNode[FullTypeNameOfState]) };
+
+
+            // calculate root props if exists
+            if (isRoot)
+            {
+                const jsonNode = this.props.$jsonNode;
+                
+                let props = null;
+                for (let key in jsonNode)
+                {
+                    if (jsonNode.hasOwnProperty(key))
+                    {
+                        if (key === RootNode ||
+                            key === DotNetTypeOfReactComponent ||
+                            key === FullTypeNameOfState ||
+                            key === 'key' ||
+                            key === 'state')
+                        {
+                            continue;
+                        }
+
+                        if (props === null)
+                        {
+                            props = {};
+                        }
+
+                        props[key] = jsonNode[key];
+                    }
+                }
+
+                if (props)
+                {
+                    map[prefix].props = props;
+                }
+            }
+            
             
             if (this.ReactWithDotNetManagedChildComponents)
             {

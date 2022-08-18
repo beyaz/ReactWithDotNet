@@ -18,6 +18,7 @@ public sealed class ClientStateInfo
 {
     public string FullTypeNameOfState { get; set; }
     public string StateAsJson { get; set; }
+    public IReadOnlyDictionary<string,object> props { get; set; }
 }
 
 [Serializable]
@@ -153,6 +154,23 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
+            // transfer properties
+            {
+                var props = request.CapturedStateTree["0"].props;
+                if (props is not null)
+                {
+                    foreach (var (key, value) in props)
+                    {
+                        var property = type.GetProperty(key);
+                        if (property == null)
+                        {
+                            return new ComponentResponse { ErrorMessage = $"Property not found.{request.FullName}::{key}" };
+                        }
+                        
+                        property.SetValue(instance, value);
+                    }
+                }
+            }
            
             
             

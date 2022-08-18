@@ -336,6 +336,20 @@ public static class ElementSerializer
             map.Add("$RootNodeOnMouseEnter", ToMap(reactStatefulComponent.render(), stateTree));
         }
 
+        foreach (var propertyInfo in reactStatefulComponent.GetType().GetProperties())
+        {
+            if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
+                propertyInfo.Name == nameof(reactStatefulComponent.Children)||
+                propertyInfo.Name == nameof(reactStatefulComponent.key) ||
+                propertyInfo.Name == "state")
+            {
+                continue;
+            }
+            map.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
+        }
+
+
+
         return map;
     }
 

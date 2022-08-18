@@ -1,19 +1,23 @@
-﻿namespace ReactWithDotNet.StateTests;
+﻿namespace ReactWithDotNet.StateTests.PropSerializationTests;
 
 class ModelA
 {
-    public string PropA { get; set; }
+    public string StateValueA { get; set; }
     
     public int ClickCount { get; set; }
 
-    public bool isMouseEntered { get; set; }
 }
 
 class ComponentA : ReactComponent<ModelA>
 {
+    public string A_Prop_1 { get; set; }
+
+    public string A_Prop_2 { get; set; }
+
+
     public ComponentA()
     {
-        state = new ModelA { PropA = "A" };
+        state = new ModelA { StateValueA = "A" };
     }
 
     public override Element render()
@@ -22,82 +26,51 @@ class ComponentA : ReactComponent<ModelA>
         {
             style =
             {
-                width      = "200px",
-                height     = state.isMouseEntered ? "200px" : "100px",
                 border     = "1px solid blue", 
-                textAlign  = "center", 
-                paddingTop = "20px",
-                transition = "height 3s cubic-bezier(.165, .84, .44, 1),box-shadow 2.3s ease"
+                padding = "20px"
             },
-            innerText    = state.PropA + state.ClickCount,
-            onClick      = _ => state.ClickCount++,
-            onMouseEnter = _ => { state.isMouseEntered = true; },
-            onMouseLeave = _ => { state.isMouseEntered = false; }
+            text    = "state.A: " + state.StateValueA + ", state.ClickCount: "+ state.ClickCount + ", A_Prop_1:"+ A_Prop_1 + ", A_Prop_2:"+ A_Prop_2,
+            onClick = _ => state.ClickCount++,
         };
-    }
-
-    public void ComponentDidMount()
-    {
-        state.PropA += "-DidMountA-";
     }
 }
 
 class ModelB
 {
-    public string PropB { get; set; }
+    public string StateValueB { get; set; }
     public int ClickCount { get; set; }
 }
 
 class ComponentB : ReactComponent<ModelB>
 {
+    public string B_Prop_1 { get; set; }
+
+    public string B_Prop_2 { get; set; }
+
+    
     public ComponentB()
     {
-        state = new ModelB { PropB = "B" };
+        state = new ModelB { StateValueB = "B" };
     }
 
     public override Element render()
     {
         return new div
         {
-            style     = { width = "250px", height = "150px", border = "1px solid brown", textAlign = "center", paddingTop = "40px" },
-            innerText = state.PropB + state.ClickCount,
-            onClick   = _ => state.ClickCount++
-        };
-    }
-
-    public void ComponentDidMount()
-    {
-        state.PropB += "-DidMountB-";
-    }
-}
-
-class ModelC
-{
-    public string PropC { get; set; }
-    public int ClickCount { get; set; }
-}
-
-class ComponentC : ReactComponent<ModelC>
-{
-    public ComponentC()
-    {
-        state = new ModelC { PropC = "C" };
-    }
-
-    public override Element render()
-    {
-        return new div
-        {
-            style     = { width = "300px", height = "200px", border = "1px solid red", textAlign = "center", paddingTop = "50px" },
-            innerText = state.PropC + state.ClickCount,
-            onClick   = _ => state.ClickCount++
+            style =
+            {
+                border  = "1px solid red",
+                padding = "20px"
+            },
+            text    = "state.B: " + state.StateValueB + ", state.ClickCount: " + state.ClickCount + ", B_Prop_1:" + B_Prop_1 + ", B_Prop_2:" + B_Prop_2,
+            onClick = _ => state.ClickCount++,
         };
     }
 }
+
 
 class ModelContainer1
 {
-    public string Container1Text { get; set; }
     public int ClickCount { get; set; }
 }
 
@@ -107,107 +80,24 @@ class Container1 : ReactComponent<ModelContainer1>
     {
         state = new ModelContainer1
         {
-            Container1Text = "Container1Text"
         };
     }
-
-    Element conditionalRender()
-    {
-        if (this.state.ClickCount % 3 == 0)
-        {
-            return new div
-            {
-                new div { innerText = "Mod3" },
-                new ComponentC()
-            };
-        }
-
-        return new ComponentC();
-    }
+    
     
     public override Element render()
     {
         return new div
         {
-            style = { display = "flex" },
             children =
             {
-                new ComponentA(),
-                new ComponentB(),
-                conditionalRender(),
-                new ComponentC(),
-                new div(state.Container1Text + state.ClickCount),
+                new ComponentA{A_Prop_1 = "A_Prop_1", A_Prop_2 = "A_Prop_2"},
+                new ComponentB{B_Prop_1 = "B_Prop_1", B_Prop_2 = "B_Prop_2"}
             },
-            onClick = _ => state.ClickCount++
+            //onClick = _ => state.ClickCount++
         };
     }
 }
 
-class ModelContainer2
-{
-    public string Container2Text { get; set; }
-    public int ClickCount { get; set; }
-}
-
-class Container2 : ReactComponent<ModelContainer2>
-{
-    public Container2()
-    {
-        state = new ModelContainer2
-        {
-            Container2Text = "Container2Text"
-        };
-    }
-
-    public override Element render()
-    {
-        return new div
-        {
-            style = { display = "flex" },
-            children =
-            {
-                new ComponentA(),
-                new ComponentB(),
-                new ComponentC(),
-                new div(state.Container2Text + state.ClickCount++)
-            },
-            onClick = _ => state.ClickCount++
-        };
-    }
-}
-
-class ModelContainer3
-{
-
-    public string Container3Text { get; set; }
-    public int ClickCount { get; set; }
-}
-
-class Container3 : ReactComponent<ModelContainer3>
-{
-    public Container3()
-    {
-        state = new ModelContainer3
-        {
-            Container3Text = "Container3_"
-        };
-    }
-
-    public override Element render()
-    {
-        return new div
-        {
-            style = { display = "flex", flexDirection = "column" },
-            children =
-            {
-                new Container1(),
-                new Container2(),
-                new div { innerText = state.Container3Text + state.ClickCount }
-            },
-            onClick = _ => state.ClickCount++
-        };
-    }
-}
 
 /*
  https://jsfiddle.net/boilerplate/react-jsx
