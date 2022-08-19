@@ -1,11 +1,30 @@
-﻿using ReactWithDotNet;
-
+﻿
 namespace QuranAnalyzer.WebUI.Components;
 
-class FixedTopPanelContainer : ReactComponent
+class FixedTopPanelContainerModel
 {
-    public bool HasShadow { get; set; }
-    
+    public double MainDivScrollY { get; set; }
+}
+class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
+{
+
+    public FixedTopPanelContainer()
+    {
+        state = new FixedTopPanelContainerModel();
+    }
+
+
+    public void ComponentDidMount()
+    {
+        Context.ClientTask.ListenEvent("MainContentDivScrollChanged", nameof(OnMainContentDivScrollChanged));
+        Context.ClientTask.CallJsFunction("RegisterScrollEvents");
+    }
+
+    public void OnMainContentDivScrollChanged(double mainDivScrollY)
+    {
+        state.MainDivScrollY = mainDivScrollY;
+    }
+
     public override Element render()
     {
         var top = new div
@@ -24,7 +43,7 @@ class FixedTopPanelContainer : ReactComponent
             Children = children
         };
 
-        if (HasShadow)
+        if (state.MainDivScrollY > 0)
         {
             top.style.borderBottom = "";
             top.style.boxShadow  = "0px 0px 8px rgb(0 0 0 / 20%)";

@@ -68,6 +68,28 @@ class ComponentB : ReactComponent<ModelB>
     }
 }
 
+class RedBorderModel
+{
+    public int BorderWidth { get; set; } = 5;
+}
+
+class RedBorder:ReactComponent<RedBorderModel>
+{
+    public RedBorder()
+    {
+        state = new RedBorderModel();
+    }
+    public override Element render()
+    {
+        return new div
+        {
+            style    = { border = state.BorderWidth + "px solid red" },
+            Children = children,
+
+            onClick = _ => state.BorderWidth++
+        };
+    }
+}
 
 class ModelContainer1
 {
@@ -88,12 +110,21 @@ class Container1 : ReactComponent<ModelContainer1>
     {
         return new div
         {
+            style = 
+            {  
+                border = "1px solid green",
+                padding        = "20px" 
+            },
             children =
             {
-                new ComponentA{A_Prop_1 = "A_Prop_1", A_Prop_2 = "A_Prop_2"},
-                new ComponentB{B_Prop_1 = "B_Prop_1", B_Prop_2 = "B_Prop_2"}
+                new RedBorder
+                {
+                    new ComponentA{A_Prop_1 = "A_Prop_1", A_Prop_2 = "A_Prop_2"},
+                    new ComponentB{B_Prop_1 = "B_Prop_1", B_Prop_2 = "B_Prop_2"}
+                }
+              
             },
-            //onClick = _ => state.ClickCount++
+            onClick = _ => state.ClickCount++
         };
     }
 }

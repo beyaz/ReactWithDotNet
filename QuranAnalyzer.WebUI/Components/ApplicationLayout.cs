@@ -15,7 +15,6 @@ class ApplicationLayout : ReactComponent
     {
         var top = new FixedTopPanelContainer
         {
-            HasShadow = mainDivScrollY > 0 ,
             children = { topContent }
         };
 

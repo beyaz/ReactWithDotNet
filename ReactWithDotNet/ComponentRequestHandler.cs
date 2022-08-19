@@ -161,6 +161,17 @@ public static class ComponentRequestHandler
                 {
                     foreach (var (key, value) in props)
                     {
+                        if (key == "$childrenCount")
+                        {
+                            var childrenCount = Convert.ToInt32(value);
+                            for (var i = 0; i < childrenCount; i++)
+                            {
+                                instance.children.Add(new FakeChild { Index = i });
+                            }
+                            
+                            continue;
+                        }
+                        
                         var property = type.GetProperty(key);
                         if (property == null)
                         {
@@ -171,6 +182,7 @@ public static class ComponentRequestHandler
                     }
                 }
             }
+            
            
             
             

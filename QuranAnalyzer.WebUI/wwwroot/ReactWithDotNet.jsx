@@ -107,9 +107,7 @@ function PickPropertiesToNewObject(obj, fn_bool__CanPick__stringKey_objectValue)
 
 function IsEmptyObject(obj)
 {
-    const typeofValue = typeof obj;
-
-    if (typeofValue === 'number' || typeofValue === 'string' )
+    if (IsSerializablePrimitiveJsValue(obj))
     {
         return false;
     }
@@ -280,6 +278,11 @@ function IfNull(value, defaultValue)
 
 function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
 {   
+    if (jsonNode.$FakeChild != null)
+    {
+        jsonNode = component.props.$jsonNode.$RootNode.$children[jsonNode.$FakeChild];
+    }
+    
     // is ReactWithDotNet component
     if (jsonNode[DotNetTypeOfReactComponent])
     {
@@ -462,11 +465,22 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
     return createElement(constructorFunction, props);
 }
 
+/**
+ * if value is string OR number OR boolean OR Date then returns TRUE
+ * @param {any} value
+ */
+function IsSerializablePrimitiveJsValue(value)
+{
+    const typeofValue = typeof value;
+
+    return typeofValue === "string" || typeofValue === "number" || typeofValue === 'boolean' || value instanceof Date;
+}
+
 function NormalizeEventArguments(eventArguments)
 {
     function normalizeEventArgument(obj)
     {
-        if (typeof obj === "string" || typeof obj === "number")
+        if (IsSerializablePrimitiveJsValue(obj))
         {
             return obj;
         }
@@ -715,9 +729,25 @@ function DefineComponent(componentDeclaration)
                 {
                     if (jsonNode.hasOwnProperty(key))
                     {
+                        if (key === RootNode)
+                        {
+                            if (jsonNode[key].$children)
+                            {
+                                if (jsonNode[key].$children.length > 0)
+                                {
+                                    if (props === null)
+                                    {
+                                        props = {};
+                                    }
+                                    props.$childrenCount = jsonNode[key].$children.length;
+                                }
+                            }
+                        }
+                        
                         if (key === RootNode ||
                             key === DotNetTypeOfReactComponent ||
                             key === FullTypeNameOfState ||
+                            key === '$HasComponentDidMountMethod'||
                             key === 'key' ||
                             key === 'state')
                         {
@@ -733,6 +763,8 @@ function DefineComponent(componentDeclaration)
                     }
                 }
 
+                
+                
                 if (props)
                 {
                     map[prefix].props = props;

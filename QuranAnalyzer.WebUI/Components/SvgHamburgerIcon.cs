@@ -1,18 +1,29 @@
-﻿using System;
-using ReactWithDotNet;
-
+﻿
 namespace QuranAnalyzer.WebUI.Components;
 
-class SvgHamburgerIcon : ReactComponent
+class SvgHamburgerIconModel
 {
     public bool HamburgerMenuIsOpen { get; set; }
+}
+class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
+{
 
-    public Action<string> OnHamburgerMenuClicked { get; set; }
+
+    public void OnHamburgerMenuClicked(string _)
+    {
+        state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
+        Context.ClientTask.DispatchEvent("OnHamburgerMenuClicked", state.HamburgerMenuIsOpen);
+    }
+
+    public SvgHamburgerIcon()
+    {
+        state = new SvgHamburgerIconModel();
+    }
 
     public override Element render()
     {
         var color = "black";
-        if (HamburgerMenuIsOpen)
+        if (state.HamburgerMenuIsOpen)
         {
             return new svg
             {

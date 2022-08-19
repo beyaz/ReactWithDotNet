@@ -41,29 +41,21 @@ class View : ReactComponent<MainViewModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.ListenEvent("MainContentDivScrollChanged", nameof(OnMainContentDivScrollChanged));
-        Context.ClientTask.CallJsFunction("RegisterScrollEvents");
-    }
-    
-    public void OnMainContentDivScrollChanged(double mainDivScrollY)
-    {
-        state.MainDivScrollY = mainDivScrollY;
+        Context.ClientTask.ListenEvent("OnHamburgerMenuClicked", nameof(hamburgerMenuClicked));
     }
 
+  
 
-    
-    void hamburgerMenuClicked(string _) => state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
+
+
+    void hamburgerMenuClicked(bool hamburgerMenuIsOpen) => state.HamburgerMenuIsOpen = hamburgerMenuIsOpen;
 
     public override Element render()
     {
         return new ApplicationLayout
         {
-            topContent     = new TopNavigationPanel
-            {
-                HamburgerMenuIsOpen    = state.HamburgerMenuIsOpen,
-                OnHamburgerMenuClicked = hamburgerMenuClicked
-            },
-            mainContent    = buildMainContent(),
+            topContent  = new TopNavigationPanel(),
+            mainContent = buildMainContent(),
             menu           = new FixedLeftMenuContainer
             {
                 IsOpen   = state.HamburgerMenuIsOpen,

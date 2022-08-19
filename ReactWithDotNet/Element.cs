@@ -3,6 +3,11 @@ using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
+sealed class FakeChild : Element
+{
+    public int Index { get; set; }
+}
+
 /// <summary>
 ///     The element
 /// </summary>
@@ -24,10 +29,12 @@ public abstract class Element : IEnumerable<Element>
     [System.Text.Json.Serialization.JsonIgnore]
     public IEnumerable<Element> Children
     {
-        set => children.AddRange(value);
+        set
+        {
+            
+            children.AddRange(value);
+        }
     }
-
-
 
     /// <summary>
     ///     Gets or sets the key.

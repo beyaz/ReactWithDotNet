@@ -16,6 +16,11 @@ public static class ElementSerializer
     #region Public Methods
     public static IReadOnlyDictionary<string, object> ToMap(this Element element, StateTree stateTree)
     {
+        if (element is FakeChild fakeChild)
+        {
+            return new Dictionary<string, object> { { "$FakeChild", fakeChild.Index } };
+        }
+        
         // maybe root element is inherits from ReactElement
         if (element is ReactComponent reactComponent)
         {
