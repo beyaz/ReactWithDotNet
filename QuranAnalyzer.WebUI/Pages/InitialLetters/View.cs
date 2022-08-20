@@ -13,7 +13,7 @@ class InitialLetter : ReactComponent
 
     public override Element render()
     {
-        var containerDiv = new div
+        return new div
         {
             style = { borderRadius = "0.5rem", padding = "4px", margin = "1px" },
 
@@ -27,8 +27,6 @@ class InitialLetter : ReactComponent
                 }
             }
         };
-        
-        return containerDiv;
     }
 }
 
@@ -674,128 +672,128 @@ public class View : ReactComponent
            {
                table,
 
-               new Arrow{startElementId=$"2-{Alif}", endElementId = "2-counts"},
-               new Arrow{startElementId=$"2-{Laam}",endElementId = "2-counts"},
-               new Arrow{startElementId=$"2-{Miim}",endElementId = "2-counts"},
+               new Arrow{start=$"2-{Alif}", end = "2-counts"},
+               new Arrow{start=$"2-{Laam}",end = "2-counts"},
+               new Arrow{start=$"2-{Miim}",end = "2-counts"},
 
 
-               new Arrow{startElementId=$"3-{Alif}",endElementId = "3-counts"},
-               new Arrow{startElementId=$"3-{Laam}",endElementId = "3-counts"},
-               new Arrow{startElementId=$"3-{Miim}",endElementId = "3-counts"},
+               new Arrow{start=$"3-{Alif}",end = "3-counts"},
+               new Arrow{start=$"3-{Laam}",end = "3-counts"},
+               new Arrow{start=$"3-{Miim}",end = "3-counts"},
 
-               new Arrow{startElementId =$"7-{Alif}",endElementId = "7-counts"},
-               new Arrow{startElementId =$"7-{Laam}",endElementId  = "7-counts"},
-               new Arrow{startElementId =$"7-{Miim}",endElementId  = "7-counts"},
-               new Arrow{startElementId =$"7-{Saad}",endElementId  = "7-counts"},
+               new Arrow{start =$"7-{Alif}",end = "7-counts"},
+               new Arrow{start =$"7-{Laam}",end  = "7-counts"},
+               new Arrow{start =$"7-{Miim}",end  = "7-counts"},
+               new Arrow{start =$"7-{Saad}",end  = "7-counts"},
 
-               new Arrow{startElementId =$"10-{Alif}",endElementId = "10-counts"},
-               new Arrow{startElementId =$"10-{Laam}",endElementId  = "10-counts"},
-               new Arrow{startElementId =$"10-{Raa}", endElementId  = "10-counts"},
+               new Arrow{start =$"10-{Alif}",end = "10-counts"},
+               new Arrow{start =$"10-{Laam}",end  = "10-counts"},
+               new Arrow{start =$"10-{Raa}", end  = "10-counts"},
 
-               new Arrow{startElementId =$"11-{Alif}",endElementId = "11-counts"},
-               new Arrow{startElementId =$"11-{Laam}",endElementId  = "11-counts"},
-               new Arrow{startElementId =$"11-{Raa}", endElementId  = "11-counts"},
+               new Arrow{start =$"11-{Alif}",end = "11-counts"},
+               new Arrow{start =$"11-{Laam}",end  = "11-counts"},
+               new Arrow{start =$"11-{Raa}", end  = "11-counts"},
 
-               new Arrow{startElementId =$"12-{Alif}",endElementId = "12-counts"},
-               new Arrow{startElementId =$"12-{Laam}",endElementId  = "12-counts"},
-               new Arrow{startElementId =$"12-{Raa}", endElementId  = "12-counts"},
+               new Arrow{start =$"12-{Alif}",end = "12-counts"},
+               new Arrow{start =$"12-{Laam}",end  = "12-counts"},
+               new Arrow{start =$"12-{Raa}", end  = "12-counts"},
 
-               new Arrow{startElementId =$"13-{Alif}",endElementId = "13-counts"},
-               new Arrow{startElementId =$"13-{Laam}",endElementId  = "13-counts"},
-               new Arrow{startElementId =$"13-{Miim}",endElementId  = "13-counts"},
-               new Arrow{startElementId =$"13-{Raa}",endElementId  =  "13-counts"},
+               new Arrow{start =$"13-{Alif}",end = "13-counts"},
+               new Arrow{start =$"13-{Laam}",end  = "13-counts"},
+               new Arrow{start =$"13-{Miim}",end  = "13-counts"},
+               new Arrow{start =$"13-{Raa}",end  =  "13-counts"},
 
-               new Arrow{startElementId =$"14-{Alif}",endElementId = "14-counts"},
-               new Arrow{startElementId =$"14-{Laam}",endElementId  = "14-counts"},
-               new Arrow{startElementId =$"14-{Raa}",endElementId   = "14-counts"},
+               new Arrow{start =$"14-{Alif}",end = "14-counts"},
+               new Arrow{start =$"14-{Laam}",end  = "14-counts"},
+               new Arrow{start =$"14-{Raa}",end   = "14-counts"},
 
-               new Arrow{startElementId =$"15-{Alif}",endElementId = "15-counts"},
-               new Arrow{startElementId =$"15-{Laam}",endElementId  = "15-counts"},
-               new Arrow{startElementId =$"15-{Raa}",endElementId   = "15-counts"},
+               new Arrow{start =$"15-{Alif}",end = "15-counts"},
+               new Arrow{start =$"15-{Laam}",end  = "15-counts"},
+               new Arrow{start =$"15-{Raa}",end   = "15-counts"},
 
-               new Arrow{startElementId=$"19-{Qaaf}",endElementId = "19-counts"},
-               new Arrow{startElementId=$"19-{Haa}",endElementId =  "19-counts"},
-               new Arrow{startElementId=$"19-{Yaa}",endElementId =  "19-counts"},
-               new Arrow{startElementId=$"19-{Ayn}",endElementId = "19-counts"},
-               new Arrow{startElementId=$"19-{Saad}",endElementId = "19-counts"},
+               new Arrow{start=$"19-{Qaaf}",end = "19-counts"},
+               new Arrow{start=$"19-{Haa}",end =  "19-counts"},
+               new Arrow{start=$"19-{Yaa}",end =  "19-counts"},
+               new Arrow{start=$"19-{Ayn}",end = "19-counts"},
+               new Arrow{start=$"19-{Saad}",end = "19-counts"},
 
-               new Arrow{startElementId =$"19-{Haa}",endElementId  = "TaSinMim"},
-               new Arrow{startElementId =$"20-{Taa_}",endElementId  = "TaSinMim"},
-               new Arrow{startElementId =$"20-{Haa}",endElementId  = "TaSinMim"},
-               new Arrow{startElementId =$"26-{Taa_}",endElementId  = "TaSinMim"},
-               new Arrow{startElementId =$"26-{Siin}",endElementId = "TaSinMim"},
-               new Arrow{startElementId =$"26-{Miim}",endElementId = "TaSinMim"},
-               new Arrow{startElementId =$"27-{Taa_}",endElementId  = "TaSinMim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"27-{Siin}",endElementId = "TaSinMim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"28-{Taa_}",endElementId  = "TaSinMim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"28-{Siin}",endElementId = "TaSinMim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"28-{Miim}",endElementId = "TaSinMim", StartAnchorFromTop = true},
+               new Arrow{start =$"19-{Haa}",end  = "TaSinMim"},
+               new Arrow{start =$"20-{Taa_}",end  = "TaSinMim"},
+               new Arrow{start =$"20-{Haa}",end  = "TaSinMim"},
+               new Arrow{start =$"26-{Taa_}",end  = "TaSinMim"},
+               new Arrow{start =$"26-{Siin}",end = "TaSinMim"},
+               new Arrow{start =$"26-{Miim}",end = "TaSinMim"},
+               new Arrow{start =$"27-{Taa_}",end  = "TaSinMim", StartAnchorFromTop = true},
+               new Arrow{start =$"27-{Siin}",end = "TaSinMim", StartAnchorFromTop = true},
+               new Arrow{start =$"28-{Taa_}",end  = "TaSinMim", StartAnchorFromTop = true},
+               new Arrow{start =$"28-{Siin}",end = "TaSinMim", StartAnchorFromTop = true},
+               new Arrow{start =$"28-{Miim}",end = "TaSinMim", StartAnchorFromTop = true},
 
-               new Arrow{startElementId =$"29-{Alif}", endElementId  = "29-counts"},
-               new Arrow{startElementId =$"29-{Laam}", endElementId   = "29-counts"},
-               new Arrow{startElementId =$"29-{Miim}", endElementId   = "29-counts"},
+               new Arrow{start =$"29-{Alif}", end  = "29-counts"},
+               new Arrow{start =$"29-{Laam}", end   = "29-counts"},
+               new Arrow{start =$"29-{Miim}", end   = "29-counts"},
 
-               new Arrow{startElementId =$"30-{Alif}", endElementId = "30-counts"},
-               new Arrow{startElementId =$"30-{Laam}", endElementId  = "30-counts"},
-               new Arrow{startElementId =$"30-{Miim}", endElementId  = "30-counts"},
+               new Arrow{start =$"30-{Alif}", end = "30-counts"},
+               new Arrow{start =$"30-{Laam}", end  = "30-counts"},
+               new Arrow{start =$"30-{Miim}", end  = "30-counts"},
 
-               new Arrow{startElementId =$"31-{Alif}", endElementId = "31-counts"},
-               new Arrow{startElementId =$"31-{Laam}", endElementId  = "31-counts"},
-               new Arrow{startElementId =$"31-{Miim}", endElementId  = "31-counts"},
+               new Arrow{start =$"31-{Alif}", end = "31-counts"},
+               new Arrow{start =$"31-{Laam}", end  = "31-counts"},
+               new Arrow{start =$"31-{Miim}", end  = "31-counts"},
 
 
-               new Arrow{startElementId =$"32-{Alif}", endElementId = "32-counts"},
-               new Arrow{startElementId =$"32-{Laam}", endElementId  = "32-counts"},
-               new Arrow{startElementId =$"32-{Miim}", endElementId  = "32-counts"},
+               new Arrow{start =$"32-{Alif}", end = "32-counts"},
+               new Arrow{start =$"32-{Laam}", end  = "32-counts"},
+               new Arrow{start =$"32-{Miim}", end  = "32-counts"},
 
-               new Arrow{startElementId =$"36-{Yaa}", endElementId = "36-counts"},
-               new Arrow{startElementId =$"36-{Siin}", endElementId = "36-counts"},
+               new Arrow{start =$"36-{Yaa}", end = "36-counts"},
+               new Arrow{start =$"36-{Siin}", end = "36-counts"},
 
-               new Arrow{startElementId =$"7-{Saad}",  endElementId = "Three-Sad", Dashness = true,StartAnchorFromRight  = true,color=colorForConnectedFromOtherChapters},
-               new Arrow{startElementId =$"19-{Saad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
-               new Arrow{startElementId =$"38-{Saad}", endElementId = "Three-Sad",Dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
+               new Arrow{start =$"7-{Saad}",  end = "Three-Sad", dashness = true,StartAnchorFromRight  = true,color=colorForConnectedFromOtherChapters},
+               new Arrow{start =$"19-{Saad}", end = "Three-Sad",dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
+               new Arrow{start =$"38-{Saad}", end = "Three-Sad",dashness  = true, StartAnchorFromRight = true,color=colorForConnectedFromOtherChapters},
                
-               new Arrow{startElementId =$"42-{Ayn}", endElementId = "42-Ain-Sin-Kaf", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"42-{Siin}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
-               new Arrow{startElementId =$"42-{Qaaf}", endElementId = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
+               new Arrow{start =$"42-{Ayn}", end = "42-Ain-Sin-Kaf", StartAnchorFromTop = true},
+               new Arrow{start =$"42-{Siin}", end = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
+               new Arrow{start =$"42-{Qaaf}", end = "42-Ain-Sin-Kaf",StartAnchorFromTop  = true},
 
-               new Arrow{startElementId =$"42-{Qaaf}", endElementId = $"42-{Qaaf}-counts"},
+               new Arrow{start =$"42-{Qaaf}", end = $"42-{Qaaf}-counts"},
 
-               new Arrow{startElementId =$"40-{Haa}", endElementId  = "Ha-Mim"},
-               new Arrow{startElementId =$"40-{Miim}", endElementId = "Ha-Mim"},
-               new Arrow{startElementId =$"41-{Haa}", endElementId  = "Ha-Mim"},
-               new Arrow{startElementId =$"41-{Miim}", endElementId = "Ha-Mim"},
-               new Arrow{startElementId =$"42-{Haa}", endElementId  = "Ha-Mim"},
-               new Arrow{startElementId =$"42-{Miim}", endElementId = "Ha-Mim"},
-               new Arrow{startElementId =$"43-{Haa}", endElementId  = "Ha-Mim"},
-               new Arrow{startElementId =$"43-{Miim}", endElementId = "Ha-Mim"},
-               new Arrow{startElementId =$"44-{Haa}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"44-{Miim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"45-{Haa}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"45-{Miim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"46-{Haa}", endElementId  = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"46-{Miim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
-               new Arrow{startElementId =$"46-{Miim}", endElementId = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{start =$"40-{Haa}", end  = "Ha-Mim"},
+               new Arrow{start =$"40-{Miim}", end = "Ha-Mim"},
+               new Arrow{start =$"41-{Haa}", end  = "Ha-Mim"},
+               new Arrow{start =$"41-{Miim}", end = "Ha-Mim"},
+               new Arrow{start =$"42-{Haa}", end  = "Ha-Mim"},
+               new Arrow{start =$"42-{Miim}", end = "Ha-Mim"},
+               new Arrow{start =$"43-{Haa}", end  = "Ha-Mim"},
+               new Arrow{start =$"43-{Miim}", end = "Ha-Mim"},
+               new Arrow{start =$"44-{Haa}", end  = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{start =$"44-{Miim}", end = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{start =$"45-{Haa}", end  = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{start =$"45-{Miim}", end = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{start =$"46-{Haa}", end  = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{start =$"46-{Miim}", end = "Ha-Mim", StartAnchorFromTop = true},
+               new Arrow{start =$"46-{Miim}", end = "Ha-Mim", StartAnchorFromTop = true},
 
-               new Arrow{startElementId =$"50-{Qaaf}", endElementId  = "50-counts"},
-               new Arrow{startElementId =$"68-{Nun}", endElementId = "68-counts"},
+               new Arrow{start =$"50-{Qaaf}", end  = "50-counts"},
+               new Arrow{start =$"68-{Nun}", end = "68-counts"},
 
 
-               new Arrow{startElementId =$"40-{Haa}", endElementId  = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"40-{Miim}", endElementId = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"41-{Haa}", endElementId  = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"41-{Miim}", endElementId = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"42-{Haa}", endElementId  = "40-41-42", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"42-{Miim}", endElementId = "40-41-42", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"40-{Haa}", end  = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"40-{Miim}", end = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"41-{Haa}", end  = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"41-{Miim}", end = "40-41-42", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"42-{Haa}", end  = "40-41-42", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"42-{Miim}", end = "40-41-42", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
 
-               new Arrow{startElementId =$"43-{Haa}", endElementId  = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"43-{Miim}", endElementId = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"44-{Haa}", endElementId  = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"44-{Miim}", endElementId = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"45-{Haa}", endElementId  = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"45-{Miim}", endElementId = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"46-{Haa}", endElementId  = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
-               new Arrow{startElementId =$"46-{Miim}", endElementId = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"43-{Haa}", end  = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"43-{Miim}", end = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"44-{Haa}", end  = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"44-{Miim}", end = "43-44-45-46", StartAnchorFromRight =true, color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"45-{Haa}", end  = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"45-{Miim}", end = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"46-{Haa}", end  = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
+               new Arrow{start =$"46-{Miim}", end = "43-44-45-46", StartAnchorFromRight = true,color = "blue",strokeWidth = 0.8},
 
 
                new Xarrow{start =$"41-{Haa}",  end  = "41-42-43", startAnchor="top",endAnchor="left", color = "red",strokeWidth = 1},
@@ -818,8 +816,8 @@ public class View : ReactComponent
 
 class Arrow: ReactComponent
 {
-   public  string startElementId;
-   public  string endElementId;
+   public  string start;
+   public  string end;
    public  string color;
 
    
@@ -827,7 +825,7 @@ class Arrow: ReactComponent
    public bool StartAnchorFromRight { get; set; }
     
 
-    public bool Dashness { get; set; }
+    public bool dashness { get; set; }
 
     public double? strokeWidth { get; set; } = 1;
 
@@ -837,8 +835,8 @@ class Arrow: ReactComponent
         
         return new Xarrow
         {
-            start       = startElementId,
-            end         = endElementId,
+            start       = start,
+            end         = end,
             path        = "smooth",
             color       = color,
             strokeWidth = strokeWidth,
