@@ -23,3 +23,23 @@ public class rect : HtmlElement
     [React]
     public int y { get; set; }
 }
+
+public class polygon : HtmlElement
+{
+    [React]
+    public string points { get; set; }
+
+    [React]
+    public string fill { get; set; }
+
+    [React]
+    public string stroke { get; set; }
+
+    [React]
+    public string strokeWidth { get; set; }
+
+
+    [React]
+    public string transform { get; set; }
+    
+}
