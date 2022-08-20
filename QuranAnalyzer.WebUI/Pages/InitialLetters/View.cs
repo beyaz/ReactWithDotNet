@@ -46,7 +46,7 @@ class CountingResult: ReactComponent
     {
         return new div
         {
-            style = { display = "flex", flexDirection = DirectionIsColumn ? "column":"row", flexWrap = "wrap", marginLeft = "5px", marginTop = "60px" },
+            style = { display = "flex", flexDirection = DirectionIsColumn ? "column":"row", flexWrap = "wrap", marginLeft = "5px", marginTop = "70px" },
             id    = id,
             children =
             {
@@ -82,7 +82,7 @@ class InitialLetterLineGroup: ReactComponent
 
 class Chapter : ReactComponent
 {
-    public int ChapterNo { get; set; }
+    public int ChapterNumber { get; set; }
     
     public string ChapterName { get; set; }
 
@@ -90,19 +90,12 @@ class Chapter : ReactComponent
     {
         return new div
         {
-            style = { margin = "3px" },
+            style = { margin = "3px", textAlign = "center"},
             
             children =
             {
-                new div{innerText  = $"Sure - {ChapterNo}"},
-                new HStack
-                {
-                    style={fontWeight = "600"},
-                    children=
-                    {
-                        new div{ innerText = $"({ChapterName})"}
-                    }
-                }
+                new div{innerText = $"Sure - {ChapterNumber}"},
+                new div{ text     = $"({ChapterName})", style ={fontWeight = "600"}}
             }
         };
     }
@@ -124,7 +117,7 @@ public class View : ReactComponent
                 },
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 2, ChapterName = "Bakara" } },
+                    new td { new Chapter { ChapterNumber = 2, ChapterName = "Bakara" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -143,7 +136,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 3, ChapterName = "İmran Ailesi" } },
+                    new td { new Chapter { ChapterNumber = 3, ChapterName = "İmran Ailesi" } },
 
                     new td
                     {
@@ -162,7 +155,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 7, ChapterName = "Araf" } },
+                    new td { new Chapter { ChapterNumber = 7, ChapterName = "Araf" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -182,7 +175,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 10, ChapterName = "Yunus" } },
+                    new td { new Chapter { ChapterNumber = 10, ChapterName = "Yunus" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -200,7 +193,7 @@ public class View : ReactComponent
                 },
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 11, ChapterName = "Hûd" } },
+                    new td { new Chapter { ChapterNumber = 11, ChapterName = "Hûd" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -219,7 +212,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 12, ChapterName = "Yusuf" } },
+                    new td { new Chapter { ChapterNumber = 12, ChapterName = "Yusuf" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -238,7 +231,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 13, ChapterName = "Rad" } },
+                    new td { new Chapter { ChapterNumber = 13, ChapterName = "Rad" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -258,7 +251,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 14, ChapterName = "İbrahim" } },
+                    new td { new Chapter { ChapterNumber = 14, ChapterName = "İbrahim" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -277,7 +270,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 15, ChapterName = "Hicr" } },
+                    new td { new Chapter { ChapterNumber = 15, ChapterName = "Hicr" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -296,7 +289,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 19, ChapterName = "Meryem" } },
+                    new td { new Chapter { ChapterNumber = 19, ChapterName = "Meryem" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -317,7 +310,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 20, ChapterName = "Taha" } },
+                    new td { new Chapter { ChapterNumber = 20, ChapterName = "Taha" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -333,7 +326,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 26, ChapterName = "Şuara" } },
+                    new td { new Chapter { ChapterNumber = 26, ChapterName = "Şuara" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -359,7 +352,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 27, ChapterName = "Neml" } },
+                    new td { new Chapter { ChapterNumber = 27, ChapterName = "Neml" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -375,7 +368,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 28, ChapterName = "Kasas" } },
+                    new td { new Chapter { ChapterNumber = 28, ChapterName = "Kasas" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -393,7 +386,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 29, ChapterName = "Ankebut" } },
+                    new td { new Chapter { ChapterNumber = 29, ChapterName = "Ankebut" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -412,7 +405,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 30, ChapterName = "Rum" } },
+                    new td { new Chapter { ChapterNumber = 30, ChapterName = "Rum" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -431,7 +424,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 31, ChapterName = "Lokman" } },
+                    new td { new Chapter { ChapterNumber = 31, ChapterName = "Lokman" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -450,7 +443,7 @@ public class View : ReactComponent
                 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 32, ChapterName = "Secde" } },
+                    new td { new Chapter { ChapterNumber = 32, ChapterName = "Secde" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -469,7 +462,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 36, ChapterName = "Yasin" } },
+                    new td { new Chapter { ChapterNumber = 36, ChapterName = "Yasin" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -486,7 +479,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 38, ChapterName = "Sad" } },
+                    new td { new Chapter { ChapterNumber = 38, ChapterName = "Sad" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -501,7 +494,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 40, ChapterName = "Mümin" } },
+                    new td { new Chapter { ChapterNumber = 40, ChapterName = "Mümin" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -527,7 +520,7 @@ public class View : ReactComponent
                     {
                         new div
                         {
-                            new Chapter { ChapterNo = 41, ChapterName        = "Fussilet" },
+                            new Chapter { ChapterNumber = 41, ChapterName        = "Fussilet" },
                             
                         }
                         
@@ -548,7 +541,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 42, ChapterName = "Şura" } },
+                    new td { new Chapter { ChapterNumber = 42, ChapterName = "Şura" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -568,7 +561,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 43, ChapterName = "Zuhruf" } },
+                    new td { new Chapter { ChapterNumber = 43, ChapterName = "Zuhruf" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -585,7 +578,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 44, ChapterName = "Duhan" } },
+                    new td { new Chapter { ChapterNumber = 44, ChapterName = "Duhan" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -603,7 +596,7 @@ public class View : ReactComponent
                 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 45, ChapterName = "Casiye" } },
+                    new td { new Chapter { ChapterNumber = 45, ChapterName = "Casiye" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -620,7 +613,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 46, ChapterName = "Ahkaf" } },
+                    new td { new Chapter { ChapterNumber = 46, ChapterName = "Ahkaf" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -636,7 +629,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 50, ChapterName = "Kaf" } },
+                    new td { new Chapter { ChapterNumber = 50, ChapterName = "Kaf" } },
                     new td
                     {
                         new InitialLetterLineGroup
@@ -652,7 +645,7 @@ public class View : ReactComponent
 
                 new tr
                 {
-                    new td { new Chapter { ChapterNo = 68, ChapterName = "Kalem" } },
+                    new td { new Chapter { ChapterNumber = 68, ChapterName = "Kalem" } },
                     new td
                     {
                         new InitialLetterLineGroup
