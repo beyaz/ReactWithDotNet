@@ -29,11 +29,7 @@ public abstract class Element : IEnumerable<Element>
     [System.Text.Json.Serialization.JsonIgnore]
     public IEnumerable<Element> Children
     {
-        set
-        {
-            
-            children.AddRange(value);
-        }
+        set => children.AddRange(value);
     }
 
     /// <summary>

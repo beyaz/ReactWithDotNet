@@ -7,18 +7,10 @@ namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 class InitialLetter : ReactComponent
 {
-
-    public string Label { get; set; }
-
-    public string innerText
-    {
-        set => Label = value;
-    }
+    public string text { get; set; }
 
     public string id { get; set; }
 
-    public string SecondBorderColor { get; set; }
-    
     public override Element render()
     {
         var containerDiv = new div
@@ -29,17 +21,12 @@ class InitialLetter : ReactComponent
             {
                 new div
                 {
-                    style     = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px", margin = "5px" },
-                    id        = id,
-                    innerText = Label
+                    style = { border = "thin solid #a9acaa", borderRadius = "0.5rem", padding = "5px" },
+                    id    = id,
+                    text  = text
                 }
             }
         };
-
-        if (SecondBorderColor is not null)
-        {
-            containerDiv.style.border = $"1px solid {SecondBorderColor}";
-        }
         
         return containerDiv;
     }
@@ -86,7 +73,7 @@ class InitialLetterLineGroup: ReactComponent
         {
             style =
             {
-                display = "flex", margin = "1px"
+                display = "flex", margin = "1px", gap = "10px"
             },
             Children = Items
         };
@@ -144,9 +131,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"2-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"2-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"2-{Miim}", innerText  = Miim }
+                                new InitialLetter { id = $"2-{Alif}", text = Alif },
+                                new InitialLetter { id = $"2-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"2-{Miim}", text  = Miim }
                             }
                         }
                     },
@@ -164,9 +151,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"3-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"3-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"3-{Miim}", innerText  = Miim }
+                                new InitialLetter { id = $"3-{Alif}", text = Alif },
+                                new InitialLetter { id = $"3-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"3-{Miim}", text  = Miim }
                             }
                         },
                     },
@@ -182,10 +169,10 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"7-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"7-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"7-{Miim}", innerText  = Miim },
-                                new InitialLetter { id = $"7-{Saad}", innerText  = Saad}
+                                new InitialLetter { id = $"7-{Alif}", text = Alif },
+                                new InitialLetter { id = $"7-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"7-{Miim}", text  = Miim },
+                                new InitialLetter { id = $"7-{Saad}", text  = Saad}
                             }
                         }
                     },
@@ -202,9 +189,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"10-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"10-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"10-{Raa}", innerText   = Raa }
+                                new InitialLetter { id = $"10-{Alif}", text = Alif },
+                                new InitialLetter { id = $"10-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"10-{Raa}", text   = Raa }
                             }
                         }
                     },
@@ -220,9 +207,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"11-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"11-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"11-{Raa}", innerText   = Raa }
+                                new InitialLetter { id = $"11-{Alif}", text = Alif },
+                                new InitialLetter { id = $"11-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"11-{Raa}", text   = Raa }
                             }
                         }
                     },
@@ -239,9 +226,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"12-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"12-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"12-{Raa}", innerText   = Raa }
+                                new InitialLetter { id = $"12-{Alif}", text = Alif },
+                                new InitialLetter { id = $"12-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"12-{Raa}", text   = Raa }
                             }
                         }
                     },
@@ -258,10 +245,10 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"13-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"13-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"13-{Miim}", innerText  = Miim },
-                                new InitialLetter { id = $"13-{Raa}", innerText   = Raa }
+                                new InitialLetter { id = $"13-{Alif}", text = Alif },
+                                new InitialLetter { id = $"13-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"13-{Miim}", text  = Miim },
+                                new InitialLetter { id = $"13-{Raa}", text   = Raa }
                             }
                         }
                     },
@@ -278,9 +265,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"14-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"14-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"14-{Raa}", innerText   = Raa }
+                                new InitialLetter { id = $"14-{Alif}", text = Alif },
+                                new InitialLetter { id = $"14-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"14-{Raa}", text   = Raa }
                             }
                         }
                     },
@@ -297,9 +284,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"15-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"15-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"15-{Raa}", innerText   = Raa }
+                                new InitialLetter { id = $"15-{Alif}", text = Alif },
+                                new InitialLetter { id = $"15-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"15-{Raa}", text   = Raa }
                             }
                         }
                     },
@@ -316,11 +303,11 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"19-{Qaaf}", innerText = Qaaf },
-                                new InitialLetter { id = $"19-{Haa}", innerText  = Haa_ },
-                                new InitialLetter { id = $"19-{Yaa}", innerText = Yaa },
-                                new InitialLetter { id = $"19-{Ayn}", innerText = Ayn },
-                                new InitialLetter { id = $"19-{Saad}", innerText = Saad }
+                                new InitialLetter { id = $"19-{Qaaf}", text = Qaaf },
+                                new InitialLetter { id = $"19-{Haa}", text  = Haa_ },
+                                new InitialLetter { id = $"19-{Yaa}", text = Yaa },
+                                new InitialLetter { id = $"19-{Ayn}", text = Ayn },
+                                new InitialLetter { id = $"19-{Saad}", text = Saad }
 
                             }
                         }
@@ -337,8 +324,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"20-{Taa_}", innerText = Taa_ },
-                                new InitialLetter { id = $"20-{Haa}", innerText = Haa }
+                                new InitialLetter { id = $"20-{Taa_}", text = Taa_ },
+                                new InitialLetter { id = $"20-{Haa}", text = Haa }
                             }
                         }
                     }
@@ -353,9 +340,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"26-{Taa_}", innerText  = Taa_ },
-                                new InitialLetter { id = $"26-{Siin}", innerText = Siin },
-                                new InitialLetter { id = $"26-{Miim}", innerText = Miim }
+                                new InitialLetter { id = $"26-{Taa_}", text  = Taa_ },
+                                new InitialLetter { id = $"26-{Siin}", text = Siin },
+                                new InitialLetter { id = $"26-{Miim}", text = Miim }
                             }
                         }
                     },
@@ -379,8 +366,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"27-{Taa_}", innerText  = Taa_ },
-                                new InitialLetter { id = $"27-{Siin}", innerText = Siin }
+                                new InitialLetter { id = $"27-{Taa_}", text  = Taa_ },
+                                new InitialLetter { id = $"27-{Siin}", text = Siin }
                             }
                         }
                     }
@@ -395,9 +382,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"28-{Taa_}", innerText  = Taa_ },
-                                new InitialLetter { id = $"28-{Siin}", innerText = Siin },
-                                new InitialLetter { id = $"28-{Miim}", innerText = Miim }
+                                new InitialLetter { id = $"28-{Taa_}", text  = Taa_ },
+                                new InitialLetter { id = $"28-{Siin}", text = Siin },
+                                new InitialLetter { id = $"28-{Miim}", text = Miim }
                             }
                         }
                     },
@@ -413,9 +400,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"29-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"29-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"29-{Miim}", innerText  = Miim }
+                                new InitialLetter { id = $"29-{Alif}", text = Alif },
+                                new InitialLetter { id = $"29-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"29-{Miim}", text  = Miim }
                             }
                         }
                     },
@@ -432,9 +419,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"30-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"30-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"30-{Miim}", innerText  = Miim }
+                                new InitialLetter { id = $"30-{Alif}", text = Alif },
+                                new InitialLetter { id = $"30-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"30-{Miim}", text  = Miim }
                             }
                         }
                     },
@@ -451,9 +438,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"31-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"31-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"31-{Miim}", innerText  = Miim }
+                                new InitialLetter { id = $"31-{Alif}", text = Alif },
+                                new InitialLetter { id = $"31-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"31-{Miim}", text  = Miim }
                             }
                         }
                     },
@@ -470,9 +457,9 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"32-{Alif}", innerText = Alif },
-                                new InitialLetter { id = $"32-{Laam}", innerText  = Laam },
-                                new InitialLetter { id = $"32-{Miim}", innerText  = Miim }
+                                new InitialLetter { id = $"32-{Alif}", text = Alif },
+                                new InitialLetter { id = $"32-{Laam}", text  = Laam },
+                                new InitialLetter { id = $"32-{Miim}", text  = Miim }
                             }
                         }
                     },
@@ -489,8 +476,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"36-{Yaa}", innerText  = Yaa },
-                                new InitialLetter { id = $"36-{Siin}", innerText = Siin }
+                                new InitialLetter { id = $"36-{Yaa}", text  = Yaa },
+                                new InitialLetter { id = $"36-{Siin}", text = Siin }
                             }
                         }
                     },
@@ -506,7 +493,7 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"38-{Saad}", innerText = Saad }
+                                new InitialLetter { id = $"38-{Saad}", text = Saad }
                             }
                         }
                     }
@@ -521,8 +508,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"40-{Haa}", innerText  = Haa },
-                                new InitialLetter { id = $"40-{Miim}", innerText = Miim }
+                                new InitialLetter { id = $"40-{Haa}", text  = Haa },
+                                new InitialLetter { id = $"40-{Miim}", text = Miim }
                             }
                         }
                     },
@@ -551,8 +538,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"41-{Haa}", innerText  = Haa },
-                                new InitialLetter { id = $"41-{Miim}", innerText = Miim }
+                                new InitialLetter { id = $"41-{Haa}", text  = Haa },
+                                new InitialLetter { id = $"41-{Miim}", text = Miim }
                             }
                         }
                     },
@@ -568,11 +555,11 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"42-{Haa}", innerText  = Haa },
-                                new InitialLetter { id = $"42-{Miim}", innerText = Miim },
-                                new InitialLetter { id = $"42-{Ayn}", innerText = Ayn },
-                                new InitialLetter { id = $"42-{Siin}", innerText = Siin },
-                                new InitialLetter { id = $"42-{Qaaf}", innerText = Qaaf }
+                                new InitialLetter { id = $"42-{Haa}", text  = Haa },
+                                new InitialLetter { id = $"42-{Miim}", text = Miim },
+                                new InitialLetter { id = $"42-{Ayn}", text = Ayn },
+                                new InitialLetter { id = $"42-{Siin}", text = Siin },
+                                new InitialLetter { id = $"42-{Qaaf}", text = Qaaf }
                             }
                         }
                     },
@@ -588,8 +575,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"43-{Haa}", innerText  = Haa },
-                                new InitialLetter { id = $"43-{Miim}", innerText = Miim }
+                                new InitialLetter { id = $"43-{Haa}", text  = Haa },
+                                new InitialLetter { id = $"43-{Miim}", text = Miim }
                             }
                         }
                     },
@@ -605,8 +592,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"44-{Haa}", innerText  = Haa },
-                                new InitialLetter { id = $"44-{Miim}", innerText = Miim }
+                                new InitialLetter { id = $"44-{Haa}", text  = Haa },
+                                new InitialLetter { id = $"44-{Miim}", text = Miim }
                             }
                         }
                     },
@@ -623,8 +610,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"45-{Haa}", innerText  = Haa },
-                                new InitialLetter { id = $"45-{Miim}", innerText = Miim }
+                                new InitialLetter { id = $"45-{Haa}", text  = Haa },
+                                new InitialLetter { id = $"45-{Miim}", text = Miim }
                             }
                         }
                     },
@@ -640,8 +627,8 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"46-{Haa}", innerText  = Haa },
-                                new InitialLetter { id = $"46-{Miim}", innerText = Miim }
+                                new InitialLetter { id = $"46-{Haa}", text  = Haa },
+                                new InitialLetter { id = $"46-{Miim}", text = Miim }
                             }
                         }
                     }
@@ -656,7 +643,7 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"50-{Qaaf}", innerText = Qaaf }
+                                new InitialLetter { id = $"50-{Qaaf}", text = Qaaf }
                             }
                         }
                     },
@@ -672,7 +659,7 @@ public class View : ReactComponent
                         {
                             Items =
                             {
-                                new InitialLetter { id = $"68-{Nun}", innerText = Nun }
+                                new InitialLetter { id = $"68-{Nun}", text = Nun }
                             }
                         }
                     },
