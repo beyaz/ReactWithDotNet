@@ -44,7 +44,7 @@ class CountingResult: ReactComponent
     {
         return new div
         {
-            style = { display = "flex", flexDirection = DirectionIsColumn ? "column":"row", flexWrap = "wrap", marginLeft = "5px", marginTop = "70px" },
+            style = { display = "flex", flexDirection = DirectionIsColumn ? "column":"row", flexWrap = "wrap", marginLeft = "35px", marginTop = "-40px"},
             id    = id,
             children =
             {
@@ -845,6 +845,100 @@ class Arrow: ReactComponent
             //curveness  = 1.02,
             endAnchor = "left"
 
+        };
+    }
+}
+
+
+class Group_Saad: ReactComponent
+{
+    public override Element render()
+    {
+        return new div
+        {
+
+            new table
+            {
+
+
+                new tbody
+                {
+                    new tr
+                    {
+                        new th { innerText = "Sure" },
+                        new th { innerText = "Başlangıç Harfleri" },
+                        new th { innerText = "Sayım Sonuçları" }
+                    },
+                    new tr
+                    {
+                        new td{ new Chapter { ChapterNumber = 7, ChapterName = "Araf" } },
+                        new td{
+                            new InitialLetterLineGroup
+                        {
+                            Items =
+                            {
+                                new InitialLetter { id = $"7-{Alif}", text = Alif },
+                                new InitialLetter { id = $"7-{Laam}", text = Laam },
+                                new InitialLetter { id = $"7-{Miim}", text = Miim },
+                                new InitialLetter { id = $"7-{Saad}", text = Saad }
+                            }
+                        }}
+                    },
+                    new tr{style = { height = "5px"}},
+                    new tr
+                    {
+                        new td
+                        {
+                            new Chapter { ChapterNumber = 19, ChapterName = "Meryem" }
+                        },
+                        new td
+                        {
+                            new InitialLetterLineGroup
+                            {
+                                Items =
+                                {
+                                    new InitialLetter { id = $"19-{Qaaf}", text = Qaaf },
+                                    new InitialLetter { id = $"19-{Haa}", text  = Haa_ },
+                                    new InitialLetter { id = $"19-{Yaa}", text  = Yaa },
+                                    new InitialLetter { id = $"19-{Ayn}", text  = Ayn },
+                                    new InitialLetter { id = $"19-{Saad}", text = Saad }
+
+                                }
+                            }
+                        },
+                        new td
+                        {
+                            colSpan  = 3,
+                            children =
+                            {
+                                new CountingResult { id = "Three-Sad", MultipleOf = 8, SearchScript = GetLetterCountingScript("7:*,19:*,38:*", Saad) },
+                            }
+                        }
+                    },
+                    new tr
+                    {
+                        new td{ new Chapter { ChapterNumber = 38, ChapterName = "Sad" } },
+                        new td{new InitialLetterLineGroup
+                        {
+                            Items =
+                            {
+                                new InitialLetter { id = $"38-{Saad}", text = Saad }
+                            }
+                        }}
+                    }
+                }
+            },
+
+
+
+
+
+
+            
+
+            new Arrow { start = $"7-{Saad}", end  = "Three-Sad", dashness = true, StartAnchorFromRight = true },
+            new Arrow { start = $"19-{Saad}", end = "Three-Sad", dashness = true, StartAnchorFromRight = true },
+            new Arrow { start = $"38-{Saad}", end = "Three-Sad", dashness = true, StartAnchorFromRight = true },
         };
     }
 }

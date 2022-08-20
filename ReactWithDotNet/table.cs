@@ -11,26 +11,26 @@ public class tbody : HtmlElement
 public class tr : HtmlElement
 {
     [React]
-    public int? rowspan { get; set; }
+    public int? rowSpan { get; set; }
 
     [React]
-    public int? colspan { get; set; }
+    public int? colSpan { get; set; }
 }
 
 public class th : HtmlElement
 {
     [React]
-    public int? rowspan { get; set; }
+    public int? rowSpan { get; set; }
 
     [React]
-    public int? colspan { get; set; }
+    public int? colSpan { get; set; }
 }
 
 public class td : HtmlElement
 {
     [React]
-    public int? rowspan { get; set; }
+    public int? rowSpan { get; set; }
 
     [React]
-    public int? colspan { get; set; }
+    public int? colSpan { get; set; }
 }
