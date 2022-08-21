@@ -1,8 +1,12 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
+class AllInitialLettersModel
+{
+    public string SelectedTabIdentifier { get; set; }
+}
 
 
-class AllInitialLetters:ReactComponent<AllInitialLettersModel>
+class AllInitialLetters :ReactComponent<AllInitialLettersModel>
 {
     public AllInitialLetters()
     {
@@ -24,13 +28,11 @@ class AllInitialLetters:ReactComponent<AllInitialLettersModel>
                 
             },
 
-            // onClick = _ => state.SelectedTabIdentifier = _
             onClick = OnTabHeaderClick
-
         };
     }
 
-    void OnTabHeaderClick(string _) => state.SelectedTabIdentifier = _;
+    void OnTabHeaderClick(string tabIdentifier) => state.SelectedTabIdentifier = tabIdentifier;
     public override Element render()
     {
 
@@ -43,25 +45,27 @@ class AllInitialLetters:ReactComponent<AllInitialLettersModel>
             }
         };
 
-        var headers =  new div
+        var headers = new div
         {
-            style = { display = "flex", flexDirection           = "column",
-                borderRight   = "1px solid #dee2e6", 
-                whiteSpace = "normal" ,
-                alignItems = "stretch",
-                color         = "rgba(0, 0, 0, 0.6)",
-                textAlign = "center",
-                cursor = "pointer"
+            style =
+            {
+                display     = "flex", 
+                flexDirection = "column",
+                borderRight = "1px solid #dee2e6",
+                whiteSpace  = "normal",
+                alignItems  = "stretch",
+                color       = "rgba(0, 0, 0, 0.6)",
+                textAlign   = "center",
+                cursor      = "pointer"
 
             },
             children =
             {
-                CreateTabHeader("Kaf",nameof(InitialLetterGroup_Saad)),
-                CreateTabHeader("Saad",nameof(InitialLetterGroup_Saad)),
-                CreateTabHeader("Ha Mim",nameof(InitialLetterGroup_HaMim)),
-                CreateTabHeader("Ha Mim",nameof(InitialLetterGroup_HaMimSeparated)),
-                CreateTabHeader("Ta Sin Mim",nameof(InitialLetterGroup_TaSinMim)),
-
+                CreateTabHeader("Kaf", typeof(InitialLetterGroup_Saad).FullName),
+                CreateTabHeader("Saad", typeof(InitialLetterGroup_Saad).FullName),
+                CreateTabHeader("Ha Mim", typeof(InitialLetterGroup_HaMim).FullName),
+                CreateTabHeader("Ha Mim", typeof(InitialLetterGroup_HaMimSeparated).FullName),
+                CreateTabHeader("Ta Sin Mim", typeof(InitialLetterGroup_TaSinMim).FullName)
             }
         };
 
@@ -81,29 +85,14 @@ class AllInitialLetters:ReactComponent<AllInitialLettersModel>
     Element CreateContent()
     {
         Element content = new div();
-        if (state.SelectedTabIdentifier == nameof(InitialLetterGroup_HaMim))
+        
+        if (state.SelectedTabIdentifier.HasValue())
         {
-            content = new InitialLetterGroup_HaMim();
+            content = (Element)Activator.CreateInstance(Type.GetType(state.SelectedTabIdentifier) ?? throw new TypeLoadException(state.SelectedTabIdentifier));
         }
-        else if (state.SelectedTabIdentifier == nameof(InitialLetterGroup_HaMimSeparated))
-        {
-            content = new InitialLetterGroup_HaMimSeparated();
-        }
-        else if (state.SelectedTabIdentifier == nameof(InitialLetterGroup_TaSinMim))
-        {
-            content = new InitialLetterGroup_TaSinMim();
-        }
-        else if (state.SelectedTabIdentifier == nameof(InitialLetterGroup_Saad))
-        {
-            content = new InitialLetterGroup_Saad();
-        }
-
+        
         return content;
     }
 }
 
 
-class AllInitialLettersModel
-{
-    public string SelectedTabIdentifier { get; set; } 
-}
