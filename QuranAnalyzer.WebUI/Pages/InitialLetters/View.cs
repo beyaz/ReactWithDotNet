@@ -101,6 +101,9 @@ public class View : ReactComponent
 {
     public override Element render()
     {
+      
+
+
         var table = new table
         {
             new tbody
@@ -663,7 +666,7 @@ public class View : ReactComponent
         var colorForConnectedFromOtherChapters = "#66f295";
 
 
-        return new div
+        var yy =  new div
         {
            style={ display = "flex", justifyContent = "center", fontSize = Context.ClientWidth < 400 ? "9px": null },
            children =
@@ -802,11 +805,11 @@ public class View : ReactComponent
                new Xarrow{start =$"43-{Miim}", end = "41-42-43",  startAnchor="top",endAnchor="left", color = "red",strokeWidth = 1},
            }
         };
-        
 
 
-        
-        
+        return new AllInitialLetters();
+
+
     }
 
    

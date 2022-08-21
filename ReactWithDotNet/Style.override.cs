@@ -123,5 +123,7 @@ partial class Style
             paddingRight = value;
         }
     }
+
+    public string borderInlineStyle { get; set; }
     #endregion
 }
