@@ -67,6 +67,7 @@ class AllInitialLetters :ReactComponent<AllInitialLettersModel>
                 CreateTabHeader("42_AinSinKaf", typeof(InitialLetterGroup_Chapter42_AinSinKaf).FullName),
                 CreateTabHeader("Meryem", typeof(InitialLetterGroup_Chapter19).FullName),
                 CreateTabHeader("Elif Lam Mim", typeof(InitialLetterGroup_Alif_Laam_Miim).FullName),
+                CreateTabHeader("Elif Lam Ra", typeof(InitialLetterGroup_Alif_Laam_Raa).FullName),
                 CreateTabHeader("Saad", typeof(InitialLetterGroup_Saad).FullName),
                 CreateTabHeader("Ha Mim", typeof(InitialLetterGroup_HaMim).FullName),
                 CreateTabHeader("Ha Mim", typeof(InitialLetterGroup_HaMimSeparated).FullName),
