@@ -116,6 +116,9 @@ public class a : HtmlElement
 {
     [React]
     public string href { get; set; }
+    
+    [React]
+    public string target { get; set; }
 }
 public class lu : HtmlElement
 {
