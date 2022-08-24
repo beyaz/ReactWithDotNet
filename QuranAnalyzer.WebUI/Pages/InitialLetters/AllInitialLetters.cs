@@ -15,6 +15,8 @@ class AllInitialLetters :ReactComponent<AllInitialLettersModel>
 
     Element CreateTabHeader(string text, string identifier)
     {
+        var isSelected = state.SelectedTabIdentifier == identifier;
+        
         return new div
         {
             id = identifier,
@@ -23,8 +25,8 @@ class AllInitialLetters :ReactComponent<AllInitialLettersModel>
             style =
             {
                 padding     = "10px",
-                borderRight = state.SelectedTabIdentifier == identifier ? "1.7px  solid #1976d2" : null,
-                color       = state.SelectedTabIdentifier == identifier ? "#1976d2" : null,
+                borderRight = $"1px solid {(isSelected ? "#1976d2" : "#dee2e6")}",
+                color       = isSelected ? "#1976d2" : null,
                 
             },
 
@@ -51,7 +53,6 @@ class AllInitialLetters :ReactComponent<AllInitialLettersModel>
             {
                 display     = "flex", 
                 flexDirection = "column",
-                borderRight = "1px solid #dee2e6",
                 whiteSpace  = "normal",
                 alignItems  = "stretch",
                 color       = "rgba(0, 0, 0, 0.6)",
