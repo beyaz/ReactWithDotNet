@@ -43,11 +43,11 @@ class ApplicationLayout : ReactComponent
             {
                 position     = "fixed",
                 top          = "0px",
-                left         = "0px",
+                left         = (IsBackDropActive ? "400px" : "0px"),
                 marginTop    = "50px",
                 marginBottom = "27px",
 
-                width     = "100%",
+                width     = IsBackDropActive ? "calc(100% - 400px)" : "100%",
                 height    = "calc(100% - 65px)",
                 overflowY = "auto"
             }
