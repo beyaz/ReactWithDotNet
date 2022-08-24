@@ -13,6 +13,57 @@ public static class QuranQuery
         return false;
     }
 
+    public static IReadOnlyList<IReadOnlyList<LetterInfo>> GetWords(this IReadOnlyList<LetterInfo> text)
+    {
+        var returnList = new List<IReadOnlyList<LetterInfo>>();
+        
+        var length = text.Count;
+
+        var currentWord = new List<LetterInfo>();
+        
+        for (var i = 0; i < length; i++)
+        {
+            if (text[i].MatchedLetter == " ")
+            {
+                if (currentWord.Count == 0)
+                {
+                    continue;
+                }
+                
+                returnList.Add(currentWord);
+
+                currentWord = new List<LetterInfo>();
+                
+                continue;
+            }
+
+            currentWord.Add(text[i]);
+        }
+
+        if (currentWord.Count>0)
+        {
+            returnList.Add(currentWord);
+        }
+
+        return returnList;
+    }
+
+
+    public static IReadOnlyList<LetterInfo> GetStartPointsOfSameWords(this IReadOnlyList<LetterInfo> verseText, IReadOnlyList<LetterInfo> searchWord)
+    {
+        var returnList = new List<LetterInfo>();
+
+        foreach (var word in GetWords(verseText))
+        {
+            if (word.HasValueAndSame(searchWord))
+            {
+                returnList.Add(word[0]);
+            }
+        }
+
+        return returnList;
+    }
+
     public static bool HasValueAndSame(this IReadOnlyList<LetterInfo> a, IReadOnlyList<LetterInfo> b)
     {
         if (a == null || b == null)

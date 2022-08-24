@@ -16,18 +16,25 @@ public static class DataAccess
         {
             Name  = chapter._name,
             Index = int.Parse(chapter._index),
-            Verses = chapter.aya.AsListOf(v => new Verse
-            {
-                Index            = v._index,
-                Bismillah        = v._bismillah,
-                Text             = v._text,
-                ChapterNumber    = int.Parse(chapter._index),
-                Id               = $"{chapter._index}:{v._index}",
-                WordList         = v._text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).AsListOf(word => AnalyzeText(word)),
-                AnalyzedFullText = AnalyzeText(v._bismillah + v._text),
-                TextWithBismillah = v._bismillah + v._text,
-            })
+            Verses = chapter.aya.AsListOf(v => toVerse(chapter,v))
         });
+
+        static Verse toVerse(Surah_ chapter, Verse_ v)
+        {
+            var analyzedFullText = AnalyzeText(v._bismillah + v._text);
+            
+            return new Verse
+            {
+                Index             = v._index,
+                Bismillah         = v._bismillah,
+                Text              = v._text,
+                ChapterNumber     = int.Parse(chapter._index),
+                Id                = $"{chapter._index}:{v._index}",
+                WordList          = analyzedFullText.GetWords(),
+                AnalyzedFullText  = analyzedFullText,
+                TextWithBismillah = v._bismillah + v._text,
+            };
+        }
     }
     class Surah_
     {
