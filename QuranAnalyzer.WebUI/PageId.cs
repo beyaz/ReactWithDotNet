@@ -9,6 +9,7 @@ static class PageId
     public const string ContactPage = "5";
     public const string CharacterCounting = "6";
     public const string PageIdOfMushafOptionsDetail = "7";
+    public const string WordSearchingPage = "8";
 }
 
 static class QueryKey

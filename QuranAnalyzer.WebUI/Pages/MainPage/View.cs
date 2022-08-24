@@ -91,7 +91,12 @@ class View : ReactComponent<MainViewModel>
             {
                 return new SecuringDataWithCurrentTechnology.View();
             }
-            
+
+            if (state.PageId == PageId.WordSearchingPage)
+            {
+                return new WordSearchingPage.View();
+            }
+
 
             return new MainPageContent();
         }
