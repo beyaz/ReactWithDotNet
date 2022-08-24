@@ -747,7 +747,8 @@ function DefineComponent(componentDeclaration)
                         if (key === RootNode ||
                             key === DotNetTypeOfReactComponent ||
                             key === FullTypeNameOfState ||
-                            key === '$HasComponentDidMountMethod'||
+                            key === '$HasComponentDidMountMethod' ||
+                            key === '$RootNodeOnMouseEnter'||
                             key === 'key' ||
                             key === 'state')
                         {
