@@ -1,6 +1,6 @@
-﻿namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer.WebUI;
 
-static class LetterColor
+static class LetterColorPalette
 {
     static readonly string[] Colors = { "blue", "red", "#E0B4E8", "#D4D925", "#159E09" };
 

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using static QuranAnalyzer.ArabicLetterIndex;
-using static QuranAnalyzer.LetterColor;
+using static QuranAnalyzer.WebUI.LetterColorPalette;
 using static QuranAnalyzer.QuranAnalyzerMixin;
 
 namespace QuranAnalyzer;
