@@ -16,6 +16,8 @@ public class CharacterCountingViewModel
     public bool IsBlocked { get; set; }
 
     public string SearchScript { get; set; }
+    
+    public string SearchScriptErrorMessage { get; set; }
 }
 
 class SearchScript
@@ -115,7 +117,13 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VStack
                     {
                         new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
-                        new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true}
+                        new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true},
+                        new small{text = state.SearchScriptErrorMessage, style=
+                        {
+                            color = "#e24c4c",
+                            marginTop = "5px",
+                            display = state.SearchScriptErrorMessage.HasValue() ?"": "none"
+                        }}
                     },
                    
                     new VSpace(3),
@@ -234,6 +242,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     #region Methods
     void OnCaclculateClicked(string _)
     {
+        if (state.SearchScript.HasNoValue())
+        {
+            state.SearchScriptErrorMessage = "Arama Komutu doldurulmalıdır";
+            return;
+        }
         state.ClickCount++;
 
         if (state.IsBlocked == false)

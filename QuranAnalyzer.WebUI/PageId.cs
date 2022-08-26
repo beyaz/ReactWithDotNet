@@ -22,3 +22,8 @@ static class ResourceAccess
 {
     public static string Img(string fileName) => ReactWithDotNetIntegration.RootFolderName + "/img/" +fileName;
 }
+
+class ApplicationEventName
+{
+    public const string BackdropClicked = nameof(BackdropClicked);
+}

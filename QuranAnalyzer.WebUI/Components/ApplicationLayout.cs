@@ -1,7 +1,29 @@
-﻿using ReactWithDotNet;
-
+﻿
 namespace QuranAnalyzer.WebUI.Components;
 
+class BackdropModel
+{
+    
+    
+}
+
+class BackdropView: ReactComponent<BackdropModel>
+{
+    public BackdropView()
+    {
+        state = new BackdropModel();
+    }
+    
+    public override Element render()
+    {
+        return new div
+        {
+            className = "p-blockui p-component-overlay p-component-overlay-enter", 
+            style = { zIndex = "3" },
+            onClick = _=>Context.ClientTask.DispatchEvent(ApplicationEventName.BackdropClicked,"")
+        };
+    }
+}
 class ApplicationLayout : ReactComponent
 {
     public Element topContent;
@@ -18,7 +40,7 @@ class ApplicationLayout : ReactComponent
             children = { topContent }
         };
 
-        var backDrop = new div { className = "p-blockui p-component-overlay p-component-overlay-enter",style = { zIndex = "3"}};
+        var backDrop = new BackdropView();
         var main = new div
         {
             id = "main",

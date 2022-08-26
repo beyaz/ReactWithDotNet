@@ -17,7 +17,7 @@ class AllInitialLetters :ReactComponent<AllInitialLettersModel>
     {
         var isSelected = state.SelectedTabIdentifier == identifier;
         
-        return new div
+        var element = new div
         {
             id = identifier,
             text = text,
@@ -26,12 +26,17 @@ class AllInitialLetters :ReactComponent<AllInitialLettersModel>
             {
                 padding     = "10px",
                 borderRight = $"1px solid {(isSelected ? "#1976d2" : "#dee2e6")}",
-                color       = isSelected ? "#1976d2" : null,
-                
             },
 
             onClick = OnTabHeaderClick
         };
+
+        if (isSelected)
+        {
+            element.style.background = "rgb(203 213 223 / 8%)";
+            element.style.color      = "#1976d2";
+        }
+        return element;
     }
 
     void OnTabHeaderClick(string tabIdentifier) => state.SelectedTabIdentifier = tabIdentifier;

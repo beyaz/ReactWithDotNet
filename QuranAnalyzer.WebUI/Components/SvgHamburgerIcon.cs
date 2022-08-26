@@ -18,6 +18,12 @@ class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
     public SvgHamburgerIcon()
     {
         state = new SvgHamburgerIconModel();
+        
+    }
+
+    public void ComponentDidMount()
+    {
+        Context.ClientTask.ListenEvent(ApplicationEventName.BackdropClicked, nameof(OnHamburgerMenuClicked));
     }
 
     public override Element render()

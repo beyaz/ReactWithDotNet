@@ -67,6 +67,21 @@ class View : ReactComponent<MainViewModel>
 
         Element buildMainContent()
         {
+            if (state.PageId == PageId.MainPage)
+            {
+                return new MainPageContent();
+            }
+
+            if (state.PageId == PageId.SecuringDataWithCurrentTechnology)
+            {
+                return new SecuringDataWithCurrentTechnology.View();
+            }
+
+            if (state.PageId == PageId.InitialLetters)
+            {
+                return new InitialLetters.AllInitialLetters();
+            }
+            
             if (state.PageId == PageId.QuestionAnswerPage)
             {
                 return new QuestionAnswerPage.View();
@@ -77,20 +92,14 @@ class View : ReactComponent<MainViewModel>
                 return new ContactPage.View();
             }
 
-            if (state.PageId == PageId.InitialLetters)
-            {
-                return new InitialLetters.View();
-            }
+           
 
             if (state.PageId == PageId.CharacterCounting)
             {
                 return new CharacterCountingView();
             }
 
-            if (state.PageId == PageId.SecuringDataWithCurrentTechnology)
-            {
-                return new SecuringDataWithCurrentTechnology.View();
-            }
+            
 
             if (state.PageId == PageId.WordSearchingPage)
             {
