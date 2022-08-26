@@ -106,11 +106,6 @@ public sealed class ClientTaskCollection
         taskList.Add(new ClientTask { TaskId = 4, Title = title, Url = url });
     }
 
-    public void ComebackWithLastAction(int timeout)
-    {
-        taskList.Add(new ClientTask { TaskId = 5, Timeout = timeout });
-    }
-
     public void GotoMethod(int timeout, string methodName, params object[] methodArguments)
     {
         taskList.Add(new ClientTask { TaskId = 6, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });

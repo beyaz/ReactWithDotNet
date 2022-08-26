@@ -256,7 +256,7 @@ var ClientTaskId =
     DispatchEvent: 2,        
     
     PushHistory: 4,
-    ComebackWithLastAction: 5,
+    // free 5,
     GotoMethod: 6,
     NavigateToUrl : 7
 }
@@ -531,6 +531,79 @@ function NormalizeEventArguments(eventArguments)
     );
 }
 
+function ProcessClientTasks(clientTasks, component)
+{
+    if (clientTasks == null)
+    {
+        return;
+    }
+
+    for (let i = 0; i < clientTasks.length; i++)
+    {
+        const clientTask = clientTasks[i];
+                       
+        if (clientTask.TaskId === ClientTaskId.GotoMethod)
+        {
+            EventQueue.push(() =>
+            {
+                setTimeout(() =>
+                {
+                    HandleAction({ remoteMethodName: clientTask.MethodName, component: component, eventArguments: clientTask.MethodArguments || [] });
+
+                }, clientTask.Timeout);
+
+                OnReactStateReady();
+            });
+
+            continue;
+        }
+
+        if (clientTask.TaskId === ClientTaskId.PushHistory)
+        {
+            window.history.replaceState({}, clientTask.Title, clientTask.Url);
+
+            continue;
+        }
+
+        if (clientTask.TaskId === ClientTaskId.DispatchEvent)
+        {
+            EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
+
+            continue;
+        }
+
+        if (clientTask.TaskId === ClientTaskId.ListenEvent)
+        {
+            EventBus.On(clientTask.EventName, (eventArgumentsAsArray)=>
+            {
+                HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
+            });
+
+            continue;
+        }
+                
+        if (clientTask.TaskId === ClientTaskId.CallJsFunction)
+        {
+            EventQueue.push(() =>
+            {
+                CallJsFunctionInPath(clientTask);
+                OnReactStateReady();
+            });
+
+            continue;
+        }
+
+        if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
+        {
+            window.location.replace(location.origin + clientTask.Url);
+
+            continue;
+        }
+
+        throw CreateNewDeveloperError("ClientTask not recognized.");
+    }
+}
+
 function HandleAction(data)
 {
     const remoteMethodName = data.remoteMethodName;
@@ -572,92 +645,7 @@ function HandleAction(data)
             data.component.setState(newState, onStateReady);
         }
 
-        const clientTasks = response.ClientTasks;
-        
-        if (clientTasks != null)
-        {
-            for (let i = 0; i < clientTasks.length; i++)
-            {
-                const clientTask = clientTasks[i];
-
-                if (clientTask.TaskId === ClientTaskId.ComebackWithLastAction)
-                {
-                    EventQueue.push(() =>
-                    {
-                        setTimeout(() =>
-                        {
-                            request.CapturedStateTree = component.CaptureStateTree();
-                            SendRequest(request, onSuccess);
-
-                        }, clientTask.Timeout);
-
-                        OnReactStateReady();
-                    });
-
-                    continue;
-                }
-
-                if (clientTask.TaskId === ClientTaskId.GotoMethod)
-                {
-                    EventQueue.push(() =>
-                    {
-                        setTimeout(() =>
-                        {
-                            HandleAction({ remoteMethodName: clientTask.MethodName, component: component, eventArguments: clientTask.MethodArguments || [] });
-
-                        }, clientTask.Timeout);
-
-                        OnReactStateReady();
-                    });
-
-                    continue;
-                }
-
-                if (clientTask.TaskId === ClientTaskId.PushHistory)
-                {
-                    window.history.replaceState({}, clientTask.Title, clientTask.Url);
-
-                    continue;
-                }
-
-                if (clientTask.TaskId === ClientTaskId.DispatchEvent)
-                {
-                    EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
-
-                    continue;
-                }
-
-                if (clientTask.TaskId === ClientTaskId.ListenEvent)
-                {
-                    EventBus.On(clientTask.EventName, (eventArgumentsAsArray)=>
-                    {
-                        HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
-                    });
-
-                    continue;
-                }
-                
-                if (clientTask.TaskId === ClientTaskId.CallJsFunction)
-                {
-                    EventQueue.push(() =>
-                    {
-                        CallJsFunctionInPath(clientTask);
-                        OnReactStateReady();
-                    });
-
-                    continue;
-                }
-
-                if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
-                {
-                    window.location.replace(location.origin + clientTask.Url);
-
-                    continue;
-                }
-
-                throw CreateNewDeveloperError("ClientTask not recognized.");
-            }    
-        }
+        ProcessClientTasks(response.ClientTasks, component);
         
         restoreState(OnReactStateReady);
     }
@@ -873,37 +861,12 @@ function RenderComponentIn(obj)
             const element = response.ElementAsJson;
 
             const component = DefineComponent(element);
-            
+
             const clientTasks = response.ClientTasks;
 
             function renderCallback(component)
             {
-                if (clientTasks != null)
-                {
-                    for (let i = 0; i < clientTasks.length; i++)
-                    {
-                        const clientTask = clientTasks[i];
-
-                        if (clientTask.TaskId === ClientTaskId.ListenEvent)
-                        {
-                            EventBus.On(clientTask.EventName, (eventArgumentsAsArray)=>
-                            {
-                                HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
-                            });
-
-                            continue;
-                        }
-
-                        if (clientTask.TaskId === ClientTaskId.CallJsFunction)
-                        {
-                            CallJsFunctionInPath(clientTask);
-
-                            continue;
-                        }
-
-                        throw CreateNewDeveloperError("Client Task not recognized");
-                    }    
-                }
+                ProcessClientTasks(clientTasks, component);
                 
                 OnReactStateReady();
             }
