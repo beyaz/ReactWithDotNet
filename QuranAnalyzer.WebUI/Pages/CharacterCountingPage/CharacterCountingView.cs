@@ -70,6 +70,49 @@ class SearchScript
     }
 }
 
+class ErrorTextModel
+{
+    public string Text { get; set; }
+}
+
+class ErrorText: ReactComponent<ErrorTextModel>
+{
+    public string Text { get; set; }
+    
+    public ErrorText()
+    {
+        state =  new ErrorTextModel();
+        
+        StateInitialized += () => state.Text = Text;
+    }
+    
+
+    public void ClearMessage()
+    {
+        state.Text = null;
+    }
+    
+    public override Element render()
+    {
+        if (state.Text.HasValue())
+        {
+            Context.ClientTask.GotoMethod(2000, nameof(ClearMessage));
+        }
+        
+        return new small
+        {
+            text = state.Text,
+            style =
+            {
+                color     = "#e24c4c",
+                marginTop = "5px",
+                display   = state.Text.HasValue() ? "" : "none"
+            }
+        };
+    }
+}
+
+
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
     #region Constructors
@@ -118,12 +161,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     {
                         new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
                         new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true},
-                        new small{text = state.SearchScriptErrorMessage, style=
-                        {
-                            color = "#e24c4c",
-                            marginTop = "5px",
-                            display = state.SearchScriptErrorMessage.HasValue() ?"": "none"
-                        }}
+                        new ErrorText{Text = state.SearchScriptErrorMessage}
                     },
                    
                     new VSpace(3),
