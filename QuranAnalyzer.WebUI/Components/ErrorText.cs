@@ -1,4 +1,4 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+﻿namespace QuranAnalyzer.WebUI.Components;
 
 
 class ErrorTextModel
