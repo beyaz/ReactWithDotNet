@@ -136,3 +136,9 @@ public abstract class ReactComponent<TState> : ReactStatefulComponent where TSta
 {
     public  TState state { get; protected set; }
 }
+
+[Serializable]
+public class EmptyState
+{
+    
+}
