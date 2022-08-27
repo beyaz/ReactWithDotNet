@@ -38,19 +38,13 @@ public class ComponentRequest
 [Serializable]
 public class ComponentResponse
 {
-    #region Public Properties
-    public string ElementAsJsonString { get; set; }
-
     public IReadOnlyList<object> ClientTasks { get; set; }
 
     public string ErrorMessage { get; set; }
 
-    public string NavigateToUrl { get; set; }
-
     public object ElementAsJson { get; set; }
 
     public IReadOnlyList<string> Trace { get; set; }
-    #endregion
 }
 
 public static class ComponentRequestHandler

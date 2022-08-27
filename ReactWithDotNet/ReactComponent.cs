@@ -79,7 +79,7 @@ public sealed class ReactContextKey<TValue>
 
 public sealed class ClientTaskCollection
 {
-    readonly List<ClientTask> taskList = new();
+    internal readonly List<ClientTask> taskList = new();
 
 
     internal ClientTask[] ToArray() => taskList.ToArray();
@@ -123,7 +123,8 @@ public abstract class ReactStatefulComponent : Element
     [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; set; }
 
-    
+    public readonly  ClientTaskCollection ClientTask  = new();
+
     public abstract Element render();
 
     public event Action StateInitialized;

@@ -341,11 +341,18 @@ public static class ElementSerializer
             map.Add("$RootNodeOnMouseEnter", ToMap(reactStatefulComponent.render(), stateTree));
         }
 
+        if (reactStatefulComponent.ClientTask.taskList.Count > 0)
+        {
+            map.Add("$ClientTasks", reactStatefulComponent.ClientTask.taskList);
+        }
+
+
         foreach (var propertyInfo in reactStatefulComponent.GetType().GetProperties())
         {
             if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
                 propertyInfo.Name == nameof(reactStatefulComponent.Children)||
                 propertyInfo.Name == nameof(reactStatefulComponent.key) ||
+                propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
                 propertyInfo.Name == "state")
             {
                 continue;

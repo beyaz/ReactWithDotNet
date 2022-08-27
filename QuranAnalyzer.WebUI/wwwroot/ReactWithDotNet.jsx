@@ -276,6 +276,13 @@ function IfNull(value, defaultValue)
     return value;
 }
 
+
+const GetNextSequence = (() =>
+{
+    var sequence = 1;
+
+    return () => { return sequence++; };
+})();
 function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
 {   
     if (jsonNode.$FakeChild != null)
@@ -289,11 +296,12 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
         const cmp = DefineComponent(jsonNode);
 
         return createElement(cmp,
-            {
-                key: NotNull(jsonNode.key),
-                ParentReactWithDotNetManagedComponent: component,
-                $jsonNode: jsonNode
-            });
+        {
+            key: NotNull(jsonNode.key),
+            ParentReactWithDotNetManagedComponent: component,
+            $jsonNode: jsonNode,
+            $propId: GetNextSequence()
+        });
     }
 
     let props = null;
@@ -544,6 +552,8 @@ function ProcessClientTasks(clientTasks, component)
                        
         if (clientTask.TaskId === ClientTaskId.GotoMethod)
         {
+            NotNull(component);
+
             EventQueue.push(() =>
             {
                 setTimeout(() =>
@@ -574,6 +584,8 @@ function ProcessClientTasks(clientTasks, component)
 
         if (clientTask.TaskId === ClientTaskId.ListenEvent)
         {
+            NotNull(component);
+
             EventBus.On(clientTask.EventName, (eventArgumentsAsArray)=>
             {
                 HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
@@ -607,14 +619,14 @@ function ProcessClientTasks(clientTasks, component)
 function HandleAction(data)
 {
     const remoteMethodName = data.remoteMethodName;
-    const component = data.component;
+    const component = NotNull(data.component);
     
     const request =
     {
         MethodName: "HandleComponentEvent",
 
         EventHandlerMethodName: NotNull(remoteMethodName),
-        FullName   : component.constructor[DotNetTypeOfReactComponent],
+        FullName   : NotNull(component.constructor)[DotNetTypeOfReactComponent],
         CapturedStateTree: component.CaptureStateTree()
     };
     
@@ -674,7 +686,8 @@ function DefineComponent(componentDeclaration)
             this.state =
             {
                 $rootNode: NotNull(props.$jsonNode[RootNode]),
-                $state   : NotNull(props.$jsonNode.state)
+                $state: NotNull(props.$jsonNode.state),
+                $propId: props.$propId
             };
 
             if (props.$jsonNode.$RootNodeOnMouseEnter)
@@ -736,7 +749,8 @@ function DefineComponent(componentDeclaration)
                             key === DotNetTypeOfReactComponent ||
                             key === FullTypeNameOfState ||
                             key === '$HasComponentDidMountMethod' ||
-                            key === '$RootNodeOnMouseEnter'||
+                            key === '$RootNodeOnMouseEnter' ||
+                            key === '$ClientTasks'||
                             key === 'key' ||
                             key === 'state')
                         {
@@ -792,7 +806,7 @@ function DefineComponent(componentDeclaration)
             {
                 return ConvertToReactElement(state.$RootNodeOnMouseEnter, this, /*isConvertingRootNode*/true);    
             }
-            
+
             return ConvertToReactElement(state.$rootNode, this, /*isConvertingRootNode*/true);
         }
 
@@ -808,6 +822,25 @@ function DefineComponent(componentDeclaration)
         componentWillUnmount()
         {
             
+        }        
+
+        componentDidUpdate(nextProps)
+        {
+            ProcessClientTasks(this.state.$clientTasks, this);
+        }
+
+        static getDerivedStateFromProps(props, state) 
+        {
+            if (state.$propId !== props.$propId)
+            {
+                return {
+                    $rootNode: NotNull(props.$jsonNode[RootNode]),
+                    $propId: props.$propId,
+                    $clientTasks: props.$jsonNode.$ClientTasks
+                };
+            }
+
+            return null;
         }
     }
     

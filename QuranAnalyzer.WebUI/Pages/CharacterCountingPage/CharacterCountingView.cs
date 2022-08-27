@@ -90,25 +90,33 @@ class ErrorText: ReactComponent<ErrorTextModel>
     public void ClearMessage()
     {
         state.Text = null;
+        Text       = null;
     }
     
     public override Element render()
     {
         if (state.Text.HasValue())
         {
-            Context.ClientTask.GotoMethod(2000, nameof(ClearMessage));
+            ClientTask.GotoMethod(3000, nameof(ClearMessage));
         }
         
-        return new small
+        var element = new small
         {
             text = state.Text,
             style =
             {
                 color     = "#e24c4c",
-                marginTop = "5px",
-                display   = state.Text.HasValue() ? "" : "none"
+                marginTop = "5px"
             }
         };
+
+        if (state.Text.HasNoValue())
+        {
+            element.style.display = "none";
+        }
+        
+        return element;
+        
     }
 }
 
@@ -141,8 +149,9 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     public void ArabicKeyboardPressed(string letter)
     {
-        state.ClickCount    =  0;
-        state.SearchScript += " " + letter;
+        state.SearchScriptErrorMessage =  null;
+        state.ClickCount               =  0;
+        state.SearchScript             += " " + letter;
     }
 
     #region Public Methods
@@ -280,6 +289,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     #region Methods
     void OnCaclculateClicked(string _)
     {
+        state.SearchScriptErrorMessage = null;
         if (state.SearchScript.HasNoValue())
         {
             state.SearchScriptErrorMessage = "Arama Komutu doldurulmalıdır";
