@@ -38,8 +38,8 @@ class View : ReactComponent<Model>
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            Context.ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
-            Context.ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
+            ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
+            ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
             return;
         }
 

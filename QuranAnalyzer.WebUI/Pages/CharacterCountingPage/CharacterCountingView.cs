@@ -144,7 +144,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, nameof(ArabicKeyboardPressed));
+        ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, nameof(ArabicKeyboardPressed));
     }
 
     public void ArabicKeyboardPressed(string letter)
@@ -300,8 +300,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            Context.ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
-            Context.ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
+            ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
+            ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
             return;
         }
 
