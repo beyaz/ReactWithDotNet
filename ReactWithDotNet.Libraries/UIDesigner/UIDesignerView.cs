@@ -13,8 +13,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.ListenEvent("OnBrowserInactive", nameof(Refresh));
-        Context.ClientTask.CallJsFunction("InitializeUIDesignerEvents", 1000);
+        ClientTask.ListenEvent("OnBrowserInactive", nameof(Refresh));
+        ClientTask.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
 
     public override Element render()
