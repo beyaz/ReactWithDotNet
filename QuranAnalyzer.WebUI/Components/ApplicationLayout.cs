@@ -20,7 +20,7 @@ class BackdropView: ReactComponent<BackdropModel>
         {
             className = "p-blockui p-component-overlay p-component-overlay-enter", 
             style = { zIndex = "3" },
-            onClick = _=>Context.ClientTask.DispatchEvent(ApplicationEventName.BackdropClicked,"")
+            onClick = _=>ClientTask.DispatchEvent(ApplicationEventName.BackdropClicked,"")
         };
     }
 }

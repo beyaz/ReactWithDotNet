@@ -12,7 +12,7 @@ class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
     public void OnHamburgerMenuClicked(string _)
     {
         state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
-        Context.ClientTask.DispatchEvent("OnHamburgerMenuClicked", state.HamburgerMenuIsOpen);
+        ClientTask.DispatchEvent("OnHamburgerMenuClicked", state.HamburgerMenuIsOpen);
     }
 
     public SvgHamburgerIcon()
@@ -23,7 +23,7 @@ class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.ListenEvent(ApplicationEventName.BackdropClicked, nameof(OnHamburgerMenuClicked));
+        ClientTask.ListenEvent(ApplicationEventName.BackdropClicked, nameof(OnHamburgerMenuClicked));
     }
 
     public override Element render()
