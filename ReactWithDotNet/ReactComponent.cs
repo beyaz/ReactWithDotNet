@@ -8,22 +8,11 @@ public enum ReactComponentEvents
     componentDidMount
 }
 
-public interface IReactStatelessComponent
-{
-    string key { get; }
-    Element render();
-}
 
 
 
-public abstract class ReactComponent : Element, IReactStatelessComponent
-{
-    [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
-    protected internal ReactContext Context { get; set; }
-    
-    public abstract Element render();
-}
+
+
 
 public sealed class ReactContext
 {
@@ -113,6 +102,16 @@ public sealed class ClientTaskCollection
     }
 
     
+}
+
+
+public abstract class ReactComponent : Element
+{
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    protected internal ReactContext Context { get; set; }
+
+    public abstract Element render();
 }
 
 public abstract class ReactStatefulComponent : Element

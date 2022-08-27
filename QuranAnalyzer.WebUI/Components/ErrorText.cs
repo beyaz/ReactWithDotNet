@@ -3,7 +3,6 @@
 
 class ErrorTextModel
 {
-    public string Text { get; set; }
 }
 
 class ErrorText: ReactComponent<ErrorTextModel>
@@ -14,26 +13,24 @@ class ErrorText: ReactComponent<ErrorTextModel>
     {
         state = new ErrorTextModel();
         
-        StateInitialized += () => state.Text = Text;
     }
     
 
     public void ClearMessage()
     {
-        state.Text = null;
         Text       = null;
     }
     
     public override Element render()
     {
-        if (state.Text.HasValue())
+        if (Text.HasValue())
         {
             ClientTask.GotoMethod(3000, nameof(ClearMessage));
         }
         
         var element = new small
         {
-            text = state.Text,
+            text = Text,
             style =
             {
                 color     = "#e24c4c",
@@ -41,7 +38,7 @@ class ErrorText: ReactComponent<ErrorTextModel>
             }
         };
 
-        if (state.Text.HasNoValue())
+        if (Text.HasNoValue())
         {
             element.style.display = "none";
         }
