@@ -1,7 +1,8 @@
 /**
-*  Written by Abdullah Beyaztaş
-*  Manages react ui by using react render informations which incoming from server.
-*/
+ *  == ReactWithDotNet ==
+ *  Written by Abdullah Beyaztaş
+ *  Manages react ui by using react render informations which incoming from server.
+ */
 
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -659,8 +660,6 @@ function HandleAction(data)
             data.component.setState(newState, onStateReady);
         }
 
-        ProcessClientTasks(response.ClientTasks, component);
-        
         restoreState(OnReactStateReady);
     }
 
@@ -910,12 +909,8 @@ function RenderComponentIn(obj)
 
             const component = DefineComponent(element);
 
-            const clientTasks = response.ClientTasks;
-
             function renderCallback(component)
             {
-                ProcessClientTasks(clientTasks, component);
-                
                 OnReactStateReady();
             }
 

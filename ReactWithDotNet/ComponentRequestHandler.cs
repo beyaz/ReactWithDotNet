@@ -1,8 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Web;
 
 namespace ReactWithDotNet;
@@ -298,57 +296,4 @@ public class StateTree
 
     public Element RootElement { get; set; }
     #endregion
-}
-
-static class ComponentSerializer
-{
-    #region Public Methods
-   
-
-    public static string SerializeComponent(Element instance, IReadOnlyDictionary<string, ClientStateInfo> childStates)
-    {
-        var jsonSerializerOptions = new JsonSerializerOptions
-        {
-            IgnoreNullValues = true,
-            WriteIndented = true,
-            Converters =
-            {
-                new DummyConverter
-                {
-                    stateTree = new StateTree
-                    {
-                        ChildStates    = childStates,
-                        BreadCrumpPath = "0",
-                        RootElement    = instance
-                    }
-                }
-            }
-        }.ModifyForReactWithDotNet();
-
-        return JsonSerializer.Serialize(instance, jsonSerializerOptions);
-    }
-    #endregion
-
-    class Dummy
-    {
-    }
-
-    class DummyConverter : JsonConverter<Dummy>
-    {
-        #region Public Properties
-        public StateTree stateTree { get; set; }
-        #endregion
-
-        #region Public Methods
-        public override Dummy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, Dummy value, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-    }
 }
