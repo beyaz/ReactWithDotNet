@@ -75,6 +75,12 @@ public abstract class Element : IEnumerable<Element>
     protected internal virtual void BeforeSerialize()
     {
         children.RemoveAll(x => x is null);
+
+        if (key == null)
+        {
+            key = Guid.NewGuid().ToString();
+        }
+        
         InitializeKeyIfNotExists(children);
 
         static void InitializeKeyIfNotExists(IReadOnlyList<Element> siblings)
