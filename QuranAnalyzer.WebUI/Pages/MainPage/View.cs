@@ -41,7 +41,7 @@ class View : ReactComponent<MainViewModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.ListenEvent("OnHamburgerMenuClicked", nameof(hamburgerMenuClicked));
+        Context.ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClicked, nameof(hamburgerMenuClicked));
     }
 
   

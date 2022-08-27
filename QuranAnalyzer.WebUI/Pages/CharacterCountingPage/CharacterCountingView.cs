@@ -144,7 +144,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.ListenEvent("ArabicKeyboardPressed", nameof(ArabicKeyboardPressed));
+        Context.ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, nameof(ArabicKeyboardPressed));
     }
 
     public void ArabicKeyboardPressed(string letter)

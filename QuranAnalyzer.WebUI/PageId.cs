@@ -26,4 +26,7 @@ static class ResourceAccess
 class ApplicationEventName
 {
     public const string BackdropClicked = nameof(BackdropClicked);
+    public const string OnHamburgerMenuClicked = nameof(OnHamburgerMenuClicked);
+    public const string ArabicKeyboardPressed = nameof(ArabicKeyboardPressed);
+    public const string MainContentDivScrollChanged = nameof(MainContentDivScrollChanged);
 }
