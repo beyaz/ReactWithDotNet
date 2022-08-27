@@ -300,7 +300,7 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
             key: NotNull(jsonNode.key),
             ParentReactWithDotNetManagedComponent: component,
             $jsonNode: jsonNode,
-            $propId: GetNextSequence()
+            $SyncId: GetNextSequence()
         });
     }
 
@@ -645,7 +645,9 @@ function HandleAction(data)
         {
             const newState = {
                 $rootNode: NotNull(element[RootNode]),
-                $state   : NotNull(element.state)
+                $state: NotNull(element.state),
+                $SyncId: component.state.$SyncId + 1,
+                $clientTasks: element.$ClientTasks
             };
 
             if (element.$RootNodeOnMouseEnter)
@@ -687,7 +689,7 @@ function DefineComponent(componentDeclaration)
             {
                 $rootNode: NotNull(props.$jsonNode[RootNode]),
                 $state: NotNull(props.$jsonNode.state),
-                $propId: props.$propId
+                $SyncId: props.$SyncId
             };
 
             if (props.$jsonNode.$RootNodeOnMouseEnter)
@@ -831,11 +833,24 @@ function DefineComponent(componentDeclaration)
 
         static getDerivedStateFromProps(props, state) 
         {
-            if (state.$propId !== props.$propId)
+            const syncIdInState = state.$SyncId;
+            const syncIdInProp  = props.$SyncId;
+
+            if (isNaN(syncIdInState) || isNaN(syncIdInProp))
+            {
+                return null;
+            }
+
+            if (syncIdInState > syncIdInProp)
+            {
+                 return null;
+            }
+
+            if (syncIdInState !== syncIdInProp)
             {
                 return {
                     $rootNode: NotNull(props.$jsonNode[RootNode]),
-                    $propId: props.$propId,
+                    $SyncId: syncIdInProp,
                     $clientTasks: props.$jsonNode.$ClientTasks
                 };
             }

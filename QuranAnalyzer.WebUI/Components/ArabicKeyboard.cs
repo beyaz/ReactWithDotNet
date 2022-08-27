@@ -97,7 +97,7 @@ public class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewM
                 new div(state.English){style = { marginLeftRight = "2px", fontSize = "0.8rem"}}
             },
 
-            onClick = _ => Context.ClientTask.DispatchEvent("ArabicKeyboardPressed", state.ArabicLetter)
+            onClick = _ => ClientTask.DispatchEvent("ArabicKeyboardPressed", state.ArabicLetter)
         };
     }
 }
