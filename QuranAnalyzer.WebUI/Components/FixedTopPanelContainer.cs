@@ -16,8 +16,8 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 
     public void ComponentDidMount()
     {
-        Context.ClientTask.ListenEvent(ApplicationEventName.MainContentDivScrollChanged, nameof(OnMainContentDivScrollChanged));
-        Context.ClientTask.CallJsFunction("RegisterScrollEvents");
+        ClientTask.ListenEvent(ApplicationEventName.MainContentDivScrollChanged, nameof(OnMainContentDivScrollChanged));
+        ClientTask.CallJsFunction("RegisterScrollEvents");
     }
 
     public void OnMainContentDivScrollChanged(double mainDivScrollY)
