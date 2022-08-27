@@ -55,8 +55,6 @@ public sealed class ReactContext
         map.Add(key, value);
     }
 
-    public ClientTaskCollection ClientTask { get;  } = new();
-
     public double ClientWidth { get; internal set; }
     public double ClientHeight { get; internal set; }
     public NameValueCollection Query { get; internal set; }

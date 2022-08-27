@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Web;
@@ -38,8 +34,6 @@ public class ComponentRequest
 [Serializable]
 public class ComponentResponse
 {
-    public IReadOnlyList<object> ClientTasks { get; set; }
-
     public string ErrorMessage { get; set; }
 
     public object ElementAsJson { get; set; }
@@ -129,8 +123,7 @@ public static class ComponentRequestHandler
             return new ComponentResponse
             {
                 ElementAsJson = map,
-                Trace         = trace,
-                ClientTasks = context.ClientTask.ToArray()
+                Trace         = trace
             };
         }
 
@@ -241,8 +234,7 @@ public static class ComponentRequestHandler
             return new ComponentResponse
             {
                 ElementAsJson = map,
-                Trace         = trace,
-                ClientTasks   = context.ClientTask.ToArray()
+                Trace         = trace
             };
         }
 
@@ -293,15 +285,7 @@ public static class Json
 {
     public static object DeserializeJsonByNewtonsoft(string json, Type returnType)
     {
-        try
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject(json, returnType);
-        }
-        catch (Exception exception)
-        {
-            exception.ToString();
-            throw;
-        }
+        return Newtonsoft.Json.JsonConvert.DeserializeObject(json, returnType);
     }
 }
 
@@ -319,10 +303,7 @@ public class StateTree
 static class ComponentSerializer
 {
     #region Public Methods
-    public static StateTree GetElementSerializationExtraData(this JsonSerializerOptions options)
-    {
-        return (options.Converters[0] as DummyConverter)?.stateTree ?? new StateTree();
-    }
+   
 
     public static string SerializeComponent(Element instance, IReadOnlyDictionary<string, ClientStateInfo> childStates)
     {
