@@ -15,7 +15,9 @@ class ComponentA : ReactComponent<ModelA>
     public string A_Prop_2 { get; set; }
 
 
-    public ComponentA()
+    
+
+    protected override void constructor()
     {
         state = new ModelA { StateValueA = "A" };
     }
@@ -47,14 +49,34 @@ class ComponentB : ReactComponent<ModelB>
 
     public string B_Prop_2 { get; set; }
 
-    
-    public ComponentB()
+    public bool ShouldContainsA { get; set; }
+   
+
+    protected override void constructor()
     {
         state = new ModelB { StateValueB = "B" };
     }
 
     public override Element render()
     {
+        if (ShouldContainsA)
+        {
+            return new div
+            {
+                new div
+                {
+                    style =
+                    {
+                        border  = "1px solid green",
+                        padding = "10px"
+                    },
+                    children =
+                    {
+                        new ComponentA { A_Prop_1 = "p1AInB", A_Prop_2 = "p2AInB" }
+                    }
+                }
+            };
+        }
         return new div
         {
             style =
@@ -75,10 +97,11 @@ class RedBorderModel
 
 class RedBorder:ReactComponent<RedBorderModel>
 {
-    public RedBorder()
+    protected override void constructor()
     {
         state = new RedBorderModel();
     }
+    
     public override Element render()
     {
         return new div
@@ -98,14 +121,11 @@ class ModelContainer1
 
 class Container1 : ReactComponent<ModelContainer1>
 {
-    public Container1()
+    protected override void constructor()
     {
-        state = new ModelContainer1
-        {
-        };
+        state = new ModelContainer1();
     }
-    
-    
+
     public override Element render()
     {
         return new div
@@ -117,10 +137,33 @@ class Container1 : ReactComponent<ModelContainer1>
             },
             children =
             {
-                new RedBorder
+                new div
                 {
                     new ComponentA{A_Prop_1 = "A_Prop_1", A_Prop_2 = "A_Prop_2"},
-                    new ComponentB{B_Prop_1 = "B_Prop_1", B_Prop_2 = "B_Prop_2"}
+                    new div{text            = state.ClickCount.ToString()},
+                    new div{text            = state.ClickCount.ToString()},
+                    new div
+                    {
+                        new div
+                        {
+                            new div(),
+                            new div(),
+                            new div(),
+                            new div(),
+                            new div(),
+                            new ComponentB{B_Prop_1 = "B_Prop_1", B_Prop_2 = "B_Prop_2"},
+                            new div(),
+                            new div(),
+                            new div(),
+                            new ComponentB{B_Prop_1 = "B_Prop_1", B_Prop_2 = "B_Prop_2"},
+                            new div(),
+                            new div
+                            {
+                                new ComponentB{B_Prop_1 = "B_Prop_1", B_Prop_2 = "B_Prop_2", ShouldContainsA = true}
+                            }
+                            
+                        }
+                    }
                 }
               
             },

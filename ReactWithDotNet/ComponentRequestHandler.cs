@@ -98,11 +98,14 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            var instance = (Element)Activator.CreateInstance(type);
+            var instance = (ReactStatefulComponent)Activator.CreateInstance(type);
             if (instance == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
+
+            instance.Context = context;
+            instance.InvokeConstructor();
 
             var stateTree = new StateTree
             {
@@ -189,8 +192,6 @@ public static class ComponentRequestHandler
                 if (instance is ReactStatefulComponent reactStatefulComponent2)
                 {
                     reactStatefulComponent2.Context = context;
-                    
-                    reactStatefulComponent2.OnStateInitialized();
                 }
             }
 
@@ -307,6 +308,7 @@ public class StateTree
     #region Public Properties
     public ReactContext Context { get; set; }
     public string BreadCrumpPath { get; set; }
+    public int CurrentOrder { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
 
     public Element RootElement { get; set; }

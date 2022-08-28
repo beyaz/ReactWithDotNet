@@ -7,7 +7,9 @@ namespace ReactWithDotNet.UIDesigner;
 
 class ComponentPreivew: ReactComponent<UIDesignerModel>
 {
-    public ComponentPreivew()
+   
+
+    protected override void constructor()
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
     }

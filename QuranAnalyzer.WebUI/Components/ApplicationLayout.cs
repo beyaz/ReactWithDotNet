@@ -9,10 +9,7 @@ class BackdropModel
 
 class BackdropView: ReactComponent<BackdropModel>
 {
-    public BackdropView()
-    {
-        state = new BackdropModel();
-    }
+    
     
     public override Element render()
     {

@@ -68,18 +68,10 @@ public static class ElementSerializer
         {
             var childElements = new List<object>();
 
-            var breadCrumpPath = stateTree.BreadCrumpPath;
-
-            var i = 0;
             foreach (var item in element.children)
             {
-                stateTree.BreadCrumpPath = breadCrumpPath + "," + i;
-
                 childElements.Add(ToMap(item, stateTree));
-                i++;
             }
-
-            stateTree.BreadCrumpPath = breadCrumpPath;
 
             map.Add("$children", childElements);
         }
@@ -298,30 +290,54 @@ public static class ElementSerializer
 
     static IReadOnlyDictionary<string, object> ToMap(ReactStatefulComponent reactStatefulComponent, StateTree stateTree)
     {
+
+        var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
+        if (statePropertyInfo == null)
+        {
+            throw new MissingMemberException(reactStatefulComponent.GetType().GetFullName(), "state");
+        }
+
         var map = new Dictionary<string, object>();
 
-        if (stateTree.BreadCrumpPath != "0")
+        var breadCrumpPath = stateTree.BreadCrumpPath;
+        var stateOrder     = stateTree.CurrentOrder;
+        
+        if (statePropertyInfo.GetValue(reactStatefulComponent) is null)
         {
+            stateTree.BreadCrumpPath = breadCrumpPath + "," + stateTree.CurrentOrder;
+            stateTree.CurrentOrder   = 0;
+            
             if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
             {
-                var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
-                if (statePropertyInfo == null)
-                {
-                    throw new MissingMemberException(reactStatefulComponent.GetType().GetFullName(), "state");
-                }
-
                 if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
                 {
                     var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
                     statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
                 }
             }
+
+            if (stateTree.BreadCrumpPath != "0")
+            {
+                stateOrder++;
+            }
+
+            
+
         }
 
-        reactStatefulComponent.Context = stateTree.Context;
-        reactStatefulComponent.OnStateInitialized();
+        
 
-        map.Add("state", reactStatefulComponent.GetType().GetProperty("state")?.GetValue(reactStatefulComponent));
+        reactStatefulComponent.Context = stateTree.Context;
+
+        var state = statePropertyInfo.GetValue(reactStatefulComponent);
+        if (state == null)
+        {
+            reactStatefulComponent.InvokeConstructor();
+        }
+
+        state = statePropertyInfo.GetValue(reactStatefulComponent);
+
+        map.Add("state", state);
 
         map.Add(___RootNode___, ToMap(reactStatefulComponent.render(), stateTree));
 
@@ -360,7 +376,8 @@ public static class ElementSerializer
             map.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
         }
 
-
+        stateTree.BreadCrumpPath = breadCrumpPath;
+        stateTree.CurrentOrder   = stateOrder;
 
         return map;
     }

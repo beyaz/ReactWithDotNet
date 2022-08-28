@@ -26,15 +26,14 @@ class EnvironmentSelectorModel
 
 class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
 {
-    public EnvironmentSelectorView()
+    protected override void constructor()
     {
         state = new EnvironmentSelectorModel
         {
             ItemsSource = new[] { new EnvironmentInfo { Name = "Development" }, new EnvironmentInfo { Name = "Test" } },
-            Suggestions = new[] { new EnvironmentInfo{Name   = "Development" } , new EnvironmentInfo{Name  = "Test" } }
+            Suggestions = new[] { new EnvironmentInfo { Name = "Development" }, new EnvironmentInfo { Name = "Test" } }
         };
     }
-
     static IEnumerable<TreeNode> GetNodes()
     {
         return new[]

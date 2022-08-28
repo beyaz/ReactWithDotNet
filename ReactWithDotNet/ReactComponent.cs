@@ -124,17 +124,19 @@ public abstract class ReactStatefulComponent : Element
 
     public abstract Element render();
 
-    public event Action StateInitialized;
+    protected  abstract void constructor();
 
-    internal void OnStateInitialized()
-    {
-        StateInitialized?.Invoke();
-    }
+    internal void InvokeConstructor() => constructor();
 }
 
 public abstract class ReactComponent<TState> : ReactStatefulComponent where TState : new()
 {
     public  TState state { get; protected set; }
+
+    protected override void constructor()
+    {
+        state = new TState();
+    }
 }
 
 [Serializable]

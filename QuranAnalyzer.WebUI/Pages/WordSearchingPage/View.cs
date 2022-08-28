@@ -15,21 +15,7 @@ class Model
 
 class View : ReactComponent<Model>
 {
-    public View()
-    {
-        state = new Model();
-        StateInitialized += () =>
-        {
-            if (state.SearchScript == null)
-            {
-                var value = Context.Query[QueryKey.SearchQuery];
-                if (value is not null)
-                {
-                    state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
-                }
-            }
-        };
-    }
+    
 
     void OnCaclculateClicked(string _)
     {

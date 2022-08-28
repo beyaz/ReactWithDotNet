@@ -75,21 +75,16 @@ class SearchScript
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
     #region Constructors
-    public CharacterCountingView()
+    
+
+    protected override void constructor()
     {
         state = new CharacterCountingViewModel();
-
-        StateInitialized += () =>
-        {
-            if (state.SearchScript == null)
+            var value = Context.Query[QueryKey.SearchQuery];
+            if (value is not null)
             {
-                var value = Context.Query[QueryKey.SearchQuery];
-                if (value is not null)
-                {
-                    state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
-                }
+                state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
             }
-        };
     }
     #endregion
 
@@ -144,7 +139,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VSpace(3),
                     new MushafOptionsView
                     {
-                        MushafOption = state.MushafOption,
                     },
 
                     new VSpace(20),

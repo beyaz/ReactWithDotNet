@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-class ArabicKeyboard : ReactComponent
+class ArabicKeyboard : ReactComponent<EmptyState>
 {
     public override Element render()
     {
@@ -50,8 +50,7 @@ class ArabicKeyboard : ReactComponent
 
 public class ArabicKeyboardLetterViewModel
 {
-    public string ArabicLetter { get; set; }
-    public string English { get; set; }
+    public int AAA { get; set; } = 3;
 }
 
 public class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewModel>, ISupportMouseEnter
@@ -61,15 +60,7 @@ public class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewM
 
     public bool IsMouseEntered { get; set; }
 
-    public ArabicKeyboardLetterView()
-    {
-        state = new ArabicKeyboardLetterViewModel();
-        StateInitialized += () =>
-        {
-            state.ArabicLetter ??= ArabicLetter;
-            state.English      ??= English;
-        };
-    }
+   
 
     public override Element render()
     {
@@ -91,13 +82,13 @@ public class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewM
             {
                 new div
                 {
-                    text  = state.ArabicLetter,
+                    text  = ArabicLetter,
                     style = { fontSize = "35px", paddingLeftRight = "5px", fontFamily = "Lateef, cursive" }
                 },
-                new div(state.English){style = { marginLeftRight = "2px", fontSize = "0.8rem"}}
+                new div(English){style = { marginLeftRight = "2px", fontSize = "0.8rem"}}
             },
 
-            onClick = _ => ClientTask.DispatchEvent("ArabicKeyboardPressed", state.ArabicLetter)
+            onClick = _ => ClientTask.DispatchEvent("ArabicKeyboardPressed", ArabicLetter)
         };
     }
 }

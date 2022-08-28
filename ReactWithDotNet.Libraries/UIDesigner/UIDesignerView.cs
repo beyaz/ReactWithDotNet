@@ -6,7 +6,9 @@ namespace ReactWithDotNet.UIDesigner;
 
 class UIDesignerView : ReactComponent<UIDesignerModel>
 {
-    public UIDesignerView()
+   
+
+    protected override void constructor()
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
     }

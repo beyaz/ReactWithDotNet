@@ -43,8 +43,6 @@ class LeftMenuContent: ReactComponent
 
 class LeftMenuItemState
 {
-    public string Text { get; set; }
-    public string PageId { get; set; }
 }
 
 class LeftMenuItem: ReactComponent<LeftMenuItemState>,ISupportMouseEnter
@@ -52,22 +50,14 @@ class LeftMenuItem: ReactComponent<LeftMenuItemState>,ISupportMouseEnter
     public string Text { get; set; }
     public string PageId { get; set; }
 
-    public LeftMenuItem()
-    {
-        state = new LeftMenuItemState();
-        StateInitialized += () =>
-        {
-            state.PageId ??= PageId;
-            state.Text ??= Text;
-        };
-    }
+
     
     public override Element render()
     {
         var link = new a
         {
-            innerText = state.Text,
-            href      = GetPageLink(state.PageId),
+            innerText = Text,
+            href      = GetPageLink(PageId),
             style =
             {
                 padding        = "10px",

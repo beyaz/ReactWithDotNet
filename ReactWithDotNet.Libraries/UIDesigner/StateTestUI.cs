@@ -11,7 +11,9 @@ class ModelA
 
 class ComponentA : ReactComponent<ModelA>
 {
-    public ComponentA()
+    
+
+    protected override void constructor()
     {
         state = new ModelA { PropA = "A" };
     }
@@ -50,7 +52,9 @@ class ModelB
 
 class ComponentB : ReactComponent<ModelB>
 {
-    public ComponentB()
+   
+
+    protected override void constructor()
     {
         state = new ModelB { PropB = "B" };
     }
@@ -79,7 +83,9 @@ class ModelC
 
 class ComponentC : ReactComponent<ModelC>
 {
-    public ComponentC()
+    
+
+    protected override void constructor()
     {
         state = new ModelC { PropC = "C" };
     }
@@ -103,7 +109,9 @@ class ModelContainer1
 
 class Container1 : ReactComponent<ModelContainer1>
 {
-    public Container1()
+  
+
+    protected override void constructor()
     {
         state = new ModelContainer1
         {
@@ -151,14 +159,16 @@ class ModelContainer2
 
 class Container2 : ReactComponent<ModelContainer2>
 {
-    public Container2()
+    
+
+    protected override void constructor()
     {
         state = new ModelContainer2
         {
             Container2Text = "Container2Text"
         };
     }
-
+    
     public override Element render()
     {
         return new div
@@ -185,7 +195,9 @@ class ModelContainer3
 
 class Container3 : ReactComponent<ModelContainer3>
 {
-    public Container3()
+    
+
+    protected override void constructor()
     {
         state = new ModelContainer3
         {

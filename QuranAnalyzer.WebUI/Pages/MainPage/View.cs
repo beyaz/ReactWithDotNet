@@ -27,15 +27,13 @@ public class MainViewModel
 
 class View : ReactComponent<MainViewModel>
 {
+    
 
-
-    public View()
+    protected override void constructor()
     {
-        state = new MainViewModel();
-        
-        StateInitialized += () =>
+        state        = new MainViewModel
         {
-            state.PageId = Context.Query[QueryKey.Page];
+            PageId = Context.Query[QueryKey.Page]
         };
     }
 
