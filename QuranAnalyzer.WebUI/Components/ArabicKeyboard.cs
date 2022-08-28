@@ -48,12 +48,7 @@ class ArabicKeyboard : ReactComponent<EmptyState>
 }
 
 
-public class ArabicKeyboardLetterViewModel
-{
-    public int AAA { get; set; } = 3;
-}
-
-public class ArabicKeyboardLetterView : ReactComponent<ArabicKeyboardLetterViewModel>, ISupportMouseEnter
+public class ArabicKeyboardLetterView : ReactComponent<EmptyState>, ISupportMouseEnter
 {
     public string ArabicLetter { get; set; }
     public string English { get; set; }
