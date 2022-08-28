@@ -29,4 +29,6 @@ class ApplicationEventName
     public const string OnHamburgerMenuClicked = nameof(OnHamburgerMenuClicked);
     public const string ArabicKeyboardPressed = nameof(ArabicKeyboardPressed);
     public const string MainContentDivScrollChanged = nameof(MainContentDivScrollChanged);
+
+    public const string MushafOptionChanged = nameof(MushafOptionChanged);
 }

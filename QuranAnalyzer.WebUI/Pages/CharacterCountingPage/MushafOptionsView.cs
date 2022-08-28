@@ -2,16 +2,29 @@
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
-class MushafOptionsView:ReactComponent
+class MushafOptionsView: ReactComponent<MushafOption>
 {
-    public bool MushafOptionsPanelIsVisible { get; set; }
-
+    public MushafOptionsView()
+    {
+        state = new MushafOption();
+        StateInitialized += () =>
+        {
+            if (MushafOption  is not  null)
+            {
+                state.Chapter_68_Should_Single_Nun                 = MushafOption.Chapter_68_Should_Single_Nun;
+                state.CountHamzaAsAlif                             = MushafOption.CountHamzaAsAlif;
+                state.UseElifReferencesFromTanzil                  = MushafOption.UseElifReferencesFromTanzil;
+                state.Use_Laam_SpecifiedByTanzil                   = MushafOption.Use_Laam_SpecifiedByTanzil;
+                state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = MushafOption.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten;
+            }
+           
+        };
+    }
+    public void FireMushafOptionChanged()
+    {
+        ClientTask.DispatchEvent(ApplicationEventName.MushafOptionChanged, state);
+    }
     public MushafOption MushafOption { get; set; }
-
-    public Expression<Func<bool>> Bestaten_7_69 { get; set; }
-
-    public Expression<Func<bool>> UseElifReferencesFromTanzil { get; set; }
-    public Expression<Func<bool>> CountHamzaAsAlif { get; set; }
 
     public override Element render()
     {
@@ -30,7 +43,12 @@ class MushafOptionsView:ReactComponent
                     {
                         new InputSwitch
                         {
-                            checkedBind = UseElifReferencesFromTanzil
+                            @checked = state.UseElifReferencesFromTanzil,
+                            onChange = x =>
+                            {
+                                state.UseElifReferencesFromTanzil = x.value;
+                                FireMushafOptionChanged();
+                            }
                         },
                         new HSpace(15),
                         new h5{text = "Elif sayımları için Tanzil.net'i referans al"}
@@ -43,7 +61,15 @@ class MushafOptionsView:ReactComponent
                     {
                         new InputSwitch
                         {
-                            checkedBind = Bestaten_7_69
+                            
+
+
+                            @checked = state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
+                            onChange = x =>
+                            {
+                                state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x.value;
+                                FireMushafOptionChanged();
+                            }
                         },
                         new HSpace(15),
                         new h5{text = "7:69 daki bestaten'i Sad olarak say"}
@@ -56,7 +82,12 @@ class MushafOptionsView:ReactComponent
                     {
                         new InputSwitch
                         {
-                            checkedBind = CountHamzaAsAlif
+                            @checked = state.CountHamzaAsAlif,
+                            onChange = x =>
+                            {
+                                state.CountHamzaAsAlif = x.value;
+                                FireMushafOptionChanged();
+                            }
                         },
                         new HSpace(15),
                         new h5{text = "Hemzeleri Elif(ﺍ) olarak say"}
@@ -66,4 +97,6 @@ class MushafOptionsView:ReactComponent
             }
         };
     }
+
+    
 }

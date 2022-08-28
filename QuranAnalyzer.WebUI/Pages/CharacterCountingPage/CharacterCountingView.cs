@@ -96,8 +96,12 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     public void ComponentDidMount()
     {
         ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, nameof(ArabicKeyboardPressed));
+        ClientTask.ListenEvent(ApplicationEventName.MushafOptionChanged, nameof(MushafOptionChanged));
     }
-
+    public void MushafOptionChanged(MushafOption mushafOption)
+    {
+        state.MushafOption = mushafOption;
+    }
     public void ArabicKeyboardPressed(string letter)
     {
         state.SearchScriptErrorMessage =  null;
@@ -140,10 +144,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VSpace(3),
                     new MushafOptionsView
                     {
-                        MushafOption                = state.MushafOption,
-                        Bestaten_7_69               = () => state.MushafOption.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
-                        UseElifReferencesFromTanzil = () => state.MushafOption.UseElifReferencesFromTanzil,
-                        CountHamzaAsAlif            = () => state.MushafOption.CountHamzaAsAlif,
+                        MushafOption = state.MushafOption,
                     },
 
                     new VSpace(20),

@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet;
 
@@ -162,8 +164,13 @@ public static class ComponentRequestHandler
                         {
                             return new ComponentResponse { ErrorMessage = $"Property not found.{request.FullName}::{key}" };
                         }
-                        
-                        property.SetValue(instance, value);
+
+                        var propertyValue = value;
+                        if (value is JToken jToken)
+                        {
+                            propertyValue = jToken.ToObject(property.PropertyType);
+                        }
+                        property.SetValue(instance, propertyValue);
                     }
                 }
             }
@@ -283,7 +290,15 @@ public static class Json
 {
     public static object DeserializeJsonByNewtonsoft(string json, Type returnType)
     {
-        return Newtonsoft.Json.JsonConvert.DeserializeObject(json, returnType);
+        try
+        {
+            return JsonConvert.DeserializeObject(json, returnType);
+        }
+        catch (Exception exception)
+        {
+            // ReSharper disable once PossibleIntendedRethrow
+            throw exception;
+        }
     }
 }
 

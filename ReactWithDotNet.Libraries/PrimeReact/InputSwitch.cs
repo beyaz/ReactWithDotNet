@@ -27,5 +27,11 @@ public class InputSwitch : ElementBase
     ///     Callback to invoke on value change
     /// </summary>
     [React]
-    public Action<bool> onChange { get; set; }
+    public Action<InputSwitchChangeTargetOptions> onChange { get; set; }
+}
+
+[Serializable]
+public sealed class InputSwitchChangeTargetOptions
+{
+    public bool value { get; set; }
 }
