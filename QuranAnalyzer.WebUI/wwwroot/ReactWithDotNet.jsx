@@ -749,26 +749,29 @@ function DefineComponent(componentDeclaration)
 
             TraceComponent(this, "constructor", props);
 
-            this.state =
+            const initialState =
             {
                 $rootNode: NotNull(props.$jsonNode[RootNode]),
                 $state: NotNull(props.$jsonNode.state),
-                $SyncId: props.$SyncId,
-                $HasComponentDidMountMethod: props.$jsonNode.$HasComponentDidMountMethod
+                $SyncId: NotNull(props.$SyncId)
             };
+
+            if (props.$jsonNode.$HasComponentDidMountMethod)
+            {
+                initialState.$HasComponentDidMountMethod = props.$jsonNode.$HasComponentDidMountMethod;
+            }
 
             if (props.$jsonNode.$RootNodeOnMouseEnter)
             {
-                this.state.$RootNodeOnMouseEnter = props.$jsonNode.$RootNodeOnMouseEnter;
+                initialState.$RootNodeOnMouseEnter = props.$jsonNode.$RootNodeOnMouseEnter;
             }
 
             if (props.$jsonNode.$ClientTasks)
             {
-                this.state.$clientTasks = props.$jsonNode.$ClientTasks;
-            }            
+                initialState.$clientTasks = props.$jsonNode.$ClientTasks;
+            }
 
-            this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
-            this.state[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
+            initialState[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
             if (props.ParentReactWithDotNetManagedComponent)
             {
@@ -778,7 +781,11 @@ function DefineComponent(componentDeclaration)
                 }
             }
 
+            this.state = initialState;
+
             this.ReactWithDotNetManagedChildComponents = [];
+
+            this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
         }
         
         CaptureStateTree(map, prefix)
