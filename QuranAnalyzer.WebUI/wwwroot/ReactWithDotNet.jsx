@@ -15,6 +15,7 @@ const RootNode = '$RootNode';
 const ClientTasks = '$ClientTasks';
 const RootNodeOnMouseEnter = '$RootNodeOnMouseEnter';
 const SyncId = '$SyncId';
+const DotNetState = '$state';
 
 const EventBus =
 {
@@ -396,14 +397,17 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
                 const jsValueAccess = propValue.jsValueAccess;
                 const defaultValue = propValue.defaultValue;
 
-                props[targetProp] = IfNull(GetValueInPath(component.state.$state, sourcePath), defaultValue);
+                props[targetProp] = IfNull(GetValueInPath(component.state[DotNetState], sourcePath), defaultValue);
                 props[eventName] = function(e)
                 {
-                    const state = Clone(component.state.$state);
+                    const state = Clone(component.state[DotNetState]);
 
                     SetValueInPath(state, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
 
-                    component.setState({ $state: state });
+                    const newState = {};
+                    newState[DotNetState] = state;
+
+                    component.setState(newState);
                 }
 
                 continue;
@@ -689,10 +693,9 @@ function HandleAction(data)
         
         function restoreState(onStateReady)
         {
-            const newState = {
-                $state: NotNull(element.state)
-            };
+            const newState = {};
 
+            newState[DotNetState] = NotNull(element.state);
             newState[SyncId] = ShouldBeNumber(component.state[SyncId]) + 1;
             newState[RootNode]    = NotNull(element[RootNode]);
             newState[ClientTasks] = element[ClientTasks];
@@ -769,11 +772,9 @@ function DefineComponent(componentDeclaration)
 
             TraceComponent(this, "constructor", props);
 
-            const initialState =
-            {
-                $state: NotNull(props.$jsonNode.state)
-            };
+            const initialState = {};
 
+            initialState[DotNetState] = NotNull(props.$jsonNode.state);
             initialState[SyncId] = ShouldBeNumber(props[SyncId]);
             initialState[RootNode] = NotNull(props.$jsonNode[RootNode]);
 
@@ -817,8 +818,8 @@ function DefineComponent(componentDeclaration)
                 map = {};
                 prefix = "0";
             }
-            
-            map[prefix] = { StateAsJson: JSON.stringify(this.state.$state), FullTypeNameOfState: NotNull(this.props.$jsonNode[FullTypeNameOfState]) };
+
+            map[prefix] = { StateAsJson: JSON.stringify(this.state[DotNetState]), FullTypeNameOfState: NotNull(this.props.$jsonNode[FullTypeNameOfState]) };
 
 
             // calculate root props if exists
