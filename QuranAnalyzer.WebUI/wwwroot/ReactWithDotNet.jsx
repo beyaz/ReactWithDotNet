@@ -16,6 +16,7 @@ const ClientTasks = '$ClientTasks';
 const RootNodeOnMouseEnter = '$RootNodeOnMouseEnter';
 const SyncId = '$SyncId';
 const DotNetState = '$State';
+const HasComponentDidMountMethod = '$HasComponentDidMountMethod'
 
 const EventBus =
 {
@@ -778,9 +779,9 @@ function DefineComponent(componentDeclaration)
             initialState[SyncId] = ShouldBeNumber(props[SyncId]);
             initialState[RootNode] = NotNull(props.$jsonNode[RootNode]);
 
-            if (props.$jsonNode.$HasComponentDidMountMethod)
+            if (props.$jsonNode[HasComponentDidMountMethod])
             {
-                initialState.$HasComponentDidMountMethod = props.$jsonNode.$HasComponentDidMountMethod;
+                initialState[HasComponentDidMountMethod] = props.$jsonNode[HasComponentDidMountMethod];
             }
 
             if (props.$jsonNode[RootNodeOnMouseEnter])
@@ -821,7 +822,6 @@ function DefineComponent(componentDeclaration)
 
             map[prefix] = { StateAsJson: JSON.stringify(this.state[DotNetState]), FullTypeNameOfState: NotNull(this.props.$jsonNode[FullTypeNameOfState]) };
 
-
             // calculate root props if exists
             if (isRoot)
             {
@@ -850,7 +850,7 @@ function DefineComponent(componentDeclaration)
                         if (key === RootNode ||
                             key === DotNetTypeOfReactComponent ||
                             key === FullTypeNameOfState ||
-                            key === '$HasComponentDidMountMethod' ||
+                            key === HasComponentDidMountMethod ||
                             key === RootNodeOnMouseEnter ||
                             key === ClientTasks ||
                             key === 'key' ||
@@ -866,16 +866,13 @@ function DefineComponent(componentDeclaration)
 
                         props[key] = jsonNode[key];
                     }
-                }
-
-                
+                }                
                 
                 if (props)
                 {
                     map[prefix].props = props;
                 }
-            }
-            
+            }            
             
             if (this.ReactWithDotNetManagedChildComponents)
             {
@@ -920,7 +917,7 @@ function DefineComponent(componentDeclaration)
 
             ProcessClientTasks(this.state[ClientTasks], this);
 
-            if (this.state.$HasComponentDidMountMethod)
+            if (this.state[HasComponentDidMountMethod])
             {
                 HandleAction({ remoteMethodName: 'ComponentDidMount', component: this, eventArguments: [] });
                 return;
@@ -953,10 +950,9 @@ function DefineComponent(componentDeclaration)
 
             if (syncIdInState !== syncIdInProp)
             {
-                const partialState = {
-                    $HasComponentDidMountMethod: false
-                };
+                const partialState = {};
 
+                partialState[HasComponentDidMountMethod] = false;
                 partialState[SyncId] = syncIdInProp;
                 partialState[RootNode] = NotNull(nextProps.$jsonNode[RootNode]);
                 partialState[ClientTasks] = nextProps.$jsonNode[ClientTasks];
