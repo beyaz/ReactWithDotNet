@@ -56,7 +56,7 @@ class View : ReactComponent<MainViewModel>
             menu           = new FixedLeftMenuContainer
             {
                 IsOpen   = state.HamburgerMenuIsOpen,
-                children = { state.HamburgerMenuIsOpen ? new LeftMenuContent() : null }
+                children = { new LeftMenuContent() }
             },
             mainDivScrollY = state.MainDivScrollY,
             IsBackDropActive = state.HamburgerMenuIsOpen

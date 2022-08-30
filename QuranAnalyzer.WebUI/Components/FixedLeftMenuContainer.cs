@@ -1,6 +1,4 @@
-﻿using ReactWithDotNet;
-
-namespace QuranAnalyzer.WebUI.Components;
+﻿namespace QuranAnalyzer.WebUI.Components;
 
 class FixedLeftMenuContainer : ReactComponent
 {
@@ -20,7 +18,7 @@ class FixedLeftMenuContainer : ReactComponent
                 top        = "50px",
                 background = "white",
                 boxShadow  = "5px 0 5px -5px rgb(0 0 0 / 28%)",
-                zIndex     = "1",
+                zIndex     = IsOpen ? "1" : "-9999",
                 visibility = IsOpen ? "visible" : "collapsed",
                 opacity    = IsOpen ? "1" : "0",
                 transition = "0.5s"
