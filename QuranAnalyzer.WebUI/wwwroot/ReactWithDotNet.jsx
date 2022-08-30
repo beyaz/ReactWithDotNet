@@ -12,6 +12,8 @@ var createElement = React.createElement;
 const DotNetTypeOfReactComponent = '$Type';
 const FullTypeNameOfState = '$TypeOfState';
 const RootNode = '$RootNode';
+const ClientTasks = '$ClientTasks';
+const RootNodeOnMouseEnter = '$RootNodeOnMouseEnter';
 
 const EventBus =
 {
@@ -455,7 +457,7 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
         props[propName] = jsonNode[propName];
     }
     
-    if (isConvertingRootNode === true && component.state.$RootNodeOnMouseEnter)
+    if (isConvertingRootNode === true && component.state[RootNodeOnMouseEnter])
     {
         NotNull(props);
         
@@ -686,14 +688,15 @@ function HandleAction(data)
             const newState = {
                 $rootNode: NotNull(element[RootNode]),
                 $state: NotNull(element.state),
-                $SyncId: component.state.$SyncId + 1,
-                $clientTasks: element.$ClientTasks
+                $SyncId: component.state.$SyncId + 1
             };
 
-            if (element.$RootNodeOnMouseEnter)
+            newState[ClientTasks] = element[ClientTasks];
+
+            if (element[RootNodeOnMouseEnter])
             {
                 newState.$onMouseEnter = false;
-                newState.$RootNodeOnMouseEnter = element.$RootNodeOnMouseEnter;
+                newState[RootNodeOnMouseEnter] = element[RootNodeOnMouseEnter];
             }
             
             data.component.setState(newState, onStateReady);
@@ -774,14 +777,14 @@ function DefineComponent(componentDeclaration)
                 initialState.$HasComponentDidMountMethod = props.$jsonNode.$HasComponentDidMountMethod;
             }
 
-            if (props.$jsonNode.$RootNodeOnMouseEnter)
+            if (props.$jsonNode[RootNodeOnMouseEnter])
             {
-                initialState.$RootNodeOnMouseEnter = props.$jsonNode.$RootNodeOnMouseEnter;
+                initialState[RootNodeOnMouseEnter] = props.$jsonNode[RootNodeOnMouseEnter];
             }
 
-            if (props.$jsonNode.$ClientTasks)
+            if (props.$jsonNode[ClientTasks])
             {
-                initialState.$clientTasks = props.$jsonNode.$ClientTasks;
+                initialState[ClientTasks] = props.$jsonNode[ClientTasks];
             }
 
             initialState[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
@@ -842,8 +845,8 @@ function DefineComponent(componentDeclaration)
                             key === DotNetTypeOfReactComponent ||
                             key === FullTypeNameOfState ||
                             key === '$HasComponentDidMountMethod' ||
-                            key === '$RootNodeOnMouseEnter' ||
-                            key === '$ClientTasks'||
+                            key === RootNodeOnMouseEnter ||
+                            key === ClientTasks ||
                             key === 'key' ||
                             key === 'state')
                         {
@@ -899,7 +902,7 @@ function DefineComponent(componentDeclaration)
             
             if (state.$onMouseEnter === true)
             {
-                return ConvertToReactElement(state.$RootNodeOnMouseEnter, this, /*isConvertingRootNode*/true);    
+                return ConvertToReactElement(state[RootNodeOnMouseEnter], this, /*isConvertingRootNode*/true);    
             }
 
             return ConvertToReactElement(state.$rootNode, this, /*isConvertingRootNode*/true);
@@ -909,7 +912,7 @@ function DefineComponent(componentDeclaration)
         {
             TraceComponent(this, "componentDidMount");
 
-            ProcessClientTasks(this.state.$clientTasks, this);
+            ProcessClientTasks(this.state[ClientTasks], this);
 
             if (this.state.$HasComponentDidMountMethod)
             {
@@ -927,7 +930,7 @@ function DefineComponent(componentDeclaration)
         {
             TraceComponent(this, "componentDidUpdate");
 
-            ProcessClientTasks(this.state.$clientTasks, this);
+            ProcessClientTasks(this.state[ClientTasks], this);
         }
 
         static getDerivedStateFromProps(nextProps, prevState) 
@@ -944,12 +947,15 @@ function DefineComponent(componentDeclaration)
 
             if (syncIdInState !== syncIdInProp)
             {
-                return {
+                const partialState = {
                     $rootNode: NotNull(nextProps.$jsonNode[RootNode]),
                     $SyncId: syncIdInProp,
-                    $clientTasks: nextProps.$jsonNode.$ClientTasks,
                     $HasComponentDidMountMethod: false
                 };
+
+                partialState[ClientTasks] = nextProps.$jsonNode[ClientTasks];
+
+                return partialState;
             }
 
             return null;
