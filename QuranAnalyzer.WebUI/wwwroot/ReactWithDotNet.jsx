@@ -695,7 +695,7 @@ function HandleAction(data)
         {
             const newState = {};
 
-            newState[DotNetState] = NotNull(element.state);
+            newState[DotNetState] = NotNull(element[DotNetState]);
             newState[SyncId] = ShouldBeNumber(component.state[SyncId]) + 1;
             newState[RootNode]    = NotNull(element[RootNode]);
             newState[ClientTasks] = element[ClientTasks];
@@ -774,7 +774,7 @@ function DefineComponent(componentDeclaration)
 
             const initialState = {};
 
-            initialState[DotNetState] = NotNull(props.$jsonNode.state);
+            initialState[DotNetState] = NotNull(props.$jsonNode[DotNetState]);
             initialState[SyncId] = ShouldBeNumber(props[SyncId]);
             initialState[RootNode] = NotNull(props.$jsonNode[RootNode]);
 
@@ -854,7 +854,7 @@ function DefineComponent(componentDeclaration)
                             key === RootNodeOnMouseEnter ||
                             key === ClientTasks ||
                             key === 'key' ||
-                            key === 'state')
+                            key === DotNetState)
                         {
                             continue;
                         }

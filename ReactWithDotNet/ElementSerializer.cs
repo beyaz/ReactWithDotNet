@@ -327,7 +327,9 @@ public static class ElementSerializer
 
         state = statePropertyInfo.GetValue(reactStatefulComponent);
 
-        map.Add("state", state);
+        const string DotNetState = "$state";
+        
+        map.Add(DotNetState, state);
 
         map.Add(___RootNode___, ToMap(reactStatefulComponent.render(), stateTree));
 
