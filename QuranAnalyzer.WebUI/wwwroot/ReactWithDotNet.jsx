@@ -14,6 +14,7 @@ const FullTypeNameOfState = '$TypeOfState';
 const RootNode = '$RootNode';
 const ClientTasks = '$ClientTasks';
 const RootNodeOnMouseEnter = '$RootNodeOnMouseEnter';
+const SyncId = '$SyncId';
 
 const EventBus =
 {
@@ -308,7 +309,7 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
 
     if (jsonNode.$FakeChild != null)
     {
-        jsonNode = component.props.$jsonNode.$RootNode.$children[jsonNode.$FakeChild];
+        jsonNode = component.props.$jsonNode[RootNode].$children[jsonNode.$FakeChild];
     }
     
     // is ReactWithDotNet component
@@ -316,13 +317,16 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
     {
         const cmp = DefineComponent(jsonNode);
 
-        return createElement(cmp,
+        const cmpProps =
         {
             key: NotNull(jsonNode.key),
             ParentReactWithDotNetManagedComponent: component,
-            $jsonNode: jsonNode,
-            $SyncId: GetNextSequence()
-        });
+            $jsonNode: jsonNode
+        };
+
+        cmpProps[SyncId] = GetNextSequence();
+
+        return createElement(cmp, cmpProps);
     }
 
     let props = null;
@@ -686,11 +690,11 @@ function HandleAction(data)
         function restoreState(onStateReady)
         {
             const newState = {
-                $rootNode: NotNull(element[RootNode]),
-                $state: NotNull(element.state),
-                $SyncId: component.state.$SyncId + 1
+                $state: NotNull(element.state)
             };
 
+            newState[SyncId] = ShouldBeNumber(component.state[SyncId]) + 1;
+            newState[RootNode]    = NotNull(element[RootNode]);
             newState[ClientTasks] = element[ClientTasks];
 
             if (element[RootNodeOnMouseEnter])
@@ -767,10 +771,11 @@ function DefineComponent(componentDeclaration)
 
             const initialState =
             {
-                $rootNode: NotNull(props.$jsonNode[RootNode]),
-                $state: NotNull(props.$jsonNode.state),
-                $SyncId: NotNull(props.$SyncId)
+                $state: NotNull(props.$jsonNode.state)
             };
+
+            initialState[SyncId] = ShouldBeNumber(props[SyncId]);
+            initialState[RootNode] = NotNull(props.$jsonNode[RootNode]);
 
             if (props.$jsonNode.$HasComponentDidMountMethod)
             {
@@ -905,7 +910,7 @@ function DefineComponent(componentDeclaration)
                 return ConvertToReactElement(state[RootNodeOnMouseEnter], this, /*isConvertingRootNode*/true);    
             }
 
-            return ConvertToReactElement(state.$rootNode, this, /*isConvertingRootNode*/true);
+            return ConvertToReactElement(state[RootNode], this, /*isConvertingRootNode*/true);
         }
 
         componentDidMount()
@@ -937,8 +942,8 @@ function DefineComponent(componentDeclaration)
         {
             TraceComponent(prevState[DotNetTypeOfReactComponent], "getDerivedStateFromProps", nextProps, prevState);
 
-            const syncIdInState = ShouldBeNumber(prevState.$SyncId);
-            const syncIdInProp  = ShouldBeNumber(nextProps.$SyncId);
+            const syncIdInState = ShouldBeNumber(prevState[SyncId]);
+            const syncIdInProp  = ShouldBeNumber(nextProps[SyncId]);
 
             if (syncIdInState > syncIdInProp)
             {
@@ -948,11 +953,11 @@ function DefineComponent(componentDeclaration)
             if (syncIdInState !== syncIdInProp)
             {
                 const partialState = {
-                    $rootNode: NotNull(nextProps.$jsonNode[RootNode]),
-                    $SyncId: syncIdInProp,
                     $HasComponentDidMountMethod: false
                 };
 
+                partialState[SyncId] = syncIdInProp;
+                partialState[RootNode] = NotNull(nextProps.$jsonNode[RootNode]);
                 partialState[ClientTasks] = nextProps.$jsonNode[ClientTasks];
 
                 return partialState;
@@ -1018,7 +1023,9 @@ function RenderComponentIn(obj)
                 OnReactStateReady();
             }
 
-            const props = { key: '0', $jsonNode: element, ref: renderCallback, $SyncId: GetNextSequence() };
+            const props = { key: '0', $jsonNode: element, ref: renderCallback };
+
+            props[SyncId] = GetNextSequence();
 
             const reactElement = React.createElement(component, props);
             
