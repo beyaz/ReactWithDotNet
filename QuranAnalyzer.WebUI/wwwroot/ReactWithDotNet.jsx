@@ -235,6 +235,19 @@ function NotNull(value)
     return value;
 }
 
+function ShouldBeNumber(value)
+{
+    if (typeof value === 'number')
+    {
+        if (!isNaN(value))
+        {
+            return value;
+        }
+    }
+
+    throw CreateNewDeveloperError("value should be number.");
+}
+
 function NVL(a, b)
 {
     if (a == null)
@@ -921,13 +934,8 @@ function DefineComponent(componentDeclaration)
         {
             TraceComponent(prevState[DotNetTypeOfReactComponent], "getDerivedStateFromProps", nextProps, prevState);
 
-            const syncIdInState = prevState.$SyncId;
-            const syncIdInProp  = nextProps.$SyncId;
-
-            if (isNaN(syncIdInState) || isNaN(syncIdInProp))
-            {
-                return null;
-            }
+            const syncIdInState = ShouldBeNumber(prevState.$SyncId);
+            const syncIdInProp  = ShouldBeNumber(nextProps.$SyncId);
 
             if (syncIdInState > syncIdInProp)
             {
