@@ -1,4 +1,6 @@
-﻿namespace QuranAnalyzer.WebUI.Components;
+﻿using QuranAnalyzer.WebUI.Pages.MainPage;
+
+namespace QuranAnalyzer.WebUI.Components;
 
 class FixedLeftMenuContainer : ReactComponent
 {
@@ -8,7 +10,7 @@ class FixedLeftMenuContainer : ReactComponent
     {
         return new div
         {
-            Children = children,
+            children = { new LeftMenuContent() },
             style =
             {
                 position   = "fixed",
