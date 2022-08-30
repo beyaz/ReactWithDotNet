@@ -16,7 +16,7 @@ const ClientTasks = '$ClientTasks';
 const RootNodeOnMouseEnter = '$RootNodeOnMouseEnter';
 const SyncId = '$SyncId';
 const DotNetState = '$State';
-const HasComponentDidMountMethod = '$HasComponentDidMountMethod'
+const HasComponentDidMountMethod = '$HasComponentDidMountMethod';
 
 const EventBus =
 {
