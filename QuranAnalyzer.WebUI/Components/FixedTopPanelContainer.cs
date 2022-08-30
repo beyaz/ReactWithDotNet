@@ -7,16 +7,10 @@ class FixedTopPanelContainerModel
 }
 class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 {
-    //protected override void constructor()
-    //{
-    //    base.constructor();
-    //    ClientTask.ListenEvent(ApplicationEventName.MainContentDivScrollChanged, nameof(OnMainContentDivScrollChanged));
-    //}
-
-    public void ComponentDidMount()
+    protected override void constructor()
     {
+        base.constructor();
         ClientTask.ListenEvent(ApplicationEventName.MainContentDivScrollChanged, nameof(OnMainContentDivScrollChanged));
-
     }
 
     public void OnMainContentDivScrollChanged(double mainDivScrollY)

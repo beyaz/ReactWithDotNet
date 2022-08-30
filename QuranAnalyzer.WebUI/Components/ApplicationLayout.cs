@@ -34,7 +34,7 @@ class ApplicationLayout : ReactComponent
     {
         var top = new FixedTopPanelContainer
         {
-            children = { topContent }
+            topContent
         };
 
         var backDrop = new BackdropView { IsActive = IsBackDropActive };
