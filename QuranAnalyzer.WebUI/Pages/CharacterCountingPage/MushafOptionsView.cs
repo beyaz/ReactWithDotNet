@@ -4,7 +4,13 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 class MushafOptionsView: ReactComponent<MushafOption>
 {
-    
+    public MushafOption MushafOption { get; set; }
+
+    protected override void constructor()
+    {
+        state = MushafOption ?? new MushafOption();
+    }
+
     public void FireMushafOptionChanged()
     {
         ClientTask.DispatchEvent(ApplicationEventName.MushafOptionChanged, state);

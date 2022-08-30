@@ -16,18 +16,15 @@ public static class ElementSerializer
     #region Public Methods
     public static IReadOnlyDictionary<string, object> ToMap(this Element element, StateTree stateTree)
     {
+        if (element == null)
+        {
+            return null;
+        }
         if (element is FakeChild fakeChild)
         {
             return new Dictionary<string, object> { { "$FakeChild", fakeChild.Index } };
         }
         
-        // maybe root element is inherits from ReactElement
-        if (element is ReactComponent reactComponent)
-        {
-            reactComponent.Context = stateTree.Context;
-            return ToMap(GetElementTreeOfStatelessReactComponent(reactComponent), stateTree);
-        }
-
         element.BeforeSerialize();
 
         if (element is ReactStatefulComponent reactStatefulComponent)
@@ -68,9 +65,9 @@ public static class ElementSerializer
         {
             var childElements = new List<object>();
 
-            foreach (var item in element.children)
+            foreach (var child in element.children)
             {
-                childElements.Add(ToMap(item, stateTree));
+                childElements.Add(ToMap(child, stateTree));
             }
 
             map.Add("$children", childElements);
@@ -81,14 +78,7 @@ public static class ElementSerializer
     #endregion
 
     #region Methods
-    static Element GetElementTreeOfStatelessReactComponent(ReactComponent reactComponent)
-    {
-        var rootElement = reactComponent.render();
-
-        rootElement.key = reactComponent.key;
-
-        return rootElement;
-    }
+    
 
     static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
     {

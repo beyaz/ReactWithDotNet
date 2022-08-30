@@ -85,14 +85,13 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             {
                 state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
             }
-    }
-    #endregion
 
-    public void ComponentDidMount()
-    {
         ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, nameof(ArabicKeyboardPressed));
         ClientTask.ListenEvent(ApplicationEventName.MushafOptionChanged, nameof(MushafOptionChanged));
     }
+    #endregion
+
+    
     public void MushafOptionChanged(MushafOption mushafOption)
     {
         state.MushafOption = mushafOption;
@@ -139,6 +138,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     new VSpace(3),
                     new MushafOptionsView
                     {
+                        MushafOption = state.MushafOption
                     },
 
                     new VSpace(20),

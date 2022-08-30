@@ -7,24 +7,24 @@ class SvgHamburgerIconModel
 }
 class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
 {
-
+    protected override void constructor()
+    {
+        base.constructor();
+        ClientTask.ListenEvent(ApplicationEventName.BackdropClicked, nameof(OnHamburgerMenuClicked));
+    }
 
     public void OnHamburgerMenuClicked(string _)
     {
         state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
-        ClientTask.DispatchEvent("OnHamburgerMenuClicked", state.HamburgerMenuIsOpen);
+        ClientTask.DispatchEvent(ApplicationEventName.OnHamburgerMenuClicked, state.HamburgerMenuIsOpen);
+     
     }
 
-    public SvgHamburgerIcon()
-    {
-        state = new SvgHamburgerIconModel();
+
+    //public void ComponentDidMount()
+    //{
         
-    }
-
-    public void ComponentDidMount()
-    {
-        ClientTask.ListenEvent(ApplicationEventName.BackdropClicked, nameof(OnHamburgerMenuClicked));
-    }
+    //}
 
     public override Element render()
     {

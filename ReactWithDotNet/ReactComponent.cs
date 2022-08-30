@@ -105,14 +105,7 @@ public sealed class ClientTaskCollection
 }
 
 
-public abstract class ReactComponent : Element
-{
-    [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
-    protected internal ReactContext Context { get; set; }
 
-    public abstract Element render();
-}
 
 public abstract class ReactStatefulComponent : Element
 {
@@ -143,4 +136,8 @@ public abstract class ReactComponent<TState> : ReactStatefulComponent where TSta
 public class EmptyState
 {
     
+}
+
+public abstract class ReactComponent : ReactComponent<EmptyState>
+{
 }

@@ -9,14 +9,14 @@ class BackdropModel
 
 class BackdropView: ReactComponent<BackdropModel>
 {
-    
+    public bool IsActive { get; set; }
     
     public override Element render()
     {
         return new div
         {
             className = "p-blockui p-component-overlay p-component-overlay-enter", 
-            style = { zIndex = "3" },
+            style = { zIndex = "3" , display = IsActive ? "": "none"},
             onClick = _=>ClientTask.DispatchEvent(ApplicationEventName.BackdropClicked,"")
         };
     }
@@ -37,7 +37,7 @@ class ApplicationLayout : ReactComponent
             children = { topContent }
         };
 
-        var backDrop = new BackdropView();
+        var backDrop = new BackdropView { IsActive = IsBackDropActive };
         var main = new div
         {
             id = "main",
@@ -48,7 +48,7 @@ class ApplicationLayout : ReactComponent
                     style = { display = "flex", justifyContent = "center", height = "100%"},
                     children =
                     {
-                        IsBackDropActive ? backDrop : null,
+                        backDrop,
                         new div
                         {
                             style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px", width = "100%"},

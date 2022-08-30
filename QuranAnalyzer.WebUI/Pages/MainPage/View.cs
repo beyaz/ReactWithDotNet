@@ -35,12 +35,11 @@ class View : ReactComponent<MainViewModel>
         {
             PageId = Context.Query[QueryKey.Page]
         };
-    }
 
-    public void ComponentDidMount()
-    {
+        ClientTask.CallJsFunction("RegisterScrollEvents");
         ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClicked, nameof(hamburgerMenuClicked));
     }
+    
 
   
 

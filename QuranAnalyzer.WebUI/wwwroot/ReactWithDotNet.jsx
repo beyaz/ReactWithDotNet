@@ -285,7 +285,12 @@ const GetNextSequence = (() =>
     return () => { return sequence++; };
 })();
 function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
-{   
+{
+    if (jsonNode == null)
+    {
+        return null;
+    }
+
     if (jsonNode.$FakeChild != null)
     {
         jsonNode = component.props.$jsonNode.$RootNode.$children[jsonNode.$FakeChild];
@@ -540,6 +545,19 @@ function NormalizeEventArguments(eventArguments)
     );
 }
 
+const EnableTraceOfClientTask = false;
+function TraceClientTask(component, actionName, actionValue)
+{
+    if (!EnableTraceOfClientTask)
+    {
+        return;
+    }
+
+    const fullTypeName = component[DotNetTypeOfReactComponent];
+
+    console.log(fullTypeName + " -> " + actionName + " -> " + actionValue);
+}
+
 function ProcessClientTasks(clientTasks, component)
 {
     if (clientTasks == null)
@@ -550,10 +568,12 @@ function ProcessClientTasks(clientTasks, component)
     for (let i = 0; i < clientTasks.length; i++)
     {
         const clientTask = clientTasks[i];
-                       
+
         if (clientTask.TaskId === ClientTaskId.GotoMethod)
         {
             NotNull(component);
+
+            TraceClientTask(component, 'GotoMethod', clientTask.MethodName);
 
             EventQueue.push(() =>
             {
@@ -578,6 +598,8 @@ function ProcessClientTasks(clientTasks, component)
 
         if (clientTask.TaskId === ClientTaskId.DispatchEvent)
         {
+            TraceClientTask(component, 'DispatchEvent', clientTask.EventName);
+
             EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
 
             continue;
@@ -586,6 +608,8 @@ function ProcessClientTasks(clientTasks, component)
         if (clientTask.TaskId === ClientTaskId.ListenEvent)
         {
             NotNull(component);
+
+            TraceClientTask(component, 'ListenEvent', clientTask.EventName);
 
             EventBus.On(clientTask.EventName, (eventArgumentsAsArray)=>
             {
@@ -597,6 +621,8 @@ function ProcessClientTasks(clientTasks, component)
                 
         if (clientTask.TaskId === ClientTaskId.CallJsFunction)
         {
+            TraceClientTask(component, 'CallJsFunction', clientTask.JsFunctionPath);
+
             EventQueue.push(() =>
             {
                 CallJsFunctionInPath(clientTask);
@@ -666,6 +692,43 @@ function HandleAction(data)
     SendRequest(request, onSuccess);
 }
 
+const EnableTraceOfComponent = false;
+function TraceComponent(component, methodName, methodArgument1, methodArgument2)
+{
+    if (!EnableTraceOfComponent)
+    {
+        return;
+    }
+
+    let fullTypeName = null;
+
+    if (typeof (component) === 'string')
+    {
+        fullTypeName = component;
+    }
+    else
+    {
+        fullTypeName = component.constructor[DotNetTypeOfReactComponent];
+    }    
+
+    if (fullTypeName !== 'QuranAnalyzer.WebUI.Pages.MainPage.View,QuranAnalyzer.WebUI')
+    {
+        return;
+    }
+
+    console.log(fullTypeName + '::' + methodName);
+
+    if (methodArgument1 !== undefined)
+    {
+        console.log(methodArgument1);
+    }
+
+    if (methodArgument2 !== undefined)
+    {
+        console.log(methodArgument2);
+    }
+}
+
 const ComponentDefinitions = {};
 
 function DefineComponent(componentDeclaration)
@@ -684,11 +747,14 @@ function DefineComponent(componentDeclaration)
         {
             super(props||{});
 
+            TraceComponent(this, "constructor", props);
+
             this.state =
             {
                 $rootNode: NotNull(props.$jsonNode[RootNode]),
                 $state: NotNull(props.$jsonNode.state),
-                $SyncId: props.$SyncId
+                $SyncId: props.$SyncId,
+                $HasComponentDidMountMethod: props.$jsonNode.$HasComponentDidMountMethod
             };
 
             if (props.$jsonNode.$RootNodeOnMouseEnter)
@@ -696,7 +762,13 @@ function DefineComponent(componentDeclaration)
                 this.state.$RootNodeOnMouseEnter = props.$jsonNode.$RootNodeOnMouseEnter;
             }
 
+            if (props.$jsonNode.$ClientTasks)
+            {
+                this.state.$clientTasks = props.$jsonNode.$ClientTasks;
+            }            
+
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
+            this.state[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
             if (props.ParentReactWithDotNetManagedComponent)
             {
@@ -799,6 +871,8 @@ function DefineComponent(componentDeclaration)
         
         render()
         {
+            TraceComponent(this, "render");
+
             this.ReactWithDotNetManagedChildComponents = [];
 
             const state = this.state;
@@ -813,7 +887,11 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
-            if (this.props.$jsonNode.$HasComponentDidMountMethod)
+            TraceComponent(this, "componentDidMount");
+
+            ProcessClientTasks(this.state.$clientTasks, this);
+
+            if (this.state.$HasComponentDidMountMethod)
             {
                 HandleAction({ remoteMethodName: 'ComponentDidMount', component: this, eventArguments: [] });
                 return;
@@ -827,13 +905,17 @@ function DefineComponent(componentDeclaration)
 
         componentDidUpdate(nextProps)
         {
+            TraceComponent(this, "componentDidUpdate");
+
             ProcessClientTasks(this.state.$clientTasks, this);
         }
 
-        static getDerivedStateFromProps(props, state) 
+        static getDerivedStateFromProps(nextProps, prevState) 
         {
-            const syncIdInState = state.$SyncId;
-            const syncIdInProp  = props.$SyncId;
+            TraceComponent(prevState[DotNetTypeOfReactComponent], "getDerivedStateFromProps", nextProps, prevState);
+
+            const syncIdInState = prevState.$SyncId;
+            const syncIdInProp  = nextProps.$SyncId;
 
             if (isNaN(syncIdInState) || isNaN(syncIdInProp))
             {
@@ -848,9 +930,10 @@ function DefineComponent(componentDeclaration)
             if (syncIdInState !== syncIdInProp)
             {
                 return {
-                    $rootNode: NotNull(props.$jsonNode[RootNode]),
+                    $rootNode: NotNull(nextProps.$jsonNode[RootNode]),
                     $SyncId: syncIdInProp,
-                    $clientTasks: props.$jsonNode.$ClientTasks
+                    $clientTasks: nextProps.$jsonNode.$ClientTasks,
+                    $HasComponentDidMountMethod: false
                 };
             }
 
@@ -914,7 +997,9 @@ function RenderComponentIn(obj)
                 OnReactStateReady();
             }
 
-            const reactElement = React.createElement(component, { key: '0', $jsonNode: element, ref: renderCallback });
+            const props = { key: '0', $jsonNode: element, ref: renderCallback, $SyncId: GetNextSequence() };
+
+            const reactElement = React.createElement(component, props);
             
             createRoot(document.getElementById(containerHtmlElementId)).render(reactElement);
         }
@@ -1001,4 +1086,3 @@ var ReactWithDotNet =
 window.ReactWithDotNet = ReactWithDotNet;
 
 export default ReactWithDotNet;
-

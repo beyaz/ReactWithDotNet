@@ -74,7 +74,7 @@ public abstract class Element : IEnumerable<Element>
     #region Methods
     protected internal virtual void BeforeSerialize()
     {
-        children.RemoveAll(x => x is null);
+        // children.RemoveAll(x => x is null);
 
         if (key == null)
         {
@@ -89,6 +89,11 @@ public abstract class Element : IEnumerable<Element>
 
             foreach (var sibling in siblings)
             {
+                if (sibling == null)
+                {
+                    continue;
+                }
+                
                 if (sibling.key == null)
                 {
                     sibling.key = key++.ToString();
