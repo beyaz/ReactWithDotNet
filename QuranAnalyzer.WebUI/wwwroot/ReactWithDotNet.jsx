@@ -400,12 +400,12 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
                 props[targetProp] = IfNull(GetValueInPath(component.state[DotNetState], sourcePath), defaultValue);
                 props[eventName] = function(e)
                 {
-                    const state = Clone(component.state[DotNetState]);
+                    const modifiedDotNetState = Clone(component.state[DotNetState]);
 
-                    SetValueInPath(state, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
+                    SetValueInPath(modifiedDotNetState, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
 
                     const newState = {};
-                    newState[DotNetState] = state;
+                    newState[DotNetState] = modifiedDotNetState;
 
                     component.setState(newState);
                 }
