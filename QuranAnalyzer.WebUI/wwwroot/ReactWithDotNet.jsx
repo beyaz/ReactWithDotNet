@@ -15,7 +15,7 @@ const RootNode = '$RootNode';
 const ClientTasks = '$ClientTasks';
 const RootNodeOnMouseEnter = '$RootNodeOnMouseEnter';
 const SyncId = '$SyncId';
-const DotNetState = '$state';
+const DotNetState = '$State';
 
 const EventBus =
 {
