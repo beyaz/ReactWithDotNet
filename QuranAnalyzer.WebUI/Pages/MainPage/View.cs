@@ -52,17 +52,56 @@ class View : ReactComponent<MainViewModel>
 
     public override Element render()
     {
-        return new ApplicationLayout
+        var IsBackDropActive = state.HamburgerMenuIsOpen;
+        
+        var top = new FixedTopPanelContainer
         {
-            topContent  = new TopNavigationPanel(),
-            mainContent = buildMainContent(),
-            menu           = new FixedLeftMenuContainer
-            {
-                IsOpen   = state.HamburgerMenuIsOpen
-            },
-            mainDivScrollY = state.MainDivScrollY,
-            IsBackDropActive = state.HamburgerMenuIsOpen
+            new TopNavigationPanel()
         };
+
+        var backDrop = new BackdropView { IsActive = IsBackDropActive };
+        var main = new div
+        {
+            id = "main",
+            children =
+            {
+                new div
+                {
+                    style = { display = "flex", justifyContent = "center", height = "100%"},
+                    children =
+                    {
+                        backDrop,
+                        new div
+                        {
+                            style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px", width = "100%"},
+                            children = { buildMainContent() }
+                        }
+                    }
+                }
+            },
+
+            style =
+            {
+                position     = "fixed",
+                top          = "0px",
+                left         = (IsBackDropActive ? "400px" : "0px"),
+                marginTop    = "50px",
+                marginBottom = "27px",
+
+                width     = IsBackDropActive ? "calc(100% - 400px)" : "100%",
+                height    = "calc(100% - 65px)",
+                overflowY = "auto"
+            }
+        };
+
+        return new div
+        {
+            children = { top, new FixedLeftMenuContainer { IsOpen = state.HamburgerMenuIsOpen }, main },
+            style    = { width_height = "100%" }
+        };
+
+
+       
 
         Element buildMainContent()
         {
