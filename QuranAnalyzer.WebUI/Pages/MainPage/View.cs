@@ -1,7 +1,5 @@
-﻿using System;
-using QuranAnalyzer.WebUI.Components;
+﻿using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
-using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -37,15 +35,20 @@ class View : ReactComponent<MainViewModel>
         };
 
         ClientTask.CallJsFunction("RegisterScrollEvents");
-        ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClicked, nameof(hamburgerMenuClicked));
+        ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuOpened, nameof(OnHamburgerMenuOpened));
+        ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClosed, nameof(OnHamburgerMenuClosed));
     }
-    
-
-  
 
 
+    public void OnHamburgerMenuClosed()
+    {
+        state.HamburgerMenuIsOpen = false;
+    }
 
-    void hamburgerMenuClicked(bool hamburgerMenuIsOpen) => state.HamburgerMenuIsOpen = hamburgerMenuIsOpen;
+    public void OnHamburgerMenuOpened()
+    {
+        state.HamburgerMenuIsOpen = true;
+    }
 
     public override Element render()
     {

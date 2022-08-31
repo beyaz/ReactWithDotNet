@@ -7,24 +7,20 @@ class SvgHamburgerIconModel
 }
 class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
 {
-    protected override void constructor()
+   
+
+    
+    public void CloseHamburgerMenu(string _)
     {
-        base.constructor();
-        ClientTask.ListenEvent(ApplicationEventName.BackdropClicked, nameof(OnHamburgerMenuClicked));
+        state.HamburgerMenuIsOpen = false;
+        ClientTask.DispatchEvent(ApplicationEventName.OnHamburgerMenuClosed);
     }
 
-    public void OnHamburgerMenuClicked(string _)
+    public void OpenHamburgerMenu(string _)
     {
-        state.HamburgerMenuIsOpen = !state.HamburgerMenuIsOpen;
-        ClientTask.DispatchEvent(ApplicationEventName.OnHamburgerMenuClicked, state.HamburgerMenuIsOpen);
-     
+        state.HamburgerMenuIsOpen = true;
+        ClientTask.DispatchEvent(ApplicationEventName.OnHamburgerMenuOpened);
     }
-
-
-    //public void ComponentDidMount()
-    //{
-        
-    //}
 
     public override Element render()
     {
@@ -43,14 +39,14 @@ class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
                     margin = "14px"
                 },
                 viewBox = "0 0 15 15",
-                onClick = OnHamburgerMenuClicked,
+                onClick = CloseHamburgerMenu,
             };
         }
 
         return new svg
         {
             viewBox = "0 0 24 24",
-            onClick = OnHamburgerMenuClicked,
+            onClick = OpenHamburgerMenu,
             children =
             {
                 new path {d = "M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z", fill = color}
