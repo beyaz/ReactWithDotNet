@@ -56,7 +56,8 @@ class View : ReactComponent<MainViewModel>
             new TopNavigationPanel()
         };
 
-        var backDrop = new BackdropView { IsActive = IsBackDropActive };
+        var left = new FixedLeftMenuContainer { IsOpen = state.HamburgerMenuIsOpen };
+        
         var main = new div
         {
             id = "main",
@@ -67,7 +68,7 @@ class View : ReactComponent<MainViewModel>
                     style = { display = "flex", justifyContent = "center", height = "100%" },
                     children =
                     {
-                        backDrop,
+                        new BackdropView { IsActive = IsBackDropActive },
                         new div
                         {
                             style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px", width = "100%" },
@@ -93,7 +94,7 @@ class View : ReactComponent<MainViewModel>
 
         return new div
         {
-            children = { top, new FixedLeftMenuContainer { IsOpen = state.HamburgerMenuIsOpen }, main },
+            children = { top, left, main },
             style    = { width_height = "100%" }
         };
 

@@ -1,13 +1,7 @@
 ﻿
 namespace QuranAnalyzer.WebUI.Components;
 
-class BackdropModel
-{
-    
-    
-}
-
-class BackdropView: ReactComponent<BackdropModel>
+class BackdropView: ReactComponent
 {
     public bool IsActive { get; set; }
     
