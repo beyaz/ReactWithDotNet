@@ -1,5 +1,6 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+using QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -16,7 +17,6 @@ public class MainViewModel
     public bool HamburgerMenuIsOpen { get; set; }
 
     public double MainDivScrollY { get; set; }
-    
 
     public string LastClickedMenuId { get; set; }
 
@@ -25,11 +25,9 @@ public class MainViewModel
 
 class View : ReactComponent<MainViewModel>
 {
-    
-
     protected override void constructor()
     {
-        state        = new MainViewModel
+        state = new MainViewModel
         {
             PageId = Context.Query[QueryKey.Page]
         };
@@ -38,7 +36,6 @@ class View : ReactComponent<MainViewModel>
         ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuOpened, nameof(OnHamburgerMenuOpened));
         ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClosed, nameof(OnHamburgerMenuClosed));
     }
-
 
     public void OnHamburgerMenuClosed()
     {
@@ -53,7 +50,7 @@ class View : ReactComponent<MainViewModel>
     public override Element render()
     {
         var IsBackDropActive = state.HamburgerMenuIsOpen;
-        
+
         var top = new FixedTopPanelContainer
         {
             new TopNavigationPanel()
@@ -67,13 +64,13 @@ class View : ReactComponent<MainViewModel>
             {
                 new div
                 {
-                    style = { display = "flex", justifyContent = "center", height = "100%"},
+                    style = { display = "flex", justifyContent = "center", height = "100%" },
                     children =
                     {
                         backDrop,
                         new div
                         {
-                            style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px", width = "100%"},
+                            style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px", width = "100%" },
                             children = { buildMainContent() }
                         }
                     }
@@ -84,7 +81,7 @@ class View : ReactComponent<MainViewModel>
             {
                 position     = "fixed",
                 top          = "0px",
-                left         = (IsBackDropActive ? "400px" : "0px"),
+                left         = IsBackDropActive ? "400px" : "0px",
                 marginTop    = "50px",
                 marginBottom = "27px",
 
@@ -100,9 +97,6 @@ class View : ReactComponent<MainViewModel>
             style    = { width_height = "100%" }
         };
 
-
-       
-
         Element buildMainContent()
         {
             if (state.PageId == PageId.MainPage)
@@ -117,9 +111,9 @@ class View : ReactComponent<MainViewModel>
 
             if (state.PageId == PageId.InitialLetters)
             {
-                return new InitialLetters.AllInitialLetters();
+                return new AllInitialLetters();
             }
-            
+
             if (state.PageId == PageId.QuestionAnswerPage)
             {
                 return new QuestionAnswerPage.View();
@@ -130,32 +124,17 @@ class View : ReactComponent<MainViewModel>
                 return new ContactPage.View();
             }
 
-           
-
             if (state.PageId == PageId.CharacterCounting)
             {
                 return new CharacterCountingView();
             }
-
-            
 
             if (state.PageId == PageId.WordSearchingPage)
             {
                 return new WordSearchingPage.View();
             }
 
-
             return new MainPageContent();
         }
-        
-
-       
-
-       
-
-        
-         
     }
-
-    
 }
