@@ -21,7 +21,6 @@ public abstract class Element : IEnumerable<Element>
     public readonly List<Element> children = new();
     #endregion
 
-
     #region Public Properties
     /// <summary>
     ///     Imports filled values given style
@@ -37,10 +36,6 @@ public abstract class Element : IEnumerable<Element>
     /// </summary>
     [React]
     public string key { get; set; }
-
-
-
-
     #endregion
 
     #region Public Methods
@@ -68,38 +63,6 @@ public abstract class Element : IEnumerable<Element>
     IEnumerator IEnumerable.GetEnumerator()
     {
         return children.GetEnumerator();
-    }
-    #endregion
-
-    #region Methods
-    protected internal virtual void BeforeSerialize()
-    {
-        // children.RemoveAll(x => x is null);
-
-        if (key == null)
-        {
-            key = Guid.NewGuid().ToString();
-        }
-        
-        InitializeKeyIfNotExists(children);
-
-        static void InitializeKeyIfNotExists(IReadOnlyList<Element> siblings)
-        {
-            var key = 0;
-
-            foreach (var sibling in siblings)
-            {
-                if (sibling == null)
-                {
-                    continue;
-                }
-                
-                if (sibling.key == null)
-                {
-                    sibling.key = key++.ToString();
-                }
-            }
-        }
     }
     #endregion
 }

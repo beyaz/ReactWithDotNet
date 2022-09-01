@@ -7,7 +7,14 @@ namespace ReactWithDotNet;
 public sealed class ElementSerializerContext
 {
     public StateTree StateTree { get; set; }
-    
+    int UniqueId;
+
+    public string GetNextUniqueValue()
+    {
+        UniqueId++;
+        
+        return UniqueId.ToString();
+    }
 }
 
 public static class ElementSerializer
@@ -21,6 +28,26 @@ public static class ElementSerializer
     #endregion
 
     #region Public Methods
+
+    static void InitializeKeyIfNotExists(Element element, ElementSerializerContext context)
+    {
+        element.key ??= context.GetNextUniqueValue();
+
+        var key = 0;
+
+        foreach (var sibling in element.children)
+        {
+            if (sibling == null)
+            {
+                continue;
+            }
+
+            if (sibling.key == null)
+            {
+                sibling.key = key++.ToString();
+            }
+        }
+    }
     public static IReadOnlyDictionary<string, object> ToMap(this Element element, ElementSerializerContext context)
     {
         if (element == null)
@@ -31,8 +58,8 @@ public static class ElementSerializer
         {
             return new Dictionary<string, object> { { "$FakeChild", fakeChild.Index } };
         }
-        
-        element.BeforeSerialize();
+
+        InitializeKeyIfNotExists(element, context);
 
         if (element is ReactStatefulComponent reactStatefulComponent)
         {
