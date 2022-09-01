@@ -302,7 +302,7 @@ const GetNextSequence = (() =>
 
     return () => { return sequence++; };
 })();
-function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
+function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRootNode)
 {
     if (jsonNode == null)
     {
@@ -417,7 +417,7 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
             // tryProcessAsElement
             if (propValue.$isElement === true)
             {
-                props[propName] = ConvertToReactElement(propValue.Element, component);
+                props[propName] = ConvertToReactElement(buildContext, propValue.Element, component);
 
                 continue;
             }
@@ -429,7 +429,7 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
                 {
                     if (item == null && propValue.___TemplateForNull___)
                     {
-                        return ConvertToReactElement(propValue.___TemplateForNull___);
+                        return ConvertToReactElement({}, propValue.___TemplateForNull___);
                     }
 
                     const length = propValue.___ItemTemplates___.length;
@@ -440,12 +440,12 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
                         // try find as TreeNode
                         if (key.key != null && item && item.key != null && key.key === item.key)
                         {
-                            return ConvertToReactElement(propValue.___ItemTemplates___[j].Value);
+                            return ConvertToReactElement({}, propValue.___ItemTemplates___[j].Value);
                         }
 
                         if (JSON.stringify(key) === JSON.stringify(item))
                         {
-                            return ConvertToReactElement(propValue.___ItemTemplates___[j].Value);
+                            return ConvertToReactElement({}, propValue.___ItemTemplates___[j].Value);
                         }
                     }
 
@@ -494,7 +494,7 @@ function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
 
         for (let childIndex = 0; childIndex < childrenLength; childIndex++)
         {
-            newChildren.push(ConvertToReactElement(children[childIndex], component));
+            newChildren.push(ConvertToReactElement(buildContext, children[childIndex], component));
         }
 
         return createElement(constructorFunction, props, newChildren);
@@ -905,10 +905,10 @@ function DefineComponent(componentDeclaration)
             
             if (state.$onMouseEnter === true)
             {
-                return ConvertToReactElement(state[RootNodeOnMouseEnter], this, /*isConvertingRootNode*/true);    
+                return ConvertToReactElement({}, state[RootNodeOnMouseEnter], this, /*isConvertingRootNode*/true);    
             }
 
-            return ConvertToReactElement(state[RootNode], this, /*isConvertingRootNode*/true);
+            return ConvertToReactElement({}, state[RootNode], this, /*isConvertingRootNode*/true);
         }
 
         componentDidMount()
