@@ -22,7 +22,6 @@ public static class ElementSerializer
     #region Constants
     const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
     const string ___RootNode___ = "$RootNode";
-
     const string ___Type___ = "$Type";
     const string ___TypeOfState___ = "$TypeOfState";
     #endregion
