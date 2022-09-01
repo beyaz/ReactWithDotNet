@@ -295,6 +295,16 @@ function IfNull(value, defaultValue)
     return value;
 }
 
+const REFS = "REFS";
+
+const CreateNewBuildContext = () =>
+{
+    const context = {};
+
+    context[REFS] = {};
+
+    return context;
+};
 
 const GetNextSequence = (() =>
 {
@@ -319,11 +329,14 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
     {
         const cmp = DefineComponent(jsonNode);
 
+        const cmpKey = NotNull(jsonNode.key);
+
         const cmpProps =
         {
-            key: NotNull(jsonNode.key),
+            key: cmpKey,
             ParentReactWithDotNetManagedComponent: component,
-            $jsonNode: jsonNode
+            $jsonNode: jsonNode,
+            ref: (x) => { buildContext[REFS][cmpKey] = x; }
         };
 
         cmpProps[SyncId] = GetNextSequence();
@@ -429,7 +442,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                 {
                     if (item == null && propValue.___TemplateForNull___)
                     {
-                        return ConvertToReactElement({}, propValue.___TemplateForNull___);
+                        return ConvertToReactElement(CreateNewBuildContext(), propValue.___TemplateForNull___);
                     }
 
                     const length = propValue.___ItemTemplates___.length;
@@ -440,12 +453,12 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                         // try find as TreeNode
                         if (key.key != null && item && item.key != null && key.key === item.key)
                         {
-                            return ConvertToReactElement({}, propValue.___ItemTemplates___[j].Value);
+                            return ConvertToReactElement(CreateNewBuildContext(), propValue.___ItemTemplates___[j].Value);
                         }
 
                         if (JSON.stringify(key) === JSON.stringify(item))
                         {
-                            return ConvertToReactElement({}, propValue.___ItemTemplates___[j].Value);
+                            return ConvertToReactElement(CreateNewBuildContext(), propValue.___ItemTemplates___[j].Value);
                         }
                     }
 
@@ -905,10 +918,10 @@ function DefineComponent(componentDeclaration)
             
             if (state.$onMouseEnter === true)
             {
-                return ConvertToReactElement({}, state[RootNodeOnMouseEnter], this, /*isConvertingRootNode*/true);    
+                return ConvertToReactElement(CreateNewBuildContext(), state[RootNodeOnMouseEnter], this, /*isConvertingRootNode*/true);    
             }
 
-            return ConvertToReactElement({}, state[RootNode], this, /*isConvertingRootNode*/true);
+            return ConvertToReactElement(CreateNewBuildContext(), state[RootNode], this, /*isConvertingRootNode*/true);
         }
 
         componentDidMount()
