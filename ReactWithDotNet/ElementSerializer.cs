@@ -33,8 +33,6 @@ public static class ElementSerializer
     {
         element.key ??= context.GetNextUniqueValue();
 
-        var key = 0;
-
         foreach (var sibling in element.children)
         {
             if (sibling == null)
@@ -44,7 +42,7 @@ public static class ElementSerializer
 
             if (sibling.key == null)
             {
-                sibling.key = key++.ToString();
+                sibling.key = context.GetNextUniqueValue();
             }
         }
     }
