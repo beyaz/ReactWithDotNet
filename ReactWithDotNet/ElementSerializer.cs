@@ -3,6 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
+
+public sealed class ElementSerializerContext
+{
+    public StateTree StateTree { get; set; }
+    
+}
+
 public static class ElementSerializer
 {
     #region Constants
@@ -14,7 +21,7 @@ public static class ElementSerializer
     #endregion
 
     #region Public Methods
-    public static IReadOnlyDictionary<string, object> ToMap(this Element element, StateTree stateTree)
+    public static IReadOnlyDictionary<string, object> ToMap(this Element element, ElementSerializerContext context)
     {
         if (element == null)
         {
@@ -29,7 +36,7 @@ public static class ElementSerializer
 
         if (element is ReactStatefulComponent reactStatefulComponent)
         {
-            return ToMap(reactStatefulComponent, stateTree);
+            return ToMap(reactStatefulComponent, context);
         }
 
         var map = new Dictionary<string, object>();
@@ -47,7 +54,7 @@ public static class ElementSerializer
 
         foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
-            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, stateTree);
+            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, context);
             if (noNeedToExport)
             {
                 continue;
@@ -67,7 +74,7 @@ public static class ElementSerializer
 
             foreach (var child in element.children)
             {
-                childElements.Add(ToMap(child, stateTree));
+                childElements.Add(ToMap(child, context));
             }
 
             map.Add("$children", childElements);
@@ -119,7 +126,7 @@ public static class ElementSerializer
         return propertyName;
     }
 
-    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, StateTree stateTree)
+    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, ElementSerializerContext context)
     {
         var propertyValue = propertyInfo.GetValue(instance);
 
@@ -201,7 +208,7 @@ public static class ElementSerializer
             propertyValue = new InnerElementInfo
             {
                 IsElement = true,
-                Element   = element.ToMap(stateTree)
+                Element   = element.ToMap(context)
             };
         }
 
@@ -222,7 +229,7 @@ public static class ElementSerializer
 
             var itemTemplates = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[]
             {
-                (Func<object, IReadOnlyDictionary<string, object>>)(item => ((Element)func.DynamicInvoke(item)).ToMap(stateTree))
+                (Func<object, IReadOnlyDictionary<string, object>>)(item => ((Element)func.DynamicInvoke(item)).ToMap(context))
             });
 
             var template = new ItemTemplate
@@ -232,7 +239,7 @@ public static class ElementSerializer
 
             if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
             {
-                template.___TemplateForNull___ = Try(() => ((Element)func.DynamicInvoke((object)null))?.ToMap(stateTree)).value;
+                template.___TemplateForNull___ = Try(() => ((Element)func.DynamicInvoke((object)null))?.ToMap(context)).value;
             }
 
             return (template, false);
@@ -278,7 +285,7 @@ public static class ElementSerializer
         return false;
     }
 
-    static IReadOnlyDictionary<string, object> ToMap(ReactStatefulComponent reactStatefulComponent, StateTree stateTree)
+    static IReadOnlyDictionary<string, object> ToMap(ReactStatefulComponent reactStatefulComponent, ElementSerializerContext context)
     {
 
         var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
@@ -289,6 +296,7 @@ public static class ElementSerializer
 
         var map = new Dictionary<string, object>();
 
+        var stateTree      = context.StateTree;
         var breadCrumpPath = stateTree.BreadCrumpPath;
         var stateOrder     = stateTree.CurrentOrder;
         
@@ -331,7 +339,7 @@ public static class ElementSerializer
         
         map.Add(DotNetState, state);
 
-        map.Add(___RootNode___, ToMap(reactStatefulComponent.render(), stateTree));
+        map.Add(___RootNode___, ToMap(reactStatefulComponent.render(), context));
 
         map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
         map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
@@ -346,7 +354,7 @@ public static class ElementSerializer
         {
             supportMouseEnter.IsMouseEntered = true;
 
-            map.Add("$RootNodeOnMouseEnter", ToMap(reactStatefulComponent.render(), stateTree));
+            map.Add("$RootNodeOnMouseEnter", ToMap(reactStatefulComponent.render(), context));
         }
 
         if (reactStatefulComponent.ClientTask.taskList.Count > 0)

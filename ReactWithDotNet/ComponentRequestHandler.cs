@@ -117,7 +117,7 @@ public static class ComponentRequestHandler
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
             
-            var map = instance.ToMap(stateTree);
+            var map = instance.ToMap(new ElementSerializerContext{ StateTree = stateTree});
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             
@@ -230,7 +230,7 @@ public static class ComponentRequestHandler
                     Context = context
                 };
 
-                var map = instance.ToMap(stateTree);
+                var map = instance.ToMap(new ElementSerializerContext { StateTree = stateTree });
 
                 trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             
