@@ -692,7 +692,13 @@ function ProcessClientTasks(clientTasks, component)
                 HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
             };
 
-            component[ON_COMPONENT_DESTROY].push(() => { EventBus.Remove(clientTask.EventName, onEventFired) });
+            NotNull(component[ON_COMPONENT_DESTROY]);
+
+            component[ON_COMPONENT_DESTROY].push(() =>
+            {
+                TraceClientTask(component, 'UNDO-ListenEvent', clientTask.EventName);
+                EventBus.Remove(clientTask.EventName, onEventFired)
+            });
 
             EventBus.On(clientTask.EventName, onEventFired);
 
