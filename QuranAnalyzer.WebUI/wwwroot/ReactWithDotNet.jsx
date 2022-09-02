@@ -18,6 +18,7 @@ const SyncId = '$SyncId';
 const DotNetState = '$State';
 const HasComponentDidMountMethod = '$HasComponentDidMountMethod';
 const ComponentRefKey = '$Key';
+const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
 
 
 const EventBus =
@@ -691,12 +692,7 @@ function ProcessClientTasks(clientTasks, component)
                 HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
             };
 
-            if (component.OnDestroy == null)
-            {
-                component.OnDestroy = [];
-            }
-
-            component.OnDestroy.push(() => { EventBus.Remove(clientTask.EventName, onEventFired) });
+            component[ON_COMPONENT_DESTROY].push(() => { EventBus.Remove(clientTask.EventName, onEventFired) });
 
             EventBus.On(clientTask.EventName, onEventFired);
 
@@ -871,7 +867,9 @@ function DefineComponent(componentDeclaration)
 
             this.ReactWithDotNetManagedChildComponents = [];
 
-            this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;            
+            this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
+
+            this[ON_COMPONENT_DESTROY] = [];
         }
         
         CaptureStateTree(map, prefix)
@@ -989,15 +987,12 @@ function DefineComponent(componentDeclaration)
         }
 
         componentWillUnmount()
-        {
-            if (this.OnDestroy)
+        {            
+            const length = this[ON_COMPONENT_DESTROY].length;
+            for (var i = 0; i < length; i++)
             {
-                const length = this.OnDestroy.length;
-                for (var i = 0; i < length; i++)
-                {
-                    this.OnDestroy[i]();
-                }
-            }
+                this[ON_COMPONENT_DESTROY][i]();
+            }            
 
             TraceComponent(this, "componentWillUnmount");
         }
