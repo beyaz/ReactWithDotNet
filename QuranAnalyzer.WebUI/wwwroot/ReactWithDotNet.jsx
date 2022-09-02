@@ -19,11 +19,12 @@ const DotNetState = '$State';
 const HasComponentDidMountMethod = '$HasComponentDidMountMethod';
 const ComponentRefKey = '$Key';
 
+
 const EventBus =
 {
     On: function(event, callback)
     {
-        document.addEventListener(event, (e) => callback(e.detail));
+        document.addEventListener(event, callback);
     },
     Dispatch: function(event, data)
     {
@@ -683,10 +684,21 @@ function ProcessClientTasks(clientTasks, component)
 
             TraceClientTask(component, 'ListenEvent', clientTask.EventName);
 
-            EventBus.On(clientTask.EventName, (eventArgumentsAsArray)=>
+            const onEventFired = (e) =>
             {
+                const eventArgumentsAsArray = e.detail;
+
                 HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
-            });
+            };
+
+            if (component.OnDestroy == null)
+            {
+                component.OnDestroy = [];
+            }
+
+            component.OnDestroy.push(() => { EventBus.Remove(clientTask.EventName, onEventFired) });
+
+            EventBus.On(clientTask.EventName, onEventFired);
 
             continue;
         }
@@ -978,8 +990,17 @@ function DefineComponent(componentDeclaration)
 
         componentWillUnmount()
         {
-            
-        }        
+            if (this.OnDestroy)
+            {
+                const length = this.OnDestroy.length;
+                for (var i = 0; i < length; i++)
+                {
+                    this.OnDestroy[i]();
+                }
+            }
+
+            TraceComponent(this, "componentWillUnmount");
+        }
 
         componentDidUpdate(nextProps)
         {
