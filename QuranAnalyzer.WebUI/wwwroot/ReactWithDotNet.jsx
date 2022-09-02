@@ -307,6 +307,25 @@ const GetNextSequence = (() =>
 
 const ComponentCache = [];
 
+const PushToComponentCache = (component) =>
+{
+    NotNull(component);
+
+    var length = ComponentCache.length - 1;
+
+    while (length >= 0)
+    {
+        if (ComponentCache[length] === component)
+        {
+            return;
+        }
+
+        length--;
+    }
+
+    ComponentCache.push(component);
+};
+
 const FindComponentByKey = (key) =>
 {
     var length = ComponentCache.length - 1;
@@ -365,7 +384,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             {
                 if (x)
                 {
-                    ComponentCache.push(x);
+                    PushToComponentCache(x);
                 }                
             }
         };
@@ -1092,7 +1111,12 @@ function RenderComponentIn(obj)
 
             function renderCallback(component)
             {
-                OnReactStateReady();
+                if (component)
+                {
+                    PushToComponentCache(component);
+
+                    OnReactStateReady();
+                }
             }
 
             const props = { key: '0', $jsonNode: element, ref: renderCallback };
