@@ -15,48 +15,42 @@ import "./integration/react-xarrows";
 // your app specific imports and codes
 import './app.css'
 
-RegisterScrollEvents = function()
+
+var currentScrollY = 0;
+
+function OnMainDivScrollChanged(e)
 {
-    var currentScrollY = 0;
+    var scrollY = e.target.scrollTop;
 
-    function handleScroll(e)
+    function canFireAction()
     {
-        var scrollY = e.target.scrollTop;
-
-        function canFireAction()
+        if (scrollY > 0)
         {
-            if (scrollY > 0)
-            {
-                return currentScrollY === 0;
-            }
-
-            if (currentScrollY > 0)
-            {
-                return true;   
-            }
-
-            return false;
+            return currentScrollY === 0;
         }
 
-        if (canFireAction())
+        if (currentScrollY > 0)
         {
-            currentScrollY = scrollY;
+            return true;   
+        }
 
-            ReactWithDotNet.DispatchEvent('MainContentDivScrollChanged', [scrollY]);
-        }
-        else
-        {
-            currentScrollY = scrollY;
-        }
+        return false;
     }
 
-    ReactWithDotNet.OnDocumentReady(function()
+    if (canFireAction())
     {
-        document.getElementById("main").addEventListener('scroll', handleScroll);
-    });
+        currentScrollY = scrollY;
+
+        ReactWithDotNet.DispatchEvent('MainContentDivScrollChanged', [scrollY]);
+    }
+    else
+    {
+        currentScrollY = scrollY;
+    }
 }
 
-ReactWithDotNet.RegisterExternalJsObject("RegisterScrollEvents", RegisterScrollEvents);
+ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", OnMainDivScrollChanged);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.GetExternalJsObject", ReactWithDotNet.GetExternalJsObject);
 
 import React from 'react';
 import { Ripple } from 'primereact/ripple';

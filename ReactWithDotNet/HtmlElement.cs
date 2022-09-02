@@ -32,6 +32,11 @@ public abstract class HtmlElement : Element
     
     [React]
     public Action<MouseEvent> onMouseLeave { get; set; }
+    
+    [React]
+    [ReactTransformValueInClient("ReactWithDotNet.GetExternalJsObject")]
+    public string onScroll { get; set; }
+    
 
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();

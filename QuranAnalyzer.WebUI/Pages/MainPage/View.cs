@@ -32,7 +32,7 @@ class View : ReactComponent<MainViewModel>
             PageId = Context.Query[QueryKey.Page]
         };
 
-        ClientTask.CallJsFunction("RegisterScrollEvents");
+        
         ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuOpened, nameof(OnHamburgerMenuOpened));
         ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClosed, nameof(OnHamburgerMenuClosed));
     }
@@ -61,6 +61,7 @@ class View : ReactComponent<MainViewModel>
         var main = new div
         {
             id = "main",
+            onScroll = "OnMainDivScrollChanged",
             children =
             {
                 new div
