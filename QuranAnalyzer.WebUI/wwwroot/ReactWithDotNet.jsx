@@ -361,7 +361,10 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             $jsonNode: jsonNode,
             ref: (x) =>
             {
-                ComponentCache.push(x);
+                if (x)
+                {
+                    ComponentCache.push(x);
+                }                
             }
         };
 
@@ -763,7 +766,7 @@ function HandleAction(data)
     SendRequest(request, onSuccess);
 }
 
-const EnableTraceOfComponent = false;
+const EnableTraceOfComponent = true;
 function TraceComponent(component, methodName, methodArgument1, methodArgument2)
 {
     if (!EnableTraceOfComponent)
@@ -781,8 +784,8 @@ function TraceComponent(component, methodName, methodArgument1, methodArgument2)
     {
         fullTypeName = component.constructor[DotNetTypeOfReactComponent];
     }    
-
-    if (fullTypeName !== 'QuranAnalyzer.WebUI.Pages.MainPage.View,QuranAnalyzer.WebUI')
+    
+    if (fullTypeName !== 'QuranAnalyzer.WebUI.Components.FixedTopPanelContainer,QuranAnalyzer.WebUI')
     {
         return;
     }
