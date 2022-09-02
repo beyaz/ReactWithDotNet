@@ -140,6 +140,8 @@ public sealed class EventInfo
     public bool IsRemoteMethod { get; set; }
 
     public string remoteMethodName { get; set; }
+    
+    public string TargetKey { get; set; }
     #endregion
 }
 

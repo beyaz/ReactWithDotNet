@@ -17,6 +17,7 @@ const RootNodeOnMouseEnter = '$RootNodeOnMouseEnter';
 const SyncId = '$SyncId';
 const DotNetState = '$State';
 const HasComponentDidMountMethod = '$HasComponentDidMountMethod';
+const ComponentRefKey = '$Key';
 
 const EventBus =
 {
@@ -295,23 +296,45 @@ function IfNull(value, defaultValue)
     return value;
 }
 
-const REFS = "REFS";
-
-const CreateNewBuildContext = () =>
-{
-    const context = {};
-
-    context[REFS] = {};
-
-    return context;
-};
-
 const GetNextSequence = (() =>
 {
     var sequence = 1;
 
     return () => { return sequence++; };
 })();
+
+const ComponentCache = [];
+
+const FindComponentByKey = (key) =>
+{
+    var length = ComponentCache.length - 1;
+
+    while (length >= 0)
+    {
+        if (ComponentCache[length])
+        {
+            if (ComponentCache[length].state)
+            {
+                if (ComponentCache[length].state[ComponentRefKey] === key)
+                {
+                    return ComponentCache[length];
+                }
+            }
+        }
+
+        length--;
+    }
+
+    return null;
+};
+
+const CreateNewBuildContext = () =>
+{
+    const context = {};
+
+    return context;
+};
+
 function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRootNode)
 {
     if (jsonNode == null)
@@ -336,7 +359,10 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             key: cmpKey,
             ParentReactWithDotNetManagedComponent: component,
             $jsonNode: jsonNode,
-            ref: (x) => { buildContext[REFS][cmpKey] = x; }
+            ref: (x) =>
+            {
+                ComponentCache.push(x);
+            }
         };
 
         cmpProps[SyncId] = GetNextSequence();
@@ -383,11 +409,17 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             // tryProcessAsEventHandler
             if (propValue.$isRemoteMethod === true)
             {
-                const remoteMethodName = propValue.remoteMethodName;
+                var remoteMethodName = propValue.remoteMethodName;
+                var targetComponentKey = propValue.TargetKey;
 
-                props[propName] = function()
+                const getTargetComponent = () =>
                 {
-                    PushToEventQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: Array.prototype.slice.call(arguments) }));
+                    return NotNull(FindComponentByKey(targetComponentKey));
+                }
+
+                props[propName] = function ()
+                {
+                    PushToEventQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: getTargetComponent(), eventArguments: Array.prototype.slice.call(arguments) }));
                 }
 
                 continue;
@@ -691,7 +723,8 @@ function HandleAction(data)
 
         EventHandlerMethodName: NotNull(remoteMethodName),
         FullName   : NotNull(component.constructor)[DotNetTypeOfReactComponent],
-        CapturedStateTree: component.CaptureStateTree()
+        CapturedStateTree: component.CaptureStateTree(),
+        ComponentRefId: NotNull(component.props.$jsonNode.key)
     };
     
     request.eventArgumentsAsJsonArray = NormalizeEventArguments(data.eventArguments).map(JSON.stringify);
@@ -713,6 +746,7 @@ function HandleAction(data)
             newState[SyncId] = ShouldBeNumber(component.state[SyncId]) + 1;
             newState[RootNode]    = NotNull(element[RootNode]);
             newState[ClientTasks] = element[ClientTasks];
+            newState[ComponentRefKey] = element.key;
 
             if (element[RootNodeOnMouseEnter])
             {
@@ -791,6 +825,7 @@ function DefineComponent(componentDeclaration)
             initialState[DotNetState] = NotNull(props.$jsonNode[DotNetState]);
             initialState[SyncId] = ShouldBeNumber(props[SyncId]);
             initialState[RootNode] = NotNull(props.$jsonNode[RootNode]);
+            initialState[ComponentRefKey] = NotNull(props.$jsonNode.key);
 
             if (props.$jsonNode[HasComponentDidMountMethod])
             {
@@ -821,7 +856,7 @@ function DefineComponent(componentDeclaration)
 
             this.ReactWithDotNetManagedChildComponents = [];
 
-            this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
+            this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;            
         }
         
         CaptureStateTree(map, prefix)
@@ -867,6 +902,7 @@ function DefineComponent(componentDeclaration)
                             key === RootNodeOnMouseEnter ||
                             key === ClientTasks ||
                             key === 'key' ||
+                            key === ComponentRefKey ||
                             key === DotNetState)
                         {
                             continue;
@@ -969,6 +1005,7 @@ function DefineComponent(componentDeclaration)
                 partialState[SyncId] = syncIdInProp;
                 partialState[RootNode] = NotNull(nextProps.$jsonNode[RootNode]);
                 partialState[ClientTasks] = nextProps.$jsonNode[ClientTasks];
+                partialState[ComponentRefKey] = NotNull(nextProps.$jsonNode.key);
 
                 return partialState;
             }

@@ -29,6 +29,8 @@ public class ComponentRequest
     public string MethodName { get; set; }
 
     public string SearchPartOfUrl { get; set; }
+
+    public int ComponentRefId { get; set; }
 }
 
 [Serializable]
@@ -117,7 +119,7 @@ public static class ComponentRequestHandler
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
             
-            var map = instance.ToMap(new ElementSerializerContext{ StateTree = stateTree});
+            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId){ StateTree = stateTree});
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             
@@ -230,7 +232,7 @@ public static class ComponentRequestHandler
                     Context = context
                 };
 
-                var map = instance.ToMap(new ElementSerializerContext { StateTree = stateTree });
+                var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId) { StateTree = stateTree });
 
                 trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
             

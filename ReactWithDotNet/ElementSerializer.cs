@@ -6,14 +6,20 @@ namespace ReactWithDotNet;
 
 public sealed class ElementSerializerContext
 {
+    int ComponentRefId;
+    
+    public ElementSerializerContext(int componentRefIdStart)
+    {
+        ComponentRefId = componentRefIdStart;
+    }
     public StateTree StateTree { get; set; }
-    int UniqueId;
+   
 
     public string GetNextUniqueValue()
     {
-        UniqueId++;
+        ComponentRefId++;
         
-        return UniqueId.ToString();
+        return ComponentRefId.ToString();
     }
 }
 
@@ -178,14 +184,26 @@ public static class ElementSerializer
 
         if (propertyValue is Action action)
         {
-            propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name };
+            if (action.Target is ReactStatefulComponent target)
+            {
+                propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name, TargetKey = target.key };
+            }
         }
 
         if (propertyInfo.PropertyType.IsGenericType)
         {
             if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
             {
-                propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = ((Delegate)propertyValue)?.Method.Name };
+                var @delegate = ((Delegate)propertyValue);
+                if (@delegate is not  null)
+                {
+                    if (@delegate.Target is ReactStatefulComponent target)
+                    {
+                        propertyValue = new EventInfo { IsRemoteMethod = true, remoteMethodName = @delegate.Method.Name, TargetKey = target.key };
+                    }
+                        
+                }
+                
             }
         }
 
