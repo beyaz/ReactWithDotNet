@@ -51,10 +51,7 @@ class View : ReactComponent<MainViewModel>
     {
         var IsBackDropActive = state.HamburgerMenuIsOpen;
 
-        var top = new FixedTopPanelContainer
-        {
-            new TopNavigationPanel()
-        };
+        var top = new FixedTopPanelContainer();
 
         var left = new FixedLeftMenuContainer { IsOpen = state.HamburgerMenuIsOpen };
         

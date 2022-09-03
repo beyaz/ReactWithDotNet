@@ -298,6 +298,116 @@ function IfNull(value, defaultValue)
     return value;
 }
 
+const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
+{
+    var scope = parentScope;
+
+    var isFiberNodeRelatedWithDotNetComponent = fiberNode.type && fiberNode.type[DotNetTypeOfReactComponent];
+    if (isFiberNodeRelatedWithDotNetComponent)
+    {
+        var map = parentScope.map;
+
+        var breadcrumb = parentScope.breadcrumb + ',' + parentScope.index;
+
+        parentScope.index++;
+
+        if (map[breadcrumb] !== undefined)
+        {
+            throw CreateNewDeveloperError('Problem when traversing nodes');
+        }
+        map[breadcrumb] =
+        {
+            StateAsJson: JSON.stringify(fiberNode.stateNode.state[DotNetState]),
+            FullTypeNameOfState: NotNull(fiberNode.memoizedProps.$jsonNode[FullTypeNameOfState])
+        };
+
+        scope = { map: map, index: 0, breadcrumb: breadcrumb };
+    }
+
+    var child = fiberNode.child;
+    while (child)
+    {
+        VisitFiberNodeForCaptureState(scope, child);
+        child = child.sibling;
+    }
+};
+
+
+const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
+{
+    var map = {};
+
+    map['0'] =
+    {
+        StateAsJson: JSON.stringify(rootFiberNode.stateNode.state[DotNetState]),
+        FullTypeNameOfState: NotNull(rootFiberNode.memoizedProps.$jsonNode[FullTypeNameOfState])
+    };
+
+    var rootScope = { map: map, index: 0, breadcrumb: '0' };
+
+    var child = rootFiberNode.child;
+    while (child)
+    {
+        VisitFiberNodeForCaptureState(rootScope, child);
+        child = child.sibling;
+    }
+
+    // calculate root props if exists
+    {
+        const jsonNode = rootFiberNode.memoizedProps.$jsonNode;
+                
+        let props = null;
+        for (let key in jsonNode)
+        {
+            if (jsonNode.hasOwnProperty(key))
+            {
+                if (key === RootNode)
+                {
+                    if (jsonNode[key].$children)
+                    {
+                        if (jsonNode[key].$children.length > 0)
+                        {
+                            if (props === null)
+                            {
+                                props = {};
+                            }
+                            props.$childrenCount = jsonNode[key].$children.length;
+                        }
+                    }
+                }
+                        
+                if (key === RootNode ||
+                    key === DotNetTypeOfReactComponent ||
+                    key === FullTypeNameOfState ||
+                    key === HasComponentDidMountMethod ||
+                    key === RootNodeOnMouseEnter ||
+                    key === ClientTasks ||
+                    key === 'key' ||
+                    key === ComponentRefKey ||
+                    key === DotNetState)
+                {
+                    continue;
+                }
+
+                if (props === null)
+                {
+                    props = {};
+                }
+
+                props[key] = jsonNode[key];
+            }
+        }                
+                
+        if (props)
+        {
+            map['0'].props = props;
+        }
+    }       
+
+    return map;
+};
+
+
 const GetNextSequence = (() =>
 {
     var sequence = 1;
@@ -759,7 +869,7 @@ function HandleAction(data)
 
         EventHandlerMethodName: NotNull(remoteMethodName),
         FullName   : NotNull(component.constructor)[DotNetTypeOfReactComponent],
-        CapturedStateTree: component.CaptureStateTree(),
+        CapturedStateTree: CaptureStateTreeFromFiberNode(component._reactInternals),
         ComponentRefId: NotNull(component.props.$jsonNode.key)
     };
     

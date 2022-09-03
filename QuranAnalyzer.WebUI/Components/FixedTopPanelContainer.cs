@@ -7,12 +7,12 @@ class FixedTopPanelContainerModel
 }
 class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 {
-    protected override void constructor()
+
+    public void ComponentDidMount()
     {
-        base.constructor();
         ClientTask.ListenEvent(ApplicationEventName.MainContentDivScrollChanged, nameof(OnMainContentDivScrollChanged));
     }
-
+    
     public void OnMainContentDivScrollChanged(double mainDivScrollY)
     {
         state.MainDivScrollY = mainDivScrollY;
@@ -33,7 +33,26 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                 zIndex       = "1",
                 borderBottom = "1px solid #dadce0"
             },
-            Children = children
+            children =
+            {
+                new nav
+                {
+                    children =
+                    {
+                        new SvgHamburgerIcon(),
+                        new div
+                        {
+                            new SiteTitle("19 Sistemi Nedir")
+                        }
+                    },
+                    style =
+                    {
+                        display        = "flex",
+                        justifyContent = "flex-start",
+                        alignItems     = "center"
+                    }
+                }
+            }
         };
 
         if (state.MainDivScrollY > 0)
