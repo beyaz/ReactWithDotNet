@@ -488,7 +488,6 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
         const cmpProps =
         {
             key: cmpKey,
-            ParentReactWithDotNetManagedComponent: component,
             $jsonNode: jsonNode,
             ref: (x) =>
             {
@@ -909,7 +908,7 @@ function HandleAction(data)
     SendRequest(request, onSuccess);
 }
 
-const EnableTraceOfComponent = true;
+const EnableTraceOfComponent = false;
 function TraceComponent(component, methodName, methodArgument1, methodArgument2)
 {
     if (!EnableTraceOfComponent)
@@ -990,113 +989,16 @@ function DefineComponent(componentDeclaration)
 
             initialState[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
-            if (props.ParentReactWithDotNetManagedComponent)
-            {
-                if (props.ParentReactWithDotNetManagedComponent.ReactWithDotNetManagedChildComponents)
-                {
-                    props.ParentReactWithDotNetManagedComponent.ReactWithDotNetManagedChildComponents.push(this);
-                }
-            }
-
             this.state = initialState;
-
-            this.ReactWithDotNetManagedChildComponents = [];
 
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
             this[ON_COMPONENT_DESTROY] = [];
         }
         
-        CaptureStateTree(map, prefix)
-        {
-            const isRoot = map == null;
-            if (isRoot)
-            {
-                map = {};
-                prefix = "0";
-            }
-
-            map[prefix] = { StateAsJson: JSON.stringify(this.state[DotNetState]), FullTypeNameOfState: NotNull(this.props.$jsonNode[FullTypeNameOfState]) };
-
-            // calculate root props if exists
-            if (isRoot)
-            {
-                const jsonNode = this.props.$jsonNode;
-                
-                let props = null;
-                for (let key in jsonNode)
-                {
-                    if (jsonNode.hasOwnProperty(key))
-                    {
-                        if (key === RootNode)
-                        {
-                            if (jsonNode[key].$children)
-                            {
-                                if (jsonNode[key].$children.length > 0)
-                                {
-                                    if (props === null)
-                                    {
-                                        props = {};
-                                    }
-                                    props.$childrenCount = jsonNode[key].$children.length;
-                                }
-                            }
-                        }
-                        
-                        if (key === RootNode ||
-                            key === DotNetTypeOfReactComponent ||
-                            key === FullTypeNameOfState ||
-                            key === HasComponentDidMountMethod ||
-                            key === RootNodeOnMouseEnter ||
-                            key === ClientTasks ||
-                            key === 'key' ||
-                            key === ComponentRefKey ||
-                            key === DotNetState)
-                        {
-                            continue;
-                        }
-
-                        if (props === null)
-                        {
-                            props = {};
-                        }
-
-                        props[key] = jsonNode[key];
-                    }
-                }                
-                
-                if (props)
-                {
-                    map[prefix].props = props;
-                }
-            }            
-            
-            if (this.ReactWithDotNetManagedChildComponents)
-            {
-                for (let i = 0; i < this.ReactWithDotNetManagedChildComponents.length; i++)
-                {
-                    const child = this.ReactWithDotNetManagedChildComponents[i];
-
-                    if (child.CaptureStateTree)
-                    {
-                        child.CaptureStateTree(map, prefix + "," + i);
-                    }
-                }
-            }
-
-            if (isRoot)
-            {
-                return map;
-            }
-
-            return null;
-        }
-        
         render()
         {
             TraceComponent(this, "render");
-
-            this.ReactWithDotNetManagedChildComponents = [];
 
             const state = this.state;
             
