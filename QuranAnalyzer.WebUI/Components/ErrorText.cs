@@ -25,7 +25,7 @@ class ErrorText: ReactComponent<ErrorTextModel>
     {
         if (Text.HasValue())
         {
-            ClientTask.GotoMethod(3000, nameof(ClearMessage));
+            ClientTask.GotoMethod(3000, ClearMessage);
         }
         
         var element = new small

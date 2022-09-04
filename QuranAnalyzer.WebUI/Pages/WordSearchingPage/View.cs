@@ -25,7 +25,7 @@ class View : ReactComponent<Model>
         {
             state.IsBlocked = true;
             ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
-            ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
+            ClientTask.GotoMethod(5, OnCaclculateClicked, _);
             return;
         }
 

@@ -18,12 +18,12 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
         
-        ClientTask.GotoMethod(700, nameof(Refresh));
+        ClientTask.GotoMethod(700, Refresh);
     }
 
     public void ComponentDidMount()
     {
-        ClientTask.GotoMethod(700, nameof(Refresh));
+        ClientTask.GotoMethod(700, Refresh);
     }
     
     public override Element render()

@@ -41,9 +41,19 @@ public sealed class ClientTaskCollection
         DispatchEvent(eventInfo.Name);
     }
 
-    public void GotoMethod(int timeout, string methodName, params object[] methodArguments)
+    public void GotoMethod(int timeout, Action action)
     {
-        taskList.Add(new ClientTask { TaskId = 6, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });
+        GotoMethod(timeout, action.Method.Name);
+    }
+
+    public void GotoMethod<TArgument>(int timeout, Action<TArgument> action, TArgument argument)
+    {
+        GotoMethod(timeout, action.Method.Name, argument);
+    }
+
+    public void GotoMethod<TArgument1, TArgument2>(int timeout, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
+    {
+        GotoMethod(timeout, action.Method.Name, argument1, argument2);
     }
 
     public void ListenEvent<EventArgument1>(ClientEventInfo<EventArgument1> eventInfo, Action<EventArgument1> routeToMethod)
@@ -73,6 +83,11 @@ public sealed class ClientTaskCollection
     void DispatchEvent(string eventName, params object[] eventArguments)
     {
         taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
+    }
+
+    void GotoMethod(int timeout, string methodName, params object[] methodArguments)
+    {
+        taskList.Add(new ClientTask { TaskId = 6, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });
     }
 
     void ListenEvent(string eventName, string routeToMethod)

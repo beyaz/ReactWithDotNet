@@ -247,7 +247,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             state.IsBlocked = true;
             ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
-            ClientTask.GotoMethod(5, nameof(OnCaclculateClicked), _);
+            ClientTask.GotoMethod(5, OnCaclculateClicked, _);
             return;
         }
 
