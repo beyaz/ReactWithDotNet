@@ -83,7 +83,7 @@ public class ArabicKeyboardLetterView : ReactComponent<EmptyState>, ISupportMous
                 new div(English){style = { marginLeftRight = "2px", fontSize = "0.8rem"}}
             },
 
-            onClick = _ => ClientTask.DispatchEvent("ArabicKeyboardPressed", ArabicLetter)
+            onClick = _ => ClientTask.DispatchEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicLetter)
         };
     }
 }
