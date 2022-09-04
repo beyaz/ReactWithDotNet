@@ -7,6 +7,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
+
 var createElement = React.createElement;
 
 const DotNetTypeOfReactComponent = '$Type';
@@ -502,39 +503,52 @@ class LinkedList
     }
 }
 
-
-const ComponentCache = new LinkedList();
-
-const PushToComponentCache = (component) =>
+class ComponentCache 
 {
-    NotNull(component);
-
-    var existingComponent = ComponentCache.first(x => x === component);
-    if (existingComponent)
+    constructor()
     {
-        return;
+        this.linkedList = new LinkedList();
     }
 
-    ComponentCache.add(component);
-};
-
-const FindComponentByKey = (key) =>
-{
-    const isMatch = (component) =>
+    Register(component)
     {
-        if (component && component.state)
+        NotNull(component);
+
+        var existingComponent = this.linkedList.first(x => x === component);
+        if (existingComponent)
         {
-            if (component.state[ComponentRefKey] === key)
-            {
-                return true;
-            }
+            return;
         }
 
-        return false;
-    };
+        this.linkedList.add(component);
+    }
 
-    return ComponentCache.first(isMatch);
-};
+    FindComponentByKey(key)
+    {
+        const isMatch = (component) =>
+        {
+            if (component && component.state)
+            {
+                if (component.state[ComponentRefKey] === key)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        return this.linkedList.first(isMatch);
+    }
+
+    Unregister(component)
+    {
+        this.linkedList.removeFirst(x => x === component);
+    }
+}
+
+const COMPONENT_CACHE = new ComponentCache();
+
 
 const CreateNewBuildContext = () =>
 {
@@ -570,7 +584,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             {
                 if (x)
                 {
-                    PushToComponentCache(x);
+                    COMPONENT_CACHE.Register(x);
                 }                
             }
         };
@@ -624,7 +638,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
 
                 const getTargetComponent = () =>
                 {
-                    return NotNull(FindComponentByKey(targetComponentKey));
+                    return NotNull(COMPONENT_CACHE.FindComponentByKey(targetComponentKey));
                 }
 
                 props[propName] = function ()
@@ -1108,7 +1122,7 @@ function DefineComponent(componentDeclaration)
                 this[ON_COMPONENT_DESTROY][i]();
             }            
 
-            ComponentCache.removeFirst(x => x === this);
+            COMPONENT_CACHE.Unregister(this);
 
             TraceComponent(this, "componentWillUnmount");
         }
@@ -1204,7 +1218,7 @@ function RenderComponentIn(obj)
             {
                 if (component)
                 {
-                    PushToComponentCache(component);
+                    COMPONENT_CACHE.Register(component);
 
                     OnReactStateReady();
                 }
