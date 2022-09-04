@@ -102,6 +102,10 @@ public sealed class ClientTaskCollection
     {
         ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
     }
+    public void ListenEvent(ClientEventInfo eventInfo, Action routeToMethod)
+    {
+        ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
+    }
 
     public void DispatchEvent(string eventName, params object[] eventArguments)
     {
@@ -111,6 +115,11 @@ public sealed class ClientTaskCollection
     public void DispatchEvent<EventArgument1>(ClientEventInfo<EventArgument1> eventInfo, EventArgument1 argument)
     {
         DispatchEvent(eventInfo.Name, argument);
+    }
+
+    public void DispatchEvent(ClientEventInfo eventInfo)
+    {
+        DispatchEvent(eventInfo.Name);
     }
 
     public void PushHistory(string title, string url)

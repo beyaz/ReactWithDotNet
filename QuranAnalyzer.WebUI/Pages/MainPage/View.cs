@@ -33,8 +33,8 @@ class View : ReactComponent<MainViewModel>
         };
 
         
-        ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuOpened, nameof(OnHamburgerMenuOpened));
-        ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClosed, nameof(OnHamburgerMenuClosed));
+        ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuOpened, OnHamburgerMenuOpened);
+        ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClosed, OnHamburgerMenuClosed);
     }
 
     public void OnHamburgerMenuClosed()

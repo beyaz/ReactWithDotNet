@@ -31,6 +31,6 @@ class ApplicationEventName
 
     public static ClientEventInfo<MushafOption> MushafOptionChanged = new(nameof(MushafOptionChanged));
 
-    public const string OnHamburgerMenuClosed = nameof(OnHamburgerMenuClosed);
-    public const string OnHamburgerMenuOpened = nameof(OnHamburgerMenuOpened);
+    public static ClientEventInfo OnHamburgerMenuClosed = new(nameof(OnHamburgerMenuClosed));
+    public static ClientEventInfo OnHamburgerMenuOpened = new(nameof(OnHamburgerMenuOpened));
 }
