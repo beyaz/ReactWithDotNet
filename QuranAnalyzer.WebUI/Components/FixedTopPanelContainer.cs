@@ -10,14 +10,9 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 
     public void ComponentDidMount()
     {
-        ClientTask.ListenEvent(ApplicationEventName.MainContentDivScrollChanged, nameof(OnMainContentDivScrollChanged));
+        ClientTask.ListenEvent(ApplicationEventName.MainContentDivScrollChanged, mainDivScrollY => state.MainDivScrollY = mainDivScrollY);
     }
     
-    public void OnMainContentDivScrollChanged(double mainDivScrollY)
-    {
-        state.MainDivScrollY = mainDivScrollY;
-    }
-
     public override Element render()
     {
         var top = new div

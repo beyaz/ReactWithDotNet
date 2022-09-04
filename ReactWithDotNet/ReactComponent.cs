@@ -64,6 +64,24 @@ public sealed class ReactContextKey<TValue>
     }
 }
 
+public class ClientEventInfo
+{
+    public readonly string Name;
+
+    public ClientEventInfo(string name)
+    {
+        Name = name;
+    }
+}
+
+public sealed class ClientEventInfo<EventArgument1> : ClientEventInfo
+{
+    public ClientEventInfo(string name): base(name)
+    {
+    }
+}
+
+
 public sealed class ClientTaskCollection
 {
     internal readonly List<ClientTask> taskList = new();
@@ -80,6 +98,10 @@ public sealed class ClientTaskCollection
         taskList.Add(new ClientTask { TaskId = 1, EventName = eventName, RouteToMethod = routeToMethod });
     }
 
+    public void ListenEvent<EventArgument1>(ClientEventInfo<EventArgument1> eventInfo, Action<EventArgument1> routeToMethod)
+    {
+        ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
+    }
 
     public void DispatchEvent(string eventName, params object[] eventArguments)
     {

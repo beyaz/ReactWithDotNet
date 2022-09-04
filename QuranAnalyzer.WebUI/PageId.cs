@@ -27,7 +27,7 @@ class ApplicationEventName
 {
     
     public const string ArabicKeyboardPressed = nameof(ArabicKeyboardPressed);
-    public const string MainContentDivScrollChanged = nameof(MainContentDivScrollChanged);
+    public static ClientEventInfo<double> MainContentDivScrollChanged = new(nameof(MainContentDivScrollChanged));
 
     public const string MushafOptionChanged = nameof(MushafOptionChanged);
 
