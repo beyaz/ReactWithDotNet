@@ -132,7 +132,7 @@ static class JsonSerializationOptionHelper
 }
 
 [Serializable]
-sealed class EventInfo
+sealed class RemoteMethodInfo
 {
     #region Public Properties
     [JsonPropertyName("$isRemoteMethod")]
