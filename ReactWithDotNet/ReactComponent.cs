@@ -107,7 +107,7 @@ public sealed class ClientTaskCollection
         ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
     }
 
-    public void DispatchEvent(string eventName, params object[] eventArguments)
+    void DispatchEvent(string eventName, params object[] eventArguments)
     {
         taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
     }
