@@ -25,8 +25,8 @@ static class ResourceAccess
 
 class ApplicationEventName
 {
-    
-    public const string ArabicKeyboardPressed = nameof(ArabicKeyboardPressed);
+
+    public static ClientEventInfo<string> ArabicKeyboardPressed = new(nameof(ArabicKeyboardPressed));
     public static ClientEventInfo<double> MainContentDivScrollChanged = new(nameof(MainContentDivScrollChanged));
 
     public const string MushafOptionChanged = nameof(MushafOptionChanged);

@@ -86,7 +86,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
             }
 
-        ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, nameof(ArabicKeyboardPressed));
+        ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
         ClientTask.ListenEvent(ApplicationEventName.MushafOptionChanged, nameof(MushafOptionChanged));
     }
     #endregion
