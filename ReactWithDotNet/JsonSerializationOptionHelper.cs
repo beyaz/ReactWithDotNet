@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -133,7 +132,7 @@ static class JsonSerializationOptionHelper
 }
 
 [Serializable]
-public sealed class EventInfo
+sealed class EventInfo
 {
     #region Public Properties
     [JsonPropertyName("$isRemoteMethod")]
