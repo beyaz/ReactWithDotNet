@@ -107,7 +107,12 @@ public sealed class ClientTaskCollection
     {
         taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
     }
-    
+
+    public void DispatchEvent<EventArgument1>(ClientEventInfo<EventArgument1> eventInfo, EventArgument1 argument)
+    {
+        DispatchEvent(eventInfo.Name, argument);
+    }
+
     public void PushHistory(string title, string url)
     {
         taskList.Add(new ClientTask { TaskId = 4, Title = title, Url = url });

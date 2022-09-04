@@ -29,7 +29,7 @@ class ApplicationEventName
     public static ClientEventInfo<string> ArabicKeyboardPressed = new(nameof(ArabicKeyboardPressed));
     public static ClientEventInfo<double> MainContentDivScrollChanged = new(nameof(MainContentDivScrollChanged));
 
-    public const string MushafOptionChanged = nameof(MushafOptionChanged);
+    public static ClientEventInfo<MushafOption> MushafOptionChanged = new(nameof(MushafOptionChanged));
 
     public const string OnHamburgerMenuClosed = nameof(OnHamburgerMenuClosed);
     public const string OnHamburgerMenuOpened = nameof(OnHamburgerMenuOpened);
