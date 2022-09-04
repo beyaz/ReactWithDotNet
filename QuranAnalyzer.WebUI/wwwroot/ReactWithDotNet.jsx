@@ -415,48 +415,125 @@ const GetNextSequence = (() =>
     return () => { return sequence++; };
 })();
 
-const ComponentCache = [];
+
+class LinkedListNode 
+{
+    constructor(data) 
+    {
+        this.data = data
+        this.next = null                
+    }
+}
+class LinkedList 
+{
+    constructor()
+    {
+        this.head = null;
+        this.size = 0;
+    }
+
+    add(data)
+    {
+	    var node = new LinkedListNode(data);
+
+	    var current;
+
+	    if (this.head == null)
+        {
+            this.head = node;
+        }
+        else 
+        {
+		    current = this.head;
+
+		    // iterate to the end of the list
+            while (current.next) 
+            {
+			    current = current.next;
+		    }
+
+		    // add node
+		    current.next = node;
+	    }
+	    this.size++;
+    }
+
+    removeFirst(isMatch)
+    {
+	    var current = this.head;
+	    var prev = null;
+
+        while (current != null)
+        {
+            if (isMatch(current.data) === true)
+            {
+                if (prev == null) 
+                {
+				    this.head = current.next;
+                }
+                else
+                {
+				    prev.next = current.next;
+			    }
+			    this.size--;
+			    return current.data;
+		    }
+		    prev = current;
+		    current = current.next;
+	    }
+	    return -1;
+    }
+
+    first(isMatch)
+    {
+	    var current = this.head;
+
+	    // iterate over the list
+        while (current != null) 
+        {
+            if (isMatch(current.data) === true)
+            {
+                return current.data;
+            }
+		    current = current.next;
+	    }
+
+	    return null;
+    }
+}
+
+
+const ComponentCache = new LinkedList();
 
 const PushToComponentCache = (component) =>
 {
     NotNull(component);
 
-    var length = ComponentCache.length - 1;
-
-    while (length >= 0)
+    var existingComponent = ComponentCache.first(x => x === component);
+    if (existingComponent)
     {
-        if (ComponentCache[length] === component)
-        {
-            return;
-        }
-
-        length--;
+        return;
     }
 
-    ComponentCache.push(component);
+    ComponentCache.add(component);
 };
 
 const FindComponentByKey = (key) =>
 {
-    var length = ComponentCache.length - 1;
-
-    while (length >= 0)
+    const isMatch = (component) =>
     {
-        if (ComponentCache[length])
+        if (component && component.state)
         {
-            if (ComponentCache[length].state)
+            if (component.state[ComponentRefKey] === key)
             {
-                if (ComponentCache[length].state[ComponentRefKey] === key)
-                {
-                    return ComponentCache[length];
-                }
+                return true;
             }
         }
 
-        length--;
-    }
+        return false;
+    };
 
-    return null;
+    return ComponentCache.first(isMatch);
 };
 
 const CreateNewBuildContext = () =>
@@ -1030,6 +1107,8 @@ function DefineComponent(componentDeclaration)
             {
                 this[ON_COMPONENT_DESTROY][i]();
             }            
+
+            ComponentCache.removeFirst(x => x === this);
 
             TraceComponent(this, "componentWillUnmount");
         }
