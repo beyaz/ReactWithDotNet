@@ -91,6 +91,7 @@ public abstract class ReactStatefulComponent : Element
     protected  abstract void constructor();
 
     internal void InvokeConstructor() => constructor();
+    internal Element InvokeRender() => render();
 
     protected virtual void componentDidMount()
     {

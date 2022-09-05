@@ -406,7 +406,7 @@ public static class ElementSerializer
         
         map.Add(DotNetState, state);
 
-        map.Add(___RootNode___, ToMap(reactStatefulComponent.render(), context));
+        map.Add(___RootNode___, ToMap(reactStatefulComponent.InvokeRender(), context));
 
         map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
         map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
@@ -421,7 +421,7 @@ public static class ElementSerializer
         {
             supportMouseEnter.IsMouseEntered = true;
 
-            map.Add("$RootNodeOnMouseEnter", ToMap(reactStatefulComponent.render(), context));
+            map.Add("$RootNodeOnMouseEnter", ToMap(reactStatefulComponent.InvokeRender(), context));
         }
 
         if (reactStatefulComponent.ClientTask.taskList.Count > 0)
