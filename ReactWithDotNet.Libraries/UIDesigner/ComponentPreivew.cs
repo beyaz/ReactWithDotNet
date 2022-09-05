@@ -21,7 +21,7 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
         ClientTask.GotoMethod(700, Refresh);
     }
 
-    public void ComponentDidMount()
+    protected override void componentDidMount()
     {
         ClientTask.GotoMethod(700, Refresh);
     }

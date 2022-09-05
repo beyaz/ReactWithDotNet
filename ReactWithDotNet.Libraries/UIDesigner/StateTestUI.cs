@@ -38,7 +38,7 @@ class ComponentA : ReactComponent<ModelA>
         };
     }
 
-    public void ComponentDidMount()
+    protected override void componentDidMount()
     {
         state.PropA += "-DidMountA-";
     }
@@ -69,7 +69,7 @@ class ComponentB : ReactComponent<ModelB>
         };
     }
 
-    public void ComponentDidMount()
+    protected override void componentDidMount()
     {
         state.PropB += "-DidMountB-";
     }

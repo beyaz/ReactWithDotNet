@@ -3,10 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-public enum ReactComponentEvents
-{
-    componentDidMount
-}
+
 
 
 
@@ -94,6 +91,11 @@ public abstract class ReactStatefulComponent : Element
     protected  abstract void constructor();
 
     internal void InvokeConstructor() => constructor();
+
+    protected virtual void componentDidMount()
+    {
+        
+    }
 }
 
 

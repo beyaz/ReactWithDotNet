@@ -314,7 +314,19 @@ public static class ElementSerializer
 
     static bool HasComponentDidMountMethod(object reactStatefulComponent)
     {
-        return reactStatefulComponent.GetType().GetMethod("ComponentDidMount", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
+        var componentType = reactStatefulComponent.GetType();
+
+        var didMountMethodInfo = componentType.GetMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        if (didMountMethodInfo != null)
+        {
+            if (didMountMethodInfo.DeclaringType != typeof(ReactStatefulComponent))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     static bool IsEmptyStyle(object value)

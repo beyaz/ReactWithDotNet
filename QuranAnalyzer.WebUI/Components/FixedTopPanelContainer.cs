@@ -8,7 +8,7 @@ class FixedTopPanelContainerModel
 class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 {
 
-    public void ComponentDidMount()
+    protected override void componentDidMount()
     {
         ClientTask.ListenEvent(ApplicationEventName.MainContentDivScrollChanged, mainDivScrollY => state.MainDivScrollY = mainDivScrollY);
     }

@@ -13,7 +13,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         state = StateCache.ReadState() ?? new UIDesignerModel();
     }
 
-    public void ComponentDidMount()
+    protected override void componentDidMount()
     {
         ClientTask.ListenEvent(OnBrowserInactive, Refresh);
         ClientTask.CallJsFunction("InitializeUIDesignerEvents", 1000);
