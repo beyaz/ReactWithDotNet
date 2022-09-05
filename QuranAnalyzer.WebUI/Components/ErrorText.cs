@@ -1,24 +1,15 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
 
-class ErrorTextModel
-{
-}
 
-class ErrorText: ReactComponent<ErrorTextModel>
+
+class ErrorText: ReactComponent
 {
     public string Text { get; set; }
-    
-    public ErrorText()
-    {
-        state = new ErrorTextModel();
-        
-    }
-    
 
     public void ClearMessage()
     {
-        Text       = null;
+        Text = null;
     }
 
     protected override Element render()
