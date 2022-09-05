@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactWithDotNet", "ReactWithDotNet\ReactWithDotNet.csproj", "{ABF5AA3B-7A14-4F34-8FE8-54834754D237}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactWithDotNet.Test", "ReactWithDotNet.Test\ReactWithDotNet.Test.csproj", "{F9DFCF0F-2750-46C0-8001-626FD0907226}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuranAnalyzer", "QuranAnalyzer\QuranAnalyzer.csproj", "{C2108589-1D5A-417A-91D8-B54933EC1189}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuranAnalyzer.Tests", "QuranAnalyzer.Tests\QuranAnalyzer.Tests.csproj", "{D13D32FA-30DF-4F60-9A53-422DAA4992C4}"
@@ -25,10 +23,6 @@ Global
 		{ABF5AA3B-7A14-4F34-8FE8-54834754D237}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABF5AA3B-7A14-4F34-8FE8-54834754D237}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABF5AA3B-7A14-4F34-8FE8-54834754D237}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9DFCF0F-2750-46C0-8001-626FD0907226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9DFCF0F-2750-46C0-8001-626FD0907226}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9DFCF0F-2750-46C0-8001-626FD0907226}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9DFCF0F-2750-46C0-8001-626FD0907226}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C2108589-1D5A-417A-91D8-B54933EC1189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C2108589-1D5A-417A-91D8-B54933EC1189}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2108589-1D5A-417A-91D8-B54933EC1189}.Release|Any CPU.ActiveCfg = Release|Any CPU
