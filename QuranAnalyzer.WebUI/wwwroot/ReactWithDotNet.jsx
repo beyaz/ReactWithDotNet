@@ -1096,6 +1096,8 @@ function DefineComponent(componentDeclaration)
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
             this[ON_COMPONENT_DESTROY] = [];
+
+            
         }
         
         render()
@@ -1177,7 +1179,9 @@ function DefineComponent(componentDeclaration)
     NewComponent[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
     ComponentDefinitions[dotNetTypeOfReactComponent] = NewComponent;
-    
+
+    NewComponent.displayName = dotNetTypeOfReactComponent.split(',')[0].split('.').pop();
+
     return NewComponent;
 }
 

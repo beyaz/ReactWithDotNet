@@ -37,7 +37,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                         new SvgHamburgerIcon(),
                         new div
                         {
-                            new SiteTitle("19 Sistemi Nedir")
+                            new SiteTitle()
                         }
                     },
                     style =

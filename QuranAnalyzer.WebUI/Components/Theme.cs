@@ -18,18 +18,6 @@ class divWithBorder: HtmlElement
     }
 }
 
-class SiteTitle : HtmlElement
-{
-    public override string Type => nameof(div);
-    
-    public SiteTitle(string innerText)
-    {
-        this.innerText = innerText;
-        
-        style.fontSize = "20px";
-    }
-}
-
 class LargeTitle : ReactComponent
 {
     readonly string text;
