@@ -92,18 +92,12 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
             var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.JsonText.HasValue() ? state.JsonText : "{}", type);
 
-            if (instance is ReactComponent reactComponent)
-            {
-                reactComponent.Context = new ReactContext();
-                return reactComponent.render();
-            }
+         
 
             if (instance is ReactStatefulComponent reactStatefulComponent)
             {
                 reactStatefulComponent.Context = new ReactContext();
 
-                reactStatefulComponent.key = "root";
-                
                 return reactStatefulComponent;
             }
 
