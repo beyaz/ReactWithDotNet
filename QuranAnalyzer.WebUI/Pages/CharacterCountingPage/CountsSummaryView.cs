@@ -18,7 +18,7 @@ class CountsSummaryView : ReactComponent
     #endregion
 
     #region Public Methods
-    public override Element render()
+    protected override Element render()
     {
         var counts = Counts ?? new List<SummaryInfo>();
 

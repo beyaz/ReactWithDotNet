@@ -60,11 +60,7 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
         };
     }
 
-
-
-    
-    
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

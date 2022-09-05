@@ -18,7 +18,7 @@ class ComponentA : ReactComponent<ModelA>
         state = new ModelA { PropA = "A" };
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -59,7 +59,7 @@ class ComponentB : ReactComponent<ModelB>
         state = new ModelB { PropB = "B" };
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -90,7 +90,7 @@ class ComponentC : ReactComponent<ModelC>
         state = new ModelC { PropC = "C" };
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -132,8 +132,8 @@ class Container1 : ReactComponent<ModelContainer1>
 
         return new ComponentC();
     }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         return new div
         {
@@ -168,8 +168,8 @@ class Container2 : ReactComponent<ModelContainer2>
             Container2Text = "Container2Text"
         };
     }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         return new div
         {
@@ -205,7 +205,7 @@ class Container3 : ReactComponent<ModelContainer3>
         };
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

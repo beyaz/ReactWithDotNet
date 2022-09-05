@@ -12,8 +12,7 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
 
     static Element countingResult => new CountingResult { id = IdOfCountingResult, MultipleOf = 42, SearchScript = GetLetterCountingScript("19:*", Kaaf, Haa_, Yaa, Ayn, Saad) };
 
-
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

@@ -5,7 +5,7 @@ namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
 class MainPageContent : ReactComponent
 {
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

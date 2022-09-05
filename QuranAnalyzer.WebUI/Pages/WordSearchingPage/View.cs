@@ -31,8 +31,8 @@ class View : ReactComponent<Model>
 
         state.IsBlocked = false;
     }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         var searchPanel = new divWithBorder
         {

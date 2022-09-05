@@ -2,7 +2,7 @@
 
 class ArabicKeyboard : ReactComponent<EmptyState>
 {
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -55,9 +55,7 @@ public class ArabicKeyboardLetterView : ReactComponent<EmptyState>, ISupportMous
 
     public bool IsMouseEntered { get; set; }
 
-   
-
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

@@ -25,8 +25,8 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
     {
         ClientTask.GotoMethod(700, Refresh);
     }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         return createElement();
     }

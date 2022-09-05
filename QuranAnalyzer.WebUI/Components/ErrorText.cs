@@ -20,8 +20,8 @@ class ErrorText: ReactComponent<ErrorTextModel>
     {
         Text       = null;
     }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         if (Text.HasValue())
         {

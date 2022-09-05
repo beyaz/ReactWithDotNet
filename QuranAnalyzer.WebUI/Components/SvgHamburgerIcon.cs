@@ -22,7 +22,7 @@ class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
         ClientTask.DispatchEvent(ApplicationEventName.OnHamburgerMenuOpened);
     }
 
-    public override Element render()
+    protected override Element render()
     {
         var color = "black";
         if (state.HamburgerMenuIsOpen)

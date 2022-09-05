@@ -14,7 +14,7 @@ class ComponentA : ReactComponent<ModelA>
         state = new ModelA { PropA = "A" };
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -48,7 +48,7 @@ class ComponentB : ReactComponent<ModelB>
         state = new ModelB { PropB = "B" };
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -71,7 +71,7 @@ class ContainerModel
 }
 class Container : ReactComponent<ContainerModel>
 {
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

@@ -104,7 +104,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     }
 
     #region Public Methods
-    public override Element render()
+    protected override Element render()
     {
         var searchPanel = new divWithBorder
         {

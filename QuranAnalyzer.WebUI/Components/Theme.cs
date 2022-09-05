@@ -34,8 +34,8 @@ class LargeTitle : ReactComponent
     {
         this.text = text;
     }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         return new div
         {
@@ -55,7 +55,7 @@ class Important : ReactComponent
         this.text = text;
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -90,7 +90,7 @@ class SubTitle : div
 
 class Article : ReactComponent
 {
-    public override Element render()
+    protected override Element render()
     {
         return new article
         {

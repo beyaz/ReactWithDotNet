@@ -4,8 +4,8 @@ namespace QuranAnalyzer.WebUI.Components;
 class BackdropView: ReactComponent
 {
     public bool IsActive { get; set; }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         return new div
         {

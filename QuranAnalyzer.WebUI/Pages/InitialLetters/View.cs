@@ -12,8 +12,8 @@ class InitialLetter : ReactComponent
     public string id { get; set; }
 
     public bool IsSelected { get; set; }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         var color = "#a9acaa";
         if (IsSelected)
@@ -38,7 +38,7 @@ class CountingResult: ReactComponent
 
     public string SearchScript { get; set; }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -63,8 +63,7 @@ class InitialLetterLineGroup: ReactComponent
 {
     public List<InitialLetter> Items { get; } = new();
 
-    
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -83,7 +82,7 @@ class Chapter : ReactComponent
     
     public string ChapterName { get; set; }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -115,7 +114,7 @@ class Arrow: ReactComponent
 
     public double? strokeWidth { get; set; } = 1;
 
-    public override Element render()
+    protected override Element render()
     {
         color ??= "#a9acaa";
         
@@ -156,7 +155,7 @@ class InitialLetterGroup_Saad: InitialLetterGroup
 
     static string IdOfCountingResult => $"ThreeSaad-{nameof(IdOfCountingResult)}";
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

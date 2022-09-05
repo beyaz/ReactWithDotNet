@@ -40,7 +40,8 @@ class AllInitialLetters :ReactComponent<AllInitialLettersModel>
     }
 
     void OnTabHeaderClick(string tabIdentifier) => state.SelectedTabIdentifier = tabIdentifier;
-    public override Element render()
+
+    protected override Element render()
     {
 
         var contentContainer = new div

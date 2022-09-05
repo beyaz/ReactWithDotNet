@@ -12,8 +12,7 @@ class InitialLetterGroup_Qaaf_50 : InitialLetterGroup
 
     static Element countingResult => new CountingResult { id = IdOfCountingResult, MultipleOf = 3, SearchScript = GetLetterCountingScript("50:*", Qaaf) };
 
-
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

@@ -17,7 +17,7 @@ public class LetterColorizer : ReactComponent
     public string VerseText { get; set; }
     public IReadOnlyList<LetterInfo> VerseTextNodes { get; set; }
 
-    public override Element render()
+    protected override Element render()
     {
         var verseText = VerseTextNodes ??= Analyzer.AnalyzeText(VerseText).Where(Analyzer.IsArabicLetter).ToList();
 

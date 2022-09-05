@@ -16,7 +16,7 @@ class MushafOptionsView: ReactComponent<MushafOption>
         ClientTask.DispatchEvent(ApplicationEventName.MushafOptionChanged, state);
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new Panel
         {

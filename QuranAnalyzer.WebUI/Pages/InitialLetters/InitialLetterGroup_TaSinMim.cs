@@ -21,8 +21,7 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                        GetLetterCountingScript("28:*", Taa_, Siin, Miim)
     };
 
-
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

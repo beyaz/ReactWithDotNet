@@ -22,7 +22,7 @@ class ComponentA : ReactComponent<ModelA>
         state = new ModelA { StateValueA = "A" };
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -57,7 +57,7 @@ class ComponentB : ReactComponent<ModelB>
         state = new ModelB { StateValueB = "B" };
     }
 
-    public override Element render()
+    protected override Element render()
     {
         if (ShouldContainsA)
         {
@@ -101,8 +101,8 @@ class RedBorder:ReactComponent<RedBorderModel>
     {
         state = new RedBorderModel();
     }
-    
-    public override Element render()
+
+    protected override Element render()
     {
         return new div
         {
@@ -126,7 +126,7 @@ class Container1 : ReactComponent<ModelContainer1>
         state = new ModelContainer1();
     }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

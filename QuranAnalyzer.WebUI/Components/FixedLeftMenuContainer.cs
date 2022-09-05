@@ -6,7 +6,7 @@ class FixedLeftMenuContainer : ReactComponent
 {
     public bool IsOpen { get; set; }
 
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

@@ -13,8 +13,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
 
     static Element countingResult => new CountingResult { id = IdOfCountingResult, MultipleOf = 113, SearchScript = GetLetterCountingScript("40:*,41:*,42:*,43:*,44:*,45:*,46:*", Haa, Miim) };
 
-
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

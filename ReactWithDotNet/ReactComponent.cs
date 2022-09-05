@@ -86,7 +86,7 @@ public abstract class ReactStatefulComponent : Element
 
     public readonly  ClientTaskCollection ClientTask  = new();
 
-    public abstract Element render();
+    protected abstract Element render();
 
     protected  abstract void constructor();
 

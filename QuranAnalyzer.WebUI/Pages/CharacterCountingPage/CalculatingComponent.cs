@@ -5,7 +5,7 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 class CalculatingComponent : ReactComponent
 {
-    public override Element render()
+    protected override Element render()
     {
         return new BlockUI
         {

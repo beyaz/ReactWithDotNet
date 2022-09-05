@@ -12,10 +12,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
     static string IdOfCountingResult_1 => $"HaMimSeparated-{nameof(IdOfCountingResult_1)}";
     static string IdOfCountingResult_2 => $"HaMimSeparated-{nameof(IdOfCountingResult_2)}";
 
-
-
-
-    public override Element render()
+    protected override Element render()
     {
         
         return new div

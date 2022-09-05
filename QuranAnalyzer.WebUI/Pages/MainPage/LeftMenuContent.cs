@@ -5,7 +5,7 @@ namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
 class LeftMenuContent: ReactComponent
 {
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
@@ -50,9 +50,7 @@ class LeftMenuItem: ReactComponent<LeftMenuItemState>,ISupportMouseEnter
     public string Text { get; set; }
     public string PageId { get; set; }
 
-
-    
-    public override Element render()
+    protected override Element render()
     {
         var link = new a
         {

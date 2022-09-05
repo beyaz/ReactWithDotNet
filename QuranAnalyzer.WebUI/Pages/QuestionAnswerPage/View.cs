@@ -31,7 +31,7 @@ public class View : ReactComponent
     {
         public string Question { get; set; }
 
-        public override Element render()
+        protected override Element render()
         {
             return new div
                 { 
@@ -73,9 +73,7 @@ public class View : ReactComponent
         }
     }
 
-    
-
-    public override Element render()
+    protected override Element render()
         {
 
             var model = ResourceHelper.Read<QuestionAnswerPageModel>("Pages.QuestionAnswerPage.Data.yaml");

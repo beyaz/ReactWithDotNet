@@ -9,7 +9,7 @@ namespace QuranAnalyzer.WebUI.Pages.SecuringDataWithCurrentTechnology;
 
 public class View : ReactComponent
 {
-    public override Element render()
+    protected override Element render()
     {
 
 

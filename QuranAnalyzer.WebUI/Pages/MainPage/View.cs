@@ -47,7 +47,7 @@ class View : ReactComponent<MainViewModel>
         state.HamburgerMenuIsOpen = true;
     }
 
-    public override Element render()
+    protected override Element render()
     {
         var IsBackDropActive = state.HamburgerMenuIsOpen;
 

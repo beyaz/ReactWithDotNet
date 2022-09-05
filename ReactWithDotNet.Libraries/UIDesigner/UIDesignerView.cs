@@ -19,7 +19,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         SaveState();
     }
 
-    public override Element render()
+    protected override Element render()
     {
         var propertyPanel = new VStack
         {

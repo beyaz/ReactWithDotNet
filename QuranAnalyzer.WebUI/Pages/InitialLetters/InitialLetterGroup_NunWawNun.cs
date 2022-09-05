@@ -12,8 +12,7 @@ class InitialLetterGroup_NunWawNun : InitialLetterGroup
 
     static Element countingResult => new CountingResult { id = IdOfCountingResult, MultipleOf = 7, SearchScript = GetLetterCountingScript("68:*", Nun) };
 
-
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {

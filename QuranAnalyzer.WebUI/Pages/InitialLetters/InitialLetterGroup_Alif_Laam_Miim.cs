@@ -10,8 +10,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
 
     static string IdOfCountingResult(int chapterNumber) => $"Alif_Laam_Miim-{chapterNumber}";
 
-
-    public override Element render()
+    protected override Element render()
     {
         return new div
         {
