@@ -7,8 +7,10 @@ namespace QuranAnalyzer.WebUI.Components;
 
 
 
-class divWithBorder: div
+class divWithBorder: HtmlElement
 {
+    public override string Type => nameof(div);
+    
     public divWithBorder()
     {
         style.border       = "1px solid rgb(218, 220, 224)";
@@ -16,8 +18,10 @@ class divWithBorder: div
     }
 }
 
-class SiteTitle : div
+class SiteTitle : HtmlElement
 {
+    public override string Type => nameof(div);
+    
     public SiteTitle(string innerText)
     {
         this.innerText = innerText;
@@ -66,8 +70,9 @@ class Important : ReactComponent
 }
 
 
-class Title : div
+class Title : HtmlElement
 {
+    public override string Type => nameof(div);
     public Title(string innerText)
     {
         this.innerText = innerText;
@@ -77,8 +82,9 @@ class Title : div
     }
 }
 
-class SubTitle : div
+class SubTitle : HtmlElement
 {
+    public override string Type => nameof(div);
     public SubTitle(string innerText)
     {
         this.innerText = innerText;

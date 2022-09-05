@@ -1,10 +1,7 @@
-﻿
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
-public class div : HtmlElement
+public sealed class div : HtmlElement
 {
-    public override string Type => nameof(div);
-
     public div()
     {
     }
@@ -13,11 +10,4 @@ public class div : HtmlElement
     {
         this.innerText = innerText;
     }
-
-    public div(IEnumerable<Element> children)
-    {
-        this.children.AddRange(children);
-    }
-
-    public override string ToString() => this.ToHTML();
 }

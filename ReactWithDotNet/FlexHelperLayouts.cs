@@ -1,7 +1,8 @@
 ﻿namespace ReactWithDotNet;
 
-public sealed class HStack : div
+public sealed class HStack : HtmlElement
 {
+    public override string Type => nameof(div);
     public HStack()
     {
         style.display       = "flex";
@@ -11,8 +12,9 @@ public sealed class HStack : div
     }
 }
 
-public sealed class HPanel : div
+public sealed class HPanel : HtmlElement
 {
+    public override string Type => nameof(div);
     public HPanel()
     {
         style.display       = "flex";
@@ -21,8 +23,9 @@ public sealed class HPanel : div
     }
 }
 
-public sealed class VPanel : div
+public sealed class VPanel : HtmlElement
 {
+    public override string Type => nameof(div);
     public VPanel()
     {
         style.display       = "flex";
@@ -31,8 +34,9 @@ public sealed class VPanel : div
     }
 }
 
-public sealed class VStack : div
+public sealed class VStack : HtmlElement
 {
+    public override string Type => nameof(div);
     public VStack()
     {
         style.display       = "flex";
