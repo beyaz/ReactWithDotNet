@@ -20,7 +20,7 @@ class MetadataNode : TreeNode
     public string DeclaringTypeNamespaceName { get; set; }
 }
 
-class MethodSelectionView : ReactComponent
+class MethodSelectionView 
 {
     public Action<SingleSelectionTreeSelectionParams> OnSelectionChange { get; set; }
 
@@ -100,7 +100,7 @@ class MethodSelectionView : ReactComponent
         };
     }
 
-    public override Element render()
+    public  Element render()
     {
         return new div
         {

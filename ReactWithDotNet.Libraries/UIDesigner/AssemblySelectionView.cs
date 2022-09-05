@@ -6,7 +6,7 @@ using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class AssemblySelectionView : ReactComponent
+class AssemblySelectionView 
 {
     public string LastQuery { get; set; }
     public string SelectedFolder { get; set; }
@@ -15,7 +15,7 @@ class AssemblySelectionView : ReactComponent
     public Action<AutoCompleteChangeParams> OnChange { get; set; }
     public Action<AutoCompleteCompleteMethodParams> CompleteMethod { get; set; }
 
-    public override Element render()
+    public  Element render()
     {
         var suggestions = new List<string>();
 

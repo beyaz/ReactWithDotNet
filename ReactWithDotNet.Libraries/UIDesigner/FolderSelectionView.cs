@@ -5,7 +5,7 @@ using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class FolderSelectionView : ReactComponent
+class FolderSelectionView 
 {
     public string LastQuery { get; set; }
     public string SelectedFolder { get; set; }
@@ -14,7 +14,7 @@ class FolderSelectionView : ReactComponent
     public Action<AutoCompleteChangeParams> OnChange { get; set; }
     public Action<AutoCompleteCompleteMethodParams> CompleteMethod { get; set; }
 
-    public override Element render()
+    public  Element render()
     {
         return new div
         {
