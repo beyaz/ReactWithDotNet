@@ -550,6 +550,28 @@ class ComponentCache
 const COMPONENT_CACHE = new ComponentCache();
 
 
+function ConvertToEventHandlerFunction(remoteMethodInfo)
+{
+    const remoteMethodName   = remoteMethodInfo.remoteMethodName;
+    const targetComponentKey = remoteMethodInfo.TargetKey;
+
+    NotNull(remoteMethodName);
+    NotNull(targetComponentKey);
+
+    return function ()
+    {
+        const targetComponent = COMPONENT_CACHE.FindComponentByKey(targetComponentKey);
+        if (targetComponent === null)
+        {
+            throw CreateNewDeveloperError('Target component not found. Target component key is ' + targetComponentKey);
+        }
+
+        const eventArguments = Array.prototype.slice.call(arguments);
+
+        PushToEventQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: targetComponent, eventArguments: eventArguments }));
+    }
+}
+
 const CreateNewBuildContext = () =>
 {
     const context = {};
@@ -633,18 +655,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             // tryProcessAsEventHandler
             if (propValue.$isRemoteMethod === true)
             {
-                var remoteMethodName = propValue.remoteMethodName;
-                var targetComponentKey = propValue.TargetKey;
-
-                const getTargetComponent = () =>
-                {
-                    return NotNull(COMPONENT_CACHE.FindComponentByKey(targetComponentKey));
-                }
-
-                props[propName] = function ()
-                {
-                    PushToEventQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: getTargetComponent(), eventArguments: Array.prototype.slice.call(arguments) }));
-                }
+                props[propName] = ConvertToEventHandlerFunction(propValue);
 
                 continue;
             }
