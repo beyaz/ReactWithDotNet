@@ -1120,7 +1120,7 @@ function DefineComponent(componentDeclaration)
 
             if (this.state[HasComponentDidMountMethod])
             {
-                HandleAction({ remoteMethodName: 'ComponentDidMount', component: this, eventArguments: [] });
+                HandleAction({ remoteMethodName: 'componentDidMount', component: this, eventArguments: [] });
                 return;
             }
         }

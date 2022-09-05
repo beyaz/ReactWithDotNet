@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
 
@@ -19,6 +21,59 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         ClientTask.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
 
+
+    Element BuildFolderSelectionPart()
+    {
+        var SelectedFolder = state.SelectedFolder;
+        var LastQuery      = state.SelectedFolderLastQuery;
+        var Suggestions    = state.SelectedFolderSuggestions;
+            
+        var autoComplete = new AutoComplete
+        {
+            suggestions    = Suggestions.Where(x => x.Contains(LastQuery ?? "", StringComparison.OrdinalIgnoreCase)).ToList(),
+            value          = SelectedFolder,
+            onChange       = OnFolderChange,
+            completeMethod = OnFolderComplete,
+            itemTemplate = item => new div
+            {
+                style = { display = "flex", alignItems = "center" },
+                children =
+                {
+                    new img { src  = "wwwroot/img/Folder.svg", width = 20, height = 20 },
+                    new div { text = item, style                     = { marginLeft = "7px" } }
+                }
+            }
+        };
+
+        return new div
+        {
+            style = { display = "flex", flexDirection = "column", alignItems = "stretch" },
+            children =
+            {
+                new label { text = "Search Folder", style = { marginBottom = "5px", fontWeight = "bold" } },
+
+                new span
+                {
+                    className = "p-fluid",
+                    children =
+                    {
+                        autoComplete
+                    }
+                }
+            }
+        };
+    }
+
+    void OnFolderComplete(AutoCompleteCompleteMethodParams e)
+    {
+        state.SelectedFolderLastQuery = e.query;
+    }
+
+    void OnFolderChange(AutoCompleteChangeParams e)
+    {
+        state.SelectedFolder = e.GetValue<string>();
+    }
+
     public override Element render()
     {
         var propertyPanel = new VStack
@@ -26,14 +81,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             style = { margin = "5px"},
             children =
             {
-                new FolderSelectionView
-                {
-                    SelectedFolder = state.SelectedFolder,
-                    LastQuery      = state.SelectedFolderLastQuery,
-                    Suggestions    = state.SelectedFolderSuggestions,
-                    OnChange       = e => { state.SelectedFolder          = e.GetValue<string>(); },
-                    CompleteMethod = e => { state.SelectedFolderLastQuery = e.query; }
-                }.render(),
+                BuildFolderSelectionPart(),
                 new VSpace(10),
                 new AssemblySelectionView
                 {

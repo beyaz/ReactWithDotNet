@@ -188,18 +188,26 @@ public static class ElementSerializer
             {
                 propertyValue = new RemoteMethodInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name, TargetKey = target.key };
             }
+            else
+            {
+                throw HandlerMethodShouldBelongToReactComponent(propertyInfo);
+            }
         }
 
         if (propertyInfo.PropertyType.IsGenericType)
         {
             if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
             {
-                var @delegate = ((Delegate)propertyValue);
+                var @delegate = (Delegate)propertyValue;
                 if (@delegate is not  null)
                 {
                     if (@delegate.Target is ReactStatefulComponent target)
                     {
                         propertyValue = new RemoteMethodInfo { IsRemoteMethod = true, remoteMethodName = @delegate.Method.Name, TargetKey = target.key };
+                    }
+                    else
+                    {
+                        throw HandlerMethodShouldBelongToReactComponent(propertyInfo);
                     }
                         
                 }
@@ -302,11 +310,16 @@ public static class ElementSerializer
         return (propertyValue, false);
     }
 
+    
     static string GetReactComponentTypeInfo(object reactStatefulComponent)
     {
         return reactStatefulComponent.GetType().GetFullName();
     }
 
+    static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo)
+    {
+        throw new InvalidOperationException("Delegate method should belong to ReactComponent. Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name);
+    }
     static string GetTypeFullNameOfState(object reactStatefulComponent)
     {
         return reactStatefulComponent.GetType().GetProperty("state")!.PropertyType.GetFullName();
