@@ -90,7 +90,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     LastQuery        = state.SelectedAssemblyLastQuery,
                     OnChange         = e => { state.SelectedAssembly          = e.GetValue<string>(); },
                     CompleteMethod   = e => { state.SelectedAssemblyLastQuery = e.query; }
-                }.render(),
+                }.BuildAssemblySelectionPart(),
                 new VSpace(10),
                 new MethodSelectionView
                 {

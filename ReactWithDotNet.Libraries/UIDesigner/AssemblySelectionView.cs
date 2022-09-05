@@ -15,7 +15,7 @@ class AssemblySelectionView
     public Action<AutoCompleteChangeParams> OnChange { get; set; }
     public Action<AutoCompleteCompleteMethodParams> CompleteMethod { get; set; }
 
-    public  Element render()
+    public  Element BuildAssemblySelectionPart()
     {
         var suggestions = new List<string>();
 
