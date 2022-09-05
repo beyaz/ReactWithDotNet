@@ -1,13 +1,10 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-
-
-
-class ErrorText: ReactComponent
+class ErrorText : ReactComponent
 {
     public string Text { get; set; }
 
-    public void ClearMessage()
+    void ClearMessage()
     {
         Text = null;
     }
@@ -18,7 +15,7 @@ class ErrorText: ReactComponent
         {
             ClientTask.GotoMethod(3000, ClearMessage);
         }
-        
+
         var element = new small
         {
             text = Text,
@@ -33,8 +30,7 @@ class ErrorText: ReactComponent
         {
             element.style.display = "none";
         }
-        
+
         return element;
-        
     }
 }
