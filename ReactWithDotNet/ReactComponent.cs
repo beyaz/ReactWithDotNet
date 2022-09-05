@@ -91,6 +91,7 @@ public abstract class ReactStatefulComponent : Element
     protected  abstract void constructor();
 
     internal void InvokeConstructor() => constructor();
+    
     internal Element InvokeRender() => render();
 
     protected virtual void componentDidMount()
@@ -98,8 +99,6 @@ public abstract class ReactStatefulComponent : Element
         
     }
 }
-
-
 
 public abstract class ReactComponent : ReactComponent<EmptyState>
 {
