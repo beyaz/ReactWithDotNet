@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net.Mime;
-using ReactWithDotNet;
-using ReactWithDotNet.PrimeReact;
-
+﻿
 namespace QuranAnalyzer.WebUI.Components;
 
 
