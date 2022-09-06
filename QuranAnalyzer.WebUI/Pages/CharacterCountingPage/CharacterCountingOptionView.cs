@@ -2,7 +2,7 @@
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
-class CharacterCountingOptionView: ReactComponent
+class CharacterCountingOptionView : ReactComponent
 {
     public bool? ShowKeyborad { get; set; }
     
@@ -14,9 +14,24 @@ class CharacterCountingOptionView: ReactComponent
         {
             ShowKeyborad = true;
         }
+
+        ShowMushafOptions = null;
     }
+
+    void OnMushafOptionClicked(string _)
+    {
+        if (ShowMushafOptions == null)
+        {
+            ShowMushafOptions = true;
+        }
+
+        ShowKeyborad = null;
+    }
+
     protected override Element render()
     {
+        var iconSize = 18;
+        
         return new div
         {
             style = { display = "flex", flexDirection = "column" },
@@ -35,21 +50,68 @@ class CharacterCountingOptionView: ReactComponent
                     },
                     children =
                     {
-                        new div("Arapça Klavye"){style = { padding = "10px", color = "#1976d2"}, onClick =KeyboardClicked},
+                        new HPanel
+                        {
+                            onClick = KeyboardClicked,
+                            children =
+                            {
+                                new HSpace(20),
+                                new img
+                                {
+                                    src   = "wwwroot/img/Keyboard.svg",
+                                    width = iconSize, 
+                                    height = iconSize
+                                },
+                                new div("Arapça Klavye") { style = { padding = "10px", color = "#1976d2" } },
+                            }
+                        },
+
                         new HSpace(10),
-                        new div("Mushaf Ayarları"){style = { padding = "10px"}},
+                        
+                        new HPanel
+                        {
+                            onClick = OnMushafOptionClicked,
+                            children =
+                            {
+                                new HSpace(10),
+                                new img
+                                {
+                                    src   = "wwwroot/img/Options.svg",
+                                    width = iconSize,
+                                    height = iconSize
+                                },
+                                new div("Mushaf Ayarları") { style = { padding = "10px", color = "#1976d2" } },
+                            }
+                        }
+
                     }
                 },
 
                 // content
                 new div
                 {
-                    children= 
+                    children =
                     {
-                        ShowKeyborad == true ? ArabicKeyboard.Content: ShowMushafOptions == true ? new div("MushafOptioncontent") : null
+                        BuildContent()
                     }
                 }
             }
         };
+        
+    }
+
+    Element BuildContent()
+    {
+        if (ShowKeyborad == true)
+        {
+            return ArabicKeyboard.Content;
+        }
+
+        if (ShowMushafOptions == true)
+        {
+            return new div("MushafOptioncontent");
+        }
+
+        return null;
     }
 }
