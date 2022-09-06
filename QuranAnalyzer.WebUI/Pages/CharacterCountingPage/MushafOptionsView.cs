@@ -1,19 +1,19 @@
 ﻿using ReactWithDotNet.PrimeReact;
+using static QuranAnalyzer.WebUI.Extensions;
+using static QuranAnalyzer.WebUI.PageId;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
-class MushafOptionsView: ReactComponent<MushafOption>
+class MushafOptionsView : ReactComponent<MushafOption>
 {
+    #region Public Properties
     public MushafOption MushafOption { get; set; }
+    #endregion
 
+    #region Methods
     protected override void constructor()
     {
         state = MushafOption ?? new MushafOption();
-    }
-
-    public void FireMushafOptionChanged()
-    {
-        ClientTask.DispatchEvent(ApplicationEventName.MushafOptionChanged, state);
     }
 
     protected override Element render()
@@ -28,7 +28,7 @@ class MushafOptionsView: ReactComponent<MushafOption>
             {
                 new div
                 {
-                    style = {  display = "flex", flexDirection = "row", alignItems = "center"},
+                    style = { display = "flex", flexDirection = "row", alignItems = "center" },
                     children =
                     {
                         new InputSwitch
@@ -41,19 +41,16 @@ class MushafOptionsView: ReactComponent<MushafOption>
                             }
                         },
                         new HSpace(15),
-                        new h5{text = "Elif sayımları için Tanzil.net'i referans al"}
+                        new h5 { text = "Elif sayımları için Tanzil.net'i referans al" }
                     }
                 },
                 new div
                 {
-                    style = {  display = "flex", flexDirection = "row", alignItems = "center"},
+                    style = { display = "flex", flexDirection = "row", alignItems = "center" },
                     children =
                     {
                         new InputSwitch
                         {
-                            
-
-
                             @checked = state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
                             onChange = x =>
                             {
@@ -62,12 +59,12 @@ class MushafOptionsView: ReactComponent<MushafOption>
                             }
                         },
                         new HSpace(15),
-                        new h5{text = "7:69 daki bestaten'i Sad olarak say"}
+                        new h5 { text = "7:69 daki bestaten'i Sad olarak say" }
                     }
                 },
                 new div
                 {
-                    style = {  display = "flex", flexDirection = "row", alignItems = "center"},
+                    style = { display = "flex", flexDirection = "row", alignItems = "center" },
                     children =
                     {
                         new InputSwitch
@@ -80,13 +77,17 @@ class MushafOptionsView: ReactComponent<MushafOption>
                             }
                         },
                         new HSpace(15),
-                        new h5{text = "Hemzeleri Elif(ﺍ) olarak say"}
+                        new h5 { text = "Hemzeleri Elif(ﺍ) olarak say" }
                     }
                 },
-                new a{text = "Mushaf ayarları hakkında detaylı bilgi", href =  Extensions.GetPageLink(PageId.PageIdOfMushafOptionsDetail), }
+                new a { text = "Mushaf ayarları hakkında detaylı bilgi", href = GetPageLink(PageIdOfMushafOptionsDetail), }
             }
         };
     }
 
-    
+    void FireMushafOptionChanged()
+    {
+        ClientTask.DispatchEvent(ApplicationEventName.MushafOptionChanged, state);
+    }
+    #endregion
 }
