@@ -8,11 +8,6 @@ class AllInitialLettersModel
 
 class AllInitialLetters :ReactComponent<AllInitialLettersModel>
 {
-    public AllInitialLetters()
-    {
-        state = new AllInitialLettersModel();
-    }
-
     Element CreateTabHeader(string text, string identifier)
     {
         var isSelected = state.SelectedTabIdentifier == identifier;
