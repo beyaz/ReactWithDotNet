@@ -37,12 +37,12 @@ class View : ReactComponent<MainViewModel>
         ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClosed, OnHamburgerMenuClosed);
     }
 
-    public void OnHamburgerMenuClosed()
+     void OnHamburgerMenuClosed()
     {
         state.HamburgerMenuIsOpen = false;
     }
 
-    public void OnHamburgerMenuOpened()
+     void OnHamburgerMenuOpened()
     {
         state.HamburgerMenuIsOpen = true;
     }
@@ -106,6 +106,11 @@ class View : ReactComponent<MainViewModel>
             if (state.PageId == PageId.SecuringDataWithCurrentTechnology)
             {
                 return new SecuringDataWithCurrentTechnology.View();
+            }
+
+            if (state.PageId == PageId.PreInformation)
+            {
+                return new PreInformation.PreInformationView();
             }
 
             if (state.PageId == PageId.InitialLetters)

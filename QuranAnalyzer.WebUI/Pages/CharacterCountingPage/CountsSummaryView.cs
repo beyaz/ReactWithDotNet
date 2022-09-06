@@ -39,28 +39,25 @@ class CountsSummaryView : ReactComponent
 
         var total = counts.Select(x => x.Count).Sum();
 
-        if (total > 0)
+        if (total > 0 && total % 19 == 0)
         {
-            if (total % 19 == 0)
+            returnDiv.appendChild(MultipleOf(total));
+        }
+        else
+        {
+            returnDiv.appendChild(new legend
             {
-                returnDiv.appendChild(MultipleOf(total));
-            }
-            else
-            {
-                returnDiv.appendChild(new legend
+                style = { display = "flex", flexDirection = "row" },
+                children =
                 {
-                    style = { display = "flex", flexDirection = "row"},
-                    children =
-                    {
-                        new div { text = "Toplam:"},
-                        new HSpace(4),
-                        new strong { text = total.ToString(), id ="GrandTotal" }
-                    }
-                });
-            }
+                    new div { text = "Toplam:" },
+                    new HSpace(4),
+                    new strong { text = total.ToString(), id = "GrandTotal" }
+                }
+            });
         }
 
-     
+
 
         var countsView = new HPanel
         {
