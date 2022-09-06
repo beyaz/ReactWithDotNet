@@ -2,12 +2,10 @@
 
 class ArabicKeyboard : ReactComponent
 {
-    protected override Element render()
+    public static Element Content => new div
     {
-        return new div
-        {
-            style = { display = "flex", flexWrap = "wrap", justifyContent = "center", direction = "rtl" },
-            children =
+        style = { display = "flex", flexWrap = "wrap", justifyContent = "center", direction = "rtl" },
+        children =
             {
                 LetterToElement(ArabicLetter.Alif, nameof(ArabicLetter.Alif)),
                 LetterToElement(ArabicLetter.Baa, nameof(ArabicLetter.Baa)),
@@ -38,7 +36,10 @@ class ArabicKeyboard : ReactComponent
                 LetterToElement(ArabicLetter.Waaw, nameof(ArabicLetter.Waaw)),
                 LetterToElement(ArabicLetter.Yaa, nameof(ArabicLetter.Yaa))
             }
-        };
+    };
+    protected override Element render()
+    {
+        return Content;
     }
 
     static Element LetterToElement(string arabicLetter, string englistText)

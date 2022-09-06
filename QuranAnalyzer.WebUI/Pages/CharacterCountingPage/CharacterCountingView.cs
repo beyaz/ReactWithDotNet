@@ -70,8 +70,6 @@ class SearchScript
     }
 }
 
-
-
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
     #region Constructors
@@ -123,6 +121,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     },
                    
                     new VSpace(3),
+                    
+                    
                     new HPanel
                     {
                         new Panel

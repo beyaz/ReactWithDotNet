@@ -72,7 +72,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             children =
             {
                 headers,
-                contentContainer,
+                contentContainer
             }
         };
     }
