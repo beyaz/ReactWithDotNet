@@ -123,22 +123,25 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     },
                    
                     new VSpace(3),
-                    new Panel
+                    new HPanel
                     {
-                        header     = "Arapça Klavye",
-                        collapsed  = true,
-                        toggleable = true,
-                        children =
+                        new Panel
                         {
-                            new ArabicKeyboard()
+                            header     = "Arapça Klavye",
+                            collapsed  = true,
+                            toggleable = true,
+                            children =
+                            {
+                                new ArabicKeyboard()
+                            },
+                            headerTemplate = "QuranAnalyzer_WebUI_PanelHeaderTemplate"
                         },
-                        headerTemplate = "QuranAnalyzer_WebUI_PanelHeaderTemplate"
-                    },
 
-                    new VSpace(3),
-                    new MushafOptionsView
-                    {
-                        MushafOption = state.MushafOption
+                        new HSpace(3),
+                        new MushafOptionsView
+                        {
+                            MushafOption = state.MushafOption
+                        }
                     },
 
                     new VSpace(20),
