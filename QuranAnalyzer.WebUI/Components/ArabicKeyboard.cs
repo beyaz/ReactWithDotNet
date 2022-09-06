@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-class ArabicKeyboard : ReactComponent<EmptyState>
+class ArabicKeyboard : ReactComponent
 {
     protected override Element render()
     {
@@ -48,7 +48,7 @@ class ArabicKeyboard : ReactComponent<EmptyState>
 }
 
 
-public class ArabicKeyboardLetterView : ReactComponent<EmptyState>, ISupportMouseEnter
+public class ArabicKeyboardLetterView : ReactComponent, ISupportMouseEnter
 {
     public string ArabicLetter { get; set; }
     public string English { get; set; }

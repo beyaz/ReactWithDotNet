@@ -15,7 +15,7 @@ public abstract class ReactComponent<TState> : ReactStatefulComponent where TSta
 }
 
 [Serializable]
-public class EmptyState
+public sealed class EmptyState
 {
 }
 

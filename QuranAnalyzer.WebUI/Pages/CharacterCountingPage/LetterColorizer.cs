@@ -216,6 +216,25 @@ public class LetterColorizer : ReactComponent
             }
         }
 
+        if (arabicLetterIndex == Siin)
+        {
+            if (MushafOption.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten == false)
+            {
+                if (MushafTotalCountPerVerseDifference[Siin].TryGetValue(GetDifferencesKeyForRK(Verse.Id), out var count))
+                {
+                    if (MushafTotalCountPerVerseDifference[Siin].TryGetValue(GetDifferencesKeyForTanzil(Verse.Id), out var countAccordingToTanzil))
+                    {
+                        if (count > countAccordingToTanzil)
+                        {
+                            return new div { text = "+" + (count - countAccordingToTanzil) };
+                        }
+
+                        return new div { text = "-" + (countAccordingToTanzil - count) };
+                    }
+                }
+            }
+        }
+
 
         if (arabicLetterIndex == Nun)
         {

@@ -44,7 +44,21 @@ public static class QuranAnalyzerMixin
             Saad, new()
             {
                 { GetDifferencesKeyForTanzil("7:69"), 1 }, // bestaten: *بَسْطَةً*
-                { GetDifferencesKeyForRK("7:69"), 0 } // bestaten: *بَصْۜطَةً*
+                { GetDifferencesKeyForRK("7:69"), 0 }, // bestaten: *بَصْۜطَةً*
+                
+                { GetDifferencesKeyForTanzil("2:245"), 1 }, // yebsut: *رِضُ ٱللَّ*
+                { GetDifferencesKeyForRK("2:245"), 0 } // yebsut: *رِضُ ٱللَّ*
+            }
+        },
+
+        {
+            Siin, new()
+            {
+                { GetDifferencesKeyForTanzil("7:69"), 0 }, // bestaten: *بَسْطَةً*
+                { GetDifferencesKeyForRK("7:69"), 1 }, // bestaten: *بَصْۜطَةً*
+                
+                { GetDifferencesKeyForTanzil("2:245"), 1 }, // yebsut: *رِضُ ٱللَّ*
+                { GetDifferencesKeyForRK("2:245"), 2 } // yebsut: *رِضُ ٱللَّ*
             }
         },
 
@@ -324,6 +338,17 @@ public static class QuranAnalyzerMixin
             if (option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten == false)
             {
                 if (MushafTotalCountPerVerseDifference[Saad].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
+                {
+                    return totalCount;
+                }
+            }
+        }
+
+        if (arabicLetterIndex == Siin)
+        {
+            if (option.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten == false)
+            {
+                if (MushafTotalCountPerVerseDifference[Siin].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
                 {
                     return totalCount;
                 }
