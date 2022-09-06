@@ -48,7 +48,7 @@ class ArabicKeyboard : ReactComponent
 }
 
 
-public class ArabicKeyboardLetterView : ReactComponent, ISupportMouseEnter
+class ArabicKeyboardLetterView : ReactComponent, ISupportMouseEnter
 {
     public string ArabicLetter { get; set; }
     public string English { get; set; }
