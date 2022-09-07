@@ -97,6 +97,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     
     public void MushafOptionChanged(MushafOption mushafOption)
     {
+        state.ClickCount   = 0;
         state.MushafOption = mushafOption;
         Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
     }
@@ -150,7 +151,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         if (state.IsBlocked)
         {
-            return new CalculatingComponent { searchPanel };
+            return CalculatingComponent.WithBlockUI(searchPanel);
         }
 
         var mushafVerse           = new List<LetterColorizer>();

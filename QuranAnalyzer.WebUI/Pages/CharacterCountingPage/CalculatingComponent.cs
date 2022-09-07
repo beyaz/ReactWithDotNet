@@ -1,11 +1,10 @@
-﻿using ReactWithDotNet;
-using ReactWithDotNet.PrimeReact;
+﻿using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
-class CalculatingComponent : ReactComponent
+class CalculatingComponent 
 {
-    protected override Element render()
+    public static Element WithBlockUI(Element child)
     {
         return new BlockUI
         {
@@ -25,7 +24,7 @@ class CalculatingComponent : ReactComponent
                 }
             },
 
-            Children = children
+            children = { child }
         };
     }
 }

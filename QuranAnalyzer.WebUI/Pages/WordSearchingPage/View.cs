@@ -67,7 +67,7 @@ class View : ReactComponent<Model>
 
         if (state.IsBlocked)
         {
-            return new CalculatingComponent { searchPanel };
+            return CalculatingComponent.WithBlockUI(searchPanel);
         }
 
 
