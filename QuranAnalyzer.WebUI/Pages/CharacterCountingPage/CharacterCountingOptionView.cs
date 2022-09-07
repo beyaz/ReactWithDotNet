@@ -35,6 +35,8 @@ class CharacterCountingOptionView : ReactComponent
     protected override Element render()
     {
         var iconSize = 18;
+
+        var selectedColor = "rgb(197 220 243)";
         
         return new div
         {

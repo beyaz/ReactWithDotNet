@@ -404,7 +404,12 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
     // calculate root props if exists
     {
-        let dotNetProperties = CalculateDotNetProperties(rootFiberNode.memoizedProps.$jsonNode);
+        // let dotNetProperties = CalculateDotNetProperties(rootFiberNode.memoizedProps.$jsonNode);
+        let dotNetProperties = rootFiberNode.stateNode.state[DotNetProperties];
+        if (!dotNetProperties)
+        {
+            dotNetProperties = CalculateDotNetProperties(rootFiberNode.memoizedProps.$jsonNode);
+        }
         if (dotNetProperties)
         {
             map['0'][DotNetProperties] = dotNetProperties;
@@ -1000,8 +1005,7 @@ function HandleAction(data)
             newState[RootNode]        = NotNull(element[RootNode]);
             newState[ClientTasks]     = element[ClientTasks];
             newState[ComponentRefKey] = element.key;
-
-            
+            newState[DotNetProperties]= element[DotNetProperties];
 
             if (element[RootNodeOnMouseEnter])
             {
