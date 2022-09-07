@@ -122,27 +122,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                    
                     new VSpace(3),
                     
-                    
-                    new HPanel
-                    {
-                        new Panel
-                        {
-                            header     = "Arapça Klavye",
-                            collapsed  = true,
-                            toggleable = true,
-                            children =
-                            {
-                                new ArabicKeyboard()
-                            },
-                            headerTemplate = "QuranAnalyzer_WebUI_PanelHeaderTemplate"
-                        },
-
-                        new HSpace(3),
-                        new MushafOptionsView
-                        {
-                            MushafOption = state.MushafOption
-                        }
-                    },
+                    new CharacterCountingOptionView(),
 
                     new VSpace(20),
 
@@ -258,3 +238,5 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     }
     #endregion
 }
+
+// TODO: check and remove : QuranAnalyzer_WebUI_PanelHeaderTemplate

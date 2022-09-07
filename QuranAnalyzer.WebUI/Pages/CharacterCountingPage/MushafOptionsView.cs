@@ -18,12 +18,8 @@ class MushafOptionsView : ReactComponent<MushafOption>
 
     protected override Element render()
     {
-        return new Panel
+        return new div
         {
-            toggleable     = true,
-            collapsed      = true,
-            header         = "Mushaf Ayarları",
-            headerTemplate = "QuranAnalyzer_WebUI_PanelHeaderTemplate",
             children =
             {
                 new div

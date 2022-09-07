@@ -10,9 +10,13 @@ class CharacterCountingOptionView : ReactComponent
 
     void KeyboardClicked(string _)
     {
-        if (ShowKeyborad == null)
+        if (ShowKeyborad == null || ShowKeyborad == false)
         {
             ShowKeyborad = true;
+        }
+        else if (ShowKeyborad == true)
+        {
+            ShowKeyborad = null;
         }
 
         ShowMushafOptions = null;
@@ -90,6 +94,7 @@ class CharacterCountingOptionView : ReactComponent
                 // content
                 new div
                 {
+                    style = { paddingLeft = "20px"},
                     children =
                     {
                         BuildContent()
@@ -109,7 +114,7 @@ class CharacterCountingOptionView : ReactComponent
 
         if (ShowMushafOptions == true)
         {
-            return new div("MushafOptioncontent");
+            return new MushafOptionsView();
         }
 
         return null;
