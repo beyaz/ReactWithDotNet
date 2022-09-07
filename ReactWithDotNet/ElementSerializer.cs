@@ -430,7 +430,7 @@ public static class ElementSerializer
         }
 
 
-        Dictionary<string, object> dotNetProperties = new Dictionary<string, object>();
+        var dotNetProperties = new Dictionary<string, object>();
         
         foreach (var propertyInfo in reactStatefulComponent.GetType().GetProperties())
         {
