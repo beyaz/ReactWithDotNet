@@ -2,38 +2,40 @@
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
-class CharacterCountingOptionView : ReactComponent
+class CharacterCountingOptionState
 {
     public bool? ShowKeyborad { get; set; }
-    
-    public bool? ShowMushafOptions { get; set; }
 
+    public bool? ShowMushafOptions { get; set; }
+}
+class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
+{
     void KeyboardClicked(string _)
     {
-        if (ShowKeyborad == true)
+        if (state.ShowKeyborad == true)
         {
-            ShowKeyborad = null;
+            state.ShowKeyborad = null;
         }
         else
         {
-            ShowKeyborad = true;
+            state.ShowKeyborad = true;
         }
 
-        ShowMushafOptions = null;
+        state.ShowMushafOptions = null;
     }
 
     void OnMushafOptionClicked(string _)
     {
-        if (ShowMushafOptions == true)
+        if (state.ShowMushafOptions == true)
         {
-            ShowMushafOptions = null;
+            state.ShowMushafOptions = null;
         }
         else
         {
-            ShowMushafOptions = true;
+            state.ShowMushafOptions = true;
         }
 
-        ShowKeyborad = null;
+        state.ShowKeyborad = null;
     }
 
     protected override Element render()
@@ -82,7 +84,7 @@ class CharacterCountingOptionView : ReactComponent
                                     }
                                 },
                             },
-                            style = { opacity = ShowKeyborad == true ? "0.2" : null }
+                            style = { opacity = state.ShowKeyborad == true ? "0.2" : null }
                         },
 
                         new HSpace(10),
@@ -109,7 +111,7 @@ class CharacterCountingOptionView : ReactComponent
                                     }
                                 },
                             },
-                            style = { opacity = ShowMushafOptions == true ? "0.2" : null }
+                            style = { opacity = state.ShowMushafOptions == true ? "0.2" : null }
                         }
 
                     }
@@ -131,12 +133,12 @@ class CharacterCountingOptionView : ReactComponent
 
     Element BuildContent()
     {
-        if (ShowKeyborad == true)
+        if (state.ShowKeyborad == true)
         {
             return ArabicKeyboard.Content;
         }
 
-        if (ShowMushafOptions == true)
+        if (state.ShowMushafOptions == true)
         {
             return new MushafOptionsView();
         }

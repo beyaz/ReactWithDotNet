@@ -96,9 +96,9 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     }
     public void ArabicKeyboardPressed(string letter)
     {
-        state.SearchScriptErrorMessage =  null;
-        state.ClickCount               =  0;
-        state.SearchScript             += " " + letter;
+        state.SearchScriptErrorMessage = null;
+        state.ClickCount               = 0;
+        state.SearchScript             = state.SearchScript.Trim() + " " + letter;
     }
 
     #region Public Methods
