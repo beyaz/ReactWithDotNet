@@ -11,7 +11,12 @@ class BackdropView: ReactComponent
         {
             className = "p-blockui p-component-overlay p-component-overlay-enter", 
             style = { zIndex = "3" , display = IsActive ? "": "none"},
-            onClick = _=>ClientTask.DispatchEvent(ApplicationEventName.OnHamburgerMenuClosed)
+            onClick = OnBackdropClicked
         };
+    }
+
+    void OnBackdropClicked(string _)
+    {
+        ClientTask.DispatchEvent(ApplicationEventName.OnHamburgerMenuClosed);
     }
 }
