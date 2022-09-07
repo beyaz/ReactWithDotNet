@@ -333,6 +333,55 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
     }
 };
 
+const CalculateProps = (jsonNode) =>
+{
+    const jsonNode = rootFiberNode.memoizedProps.$jsonNode;
+                
+    let props = null;
+
+    for (let key in jsonNode)
+    {
+        if (jsonNode.hasOwnProperty(key))
+        {
+            if (key === RootNode)
+            {
+                if (jsonNode[key].$children)
+                {
+                    if (jsonNode[key].$children.length > 0)
+                    {
+                        if (props === null)
+                        {
+                            props = {};
+                        }
+                        props.$childrenCount = jsonNode[key].$children.length;
+                    }
+                }
+            }
+                        
+            if (key === RootNode ||
+                key === DotNetTypeOfReactComponent ||
+                key === FullTypeNameOfState ||
+                key === HasComponentDidMountMethod ||
+                key === RootNodeOnMouseEnter ||
+                key === ClientTasks ||
+                key === 'key' ||
+                key === ComponentRefKey ||
+                key === DotNetState)
+            {
+                continue;
+            }
+
+            if (props === null)
+            {
+                props = {};
+            }
+
+            props[key] = jsonNode[key];
+        }
+    }
+
+    return props;
+};
 
 const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 {
@@ -355,50 +404,8 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
     // calculate root props if exists
     {
-        const jsonNode = rootFiberNode.memoizedProps.$jsonNode;
-                
-        let props = null;
-        for (let key in jsonNode)
-        {
-            if (jsonNode.hasOwnProperty(key))
-            {
-                if (key === RootNode)
-                {
-                    if (jsonNode[key].$children)
-                    {
-                        if (jsonNode[key].$children.length > 0)
-                        {
-                            if (props === null)
-                            {
-                                props = {};
-                            }
-                            props.$childrenCount = jsonNode[key].$children.length;
-                        }
-                    }
-                }
-                        
-                if (key === RootNode ||
-                    key === DotNetTypeOfReactComponent ||
-                    key === FullTypeNameOfState ||
-                    key === HasComponentDidMountMethod ||
-                    key === RootNodeOnMouseEnter ||
-                    key === ClientTasks ||
-                    key === 'key' ||
-                    key === ComponentRefKey ||
-                    key === DotNetState)
-                {
-                    continue;
-                }
+        let props = CalculateProps(rootFiberNode.memoizedProps.$jsonNode);
 
-                if (props === null)
-                {
-                    props = {};
-                }
-
-                props[key] = jsonNode[key];
-            }
-        }                
-                
         if (props)
         {
             map['0'].props = props;
