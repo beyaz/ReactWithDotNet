@@ -87,12 +87,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
         ClientTask.ListenEvent(ApplicationEventName.MushafOptionChanged, MushafOptionChanged);
     }
+    
     #endregion
 
     
     public void MushafOptionChanged(MushafOption mushafOption)
     {
         state.MushafOption = mushafOption;
+        Context
     }
     public void ArabicKeyboardPressed(string letter)
     {
