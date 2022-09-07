@@ -357,7 +357,8 @@ const CalculateDotNetProperties = (jsonNode) =>
                 }
             }
                         
-            if (key === RootNode ||
+            if (key == 'DotNetProperties' ||
+                key === RootNode ||
                 key === DotNetTypeOfReactComponent ||
                 key === FullTypeNameOfState ||
                 key === HasComponentDidMountMethod ||

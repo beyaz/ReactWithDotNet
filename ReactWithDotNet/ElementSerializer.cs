@@ -430,6 +430,8 @@ public static class ElementSerializer
         }
 
 
+        Dictionary<string, object> dotNetProperties = new Dictionary<string, object>();
+        
         foreach (var propertyInfo in reactStatefulComponent.GetType().GetProperties())
         {
             if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
@@ -440,7 +442,17 @@ public static class ElementSerializer
             {
                 continue;
             }
-            map.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
+            dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
+        }
+
+        foreach (var (key, value) in dotNetProperties)
+        {
+            map.Add(key, value);
+        }
+
+        if (dotNetProperties.Count > 0)
+        {
+            map.Add("DotNetProperties", dotNetProperties);
         }
 
         stateTree.BreadCrumpPath = breadCrumpPath;
