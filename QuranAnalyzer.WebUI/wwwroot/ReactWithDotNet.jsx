@@ -459,6 +459,22 @@ class LinkedList
 
 	    return null;
     }
+
+    visitAll(action)
+    {
+        if (this.head == null)
+        {
+            return;
+        }
+
+	    let current = this.head;
+
+        while (current.next) 
+        {
+            action(current.data);
+			current = current.next;
+		}
+    }
 }
 
 class ComponentCache 
@@ -502,6 +518,11 @@ class ComponentCache
     Unregister(component)
     {
         this.linkedList.removeFirst(x => x === component);
+    }
+
+    PrintAll()
+    {
+        this.linkedList.visitAll(console.log);
     }
 }
 
