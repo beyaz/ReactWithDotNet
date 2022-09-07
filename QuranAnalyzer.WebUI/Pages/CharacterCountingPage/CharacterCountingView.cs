@@ -94,7 +94,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     public void MushafOptionChanged(MushafOption mushafOption)
     {
         state.MushafOption = mushafOption;
-        Context
+        Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
     }
     public void ArabicKeyboardPressed(string letter)
     {

@@ -6,18 +6,19 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 class MushafOptionsView : ReactComponent<MushafOption>
 {
-    #region Public Properties
-    public MushafOption MushafOption { get; set; }
-    #endregion
+   
 
     #region Methods
     protected override void constructor()
     {
-        state = MushafOption ?? new MushafOption();
+        state = Context.TryGetValue(ContextKey.MushafOptionKey) ?? new MushafOption();
     }
 
     protected override Element render()
     {
+
+        state = Context.TryGetValue(ContextKey.MushafOptionKey) ?? state;
+        
         return new div
         {
             children =

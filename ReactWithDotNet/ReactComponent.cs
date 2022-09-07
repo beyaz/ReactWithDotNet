@@ -25,12 +25,12 @@ public sealed class ReactContext
         return default;
     }
 
-    public void Insert<TValue>(ReactContextKey<TValue> key, TValue value)
+    public void Set<TValue>(ReactContextKey<TValue> key, TValue value)
     {
-        Insert(key.Key, value);
+        Set(key.Key, value);
     }
 
-    public void Insert<TValue>(string key, TValue value)
+    public void Set<TValue>(string key, TValue value)
     {
         if (map.ContainsKey(key))
         {
