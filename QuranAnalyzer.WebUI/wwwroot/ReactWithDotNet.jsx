@@ -335,8 +335,6 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
 
 const CalculateProps = (jsonNode) =>
 {
-    const jsonNode = rootFiberNode.memoizedProps.$jsonNode;
-                
     let props = null;
 
     for (let key in jsonNode)
