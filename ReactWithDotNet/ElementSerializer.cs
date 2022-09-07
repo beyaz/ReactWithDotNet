@@ -400,13 +400,13 @@ public static class ElementSerializer
             reactStatefulComponent.InvokeConstructor();
         }
 
+        map.Add(___RootNode___, ToMap(reactStatefulComponent.InvokeRender(), context));
+
         state = statePropertyInfo.GetValue(reactStatefulComponent);
 
         const string DotNetState = "$State";
         
         map.Add(DotNetState, state);
-
-        map.Add(___RootNode___, ToMap(reactStatefulComponent.InvokeRender(), context));
 
         map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
         map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
