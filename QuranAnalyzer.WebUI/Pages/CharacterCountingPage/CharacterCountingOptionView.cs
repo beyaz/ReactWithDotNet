@@ -10,13 +10,13 @@ class CharacterCountingOptionView : ReactComponent
 
     void KeyboardClicked(string _)
     {
-        if (ShowKeyborad == null || ShowKeyborad == false)
-        {
-            ShowKeyborad = true;
-        }
-        else if (ShowKeyborad == true)
+        if (ShowKeyborad == true)
         {
             ShowKeyborad = null;
+        }
+        else
+        {
+            ShowKeyborad = true;
         }
 
         ShowMushafOptions = null;
@@ -24,7 +24,11 @@ class CharacterCountingOptionView : ReactComponent
 
     void OnMushafOptionClicked(string _)
     {
-        if (ShowMushafOptions == null)
+        if (ShowMushafOptions == true)
+        {
+            ShowMushafOptions = null;
+        }
+        else
         {
             ShowMushafOptions = true;
         }
@@ -36,7 +40,8 @@ class CharacterCountingOptionView : ReactComponent
     {
         var iconSize = 18;
 
-        var selectedColor = "rgb(197 220 243)";
+        var headerColor = "#1976d2";
+        var headerColorSelected = "rgb(197 220 243)";
         
         return new div
         {
@@ -68,8 +73,15 @@ class CharacterCountingOptionView : ReactComponent
                                     width = iconSize, 
                                     height = iconSize
                                 },
-                                new div("Arapça Klavye") { style = { padding = "10px", color = "#1976d2" } },
-                            }
+                                new div("Arapça Klavye") { style =
+                                {
+                                    padding = "10px", 
+                                    // color = ShowKeyborad == true ? headerColorSelected :  headerColor,
+                                    color   =   headerColor,
+                                    
+                                } },
+                            },
+                            style = { opacity = ShowKeyborad == true ? "0.2" : null }
                         },
 
                         new HSpace(10),
@@ -86,8 +98,13 @@ class CharacterCountingOptionView : ReactComponent
                                     width = iconSize,
                                     height = iconSize
                                 },
-                                new div("Mushaf Ayarları") { style = { padding = "10px", color = "#1976d2" } },
-                            }
+                                new div("Mushaf Ayarları") { style = { padding = "10px", 
+                                    // color = ShowMushafOptions == true ? headerColorSelected : headerColor ,
+                                    color = headerColor ,
+                                    
+                                } },
+                            },
+                            style = { opacity = ShowMushafOptions == true ? "0.2" : null }
                         }
 
                     }

@@ -1178,6 +1178,7 @@ function DefineComponent(componentDeclaration)
                 partialState[RootNode] = NotNull(nextProps.$jsonNode[RootNode]);
                 partialState[ClientTasks] = nextProps.$jsonNode[ClientTasks];
                 partialState[ComponentRefKey] = NotNull(nextProps.$jsonNode.key);
+                partialState[DotNetProperties] = NotNull(nextProps.$jsonNode[DotNetProperties]);
 
                 return partialState;
             }
