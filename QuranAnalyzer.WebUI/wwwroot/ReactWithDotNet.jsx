@@ -1082,6 +1082,7 @@ function DefineComponent(componentDeclaration)
             initialState[SyncId] = ShouldBeNumber(props[SyncId]);
             initialState[RootNode] = NotNull(props.$jsonNode[RootNode]);
             initialState[ComponentRefKey] = NotNull(props.$jsonNode.key);
+            initialState[DotNetProperties] = props.$jsonNode[DotNetProperties];
 
             if (props.$jsonNode[HasComponentDidMountMethod])
             {
