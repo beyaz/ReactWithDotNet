@@ -137,7 +137,7 @@ class Container1 : ReactComponent<ModelContainer1>
             },
             children =
             {
-                new div
+                new RedBorder
                 {
                     new ComponentA{A_Prop_1 = "A_Prop_1", A_Prop_2 = "A_Prop_2"},
                     new div{text            = state.ClickCount.ToString()},
