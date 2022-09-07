@@ -334,55 +334,6 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
     }
 };
 
-const CalculateDotNetProperties = (jsonNode) =>
-{
-    let props = null;
-
-    for (let key in jsonNode)
-    {
-        if (jsonNode.hasOwnProperty(key))
-        {
-            if (key === RootNode)
-            {
-                if (jsonNode[key].$children)
-                {
-                    if (jsonNode[key].$children.length > 0)
-                    {
-                        if (props === null)
-                        {
-                            props = {};
-                        }
-                        props.$childrenCount = jsonNode[key].$children.length;
-                    }
-                }
-            }
-                        
-            if (key == 'DotNetProperties' ||
-                key === RootNode ||
-                key === DotNetTypeOfReactComponent ||
-                key === FullTypeNameOfState ||
-                key === HasComponentDidMountMethod ||
-                key === RootNodeOnMouseEnter ||
-                key === ClientTasks ||
-                key === 'key' ||
-                key === ComponentRefKey ||
-                key === DotNetState)
-            {
-                continue;
-            }
-
-            if (props === null)
-            {
-                props = {};
-            }
-
-            props[key] = jsonNode[key];
-        }
-    }
-
-    return props;
-};
-
 const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 {
     var map = {};
@@ -401,20 +352,17 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
         VisitFiberNodeForCaptureState(rootScope, child);
         child = child.sibling;
     }
+    
+    map['0'][DotNetProperties] = Object.assign({}, NotNull(rootFiberNode.stateNode.state[DotNetProperties]));
 
-    // calculate root props if exists
+    // calculate $childrenCount
     {
-        // let dotNetProperties = CalculateDotNetProperties(rootFiberNode.memoizedProps.$jsonNode);
-        let dotNetProperties = rootFiberNode.stateNode.state[DotNetProperties];
-        if (!dotNetProperties)
+        const rootNode = rootFiberNode.stateNode.state[RootNode];
+        if (rootNode && rootNode.$children && rootNode.$children.length > 0)
         {
-            dotNetProperties = CalculateDotNetProperties(rootFiberNode.memoizedProps.$jsonNode);
+            map['0'][DotNetProperties].$childrenCount = rootNode.$children.length;
         }
-        if (dotNetProperties)
-        {
-            map['0'][DotNetProperties] = dotNetProperties;
-        }
-    }       
+    }
 
     return map;
 };
