@@ -84,10 +84,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
             }
 
+       
+    }
+
+    protected override void componentDidMount()
+    {
         ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
         ClientTask.ListenEvent(ApplicationEventName.MushafOptionChanged, MushafOptionChanged);
     }
-    
     #endregion
 
     
