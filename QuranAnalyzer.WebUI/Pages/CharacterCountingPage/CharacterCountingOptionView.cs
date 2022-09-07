@@ -41,8 +41,7 @@ class CharacterCountingOptionView : ReactComponent
         var iconSize = 18;
 
         var headerColor = "#1976d2";
-        var headerColorSelected = "rgb(197 220 243)";
-        
+
         return new div
         {
             style = { display = "flex", flexDirection = "column" },
@@ -69,23 +68,25 @@ class CharacterCountingOptionView : ReactComponent
                                 new HSpace(20),
                                 new img
                                 {
-                                    src   = "wwwroot/img/Keyboard.svg",
-                                    width = iconSize, 
+                                    src    = "wwwroot/img/Keyboard.svg",
+                                    width  = iconSize,
                                     height = iconSize
                                 },
-                                new div("Arapça Klavye") { style =
+                                new div("Arapça Klavye")
                                 {
-                                    padding = "10px", 
-                                    // color = ShowKeyborad == true ? headerColorSelected :  headerColor,
-                                    color   =   headerColor,
-                                    
-                                } },
+                                    style =
+                                    {
+                                        padding = "10px",
+                                        color   = headerColor,
+
+                                    }
+                                },
                             },
                             style = { opacity = ShowKeyborad == true ? "0.2" : null }
                         },
 
                         new HSpace(10),
-                        
+
                         new HPanel
                         {
                             onClick = OnMushafOptionClicked,
@@ -94,15 +95,19 @@ class CharacterCountingOptionView : ReactComponent
                                 new HSpace(10),
                                 new img
                                 {
-                                    src   = "wwwroot/img/Options.svg",
-                                    width = iconSize,
+                                    src    = "wwwroot/img/Options.svg",
+                                    width  = iconSize,
                                     height = iconSize
                                 },
-                                new div("Mushaf Ayarları") { style = { padding = "10px", 
-                                    // color = ShowMushafOptions == true ? headerColorSelected : headerColor ,
-                                    color = headerColor ,
-                                    
-                                } },
+                                new div("Mushaf Ayarları")
+                                {
+                                    style =
+                                    {
+                                        padding = "10px",
+                                        color   = headerColor,
+
+                                    }
+                                },
                             },
                             style = { opacity = ShowMushafOptions == true ? "0.2" : null }
                         }
@@ -113,7 +118,7 @@ class CharacterCountingOptionView : ReactComponent
                 // content
                 new div
                 {
-                    style = { paddingLeft = "20px"},
+                    style = { paddingLeft = "20px" },
                     children =
                     {
                         BuildContent()
@@ -121,7 +126,7 @@ class CharacterCountingOptionView : ReactComponent
                 }
             }
         };
-        
+
     }
 
     Element BuildContent()
