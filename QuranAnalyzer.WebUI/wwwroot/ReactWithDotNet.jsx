@@ -419,7 +419,6 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
     return map;
 };
 
-
 const GetNextSequence = (() =>
 {
     var sequence = 1;
