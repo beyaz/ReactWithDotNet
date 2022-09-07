@@ -985,14 +985,14 @@ function HandleAction(data)
 
         const element = response.ElementAsJson;
         
-        function restoreState(onStateReady)
+        // update state
         {
             const newState = {};
 
-            newState[DotNetState] = NotNull(element[DotNetState]);
-            newState[SyncId] = ShouldBeNumber(component.state[SyncId]) + 1;
-            newState[RootNode]    = NotNull(element[RootNode]);
-            newState[ClientTasks] = element[ClientTasks];
+            newState[DotNetState]     = NotNull(element[DotNetState]);
+            newState[SyncId]          = ShouldBeNumber(component.state[SyncId]) + 1;
+            newState[RootNode]        = NotNull(element[RootNode]);
+            newState[ClientTasks]     = element[ClientTasks];
             newState[ComponentRefKey] = element.key;
 
             if (element[RootNodeOnMouseEnter])
@@ -1001,10 +1001,8 @@ function HandleAction(data)
                 newState[RootNodeOnMouseEnter] = element[RootNodeOnMouseEnter];
             }
             
-            data.component.setState(newState, onStateReady);
+            data.component.setState(newState, OnReactStateReady);
         }
-
-        restoreState(OnReactStateReady);
     }
 
     SendRequest(request, onSuccess);
