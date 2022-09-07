@@ -20,6 +20,7 @@ const DotNetState = '$State';
 const HasComponentDidMountMethod = '$HasComponentDidMountMethod';
 const ComponentRefKey = '$Key';
 const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
+const DotNetProperties = 'DotNetProperties';
 
 
 const EventBus =
@@ -333,7 +334,7 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
     }
 };
 
-const CalculateProps = (jsonNode) =>
+const CalculateDotNetProperties = (jsonNode) =>
 {
     let props = null;
 
@@ -402,11 +403,10 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
     // calculate root props if exists
     {
-        let props = CalculateProps(rootFiberNode.memoizedProps.$jsonNode);
-
-        if (props)
+        let dotNetProperties = CalculateDotNetProperties(rootFiberNode.memoizedProps.$jsonNode);
+        if (dotNetProperties)
         {
-            map['0'].props = props;
+            map['0'][DotNetProperties] = dotNetProperties;
         }
     }       
 
@@ -999,6 +999,8 @@ function HandleAction(data)
             newState[RootNode]        = NotNull(element[RootNode]);
             newState[ClientTasks]     = element[ClientTasks];
             newState[ComponentRefKey] = element.key;
+
+            
 
             if (element[RootNodeOnMouseEnter])
             {

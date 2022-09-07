@@ -14,7 +14,7 @@ public sealed class ClientStateInfo
 {
     public string FullTypeNameOfState { get; set; }
     public string StateAsJson { get; set; }
-    public IReadOnlyDictionary<string,object> props { get; set; }
+    public IReadOnlyDictionary<string,object> DotNetProperties { get; set; }
 }
 
 [Serializable]
@@ -148,7 +148,7 @@ public static class ComponentRequestHandler
 
             // transfer properties
             {
-                var props = request.CapturedStateTree["0"].props;
+                var props = request.CapturedStateTree["0"].DotNetProperties;
                 if (props is not null)
                 {
                     foreach (var (key, value) in props)
