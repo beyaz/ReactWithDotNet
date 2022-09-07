@@ -30,6 +30,11 @@ public sealed class ReactContext
         Set(key.Key, value);
     }
 
+    public bool Contains<TValue>(ReactContextKey<TValue> key)
+    {
+        return map.ContainsKey(key.Key);
+    }
+
     public void Set<TValue>(string key, TValue value)
     {
         if (map.ContainsKey(key))

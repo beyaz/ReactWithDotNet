@@ -24,6 +24,11 @@ class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
 
     protected override Element render()
     {
+        if (Context.Contains(ContextKey.HamburgerMenuIsOpen))
+        {
+            state.HamburgerMenuIsOpen = Context.TryGetValue(ContextKey.HamburgerMenuIsOpen);
+        }
+        
         var color = "black";
         if (state.HamburgerMenuIsOpen)
         {

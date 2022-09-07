@@ -37,9 +37,10 @@ class View : ReactComponent<MainViewModel>
         ClientTask.ListenEvent(ApplicationEventName.OnHamburgerMenuClosed, OnHamburgerMenuClosed);
     }
 
-     void OnHamburgerMenuClosed()
+    void OnHamburgerMenuClosed()
     {
         state.HamburgerMenuIsOpen = false;
+        Context.Set(ContextKey.HamburgerMenuIsOpen,state.HamburgerMenuIsOpen);
     }
 
      void OnHamburgerMenuOpened()

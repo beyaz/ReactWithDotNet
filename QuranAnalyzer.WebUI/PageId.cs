@@ -39,4 +39,5 @@ class ApplicationEventName
 static class ContextKey
 {
     public static ReactContextKey<MushafOption> MushafOptionKey = new(nameof(MushafOptionKey));
+    public static ReactContextKey<bool> HamburgerMenuIsOpen = new(nameof(HamburgerMenuIsOpen));
 }
