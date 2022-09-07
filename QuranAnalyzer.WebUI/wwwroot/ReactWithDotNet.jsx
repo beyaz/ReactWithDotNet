@@ -336,6 +336,12 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
 
 const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 {
+    // I'dont know what is going here :)
+    if (rootFiberNode.alternate && rootFiberNode.actualStartTime < rootFiberNode.alternate.actualStartTime)
+    {
+        rootFiberNode = rootFiberNode.alternate;
+    }
+
     var map = {};
 
     map['0'] =
