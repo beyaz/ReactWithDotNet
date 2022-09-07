@@ -450,10 +450,7 @@ public static class ElementSerializer
             map.Add(key, value);
         }
 
-        if (dotNetProperties.Count > 0)
-        {
-            map.Add("DotNetProperties", dotNetProperties);
-        }
+        map.Add("DotNetProperties", dotNetProperties);
 
         stateTree.BreadCrumpPath = breadCrumpPath;
         stateTree.CurrentOrder   = stateOrder;
