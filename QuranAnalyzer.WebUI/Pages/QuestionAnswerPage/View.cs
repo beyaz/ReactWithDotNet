@@ -82,7 +82,7 @@ public class View : ReactComponent
                             innerText = "Soru - Cevap",
                             style =
                             {
-                                marginBottom = "16px",
+                                marginBottom = "10px",
                                 fontWeight   = "500",
                                 textAlign    = "center"
                             }
@@ -90,21 +90,21 @@ public class View : ReactComponent
 
                         new pre{text =@"Bu bölümde 19 meselesi etrafında dönen tartışmalı konuları ele aldım. 
 Elimden geldiğince tartışılan konuları en kısa ve tarafsız bir şekilde özetlemeye çalıştım.  
-Tekrar hatırlatma fayda görüyorum. 
+Tekrar hatırlatmakta fayda görüyorum. 
 Aşağıdaki soruların cevaplarının doğru olup olmadığı siz okuyucuya bırakılmıştır. 
 İmana dair bir meselenin üzerinde düşünlüp içselleştirilmedikten sonra bir faydasının olmayacağına inanıyorum.
 Bu sebeple ben burada tartışmayı aktarayım üzerine düşünmek / bir karara varmak size kalsın." },
 
                         new div
-                        {
+                        { 
                             new QuestionLink{Question = "Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden hiç bir alimden/hocadan duymuyoruz?"},
                             new QuestionLink{Question = "19 sistemi nin olması için Kurandan iki ayet atılması gerekiyor mu ? Yoksa sistem çöküyormuş doğru mu ?"},
-                          new QuestionLink{ Question  = "Elif sayımlarının doğru olduğu ne malum ?"},
-                          new QuestionLink{Question   = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?"},
-                          new QuestionLink{Question   = "Reşad Halife kimdir ?"},
-                          new QuestionLink{Question   = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?"},
-                          new QuestionLink{Question   = "Paralel 19 sistemleri"},
-                          new QuestionLink{Question   = "Allah mı? Tanrı mı ?"},
+                            new QuestionLink{ Question  = "Elif sayımlarının doğru olduğu ne malum ?"},
+                            new QuestionLink{Question   = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?"},
+                            new QuestionLink{Question   = "Reşad Halife kimdir ?"},
+                            new QuestionLink{Question   = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?"},
+                            new QuestionLink{Question   = "Paralel 19 sistemleri"},
+                            new QuestionLink{Question   = "Allah mı? Tanrı mı ?"},
 
 
                         }
