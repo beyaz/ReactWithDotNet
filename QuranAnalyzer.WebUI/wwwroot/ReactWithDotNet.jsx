@@ -586,14 +586,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
         const cmpProps =
         {
             key: cmpKey,
-            $jsonNode: jsonNode,
-            ref: (x) =>
-            {
-                if (x)
-                {
-                    COMPONENT_CACHE.Register(x);
-                }                
-            }
+            $jsonNode: jsonNode
         };
 
         cmpProps[SyncId] = GetNextSequence();
@@ -1082,6 +1075,7 @@ function DefineComponent(componentDeclaration)
 
             this[ON_COMPONENT_DESTROY] = [];
 
+            COMPONENT_CACHE.Register(this);
             
         }
         
@@ -1195,7 +1189,8 @@ function RenderComponentIn(obj)
         const request =
         {
             MethodName: "FetchComponent",
-            FullName: fullTypeNameOfReactComponent
+            FullName: fullTypeNameOfReactComponent,
+            ComponentRefId: "1"
         };
 
         function onSuccess(response)
@@ -1219,8 +1214,6 @@ function RenderComponentIn(obj)
             {
                 if (component)
                 {
-                    COMPONENT_CACHE.Register(component);
-
                     OnReactStateReady();
                 }
             }

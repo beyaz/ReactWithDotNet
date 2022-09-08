@@ -14,7 +14,7 @@ public sealed class ClientStateInfo
 {
     public string FullTypeNameOfState { get; set; }
     public string StateAsJson { get; set; }
-    public IReadOnlyDictionary<string,object> DotNetProperties { get; set; }
+    public IReadOnlyDictionary<string, object> DotNetProperties { get; set; }
 }
 
 [Serializable]
@@ -46,21 +46,17 @@ public class ComponentResponse
 public static class ComponentRequestHandler
 {
     #region Public Methods
-   
-
     public static string GetFullName(this Type type)
     {
         return $"{type.FullName},{type.Assembly.GetName().Name}";
     }
-    
-    
 
-    static  ReactContext CreateContext(ComponentRequest request)
+    static ReactContext CreateContext(ComponentRequest request)
     {
         var context = new ReactContext
         {
-            Query = string.IsNullOrWhiteSpace(request.SearchPartOfUrl) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.SearchPartOfUrl),
-            ClientWidth = request.ClientWidth,
+            Query        = string.IsNullOrWhiteSpace(request.SearchPartOfUrl) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.SearchPartOfUrl),
+            ClientWidth  = request.ClientWidth,
             ClientHeight = request.ClientHeight
         };
 
@@ -78,7 +74,6 @@ public static class ComponentRequestHandler
         trace.Add($"BEGIN {stopwatch.ElapsedMilliseconds}");
 
         var context = CreateContext(request);
-        
 
         if (request.MethodName == "FetchComponent")
         {
@@ -118,11 +113,11 @@ public static class ComponentRequestHandler
             };
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
-            
-            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId){ StateTree = stateTree});
+
+            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId) { StateTree = stateTree });
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
-            
+
             trace.Add($"END {stopwatch.ElapsedMilliseconds}");
 
             return new ComponentResponse
@@ -140,7 +135,7 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            var instance = (Element)Activator.CreateInstance(type);
+            var instance = (ReactStatefulComponent)Activator.CreateInstance(type);
             if (instance == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
@@ -160,10 +155,10 @@ public static class ComponentRequestHandler
                             {
                                 instance.children.Add(new FakeChild { Index = i });
                             }
-                            
+
                             continue;
                         }
-                        
+
                         var property = type.GetProperty(key);
                         if (property == null)
                         {
@@ -175,14 +170,12 @@ public static class ComponentRequestHandler
                         {
                             propertyValue = jToken.ToObject(property.PropertyType);
                         }
+
                         property.SetValue(instance, propertyValue);
                     }
                 }
             }
-            
-           
-            
-            
+
             // Init state
             {
                 var errorMessage = setState(type, instance, request.CapturedStateTree["0"].StateAsJson);
@@ -191,10 +184,7 @@ public static class ComponentRequestHandler
                     return new ComponentResponse { ErrorMessage = errorMessage };
                 }
 
-                if (instance is ReactStatefulComponent reactStatefulComponent2)
-                {
-                    reactStatefulComponent2.Context = context;
-                }
+                instance.Context = context;
             }
 
             // Find method
@@ -202,7 +192,7 @@ public static class ComponentRequestHandler
             if (methodInfo == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}" };
-            } 
+            }
 
             // Invoke method
             {
@@ -219,23 +209,21 @@ public static class ComponentRequestHandler
                 trace.Add($"Method '{methodInfo.Name}' invocation finished at {stopwatch.ElapsedMilliseconds}");
             }
 
-
             // Serialize to json
-            
-                trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-                var stateTree = new StateTree
-                {
-                    ChildStates    = request.CapturedStateTree,
-                    BreadCrumpPath = "0",
-                    RootElement    = instance,
-                    Context = context
-                };
+            trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-                var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId) { StateTree = stateTree });
+            var stateTree = new StateTree
+            {
+                ChildStates    = request.CapturedStateTree,
+                BreadCrumpPath = "0",
+                RootElement    = instance,
+                Context        = context
+            };
 
-                trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
-            
+            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId) { StateTree = stateTree });
+
+            trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
             trace.Add($"END {stopwatch.ElapsedMilliseconds}");
 
@@ -246,10 +234,6 @@ public static class ComponentRequestHandler
             };
         }
 
-        
-        
-        
-
         string setState(Type typeOfInstance, object instance, string stateAsJson)
         {
             var statePropertyInfo = typeOfInstance.GetProperty("state", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -258,7 +242,6 @@ public static class ComponentRequestHandler
                 return $"MissingMember at {typeOfInstance.FullName}::state";
             }
 
-            
             var state = Json.DeserializeJsonByNewtonsoft(stateAsJson, statePropertyInfo.PropertyType);
 
             statePropertyInfo.SetValue(instance, state);
@@ -279,14 +262,12 @@ public static class ComponentRequestHandler
             for (var i = 0; i < parameterInfoList.Length; i++)
             {
                 eventArguments[i] = Json.DeserializeJsonByNewtonsoft(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
-                
             }
 
             return eventArguments;
         }
     }
     #endregion
-
 }
 
 public static class Json

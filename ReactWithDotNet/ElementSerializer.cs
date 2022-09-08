@@ -12,14 +12,16 @@ public sealed class ElementSerializerContext
     {
         ComponentRefId = componentRefIdStart;
     }
+    
     public StateTree StateTree { get; set; }
-   
 
     public string GetNextUniqueValue()
     {
+        var nextUniqueValue = ComponentRefId.ToString();
+        
         ComponentRefId++;
         
-        return ComponentRefId.ToString();
+        return nextUniqueValue;
     }
 }
 
