@@ -297,6 +297,35 @@ public static class FpExtensions
         return fn(responseA.Value, responseB.Value);
     }
 
+
+    public static Response<IReadOnlyList<TTarget>> AsListOf<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, Response<TTarget>> convertFunc)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (convertFunc == null)
+        {
+            throw new ArgumentNullException(nameof(convertFunc));
+        }
+
+        var result = new List<TTarget>();
+
+        foreach (var item in source)
+        {
+            var response = convertFunc(item);
+            if (response.IsFail)
+            {
+                return response.Errors.ToArray();
+            }
+            
+            result.Add(response.Value);
+        }
+
+        return result;
+    }
+
     static Response<T> Try<T>(Func<T> func)
     {
         try

@@ -13,7 +13,7 @@ class ErrorText : ReactComponent
     {
         if (Text.HasValue())
         {
-            ClientTask.GotoMethod(3000, ClearMessage);
+            ClientTask.GotoMethod(5000, ClearMessage);
         }
 
         var element = new small

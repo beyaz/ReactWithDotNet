@@ -24,13 +24,26 @@ class SearchScript
 {
     public IReadOnlyList<(string ChapterFilter, IReadOnlyList<string> SearchLetters)> Lines { get; private set; }
 
-    public static SearchScript ParseScript(string value)
+    public static Response<SearchScript> ParseScript(string value)
     {
+        if (value.HasNoValue())
+        {
+            return new SearchScript
+            {
+                Lines = new List<(string ChapterFilter, IReadOnlyList<string> SearchLetters)>()
+            };
+        }
+        
         var lines = parseToLines(value).AsListOf(parseLine);
 
+        if (lines.IsFail)
+        {
+            return lines.Errors.ToArray();
+        }
+        
         return new SearchScript
         {
-            Lines = lines
+            Lines = lines.Value
         };
 
 
@@ -41,11 +54,23 @@ class SearchScript
             return value.Split(';', StringSplitOptions.RemoveEmptyEntries);
         }
 
-        static (string ChapterFilter, IReadOnlyList<string> SearchLetters) parseLine(string line)
+        static Response<(string ChapterFilter, IReadOnlyList<string> SearchLetters)> parseLine(string line)
         {
             var arr = line.Split('|', StringSplitOptions.RemoveEmptyEntries);
+            if (arr.Length != 2)
+            {
+                return "Arama komutunda yanlışlık var. Mesela 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
+            }
 
-            return (arr[0].Trim(), AnalyzeText(clearText(arr[1])).Where(IsArabicLetter).AsListOf(x => x.MatchedLetter));
+            var letters = AnalyzeText(clearText(arr[1])).Where(IsArabicLetter).AsListOf(x => x.MatchedLetter);
+
+            if (letters.Count ==0)
+            {
+                return "Arama komutunda yanlışlık var. Arap alfabesine ait olmayan bir karakter kullanılmış. Mesela 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
+            }
+
+
+            return (arr[0].Trim(), letters);
         }
 
         static string clearText(string str) => Regex.Replace(str, @"\s+", String.Empty);
@@ -82,9 +107,13 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         var value = Context.Query[QueryKey.SearchQuery];
         if (value is not null)
         {
-            state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
-            
-            state.SearchScriptErrorMessage = null;
+            var parseResponse = SearchScript.ParseScript(value);
+            if (parseResponse.IsFail)
+            {
+                state.SearchScriptErrorMessage = parseResponse.FailMessage;
+                return;
+            }
+            state.SearchScript = parseResponse.Value.AsReadibleString();
         }
 
 
@@ -161,7 +190,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var summaryInfoList = new List<SummaryInfo>();
 
-        foreach (var (ChapterFilter, SearchLetters) in SearchScript.ParseScript(state.SearchScript).Lines)
+        foreach (var (ChapterFilter, SearchLetters) in SearchScript.ParseScript(state.SearchScript).Value.Lines)
         {
             var chapterFilter         = ChapterFilter;
             var searchLettersAsString = string.Join("", SearchLetters);
@@ -234,12 +263,24 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             state.SearchScriptErrorMessage = "Arama Komutu doldurulmalıdır";
             return;
         }
+
+        var scriptParseResponse = SearchScript.ParseScript(state.SearchScript);
+        if (scriptParseResponse.IsFail)
+        {
+            state.SearchScriptErrorMessage = scriptParseResponse.FailMessage;
+            return;
+        }
+
+        var script = scriptParseResponse.Value;
+
+
+
         state.ClickCount++;
 
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
+            ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={script.AsString()}");
             ClientTask.GotoMethod(5, OnCaclculateClicked, _);
             return;
         }
