@@ -1149,6 +1149,11 @@ function DefineComponent(componentDeclaration)
                 partialState[ComponentRefKey] = NotNull(nextProps.$jsonNode.key);
                 partialState[DotNetProperties] = NotNull(nextProps.$jsonNode[DotNetProperties]);
 
+                if (prevState && prevState[ComponentRefKey] && prevState[ComponentRefKey] !== nextProps.$jsonNode.key)
+                {
+                    throw CreateNewDeveloperError("Component Key Changed");
+                }
+
                 return partialState;
             }
 
