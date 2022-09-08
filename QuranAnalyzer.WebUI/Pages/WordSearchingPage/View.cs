@@ -15,8 +15,6 @@ class Model
 
 class View : ReactComponent<Model>
 {
-    
-
     void OnCaclculateClicked(string _)
     {
         state.ClickCount++;
@@ -24,7 +22,7 @@ class View : ReactComponent<Model>
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
+            //ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
             ClientTask.GotoMethod(5, OnCaclculateClicked, _);
             return;
         }

@@ -73,18 +73,21 @@ class SearchScript
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
     #region Constructors
-    
+
 
     protected override void constructor()
     {
         state = new CharacterCountingViewModel();
-            var value = Context.Query[QueryKey.SearchQuery];
-            if (value is not null)
-            {
-                state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
-            }
+        
+        var value = Context.Query[QueryKey.SearchQuery];
+        if (value is not null)
+        {
+            state.SearchScript = SearchScript.ParseScript(value).AsReadibleString();
+            
+            state.SearchScriptErrorMessage = null;
+        }
 
-       
+
     }
 
     protected override void componentDidMount()
