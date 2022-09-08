@@ -31,9 +31,17 @@ public static class ListExtensions
         return result;
     }
 
-    
 
-    
+
+    public static TValue Unwrap<TValue>(this (TValue value, string exception) tuple)
+    {
+        if (tuple.exception is not null)
+        {
+            throw new Exception(tuple.exception);
+        }
+
+        return tuple.value;
+    }
 
     
 

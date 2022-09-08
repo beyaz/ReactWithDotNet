@@ -7,7 +7,7 @@ public class WordSearchingTests
 {
     static void CountShouldBe(string searchWord, int expected)
     {
-        var search = AnalyzeText(searchWord);
+        var search = AnalyzeText(searchWord).Unwrap();
 
         VerseFilter.GetVerseList("*").Value.Sum(v => v.WordList.Count(w => w.HasValueAndSame(search))).Value.Should().Be(expected);
     }
@@ -70,7 +70,7 @@ public class WordSearchingTests
     [TestMethod]
     public void EndsWithNunVavNun()
     {
-        var nunVavNun = AnalyzeText("نون");
+        var nunVavNun = AnalyzeText("نون").Unwrap();
 
         VerseFilter.GetVerseList("*").Value.Count(v => v.WordList.Last().EndsWith(nunVavNun)).Should().Be(133);
     }

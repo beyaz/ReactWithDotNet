@@ -14,10 +14,6 @@ public class CharacterCountingTests
     public void AnalyzeVerseTest()
     {
         CountShouldBe("*", Daad, 1686);
-
-        Analyzer.AnalyzeVerse(new Verse { Text = "طه" }).Count.Should().Be(2);
-        Analyzer.AnalyzeVerse(new Verse { Text = "طه" })[0].ArabicLetterIndex.Should().Be(15);
-        Analyzer.AnalyzeVerse(new Verse { Text = "طه" })[1].ArabicLetterIndex.Should().Be(25);
     }
 
     static readonly MushafOption AlifAccordingToTanzil = new() { UseElifReferencesFromTanzil = true };

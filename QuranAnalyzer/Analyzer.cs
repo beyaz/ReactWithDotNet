@@ -43,7 +43,7 @@ public static class Analyzer
         return false;
     }
     
-    public static IReadOnlyList<LetterInfo> AnalyzeText(string line, bool isHemzeActive = true)
+    public static (IReadOnlyList<LetterInfo> value, string exception) AnalyzeText(string line, bool isHemzeActive = true)
     {
         var items = new List<LetterInfo>();
 
@@ -76,29 +76,10 @@ public static class Analyzer
                 }
             }
 
-            throw new InvalidOperationException("Arabic letter is not recognized.");
+            return (null, $"Arapça karakter girilmelidir. Yanlış girilen karakter:{line[cursor]}");
         }
 
-        return items;
-    }
-
-    public static IReadOnlyList<LetterInfoInVerse> AnalyzeVerse(Verse verse, bool isHemzeActive = true)
-    {
-        var line = verse.Bismillah + verse.Text;
-
-        return AnalyzeText(line, isHemzeActive).Select(asMatchInfo).ToList();
-
-        LetterInfoInVerse asMatchInfo(LetterInfo x)
-        {
-            return new LetterInfoInVerse
-            {
-                ArabicLetterIndex     = x.ArabicLetterIndex,
-                MatchedLetter         = x.MatchedLetter,
-                StartIndexInVerseText = x.StartIndex,
-                Verse                 = verse,
-                
-            };
-        }
+        return (items, null);
     }
 
     public static bool IsArabicLetter(LetterInfo info)
@@ -174,8 +155,5 @@ public static class Analyzer
         public string[] Forms { get; init; }
     }
 
-    public static IReadOnlyList<string> AsClearArabicCharacterList(this string value)
-    {
-        return AnalyzeText(value).Where(x => x.ArabicLetterIndex >= 0).Select(x => ArabicLetter.AllArabicLetters[x.ArabicLetterIndex]).ToList();
-    }
+    
 }

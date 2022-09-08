@@ -62,7 +62,13 @@ class SearchScript
                 return "Arama komutunda yanlışlık var. Mesela 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
             }
 
-            var letters = AnalyzeText(clearText(arr[1])).Where(IsArabicLetter).AsListOf(x => x.MatchedLetter);
+            var (letterInfoList, exception) = AnalyzeText(clearText(arr[1]));
+            if (exception is not null)
+            {
+                return exception;
+            }
+            
+            var letters = letterInfoList.Where(IsArabicLetter).AsListOf(x => x.MatchedLetter);
 
             if (letters.Count ==0)
             {
@@ -195,7 +201,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             var chapterFilter         = ChapterFilter;
             var searchLettersAsString = string.Join("", SearchLetters);
 
-            var searchLetters = AnalyzeText(searchLettersAsString).Where(IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
+            var searchLetters = AnalyzeText(searchLettersAsString).Unwrap().Where(IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
 
             summaryInfoList.AddRange(searchLetters.AsListOf(x => new SummaryInfo
             {

@@ -21,7 +21,7 @@ public static class DataAccess
 
         static Verse toVerse(Surah_ chapter, Verse_ v)
         {
-            var analyzedFullText = AnalyzeText(v._bismillah + v._text);
+            var analyzedFullText = AnalyzeText(v._bismillah + v._text).Unwrap();
             
             return new Verse
             {

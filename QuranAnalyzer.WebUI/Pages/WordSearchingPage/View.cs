@@ -76,7 +76,7 @@ class View : ReactComponent<Model>
 
         var searchWord = yevmen;
 
-        var search = QuranAnalyzer.Analyzer.AnalyzeText(searchWord);
+        var search = QuranAnalyzer.Analyzer.AnalyzeText(searchWord).Unwrap();
 
         foreach (var verse in VerseFilter.GetVerseList("*").Value)
         {
