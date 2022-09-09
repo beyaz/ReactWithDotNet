@@ -856,8 +856,8 @@ function ProcessClientTasks(clientTasks, component)
             NotNull(component);
 
             TraceClientTask(component, 'GotoMethod', clientTask.MethodName);
-
-            EventQueue.push(() =>
+            
+            PushToEventQueue(() =>
             {
                 setTimeout(() =>
                 {
@@ -917,7 +917,7 @@ function ProcessClientTasks(clientTasks, component)
         {
             TraceClientTask(component, 'CallJsFunction', clientTask.JsFunctionPath);
 
-            EventQueue.push(() =>
+            PushToEventQueue(() =>
             {
                 CallJsFunctionInPath(clientTask);
                 OnReactStateReady();
