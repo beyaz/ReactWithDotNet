@@ -143,7 +143,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         state.SearchScriptErrorMessage = null;
         state.ClickCount               = 0;
-        state.SearchScript             = state.SearchScript.Trim() + " " + letter;
+        state.SearchScript             = state.SearchScript?.Trim() + " " + letter;
     }
 
     #region Public Methods
