@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Text.RegularExpressions;
-using QuranAnalyzer.WebUI.Components;
+﻿using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.PrimeReact;
 using static QuranAnalyzer.Analyzer;
 
@@ -20,91 +18,14 @@ public class CharacterCountingViewModel
     public string SearchScriptErrorMessage { get; set; }
 }
 
-class SearchScript
-{
-    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<string> SearchLetters)> Lines { get; private set; }
-
-    public static Response<SearchScript> ParseScript(string value)
-    {
-        if (value.HasNoValue())
-        {
-            return new SearchScript
-            {
-                Lines = new List<(string ChapterFilter, IReadOnlyList<string> SearchLetters)>()
-            };
-        }
-        
-        var lines = parseToLines(value).AsListOf(parseLine);
-
-        if (lines.IsFail)
-        {
-            return lines.Errors.ToArray();
-        }
-        
-        return new SearchScript
-        {
-            Lines = lines.Value
-        };
-
-
-        static IEnumerable<string> parseToLines(string value)
-        {
-            value = value.Replace(Environment.NewLine, ";");
-            
-            return value.Split(';', StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        static Response<(string ChapterFilter, IReadOnlyList<string> SearchLetters)> parseLine(string line)
-        {
-            var arr = line.Split('|', StringSplitOptions.RemoveEmptyEntries);
-            if (arr.Length != 2)
-            {
-                return "Arama komutunda yanlışlık var. Mesela 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
-            }
-
-            var (letterInfoList, exception) = AnalyzeText(clearText(arr[1]));
-            if (exception is not null)
-            {
-                return exception;
-            }
-            
-            var letters = letterInfoList.Where(IsArabicLetter).AsListOf(x => x.MatchedLetter);
-
-            if (letters.Count ==0)
-            {
-                return "Arama komutunda yanlışlık var. Arap alfabesine ait olmayan bir karakter kullanılmış. Mesela 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
-            }
-
-
-            return (arr[0].Trim(), letters);
-        }
-
-        static string clearText(string str) => Regex.Replace(str, @"\s+", String.Empty);
-
-    }
-
-    public string AsReadibleString()
-    {
-        var sb = new StringBuilder();
-
-        foreach (var line in Lines)
-        {
-            sb.AppendLine(line.ChapterFilter + " | " + string.Join(" ", line.SearchLetters));
-        }
-
-        return sb.ToString();
-    }
-
-    public string AsString()
-    {
-        return string.Join(";", Lines.Select(line => line.ChapterFilter + "|" + string.Join("", line.SearchLetters)));
-    }
-}
-
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
     #region Constructors
 
+    void ClearErrorMessage()
+    {
+        state.SearchScriptErrorMessage = null;
+    }
 
     protected override void constructor()
     {
@@ -121,8 +42,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             }
             state.SearchScript = parseResponse.Value.AsReadibleString();
         }
-
-
     }
 
     protected override void componentDidMount()
@@ -149,6 +68,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     #region Public Methods
     protected override Element render()
     {
+        if (state.SearchScriptErrorMessage.HasValue())
+        {
+            ClientTask.GotoMethod(5000, ClearErrorMessage);
+        }
+        
         var searchPanel = new divWithBorder
         {
             style = { paddingLeftRight = "15px", paddingBottom = "15px" },

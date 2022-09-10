@@ -4,18 +4,8 @@ class ErrorText : ReactComponent
 {
     public string Text { get; set; }
 
-    void ClearMessage()
-    {
-        Text = null;
-    }
-
     protected override Element render()
     {
-        if (Text.HasValue())
-        {
-            ClientTask.GotoMethod(5000, ClearMessage);
-        }
-
         var element = new small
         {
             text = Text,
