@@ -22,7 +22,6 @@ const ComponentRefKey = '$Key';
 const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
 const DotNetProperties = 'DotNetProperties';
 
-
 const EventBus =
 {
     On: function(event, callback)
@@ -941,7 +940,7 @@ function HandleAction(data)
 {
     const remoteMethodName = data.remoteMethodName;
     const component = NotNull(data.component);
-    
+
     const request =
     {
         MethodName: "HandleComponentEvent",
@@ -1097,12 +1096,28 @@ function DefineComponent(componentDeclaration)
         {
             TraceComponent(this, "componentDidMount");
 
-            ProcessClientTasks(this.state[ClientTasks], this);
-
-            if (this.state[HasComponentDidMountMethod])
+            const clientTasks = this.state[ClientTasks];            
+            if (clientTasks)
             {
+                const partialState = {};
+
+                partialState[ClientTasks] = null;
+
+                this.setState(partialState);
+
+                ProcessClientTasks(clientTasks, this);
+            }
+
+            const hasComponentDidMountMethod = this.state[HasComponentDidMountMethod];
+            if (hasComponentDidMountMethod)
+            {
+                const partialState = {};
+
+                partialState[HasComponentDidMountMethod] = null;
+
+                this.setState(partialState);
+
                 HandleAction({ remoteMethodName: 'componentDidMount', component: this, eventArguments: [] });
-                return;
             }
         }
 
@@ -1119,11 +1134,22 @@ function DefineComponent(componentDeclaration)
             TraceComponent(this, "componentWillUnmount");
         }
 
-        componentDidUpdate(nextProps)
+        componentDidUpdate(previousProps, previousState)
         {
             TraceComponent(this, "componentDidUpdate");
 
-            ProcessClientTasks(this.state[ClientTasks], this);
+            const clientTasks = this.state[ClientTasks];
+            if (clientTasks)
+            {
+                const partialState = {};
+
+                partialState[ClientTasks] = null;
+
+                this.setState(partialState);
+
+                ProcessClientTasks(clientTasks, this);
+            }
+            
         }
 
         static getDerivedStateFromProps(nextProps, prevState) 
@@ -1133,7 +1159,7 @@ function DefineComponent(componentDeclaration)
             const syncIdInState = ShouldBeNumber(prevState[SyncId]);
             const syncIdInProp  = ShouldBeNumber(nextProps[SyncId]);
 
-            if (syncIdInState > syncIdInProp)
+            if (syncIdInState > syncIdInProp )
             {
                  return null;
             }
@@ -1142,7 +1168,6 @@ function DefineComponent(componentDeclaration)
             {
                 const partialState = {};
 
-                partialState[HasComponentDidMountMethod] = false;
                 partialState[SyncId] = syncIdInProp;
                 partialState[RootNode] = NotNull(nextProps.$jsonNode[RootNode]);
                 partialState[ClientTasks] = nextProps.$jsonNode[ClientTasks];
