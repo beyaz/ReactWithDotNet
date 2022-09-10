@@ -11,6 +11,7 @@ public class CharacterCountingViewModel
     public int ClickCount { get; set; }
 
     public bool IsBlocked { get; set; }
+
     public MushafOption MushafOption { get; set; } = new();
 
     public string SearchScript { get; set; }
@@ -21,22 +22,6 @@ public class CharacterCountingViewModel
 
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
-    #region Public Methods
-    public void ArabicKeyboardPressed(string letter)
-    {
-        state.SearchScriptErrorMessage = null;
-        state.ClickCount               = 0;
-        state.SearchScript             = state.SearchScript?.Trim() + " " + letter;
-    }
-
-    public void MushafOptionChanged(MushafOption mushafOption)
-    {
-        state.ClickCount   = 0;
-        state.MushafOption = mushafOption;
-        Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
-    }
-    #endregion
-
     #region Methods
     protected override void componentDidMount()
     {
@@ -175,9 +160,23 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         };
     }
 
+    void ArabicKeyboardPressed(string letter)
+    {
+        state.SearchScriptErrorMessage = null;
+        state.ClickCount               = 0;
+        state.SearchScript             = state.SearchScript?.Trim() + " " + letter;
+    }
+
     void ClearErrorMessage()
     {
         state.SearchScriptErrorMessage = null;
+    }
+
+    void MushafOptionChanged(MushafOption mushafOption)
+    {
+        state.ClickCount   = 0;
+        state.MushafOption = mushafOption;
+        Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
     }
 
     void OnCaclculateClicked(string _)
