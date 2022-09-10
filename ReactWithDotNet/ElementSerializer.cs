@@ -401,6 +401,7 @@ public static class ElementSerializer
         {
             reactStatefulComponent.InvokeConstructor();
         }
+        
 
         map.Add(___RootNode___, ToMap(reactStatefulComponent.InvokeRender(), context));
 
@@ -419,7 +420,8 @@ public static class ElementSerializer
 
         map.Add(nameof(reactStatefulComponent.key), reactStatefulComponent.key);
 
-        if (reactStatefulComponent is ISupportMouseEnter supportMouseEnter)
+        var supportMouseEnter = reactStatefulComponent as ISupportMouseEnter;
+        if (supportMouseEnter is not null)
         {
             supportMouseEnter.IsMouseEntered = true;
 
@@ -440,6 +442,7 @@ public static class ElementSerializer
                 propertyInfo.Name == nameof(reactStatefulComponent.Children)||
                 propertyInfo.Name == nameof(reactStatefulComponent.key) ||
                 propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
+                (propertyInfo.Name == nameof(ISupportMouseEnter.IsMouseEntered) && supportMouseEnter is not null) ||
                 propertyInfo.Name == "state")
             {
                 continue;
