@@ -7,6 +7,7 @@
   <ItemGroup>
     <Content Remove="CommonData.json" />
     <Content Remove="Facts.json" />
+    <Content Remove="Settings.json" />
     <Content Remove="wwwroot\index - Copy.js" />
     <Content Remove="wwwroot\integration-primereact.jsx" />
     <Content Remove="wwwroot\integration\primereact - Copy.js" />
@@ -28,6 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\app.css" />
     <None Include="wwwroot\img\Class.svg" />
     <None Include="wwwroot\img\dll.svg" />
