@@ -7,30 +7,47 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 [Serializable]
 public class CharacterCountingViewModel
 {
-    public MushafOption MushafOption { get; set; } = new();
-
+    #region Public Properties
     public int ClickCount { get; set; }
 
     public bool IsBlocked { get; set; }
+    public MushafOption MushafOption { get; set; } = new();
 
     public string SearchScript { get; set; }
-    
+
     public string SearchScriptErrorMessage { get; set; }
+    #endregion
 }
 
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
-    #region Constructors
-
-    void ClearErrorMessage()
+    #region Public Methods
+    public void ArabicKeyboardPressed(string letter)
     {
         state.SearchScriptErrorMessage = null;
+        state.ClickCount               = 0;
+        state.SearchScript             = state.SearchScript?.Trim() + " " + letter;
+    }
+
+    public void MushafOptionChanged(MushafOption mushafOption)
+    {
+        state.ClickCount   = 0;
+        state.MushafOption = mushafOption;
+        Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
+    }
+    #endregion
+
+    #region Methods
+    protected override void componentDidMount()
+    {
+        ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
+        ClientTask.ListenEvent(ApplicationEventName.MushafOptionChanged, MushafOptionChanged);
     }
 
     protected override void constructor()
     {
         state = new CharacterCountingViewModel();
-        
+
         var value = Context.Query[QueryKey.SearchQuery];
         if (value is not null)
         {
@@ -40,57 +57,36 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 state.SearchScriptErrorMessage = parseResponse.FailMessage;
                 return;
             }
+
             state.SearchScript = parseResponse.Value.AsReadibleString();
         }
     }
 
-    protected override void componentDidMount()
-    {
-        ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
-        ClientTask.ListenEvent(ApplicationEventName.MushafOptionChanged, MushafOptionChanged);
-    }
-    #endregion
-
-    
-    public void MushafOptionChanged(MushafOption mushafOption)
-    {
-        state.ClickCount   = 0;
-        state.MushafOption = mushafOption;
-        Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
-    }
-    public void ArabicKeyboardPressed(string letter)
-    {
-        state.SearchScriptErrorMessage = null;
-        state.ClickCount               = 0;
-        state.SearchScript             = state.SearchScript?.Trim() + " " + letter;
-    }
-
-    #region Public Methods
     protected override Element render()
     {
         if (state.SearchScriptErrorMessage.HasValue())
         {
             ClientTask.GotoMethod(5000, ClearErrorMessage);
         }
-        
+
         var searchPanel = new divWithBorder
         {
             style = { paddingLeftRight = "15px", paddingBottom = "15px" },
 
             children =
             {
-                new h4 { text = "Harf Arama" , style = { textAlign = "center"}},
+                new h4 { text = "Harf Arama", style = { textAlign = "center" } },
                 new VStack
                 {
                     new VStack
                     {
-                        new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
-                        new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true},
-                        new ErrorText{Text = state.SearchScriptErrorMessage}
+                        new div { text                = "Arama Komutu", style          = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                        new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true },
+                        new ErrorText { Text          = state.SearchScriptErrorMessage }
                     },
-                   
+
                     new VSpace(3),
-                    
+
                     new CharacterCountingOptionView(),
 
                     new VSpace(20),
@@ -116,7 +112,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return CalculatingComponent.WithBlockUI(searchPanel);
         }
 
-        var mushafVerse           = new List<LetterColorizer>();
+        var mushafVerse = new List<LetterColorizer>();
 
         var summaryInfoList = new List<SummaryInfo>();
 
@@ -132,8 +128,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
                 Name  = x.MatchedLetter
             }));
-
-
 
             foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
             {
@@ -154,8 +148,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 }
             }
         }
-
-        
 
         var results = new divWithBorder
         {
@@ -182,9 +174,12 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             }
         };
     }
-    #endregion
 
-    #region Methods
+    void ClearErrorMessage()
+    {
+        state.SearchScriptErrorMessage = null;
+    }
+
     void OnCaclculateClicked(string _)
     {
         state.SearchScriptErrorMessage = null;
@@ -202,8 +197,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         }
 
         var script = scriptParseResponse.Value;
-
-
 
         state.ClickCount++;
 
