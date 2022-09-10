@@ -1313,13 +1313,14 @@ function CreateNewDeveloperError(message)
 
 var ReactWithDotNet =
 {
+    RequestHandlerUrl: '/HandleReactWithDotNetRequest',
     OnDocumentReady: OnDocumentReady,
     HandleAction: HandleAction,
     DispatchEvent: EventBus.Dispatch,
     RenderComponentIn: RenderComponentIn,
     SendRequest: function (request, callback)
     {
-        Fetch("/HandleReactWithDotNetRequest", {
+        Fetch(ReactWithDotNet.RequestHandlerUrl, {
                 method: "POST",
                 headers:
                 {
