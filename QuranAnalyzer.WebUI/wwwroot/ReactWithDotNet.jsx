@@ -1159,7 +1159,7 @@ function DefineComponent(componentDeclaration)
             const syncIdInState = ShouldBeNumber(prevState[SyncId]);
             const syncIdInProp  = ShouldBeNumber(nextProps[SyncId]);
 
-            if (syncIdInState > syncIdInProp )
+            if (syncIdInState > syncIdInProp)
             {
                  return null;
             }
