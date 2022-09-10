@@ -1,0 +1,5 @@
+{
+    "rootLocation": "/",
+    "logFilePath": "log.txt",
+    "isLogEnabled": true
+}
