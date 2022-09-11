@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="CommonData.json" />
+    <Content Remove="Facts.json" />
+    <Content Remove="wwwroot\index - Copy.js" />
+    <Content Remove="wwwroot\integration-primereact.jsx" />
+    <Content Remove="wwwroot\integration\primereact - Copy.js" />
+    <Content Remove="wwwroot\integration\react-xarrows - Copy.js" />
+    <Content Remove="wwwroot\integration\ReactWithDotNet-UIDesigner.jsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="MainPage.yaml" />
+    <None Remove="QuestionAnswerPage.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QuranAnalyzer\QuranAnalyzer.csproj" />
+    <ProjectReference Include="..\ReactWithDotNet.Libraries\ReactWithDotNet.Libraries.csproj" />
+    <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\app.css" />
+    <None Include="wwwroot\integration\ReactWithDotNet-UIDesigner.js" />
+    <None Include="wwwroot\integration\ReactWithDotNet-UIDesigner.jsx" />
+    <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\index.js" />
+    <None Include="wwwroot\index.jsx" />
+    <None Include="wwwroot\ReactWithDotNet.js" />
+    <None Include="wwwroot\ReactWithDotNet.jsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\ReactWithDotNet.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+    <PropertyGroup>
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
+</Project>
