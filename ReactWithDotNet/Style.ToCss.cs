@@ -1931,7 +1931,7 @@ partial class Style
             var array = line.Trim().Split(":").Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
             if (array.Length != 2)
             {
-                throw new Exception("Css parse error." + line);
+                throw CssParseException(line);
             }
 
             var cssAttributeName = array[0].Trim();
@@ -1940,7 +1940,7 @@ partial class Style
                 var endCommentIndex = cssAttributeName.IndexOf("*/", StringComparison.OrdinalIgnoreCase);
                 if (endCommentIndex < 0)
                 {
-                    throw new Exception("Css parse error." + line);
+                    throw CssParseException(line);
                 }
 
                 cssAttributeName = cssAttributeName.Substring(endCommentIndex + 2).Trim();
@@ -1948,6 +1948,11 @@ partial class Style
             
             this[cssAttributeName] = array[1];
         }
+    }
+
+    static Exception CssParseException(string message)
+    {
+        return new Exception("Css parse error." + message);
     }
 
     public static Style ParseCss(string css)

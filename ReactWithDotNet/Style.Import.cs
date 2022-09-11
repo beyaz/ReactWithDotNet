@@ -1223,7 +1223,7 @@ partial class Style
                 return borderInlineStyle;
             }
 
-            throw new ArgumentOutOfRangeException($"Css attibute not recognized. '{key}'");
+            throw CssParseException(key);
         }
         set
         {
@@ -2668,7 +2668,7 @@ partial class Style
                 return;
             }
 
-            throw new ArgumentOutOfRangeException($"Css attibute not recognized. '{key}'");
+            throw CssParseException(key);
         }
     }
 
