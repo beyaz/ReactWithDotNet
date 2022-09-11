@@ -1919,4 +1919,18 @@ partial class Style
 
         return sb.ToString();
     }
+
+    public void Import(string css)
+    {
+        foreach (var line in css.Trim().Split(";").Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)))
+        {
+            var array = line.Trim().Split(":").Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            if (array.Length != 2)
+            {
+                throw new Exception("Css parse error." + line);
+            }
+
+            this[/*css attribute name*/array[0]] = array[1];
+        }
+    }
 }
