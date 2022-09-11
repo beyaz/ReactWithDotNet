@@ -1922,6 +1922,10 @@ partial class Style
 
     public void Import(string css)
     {
+        if (css == null)
+        {
+            return;
+        }
         foreach (var line in css.Trim().Split(";").Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)))
         {
             var array = line.Trim().Split(":").Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
@@ -1930,7 +1934,28 @@ partial class Style
                 throw new Exception("Css parse error." + line);
             }
 
-            this[/*css attribute name*/array[0]] = array[1];
+            var cssAttributeName = array[0].Trim();
+            if (cssAttributeName.StartsWith("/*", StringComparison.OrdinalIgnoreCase))
+            {
+                var endCommentIndex = cssAttributeName.IndexOf("*/", StringComparison.OrdinalIgnoreCase);
+                if (endCommentIndex < 0)
+                {
+                    throw new Exception("Css parse error." + line);
+                }
+
+                cssAttributeName = cssAttributeName.Substring(endCommentIndex + 2).Trim();
+            }
+            
+            this[cssAttributeName] = array[1];
         }
+    }
+
+    public static Style ParseCss(string css)
+    {
+        var style = new Style();
+        
+        style.Import(css);
+
+        return style;
     }
 }

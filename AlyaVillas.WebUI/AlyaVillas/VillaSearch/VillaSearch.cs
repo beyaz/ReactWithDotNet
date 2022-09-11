@@ -19,6 +19,7 @@ class VillaSearchView : ReactComponent
     {
         var model = Model ?? new VillaSearchViewModel();
         
+        
         return new div
         {
             style = { border = "1px solid #DBDBDB", display = "flex", flexDirection = "column" , paddingLeftRight = "10px"},
@@ -30,14 +31,27 @@ class VillaSearchView : ReactComponent
                     style = { boxShadow = "0px 4px 8px rgba(16, 24, 64, 0.08)", padding = "16px"},
                     children =
                     {
-                        new div("arama")
+                        BuildGrisCıkışTarih()
                     }
                 },
                 new VSpace(24),
                 new div
                 {
                     text = "Aile için Villalar",
-                    
+                    Style = Style.ParseCss(@"
+
+/* Display/D-700 */
+
+font-family: 'Marcellus';
+font-style: normal;
+font-weight: 400;
+font-size: 32px;
+line-height: 40px;
+
+/* Neutral/N900 */
+
+color: #4A4A49;
+")
                 },
                 new div
                 {
@@ -73,5 +87,48 @@ class VillaSearchView : ReactComponent
         };
 
         
+    }
+
+    Element BuildGrisCıkışTarih()
+    {
+        return new VStack
+        {
+            new div("Girş - Çıkış Tarih")
+            {
+                Style = Style.ParseCss(@"/* Headline / H-400 */
+
+font-family: 'Open Sans';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 24px;
+
+
+
+
+
+color: #4A4A49;")
+            },
+            
+            new div("Seçiniz")
+            {
+                Style = Style.ParseCss(@"
+
+
+font-family: 'Open Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+
+
+/* Neutral/N400 */
+
+color: #98999D;
+")
+            }
+        };
+
     }
 }
