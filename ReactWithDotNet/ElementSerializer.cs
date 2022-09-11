@@ -348,7 +348,7 @@ public static class ElementSerializer
     {
         if (value is Style style)
         {
-            return style.GetValues().Count == 0;
+            return style.IsEmpty;
         }
 
         return false;

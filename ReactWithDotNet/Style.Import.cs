@@ -1220,4 +1220,1207 @@ partial class Style
             borderInlineStyle = newStyle.borderInlineStyle;
         }
     }
+
+    public bool IsEmpty
+    {
+        get
+        {
+            if (alignContent != null)
+            {
+                return false;
+            }
+
+            if (alignItems != null)
+            {
+                return false;
+            }
+
+            if (alignSelf != null)
+            {
+                return false;
+            }
+
+            if (all != null)
+            {
+                return false;
+            }
+
+            if (animation != null)
+            {
+                return false;
+            }
+
+            if (animationDelay != null)
+            {
+                return false;
+            }
+
+            if (animationDirection != null)
+            {
+                return false;
+            }
+
+            if (animationDuration != null)
+            {
+                return false;
+            }
+
+            if (animationFillMode != null)
+            {
+                return false;
+            }
+
+            if (animationIterationCount != null)
+            {
+                return false;
+            }
+
+            if (animationName != null)
+            {
+                return false;
+            }
+
+            if (animationPlayState != null)
+            {
+                return false;
+            }
+
+            if (animationTimingFunction != null)
+            {
+                return false;
+            }
+
+            if (backfaceVisibility != null)
+            {
+                return false;
+            }
+
+            if (background != null)
+            {
+                return false;
+            }
+
+            if (backgroundAttachment != null)
+            {
+                return false;
+            }
+
+            if (backgroundBlendMode != null)
+            {
+                return false;
+            }
+
+            if (backgroundClip != null)
+            {
+                return false;
+            }
+
+            if (backgroundColor != null)
+            {
+                return false;
+            }
+
+            if (backgroundImage != null)
+            {
+                return false;
+            }
+
+            if (backgroundOrigin != null)
+            {
+                return false;
+            }
+
+            if (backgroundPosition != null)
+            {
+                return false;
+            }
+
+            if (backgroundRepeat != null)
+            {
+                return false;
+            }
+
+            if (backgroundSize != null)
+            {
+                return false;
+            }
+
+            if (border != null)
+            {
+                return false;
+            }
+
+            if (borderBottom != null)
+            {
+                return false;
+            }
+
+            if (borderBottomColor != null)
+            {
+                return false;
+            }
+
+            if (borderBottomLeftRadius != null)
+            {
+                return false;
+            }
+
+            if (borderBottomRightRadius != null)
+            {
+                return false;
+            }
+
+            if (borderBottomStyle != null)
+            {
+                return false;
+            }
+
+            if (borderBottomWidth != null)
+            {
+                return false;
+            }
+
+            if (borderCollapse != null)
+            {
+                return false;
+            }
+
+            if (borderColor != null)
+            {
+                return false;
+            }
+
+            if (borderImage != null)
+            {
+                return false;
+            }
+
+            if (borderImageOutset != null)
+            {
+                return false;
+            }
+
+            if (borderImageRepeat != null)
+            {
+                return false;
+            }
+
+            if (borderImageSlice != null)
+            {
+                return false;
+            }
+
+            if (borderImageSource != null)
+            {
+                return false;
+            }
+
+            if (borderImageWidth != null)
+            {
+                return false;
+            }
+
+            if (borderLeft != null)
+            {
+                return false;
+            }
+
+            if (borderLeftColor != null)
+            {
+                return false;
+            }
+
+            if (borderLeftStyle != null)
+            {
+                return false;
+            }
+
+            if (borderLeftWidth != null)
+            {
+                return false;
+            }
+
+            if (borderRadius != null)
+            {
+                return false;
+            }
+
+            if (borderRight != null)
+            {
+                return false;
+            }
+
+            if (borderRightColor != null)
+            {
+                return false;
+            }
+
+            if (borderRightStyle != null)
+            {
+                return false;
+            }
+
+            if (borderRightWidth != null)
+            {
+                return false;
+            }
+
+            if (borderSpacing != null)
+            {
+                return false;
+            }
+
+            if (borderStyle != null)
+            {
+                return false;
+            }
+
+            if (borderTop != null)
+            {
+                return false;
+            }
+
+            if (borderTopColor != null)
+            {
+                return false;
+            }
+
+            if (borderTopLeftRadius != null)
+            {
+                return false;
+            }
+
+            if (borderTopRightRadius != null)
+            {
+                return false;
+            }
+
+            if (borderTopStyle != null)
+            {
+                return false;
+            }
+
+            if (borderTopWidth != null)
+            {
+                return false;
+            }
+
+            if (borderWidth != null)
+            {
+                return false;
+            }
+
+            if (bottom != null)
+            {
+                return false;
+            }
+
+            if (boxDecorationBreak != null)
+            {
+                return false;
+            }
+
+            if (boxShadow != null)
+            {
+                return false;
+            }
+
+            if (boxSizing != null)
+            {
+                return false;
+            }
+
+            if (captionSide != null)
+            {
+                return false;
+            }
+
+            if (clear != null)
+            {
+                return false;
+            }
+
+            if (clip != null)
+            {
+                return false;
+            }
+
+            if (clipPath != null)
+            {
+                return false;
+            }
+
+            if (color != null)
+            {
+                return false;
+            }
+
+            if (columns != null)
+            {
+                return false;
+            }
+
+            if (columnCount != null)
+            {
+                return false;
+            }
+
+            if (columnFill != null)
+            {
+                return false;
+            }
+
+            if (columnGap != null)
+            {
+                return false;
+            }
+
+            if (rowGap != null)
+            {
+                return false;
+            }
+
+            if (gap != null)
+            {
+                return false;
+            }
+
+            if (columnRule != null)
+            {
+                return false;
+            }
+
+            if (columnRuleColor != null)
+            {
+                return false;
+            }
+
+            if (columnRuleStyle != null)
+            {
+                return false;
+            }
+
+            if (columnRuleWidth != null)
+            {
+                return false;
+            }
+
+            if (columnSpan != null)
+            {
+                return false;
+            }
+
+            if (columnWidth != null)
+            {
+                return false;
+            }
+
+            if (content != null)
+            {
+                return false;
+            }
+
+            if (counterIncrement != null)
+            {
+                return false;
+            }
+
+            if (counterReset != null)
+            {
+                return false;
+            }
+
+            if (cssFloat != null)
+            {
+                return false;
+            }
+
+            if (cssText != null)
+            {
+                return false;
+            }
+
+            if (cursor != null)
+            {
+                return false;
+            }
+
+            if (direction != null)
+            {
+                return false;
+            }
+
+            if (display != null)
+            {
+                return false;
+            }
+
+            if (dominantBaseline != null)
+            {
+                return false;
+            }
+
+            if (emptyCells != null)
+            {
+                return false;
+            }
+
+            if (fill != null)
+            {
+                return false;
+            }
+
+            if (fillOpacity != null)
+            {
+                return false;
+            }
+
+            if (fillRule != null)
+            {
+                return false;
+            }
+
+            if (filter != null)
+            {
+                return false;
+            }
+
+            if (flex != null)
+            {
+                return false;
+            }
+
+            if (flexBasis != null)
+            {
+                return false;
+            }
+
+            if (flexDirection != null)
+            {
+                return false;
+            }
+
+            if (flexFlow != null)
+            {
+                return false;
+            }
+
+            if (flexGrow != null)
+            {
+                return false;
+            }
+
+            if (flexShrink != null)
+            {
+                return false;
+            }
+
+            if (flexWrap != null)
+            {
+                return false;
+            }
+
+            if (floodColor != null)
+            {
+                return false;
+            }
+
+            if (floodOpacity != null)
+            {
+                return false;
+            }
+
+            if (font != null)
+            {
+                return false;
+            }
+
+            if (fontFamily != null)
+            {
+                return false;
+            }
+
+            if (fontFeatureSettings != null)
+            {
+                return false;
+            }
+
+            if (fontKerning != null)
+            {
+                return false;
+            }
+
+            if (fontLanguageOverride != null)
+            {
+                return false;
+            }
+
+            if (fontSize != null)
+            {
+                return false;
+            }
+
+            if (fontSizeAdjust != null)
+            {
+                return false;
+            }
+
+            if (fontStretch != null)
+            {
+                return false;
+            }
+
+            if (fontStyle != null)
+            {
+                return false;
+            }
+
+            if (fontSynthesis != null)
+            {
+                return false;
+            }
+
+            if (fontVariant != null)
+            {
+                return false;
+            }
+
+            if (fontVariantAlternates != null)
+            {
+                return false;
+            }
+
+            if (fontVariantCaps != null)
+            {
+                return false;
+            }
+
+            if (fontVariantEastAsian != null)
+            {
+                return false;
+            }
+
+            if (fontVariantLigatures != null)
+            {
+                return false;
+            }
+
+            if (fontVariantNumeric != null)
+            {
+                return false;
+            }
+
+            if (fontVariantPosition != null)
+            {
+                return false;
+            }
+
+            if (fontWeight != null)
+            {
+                return false;
+            }
+
+            if (grid != null)
+            {
+                return false;
+            }
+
+            if (gridArea != null)
+            {
+                return false;
+            }
+
+            if (gridAutoColumns != null)
+            {
+                return false;
+            }
+
+            if (gridAutoFlow != null)
+            {
+                return false;
+            }
+
+            if (gridAutoPosition != null)
+            {
+                return false;
+            }
+
+            if (gridAutoRows != null)
+            {
+                return false;
+            }
+
+            if (gridColumn != null)
+            {
+                return false;
+            }
+
+            if (gridColumnStart != null)
+            {
+                return false;
+            }
+
+            if (gridColumnEnd != null)
+            {
+                return false;
+            }
+
+            if (gridRow != null)
+            {
+                return false;
+            }
+
+            if (gridRowStart != null)
+            {
+                return false;
+            }
+
+            if (gridRowEnd != null)
+            {
+                return false;
+            }
+
+            if (gridTemplate != null)
+            {
+                return false;
+            }
+
+            if (gridTemplateAreas != null)
+            {
+                return false;
+            }
+
+            if (gridTemplateRows != null)
+            {
+                return false;
+            }
+
+            if (gridTemplateColumns != null)
+            {
+                return false;
+            }
+
+            if (height != null)
+            {
+                return false;
+            }
+
+            if (hyphens != null)
+            {
+                return false;
+            }
+
+            if (icon != null)
+            {
+                return false;
+            }
+
+            if (imageRendering != null)
+            {
+                return false;
+            }
+
+            if (imageResolution != null)
+            {
+                return false;
+            }
+
+            if (imageOrientation != null)
+            {
+                return false;
+            }
+
+            if (imeMode != null)
+            {
+                return false;
+            }
+
+            if (justifyContent != null)
+            {
+                return false;
+            }
+
+            if (left != null)
+            {
+                return false;
+            }
+
+            if (letterSpacing != null)
+            {
+                return false;
+            }
+
+            if (lightingColor != null)
+            {
+                return false;
+            }
+
+            if (lineHeight != null)
+            {
+                return false;
+            }
+
+            if (listStyle != null)
+            {
+                return false;
+            }
+
+            if (listStyleImage != null)
+            {
+                return false;
+            }
+
+            if (listStylePosition != null)
+            {
+                return false;
+            }
+
+            if (listStyleType != null)
+            {
+                return false;
+            }
+
+            if (margin != null)
+            {
+                return false;
+            }
+
+            if (marginBottom != null)
+            {
+                return false;
+            }
+
+            if (marginLeft != null)
+            {
+                return false;
+            }
+
+            if (marginRight != null)
+            {
+                return false;
+            }
+
+            if (marginTop != null)
+            {
+                return false;
+            }
+
+            if (marks != null)
+            {
+                return false;
+            }
+
+            if (mask != null)
+            {
+                return false;
+            }
+
+            if (maskType != null)
+            {
+                return false;
+            }
+
+            if (maxHeight != null)
+            {
+                return false;
+            }
+
+            if (maxWidth != null)
+            {
+                return false;
+            }
+
+            if (minHeight != null)
+            {
+                return false;
+            }
+
+            if (minWidth != null)
+            {
+                return false;
+            }
+
+            if (mixBlendMode != null)
+            {
+                return false;
+            }
+
+            if (navDown != null)
+            {
+                return false;
+            }
+
+            if (navIndex != null)
+            {
+                return false;
+            }
+
+            if (navLeft != null)
+            {
+                return false;
+            }
+
+            if (navRight != null)
+            {
+                return false;
+            }
+
+            if (navUp != null)
+            {
+                return false;
+            }
+
+            if (objectFit != null)
+            {
+                return false;
+            }
+
+            if (objectPosition != null)
+            {
+                return false;
+            }
+
+            if (opacity != null)
+            {
+                return false;
+            }
+
+            if (order != null)
+            {
+                return false;
+            }
+
+            if (orphans != null)
+            {
+                return false;
+            }
+
+            if (outline != null)
+            {
+                return false;
+            }
+
+            if (outlineColor != null)
+            {
+                return false;
+            }
+
+            if (outlineOffset != null)
+            {
+                return false;
+            }
+
+            if (outlineStyle != null)
+            {
+                return false;
+            }
+
+            if (outlineWidth != null)
+            {
+                return false;
+            }
+
+            if (overflow != null)
+            {
+                return false;
+            }
+
+            if (overflowWrap != null)
+            {
+                return false;
+            }
+
+            if (overflowX != null)
+            {
+                return false;
+            }
+
+            if (overflowY != null)
+            {
+                return false;
+            }
+
+            if (overflowClipBox != null)
+            {
+                return false;
+            }
+
+            if (padding != null)
+            {
+                return false;
+            }
+
+            if (paddingBottom != null)
+            {
+                return false;
+            }
+
+            if (paddingLeft != null)
+            {
+                return false;
+            }
+
+            if (paddingRight != null)
+            {
+                return false;
+            }
+
+            if (paddingTop != null)
+            {
+                return false;
+            }
+
+            if (pageBreakAfter != null)
+            {
+                return false;
+            }
+
+            if (pageBreakBefore != null)
+            {
+                return false;
+            }
+
+            if (pageBreakInside != null)
+            {
+                return false;
+            }
+
+            if (perspective != null)
+            {
+                return false;
+            }
+
+            if (perspectiveOrigin != null)
+            {
+                return false;
+            }
+
+            if (pointerEvents != null)
+            {
+                return false;
+            }
+
+            if (position != null)
+            {
+                return false;
+            }
+
+            if (quotes != null)
+            {
+                return false;
+            }
+
+            if (resize != null)
+            {
+                return false;
+            }
+
+            if (right != null)
+            {
+                return false;
+            }
+
+            if (tableLayout != null)
+            {
+                return false;
+            }
+
+            if (tabSize != null)
+            {
+                return false;
+            }
+
+            if (textAlign != null)
+            {
+                return false;
+            }
+
+            if (textAlignLast != null)
+            {
+                return false;
+            }
+
+            if (textCombineHorizontal != null)
+            {
+                return false;
+            }
+
+            if (textDecoration != null)
+            {
+                return false;
+            }
+
+            if (textDecorationColor != null)
+            {
+                return false;
+            }
+
+            if (textDecorationLine != null)
+            {
+                return false;
+            }
+
+            if (textDecorationStyle != null)
+            {
+                return false;
+            }
+
+            if (textIndent != null)
+            {
+                return false;
+            }
+
+            if (textOrientation != null)
+            {
+                return false;
+            }
+
+            if (textOverflow != null)
+            {
+                return false;
+            }
+
+            if (textRendering != null)
+            {
+                return false;
+            }
+
+            if (textShadow != null)
+            {
+                return false;
+            }
+
+            if (textTransform != null)
+            {
+                return false;
+            }
+
+            if (textUnderlinePosition != null)
+            {
+                return false;
+            }
+
+            if (top != null)
+            {
+                return false;
+            }
+
+            if (touchAction != null)
+            {
+                return false;
+            }
+
+            if (transform != null)
+            {
+                return false;
+            }
+
+            if (transformOrigin != null)
+            {
+                return false;
+            }
+
+            if (transformStyle != null)
+            {
+                return false;
+            }
+
+            if (transition != null)
+            {
+                return false;
+            }
+
+            if (transitionDelay != null)
+            {
+                return false;
+            }
+
+            if (transitionDuration != null)
+            {
+                return false;
+            }
+
+            if (transitionProperty != null)
+            {
+                return false;
+            }
+
+            if (transitionTimingFunction != null)
+            {
+                return false;
+            }
+
+            if (unicodeBidi != null)
+            {
+                return false;
+            }
+
+            if (unicodeRange != null)
+            {
+                return false;
+            }
+
+            if (verticalAlign != null)
+            {
+                return false;
+            }
+
+            if (visibility != null)
+            {
+                return false;
+            }
+
+            if (whiteSpace != null)
+            {
+                return false;
+            }
+
+            if (widows != null)
+            {
+                return false;
+            }
+
+            if (width != null)
+            {
+                return false;
+            }
+
+            if (willChange != null)
+            {
+                return false;
+            }
+
+            if (wordBreak != null)
+            {
+                return false;
+            }
+
+            if (wordSpacing != null)
+            {
+                return false;
+            }
+
+            if (wordWrap != null)
+            {
+                return false;
+            }
+
+            if (writingMode != null)
+            {
+                return false;
+            }
+
+            if (zIndex != null)
+            {
+                return false;
+            }
+
+            if (borderInlineStyle != null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
 }
