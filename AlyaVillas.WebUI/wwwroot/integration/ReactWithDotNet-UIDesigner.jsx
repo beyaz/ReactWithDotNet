@@ -21,4 +21,7 @@ function OnBrowserInactive(timeoutInMilliseconds, callback)
     };
 }
 
-ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", InitializeUIDesignerEvents);
+if (process.env.NODE_ENV !== 'production')
+{
+    ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", InitializeUIDesignerEvents);
+}

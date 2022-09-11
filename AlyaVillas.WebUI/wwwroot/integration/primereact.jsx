@@ -23,26 +23,30 @@ import { Panel } from 'primereact/panel';
 import { Tooltip } from 'primereact/tooltip';
 
 
-// primereact
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Button", Button);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputText", InputText);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputTextarea", InputTextarea);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.BlockUI", BlockUI);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Card", Card);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabView", TabView);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabPanel", TabPanel);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.SplitterPanel", SplitterPanel);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Splitter", Splitter);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ListBox", ListBox);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Dropdown", Dropdown);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Column", Column);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.DataTable", DataTable);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Checkbox", Checkbox);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputMask", InputMask);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.AutoComplete", AutoComplete);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tooltip", Tooltip);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel::GetHeaderTemplate", (key)=> ReactWithDotNet.GetExternalJsObject(key) );
+if (process.env.NODE_ENV !== 'production')
+{
+    // primereact
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Button", Button);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputText", InputText);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputTextarea", InputTextarea);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.BlockUI", BlockUI);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Card", Card);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabView", TabView);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabPanel", TabPanel);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.SplitterPanel", SplitterPanel);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Splitter", Splitter);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ListBox", ListBox);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Dropdown", Dropdown);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Column", Column);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.DataTable", DataTable);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Checkbox", Checkbox);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputMask", InputMask);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.AutoComplete", AutoComplete);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tooltip", Tooltip);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel::GetHeaderTemplate", (key) => ReactWithDotNet.GetExternalJsObject(key));
+
+}

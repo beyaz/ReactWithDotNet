@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
+using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -169,6 +171,25 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
     protected override void constructor()
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
+
+        var defaultAssemblyDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar;
+
+        var suggestionDirectories = new List<string>();
+        if (state.SelectedFolderSuggestions is not null)
+        {
+            suggestionDirectories.AddRange(state.SelectedFolderSuggestions);
+        }
+
+        if (!suggestionDirectories.Contains(defaultAssemblyDirectory))
+        {
+            suggestionDirectories.Add(defaultAssemblyDirectory);
+        }
+
+        state.SelectedFolderSuggestions = suggestionDirectories;
+        
+        
+
+
     }
 
     Element BuildAssemblySelectionPart()
@@ -234,8 +255,9 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 style = { display = "flex", alignItems = "center" },
                 children =
                 {
-                    new img { src  = "wwwroot/img/Folder.svg", width = 20, height = 20 },
-                    new div { text = item, style                     = { marginLeft = "7px" } }
+                    new img { src  = GetSvgUrl("Folder"), width = 20, height = 20 },
+                    
+                    new div { text = item, style = { marginLeft = "7px" } }
                 }
             }
         };

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ReactWithDotNet.PrimeReact;
+using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -68,9 +69,9 @@ class MethodSelectionView
         {
             return new HStack
             {
-                new img { src                                   = "wwwroot/img/Method.svg", width = 20, height = 20 },
-                new div(node.FullNameWithoutReturnType) { style = { marginLeft = "5px" } },
-                //new div(node.FullName) { style = { marginLeft = "5px", fontSize = "10px"} }
+                new img { src = GetSvgUrl("Method"), width = 20, height = 20 },
+                
+                new div(node.FullNameWithoutReturnType) { style = { marginLeft = "5px" } }
             };
         }
 
@@ -78,7 +79,7 @@ class MethodSelectionView
         {
             return new HStack
             {
-                new img { src              = "wwwroot/img/Class.svg", width = 20, height = 20 },
+                new img { src              = GetSvgUrl("Class"), width = 20, height = 20 },
                 new div(node.Name) { style = { marginLeft = "5px" } }
             };
         }
@@ -87,14 +88,16 @@ class MethodSelectionView
         {
             return new HStack
             {
-                new img { src              = "wwwroot/img/Namespace.svg", width = 20, height = 20 },
+                new img { src = GetSvgUrl("Namespace"), width = 20, height = 20 },
+                
                 new div(node.Name) { style = { marginLeft = "5px" } }
             };
         }
 
         return new HStack
         {
-            new img { src            = "wwwroot/img/Namespace.svg", width = 20, height = 20 },
+            new img { src = GetSvgUrl("Namespace"), width = 20, height = 20 },
+            
             new div("aloha") { style = { marginLeft = "5px" } }
         };
     }

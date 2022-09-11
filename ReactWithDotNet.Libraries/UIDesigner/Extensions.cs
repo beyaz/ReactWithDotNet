@@ -17,4 +17,6 @@ static class Extensions
     }
 
     public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
+
+    public static string GetSvgUrl(string svgFileName) => $"wwwroot/integration/ReactWithDotNet-UIDesigner/{svgFileName}.svg";
 }
