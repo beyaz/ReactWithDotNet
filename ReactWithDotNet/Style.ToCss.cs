@@ -1937,7 +1937,7 @@ partial class Style
             var cssAttributeName = array[0].Trim();
             if (cssAttributeName.StartsWith("/*", StringComparison.OrdinalIgnoreCase))
             {
-                var endCommentIndex = cssAttributeName.IndexOf("*/", StringComparison.OrdinalIgnoreCase);
+                var endCommentIndex = cssAttributeName.LastIndexOf("*/", StringComparison.OrdinalIgnoreCase);
                 if (endCommentIndex < 0)
                 {
                     throw CssParseException(line);
