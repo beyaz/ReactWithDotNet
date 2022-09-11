@@ -1,4 +1,5 @@
-﻿namespace AlyaVillas.VillaSearch;
+﻿
+namespace AlyaVillas.VillaSearch;
 
 class VillaSearchResultCardModel
 {
@@ -116,23 +117,19 @@ class VillaSearchResultCardView : ReactComponent
 
         static Element newInfo(string svgName, string text)
         {
-            return new div
+            return new div(new Style { display = "flex" })
             {
-                style = { display = "flex" },
-                children =
+                new img { src = $"wwwroot/img/{svgName}", style = { width_height = "20px" } },
+                new HSpace(5),
+                new div(text)
                 {
-                    new img { src = $"wwwroot/img/{svgName}", style = { width_height = "20px" } },
-                    new HSpace(5),
-                    new div(text)
+                    style =
                     {
-                        style =
-                        {
-                            fontFamily = "'Source sans pro'",
-                            fontWeight = "400",
-                            color      = "#4A4A49",
-                            fontSize   = "14px",
-                            lineHeight = "20px"
-                        }
+                        fontFamily = "'Source sans pro'",
+                        fontWeight = "400",
+                        color      = "#4A4A49",
+                        fontSize   = "14px",
+                        lineHeight = "20px"
                     }
                 }
             };

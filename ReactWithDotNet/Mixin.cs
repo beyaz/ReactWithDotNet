@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.Json;
 using System.Web;
 
@@ -39,13 +35,6 @@ public static partial class Mixin
         return JsonSerializer.Serialize(value, options);
     }
 
-    public static void Import(this Style style, Style newStyle)
-    {
-        foreach (var (propertyInfo, newValue) in newStyle.GetValues())
-        {
-            propertyInfo.SetValue(style,newValue);
-        }
-    }
 
     internal static IReadOnlyList<(PropertyInfo propertyInfo, object newValue)> GetValues(this Style style)
     {
