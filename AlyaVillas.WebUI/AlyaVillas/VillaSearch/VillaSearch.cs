@@ -1,4 +1,6 @@
-﻿namespace AlyaVillas.VillaSearch;
+﻿using System.Text;
+
+namespace AlyaVillas.VillaSearch;
 
 class VillaSearchViewModel
 {
@@ -34,7 +36,8 @@ class VillaSearchView : ReactComponent
                 new VSpace(24),
                 new div
                 {
-                    text = "Aile için Villalar"
+                    text = "Aile için Villalar",
+                    
                 },
                 new div
                 {
