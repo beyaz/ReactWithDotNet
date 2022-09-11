@@ -32,11 +32,14 @@ static class ReactWithDotNetIntegration
 
         htmlContent = htmlContent.Replace("~/", RootFolderName + "/");
 
-        htmlContent = changeComponent();
+        htmlContent = changeComponent(htmlContent);
+
+        htmlContent = enablePrimeReactCssList(htmlContent);
+
 
         await context.Response.WriteAsync(htmlContent);
 
-        string changeComponent()
+        static string changeComponent(string htmlContent)
         {
             return string.Join(Environment.NewLine, htmlContent.Split(Environment.NewLine).Select(line =>
             {
@@ -47,6 +50,12 @@ static class ReactWithDotNetIntegration
 
                 return line;
             }));
+        }
+
+        static string enablePrimeReactCssList(string htmlContent)
+        {
+            return htmlContent.Replace("<!--ReactWithDotNet-UIDesigner", string.Empty)
+                              .Replace("ReactWithDotNet-UIDesigner-->", string.Empty);
         }
     }
 
