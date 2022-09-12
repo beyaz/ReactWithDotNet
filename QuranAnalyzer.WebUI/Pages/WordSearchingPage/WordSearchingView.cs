@@ -13,22 +13,9 @@ class Model
     public string SearchScript { get; set; }
 }
 
-class View : ReactComponent<Model>
+class WordSearchingView : ReactComponent<Model>
 {
-    void OnCaclculateClicked(string _)
-    {
-        state.ClickCount++;
-
-        if (state.IsBlocked == false)
-        {
-            state.IsBlocked = true;
-            //ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
-            ClientTask.GotoMethod(5, OnCaclculateClicked, _);
-            return;
-        }
-
-        state.IsBlocked = false;
-    }
+  
 
     protected override Element render()
     {
@@ -111,5 +98,20 @@ class View : ReactComponent<Model>
             }
         };
         
+    }
+
+    void OnCaclculateClicked(string _)
+    {
+        state.ClickCount++;
+
+        if (state.IsBlocked == false)
+        {
+            state.IsBlocked = true;
+            //ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
+            ClientTask.GotoMethod(5, OnCaclculateClicked, _);
+            return;
+        }
+
+        state.IsBlocked = false;
     }
 }

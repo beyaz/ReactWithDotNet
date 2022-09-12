@@ -136,7 +136,7 @@ class View : ReactComponent<MainViewModel>
 
             if (state.PageId == PageId.WordSearchingPage)
             {
-                return new WordSearchingPage.View();
+                return new WordSearchingPage.WordSearchingView();
             }
 
             return new MainPageContent();
