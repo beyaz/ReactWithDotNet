@@ -6,9 +6,6 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 class MushafOptionsView : ReactComponent<MushafOption>
 {
-   
-
-    #region Methods
     protected override void constructor()
     {
         state = Context.TryGetValue(ContextKey.MushafOptionKey) ?? new MushafOption();
@@ -16,9 +13,8 @@ class MushafOptionsView : ReactComponent<MushafOption>
 
     protected override Element render()
     {
-
         state = Context.TryGetValue(ContextKey.MushafOptionKey) ?? state;
-        
+
         return new div
         {
             children =
@@ -86,5 +82,4 @@ class MushafOptionsView : ReactComponent<MushafOption>
     {
         ClientTask.DispatchEvent(ApplicationEventName.MushafOptionChanged, state);
     }
-    #endregion
 }

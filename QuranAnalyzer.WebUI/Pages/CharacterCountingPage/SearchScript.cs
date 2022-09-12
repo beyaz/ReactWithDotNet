@@ -16,24 +16,23 @@ class SearchScript
                 Lines = new List<(string ChapterFilter, IReadOnlyList<string> SearchLetters)>()
             };
         }
-        
+
         var lines = parseToLines(value).AsListOf(parseLine);
 
         if (lines.IsFail)
         {
             return lines.Errors.ToArray();
         }
-        
+
         return new SearchScript
         {
             Lines = lines.Value
         };
 
-
         static IEnumerable<string> parseToLines(string value)
         {
             value = value.Replace(Environment.NewLine, ";");
-            
+
             return value.Split(';', StringSplitOptions.RemoveEmptyEntries);
         }
 
@@ -50,20 +49,18 @@ class SearchScript
             {
                 return exception;
             }
-            
+
             var letters = letterInfoList.Where(Analyzer.IsArabicLetter).AsListOf(x => x.MatchedLetter);
 
-            if (letters.Count ==0)
+            if (letters.Count == 0)
             {
                 return "Arama komutunda yanlışlık var. Arap alfabesine ait olmayan bir karakter kullanılmış. Mesela 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
             }
 
-
             return (arr[0].Trim(), letters);
         }
 
-        static string clearText(string str) => Regex.Replace(str, @"\s+", String.Empty);
-
+        static string clearText(string str) => Regex.Replace(str, @"\s+", string.Empty);
     }
 
     public string AsReadibleString()

@@ -8,6 +8,7 @@ class CharacterCountingOptionState
 
     public bool? ShowMushafOptions { get; set; }
 }
+
 class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
 {
     void KeyboardClicked(string _)
@@ -80,7 +81,6 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                     {
                                         padding = "10px",
                                         color   = headerColor,
-
                                     }
                                 },
                             },
@@ -107,13 +107,11 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                     {
                                         padding = "10px",
                                         color   = headerColor,
-
                                     }
                                 },
                             },
                             style = { opacity = state.ShowMushafOptions == true ? "0.2" : null }
                         }
-
                     }
                 },
 
@@ -125,18 +123,17 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                     {
                         new div
                         {
-                            style    = { display = state.ShowKeyborad == true ? null : "none"},
+                            style    = { display = state.ShowKeyborad == true ? null : "none" },
                             children = { new ArabicKeyboard() }
                         },
                         new div
                         {
-                            style    = { display = state.ShowMushafOptions == true ? null : "none"},
+                            style    = { display = state.ShowMushafOptions == true ? null : "none" },
                             children = { new MushafOptionsView() }
                         }
                     }
                 }
             }
         };
-
     }
 }

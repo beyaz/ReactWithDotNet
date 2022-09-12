@@ -83,12 +83,12 @@ public class LetterColorizer : ReactComponent
             {
                 children =
                 {
-                    new div { text = lettersForColorize[j].MatchedLetter, style = { color = GetColor(j), fontWeight = "bold"} },
-                    
+                    new div { text = lettersForColorize[j].MatchedLetter, style = { color = GetColor(j), fontWeight = "bold" } },
+
                     new div { text = ":", style = { marginLeftRight = "4px" } },
-                    
-                    new div { text = counts[j].ToString(), style = { fontSize = "0.78rem" }},
-                    
+
+                    new div { text = counts[j].ToString(), style = { fontSize = "0.78rem" } },
+
                     GetExtra(lettersForColorize[j].ArabicLetterIndex)
                 },
                 style = { marginLeft = "10px" }
@@ -120,7 +120,7 @@ public class LetterColorizer : ReactComponent
                 marginLeft = "2px"
             }
         };
-        
+
         var topLegend = new legend
         {
             style = { display = "flex", flexDirection = "row", alignItems = "center" },
@@ -234,7 +234,6 @@ public class LetterColorizer : ReactComponent
                 }
             }
         }
-
 
         if (arabicLetterIndex == Nun)
         {

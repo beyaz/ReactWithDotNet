@@ -2,7 +2,7 @@
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
-class CalculatingComponent 
+class CalculatingComponent
 {
     public static Element WithBlockUI(Element child)
     {
@@ -14,7 +14,7 @@ class CalculatingComponent
                 children =
                 {
                     new i { className   = "pi pi-spin pi-spinner" },
-                    new div { innerText = "Hesaplanıyor...", style = { color = "White", marginLeft = "5px"} }
+                    new div { innerText = "Hesaplanıyor...", style = { color = "White", marginLeft = "5px" } }
                 },
                 style =
                 {

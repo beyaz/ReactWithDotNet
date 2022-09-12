@@ -33,7 +33,6 @@ class CountsSummaryView : ReactComponent
                 display       = "flex",
                 flexDirection = "column",
                 alignItems    = "flex-start"
-
             }
         };
 
@@ -57,8 +56,6 @@ class CountsSummaryView : ReactComponent
             });
         }
 
-
-
         var countsView = new HPanel
         {
             style =
@@ -67,7 +64,7 @@ class CountsSummaryView : ReactComponent
                 justifyContent = "space-between",
                 fontSize       = "0.9rem",
                 flexWrap       = "wrap",
-                marginTop = "20px"
+                marginTop      = "20px"
             },
         };
 
@@ -77,36 +74,31 @@ class CountsSummaryView : ReactComponent
             {
                 children =
                 {
-                    new div { text = counts[j].Name ,style          = { color           = LetterColorPalette.GetColor(j) } },
-                    new div { text = ":", style                     = { marginLeftRight = "4px" } },
-                    new div{text   = counts[j].Count.ToString(), id = "subTotal-"+j}
+                    new div { text = counts[j].Name, style = { color = LetterColorPalette.GetColor(j) } },
+
+                    new div { text = ":", style = { marginLeftRight = "4px" } },
+
+                    new div { text = counts[j].Count.ToString(), id = "subTotal-" + j }
                 },
                 style = { marginLeft = "10px" }
             };
 
-
             countsView.appendChild(countView);
-
 
             returnDiv.appendChild(new Xarrow
             {
-                start = "GrandTotal",
-                end = "subTotal-" + j,
-                path = "smooth",
-                color = "rgb(218, 220, 224)",
+                start       = "GrandTotal",
+                end         = "subTotal-" + j,
+                path        = "smooth",
+                color       = "rgb(218, 220, 224)",
                 strokeWidth = 1,
                 startAnchor = "bottom",
-                dashness = true,
-                endAnchor = "top"
-
+                dashness    = true,
+                endAnchor   = "top"
             });
-
-
         }
 
         returnDiv.appendChild(countsView);
-
-        
 
         return returnDiv;
     }
@@ -123,7 +115,7 @@ class CountsSummaryView : ReactComponent
                 new div { innerText = ")" }
             },
             style = { display = "flex", flexDirection = "row" },
-            id = "GrandTotal"
+            id    = "GrandTotal"
         };
     }
 }
