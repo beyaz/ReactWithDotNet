@@ -125,11 +125,6 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                         {
                             style    = { display = state.ShowKeyborad == true ? null : "none" },
                             children = { new ArabicKeyboard() }
-                        },
-                        new div
-                        {
-                            style    = { display = state.ShowMushafOptions == true ? null : "none" },
-                            children = { new MushafOptionsView() }
                         }
                     }
                 }

@@ -80,61 +80,26 @@ class WordSearchingView : ReactComponent<Model>
 
         var resultList = new div { };
         
-        const string yevmen = "يوما";
-
-        var searchWord = yevmen;
-
-        var search = QuranAnalyzer.Analyzer.AnalyzeText(searchWord).Unwrap();
-
-        foreach (var verse in VerseFilter.GetVerseList("*").Value)
-        {
-            if (verse.WordList.Any(x=>x.HasValueAndSame(search)))
-            {
-                resultList.Add(new div{ text = verse.Text, style = { border = "1px solid red", margin = "5px"}});
-            }
-        }
-
         var resultVerseList = new List<LetterColorizer>();
 
         var summaryInfoList = new List<SummaryInfo>();
 
         foreach (var (ChapterFilter, SearchLetters) in searchScript.Lines)
         {
-            var chapterFilter         = ChapterFilter;
-            var searchLettersAsString = string.Join("", SearchLetters);
-
-            var search = QuranAnalyzer.Analyzer.AnalyzeText(searchWord).Unwrap();
-
-            var searchLetters = AnalyzeText(searchLettersAsString).Unwrap().Where(IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
-
-            summaryInfoList.AddRange(searchLetters.AsListOf(x => new SummaryInfo
-            {
-                Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
-                Name  = x.MatchedLetter
-            }));
+            var chapterFilter = ChapterFilter;
+            var searchWord    = Analyzer.AnalyzeText(string.Join("", SearchLetters)).Unwrap();
+            
+            
 
             foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
             {
-                if (verse.AnalyzedFullText.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
+                if (verse.WordList.Any(x => x.HasValueAndSame(searchWord)))
                 {
-                    var letterColorizer = new LetterColorizer
-                    {
-                        VerseTextNodes          = verse.AnalyzedFullText,
-                        ChapterNumber           = verse.ChapterNumber.ToString(),
-                        VerseNumber             = verse.Index,
-                        LettersForColorizeNodes = searchLetters,
-                        VerseText               = verse.TextWithBismillah,
-                        Verse                   = verse,
-                    };
-
-                    resultVerseList.Add(letterColorizer);
+                    resultList.Add(new div { text = verse.Text, style = { border = "1px solid red", margin = "5px" } });
                 }
             }
         }
-
-
-
-
+        
 
         var results = new divWithBorder
         {
@@ -147,7 +112,10 @@ class WordSearchingView : ReactComponent<Model>
                 new VSpace(30),
                 new div
                 {
-                    Children = resultVerseList
+                    children =
+                    {
+                        resultList
+                    }
                 }
             }
         };
