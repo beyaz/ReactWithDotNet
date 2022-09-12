@@ -1,9 +1,6 @@
 ﻿using System.Globalization;
-using System.Text;
-using Newtonsoft.Json;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
-using static Newtonsoft.Json.JsonConvert;
 
 namespace ReactWithDotNet.WebSite.Components;
 
@@ -11,16 +8,53 @@ class FigmaCss2ReactInlineStyleConverterModel
 {
     public string FigmaCss { get; set; }
     public string ReactInlineStyle { get; set; }
+    public string StatusMessage { get; set; }
 }
+
 class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInlineStyleConverterModel>
 {
     protected override Element render()
     {
+        var cssEditor = new Editor
+        {
+            onValueChange = OnCssValueChanged,
+            value         = state.FigmaCss,
+            highlight     = "css",
+            style =
+            {
+                height    = "100%",
+                minHeight = "200px",
+                fontSize  = "15px", 
+                fontFamily = "Consolas"
+            },
+            
+        };
+        var csharpEditor = new Editor
+        {
+            value     = state.ReactInlineStyle,
+            highlight = "csharp",
+            style =
+            {
+                height    = "100%",
+                minHeight = "200px", 
+                fontSize = "15px",
+                fontFamily = "Consolas"
+            }
+        };
+
+        var statusMessageEditor = new Message
+        {
+            severity = "success",
+            text     = state.StatusMessage,
+            style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
+        };
+
         return new div
         {
-            style = { width_height = "100%", padding = "10px", border = "1px solid pink"},
+            style = { width_height = "100%", padding = "10px" , display = "flex", flexDirection = "column"},
             children =
             {
+                new div("Figma css to React inline style"){style = { fontSize = "23px", padding = "20px", textAlign = "center" }},
                 new Splitter
                 {
                     layout = SplitterLayoutType.horizontal,
@@ -36,17 +70,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
                             size = 50,
                             children =
                             {
-                                new Editor
-                                {
-                                    onValueChange = OnValueChange,
-                                    value = state.FigmaCss,
-                                    highlight = "css",
-                                    style =
-                                    {
-                                        height    = "100%",
-                                        minHeight = "200px", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace"
-                                    }
-                                }
+                                cssEditor
                             }
                         },
                         new SplitterPanel
@@ -54,26 +78,21 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
                             size = 50,
                             children =
                             {
-                                new Editor
-                                {
-                                    value = state.ReactInlineStyle,
-                                    highlight = "csharp",
-                                    style =
-                                    {
-                                        height    = "100%",
-                                        minHeight = "200px",  fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace"
-                                    }
-                                }
+                                csharpEditor
                             }
                         }
                     }
-                }
+                },
+
+                statusMessageEditor
             }
         };
     }
 
-    void OnValueChange(string figmaCssText)
+    void OnCssValueChanged(string figmaCssText)
     {
+        state.StatusMessage = null;
+
         state.FigmaCss = figmaCssText;
 
         if (string.IsNullOrWhiteSpace(figmaCssText))
@@ -83,14 +102,18 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         }
 
         state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines().Select(processLine));
-        
+
         ClientTask.CallJsFunction(JsClient.CopyToClipboard, state.ReactInlineStyle);
-        
+
+        state.StatusMessage = "Copied to clipboard.";
+
+        ClientTask.GotoMethod(2000, ClearStatusMessage);
+
         IEnumerable<string> splitToLines()
         {
             return figmaCssText.Trim().Split('\n').Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x));
         }
-        
+
         static string processLine(string line)
         {
             line = line.Trim();
@@ -100,7 +123,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
                 return line;
             }
 
-            var array = line.Split(new []{ ':', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToArray();
+            var array = line.Split(new[] { ':', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
             if (array.Length == 2)
             {
                 return $"{keyToPropertyName(array[0])} = \"{array[1]}\"";
@@ -119,5 +142,10 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
 
             return key;
         }
+    }
+
+    void ClearStatusMessage()
+    {
+        state.StatusMessage = null;
     }
 }

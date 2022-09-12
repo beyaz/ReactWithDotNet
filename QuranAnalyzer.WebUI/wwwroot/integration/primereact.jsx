@@ -21,6 +21,7 @@ import { Tree } from 'primereact/tree';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Panel } from 'primereact/panel';
 import { Tooltip } from 'primereact/tooltip';
+import { Message } from 'primereact/message';
 
 
 // primereact
@@ -45,4 +46,5 @@ ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tooltip", Tooltip);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Message", Message);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel::GetHeaderTemplate", (key)=> ReactWithDotNet.GetExternalJsObject(key) );

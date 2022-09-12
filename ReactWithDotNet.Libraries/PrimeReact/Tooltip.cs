@@ -43,3 +43,4 @@ public class Tooltip : ElementBase
     [React]
     public double hideDelay { get; set; }
 }
+
