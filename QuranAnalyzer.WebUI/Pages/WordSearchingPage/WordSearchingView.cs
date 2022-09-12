@@ -84,13 +84,8 @@ class WordSearchingView : ReactComponent<Model>
 
         var summaryInfoList = new List<SummaryInfo>();
 
-        foreach (var (ChapterFilter, SearchLetters) in searchScript.Lines)
+        foreach (var (chapterFilter, searchWord) in searchScript.Lines)
         {
-            var chapterFilter = ChapterFilter;
-            var searchWord    = Analyzer.AnalyzeText(string.Join("", SearchLetters)).Unwrap();
-            
-            
-
             foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
             {
                 if (verse.WordList.Any(x => x.HasValueAndSame(searchWord)))

@@ -5,7 +5,7 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 class SearchScript
 {
-    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<string> SearchLetters)> Lines { get; private set; }
+    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> Lines { get; private set; }
 
     public static Response<SearchScript> ParseScript(string value)
     {
@@ -13,7 +13,7 @@ class SearchScript
         {
             return new SearchScript
             {
-                Lines = new List<(string ChapterFilter, IReadOnlyList<string> SearchLetters)>()
+                Lines = new List<(string ChapterFilter, IReadOnlyList<LetterInfo> SearchLetters)>()
             };
         }
 
@@ -33,15 +33,15 @@ class SearchScript
         {
             value = value.Replace(Environment.NewLine, ";");
 
-            return value.Split(';', StringSplitOptions.RemoveEmptyEntries);
+            return value.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
         }
 
-        static Response<(string ChapterFilter, IReadOnlyList<string> SearchLetters)> parseLine(string line)
+        static Response<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> parseLine(string line)
         {
             var arr = line.Split('|', StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
             {
-                return "Arama komutunda yanlışlık var. Mesela 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
+                return "Arama komutunda yanlışlık var. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
             }
 
             var (letterInfoList, exception) = Analyzer.AnalyzeText(clearText(arr[1]));
@@ -50,11 +50,10 @@ class SearchScript
                 return exception;
             }
 
-            var letters = letterInfoList.Where(Analyzer.IsArabicLetter).AsListOf(x => x.MatchedLetter);
-
+            var letters = letterInfoList.Where(Analyzer.IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
             if (letters.Count == 0)
             {
-                return "Arama komutunda yanlışlık var. Arap alfabesine ait olmayan bir karakter kullanılmış. Mesela 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
+                return "Arama komutunda yanlışlık var. Arap alfabesine ait olmayan bir karakter kullanılmış. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
             }
 
             return (arr[0].Trim(), letters);
@@ -69,7 +68,7 @@ class SearchScript
 
         foreach (var line in Lines)
         {
-            sb.AppendLine(line.ChapterFilter + " | " + string.Join(" ", line.SearchLetters));
+            sb.AppendLine(line.ChapterFilter + " | " + string.Join(" ", line.Letters));
         }
 
         return sb.ToString();
@@ -77,6 +76,6 @@ class SearchScript
 
     public string AsString()
     {
-        return string.Join(";", Lines.Select(line => line.ChapterFilter + "|" + string.Join("", line.SearchLetters)));
+        return string.Join(";", Lines.Select(line => line.ChapterFilter + "|" + string.Join("", line.Letters)));
     }
 }
