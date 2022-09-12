@@ -84,7 +84,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                         onClick   = OnCaclculateClicked,
                         className = "p-button-outlined",
                         style     = { alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px" }
-                    },
+                    }
                 }
             }
         };

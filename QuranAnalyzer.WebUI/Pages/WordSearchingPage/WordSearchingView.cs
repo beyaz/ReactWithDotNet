@@ -11,11 +11,16 @@ class Model
     public bool IsBlocked { get; set; }
 
     public string SearchScript { get; set; }
+
+    public string SearchScriptErrorMessage { get; set; }
 }
 
 class WordSearchingView : ReactComponent<Model>
 {
-  
+    protected override void componentDidMount()
+    {
+        ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
+    }
 
     protected override Element render()
     {
@@ -28,19 +33,26 @@ class WordSearchingView : ReactComponent<Model>
 
                 new VStack
                 {
-                    new div { text                = "Arama Komutu", style          = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
-                    new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true}
+                    new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                    
+                    new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true},
+
+                    new ErrorText { Text = state.SearchScriptErrorMessage }
                 },
 
                 new VSpace(3),
 
+                new CharacterCountingOptionView(),
+
+                new VSpace(20),
+                
                 new Button
                 {
                     label     = "Ara",
                     onClick   = OnCaclculateClicked,
                     className = "p-button-outlined",
                     style     = { alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px" }
-                },
+                }
             }
         };
 
@@ -50,6 +62,15 @@ class WordSearchingView : ReactComponent<Model>
             return searchPanel;
         }
 
+        var parseResponse = SearchScript.ParseScript(state.SearchScript);
+        if (parseResponse.IsFail)
+        {
+            state.SearchScriptErrorMessage = parseResponse.FailMessage;
+            return searchPanel;
+        }
+
+        var searchScript = parseResponse.Value;
+        
         if (state.IsBlocked)
         {
             return CalculatingComponent.WithBlockUI(searchPanel);
@@ -73,6 +94,44 @@ class WordSearchingView : ReactComponent<Model>
             }
         }
 
+        var resultVerseList = new List<LetterColorizer>();
+
+        var summaryInfoList = new List<SummaryInfo>();
+
+        foreach (var (ChapterFilter, SearchLetters) in searchScript.Lines)
+        {
+            var chapterFilter         = ChapterFilter;
+            var searchLettersAsString = string.Join("", SearchLetters);
+
+            var search = QuranAnalyzer.Analyzer.AnalyzeText(searchWord).Unwrap();
+
+            var searchLetters = AnalyzeText(searchLettersAsString).Unwrap().Where(IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
+
+            summaryInfoList.AddRange(searchLetters.AsListOf(x => new SummaryInfo
+            {
+                Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
+                Name  = x.MatchedLetter
+            }));
+
+            foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
+            {
+                if (verse.AnalyzedFullText.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
+                {
+                    var letterColorizer = new LetterColorizer
+                    {
+                        VerseTextNodes          = verse.AnalyzedFullText,
+                        ChapterNumber           = verse.ChapterNumber.ToString(),
+                        VerseNumber             = verse.Index,
+                        LettersForColorizeNodes = searchLetters,
+                        VerseText               = verse.TextWithBismillah,
+                        Verse                   = verse,
+                    };
+
+                    resultVerseList.Add(letterColorizer);
+                }
+            }
+        }
+
 
 
 
@@ -83,11 +142,16 @@ class WordSearchingView : ReactComponent<Model>
             children =
             {
                 new h4("Sonuçlar"),
-                new VSpace(10),
-                resultList
+
+                new CountsSummaryView { Counts = summaryInfoList },
+                new VSpace(30),
+                new div
+                {
+                    Children = resultVerseList
+                }
             }
         };
-        
+
 
         return new div
         {
@@ -99,15 +163,42 @@ class WordSearchingView : ReactComponent<Model>
         };
         
     }
+    void ArabicKeyboardPressed(string letter)
+    {
+        state.SearchScriptErrorMessage = null;
+        state.ClickCount               = 0;
+        state.SearchScript             = state.SearchScript?.Trim() + " " + letter;
+    }
 
+    void ClearErrorMessage()
+    {
+        state.SearchScriptErrorMessage = null;
+    }
+    
     void OnCaclculateClicked(string _)
     {
+        state.SearchScriptErrorMessage = null;
+        if (state.SearchScript.HasNoValue())
+        {
+            state.SearchScriptErrorMessage = "Arama Komutu doldurulmalıdır";
+            return;
+        }
+
+        var scriptParseResponse = SearchScript.ParseScript(state.SearchScript);
+        if (scriptParseResponse.IsFail)
+        {
+            state.SearchScriptErrorMessage = scriptParseResponse.FailMessage;
+            return;
+        }
+
+        var script = scriptParseResponse.Value;
+        
         state.ClickCount++;
 
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            //ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={SearchScript.ParseScript(state.SearchScript).AsString()}");
+            ClientTask.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={script.AsString()}");
             ClientTask.GotoMethod(5, OnCaclculateClicked, _);
             return;
         }
