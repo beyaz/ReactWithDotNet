@@ -363,3 +363,6 @@ MigrationBackup/
 /AlyaVillas.WebUI/wwwroot/package-lock.json
 /AlyaVillas.WebUI/wwwroot/index.js
 /AlyaVillas.WebUI/wwwroot/index.css
+/ReactWithDotNet.WebSite/wwwroot/package-lock.json
+/ReactWithDotNet.WebSite/wwwroot/index.js
+/ReactWithDotNet.WebSite/wwwroot/index.css
