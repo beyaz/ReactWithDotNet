@@ -101,13 +101,22 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             return;
         }
 
-        state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines().Select(processLine));
+        try
+        {
+            state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines().Select(processLine));
 
-        ClientTask.CallJsFunction(JsClient.CopyToClipboard, state.ReactInlineStyle);
+            ClientTask.CallJsFunction(JsClient.CopyToClipboard, state.ReactInlineStyle);
 
-        state.StatusMessage = "Copied to clipboard.";
+            state.StatusMessage = "Copied to clipboard.";
 
-        ClientTask.GotoMethod(2000, ClearStatusMessage);
+            ClientTask.GotoMethod(2000, ClearStatusMessage);
+
+        }
+        catch (Exception exception)
+        {
+            state.StatusMessage = "Error occured: " + exception;
+        }
+        
 
         IEnumerable<string> splitToLines()
         {
