@@ -1285,7 +1285,8 @@ function Fetch(url, options, processResponse, callback)
 }
 
 const ExternalJsObjectMap = {
-    'RegExp': (x) => new RegExp(x)
+    'RegExp': (x) => new RegExp(x),
+    'CopyToClipboard': (x) => navigator.clipboard.writeText(x)
 };
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {

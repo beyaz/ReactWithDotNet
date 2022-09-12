@@ -66,22 +66,7 @@ public sealed class ReactContextKey<TValue>
     }
 }
 
-public class ClientEventInfo
-{
-    public readonly string Name;
 
-    public ClientEventInfo(string name)
-    {
-        Name = name;
-    }
-}
-
-public sealed class ClientEventInfo<EventArgument1> : ClientEventInfo
-{
-    public ClientEventInfo(string name): base(name)
-    {
-    }
-}
 
 public abstract class ReactStatefulComponent : Element
 {

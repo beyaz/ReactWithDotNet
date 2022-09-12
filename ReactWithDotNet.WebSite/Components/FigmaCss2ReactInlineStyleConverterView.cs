@@ -81,9 +81,11 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             state.ReactInlineStyle = null;
             return;
         }
-        
-        state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines().Select(processLine));
 
+        state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines().Select(processLine));
+        
+        ClientTask.CallJsFunction(JsClient.CopyToClipboard, state.ReactInlineStyle);
+        
         IEnumerable<string> splitToLines()
         {
             return figmaCssText.Trim().Split('\n').Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x));
