@@ -65,9 +65,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 {
                     new VStack
                     {
-                        new div { text                = "Arama Komutu", style          = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                        new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                        
                         new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true },
-                        new ErrorText { Text          = state.SearchScriptErrorMessage }
+                        
+                        new ErrorText { Text = state.SearchScriptErrorMessage }
                     },
 
                     new VSpace(3),
@@ -106,7 +108,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return CalculatingComponent.WithBlockUI(searchPanel);
         }
 
-        var mushafVerse = new List<LetterColorizer>();
+        var resultVerseList = new List<LetterColorizer>();
 
         var summaryInfoList = new List<SummaryInfo>();
 
@@ -138,7 +140,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                         MushafOption            = state.MushafOption
                     };
 
-                    mushafVerse.Add(letterColorizer);
+                    resultVerseList.Add(letterColorizer);
                 }
             }
         }
@@ -154,7 +156,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 new VSpace(30),
                 new div
                 {
-                    Children = mushafVerse
+                    Children = resultVerseList
                 }
             }
         };
