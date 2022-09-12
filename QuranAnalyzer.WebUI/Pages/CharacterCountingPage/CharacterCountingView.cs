@@ -92,6 +92,15 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return searchPanel;
         }
 
+        var parseResponse = SearchScript.ParseScript(state.SearchScript);
+        if (parseResponse.IsFail)
+        {
+            state.SearchScriptErrorMessage = parseResponse.FailMessage;
+            return searchPanel;
+        }
+
+        var searchScript = parseResponse.Value;
+
         if (state.IsBlocked)
         {
             return CalculatingComponent.WithBlockUI(searchPanel);
@@ -101,7 +110,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var summaryInfoList = new List<SummaryInfo>();
 
-        foreach (var (ChapterFilter, SearchLetters) in SearchScript.ParseScript(state.SearchScript).Value.Lines)
+        foreach (var (ChapterFilter, SearchLetters) in searchScript.Lines)
         {
             var chapterFilter         = ChapterFilter;
             var searchLettersAsString = string.Join("", SearchLetters);
