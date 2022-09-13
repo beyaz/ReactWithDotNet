@@ -7,6 +7,15 @@ public class svg : HtmlElement
 
     [React]
     public string viewBox { get; set; }
+
+    [React]
+    public string fill { get; set; }
+
+    [React]
+    public string width { get; set; }
+
+    [React]
+    public string height { get; set; }
 }
 
 public class path : HtmlElement
