@@ -26,34 +26,32 @@ public sealed class ClientTaskCollection
     #endregion
 
     #region Public Methods
-    public void CallJsFunction(string JsFunctionPath, params object[] JsFunctionArguments)
-    {
-        taskList.Add(new ClientTask { TaskId = 0, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
-    }
-
     public void CallJsFunction(JsClientFunctionInfo info)
     {
         CallJsFunction(info.Name);
     }
+
     public void CallJsFunction<P1>(JsClientFunctionInfo<P1> info, P1 parameter)
     {
         CallJsFunction(info.Name, parameter);
     }
-    public void CallJsFunction<P1,P2>(JsClientFunctionInfo<P1,P2> info, P1 parameter1, P2 parameter2)
+
+    public void CallJsFunction<P1, P2>(JsClientFunctionInfo<P1, P2> info, P1 parameter1, P2 parameter2)
     {
         CallJsFunction(info.Name, parameter1, parameter2);
     }
-    public void CallJsFunction<P1, P2,P3>(JsClientFunctionInfo<P1, P2,P3> info, P1 parameter1, P2 parameter2,P3 parameter3)
+
+    public void CallJsFunction<P1, P2, P3>(JsClientFunctionInfo<P1, P2, P3> info, P1 parameter1, P2 parameter2, P3 parameter3)
     {
         CallJsFunction(info.Name, parameter1, parameter2, parameter3);
     }
 
-    public void DispatchEvent<EventArgument1>(ClientEventInfo<EventArgument1> eventInfo, EventArgument1 argument)
+    public void DispatchEvent<EventArgument1>(JsClientEventInfo<EventArgument1> eventInfo, EventArgument1 argument)
     {
         DispatchEvent(eventInfo.Name, argument);
     }
 
-    public void DispatchEvent(ClientEventInfo eventInfo)
+    public void DispatchEvent(JsClientEventInfo eventInfo)
     {
         DispatchEvent(eventInfo.Name);
     }
@@ -73,12 +71,12 @@ public sealed class ClientTaskCollection
         GotoMethod(timeout, action.Method.Name, argument1, argument2);
     }
 
-    public void ListenEvent<EventArgument1>(ClientEventInfo<EventArgument1> eventInfo, Action<EventArgument1> routeToMethod)
+    public void ListenEvent<EventArgument1>(JsClientEventInfo<EventArgument1> eventInfo, Action<EventArgument1> routeToMethod)
     {
         ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
     }
 
-    public void ListenEvent(ClientEventInfo eventInfo, Action routeToMethod)
+    public void ListenEvent(JsClientEventInfo eventInfo, Action routeToMethod)
     {
         ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
     }
@@ -97,6 +95,11 @@ public sealed class ClientTaskCollection
     #region Methods
     internal ClientTask[] ToArray() => taskList.ToArray();
 
+    void CallJsFunction(string JsFunctionPath, params object[] JsFunctionArguments)
+    {
+        taskList.Add(new ClientTask { TaskId = 0, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
+    }
+
     void DispatchEvent(string eventName, params object[] eventArguments)
     {
         taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
@@ -114,58 +117,75 @@ public sealed class ClientTaskCollection
     #endregion
 }
 
-public class ClientEventInfo
+public class JsClientEventInfo
 {
+    #region Fields
     public readonly string Name;
+    #endregion
 
-    public ClientEventInfo(string name)
+    #region Constructors
+    public JsClientEventInfo(string name)
     {
         Name = name;
     }
+    #endregion
 }
 
-public sealed class ClientEventInfo<EventArgument1> : ClientEventInfo
+public sealed class JsClientEventInfo<EventArgument1> : JsClientEventInfo
 {
-    public ClientEventInfo(string name) : base(name)
+    #region Constructors
+    public JsClientEventInfo(string name) : base(name)
     {
     }
+    #endregion
 }
 
 #region JsClientFunctionInfo
-
-
 public class JsClientFunctionInfo
 {
+    #region Fields
     public readonly string Name;
+    #endregion
 
+    #region Constructors
     public JsClientFunctionInfo(string name)
     {
         Name = name;
     }
+    #endregion
 }
 
 public sealed class JsClientFunctionInfo<EventArgument1> : JsClientFunctionInfo
 {
+    #region Constructors
     public JsClientFunctionInfo(string name) : base(name)
     {
     }
-}
-public sealed class JsClientFunctionInfo<EventArgument1, EventArgument2> : JsClientFunctionInfo
-{
-    public JsClientFunctionInfo(string name) : base(name)
-    {
-    }
-}
-public sealed class JsClientFunctionInfo<EventArgument1, EventArgument2, EventArgument3> : JsClientFunctionInfo
-{
-    public JsClientFunctionInfo(string name) : base(name)
-    {
-    }
+    #endregion
 }
 
+public sealed class JsClientFunctionInfo<EventArgument1, EventArgument2> : JsClientFunctionInfo
+{
+    #region Constructors
+    public JsClientFunctionInfo(string name) : base(name)
+    {
+    }
+    #endregion
+}
+
+public sealed class JsClientFunctionInfo<EventArgument1, EventArgument2, EventArgument3> : JsClientFunctionInfo
+{
+    #region Constructors
+    public JsClientFunctionInfo(string name) : base(name)
+    {
+    }
+    #endregion
+}
 #endregion
 
 public static class JsClient
 {
+    #region Static Fields
     public static JsClientFunctionInfo<string> CopyToClipboard = new(nameof(CopyToClipboard));
+    #endregion
 }

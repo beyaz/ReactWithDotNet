@@ -30,13 +30,13 @@ static class ResourceAccess
 class ApplicationEventName
 {
 
-    public static ClientEventInfo<string> ArabicKeyboardPressed = new(nameof(ArabicKeyboardPressed));
-    public static ClientEventInfo<double> MainContentDivScrollChanged = new(nameof(MainContentDivScrollChanged));
+    public static JsClientEventInfo<string> ArabicKeyboardPressed = new(nameof(ArabicKeyboardPressed));
+    public static JsClientEventInfo<double> MainContentDivScrollChanged = new(nameof(MainContentDivScrollChanged));
 
-    public static ClientEventInfo<MushafOption> MushafOptionChanged = new(nameof(MushafOptionChanged));
+    public static JsClientEventInfo<MushafOption> MushafOptionChanged = new(nameof(MushafOptionChanged));
 
-    public static ClientEventInfo OnHamburgerMenuClosed = new(nameof(OnHamburgerMenuClosed));
-    public static ClientEventInfo OnHamburgerMenuOpened = new(nameof(OnHamburgerMenuOpened));
+    public static JsClientEventInfo OnHamburgerMenuClosed = new(nameof(OnHamburgerMenuClosed));
+    public static JsClientEventInfo OnHamburgerMenuOpened = new(nameof(OnHamburgerMenuOpened));
 }
 
 static class ContextKey
