@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using static QuranAnalyzer.DataAccess;
+﻿using static QuranAnalyzer.DataAccess;
 using static QuranAnalyzer.FpExtensions;
 
 namespace QuranAnalyzer;
@@ -125,6 +122,11 @@ public static class VerseFilter
 
     public static Verse GetVerseById(string verseId)
     {
-        throw new NotImplementedException();
+        var arr = verseId.Split(':');
+
+        var chapterNumber = int.Parse(arr[0]);
+        var verseNumber = int.Parse(arr[1]);
+
+        return AllSurahs[chapterNumber - 1].Verses[verseNumber - 1];
     }
 }
