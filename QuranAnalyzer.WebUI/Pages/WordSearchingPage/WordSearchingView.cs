@@ -17,6 +17,24 @@ class Model
 
 class WordSearchingView : ReactComponent<Model>
 {
+    protected override void constructor()
+    {
+        state = new Model();
+
+        var value = Context.Query[QueryKey.SearchQuery];
+        if (value is not null)
+        {
+            var parseResponse = SearchScript.ParseScript(value);
+            if (parseResponse.IsFail)
+            {
+                state.SearchScriptErrorMessage = parseResponse.FailMessage;
+                return;
+            }
+
+            state.SearchScript = parseResponse.Value.AsReadibleString();
+        }
+    }
+    
     protected override void componentDidMount()
     {
         ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
@@ -84,10 +102,10 @@ class WordSearchingView : ReactComponent<Model>
 
         var resultList = new div { };
         
-        var resultVerseList = new List<LetterColorizer>();
-
         var summaryInfoList = new List<SummaryInfo>();
 
+        var total = 0;
+        
         foreach (var (chapterFilter, searchWord) in searchScript.Lines)
         {
             var verseListResponse = VerseFilter.GetVerseList(chapterFilter);
@@ -110,6 +128,8 @@ class WordSearchingView : ReactComponent<Model>
                     }
 
                     matchMap[verse.Id].Add((searchWord, startPointsOfSameWords));
+
+                    total += startPointsOfSameWords.Count;
                 }
             }
         }
@@ -126,7 +146,7 @@ class WordSearchingView : ReactComponent<Model>
             style = { paddingLeftRight = "15px", paddingBottom = "15px", marginTop = "5px" },
             children =
             {
-                new h4("Sonuçlar"),
+                new h4("Sonuçlar:"+ total),
 
                 new CountsSummaryView { Counts = summaryInfoList },
                 new VSpace(30),
