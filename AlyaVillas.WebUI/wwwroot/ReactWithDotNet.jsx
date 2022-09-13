@@ -1284,8 +1284,47 @@ function Fetch(url, options, processResponse, callback)
     //});
 }
 
+function CopyToClipboard(text) 
+{
+    if (navigator.clipboard && navigator.clipboard.writeText)
+    {
+        navigator.clipboard.writeText(text);
+        return;
+    }
+
+    if (window.clipboardData && window.clipboardData.setData) 
+    {
+        // IE specific code path to prevent textarea being shown while dialog is visible.
+        return clipboardData.setData("Text", text); 
+
+    }
+
+    if (document.queryCommandSupported && document.queryCommandSupported("copy"))
+    {
+        var textarea = document.createElement("textarea");
+        textarea.textContent = text;
+        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+        document.body.appendChild(textarea);
+        textarea.select();
+        try 
+        {
+            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+        }
+        catch (ex)
+        {
+            console.warn("Copy to clipboard failed.", ex);
+            return false;
+        }
+        finally
+        {
+            document.body.removeChild(textarea);
+        }
+    }
+}
+
 const ExternalJsObjectMap = {
-    'RegExp': (x) => new RegExp(x)
+    'RegExp': (x) => new RegExp(x),
+    'CopyToClipboard': CopyToClipboard
 };
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {
