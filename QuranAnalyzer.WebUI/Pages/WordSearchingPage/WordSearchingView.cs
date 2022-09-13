@@ -78,6 +78,10 @@ class WordSearchingView : ReactComponent<Model>
 
 
 
+
+        var matchMap = new Dictionary<string, List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<LetterInfo> startPoints)>>();
+
+
         var resultList = new div { };
         
         var resultVerseList = new List<LetterColorizer>();
@@ -86,13 +90,34 @@ class WordSearchingView : ReactComponent<Model>
 
         foreach (var (chapterFilter, searchWord) in searchScript.Lines)
         {
-            foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
+            var verseListResponse = VerseFilter.GetVerseList(chapterFilter);
+            if (verseListResponse.IsFail)
             {
-                if (verse.WordList.Any(x => x.HasValueAndSame(searchWord)))
+                state.SearchScriptErrorMessage = verseListResponse.FailMessage;
+                return searchPanel;
+            }
+
+            var verseList = verseListResponse.Value;
+            
+            foreach (var verse in verseList)
+            {
+                var startPointsOfSameWords = verse.GetStartPointsOfSameWords(searchWord);
+                if (startPointsOfSameWords.Count > 0)
                 {
-                    resultList.Add(new div { text = verse.Text, style = { border = "1px solid red", margin = "5px" } });
+                    if (!matchMap.ContainsKey(verse.Id))
+                    {
+                        matchMap.Add(verse.Id,new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<LetterInfo> startPoints)>());
+                    }
+
+                    matchMap[verse.Id].Add((searchWord, startPointsOfSameWords));
                 }
             }
+        }
+
+        foreach (var (verseId, matchList) in matchMap)
+        {
+            var  verse = VerseFilter.GetVerseById(verseId);
+            resultList.Add(new div { text = verse.Text, style = { border = "1px solid red", margin = "5px" } });
         }
         
 

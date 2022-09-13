@@ -122,4 +122,9 @@ public static class VerseFilter
         }
     }
     #endregion
+
+    public static Verse GetVerseById(string verseId)
+    {
+        throw new NotImplementedException();
+    }
 }
