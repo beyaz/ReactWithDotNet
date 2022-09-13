@@ -103,7 +103,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
 
         try
         {
-            state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines().Select(processLine));
+            state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines(figmaCssText).Select(processLine));
 
             ClientTask.CallJsFunction(JsClient.CopyToClipboard, state.ReactInlineStyle);
 
@@ -116,43 +116,42 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         {
             state.StatusMessage = "Error occured: " + exception;
         }
-        
+    }
 
-        IEnumerable<string> splitToLines()
+    static IEnumerable<string> splitToLines(string figmaCssText)
+    {
+        return figmaCssText.Trim().Split('\n').Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x));
+    }
+
+    static string processLine(string line)
+    {
+        line = line.Trim();
+
+        if (line.StartsWith("/*"))
         {
-            return figmaCssText.Trim().Split('\n').Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x));
-        }
-
-        static string processLine(string line)
-        {
-            line = line.Trim();
-
-            if (line.StartsWith("/*"))
-            {
-                return line;
-            }
-
-            var array = line.Split(new[] { ':', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-            if (array.Length == 2)
-            {
-                return $"{keyToPropertyName(array[0])} = \"{array[1]}\"";
-            }
-
             return line;
         }
 
-        static string keyToPropertyName(string key)
+        var array = line.Split(new[] { ':', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+        if (array.Length == 2)
         {
-            var names = key.Split('-', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-            if (names.Length == 2)
-            {
-                return names[0] + char.ToUpper(names[1][0], new CultureInfo("en-US")) + names[1].Substring(1);
-            }
-
-            return key;
+            return $"{keyToPropertyName(array[0])} = \"{array[1]}\"";
         }
+
+        return line;
     }
 
+    static string keyToPropertyName(string key)
+    {
+        var names = key.Split('-', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+        if (names.Length == 2)
+        {
+            return names[0] + char.ToUpper(names[1][0], new CultureInfo("en-US")) + names[1].Substring(1);
+        }
+
+        return key;
+    }
+    
     void ClearStatusMessage()
     {
         state.StatusMessage = null;
