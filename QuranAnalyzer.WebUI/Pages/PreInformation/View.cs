@@ -47,7 +47,7 @@ Yine bu harflerin geçtiği surelerin bir kısmında ilk çümleler şöyledir. 
 Mesela gün gelimesinin 365 defa geçmesi buna bir örnek olarak verilebilir.
 Adem ve İsanın durumu aynıdır denmesi ve Adem / İsa kelimeleri 25'er defa geçmesi bunlara örnek olarak verilebilir. 
 Dilerseniz aşağıdaki linklerden sayımları kendiniz yapabilirsiniz." },
-            new a{href = "https://www.quranflash.com/home?en", text = "Gün Sayısının 365 kez geçmesi"},
+            new a{href =  Extensions.PageUrlOfDays365, text = "Gün Sayısının 365 kez geçmesi"},
             new br(),
             new a{href = "https://www.quranflash.com/home?en", text = "Adem ve İsa kelimelerinin geçiş adeti"},
 

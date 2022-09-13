@@ -9,9 +9,10 @@ static class Extensions
 
     public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
 
-   
 
-   
+    public static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*|يوم;*|ويوم;*|اليوم;*|واليوم;*|يوما;*|ليوم;*|فاليوم;*|بيوم;*|باليوم;*|وباليوم";
+
+
 
     public static string GetLetterCountingScript(string chapterFilter, params string[] arabicLetters)
     {
