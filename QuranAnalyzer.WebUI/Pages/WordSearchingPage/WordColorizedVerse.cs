@@ -47,7 +47,7 @@ class WordColorizedVerse : ReactComponent
                             innerText = string.Join(string.Empty, VerseLetters.ToList().GetRange(cursor, searchWord.Count+1).Select(x => x.MatchedLetter)),
                             style =
                             {
-                                color        = LetterColorPalette.GetColor(searchWordIndex),
+                                color        = GetColor(searchWordIndex),
                                 border       = "1px dashed rgb(218, 220, 224)",
                                 borderRadius = "4px",
                                 fontWeight   = "bold"
