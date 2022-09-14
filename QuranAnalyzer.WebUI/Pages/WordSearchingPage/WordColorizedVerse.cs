@@ -44,7 +44,7 @@ class WordColorizedVerse : ReactComponent
                     {
                         var span = new span
                         {
-                            innerText = string.Join(string.Empty, VerseLetters.ToList().GetRange(cursor, searchWord.Count).Select(x => x.MatchedLetter)),
+                            innerText = string.Join(string.Empty, VerseLetters.ToList().GetRange(cursor, searchWord.Count+1).Select(x => x.MatchedLetter)),
                             style =
                             {
                                 color        = LetterColorPalette.GetColor(searchWordIndex),

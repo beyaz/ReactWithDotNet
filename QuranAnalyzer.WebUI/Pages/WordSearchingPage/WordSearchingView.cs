@@ -100,8 +100,9 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         var matchMap = new Dictionary<string, List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<LetterInfo> startPoints)>>();
 
 
-        var resultList = new div { };
-        
+       
+     
+
         var summaryInfoList = new List<SummaryInfo>();
 
         var total = 0;
@@ -130,32 +131,43 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                     matchMap[verse.Id].Add((searchWord, startPointsOfSameWords));
 
                     total += startPointsOfSameWords.Count;
+
+                    // update summary
+                    {
+                        if (summaryInfoList.All(x => x.Name != searchWord.AsText()))
+                        {
+                            summaryInfoList.Add(new SummaryInfo { Name = searchWord.AsText() });
+                        }
+
+                        summaryInfoList.First(x => x.Name == searchWord.AsText()).Count += startPointsOfSameWords.Count;
+                    }
                 }
             }
         }
 
+        var resultVerseList = new List<WordColorizedVerse>();
+        
         foreach (var (verseId, matchList) in matchMap)
         {
-            var  verse = VerseFilter.GetVerseById(verseId);
-            resultList.Add(new div { text = verse.Text, style = { border = "1px solid red", margin = "5px" } });
+            resultVerseList.Add(new WordColorizedVerse
+            {
+                Verse     = VerseFilter.GetVerseById(verseId),
+                MatchList = matchList
+            });
         }
-        
 
         var results = new divWithBorder
         {
             style = { paddingLeftRight = "15px", paddingBottom = "15px", marginTop = "5px" },
             children =
             {
-                new h4("Sonuçlar:"+ total),
+                new h4("Sonuçlar"),
 
                 new CountsSummaryView { Counts = summaryInfoList },
                 new VSpace(30),
                 new div
                 {
-                    children =
-                    {
-                        resultList
-                    }
+                   Children = resultVerseList
                 }
             }
         };
