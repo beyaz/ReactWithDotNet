@@ -43,7 +43,7 @@ class WordColorizedVerse : ReactComponent
                 {
                     if(startEndPoint.start == letterInfo)
                     {
-                        var endIndex = verseLetters.IndexOf(startEndPoint.end);
+                        var endIndex = verseLetters.IndexOf(startEndPoint.end,cursor);
                         
                         var span = new span
                         {
