@@ -22,12 +22,11 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             highlight     = "css",
             style =
             {
-                height    = "100%",
-                minHeight = "200px",
-                fontSize  = "15px", 
+                height     = "100%",
+                minHeight  = "200px",
+                fontSize   = "15px",
                 fontFamily = "Consolas"
-            },
-            
+            }
         };
         var csharpEditor = new Editor
         {
@@ -35,9 +34,9 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             highlight = "csharp",
             style =
             {
-                height    = "100%",
-                minHeight = "200px", 
-                fontSize = "15px",
+                height     = "100%",
+                minHeight  = "200px",
+                fontSize   = "15px",
                 fontFamily = "Consolas"
             }
         };
@@ -51,10 +50,10 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
 
         return new div
         {
-            style = { width_height = "100%", padding = "10px" , display = "flex", flexDirection = "column"},
+            style = { width_height = "100%", padding = "10px", display = "flex", flexDirection = "column" },
             children =
             {
-                new div("Figma css to React inline style"){style = { fontSize = "23px", padding = "20px", textAlign = "center" }},
+                new div("Figma css to React inline style") { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
                 new Splitter
                 {
                     layout = SplitterLayoutType.horizontal,
@@ -110,7 +109,6 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             state.StatusMessage = "Copied to clipboard.";
 
             ClientTask.GotoMethod(2000, ClearStatusMessage);
-
         }
         catch (Exception exception)
         {
@@ -152,8 +150,6 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         }
     }
 
-   
-    
     void ClearStatusMessage()
     {
         state.StatusMessage = null;
