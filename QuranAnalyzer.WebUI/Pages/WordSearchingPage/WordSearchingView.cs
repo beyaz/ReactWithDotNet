@@ -147,7 +147,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
         var resultVerseList = new List<WordColorizedVerse>();
         
-        foreach (var (verseId, matchList) in matchMap)
+        foreach (var (verseId, matchList) in matchMap.ToList().OrderBy(x=>x.Key, new VerseNumberComparer()))
         {
             resultVerseList.Add(new WordColorizedVerse
             {

@@ -129,4 +129,44 @@ public static class VerseFilter
 
         return AllSurahs[chapterNumber - 1].Verses[verseNumber - 1];
     }
+    
+}
+
+public class VerseNumberComparer : IComparer<string>
+{
+    public int Compare(string verseIdA, string verseIdB)
+    {
+        if (verseIdA == null)
+        {
+            throw new ArgumentNullException(nameof(verseIdA));
+        }
+
+        if (verseIdB == null)
+        {
+            throw new ArgumentNullException(nameof(verseIdB));
+        }
+
+        if (verseIdA == verseIdB)
+        {
+            return 0;
+        }
+        
+        var a = verseIdA.Split(':');
+        var b = verseIdB.Split(':');
+
+        if (int.Parse(a[0]) > int.Parse(b[0]))
+        {
+            return 1;
+        }
+
+        if (int.Parse(a[0]) == int.Parse(b[0]))
+        {
+            if (int.Parse(a[1]) > int.Parse(b[1]))
+            {
+                return 1;
+            }
+        }
+
+        return -1;
+    }
 }
