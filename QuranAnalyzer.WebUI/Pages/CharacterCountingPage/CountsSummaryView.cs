@@ -1,4 +1,5 @@
 ﻿using ReactWithDotNet.react_xarrows;
+using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -68,14 +69,33 @@ class CountsSummaryView : ReactComponent
             },
         };
 
+        
         for (var j = 0; j < counts.Count; j++)
         {
+            var name = counts[j].Name;
+
+
+            var mean = new div
+            {
+                style =
+                {
+                    fontSize = "0.6rem",
+                    marginRight = "1px",
+                    marginLeft = "3px"
+                }
+            };
+            
+            if (TranslateMap.ContainsKey(name))
+            {
+                mean.text = $"({TranslateMap[name].tr})";
+            }
+            
             var countView = new HPanel
             {
                 children =
                 {
-                    new div { text = counts[j].Name, style = { color = LetterColorPalette.GetColor(j) } },
-
+                    new div { text = name, style = { color = LetterColorPalette.GetColor(j) } },
+                    mean,
                     new div { text = ":", style = { marginLeftRight = "4px" } },
 
                     new div { text = counts[j].Count.ToString(), id = "subTotal-" + j }

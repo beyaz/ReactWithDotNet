@@ -68,7 +68,7 @@ class SearchScript
 
         foreach (var line in Lines)
         {
-            sb.AppendLine(line.ChapterFilter + " | " + string.Join(" ", line.Letters));
+            sb.AppendLine(line.ChapterFilter + " | " + string.Join("", line.Letters));
         }
 
         return sb.ToString();

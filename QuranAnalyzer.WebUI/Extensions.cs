@@ -11,6 +11,7 @@ static class Extensions
 
 
     public static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*|يوم;*|ويوم;*|اليوم;*|واليوم;*|يوما;*|ليوم;*|فاليوم;*|بيوم;*|باليوم;*|وباليوم";
+    public static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*|ايام;*|يومين;*|الايام;*|اياما;*|واياما;*|بايىم";
 
     public static string AsText(this IReadOnlyList<LetterInfo> letters)
     {
@@ -21,4 +22,15 @@ static class Extensions
     {
         return chapterFilter + "|" + string.Join(string.Empty, arabicLetters);
     }
+
+    public static IReadOnlyDictionary<string, (string reading, string tr)> TranslateMap = new Dictionary<string, (string reading, string tr)>
+    {
+        {"ايام",("eyyam","günler")},
+        {"يومين",("yevmeyn","2 gün")},
+        {"الايام",("el-eyyam","günler")},
+        {"اياما",("eyyamen","günler")},
+        {"واياما",("ve eyyamen","günler")},
+        {"بايىم",("bi-eyyam","günler")}
+    };
+
 }

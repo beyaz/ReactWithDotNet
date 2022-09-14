@@ -1,4 +1,5 @@
 ﻿using QuranAnalyzer.WebUI.Components;
+using static QuranAnalyzer.WebUI.Extensions;
 using static QuranAnalyzer.WebUI.ResourceAccess;
 
 namespace QuranAnalyzer.WebUI.Pages.PreInformation;
@@ -46,10 +47,12 @@ Yine bu harflerin geçtiği surelerin bir kısmında ilk çümleler şöyledir. 
             new li { text = @"Kurandaki bazı kelimelerin geçişleri anlamları/olayları ile ilgili olarak çok ilginç sayıda geçmektedir. 
 Mesela gün gelimesinin 365 defa geçmesi buna bir örnek olarak verilebilir.
 Adem ve İsanın durumu aynıdır denmesi ve Adem / İsa kelimeleri 25'er defa geçmesi bunlara örnek olarak verilebilir. 
-Dilerseniz aşağıdaki linklerden sayımları kendiniz yapabilirsiniz." },
-            new a{href =  Extensions.PageUrlOfDays365, text = "Gün Sayısının 365 kez geçmesi"},
+Dilerseniz aşağıdaki linklerden bu sayımları kendiniz yapabilirsiniz." },
+            new a{href =  PageUrlOfDays365, text = "Gün Sayısının 365 kez geçmesi"},
             new br(),
-            new a{href = "https://www.quranflash.com/home?en", text = "Adem ve İsa kelimelerinin geçiş adeti"},
+            new a{href = PageUrlOfDays30, text = "Günler kelimesinin 30 defa geçmesi"},
+            new br(),
+            new a{href = PageUrlOfDays30, text = "Adem ve İsa kelimelerinin geçiş adeti"},
 
             new VSpace(15)
         };

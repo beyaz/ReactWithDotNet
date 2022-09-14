@@ -44,7 +44,7 @@ class WordColorizedVerse : ReactComponent
                     {
                         var span = new span
                         {
-                            innerText = string.Join(string.Empty, VerseLetters.ToList().GetRange(cursor, startEndPoint.end.StartIndex - cursor + 1).Select(x => x.MatchedLetter)),
+                            innerText = string.Join(string.Empty, VerseLetters.ToList().GetRange(startEndPoint.start.StartIndex, startEndPoint.end.StartIndex - startEndPoint.start.StartIndex).Select(x => x.MatchedLetter)),
                             style =
                             {
                                 color        = GetColor(searchWordIndex),
@@ -56,7 +56,7 @@ class WordColorizedVerse : ReactComponent
 
                         html.Append(span);
 
-                        cursor += startEndPoint.end.StartIndex + 1;
+                        cursor = startEndPoint.end.StartIndex + 1;
 
                         hasAnyMatch = true;
                         break;
