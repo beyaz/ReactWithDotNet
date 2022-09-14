@@ -4,7 +4,7 @@ using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 
-class Model
+class WordSearchingViewModel
 {
     public int ClickCount { get; set; }
 
@@ -15,11 +15,11 @@ class Model
     public string SearchScriptErrorMessage { get; set; }
 }
 
-class WordSearchingView : ReactComponent<Model>
+class WordSearchingView : ReactComponent<WordSearchingViewModel>
 {
     protected override void constructor()
     {
-        state = new Model();
+        state = new WordSearchingViewModel();
 
         var value = Context.Query[QueryKey.SearchQuery];
         if (value is not null)
