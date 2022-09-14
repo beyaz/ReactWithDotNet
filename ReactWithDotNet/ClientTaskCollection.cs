@@ -3,7 +3,7 @@
 public abstract class ReactComponent<TState> : ReactStatefulComponent where TState : new()
 {
     #region Public Properties
-    public TState state { get; protected set; }
+    public TState state { get; protected internal set; }
     #endregion
 
     #region Methods

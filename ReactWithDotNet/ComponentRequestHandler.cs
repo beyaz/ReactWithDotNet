@@ -103,6 +103,13 @@ public static class ComponentRequestHandler
 
             instance.Context = context;
             instance.InvokeConstructor();
+            
+            // maybe developer forget init state
+            if (instance is ReactComponent<EmptyState> reactComponent && reactComponent.state == null)
+            {
+                reactComponent.state = new EmptyState();
+            }
+            
 
             var stateTree = new StateTree
             {
