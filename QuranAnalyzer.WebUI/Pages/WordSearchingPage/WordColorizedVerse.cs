@@ -42,13 +42,13 @@ class WordColorizedVerse : ReactComponent
                 foreach (var startEndPoint in startEndPoints)
                 {
                     var startIndex = startEndPoint.start.StartIndex;
-                    var endIndex = startEndPoint.end.StartIndex;
+                    var endIndex   = startEndPoint.end.StartIndex;
 
                     if (startIndex == letterInfo.StartIndex)
                     {
                         var span = new span
                         {
-                            innerText = string.Join(string.Empty, verseLetters.GetRange(startIndex, endIndex - startIndex).Select(x => x.MatchedLetter)),
+                            innerText = verseLetters.GetRange(startIndex, endIndex - startIndex).AsText(),
                             style =
                             {
                                 color        = GetColor(searchWordIndex),
