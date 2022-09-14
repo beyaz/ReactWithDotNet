@@ -24,14 +24,15 @@ class WordColorizedVerse : ReactComponent
             };
         }
 
-        var cursor = 0;
+        var verseLetters = VerseLetters.ToList();
 
+        var cursor = 0;
 
         var html = new StringBuilder();
         
-        while (cursor < VerseLetters.Count)
+        while (cursor < verseLetters.Count)
         {
-            var letterInfo = VerseLetters[cursor];
+            var letterInfo = verseLetters[cursor];
 
             var hasAnyMatch = false;
             
@@ -44,7 +45,7 @@ class WordColorizedVerse : ReactComponent
                     {
                         var span = new span
                         {
-                            innerText = string.Join(string.Empty, VerseLetters.ToList().GetRange(startEndPoint.start.StartIndex, startEndPoint.end.StartIndex - startEndPoint.start.StartIndex).Select(x => x.MatchedLetter)),
+                            innerText = string.Join(string.Empty, verseLetters.GetRange(startEndPoint.start.StartIndex, startEndPoint.end.StartIndex - startEndPoint.start.StartIndex).Select(x => x.MatchedLetter)),
                             style =
                             {
                                 color        = GetColor(searchWordIndex),
