@@ -9,18 +9,18 @@ class WordColorizedVerse : ReactComponent
 
     public IReadOnlyList<LetterInfo> VerseLetters => Verse.AnalyzedFullText;
 
-    public IReadOnlyList<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<LetterInfo> startPoints)> MatchList { get; set; }
+    public IReadOnlyList<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startEndPoints)> MatchList { get; set; }
 
     protected override Element render()
     {
         if (Verse == null)
         {
             Verse = VerseFilter.GetVerseById("2:286");
-            MatchList = new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<LetterInfo> startPoints)>
+            MatchList = new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo first, LetterInfo last)> startPoints)>
             {
-                (Analyzer.AnalyzeText("واليوم").Unwrap(), new [] { VerseLetters[6], VerseLetters[28],VerseLetters[258] }),
-                (Analyzer.AnalyzeText("يوم").Unwrap(), new [] { VerseLetters[45], VerseLetters[68] }),
-                (Analyzer.AnalyzeText("باليوم").Unwrap(), new [] { VerseLetters[96], VerseLetters[178], VerseLetters[228] })
+                (Analyzer.AnalyzeText("واليوم").Unwrap(), new [] { (VerseLetters[6], VerseLetters[9]), (VerseLetters[28], VerseLetters[33]),(VerseLetters[258], VerseLetters[268]) }),
+                (Analyzer.AnalyzeText("يوم").Unwrap(), new [] { (VerseLetters[45], VerseLetters[50]), (VerseLetters[68], VerseLetters[78]) }),
+                (Analyzer.AnalyzeText("باليوم").Unwrap(), new [] { (VerseLetters[96], VerseLetters[100]), (VerseLetters[178], VerseLetters[184]), (VerseLetters[228], VerseLetters[235]) })
             };
         }
 
@@ -36,15 +36,15 @@ class WordColorizedVerse : ReactComponent
             var hasAnyMatch = false;
             
             var searchWordIndex = 0;
-            foreach (var (searchWord, startPoints) in MatchList)
+            foreach (var (_, startEndPoints) in MatchList)
             {
-                foreach (var startPoint in startPoints)
+                foreach (var startEndPoint in startEndPoints)
                 {
-                    if (startPoint.StartIndex == letterInfo.StartIndex)
+                    if (startEndPoint.start.StartIndex == letterInfo.StartIndex)
                     {
                         var span = new span
                         {
-                            innerText = string.Join(string.Empty, VerseLetters.ToList().GetRange(cursor, searchWord.Count+1).Select(x => x.MatchedLetter)),
+                            innerText = string.Join(string.Empty, VerseLetters.ToList().GetRange(cursor, startEndPoint.end.StartIndex - cursor + 1).Select(x => x.MatchedLetter)),
                             style =
                             {
                                 color        = GetColor(searchWordIndex),
@@ -56,7 +56,7 @@ class WordColorizedVerse : ReactComponent
 
                         html.Append(span);
 
-                        cursor += searchWord.Count;
+                        cursor += startEndPoint.end.StartIndex + 1;
 
                         hasAnyMatch = true;
                         break;
@@ -94,7 +94,7 @@ class WordColorizedVerse : ReactComponent
         {
             var searchWordIndex = 0;
 
-            foreach (var (searchWord, startPoints) in MatchList)
+            foreach (var (searchWord, startEndPoints) in MatchList)
             {
                 var countView = new HPanel
                 {
@@ -104,7 +104,7 @@ class WordColorizedVerse : ReactComponent
 
                         new div { text = ":", style = { marginLeftRight = "4px" } },
 
-                        new div { text = startPoints.Count.ToString(), style = { fontSize = "0.78rem" } }
+                        new div { text = startEndPoints.Count.ToString(), style = { fontSize = "0.78rem" } }
                     },
                     style = { marginLeft = "10px" }
                 };

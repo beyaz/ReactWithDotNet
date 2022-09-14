@@ -48,15 +48,15 @@ public static class QuranQuery
         return returnList;
     }
     
-    public static IReadOnlyList<LetterInfo> GetStartPointsOfSameWords(this Verse verse, IReadOnlyList<LetterInfo> searchWord)
+    public static IReadOnlyList<(LetterInfo start, LetterInfo end)> GetStartAndEndPointsOfSameWords(this Verse verse, IReadOnlyList<LetterInfo> searchWord)
     {
-        var returnList = new List<LetterInfo>();
+        var returnList = new List<(LetterInfo start, LetterInfo end)>();
 
         foreach (var word in verse.WordList)
         {
             if (word.HasValueAndSame(searchWord))
             {
-                returnList.Add(word[0]);
+                returnList.Add((word.First(), word.Last()));
             }
         }
 

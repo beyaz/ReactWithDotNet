@@ -97,7 +97,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
 
 
-        var matchMap = new Dictionary<string, List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<LetterInfo> startPoints)>>();
+        var matchMap = new Dictionary<string, List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>>();
 
 
        
@@ -105,7 +105,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
         var summaryInfoList = new List<SummaryInfo>();
 
-        var total = 0;
+       
         
         foreach (var (chapterFilter, searchWord) in searchScript.Lines)
         {
@@ -120,17 +120,17 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
             
             foreach (var verse in verseList)
             {
-                var startPointsOfSameWords = verse.GetStartPointsOfSameWords(searchWord);
-                if (startPointsOfSameWords.Count > 0)
+                var startAndEndPointsOfSameWords = verse.GetStartAndEndPointsOfSameWords(searchWord);
+                if (startAndEndPointsOfSameWords.Count > 0)
                 {
                     if (!matchMap.ContainsKey(verse.Id))
                     {
-                        matchMap.Add(verse.Id,new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<LetterInfo> startPoints)>());
+                        matchMap.Add(verse.Id,new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>());
                     }
 
-                    matchMap[verse.Id].Add((searchWord, startPointsOfSameWords));
+                    matchMap[verse.Id].Add((searchWord, startAndEndPointsOfSameWords));
 
-                    total += startPointsOfSameWords.Count;
+                   
 
                     // update summary
                     {
@@ -139,7 +139,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                             summaryInfoList.Add(new SummaryInfo { Name = searchWord.AsText() });
                         }
 
-                        summaryInfoList.First(x => x.Name == searchWord.AsText()).Count += startPointsOfSameWords.Count;
+                        summaryInfoList.First(x => x.Name == searchWord.AsText()).Count += startAndEndPointsOfSameWords.Count;
                     }
                 }
             }
