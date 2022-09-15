@@ -108,7 +108,7 @@ public static class ElementSerializer
             {
                 if (child is HtmlTextNode textNode)
                 {
-                    childElements.Add(textNode.dangerouslySetInnerHTML.__html);
+                    childElements.Add(textNode.innerText);
                     continue;
                 }
                 

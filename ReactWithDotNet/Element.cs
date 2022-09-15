@@ -57,7 +57,7 @@ public abstract class Element : IEnumerable<Element>
 
     public static implicit operator Element(string text)
     {
-        return new HtmlTextNode { innerHTML = text};
+        return new HtmlTextNode { text = text};
     }
     
     #endregion
