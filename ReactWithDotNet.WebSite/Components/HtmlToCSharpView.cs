@@ -247,7 +247,13 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
     static IReadOnlyList<string> ToCSharpCode(HtmlNode htmlNode)
     {
-        if (htmlNode.Name == "#text")
+        var htmlNodeName = htmlNode.Name;
+        if (htmlNodeName == "clippath")
+        {
+            htmlNodeName = "clipPath";
+        }
+        
+        if (htmlNodeName == "#text")
         {
             if (string.IsNullOrWhiteSpace(htmlNode.InnerText))
             {
@@ -269,7 +275,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 return new List<string>
                 {
                     // one line
-                    $"new {htmlNode.Name} {{ {string.Join(", ", attributeLines)} }}"
+                    $"new {htmlNodeName} {{ {string.Join(", ", attributeLines)} }}"
                 };
             }
 
@@ -277,7 +283,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 var lines = new List<string>
                 {
-                    $"new {htmlNode.Name}",
+                    $"new {htmlNodeName}",
                     "{"
                 };
                 lines.AddRange(attributeLines);
@@ -297,7 +303,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     return new List<string>
                     {
                         // one line
-                        $"new {htmlNode.Name} {{ {string.Join(", ", attributeLines)} }}"
+                        $"new {htmlNodeName} {{ {string.Join(", ", attributeLines)} }}"
                     };
                 }
 
@@ -306,7 +312,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     return new List<string>
                     {
                         // one line
-                        $"new {htmlNode.Name}()"
+                        $"new {htmlNodeName}()"
                     };
                 }
                     
@@ -317,7 +323,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             var lines = new List<string>
             {
-                $"new {htmlNode.Name}",
+                $"new {htmlNodeName}",
                 "{"
             };
 
