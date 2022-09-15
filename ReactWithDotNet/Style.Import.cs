@@ -422,6 +422,11 @@ partial class Style
             {
                 return content;
             }
+            
+            if (nameof(contentVisibility).Equals(cssAttributeName, StringComparison.OrdinalIgnoreCase))
+            {
+                return contentVisibility;
+            }
 
             if (nameof(counterIncrement).Equals(cssAttributeName, StringComparison.OrdinalIgnoreCase))
             {
@@ -1705,6 +1710,12 @@ partial class Style
             if (nameof(content).Equals(cssAttributeName, StringComparison.OrdinalIgnoreCase))
             {
                 content = value;
+                return;
+            }
+            
+            if (nameof(contentVisibility).Equals(cssAttributeName, StringComparison.OrdinalIgnoreCase))
+            {
+                contentVisibility = value;
                 return;
             }
 
@@ -3073,6 +3084,11 @@ partial class Style
         {
             content = newStyle.content;
         }
+        
+        if (newStyle.contentVisibility != null)
+        {
+            contentVisibility = newStyle.contentVisibility;
+        }
 
         if (newStyle.counterIncrement != null)
         {
@@ -4270,6 +4286,11 @@ partial class Style
             }
 
             if (content != null)
+            {
+                return false;
+            }
+            
+            if (contentVisibility != null)
             {
                 return false;
             }

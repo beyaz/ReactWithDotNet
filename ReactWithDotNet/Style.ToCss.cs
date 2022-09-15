@@ -639,7 +639,15 @@ partial class Style
             sb.Append(content);
             sb.Append(";");
         }
-
+        
+        if (contentVisibility != null)
+        {
+            sb.Append("content-visibility");
+            sb.Append(": ");
+            sb.Append(contentVisibility);
+            sb.Append(";");
+        }
+        
         if (counterIncrement != null)
         {
             sb.Append("counter-increment");

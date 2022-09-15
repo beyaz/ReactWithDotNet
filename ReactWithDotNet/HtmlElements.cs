@@ -35,6 +35,9 @@ public class input : HtmlElement
     public bool @checked { get; set; }
 
     [React]
+    public string autocomplete { get; set; }
+
+    [React]
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.target.checked", eventName = "onChange")]
     public Expression<Func<bool>> checkedBind { get; set; }
 }
@@ -157,6 +160,9 @@ public class img : HtmlElement
 
     [React]
     public int height { get; set; }
+
+    [React]
+    public string loading { get; set; }
 }
 
 

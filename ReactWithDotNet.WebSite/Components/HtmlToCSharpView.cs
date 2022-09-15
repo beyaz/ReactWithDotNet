@@ -152,6 +152,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             attributeName = "htmlFor";
         }
 
+        attributeName = attributeName.Replace("-", "_");
+
         if (attributeName == "style")
         {
             var map = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(Style.ParseCss(htmlAttribute.Value), new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
@@ -267,11 +269,15 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     };
                 }
 
-                return new List<string>
+                if (attributeLines.Count == 0)
                 {
-                    // one line
-                    $"new {htmlNode.Name}()"
-                };
+                    return new List<string>
+                    {
+                        // one line
+                        $"new {htmlNode.Name}()"
+                    };
+                }
+                    
             }
         }
 
@@ -286,6 +292,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             var attributes = ToCSharpCode(htmlNode.Attributes);
             foreach (var attribute in attributes)
             {
+                if (attribute[^1]=='=' || attribute[^1] == '{' || attribute[^1] == ',')
+                {
+                    lines.Add(attribute);
+                    continue;
+                }
                 lines.Add(attribute + ",");
             }
 
@@ -346,6 +357,10 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
             if (line == "}" || line == "},")
             {
+                if (padding ==0)
+                {
+                    padding++;
+                }
                 padding--;
                 paddingAsString = "".PadRight(padding*4, ' ');
                 sb.AppendLine(paddingAsString + line);

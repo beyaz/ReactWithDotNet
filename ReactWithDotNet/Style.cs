@@ -165,7 +165,9 @@ public sealed partial class Style
     public string columnWidth { get; set; }
 
     public string content { get; set; }
-
+    
+    public string contentVisibility { get; set; }
+    
     public string counterIncrement { get; set; }
 
     public string counterReset { get; set; }
