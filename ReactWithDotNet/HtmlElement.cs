@@ -71,6 +71,12 @@ public abstract class HtmlElement : Element
     /// </summary>
     [React]
     public string className { get; set; }
+
+    [React]
+    public string title { get; set; }
+
+    [React]
+    public string tabIndex { get; set; }
 }
 
 

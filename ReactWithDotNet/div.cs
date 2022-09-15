@@ -2,6 +2,12 @@
 
 public sealed class div : HtmlElement
 {
+    [React]
+    public string role { get; set; }
+
+   
+    
+
     public div()
     {
     }

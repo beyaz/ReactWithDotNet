@@ -152,7 +152,39 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             attributeName = "htmlFor";
         }
 
-        attributeName = attributeName.Replace("-", "_");
+        if (attributeName == "viewbox")
+        {
+            attributeName = "viewBox";
+        }
+
+        if (attributeName == "tabindex")
+        {
+            attributeName = "tabIndex";
+        }
+
+        if (attributeName == "preserveaspectratio")
+        {
+            attributeName = "preserveAspectRatio";
+        }
+
+        
+
+        if (attributeName.Contains("-"))
+        {
+            return lines;
+        }
+
+        if (attributeName == "color" || attributeName == "width")
+        {
+            if (htmlAttribute.OwnerNode.Name == "div")
+            {
+                return lines;
+            }
+        }
+
+        
+
+
 
         if (attributeName == "style")
         {
@@ -359,7 +391,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 if (padding ==0)
                 {
-                    padding++;
+                    throw new InvalidOperationException("Padding is already zero.");
                 }
                 padding--;
                 paddingAsString = "".PadRight(padding*4, ' ');

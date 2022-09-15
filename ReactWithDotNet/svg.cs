@@ -16,6 +16,10 @@ public class svg : HtmlElement
 
     [React]
     public string height { get; set; }
+
+    [React]
+    public string preserveAspectRatio { get; set; }
+    
 }
 
 public class path : HtmlElement
@@ -25,12 +29,43 @@ public class path : HtmlElement
 
     [React]
     public string fill { get; set; }
+
+    [React]
+    public string stroke { get; set; }
+    
+}
+
+public class g : HtmlElement
+{
+    [React]
+    public string transform { get; set; }
+
+    [React]
+    public string opacity { get; set; }
+}
+
+public class defs : HtmlElement
+{
+}
+
+public class clipPath : HtmlElement
+{
 }
 
 public class rect : HtmlElement
 {
     [React]
-    public int y { get; set; }
+    public string x { get; set; }
+    
+    [React]
+    public string y { get; set; }
+
+    [React]
+    public string width { get; set; }
+
+    [React]
+    public string height { get; set; }
+
 }
 
 public class polygon : HtmlElement
