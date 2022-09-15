@@ -570,6 +570,11 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
         return null;
     }
 
+    if (typeof jsonNode === 'string')
+    {
+        return jsonNode;
+    }
+
     if (jsonNode.$FakeChild != null)
     {
         jsonNode = component.props.$jsonNode[RootNode].$children[jsonNode.$FakeChild];

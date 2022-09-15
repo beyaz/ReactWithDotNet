@@ -106,6 +106,12 @@ public static class ElementSerializer
 
             foreach (var child in element.children)
             {
+                if (child is HtmlTextNode textNode)
+                {
+                    childElements.Add(textNode.dangerouslySetInnerHTML.__html);
+                    continue;
+                }
+                
                 childElements.Add(ToMap(child, context));
             }
 

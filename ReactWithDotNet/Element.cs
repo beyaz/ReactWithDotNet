@@ -54,6 +54,12 @@ public abstract class Element : IEnumerable<Element>
     {
         return children.GetEnumerator();
     }
+
+    public static implicit operator Element(string text)
+    {
+        return new HtmlTextNode { innerHTML = text};
+    }
+    
     #endregion
 
     #region Explicit Interface Methods

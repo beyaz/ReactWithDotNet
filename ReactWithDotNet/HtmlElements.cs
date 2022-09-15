@@ -147,3 +147,7 @@ public class img : HtmlElement
 public class nav : HtmlElement
 {
 }
+
+public class HtmlTextNode : HtmlElement
+{
+}
