@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Text;
+﻿using System.Text;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using ReactWithDotNet.PrimeReact;
@@ -117,7 +116,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             state.StatusMessage = "Error occured: " + exception;
         }
-        
     }
 
     void ClearStatusMessage()
@@ -131,69 +129,131 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             return null;
         }
-        
-        
+
         HtmlDocument document = new HtmlDocument();
-        
+
         document.LoadHtml(htmlRootNode);
-        
-        return Convert(document.DocumentNode.FirstChild);
+
+        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild));
     }
 
-    static string ToString(HtmlAttribute htmlAttribute)
+    static List<string> ToCSharpCode(HtmlAttribute htmlAttribute)
     {
+        var lines = new List<string>();
+
         if (htmlAttribute.Name == "style")
         {
-            var map = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(Style.ParseCss(htmlAttribute.Value),new JsonSerializerSettings{DefaultValueHandling = DefaultValueHandling.Ignore}));
+            var map = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(Style.ParseCss(htmlAttribute.Value), new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
             if (map != null)
             {
-                var lines = new List<string>();
-                
+                // as one line
+                if (map.Count <= 3)
+                {
+                    lines.Add($"{htmlAttribute.Name} = {{ {string.Join(", ", map.Select(x => $"{x.Key} = \"{x.Value}\""))} }}");
+                    return lines;
+                }
+
+                // as multi line
                 lines.AddRange(map.Select(x => $"{x.Key} = \"{x.Value}\""));
 
-            }
-            var value = String.Join("," + Environment.NewLine, map.Select(x => $"  {x.Key} = \"{x.Value}\""));
-            
-            return $"{htmlAttribute.Name} =" + Environment.NewLine+
-                   "{" + Environment.NewLine +
-                   value + Environment.NewLine +
-            "}";
-            
-        }
-        return $"{htmlAttribute.Name} = {htmlAttribute.Value}";
-    }
-    static string Convert(HtmlNode htmlNode)
-    {
-        var sb = new StringBuilder();
-        
-
-        sb.AppendLine($"new {htmlNode.Name}");
-        sb.AppendLine("{");
-        
-        if (htmlNode.Attributes.Any())
-        {
-            sb.Append(string.Join(", ", htmlNode.Attributes.Select(ToString)));
-        }
-        
-        if (htmlNode.ChildNodes.Count > 0)
-        {
-            foreach (var child in htmlNode.ChildNodes)
-            {
-                if (child == null || child.Name == "#text")
+                for (var i = 0; i < lines.Count - 1; i++)
                 {
-                    continue;
+                    lines[i] += ",";
                 }
-                sb.AppendLine(Convert(child));
-            }
-            
-            sb.AppendLine();
-            sb.AppendLine("}");
 
-            return sb.ToString();
+                lines.Insert(0, $"{htmlAttribute.Name} =");
+                lines.Insert(1, "{");
+                lines.Add("}");
+
+                return lines;
+            }
+
+            return lines;
+        }
+
+        lines.Add($"{htmlAttribute.Name} = \"{htmlAttribute.Value}\"");
+
+        return lines;
+    }
+
+    static IReadOnlyList<string> ToCSharpCode(HtmlAttributeCollection htmlAttributes)
+    {
+        var  attributeLines = new List<string>();
+        
+        if (htmlAttributes.Any())
+        {
+            attributeLines.AddRange(htmlAttributes.Select(ToCSharpCode).Aggregate((a, b) =>
+            {
+                a.AddRange(b);
+                return a;
+            }));
         }
         
-        
-        return sb.ToString();
+
+        var lines = new List<string>();
+
+        if (attributeLines.Count > 1 && attributeLines.Count <= 3)
+        {
+            lines.Add(string.Join(", ", attributeLines));
+
+            return lines;
+        }
+
+        for (var i = 0; i < attributeLines.Count - 1; i++)
+        {
+            attributeLines[i] += ",";
+        }
+
+        return lines;
+    }
+
+    static IReadOnlyList<string> ToCSharpCode(HtmlNode htmlNode)
+    {
+        var lines = new List<string>();
+
+        if (htmlNode.ChildNodes.Count(x=>x.Name != "#text") == 0)
+        {
+            var attributeLines = ToCSharpCode(htmlNode.Attributes);
+
+            if (attributeLines.Count == 1)
+            {
+                // one line
+                lines.Add($"new {htmlNode.Name} {{ {attributeLines[0]} }}");
+
+                return lines;
+            }
+
+            lines.Add($"new {htmlNode.Name}()");
+
+            return lines;
+        }
+
+        lines.Add($"new {htmlNode.Name}");
+        lines.Add("{");
+
+        lines.AddRange(ToCSharpCode(htmlNode.Attributes));
+
+        foreach (var child in htmlNode.ChildNodes)
+        {
+            if (child == null || child.Name == "#text")
+            {
+                continue;
+            }
+
+            if (!lines[^1].EndsWith("{", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!lines[^1].EndsWith(",", StringComparison.OrdinalIgnoreCase))
+                {
+                    lines[^1] += ",";
+                }
+            }
+
+            lines.AddRange(ToCSharpCode(child));
+        }
+
+        lines.Add("}");
+
+        return lines;
     }
 
     static string ToCSharpCode(IEnumerable<string> lines)
@@ -201,27 +261,29 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         var sb = new StringBuilder();
 
         var padding = 0;
-        
+
         foreach (var line in lines)
         {
             var paddingAsString = "".PadRight(padding, ' ');
             if (line == "{")
             {
-                sb.AppendLine(paddingAsString+line);
+                sb.AppendLine(paddingAsString + line);
                 padding++;
                 continue;
             }
 
             if (line == "}")
             {
-                sb.AppendLine(paddingAsString + line);
                 padding--;
+                paddingAsString = "".PadRight(padding, ' ');
+                sb.AppendLine(paddingAsString + line);
+                
                 continue;
             }
 
             sb.AppendLine(paddingAsString + line);
         }
-        
+
         return sb.ToString();
     }
 }
