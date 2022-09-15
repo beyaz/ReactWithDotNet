@@ -13,12 +13,18 @@ public class MainWindow : ReactComponent
 
     protected override Element render()
     {
+        if (PageId == "1")
+        {
+            return new FigmaCss2ReactInlineStyleConverterView();
+        }
+
         if (PageId == "2")
         {
             return new HtmlToCSharpView();
         }
 
-        return new FigmaCss2ReactInlineStyleConverterView();
+        return new div("Aloha");
+
     }
 }
 
