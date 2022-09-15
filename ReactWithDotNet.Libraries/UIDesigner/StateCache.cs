@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -7,7 +8,10 @@ namespace ReactWithDotNet.UIDesigner;
 class StateCache
 {
     #region Static Fields
-    static readonly string CacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReactWithDotNet.UIDesigner") + Path.DirectorySeparatorChar;
+    static readonly string CacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReactWithDotNet.UIDesigner") + 
+                                            Path.DirectorySeparatorChar +
+                                            (System.Reflection.Assembly.GetEntryAssembly()?.GetName().Name ?? "UnknowAssembly")+
+                                            Path.DirectorySeparatorChar;
 
     static readonly object fileLock = new();
     #endregion
@@ -29,6 +33,7 @@ class StateCache
 
     public static UIDesignerModel ReadState()
     {
+        
         if (File.Exists(StateFilePath))
         {
             var json = File.ReadAllText(StateFilePath);
