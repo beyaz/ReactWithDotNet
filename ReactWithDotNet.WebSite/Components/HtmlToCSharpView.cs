@@ -26,7 +26,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 height     = "100%",
                 minHeight  = "200px",
-                fontSize   = "15px",
+                fontSize   = "11px",
                 fontFamily = "Consolas"
             }
         };
@@ -39,7 +39,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 height     = "100%",
                 minHeight  = "200px",
-                fontSize   = "15px",
+                fontSize   = "11px",
                 fontFamily = "Consolas"
             }
         };
@@ -69,7 +69,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     {
                         new SplitterPanel
                         {
-                            size = 50,
+                            size = 30,
                             children =
                             {
                                 cssEditor
@@ -77,7 +77,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                         },
                         new SplitterPanel
                         {
-                            size = 50,
+                            size = 70,
                             children =
                             {
                                 csharpEditor
@@ -147,7 +147,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             attributeName = "className";
         }
-        
+        if (attributeName == "for")
+        {
+            attributeName = "htmlFor";
+        }
+
         if (attributeName == "style")
         {
             var map = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(Style.ParseCss(htmlAttribute.Value), new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
@@ -226,7 +230,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             attributeLines.Insert(0, $"text = \"{htmlNode.ChildNodes[0].InnerText}\"");
 
             // one line
-            if (attributeLines.Count < 4)
+            if (attributeLines.Count < 3)
             {
                 return new List<string>
                 {
@@ -246,6 +250,28 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 lines.Add("}");
 
                 return lines;
+            }
+        }
+
+        // check can be written in one line
+        {
+            if (htmlNode.ChildNodes.Count == 0)
+            {
+                var attributeLines = ToCSharpCode(htmlNode.Attributes);
+                if (attributeLines.Count > 0 && attributeLines.Count < 3)
+                {
+                    return new List<string>
+                    {
+                        // one line
+                        $"new {htmlNode.Name} {{ {string.Join(", ", attributeLines)} }}"
+                    };
+                }
+
+                return new List<string>
+                {
+                    // one line
+                    $"new {htmlNode.Name}()"
+                };
             }
         }
 
@@ -291,6 +317,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 lines.Add("}");
             }
 
+            if (lines[^1].EndsWith(",", StringComparison.OrdinalIgnoreCase))
+            {
+                lines[^1] = lines[^1].Remove(lines[^1].Length - 1);
+            }
+            
             lines.Add("}");
 
             return lines;
