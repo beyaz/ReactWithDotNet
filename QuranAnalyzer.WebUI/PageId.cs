@@ -14,6 +14,7 @@ static class PageId
     public const string CharacterCounting = "7";
     public const string PageIdOfMushafOptionsDetail = "7";
     public const string WordSearchingPage = "8";
+    public const string AlternativeSystems = "9";
 }
 
 static class QueryKey

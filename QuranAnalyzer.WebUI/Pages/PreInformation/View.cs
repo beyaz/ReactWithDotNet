@@ -1,6 +1,6 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using static QuranAnalyzer.WebUI.Extensions;
-using static QuranAnalyzer.WebUI.ResourceAccess;
+
 
 namespace QuranAnalyzer.WebUI.Pages.PreInformation;
 

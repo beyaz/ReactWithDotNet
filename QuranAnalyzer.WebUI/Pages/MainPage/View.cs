@@ -139,6 +139,11 @@ class View : ReactComponent<MainViewModel>
                 return new WordSearchingPage.WordSearchingView();
             }
 
+            if (state.PageId == PageId.AlternativeSystems)
+            {
+                return new AlternativeSystems.AlternativeSystemsView();
+            }
+
             return new MainPageContent();
         }
     }
