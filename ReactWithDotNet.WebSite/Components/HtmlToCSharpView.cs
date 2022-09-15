@@ -145,7 +145,13 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         if (htmlAttribute.Name == "style")
         {
             var map = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(Style.ParseCss(htmlAttribute.Value),new JsonSerializerSettings{DefaultValueHandling = DefaultValueHandling.Ignore}));
+            if (map != null)
+            {
+                var lines = new List<string>();
+                
+                lines.AddRange(map.Select(x => $"{x.Key} = \"{x.Value}\""));
 
+            }
             var value = String.Join("," + Environment.NewLine, map.Select(x => $"  {x.Key} = \"{x.Value}\""));
             
             return $"{htmlAttribute.Name} =" + Environment.NewLine+
@@ -186,6 +192,35 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             return sb.ToString();
         }
         
+        
+        return sb.ToString();
+    }
+
+    static string ToCSharpCode(IEnumerable<string> lines)
+    {
+        var sb = new StringBuilder();
+
+        var padding = 0;
+        
+        foreach (var line in lines)
+        {
+            var paddingAsString = "".PadRight(padding, ' ');
+            if (line == "{")
+            {
+                sb.AppendLine(paddingAsString+line);
+                padding++;
+                continue;
+            }
+
+            if (line == "}")
+            {
+                sb.AppendLine(paddingAsString + line);
+                padding--;
+                continue;
+            }
+
+            sb.AppendLine(paddingAsString + line);
+        }
         
         return sb.ToString();
     }
