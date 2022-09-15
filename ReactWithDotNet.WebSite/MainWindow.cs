@@ -13,17 +13,25 @@ public class MainWindow : ReactComponent
 
     protected override Element render()
     {
-        if (PageId == "1")
+        if (PageId == nameof(FigmaCss2ReactInlineStyleConverterView))
         {
             return new FigmaCss2ReactInlineStyleConverterView();
         }
 
-        if (PageId == "2")
+        if (PageId == nameof(HtmlToCSharpView))
         {
             return new HtmlToCSharpView();
         }
 
-        return new div("Aloha");
+        return new div
+        {
+            style = { width_height = "100%", display = "flex", flexDirection = "column", gap = "10px", justifyContent = "center", alignItems = "center" },
+            children =
+            {
+                new a { text = "Figma Css -> React Inline Style Converter", href = $"?{QueryKey.Page}={nameof(FigmaCss2ReactInlineStyleConverterView)}" },
+                new a { text = "Html -> ReactWithDotNet", href                   = $"?{QueryKey.Page}={nameof(HtmlToCSharpView)}" }
+            }
+        };
 
     }
 }
