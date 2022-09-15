@@ -142,7 +142,13 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
     {
         var lines = new List<string>();
 
-        if (htmlAttribute.Name == "style")
+        var attributeName = htmlAttribute.Name;
+        if (attributeName == "class")
+        {
+            attributeName = "className";
+        }
+        
+        if (attributeName == "style")
         {
             var map = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(Style.ParseCss(htmlAttribute.Value), new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
             if (map?.Count > 0)
@@ -150,7 +156,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 // as one line
                 if (map.Count <= 3)
                 {
-                    lines.Add($"{htmlAttribute.Name} = {{ {string.Join(", ", map.Select(x => $"{x.Key} = \"{x.Value}\""))} }}");
+                    lines.Add($"{attributeName} = {{ {string.Join(", ", map.Select(x => $"{x.Key} = \"{x.Value}\""))} }}");
                     return lines;
                 }
 
@@ -162,7 +168,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     lines[i] += ",";
                 }
 
-                lines.Insert(0, $"{htmlAttribute.Name} =");
+                lines.Insert(0, $"{attributeName} =");
                 lines.Insert(1, "{");
                 lines.Add("}");
 
@@ -172,7 +178,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             return lines;
         }
 
-        lines.Add($"{htmlAttribute.Name} = \"{htmlAttribute.Value}\"");
+        lines.Add($"{attributeName} = \"{htmlAttribute.Value}\"");
 
         return lines;
     }
