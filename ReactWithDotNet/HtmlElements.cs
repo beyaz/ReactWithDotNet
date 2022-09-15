@@ -6,6 +6,8 @@ namespace ReactWithDotNet;
 
 public class button : HtmlElement
 {
+    [React]
+    public string type { get; set; }
 }
 
 public class label : HtmlElement
@@ -111,6 +113,17 @@ public class h1 : HtmlElement
         this.innerText = innerText;
     }
 }
+public class header : HtmlElement
+{
+    public header()
+    {
+    }
+
+    public header(string innerText)
+    {
+        this.innerText = innerText;
+    }
+}
 
 public class a : HtmlElement
 {
@@ -119,6 +132,11 @@ public class a : HtmlElement
     
     [React]
     public string target { get; set; }
+
+
+    [React]
+    public string title { get; set; }
+    
 }
 public class lu : HtmlElement
 {
@@ -147,6 +165,15 @@ public class img : HtmlElement
 public class nav : HtmlElement
 {
 }
+
+public class main : HtmlElement
+{
+}
+public class footer : HtmlElement
+{
+}
+
+
 
 public class HtmlTextNode : HtmlElement
 {
