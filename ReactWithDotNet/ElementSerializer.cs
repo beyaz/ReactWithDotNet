@@ -406,6 +406,12 @@ public static class ElementSerializer
         if (state == null)
         {
             reactStatefulComponent.InvokeConstructor();
+
+            // maybe developer forget init state
+            if (reactStatefulComponent is ReactComponent<EmptyState> reactComponent && reactComponent.state == null)
+            {
+                reactComponent.state = new EmptyState();
+            }
         }
         
 
