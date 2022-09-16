@@ -17,3 +17,27 @@ pre {
     height: 100%;
 }
 
+footer {
+    background: '#4A4A49';
+    color: '#F6F1E4';
+    padding-top: 64px;
+}
+footer.menus.menu-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+footer.menus.menu-item {
+    padding: 4px 0;
+}
+footer.menus.menu-item i {
+    margin-right: 8px;
+}
+footer.tursab {
+    width: 117px;
+    height: 40px;
+}
+footer.copyright {
+    font-size: 14px;
+    border-top: 1px solid #F6F1E4;
+}

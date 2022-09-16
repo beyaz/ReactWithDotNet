@@ -14,7 +14,7 @@ public sealed class div : HtmlElement
 
     public div(Style style)
     {
-        style.Import(style);
+        this.style.Import(style);
     }
 
     public div(string innerText)
