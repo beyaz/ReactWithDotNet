@@ -23,14 +23,11 @@ public class MainWindow : ReactComponent
             return new HtmlToCSharpView();
         }
 
-        return new div
+        return new divVerticalCentered
         {
-            style = { width_height = "100%", display = "flex", flexDirection = "column", gap = "10px", justifyContent = "center", alignItems = "center", textAlign = "center"},
-            children =
-            {
-                new a { text = "Figma css to React inline style", href = $"?{QueryKey.Page}={nameof(FigmaCss2ReactInlineStyleConverterView)}" },
-                new a { text = "Html to ReactWithDotNet", href                   = $"?{QueryKey.Page}={nameof(HtmlToCSharpView)}" }
-            }
+            new a { text = "Figma css to React inline style", href = $"?{QueryKey.Page}={nameof(FigmaCss2ReactInlineStyleConverterView)}" },
+
+            new a { text = "Html to ReactWithDotNet", href = $"?{QueryKey.Page}={nameof(HtmlToCSharpView)}" }
         };
 
     }

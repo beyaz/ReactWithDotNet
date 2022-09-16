@@ -45,3 +45,35 @@ public sealed class VStack : HtmlElement
         style.height        = "100%";
     }
 }
+
+public sealed class divVerticalCentered : HtmlElement
+{
+    public override string Type => nameof(div);
+    
+    public divVerticalCentered(int gapAsPixel = 10)
+    {
+        style.width_height   = "100%";
+        style.display        = "flex";
+        style.flexDirection  = "column";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+        style.textAlign      = "center";
+        style.gap            = gapAsPixel + "px";
+    }
+}
+
+public sealed class divHorizontalCentered : HtmlElement
+{
+    public override string Type => nameof(div);
+
+    public divHorizontalCentered(int gapAsPixel = 10)
+    {
+        style.width_height   = "100%";
+        style.display        = "flex";
+        style.flexDirection  = "row";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+        style.textAlign      = "center";
+        style.gap            = gapAsPixel + "px";
+    }
+}
