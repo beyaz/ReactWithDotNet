@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Text.Json.Serialization;
+
+namespace ReactWithDotNet;
 
 partial class Style
 {
@@ -3891,6 +3893,8 @@ partial class Style
         }
     }
 
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public bool IsEmpty
     {
         get
