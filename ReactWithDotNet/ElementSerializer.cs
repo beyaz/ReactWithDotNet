@@ -455,7 +455,9 @@ public static class ElementSerializer
                 propertyInfo.Name == nameof(reactStatefulComponent.key) ||
                 propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
                 (propertyInfo.Name == nameof(ISupportMouseEnter.IsMouseEntered) && supportMouseEnter is not null) ||
-                propertyInfo.Name == "state")
+                propertyInfo.Name == "state" ||
+                propertyInfo.GetValue(reactStatefulComponent)  is Delegate
+                )
             {
                 continue;
             }
