@@ -14,7 +14,6 @@ class Header : ReactComponent<HeaderState>
     protected override void constructor()
     {
         state = new HeaderState();
-        
     }
 
     protected override Element render()
@@ -29,7 +28,7 @@ class Header : ReactComponent<HeaderState>
             transition   = "0.35sn",
             borderBottom = "1px solid #EDEDED",
             fontWeight = "600",
-            color = Mixin.w50
+            color = Primary.W50
             
         };
         

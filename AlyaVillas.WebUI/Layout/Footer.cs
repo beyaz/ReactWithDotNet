@@ -135,9 +135,9 @@ public class Footer: ReactComponent
             
 
     }
-    static Element copyRight()
+    Element copyRight()
     {
-        return new div(new Style {display = "flex" ,alignItems = "center", justifyContent = "space-between", fontSize = "14px", borderTop = $"1px solid {w50}", paddingTopBottom = "16px"})
+        return new div(new Style {display = "flex" ,alignItems = "center", justifyContent = "space-between", fontSize = "14px", borderTop = $"1px solid {Primary.W50}", paddingTopBottom = "16px"})
         {
             new a{text = "Güvenlik Gizlilik"},
             new a{text = "® 2022 Alya Villas"}

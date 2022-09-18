@@ -32,9 +32,6 @@ static class Mixin
     public static int headerHeight= 90;
     public static int headerHeightMobile =56;
 
-    public static string w50 = "#F6F1E4";
-
-
     internal static bool IsMobile(this ReactContext reactContext)
     {
         return reactContext.ClientWidth <= 768;
