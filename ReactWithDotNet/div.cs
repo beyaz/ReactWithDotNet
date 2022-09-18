@@ -12,13 +12,13 @@ public sealed class div : HtmlElement
     {
     }
 
-    public div(Style style)
-    {
-        this.style.Import(style);
-    }
+    
 
     public div(string innerText)
     {
         this.innerText = innerText;
     }
+
+    public div(params Action<HtmlElement>[] modifiers) : base(modifiers) { }
+    public div(Style style) : base(style) { }
 }

@@ -1,5 +1,4 @@
-﻿using static ReactWithDotNet.Mixin;
-
+﻿
 namespace AlyaVillas.WebUI.Components;
 
 
@@ -111,8 +110,7 @@ class Header : ReactComponent<HeaderState>
 
         static Element UserIcon()
         {
-            // TODO: icon
-            return new i { className = $"icon icon-user", style = { color = " " } };
+            return new i(ClassName("icon icon-user"));
         }
 
         static Element Menutem(string text,  string href = null, string icon = "icon-arrow-right-rectangle")
@@ -135,8 +133,8 @@ class Header : ReactComponent<HeaderState>
                 {
                     new FlexRow(FontWeight600, AlignItemsCenter, PaddingLeftRight(16))
                     {
-                        new div("Book Now"){style = { marginRight                   = "8px"}},
-                        new i {className    = $"icon icon-arrow-right", style = { color = " "}},
+                        new div(Text("Book Now"), MarginRight(8)),
+                        new i(ClassName("icon icon-arrow-right"))
                     }
                 }
             };

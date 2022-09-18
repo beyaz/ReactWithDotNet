@@ -44,6 +44,9 @@ public class input : HtmlElement
 
 public class i : HtmlElement
 {
+    public i() { }
+    public i(params Action<HtmlElement>[] modifiers) : base(modifiers) { }
+    public i(Style style) : base(style) { }
 }
 public class b : HtmlElement
 {
