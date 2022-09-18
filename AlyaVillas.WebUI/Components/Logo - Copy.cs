@@ -26,7 +26,7 @@ public class BrownButton : ReactComponent
             children =
             {
                 new div(Text){style = { marginRight                           = "8px"}},
-                new i {className    = "icon icon-caret-down", style = { color = "white"}},
+                new i {className    = $"icon {Icon}", style = { color = "white"}},
             }
         };
     }

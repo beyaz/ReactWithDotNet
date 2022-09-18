@@ -77,3 +77,29 @@ public sealed class divHorizontalCentered : HtmlElement
         style.gap            = gapAsPixel + "px";
     }
 }
+
+public sealed class FlexRow : HtmlElement
+{
+    public override string Type => nameof(div);
+
+    public FlexRow(params Action<HtmlElement>[] modifiers)
+    {
+        style.display       = "flex";
+        style.flexDirection = "row";
+
+        this.Apply(modifiers);
+    }
+}
+
+public sealed class FlexColumn : HtmlElement
+{
+    public override string Type => nameof(div);
+
+    public FlexColumn(params Action<HtmlElement>[] modifiers)
+    {
+        style.display       = "flex";
+        style.flexDirection = "column";
+
+        this.Apply(modifiers);
+    }
+}

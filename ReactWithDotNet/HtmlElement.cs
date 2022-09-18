@@ -1,10 +1,24 @@
-﻿using System;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
 public abstract class HtmlElement : Element
 {
+    protected HtmlElement()
+    {
+        
+    }
+
+    protected HtmlElement(params Action<HtmlElement>[] modifiers)
+    {
+        this.Apply(modifiers);
+    }
+
+    protected HtmlElement(Style style)
+    {
+        this.style.Import(style);
+    }
+    
 
     /// <summary>
     ///     Gets the style.

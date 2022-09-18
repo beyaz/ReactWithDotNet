@@ -126,6 +126,9 @@ public class header : HtmlElement
     {
         this.innerText = innerText;
     }
+
+    public header(params Action<HtmlElement>[] modifiers):base(modifiers) { }
+    public header(Style style):base(style) { }
 }
 
 public class a : HtmlElement

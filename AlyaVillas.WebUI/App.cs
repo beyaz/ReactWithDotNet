@@ -33,6 +33,12 @@ static class App
     public static int headerHeightMobile =56;
 
     public static string w50 = "#F6F1E4";
+
+
+    internal static bool IsMobile(this ReactContext reactContext)
+    {
+        return reactContext.ClientWidth <= 768;
+    }
 }
 
 enum MediaSize
@@ -49,6 +55,13 @@ enum MediaSize
 
 class container :   ReactWithDotNet.ReactComponent
 {
+    readonly Action<HtmlElement>[] modifiers;
+
+    public container(params Action<HtmlElement>[] modifiers)
+    {
+        this.modifiers = modifiers;
+    }
+        
     protected override Element render()
     {
         var style = new Style
@@ -59,7 +72,7 @@ class container :   ReactWithDotNet.ReactComponent
             padding = "0 40px"
         };
 
-        if (Context.Is(phone))
+        if (Context.IsMobile())
         {
             style.padding  = "0 24px";
             style.maxWidth = "100%";
@@ -71,9 +84,13 @@ class container :   ReactWithDotNet.ReactComponent
             style.maxWidth = "100%";
         }
 
-        return new div(style)
+        var returnDiv = new div(style)
         {
             Children = children
         };
+
+        returnDiv.Apply(modifiers);
+        
+        return returnDiv;
     }
 }

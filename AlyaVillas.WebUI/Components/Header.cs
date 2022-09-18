@@ -1,4 +1,6 @@
-﻿namespace AlyaVillas.WebUI.Components;
+﻿using static ReactWithDotNet.Mixin;
+
+namespace AlyaVillas.WebUI.Components;
 
 
 class HeaderState
@@ -16,25 +18,37 @@ class Header : ReactComponent<HeaderState>
 
     protected override Element render()
     {
-        return new container
+        var headerStyle = new Style
         {
-            new div
+            position     = "sticky",
+            top          = "0px",
+            left         = "0px",
+            right        = "0px",
+            zIndex       = "2",
+            transition   = "0.35sn",
+            borderBottom = "1px solid #EDEDED",
+            fontWeight = "600"
+            
+        };
+        
+        return new header(headerStyle)
+        {
+            new container(BoxSizingBorderBox)
             {
-                style = { display = "flex", direction = "row", fontSize = "14px"},
-                children =
+                new div
                 {
-                    new Logo(),
-                    new HSpace(50),
-                    new div
+                    style = { boxSizing = "border-box", display = "flex", direction = "row", height = Context.IsMobile() ? "60px" : "90px"},
+                    children =
                     {
-                        style = { display = "flex", alignItems = "center", justifyContent = "space-between", width = "100%"},
-                        children =
+                        new FlexRow(AlignItemsCenter, JustifyContentSpaceBetween,StretchWidth)
                         {
                             new div
                             {
                                 style = { display = "flex", direction = "row", gap = "20px", alignItems = "center"},
                                 children =
                                 {
+                                    new Logo(),
+                                    new HSpace(30),
                                     Menutem("Bodrum", "/villa/bodrum"),
                                     Menutem("Marmaris"),
                                     Menutem("Maşukiye")
@@ -45,15 +59,16 @@ class Header : ReactComponent<HeaderState>
                                 style = { display = "flex", direction = "row", gap = "20px", alignItems = "center"},
                                 children =
                                 {
-                                    Menutem("Hemen Ara: 0555 055 55 55", "/villa/bodrum"),
+                                    Menutem("0850 345 34 65", "/villa/bodrum", "icon-phone-call"),
                                     Language(),
                                     UserIcon(),
-                                    new BrownButton{ Text = "Rezervasyon Yap", Icon = "right-arrow", OnClick = OnLanguageClicked}
+                                    // new BrownButton{ Text = "Rezervasyon Yap", Icon = "icon-arrow-right", OnClick = OnLanguageClicked}
+                                    BookNow()
                                 }
                             }
                         }
-                    }
 
+                    }
                 }
             }
         };
@@ -97,28 +112,36 @@ class Header : ReactComponent<HeaderState>
         static Element UserIcon()
         {
             // TODO: icon
-            return new div { style = { width_height = "20px", border = "1px solid red"}};
+            return new i { className = $"icon icon-user", style = { color = " " } };
         }
 
-        static Element Menutem(string text, string href = null)
+        static Element Menutem(string text,  string href = null, string icon = "icon-arrow-right-rectangle")
         {
-            return new HStack
+            return new FlexRow(FontWeight600, AlignItemsCenter, PaddingLeftRight(16))
             {
-                new i {className = "icon icon-arrow-right-rectangle"},
+                new i {className = $"icon {icon}"},
                 new HSpace(8),
                 new div(text)
             };
-                
-            //return new div
-            //{
-            //    style = { display = "flex", direction = "row", gap = "8px"},
-            //    children =
-            //    {
-            //        new i {className = "icon icon-arrow-right-rectangle"},
-            //        new div(text)
-            //    }
-            //};
         }
+
+        Element BookNow()
+        {
+            return new a
+            {
+                style = { textDecoration = "none", color = "inherit", border = "1px solid rgba(74,74,73,0.5)", padding = "8px 16px"},
+                href = "#",
+                children =
+                {
+                    new FlexRow(FontWeight600, AlignItemsCenter, PaddingLeftRight(16))
+                    {
+                        new div("Book Now"){style = { marginRight                   = "8px"}},
+                        new i {className    = $"icon icon-arrow-right", style = { color = " "}},
+                    }
+                }
+            };
+        }
+
     }
 
     void OnLanguageClicked(MouseEvent e)
