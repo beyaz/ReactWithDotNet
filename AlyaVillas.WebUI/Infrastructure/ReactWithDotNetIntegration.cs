@@ -98,6 +98,6 @@ static class ReactWithDotNetIntegration
 
         context.Response.ContentType = "application/json";
 
-        await context.Response.WriteAsync(Mixin.ToJson(response));
+        await context.Response.WriteAsync(response.ToJson());
     }
 }

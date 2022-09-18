@@ -1,10 +1,7 @@
-using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using ReactWithDotNet;
 
 namespace QuranAnalyzer.WebUI;
 
@@ -98,6 +95,6 @@ static class ReactWithDotNetIntegration
 
         context.Response.ContentType = "application/json";
 
-        await context.Response.WriteAsync(Mixin.ToJson(response));
+        await context.Response.WriteAsync(response.ToJson());
     }
 }

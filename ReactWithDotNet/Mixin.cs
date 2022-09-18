@@ -4,9 +4,7 @@ namespace ReactWithDotNet;
 
 public static class Mixin
 {
-    
-
-    public static string ToJson(object value)
+    public static string ToJson(this ComponentResponse value)
     {
         var options = new JsonSerializerOptions();
 
