@@ -25,7 +25,7 @@ public abstract class HtmlElement : Element
     ///     Gets or sets the on click.
     /// </summary>
     [React]
-    public Action<string> onClick { get; set; }
+    public Action<MouseEvent> onClick { get; set; }
 
     [React]
     public Action<MouseEvent> onMouseEnter { get; set; }

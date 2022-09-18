@@ -86,7 +86,7 @@ class ArabicKeyboardLetterView : ReactComponent, ISupportMouseEnter
         };
     }
 
-    void OnArabicKeyboardLetterClicked(string _)
+    void OnArabicKeyboardLetterClicked(MouseEvent e)
     {
         ClientTask.DispatchEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicLetter);
     }

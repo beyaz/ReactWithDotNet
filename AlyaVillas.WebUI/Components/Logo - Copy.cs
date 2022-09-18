@@ -8,7 +8,7 @@ public class BrownButton : ReactComponent
         
     public string Icon { get; set; }
 
-    public Action<string> OnClick { get; set; }
+    public Action<MouseEvent> OnClick { get; set; }
 
     protected override Element render()
     {

@@ -833,23 +833,33 @@ function NormalizeEventArguments(eventArguments)
 
 function ConvertToSyntheticMouseEvent(e)
 {
-    var firstNotEmptyId = NVL(GoUpwardFindFirst(e.target, HasId), e.target).id;
+    let firstNotEmptyId = NVL(GoUpwardFindFirst(e.target, HasId), e.target).id;
     if (firstNotEmptyId === '')
     {
         firstNotEmptyId = null;
     }
 
+    const target = ConvertToShadowHtmlElement(e.target);
+
     return {
+        FirstNotEmptyId: firstNotEmptyId,
+        
+        altKey:    e.altKey,
+        bubbles:   e.bubbles,
         clientX:   e.clientX,
         clientY:   e.clientY,
+        ctrlKey:   e.ctrlKey,
+        metaKey:   e.metaKey,
+        movementX: e.movementX,
+        movementY: e.movementY,
         pageX:     e.pageX,
-        pageY:     e.pageY,
+        pageY:     e.pageY,        
         screenX:   e.screenX,
         screenY:   e.screenY,
-        timeStamp: e.timeStamp,
-        type:      e.type,
-        FirstNotEmptyId: firstNotEmptyId,
-        target: ConvertToShadowHtmlElement(e.target)
+        shiftKey:  e.shiftKey,
+        target:    target,
+        timeStamp: e.timeStamp,        
+        type:      e.type
     };
 }
 

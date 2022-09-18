@@ -121,12 +121,7 @@ class Header : ReactComponent<HeaderState>
         }
     }
 
-    void OnLanguageClicked(string _)
-    {
-        state.LanguagePopupIsOpen = !state.LanguagePopupIsOpen;
-    }
-
-    void OnLanguageClicked2(string _)
+    void OnLanguageClicked(MouseEvent e)
     {
         state.LanguagePopupIsOpen = !state.LanguagePopupIsOpen;
     }

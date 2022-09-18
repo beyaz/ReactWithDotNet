@@ -208,12 +208,12 @@ class VillaSearchView : ReactComponent
 
     }
 
-    void ShowDetail(string _)
+    void ShowDetail(MouseEvent e)
     {
         this.showMenu = true;
     }
 
-    void CloseDetail(string _)
+    void CloseDetail(MouseEvent e)
     {
         this.showMenu = false;
     }

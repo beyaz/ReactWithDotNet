@@ -116,6 +116,6 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
         return element;
     }
 
-    void OnTabHeaderClick(string tabIdentifier) => state.SelectedTabIdentifier = tabIdentifier;
+    void OnTabHeaderClick(MouseEvent e) => state.SelectedTabIdentifier = e.FirstNotEmptyId;
     #endregion
 }

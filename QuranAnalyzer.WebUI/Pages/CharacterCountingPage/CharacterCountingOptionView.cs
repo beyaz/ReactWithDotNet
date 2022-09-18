@@ -11,7 +11,7 @@ class CharacterCountingOptionState
 
 class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
 {
-    void KeyboardClicked(string _)
+    void KeyboardClicked(MouseEvent e)
     {
         if (state.ShowKeyborad == true)
         {
@@ -25,7 +25,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
         state.ShowMushafOptions = null;
     }
 
-    void OnMushafOptionClicked(string _)
+    void OnMushafOptionClicked(MouseEvent e)
     {
         if (state.ShowMushafOptions == true)
         {
