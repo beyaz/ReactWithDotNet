@@ -9,6 +9,8 @@ class HeaderState
 
 class Header : ReactComponent<HeaderState>
 {
+    public bool IsTransparent { get; set; }
+    
     protected override void constructor()
     {
         state = new HeaderState();
@@ -26,7 +28,8 @@ class Header : ReactComponent<HeaderState>
             zIndex       = "2",
             transition   = "0.35sn",
             borderBottom = "1px solid #EDEDED",
-            fontWeight = "600"
+            fontWeight = "600",
+            color = App.w50
             
         };
         
