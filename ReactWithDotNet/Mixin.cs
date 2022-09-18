@@ -7,6 +7,10 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 
 public static class Mixin
 {
+
+    public static HtmlElementModifier Gap(double gap) => element => element.style.gap = gap.AsPixel();
+    public static HtmlElementModifier Gap(string gap) => element => element.style.gap = gap;
+
     public static HtmlElementModifier DisplayFlex => element => element.style.display = "flex";
     public static HtmlElementModifier FlexDirectionRow => element => element.style.flexDirection = "row";
     public static HtmlElementModifier FlexDirectionColumn=> element => element.style.flexDirection = "column";
