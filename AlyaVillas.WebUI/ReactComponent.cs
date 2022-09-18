@@ -4,12 +4,17 @@ public abstract class ReactComponent<TState> : ReactWithDotNet.ReactComponent<TS
 {
     protected Primary Primary { get; } = new();
     protected Natural Natural { get; } = new();
+
+    protected bool IsMobile => Context.ClientWidth <= 768;
 }
 
 public abstract class ReactComponent : ReactWithDotNet.ReactComponent
 {
     protected Primary Primary { get; } = new();
     protected Natural Natural { get; } = new();
+
+    protected  bool IsMobile=>Context.ClientWidth <= 768;
+    
 }
 
 public sealed class Primary

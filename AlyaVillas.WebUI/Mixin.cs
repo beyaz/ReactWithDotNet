@@ -32,10 +32,7 @@ static class Mixin
     public static int headerHeight= 90;
     public static int headerHeightMobile =56;
 
-    internal static bool IsMobile(this ReactContext reactContext)
-    {
-        return reactContext.ClientWidth <= 768;
-    }
+    
 
     public static HtmlElementModifier TitleStyle => element =>
     {

@@ -7,6 +7,13 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 
 public static class Mixin
 {
+    public static HtmlElementModifier Width(double width) => element => element.style.width = width.AsPixel();
+    public static HtmlElementModifier Width(string width) => element => element.style.width = width;
+
+    public static HtmlElementModifier Height(double height) => Height(height.AsPixel());
+    public static HtmlElementModifier Height(string height) => element => element.style.height = height;
+
+
 
     public static HtmlElementModifier Gap(double gap) => element => element.style.gap = gap.AsPixel();
     public static HtmlElementModifier Gap(string gap) => element => element.style.gap = gap;

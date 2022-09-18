@@ -1,5 +1,4 @@
 ﻿
-using System.Drawing;
 
 namespace AlyaVillas.WebUI.Components;
 
@@ -39,32 +38,27 @@ class Header : ReactComponent<HeaderState>
         {
             new container(BoxSizingBorderBox)
             {
-                new div
+                new FlexRow(BoxSizingBorderBox,Height(IsMobile ? 60 : 90))
                 {
-                    style = { boxSizing = "border-box", display = "flex", direction = "row", height = Context.IsMobile() ? "60px" : "90px"},
-                    children =
+                    new FlexRow(AlignItemsCenter, JustifyContentSpaceBetween,StretchWidth)
                     {
-                        new FlexRow(AlignItemsCenter, JustifyContentSpaceBetween,StretchWidth)
+                        new FlexRow(AlignItemsCenter, Gap(65))
                         {
-                            new FlexRow(AlignItemsCenter, Gap(65))
+                            new Logo{On = IsTransparent ? "dark" : "light"},
+                            new FlexRow
                             {
-                                new Logo{On = IsTransparent ? "dark" : "light"},
-                                new FlexRow
-                                {
-                                    Menutem("Bodrum", "/villa/bodrum"),
-                                    Menutem("Marmaris"),
-                                    Menutem("Maşukiye")
-                                }
-                            },
-                            new FlexRow(Gap(20), AlignItemsCenter)
-                            {
-                                Menutem("0850 345 34 65", "/villa/bodrum", "icon-phone-call"),
-                                Language(),
-                                UserIcon(),
-                                new BookNow{IsTransparent = IsTransparent}
+                                Menutem("Bodrum", "/villa/bodrum"),
+                                Menutem("Marmaris"),
+                                Menutem("Maşukiye")
                             }
+                        },
+                        new FlexRow(Gap(20), AlignItemsCenter)
+                        {
+                            Menutem("0850 345 34 65", "/villa/bodrum", "icon-phone-call"),
+                            Language(),
+                            UserIcon(),
+                            new BookNow{IsTransparent = IsTransparent}
                         }
-
                     }
                 }
             }

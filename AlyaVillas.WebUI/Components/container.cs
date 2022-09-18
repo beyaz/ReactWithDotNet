@@ -1,6 +1,6 @@
 ﻿namespace AlyaVillas.WebUI;
 
-class container :   ReactWithDotNet.ReactComponent
+class container :   ReactComponent
 {
     readonly HtmlElementModifier[] modifiers;
 
@@ -19,7 +19,7 @@ class container :   ReactWithDotNet.ReactComponent
             padding  = "0 40px"
         };
 
-        if (Context.IsMobile())
+        if (IsMobile)
         {
             style.padding  = "0 24px";
             style.maxWidth = "100%";
