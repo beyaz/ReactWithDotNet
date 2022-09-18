@@ -10,6 +10,15 @@ public static class Mixin
     public static Action<HtmlElement> FlexDirectionColumn=> element => element.style.flexDirection = "column";
     public static Action<HtmlElement> JustifyContentSpaceBetween => element => element.style.justifyContent = "space-between";
     public static Action<HtmlElement> AlignItemsCenter=> element => element.style.alignItems = "center";
+
+    public static Action<HtmlElement> FontSize(string fontSize) => element => element.style.fontSize = fontSize;
+    public static Action<HtmlElement> FontSize(double fontSize) => element => element.style.fontSize = fontSize.AsPixel();
+
+    public static Action<HtmlElement> Color(string color) => element => element.style.color = color;
+
+    public static Action<HtmlElement> MaxWidth(string maxWidth) => element => element.style.maxWidth = maxWidth;
+    public static Action<HtmlElement> MaxWidth(double maxWidth) => element => element.style.maxWidth = maxWidth.AsPixel();
+
     public static Action<HtmlElement> StretchWidth => element => element.style.width = "100%";
     public static Action<HtmlElement> StretchHeight => element => element.style.height = "100%";
     public static Action<HtmlElement> StretchWidthHeight => element => element.style.width_height = "100%";

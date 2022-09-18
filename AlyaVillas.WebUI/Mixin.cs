@@ -36,6 +36,13 @@ static class Mixin
     {
         return reactContext.ClientWidth <= 768;
     }
+
+    public static Action<HtmlElement> TitleStyle => element =>
+    {
+        element.style.fontWeight = "400";
+        element.style.lineHeight = "1.25";
+        element.style.fontFamily = "Marcellus,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif";
+    };
 }
 
 enum MediaSize

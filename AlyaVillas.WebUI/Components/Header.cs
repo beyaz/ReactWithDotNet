@@ -26,7 +26,7 @@ class Header : ReactComponent<HeaderState>
             top          = "0px",
             left         = "0px",
             right        = "0px",
-            zIndex       = "2",
+            zIndex       = "3",
             transition   = "0.35sn",
             borderBottom = IsTransparent ? "none" : $"1px solid {Natural.W75}",
             background   = IsTransparent ? "transparent" : Natural.W0,
@@ -51,7 +51,7 @@ class Header : ReactComponent<HeaderState>
                                 style = { display = "flex", direction = "row", gap = "20px", alignItems = "center"},
                                 children =
                                 {
-                                    new Logo(),
+                                    new Logo{On = IsTransparent ? "dark" : "light"},
                                     new HSpace(30),
                                     Menutem("Bodrum", "/villa/bodrum"),
                                     Menutem("Marmaris"),
@@ -85,11 +85,11 @@ class Header : ReactComponent<HeaderState>
                onClick = OnLanguageClicked,
                children =
                {
-                   new HStack
+                   new FlexRow(AlignItemsCenter)
                    {
                        new div("TR / EUR"),
                        new HSpace(5),
-                       new i {className = "icon icon-caret-down"},
+                       new i(Color("white")) {className = "icon icon-caret-down"},
                    },
                    LanguagePopup()
                }

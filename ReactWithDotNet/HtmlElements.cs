@@ -118,6 +118,9 @@ public class h1 : HtmlElement
     {
         this.innerText = innerText;
     }
+
+    public h1(params Action<HtmlElement>[] modifiers) : base(modifiers) { }
+    public h1(Style style) : base(style) { }
 }
 public class header : HtmlElement
 {
