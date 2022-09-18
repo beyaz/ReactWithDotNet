@@ -22,6 +22,10 @@ const ComponentRefKey = '$Key';
 const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
 const DotNetProperties = 'DotNetProperties';
 
+function a()
+{
+    return <div onClick={e => e.altKey.toString()} />
+}
 const EventBus =
 {
     On: function(event, callback)
