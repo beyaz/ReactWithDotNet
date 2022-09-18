@@ -16,7 +16,16 @@ public sealed class SyntheticMouseEvent
     public double timeStamp { get; set; }
 
     public string type { get; set; }
+
+    public ShadowHtmlElement target { get; set; }
+
+    /// <summary>
+    /// this is the id of first element id which is 'has id value'
+    /// </summary>
+    public string FirstNotEmptyId { get; set; }
 }
+
+
 
 public class SyntheticEvent
 {
@@ -25,8 +34,11 @@ public class SyntheticEvent
 
 public class ShadowHtmlElement
 {
-    public int selectionStart { get; set; }
-    public string value { get; set; }
+    public string id { get; set; }
+    public string tagName { get; set; }
+
+    //public int selectionStart { get; set; }
+    //public string value { get; set; }
 }
 
 public sealed class MouseEvent

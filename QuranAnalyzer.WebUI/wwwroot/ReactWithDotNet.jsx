@@ -787,7 +787,7 @@ function NormalizeEventArguments(eventArguments)
 
         if (obj && obj._reactName === "onClick")
         {
-            return NVL(GoUpwardFindFirst(obj.target, HasId), obj.target).id;
+            return ConvertToSyntheticMouseEvent(obj);
         }
 
         // inputtext: // todo take from attribute
@@ -829,6 +829,36 @@ function NormalizeEventArguments(eventArguments)
         arr => arr.map(normalizeEventArgument),
         arr => arr.filter(IsNotEmptyObject)
     );
+}
+
+function ConvertToSyntheticMouseEvent(e)
+{
+    var firstNotEmptyId = NVL(GoUpwardFindFirst(e.target, HasId), e.target).id;
+    if (firstNotEmptyId === '')
+    {
+        firstNotEmptyId = null;
+    }
+
+    return {
+        clientX:   e.clientX,
+        clientY:   e.clientY,
+        pageX:     e.pageX,
+        pageY:     e.pageY,
+        screenX:   e.screenX,
+        screenY:   e.screenY,
+        timeStamp: e.timeStamp,
+        type:      e.type,
+        FirstNotEmptyId: firstNotEmptyId,
+        target: ConvertToShadowHtmlElement(e.target)
+    };
+}
+
+function ConvertToShadowHtmlElement(htmlElement)
+{
+    return {
+        tagName: htmlElement.tagName,
+        id: htmlElement.id
+    };
 }
 
 const EnableTraceOfClientTask = false;
