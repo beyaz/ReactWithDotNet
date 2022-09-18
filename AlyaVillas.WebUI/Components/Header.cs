@@ -1,4 +1,6 @@
 ﻿
+using System.Drawing;
+
 namespace AlyaVillas.WebUI.Components;
 
 
@@ -26,9 +28,10 @@ class Header : ReactComponent<HeaderState>
             right        = "0px",
             zIndex       = "2",
             transition   = "0.35sn",
-            borderBottom = "1px solid #EDEDED",
-            fontWeight = "600",
-            color = Primary.W50
+            borderBottom = IsTransparent ? "none" : $"1px solid {Natural.W75}",
+            background   = IsTransparent ? "transparent" : Natural.W0,
+            fontWeight   = "600",
+            color        = Primary.W50
             
         };
         
@@ -63,8 +66,7 @@ class Header : ReactComponent<HeaderState>
                                     Menutem("0850 345 34 65", "/villa/bodrum", "icon-phone-call"),
                                     Language(),
                                     UserIcon(),
-                                    // new BrownButton{ Text = "Rezervasyon Yap", Icon = "icon-arrow-right", OnClick = OnLanguageClicked}
-                                    BookNow()
+                                    new BookNow{IsTransparent = IsTransparent}
                                 }
                             }
                         }
@@ -125,22 +127,9 @@ class Header : ReactComponent<HeaderState>
             };
         }
 
-        Element BookNow()
-        {
-            return new a
-            {
-                style = { textDecoration = "none", color = "inherit", border = "1px solid rgba(74,74,73,0.5)", padding = "8px 16px"},
-                href = "#",
-                children =
-                {
-                    new FlexRow(FontWeight600, AlignItemsCenter, PaddingLeftRight(16))
-                    {
-                        new div(Text("Book Now"), MarginRight(8)),
-                        new i(ClassName("icon icon-arrow-right"))
-                    }
-                }
-            };
-        }
+        
+        
+        
 
     }
 
@@ -150,4 +139,33 @@ class Header : ReactComponent<HeaderState>
     }
 }
 
+class BookNow : ReactComponent, ISupportMouseEnter
+{
+    public bool IsMouseEntered { get; set; }
+    
+    public bool IsTransparent { get; set; }
+    
+    protected override Element render()
+    {
+        var borderColor = IsTransparent ? Primary.W50 : Natural.W900;
+
+        borderColor = HexToRgb(borderColor, IsMouseEntered ? 1 : 0.5);
+        
+        return new a
+        {
+            style = { textDecoration = "none", color = "inherit", border = $"1px solid {borderColor}", padding = "8px 16px" },
+            href  = "#",
+            children =
+            {
+                new FlexRow(FontWeight600, AlignItemsCenter, PaddingLeftRight(16))
+                {
+                    new div(Text("Book Now"), MarginRight(8)),
+                    new i(ClassName("icon icon-arrow-right"))
+                }
+            }
+        };
+    }
+
+    
+}
 

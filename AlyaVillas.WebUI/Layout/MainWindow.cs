@@ -10,7 +10,7 @@ class MainWindow : ReactComponent
         
         return new div
         {
-            new Header(),
+            new Header{IsTransparent = true},
             new HomeView(),
             new Footer()
         };

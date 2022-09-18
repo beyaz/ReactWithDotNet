@@ -3,13 +3,13 @@
 public abstract class ReactComponent<TState> : ReactWithDotNet.ReactComponent<TState> where TState : new()
 {
     protected Primary Primary { get; } = new();
-    protected Neutral Neutral { get; } = new();
+    protected Natural Natural { get; } = new();
 }
 
 public abstract class ReactComponent : ReactWithDotNet.ReactComponent
 {
     protected Primary Primary { get; } = new();
-    protected Neutral Neutral { get; } = new();
+    protected Natural Natural { get; } = new();
 }
 
 public sealed class Primary
@@ -20,7 +20,7 @@ public sealed class Primary
     public string W600 { get; set; } = "#987931";
 }
 
-public sealed class Neutral
+public sealed class Natural
 {
     public string W0 { get; set; } = "#FFFFFF";
     public string W50 { get; set; } = "#F6F6F6";

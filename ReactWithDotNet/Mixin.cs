@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Drawing;
+using System.Text.Json;
 
 namespace ReactWithDotNet;
 
@@ -23,6 +24,7 @@ public static class Mixin
     public static Action<HtmlElement> BoxSizingBorderBox => element => element.style.boxSizing = "border-box";
     public static Action<HtmlElement> Zindex(int zIndex) => element => element.style.zIndex = zIndex.ToString();
     public static Action<HtmlElement> Text(string innerText) => element => element.text = innerText;
+    
     
     #region Margin
     public static Action<HtmlElement> MarginRight(string marginRight) => element => element.style.marginRight = marginRight;
@@ -52,6 +54,19 @@ public static class Mixin
 
 
     internal static string AsPixel(this double value) => value + "px";
+
+    
+
+    public static string HexToRgb(string hexColor, double opacity = 1)
+    {
+        var color = ColorTranslator.FromHtml(hexColor);
+        
+        int   r     = Convert.ToInt16(color.R);
+        int   g     = Convert.ToInt16(color.G);
+        int   b     = Convert.ToInt16(color.B);
+        
+        return $"rgba({r}, {g}, {b}, {opacity})";
+    }
 
     public static void Apply(this HtmlElement htmlElement, params Action<HtmlElement>[] modifiers)
     {

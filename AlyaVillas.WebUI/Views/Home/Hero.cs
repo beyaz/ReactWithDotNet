@@ -31,7 +31,12 @@ namespace AlyaVillas.WebUI.Views.Home
                     {
                         marginTopBottom = "36px",
                         color = "white",
-                        fontSize = "58px"
+                        fontSize = "58px",
+                        maxWidth = "960px",
+                        
+                        fontWeight = "400",
+                        lineHeight = "1.25",
+                        fontFamily = "Marcellus,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif"
                     }}
                 }
             };
