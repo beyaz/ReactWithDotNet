@@ -48,14 +48,18 @@ class Header : ReactComponent<HeaderState>
                         {
                             new div
                             {
-                                style = { display = "flex", direction = "row", gap = "20px", alignItems = "center"},
+                                style = { display = "flex", direction = "row", alignItems = "center"},
                                 children =
                                 {
                                     new Logo{On = IsTransparent ? "dark" : "light"},
-                                    new HSpace(30),
-                                    Menutem("Bodrum", "/villa/bodrum"),
-                                    Menutem("Marmaris"),
-                                    Menutem("Maşukiye")
+                                    new HSpace(65),
+                                    new FlexRow
+                                    {
+                                        Menutem("Bodrum", "/villa/bodrum"),
+                                        Menutem("Marmaris"),
+                                        Menutem("Maşukiye")
+                                    }
+                                   
                                 }
                             },
                             new div
