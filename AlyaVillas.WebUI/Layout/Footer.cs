@@ -1,5 +1,5 @@
 ﻿using AlyaVillas.WebUI.Components;
-using static AlyaVillas.WebUI.App;
+using static AlyaVillas.WebUI.Mixin;
 using static AlyaVillas.WebUI.Extension;
 
 namespace AlyaVillas.WebUI.Layout;

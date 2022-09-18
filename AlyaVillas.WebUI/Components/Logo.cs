@@ -1,4 +1,4 @@
-﻿using static AlyaVillas.WebUI.App;
+﻿using static AlyaVillas.WebUI.Mixin;
 using static AlyaVillas.WebUI.MediaSize;
 
 namespace AlyaVillas.WebUI.Components

@@ -13,7 +13,7 @@ class container :   ReactWithDotNet.ReactComponent
     {
         var style = new Style
         {
-            maxWidth = $"{App.containerWidth}px",
+            maxWidth = $"{Mixin.containerWidth}px",
             width    = "100%",
             margin   = "0 auto",
             padding  = "0 40px"

@@ -17,7 +17,7 @@ namespace AlyaVillas.WebUI.Views.Home
                     left="0",
                     right="0",
                     zIndex = "1",
-                    background= $"url({App.ImageUrl("/assets/pages/home/hero/hero-image.jpg")})" ,
+                    background= $"url({Mixin.ImageUrl("/assets/pages/home/hero/hero-image.jpg")})" ,
                     backgroundSize = "100%"
                 }
             };
@@ -52,7 +52,7 @@ namespace AlyaVillas.WebUI.Views.Home
                     new container(Zindex(2), DisplayFlex, FlexDirectionColumn, AlignItemsCenter)
                     {
                         content,
-                        new img{src = App.ImageUrl("/assets/pages/home/hero/seperatordouble.svg"),style = { width = "85px", height = "27px", marginBottom = "50px"}}
+                        new img{src = Mixin.ImageUrl("/assets/pages/home/hero/seperatordouble.svg"),style = { width = "85px", height = "27px", marginBottom = "50px"}}
                     }
                 }
             };

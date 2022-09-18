@@ -2,7 +2,7 @@
 
 namespace AlyaVillas.WebUI;
 
-static class App
+static class Mixin
 {
     public static string SITE_SHORT_NAME { get; set; } = "Alya Villas";
 
