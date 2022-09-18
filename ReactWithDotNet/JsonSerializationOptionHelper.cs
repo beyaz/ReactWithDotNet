@@ -12,7 +12,7 @@ static class JsonSerializationOptionHelper
         options.WriteIndented    = true;
         options.IgnoreNullValues = true;
 
-        options.PropertyNamingPolicy = Mixin.JsonNamingPolicy;
+        options.PropertyNamingPolicy = null;
 
         options.Converters.Add(new JsonConverterForEnum());
 

@@ -1,29 +1,10 @@
 ﻿using System.Text.Json;
-using System.Web;
 
 namespace ReactWithDotNet;
 
-public static partial class Mixin
+public static class Mixin
 {
-    internal static IReadOnlyDictionary<string, string> ParseQueryString(string query)
-    {
-        var items = new Dictionary<string, string>();
-
-        if (query == null)
-        {
-            return items;
-        }
-
-        var nameValueCollection = HttpUtility.ParseQueryString(query);
-        foreach (var key in nameValueCollection.AllKeys)
-        {
-            items.Add(key, nameValueCollection.Get(key));
-        }
-
-        return items;
-    }
-
-    public static  JsonNamingPolicy JsonNamingPolicy;
+    
 
     public static string ToJson(object value)
     {
