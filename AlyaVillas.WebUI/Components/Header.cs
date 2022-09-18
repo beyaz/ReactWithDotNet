@@ -46,21 +46,19 @@ class Header : ReactComponent<HeaderState>
                     {
                         new FlexRow(AlignItemsCenter, JustifyContentSpaceBetween,StretchWidth)
                         {
-                            new div
+                            new FlexRow(AlignItemsCenter)
                             {
-                                style = { display = "flex", direction = "row", alignItems = "center"},
-                                children =
-                                {
-                                    new Logo{On = IsTransparent ? "dark" : "light"},
-                                    new HSpace(65),
-                                    new FlexRow
-                                    {
-                                        Menutem("Bodrum", "/villa/bodrum"),
-                                        Menutem("Marmaris"),
-                                        Menutem("Maşukiye")
-                                    }
-                                   
-                                }
+                               style = { gap = "65px"},
+                               children =
+                               {
+                                   new Logo{On = IsTransparent ? "dark" : "light"},
+                                   new FlexRow
+                                   {
+                                       Menutem("Bodrum", "/villa/bodrum"),
+                                       Menutem("Marmaris"),
+                                       Menutem("Maşukiye")
+                                   }
+                               }
                             },
                             new div
                             {
