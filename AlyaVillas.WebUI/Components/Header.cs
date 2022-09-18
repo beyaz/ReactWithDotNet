@@ -56,16 +56,12 @@ class Header : ReactComponent<HeaderState>
                                     Menutem("Maşukiye")
                                 }
                             },
-                            new div
+                            new FlexRow(Gap(20), AlignItemsCenter)
                             {
-                                style = { display = "flex", direction = "row", gap = "20px", alignItems = "center"},
-                                children =
-                                {
-                                    Menutem("0850 345 34 65", "/villa/bodrum", "icon-phone-call"),
-                                    Language(),
-                                    UserIcon(),
-                                    new BookNow{IsTransparent = IsTransparent}
-                                }
+                                Menutem("0850 345 34 65", "/villa/bodrum", "icon-phone-call"),
+                                Language(),
+                                UserIcon(),
+                                new BookNow{IsTransparent = IsTransparent}
                             }
                         }
 
