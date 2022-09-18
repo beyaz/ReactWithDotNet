@@ -9,7 +9,7 @@ public abstract class HtmlElement : Element
         
     }
 
-    protected HtmlElement(params Action<HtmlElement>[] modifiers)
+    protected HtmlElement(params HtmlElementModifier[] modifiers)
     {
         this.Apply(modifiers);
     }

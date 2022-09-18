@@ -37,7 +37,7 @@ static class Mixin
         return reactContext.ClientWidth <= 768;
     }
 
-    public static Action<HtmlElement> TitleStyle => element =>
+    public static HtmlElementModifier TitleStyle => element =>
     {
         element.style.fontWeight = "400";
         element.style.lineHeight = "1.25";

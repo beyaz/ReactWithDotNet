@@ -82,7 +82,7 @@ public sealed class FlexRow : HtmlElement
 {
     public override string Type => nameof(div);
 
-    public FlexRow(params Action<HtmlElement>[] modifiers)
+    public FlexRow(params HtmlElementModifier[] modifiers)
     {
         style.display       = "flex";
         style.flexDirection = "row";
@@ -95,7 +95,7 @@ public sealed class FlexColumn : HtmlElement
 {
     public override string Type => nameof(div);
 
-    public FlexColumn(params Action<HtmlElement>[] modifiers)
+    public FlexColumn(params HtmlElementModifier[] modifiers)
     {
         style.display       = "flex";
         style.flexDirection = "column";

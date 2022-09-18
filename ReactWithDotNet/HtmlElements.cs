@@ -45,7 +45,7 @@ public class input : HtmlElement
 public class i : HtmlElement
 {
     public i() { }
-    public i(params Action<HtmlElement>[] modifiers) : base(modifiers) { }
+    public i(params HtmlElementModifier[] modifiers) : base(modifiers) { }
     public i(Style style) : base(style) { }
 }
 public class b : HtmlElement
@@ -119,7 +119,7 @@ public class h1 : HtmlElement
         this.innerText = innerText;
     }
 
-    public h1(params Action<HtmlElement>[] modifiers) : base(modifiers) { }
+    public h1(params HtmlElementModifier[] modifiers) : base(modifiers) { }
     public h1(Style style) : base(style) { }
 }
 public class header : HtmlElement
@@ -133,7 +133,7 @@ public class header : HtmlElement
         this.innerText = innerText;
     }
 
-    public header(params Action<HtmlElement>[] modifiers):base(modifiers) { }
+    public header(params HtmlElementModifier[] modifiers):base(modifiers) { }
     public header(Style style):base(style) { }
 }
 

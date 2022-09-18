@@ -2,9 +2,9 @@
 
 class container :   ReactWithDotNet.ReactComponent
 {
-    readonly Action<HtmlElement>[] modifiers;
+    readonly HtmlElementModifier[] modifiers;
 
-    public container(params Action<HtmlElement>[] modifiers)
+    public container(params HtmlElementModifier[] modifiers)
     {
         this.modifiers = modifiers;
     }
