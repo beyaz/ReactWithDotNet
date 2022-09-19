@@ -148,7 +148,10 @@ public class a : HtmlElement
 
     [React]
     public string title { get; set; }
-    
+
+    public a() { }
+    public a(params HtmlElementModifier[] modifiers) : base(modifiers) { }
+
 }
 public class lu : HtmlElement
 {

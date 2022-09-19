@@ -7,6 +7,7 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 
 public static class Mixin
 {
+    public static HtmlElementModifier TextDecorationNone => element => element.style.textDecoration = "none";
     public static HtmlElementModifier BackgroundColor(string backgroundColor) => element => element.style.backgroundColor = backgroundColor;
 
     public static HtmlElementModifier BorderRadius(string borderRadius) => element => element.style.borderRadius = borderRadius;
@@ -30,6 +31,9 @@ public static class Mixin
     public static HtmlElementModifier Gap(string gap) => element => element.style.gap = gap;
 
 
+    public static HtmlElementModifier Transition(string transition) => element => element.style.transition = transition;
+
+
     #region Position
     public static HtmlElementModifier PositionRelative => element => element.style.position = "relative";
     public static HtmlElementModifier PositionFixed => element => element.style.position = "fixed";
@@ -45,7 +49,25 @@ public static class Mixin
     public static HtmlElementModifier AlignItemsCenter=> element => element.style.alignItems = "center";
 
     public static HtmlElementModifier FontSize(string fontSize) => element => element.style.fontSize = fontSize;
-    public static HtmlElementModifier FontSize(double fontSize) => element => element.style.fontSize = fontSize.AsPixel();
+    public static HtmlElementModifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
+
+    public static HtmlElementModifier FontSize9 => FontSize(9);
+    public static HtmlElementModifier FontSize10 => FontSize(10);
+    public static HtmlElementModifier FontSize11 => FontSize(11);
+    public static HtmlElementModifier FontSize12 => FontSize(12);
+    public static HtmlElementModifier FontSize13 => FontSize(13);
+    public static HtmlElementModifier FontSize14 => FontSize(14);
+    public static HtmlElementModifier FontSize15 => FontSize(15);
+    public static HtmlElementModifier FontSize16 => FontSize(16);
+    public static HtmlElementModifier FontSize17 => FontSize(17);
+    public static HtmlElementModifier FontSize18 => FontSize(18);
+    public static HtmlElementModifier FontSize19 => FontSize(19);
+    public static HtmlElementModifier FontSize20 => FontSize(20);
+    public static HtmlElementModifier FontSize21 => FontSize(21);
+    public static HtmlElementModifier FontSize22 => FontSize(22);
+    public static HtmlElementModifier FontSize23 => FontSize(23);
+    public static HtmlElementModifier FontSize24 => FontSize(24);
+    public static HtmlElementModifier FontSize25 => FontSize(25);
 
     public static HtmlElementModifier Color(string color) => element => element.style.color = color;
 
@@ -93,8 +115,12 @@ public static class Mixin
 
     #endregion
 
+    
+
 
     #region Padding
+    public static HtmlElementModifier Padding(string padding) => element => element.style.padding = padding;
+    public static HtmlElementModifier Padding(double topBottomPx, double rightLeftPx) => Padding($"{topBottomPx}px {rightLeftPx}px");
     public static HtmlElementModifier PaddingRight(string paddingRight) => element => element.style.paddingRight = paddingRight;
     public static HtmlElementModifier PaddingLeft(string paddingLeft) => element => element.style.paddingLeft = paddingLeft;
     public static HtmlElementModifier PaddingTop(string paddingTop) => element => element.style.paddingTop = paddingTop;
