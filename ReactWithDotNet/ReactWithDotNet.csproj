@@ -11,6 +11,10 @@
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    </ItemGroup>
+    </ItemGroup>  
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="copy /y &quot;$(TargetDir)ReactWithDotNet.dll&quot; &quot;D:\work2\git\AlyaVillasHotels-Azure\AlyaVillas.WebUI\Libs\&quot;" />
+    </Target>
 
 </Project>

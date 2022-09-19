@@ -7,16 +7,36 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 
 public static class Mixin
 {
+    public static HtmlElementModifier BackgroundColor(string backgroundColor) => element => element.style.backgroundColor = backgroundColor;
+
+    public static HtmlElementModifier BorderRadius(string borderRadius) => element => element.style.borderRadius = borderRadius;
+    public static HtmlElementModifier BorderRadius(double borderRadius) => BorderRadius(borderRadius.AsPixel());
+
+    public static HtmlElementModifier TextAlignCenter => element => element.style.textAlign = "center";
+
     public static HtmlElementModifier Width(double width) => element => element.style.width = width.AsPixel();
     public static HtmlElementModifier Width(string width) => element => element.style.width = width;
 
     public static HtmlElementModifier Height(double height) => Height(height.AsPixel());
     public static HtmlElementModifier Height(string height) => element => element.style.height = height;
+    public static HtmlElementModifier Height100vh => element => element.style.height = "100vh";
+
+    public static HtmlElementModifier MaxHeight(string height) => element => element.style.maxHeight = height;
+    public static HtmlElementModifier MaxHeight(double height) => MaxHeight(height.AsPixel());
 
 
 
     public static HtmlElementModifier Gap(double gap) => element => element.style.gap = gap.AsPixel();
     public static HtmlElementModifier Gap(string gap) => element => element.style.gap = gap;
+
+
+    #region Position
+    public static HtmlElementModifier PositionRelative => element => element.style.position = "relative";
+    public static HtmlElementModifier PositionFixed => element => element.style.position = "fixed";
+    public static HtmlElementModifier PositionAbsolute => element => element.style.position = "absolute";
+    public static HtmlElementModifier PositionSticky => element => element.style.position = "sticky";
+    public static HtmlElementModifier PositionStatic => element => element.style.position = "static";
+    #endregion
 
     public static HtmlElementModifier DisplayFlex => element => element.style.display = "flex";
     public static HtmlElementModifier FlexDirectionRow => element => element.style.flexDirection = "row";
@@ -42,7 +62,7 @@ public static class Mixin
     public static HtmlElementModifier FontWeight600 => element => element.style.fontWeight = "600";
     public static HtmlElementModifier FontWeight700 => element => element.style.fontWeight = "700";
     public static HtmlElementModifier FontWeight800 => element => element.style.fontWeight = "800";
-    public static HtmlElementModifier PaddingLeftRight(int px) => element => element.style.paddingLeftRight = px+"px";
+    
     public static HtmlElementModifier BoxSizingBorderBox => element => element.style.boxSizing = "border-box";
     public static HtmlElementModifier Zindex(int zIndex) => element => element.style.zIndex = zIndex.ToString();
     public static HtmlElementModifier Text(string innerText) => element => element.text = innerText;
@@ -72,7 +92,33 @@ public static class Mixin
     public static HtmlElementModifier MarginTopRight(double marginTopRight) => element => element.style.marginTopRight = marginTopRight.AsPixel();
 
     #endregion
-    
+
+
+    #region Padding
+    public static HtmlElementModifier PaddingRight(string paddingRight) => element => element.style.paddingRight = paddingRight;
+    public static HtmlElementModifier PaddingLeft(string paddingLeft) => element => element.style.paddingLeft = paddingLeft;
+    public static HtmlElementModifier PaddingTop(string paddingTop) => element => element.style.paddingTop = paddingTop;
+    public static HtmlElementModifier PaddingBottom(string paddingBottom) => element => element.style.paddingBottom = paddingBottom;
+
+    public static HtmlElementModifier PaddingLeft(double paddingLeftAsPx) => element => element.style.paddingLeft = paddingLeftAsPx.AsPixel();
+    public static HtmlElementModifier PaddingRight(double paddingRightAsPx) => element => element.style.paddingRight = paddingRightAsPx.AsPixel();
+    public static HtmlElementModifier PaddingTop(double paddingTopAsPx) => element => element.style.paddingTop = paddingTopAsPx.AsPixel();
+    public static HtmlElementModifier PaddingBottom(double paddingBottomAsPx) => element => element.style.paddingBottom = paddingBottomAsPx.AsPixel();
+
+    public static HtmlElementModifier PaddingLeftRight(string paddingLeftRight) => element => element.style.paddingLeftRight = paddingLeftRight;
+    public static HtmlElementModifier PaddingTopBottom(string paddingTopBottom) => element => element.style.paddingTopBottom = paddingTopBottom;
+    public static HtmlElementModifier PaddingLeftTop(string paddingLeftTop) => element => element.style.paddingLeftTop = paddingLeftTop;
+    public static HtmlElementModifier PaddingLeftBottom(string paddingLeftBottom) => element => element.style.paddingLeftBottom = paddingLeftBottom;
+    public static HtmlElementModifier PaddingTopRight(string paddingTopRight) => element => element.style.paddingTopRight = paddingTopRight;
+
+    public static HtmlElementModifier PaddingLeftRight(double paddingLeftRight) => element => element.style.paddingLeftRight = paddingLeftRight.AsPixel();
+    public static HtmlElementModifier PaddingTopBottom(double paddingTopBottom) => element => element.style.paddingTopBottom = paddingTopBottom.AsPixel();
+    public static HtmlElementModifier PaddingLeftTop(double paddingLeftTop) => element => element.style.paddingLeftTop = paddingLeftTop.AsPixel();
+    public static HtmlElementModifier PaddingLeftBottom(double paddingLeftBottom) => element => element.style.paddingLeftBottom = paddingLeftBottom.AsPixel();
+    public static HtmlElementModifier PaddingTopRight(double paddingTopRight) => element => element.style.paddingTopRight = paddingTopRight.AsPixel();
+
+    #endregion
+
 
 
     internal static string AsPixel(this double value) => value + "px";

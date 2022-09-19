@@ -15,6 +15,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
-    </ItemGroup>   
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="copy /y &quot;$(TargetDir)ReactWithDotNet.Libraries.dll&quot; &quot;D:\work2\git\AlyaVillasHotels-Azure\AlyaVillas.WebUI\Libs\&quot;" />
+    </Target>   
     
 </Project>
