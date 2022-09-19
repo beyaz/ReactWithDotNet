@@ -21,7 +21,7 @@
     </PropertyGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="copy /y &quot;$(ProjectDir)wwwroot\ReactWithDotNet.jsx&quot; &quot;$(SolutionDir)ReactWithDotNet.WebSite\wwwroot\&quot;&#xD;&#xA;copy /y &quot;$(ProjectDir)wwwroot\ReactWithDotNet.jsx&quot; &quot;$(SolutionDir)AlyaVillas.WebUI\wwwroot\&quot;" />
+      <Exec Command="copy /y &quot;$(ProjectDir)wwwroot\ReactWithDotNet.jsx&quot; &quot;$(SolutionDir)ReactWithDotNet.WebSite\wwwroot\&quot;&#xD;&#xA;&#xD;&#xA;copy /y &quot;$(ProjectDir)wwwroot\ReactWithDotNet.jsx&quot; &quot;D:\work2\git\AlyaVillasHotels-Azure\AlyaVillas.WebUI\wwwroot\&quot;&#xD;&#xA;copy /y &quot;$(ProjectDir)wwwroot\integration\*.*&quot; &quot;D:\work2\git\AlyaVillasHotels-Azure\AlyaVillas.WebUI\wwwroot\integration\&quot;" />
     </Target>
 
 </Project>
