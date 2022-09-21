@@ -175,6 +175,9 @@ public class img : HtmlElement
 
     [React]
     public string loading { get; set; }
+
+    public img() { }
+    public img(params HtmlElementModifier[] modifiers) : base(modifiers) { }
 }
 
 

@@ -73,6 +73,7 @@ public static class Mixin
 
     public static HtmlElementModifier MaxWidth(string maxWidth) => element => element.style.maxWidth = maxWidth;
     public static HtmlElementModifier MaxWidth(double maxWidth) => element => element.style.maxWidth = maxWidth.AsPixel();
+    public static HtmlElementModifier WidthAuto => element => element.style.width = "auto";
 
     public static HtmlElementModifier StretchWidth => element => element.style.width = "100%";
     public static HtmlElementModifier StretchHeight => element => element.style.height = "100%";
