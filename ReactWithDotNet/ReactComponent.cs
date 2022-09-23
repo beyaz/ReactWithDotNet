@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Text.Json.Serialization;
+using System.Web;
 
 namespace ReactWithDotNet;
 
@@ -49,6 +50,7 @@ public sealed class ReactContext
     public double ClientWidth { get; internal set; }
     public double ClientHeight { get; internal set; }
     public NameValueCollection Query { get; internal set; }
+    public string QueryAsString=> string.Join("&", Query.AllKeys.Select(key => $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(Query[key])}"));
 
 }
 

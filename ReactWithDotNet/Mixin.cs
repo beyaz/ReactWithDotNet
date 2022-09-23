@@ -8,6 +8,10 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 public static class Mixin
 {
 
+    public static HtmlElementModifier WidthHeight(double valuePx) => element => element.style.width_height = valuePx.AsPixel();
+    public static HtmlElementModifier WidthHeight(string width_height) => element => element.style.width_height = width_height;
+    public static HtmlElementModifier Background(string background) => element => element.style.background = background;
+    
     public static HtmlElementModifier DisplayNone => element => element.style.display = "none";
     public static HtmlElementModifier DisplayNull => element => element.style.display = null;
 
@@ -50,6 +54,12 @@ public static class Mixin
     public static HtmlElementModifier FlexDirectionRow => element => element.style.flexDirection = "row";
     public static HtmlElementModifier FlexDirectionColumn=> element => element.style.flexDirection = "column";
     public static HtmlElementModifier JustifyContentSpaceBetween => element => element.style.justifyContent = "space-between";
+
+    /// <summary>
+    ///    justifyContent = "center"
+    /// </summary>
+    public static HtmlElementModifier JustifyContentCenter => element => element.style.justifyContent = "center";
+
     public static HtmlElementModifier AlignItemsCenter=> element => element.style.alignItems = "center";
 
     public static HtmlElementModifier FontSize(string fontSize) => element => element.style.fontSize = fontSize;
@@ -84,6 +94,9 @@ public static class Mixin
     /// </summary>
     public static HtmlElementModifier StretchWidth => element => element.style.width = "100%";
     public static HtmlElementModifier StretchHeight => element => element.style.height = "100%";
+    /// <summary>
+    /// width = '100%' , height = '100%'
+    /// </summary>
     public static HtmlElementModifier StretchWidthHeight => element => element.style.width_height = "100%";
     public static HtmlElementModifier Border(string border) => element => element.style.border = border;
     public static HtmlElementModifier ClassName(string className) => element => element.className = className;
@@ -123,10 +136,11 @@ public static class Mixin
 
     #endregion
 
-    
+
 
 
     #region Padding
+    public static HtmlElementModifier Padding(double paddingPx) => element => element.style.padding = paddingPx.AsPixel();
     public static HtmlElementModifier Padding(string padding) => element => element.style.padding = padding;
     public static HtmlElementModifier Padding(double topBottomPx, double rightLeftPx) => Padding($"{topBottomPx}px {rightLeftPx}px");
     public static HtmlElementModifier PaddingRight(string paddingRight) => element => element.style.paddingRight = paddingRight;
