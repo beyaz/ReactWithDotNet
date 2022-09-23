@@ -49,12 +49,22 @@ public class Swiper : ThirdPartyReactComponent
 
     [React]
     public int? speed { get; set; }
+
+
+    [React]
+    public SwiperFadeEffect fadeEffect { get; } = new();
+    
 }
 
 [Serializable]
 public sealed class SwiperInstance
 {
     public int realIndex { get; set; }
+}
+
+public sealed class SwiperFadeEffect
+{
+    public bool? crossFade { get; set; }
 }
 
 public sealed class SwiperPagination
