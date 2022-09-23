@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 #pragma warning disable CS1591
@@ -9,32 +7,33 @@ namespace ReactWithDotNet.Libraries.swiper;
 public class Swiper : ThirdPartyReactComponent
 {
     [React]
-    public int? spaceBetween { get; set; }
+    public SwiperAutoplay autoplay { get; } = new();
 
-
-    [React]
-    public int? slidesPerView { get; set; }
-
-    [React]
-    public int? speed { get; set; }
-    
     [React]
     public string effect { get; set; }
-
-    [React]
-    public bool? loop { get; set; }
-
-    [React]
-    public bool? navigation { get; set; }
-
-    [React]
-    public bool? init { get; set; }
 
     [React]
     public bool? grabCursor { get; set; }
 
     [React]
+    public bool? init { get; set; }
+
+    [React]
+    public bool? loop { get; set; }
+
+    [React]
     public int? loopAdditionalSlides { get; set; }
+
+    [React]
+    [ReactTransformValueInClient("ReactWithDotNet.Libraries.Swiper::ConvertToSwiperModules")]
+    public IReadOnlyList<string> modules { get; set; }
+
+    [React]
+    public bool? navigation { get; set; }
+
+    [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
+    public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
 
     [React]
     public SwiperPagination pagination { get; } = new();
@@ -43,16 +42,13 @@ public class Swiper : ThirdPartyReactComponent
     public SwiperScrollbar scrollbar { get; } = new();
 
     [React]
-    public SwiperAutoplay autoplay { get; } = new();
-    
+    public int? slidesPerView { get; set; }
 
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet.Libraries.Swiper::ConvertToSwiperModules")]
-    public IReadOnlyList<string> modules { get; set; }
+    public int? spaceBetween { get; set; }
 
     [React]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
-    public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
+    public int? speed { get; set; }
 }
 
 [Serializable]
@@ -79,5 +75,4 @@ public sealed class SwiperAutoplay
 
 public class SwiperSlide : ThirdPartyReactComponent
 {
-    
 }
