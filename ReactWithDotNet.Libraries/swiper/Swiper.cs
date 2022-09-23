@@ -51,8 +51,8 @@ public class Swiper : ThirdPartyReactComponent
     public IReadOnlyList<string> modules { get; set; }
 
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet.Libraries.Swiper::ConvertToSwiperModules")]
-    public Action<SwiperInstance> activeIndexChange { get; set; }
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
+    public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
 }
 
 [Serializable]

@@ -211,7 +211,13 @@ public static class ElementSerializer
                 {
                     if (@delegate.Target is ReactStatefulComponent target)
                     {
-                        propertyValue = new RemoteMethodInfo { IsRemoteMethod = true, remoteMethodName = @delegate.Method.Name, TargetKey = target.key };
+                        propertyValue = new RemoteMethodInfo
+                        {
+                            IsRemoteMethod = true,
+                            remoteMethodName = @delegate.Method.Name, 
+                            TargetKey = target.key,
+                            FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction 
+                        };
                     }
                     else
                     {

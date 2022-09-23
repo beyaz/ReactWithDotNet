@@ -538,6 +538,7 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
 {
     const remoteMethodName   = remoteMethodInfo.remoteMethodName;
     const targetComponentKey = remoteMethodInfo.TargetKey;
+    const functionNameOfGrabEventArguments = remoteMethodInfo.FunctionNameOfGrabEventArguments;
 
     NotNull(remoteMethodName);
     NotNull(targetComponentKey);
@@ -550,7 +551,12 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
             throw CreateNewDeveloperError('Target component not found. Target component key is ' + targetComponentKey);
         }
 
-        const eventArguments = Array.prototype.slice.call(arguments);
+        let eventArguments = Array.prototype.slice.call(arguments);
+
+        if (functionNameOfGrabEventArguments)
+        {
+            eventArguments = GetExternalJsObject(functionNameOfGrabEventArguments)(eventArguments);
+        }
 
         PushToEventQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: targetComponent, eventArguments: eventArguments }));
     }

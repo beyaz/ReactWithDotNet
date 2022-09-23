@@ -141,6 +141,7 @@ sealed class RemoteMethodInfo
     public string remoteMethodName { get; set; }
     
     public string TargetKey { get; set; }
+    public string FunctionNameOfGrabEventArguments { get; set; }
     #endregion
 }
 
