@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text.Json.Serialization;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 [Serializable]
 public class ReactAttribute : Attribute
@@ -51,6 +48,18 @@ public class ReactTransformValueInClientAttribute : Attribute
     public string TransformFunction { get; }
 
     public ReactTransformValueInClientAttribute(string transformFunction)
+    {
+        this.TransformFunction = transformFunction;
+    }
+}
+
+
+[AttributeUsage(AttributeTargets.Property)]
+public class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
+{
+    public string TransformFunction { get; }
+
+    public ReactGrabEventArgumentsByUsingFunctionAttribute(string transformFunction)
     {
         this.TransformFunction = transformFunction;
     }

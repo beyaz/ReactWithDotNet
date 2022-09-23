@@ -10,6 +10,14 @@
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <WarningLevel>0</WarningLevel>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <WarningLevel>0</WarningLevel>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="System.Reflection.MetadataLoadContext" Version="6.0.0" />
     </ItemGroup>
