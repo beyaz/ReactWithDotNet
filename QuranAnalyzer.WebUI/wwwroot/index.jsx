@@ -50,7 +50,7 @@ function OnMainDivScrollChanged(e)
 }
 
 ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", OnMainDivScrollChanged);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.GetExternalJsObject", ReactWithDotNet.GetExternalJsObject);
+
 
 import React from 'react';
 import { Ripple } from 'primereact/ripple';

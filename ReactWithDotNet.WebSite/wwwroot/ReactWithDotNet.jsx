@@ -1390,6 +1390,8 @@ function GetExternalJsObject(key)
     return value;
 }
 
+ExternalJsObjectMap["ReactWithDotNet.GetExternalJsObject"] = GetExternalJsObject;
+
 function CreateNewDeveloperError(message)
 {
     return new Error('ReactWithDotNet developer error occured.' + message);

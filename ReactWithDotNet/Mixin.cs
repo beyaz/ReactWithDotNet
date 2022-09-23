@@ -7,6 +7,10 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 
 public static class Mixin
 {
+
+    public static HtmlElementModifier DisplayNone => element => element.style.display = "none";
+    public static HtmlElementModifier DisplayNull => element => element.style.display = null;
+
     public static HtmlElementModifier TextDecorationNone => element => element.style.textDecoration = "none";
     public static HtmlElementModifier BackgroundColor(string backgroundColor) => element => element.style.backgroundColor = backgroundColor;
 
