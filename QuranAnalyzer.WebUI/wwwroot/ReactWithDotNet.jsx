@@ -14,7 +14,6 @@ const DotNetTypeOfReactComponent = '$Type';
 const FullTypeNameOfState = '$TypeOfState';
 const RootNode = '$RootNode';
 const ClientTasks = '$ClientTasks';
-const RootNodeOnMouseEnter = '$RootNodeOnMouseEnter';
 const SyncId = '$SyncId';
 const DotNetState = '$State';
 const HasComponentDidMountMethod = '$HasComponentDidMountMethod';
@@ -734,20 +733,6 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
         props[propName] = jsonNode[propName];
     }
     
-    if (isConvertingRootNode === true && component.state[RootNodeOnMouseEnter])
-    {
-        NotNull(props);
-        
-        props['onMouseEnter'] = function()
-        {
-            component.setState({ $onMouseEnter: true });
-        }
-        props['onMouseLeave'] = function()
-        {
-            component.setState({ $onMouseEnter: false });
-        }
-    }
-
     if (jsonNode.$text != null)
     {
         return createElement(constructorFunction, props, jsonNode.$text);
@@ -1026,12 +1011,6 @@ function HandleAction(data)
             newState[ComponentRefKey] = element.key;
             newState[DotNetProperties]= element[DotNetProperties];
 
-            if (element[RootNodeOnMouseEnter])
-            {
-                newState.$onMouseEnter = false;
-                newState[RootNodeOnMouseEnter] = element[RootNodeOnMouseEnter];
-            }
-            
             data.component.setState(newState, OnReactStateReady);
         }
     }
@@ -1109,11 +1088,6 @@ function DefineComponent(componentDeclaration)
                 initialState[HasComponentDidMountMethod] = props.$jsonNode[HasComponentDidMountMethod];
             }
 
-            if (props.$jsonNode[RootNodeOnMouseEnter])
-            {
-                initialState[RootNodeOnMouseEnter] = props.$jsonNode[RootNodeOnMouseEnter];
-            }
-
             if (props.$jsonNode[ClientTasks])
             {
                 initialState[ClientTasks] = props.$jsonNode[ClientTasks];
@@ -1135,14 +1109,7 @@ function DefineComponent(componentDeclaration)
         {
             TraceComponent(this, "render");
 
-            const state = this.state;
-            
-            if (state.$onMouseEnter === true)
-            {
-                return ConvertToReactElement(CreateNewBuildContext(), state[RootNodeOnMouseEnter], this, /*isConvertingRootNode*/true);    
-            }
-
-            return ConvertToReactElement(CreateNewBuildContext(), state[RootNode], this, /*isConvertingRootNode*/true);
+            return ConvertToReactElement(CreateNewBuildContext(), this.state[RootNode], this, /*isConvertingRootNode*/true);
         }
 
         componentDidMount()
