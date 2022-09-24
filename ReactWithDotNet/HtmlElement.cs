@@ -24,7 +24,7 @@ public abstract class HtmlElement : Element
     ///     Gets the style.
     /// </summary>
     [React]
-    public Style style { get; } = new();
+    public Style style { get; internal set; } = new();
 
     /// <summary>
     ///     Imports filled values given style

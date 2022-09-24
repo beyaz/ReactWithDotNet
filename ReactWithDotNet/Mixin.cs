@@ -8,6 +8,20 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 public static class Mixin
 {
 
+
+    public static HtmlElementModifier Hover(params HtmlElementModifier[] modifiers)
+    {
+        return element =>
+        {
+            var temp = element.style;
+
+            element.style = element.style.hover;
+            
+            element.Apply(modifiers);
+
+            element.style = temp;
+        };
+    }
     public static HtmlElementModifier WidthHeight(double valuePx) => element => element.style.width_height = valuePx.AsPixel();
     public static HtmlElementModifier WidthHeight(string width_height) => element => element.style.width_height = width_height;
     public static HtmlElementModifier Background(string background) => element => element.style.background = background;
