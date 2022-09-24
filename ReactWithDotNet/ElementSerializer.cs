@@ -19,6 +19,10 @@ public sealed class ElementSerializerContext
     }
     
     public StateTree StateTree { get; set; }
+    
+    internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
+    
+    internal ReactStatefulComponent CurrentSerializingComponent;
 
     public string GetNextUniqueValue()
     {
@@ -29,6 +33,9 @@ public sealed class ElementSerializerContext
         return nextUniqueValue;
     }
 }
+
+
+
 
 public static class ElementSerializer
 {
@@ -73,11 +80,12 @@ public static class ElementSerializer
 
         if (element is ReactStatefulComponent reactStatefulComponent)
         {
+            context.CurrentSerializingComponent = reactStatefulComponent;
+            
             return ToMap(reactStatefulComponent, context);
         }
 
         context.TryCallBeforeSerializeElementToClient(element);
-
 
         var map = new Dictionary<string, object>();
 
@@ -197,6 +205,48 @@ public static class ElementSerializer
                 if (reactDefaultValueAttribute != null)
                 {
                     propertyValue = reactDefaultValueAttribute.DefaultValue;
+                }
+            }
+        }
+
+        // check inline
+        {
+            if (propertyValue is Style style)
+            {
+                var pseudos = new List<CssPseudoCodeInfo>();
+                
+                if (style._hover is not null)
+                {
+                    pseudos.Add(new CssPseudoCodeInfo
+                    {
+                        Name      = "hover",
+                        BodyOfCss = style._hover.ToCss().Replace(";", " !important;")
+                    });
+                }
+                if (style._before is not null)
+                {
+                    pseudos.Add(new CssPseudoCodeInfo
+                    {
+                        Name      = ":before",
+                        BodyOfCss = style._before.ToCss().Replace(";", " !important;")
+                    });
+                }
+                if (style._after is not null)
+                {
+                    pseudos.Add(new CssPseudoCodeInfo
+                    {
+                        Name      = ":after",
+                        BodyOfCss = style._after.ToCss().Replace(";", " !important;")
+                    });
+                }
+
+                if (pseudos.Count > 0)
+                {
+                    ((HtmlElement)instance).AddClass(context.DynamicStyles.GetClassName(new CssClassInfo
+                    {
+                        Name    = context.CurrentSerializingComponent.GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
+                        Pseudos = pseudos
+                    }));
                 }
             }
         }

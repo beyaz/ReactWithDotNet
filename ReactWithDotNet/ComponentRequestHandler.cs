@@ -37,7 +37,11 @@ public class ComponentRequest
 public class ComponentResponse
 {
     public object ElementAsJson { get; set; }
+    
     public string ErrorMessage { get; set; }
+
+    public string[] DynamicStyles { get; set; }
+    
 
     public IReadOnlyList<string> Trace { get; set; }
 }
@@ -118,7 +122,9 @@ public static class ComponentRequestHandler
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree, BeforeSerializeElementToClient = beforeSerializeElementToClient});
+            var serializerContext = new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree, BeforeSerializeElementToClient = beforeSerializeElementToClient};
+            
+            var map = instance.ToMap(serializerContext);
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -127,10 +133,12 @@ public static class ComponentRequestHandler
             return new ComponentResponse
             {
                 ElementAsJson = map,
-                Trace         = trace
+                Trace         = trace,
+                DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList()
             };
         }
 
+       
         ComponentResponse handleComponentEvent()
         {
             var type = findType(request.FullName);
@@ -224,7 +232,9 @@ public static class ComponentRequestHandler
                 RootElement    = instance,
             };
 
-            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree, BeforeSerializeElementToClient = beforeSerializeElementToClient});
+            var serializerContext = new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree, BeforeSerializeElementToClient = beforeSerializeElementToClient};
+            
+            var map = instance.ToMap(serializerContext);
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -233,7 +243,8 @@ public static class ComponentRequestHandler
             return new ComponentResponse
             {
                 ElementAsJson = map,
-                Trace         = trace
+                Trace         = trace,
+                DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList()
             };
         }
 

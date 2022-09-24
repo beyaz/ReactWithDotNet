@@ -1011,6 +1011,8 @@ function HandleAction(data)
             throw CreateNewDeveloperError(response.ErrorMessage);
         }
 
+        ProcessDynamicCssClasses(response.DynamicStyles);
+
         const element = response.ElementAsJson;
         
         // update state
@@ -1287,6 +1289,8 @@ function RenderComponentIn(obj)
                 throw response.ErrorMessage;
             }
 
+            ProcessDynamicCssClasses(response.DynamicStyles);
+
             const element = response.ElementAsJson;
 
             const component = DefineComponent(element);
@@ -1402,6 +1406,46 @@ function CreateNewDeveloperError(message)
 {
     return new Error('ReactWithDotNet developer error occured.' + message);
 }
+
+const DynamicCssClassList = [];
+var ReactWithDotNetDynamicCssElement = null;
+
+function ProcessDynamicCssClasses(arrayOfDynamicCssClasses)
+{
+    if (arrayOfDynamicCssClasses == null || arrayOfDynamicCssClasses.length === 0)
+    {
+        return;
+    }
+
+    let hasChange = false;
+
+    for (var i = 0; i < arrayOfDynamicCssClasses.length; i++)
+    {
+        var cssClass = arrayOfDynamicCssClasses[i];
+
+        if (DynamicCssClassList.indexOf(cssClass) >= 0)
+        {
+            continue;
+        }
+
+        hasChange = true;
+
+        DynamicCssClassList.push(cssClass);
+    }
+
+    if (hasChange)
+    {
+        if (ReactWithDotNetDynamicCssElement === null)
+        {
+            ReactWithDotNetDynamicCssElement = document.createElement('style');
+            ReactWithDotNetDynamicCssElement.id = "ReactWithDotNetDynamicCss";
+            document.head.appendChild(ReactWithDotNetDynamicCssElement);
+        }
+
+        ReactWithDotNetDynamicCssElement.innerHTML = DynamicCssClassList.join("\n");
+    }
+}
+
 
 var ReactWithDotNet =
 {

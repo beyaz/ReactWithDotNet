@@ -636,7 +636,7 @@ partial class Style
         {
             sb.Append("content");
             sb.Append(": ");
-            sb.Append(content);
+            sb.Append("'" + content + "'");
             sb.Append(";");
         }
         

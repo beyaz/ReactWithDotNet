@@ -49,13 +49,11 @@ class ArabicKeyboard : ReactComponent
 }
 
 
-class ArabicKeyboardLetterView : ReactComponent, ISupportMouseEnter
+class ArabicKeyboardLetterView : ReactComponent
 {
     public string ArabicLetter { get; set; }
     public string English { get; set; }
-
-    public bool IsMouseEntered { get; set; }
-
+    
     protected override Element render()
     {
         return new div
@@ -66,11 +64,15 @@ class ArabicKeyboardLetterView : ReactComponent, ISupportMouseEnter
                 flexDirection = "column",
                 alignItems    = "center",
                 margin        = "5px",
-                border        = IsMouseEntered ? "1px solid #7daee7" : "1px solid #dee2e6",
+                border        = "1px solid #dee2e6",
 
                 borderRadius = "5px",
                 background   = "rgb(248 249 251)",
-                cursor       = "pointer"
+                cursor       = "pointer",
+                hover =
+                {
+                    border = "1px solid #7daee7"
+                }
             },
             children =
             {

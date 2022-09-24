@@ -91,6 +91,17 @@ public abstract class HtmlElement : Element
 
     [React]
     public string tabIndex { get; set; }
+
+    internal void AddClass(string cssClassName)
+    {
+        if (string.IsNullOrWhiteSpace(className))
+        {
+            className = cssClassName;
+            return;
+        }
+
+        className += " " + cssClassName;
+    }
 }
 
 
