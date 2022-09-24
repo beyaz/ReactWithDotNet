@@ -10,32 +10,9 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataHelper
 {
-   
-
     static bool IsReactComponent(Type type)
     {
-        if (type.IsSubclassOf(typeof(ReactComponent)))
-        {
-            return true;
-        }
-
-        return IsReactStatefulComponent(type);
-    }
-
-    public static bool IsReactStatefulComponent(Type type)
-    {
-        type = type.BaseType;
-
-        if (type?.IsGenericType == true)
-        {
-            var typeDefinition = type.GetGenericTypeDefinition();
-            if (typeDefinition == typeof(ReactComponent<>) || typeDefinition.IsSubclassOf(typeof(ReactComponent<>)))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return type.IsSubclassOf(typeof(ReactStatefulComponent));
     }
 
     public static MethodInfo FindMethodInfo(Assembly assembly, MetadataNode node)
