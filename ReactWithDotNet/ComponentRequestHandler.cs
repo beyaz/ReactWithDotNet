@@ -62,7 +62,7 @@ public static class ComponentRequestHandler
         return context;
     }
 
-    public static ComponentResponse HandleRequest(ComponentRequest request, Func<string, Type> findType)
+    public static ComponentResponse HandleRequest(ComponentRequest request, Func<string, Type> findType, Action<Element, ReactContext> beforeSerializeElementToClient = null)
     {
         var trace = new List<string>();
 
@@ -118,7 +118,7 @@ public static class ComponentRequestHandler
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree });
+            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree, BeforeSerializeElementToClient = beforeSerializeElementToClient});
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -224,7 +224,7 @@ public static class ComponentRequestHandler
                 RootElement    = instance,
             };
 
-            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree });
+            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree, BeforeSerializeElementToClient = beforeSerializeElementToClient});
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 

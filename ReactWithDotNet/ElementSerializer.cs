@@ -6,6 +6,8 @@ namespace ReactWithDotNet;
 
 public sealed class ElementSerializerContext
 {
+    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    
     public ReactContext ReactContext { get; }
     
     int ComponentRefId;
@@ -74,6 +76,9 @@ public static class ElementSerializer
             return ToMap(reactStatefulComponent, context);
         }
 
+        context.TryCallBeforeSerializeElementToClient(element);
+
+
         var map = new Dictionary<string, object>();
 
         var htmlElement = element as HtmlElement;
@@ -111,6 +116,7 @@ public static class ElementSerializer
             {
                 if (child is HtmlTextNode textNode)
                 {
+                    context.TryCallBeforeSerializeElementToClient(child);
                     childElements.Add(textNode.innerText);
                     continue;
                 }
@@ -126,7 +132,17 @@ public static class ElementSerializer
     #endregion
 
     #region Methods
-    
+
+    static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element)
+    {
+        if (element is null || context.BeforeSerializeElementToClient is null)
+        {
+            return;
+        }
+
+        context.BeforeSerializeElementToClient(element, context.ReactContext);
+    }
+
 
     static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
     {
