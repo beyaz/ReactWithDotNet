@@ -38,7 +38,10 @@ public static class Mixin
     public static HtmlElementModifier BorderRadius(string borderRadius) => element => element.style.borderRadius = borderRadius;
     public static HtmlElementModifier BorderRadius(double borderRadius) => BorderRadius(borderRadius.AsPixel());
 
-    public static HtmlElementModifier TextAlignCenter => element => element.style.textAlign = "center";
+    public static HtmlElementModifier TextAlignCenter => TextAlign("center");
+    public static HtmlElementModifier TextAlignRight=> TextAlign("right");
+    public static HtmlElementModifier TextAlignLeft => TextAlign("left");
+    public static HtmlElementModifier TextAlign(string textAlign) => element => element.style.textAlign = textAlign;
 
     public static HtmlElementModifier Width(double width) => element => element.style.width = width.AsPixel();
     public static HtmlElementModifier Width(string width) => element => element.style.width = width;
@@ -78,6 +81,10 @@ public static class Mixin
     public static HtmlElementModifier JustifyContentCenter => element => element.style.justifyContent = "center";
 
     public static HtmlElementModifier AlignItemsCenter=> element => element.style.alignItems = "center";
+    public static HtmlElementModifier AlignItemsFlexStart => element => element.style.alignItems = "flex-start";
+    public static HtmlElementModifier AlignItemsFlexEnd => element => element.style.alignItems = "flex-end";
+    public static HtmlElementModifier AlignItemsStretch => element => element.style.alignItems = "stretch";
+    public static HtmlElementModifier AlignItemsBaseline=> element => element.style.alignItems = "baseline";
 
     public static HtmlElementModifier FontSize(string fontSize) => element => element.style.fontSize = fontSize;
     public static HtmlElementModifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());

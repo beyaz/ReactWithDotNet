@@ -4,6 +4,21 @@ namespace ReactWithDotNet;
 
 partial class Style
 {
+    internal Style _hover;
+
+    [JsonIgnore]
+    public Style hover
+    {
+        get
+        {
+            if (_hover == null)
+            {
+                _hover = new Style();
+            }
+            return _hover;
+        }
+    }
+
     #region margin
     [JsonIgnore]
     public string marginLeftRight

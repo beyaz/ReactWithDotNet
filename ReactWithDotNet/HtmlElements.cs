@@ -61,6 +61,7 @@ public class p : HtmlElement
     {
         this.innerText = innerText;
     }
+    public p(params HtmlElementModifier[] modifiers) : base(modifiers) { }
 }
 public class pre : HtmlElement
 {
