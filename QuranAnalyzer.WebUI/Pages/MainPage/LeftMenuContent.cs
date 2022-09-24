@@ -45,7 +45,7 @@ class LeftMenuItemState
 {
 }
 
-class LeftMenuItem: ReactComponent<LeftMenuItemState>,ISupportMouseEnter
+class LeftMenuItem: ReactComponent<LeftMenuItemState>
 {
     public string Text { get; set; }
     public string PageId { get; set; }
@@ -62,18 +62,15 @@ class LeftMenuItem: ReactComponent<LeftMenuItemState>,ISupportMouseEnter
                 textDecoration = "none",
                 color          =  "black",
                 overflowWrap   = "break-word",
-                borderBottom   = "1px solid #e9e9f2"
+                borderBottom   = "1px solid #e9e9f2",
+                hover =
+                {
+                    color        = "#4e6579",
+                    borderBottom = "1px solid red"
+                }
             }
         };
 
-        if (IsMouseEntered)
-        {
-            link.style.color        = "#4e6579";
-            link.style.borderBottom = "1px solid red";
-        }
-
         return link;
     }
-
-    public bool IsMouseEntered { get; set; }
 }

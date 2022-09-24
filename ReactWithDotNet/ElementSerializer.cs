@@ -507,13 +507,7 @@ public static class ElementSerializer
 
         map.Add(nameof(reactStatefulComponent.key), reactStatefulComponent.key);
 
-        var supportMouseEnter = reactStatefulComponent as ISupportMouseEnter;
-        if (supportMouseEnter is not null)
-        {
-            supportMouseEnter.IsMouseEntered = true;
-
-            map.Add("$RootNodeOnMouseEnter", ToMap(reactStatefulComponent.InvokeRender(), context));
-        }
+        
 
         if (reactStatefulComponent.ClientTask.taskList.Count > 0)
         {
@@ -529,7 +523,6 @@ public static class ElementSerializer
                 propertyInfo.Name == nameof(reactStatefulComponent.Children)||
                 propertyInfo.Name == nameof(reactStatefulComponent.key) ||
                 propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
-                (propertyInfo.Name == nameof(ISupportMouseEnter.IsMouseEntered) && supportMouseEnter is not null) ||
                 propertyInfo.Name == "state" ||
                 propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
                 )
@@ -574,19 +567,3 @@ class ItemTemplate
     #endregion
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-public interface ISupportMouseEnter
-{
-    public bool IsMouseEntered { get; set; }
-}
