@@ -15,7 +15,24 @@ public static class Mixin
     public static HtmlElementModifier DisplayNone => element => element.style.display = "none";
     public static HtmlElementModifier DisplayNull => element => element.style.display = null;
 
-    public static HtmlElementModifier TextDecorationNone => element => element.style.textDecoration = "none";
+    /// <summary>
+    /// textDecoration = "underline"
+    /// </summary>
+    public static HtmlElementModifier TextDecorationUnderline => TextDecoration("underline");
+    /// <summary>
+    /// textDecoration = 'line-through'
+    /// </summary>
+    public static HtmlElementModifier TextDecorationLineThrough=> TextDecoration("line-through");
+    /// <summary>
+    /// textDecoration = "overline"
+    /// </summary>
+    public static HtmlElementModifier TextDecorationOverline => TextDecoration("overline");
+
+    public static HtmlElementModifier TextDecorationNone => TextDecoration("none");
+    
+    public static HtmlElementModifier TextDecoration(string textDecoration) => element => element.style.textDecoration = textDecoration;
+    
+    
     public static HtmlElementModifier BackgroundColor(string backgroundColor) => element => element.style.backgroundColor = backgroundColor;
 
     public static HtmlElementModifier BorderRadius(string borderRadius) => element => element.style.borderRadius = borderRadius;
