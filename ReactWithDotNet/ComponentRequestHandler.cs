@@ -12,33 +12,32 @@ using static Array;
 [Serializable]
 public sealed class ClientStateInfo
 {
+    public IReadOnlyDictionary<string, object> DotNetProperties { get; set; }
     public string FullTypeNameOfState { get; set; }
     public string StateAsJson { get; set; }
-    public IReadOnlyDictionary<string, object> DotNetProperties { get; set; }
 }
 
 [Serializable]
 public class ComponentRequest
 {
+    public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
     public double ClientHeight { get; set; }
     public double ClientWidth { get; set; }
-    public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
+
+    public int ComponentRefId { get; set; }
     public string[] EventArgumentsAsJsonArray { get; set; }
     public string EventHandlerMethodName { get; set; }
     public string FullName { get; set; }
     public string MethodName { get; set; }
 
     public string SearchPartOfUrl { get; set; }
-
-    public int ComponentRefId { get; set; }
 }
 
 [Serializable]
 public class ComponentResponse
 {
-    public string ErrorMessage { get; set; }
-
     public object ElementAsJson { get; set; }
+    public string ErrorMessage { get; set; }
 
     public IReadOnlyList<string> Trace { get; set; }
 }
@@ -103,13 +102,12 @@ public static class ComponentRequestHandler
 
             instance.Context = context;
             instance.InvokeConstructor();
-            
+
             // maybe developer forget init state
             if (instance is ReactComponent<EmptyState> reactComponent && reactComponent.state == null)
             {
                 reactComponent.state = new EmptyState();
             }
-            
 
             var stateTree = new StateTree
             {
