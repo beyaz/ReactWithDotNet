@@ -227,7 +227,7 @@ public static class ElementSerializer
                 {
                     pseudos.Add(new CssPseudoCodeInfo
                     {
-                        Name      = ":before",
+                        Name      = "before",
                         BodyOfCss = style._before.ToCss().Replace(";", " !important;")
                     });
                 }
@@ -235,7 +235,7 @@ public static class ElementSerializer
                 {
                     pseudos.Add(new CssPseudoCodeInfo
                     {
-                        Name      = ":after",
+                        Name      = "after",
                         BodyOfCss = style._after.ToCss().Replace(";", " !important;")
                     });
                 }
