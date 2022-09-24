@@ -116,12 +116,11 @@ public static class ComponentRequestHandler
                 ChildStates    = request.CapturedStateTree,
                 BreadCrumpPath = "0",
                 RootElement    = instance,
-                Context        = context
             };
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId) { StateTree = stateTree });
+            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree });
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -225,10 +224,9 @@ public static class ComponentRequestHandler
                 ChildStates    = request.CapturedStateTree,
                 BreadCrumpPath = "0",
                 RootElement    = instance,
-                Context        = context
             };
 
-            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId) { StateTree = stateTree });
+            var map = instance.ToMap(new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree });
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -296,7 +294,6 @@ public static class Json
 public class StateTree
 {
     #region Public Properties
-    public ReactContext Context { get; set; }
     public string BreadCrumpPath { get; set; }
     public int CurrentOrder { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }

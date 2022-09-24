@@ -6,11 +6,14 @@ namespace ReactWithDotNet;
 
 public sealed class ElementSerializerContext
 {
+    public ReactContext ReactContext { get; }
+    
     int ComponentRefId;
     
-    public ElementSerializerContext(int componentRefIdStart)
+    public ElementSerializerContext(int componentRefIdStart, ReactContext reactContext)
     {
         ComponentRefId = componentRefIdStart;
+        ReactContext = reactContext;
     }
     
     public StateTree StateTree { get; set; }
@@ -406,7 +409,7 @@ public static class ElementSerializer
 
         
 
-        reactStatefulComponent.Context = stateTree.Context;
+        reactStatefulComponent.Context = context.ReactContext;
 
         var state = statePropertyInfo.GetValue(reactStatefulComponent);
         if (state == null)
