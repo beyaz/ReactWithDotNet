@@ -7,6 +7,42 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 
 public static class Mixin
 {
+    public static HtmlElementModifier WidthAsPercentOf(double valueAsPercent) => element => element.style.width = valueAsPercent + "%";
+
+    public static HtmlElementModifier Width25Percent => WidthAsPercentOf(25);
+    public static HtmlElementModifier Width50Percent => WidthAsPercentOf(50);
+    public static HtmlElementModifier Width75Percent => WidthAsPercentOf(75);
+
+    /// <summary>
+    ///    style.width = "100%"
+    /// </summary>
+    public static HtmlElementModifier Width100Percent => WidthAsPercentOf(100);
+
+
+    /// <summary>
+    /// height = valueAsPercent + "%"
+    /// </summary>
+    public static HtmlElementModifier HeightAsPercentOf(double valueAsPercent) => element => element.style.height = valueAsPercent + "%";
+
+    public static HtmlElementModifier Height25Percent => HeightAsPercentOf(25);
+    public static HtmlElementModifier Height50Percent => HeightAsPercentOf(50);
+    public static HtmlElementModifier Height75Percent => HeightAsPercentOf(75);
+    /// <summary>
+    ///    style.height = "100%"
+    /// </summary>
+    public static HtmlElementModifier Height100Percent => HeightAsPercentOf(100);
+
+    
+    /// <summary>
+    /// width = '100%' , height = '100%'
+    /// </summary>
+    public static HtmlElementModifier StretchWidthHeight => element => element.style.width_height = "100%";
+
+    /// <summary>
+    /// overflow = "hidden"
+    /// </summary>
+    public static HtmlElementModifier OverflowHidden => element => element.style.overflow = "hidden"; 
+
 
 
     public static HtmlElementModifier Hover(params HtmlElementModifier[] modifiers)
@@ -85,7 +121,16 @@ public static class Mixin
     #endregion
 
     public static HtmlElementModifier DisplayFlex => element => element.style.display = "flex";
+    /// <summary>
+    /// flexDirection = "row"
+    /// </summary>
     public static HtmlElementModifier FlexDirectionRow => element => element.style.flexDirection = "row";
+
+    /// <summary>
+    /// flexDirection = "row-reverse"
+    /// </summary>
+    public static HtmlElementModifier FlexDirectionRowReverse => element => element.style.flexDirection = "row-reverse";
+    
     public static HtmlElementModifier FlexDirectionColumn=> element => element.style.flexDirection = "column";
     public static HtmlElementModifier JustifyContentSpaceBetween => element => element.style.justifyContent = "space-between";
 
@@ -127,15 +172,8 @@ public static class Mixin
     public static HtmlElementModifier MaxWidth(double maxWidth) => element => element.style.maxWidth = maxWidth.AsPixel();
     public static HtmlElementModifier WidthAuto => element => element.style.width = "auto";
 
-    /// <summary>
-    ///    style.width = "100%"
-    /// </summary>
-    public static HtmlElementModifier StretchWidth => element => element.style.width = "100%";
-    public static HtmlElementModifier StretchHeight => element => element.style.height = "100%";
-    /// <summary>
-    /// width = '100%' , height = '100%'
-    /// </summary>
-    public static HtmlElementModifier StretchWidthHeight => element => element.style.width_height = "100%";
+    
+    
     public static HtmlElementModifier Border(string border) => element => element.style.border = border;
     public static HtmlElementModifier ClassName(string className) => element => element.className = className;
     public static HtmlElementModifier FontWeight400  => element=> element.style.fontWeight = "400";
