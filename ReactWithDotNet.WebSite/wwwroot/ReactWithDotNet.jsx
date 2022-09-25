@@ -538,12 +538,29 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
     const remoteMethodName   = remoteMethodInfo.remoteMethodName;
     const targetComponentKey = remoteMethodInfo.TargetKey;
     const functionNameOfGrabEventArguments = remoteMethodInfo.FunctionNameOfGrabEventArguments;
+    const stopPropagation = remoteMethodInfo.StopPropagation;
+    
 
     NotNull(remoteMethodName);
     NotNull(targetComponentKey);
 
     return function ()
     {
+        if (stopPropagation)
+        {
+            if (arguments.length === 0)
+            {
+                throw CreateNewDeveloperError("There is no event argument for applying StopPropagation");
+            }
+
+            if (arguments[0] == null || arguments[0].constructor.prototype.stopPropagation == null)
+            {
+                throw CreateNewDeveloperError("Event argument not support StopPropagation");
+            }
+
+            arguments[0].stopPropagation();
+        }
+
         const targetComponent = COMPONENT_CACHE.FindComponentByKey(targetComponentKey);
         if (targetComponent === null)
         {

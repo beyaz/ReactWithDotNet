@@ -282,10 +282,12 @@ public static class ElementSerializer
                     {
                         propertyValue = new RemoteMethodInfo
                         {
-                            IsRemoteMethod = true,
-                            remoteMethodName = @delegate.Method.Name, 
-                            TargetKey = target.key,
-                            FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction 
+                            IsRemoteMethod                   = true,
+                            remoteMethodName                 = @delegate.Method.Name, 
+                            TargetKey                        = target.key,
+                            FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
+                            StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null
+                            
                         };
                     }
                     else

@@ -142,6 +142,8 @@ sealed class RemoteMethodInfo
     
     public string TargetKey { get; set; }
     public string FunctionNameOfGrabEventArguments { get; set; }
+
+    public bool? StopPropagation { get; set; }
     #endregion
 }
 

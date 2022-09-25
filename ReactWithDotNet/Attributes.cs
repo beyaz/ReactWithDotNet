@@ -14,6 +14,12 @@ public class ReactBindAttribute : Attribute
 }
 
 [Serializable]
+public class ReactStopPropagationAttribute : Attribute
+{
+}
+
+
+[Serializable]
 public class ReactDefaultValueAttribute : Attribute
 {
     public string DefaultValue { get; set; }
