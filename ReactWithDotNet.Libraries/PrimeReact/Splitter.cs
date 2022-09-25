@@ -28,6 +28,7 @@ public class SplitterPanel : ElementBase
 
     [React]
     public int? minSize { get; set; }
+    
 }
 
 

@@ -3,10 +3,29 @@ using System.Text.Json;
 
 namespace ReactWithDotNet;
 
+public class StyleModifier
+{
+    Action<Style> _action;
+
+    public StyleModifier(Action<Style> action)
+    {
+        _action = action;
+    }
+
+    public static implicit operator StyleModifier(Action<Style> action)
+    {
+        return new StyleModifier(action);
+    }
+}
+
 public delegate void HtmlElementModifier(HtmlElement htmlElement);
 
 public static class Mixin
 {
+    public static HtmlElementModifier OverflowWrapBreakWord => element => element.style.overflowWrap = "break-word";
+    
+    public static HtmlElementModifier BoxShadow(string boxShadow) => element => element.style.boxShadow = boxShadow;
+
     public static HtmlElementModifier Left(string left) => element => element.style.left = left;
     public static HtmlElementModifier Right(string right) => element => element.style.right = right;
     public static HtmlElementModifier LeftRight(string valueForLeftAndRight) => element =>

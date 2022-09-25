@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
+using static ReactWithDotNet.Mixin;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -87,7 +88,10 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 new VSpace(10),
                 new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
 
-                new div { text = state.SelectedComponentTypeReference + (state.SelectedMethodName.HasValue() ? $"::{state.SelectedMethodName}" : null) },
+                new div(MaxWidth(250),OverflowWrapBreakWord)
+                {
+                    text = state.SelectedComponentTypeReference + (state.SelectedMethodName.HasValue() ? $"::{state.SelectedMethodName}" : null)
+                },
 
                 new Editor
                 {
@@ -130,7 +134,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             {
                 new SplitterPanel
                 {
-                    size = 40,
+                    size = 25,
                     children =
                     {
                         propertyPanel
@@ -138,8 +142,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 },
                 new SplitterPanel
                 {
-                    size  = 60,
-                    style = { display = "flex", justifyContent = "center", alignItems = "center" },
+                    size  = 75,
+                    style = { display = "flex", justifyContent = "streth", alignItems = "center" },
                     children =
                     {
                         outputPanel

@@ -33,9 +33,11 @@ public class Swiper : ThirdPartyReactComponent
     public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
 
     [React]
+    [ReactTransformValueInClient("ReplaceNullWhenEmpty")]
     public SwiperPagination pagination { get; } = new();
 
     [React]
+    [ReactTransformValueInClient("ReplaceNullWhenEmpty")]
     public SwiperScrollbar scrollbar { get; } = new();
 
     [React]
