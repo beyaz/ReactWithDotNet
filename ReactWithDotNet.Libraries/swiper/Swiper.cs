@@ -27,10 +27,7 @@ public class Swiper : ThirdPartyReactComponent
     [React]
     [ReactTransformValueInClient("ReactWithDotNet.Libraries.Swiper::ConvertToSwiperModules")]
     public IReadOnlyList<string> modules { get; set; }
-
-    [React]
-    public bool? navigation { get; set; }
-
+    
     [React]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
     public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
@@ -53,8 +50,21 @@ public class Swiper : ThirdPartyReactComponent
 
     [React]
     public SwiperFadeEffect fadeEffect { get; } = new();
-    
+
+    [React]
+    public SwiperNavigationOption navigation { get;  } = new();
+    //todo override with boolean
+
+
 }
+
+public sealed class SwiperNavigationOption
+{
+    public string prevEl { get; set; }
+    public string nextEl { get; set; }
+    public bool? enabled { get; set; }
+}
+
 
 [Serializable]
 public sealed class SwiperInstance

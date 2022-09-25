@@ -3891,6 +3891,19 @@ partial class Style
         {
             borderInlineStyle = newStyle.borderInlineStyle;
         }
+
+        if (newStyle._hover is not null)
+        {
+            hover.Import(newStyle._hover);
+        }
+        if (newStyle._before is not null)
+        {
+            before.Import(newStyle._before);
+        }
+        if (newStyle._after is not null)
+        {
+            after.Import(newStyle._after);
+        }
     }
 
     [JsonIgnore]

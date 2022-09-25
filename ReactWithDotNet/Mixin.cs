@@ -7,6 +7,29 @@ public delegate void HtmlElementModifier(HtmlElement htmlElement);
 
 public static class Mixin
 {
+    public static HtmlElementModifier Left(string left) => element => element.style.left = left;
+    public static HtmlElementModifier Right(string right) => element => element.style.right = right;
+    public static HtmlElementModifier LeftRight(string valueForLeftAndRight) => element =>
+    {
+        element.style.left = valueForLeftAndRight;
+        element.style.right = valueForLeftAndRight;
+    };
+    public static HtmlElementModifier LeftRightBottom(string valueForLeftAndRightAndBottom) => element =>
+    {
+        element.style.left  = valueForLeftAndRightAndBottom;
+        element.style.right = valueForLeftAndRightAndBottom;
+        element.style.bottom = valueForLeftAndRightAndBottom;
+    };
+    
+    public static HtmlElementModifier Top(string top) => element => element.style.top = top;
+    public static HtmlElementModifier Bottom(string bottom) => element => element.style.bottom = bottom;
+    public static HtmlElementModifier TopBottom(string valueForTopAndBottom) => element =>
+    {
+        element.style.top = valueForTopAndBottom;
+        element.style.bottom = valueForTopAndBottom;
+    };
+
+
     public static HtmlElementModifier WidthAsPercentOf(double valueAsPercent) => element => element.style.width = valueAsPercent + "%";
 
     public static HtmlElementModifier Width25Percent => WidthAsPercentOf(25);
