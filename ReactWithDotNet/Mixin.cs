@@ -240,6 +240,9 @@ public static class Mixin
         return JsonSerializationOptionHelper.Modify(options);
     }
 
+    public static Modifier CursorPointer => new(style => style.cursor = "pointer");
+    public static Modifier OnClick(Action<MouseEvent> onClickHandler) => new(element => element.onClick = onClickHandler);
+
     public static Modifier Right(string right) => new(style => style.right = right);
     public static Modifier Text(string innerText) => new(element => element.text = innerText);
     public static Modifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
