@@ -51,8 +51,11 @@ public class Swiper : ThirdPartyReactComponent
     [React]
     public SwiperFadeEffect fadeEffect { get; } = new();
 
+    
+
     [React]
-    public SwiperNavigationOption navigation { get;  } = new();
+    [ReactTransformValueInClient("ReplaceNullWhenEmpty")]
+    public SwiperNavigationOption navigation { get; } = new();
     //todo override with boolean
 
 

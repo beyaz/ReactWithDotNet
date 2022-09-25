@@ -1346,7 +1346,16 @@ function CopyToClipboard(text)
 
 const ExternalJsObjectMap = {
     'RegExp': (x) => new RegExp(x),
-    'CopyToClipboard': CopyToClipboard
+    'CopyToClipboard': CopyToClipboard,
+    'ReplaceNullWhenEmpty': function (value)
+    {
+        if (IsEmptyObject(value))
+        {
+            return null;
+        }
+
+        return value;
+    }
 };
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {
