@@ -9,10 +9,12 @@ public abstract class HtmlElement : Element
         
     }
 
-    protected HtmlElement(params HtmlElementModifier[] modifiers)
+    protected HtmlElement(params Modifier[] modifiers)
     {
         this.Apply(modifiers);
     }
+    
+    
 
     protected HtmlElement(Style style)
     {

@@ -140,10 +140,10 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         propertyPanel
                     }
                 },
-                new SplitterPanel
+                new SplitterPanel(DisplayFlex,JustifyContentCenter)
                 {
                     size  = 75,
-                    style = { display = "flex", justifyContent = "streth", alignItems = "center" },
+                    
                     children =
                     {
                         outputPanel

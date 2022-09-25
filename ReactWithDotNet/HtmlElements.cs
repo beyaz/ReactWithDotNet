@@ -45,7 +45,7 @@ public class input : HtmlElement
 public class i : HtmlElement
 {
     public i() { }
-    public i(params HtmlElementModifier[] modifiers) : base(modifiers) { }
+    public i(params Modifier[] modifiers) : base(modifiers) { }
     public i(Style style) : base(style) { }
 }
 public class b : HtmlElement
@@ -61,7 +61,7 @@ public class p : HtmlElement
     {
         this.innerText = innerText;
     }
-    public p(params HtmlElementModifier[] modifiers) : base(modifiers) { }
+    public p(params Modifier[] modifiers) : base(modifiers) { }
 }
 public class pre : HtmlElement
 {
@@ -120,7 +120,7 @@ public class h1 : HtmlElement
         this.innerText = innerText;
     }
 
-    public h1(params HtmlElementModifier[] modifiers) : base(modifiers) { }
+    public h1(params Modifier[] modifiers) : base(modifiers) { }
     public h1(Style style) : base(style) { }
 }
 public class header : HtmlElement
@@ -134,7 +134,7 @@ public class header : HtmlElement
         this.innerText = innerText;
     }
 
-    public header(params HtmlElementModifier[] modifiers):base(modifiers) { }
+    public header(params Modifier[] modifiers):base(modifiers) { }
     public header(Style style):base(style) { }
 }
 
@@ -151,7 +151,7 @@ public class a : HtmlElement
     public string title { get; set; }
 
     public a() { }
-    public a(params HtmlElementModifier[] modifiers) : base(modifiers) { }
+    public a(params Modifier[] modifiers) : base(modifiers) { }
 
 }
 public class lu : HtmlElement
@@ -178,7 +178,7 @@ public class img : HtmlElement
     public string loading { get; set; }
 
     public img() { }
-    public img(params HtmlElementModifier[] modifiers) : base(modifiers) { }
+    public img(params Modifier[] modifiers) : base(modifiers) { }
 }
 
 

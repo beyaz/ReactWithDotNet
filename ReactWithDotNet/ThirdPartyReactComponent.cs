@@ -25,6 +25,16 @@ public abstract class ThirdPartyReactComponent : Element
     [React]
     public Style style { get; } = new();
 
+    protected ThirdPartyReactComponent()
+    {
+        
+    }
+
+    protected ThirdPartyReactComponent(params Modifier[] modifiers)
+    {
+        style.Apply(modifiers);
+    }
+
     /// <summary>
     ///     Imports filled values given style
     /// </summary>

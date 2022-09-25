@@ -19,6 +19,9 @@ public sealed class div : HtmlElement
         this.innerText = innerText;
     }
 
-    public div(params HtmlElementModifier[] modifiers) : base(modifiers) { }
+    public div(params Modifier[] modifiers) : base(modifiers) { }
     public div(Style style) : base(style) { }
+
+   
+
 }

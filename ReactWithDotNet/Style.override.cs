@@ -4,7 +4,42 @@ namespace ReactWithDotNet;
 
 partial class Style
 {
+
+    
+
+        [JsonIgnore]
+        public string leftRight
+    {
+            set
+            {
+                left  = value;
+                right = value;
+            }
+        }
+
+    [JsonIgnore]
+    public string leftRightBottom
+    {
+        set
+        {
+            left   = value;
+            right  = value;
+            bottom = value;
+        }
+    }
+
+    [JsonIgnore]
+    public string topBottom
+    {
+        set
+        {
+            top   = value;
+            bottom  = value;
+        }
+    }
     #region margin
+
+
     [JsonIgnore]
     public string marginLeftRight
     {

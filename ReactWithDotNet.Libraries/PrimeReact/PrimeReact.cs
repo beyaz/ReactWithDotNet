@@ -10,4 +10,13 @@ public class ElementBase : ThirdPartyReactComponent
 
     [React]
     public string className { get; set; }
+
+    protected ElementBase()
+    {
+        
+    }
+
+    protected ElementBase(params Modifier[] modifiers):base(modifiers)
+    {
+    }
 }
