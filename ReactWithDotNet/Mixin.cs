@@ -3,41 +3,126 @@ using System.Text.Json;
 
 namespace ReactWithDotNet;
 
-
-public class Modifier
-{
-    readonly Action<Style> modifyStyle;
-    readonly Action<HtmlElement> htmlElementModifier;
-
-    public Modifier(Action<Style> action)
-    {
-        modifyStyle = action ?? throw new ArgumentNullException(nameof(action));
-    }
-    public Modifier(Action<HtmlElement> action)
-    {
-        htmlElementModifier = action ?? throw new ArgumentNullException(nameof(action));
-    }
-    public void Apply(HtmlElement instance)
-    {
-        if (htmlElementModifier != null)
-        {
-            htmlElementModifier(instance);
-        }
-        else
-        {
-            modifyStyle(instance.style);
-        }
-    }
-    public void Apply(Style style)
-    {
-        modifyStyle(style);
-    }
-}
-
-
-
 public static class Mixin
 {
+    public static Modifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
+
+    public static Modifier AlignItemsCenter => new(style => style.alignItems = "center");
+    public static Modifier AlignItemsFlexEnd => new(style => style.alignItems = "flex-end");
+    public static Modifier AlignItemsFlexStart => new(style => style.alignItems = "flex-start");
+    public static Modifier AlignItemsStretch => new(style => style.alignItems = "stretch");
+
+    public static Modifier BoxSizingBorderBox => new(style => style.boxSizing = "border-box");
+
+    public static Modifier DisplayFlex => new(style => style.display = "flex");
+
+    public static Modifier DisplayNone => new(style => style.display = "none");
+    public static Modifier DisplayNull => new(style => style.display = null);
+
+    public static Modifier FlexDirectionColumn => new(style => style.flexDirection = "column");
+
+    /// <summary>
+    ///     flexDirection = "row"
+    /// </summary>
+    public static Modifier FlexDirectionRow => new(style => style.flexDirection = "row");
+
+    /// <summary>
+    ///     flexDirection = "row-reverse"
+    /// </summary>
+    public static Modifier FlexDirectionRowReverse => new(style => style.flexDirection = "row-reverse");
+
+    public static Modifier FontSize10 => FontSize(10);
+    public static Modifier FontSize11 => FontSize(11);
+    public static Modifier FontSize12 => FontSize(12);
+    public static Modifier FontSize13 => FontSize(13);
+    public static Modifier FontSize14 => FontSize(14);
+    public static Modifier FontSize15 => FontSize(15);
+    public static Modifier FontSize16 => FontSize(16);
+    public static Modifier FontSize17 => FontSize(17);
+    public static Modifier FontSize18 => FontSize(18);
+    public static Modifier FontSize19 => FontSize(19);
+    public static Modifier FontSize20 => FontSize(20);
+    public static Modifier FontSize21 => FontSize(21);
+    public static Modifier FontSize22 => FontSize(22);
+    public static Modifier FontSize23 => FontSize(23);
+    public static Modifier FontSize24 => FontSize(24);
+    public static Modifier FontSize25 => FontSize(25);
+
+    public static Modifier FontSize9 => FontSize(9);
+
+    public static Modifier FontWeight400 => FontWeight("400");
+    public static Modifier FontWeight500 => FontWeight("500");
+    public static Modifier FontWeight600 => FontWeight("600");
+    public static Modifier FontWeight700 => FontWeight("700");
+    public static Modifier FontWeight800 => FontWeight("800");
+
+    /// <summary>
+    ///     style.height = "100%"
+    /// </summary>
+    public static Modifier Height100Percent => HeightAsPercentOf(100);
+
+    public static Modifier Height100vh => new(style => style.height = "100vh");
+
+    public static Modifier Height25Percent => HeightAsPercentOf(25);
+    public static Modifier Height50Percent => HeightAsPercentOf(50);
+    public static Modifier Height75Percent => HeightAsPercentOf(75);
+
+    /// <summary>
+    ///     justifyContent = "center"
+    /// </summary>
+    public static Modifier JustifyContentCenter => new(style => style.justifyContent = "center");
+
+    public static Modifier JustifyContentSpaceBetween => new(style => style.justifyContent = "space-between");
+
+    /// <summary>
+    ///     overflow = "hidden"
+    /// </summary>
+    public static Modifier OverflowHidden => new(style => style.overflow = "hidden");
+
+    public static Modifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
+
+    /// <summary>
+    ///     width = '100%' , height = '100%'
+    /// </summary>
+    public static Modifier StretchWidthHeight => new(style => style.width_height = "100%");
+
+    public static Modifier TextAlignCenter => TextAlign("center");
+    public static Modifier TextAlignLeft => TextAlign("left");
+    public static Modifier TextAlignRight => TextAlign("right");
+
+    /// <summary>
+    ///     textDecoration = 'line-through'
+    /// </summary>
+    public static Modifier TextDecorationLineThrough => TextDecoration("line-through");
+
+    public static Modifier TextDecorationNone => TextDecoration("none");
+
+    /// <summary>
+    ///     textDecoration = "overline"
+    /// </summary>
+    public static Modifier TextDecorationOverline => TextDecoration("overline");
+
+    /// <summary>
+    ///     textDecoration = "underline"
+    /// </summary>
+    public static Modifier TextDecorationUnderline => TextDecoration("underline");
+
+    /// <summary>
+    ///     style.width = "100%"
+    /// </summary>
+    public static Modifier Width100Percent => WidthAsPercentOf(100);
+
+    public static Modifier Width25Percent => WidthAsPercentOf(25);
+    public static Modifier Width50Percent => WidthAsPercentOf(50);
+    public static Modifier Width75Percent => WidthAsPercentOf(75);
+    public static Modifier WidthAuto => new(style => style.width = "auto");
+
+    public static TParent appendChild<TParent, TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
+    {
+        element.children.Add(child);
+
+        return element;
+    }
 
     public static void Apply(this HtmlElement htmlElement, params Modifier[] modifiers)
     {
@@ -75,59 +160,47 @@ public static class Mixin
         }
     }
 
+    public static Modifier Background(string background) => new(style => style.background = background);
 
+    public static Modifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
 
-    public static Modifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
+    public static Modifier Border(string border) => new(style => style.border = border);
+
+    public static Modifier BorderRadius(string borderRadius) => new(style => style.borderRadius = borderRadius);
+    public static Modifier BorderRadius(double borderRadius) => BorderRadius(borderRadius.AsPixel());
+    public static Modifier Bottom(string bottom) => new(style => style.bottom = bottom);
 
     public static Modifier BoxShadow(string boxShadow) => new(style => style.boxShadow = boxShadow);
+    public static Modifier ClassName(string className) => new(element => element.className = className);
 
-    public static Modifier Left(string left) => new(style => style.left = left);
-    public static Modifier Right(string right) => new(style => style.right = right);
-    public static Modifier LeftRight(string valueForLeftAndRight) => new(style => style.leftRight = valueForLeftAndRight);
-    public static Modifier LeftRightBottom(string valueForLeftAndRightAndBottom) => new(style => style.leftRightBottom = valueForLeftAndRightAndBottom);
+    public static Modifier Color(string color) => new(style => style.color = color);
 
-    public static Modifier Top(string top) => new(style => style.top = top);
-    public static Modifier Bottom(string bottom) => new(style => style.bottom = bottom);
-    public static Modifier TopBottom(string valueForTopAndBottom) => new(style => style.topBottom = valueForTopAndBottom);
+    public static Modifier FontSize(string fontSize) => new(style => style.fontSize = fontSize);
+    public static Modifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
 
+    public static Modifier FontWeight(string fontWeight) => new(style => style.fontWeight = fontWeight);
 
-    public static Modifier WidthAsPercentOf(double valueAsPercent) => new(style => style.width = valueAsPercent + "%");
+    public static Modifier Gap(double gap) => new(style => style.gap = gap.AsPixel());
+    public static Modifier Gap(string gap) => new(style => style.gap = gap);
 
-    public static Modifier Width25Percent => WidthAsPercentOf(25);
-    public static Modifier Width50Percent => WidthAsPercentOf(50);
-    public static Modifier Width75Percent => WidthAsPercentOf(75);
+    public static Modifier Height(double height) => Height(height.AsPixel());
+    public static Modifier Height(string height) => new(style => style.height = height);
 
     /// <summary>
-    ///    style.width = "100%"
-    /// </summary>
-    public static Modifier Width100Percent => WidthAsPercentOf(100);
-
-
-    /// <summary>
-    /// height = valueAsPercent + "%"
+    ///     height = valueAsPercent + "%"
     /// </summary>
     public static Modifier HeightAsPercentOf(double valueAsPercent) => new(style => style.height = valueAsPercent + "%");
 
-    public static Modifier Height25Percent => HeightAsPercentOf(25);
-    public static Modifier Height50Percent => HeightAsPercentOf(50);
-    public static Modifier Height75Percent => HeightAsPercentOf(75);
-    /// <summary>
-    ///    style.height = "100%"
-    /// </summary>
-    public static Modifier Height100Percent => HeightAsPercentOf(100);
+    public static string HexToRgb(string hexColor, double opacity = 1)
+    {
+        var color = ColorTranslator.FromHtml(hexColor);
 
-    
-    /// <summary>
-    /// width = '100%' , height = '100%'
-    /// </summary>
-    public static Modifier StretchWidthHeight => new(style => style.width_height = "100%");
+        int r = Convert.ToInt16(color.R);
+        int g = Convert.ToInt16(color.G);
+        int b = Convert.ToInt16(color.B);
 
-    /// <summary>
-    /// overflow = "hidden"
-    /// </summary>
-    public static Modifier OverflowHidden => new(style => style.overflow = "hidden");
-
-
+        return $"rgba({r}, {g}, {b}, {opacity})";
+    }
 
     public static Modifier Hover(params Modifier[] modifiers)
     {
@@ -148,62 +221,54 @@ public static class Mixin
                 modify.Apply(htmlElement.style.hover);
             }
         }
-        
+
         return new Modifier(apply);
     }
-    public static Modifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
-    public static Modifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
-    public static Modifier Background(string background) => new(style => style.background = background);
 
-    public static Modifier DisplayNone => new(style => style.display = "none");
-    public static Modifier DisplayNull => new(style => style.display = null);
-
-    /// <summary>
-    /// textDecoration = "underline"
-    /// </summary>
-    public static Modifier TextDecorationUnderline => TextDecoration("underline");
-    /// <summary>
-    /// textDecoration = 'line-through'
-    /// </summary>
-    public static Modifier TextDecorationLineThrough=> TextDecoration("line-through");
-    /// <summary>
-    /// textDecoration = "overline"
-    /// </summary>
-    public static Modifier TextDecorationOverline => TextDecoration("overline");
-
-    public static Modifier TextDecorationNone => TextDecoration("none");
-    
-    public static Modifier TextDecoration(string textDecoration) => new(style => style.textDecoration = textDecoration);
-
-
-    public static Modifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
-
-    public static Modifier BorderRadius(string borderRadius) => new(style => style.borderRadius = borderRadius);
-    public static Modifier BorderRadius(double borderRadius) => BorderRadius(borderRadius.AsPixel());
-
-    public static Modifier TextAlignCenter => TextAlign("center");
-    public static Modifier TextAlignRight=> TextAlign("right");
-    public static Modifier TextAlignLeft => TextAlign("left");
-    public static Modifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
-
-    public static Modifier Width(double width) => new(style => style.width = width.AsPixel());
-    public static Modifier Width(string width) => new(style => style.width = width);
-
-    public static Modifier Height(double height) => Height(height.AsPixel());
-    public static Modifier Height(string height) => new(style => style.height = height);
-    public static Modifier Height100vh => new(style => style.height = "100vh");
+    public static Modifier Left(string left) => new(style => style.left = left);
+    public static Modifier LeftRight(string valueForLeftAndRight) => new(style => style.leftRight = valueForLeftAndRight);
+    public static Modifier LeftRightBottom(string valueForLeftAndRightAndBottom) => new(style => style.leftRightBottom = valueForLeftAndRightAndBottom);
 
     public static Modifier MaxHeight(string height) => new(style => style.maxHeight = height);
     public static Modifier MaxHeight(double height) => MaxHeight(height.AsPixel());
 
+    public static Modifier MaxWidth(string maxWidth) => new(style => style.maxWidth = maxWidth);
+    public static Modifier MaxWidth(double maxWidth) => new(style => style.maxWidth = maxWidth.AsPixel());
 
+    public static JsonSerializerOptions ModifyForReactWithDotNet(this JsonSerializerOptions options)
+    {
+        return JsonSerializationOptionHelper.Modify(options);
+    }
 
-    public static Modifier Gap(double gap) => new(style => style.gap = gap.AsPixel());
-    public static Modifier Gap(string gap) => new(style => style.gap = gap);
+    public static Modifier Right(string right) => new(style => style.right = right);
+    public static Modifier Text(string innerText) => new(element => element.text = innerText);
+    public static Modifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
 
+    public static Modifier TextDecoration(string textDecoration) => new(style => style.textDecoration = textDecoration);
+
+    public static string ToJson(this ComponentResponse value)
+    {
+        var options = new JsonSerializerOptions();
+
+        options = options.ModifyForReactWithDotNet();
+
+        return JsonSerializer.Serialize(value, options);
+    }
+
+    public static Modifier Top(string top) => new(style => style.top = top);
+    public static Modifier TopBottom(string valueForTopAndBottom) => new(style => style.topBottom = valueForTopAndBottom);
 
     public static Modifier Transition(string transition) => new(style => style.transition = transition);
 
+    public static Modifier Width(double width) => new(style => style.width = width.AsPixel());
+    public static Modifier Width(string width) => new(style => style.width = width);
+
+    public static Modifier WidthAsPercentOf(double valueAsPercent) => new(style => style.width = valueAsPercent + "%");
+    public static Modifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
+    public static Modifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
+    public static Modifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
+
+    internal static string AsPixel(this double value) => value + "px";
 
     #region Position
     public static Modifier PositionRelative => new(style => style.position = "relative");
@@ -213,76 +278,6 @@ public static class Mixin
     public static Modifier PositionStatic => new(style => style.position = "static");
     #endregion
 
-    public static Modifier DisplayFlex => new(style => style.display = "flex");
-    /// <summary>
-    /// flexDirection = "row"
-    /// </summary>
-    public static Modifier FlexDirectionRow => new(style => style.flexDirection = "row");
-
-    /// <summary>
-    /// flexDirection = "row-reverse"
-    /// </summary>
-    public static Modifier FlexDirectionRowReverse => new(style => style.flexDirection = "row-reverse");
-
-    public static Modifier FlexDirectionColumn=> new(style => style.flexDirection = "column");
-    public static Modifier JustifyContentSpaceBetween => new(style => style.justifyContent = "space-between");
-
-    /// <summary>
-    ///    justifyContent = "center"
-    /// </summary>
-    public static Modifier JustifyContentCenter => new(style => style.justifyContent = "center");
-
-    public static Modifier AlignItemsCenter=> new(style => style.alignItems = "center");
-    public static Modifier AlignItemsFlexStart => new(style => style.alignItems = "flex-start");
-    public static Modifier AlignItemsFlexEnd => new(style => style.alignItems = "flex-end");
-    public static Modifier AlignItemsStretch => new(style => style.alignItems = "stretch");
-    public static Modifier AlignItemsBaseline=> new(style => style.alignItems = "baseline");
-
-    public static Modifier FontSize(string fontSize) => new(style => style.fontSize = fontSize);
-    public static Modifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
-
-    public static Modifier FontSize9 => FontSize(9);
-    public static Modifier FontSize10 => FontSize(10);
-    public static Modifier FontSize11 => FontSize(11);
-    public static Modifier FontSize12 => FontSize(12);
-    public static Modifier FontSize13 => FontSize(13);
-    public static Modifier FontSize14 => FontSize(14);
-    public static Modifier FontSize15 => FontSize(15);
-    public static Modifier FontSize16 => FontSize(16);
-    public static Modifier FontSize17 => FontSize(17);
-    public static Modifier FontSize18 => FontSize(18);
-    public static Modifier FontSize19 => FontSize(19);
-    public static Modifier FontSize20 => FontSize(20);
-    public static Modifier FontSize21 => FontSize(21);
-    public static Modifier FontSize22 => FontSize(22);
-    public static Modifier FontSize23 => FontSize(23);
-    public static Modifier FontSize24 => FontSize(24);
-    public static Modifier FontSize25 => FontSize(25);
-
-    public static Modifier Color(string color) => new(style => style.color = color);
-
-    public static Modifier MaxWidth(string maxWidth) => new(style => style.maxWidth = maxWidth);
-    public static Modifier MaxWidth(double maxWidth) => new(style => style.maxWidth = maxWidth.AsPixel());
-    public static Modifier WidthAuto => new(style => style.width = "auto");
-
-
-
-    public static Modifier Border(string border) => new(style => style.border = border);
-    public static Modifier ClassName(string className) => new(element => element.className = className);
-
-    public static Modifier FontWeight(string fontWeight) => new(style => style.fontWeight = fontWeight);
-
-    public static Modifier FontWeight400  => FontWeight("400");
-    public static Modifier FontWeight500 => FontWeight("500");
-    public static Modifier FontWeight600 => FontWeight("600");
-    public static Modifier FontWeight700 => FontWeight("700");
-    public static Modifier FontWeight800 => FontWeight("800");
-
-    public static Modifier BoxSizingBorderBox => new(style => style.boxSizing = "border-box");
-    public static Modifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
-    public static Modifier Text(string innerText) => new(element => element.text = innerText);
-    
-    
     #region Margin
     public static Modifier MarginRight(string marginRight) => new(style => style.marginRight = marginRight);
     public static Modifier MarginLeft(string marginLeft) => new(style => style.marginLeft = marginLeft);
@@ -305,11 +300,7 @@ public static class Mixin
     public static Modifier MarginLeftTop(double marginLeftTop) => new(style => style.marginLeftTop = marginLeftTop.AsPixel());
     public static Modifier MarginLeftBottom(double marginLeftBottom) => new(style => style.marginLeftBottom = marginLeftBottom.AsPixel());
     public static Modifier MarginTopRight(double marginTopRight) => new(style => style.marginTopRight = marginTopRight.AsPixel());
-
     #endregion
-
-
-
 
     #region Padding
     public static Modifier Padding(double paddingPx) => new(style => style.padding = paddingPx.AsPixel());
@@ -336,46 +327,5 @@ public static class Mixin
     public static Modifier PaddingLeftTop(double paddingLeftTop) => new(style => style.paddingLeftTop = paddingLeftTop.AsPixel());
     public static Modifier PaddingLeftBottom(double paddingLeftBottom) => new(style => style.paddingLeftBottom = paddingLeftBottom.AsPixel());
     public static Modifier PaddingTopRight(double paddingTopRight) => new(style => style.paddingTopRight = paddingTopRight.AsPixel());
-
     #endregion
-
-
-
-    internal static string AsPixel(this double value) => value + "px";
-
-    
-
-    public static string HexToRgb(string hexColor, double opacity = 1)
-    {
-        var color = ColorTranslator.FromHtml(hexColor);
-        
-        int   r     = Convert.ToInt16(color.R);
-        int   g     = Convert.ToInt16(color.G);
-        int   b     = Convert.ToInt16(color.B);
-        
-        return $"rgba({r}, {g}, {b}, {opacity})";
-    }
-
-   
-
-    public static string ToJson(this ComponentResponse value)
-    {
-        var options = new JsonSerializerOptions();
-
-        options = options.ModifyForReactWithDotNet();
-            
-        return JsonSerializer.Serialize(value, options);
-    }
-
-    public static JsonSerializerOptions ModifyForReactWithDotNet(this JsonSerializerOptions options)
-    {
-        return JsonSerializationOptionHelper.Modify(options);
-    }
-
-    public static TParent appendChild<TParent,TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
-    {
-        element.children.Add(child);
-
-        return element;
-    }
 }
