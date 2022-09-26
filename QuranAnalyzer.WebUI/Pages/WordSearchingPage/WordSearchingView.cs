@@ -195,7 +195,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         state.SearchScriptErrorMessage = null;
     }
     
-    void OnCaclculateClicked(string _)
+    void OnCaclculateClicked(MouseEvent _)
     {
         state.SearchScriptErrorMessage = null;
         if (state.SearchScript.HasNoValue())

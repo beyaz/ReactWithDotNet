@@ -10,7 +10,7 @@ public static class DataAccess
     
     static DataAccess()
     {
-        var chapters = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(@"D:\work\git\QuranAnalyzer\QuranAnalyzer\Data.json"));
+        var chapters = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(@"D:\work\git\ReactDotNet\QuranAnalyzer\Data.json"));
 
         AllSurahs = chapters.AsListOf(chapter => new Surah
         {

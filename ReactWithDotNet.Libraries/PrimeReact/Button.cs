@@ -12,7 +12,7 @@ namespace ReactWithDotNet.PrimeReact
     public class Button : ElementBase
     {
         [React]
-        public Action<string> onClick { get; set; }
+        public Action<MouseEvent> onClick { get; set; }
         
         /// <summary>
         ///     Text of the button.

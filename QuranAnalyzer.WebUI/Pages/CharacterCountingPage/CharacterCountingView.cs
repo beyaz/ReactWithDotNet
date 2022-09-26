@@ -184,7 +184,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
     }
 
-    void OnCaclculateClicked(string _)
+    void OnCaclculateClicked(MouseEvent _)
     {
         state.SearchScriptErrorMessage = null;
         if (state.SearchScript.HasNoValue())

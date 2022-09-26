@@ -1,9 +1,27 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-partial class Style
+partial class Style : IEnumerable<Modifier>
 {
+    #region IEnumerable<Modifier>
+    public IEnumerator<Modifier> GetEnumerator()
+    {
+        throw new InvalidOperationException("Style data should be serialize after .ToDictionary() method called.");
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public void Add(Modifier modifier)
+    {
+        modifier?.Apply(this);
+    } 
+    #endregion
+
     [JsonIgnore]
     public string leftRight
     {
@@ -150,4 +168,6 @@ partial class Style
 
     public string borderInlineStyle { get; set; }
     #endregion
+
+    
 }

@@ -6,13 +6,14 @@ class ErrorText : ReactComponent
 
     protected override Element render()
     {
-        var element = new small(DisplayNoneWhen(Text.HasNoValue()))
+        var element = new small
         {
             text = Text,
             style =
             {
-                color     = "#e24c4c",
-                marginTop = "5px"
+                Color("#e24c4c"),
+                MarginTop(5),
+                DisplayNoneWhen(Text.HasNoValue())
             }
         };
 

@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
@@ -208,7 +209,7 @@ public static class ElementSerializer
                 }
             }
         }
-
+        
         // check inline
         {
             if (propertyValue is Style style)
@@ -248,6 +249,12 @@ public static class ElementSerializer
                         Pseudos = pseudos
                     }));
                 }
+
+                if (!IsEmptyStyle(style))
+                {
+                    return (style.ToDictionary(), false);
+                }
+
             }
         }
 
