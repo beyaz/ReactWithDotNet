@@ -16,11 +16,6 @@ class ErrorText : ReactComponent
             }
         };
 
-        if (Text.HasNoValue())
-        {
-            element.style.display = "none";
-        }
-
         return element;
     }
 }
