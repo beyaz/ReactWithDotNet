@@ -14,9 +14,15 @@ public static class Mixin
 
     public static Modifier BoxSizingBorderBox => new(style => style.boxSizing = "border-box");
 
+    public static Modifier CursorPointer => new(style => style.cursor = "pointer");
+
     public static Modifier DisplayFlex => new(style => style.display = "flex");
 
+    /// <summary>
+    ///     style.display = "none"
+    /// </summary>
     public static Modifier DisplayNone => new(style => style.display = "none");
+
     public static Modifier DisplayNull => new(style => style.display = null);
 
     public static Modifier FlexDirectionColumn => new(style => style.flexDirection = "column");
@@ -175,6 +181,11 @@ public static class Mixin
 
     public static Modifier Color(string color) => new(style => style.color = color);
 
+    /// <summary>
+    ///     apply style.display = "none" when condition is true
+    /// </summary>
+    public static Modifier DisplayNoneWhen(bool condition) => condition ? DisplayNone : null;
+
     public static Modifier FontSize(string fontSize) => new(style => style.fontSize = fontSize);
     public static Modifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
 
@@ -240,7 +251,6 @@ public static class Mixin
         return JsonSerializationOptionHelper.Modify(options);
     }
 
-    public static Modifier CursorPointer => new(style => style.cursor = "pointer");
     public static Modifier OnClick(Action<MouseEvent> onClickHandler) => new(element => element.onClick = onClickHandler);
 
     public static Modifier Right(string right) => new(style => style.right = right);

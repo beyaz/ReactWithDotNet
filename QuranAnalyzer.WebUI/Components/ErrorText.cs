@@ -6,7 +6,7 @@ class ErrorText : ReactComponent
 
     protected override Element render()
     {
-        var element = new small
+        var element = new small(DisplayNoneWhen(Text.HasNoValue()))
         {
             text = Text,
             style =
