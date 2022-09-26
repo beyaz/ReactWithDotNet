@@ -4,18 +4,15 @@ namespace ReactWithDotNet;
 
 partial class Style
 {
-
-    
-
-        [JsonIgnore]
-        public string leftRight
+    [JsonIgnore]
+    public string leftRight
     {
-            set
-            {
-                left  = value;
-                right = value;
-            }
+        set
+        {
+            left  = value;
+            right = value;
         }
+    }
 
     [JsonIgnore]
     public string leftRightBottom
@@ -33,13 +30,22 @@ partial class Style
     {
         set
         {
-            top   = value;
-            bottom  = value;
+            top    = value;
+            bottom = value;
         }
     }
+
+    [JsonIgnore]
+    public string width_height
+    {
+        set
+        {
+            width  = value;
+            height = value;
+        }
+    }
+
     #region margin
-
-
     [JsonIgnore]
     public string marginLeftRight
     {
@@ -49,7 +55,6 @@ partial class Style
             marginRight = value;
         }
     }
-
 
     [JsonIgnore]
     public string marginLeftTop
@@ -70,7 +75,7 @@ partial class Style
             marginBottom = value;
         }
     }
-    
+
     [JsonIgnore]
     public string marginTopBottom
     {
@@ -86,26 +91,12 @@ partial class Style
     {
         set
         {
-            marginTop    = value;
+            marginTop   = value;
             marginRight = value;
         }
     }
-
     #endregion
 
-
-    [JsonIgnore]
-    public string width_height
-    {
-        set
-        {
-            width  = value;
-            height = value;
-        }
-    }
-    
-        
-        
     #region Padding
     [JsonIgnore]
     public string paddingLeftRight
@@ -117,7 +108,6 @@ partial class Style
         }
     }
 
-
     [JsonIgnore]
     public string paddingLeftTop
     {
@@ -127,7 +117,6 @@ partial class Style
             paddingTop  = value;
         }
     }
-
 
     [JsonIgnore]
     public string paddingLeftBottom
