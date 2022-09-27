@@ -250,17 +250,18 @@ public static class ElementSerializer
                     }));
                 }
 
-                if (!IsEmptyStyle(style))
+                if (IsEmptyStyle(style))
                 {
-                    return (style.ToDictionary(), false);
+                    return (null, true);
                 }
 
+                return (style.ToDictionary(), false);
             }
         }
 
         {
             var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
-            if (isDefaultValue || IsEmptyStyle(propertyValue))
+            if (isDefaultValue)
             {
                 return (null, true);
             }
