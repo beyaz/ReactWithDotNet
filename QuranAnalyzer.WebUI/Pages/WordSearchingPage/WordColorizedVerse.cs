@@ -117,14 +117,14 @@ class WordColorizedVerse : ReactComponent
                 searchWordIndex++;
             }
         }
-        var textView = new div
+        var textView = new div(FontFamily_Lateef)
         {
             innerHTML = html.ToString(),
             style =
             {
                 fontSize    = "1.4rem",
                 padding     = "5px",
-                fontFamily  = "Lateef, cursive",
+                
                 direction   = "rtl",
                 marginRight = "auto"
             }

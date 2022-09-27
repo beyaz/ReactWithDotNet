@@ -71,15 +71,16 @@ class ArabicKeyboardLetterView : ReactComponent
                 cursor       = "pointer",
                 hover =
                 {
-                    border = "1px solid #7daee7"
+                    Border("1px solid #7daee7"),
+                    Background("whitesmoke")
                 }
             },
             children =
             {
-                new div
+                new div(FontFamily_Lateef)
                 {
                     text  = ArabicLetter,
-                    style = { fontSize = "35px", paddingLeftRight = "5px", fontFamily = "Lateef, cursive" }
+                    style = { fontSize = "35px", paddingLeftRight = "5px" }
                 },
                 new div(English){style = { marginLeftRight = "2px", fontSize = "0.8rem"}}
             },

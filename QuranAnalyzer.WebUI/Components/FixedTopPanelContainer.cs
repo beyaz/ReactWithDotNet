@@ -19,14 +19,13 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
         {
             style =
             {
-                position = "fixed",
-                top      = "0px",
-                left     = "0px",
-
-                width        = "100%",
-                height       = "50px",
-                zIndex       = "1",
-                borderBottom = "1px solid #dadce0"
+                PositionFixed,
+                Top(0),
+                Left(0),
+                Width100Percent,
+                Height(50),
+                Zindex(1),
+                BorderBottom("1px solid #dadce0")
             },
             children =
             {

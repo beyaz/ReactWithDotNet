@@ -53,7 +53,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 {
                     new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
                     
-                    new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true, style = { fontFamily = "Lateef, cursive" }},
+                    new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true, style = { FontFamily_Lateef }},
 
                     new ErrorText { Text = state.SearchScriptErrorMessage }
                 },

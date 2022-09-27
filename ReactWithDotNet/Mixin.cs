@@ -171,11 +171,21 @@ public static class Mixin
         }
     }
 
+    /// <summary>
+    /// style.fontFamily = fontFamily
+    /// </summary>
+    public static Modifier FontFamily(string fontFamily) => new(style => style.fontFamily = fontFamily);
+    
+    
     public static Modifier Background(string background) => new(style => style.background = background);
 
     public static Modifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
 
     public static Modifier Border(string border) => new(style => style.border = border);
+    public static Modifier BorderLeft(string borderLeft) => new(style => style.borderLeft = borderLeft);
+    public static Modifier BorderRight(string borderRight) => new(style => style.borderRight = borderRight);
+    public static Modifier BorderTop(string borderTop) => new(style => style.borderTop = borderTop);
+    public static Modifier BorderBottom(string borderBottom) => new(style => style.borderBottom = borderBottom);
 
     public static Modifier BorderRadius(string borderRadius) => new(style => style.borderRadius = borderRadius);
     public static Modifier BorderRadius(double borderRadius) => BorderRadius(borderRadius.AsPixel());
@@ -241,6 +251,7 @@ public static class Mixin
         return new Modifier(apply);
     }
 
+    public static Modifier Left(double left) => Left(left.AsPixel());
     public static Modifier Left(string left) => new(style => style.left = left);
     public static Modifier LeftRight(string valueForLeftAndRight) => new(style => style.leftRight = valueForLeftAndRight);
     public static Modifier LeftRightBottom(string valueForLeftAndRightAndBottom) => new(style => style.leftRightBottom = valueForLeftAndRightAndBottom);
@@ -273,6 +284,7 @@ public static class Mixin
         return JsonSerializer.Serialize(value, options);
     }
 
+    public static Modifier Top(double top) => Top(top.AsPixel());
     public static Modifier Top(string top) => new(style => style.top = top);
     public static Modifier TopBottom(string valueForTopAndBottom) => new(style => style.topBottom = valueForTopAndBottom);
 

@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 
 namespace QuranAnalyzer.WebUI;
 
+
+
 static class PageId
 {
     public const string MainPage = "1";
@@ -55,6 +57,8 @@ class SettingsFile
 
 static class App
 {
+    public static Modifier FontFamily_Lateef => FontFamily("Lateef, cursive");
+    
     public static SettingsFile Settings = JsonConvert.DeserializeObject<SettingsFile>(File.ReadAllText("Settings.json"));
 
     public static void Log(string message)
