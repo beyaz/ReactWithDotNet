@@ -244,7 +244,25 @@ public static class Mixin
 
     public static Modifier Hover(params Modifier[] modifiers)
     {
-        void apply(HtmlElement htmlElement)
+        //void apply(HtmlElement htmlElement)
+        //{
+        //    if (modifiers is null)
+        //    {
+        //        return;
+        //    }
+
+        //    foreach (var modify in modifiers)
+        //    {
+        //        if (modify is null)
+        //        {
+        //            continue;
+        //        }
+
+        //        modify.Apply(htmlElement.style.hover);
+        //    }
+        //}
+
+        void apply(Style instance)
         {
             if (modifiers is null)
             {
@@ -258,7 +276,7 @@ public static class Mixin
                     continue;
                 }
 
-                modify.Apply(htmlElement.style.hover);
+                modify.Apply(instance.hover);
             }
         }
 

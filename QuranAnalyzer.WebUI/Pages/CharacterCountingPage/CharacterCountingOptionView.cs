@@ -79,8 +79,9 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                 {
                                     style =
                                     {
-                                        padding = "10px",
-                                        color   = headerColor,
+                                        Padding(10),
+                                        Color(headerColor),
+                                        Hover(Color("rgb(40 15 229)"))
                                     }
                                 },
                             },
@@ -105,8 +106,9 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                 {
                                     style =
                                     {
-                                        padding = "10px",
-                                        color   = headerColor,
+                                        Padding(10),
+                                        Color(headerColor),
+                                        Hover(Color("rgb(40 15 229)"))
                                     }
                                 },
                             },

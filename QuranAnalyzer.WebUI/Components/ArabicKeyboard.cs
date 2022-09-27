@@ -64,8 +64,7 @@ class ArabicKeyboardLetterView : ReactComponent
                 BorderRadius(5),
                 Background("rgb(248 249 251)"),
                 CursorPointer,
-                Hover(Border("1px solid #7daee7"),
-                      Background("whitesmoke"))
+                Hover(Border("1px solid #7daee7"), Background("whitesmoke"))
             },
             children =
             {
