@@ -16,6 +16,16 @@ public static class Mixin
 
     public static Modifier CursorPointer => new(style => style.cursor = "pointer");
 
+    /// <summary>
+    ///     style.direction = "ltr"
+    /// </summary>
+    public static Modifier DirectionLtr => new(style => style.direction = "ltr");
+
+    /// <summary>
+    ///     style.direction = "rtl"
+    /// </summary>
+    public static Modifier DirectionRtl => new(style => style.direction = "rtl");
+
     public static Modifier DisplayFlex => new(style => style.display = "flex");
 
     /// <summary>
@@ -36,6 +46,11 @@ public static class Mixin
     ///     flexDirection = "row-reverse"
     /// </summary>
     public static Modifier FlexDirectionRowReverse => new(style => style.flexDirection = "row-reverse");
+
+    public static Modifier FlexNoWrap => new(style => style.flexWrap = "nowrap");
+
+    public static Modifier FlexWrap => new(style => style.flexWrap = "wrap");
+    public static Modifier FlexWrapReverse => new(style => style.flexWrap = "wrap-reverse");
 
     public static Modifier FontSize10 => FontSize(10);
     public static Modifier FontSize11 => FontSize(11);
@@ -81,8 +96,8 @@ public static class Mixin
     /// <summary>
     ///     style.justifyContent = "flex-start"
     /// </summary>
-    public static Modifier JustifyContentFlexStart => new (style => style.justifyContent = "flex-start");
-    
+    public static Modifier JustifyContentFlexStart => new(style => style.justifyContent = "flex-start");
+
     public static Modifier JustifyContentSpaceBetween => new(style => style.justifyContent = "space-between");
 
     /// <summary>
@@ -171,24 +186,18 @@ public static class Mixin
         }
     }
 
-    /// <summary>
-    /// style.fontFamily = fontFamily
-    /// </summary>
-    public static Modifier FontFamily(string fontFamily) => new(style => style.fontFamily = fontFamily);
-    
-    
     public static Modifier Background(string background) => new(style => style.background = background);
 
     public static Modifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
 
     public static Modifier Border(string border) => new(style => style.border = border);
-    public static Modifier BorderLeft(string borderLeft) => new(style => style.borderLeft = borderLeft);
-    public static Modifier BorderRight(string borderRight) => new(style => style.borderRight = borderRight);
-    public static Modifier BorderTop(string borderTop) => new(style => style.borderTop = borderTop);
     public static Modifier BorderBottom(string borderBottom) => new(style => style.borderBottom = borderBottom);
+    public static Modifier BorderLeft(string borderLeft) => new(style => style.borderLeft = borderLeft);
 
     public static Modifier BorderRadius(string borderRadius) => new(style => style.borderRadius = borderRadius);
     public static Modifier BorderRadius(double borderRadius) => BorderRadius(borderRadius.AsPixel());
+    public static Modifier BorderRight(string borderRight) => new(style => style.borderRight = borderRight);
+    public static Modifier BorderTop(string borderTop) => new(style => style.borderTop = borderTop);
     public static Modifier Bottom(string bottom) => new(style => style.bottom = bottom);
 
     public static Modifier BoxShadow(string boxShadow) => new(style => style.boxShadow = boxShadow);
@@ -200,6 +209,11 @@ public static class Mixin
     ///     apply style.display = "none" when condition is true
     /// </summary>
     public static Modifier DisplayNoneWhen(bool condition) => condition ? DisplayNone : null;
+
+    /// <summary>
+    ///     style.fontFamily = fontFamily
+    /// </summary>
+    public static Modifier FontFamily(string fontFamily) => new(style => style.fontFamily = fontFamily);
 
     public static Modifier FontSize(string fontSize) => new(style => style.fontSize = fontSize);
     public static Modifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
