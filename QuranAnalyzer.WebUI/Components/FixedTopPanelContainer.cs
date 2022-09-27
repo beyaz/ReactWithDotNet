@@ -30,21 +30,12 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
             },
             children =
             {
-                new nav
+                new nav(DisplayFlex, JustifyContentFlexStart, AlignItemsCenter)
                 {
-                    children =
+                    new SvgHamburgerIcon(),
+                    new div
                     {
-                        new SvgHamburgerIcon(),
-                        new div
-                        {
-                            new SiteTitle()
-                        }
-                    },
-                    style =
-                    {
-                        display        = "flex",
-                        justifyContent = "flex-start",
-                        alignItems     = "center"
+                        new SiteTitle()
                     }
                 }
             }

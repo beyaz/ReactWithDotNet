@@ -208,17 +208,24 @@ public class img : HtmlElement
 
 public class nav : HtmlElement
 {
+    public nav() { }
+    public nav(params Modifier[] modifiers) : base(modifiers) { }
 }
 
 public class main : HtmlElement
 {
+    public main() { }
+    public main(params Modifier[] modifiers) : base(modifiers) { }
 }
 public class footer : HtmlElement
 {
+    public footer() { }
+    public footer(params Modifier[] modifiers) : base(modifiers) { }
 }
 
 
 
 public class HtmlTextNode : HtmlElement
 {
+    
 }

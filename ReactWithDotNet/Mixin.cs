@@ -78,6 +78,11 @@ public static class Mixin
     /// </summary>
     public static Modifier JustifyContentCenter => new(style => style.justifyContent = "center");
 
+    /// <summary>
+    ///     style.justifyContent = "flex-start"
+    /// </summary>
+    public static Modifier JustifyContentFlexStart => new (style => style.justifyContent = "flex-start");
+    
     public static Modifier JustifyContentSpaceBetween => new(style => style.justifyContent = "space-between");
 
     /// <summary>
