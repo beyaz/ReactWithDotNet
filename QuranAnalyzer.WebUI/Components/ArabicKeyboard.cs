@@ -77,12 +77,14 @@ class ArabicKeyboardLetterView : ReactComponent
             },
             children =
             {
-                new div(FontFamily_Lateef)
+                new div(PaddingLeftRight(5),FontSize(35),FontFamily_Lateef)
                 {
-                    text  = ArabicLetter,
-                    style = { fontSize = "35px", paddingLeftRight = "5px" }
+                    text  = ArabicLetter
                 },
-                new div(English){style = { marginLeftRight = "2px", fontSize = "0.8rem"}}
+                new div(MarginLeftRight(2), FontSize("0.8rem"))
+                {
+                   text = English
+                }
             },
 
             onClick = OnArabicKeyboardLetterClicked
