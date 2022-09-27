@@ -292,6 +292,8 @@ public static class Mixin
     #endregion
 
     #region Margin
+    public static Modifier Margin(string margin) => new(style => style.margin = margin);
+    public static Modifier Margin(double margin) => new(style => style.margin = margin.AsPixel());
     public static Modifier MarginRight(string marginRight) => new(style => style.marginRight = marginRight);
     public static Modifier MarginLeft(string marginLeft) => new(style => style.marginLeft = marginLeft);
     public static Modifier MarginTop(string marginTop) => new(style => style.marginTop = marginTop);

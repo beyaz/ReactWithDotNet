@@ -67,8 +67,23 @@ public class pre : HtmlElement
 {
 }
 
+public class h6 : HtmlElement
+{
+    public h6()
+    {
+
+    }
+    public h6(params Modifier[] modifiers) : base(modifiers) { }
+    public h6(Style style) : base(style) { }
+}
 public class h5 : HtmlElement
 {
+    public h5()
+    {
+        
+    }
+    public h5(params Modifier[] modifiers) : base(modifiers) { }
+    public h5(Style style) : base(style) { }
 }
 
 public class h4 : HtmlElement
@@ -81,6 +96,8 @@ public class h4 : HtmlElement
     {
         this.innerText = innerText;
     }
+    public h4(params Modifier[] modifiers) : base(modifiers) { }
+    public h4(Style style) : base(style) { }
 }
 
 public class h3 : HtmlElement
@@ -93,6 +110,8 @@ public class h3 : HtmlElement
     {
         this.innerText = innerText;
     }
+    public h3(params Modifier[] modifiers) : base(modifiers) { }
+    public h3(Style style) : base(style) { }
 }
 
 public class h2 : HtmlElement
@@ -107,6 +126,9 @@ public class h2 : HtmlElement
     {
         this.innerText = innerText;
     }
+
+    public h2(params Modifier[] modifiers) : base(modifiers) { }
+    public h2(Style style) : base(style) { }
 }
 
 public class h1 : HtmlElement

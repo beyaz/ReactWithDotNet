@@ -9,8 +9,8 @@ class divWithBorder: HtmlElement
     
     public divWithBorder()
     {
-        style.border       = "1px solid rgb(218, 220, 224)";
-        style.borderRadius = "5px";
+        this.Apply(BorderRadius(5),
+                   Border("1px solid rgb(218, 220, 224)"));
     }
 }
 
@@ -27,7 +27,7 @@ class LargeTitle : ReactComponent
     {
         return new div
         {
-            style    = { fontSize = "18px", textAlign = "center", fontWeight = "500"},
+            style    = { FontSize18, TextAlignCenter, FontWeight500},
             text = text
         };
     }
@@ -47,7 +47,7 @@ class Important : ReactComponent
     {
         return new div
         {
-            style = { fontWeight = "500" },
+            style = { FontWeight500 },
             text  = text
         };
     }
@@ -84,7 +84,7 @@ class Article : ReactComponent
     {
         return new article
         {
-            style = { marginLeftRight = "8px", paddingLeftRight = "16px"},
+            style = { MarginLeftRight(8), PaddingLeftRight(16) },
             Children = children
         };
     }
