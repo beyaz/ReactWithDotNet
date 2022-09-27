@@ -32,10 +32,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                 new nav(DisplayFlex, JustifyContentFlexStart, AlignItemsCenter)
                 {
                     new SvgHamburgerIcon(),
-                    new div
-                    {
-                        new SiteTitle()
-                    }
+                    new SiteTitle()
                 }
             }
         };

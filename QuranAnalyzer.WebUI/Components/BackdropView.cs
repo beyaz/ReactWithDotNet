@@ -10,7 +10,11 @@ class BackdropView: ReactComponent
         return new div
         {
             className = "p-blockui p-component-overlay p-component-overlay-enter", 
-            style = { zIndex = "3" , display = IsActive ? "": "none"},
+            style =
+            {
+                DisplayNoneWhen(!IsActive),
+                Zindex(3)
+            },
             onClick = OnBackdropClicked
         };
     }

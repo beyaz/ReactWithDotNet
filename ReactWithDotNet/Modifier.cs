@@ -31,4 +31,9 @@ public class Modifier
     {
         modifyStyle(style);
     }
+
+    public static implicit operator Modifier(string text)
+    {
+        return Mixin.Text(text);
+    }
 }
