@@ -13,7 +13,7 @@ class ErrorText : ReactComponent
             {
                 Color("#e24c4c"),
                 MarginTop(5),
-                DisplayNoneWhen(Text.HasNoValue())
+                When(Text.HasNoValue(),DisplayNone)
             }
         };
 

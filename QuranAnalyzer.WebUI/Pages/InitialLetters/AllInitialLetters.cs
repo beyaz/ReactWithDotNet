@@ -42,38 +42,20 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
     #region Methods
     protected override Element render()
     {
-        var contentContainer = new div
+        var contentContainer = new div(StretchWidthHeight)
         {
-            style = { width_height = "100%" },
-            children =
-            {
-                CreateTabContent()
-            }
+            CreateTabContent()
         };
 
-        var headers = new div
+        var headers = new FlexColumn(TextAlignCenter, CursorPointer)
         {
-            style =
-            {
-                display       = "flex",
-                flexDirection = "column",
-                whiteSpace    = "normal",
-                alignItems    = "stretch",
-                color         = "rgba(0, 0, 0, 0.6)",
-                textAlign     = "center",
-                cursor        = "pointer"
-            },
             Children = Tabs.Select(x => CreateTabHeader(x.TabHeader, x.contenType.FullName))
         };
 
-        return new div
+        return new FlexRow(Width100Percent, Border("1px solid #dee2e6"))
         {
-            style = { display = "flex", flexDirection = "row", width = "100%", border = "1px solid #dee2e6" },
-            children =
-            {
-                headers,
-                contentContainer
-            }
+            headers,
+            contentContainer
         };
     }
 
@@ -93,29 +75,23 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
     {
         var isSelected = state.SelectedTabIdentifier == identifier;
 
-        var element = new div
+        return new div
         {
             id   = identifier,
             text = text,
 
             style =
             {
-                padding     = "10px",
-                borderRight = $"1px solid {(isSelected ? "#1976d2" : "#dee2e6")}",
+                Color("rgba(0, 0, 0, 0.6)"),
+                Padding(10),
+                BorderRight($"1px solid {(isSelected ? "#1976d2" : "#dee2e6")}"),
+                When(isSelected, Background("#deecf9"), Color("#1976d2"))
             },
 
             onClick = OnTabHeaderClick
         };
-
-        if (isSelected)
-        {
-            element.style.background = "rgb(203 213 223 / 8%)";
-            element.style.color      = "#1976d2";
-        }
-
-        return element;
     }
-
+    
     void OnTabHeaderClick(MouseEvent e) => state.SelectedTabIdentifier = e.FirstNotEmptyId;
     #endregion
 }

@@ -12,7 +12,7 @@ class BackdropView: ReactComponent
             className = "p-blockui p-component-overlay p-component-overlay-enter", 
             style =
             {
-                DisplayNoneWhen(!IsActive),
+                When(!IsActive,DisplayNone),
                 Zindex(3)
             },
             onClick = OnBackdropClicked

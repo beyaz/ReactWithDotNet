@@ -204,11 +204,24 @@ public static class Mixin
     public static Modifier ClassName(string className) => new(element => element.className = className);
 
     public static Modifier Color(string color) => new(style => style.color = color);
-
+    
     /// <summary>
-    ///     apply style.display = "none" when condition is true
+    /// Apply given modifiers when condition is true
     /// </summary>
-    public static Modifier DisplayNoneWhen(bool condition) => condition ? DisplayNone : null;
+    public static Modifier When(bool condition, params Modifier[] modifiers)
+    {
+        if (!condition)
+        {
+            return null;
+        }
+
+        return new Modifier(apply);
+
+        void apply(Style instance)
+        {
+            instance.Apply(modifiers);
+        }
+    }
 
     /// <summary>
     ///     style.fontFamily = fontFamily
@@ -242,26 +255,10 @@ public static class Mixin
         return $"rgba({r}, {g}, {b}, {opacity})";
     }
 
+    
+    
     public static Modifier Hover(params Modifier[] modifiers)
     {
-        //void apply(HtmlElement htmlElement)
-        //{
-        //    if (modifiers is null)
-        //    {
-        //        return;
-        //    }
-
-        //    foreach (var modify in modifiers)
-        //    {
-        //        if (modify is null)
-        //        {
-        //            continue;
-        //        }
-
-        //        modify.Apply(htmlElement.style.hover);
-        //    }
-        //}
-
         void apply(Style instance)
         {
             if (modifiers is null)
