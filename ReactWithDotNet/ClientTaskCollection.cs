@@ -187,5 +187,9 @@ public static class JsClient
 {
     #region Static Fields
     public static JsClientFunctionInfo<string> CopyToClipboard = new(nameof(CopyToClipboard));
+
+    public static JsClientFunctionInfo<int> ListenWindowResizeEvent = new(nameof(ListenWindowResizeEvent));
+
+    public static JsClientEventInfo WindowResize = new(nameof(WindowResize));
     #endregion
 }

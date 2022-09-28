@@ -1361,6 +1361,20 @@ function CopyToClipboard(text)
     }
 }
 
+function ReloadPageWhenWindowResize(resizeTimeout)
+{
+    var timeout = null;
+    window.addEventListener('resize', function () 
+    {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(function ()
+        {
+            window.location.reload();
+        }, resizeTimeout);
+    });
+}
+
 const ExternalJsObjectMap = {
     'RegExp': (x) => new RegExp(x),
     'CopyToClipboard': CopyToClipboard,
@@ -1372,7 +1386,8 @@ const ExternalJsObjectMap = {
         }
 
         return value;
-    }
+    },
+    'ReloadPageWhenWindowResize': ReloadPageWhenWindowResize
 };
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {

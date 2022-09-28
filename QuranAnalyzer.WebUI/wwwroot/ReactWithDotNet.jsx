@@ -1361,6 +1361,20 @@ function CopyToClipboard(text)
     }
 }
 
+function ListenWindowResizeEvent(resizeTimeout)
+{
+    var timeout = null;
+    window.addEventListener('resize', function () 
+    {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(function ()
+        {
+            ReactWithDotNet.DispatchEvent('WindowResize', []);
+        }, resizeTimeout);
+    });
+}
+
 const ExternalJsObjectMap = {
     'RegExp': (x) => new RegExp(x),
     'CopyToClipboard': CopyToClipboard,
@@ -1372,7 +1386,8 @@ const ExternalJsObjectMap = {
         }
 
         return value;
-    }
+    },
+    'ListenWindowResizeEvent': ListenWindowResizeEvent
 };
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {
