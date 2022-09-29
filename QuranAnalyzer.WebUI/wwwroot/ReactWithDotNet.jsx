@@ -137,41 +137,41 @@ function IsNotEmptyObject(obj)
     return IsEmptyObject(obj) === false;
 }
 
-const EventQueue = [];
+const FunctionExecutionQueue = [];
 
-var IsExecutingEvent = false;
+var FunctionExecutionQueueStateIsExecuting = false;
 
 function OnReactStateReady()
 {
-    IsExecutingEvent = false;
+    FunctionExecutionQueueStateIsExecuting = false;
 
-    EmitNextEvent();
+    EmitNextFunctionInFunctionExecutionQueue();
 }
 
-function EmitNextEvent()
+function EmitNextFunctionInFunctionExecutionQueue()
 {
-    if (IsExecutingEvent)
+    if (FunctionExecutionQueueStateIsExecuting)
     {
         throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
     }
     
-    if (EventQueue.length > 0)
+    if (FunctionExecutionQueue.length > 0)
     {
-        const fn = EventQueue.shift();
+        const fn = FunctionExecutionQueue.shift();
 
-        IsExecutingEvent = true;
+        FunctionExecutionQueueStateIsExecuting = true;
         
         fn();
     }
 }
 
-function PushToEventQueue(fn)
+function PushToFunctionExecutionQueue(fn)
 {
-    EventQueue.push(fn);
+    FunctionExecutionQueue.push(fn);
 
-    if (!IsExecutingEvent)
+    if (!FunctionExecutionQueueStateIsExecuting)
     {
-        EmitNextEvent();
+        EmitNextFunctionInFunctionExecutionQueue();
     }
 }
 
@@ -574,7 +574,7 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
             eventArguments = GetExternalJsObject(functionNameOfGrabEventArguments)(eventArguments);
         }
 
-        PushToEventQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: targetComponent, eventArguments: eventArguments }));
+        PushToFunctionExecutionQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: targetComponent, eventArguments: eventArguments }));
     }
 }
 
@@ -909,7 +909,7 @@ function ProcessClientTasks(clientTasks, component)
 
             TraceClientTask(component, 'GotoMethod', clientTask.MethodName);
             
-            PushToEventQueue(() =>
+            PushToFunctionExecutionQueue(() =>
             {
                 setTimeout(() =>
                 {
@@ -969,7 +969,7 @@ function ProcessClientTasks(clientTasks, component)
         {
             TraceClientTask(component, 'CallJsFunction', clientTask.JsFunctionPath);
 
-            PushToEventQueue(() =>
+            PushToFunctionExecutionQueue(() =>
             {
                 CallJsFunctionInPath(clientTask);
                 OnReactStateReady();
