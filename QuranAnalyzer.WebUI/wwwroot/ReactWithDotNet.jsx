@@ -1157,9 +1157,7 @@ function DefineComponent(componentDeclaration)
 
                 partialState[HasComponentDidMountMethod] = null;
 
-                this.setState(partialState);
-
-                StartAction(/*remoteMethodName*/'componentDidMount', /*component*/this, /*eventArguments*/[]);
+                this.setState(partialState, StartAction(/*remoteMethodName*/'componentDidMount', /*component*/this, /*eventArguments*/[]));
             }
         }
 

@@ -137,41 +137,41 @@ function IsNotEmptyObject(obj)
     return IsEmptyObject(obj) === false;
 }
 
-const EventQueue = [];
+const FunctionExecutionQueue = [];
 
-var IsExecutingEvent = false;
+var FunctionExecutionQueueStateIsExecuting = false;
 
 function OnReactStateReady()
 {
-    IsExecutingEvent = false;
+    FunctionExecutionQueueStateIsExecuting = false;
 
-    EmitNextEvent();
+    EmitNextFunctionInFunctionExecutionQueue();
 }
 
-function EmitNextEvent()
+function EmitNextFunctionInFunctionExecutionQueue()
 {
-    if (IsExecutingEvent)
+    if (FunctionExecutionQueueStateIsExecuting)
     {
         throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
     }
     
-    if (EventQueue.length > 0)
+    if (FunctionExecutionQueue.length > 0)
     {
-        const fn = EventQueue.shift();
+        const fn = FunctionExecutionQueue.shift();
 
-        IsExecutingEvent = true;
+        FunctionExecutionQueueStateIsExecuting = true;
         
         fn();
     }
 }
 
-function PushToEventQueue(fn)
+function PushToFunctionExecutionQueue(fn)
 {
-    EventQueue.push(fn);
+    FunctionExecutionQueue.push(fn);
 
-    if (!IsExecutingEvent)
+    if (!FunctionExecutionQueueStateIsExecuting)
     {
-        EmitNextEvent();
+        EmitNextFunctionInFunctionExecutionQueue();
     }
 }
 
@@ -574,7 +574,7 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
             eventArguments = GetExternalJsObject(functionNameOfGrabEventArguments)(eventArguments);
         }
 
-        PushToEventQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: targetComponent, eventArguments: eventArguments }));
+        StartAction(/*remoteMethodName*/remoteMethodName, /*component*/targetComponent, /*eventArguments*/eventArguments);
     }
 }
 
@@ -909,11 +909,11 @@ function ProcessClientTasks(clientTasks, component)
 
             TraceClientTask(component, 'GotoMethod', clientTask.MethodName);
             
-            PushToEventQueue(() =>
+            PushToFunctionExecutionQueue(() =>
             {
                 setTimeout(() =>
                 {
-                    HandleAction({ remoteMethodName: clientTask.MethodName, component: component, eventArguments: clientTask.MethodArguments || [] });
+                    StartAction(/*remoteMethodName*/clientTask.MethodName, /*component*/component, /*eventArguments*/clientTask.MethodArguments || []);
 
                 }, clientTask.Timeout);
 
@@ -949,7 +949,7 @@ function ProcessClientTasks(clientTasks, component)
             {
                 const eventArgumentsAsArray = e.detail;
 
-                HandleAction({ remoteMethodName: clientTask.RouteToMethod, component: component, eventArguments: eventArgumentsAsArray });
+                StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/component, /*eventArguments*/eventArgumentsAsArray);
             };
 
             NotNull(component[ON_COMPONENT_DESTROY]);
@@ -969,7 +969,7 @@ function ProcessClientTasks(clientTasks, component)
         {
             TraceClientTask(component, 'CallJsFunction', clientTask.JsFunctionPath);
 
-            PushToEventQueue(() =>
+            PushToFunctionExecutionQueue(() =>
             {
                 CallJsFunctionInPath(clientTask);
                 OnReactStateReady();
@@ -987,6 +987,11 @@ function ProcessClientTasks(clientTasks, component)
 
         throw CreateNewDeveloperError("ClientTask not recognized.");
     }
+}
+
+function StartAction(remoteMethodName, component, eventArguments)
+{
+    PushToFunctionExecutionQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: eventArguments }));
 }
 
 function HandleAction(data)
@@ -1152,9 +1157,7 @@ function DefineComponent(componentDeclaration)
 
                 partialState[HasComponentDidMountMethod] = null;
 
-                this.setState(partialState);
-
-                HandleAction({ remoteMethodName: 'componentDidMount', component: this, eventArguments: [] });
+                this.setState(partialState, StartAction(/*remoteMethodName*/'componentDidMount', /*component*/this, /*eventArguments*/[]));
             }
         }
 
@@ -1459,7 +1462,7 @@ var ReactWithDotNet =
 {
     RequestHandlerUrl: '/HandleReactWithDotNetRequest',
     OnDocumentReady: OnDocumentReady,
-    HandleAction: HandleAction,
+    StartAction: StartAction,
     DispatchEvent: EventBus.Dispatch,
     RenderComponentIn: RenderComponentIn,
     SendRequest: function (request, callback)
