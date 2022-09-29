@@ -1145,9 +1145,7 @@ function DefineComponent(componentDeclaration)
 
                 partialState[ClientTasks] = null;
 
-                this.setState(partialState);
-
-                ProcessClientTasks(clientTasks, this);
+                this.setState(partialState, ()=> ProcessClientTasks(clientTasks, this));
             }
 
             const hasComponentDidMountMethod = this.state[HasComponentDidMountMethod];
@@ -1185,9 +1183,7 @@ function DefineComponent(componentDeclaration)
 
                 partialState[ClientTasks] = null;
 
-                this.setState(partialState);
-
-                ProcessClientTasks(clientTasks, this);
+                this.setState(partialState, ()=> ProcessClientTasks(clientTasks, this));
             }
             
         }

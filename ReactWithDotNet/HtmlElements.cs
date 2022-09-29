@@ -28,11 +28,21 @@ public class input : HtmlElement
     public string value { get; set; }
 
     [React]
+    public string defaultValue { get; set; }
+
+    [React]
+    public bool? readOnly { get; set; }
+    
+
+    [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 
     [React]
-    public bool @checked { get; set; }
+    public bool? @checked { get; set; }
+
+    [React]
+    public bool? defaultChecked { get; set; }
 
     [React]
     public string autocomplete { get; set; }
