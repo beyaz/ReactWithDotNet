@@ -574,6 +574,17 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
             eventArguments = GetExternalJsObject(functionNameOfGrabEventArguments)(eventArguments);
         }
 
+        if (IsWaitingRemoteResponse === true)
+        {
+            StartAction(/*remoteMethodName*/remoteMethodName, /*component*/targetComponent, /*eventArguments*/eventArguments);
+            return;
+        }
+
+        if (FunctionExecutionQueueStateIsExecuting === true)
+        {            
+            FunctionExecutionQueueStateIsExecuting = false;
+        }        
+
         StartAction(/*remoteMethodName*/remoteMethodName, /*component*/targetComponent, /*eventArguments*/eventArguments);
     }
 }
@@ -1013,6 +1024,8 @@ function HandleAction(data)
 
     function onSuccess(response)
     {
+        IsWaitingRemoteResponse = false;
+
         if (response.ErrorMessage != null)
         {
             throw CreateNewDeveloperError(response.ErrorMessage);
@@ -1231,8 +1244,12 @@ function DefineComponent(componentDeclaration)
     return NewComponent;
 }
 
+var IsWaitingRemoteResponse = false;
+
 function SendRequest(request, onSuccess)
 {
+    IsWaitingRemoteResponse = true;
+
     BeforeSendRequest(request);
 
     ReactWithDotNet.SendRequest(request, onSuccess);
@@ -1261,6 +1278,8 @@ function RenderComponentIn(obj)
 
         function onSuccess(response)
         {
+            IsWaitingRemoteResponse = false;
+
             if (response.NavigateToUrl)
             {
                 window.location.replace(location.origin + response.NavigateToUrl);
