@@ -1361,7 +1361,7 @@ function CopyToClipboard(text)
     }
 }
 
-function ReloadPageWhenWindowResize(resizeTimeout)
+function ListenWindowResizeEvent(resizeTimeout)
 {
     var timeout = null;
     window.addEventListener('resize', function () 
@@ -1370,7 +1370,7 @@ function ReloadPageWhenWindowResize(resizeTimeout)
 
         timeout = setTimeout(function ()
         {
-            window.location.reload();
+            ReactWithDotNet.DispatchEvent('WindowResize', []);
         }, resizeTimeout);
     });
 }
@@ -1387,7 +1387,7 @@ const ExternalJsObjectMap = {
 
         return value;
     },
-    'ReloadPageWhenWindowResize': ReloadPageWhenWindowResize
+    'ListenWindowResizeEvent': ListenWindowResizeEvent
 };
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {

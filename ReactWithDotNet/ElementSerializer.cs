@@ -422,8 +422,7 @@ public static class ElementSerializer
     {
         var componentType = reactStatefulComponent.GetType();
 
-        var didMountMethodInfo = componentType.GetMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
-
+        var didMountMethodInfo = componentType.FindMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
         if (didMountMethodInfo != null)
         {
             if (didMountMethodInfo.DeclaringType != typeof(ReactStatefulComponent))
