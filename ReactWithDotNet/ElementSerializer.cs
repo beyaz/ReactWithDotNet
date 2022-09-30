@@ -7,7 +7,7 @@ namespace ReactWithDotNet;
 sealed class ElementSerializerContext
 {
     internal readonly Stack<ReactStatefulComponent> componentStack = new();
-    
+
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
@@ -519,7 +519,7 @@ static class ElementSerializer
 
         if (handleCachableMethods)
         {
-            var cachedMethods = new List<CachableMethodInfo>();
+            List<CachableMethodInfo> cachedMethods = null;
 
             foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null))
             {
@@ -535,6 +535,8 @@ static class ElementSerializer
                     IgnoreParameters = true,
                     ElementAsJson    = cachedVersion
                 };
+
+                cachedMethods ??= new List<CachableMethodInfo>();
 
                 cachedMethods.Add(cachableMethodInfo);
             }
@@ -598,11 +600,13 @@ static class ElementSerializer
                         ElementAsJson = cachedVersion
                     };
 
+                    cachedMethods ??= new List<CachableMethodInfo>();
+
                     cachedMethods.Add(cachableMethodInfo);
                 }
             }
 
-            if (cachedMethods.Any())
+            if (cachedMethods?.Any() == true)
             {
                 map.Add("$CachedMethods", cachedMethods);
             }
