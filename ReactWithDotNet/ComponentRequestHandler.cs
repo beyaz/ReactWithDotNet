@@ -317,8 +317,8 @@ public class StateTree
     #region Public Properties
     public string BreadCrumpPath { get; set; }
     public int CurrentOrder { get; set; }
-    public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; set; }
+    public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; init; }
 
-    public Element RootElement { get; set; }
+    public Element RootElement { get; init; }
     #endregion
 }
