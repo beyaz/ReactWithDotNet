@@ -40,15 +40,10 @@ public sealed class ElementSerializerContext
 
 public static class ElementSerializer
 {
-    #region Constants
     const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
     const string ___RootNode___ = "$RootNode";
     const string ___Type___ = "$Type";
     const string ___TypeOfState___ = "$TypeOfState";
-    #endregion
-
-    #region Public Methods
-
     static void InitializeKeyIfNotExists(Element element, ElementSerializerContext context)
     {
         element.key ??= context.GetNextUniqueValue();
@@ -130,10 +125,6 @@ public static class ElementSerializer
 
         return map;
     }
-    #endregion
-
-    #region Methods
-
     static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element)
     {
         if (element is null || context.BeforeSerializeElementToClient is null)
@@ -656,14 +647,11 @@ public static class ElementSerializer
             return (default, exception);
         }
     }
-    #endregion
 }
 
 class ItemTemplate
 {
-    #region Public Properties
     public List<KeyValuePair<object, object>> ___ItemTemplates___ { get; set; }
     public object ___TemplateForNull___ { get; set; }
-    #endregion
 }
 
