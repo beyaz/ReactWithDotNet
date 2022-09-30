@@ -503,11 +503,6 @@ public static class ElementSerializer
             dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
         }
 
-        foreach (var (key, value) in dotNetProperties)
-        {
-            map.Add(key, value);
-        }
-
         map.Add("DotNetProperties", dotNetProperties);
 
         stateTree.BreadCrumpPath = breadCrumpPath;
@@ -539,7 +534,7 @@ public static class ElementSerializer
             {
                 var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
 
-                foreach (var (key, value) in dotNetProperties)
+                foreach (var (key, _) in dotNetProperties)
                 {
                     var dotNetPropertyInfo = component.GetType().GetProperty(key);
                     if (dotNetPropertyInfo == null)
