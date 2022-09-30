@@ -90,6 +90,11 @@ public abstract class ReactStatefulComponent : Element
     {
         
     }
+
+    internal object Clone()
+    {
+        return MemberwiseClone();
+    }
 }
 
 public abstract class ReactComponent : ReactComponent<EmptyState>

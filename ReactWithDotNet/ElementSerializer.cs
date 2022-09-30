@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -444,7 +445,7 @@ public static class ElementSerializer
         return false;
     }
 
-    static IReadOnlyDictionary<string, object> ToMap(ReactStatefulComponent reactStatefulComponent, ElementSerializerContext context)
+    static IReadOnlyDictionary<string, object> ToMap(ReactStatefulComponent reactStatefulComponent, ElementSerializerContext context, bool handleCachableMethods = true)
     {
 
         var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
@@ -551,7 +552,81 @@ public static class ElementSerializer
         stateTree.BreadCrumpPath = breadCrumpPath;
         stateTree.CurrentOrder   = stateOrder;
 
+        if (handleCachableMethods)
+        {
+            var cachedMethods = new List<CachableMethodInfo>();
+
+            foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null))
+            {
+                var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
+                
+                cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
+
+                var cachedVersion = ToMap(component, context, false);
+
+                var cachableMethodInfo = new CachableMethodInfo
+                {
+                    MethodName    = cachableMethod.Name,
+                    IgnoreParameters = true,
+                    ElementAsJson = cachedVersion
+                };
+
+                cachedMethods.Add(cachableMethodInfo);
+            }
+
+            foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null))
+            {
+                var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
+                
+                var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
+                
+                var methodInfoForGettingParameters   = reactStatefulComponent.GetType().FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+                var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(component, Array.Empty<object>());
+                if (parameters == null)
+                {
+                    throw new InvalidOperationException($"Method should return IEnumerable<{cachableMethod.GetParameters().FirstOrDefault()}>");
+                }
+                foreach (var parameter in parameters)
+                {
+                    try
+                    {
+                        cachableMethod.Invoke(component, new[]{ parameter });
+                    }
+                    catch (Exception exception)
+                    {
+                        throw new InvalidOperationException("Error occured when calculating cache method", exception);
+                    }
+
+                    var cachedVersion = ToMap(component, context, false);
+
+                    var cachableMethodInfo = new CachableMethodInfo
+                    {
+                        MethodName    = cachableMethod.Name,
+                        Parameter     = parameter,
+                        ElementAsJson = cachedVersion
+                    };
+
+                    cachedMethods.Add(cachableMethodInfo);
+                }
+            }
+
+            if (cachedMethods.Any())
+            {
+                map.Add("$CachedMethods", cachedMethods);
+            }
+        }
+       
+
         return map;
+    }
+
+    class CachableMethodInfo
+    {
+        public string MethodName { get; set; }
+        public object Parameter { get; set; }
+        public object ElementAsJson { get; set; }
+        public bool IgnoreParameters { get; set; }
     }
 
     static (T value, Exception exception) Try<T>(Func<T> func)

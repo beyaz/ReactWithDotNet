@@ -533,6 +533,78 @@ class ComponentCache
 const COMPONENT_CACHE = new ComponentCache();
 
 
+function isEquivent(a, b)
+{
+	if(a === b)
+	{
+		return true;
+	}
+		
+	if(a instanceof Date && typeof b instanceof Date)
+	{
+		return a.valueOf() === b.valueOf();
+	}
+		
+	if(typeof a === 'object' && typeof b === 'object')
+	{
+		return isTwoLiteralObjectEquivent(a, b);
+	}
+}
+function isTwoLiteralObjectEquivent(o1, o2)
+{	
+    for(var p in o1)
+	{
+        if(o1.hasOwnProperty(p))
+		{
+            if(!isEquivent(o1[p], o2[p]))
+			{
+                return false;
+            }
+        }
+    }
+	
+    for(var p in o2)
+	{
+        if(o2.hasOwnProperty(p))
+		{
+            if(!isEquivent(o1[p], o2[p]))
+			{
+                return false;
+            }
+        }
+    }
+	
+    return true;
+};
+
+function tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArguments)
+{
+    if (targetComponent.props &&
+        targetComponent.props.$jsonNode &&
+        targetComponent.props.$jsonNode.$CachedMethods)
+    {
+        for (var i = 0; i < targetComponent.props.$jsonNode.$CachedMethods.length; i++)
+        {
+            const cachedMethodInfo = targetComponent.props.$jsonNode.$CachedMethods[i];
+
+            if (cachedMethodInfo.MethodName === remoteMethodName && cachedMethodInfo.IgnoreParameters)
+            {
+                return cachedMethodInfo;
+            }
+
+            if (cachedMethodInfo.MethodName === remoteMethodName && eventArguments.length === 1)
+            {
+                if (isTwoLiteralObjectEquivent(eventArguments[0], cachedMethodInfo.Parameter))
+                {
+                    return cachedMethodInfo;
+                }                       
+            }
+        }
+    }
+
+    return null;
+}
+
 function ConvertToEventHandlerFunction(remoteMethodInfo)
 {
     const remoteMethodName   = remoteMethodInfo.remoteMethodName;
@@ -574,12 +646,23 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
             eventArguments = GetExternalJsObject(functionNameOfGrabEventArguments)(eventArguments);
         }
 
+        const cachedMethodInfo = tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArguments);
+        if (cachedMethodInfo)
+        {
+            const newState = CaclculateNewStateFromJsonElement(targetComponent.state, cachedMethodInfo.ElementAsJson);
+
+            targetComponent.setState(newState);
+
+            return;                
+        }
+
         if (IsWaitingRemoteResponse === true)
         {
             StartAction(/*remoteMethodName*/remoteMethodName, /*component*/targetComponent, /*eventArguments*/eventArguments);
             return;
         }
 
+        // TODO: check 
         if (FunctionExecutionQueueStateIsExecuting === true)
         {            
             FunctionExecutionQueueStateIsExecuting = false;
@@ -1033,24 +1116,24 @@ function HandleAction(data)
 
         ProcessDynamicCssClasses(response.DynamicStyles);
 
-        const element = response.ElementAsJson;
-        
-        // update state
-        {
-            const newState = {};
-
-            newState[DotNetState]     = NotNull(element[DotNetState]);
-            newState[SyncId]          = ShouldBeNumber(component.state[SyncId]) + 1;
-            newState[RootNode]        = NotNull(element[RootNode]);
-            newState[ClientTasks]     = element[ClientTasks];
-            newState[ComponentRefKey] = element.key;
-            newState[DotNetProperties]= element[DotNetProperties];
-
-            data.component.setState(newState, OnReactStateReady);
-        }
+        data.component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), OnReactStateReady);
     }
 
     SendRequest(request, onSuccess);
+}
+
+function CaclculateNewStateFromJsonElement(componentState, jsonElement)
+{
+    const newState = {};
+
+    newState[DotNetState]     = NotNull(jsonElement[DotNetState]);
+    newState[SyncId]          = ShouldBeNumber(componentState[SyncId]) + 1;
+    newState[RootNode]        = NotNull(jsonElement[RootNode]);
+    newState[ClientTasks]     = jsonElement[ClientTasks];
+    newState[ComponentRefKey] = jsonElement.key;
+    newState[DotNetProperties] = jsonElement[DotNetProperties];
+
+    return newState;
 }
 
 const EnableTraceOfComponent = false;

@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Reflection;
+
+namespace ReactWithDotNet;
 
 [Serializable]
 public class ReactAttribute : Attribute
@@ -69,4 +71,20 @@ public class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
     {
         this.TransformFunction = transformFunction;
     }
+}
+
+[AttributeUsage(AttributeTargets.Method)]
+public class CacheThisMethodByTheseParametersAttribute : Attribute
+{
+    public string NameofMethodForGettingParameters { get; }
+
+    public CacheThisMethodByTheseParametersAttribute(string nameofMethodForGettingParameters)
+    {
+        NameofMethodForGettingParameters = nameofMethodForGettingParameters;
+    }
+}
+
+[AttributeUsage(AttributeTargets.Method)]
+public class CacheThisMethodAttribute : Attribute
+{
 }
