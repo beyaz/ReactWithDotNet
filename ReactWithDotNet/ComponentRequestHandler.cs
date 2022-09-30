@@ -122,7 +122,12 @@ public static class ComponentRequestHandler
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            var serializerContext = new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree, BeforeSerializeElementToClient = beforeSerializeElementToClient};
+            var serializerContext = new ElementSerializerContext(request.ComponentRefId)
+            {
+                StateTree = stateTree, 
+                BeforeSerializeElementToClient = beforeSerializeElementToClient,
+                ReactContext = context
+            };
             
             var map = instance.ToMap(serializerContext);
 
@@ -232,7 +237,12 @@ public static class ComponentRequestHandler
                 RootElement    = instance,
             };
 
-            var serializerContext = new ElementSerializerContext(request.ComponentRefId, context) { StateTree = stateTree, BeforeSerializeElementToClient = beforeSerializeElementToClient};
+            var serializerContext = new ElementSerializerContext(request.ComponentRefId)
+            {
+                StateTree = stateTree, 
+                BeforeSerializeElementToClient = beforeSerializeElementToClient,
+                ReactContext = context
+            };
             
             var map = instance.ToMap(serializerContext);
 

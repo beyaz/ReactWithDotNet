@@ -8,21 +8,20 @@ public sealed class ElementSerializerContext
 {
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
-    internal Stack<ReactStatefulComponent> componentStack = new();
+    internal readonly Stack<ReactStatefulComponent> componentStack = new();
 
     int ComponentRefId;
 
-    public ElementSerializerContext(int componentRefIdStart, ReactContext reactContext)
+    public ElementSerializerContext(int componentRefIdStart)
     {
         ComponentRefId = componentRefIdStart;
-        ReactContext   = reactContext;
     }
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
-    public ReactContext ReactContext { get; }
+    public ReactContext ReactContext { get; init; }
 
-    public StateTree StateTree { get; set; }
+    public StateTree StateTree { get; init; }
 
     public string GetNextUniqueValue()
     {
