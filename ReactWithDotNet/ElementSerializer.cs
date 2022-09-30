@@ -8,7 +8,7 @@ public sealed class ElementSerializerContext
 {
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
-    internal ReactStatefulComponent CurrentSerializingComponent;
+    internal Stack<ReactStatefulComponent> componentStack = new();
 
     int ComponentRefId;
 
@@ -57,9 +57,24 @@ public static class ElementSerializer
 
         if (element is ReactStatefulComponent reactStatefulComponent)
         {
-            context.CurrentSerializingComponent = reactStatefulComponent;
+            // push
+            {
+                context.componentStack.Push(reactStatefulComponent);
+            }
+            
+            // process
+            var returnMap = ToMap(reactStatefulComponent, context);
 
-            return ToMap(reactStatefulComponent, context);
+            // pop
+            {
+                var popudComponent = context.componentStack.Pop();
+                if (!ReferenceEquals(popudComponent, reactStatefulComponent))
+                {
+                    throw new Exception("Abdullah todo");
+                }
+            }
+            
+            return returnMap;
         }
 
         context.TryCallBeforeSerializeElementToClient(element);
@@ -209,7 +224,7 @@ public static class ElementSerializer
                 {
                     ((HtmlElement)instance).AddClass(context.DynamicStyles.GetClassName(new CssClassInfo
                     {
-                        Name    = context.CurrentSerializingComponent.GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
+                        Name    = context.componentStack.Peek().GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
                         Pseudos = pseudos
                     }));
                 }
