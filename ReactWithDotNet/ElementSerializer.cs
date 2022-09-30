@@ -4,39 +4,35 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-
 public sealed class ElementSerializerContext
 {
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
-    
-    public ReactContext ReactContext { get; }
-    
+    internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
+
+    internal ReactStatefulComponent CurrentSerializingComponent;
+
     int ComponentRefId;
-    
+
     public ElementSerializerContext(int componentRefIdStart, ReactContext reactContext)
     {
         ComponentRefId = componentRefIdStart;
-        ReactContext = reactContext;
+        ReactContext   = reactContext;
     }
-    
+
+    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+
+    public ReactContext ReactContext { get; }
+
     public StateTree StateTree { get; set; }
-    
-    internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
-    
-    internal ReactStatefulComponent CurrentSerializingComponent;
 
     public string GetNextUniqueValue()
     {
         var nextUniqueValue = ComponentRefId.ToString();
-        
+
         ComponentRefId++;
-        
+
         return nextUniqueValue;
     }
 }
-
-
-
 
 public static class ElementSerializer
 {
@@ -44,21 +40,14 @@ public static class ElementSerializer
     const string ___RootNode___ = "$RootNode";
     const string ___Type___ = "$Type";
     const string ___TypeOfState___ = "$TypeOfState";
-    static void InitializeKeyIfNotExists(Element element, ElementSerializerContext context)
-    {
-        element.key ??= context.GetNextUniqueValue();
 
-        foreach (var sibling in element.children.Where(sibling => sibling != null))
-        {
-            sibling.key ??= context.GetNextUniqueValue();
-        }
-    }
     public static IReadOnlyDictionary<string, object> ToMap(this Element element, ElementSerializerContext context)
     {
         if (element == null)
         {
             return null;
         }
+
         if (element is FakeChild fakeChild)
         {
             return new Dictionary<string, object> { { "$FakeChild", fakeChild.Index } };
@@ -69,7 +58,7 @@ public static class ElementSerializer
         if (element is ReactStatefulComponent reactStatefulComponent)
         {
             context.CurrentSerializingComponent = reactStatefulComponent;
-            
+
             return ToMap(reactStatefulComponent, context);
         }
 
@@ -116,7 +105,7 @@ public static class ElementSerializer
                     childElements.Add(textNode.innerText);
                     continue;
                 }
-                
+
                 childElements.Add(ToMap(child, context));
             }
 
@@ -125,16 +114,6 @@ public static class ElementSerializer
 
         return map;
     }
-    static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element)
-    {
-        if (element is null || context.BeforeSerializeElementToClient is null)
-        {
-            return;
-        }
-
-        context.BeforeSerializeElementToClient(element, context.ReactContext);
-    }
-
 
     static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
     {
@@ -192,13 +171,13 @@ public static class ElementSerializer
                 }
             }
         }
-        
+
         // check inline
         {
             if (propertyValue is Style style)
             {
                 var pseudos = new List<CssPseudoCodeInfo>();
-                
+
                 if (style._hover is not null)
                 {
                     pseudos.Add(new CssPseudoCodeInfo
@@ -207,6 +186,7 @@ public static class ElementSerializer
                         BodyOfCss = style._hover.ToCss().Replace(";", " !important;")
                     });
                 }
+
                 if (style._before is not null)
                 {
                     pseudos.Add(new CssPseudoCodeInfo
@@ -215,6 +195,7 @@ public static class ElementSerializer
                         BodyOfCss = style._before.ToCss().Replace(";", " !important;")
                     });
                 }
+
                 if (style._after is not null)
                 {
                     pseudos.Add(new CssPseudoCodeInfo
@@ -267,27 +248,24 @@ public static class ElementSerializer
             if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
             {
                 var @delegate = (Delegate)propertyValue;
-                if (@delegate is not  null)
+                if (@delegate is not null)
                 {
                     if (@delegate.Target is ReactStatefulComponent target)
                     {
                         propertyValue = new RemoteMethodInfo
                         {
                             IsRemoteMethod                   = true,
-                            remoteMethodName                 = @delegate.Method.Name, 
+                            remoteMethodName                 = @delegate.Method.Name,
                             TargetKey                        = target.key,
                             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
                             StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null
-                            
                         };
                     }
                     else
                     {
                         throw HandlerMethodShouldBelongToReactComponent(propertyInfo);
                     }
-                        
                 }
-                
             }
         }
 
@@ -386,19 +364,19 @@ public static class ElementSerializer
         return (propertyValue, false);
     }
 
-    
     static string GetReactComponentTypeInfo(object reactStatefulComponent)
     {
         return reactStatefulComponent.GetType().GetFullName();
     }
 
-    static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo)
-    {
-        throw new InvalidOperationException("Delegate method should belong to ReactComponent. Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name);
-    }
     static string GetTypeFullNameOfState(object reactStatefulComponent)
     {
         return reactStatefulComponent.GetType().GetProperty("state")!.PropertyType.GetFullName();
+    }
+
+    static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo)
+    {
+        throw new InvalidOperationException("Delegate method should belong to ReactComponent. Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name);
     }
 
     static bool HasComponentDidMountMethod(object reactStatefulComponent)
@@ -415,6 +393,16 @@ public static class ElementSerializer
         }
 
         return false;
+    }
+
+    static void InitializeKeyIfNotExists(Element element, ElementSerializerContext context)
+    {
+        element.key ??= context.GetNextUniqueValue();
+
+        foreach (var sibling in element.children.Where(sibling => sibling != null))
+        {
+            sibling.key ??= context.GetNextUniqueValue();
+        }
     }
 
     static bool IsEmptyStyle(object value)
@@ -440,12 +428,12 @@ public static class ElementSerializer
         var stateTree      = context.StateTree;
         var breadCrumpPath = stateTree.BreadCrumpPath;
         var stateOrder     = stateTree.CurrentOrder;
-        
+
         if (statePropertyInfo.GetValue(reactStatefulComponent) is null)
         {
             stateTree.BreadCrumpPath = breadCrumpPath + "," + stateTree.CurrentOrder;
             stateTree.CurrentOrder   = 0;
-            
+
             if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
             {
                 if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
@@ -459,12 +447,7 @@ public static class ElementSerializer
             {
                 stateOrder++;
             }
-
-            
-
         }
-
-        
 
         reactStatefulComponent.Context = context.ReactContext;
 
@@ -479,14 +462,13 @@ public static class ElementSerializer
                 reactComponent.state = new EmptyState();
             }
         }
-        
 
         map.Add(___RootNode___, ToMap(reactStatefulComponent.InvokeRender(), context));
 
         state = statePropertyInfo.GetValue(reactStatefulComponent);
 
         const string DotNetState = "$State";
-        
+
         map.Add(DotNetState, state);
 
         map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
@@ -498,28 +480,26 @@ public static class ElementSerializer
 
         map.Add(nameof(reactStatefulComponent.key), reactStatefulComponent.key);
 
-        
-
         if (reactStatefulComponent.ClientTask.taskList.Count > 0)
         {
             map.Add("$ClientTasks", reactStatefulComponent.ClientTask.taskList);
         }
 
-
         var dotNetProperties = new Dictionary<string, object>();
-        
+
         foreach (var propertyInfo in reactStatefulComponent.GetType().GetProperties())
         {
             if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
-                propertyInfo.Name == nameof(reactStatefulComponent.Children)||
+                propertyInfo.Name == nameof(reactStatefulComponent.Children) ||
                 propertyInfo.Name == nameof(reactStatefulComponent.key) ||
                 propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
                 propertyInfo.Name == "state" ||
                 propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
-                )
+               )
             {
                 continue;
             }
+
             dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
         }
 
@@ -547,9 +527,9 @@ public static class ElementSerializer
 
                 var cachableMethodInfo = new CachableMethodInfo
                 {
-                    MethodName    = cachableMethod.Name,
+                    MethodName       = cachableMethod.Name,
                     IgnoreParameters = true,
-                    ElementAsJson = cachedVersion
+                    ElementAsJson    = cachedVersion
                 };
 
                 cachedMethods.Add(cachableMethodInfo);
@@ -566,6 +546,7 @@ public static class ElementSerializer
                     {
                         throw new Exception();
                     }
+
                     dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyInfo.GetValue(component)));
                 }
 
@@ -573,31 +554,31 @@ public static class ElementSerializer
                 {
                     throw new Exception();
                 }
+
                 statePropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(state));
 
                 return component;
             }
 
-
             foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null))
             {
                 var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
-                
-                var methodInfoForGettingParameters   = reactStatefulComponent.GetType().FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+                var methodInfoForGettingParameters = reactStatefulComponent.GetType().FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
                 var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
                 if (parameters == null)
                 {
                     throw new InvalidOperationException($"Method should return IEnumerable<{cachableMethod.GetParameters().FirstOrDefault()}>");
                 }
+
                 foreach (var parameter in parameters)
                 {
-                    
                     var component = cloneComponent();
 
                     try
                     {
-                        cachableMethod.Invoke(component, new[]{ parameter });
+                        cachableMethod.Invoke(component, new[] { parameter });
                     }
                     catch (Exception exception)
                     {
@@ -621,19 +602,9 @@ public static class ElementSerializer
             {
                 map.Add("$CachedMethods", cachedMethods);
             }
-
         }
-       
 
         return map;
-    }
-
-    class CachableMethodInfo
-    {
-        public string MethodName { get; set; }
-        public object Parameter { get; set; }
-        public object ElementAsJson { get; set; }
-        public bool IgnoreParameters { get; set; }
     }
 
     static (T value, Exception exception) Try<T>(Func<T> func)
@@ -647,6 +618,24 @@ public static class ElementSerializer
             return (default, exception);
         }
     }
+
+    static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element)
+    {
+        if (element is null || context.BeforeSerializeElementToClient is null)
+        {
+            return;
+        }
+
+        context.BeforeSerializeElementToClient(element, context.ReactContext);
+    }
+
+    class CachableMethodInfo
+    {
+        public object ElementAsJson { get; set; }
+        public bool IgnoreParameters { get; set; }
+        public string MethodName { get; set; }
+        public object Parameter { get; set; }
+    }
 }
 
 class ItemTemplate
@@ -654,4 +643,3 @@ class ItemTemplate
     public List<KeyValuePair<object, object>> ___ItemTemplates___ { get; set; }
     public object ___TemplateForNull___ { get; set; }
 }
-
