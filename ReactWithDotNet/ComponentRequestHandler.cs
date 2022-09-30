@@ -48,7 +48,6 @@ public class ComponentResponse
 
 public static class ComponentRequestHandler
 {
-    #region Public Methods
     public static string GetFullName(this Type type)
     {
         return $"{type.FullName},{type.Assembly.GetName().Name}";
@@ -293,7 +292,6 @@ public static class ComponentRequestHandler
             return eventArguments;
         }
     }
-    #endregion
 }
 
 public static class Json
@@ -314,11 +312,9 @@ public static class Json
 
 public class StateTree
 {
-    #region Public Properties
     public string BreadCrumpPath { get; set; }
     public int CurrentOrder { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; init; }
 
     public Element RootElement { get; init; }
-    #endregion
 }
