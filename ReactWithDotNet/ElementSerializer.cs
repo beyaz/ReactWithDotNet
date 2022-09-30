@@ -4,20 +4,15 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-public sealed class ElementSerializerContext
+sealed class ElementSerializerContext
 {
+    internal readonly Stack<ReactStatefulComponent> componentStack = new();
+    
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
-    internal readonly Stack<ReactStatefulComponent> componentStack = new();
-
-    int ComponentRefId;
-
-    public ElementSerializerContext(int componentRefIdStart)
-    {
-        ComponentRefId = componentRefIdStart;
-    }
-
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+
+    public int ComponentRefId { get; set; }
 
     public ReactContext ReactContext { get; init; }
 
@@ -33,7 +28,7 @@ public sealed class ElementSerializerContext
     }
 }
 
-public static class ElementSerializer
+static class ElementSerializer
 {
     const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
     const string ___RootNode___ = "$RootNode";
@@ -60,7 +55,7 @@ public static class ElementSerializer
             {
                 context.componentStack.Push(reactStatefulComponent);
             }
-            
+
             // process
             var returnMap = ToMap(reactStatefulComponent, context);
 
@@ -72,7 +67,7 @@ public static class ElementSerializer
                     throw new Exception("Abdullah todo");
                 }
             }
-            
+
             return returnMap;
         }
 
