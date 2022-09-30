@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Reflection;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
@@ -54,17 +53,9 @@ public static class ElementSerializer
     {
         element.key ??= context.GetNextUniqueValue();
 
-        foreach (var sibling in element.children)
+        foreach (var sibling in element.children.Where(sibling => sibling != null))
         {
-            if (sibling == null)
-            {
-                continue;
-            }
-
-            if (sibling.key == null)
-            {
-                sibling.key = context.GetNextUniqueValue();
-            }
+            sibling.key ??= context.GetNextUniqueValue();
         }
     }
     public static IReadOnlyDictionary<string, object> ToMap(this Element element, ElementSerializerContext context)
@@ -447,7 +438,6 @@ public static class ElementSerializer
 
     static IReadOnlyDictionary<string, object> ToMap(ReactStatefulComponent reactStatefulComponent, ElementSerializerContext context, bool handleCachableMethods = true)
     {
-
         var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
         if (statePropertyInfo == null)
         {
@@ -558,8 +548,8 @@ public static class ElementSerializer
 
             foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null))
             {
-                var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
-                
+                var component = cloneComponent();
+
                 cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
 
                 var cachedVersion = ToMap(component, context, false);
@@ -574,21 +564,46 @@ public static class ElementSerializer
                 cachedMethods.Add(cachableMethodInfo);
             }
 
-            foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null))
+            ReactStatefulComponent cloneComponent()
             {
                 var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
-                
+
+                foreach (var (key, value) in dotNetProperties)
+                {
+                    var dotNetPropertyInfo = component.GetType().GetProperty(key);
+                    if (dotNetPropertyInfo == null)
+                    {
+                        throw new Exception();
+                    }
+                    dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyInfo.GetValue(component)));
+                }
+
+                if (statePropertyInfo == null)
+                {
+                    throw new Exception();
+                }
+                statePropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(state));
+
+                return component;
+            }
+
+
+            foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null))
+            {
                 var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
                 
                 var methodInfoForGettingParameters   = reactStatefulComponent.GetType().FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
-                var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(component, Array.Empty<object>());
+                var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
                 if (parameters == null)
                 {
                     throw new InvalidOperationException($"Method should return IEnumerable<{cachableMethod.GetParameters().FirstOrDefault()}>");
                 }
                 foreach (var parameter in parameters)
                 {
+                    
+                    var component = cloneComponent();
+
                     try
                     {
                         cachableMethod.Invoke(component, new[]{ parameter });
@@ -615,6 +630,7 @@ public static class ElementSerializer
             {
                 map.Add("$CachedMethods", cachedMethods);
             }
+
         }
        
 

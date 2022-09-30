@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
@@ -17,5 +18,12 @@ static class ReflectionHelper
         }
 
         return null;
+    }
+
+    public static T DeepCopy<T>(T value)
+    {
+        var json = JsonConvert.SerializeObject(value);
+
+        return (T)JsonConvert.DeserializeObject(json,value.GetType());
     }
 }
