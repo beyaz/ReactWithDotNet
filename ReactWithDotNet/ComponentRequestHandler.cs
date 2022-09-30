@@ -21,13 +21,19 @@ public sealed class ClientStateInfo
 public class ComponentRequest
 {
     public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
+
     public double ClientHeight { get; set; }
+
     public double ClientWidth { get; set; }
 
     public int ComponentRefId { get; set; }
+
     public string[] EventArgumentsAsJsonArray { get; set; }
+
     public string EventHandlerMethodName { get; set; }
+
     public string FullName { get; set; }
+
     public string MethodName { get; set; }
 
     public string SearchPartOfUrl { get; set; }
@@ -36,12 +42,11 @@ public class ComponentRequest
 [Serializable]
 public class ComponentResponse
 {
-    public object ElementAsJson { get; set; }
-    
-    public string ErrorMessage { get; set; }
-
     public string[] DynamicStyles { get; set; }
-    
+
+    public object ElementAsJson { get; set; }
+
+    public string ErrorMessage { get; set; }
 
     public IReadOnlyList<string> Trace { get; set; }
 }
@@ -51,18 +56,6 @@ public static class ComponentRequestHandler
     public static string GetFullName(this Type type)
     {
         return $"{type.FullName},{type.Assembly.GetName().Name}";
-    }
-
-    static ReactContext CreateContext(ComponentRequest request)
-    {
-        var context = new ReactContext
-        {
-            Query        = string.IsNullOrWhiteSpace(request.SearchPartOfUrl) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.SearchPartOfUrl),
-            ClientWidth  = request.ClientWidth,
-            ClientHeight = request.ClientHeight
-        };
-
-        return context;
     }
 
     public static ComponentResponse HandleRequest(ComponentRequest request, Func<string, Type> findType, Action<Element, ReactContext> beforeSerializeElementToClient = null)
@@ -123,12 +116,12 @@ public static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
-                ComponentRefId = request.ComponentRefId,
-                StateTree = stateTree, 
+                ComponentRefId                 = request.ComponentRefId,
+                StateTree                      = stateTree,
                 BeforeSerializeElementToClient = beforeSerializeElementToClient,
-                ReactContext = context
+                ReactContext                   = context
             };
-            
+
             var map = instance.ToMap(serializerContext);
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
@@ -143,7 +136,6 @@ public static class ComponentRequestHandler
             };
         }
 
-       
         ComponentResponse handleComponentEvent()
         {
             var type = findType(request.FullName);
@@ -239,12 +231,12 @@ public static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
-                ComponentRefId = request.ComponentRefId,
-                StateTree = stateTree, 
+                ComponentRefId                 = request.ComponentRefId,
+                StateTree                      = stateTree,
                 BeforeSerializeElementToClient = beforeSerializeElementToClient,
-                ReactContext = context
+                ReactContext                   = context
             };
-            
+
             var map = instance.ToMap(serializerContext);
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
@@ -292,6 +284,18 @@ public static class ComponentRequestHandler
             return eventArguments;
         }
     }
+
+    static ReactContext CreateContext(ComponentRequest request)
+    {
+        var context = new ReactContext
+        {
+            Query        = string.IsNullOrWhiteSpace(request.SearchPartOfUrl) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.SearchPartOfUrl),
+            ClientWidth  = request.ClientWidth,
+            ClientHeight = request.ClientHeight
+        };
+
+        return context;
+    }
 }
 
 public static class Json
@@ -313,8 +317,10 @@ public static class Json
 public class StateTree
 {
     public string BreadCrumpPath { get; set; }
-    public int CurrentOrder { get; set; }
+
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; init; }
+
+    public int CurrentOrder { get; set; }
 
     public Element RootElement { get; init; }
 }
