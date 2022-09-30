@@ -76,7 +76,9 @@ public abstract class ReactStatefulComponent : Element
     [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; set; }
 
-    public readonly  ClientTaskCollection ClientTask  = new();
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    public ClientTaskCollection ClientTask { get; internal set; } = new();
 
     protected abstract Element render();
 

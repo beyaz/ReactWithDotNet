@@ -19,6 +19,7 @@ class BackdropView: ReactComponent
         };
     }
 
+    [CacheThisMethod]
     void OnBackdropClicked(MouseEvent e)
     {
         ClientTask.DispatchEvent(ApplicationEventName.OnHamburgerMenuClosed);

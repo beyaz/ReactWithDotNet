@@ -26,6 +26,22 @@ sealed class ElementSerializerContext
 
         return nextUniqueValue;
     }
+
+    readonly Stack<(int componentRefId,string breadCrumpPathInStateTree, int currentOrderInStateTree)> CapturedValuesForCachedMethods = new();
+
+    public void EnterToModeWorkingForCachedMethods()
+    {
+        CapturedValuesForCachedMethods.Push((ComponentRefId,StateTree.BreadCrumpPath,StateTree.CurrentOrder));
+    }
+    public void ExitFromModeWorkingForCachedMethods()
+    {
+        var (componentRefId, breadCrumpPathInStateTree, currentOrderInStateTree) = CapturedValuesForCachedMethods.Pop();
+        
+        // restore previous values
+        ComponentRefId           = componentRefId;
+        StateTree.BreadCrumpPath = breadCrumpPathInStateTree;
+        StateTree.CurrentOrder   = currentOrderInStateTree;
+    }
 }
 
 static class ElementSerializer
@@ -523,6 +539,8 @@ static class ElementSerializer
 
             foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null))
             {
+                context.EnterToModeWorkingForCachedMethods();
+                
                 var component = cloneComponent();
 
                 cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
@@ -539,6 +557,8 @@ static class ElementSerializer
                 cachedMethods ??= new List<CachableMethodInfo>();
 
                 cachedMethods.Add(cachableMethodInfo);
+                
+                context.ExitFromModeWorkingForCachedMethods();
             }
 
             ReactStatefulComponent cloneComponent()
@@ -563,6 +583,8 @@ static class ElementSerializer
 
                 statePropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(state));
 
+                component.ClientTask = ReflectionHelper.DeepCopy(component.ClientTask);
+
                 return component;
             }
 
@@ -580,6 +602,8 @@ static class ElementSerializer
 
                 foreach (var parameter in parameters)
                 {
+                    context.EnterToModeWorkingForCachedMethods();
+
                     var component = cloneComponent();
 
                     try
@@ -603,6 +627,8 @@ static class ElementSerializer
                     cachedMethods ??= new List<CachableMethodInfo>();
 
                     cachedMethods.Add(cachableMethodInfo);
+
+                    context.ExitFromModeWorkingForCachedMethods();
                 }
             }
 
