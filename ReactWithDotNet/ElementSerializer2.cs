@@ -79,6 +79,8 @@ partial class ElementSerializer
                     continue;
                 }
 
+                context.TryCallBeforeSerializeElementToClient(node.Element);
+
                 node.ElementAsJsonMap = LeafToMap(node.Element, context);
 
                 node.IsCompleted = true;
