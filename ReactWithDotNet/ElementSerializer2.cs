@@ -85,7 +85,7 @@ partial class ElementSerializer
                 break;
             }
 
-            if (node.IsAllChildrenCompleted)
+            if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false)
             {
                 CompleteWithChildren(node, context);
 
@@ -110,6 +110,8 @@ partial class ElementSerializer
                 node.ElementAsJsonMap = new Dictionary<string, object> { { "$FakeChild", node.ElementAsFakeChild.Index } };
                 continue;
             }
+
+            InitializeKeyIfNotExists(node.Element, context);
 
             if (node.ElementIsHtmlTextElement)
             {
@@ -144,6 +146,8 @@ partial class ElementSerializer
             // process React dot net component
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
+
+                context.componentStack.Push(reactStatefulComponent);
 
                 var stateTree = context.StateTree;
 
@@ -242,7 +246,6 @@ partial class ElementSerializer
                     { nameof(Element.key), reactStatefulComponent.key },
                     { "DotNetProperties", dotNetProperties }
                 };
-
                 if (HasComponentDidMountMethod(reactStatefulComponent))
                 {
                     map.Add(___HasComponentDidMountMethod___, true);
@@ -253,6 +256,7 @@ partial class ElementSerializer
                     map.Add("$ClientTasks", reactStatefulComponent.ClientTask.taskList);
                 }
 
+               
 
                 stateTree.BreadCrumpPath = node.BreadCrumpPath;
                 stateTree.CurrentOrder   = node.CurrentOrder.Value;
@@ -260,6 +264,12 @@ partial class ElementSerializer
                 node.ElementAsJsonMap = map;
                 
                 node.IsCompleted = true;
+
+                var popudComponent = context.componentStack.Pop();
+                if (!ReferenceEquals(popudComponent, reactStatefulComponent))
+                {
+                    throw FatalError("component stack problem");
+                }
             }
         }
 
@@ -360,7 +370,7 @@ partial class ElementSerializer
    {
        node.IsChildrenOpened = true;
        
-        var children = node.ElementAsHtmlElement.children;
+        var children = node.Element.children;
 
         Node child = null;
         
