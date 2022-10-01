@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace ReactWithDotNet;
@@ -270,6 +271,10 @@ partial class ElementSerializer
 
                 if (context.SkipHandleCachableMethods is false)
                 {
+                    var stopwatch = new Stopwatch();
+
+                    stopwatch.Start();
+                    
                     ElementSerializerContext createNewElementSerializerContext()
                     {
                         var elementSerializerContext = new ElementSerializerContext
@@ -391,6 +396,13 @@ partial class ElementSerializer
                     {
                         map.Add("$CachedMethods", cachedMethods);
                     }
+
+                    stopwatch.Stop();
+
+                    if (stopwatch.ElapsedMilliseconds > 10)
+                    {
+                        context.Trace.Add($"{reactStatefulComponent.GetType().FullName} cached methods calculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+                    }
                 }
 
 
@@ -485,6 +497,10 @@ partial class ElementSerializer
 
     static void AddReactAttributes(Dictionary<string, object> map, Element htmlElement, ElementSerializerContext context)
     {
+        var stopwatch = new Stopwatch();
+        
+        stopwatch.Start();
+        
         foreach (var propertyInfo in htmlElement.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
             var (propertyValue, noNeedToExport) = getPropertyValue(htmlElement, propertyInfo, context);
@@ -495,6 +511,15 @@ partial class ElementSerializer
 
             map.Add(GetPropertyName(propertyInfo), propertyValue);
         }
+
+        stopwatch.Stop();
+
+        if (stopwatch.ElapsedMilliseconds > 10)
+        {
+            context.Trace.Add($"{htmlElement.GetType().FullName} > attribute cacculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+        }
+        
+        
     }
 
     static void OpenChildren(Node node, ElementSerializerContext context)
