@@ -1,100 +1,115 @@
-﻿using System;
-using System.IO;
-using System.Text.Json.Serialization;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 public class aside : HtmlElement
 {
-    public aside() { }
-    public aside(params Modifier[] modifiers) : base(modifiers) { }
+    public aside()
+    {
+    }
+
+    public aside(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
 }
+
 public class section : HtmlElement
 {
-    public section() { }
-    public section(params Modifier[] modifiers) : base(modifiers) { }
+    public section()
+    {
+    }
+
+    public section(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
 }
+
 public class small : HtmlElement
 {
-    public small() { }
-    public small(params Modifier[] modifiers) : base(modifiers) { }
+    public small()
+    {
+    }
+
+    public small(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
 }
 
 public class ul : HtmlElement
 {
-    public ul() { }
-    public ul(params Modifier[] modifiers) : base(modifiers) { }
+    public ul()
+    {
+    }
+
+    public ul(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
 }
+
 public class br : HtmlElement
 {
 }
+
 public class article : HtmlElement
 {
-    public article() { }
-    public article(params Modifier[] modifiers) : base(modifiers) { }
+    public article()
+    {
+    }
+
+    public article(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
 }
 
 public class fieldset : HtmlElement
 {
-    public fieldset() { }
-    public fieldset(params Modifier[] modifiers) : base(modifiers) { }
+    public fieldset()
+    {
+    }
+
+    public fieldset(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
 }
 
 public class legend : HtmlElement
 {
-    public legend() { }
-    public legend(params Modifier[] modifiers) : base(modifiers) { }
-}
+    public legend()
+    {
+    }
 
+    public legend(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
+}
 
 public class iframe : HtmlElement
 {
     [React]
     public string src { get; set; }
 }
+
 public class strong : HtmlElement
 {
-    public strong() { }
-    public strong(params Modifier[] modifiers) : base(modifiers) { }
+    public strong()
+    {
+    }
 
-    public override string ToString() => this.ToHTML();
+    public strong(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
 }
 
 public class span : HtmlElement
 {
-    public span() { }
-    public span(params Modifier[] modifiers) : base(modifiers) { }
+    public span()
+    {
+    }
 
-   
+    public span(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
+
     public span(string innerText)
     {
         this.innerText = innerText;
-    }
-
-    public override string ToString() => this.ToHTML();
-}
-
-
-
-
-
-static class HtmlTextWriter
-{
-    public static string ToHTML(this HtmlElement element)
-    {
-        var css = element.style.ToCss();
-        if (css != null)
-        {
-            css = " style = " + '"' + css + '"';
-        }
-
-        var tag = element.Type;
-
-        if (element is span || element is strong)
-        {
-            return $"<{tag}{css}>{element.innerText}</{tag}>";
-        }
-
-        return "to html failed";
     }
 }
