@@ -49,6 +49,12 @@ partial class ElementSerializer
         public bool ElementIsHtmlTextElement { get; set; }
         public HtmlTextNode ElementasHtmlTextElement { get; set; }
         public bool IsAllChildrenCompleted { get; set; }
+
+        public string BreadCrumpPath { get; set; }
+        public int? CurrentOrder { get; set; }
+        public Element DotNetComponentRootElement { get; set; }
+        public bool DotNetComponentRenderMethodInvoked { get; set; }
+        public Node DotNetComponentRootNode { get; set; }
     }
 
     public static IReadOnlyDictionary<string, object> ToMap2(this Element element, ElementSerializerContext context)
@@ -137,7 +143,123 @@ partial class ElementSerializer
 
             // process React dot net component
             {
+                var reactStatefulComponent = node.ElementAsDotNetReactComponent;
+
+                var stateTree = context.StateTree;
+
+                var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
+                if (statePropertyInfo == null)
+                {
+                    throw new MissingMemberException(reactStatefulComponent.GetType().GetFullName(), "state");
+                }
+
+                if (node.CurrentOrder is null)
+                {
+                    
+                    node.BreadCrumpPath = stateTree.BreadCrumpPath;
+                    node.CurrentOrder   = stateTree.CurrentOrder;
+
+                    if (statePropertyInfo.GetValue(reactStatefulComponent) is null)
+                    {
+                        stateTree.BreadCrumpPath = node.BreadCrumpPath + "," + stateTree.CurrentOrder;
+                        stateTree.CurrentOrder   = 0;
+
+                        if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
+                        {
+                            if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
+                            {
+                                var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                                statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
+                            }
+                        }
+
+                        if (stateTree.BreadCrumpPath != "0")
+                        {
+                            node.CurrentOrder++;
+                        }
+                    }
+                }
+
+                reactStatefulComponent.Context = context.ReactContext;
+
+                var state = statePropertyInfo.GetValue(reactStatefulComponent);
+                if (state == null)
+                {
+                    reactStatefulComponent.InvokeConstructor();
+
+                    // maybe developer forget init state
+                    if (reactStatefulComponent is ReactComponent<EmptyState> reactComponent && reactComponent.state == null)
+                    {
+                        reactComponent.state = new EmptyState();
+                    }
+                }
+
+                if (node.DotNetComponentRenderMethodInvoked is false)
+                {
+                    node.DotNetComponentRenderMethodInvoked = true;
+                    
+                    node.DotNetComponentRootElement = reactStatefulComponent.InvokeRender();
+
+                    node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement, context);
+
+                    node.DotNetComponentRootNode.Parent = node;
+
+                    node = node.DotNetComponentRootNode;
+                    
+                    continue;
+                }
+
+                state = statePropertyInfo.GetValue(reactStatefulComponent);
+
+                const string DotNetState = "$State";
+
                 
+
+                var dotNetProperties = new Dictionary<string, object>();
+
+                foreach (var propertyInfo in reactStatefulComponent.GetType().GetProperties())
+                {
+                    if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
+                        propertyInfo.Name == nameof(reactStatefulComponent.Children) ||
+                        propertyInfo.Name == nameof(reactStatefulComponent.key) ||
+                        propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
+                        propertyInfo.Name == "state" ||
+                        propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
+                       )
+                    {
+                        continue;
+                    }
+
+                    dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
+                }
+
+                var map = new Dictionary<string, object>
+                {
+                    { ___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap },
+                    { DotNetState, state },
+                    { ___Type___, GetReactComponentTypeInfo(reactStatefulComponent) },
+                    { ___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent) },
+                    { nameof(Element.key), reactStatefulComponent.key },
+                    { "DotNetProperties", dotNetProperties }
+                };
+
+                if (HasComponentDidMountMethod(reactStatefulComponent))
+                {
+                    map.Add(___HasComponentDidMountMethod___, true);
+                }
+
+                if (reactStatefulComponent.ClientTask.taskList.Count > 0)
+                {
+                    map.Add("$ClientTasks", reactStatefulComponent.ClientTask.taskList);
+                }
+
+
+                stateTree.BreadCrumpPath = node.BreadCrumpPath;
+                stateTree.CurrentOrder   = node.CurrentOrder.Value;
+
+                node.ElementAsJsonMap = map;
+                
+                node.IsCompleted = true;
             }
         }
 
