@@ -81,31 +81,7 @@ partial class ElementSerializer
 
             if (node.IsAllChildrenCompleted)
             {
-                var childElements = new List<object>();
-
-                var child = node.FirstChild;
-
-                while (child is not null)
-                {
-                    if (child.ElementIsHtmlTextElement)
-                    {
-                        context.TryCallBeforeSerializeElementToClient(child.Element);
-                        
-                        childElements.Add(child.ElementasHtmlTextElement.innerText);
-                    }
-                    else
-                    {
-                        childElements.Add(child.ElementAsJsonMap);
-                    }
-
-                    child = child.NextSibling;
-                }
-
-                var map = LeafToMap(node.Element, context);
-
-                map.Add("$children", childElements);
-
-                node.IsCompleted = true;
+                CompleteWithChildren(node, context);
 
                 continue;
             }
@@ -135,7 +111,7 @@ partial class ElementSerializer
                 continue;
             }
 
-            if (node.ElementIsHtmlElement)
+            if (node.ElementIsHtmlElement || node.ElementIsThirdPartyReactComponent)
             {
                 if (node.IsChildrenOpened is false)
                 {
@@ -147,16 +123,57 @@ partial class ElementSerializer
                     continue;
                 }
 
-                node.ElementAsJsonMap = LeafToMap(node.ElementAsHtmlElement, context);
+                node.ElementAsJsonMap = LeafToMap(node.Element, context);
 
                 node.IsCompleted = true;
 
                 continue;
             }
+
+            if (node.ElementIsDotNetReactComponent is false)
+            {
+                throw FatalError("traverse problem");
+            }
+
+            // process React dot net component
+            {
+                
+            }
         }
 
 
         return node.ElementAsJsonMap;
+    }
+
+    static void CompleteWithChildren(Node node, ElementSerializerContext context)
+    {
+        var childElements = new List<object>();
+
+        var child = node.FirstChild;
+
+        while (child is not null)
+        {
+            if (child.ElementIsHtmlTextElement)
+            {
+                context.TryCallBeforeSerializeElementToClient(child.Element);
+
+                childElements.Add(child.ElementasHtmlTextElement.innerText);
+            }
+            else
+            {
+                childElements.Add(child.ElementAsJsonMap);
+            }
+
+            child = child.NextSibling;
+        }
+
+        var map = LeafToMap(node.Element, context);
+
+        map.Add("$children", childElements);
+
+        node.ElementAsJsonMap = map;
+        
+        node.IsCompleted = true;
     }
 
     static Dictionary<string, object> LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
