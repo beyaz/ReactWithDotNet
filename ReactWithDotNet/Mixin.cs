@@ -5,6 +5,8 @@ namespace ReactWithDotNet;
 
 public static class Mixin
 {
+    public static Modifier id(string id) => new(element => element.id = id);
+    
     public static Modifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
 
     public static Modifier AlignItemsCenter => new(style => style.alignItems = "center");

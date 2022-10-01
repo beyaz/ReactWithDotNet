@@ -15,6 +15,22 @@ public class Modifier
         htmlElementModifier = action ?? throw new ArgumentNullException(nameof(action));
     }
 
+    public static Modifier operator |(Modifier a, Modifier b)
+    {
+        void modify(Style style)
+        {
+            a.Apply(style);
+            b.Apply(style);
+        }
+
+        return new Modifier(modify);
+    }
+
+    public static implicit operator Modifier(string text)
+    {
+        return Mixin.Text(text);
+    }
+
     public void Apply(HtmlElement instance)
     {
         if (htmlElementModifier != null)
@@ -30,10 +46,5 @@ public class Modifier
     public void Apply(Style style)
     {
         modifyStyle(style);
-    }
-
-    public static implicit operator Modifier(string text)
-    {
-        return Mixin.Text(text);
     }
 }
