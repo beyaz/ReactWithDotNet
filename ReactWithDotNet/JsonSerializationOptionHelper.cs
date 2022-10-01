@@ -124,11 +124,16 @@ static class JsonSerializationOptionHelper
         {
             writer.WriteStartObject();
             
-            writer.WritePropertyName("A");
-            
-            writer.WriteStringValue("w");
+            value.VisitNotNullValues(add);
 
             writer.WriteEndObject();
+
+            void add(string propertyName, string propertyValue)
+            {
+                writer.WritePropertyName(propertyName);
+
+                writer.WriteStringValue(propertyValue);
+            }
         }
 
        

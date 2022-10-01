@@ -2,1209 +2,1213 @@
 
 partial class Style
 {
-    public IReadOnlyDictionary<string, string> ToDictionary()
+    internal void VisitNotNullValues(Action<string, string> action)
     {
-        var map = new Dictionary<string, string>();
-
         if (alignContent != null)
         {
-            map.Add(nameof(alignContent), alignContent);
+            action(nameof(alignContent), alignContent);
         }
 
         if (alignItems != null)
         {
-            map.Add(nameof(alignItems), alignItems);
+            action(nameof(alignItems), alignItems);
         }
 
         if (alignSelf != null)
         {
-            map.Add(nameof(alignSelf), alignSelf);
+            action(nameof(alignSelf), alignSelf);
         }
 
         if (all != null)
         {
-            map.Add(nameof(all), all);
+            action(nameof(all), all);
         }
 
         if (animation != null)
         {
-            map.Add(nameof(animation), animation);
+            action(nameof(animation), animation);
         }
 
         if (animationDelay != null)
         {
-            map.Add(nameof(animationDelay), animationDelay);
+            action(nameof(animationDelay), animationDelay);
         }
 
         if (animationDirection != null)
         {
-            map.Add(nameof(animationDirection), animationDirection);
+            action(nameof(animationDirection), animationDirection);
         }
 
         if (animationDuration != null)
         {
-            map.Add(nameof(animationDuration), animationDuration);
+            action(nameof(animationDuration), animationDuration);
         }
 
         if (animationFillMode != null)
         {
-            map.Add(nameof(animationFillMode), animationFillMode);
+            action(nameof(animationFillMode), animationFillMode);
         }
 
         if (animationIterationCount != null)
         {
-            map.Add(nameof(animationIterationCount), animationIterationCount);
+            action(nameof(animationIterationCount), animationIterationCount);
         }
 
         if (animationName != null)
         {
-            map.Add(nameof(animationName), animationName);
+            action(nameof(animationName), animationName);
         }
 
         if (animationPlayState != null)
         {
-            map.Add(nameof(animationPlayState), animationPlayState);
+            action(nameof(animationPlayState), animationPlayState);
         }
 
         if (animationTimingFunction != null)
         {
-            map.Add(nameof(animationTimingFunction), animationTimingFunction);
+            action(nameof(animationTimingFunction), animationTimingFunction);
         }
 
         if (backfaceVisibility != null)
         {
-            map.Add(nameof(backfaceVisibility), backfaceVisibility);
+            action(nameof(backfaceVisibility), backfaceVisibility);
         }
 
         if (background != null)
         {
-            map.Add(nameof(background), background);
+            action(nameof(background), background);
         }
 
         if (backgroundAttachment != null)
         {
-            map.Add(nameof(backgroundAttachment), backgroundAttachment);
+            action(nameof(backgroundAttachment), backgroundAttachment);
         }
 
         if (backgroundBlendMode != null)
         {
-            map.Add(nameof(backgroundBlendMode), backgroundBlendMode);
+            action(nameof(backgroundBlendMode), backgroundBlendMode);
         }
 
         if (backgroundClip != null)
         {
-            map.Add(nameof(backgroundClip), backgroundClip);
+            action(nameof(backgroundClip), backgroundClip);
         }
 
         if (backgroundColor != null)
         {
-            map.Add(nameof(backgroundColor), backgroundColor);
+            action(nameof(backgroundColor), backgroundColor);
         }
 
         if (backgroundImage != null)
         {
-            map.Add(nameof(backgroundImage), backgroundImage);
+            action(nameof(backgroundImage), backgroundImage);
         }
 
         if (backgroundOrigin != null)
         {
-            map.Add(nameof(backgroundOrigin), backgroundOrigin);
+            action(nameof(backgroundOrigin), backgroundOrigin);
         }
 
         if (backgroundPosition != null)
         {
-            map.Add(nameof(backgroundPosition), backgroundPosition);
+            action(nameof(backgroundPosition), backgroundPosition);
         }
 
         if (backgroundRepeat != null)
         {
-            map.Add(nameof(backgroundRepeat), backgroundRepeat);
+            action(nameof(backgroundRepeat), backgroundRepeat);
         }
 
         if (backgroundSize != null)
         {
-            map.Add(nameof(backgroundSize), backgroundSize);
+            action(nameof(backgroundSize), backgroundSize);
         }
 
         if (border != null)
         {
-            map.Add(nameof(border), border);
+            action(nameof(border), border);
         }
 
         if (borderBottom != null)
         {
-            map.Add(nameof(borderBottom), borderBottom);
+            action(nameof(borderBottom), borderBottom);
         }
 
         if (borderBottomColor != null)
         {
-            map.Add(nameof(borderBottomColor), borderBottomColor);
+            action(nameof(borderBottomColor), borderBottomColor);
         }
 
         if (borderBottomLeftRadius != null)
         {
-            map.Add(nameof(borderBottomLeftRadius), borderBottomLeftRadius);
+            action(nameof(borderBottomLeftRadius), borderBottomLeftRadius);
         }
 
         if (borderBottomRightRadius != null)
         {
-            map.Add(nameof(borderBottomRightRadius), borderBottomRightRadius);
+            action(nameof(borderBottomRightRadius), borderBottomRightRadius);
         }
 
         if (borderBottomStyle != null)
         {
-            map.Add(nameof(borderBottomStyle), borderBottomStyle);
+            action(nameof(borderBottomStyle), borderBottomStyle);
         }
 
         if (borderBottomWidth != null)
         {
-            map.Add(nameof(borderBottomWidth), borderBottomWidth);
+            action(nameof(borderBottomWidth), borderBottomWidth);
         }
 
         if (borderCollapse != null)
         {
-            map.Add(nameof(borderCollapse), borderCollapse);
+            action(nameof(borderCollapse), borderCollapse);
         }
 
         if (borderColor != null)
         {
-            map.Add(nameof(borderColor), borderColor);
+            action(nameof(borderColor), borderColor);
         }
 
         if (borderImage != null)
         {
-            map.Add(nameof(borderImage), borderImage);
+            action(nameof(borderImage), borderImage);
         }
 
         if (borderImageOutset != null)
         {
-            map.Add(nameof(borderImageOutset), borderImageOutset);
+            action(nameof(borderImageOutset), borderImageOutset);
         }
 
         if (borderImageRepeat != null)
         {
-            map.Add(nameof(borderImageRepeat), borderImageRepeat);
+            action(nameof(borderImageRepeat), borderImageRepeat);
         }
 
         if (borderImageSlice != null)
         {
-            map.Add(nameof(borderImageSlice), borderImageSlice);
+            action(nameof(borderImageSlice), borderImageSlice);
         }
 
         if (borderImageSource != null)
         {
-            map.Add(nameof(borderImageSource), borderImageSource);
+            action(nameof(borderImageSource), borderImageSource);
         }
 
         if (borderImageWidth != null)
         {
-            map.Add(nameof(borderImageWidth), borderImageWidth);
+            action(nameof(borderImageWidth), borderImageWidth);
         }
 
         if (borderLeft != null)
         {
-            map.Add(nameof(borderLeft), borderLeft);
+            action(nameof(borderLeft), borderLeft);
         }
 
         if (borderLeftColor != null)
         {
-            map.Add(nameof(borderLeftColor), borderLeftColor);
+            action(nameof(borderLeftColor), borderLeftColor);
         }
 
         if (borderLeftStyle != null)
         {
-            map.Add(nameof(borderLeftStyle), borderLeftStyle);
+            action(nameof(borderLeftStyle), borderLeftStyle);
         }
 
         if (borderLeftWidth != null)
         {
-            map.Add(nameof(borderLeftWidth), borderLeftWidth);
+            action(nameof(borderLeftWidth), borderLeftWidth);
         }
 
         if (borderRadius != null)
         {
-            map.Add(nameof(borderRadius), borderRadius);
+            action(nameof(borderRadius), borderRadius);
         }
 
         if (borderRight != null)
         {
-            map.Add(nameof(borderRight), borderRight);
+            action(nameof(borderRight), borderRight);
         }
 
         if (borderRightColor != null)
         {
-            map.Add(nameof(borderRightColor), borderRightColor);
+            action(nameof(borderRightColor), borderRightColor);
         }
 
         if (borderRightStyle != null)
         {
-            map.Add(nameof(borderRightStyle), borderRightStyle);
+            action(nameof(borderRightStyle), borderRightStyle);
         }
 
         if (borderRightWidth != null)
         {
-            map.Add(nameof(borderRightWidth), borderRightWidth);
+            action(nameof(borderRightWidth), borderRightWidth);
         }
 
         if (borderSpacing != null)
         {
-            map.Add(nameof(borderSpacing), borderSpacing);
+            action(nameof(borderSpacing), borderSpacing);
         }
 
         if (borderStyle != null)
         {
-            map.Add(nameof(borderStyle), borderStyle);
+            action(nameof(borderStyle), borderStyle);
         }
 
         if (borderTop != null)
         {
-            map.Add(nameof(borderTop), borderTop);
+            action(nameof(borderTop), borderTop);
         }
 
         if (borderTopColor != null)
         {
-            map.Add(nameof(borderTopColor), borderTopColor);
+            action(nameof(borderTopColor), borderTopColor);
         }
 
         if (borderTopLeftRadius != null)
         {
-            map.Add(nameof(borderTopLeftRadius), borderTopLeftRadius);
+            action(nameof(borderTopLeftRadius), borderTopLeftRadius);
         }
 
         if (borderTopRightRadius != null)
         {
-            map.Add(nameof(borderTopRightRadius), borderTopRightRadius);
+            action(nameof(borderTopRightRadius), borderTopRightRadius);
         }
 
         if (borderTopStyle != null)
         {
-            map.Add(nameof(borderTopStyle), borderTopStyle);
+            action(nameof(borderTopStyle), borderTopStyle);
         }
 
         if (borderTopWidth != null)
         {
-            map.Add(nameof(borderTopWidth), borderTopWidth);
+            action(nameof(borderTopWidth), borderTopWidth);
         }
 
         if (borderWidth != null)
         {
-            map.Add(nameof(borderWidth), borderWidth);
+            action(nameof(borderWidth), borderWidth);
         }
 
         if (bottom != null)
         {
-            map.Add(nameof(bottom), bottom);
+            action(nameof(bottom), bottom);
         }
 
         if (boxDecorationBreak != null)
         {
-            map.Add(nameof(boxDecorationBreak), boxDecorationBreak);
+            action(nameof(boxDecorationBreak), boxDecorationBreak);
         }
 
         if (boxShadow != null)
         {
-            map.Add(nameof(boxShadow), boxShadow);
+            action(nameof(boxShadow), boxShadow);
         }
 
         if (boxSizing != null)
         {
-            map.Add(nameof(boxSizing), boxSizing);
+            action(nameof(boxSizing), boxSizing);
         }
 
         if (captionSide != null)
         {
-            map.Add(nameof(captionSide), captionSide);
+            action(nameof(captionSide), captionSide);
         }
 
         if (clear != null)
         {
-            map.Add(nameof(clear), clear);
+            action(nameof(clear), clear);
         }
 
         if (clip != null)
         {
-            map.Add(nameof(clip), clip);
+            action(nameof(clip), clip);
         }
 
         if (clipPath != null)
         {
-            map.Add(nameof(clipPath), clipPath);
+            action(nameof(clipPath), clipPath);
         }
 
         if (color != null)
         {
-            map.Add(nameof(color), color);
+            action(nameof(color), color);
         }
 
         if (columns != null)
         {
-            map.Add(nameof(columns), columns);
+            action(nameof(columns), columns);
         }
 
         if (columnCount != null)
         {
-            map.Add(nameof(columnCount), columnCount);
+            action(nameof(columnCount), columnCount);
         }
 
         if (columnFill != null)
         {
-            map.Add(nameof(columnFill), columnFill);
+            action(nameof(columnFill), columnFill);
         }
 
         if (columnGap != null)
         {
-            map.Add(nameof(columnGap), columnGap);
+            action(nameof(columnGap), columnGap);
         }
 
         if (rowGap != null)
         {
-            map.Add(nameof(rowGap), rowGap);
+            action(nameof(rowGap), rowGap);
         }
 
         if (gap != null)
         {
-            map.Add(nameof(gap), gap);
+            action(nameof(gap), gap);
         }
 
         if (columnRule != null)
         {
-            map.Add(nameof(columnRule), columnRule);
+            action(nameof(columnRule), columnRule);
         }
 
         if (columnRuleColor != null)
         {
-            map.Add(nameof(columnRuleColor), columnRuleColor);
+            action(nameof(columnRuleColor), columnRuleColor);
         }
 
         if (columnRuleStyle != null)
         {
-            map.Add(nameof(columnRuleStyle), columnRuleStyle);
+            action(nameof(columnRuleStyle), columnRuleStyle);
         }
 
         if (columnRuleWidth != null)
         {
-            map.Add(nameof(columnRuleWidth), columnRuleWidth);
+            action(nameof(columnRuleWidth), columnRuleWidth);
         }
 
         if (columnSpan != null)
         {
-            map.Add(nameof(columnSpan), columnSpan);
+            action(nameof(columnSpan), columnSpan);
         }
 
         if (columnWidth != null)
         {
-            map.Add(nameof(columnWidth), columnWidth);
+            action(nameof(columnWidth), columnWidth);
         }
 
         if (content != null)
         {
-            map.Add(nameof(content), content);
+            action(nameof(content), content);
         }
 
         if (contentVisibility != null)
         {
-            map.Add(nameof(contentVisibility), contentVisibility);
+            action(nameof(contentVisibility), contentVisibility);
         }
 
         if (counterIncrement != null)
         {
-            map.Add(nameof(counterIncrement), counterIncrement);
+            action(nameof(counterIncrement), counterIncrement);
         }
 
         if (counterReset != null)
         {
-            map.Add(nameof(counterReset), counterReset);
+            action(nameof(counterReset), counterReset);
         }
 
         if (cssFloat != null)
         {
-            map.Add(nameof(cssFloat), cssFloat);
+            action(nameof(cssFloat), cssFloat);
         }
 
         if (cssText != null)
         {
-            map.Add(nameof(cssText), cssText);
+            action(nameof(cssText), cssText);
         }
 
         if (cursor != null)
         {
-            map.Add(nameof(cursor), cursor);
+            action(nameof(cursor), cursor);
         }
 
         if (direction != null)
         {
-            map.Add(nameof(direction), direction);
+            action(nameof(direction), direction);
         }
 
         if (display != null)
         {
-            map.Add(nameof(display), display);
+            action(nameof(display), display);
         }
 
         if (dominantBaseline != null)
         {
-            map.Add(nameof(dominantBaseline), dominantBaseline);
+            action(nameof(dominantBaseline), dominantBaseline);
         }
 
         if (emptyCells != null)
         {
-            map.Add(nameof(emptyCells), emptyCells);
+            action(nameof(emptyCells), emptyCells);
         }
 
         if (fill != null)
         {
-            map.Add(nameof(fill), fill);
+            action(nameof(fill), fill);
         }
 
         if (fillOpacity != null)
         {
-            map.Add(nameof(fillOpacity), fillOpacity);
+            action(nameof(fillOpacity), fillOpacity);
         }
 
         if (fillRule != null)
         {
-            map.Add(nameof(fillRule), fillRule);
+            action(nameof(fillRule), fillRule);
         }
 
         if (filter != null)
         {
-            map.Add(nameof(filter), filter);
+            action(nameof(filter), filter);
         }
 
         if (flex != null)
         {
-            map.Add(nameof(flex), flex);
+            action(nameof(flex), flex);
         }
 
         if (flexBasis != null)
         {
-            map.Add(nameof(flexBasis), flexBasis);
+            action(nameof(flexBasis), flexBasis);
         }
 
         if (flexDirection != null)
         {
-            map.Add(nameof(flexDirection), flexDirection);
+            action(nameof(flexDirection), flexDirection);
         }
 
         if (flexFlow != null)
         {
-            map.Add(nameof(flexFlow), flexFlow);
+            action(nameof(flexFlow), flexFlow);
         }
 
         if (flexGrow != null)
         {
-            map.Add(nameof(flexGrow), flexGrow);
+            action(nameof(flexGrow), flexGrow);
         }
 
         if (flexShrink != null)
         {
-            map.Add(nameof(flexShrink), flexShrink);
+            action(nameof(flexShrink), flexShrink);
         }
 
         if (flexWrap != null)
         {
-            map.Add(nameof(flexWrap), flexWrap);
+            action(nameof(flexWrap), flexWrap);
         }
 
         if (floodColor != null)
         {
-            map.Add(nameof(floodColor), floodColor);
+            action(nameof(floodColor), floodColor);
         }
 
         if (floodOpacity != null)
         {
-            map.Add(nameof(floodOpacity), floodOpacity);
+            action(nameof(floodOpacity), floodOpacity);
         }
 
         if (font != null)
         {
-            map.Add(nameof(font), font);
+            action(nameof(font), font);
         }
 
         if (fontFamily != null)
         {
-            map.Add(nameof(fontFamily), fontFamily);
+            action(nameof(fontFamily), fontFamily);
         }
 
         if (fontFeatureSettings != null)
         {
-            map.Add(nameof(fontFeatureSettings), fontFeatureSettings);
+            action(nameof(fontFeatureSettings), fontFeatureSettings);
         }
 
         if (fontKerning != null)
         {
-            map.Add(nameof(fontKerning), fontKerning);
+            action(nameof(fontKerning), fontKerning);
         }
 
         if (fontLanguageOverride != null)
         {
-            map.Add(nameof(fontLanguageOverride), fontLanguageOverride);
+            action(nameof(fontLanguageOverride), fontLanguageOverride);
         }
 
         if (fontSize != null)
         {
-            map.Add(nameof(fontSize), fontSize);
+            action(nameof(fontSize), fontSize);
         }
 
         if (fontSizeAdjust != null)
         {
-            map.Add(nameof(fontSizeAdjust), fontSizeAdjust);
+            action(nameof(fontSizeAdjust), fontSizeAdjust);
         }
 
         if (fontStretch != null)
         {
-            map.Add(nameof(fontStretch), fontStretch);
+            action(nameof(fontStretch), fontStretch);
         }
 
         if (fontStyle != null)
         {
-            map.Add(nameof(fontStyle), fontStyle);
+            action(nameof(fontStyle), fontStyle);
         }
 
         if (fontSynthesis != null)
         {
-            map.Add(nameof(fontSynthesis), fontSynthesis);
+            action(nameof(fontSynthesis), fontSynthesis);
         }
 
         if (fontVariant != null)
         {
-            map.Add(nameof(fontVariant), fontVariant);
+            action(nameof(fontVariant), fontVariant);
         }
 
         if (fontVariantAlternates != null)
         {
-            map.Add(nameof(fontVariantAlternates), fontVariantAlternates);
+            action(nameof(fontVariantAlternates), fontVariantAlternates);
         }
 
         if (fontVariantCaps != null)
         {
-            map.Add(nameof(fontVariantCaps), fontVariantCaps);
+            action(nameof(fontVariantCaps), fontVariantCaps);
         }
 
         if (fontVariantEastAsian != null)
         {
-            map.Add(nameof(fontVariantEastAsian), fontVariantEastAsian);
+            action(nameof(fontVariantEastAsian), fontVariantEastAsian);
         }
 
         if (fontVariantLigatures != null)
         {
-            map.Add(nameof(fontVariantLigatures), fontVariantLigatures);
+            action(nameof(fontVariantLigatures), fontVariantLigatures);
         }
 
         if (fontVariantNumeric != null)
         {
-            map.Add(nameof(fontVariantNumeric), fontVariantNumeric);
+            action(nameof(fontVariantNumeric), fontVariantNumeric);
         }
 
         if (fontVariantPosition != null)
         {
-            map.Add(nameof(fontVariantPosition), fontVariantPosition);
+            action(nameof(fontVariantPosition), fontVariantPosition);
         }
 
         if (fontWeight != null)
         {
-            map.Add(nameof(fontWeight), fontWeight);
+            action(nameof(fontWeight), fontWeight);
         }
 
         if (grid != null)
         {
-            map.Add(nameof(grid), grid);
+            action(nameof(grid), grid);
         }
 
         if (gridArea != null)
         {
-            map.Add(nameof(gridArea), gridArea);
+            action(nameof(gridArea), gridArea);
         }
 
         if (gridAutoColumns != null)
         {
-            map.Add(nameof(gridAutoColumns), gridAutoColumns);
+            action(nameof(gridAutoColumns), gridAutoColumns);
         }
 
         if (gridAutoFlow != null)
         {
-            map.Add(nameof(gridAutoFlow), gridAutoFlow);
+            action(nameof(gridAutoFlow), gridAutoFlow);
         }
 
         if (gridAutoPosition != null)
         {
-            map.Add(nameof(gridAutoPosition), gridAutoPosition);
+            action(nameof(gridAutoPosition), gridAutoPosition);
         }
 
         if (gridAutoRows != null)
         {
-            map.Add(nameof(gridAutoRows), gridAutoRows);
+            action(nameof(gridAutoRows), gridAutoRows);
         }
 
         if (gridColumn != null)
         {
-            map.Add(nameof(gridColumn), gridColumn);
+            action(nameof(gridColumn), gridColumn);
         }
 
         if (gridColumnStart != null)
         {
-            map.Add(nameof(gridColumnStart), gridColumnStart);
+            action(nameof(gridColumnStart), gridColumnStart);
         }
 
         if (gridColumnEnd != null)
         {
-            map.Add(nameof(gridColumnEnd), gridColumnEnd);
+            action(nameof(gridColumnEnd), gridColumnEnd);
         }
 
         if (gridRow != null)
         {
-            map.Add(nameof(gridRow), gridRow);
+            action(nameof(gridRow), gridRow);
         }
 
         if (gridRowStart != null)
         {
-            map.Add(nameof(gridRowStart), gridRowStart);
+            action(nameof(gridRowStart), gridRowStart);
         }
 
         if (gridRowEnd != null)
         {
-            map.Add(nameof(gridRowEnd), gridRowEnd);
+            action(nameof(gridRowEnd), gridRowEnd);
         }
 
         if (gridTemplate != null)
         {
-            map.Add(nameof(gridTemplate), gridTemplate);
+            action(nameof(gridTemplate), gridTemplate);
         }
 
         if (gridTemplateAreas != null)
         {
-            map.Add(nameof(gridTemplateAreas), gridTemplateAreas);
+            action(nameof(gridTemplateAreas), gridTemplateAreas);
         }
 
         if (gridTemplateRows != null)
         {
-            map.Add(nameof(gridTemplateRows), gridTemplateRows);
+            action(nameof(gridTemplateRows), gridTemplateRows);
         }
 
         if (gridTemplateColumns != null)
         {
-            map.Add(nameof(gridTemplateColumns), gridTemplateColumns);
+            action(nameof(gridTemplateColumns), gridTemplateColumns);
         }
 
         if (height != null)
         {
-            map.Add(nameof(height), height);
+            action(nameof(height), height);
         }
 
         if (hyphens != null)
         {
-            map.Add(nameof(hyphens), hyphens);
+            action(nameof(hyphens), hyphens);
         }
 
         if (icon != null)
         {
-            map.Add(nameof(icon), icon);
+            action(nameof(icon), icon);
         }
 
         if (imageRendering != null)
         {
-            map.Add(nameof(imageRendering), imageRendering);
+            action(nameof(imageRendering), imageRendering);
         }
 
         if (imageResolution != null)
         {
-            map.Add(nameof(imageResolution), imageResolution);
+            action(nameof(imageResolution), imageResolution);
         }
 
         if (imageOrientation != null)
         {
-            map.Add(nameof(imageOrientation), imageOrientation);
+            action(nameof(imageOrientation), imageOrientation);
         }
 
         if (imeMode != null)
         {
-            map.Add(nameof(imeMode), imeMode);
+            action(nameof(imeMode), imeMode);
         }
 
         if (justifyContent != null)
         {
-            map.Add(nameof(justifyContent), justifyContent);
+            action(nameof(justifyContent), justifyContent);
         }
 
         if (left != null)
         {
-            map.Add(nameof(left), left);
+            action(nameof(left), left);
         }
 
         if (letterSpacing != null)
         {
-            map.Add(nameof(letterSpacing), letterSpacing);
+            action(nameof(letterSpacing), letterSpacing);
         }
 
         if (lightingColor != null)
         {
-            map.Add(nameof(lightingColor), lightingColor);
+            action(nameof(lightingColor), lightingColor);
         }
 
         if (lineHeight != null)
         {
-            map.Add(nameof(lineHeight), lineHeight);
+            action(nameof(lineHeight), lineHeight);
         }
 
         if (listStyle != null)
         {
-            map.Add(nameof(listStyle), listStyle);
+            action(nameof(listStyle), listStyle);
         }
 
         if (listStyleImage != null)
         {
-            map.Add(nameof(listStyleImage), listStyleImage);
+            action(nameof(listStyleImage), listStyleImage);
         }
 
         if (listStylePosition != null)
         {
-            map.Add(nameof(listStylePosition), listStylePosition);
+            action(nameof(listStylePosition), listStylePosition);
         }
 
         if (listStyleType != null)
         {
-            map.Add(nameof(listStyleType), listStyleType);
+            action(nameof(listStyleType), listStyleType);
         }
 
         if (margin != null)
         {
-            map.Add(nameof(margin), margin);
+            action(nameof(margin), margin);
         }
 
         if (marginBottom != null)
         {
-            map.Add(nameof(marginBottom), marginBottom);
+            action(nameof(marginBottom), marginBottom);
         }
 
         if (marginLeft != null)
         {
-            map.Add(nameof(marginLeft), marginLeft);
+            action(nameof(marginLeft), marginLeft);
         }
 
         if (marginRight != null)
         {
-            map.Add(nameof(marginRight), marginRight);
+            action(nameof(marginRight), marginRight);
         }
 
         if (marginTop != null)
         {
-            map.Add(nameof(marginTop), marginTop);
+            action(nameof(marginTop), marginTop);
         }
 
         if (marks != null)
         {
-            map.Add(nameof(marks), marks);
+            action(nameof(marks), marks);
         }
 
         if (mask != null)
         {
-            map.Add(nameof(mask), mask);
+            action(nameof(mask), mask);
         }
 
         if (maskType != null)
         {
-            map.Add(nameof(maskType), maskType);
+            action(nameof(maskType), maskType);
         }
 
         if (maxHeight != null)
         {
-            map.Add(nameof(maxHeight), maxHeight);
+            action(nameof(maxHeight), maxHeight);
         }
 
         if (maxWidth != null)
         {
-            map.Add(nameof(maxWidth), maxWidth);
+            action(nameof(maxWidth), maxWidth);
         }
 
         if (minHeight != null)
         {
-            map.Add(nameof(minHeight), minHeight);
+            action(nameof(minHeight), minHeight);
         }
 
         if (minWidth != null)
         {
-            map.Add(nameof(minWidth), minWidth);
+            action(nameof(minWidth), minWidth);
         }
 
         if (mixBlendMode != null)
         {
-            map.Add(nameof(mixBlendMode), mixBlendMode);
+            action(nameof(mixBlendMode), mixBlendMode);
         }
 
         if (navDown != null)
         {
-            map.Add(nameof(navDown), navDown);
+            action(nameof(navDown), navDown);
         }
 
         if (navIndex != null)
         {
-            map.Add(nameof(navIndex), navIndex);
+            action(nameof(navIndex), navIndex);
         }
 
         if (navLeft != null)
         {
-            map.Add(nameof(navLeft), navLeft);
+            action(nameof(navLeft), navLeft);
         }
 
         if (navRight != null)
         {
-            map.Add(nameof(navRight), navRight);
+            action(nameof(navRight), navRight);
         }
 
         if (navUp != null)
         {
-            map.Add(nameof(navUp), navUp);
+            action(nameof(navUp), navUp);
         }
 
         if (objectFit != null)
         {
-            map.Add(nameof(objectFit), objectFit);
+            action(nameof(objectFit), objectFit);
         }
 
         if (objectPosition != null)
         {
-            map.Add(nameof(objectPosition), objectPosition);
+            action(nameof(objectPosition), objectPosition);
         }
 
         if (opacity != null)
         {
-            map.Add(nameof(opacity), opacity);
+            action(nameof(opacity), opacity);
         }
 
         if (order != null)
         {
-            map.Add(nameof(order), order);
+            action(nameof(order), order);
         }
 
         if (orphans != null)
         {
-            map.Add(nameof(orphans), orphans);
+            action(nameof(orphans), orphans);
         }
 
         if (outline != null)
         {
-            map.Add(nameof(outline), outline);
+            action(nameof(outline), outline);
         }
 
         if (outlineColor != null)
         {
-            map.Add(nameof(outlineColor), outlineColor);
+            action(nameof(outlineColor), outlineColor);
         }
 
         if (outlineOffset != null)
         {
-            map.Add(nameof(outlineOffset), outlineOffset);
+            action(nameof(outlineOffset), outlineOffset);
         }
 
         if (outlineStyle != null)
         {
-            map.Add(nameof(outlineStyle), outlineStyle);
+            action(nameof(outlineStyle), outlineStyle);
         }
 
         if (outlineWidth != null)
         {
-            map.Add(nameof(outlineWidth), outlineWidth);
+            action(nameof(outlineWidth), outlineWidth);
         }
 
         if (overflow != null)
         {
-            map.Add(nameof(overflow), overflow);
+            action(nameof(overflow), overflow);
         }
 
         if (overflowWrap != null)
         {
-            map.Add(nameof(overflowWrap), overflowWrap);
+            action(nameof(overflowWrap), overflowWrap);
         }
 
         if (overflowX != null)
         {
-            map.Add(nameof(overflowX), overflowX);
+            action(nameof(overflowX), overflowX);
         }
 
         if (overflowY != null)
         {
-            map.Add(nameof(overflowY), overflowY);
+            action(nameof(overflowY), overflowY);
         }
 
         if (overflowClipBox != null)
         {
-            map.Add(nameof(overflowClipBox), overflowClipBox);
+            action(nameof(overflowClipBox), overflowClipBox);
         }
 
         if (padding != null)
         {
-            map.Add(nameof(padding), padding);
+            action(nameof(padding), padding);
         }
 
         if (paddingBottom != null)
         {
-            map.Add(nameof(paddingBottom), paddingBottom);
+            action(nameof(paddingBottom), paddingBottom);
         }
 
         if (paddingLeft != null)
         {
-            map.Add(nameof(paddingLeft), paddingLeft);
+            action(nameof(paddingLeft), paddingLeft);
         }
 
         if (paddingRight != null)
         {
-            map.Add(nameof(paddingRight), paddingRight);
+            action(nameof(paddingRight), paddingRight);
         }
 
         if (paddingTop != null)
         {
-            map.Add(nameof(paddingTop), paddingTop);
+            action(nameof(paddingTop), paddingTop);
         }
 
         if (pageBreakAfter != null)
         {
-            map.Add(nameof(pageBreakAfter), pageBreakAfter);
+            action(nameof(pageBreakAfter), pageBreakAfter);
         }
 
         if (pageBreakBefore != null)
         {
-            map.Add(nameof(pageBreakBefore), pageBreakBefore);
+            action(nameof(pageBreakBefore), pageBreakBefore);
         }
 
         if (pageBreakInside != null)
         {
-            map.Add(nameof(pageBreakInside), pageBreakInside);
+            action(nameof(pageBreakInside), pageBreakInside);
         }
 
         if (perspective != null)
         {
-            map.Add(nameof(perspective), perspective);
+            action(nameof(perspective), perspective);
         }
 
         if (perspectiveOrigin != null)
         {
-            map.Add(nameof(perspectiveOrigin), perspectiveOrigin);
+            action(nameof(perspectiveOrigin), perspectiveOrigin);
         }
 
         if (pointerEvents != null)
         {
-            map.Add(nameof(pointerEvents), pointerEvents);
+            action(nameof(pointerEvents), pointerEvents);
         }
 
         if (position != null)
         {
-            map.Add(nameof(position), position);
+            action(nameof(position), position);
         }
 
         if (quotes != null)
         {
-            map.Add(nameof(quotes), quotes);
+            action(nameof(quotes), quotes);
         }
 
         if (resize != null)
         {
-            map.Add(nameof(resize), resize);
+            action(nameof(resize), resize);
         }
 
         if (right != null)
         {
-            map.Add(nameof(right), right);
+            action(nameof(right), right);
         }
 
         if (tableLayout != null)
         {
-            map.Add(nameof(tableLayout), tableLayout);
+            action(nameof(tableLayout), tableLayout);
         }
 
         if (tabSize != null)
         {
-            map.Add(nameof(tabSize), tabSize);
+            action(nameof(tabSize), tabSize);
         }
 
         if (textAlign != null)
         {
-            map.Add(nameof(textAlign), textAlign);
+            action(nameof(textAlign), textAlign);
         }
 
         if (textAlignLast != null)
         {
-            map.Add(nameof(textAlignLast), textAlignLast);
+            action(nameof(textAlignLast), textAlignLast);
         }
 
         if (textCombineHorizontal != null)
         {
-            map.Add(nameof(textCombineHorizontal), textCombineHorizontal);
+            action(nameof(textCombineHorizontal), textCombineHorizontal);
         }
 
         if (textDecoration != null)
         {
-            map.Add(nameof(textDecoration), textDecoration);
+            action(nameof(textDecoration), textDecoration);
         }
 
         if (textDecorationColor != null)
         {
-            map.Add(nameof(textDecorationColor), textDecorationColor);
+            action(nameof(textDecorationColor), textDecorationColor);
         }
 
         if (textDecorationLine != null)
         {
-            map.Add(nameof(textDecorationLine), textDecorationLine);
+            action(nameof(textDecorationLine), textDecorationLine);
         }
 
         if (textDecorationStyle != null)
         {
-            map.Add(nameof(textDecorationStyle), textDecorationStyle);
+            action(nameof(textDecorationStyle), textDecorationStyle);
         }
 
         if (textIndent != null)
         {
-            map.Add(nameof(textIndent), textIndent);
+            action(nameof(textIndent), textIndent);
         }
 
         if (textOrientation != null)
         {
-            map.Add(nameof(textOrientation), textOrientation);
+            action(nameof(textOrientation), textOrientation);
         }
 
         if (textOverflow != null)
         {
-            map.Add(nameof(textOverflow), textOverflow);
+            action(nameof(textOverflow), textOverflow);
         }
 
         if (textRendering != null)
         {
-            map.Add(nameof(textRendering), textRendering);
+            action(nameof(textRendering), textRendering);
         }
 
         if (textShadow != null)
         {
-            map.Add(nameof(textShadow), textShadow);
+            action(nameof(textShadow), textShadow);
         }
 
         if (textTransform != null)
         {
-            map.Add(nameof(textTransform), textTransform);
+            action(nameof(textTransform), textTransform);
         }
 
         if (textUnderlinePosition != null)
         {
-            map.Add(nameof(textUnderlinePosition), textUnderlinePosition);
+            action(nameof(textUnderlinePosition), textUnderlinePosition);
         }
 
         if (top != null)
         {
-            map.Add(nameof(top), top);
+            action(nameof(top), top);
         }
 
         if (touchAction != null)
         {
-            map.Add(nameof(touchAction), touchAction);
+            action(nameof(touchAction), touchAction);
         }
 
         if (transform != null)
         {
-            map.Add(nameof(transform), transform);
+            action(nameof(transform), transform);
         }
 
         if (transformOrigin != null)
         {
-            map.Add(nameof(transformOrigin), transformOrigin);
+            action(nameof(transformOrigin), transformOrigin);
         }
 
         if (transformStyle != null)
         {
-            map.Add(nameof(transformStyle), transformStyle);
+            action(nameof(transformStyle), transformStyle);
         }
 
         if (transition != null)
         {
-            map.Add(nameof(transition), transition);
+            action(nameof(transition), transition);
         }
 
         if (transitionDelay != null)
         {
-            map.Add(nameof(transitionDelay), transitionDelay);
+            action(nameof(transitionDelay), transitionDelay);
         }
 
         if (transitionDuration != null)
         {
-            map.Add(nameof(transitionDuration), transitionDuration);
+            action(nameof(transitionDuration), transitionDuration);
         }
 
         if (transitionProperty != null)
         {
-            map.Add(nameof(transitionProperty), transitionProperty);
+            action(nameof(transitionProperty), transitionProperty);
         }
 
         if (transitionTimingFunction != null)
         {
-            map.Add(nameof(transitionTimingFunction), transitionTimingFunction);
+            action(nameof(transitionTimingFunction), transitionTimingFunction);
         }
 
         if (unicodeBidi != null)
         {
-            map.Add(nameof(unicodeBidi), unicodeBidi);
+            action(nameof(unicodeBidi), unicodeBidi);
         }
 
         if (unicodeRange != null)
         {
-            map.Add(nameof(unicodeRange), unicodeRange);
+            action(nameof(unicodeRange), unicodeRange);
         }
 
         if (verticalAlign != null)
         {
-            map.Add(nameof(verticalAlign), verticalAlign);
+            action(nameof(verticalAlign), verticalAlign);
         }
 
         if (visibility != null)
         {
-            map.Add(nameof(visibility), visibility);
+            action(nameof(visibility), visibility);
         }
 
         if (whiteSpace != null)
         {
-            map.Add(nameof(whiteSpace), whiteSpace);
+            action(nameof(whiteSpace), whiteSpace);
         }
 
         if (widows != null)
         {
-            map.Add(nameof(widows), widows);
+            action(nameof(widows), widows);
         }
 
         if (width != null)
         {
-            map.Add(nameof(width), width);
+            action(nameof(width), width);
         }
 
         if (willChange != null)
         {
-            map.Add(nameof(willChange), willChange);
+            action(nameof(willChange), willChange);
         }
 
         if (wordBreak != null)
         {
-            map.Add(nameof(wordBreak), wordBreak);
+            action(nameof(wordBreak), wordBreak);
         }
 
         if (wordSpacing != null)
         {
-            map.Add(nameof(wordSpacing), wordSpacing);
+            action(nameof(wordSpacing), wordSpacing);
         }
 
         if (wordWrap != null)
         {
-            map.Add(nameof(wordWrap), wordWrap);
+            action(nameof(wordWrap), wordWrap);
         }
 
         if (writingMode != null)
         {
-            map.Add(nameof(writingMode), writingMode);
+            action(nameof(writingMode), writingMode);
         }
 
         if (zIndex != null)
         {
-            map.Add(nameof(zIndex), zIndex);
+            action(nameof(zIndex), zIndex);
         }
 
         if (borderInlineStyle != null)
         {
-            map.Add(nameof(borderInlineStyle), borderInlineStyle);
+            action(nameof(borderInlineStyle), borderInlineStyle);
         }
+    }
+    public IReadOnlyDictionary<string, string> ToDictionary()
+    {
+        var map = new Dictionary<string, string>();
+
+        VisitNotNullValues(map.Add);
 
         return map;
     }
