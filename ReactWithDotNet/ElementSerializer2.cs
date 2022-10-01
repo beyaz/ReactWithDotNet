@@ -4,64 +4,10 @@ using System.Reflection;
 
 namespace ReactWithDotNet;
 
-
 partial class ElementSerializer
 {
-    class Node
-    {
-        public bool ElementIsHtmlElement { get; set; }
-        
-        public bool ElementIsThirdPartyReactComponent{ get; set; }
-        
-        public bool ElementIsDotNetReactComponent { get; set; }
-        
-        public bool ElementIsFakeChild { get; set; }
-
-        public bool ElementIsNull{ get; set; }
-
-        public Element Element { get; set; }
-
-        public IReadOnlyDictionary<string, object> ElementAsJsonMap { get; set; }
-
-        public Node Parent { get; set; }
-
-        public bool HasParent => Parent is not null;
-
-        public Node NextSibling { get; set; }
-
-        public bool HasNextSibling => NextSibling is not null;
-
-        public Node FirstChild { get; set; }
-
-        public bool HasFirstChild => FirstChild is not null;
-
-        public bool IsCompleted { get; set; }
-
-        public ElementSerializerContext SerializerContext { get; set; }
-        
-        public ThirdPartyReactComponent ElementAsThirdPartyReactComponent { get; set; }
-        
-        public ReactStatefulComponent ElementAsDotNetReactComponent { get; set; }
-        
-        public HtmlElement ElementAsHtmlElement { get; set; }
-        
-        public FakeChild ElementAsFakeChild { get; set; }
-
-        public bool IsChildrenOpened { get; set; }
-        public bool ElementIsHtmlTextElement { get; set; }
-        public HtmlTextNode ElementasHtmlTextElement { get; set; }
-        public bool IsAllChildrenCompleted { get; set; }
-
-        public string BreadCrumpPath { get; set; }
-        public int? CurrentOrder { get; set; }
-        public Element DotNetComponentRootElement { get; set; }
-        public bool DotNetComponentRenderMethodInvoked { get; set; }
-        public Node DotNetComponentRootNode { get; set; }
-    }
-
     public static IReadOnlyDictionary<string, object> ToMap2(this Element element, ElementSerializerContext context)
     {
-
         var node = ConvertToNode(element, context);
 
         while (true)
@@ -79,7 +25,7 @@ partial class ElementSerializer
                     node.Parent.IsAllChildrenCompleted = true;
 
                     node = node.Parent;
-                    
+
                     continue;
                 }
 
@@ -93,7 +39,7 @@ partial class ElementSerializer
 
                 continue;
             }
-            
+
             if (node.HasFirstChild)
             {
                 node = node.FirstChild;
@@ -161,7 +107,6 @@ partial class ElementSerializer
 
                 if (node.CurrentOrder is null)
                 {
-                    
                     node.BreadCrumpPath = stateTree.BreadCrumpPath;
                     node.CurrentOrder   = stateTree.CurrentOrder;
 
@@ -203,7 +148,7 @@ partial class ElementSerializer
                 if (node.DotNetComponentRenderMethodInvoked is false)
                 {
                     node.DotNetComponentRenderMethodInvoked = true;
-                    
+
                     node.DotNetComponentRootElement = reactStatefulComponent.InvokeRender();
 
                     node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement, context);
@@ -211,15 +156,13 @@ partial class ElementSerializer
                     node.DotNetComponentRootNode.Parent = node;
 
                     node = node.DotNetComponentRootNode;
-                    
+
                     continue;
                 }
 
                 state = statePropertyInfo.GetValue(reactStatefulComponent);
 
                 const string DotNetState = "$State";
-
-                
 
                 var dotNetProperties = new Dictionary<string, object>();
 
@@ -248,7 +191,7 @@ partial class ElementSerializer
                     { nameof(Element.key), reactStatefulComponent.key },
                     { "DotNetProperties", dotNetProperties }
                 };
-                
+
                 if (HasComponentDidMountMethod(reactStatefulComponent))
                 {
                     map.Add(___HasComponentDidMountMethod___, true);
@@ -259,22 +202,19 @@ partial class ElementSerializer
                     map.Add("$ClientTasks", reactStatefulComponent.ClientTask.taskList);
                 }
 
-               
-
                 stateTree.BreadCrumpPath = node.BreadCrumpPath;
                 stateTree.CurrentOrder   = node.CurrentOrder.Value;
 
                 node.ElementAsJsonMap = map;
-                
-                node.IsCompleted = true;
 
+                node.IsCompleted = true;
 
                 if (context.SkipHandleCachableMethods is false)
                 {
                     var stopwatch = new Stopwatch();
 
                     stopwatch.Start();
-                    
+
                     ElementSerializerContext createNewElementSerializerContext()
                     {
                         var elementSerializerContext = new ElementSerializerContext
@@ -295,11 +235,10 @@ partial class ElementSerializer
                         return elementSerializerContext;
                     }
 
-
                     List<CachableMethodInfo> cachedMethods = null;
 
                     var cachableMethodInfoList = reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray();
-                    
+
                     foreach (var cachableMethod in cachableMethodInfoList)
                     {
                         var component = cloneComponent();
@@ -310,15 +249,14 @@ partial class ElementSerializer
 
                         var cachableMethodInfo = new CachableMethodInfo
                         {
-                            MethodName = cachableMethod.Name,
+                            MethodName       = cachableMethod.Name,
                             IgnoreParameters = true,
-                            ElementAsJson = cachedVersion
+                            ElementAsJson    = cachedVersion
                         };
 
                         cachedMethods ??= new List<CachableMethodInfo>();
 
                         cachedMethods.Add(cachableMethodInfo);
-
                     }
 
                     ReactStatefulComponent cloneComponent()
@@ -349,7 +287,7 @@ partial class ElementSerializer
                     }
 
                     var parameterizedCachableMethodInfoList = reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null);
-                    
+
                     foreach (var cachableMethod in parameterizedCachableMethodInfoList)
                     {
                         var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
@@ -364,8 +302,6 @@ partial class ElementSerializer
 
                         foreach (var parameter in parameters)
                         {
-                            
-
                             var component = cloneComponent();
 
                             try
@@ -381,8 +317,8 @@ partial class ElementSerializer
 
                             var cachableMethodInfo = new CachableMethodInfo
                             {
-                                MethodName = cachableMethod.Name,
-                                Parameter = parameter,
+                                MethodName    = cachableMethod.Name,
+                                Parameter     = parameter,
                                 ElementAsJson = cachedVersion
                             };
 
@@ -405,19 +341,40 @@ partial class ElementSerializer
                     }
                 }
 
-
                 var popudComponent = context.componentStack.Pop();
                 if (!ReferenceEquals(popudComponent, reactStatefulComponent))
                 {
                     throw FatalError("component stack problem");
                 }
-
-                
             }
         }
 
-
         return node.ElementAsJsonMap;
+    }
+
+    static void AddReactAttributes(Dictionary<string, object> map, Element htmlElement, ElementSerializerContext context)
+    {
+        var stopwatch = new Stopwatch();
+
+        stopwatch.Start();
+
+        foreach (var propertyInfo in htmlElement.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
+        {
+            var (propertyValue, noNeedToExport) = getPropertyValue(htmlElement, propertyInfo, context);
+            if (noNeedToExport)
+            {
+                continue;
+            }
+
+            map.Add(GetPropertyName(propertyInfo), propertyValue);
+        }
+
+        stopwatch.Stop();
+
+        if (stopwatch.ElapsedMilliseconds > 10)
+        {
+            context.Trace.Add($"{htmlElement.GetType().FullName} > attribute cacculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+        }
     }
 
     static void CompleteWithChildren(Node node, ElementSerializerContext context)
@@ -447,8 +404,65 @@ partial class ElementSerializer
         map.Add("$children", childElements);
 
         node.ElementAsJsonMap = map;
-        
+
         node.IsCompleted = true;
+    }
+
+    static Node ConvertToNode(Element element, ElementSerializerContext elementSerializerContext)
+    {
+        var node = new Node
+        {
+            Element           = element,
+            SerializerContext = elementSerializerContext
+        };
+
+        if (element is null)
+        {
+            node.ElementIsNull = true;
+            return node;
+        }
+
+        if (element is FakeChild fakeChild)
+        {
+            node.ElementIsFakeChild = true;
+            node.ElementAsFakeChild = fakeChild;
+            return node;
+        }
+
+        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
+        {
+            node.ElementIsThirdPartyReactComponent = true;
+            node.ElementAsThirdPartyReactComponent = thirdPartyReactComponent;
+            return node;
+        }
+
+        if (element is ReactStatefulComponent dotNetComponent)
+        {
+            node.ElementIsDotNetReactComponent = true;
+            node.ElementAsDotNetReactComponent = dotNetComponent;
+            return node;
+        }
+
+        if (element is HtmlTextNode htmlTextNode)
+        {
+            node.ElementIsHtmlTextElement = true;
+            node.ElementasHtmlTextElement = htmlTextNode;
+            return node;
+        }
+
+        if (element is HtmlElement htmlElement)
+        {
+            node.ElementIsHtmlElement = true;
+            node.ElementAsHtmlElement = htmlElement;
+            return node;
+        }
+
+        throw FatalError("Node type not recognized");
+    }
+
+    static Exception FatalError(string message)
+    {
+        return new Exception(message);
     }
 
     static Dictionary<string, object> LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
@@ -458,8 +472,8 @@ partial class ElementSerializer
             { "$tag", htmlElement.Type }
         };
 
-        AddReactAttributes(map,htmlElement,context);
-       
+        AddReactAttributes(map, htmlElement, context);
+
         if (htmlElement.innerText is not null)
         {
             map.Add("$text", htmlElement.innerText);
@@ -495,41 +509,14 @@ partial class ElementSerializer
         throw FatalError("Wrong Leaf");
     }
 
-    static void AddReactAttributes(Dictionary<string, object> map, Element htmlElement, ElementSerializerContext context)
-    {
-        var stopwatch = new Stopwatch();
-        
-        stopwatch.Start();
-        
-        foreach (var propertyInfo in htmlElement.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
-        {
-            var (propertyValue, noNeedToExport) = getPropertyValue(htmlElement, propertyInfo, context);
-            if (noNeedToExport)
-            {
-                continue;
-            }
-
-            map.Add(GetPropertyName(propertyInfo), propertyValue);
-        }
-
-        stopwatch.Stop();
-
-        if (stopwatch.ElapsedMilliseconds > 10)
-        {
-            context.Trace.Add($"{htmlElement.GetType().FullName} > attribute cacculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
-        }
-        
-        
-    }
-
     static void OpenChildren(Node node, ElementSerializerContext context)
-   {
-       node.IsChildrenOpened = true;
-       
+    {
+        node.IsChildrenOpened = true;
+
         var children = node.Element.children;
 
         Node child = null;
-        
+
         foreach (var item in children)
         {
             var childNode = ConvertToNode(item, context);
@@ -539,9 +526,9 @@ partial class ElementSerializer
             if (child == null)
             {
                 node.FirstChild = childNode;
-                
+
                 child = childNode;
-                
+
                 continue;
             }
 
@@ -551,62 +538,54 @@ partial class ElementSerializer
         }
     }
 
-    static Node ConvertToNode(Element element, ElementSerializerContext elementSerializerContext)
+    class Node
     {
-        var node = new Node
-        {
-            Element           = element,
-            SerializerContext = elementSerializerContext
-        };
+        public string BreadCrumpPath { get; set; }
+        public int? CurrentOrder { get; set; }
+        public bool DotNetComponentRenderMethodInvoked { get; set; }
+        public Element DotNetComponentRootElement { get; set; }
+        public Node DotNetComponentRootNode { get; set; }
 
-        if (element is null)
-        {
-            node.ElementIsNull = true;
-            return node;
-        }
-        
-        if(element is FakeChild fakeChild)
-        {
-            node.ElementIsFakeChild = true;
-            node.ElementAsFakeChild = fakeChild;
-            return node;
-        }
+        public Element Element { get; set; }
 
-        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
-        {
-            node.ElementIsThirdPartyReactComponent = true;
-            node.ElementAsThirdPartyReactComponent = thirdPartyReactComponent;
-            return node;
-        }
+        public ReactStatefulComponent ElementAsDotNetReactComponent { get; set; }
 
-        if (element is ReactStatefulComponent dotNetComponent)
-        {
-            node.ElementIsDotNetReactComponent = true;
-            node.ElementAsDotNetReactComponent = dotNetComponent;
-            return node;
-        }
-        
-        if (element is HtmlTextNode htmlTextNode)
-        {
-            node.ElementIsHtmlTextElement = true;
-            node.ElementasHtmlTextElement = htmlTextNode;
-            return node;
-        }
-        
-        
-        if (element is HtmlElement htmlElement)
-        {
-            node.ElementIsHtmlElement = true;
-            node.ElementAsHtmlElement = htmlElement;
-            return node;
-        }
+        public FakeChild ElementAsFakeChild { get; set; }
 
-        throw FatalError("Node type not recognized");
+        public HtmlElement ElementAsHtmlElement { get; set; }
+        public HtmlTextNode ElementasHtmlTextElement { get; set; }
+
+        public IReadOnlyDictionary<string, object> ElementAsJsonMap { get; set; }
+
+        public ThirdPartyReactComponent ElementAsThirdPartyReactComponent { get; set; }
+
+        public bool ElementIsDotNetReactComponent { get; set; }
+
+        public bool ElementIsFakeChild { get; set; }
+        public bool ElementIsHtmlElement { get; set; }
+        public bool ElementIsHtmlTextElement { get; set; }
+
+        public bool ElementIsNull { get; set; }
+
+        public bool ElementIsThirdPartyReactComponent { get; set; }
+
+        public Node FirstChild { get; set; }
+
+        public bool HasFirstChild => FirstChild is not null;
+
+        public bool HasNextSibling => NextSibling is not null;
+
+        public bool HasParent => Parent is not null;
+        public bool IsAllChildrenCompleted { get; set; }
+
+        public bool IsChildrenOpened { get; set; }
+
+        public bool IsCompleted { get; set; }
+
+        public Node NextSibling { get; set; }
+
+        public Node Parent { get; set; }
+
+        public ElementSerializerContext SerializerContext { get; set; }
     }
-
-    static Exception FatalError(string message)
-    {
-        return new Exception(message);
-    }
-
 }
