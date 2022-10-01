@@ -245,7 +245,11 @@ partial class ElementSerializer
 
                         cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
 
-                        var cachedVersion = ToMap2(component, createNewElementSerializerContext());
+                        var newElementSerializerContext = createNewElementSerializerContext();
+                        
+                        var cachedVersion = ToMap2(component, newElementSerializerContext);
+                        
+                        context.Trace.AddRange(newElementSerializerContext.Trace);
 
                         var cachableMethodInfo = new CachableMethodInfo
                         {
@@ -313,7 +317,11 @@ partial class ElementSerializer
                                 throw new InvalidOperationException("Error occured when calculating cache method", exception);
                             }
 
-                            var cachedVersion = ToMap2(component, createNewElementSerializerContext());
+                            var newElementSerializerContext = createNewElementSerializerContext();
+                            
+                            var cachedVersion = ToMap2(component, newElementSerializerContext);
+
+                            context.Trace.AddRange(newElementSerializerContext.Trace);
 
                             var cachableMethodInfo = new CachableMethodInfo
                             {
