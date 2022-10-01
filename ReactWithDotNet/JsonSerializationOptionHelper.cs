@@ -21,6 +21,8 @@ static class JsonSerializationOptionHelper
         options.Converters.Add(new PrimeReactTreeNodeConverter());
 
         options.Converters.Add(new StyleConverter());
+        options.Converters.Add(new JsMapConverter());
+        
 
         return options;
     }
@@ -115,7 +117,7 @@ static class JsonSerializationOptionHelper
         }
     }
 
-    public class StyleConverter : JsonConverter<Style>
+    class StyleConverter : JsonConverter<Style>
     {
         public override Style Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -137,10 +139,31 @@ static class JsonSerializationOptionHelper
                 writer.WriteStringValue(propertyValue);
             }
         }
-
-       
     }
 
+    class JsMapConverter : JsonConverter<JsMap>
+    {
+        public override JsMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, JsMap jsMap, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+
+            jsMap.Foreach(add);
+
+            writer.WriteEndObject();
+
+            void add(string key, object value)
+            {
+                writer.WritePropertyName(key);
+
+                JsonSerializer.Serialize(writer, value);
+            }
+        }
+    }
 }
 
 [Serializable]

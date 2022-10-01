@@ -102,7 +102,7 @@ partial class ElementSerializer
                 var stateTree = context.StateTree;
 
                 var dotNetTypeOfReactComponent = reactStatefulComponent.GetType();
-                
+
                 var statePropertyInfo = dotNetTypeOfReactComponent.GetProperty("state");
                 if (statePropertyInfo == null)
                 {
@@ -168,7 +168,7 @@ partial class ElementSerializer
 
                 const string DotNetState = "$State";
 
-                var dotNetProperties = new Dictionary<string, object>();
+                var dotNetProperties = new JsMap();
 
                 foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
                 {
@@ -251,7 +251,7 @@ partial class ElementSerializer
                         cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
 
                         var newElementSerializerContext = createNewElementSerializerContext();
-                        
+
                         var cachedVersion = ToMap2(component, newElementSerializerContext);
 
                         context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
@@ -272,8 +272,16 @@ partial class ElementSerializer
                     {
                         var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
 
-                        foreach (var (dotNetPropertyName, _) in dotNetProperties)
+                        dotNetProperties.Foreach(copyPropertyValueDeeply);
+
+                        void copyPropertyValueDeeply(string dotNetPropertyName, object dotNetPropertyValue)
                         {
+                            var noNeedToDeeplyAssign = dotNetPropertyValue is null || dotNetPropertyValue is string || dotNetPropertyValue.GetType().IsValueType;
+                            if (noNeedToDeeplyAssign)
+                            {
+                                return;
+                            }
+
                             var dotNetPropertyInfo = dotNetTypeOfReactComponent.GetProperty(dotNetPropertyName);
                             if (dotNetPropertyInfo == null)
                             {
@@ -323,7 +331,7 @@ partial class ElementSerializer
                             }
 
                             var newElementSerializerContext = createNewElementSerializerContext();
-                            
+
                             var cachedVersion = ToMap2(component, newElementSerializerContext);
 
                             context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
@@ -341,7 +349,7 @@ partial class ElementSerializer
                         }
                     }
 
-                    if (cachedMethods?.Count  > 0)
+                    if (cachedMethods?.Count > 0)
                     {
                         map.Add("$CachedMethods", cachedMethods);
                     }
@@ -605,5 +613,56 @@ partial class ElementSerializer
         public Node Parent { get; set; }
 
         public ElementSerializerContext SerializerContext { get; set; }
+    }
+}
+
+sealed class JsMap
+{
+    int count;
+
+    Node head;
+    Node tail;
+
+    public int Count => count;
+
+    public void Add(string key, object value)
+    {
+        count++;
+
+        var node = new Node { key = key, value = value };
+
+        if (head == null)
+        {
+            tail = head = node;
+            return;
+        }
+
+        tail.next = node;
+
+        tail = node;
+    }
+
+    public void Foreach(Action<string, object> action)
+    {
+        if (head == null)
+        {
+            return;
+        }
+
+        var node = head;
+
+        while (node is not null)
+        {
+            action(node.key, node.value);
+
+            node = node.next;
+        }
+    }
+
+    class Node
+    {
+        public string key;
+        public Node next;
+        public object value;
     }
 }
