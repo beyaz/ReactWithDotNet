@@ -27,10 +27,19 @@ public class Swiper : ThirdPartyReactComponent
     [React]
     [ReactTransformValueInClient("ReactWithDotNet.Libraries.Swiper::ConvertToSwiperModules")]
     public IReadOnlyList<string> modules { get; set; }
-    
+
     [React]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
     public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
+    
+    [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
+    public Action<SwiperInstance> onSlideChange { get; set; }
+
+    [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
+    public Action<SwiperInstance> slideChangeTransitionEnd { get; set; }
+    
 
     [React]
     [ReactTransformValueInClient("ReplaceNullWhenEmpty")]
