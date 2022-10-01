@@ -19,6 +19,7 @@ sealed class ElementSerializerContext
     public ReactContext ReactContext { get; init; }
 
     public StateTree StateTree { get; init; }
+    public bool SkipHandleCachableMethods { get; set; }
 
     public void EnterToModeWorkingForCachedMethods()
     {

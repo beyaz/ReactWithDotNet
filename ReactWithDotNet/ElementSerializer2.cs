@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Reflection;
 
 namespace ReactWithDotNet;
@@ -265,11 +266,136 @@ partial class ElementSerializer
                 
                 node.IsCompleted = true;
 
+
+                if (context.SkipHandleCachableMethods is false)
+                {
+                    ElementSerializerContext createNewElementSerializerContext()
+                    {
+                        var elementSerializerContext = new ElementSerializerContext
+                        {
+                            BeforeSerializeElementToClient = context.BeforeSerializeElementToClient,
+                            ComponentRefId                 = context.ComponentRefId,
+                            ReactContext                   = context.ReactContext,
+                            SkipHandleCachableMethods      = true,
+                            StateTree = new StateTree
+                            {
+                                BreadCrumpPath = context.StateTree.BreadCrumpPath,
+                                CurrentOrder   = context.StateTree.CurrentOrder,
+                                ChildStates    = context.StateTree.ChildStates
+                            }
+                        };
+                        elementSerializerContext.componentStack.Push(context.componentStack.Peek());
+
+                        return elementSerializerContext;
+                    }
+
+
+                    List<CachableMethodInfo> cachedMethods = null;
+
+                    foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null))
+                    {
+                        var component = cloneComponent();
+
+                        cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
+
+                        var cachedVersion = ToMap2(component, createNewElementSerializerContext());
+
+                        var cachableMethodInfo = new CachableMethodInfo
+                        {
+                            MethodName = cachableMethod.Name,
+                            IgnoreParameters = true,
+                            ElementAsJson = cachedVersion
+                        };
+
+                        cachedMethods ??= new List<CachableMethodInfo>();
+
+                        cachedMethods.Add(cachableMethodInfo);
+
+                    }
+
+                    ReactStatefulComponent cloneComponent()
+                    {
+                        var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
+
+                        foreach (var (key, _) in dotNetProperties)
+                        {
+                            var dotNetPropertyInfo = component.GetType().GetProperty(key);
+                            if (dotNetPropertyInfo == null)
+                            {
+                                throw new Exception();
+                            }
+
+                            dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyInfo.GetValue(component)));
+                        }
+
+                        if (statePropertyInfo == null)
+                        {
+                            throw new Exception();
+                        }
+
+                        statePropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(state));
+
+                        component.ClientTask = ReflectionHelper.DeepCopy(component.ClientTask);
+
+                        return component;
+                    }
+
+                    foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null))
+                    {
+                        var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
+
+                        var methodInfoForGettingParameters = reactStatefulComponent.GetType().FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+                        var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
+                        if (parameters == null)
+                        {
+                            throw new InvalidOperationException($"Method should return IEnumerable<{cachableMethod.GetParameters().FirstOrDefault()}>");
+                        }
+
+                        foreach (var parameter in parameters)
+                        {
+                            
+
+                            var component = cloneComponent();
+
+                            try
+                            {
+                                cachableMethod.Invoke(component, new[] { parameter });
+                            }
+                            catch (Exception exception)
+                            {
+                                throw new InvalidOperationException("Error occured when calculating cache method", exception);
+                            }
+
+                            var cachedVersion = ToMap2(component, createNewElementSerializerContext());
+
+                            var cachableMethodInfo = new CachableMethodInfo
+                            {
+                                MethodName = cachableMethod.Name,
+                                Parameter = parameter,
+                                ElementAsJson = cachedVersion
+                            };
+
+                            cachedMethods ??= new List<CachableMethodInfo>();
+
+                            cachedMethods.Add(cachableMethodInfo);
+                        }
+                    }
+
+                    if (cachedMethods?.Any() == true)
+                    {
+                        map.Add("$CachedMethods", cachedMethods);
+                    }
+                }
+
+
                 var popudComponent = context.componentStack.Pop();
                 if (!ReferenceEquals(popudComponent, reactStatefulComponent))
                 {
                     throw FatalError("component stack problem");
                 }
+
+                
             }
         }
 
