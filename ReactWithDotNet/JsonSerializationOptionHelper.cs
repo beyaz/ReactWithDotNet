@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -111,9 +112,28 @@ static class JsonSerializationOptionHelper
             writer.WriteEndObject();
         }
     }
-    
-    
-    
+
+    public class StyleConverter : JsonConverter<Style>
+    {
+        public override Style Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, Style value, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+            
+            writer.WritePropertyName("A");
+            
+            writer.WriteStringValue("w");
+
+            writer.WriteEndObject();
+        }
+
+       
+    }
+
 }
 
 [Serializable]
