@@ -108,8 +108,7 @@ public static class ComponentRequestHandler
             var stateTree = new StateTree
             {
                 ChildStates    = request.CapturedStateTree,
-                BreadCrumpPath = "0",
-                RootElement    = instance,
+                BreadCrumpPath = "0"
             };
 
             trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
@@ -226,7 +225,6 @@ public static class ComponentRequestHandler
             {
                 ChildStates    = request.CapturedStateTree,
                 BreadCrumpPath = "0",
-                RootElement    = instance,
             };
 
             var serializerContext = new ElementSerializerContext
@@ -321,6 +319,4 @@ public class StateTree
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; init; }
 
     public int CurrentOrder { get; set; }
-
-    public Element RootElement { get; init; }
 }
