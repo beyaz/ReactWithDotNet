@@ -292,7 +292,9 @@ partial class ElementSerializer
 
                     List<CachableMethodInfo> cachedMethods = null;
 
-                    foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null))
+                    var cachableMethodInfoList = reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray();
+                    
+                    foreach (var cachableMethod in cachableMethodInfoList)
                     {
                         var component = cloneComponent();
 
@@ -340,7 +342,9 @@ partial class ElementSerializer
                         return component;
                     }
 
-                    foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null))
+                    var parameterizedCachableMethodInfoList = reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null);
+                    
+                    foreach (var cachableMethod in parameterizedCachableMethodInfoList)
                     {
                         var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
 
