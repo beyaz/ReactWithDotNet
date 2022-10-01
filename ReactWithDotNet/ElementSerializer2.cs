@@ -225,7 +225,7 @@ partial class ElementSerializer
                         var elementSerializerContext = new ElementSerializerContext
                         {
                             BeforeSerializeElementToClient = context.BeforeSerializeElementToClient,
-                            ComponentRefId                 = context.ComponentRefId + 1,
+                            ComponentRefId                 = int.Parse(reactStatefulComponent.key) + 1,
                             ReactContext                   = context.ReactContext,
                             SkipHandleCachableMethods      = true,
                             StateTree = new StateTree
