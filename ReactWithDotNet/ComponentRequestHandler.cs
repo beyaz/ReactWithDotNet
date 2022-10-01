@@ -122,7 +122,7 @@ public static class ComponentRequestHandler
                 ReactContext                   = context
             };
 
-            var map = instance.ToMap(serializerContext);
+            var map = instance.ToMap2(serializerContext);
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -237,7 +237,7 @@ public static class ComponentRequestHandler
                 ReactContext                   = context
             };
 
-            var map = instance.ToMap(serializerContext);
+            var map = instance.ToMap2(serializerContext);
 
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
