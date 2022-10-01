@@ -14,11 +14,26 @@ sealed class FakeChild : Element
 [JsonObject]
 public abstract class Element : IEnumerable<Element>
 {
+    internal List<Element> _children;
+
     #region Fields
     /// <summary>
     ///     The children
     /// </summary>
-    public readonly List<Element> children = new();
+    [System.Text.Json.Serialization.JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    public List<Element> children
+    {
+        get
+        {
+            if (_children == null)
+            {
+                _children = new List<Element>();
+            }
+
+            return _children;
+        }
+    }
     #endregion
 
     #region Public Properties

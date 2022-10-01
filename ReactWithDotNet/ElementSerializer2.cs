@@ -170,6 +170,7 @@ partial class ElementSerializer
                 {
                     if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
                         propertyInfo.Name == nameof(reactStatefulComponent.Children) ||
+                        propertyInfo.Name == nameof(Element.children) ||
                         propertyInfo.Name == nameof(reactStatefulComponent.key) ||
                         propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
                         propertyInfo.Name == "state" ||
@@ -521,9 +522,9 @@ partial class ElementSerializer
     {
         node.IsChildrenOpened = true;
 
-        var children = node.Element.children;
+        var children = node.Element._children;
 
-        if (children.Count == 0)
+        if (children == null || children.Count == 0)
         {
             return;
         }
