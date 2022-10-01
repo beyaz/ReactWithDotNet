@@ -4,10 +4,30 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
+
+class Tracer
+{
+    public int traceIndentLevel;
+    
+    internal readonly LinkedList<string> traceMessages = new();
+
+    public void Trace(string message)
+    {
+        traceMessages.AddLast("".PadRight(traceIndentLevel) + message);
+    }
+    public void Trace(LinkedList<string> messageList)
+    {
+        foreach (var message in messageList)
+        {
+            Trace(message);
+        }
+    }
+}
+
 sealed class ElementSerializerContext
 {
-    public readonly List<string> Trace = new();
-    
+    public readonly Tracer Tracer = new();
+
     internal readonly Stack<ReactStatefulComponent> componentStack = new();
 
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();

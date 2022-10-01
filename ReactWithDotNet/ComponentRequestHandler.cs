@@ -48,7 +48,7 @@ public class ComponentResponse
 
     public string ErrorMessage { get; set; }
 
-    public IReadOnlyList<string> Trace { get; set; }
+    public LinkedList<string> Trace { get; set; }
 }
 
 public static class ComponentRequestHandler
@@ -60,14 +60,6 @@ public static class ComponentRequestHandler
 
     public static ComponentResponse HandleRequest(ComponentRequest request, Func<string, Type> findType, Action<Element, ReactContext> beforeSerializeElementToClient = null)
     {
-        var trace = new List<string>();
-
-        var stopwatch = new Stopwatch();
-
-        stopwatch.Start();
-
-        trace.Add($"BEGIN {stopwatch.ElapsedMilliseconds}");
-
         var context = CreateContext(request);
 
         if (request.MethodName == "FetchComponent")
@@ -84,6 +76,10 @@ public static class ComponentRequestHandler
 
         ComponentResponse fetchComponent()
         {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
             var type = findType(request.FullName);
             if (type == null)
             {
@@ -111,8 +107,6 @@ public static class ComponentRequestHandler
                 BreadCrumpPath = "0"
             };
 
-            trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
-
             var serializerContext = new ElementSerializerContext
             {
                 ComponentRefId                 = request.ComponentRefId,
@@ -121,24 +115,37 @@ public static class ComponentRequestHandler
                 ReactContext                   = context
             };
 
+            var tracer = serializerContext.Tracer;
+
+
+            tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
+
+            tracer.traceIndentLevel++;
+
             var map = instance.ToMap2(serializerContext);
 
-            trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
+            tracer.traceIndentLevel--;
 
-            trace.Add($"END {stopwatch.ElapsedMilliseconds}");
-            
-            trace.AddRange(serializerContext.Trace);
+            tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
+
+            tracer.Trace($"Total time in ReactWithDotnet is {stopwatch.ElapsedMilliseconds} milliseconds.");
+
+
 
             return new ComponentResponse
             {
                 ElementAsJson = map,
-                Trace         = trace,
+                Trace         = tracer.traceMessages,
                 DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList()
             };
         }
 
         ComponentResponse handleComponentEvent()
         {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+            
             var type = findType(request.FullName);
             if (type == null)
             {
@@ -205,8 +212,7 @@ public static class ComponentRequestHandler
             }
 
             // Invoke method
-            {
-                trace.Add($"Method '{methodInfo.Name}' invocation started at {stopwatch.ElapsedMilliseconds}");
+            
                 try
                 {
                     methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
@@ -216,12 +222,11 @@ public static class ComponentRequestHandler
                     return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
                 }
 
-                trace.Add($"Method '{methodInfo.Name}' invocation finished at {stopwatch.ElapsedMilliseconds}");
-            }
+                
 
-            // Serialize to json
+            
 
-            trace.Add($"Serialization started at {stopwatch.ElapsedMilliseconds}");
+           
 
             var stateTree = new StateTree
             {
@@ -237,18 +242,28 @@ public static class ComponentRequestHandler
                 ReactContext                   = context
             };
 
+            var tracer = serializerContext.Tracer;
+
+            tracer.Trace(($"Method '{methodInfo.Name}' invoked in {stopwatch.ElapsedMilliseconds} milliseconds."));
+            
+            tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
+
+            tracer.traceIndentLevel++;
+
             var map = instance.ToMap2(serializerContext);
 
-            trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
+            tracer.traceIndentLevel--;
+            
+            tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
-            trace.Add($"END {stopwatch.ElapsedMilliseconds}");
+            tracer.Trace($"Total time in ReactWithDotnet is {stopwatch.ElapsedMilliseconds} milliseconds.");
 
-            trace.AddRange(serializerContext.Trace);
+            
 
             return new ComponentResponse
             {
                 ElementAsJson = map,
-                Trace         = trace,
+                Trace         = tracer.traceMessages,
                 DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList()
             };
         }

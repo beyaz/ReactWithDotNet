@@ -249,8 +249,8 @@ partial class ElementSerializer
                         var newElementSerializerContext = createNewElementSerializerContext();
                         
                         var cachedVersion = ToMap2(component, newElementSerializerContext);
-                        
-                        context.Trace.AddRange(newElementSerializerContext.Trace);
+
+                        context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
 
                         var cachableMethodInfo = new CachableMethodInfo
                         {
@@ -322,7 +322,7 @@ partial class ElementSerializer
                             
                             var cachedVersion = ToMap2(component, newElementSerializerContext);
 
-                            context.Trace.AddRange(newElementSerializerContext.Trace);
+                            context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
 
                             var cachableMethodInfo = new CachableMethodInfo
                             {
@@ -346,7 +346,7 @@ partial class ElementSerializer
 
                     if (stopwatch.ElapsedMilliseconds > 10)
                     {
-                        context.Trace.Add($"{reactStatefulComponent.GetType().FullName} cached methods calculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+                        context.Tracer.Trace($"{reactStatefulComponent.GetType().FullName} cached methods calculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
                     }
                 }
 
@@ -382,7 +382,7 @@ partial class ElementSerializer
 
         if (stopwatch.ElapsedMilliseconds > 10)
         {
-            context.Trace.Add($"{htmlElement.GetType().FullName} > attribute cacculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+            context.Tracer.Trace($"{htmlElement.GetType().FullName} > attribute cacculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
         }
     }
 
