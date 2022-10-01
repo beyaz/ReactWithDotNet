@@ -101,10 +101,12 @@ partial class ElementSerializer
 
                 var stateTree = context.StateTree;
 
-                var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
+                var dotNetTypeOfReactComponent = reactStatefulComponent.GetType();
+                
+                var statePropertyInfo = dotNetTypeOfReactComponent.GetProperty("state");
                 if (statePropertyInfo == null)
                 {
-                    throw new MissingMemberException(reactStatefulComponent.GetType().GetFullName(), "state");
+                    throw new MissingMemberException(dotNetTypeOfReactComponent.GetFullName(), "state");
                 }
 
                 if (node.CurrentOrder is null)
@@ -168,7 +170,7 @@ partial class ElementSerializer
 
                 var dotNetProperties = new Dictionary<string, object>();
 
-                foreach (var propertyInfo in reactStatefulComponent.GetType().GetProperties())
+                foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
                 {
                     if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
                         propertyInfo.Name == nameof(reactStatefulComponent.Children) ||
@@ -240,7 +242,7 @@ partial class ElementSerializer
 
                     List<CachableMethodInfo> cachedMethods = null;
 
-                    var cachableMethodInfoList = reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray();
+                    var cachableMethodInfoList = dotNetTypeOfReactComponent.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray();
 
                     foreach (var cachableMethod in cachableMethodInfoList)
                     {
@@ -293,13 +295,13 @@ partial class ElementSerializer
                         return component;
                     }
 
-                    var parameterizedCachableMethodInfoList = reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null);
+                    var parameterizedCachableMethodInfoList = dotNetTypeOfReactComponent.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null);
 
                     foreach (var cachableMethod in parameterizedCachableMethodInfoList)
                     {
                         var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
 
-                        var methodInfoForGettingParameters = reactStatefulComponent.GetType().FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                        var methodInfoForGettingParameters = dotNetTypeOfReactComponent.FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
                         var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
                         if (parameters == null)
@@ -339,7 +341,7 @@ partial class ElementSerializer
                         }
                     }
 
-                    if (cachedMethods?.Any() == true)
+                    if (cachedMethods?.Count  > 0)
                     {
                         map.Add("$CachedMethods", cachedMethods);
                     }
@@ -348,7 +350,7 @@ partial class ElementSerializer
 
                     if (stopwatch.ElapsedMilliseconds > 10)
                     {
-                        context.Tracer.Trace($"{reactStatefulComponent.GetType().FullName} cached methods calculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+                        context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} cached methods calculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
                     }
                 }
 
