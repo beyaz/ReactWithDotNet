@@ -272,12 +272,12 @@ partial class ElementSerializer
                     {
                         var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
 
-                        foreach (var (key, _) in dotNetProperties)
+                        foreach (var (dotNetPropertyName, _) in dotNetProperties)
                         {
-                            var dotNetPropertyInfo = component.GetType().GetProperty(key);
+                            var dotNetPropertyInfo = dotNetTypeOfReactComponent.GetProperty(dotNetPropertyName);
                             if (dotNetPropertyInfo == null)
                             {
-                                throw new Exception();
+                                throw new MissingMemberException(dotNetTypeOfReactComponent.FullName + "::" + dotNetPropertyName);
                             }
 
                             dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyInfo.GetValue(component)));
