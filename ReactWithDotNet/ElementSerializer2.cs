@@ -523,6 +523,11 @@ partial class ElementSerializer
 
         var children = node.Element.children;
 
+        if (children.Count == 0)
+        {
+            return;
+        }
+
         Node child = null;
 
         foreach (var item in children)
