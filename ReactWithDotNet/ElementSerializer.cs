@@ -10,6 +10,8 @@ sealed class ElementSerializerContext
 
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
+    readonly Stack<(int componentRefId, string breadCrumpPathInStateTree, int currentOrderInStateTree)> CapturedValuesForCachedMethods = new();
+
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
     public int ComponentRefId { get; set; }
@@ -17,6 +19,21 @@ sealed class ElementSerializerContext
     public ReactContext ReactContext { get; init; }
 
     public StateTree StateTree { get; init; }
+
+    public void EnterToModeWorkingForCachedMethods()
+    {
+        CapturedValuesForCachedMethods.Push((ComponentRefId, StateTree.BreadCrumpPath, StateTree.CurrentOrder));
+    }
+
+    public void ExitFromModeWorkingForCachedMethods()
+    {
+        var (componentRefId, breadCrumpPathInStateTree, currentOrderInStateTree) = CapturedValuesForCachedMethods.Pop();
+
+        // restore previous values
+        ComponentRefId           = componentRefId;
+        StateTree.BreadCrumpPath = breadCrumpPathInStateTree;
+        StateTree.CurrentOrder   = currentOrderInStateTree;
+    }
 
     public string GetNextUniqueValue()
     {
@@ -26,25 +43,9 @@ sealed class ElementSerializerContext
 
         return nextUniqueValue;
     }
-
-    readonly Stack<(int componentRefId,string breadCrumpPathInStateTree, int currentOrderInStateTree)> CapturedValuesForCachedMethods = new();
-
-    public void EnterToModeWorkingForCachedMethods()
-    {
-        CapturedValuesForCachedMethods.Push((ComponentRefId,StateTree.BreadCrumpPath,StateTree.CurrentOrder));
-    }
-    public void ExitFromModeWorkingForCachedMethods()
-    {
-        var (componentRefId, breadCrumpPathInStateTree, currentOrderInStateTree) = CapturedValuesForCachedMethods.Pop();
-        
-        // restore previous values
-        ComponentRefId           = componentRefId;
-        StateTree.BreadCrumpPath = breadCrumpPathInStateTree;
-        StateTree.CurrentOrder   = currentOrderInStateTree;
-    }
 }
 
-static class ElementSerializer
+static partial class ElementSerializer
 {
     const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
     const string ___RootNode___ = "$RootNode";
@@ -540,7 +541,7 @@ static class ElementSerializer
             foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null))
             {
                 context.EnterToModeWorkingForCachedMethods();
-                
+
                 var component = cloneComponent();
 
                 cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
@@ -557,7 +558,7 @@ static class ElementSerializer
                 cachedMethods ??= new List<CachableMethodInfo>();
 
                 cachedMethods.Add(cachableMethodInfo);
-                
+
                 context.ExitFromModeWorkingForCachedMethods();
             }
 
