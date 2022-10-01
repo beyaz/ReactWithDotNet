@@ -20,6 +20,8 @@ static class JsonSerializationOptionHelper
 
         options.Converters.Add(new PrimeReactTreeNodeConverter());
 
+        options.Converters.Add(new StyleConverter());
+
         return options;
     }
     #endregion

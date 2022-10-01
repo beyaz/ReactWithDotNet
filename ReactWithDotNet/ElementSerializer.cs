@@ -248,7 +248,7 @@ static partial class ElementSerializer
                     return (null, true);
                 }
 
-                return (style.ToDictionary(), false);
+                return (style, false);
             }
         }
 
