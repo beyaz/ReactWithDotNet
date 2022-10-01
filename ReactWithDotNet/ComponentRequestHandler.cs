@@ -126,6 +126,8 @@ public static class ComponentRequestHandler
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
             trace.Add($"END {stopwatch.ElapsedMilliseconds}");
+            
+            trace.AddRange(serializerContext.Trace);
 
             return new ComponentResponse
             {
@@ -240,6 +242,8 @@ public static class ComponentRequestHandler
             trace.Add($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
             trace.Add($"END {stopwatch.ElapsedMilliseconds}");
+
+            trace.AddRange(serializerContext.Trace);
 
             return new ComponentResponse
             {

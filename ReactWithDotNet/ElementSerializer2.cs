@@ -247,6 +247,7 @@ partial class ElementSerializer
                     { nameof(Element.key), reactStatefulComponent.key },
                     { "DotNetProperties", dotNetProperties }
                 };
+                
                 if (HasComponentDidMountMethod(reactStatefulComponent))
                 {
                     map.Add(___HasComponentDidMountMethod___, true);

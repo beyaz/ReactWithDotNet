@@ -6,6 +6,8 @@ namespace ReactWithDotNet;
 
 sealed class ElementSerializerContext
 {
+    public readonly List<string> Trace = new();
+    
     internal readonly Stack<ReactStatefulComponent> componentStack = new();
 
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
