@@ -6,7 +6,7 @@
 
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
-        <RootNamespace>ReactWithDotNet</RootNamespace>
+        <RootNamespace>ReactWithDotNet.Libraries</RootNamespace>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
 

@@ -1488,7 +1488,15 @@ const ExternalJsObjectMap = {
 
         return value;
     },
-    'ListenWindowResizeEvent': ListenWindowResizeEvent
+    'ListenWindowResizeEvent': ListenWindowResizeEvent,
+    'ReactWithDotNet::Core::ConvertDotnetSerializedStringDateToJsDate': function (dotnetDateAsJsonString)
+    {
+        if (dotnetDateAsJsonString == null || dotnetDateAsJsonString === '')
+        {
+            return null;
+        }
+        return new Date(dotnetDateAsJsonString);
+    }
 };
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {
