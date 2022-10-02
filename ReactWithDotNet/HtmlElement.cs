@@ -104,6 +104,13 @@ public abstract class HtmlElement : Element
 
         className += " " + cssClassName;
     }
+
+    public static HtmlElement operator |(HtmlElement element, Modifier modifier)
+    {
+        element.Apply(modifier);
+
+        return element;
+    }
 }
 
 

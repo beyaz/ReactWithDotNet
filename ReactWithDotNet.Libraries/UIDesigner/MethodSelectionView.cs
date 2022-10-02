@@ -117,7 +117,8 @@ class MethodSelectionView
                     nodeTemplate      = nodeTemplate,
                     value             = GetNodes(),
                     onSelectionChange = OnSelectionChange,
-                    selectionKeys     = SelectedMethodTreeNodeKey
+                    selectionKeys     = SelectedMethodTreeNodeKey,
+                    style = { MaxHeight(250), OverflowHidden }
                 }
             }
         };

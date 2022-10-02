@@ -103,3 +103,33 @@ public sealed class FlexColumn : HtmlElement
         this.Apply(modifiers);
     }
 }
+
+/// <summary>
+/// <para>display = "flex"</para>
+/// <para>flexDirection  = "row"</para>
+/// <para>justifyContent = "center"</para>
+/// <para>alignItems     = "center"</para>
+/// </summary>
+public sealed class FlexRowCentered : HtmlElement
+{
+    public override string Type => nameof(div);
+
+    /// <summary>
+    /// <para>display = "flex"</para>
+    /// <para>flexDirection  = "row"</para>
+    /// <para>justifyContent = "center"</para>
+    /// <para>alignItems     = "center"</para>
+    /// </summary>
+    public FlexRowCentered()
+    {
+        style.display        = "flex";
+        style.flexDirection  = "row";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+    }
+
+    public FlexRowCentered(params Modifier[] modifiers):this()
+    {
+        this.Apply(modifiers);
+    }
+}

@@ -139,7 +139,7 @@ class MetadataHelper
     static MetadataNode createFromMethod(MethodInfo methodInfo)
     {
         // is function component
-        if (methodInfo.IsStatic && methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
+        if (methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
         {
             return new MetadataNode
             {
@@ -159,7 +159,7 @@ class MetadataHelper
     {
         foreach (var methodInfo in type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
         {
-            if (methodInfo.Name.StartsWith("get_") || methodInfo.Name.StartsWith("set_"))
+            if (methodInfo.Name.Contains("|") || methodInfo.Name.StartsWith("set_"))
             {
                 continue;
             }

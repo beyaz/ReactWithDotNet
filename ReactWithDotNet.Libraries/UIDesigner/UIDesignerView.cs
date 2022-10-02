@@ -88,17 +88,36 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 new VSpace(10),
                 new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
 
-                new div(MaxWidth(250),OverflowWrapBreakWord)
+                new TabView
                 {
-                    text = state.SelectedComponentTypeReference + (state.SelectedMethodName.HasValue() ? $"::{state.SelectedMethodName}" : null)
-                },
-
-                new Editor
-                {
-                    valueBind = () => state.JsonText,
-                    highlight = "json",
-                    style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                    new TabPanel
+                    {
+                        header = "Instance json",
+                        children =
+                        {
+                            new Editor
+                            {
+                                valueBind = () => state.JsonText,
+                                highlight = "json",
+                                style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                            }
+                        }
+                    },
+                    new TabPanel
+                    {
+                        header = "Parameters json",
+                        children =
+                        {
+                            new Editor
+                            {
+                                valueBind = () => state.JsonText,
+                                highlight = "json",
+                                style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                            }
+                        }
+                    }
                 }
+                
             }
         };
 

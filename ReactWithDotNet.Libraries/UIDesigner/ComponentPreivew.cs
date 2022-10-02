@@ -74,7 +74,28 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
                                     return new div { text = "parameterName not be evaluated" };
                                 }
 
-                                return (Element)methodInfo.Invoke(null, invocationParameters.ToArray());
+                                if (methodInfo.IsStatic)
+                                {
+                                    return (Element)methodInfo.Invoke(null, invocationParameters.ToArray());
+                                }
+
+                                // invoke as instance
+                                {
+                                    var declaringType = methodInfo.DeclaringType;
+                                    if (declaringType is null)
+                                    {
+                                        return new div { text = "Method declaring type is null." };
+                                    }
+                                    var component = (ReactStatefulComponent)Activator.CreateInstance(declaringType);
+                                    if (component is null)
+                                    {
+                                        return new div { text = "Method declaring type created null instance." };
+                                    }
+                                    component.Context = Context;
+
+                                    return (Element)methodInfo.Invoke(component, invocationParameters.ToArray());
+                                }
+
                             }
                         }
                     }
