@@ -5,16 +5,23 @@ namespace ReactWithDotNet;
 
 public static class Mixin
 {
-    public static Modifier id(string id) => new(element => element.id = id);
-    
     public static Modifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
 
+    /// <summary>
+    ///     <para>style.alignItems = "center"</para>
+    /// </summary>
     public static Modifier AlignItemsCenter => new(style => style.alignItems = "center");
+
     public static Modifier AlignItemsFlexEnd => new(style => style.alignItems = "flex-end");
     public static Modifier AlignItemsFlexStart => new(style => style.alignItems = "flex-start");
     public static Modifier AlignItemsStretch => new(style => style.alignItems = "stretch");
 
     public static Modifier BoxSizingBorderBox => new(style => style.boxSizing = "border-box");
+
+    /// <summary>
+    ///     style.color = 'white'
+    /// </summary>
+    public static Modifier ColorWhite => Color("white");
 
     public static Modifier CursorPointer => new(style => style.cursor = "pointer");
 
@@ -91,15 +98,18 @@ public static class Mixin
     public static Modifier Height75Percent => HeightAsPercentOf(75);
 
     /// <summary>
-    ///     justifyContent = "center"
+    ///     <para>justifyContent = "center"</para>
     /// </summary>
     public static Modifier JustifyContentCenter => new(style => style.justifyContent = "center");
 
     /// <summary>
-    ///     style.justifyContent = "flex-start"
+    ///     <para>style.justifyContent = "flex-start"</para>
     /// </summary>
     public static Modifier JustifyContentFlexStart => new(style => style.justifyContent = "flex-start");
 
+    /// <summary>
+    ///     <para>style.justifyContent = "space-between"</para>
+    /// </summary>
     public static Modifier JustifyContentSpaceBetween => new(style => style.justifyContent = "space-between");
 
     /// <summary>
@@ -206,24 +216,6 @@ public static class Mixin
     public static Modifier ClassName(string className) => new(element => element.className = className);
 
     public static Modifier Color(string color) => new(style => style.color = color);
-    
-    /// <summary>
-    /// Apply given modifiers when condition is true
-    /// </summary>
-    public static Modifier When(bool condition, params Modifier[] modifiers)
-    {
-        if (!condition)
-        {
-            return null;
-        }
-
-        return new Modifier(apply);
-
-        void apply(Style instance)
-        {
-            instance.Apply(modifiers);
-        }
-    }
 
     /// <summary>
     ///     style.fontFamily = fontFamily
@@ -257,8 +249,6 @@ public static class Mixin
         return $"rgba({r}, {g}, {b}, {opacity})";
     }
 
-    
-    
     public static Modifier Hover(params Modifier[] modifiers)
     {
         void apply(Style instance)
@@ -281,6 +271,8 @@ public static class Mixin
 
         return new Modifier(apply);
     }
+
+    public static Modifier id(string id) => new(element => element.id = id);
 
     public static Modifier Left(double left) => Left(left.AsPixel());
     public static Modifier Left(string left) => new(style => style.left = left);
@@ -321,12 +313,31 @@ public static class Mixin
 
     public static Modifier Transition(string transition) => new(style => style.transition = transition);
 
+    /// <summary>
+    ///     Apply given modifiers when condition is true
+    /// </summary>
+    public static Modifier When(bool condition, params Modifier[] modifiers)
+    {
+        if (!condition)
+        {
+            return null;
+        }
+
+        return new Modifier(apply);
+
+        void apply(Style instance)
+        {
+            instance.Apply(modifiers);
+        }
+    }
+
     public static Modifier Width(double width) => new(style => style.width = width.AsPixel());
     public static Modifier Width(string width) => new(style => style.width = width);
 
     public static Modifier WidthAsPercentOf(double valueAsPercent) => new(style => style.width = valueAsPercent + "%");
     public static Modifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
     public static Modifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
+
     public static Modifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
 
     internal static string AsPixel(this double value) => value + "px";

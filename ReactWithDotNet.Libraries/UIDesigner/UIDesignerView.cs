@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using Newtonsoft.Json;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
-using static ReactWithDotNet.Mixin;
 using static ReactWithDotNet.UIDesigner.Extensions;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -78,7 +77,16 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
                         if (typeReference != null)
                         {
-                            state.JsonText = StateCache.ReadFromCache(typeReference + state.MetadataToken);
+                            var json = StateCache.ReadFromCache(typeReference + state.MetadataToken);
+                            if (json.HasValue())
+                            {
+                                state.SelectedDotNetMemberSpecification = JsonConvert.DeserializeObject<DotNetMemberSpecification>(json);
+                            }
+                            else
+                            {
+                                state.SelectedDotNetMemberSpecification = new DotNetMemberSpecification();
+                            }
+                            
                         }
 
                         SaveState();
@@ -97,7 +105,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         {
                             new Editor
                             {
-                                valueBind = () => state.JsonText,
+                                valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
                                 highlight = "json",
                                 style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                             }
@@ -110,7 +118,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         {
                             new Editor
                             {
-                                valueBind = () => state.JsonText,
+                                valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
                                 highlight = "json",
                                 style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                             }
@@ -332,12 +340,16 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     void SaveState()
     {
+
         if (state.SelectedComponentTypeReference.HasValue())
         {
-            StateCache.SaveToCache(state.SelectedComponentTypeReference + state.MetadataToken, state.JsonText);
+            var selectedDotNetMemberSpecificationAsJson = JsonSerializer.Serialize(state.SelectedDotNetMemberSpecification, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true });
+            
+            StateCache.SaveToCache(state.SelectedComponentTypeReference + state.MetadataToken, selectedDotNetMemberSpecificationAsJson);
         }
 
         StateCache.SaveState(state);
     }
     #endregion
 }
+

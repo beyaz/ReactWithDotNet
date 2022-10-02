@@ -2,7 +2,6 @@
 
 public sealed class HStack : HtmlElement
 {
-    public override string Type => nameof(div);
     public HStack()
     {
         style.display       = "flex";
@@ -10,33 +9,36 @@ public sealed class HStack : HtmlElement
         style.alignItems    = "stretch";
         style.width         = "100%";
     }
+
+    public override string Type => nameof(div);
 }
 
 public sealed class HPanel : HtmlElement
 {
-    public override string Type => nameof(div);
     public HPanel()
     {
         style.display       = "flex";
         style.flexDirection = "row";
         style.alignItems    = "center";
     }
+
+    public override string Type => nameof(div);
 }
 
 public sealed class VPanel : HtmlElement
 {
-    public override string Type => nameof(div);
     public VPanel()
     {
         style.display       = "flex";
         style.flexDirection = "column";
         style.alignItems    = "center";
     }
+
+    public override string Type => nameof(div);
 }
 
 public sealed class VStack : HtmlElement
 {
-    public override string Type => nameof(div);
     public VStack()
     {
         style.display       = "flex";
@@ -44,12 +46,12 @@ public sealed class VStack : HtmlElement
         style.alignItems    = "stretch";
         style.height        = "100%";
     }
+
+    public override string Type => nameof(div);
 }
 
 public sealed class divVerticalCentered : HtmlElement
 {
-    public override string Type => nameof(div);
-    
     public divVerticalCentered(int gapAsPixel = 10)
     {
         style.width_height   = "100%";
@@ -60,12 +62,12 @@ public sealed class divVerticalCentered : HtmlElement
         style.textAlign      = "center";
         style.gap            = gapAsPixel + "px";
     }
+
+    public override string Type => nameof(div);
 }
 
 public sealed class divHorizontalCentered : HtmlElement
 {
-    public override string Type => nameof(div);
-
     public divHorizontalCentered(int gapAsPixel = 10)
     {
         style.width_height   = "100%";
@@ -76,12 +78,12 @@ public sealed class divHorizontalCentered : HtmlElement
         style.textAlign      = "center";
         style.gap            = gapAsPixel + "px";
     }
+
+    public override string Type => nameof(div);
 }
 
 public sealed class FlexRow : HtmlElement
 {
-    public override string Type => nameof(div);
-
     public FlexRow(params Modifier[] modifiers)
     {
         style.display       = "flex";
@@ -89,12 +91,12 @@ public sealed class FlexRow : HtmlElement
 
         this.Apply(modifiers);
     }
+
+    public override string Type => nameof(div);
 }
 
 public sealed class FlexColumn : HtmlElement
 {
-    public override string Type => nameof(div);
-
     public FlexColumn(params Modifier[] modifiers)
     {
         style.display       = "flex";
@@ -102,23 +104,23 @@ public sealed class FlexColumn : HtmlElement
 
         this.Apply(modifiers);
     }
+
+    public override string Type => nameof(div);
 }
 
 /// <summary>
-/// <para>display = "flex"</para>
-/// <para>flexDirection  = "row"</para>
-/// <para>justifyContent = "center"</para>
-/// <para>alignItems     = "center"</para>
+///     <br>display = "flex"</br>
+///     <br>flexDirection  = "row"</br>
+///     <br>justifyContent = "center"</br>
+///     <br>alignItems     = "center"</br>
 /// </summary>
 public sealed class FlexRowCentered : HtmlElement
 {
-    public override string Type => nameof(div);
-
     /// <summary>
-    /// <para>display = "flex"</para>
-    /// <para>flexDirection  = "row"</para>
-    /// <para>justifyContent = "center"</para>
-    /// <para>alignItems     = "center"</para>
+    ///     <br>display = "flex"</br>
+    ///     <br>flexDirection  = "row"</br>
+    ///     <br>justifyContent = "center"</br>
+    ///     <br>alignItems     = "center"</br>
     /// </summary>
     public FlexRowCentered()
     {
@@ -128,8 +130,16 @@ public sealed class FlexRowCentered : HtmlElement
         style.alignItems     = "center";
     }
 
-    public FlexRowCentered(params Modifier[] modifiers):this()
+    /// <summary>
+    ///     <br>display = "flex"</br>
+    ///     <br>flexDirection  = "row"</br>
+    ///     <br>justifyContent = "center"</br>
+    ///     <br>alignItems     = "center"</br>
+    /// </summary>
+    public FlexRowCentered(params Modifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }
+
+    public override string Type => nameof(div);
 }

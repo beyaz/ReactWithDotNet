@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -53,7 +51,7 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
                                 var methodParameters = methodInfo.GetParameters();
 
-                                var jsObject = (JObject)Json.DeserializeJsonByNewtonsoft(state.JsonText.HasValue() ? state.JsonText : "{}", typeof(JObject));
+                                var jsObject = (JObject)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification. JsonTextForDotNetMethodParameters.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
                                 foreach (var parameterInfo in methodParameters)
                                 {
                                     var parameterName = parameterInfo.Name;
@@ -86,14 +84,15 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
                                     {
                                         return new div { text = "Method declaring type is null." };
                                     }
-                                    var component = (ReactStatefulComponent)Activator.CreateInstance(declaringType);
-                                    if (component is null)
-                                    {
-                                        return new div { text = "Method declaring type created null instance." };
-                                    }
-                                    component.Context = Context;
 
-                                    return (Element)methodInfo.Invoke(component, invocationParameters.ToArray());
+                                    var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification?.JsonTextForDotNetInstanceProperties : "{}", declaringType);
+
+                                    if (instance is ReactStatefulComponent component)
+                                    {
+                                        component.Context = Context;
+                                    }
+
+                                    return (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
                                 }
 
                             }
@@ -104,25 +103,28 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
             }
 
-
-            var type = FindType(state.SelectedComponentTypeReference);
-            if (type == null)
             {
-                return new div("type not found.@" + state.SelectedComponentTypeReference);
+                var type = FindType(state.SelectedComponentTypeReference);
+                if (type == null)
+                {
+                    return new div("type not found.@" + state.SelectedComponentTypeReference);
+                }
+
+                var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties : "{}", type);
+
+
+
+                if (instance is ReactStatefulComponent reactStatefulComponent)
+                {
+                    reactStatefulComponent.Context = new ReactContext();
+
+                    return reactStatefulComponent;
+                }
+
+                return new div(instance.ToString());
             }
 
-            var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.JsonText.HasValue() ? state.JsonText : "{}", type);
-
-         
-
-            if (instance is ReactStatefulComponent reactStatefulComponent)
-            {
-                reactStatefulComponent.Context = new ReactContext();
-
-                return reactStatefulComponent;
-            }
-
-            return new div(instance.ToString());
+            
         }
         catch (Exception exception)
         {
