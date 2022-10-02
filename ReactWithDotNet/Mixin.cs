@@ -293,6 +293,28 @@ public static class Mixin
     public static Modifier OnClick(Action<MouseEvent> onClickHandler) => new(element => element.onClick = onClickHandler);
 
     public static Modifier Right(string right) => new(style => style.right = right);
+
+    /// <summary>
+    ///     <br>if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value</br>
+    ///     <br>
+    ///         if parent is display='flex' and flexDirection = 'column' then create empty div element with style.height =
+    ///         value
+    ///     </br>
+    /// </summary>
+    public static HtmlElement Space(string value) => new Space(value);
+
+    /// <summary>
+    ///     <br>
+    ///         if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value +
+    ///         'px'
+    ///     </br>
+    ///     <br>
+    ///         if parent is display='flex' and flexDirection = 'column' then create empty div element with style.height =
+    ///         value + 'px'
+    ///     </br>
+    /// </summary>
+    public static HtmlElement Space(double valueInPx) => new Space(valueInPx);
+
     public static Modifier Text(string innerText) => new(element => element.text = innerText);
     public static Modifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
 

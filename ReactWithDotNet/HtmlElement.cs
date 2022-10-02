@@ -111,6 +111,11 @@ public abstract class HtmlElement : Element
 
         return element;
     }
+
+    internal virtual void BeforeSerialize(HtmlElement parent)
+    {
+        
+    }
 }
 
 
