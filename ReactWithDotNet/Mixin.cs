@@ -77,7 +77,6 @@ public static class Mixin
     public static Modifier FontSize23 => FontSize(23);
     public static Modifier FontSize24 => FontSize(24);
     public static Modifier FontSize25 => FontSize(25);
-
     public static Modifier FontSize9 => FontSize(9);
 
     public static Modifier FontWeight400 => FontWeight("400");
@@ -112,11 +111,33 @@ public static class Mixin
     /// </summary>
     public static Modifier JustifyContentSpaceBetween => new(style => style.justifyContent = "space-between");
 
+    public static Modifier LineHeight10 => LineHeight(10);
+    public static Modifier LineHeight11 => LineHeight(11);
+    public static Modifier LineHeight12 => LineHeight(12);
+    public static Modifier LineHeight13 => LineHeight(13);
+    public static Modifier LineHeight14 => LineHeight(14);
+    public static Modifier LineHeight15 => LineHeight(15);
+    public static Modifier LineHeight16 => LineHeight(16);
+    public static Modifier LineHeight17 => LineHeight(17);
+    public static Modifier LineHeight18 => LineHeight(18);
+    public static Modifier LineHeight19 => LineHeight(19);
+    public static Modifier LineHeight20 => LineHeight(20);
+    public static Modifier LineHeight21 => LineHeight(21);
+    public static Modifier LineHeight22 => LineHeight(22);
+    public static Modifier LineHeight23 => LineHeight(23);
+    public static Modifier LineHeight24 => LineHeight(24);
+    public static Modifier LineHeight25 => LineHeight(25);
+    public static Modifier LineHeight9 => LineHeight(9);
+
     /// <summary>
     ///     overflow = "hidden"
     /// </summary>
     public static Modifier OverflowHidden => new(style => style.overflow = "hidden");
-
+    /// <summary>
+    ///     overflow = "scroll"
+    /// </summary>
+    public static Modifier OverflowScroll => new(style => style.overflow = "scroll");
+    
     public static Modifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
 
     /// <summary>
@@ -272,12 +293,23 @@ public static class Mixin
         return new Modifier(apply);
     }
 
+    /// <summary>
+    /// initialize id attribute of html element
+    /// </summary>
     public static Modifier id(string id) => new(element => element.id = id);
+    
+    /// <summary>
+    /// initialize id attribute of html element
+    /// </summary>
+    public static Modifier id(int id) => new(element => element.id = id.ToString());
 
     public static Modifier Left(double left) => Left(left.AsPixel());
     public static Modifier Left(string left) => new(style => style.left = left);
     public static Modifier LeftRight(string valueForLeftAndRight) => new(style => style.leftRight = valueForLeftAndRight);
     public static Modifier LeftRightBottom(string valueForLeftAndRightAndBottom) => new(style => style.leftRightBottom = valueForLeftAndRightAndBottom);
+
+    public static Modifier LineHeight(string lineHeight) => new(style => style.lineHeight = lineHeight);
+    public static Modifier LineHeight(double lineHeightPx) => LineHeight(lineHeightPx.AsPixel());
 
     public static Modifier MaxHeight(string height) => new(style => style.maxHeight = height);
     public static Modifier MaxHeight(double height) => MaxHeight(height.AsPixel());

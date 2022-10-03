@@ -90,6 +90,7 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
                                     if (instance is ReactStatefulComponent component)
                                     {
                                         component.Context = Context;
+                                        component.InvokeConstructor();
                                     }
 
                                     return (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
@@ -114,11 +115,12 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
 
 
-                if (instance is ReactStatefulComponent reactStatefulComponent)
+                if (instance is ReactStatefulComponent component)
                 {
-                    reactStatefulComponent.Context = new ReactContext();
+                    component.Context = Context;
+                    component.InvokeConstructor();
 
-                    return reactStatefulComponent;
+                    return component;
                 }
 
                 return new div(instance.ToString());

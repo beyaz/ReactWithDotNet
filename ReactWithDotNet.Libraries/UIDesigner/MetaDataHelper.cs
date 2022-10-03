@@ -114,8 +114,8 @@ class MetadataHelper
         {
             var classNode = new MetadataNode
             {
-                IsClass = true,
-                Name    = x.Name,
+                IsClass       = true,
+                Name          = x.IsNested ? x.DeclaringType?.Name + "+" + x.Name : x.Name,
                 NamespaceName = x.Namespace
             };
 

@@ -118,7 +118,7 @@ class MethodSelectionView
                     value             = GetNodes(),
                     onSelectionChange = OnSelectionChange,
                     selectionKeys     = SelectedMethodTreeNodeKey,
-                    style = { MaxHeight(250), OverflowHidden }
+                    style = { MaxHeight(250), OverflowScroll }
                 }
             }
         };

@@ -113,3 +113,32 @@ public class span : HtmlElement
         this.innerText = innerText;
     }
 }
+
+public class select : HtmlElement
+{
+    [React]
+    public string value { get; set; }
+
+    [React]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    public Expression<Func<string>> valueBind { get; set; }
+    
+    
+    public select()
+    {
+    }
+
+    public select(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
+}
+public class option : HtmlElement
+{
+    public option()
+    {
+    }
+
+    public option(params Modifier[] modifiers) : base(modifiers)
+    {
+    }
+}
