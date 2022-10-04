@@ -84,12 +84,20 @@ public sealed class divHorizontalCentered : HtmlElement
 
 public sealed class FlexRow : HtmlElement
 {
-    public FlexRow(params Modifier[] modifiers)
+    public FlexRow(params Modifier[] modifiers):this()
+    {
+        this.Apply(modifiers);
+    }
+
+    public FlexRow()
     {
         style.display       = "flex";
         style.flexDirection = "row";
+    }
 
-        this.Apply(modifiers);
+    public FlexRow(IEnumerable<Element> children):this()
+    {
+        Children = children;
     }
 
     public override string Type => nameof(div);
@@ -97,12 +105,22 @@ public sealed class FlexRow : HtmlElement
 
 public sealed class FlexColumn : HtmlElement
 {
-    public FlexColumn(params Modifier[] modifiers)
+    public FlexColumn(params Modifier[] modifiers) : this()
+    {
+       
+
+        this.Apply(modifiers);
+    }
+
+    public FlexColumn()
     {
         style.display       = "flex";
         style.flexDirection = "column";
+    }
 
-        this.Apply(modifiers);
+    public FlexColumn(IEnumerable<Element> children) : this()
+    {
+        Children = children;
     }
 
     public override string Type => nameof(div);

@@ -303,6 +303,11 @@ public static class Mixin
     /// </summary>
     public static Modifier id(int id) => new(element => element.id = id.ToString());
 
+    /// <summary>
+    /// initialize id attribute of html element
+    /// </summary>
+    public static Modifier id(long id) => new(element => element.id = id.ToString());
+
     public static Modifier Left(double left) => Left(left.AsPixel());
     public static Modifier Left(string left) => new(style => style.left = left);
     public static Modifier LeftRight(string valueForLeftAndRight) => new(style => style.leftRight = valueForLeftAndRight);
