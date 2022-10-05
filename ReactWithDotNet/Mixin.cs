@@ -257,7 +257,7 @@ public static partial class Mixin
     public static Modifier Bottom(string bottom) => new(style => style.bottom = bottom);
     public static Modifier Bottom(double bottom) => Bottom(bottom.AsPixel());
 
-    public static Modifier BottomRight(string bottomAndRight) => Bottom(bottomAndRight)|Right(bottomAndRight);
+    public static Modifier BottomRight(string bottomAndRight) => Bottom(bottomAndRight) | Right(bottomAndRight);
     public static Modifier BottomRight(double bottomAndRight) => Bottom(bottomAndRight) | Right(bottomAndRight);
 
     public static Modifier BoxShadow(string boxShadow) => new(style => style.boxShadow = boxShadow);
@@ -426,7 +426,7 @@ public static partial class Mixin
     }
 
     /// <summary>
-    /// Returns given <paramref name="element"/> when condition is true otherwise returns null
+    ///     Returns given <paramref name="element" /> when condition is true otherwise returns null
     /// </summary>
     public static Element When(bool condition, Element element)
     {
