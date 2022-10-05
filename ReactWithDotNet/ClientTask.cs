@@ -18,4 +18,5 @@ sealed class ClientTask
     public int Timeout { get; set; }
     public string MethodName { get; set; }
     public object[] MethodArguments { get; set; }
+    public string HandlerComponentKey { get; set; }
 }

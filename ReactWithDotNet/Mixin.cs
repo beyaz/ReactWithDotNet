@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace ReactWithDotNet;
 
-public static class Mixin
+public  static partial class Mixin
 {
     public static Modifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
 

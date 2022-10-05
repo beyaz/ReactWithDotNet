@@ -11,7 +11,7 @@ static class ReactAttributeCollector
 
       
 
-    public static Dictionary<string,object> CollectReactAttributedProperties(this Element element)
+    public static Dictionary<string,object> CollectReactAttributedProperties(this Element element)// todo:check usage
     {
         var attributes = new Dictionary<string, object>();
 

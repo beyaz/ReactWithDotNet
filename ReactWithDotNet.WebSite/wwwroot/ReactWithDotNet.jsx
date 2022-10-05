@@ -278,7 +278,7 @@ var ClientTaskId =
     DispatchEvent: 2,        
     
     PushHistory: 4,
-    // free 5,
+    InitializeDotnetComponentEventListener: 5,
     GotoMethod: 6,
     NavigateToUrl : 7
 }
@@ -1051,13 +1051,47 @@ function ProcessClientTasks(clientTasks, component)
             component[ON_COMPONENT_DESTROY].push(() =>
             {
                 TraceClientTask(component, 'UNDO-ListenEvent', clientTask.EventName);
-                EventBus.Remove(clientTask.EventName, onEventFired)
+                EventBus.Remove(clientTask.EventName, onEventFired);
             });
 
             EventBus.On(clientTask.EventName, onEventFired);
 
             continue;
         }
+
+        if (clientTask.TaskId === ClientTaskId.InitializeDotnetComponentEventListener)
+        {
+            NotNull(component);
+
+            TraceClientTask(component, 'InitializeDotnetComponentEventListener', clientTask.EventName);
+
+            const handlerComponentKey = clientTask.HandlerComponentKey;
+
+            const onEventFired = (e) =>
+            {
+                const eventArgumentsAsArray = e.detail;
+                
+                const handlerComponent = COMPONENT_CACHE.FindComponentByKey(handlerComponentKey);
+                if (handlerComponent === null)
+                {
+                    throw CreateNewDeveloperError('Handler component not found. Handler component key is ' + handlerComponentKey);
+                }
+
+                StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/handlerComponent, /*eventArguments*/eventArgumentsAsArray);
+            };
+
+            NotNull(component[ON_COMPONENT_DESTROY]);
+
+            component[ON_COMPONENT_DESTROY].push(() =>
+            {
+                TraceClientTask(component, 'UNDO-ListenEvent', clientTask.EventName);
+                EventBus.Remove(clientTask.EventName, onEventFired);
+            });
+
+            EventBus.On(clientTask.EventName, onEventFired);
+
+            continue;
+        }        
                 
         if (clientTask.TaskId === ClientTaskId.CallJsFunction)
         {

@@ -1,4 +1,70 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Reflection;
+
+namespace ReactWithDotNet;
+
+static partial class Mixin
+{
+    public static void FireEvent(this ReactStatefulComponent reactComponent, string propertyName, Action _)
+    {
+        reactComponent.ClientTask.DispatchEvent(GetEventKey(reactComponent, propertyName));
+    }
+
+    public static void FireEvent<A>(this ReactStatefulComponent reactComponent, string propertyName, Action<A> _, A a)
+    {
+        reactComponent.ClientTask.DispatchEvent(GetEventKey(reactComponent, propertyName), a);
+    }
+
+    public static void FireEvent<A, B>(this ReactStatefulComponent reactComponent, string propertyName, Action<A, B> _, A a, B b)
+    {
+        reactComponent.ClientTask.DispatchEvent(GetEventKey(reactComponent, propertyName), a, b);
+    }
+
+    public static void FireEvent<A, B, C>(this ReactStatefulComponent reactComponent, string propertyName, Action<A, B, C> _, A a, B b, C c)
+    {
+        reactComponent.ClientTask.DispatchEvent(GetEventKey(reactComponent, propertyName), a, b, c);
+    }
+
+    internal static void ConvertReactEventsToTaskForEventBus(this ReactStatefulComponent reactComponent)
+    {
+        foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() is not null))
+        {
+            var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
+            var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>);
+
+            if (isAction || isGenericAction)
+            {
+                convertToTask(propertyInfo);
+            }
+        }
+
+        void convertToTask(PropertyInfo propertyInfo)
+        {
+            var @delegate = (Delegate)propertyInfo.GetValue(reactComponent);
+            if (@delegate is null)
+            {
+                return;
+            }
+
+            if (@delegate.Target is ReactStatefulComponent target)
+            {
+                propertyInfo.SetValue(reactComponent, null);
+
+                reactComponent.ClientTask.taskList.Add(new ClientTask
+                {
+                    TaskId              = 5,
+                    EventName           = GetEventKey(reactComponent, propertyInfo.Name),
+                    HandlerComponentKey = target.key,
+                    RouteToMethod       = @delegate.Method.Name
+                });
+            }
+        }
+    }
+
+    internal static string GetEventKey(ReactStatefulComponent reactComponent, string propertyName)
+    {
+        return reactComponent.key + "::" + propertyName;
+    }
+}
 
 public abstract class ReactComponent<TState> : ReactStatefulComponent where TState : new()
 {
@@ -100,7 +166,7 @@ public sealed class ClientTaskCollection
         taskList.Add(new ClientTask { TaskId = 0, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
     }
 
-    void DispatchEvent(string eventName, params object[] eventArguments)
+    internal void DispatchEvent(string eventName, params object[] eventArguments)
     {
         taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
     }
@@ -110,7 +176,7 @@ public sealed class ClientTaskCollection
         taskList.Add(new ClientTask { TaskId = 6, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });
     }
 
-    void ListenEvent(string eventName, string routeToMethod)
+    internal void ListenEvent(string eventName, string routeToMethod)
     {
         taskList.Add(new ClientTask { TaskId = 1, EventName = eventName, RouteToMethod = routeToMethod });
     }

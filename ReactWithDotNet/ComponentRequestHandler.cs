@@ -212,21 +212,19 @@ public static class ComponentRequestHandler
             }
 
             // Invoke method
+
+            instance.key = request.ComponentRefId.ToString();
+            request.ComponentRefId++;
             
-                try
-                {
-                    methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
-                }
-                catch (Exception exception)
-                {
-                    return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
-                }
+            try
+            {
+                methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
+            }
+            catch (Exception exception)
+            {
+                return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
+            }
 
-                
-
-            
-
-           
 
             var stateTree = new StateTree
             {

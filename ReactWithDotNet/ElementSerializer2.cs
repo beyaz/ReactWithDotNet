@@ -160,6 +160,9 @@ partial class ElementSerializer
 
                     node.DotNetComponentRootElement = reactStatefulComponent.InvokeRender();
 
+                    reactStatefulComponent.ConvertReactEventsToTaskForEventBus();
+
+
                     node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement, context);
 
                     node.DotNetComponentRootNode.Parent = node;
