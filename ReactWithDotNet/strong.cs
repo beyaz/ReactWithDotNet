@@ -142,3 +142,8 @@ public class option : HtmlElement
     {
     }
 }
+
+public class style : HtmlElement
+{
+    
+}
