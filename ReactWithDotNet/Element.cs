@@ -16,12 +16,11 @@ public abstract class Element : IEnumerable<Element>
 {
     internal List<Element> _children;
 
-    #region Fields
     /// <summary>
     ///     The children
     /// </summary>
     [System.Text.Json.Serialization.JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public List<Element> children
     {
         get
@@ -34,9 +33,7 @@ public abstract class Element : IEnumerable<Element>
             return _children;
         }
     }
-    #endregion
 
-    #region Public Properties
     /// <summary>
     ///     Imports filled values given style
     /// </summary>
@@ -51,9 +48,12 @@ public abstract class Element : IEnumerable<Element>
     /// </summary>
     [React]
     public string key { get; set; }
-    #endregion
 
-    #region Public Methods
+    public static implicit operator Element(string text)
+    {
+        return new HtmlTextNode { text = text };
+    }
+
     /// <summary>
     ///     Adds the specified element.
     /// </summary>
@@ -70,14 +70,6 @@ public abstract class Element : IEnumerable<Element>
         return children.GetEnumerator();
     }
 
-    public static implicit operator Element(string text)
-    {
-        return new HtmlTextNode { text = text};
-    }
-    
-    #endregion
-
-    #region Explicit Interface Methods
     /// <summary>
     ///     Gets the enumerator.
     /// </summary>
@@ -85,8 +77,4 @@ public abstract class Element : IEnumerable<Element>
     {
         return children.GetEnumerator();
     }
-    #endregion
-
-
-   
 }
