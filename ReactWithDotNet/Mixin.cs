@@ -77,6 +77,11 @@ public static partial class Mixin
     public static Modifier FontSize23 => FontSize(23);
     public static Modifier FontSize24 => FontSize(24);
     public static Modifier FontSize25 => FontSize(25);
+    public static Modifier FontSize26 => FontSize(25);
+    public static Modifier FontSize27 => FontSize(25);
+    public static Modifier FontSize28 => FontSize(25);
+    public static Modifier FontSize29 => FontSize(25);
+    public static Modifier FontSize30 => FontSize(25);
     public static Modifier FontSize9 => FontSize(9);
 
     public static Modifier FontWeight400 => FontWeight("400");
@@ -127,6 +132,23 @@ public static partial class Mixin
     public static Modifier LineHeight23 => LineHeight(23);
     public static Modifier LineHeight24 => LineHeight(24);
     public static Modifier LineHeight25 => LineHeight(25);
+
+    public static Modifier LineHeight26 => LineHeight(25);
+    public static Modifier LineHeight27 => LineHeight(25);
+    public static Modifier LineHeight28 => LineHeight(25);
+    public static Modifier LineHeight29 => LineHeight(25);
+    public static Modifier LineHeight30 => LineHeight(25);
+    public static Modifier LineHeight31 => LineHeight(25);
+    public static Modifier LineHeight32 => LineHeight(25);
+    public static Modifier LineHeight33 => LineHeight(25);
+    public static Modifier LineHeight34 => LineHeight(25);
+    public static Modifier LineHeight35 => LineHeight(25);
+    public static Modifier LineHeight36 => LineHeight(25);
+    public static Modifier LineHeight37 => LineHeight(25);
+    public static Modifier LineHeight38 => LineHeight(25);
+    public static Modifier LineHeight39 => LineHeight(25);
+    public static Modifier LineHeight40 => LineHeight(25);
+
     public static Modifier LineHeight9 => LineHeight(9);
 
     /// <summary>
@@ -397,6 +419,14 @@ public static partial class Mixin
         {
             instance.Apply(modifiers);
         }
+    }
+
+    /// <summary>
+    /// Returns given <paramref name="element"/> when condition is true otherwise returns null
+    /// </summary>
+    public static Element When(bool condition, Element element)
+    {
+        return condition ? element : null;
     }
 
     public static Modifier Width(double width) => new(style => style.width = width.AsPixel());
