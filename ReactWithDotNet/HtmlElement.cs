@@ -6,21 +6,56 @@ public abstract class HtmlElement : Element
 {
     protected HtmlElement()
     {
-        
     }
 
     protected HtmlElement(params Modifier[] modifiers)
     {
         this.Apply(modifiers);
     }
-    
-    
 
     protected HtmlElement(Style style)
     {
         this.style.Import(style);
     }
-    
+
+    /// <summary>
+    ///     Gets or sets the name of the class.
+    /// </summary>
+    [React]
+    public string className { get; set; }
+
+    [React]
+    public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
+
+    [React]
+    public virtual string id { get; set; }
+
+    [JsonIgnore]
+    public string innerHTML
+    {
+        set => dangerouslySetInnerHTML = value;
+    }
+
+    /// <summary>
+    ///     'innerText' property of element.
+    /// </summary>
+    public string innerText { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the on click.
+    /// </summary>
+    [React]
+    public Action<MouseEvent> onClick { get; set; }
+
+    [React]
+    public Action<MouseEvent> onMouseEnter { get; set; }
+
+    [React]
+    public Action<MouseEvent> onMouseLeave { get; set; }
+
+    [React]
+    [ReactTransformValueInClient("ReactWithDotNet.GetExternalJsObject")]
+    public string onScroll { get; set; }
 
     /// <summary>
     ///     Gets the style.
@@ -37,39 +72,8 @@ public abstract class HtmlElement : Element
         set => style.Import(value);
     }
 
-    /// <summary>
-    ///     Gets or sets the on click.
-    /// </summary>
     [React]
-    public Action<MouseEvent> onClick { get; set; }
-
-    [React]
-    public Action<MouseEvent> onMouseEnter { get; set; }
-    
-    [React]
-    public Action<MouseEvent> onMouseLeave { get; set; }
-    
-    [React]
-    [ReactTransformValueInClient("ReactWithDotNet.GetExternalJsObject")]
-    public string onScroll { get; set; }
-    
-
-    [JsonPropertyName("$type")]
-    public virtual string Type => GetType().Name.ToLower();
-
-    [React]
-    public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
-
-    [JsonIgnore]
-    public string innerHTML
-    {
-        set => dangerouslySetInnerHTML = value;
-    }
-
-    /// <summary>
-    ///     'innerText' property of element.
-    /// </summary>
-    public string innerText { get; set; }
+    public string tabIndex { get; set; }
 
     /// <summary>
     ///     'innerText' property of element.
@@ -80,21 +84,22 @@ public abstract class HtmlElement : Element
     }
 
     [React]
-    public virtual string id { get; set; }
-
-    /// <summary>
-    ///     Gets or sets the name of the class.
-    /// </summary>
-    [React]
-    public string className { get; set; }
-
-    [React]
     public string title { get; set; }
 
-    [React]
-    public string tabIndex { get; set; }
+    [JsonPropertyName("$type")]
+    public virtual string Type => GetType().Name.ToLower();
 
-    internal void AddClass(string cssClassName)
+    public static HtmlElement operator |(HtmlElement element, Modifier modifier)
+    {
+        element.Apply(modifier);
+
+        return element;
+    }
+
+    /// <summary>
+    ///     Adds given cssClassName ot class attribute of html element
+    /// </summary>
+    public void AddClass(string cssClassName)
     {
         if (string.IsNullOrWhiteSpace(className))
         {
@@ -105,19 +110,10 @@ public abstract class HtmlElement : Element
         className += " " + cssClassName;
     }
 
-    public static HtmlElement operator |(HtmlElement element, Modifier modifier)
-    {
-        element.Apply(modifier);
-
-        return element;
-    }
-
     internal virtual void BeforeSerialize(HtmlElement parent)
     {
-        
     }
 }
-
 
 [Serializable]
 public sealed class dangerouslySetInnerHTML
@@ -130,6 +126,7 @@ public sealed class dangerouslySetInnerHTML
     public dangerouslySetInnerHTML()
     {
     }
+
     public string __html { get; set; }
 
     public static implicit operator dangerouslySetInnerHTML(string html)
