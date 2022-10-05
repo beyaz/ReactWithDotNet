@@ -50,4 +50,19 @@ partial class Style
         }
     }
 
+    internal Style _active;
+
+    [JsonIgnore]
+    public Style active
+    {
+        get
+        {
+            if (_active == null)
+            {
+                _active = new Style();
+            }
+            return _active;
+        }
+    }
+
 }

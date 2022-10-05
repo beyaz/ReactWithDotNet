@@ -254,6 +254,15 @@ static partial class ElementSerializer
                     });
                 }
 
+                if (style._active is not null)
+                {
+                    pseudos.Add(new CssPseudoCodeInfo
+                    {
+                        Name      = "active",
+                        BodyOfCss = style._active.ToCss().Replace(";", " !important;")
+                    });
+                }
+
                 if (pseudos.Count > 0)
                 {
                     ((HtmlElement)instance).AddClass(context.DynamicStyles.GetClassName(new CssClassInfo

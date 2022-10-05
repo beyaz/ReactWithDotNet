@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace ReactWithDotNet;
 
-public  static partial class Mixin
+public static partial class Mixin
 {
     public static Modifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
 
@@ -133,11 +133,12 @@ public  static partial class Mixin
     ///     overflow = "hidden"
     /// </summary>
     public static Modifier OverflowHidden => new(style => style.overflow = "hidden");
+
     /// <summary>
     ///     overflow = "scroll"
     /// </summary>
     public static Modifier OverflowScroll => new(style => style.overflow = "scroll");
-    
+
     public static Modifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
 
     /// <summary>
@@ -294,17 +295,17 @@ public  static partial class Mixin
     }
 
     /// <summary>
-    /// initialize id attribute of html element
+    ///     initialize id attribute of html element
     /// </summary>
     public static Modifier id(string id) => new(element => element.id = id);
-    
+
     /// <summary>
-    /// initialize id attribute of html element
+    ///     initialize id attribute of html element
     /// </summary>
     public static Modifier id(int id) => new(element => element.id = id.ToString());
 
     /// <summary>
-    /// initialize id attribute of html element
+    ///     initialize id attribute of html element
     /// </summary>
     public static Modifier id(long id) => new(element => element.id = id.ToString());
 
@@ -329,7 +330,15 @@ public  static partial class Mixin
 
     public static Modifier OnClick(Action<MouseEvent> onClickHandler) => new(element => element.onClick = onClickHandler);
 
+    /// <summary>
+    ///     style.right = right
+    /// </summary>
     public static Modifier Right(string right) => new(style => style.right = right);
+
+    /// <summary>
+    ///     style.right = right + 'px'
+    /// </summary>
+    public static Modifier Right(double right) => new(style => style.right = right.AsPixel());
 
     /// <summary>
     ///     <br>if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value</br>
