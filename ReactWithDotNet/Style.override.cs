@@ -3,10 +3,10 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-partial class Style : IEnumerable<Modifier>
+partial class Style : IEnumerable<StyleModifier>
 {
     #region IEnumerable<Modifier>
-    public IEnumerator<Modifier> GetEnumerator()
+    public IEnumerator<StyleModifier> GetEnumerator()
     {
         throw new InvalidOperationException("Style data should be serialize after .ToDictionary() method called.");
     }
@@ -16,9 +16,9 @@ partial class Style : IEnumerable<Modifier>
         return GetEnumerator();
     }
 
-    public void Add(Modifier modifier)
+    public void Add(StyleModifier modifier)
     {
-        modifier?.Apply(this);
+        modifier?.Modify(this);
     } 
     #endregion
 

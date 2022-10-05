@@ -4,6 +4,6 @@ class SiteTitle : ReactComponent
 {
     protected override Element render()
     {
-        return new div("19 Sistemi Nedir", FontSize20);
+        return new div(Text("19 Sistemi Nedir"), FontSize20);
     }
 }

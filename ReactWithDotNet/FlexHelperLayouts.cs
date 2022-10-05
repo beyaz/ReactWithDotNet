@@ -84,7 +84,7 @@ public sealed class divHorizontalCentered : HtmlElement
 
 public sealed class FlexRow : HtmlElement
 {
-    public FlexRow(params Modifier[] modifiers):this()
+    public FlexRow(params IModifier[] modifiers):this()
     {
         this.Apply(modifiers);
     }

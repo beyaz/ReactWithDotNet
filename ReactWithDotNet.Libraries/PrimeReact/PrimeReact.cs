@@ -16,7 +16,7 @@ public class ElementBase : ThirdPartyReactComponent
         
     }
 
-    protected ElementBase(params Modifier[] modifiers):base(modifiers)
+    protected ElementBase(params StyleModifier[] modifiers):base(modifiers)
     {
     }
 }

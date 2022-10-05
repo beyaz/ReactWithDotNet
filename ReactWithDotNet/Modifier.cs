@@ -1,50 +1,99 @@
 ﻿namespace ReactWithDotNet;
 
-public class Modifier
+public interface IModifier
 {
-    readonly Action<HtmlElement> htmlElementModifier;
+    internal void Modify(Style style);
+    internal void Modify(HtmlElement htmlElement);
+}
+
+public sealed class StyleModifier : IModifier
+{
     readonly Action<Style> modifyStyle;
 
-    public Modifier(Action<Style> action)
+    public StyleModifier(Action<Style> modifyStyle)
     {
-        modifyStyle = action ?? throw new ArgumentNullException(nameof(action));
+        this.modifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
     }
 
-    public Modifier(Action<HtmlElement> action)
+    void IModifier.Modify(HtmlElement instance)
     {
-        htmlElementModifier = action ?? throw new ArgumentNullException(nameof(action));
+        if (instance == null)
+        {
+            throw new ArgumentNullException(nameof(instance));
+        }
+
+        modifyStyle(instance.style);
     }
 
-    public static Modifier operator |(Modifier a, Modifier b)
+    void IModifier.Modify(Style style)
+    {
+        Modify(style);
+    }
+
+    internal void Modify(Style style)
+    {
+        if (style == null)
+        {
+            throw new ArgumentNullException(nameof(style));
+        }
+
+        modifyStyle(style);
+    }
+
+    public static StyleModifier operator |(StyleModifier a, StyleModifier b)
     {
         void modify(Style style)
         {
-            a.Apply(style);
-            b.Apply(style);
+            ((IModifier)a).Modify(style);
+            ((IModifier)b).Modify(style);
         }
 
-        return new Modifier(modify);
+        return new StyleModifier(modify);
+    }
+}
+
+public sealed class HtmlElementModifier : IModifier
+{
+    readonly Action<HtmlElement> modifyHtmlElement;
+
+    public HtmlElementModifier(Action<HtmlElement> modifyHtmlElement)
+    {
+        this.modifyHtmlElement = modifyHtmlElement ?? throw new ArgumentNullException(nameof(modifyHtmlElement));
     }
 
-    public static implicit operator Modifier(string text)
+    void IModifier.Modify(HtmlElement htmlElement)
     {
-        return Mixin.Text(text);
+        Modify(htmlElement);
     }
 
-    public void Apply(HtmlElement instance)
+    internal void Modify(HtmlElement htmlElement)
     {
-        if (htmlElementModifier != null)
+        if (htmlElement == null)
         {
-            htmlElementModifier(instance);
+            throw new ArgumentNullException(nameof(htmlElement));
         }
-        else
-        {
-            modifyStyle(instance.style);
-        }
+
+        modifyHtmlElement(htmlElement);
     }
 
-    public void Apply(Style style)
+    void IModifier.Modify(Style style)
     {
-        modifyStyle(style);
+        throw new InvalidOperationException("HtmlElementModifier cannot be use for style");
+    }
+
+    //public static implicit operator HtmlElementModifier(string text)
+    //{
+    //    return Mixin.Text(text);
+    //}
+
+    public static HtmlElementModifier operator |(HtmlElementModifier a, HtmlElementModifier b)
+    {
+        void modify(HtmlElement htmlElement)
+        {
+            ((IModifier)a).Modify(htmlElement);
+            ((IModifier)b).Modify(htmlElement);
+        }
+
+        return new HtmlElementModifier(modify);
     }
 }

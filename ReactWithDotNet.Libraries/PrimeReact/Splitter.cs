@@ -34,7 +34,7 @@ public class SplitterPanel : ElementBase
         
     }
 
-    public SplitterPanel(params Modifier[] modifiers) : base(modifiers) { }
+    public SplitterPanel(params StyleModifier[] modifiers) : base(modifiers) { }
 }
 
 

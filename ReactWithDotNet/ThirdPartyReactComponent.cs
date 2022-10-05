@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
@@ -30,7 +29,7 @@ public abstract class ThirdPartyReactComponent : Element
         
     }
 
-    protected ThirdPartyReactComponent(params Modifier[] modifiers)
+    protected ThirdPartyReactComponent(params StyleModifier[] modifiers)
     {
         style.Apply(modifiers);
     }
@@ -44,8 +43,19 @@ public abstract class ThirdPartyReactComponent : Element
         set => style.Import(value);
     }
 
-    protected internal sealed override void ProcessModifier(Modifier modifier)
+    protected internal sealed override void ProcessModifier(IModifier modifier)
     {
-        style.Apply(modifier);
+        if (modifier == null)
+        {
+            return;
+        }
+        
+        if (modifier is StyleModifier styleModifier)
+        {
+            styleModifier.Modify(style);
+            return;
+        }
+
+        throw new InvalidOperationException("Expected only StyleModifier but found HtmlModifier");
     }
 }
