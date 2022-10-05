@@ -3904,6 +3904,10 @@ partial class Style
         {
             after.Import(newStyle._after);
         }
+        if (newStyle._active is not null)
+        {
+            active.Import(newStyle._active);
+        }
     }
 
     [JsonIgnore]
