@@ -6,6 +6,11 @@ namespace ReactWithDotNet;
 sealed class FakeChild : Element
 {
     public int Index { get; set; }
+    
+    protected internal override void ProcessModifier(Modifier modifier)
+    {
+        throw new NotImplementedException("Fake childs cannot modify");
+    }
 }
 
 /// <summary>
@@ -77,4 +82,13 @@ public abstract class Element : IEnumerable<Element>
     {
         return children.GetEnumerator();
     }
+
+    public static Element operator |(Element element, Modifier modifier)
+    {
+        element.ProcessModifier(modifier);
+
+        return element;
+    }
+
+    protected internal abstract void ProcessModifier(Modifier modifier);
 }

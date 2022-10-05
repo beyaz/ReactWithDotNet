@@ -43,4 +43,9 @@ public abstract class ThirdPartyReactComponent : Element
     {
         set => style.Import(value);
     }
+
+    protected internal sealed override void ProcessModifier(Modifier modifier)
+    {
+        style.Apply(modifier);
+    }
 }

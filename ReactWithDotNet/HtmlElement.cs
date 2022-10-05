@@ -89,11 +89,9 @@ public abstract class HtmlElement : Element
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();
 
-    public static HtmlElement operator |(HtmlElement element, Modifier modifier)
+    protected internal sealed override void ProcessModifier(Modifier modifier)
     {
-        element.Apply(modifier);
-
-        return element;
+        this.Apply(modifier);
     }
 
     /// <summary>

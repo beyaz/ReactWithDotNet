@@ -97,6 +97,20 @@ public abstract class ReactStatefulComponent : Element
     {
         return MemberwiseClone();
     }
+
+    internal List<Modifier> modifiers;
+    
+    protected internal sealed override void ProcessModifier(Modifier modifier)
+    {
+        if (modifier is null)
+        {
+            return;
+        }
+        
+        modifiers ??= new List<Modifier>();
+
+        modifiers.Add(modifier);
+    }
 }
 
 public abstract class ReactComponent : ReactComponent<EmptyState>

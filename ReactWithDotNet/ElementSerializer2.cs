@@ -160,6 +160,14 @@ partial class ElementSerializer
 
                     node.DotNetComponentRootElement = reactStatefulComponent.InvokeRender();
 
+                    if (reactStatefulComponent.modifiers is not null)
+                    {
+                        foreach (var modifier in reactStatefulComponent.modifiers)
+                        {
+                            node.DotNetComponentRootElement.ProcessModifier(modifier);
+                        }
+                    }
+                    
                     reactStatefulComponent.ConvertReactEventsToTaskForEventBus();
 
 

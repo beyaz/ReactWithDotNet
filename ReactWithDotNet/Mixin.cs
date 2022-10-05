@@ -255,6 +255,10 @@ public static partial class Mixin
     public static Modifier BorderRight(string borderRight) => new(style => style.borderRight = borderRight);
     public static Modifier BorderTop(string borderTop) => new(style => style.borderTop = borderTop);
     public static Modifier Bottom(string bottom) => new(style => style.bottom = bottom);
+    public static Modifier Bottom(double bottom) => Bottom(bottom.AsPixel());
+
+    public static Modifier BottomRight(string bottomAndRight) => Bottom(bottomAndRight)|Right(bottomAndRight);
+    public static Modifier BottomRight(double bottomAndRight) => Bottom(bottomAndRight) | Right(bottomAndRight);
 
     public static Modifier BoxShadow(string boxShadow) => new(style => style.boxShadow = boxShadow);
     public static Modifier ClassName(string className) => new(element => element.className = className);

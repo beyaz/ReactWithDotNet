@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactWithDotNet.Libraries",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactWithDotNet.WebSite", "ReactWithDotNet.WebSite\ReactWithDotNet.WebSite.csproj", "{A995C489-B0D2-4E43-80AA-D3E2BDFF9C07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactWithDotNet.Test", "ReactWithDotNet.Test\ReactWithDotNet.Test.csproj", "{7C9C7BB7-DD6A-4191-A179-5034F86D27CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactWithDotNet.Test", "ReactWithDotNet.Test\ReactWithDotNet.Test.csproj", "{7C9C7BB7-DD6A-4191-A179-5034F86D27CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
