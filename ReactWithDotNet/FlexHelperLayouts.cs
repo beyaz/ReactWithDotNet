@@ -105,7 +105,7 @@ public sealed class FlexRow : HtmlElement
 
 public sealed class FlexColumn : HtmlElement
 {
-    public FlexColumn(params Modifier[] modifiers) : this()
+    public FlexColumn(params IModifier[] modifiers) : this()
     {
        
 
@@ -154,7 +154,7 @@ public sealed class FlexRowCentered : HtmlElement
     ///     <br>justifyContent = "center"</br>
     ///     <br>alignItems     = "center"</br>
     /// </summary>
-    public FlexRowCentered(params Modifier[] modifiers) : this()
+    public FlexRowCentered(params IModifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }

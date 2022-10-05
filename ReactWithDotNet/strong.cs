@@ -6,7 +6,7 @@ public class aside : HtmlElement
     {
     }
 
-    public aside(params Modifier[] modifiers) : base(modifiers)
+    public aside(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -17,7 +17,7 @@ public class section : HtmlElement
     {
     }
 
-    public section(params Modifier[] modifiers) : base(modifiers)
+    public section(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -28,7 +28,7 @@ public class small : HtmlElement
     {
     }
 
-    public small(params Modifier[] modifiers) : base(modifiers)
+    public small(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -39,7 +39,7 @@ public class ul : HtmlElement
     {
     }
 
-    public ul(params Modifier[] modifiers) : base(modifiers)
+    public ul(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -54,7 +54,7 @@ public class article : HtmlElement
     {
     }
 
-    public article(params Modifier[] modifiers) : base(modifiers)
+    public article(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -65,7 +65,7 @@ public class fieldset : HtmlElement
     {
     }
 
-    public fieldset(params Modifier[] modifiers) : base(modifiers)
+    public fieldset(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -76,7 +76,7 @@ public class legend : HtmlElement
     {
     }
 
-    public legend(params Modifier[] modifiers) : base(modifiers)
+    public legend(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -93,7 +93,7 @@ public class strong : HtmlElement
     {
     }
 
-    public strong(params Modifier[] modifiers) : base(modifiers)
+    public strong(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -104,7 +104,7 @@ public class span : HtmlElement
     {
     }
 
-    public span(params Modifier[] modifiers) : base(modifiers)
+    public span(params IModifier[] modifiers) : base(modifiers)
     {
     }
 
@@ -128,7 +128,7 @@ public class select : HtmlElement
     {
     }
 
-    public select(params Modifier[] modifiers) : base(modifiers)
+    public select(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }
@@ -138,7 +138,7 @@ public class option : HtmlElement
     {
     }
 
-    public option(params Modifier[] modifiers) : base(modifiers)
+    public option(params IModifier[] modifiers) : base(modifiers)
     {
     }
 }

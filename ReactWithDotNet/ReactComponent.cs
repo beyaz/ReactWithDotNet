@@ -98,16 +98,16 @@ public abstract class ReactStatefulComponent : Element
         return MemberwiseClone();
     }
 
-    internal List<Modifier> modifiers;
+    internal List<IModifier> modifiers;
     
-    protected internal sealed override void ProcessModifier(Modifier modifier)
+    protected internal sealed override void ProcessModifier(IModifier modifier)
     {
         if (modifier is null)
         {
             return;
         }
         
-        modifiers ??= new List<Modifier>();
+        modifiers ??= new List<IModifier>();
 
         modifiers.Add(modifier);
     }

@@ -7,7 +7,7 @@ sealed class FakeChild : Element
 {
     public int Index { get; set; }
     
-    protected internal override void ProcessModifier(Modifier modifier)
+    protected internal override void ProcessModifier(IModifier modifier)
     {
         throw new NotImplementedException("Fake childs cannot modify");
     }
@@ -83,12 +83,12 @@ public abstract class Element : IEnumerable<Element>
         return children.GetEnumerator();
     }
 
-    public static Element operator |(Element element, Modifier modifier)
+    public static Element operator |(Element element, IModifier modifier)
     {
         element.ProcessModifier(modifier);
 
         return element;
     }
 
-    protected internal abstract void ProcessModifier(Modifier modifier);
+    protected internal abstract void ProcessModifier(IModifier modifier);
 }

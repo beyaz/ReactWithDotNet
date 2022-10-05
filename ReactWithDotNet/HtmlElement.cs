@@ -8,7 +8,7 @@ public abstract class HtmlElement : Element
     {
     }
 
-    protected HtmlElement(params Modifier[] modifiers)
+    protected HtmlElement(params IModifier[] modifiers)
     {
         this.Apply(modifiers);
     }
@@ -89,7 +89,7 @@ public abstract class HtmlElement : Element
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();
 
-    protected internal sealed override void ProcessModifier(Modifier modifier)
+    protected internal sealed override void ProcessModifier(IModifier modifier)
     {
         this.Apply(modifier);
     }
