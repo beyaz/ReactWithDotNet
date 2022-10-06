@@ -389,15 +389,15 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
-    static void AddReactAttributes(Dictionary<string, object> map, Element htmlElement, ElementSerializerContext context)
+    static void AddReactAttributes(Dictionary<string, object> map, Element element, ElementSerializerContext context)
     {
         var stopwatch = new Stopwatch();
 
         stopwatch.Start();
 
-        foreach (var propertyInfo in htmlElement.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
+        foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
         {
-            var (propertyValue, noNeedToExport) = getPropertyValue(htmlElement, propertyInfo, context);
+            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, context);
             if (noNeedToExport)
             {
                 continue;
@@ -410,7 +410,7 @@ partial class ElementSerializer
 
         if (stopwatch.ElapsedMilliseconds > 10)
         {
-            context.Tracer.Trace($"{htmlElement.GetType().FullName} > attribute cacculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+            context.Tracer.Trace($"{element.GetType().FullName} > attribute cacculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
         }
     }
 
