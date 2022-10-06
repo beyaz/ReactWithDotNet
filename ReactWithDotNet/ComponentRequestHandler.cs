@@ -193,6 +193,11 @@ public static class ComponentRequestHandler
                             propertyValue = Convert.ChangeType(propertyValue, TypeCode.Int32);
                         }
 
+                        if (property.PropertyType == typeof(int?) && propertyValue is not null)
+                        {
+                            propertyValue = Convert.ChangeType(propertyValue, TypeCode.Int32);
+                        }
+
                         property.SetValue(instance, propertyValue);
                     }
                 }

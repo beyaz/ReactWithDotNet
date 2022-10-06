@@ -50,13 +50,17 @@ public class Swiper : ThirdPartyReactComponent
     public SwiperScrollbar scrollbar { get; } = new();
 
     [React]
-    public int? slidesPerView { get; set; }
+    public double? slidesPerView { get; set; }
 
     [React]
-    public int? spaceBetween { get; set; }
+    public double? spaceBetween { get; set; }
 
     [React]
-    public int? speed { get; set; }
+    public double? speed { get; set; }
+
+    [React]
+    public bool? centeredSlides { get; set; }
+    
 
 
     [React]

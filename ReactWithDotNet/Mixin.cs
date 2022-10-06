@@ -349,11 +349,45 @@ public static partial class Mixin
     public static StyleModifier LineHeight(string lineHeight) => new(style => style.lineHeight = lineHeight);
     public static StyleModifier LineHeight(double lineHeightPx) => LineHeight(lineHeightPx.AsPixel());
 
-    public static StyleModifier MaxHeight(string height) => new(style => style.maxHeight = height);
-    public static StyleModifier MaxHeight(double height) => MaxHeight(height.AsPixel());
+    /// <summary>
+    ///     style.maxHeight = <paramref name="maxHeight" />
+    /// </summary>
+    public static StyleModifier MaxHeight(string maxHeight) => new(style => style.maxHeight = maxHeight);
 
+    /// <summary>
+    ///     style.maxHeight = <paramref name="maxHeight" /> + "px"
+    /// </summary>
+    public static StyleModifier MaxHeight(double maxHeight) => MaxHeight(maxHeight.AsPixel());
+
+    /// <summary>
+    ///     style.maxWidth = <paramref name="maxWidth" />
+    /// </summary>
     public static StyleModifier MaxWidth(string maxWidth) => new(style => style.maxWidth = maxWidth);
-    public static StyleModifier MaxWidth(double maxWidth) => new(style => style.maxWidth = maxWidth.AsPixel());
+
+    /// <summary>
+    ///     style.maxWidth = <paramref name="maxWidth" /> + 'px'
+    /// </summary>
+    public static StyleModifier MaxWidth(double maxWidth) => MaxWidth(maxWidth.AsPixel());
+
+    /// <summary>
+    ///     style.minHeight = <paramref name="minHeight" />
+    /// </summary>
+    public static StyleModifier MinHeight(string minHeight) => new(style => style.minHeight = minHeight);
+
+    /// <summary>
+    ///     style.minHeight = <paramref name="minHeight" /> + "px"
+    /// </summary>
+    public static StyleModifier MinHeight(double minHeight) => new(style => style.minHeight = minHeight.AsPixel());
+
+    /// <summary>
+    ///     style.minWidth = minWidth
+    /// </summary>
+    public static StyleModifier MinWidth(string minWidth) => new(style => style.minWidth = minWidth);
+
+    /// <summary>
+    ///     style.minWidth = minWidth + 'px'
+    /// </summary>
+    public static StyleModifier MinWidth(double minWidth) => MinWidth(minWidth.AsPixel());
 
     public static JsonSerializerOptions ModifyForReactWithDotNet(this JsonSerializerOptions options)
     {
