@@ -6,7 +6,7 @@ namespace ReactWithDotNet;
 sealed class FakeChild : Element
 {
     public int Index { get; set; }
-    
+
     protected internal override void ProcessModifier(IModifier modifier)
     {
         throw new NotImplementedException("Fake childs cannot modify");
@@ -17,7 +17,7 @@ sealed class FakeChild : Element
 ///     The element
 /// </summary>
 [JsonObject]
-public abstract class Element : IEnumerable<Element>
+public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 {
     internal List<Element> _children;
 
@@ -54,6 +54,13 @@ public abstract class Element : IEnumerable<Element>
     [React]
     public string key { get; set; }
 
+    public static Element operator |(Element element, IModifier modifier)
+    {
+        element.ProcessModifier(modifier);
+
+        return element;
+    }
+
     public static implicit operator Element(string text)
     {
         return new HtmlTextNode { text = text };
@@ -65,6 +72,11 @@ public abstract class Element : IEnumerable<Element>
     public void Add(Element element)
     {
         children.Add(element);
+    }
+
+    public void Add(IModifier modifier)
+    {
+        ProcessModifier(modifier);
     }
 
     /// <summary>
@@ -83,11 +95,9 @@ public abstract class Element : IEnumerable<Element>
         return children.GetEnumerator();
     }
 
-    public static Element operator |(Element element, IModifier modifier)
+    IEnumerator<IModifier> IEnumerable<IModifier>.GetEnumerator()
     {
-        element.ProcessModifier(modifier);
-
-        return element;
+        return Enumerable.Empty<IModifier>().GetEnumerator();
     }
 
     protected internal abstract void ProcessModifier(IModifier modifier);
