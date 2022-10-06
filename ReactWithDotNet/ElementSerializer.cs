@@ -203,6 +203,70 @@ static partial class ElementSerializer
         return propertyName;
     }
 
+    static (Style style, bool noNeedToExport) GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
+    {
+        var pseudos = new List<CssPseudoCodeInfo>();
+
+        if (style._hover is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "hover",
+                BodyOfCss = style._hover.ToCss().Replace(";", " !important;")
+            });
+        }
+
+        if (style._before is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "before",
+                BodyOfCss = style._before.ToCss().Replace(";", " !important;")
+            });
+        }
+
+        if (style._after is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "after",
+                BodyOfCss = style._after.ToCss().Replace(";", " !important;")
+            });
+        }
+
+        if (style._active is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "active",
+                BodyOfCss = style._active.ToCss().Replace(";", " !important;")
+            });
+        }
+
+        if (pseudos.Count > 0)
+        {
+            if (instance is HtmlElement htmlElement)
+            {
+                htmlElement.AddClass(context.DynamicStyles.GetClassName(new CssClassInfo
+                {
+                    Name    = context.componentStack.Peek().GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
+                    Pseudos = pseudos
+                }));
+            }
+            else
+            {
+                throw new NotImplementedException("Style attribute problem TODO: beyaz");
+            }
+           
+        }
+
+        if (IsEmptyStyle(style))
+        {
+            return (null, true);
+        }
+
+        return (style, false);
+    }
     static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, ElementSerializerContext context)
     {
         var propertyValue = propertyInfo.GetValue(instance);
@@ -225,59 +289,7 @@ static partial class ElementSerializer
         {
             if (propertyValue is Style style)
             {
-                var pseudos = new List<CssPseudoCodeInfo>();
-
-                if (style._hover is not null)
-                {
-                    pseudos.Add(new CssPseudoCodeInfo
-                    {
-                        Name      = "hover",
-                        BodyOfCss = style._hover.ToCss().Replace(";", " !important;")
-                    });
-                }
-
-                if (style._before is not null)
-                {
-                    pseudos.Add(new CssPseudoCodeInfo
-                    {
-                        Name      = "before",
-                        BodyOfCss = style._before.ToCss().Replace(";", " !important;")
-                    });
-                }
-
-                if (style._after is not null)
-                {
-                    pseudos.Add(new CssPseudoCodeInfo
-                    {
-                        Name      = "after",
-                        BodyOfCss = style._after.ToCss().Replace(";", " !important;")
-                    });
-                }
-
-                if (style._active is not null)
-                {
-                    pseudos.Add(new CssPseudoCodeInfo
-                    {
-                        Name      = "active",
-                        BodyOfCss = style._active.ToCss().Replace(";", " !important;")
-                    });
-                }
-
-                if (pseudos.Count > 0)
-                {
-                    ((HtmlElement)instance).AddClass(context.DynamicStyles.GetClassName(new CssClassInfo
-                    {
-                        Name    = context.componentStack.Peek().GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
-                        Pseudos = pseudos
-                    }));
-                }
-
-                if (IsEmptyStyle(style))
-                {
-                    return (null, true);
-                }
-
-                return (style, false);
+                return GetStylePropertyValueOfHtmlElementForSerialize(instance, style, context);
             }
         }
 
