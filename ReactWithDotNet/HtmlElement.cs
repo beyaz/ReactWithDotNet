@@ -4,6 +4,8 @@ namespace ReactWithDotNet;
 
 public abstract class HtmlElement : Element
 {
+    internal Style _style;
+
     protected HtmlElement()
     {
     }
@@ -60,8 +62,16 @@ public abstract class HtmlElement : Element
     /// <summary>
     ///     Gets the style.
     /// </summary>
-    [React]
-    public Style style { get; internal set; } = new();
+    [JsonIgnore]
+    public Style style
+    {
+        get
+        {
+            _style ??= new Style();
+
+            return _style;
+        }
+    }
 
     /// <summary>
     ///     Imports filled values given style
@@ -89,11 +99,6 @@ public abstract class HtmlElement : Element
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();
 
-    protected internal sealed override void ProcessModifier(IModifier modifier)
-    {
-        this.Apply(modifier);
-    }
-
     /// <summary>
     ///     Adds given cssClassName ot class attribute of html element
     /// </summary>
@@ -110,6 +115,11 @@ public abstract class HtmlElement : Element
 
     internal virtual void BeforeSerialize(HtmlElement parent)
     {
+    }
+
+    protected internal sealed override void ProcessModifier(IModifier modifier)
+    {
+        this.Apply(modifier);
     }
 }
 

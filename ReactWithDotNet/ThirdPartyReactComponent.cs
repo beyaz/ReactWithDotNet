@@ -5,33 +5,43 @@ namespace ReactWithDotNet;
 
 public abstract class ThirdPartyReactComponent : Element
 {
-    [JsonPropertyName("$type")]
-    public virtual string Type
-    {
-        get
-        {
-            var type = GetType();
-
-            var reactRealType = type.GetCustomAttributes<ReactRealTypeAttribute>().FirstOrDefault()?.Type;
-            
-            return (reactRealType ?? type).FullName;
-        }
-    }
-
-    /// <summary>
-    ///     Gets the style.
-    /// </summary>
-    [React]
-    public Style style { get; } = new();
+    internal Style _style;
 
     protected ThirdPartyReactComponent()
     {
-        
     }
 
     protected ThirdPartyReactComponent(params StyleModifier[] modifiers)
     {
         style.Apply(modifiers);
+    }
+
+    [React]
+    public string className { get; set; }
+
+    public void AddClass(string cssClassName)
+    {
+        if (string.IsNullOrWhiteSpace(className))
+        {
+            className = cssClassName;
+            return;
+        }
+
+        className += " " + cssClassName;
+    }
+
+    /// <summary>
+    ///     Gets the style.
+    /// </summary>
+    [JsonIgnore]
+    public Style style
+    {
+        get
+        {
+            _style ??= new Style();
+
+            return _style;
+        }
     }
 
     /// <summary>
@@ -43,13 +53,26 @@ public abstract class ThirdPartyReactComponent : Element
         set => style.Import(value);
     }
 
+    [JsonPropertyName("$type")]
+    public virtual string Type
+    {
+        get
+        {
+            var type = GetType();
+
+            var reactRealType = type.GetCustomAttributes<ReactRealTypeAttribute>().FirstOrDefault()?.Type;
+
+            return (reactRealType ?? type).FullName;
+        }
+    }
+
     protected internal sealed override void ProcessModifier(IModifier modifier)
     {
         if (modifier == null)
         {
             return;
         }
-        
+
         if (modifier is StyleModifier styleModifier)
         {
             styleModifier.Modify(style);

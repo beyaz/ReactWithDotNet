@@ -509,6 +509,15 @@ partial class ElementSerializer
             { "$tag", htmlElement.Type }
         };
 
+        if (htmlElement._style is not null)
+        {
+            var (style, noNeedToExport) = GetStylePropertyValueOfHtmlElementForSerialize(htmlElement, htmlElement._style, context);
+            if (noNeedToExport is false)
+            {
+                map.Add("style", style);
+            }
+        }
+
         AddReactAttributes(map, htmlElement, context);
 
         if (htmlElement.innerText is not null)
@@ -525,6 +534,15 @@ partial class ElementSerializer
         {
             { "$tag", thirdPartyReactComponent.Type }
         };
+
+        if (thirdPartyReactComponent._style is not null)
+        {
+            var (style, noNeedToExport) = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent._style, context);
+            if (noNeedToExport is false)
+            {
+                map.Add("style", style);
+            }
+        }
 
         AddReactAttributes(map, thirdPartyReactComponent, context);
 

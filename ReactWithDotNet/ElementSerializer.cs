@@ -245,19 +245,24 @@ static partial class ElementSerializer
 
         if (pseudos.Count > 0)
         {
+            var cssClassName = context.DynamicStyles.GetClassName(new CssClassInfo
+            {
+                Name    = context.componentStack.Peek().GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
+                Pseudos = pseudos
+            });
+            
             if (instance is HtmlElement htmlElement)
             {
-                htmlElement.AddClass(context.DynamicStyles.GetClassName(new CssClassInfo
-                {
-                    Name    = context.componentStack.Peek().GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
-                    Pseudos = pseudos
-                }));
+                htmlElement.AddClass(cssClassName);
+            }
+            else if(instance is ThirdPartyReactComponent thirdPartyReactComponent)
+            {
+                thirdPartyReactComponent.AddClass(cssClassName);
             }
             else
             {
                 throw new NotImplementedException("Style attribute problem TODO: beyaz");
             }
-           
         }
 
         if (IsEmptyStyle(style))
