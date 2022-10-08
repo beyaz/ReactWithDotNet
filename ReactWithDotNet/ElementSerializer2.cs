@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
+using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
@@ -188,13 +189,16 @@ partial class ElementSerializer
 
                 foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
                 {
-                    if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
-                        propertyInfo.Name == nameof(reactStatefulComponent.Children) ||
-                        propertyInfo.Name == nameof(Element.children) ||
-                        propertyInfo.Name == nameof(reactStatefulComponent.key) ||
-                        propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
-                        propertyInfo.Name == "state" ||
-                        propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
+                    if (propertyInfo.Name == nameof(reactStatefulComponent.Context) 
+                        || propertyInfo.Name == nameof(reactStatefulComponent.Children)
+                        || propertyInfo.Name == nameof(Element.children)
+                        || propertyInfo.Name == nameof(reactStatefulComponent.key)
+                        || propertyInfo.Name == nameof(reactStatefulComponent.ClientTask)
+                        || propertyInfo.Name == "state"
+                        || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate)) 
+                        || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
+                        || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
+
                        )
                     {
                         continue;

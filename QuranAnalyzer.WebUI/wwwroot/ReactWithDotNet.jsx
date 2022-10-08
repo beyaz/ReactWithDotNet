@@ -876,7 +876,7 @@ function IsSerializablePrimitiveJsValue(value)
 {
     const typeofValue = typeof value;
 
-    return typeofValue === "string" || typeofValue === "number" || typeofValue === 'boolean' || value instanceof Date;
+    return typeofValue === "string" || typeofValue === "number" || typeofValue === 'boolean' || value instanceof Date || value instanceof Array;
 }
 
 function NormalizeEventArguments(eventArguments)
