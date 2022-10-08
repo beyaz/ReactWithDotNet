@@ -26,7 +26,9 @@ public class ComponentRequest
 
     public double ClientWidth { get; set; }
 
-    public int ComponentRefId { get; set; }
+    public int ComponentKey { get; set; }
+
+    public int NextAvailableKey { get; set; }
 
     public string[] EventArgumentsAsJsonArray { get; set; }
 
@@ -49,6 +51,8 @@ public class ComponentResponse
     public string ErrorMessage { get; set; }
 
     public LinkedList<string> Trace { get; set; }
+
+    public int NextAvailableKey { get; set; }
 }
 
 public static class ComponentRequestHandler
@@ -109,7 +113,7 @@ public static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
-                ComponentRefId                 = request.ComponentRefId,
+                ComponentRefId                 = request.NextAvailableKey,
                 StateTree                      = stateTree,
                 BeforeSerializeElementToClient = beforeSerializeElementToClient,
                 ReactContext                   = context
@@ -136,7 +140,8 @@ public static class ComponentRequestHandler
             {
                 ElementAsJson = map,
                 Trace         = tracer.traceMessages,
-                DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList()
+                DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList(),
+                NextAvailableKey = serializerContext.ComponentRefId
             };
         }
 
@@ -223,8 +228,8 @@ public static class ComponentRequestHandler
 
             // Invoke method
 
-            instance.key = request.ComponentRefId.ToString();
-            request.ComponentRefId++;
+            instance.key = request.ComponentKey.ToString();
+            request.ComponentKey++;
             
             try
             {
@@ -244,7 +249,7 @@ public static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
-                ComponentRefId                 = request.ComponentRefId,
+                ComponentRefId                 = request.NextAvailableKey,
                 StateTree                      = stateTree,
                 BeforeSerializeElementToClient = beforeSerializeElementToClient,
                 ReactContext                   = context
@@ -272,7 +277,8 @@ public static class ComponentRequestHandler
             {
                 ElementAsJson = map,
                 Trace         = tracer.traceMessages,
-                DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList()
+                DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList(),
+                NextAvailableKey = serializerContext.ComponentRefId
             };
         }
 

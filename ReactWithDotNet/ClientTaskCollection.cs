@@ -9,12 +9,15 @@ static partial class Mixin
         foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
         {
             var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
-            var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>);
+            var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
 
             if (isAction || isGenericAction)
             {
                 convertToTask(propertyInfo);
+                continue;
             }
+
+            throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<..>");
         }
 
         void convertToTask(PropertyInfo propertyInfo)
@@ -42,7 +45,7 @@ static partial class Mixin
 
     internal static string GetEventKey(ReactStatefulComponent reactComponent, string propertyName)
     {
-        return reactComponent.key + "::" + propertyName;
+        return $"{reactComponent.GetType().FullName}::{propertyName}::{reactComponent.key}";
     }
 }
 

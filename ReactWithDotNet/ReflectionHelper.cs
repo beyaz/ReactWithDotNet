@@ -26,4 +26,11 @@ static class ReflectionHelper
 
         return (T)JsonConvert.DeserializeObject(json,value.GetType());
     }
+
+    public static bool IsGenericAction1or2or3(this Type type)
+    {
+        var typeDefinition = type.GetGenericTypeDefinition();
+        
+        return typeDefinition == typeof(Action<>) || typeDefinition == typeof(Action<,>)|| typeDefinition == typeof(Action<,,>);
+    }
 }

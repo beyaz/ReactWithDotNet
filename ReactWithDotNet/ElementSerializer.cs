@@ -320,7 +320,7 @@ static partial class ElementSerializer
 
         if (propertyInfo.PropertyType.IsGenericType)
         {
-            if (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>))
+            if (propertyInfo.PropertyType.IsGenericAction1or2or3())
             {
                 var @delegate = (Delegate)propertyValue;
                 if (@delegate is not null)

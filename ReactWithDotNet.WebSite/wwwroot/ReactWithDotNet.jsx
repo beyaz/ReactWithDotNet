@@ -1147,7 +1147,8 @@ function HandleAction(data)
         EventHandlerMethodName: NotNull(remoteMethodName),
         FullName   : NotNull(component.constructor)[DotNetTypeOfReactComponent],
         CapturedStateTree: CaptureStateTreeFromFiberNode(component._reactInternals),
-        ComponentRefId: NotNull(component.props.$jsonNode.key)
+        ComponentRefId: NotNull(component.props.$jsonNode.key),
+        NextAvailableKey: NextAvailableKey
     };
     
     request.eventArgumentsAsJsonArray = NormalizeEventArguments(data.eventArguments).map(JSON.stringify);
@@ -1160,6 +1161,8 @@ function HandleAction(data)
         {
             throw CreateNewDeveloperError(response.ErrorMessage);
         }
+
+        NextAvailableKey = response.NextAvailableKey;
 
         ProcessDynamicCssClasses(response.DynamicStyles);
 
@@ -1394,6 +1397,8 @@ function SendRequest(request, onSuccess)
     }
 }
 
+var NextAvailableKey = 1;
+
 function RenderComponentIn(obj)
 {
     var fullTypeNameOfReactComponent = obj.fullTypeNameOfReactComponent;
@@ -1428,6 +1433,8 @@ function RenderComponentIn(obj)
             const element = response.ElementAsJson;
 
             const component = DefineComponent(element);
+
+            NextAvailableKey = response.NextAvailableKey;
 
             function renderCallback(component)
             {
