@@ -111,6 +111,78 @@ public abstract class ReactStatefulComponent : Element
 
         modifiers.Add(modifier);
     }
+
+
+
+
+    /// <summary>
+    ///     Sample event decleration <br/>
+    ///     [React] public Action OnUserChanged { get; set; }
+    /// <br/>
+    /// <br/>
+    /// Sample event dispatching <br/>
+    /// DispatchEvent(()=> OnUserChanged);
+    /// </summary>
+    protected void DispatchEvent(Expression<Func<Action>> expressionForAccessingCustomReactEventProperty)
+    {
+        var expression = (MemberExpression)expressionForAccessingCustomReactEventProperty.Body;
+
+        var propertyNameOfCustomReactEvent = expression.Member.Name;
+
+        ClientTask.DispatchEvent(Mixin.GetEventKey(this, propertyNameOfCustomReactEvent));
+    }
+
+    /// <summary>
+    ///     Sample event decleration <br/>
+    ///     [React] public Action&lt;UserInfo&gt; OnUserChanged { get; set; }
+    /// <br/>
+    /// <br/>
+    /// Sample event dispatching <br/>
+    /// DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo);
+    /// </summary>
+    protected void DispatchEvent<A>(Expression<Func<Action<A>>> expressionForAccessingCustomReactEventProperty, A a)
+    {
+        var expression = (MemberExpression)expressionForAccessingCustomReactEventProperty.Body;
+        
+        var propertyNameOfCustomReactEvent = expression.Member.Name;
+
+        ClientTask.DispatchEvent(Mixin.GetEventKey(this, propertyNameOfCustomReactEvent), a);
+    }
+
+    /// <summary>
+    ///     Sample event decleration <br/>
+    ///     [React] public Action&lt;UserInfo,OrderInfo&gt; OnUserChanged { get; set; }
+    /// <br/>
+    /// <br/>
+    /// Sample event dispatching <br/>
+    /// DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo, state.SelectedOrderInfo);
+    /// </summary>
+    protected void DispatchEvent<A,B>(Expression<Func<Action<A,B>>> customReactEvent, A a, B b)
+    {
+        var expression = (MemberExpression)customReactEvent.Body;
+
+        var propertyNameOfCustomReactEvent = expression.Member.Name;
+
+        ClientTask.DispatchEvent(Mixin.GetEventKey(this, propertyNameOfCustomReactEvent), a,b);
+    }
+
+    /// <summary>
+    ///     Sample event decleration <br/>
+    ///     [React] public Action&lt;UserInfo,OrderInfo,CommissionInfo&gt; OnUserChanged { get; set; }
+    /// <br/>
+    /// <br/>
+    /// Sample event dispatching <br/>
+    /// DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo, state.SelectedOrderInfo, state.SelectedCommissionInfo);
+    /// </summary>
+    protected void DispatchEvent<A, B, C>(Expression<Func<Action<A, B>>> customReactEvent, A a, B b, C c)
+    {
+        var expression = (MemberExpression)customReactEvent.Body;
+
+        var propertyNameOfCustomReactEvent = expression.Member.Name;
+
+        ClientTask.DispatchEvent(Mixin.GetEventKey(this, propertyNameOfCustomReactEvent), a, b, c);
+    }
+
 }
 
 public abstract class ReactComponent : ReactComponent<EmptyState>

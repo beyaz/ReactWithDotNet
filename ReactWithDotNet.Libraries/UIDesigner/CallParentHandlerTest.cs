@@ -43,8 +43,7 @@ class ComponentA : ReactComponent<ModelA>
 
         if (state.ClickCount % 3 == 0)
         {
-            this.FireEvent(nameof(OnCountMod3), OnCountMod3, state.ClickCount);
-           
+            DispatchEvent(()=> OnCountMod3, state.ClickCount);
         }
     }
 }

@@ -4,26 +4,6 @@ namespace ReactWithDotNet;
 
 static partial class Mixin
 {
-    public static void FireEvent(this ReactStatefulComponent reactComponent, string propertyName, Action _)
-    {
-        reactComponent.ClientTask.DispatchEvent(GetEventKey(reactComponent, propertyName));
-    }
-
-    public static void FireEvent<A>(this ReactStatefulComponent reactComponent, string propertyName, Action<A> _, A a)
-    {
-        reactComponent.ClientTask.DispatchEvent(GetEventKey(reactComponent, propertyName), a);
-    }
-
-    public static void FireEvent<A, B>(this ReactStatefulComponent reactComponent, string propertyName, Action<A, B> _, A a, B b)
-    {
-        reactComponent.ClientTask.DispatchEvent(GetEventKey(reactComponent, propertyName), a, b);
-    }
-
-    public static void FireEvent<A, B, C>(this ReactStatefulComponent reactComponent, string propertyName, Action<A, B, C> _, A a, B b, C c)
-    {
-        reactComponent.ClientTask.DispatchEvent(GetEventKey(reactComponent, propertyName), a, b, c);
-    }
-
     internal static void ConvertReactEventsToTaskForEventBus(this ReactStatefulComponent reactComponent)
     {
         foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() is not null))
