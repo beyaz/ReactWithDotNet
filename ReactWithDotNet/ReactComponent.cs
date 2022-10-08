@@ -154,7 +154,7 @@ public abstract class ReactStatefulComponent : Element
     {
         var propertyNameOfCustomReactEvent = expression.Member.Name;
 
-        if (GetType().GetProperty(propertyNameOfCustomReactEvent)?.GetCustomAttribute<ReactAttribute>() is null)
+        if (GetType().GetProperty(propertyNameOfCustomReactEvent)?.GetCustomAttribute<ReactCustomEventAttribute>() is null)
         {
             throw DeveloperException($"{GetType().FullName}::{propertyNameOfCustomReactEvent} should contains 'React' attribute.");
         }

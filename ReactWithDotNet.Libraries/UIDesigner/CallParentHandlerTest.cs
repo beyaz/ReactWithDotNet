@@ -14,7 +14,7 @@ class ComponentA : ReactComponent<ModelA>
         state = new ModelA { PropA = "A" };
     }
 
-    [React]
+    [ReactCustomEvent]
     public Action<int> OnCountMod3 { get; set; }
 
    

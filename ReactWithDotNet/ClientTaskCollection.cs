@@ -6,7 +6,7 @@ static partial class Mixin
 {
     internal static void ConvertReactEventsToTaskForEventBus(this ReactStatefulComponent reactComponent)
     {
-        foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() is not null))
+        foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
         {
             var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
             var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Action<>);

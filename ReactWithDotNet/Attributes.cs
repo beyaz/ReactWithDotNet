@@ -73,6 +73,11 @@ public class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
     }
 }
 
+[AttributeUsage(AttributeTargets.Property)]
+public class ReactCustomEventAttribute : Attribute
+{
+}
+
 [AttributeUsage(AttributeTargets.Method)]
 public class CacheThisMethodByTheseParametersAttribute : Attribute
 {
