@@ -19,6 +19,7 @@ const DotNetState = '$State';
 const HasComponentDidMountMethod = '$HasComponentDidMountMethod';
 const ComponentRefKey = '$Key';
 const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
+const CUSTOM_EVENT_LISTENER_MAP = '$CUSTOM_EVENT_LISTENER_MAP';
 const DotNetProperties = 'DotNetProperties';
 
 const EventBus =
@@ -1067,10 +1068,22 @@ function ProcessClientTasks(clientTasks, component)
 
             const handlerComponentKey = clientTask.HandlerComponentKey;
 
+            // avoid multiple attach we need to ensure attach an listener at once
+            {
+                const customEventListenerMapKey = clientTask.EventName + ', RemoteMethodName: ' + clientTask.RouteToMethod + ' handlerComponentKey: ' + handlerComponentKey;
+
+                if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
+                {
+                    continue;
+                }
+
+                component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+            }
+
             const onEventFired = (e) =>
             {
                 const eventArgumentsAsArray = e.detail;
-                
+
                 const handlerComponent = COMPONENT_CACHE.FindComponentByKey(handlerComponentKey);
                 if (handlerComponent === null)
                 {
@@ -1252,6 +1265,8 @@ function DefineComponent(componentDeclaration)
             this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
             this[ON_COMPONENT_DESTROY] = [];
+
+            this[CUSTOM_EVENT_LISTENER_MAP] = {};
 
             COMPONENT_CACHE.Register(this);
             
@@ -1596,7 +1611,6 @@ function ProcessDynamicCssClasses(arrayOfDynamicCssClasses)
         ReactWithDotNetDynamicCssElement.innerHTML = DynamicCssClassList.join("\n");
     }
 }
-
 
 var ReactWithDotNet =
 {
