@@ -98,7 +98,7 @@ public abstract class ReactStatefulComponent : Element
 
     /// <summary>
     ///     Sample event decleration <br />
-    ///     [React] public Action OnUserChanged { get; set; }
+    ///     [ReactCustomEvent] public Action OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
@@ -111,7 +111,7 @@ public abstract class ReactStatefulComponent : Element
 
     /// <summary>
     ///     Sample event decleration <br />
-    ///     [React] public Action&lt;UserInfo&gt; OnUserChanged { get; set; }
+    ///     [ReactCustomEvent] public Action&lt;UserInfo&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
@@ -124,7 +124,7 @@ public abstract class ReactStatefulComponent : Element
 
     /// <summary>
     ///     Sample event decleration <br />
-    ///     [React] public Action&lt;UserInfo,OrderInfo&gt; OnUserChanged { get; set; }
+    ///     [ReactCustomEvent] public Action&lt;UserInfo,OrderInfo&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
@@ -137,7 +137,7 @@ public abstract class ReactStatefulComponent : Element
 
     /// <summary>
     ///     Sample event decleration <br />
-    ///     [React] public Action&lt;UserInfo,OrderInfo,CommissionInfo&gt; OnUserChanged { get; set; }
+    ///     [ReactCustomEvent] public Action&lt;UserInfo,OrderInfo,CommissionInfo&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
@@ -156,7 +156,7 @@ public abstract class ReactStatefulComponent : Element
 
         if (GetType().GetProperty(propertyNameOfCustomReactEvent)?.GetCustomAttribute<ReactCustomEventAttribute>() is null)
         {
-            throw DeveloperException($"{GetType().FullName}::{propertyNameOfCustomReactEvent} should contains 'React' attribute.");
+            throw DeveloperException($"{GetType().FullName}::{propertyNameOfCustomReactEvent} should contains 'ReactCustomEvent' attribute.");
         }
 
         return propertyNameOfCustomReactEvent;
