@@ -1147,7 +1147,7 @@ function HandleAction(data)
         EventHandlerMethodName: NotNull(remoteMethodName),
         FullName   : NotNull(component.constructor)[DotNetTypeOfReactComponent],
         CapturedStateTree: CaptureStateTreeFromFiberNode(component._reactInternals),
-        ComponentRefId: NotNull(component.props.$jsonNode.key),
+        ComponentKey: NotNull(component.props.$jsonNode.key),
         NextAvailableKey: NextAvailableKey
     };
     
@@ -1410,7 +1410,7 @@ function RenderComponentIn(obj)
         {
             MethodName: "FetchComponent",
             FullName: fullTypeNameOfReactComponent,
-            ComponentRefId: "1"
+            NextAvailableKey: NextAvailableKey
         };
 
         function onSuccess(response)
