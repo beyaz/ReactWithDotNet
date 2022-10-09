@@ -102,6 +102,11 @@ public static partial class Mixin
     public static StyleModifier Height75Percent => HeightAsPercentOf(75);
 
     /// <summary>
+    ///     style.height = "auto"
+    /// </summary>
+    public static StyleModifier HeightAuto => new(style => style.height = "auto");
+
+    /// <summary>
     ///     <para>justifyContent = "center"</para>
     /// </summary>
     public static StyleModifier JustifyContentCenter => new(style => style.justifyContent = "center");
@@ -427,7 +432,7 @@ public static partial class Mixin
     /// <summary>
     ///     Returns a string value like "1px solid <paramref name="color" />"
     /// </summary>
-    public static string Solid_1px(string color) => "1px solid " + (color ?? throw new ArgumentNullException(nameof(color)));
+    public static string Solid_1px_(string color) => "1px solid " + (color ?? throw new ArgumentNullException(nameof(color)));
 
     /// <summary>
     ///     <br>if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value</br>
