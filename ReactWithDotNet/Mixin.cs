@@ -329,17 +329,17 @@ public static partial class Mixin
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier id(string id) => new(element => element.id = id);
+    public static HtmlElementModifier Id(string id) => new(element => element.id = id);
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier id(int id) => new(element => element.id = id.ToString());
+    public static HtmlElementModifier Id(int id) => new(element => element.id = id.ToString());
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier id(long id) => new(element => element.id = id.ToString());
+    public static HtmlElementModifier Id(long id) => new(element => element.id = id.ToString());
 
     public static StyleModifier Left(double left) => Left(left.AsPixel());
     public static StyleModifier Left(string left) => new(style => style.left = left);
