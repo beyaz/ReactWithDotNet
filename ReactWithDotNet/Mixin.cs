@@ -425,6 +425,11 @@ public static partial class Mixin
     public static StyleModifier Right(double right) => new(style => style.right = right.AsPixel());
 
     /// <summary>
+    ///     Returns a string value like "1px solid <paramref name="color" />"
+    /// </summary>
+    public static string Solid_1px(string color) => "1px solid " + (color ?? throw new ArgumentNullException(nameof(color)));
+
+    /// <summary>
     ///     <br>if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value</br>
     ///     <br>
     ///         if parent is display='flex' and flexDirection = 'column' then create empty div element with style.height =
