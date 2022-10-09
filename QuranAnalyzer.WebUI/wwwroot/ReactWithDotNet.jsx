@@ -274,10 +274,9 @@ function Clone(obj)
 
 var ClientTaskId =
 {
-    CallJsFunction: 0,
-    ListenEvent: 1,
-    DispatchEvent: 2,        
-    
+    CallJsFunction: 1,
+    ListenEvent: 2,
+    DispatchEvent: 3,
     PushHistory: 4,
     InitializeDotnetComponentEventListener: 5,
     GotoMethod: 6,

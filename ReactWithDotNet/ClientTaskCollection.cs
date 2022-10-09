@@ -34,7 +34,7 @@ static partial class Mixin
 
                 reactComponent.ClientTask.taskList.Add(new ClientTask
                 {
-                    TaskId              = 5,
+                    TaskId              = (int)TaskId.InitializeDotnetComponentEventListener,
                     EventName           = GetEventKey(reactComponent, propertyInfo.Name),
                     HandlerComponentKey = target.key,
                     RouteToMethod       = @delegate.Method.Name
@@ -132,12 +132,12 @@ public sealed class ClientTaskCollection
 
     public void NavigateToUrl(string url)
     {
-        taskList.Add(new ClientTask { TaskId = 7, Url = url });
+        taskList.Add(new ClientTask { TaskId = (int)TaskId.NavigateToUrl, Url = url });
     }
 
     public void PushHistory(string title, string url)
     {
-        taskList.Add(new ClientTask { TaskId = 4, Title = title, Url = url });
+        taskList.Add(new ClientTask { TaskId = (int)TaskId.PushHistory, Title = title, Url = url });
     }
     #endregion
 
@@ -146,26 +146,37 @@ public sealed class ClientTaskCollection
 
     void CallJsFunction(string JsFunctionPath, params object[] JsFunctionArguments)
     {
-        taskList.Add(new ClientTask { TaskId = 0, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
+        taskList.Add(new ClientTask { TaskId = (int)TaskId.CallJsFunction, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
     }
 
     internal void DispatchEvent(string eventName, params object[] eventArguments)
     {
-        taskList.Add(new ClientTask { TaskId = 2, EventName = eventName, EventArguments = eventArguments });
+        taskList.Add(new ClientTask { TaskId = (int)TaskId.DispatchEvent, EventName = eventName, EventArguments = eventArguments });
     }
 
     void GotoMethod(int timeout, string methodName, params object[] methodArguments)
     {
-        taskList.Add(new ClientTask { TaskId = 6, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });
+        taskList.Add(new ClientTask { TaskId = (int)TaskId.GotoMethod, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });
     }
 
     internal void ListenEvent(string eventName, string routeToMethod)
     {
-        taskList.Add(new ClientTask { TaskId = 1, EventName = eventName, RouteToMethod = routeToMethod });
+        taskList.Add(new ClientTask { TaskId = (int)TaskId.ListenEvent, EventName = eventName, RouteToMethod = routeToMethod });
     }
     #endregion
-}
 
+   
+}
+enum TaskId
+{
+    CallJsFunction = 1,
+    ListenEvent = 2,
+    DispatchEvent = 3,
+    PushHistory = 4,
+    InitializeDotnetComponentEventListener = 5,
+    GotoMethod = 6,
+    NavigateToUrl = 7
+}
 public class JsClientEventInfo
 {
     #region Fields
