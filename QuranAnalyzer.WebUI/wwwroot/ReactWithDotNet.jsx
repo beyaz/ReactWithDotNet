@@ -993,11 +993,25 @@ function ConvertToShadowHtmlElement(htmlElement)
         }
     }
 
+    let selectionStart = null;
+    if (htmlElement.selectionStart != null)
+    {
+        if (typeof htmlElement.selectionStart === 'number')
+        {
+            selectionStart = htmlElement.selectionStart;
+        }
+    }
+
     return {
-        tagName: htmlElement.tagName,
         id: htmlElement.id,
-        value: value,
-        selectedIndex: selectedIndex
+        offsetHeight: htmlElement.offsetHeight,
+        offsetLeft: htmlElement.offsetLeft,
+        offsetTop: htmlElement.offsetTop,
+        offsetWidth: htmlElement.offsetWidth,
+        selectedIndex: selectedIndex,
+        selectionStart: selectionStart,
+        tagName: htmlElement.tagName,        
+        value: value
     };
 }
 

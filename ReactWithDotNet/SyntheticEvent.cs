@@ -14,15 +14,20 @@ public class UIEvent : BaseSyntheticEvent
 
 public class ShadowHtmlElement
 {
-    #region Public Properties
     public string id { get; set; }
-    public string tagName { get; set; }
-    #endregion
 
-    //public int selectionStart { get; set; }
-    public string value { get; set; }
+    public int offsetHeight { get; set; }
+    public int offsetLeft { get; set; }
+    public int offsetTop { get; set; }
+    public int offsetWidth { get; set; }
 
     public int? selectedIndex { get; set; }
+
+    public int? selectionStart { get; set; }
+
+    public string tagName { get; set; }
+
+    public string value { get; set; }
 }
 
 public sealed class MouseEvent : UIEvent
@@ -62,7 +67,7 @@ public sealed class MouseEvent : UIEvent
 public sealed class ChangeEvent : UIEvent
 {
     public bool bubbles { get; set; }
-    
+
     public ShadowHtmlElement target { get; set; }
 
     public double timeStamp { get; set; }
