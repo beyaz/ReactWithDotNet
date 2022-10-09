@@ -20,7 +20,9 @@ public class ShadowHtmlElement
     #endregion
 
     //public int selectionStart { get; set; }
-    //public string value { get; set; }
+    public string value { get; set; }
+
+    public int? selectedIndex { get; set; }
 }
 
 public sealed class MouseEvent : UIEvent
@@ -50,6 +52,17 @@ public sealed class MouseEvent : UIEvent
 
     public bool shiftKey { get; set; }
 
+    public ShadowHtmlElement target { get; set; }
+
+    public double timeStamp { get; set; }
+
+    public string type { get; set; }
+}
+
+public sealed class ChangeEvent : UIEvent
+{
+    public bool bubbles { get; set; }
+    
     public ShadowHtmlElement target { get; set; }
 
     public double timeStamp { get; set; }

@@ -120,10 +120,12 @@ public class select : HtmlElement
     public string value { get; set; }
 
     [React]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = nameof(onChange))]
     public Expression<Func<string>> valueBind { get; set; }
-    
-    
+
+    [React]
+    public Action<ChangeEvent> onChange { get; set; }
+
     public select()
     {
     }
@@ -134,6 +136,12 @@ public class select : HtmlElement
 }
 public class option : HtmlElement
 {
+    [React]
+    public bool? selected { get; set; }
+
+    [React]
+    public string value { get; set; }
+    
     public option()
     {
     }

@@ -893,15 +893,9 @@ function NormalizeEventArguments(eventArguments)
             return ConvertToSyntheticMouseEvent(obj);
         }
 
-        // inputtext: // todo take from attribute
         if (obj && obj._reactName === "onChange")
         {
-            return {
-                target: {
-                    value: obj.target.value,
-                    selectionStart: obj.target.selectionStart
-                }
-            };
+            return ConvertToSyntheticChangeEvent(obj);
         }
 
         if (obj && (obj._reactName === "onMouseLeave" || obj._reactName === "onMouseEnter"))
@@ -966,11 +960,44 @@ function ConvertToSyntheticMouseEvent(e)
     };
 }
 
+function ConvertToSyntheticChangeEvent(e)
+{
+    const target = ConvertToShadowHtmlElement(e.target);
+
+    return {        
+        bubbles:   e.bubbles,
+        target:    target,
+        timeStamp: e.timeStamp,        
+        type:      e.type
+    };
+}
+
 function ConvertToShadowHtmlElement(htmlElement)
 {
+    let value = null;
+
+    if (htmlElement.value != null)
+    {
+        if (typeof htmlElement.value === 'string')
+        {
+            value = htmlElement.value;
+        }
+    }
+
+    let selectedIndex = null;
+    if (htmlElement.selectedIndex != null)
+    {
+        if (typeof htmlElement.selectedIndex === 'number')
+        {
+            selectedIndex = htmlElement.selectedIndex;
+        }
+    }
+
     return {
         tagName: htmlElement.tagName,
-        id: htmlElement.id
+        id: htmlElement.id,
+        value: value,
+        selectedIndex: selectedIndex
     };
 }
 
