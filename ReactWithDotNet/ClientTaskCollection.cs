@@ -40,6 +40,10 @@ static partial class Mixin
                     RouteToMethod       = @delegate.Method.Name
                 });
             }
+            else
+            {
+                throw DeveloperException("Action handler method should belong to React component");
+            }
         }
     }
 
@@ -114,6 +118,26 @@ public sealed class ClientTaskCollection
     {
         GotoMethod(timeout, action.Method.Name, argument);
     }
+    
+    public void OnOutsideClicked(string idOfElement, Action action)
+    {
+        if (action.Target is ReactStatefulComponent target)
+        {
+            taskList.Add(new ClientTask
+            {
+                TaskId        = (int)TaskId.OnOutsideClicked,
+                IdOfElement   = idOfElement,
+                RouteToMethod = action.Method.Name,
+                HandlerComponentKey = target.key
+            });
+        }
+        else
+        {
+            throw DeveloperException("Action handler method should belong to React component");
+        }
+            
+        
+    }
 
     public void GotoMethod<TArgument1, TArgument2>(int timeout, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
     {
@@ -175,7 +199,8 @@ enum TaskId
     PushHistory = 4,
     InitializeDotnetComponentEventListener = 5,
     GotoMethod = 6,
-    NavigateToUrl = 7
+    NavigateToUrl = 7,
+    OnOutsideClicked =8
 }
 public class JsClientEventInfo
 {

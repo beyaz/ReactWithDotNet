@@ -19,4 +19,5 @@ sealed class ClientTask
     public string MethodName { get; set; }
     public object[] MethodArguments { get; set; }
     public string HandlerComponentKey { get; set; }
+    public string IdOfElement { get; set; }
 }

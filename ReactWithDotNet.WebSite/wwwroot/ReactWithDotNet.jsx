@@ -274,14 +274,14 @@ function Clone(obj)
 
 var ClientTaskId =
 {
-    CallJsFunction: 0,
-    ListenEvent: 1,
-    DispatchEvent: 2,        
-    
+    CallJsFunction: 1,
+    ListenEvent: 2,
+    DispatchEvent: 3,
     PushHistory: 4,
     InitializeDotnetComponentEventListener: 5,
     GotoMethod: 6,
-    NavigateToUrl : 7
+    NavigateToUrl: 7,
+    OnOutsideClicked: 8
 }
 
 function IfNull(value, defaultValue)
@@ -1109,7 +1109,7 @@ function ProcessClientTasks(clientTasks, component)
 
             const handlerComponentKey = clientTask.HandlerComponentKey;
 
-            // avoid multiple attach we need to ensure attach an listener at once
+            // avoid multiple attach we need to ensure attach a listener at once
             {
                 const customEventListenerMapKey = clientTask.EventName + ', RemoteMethodName: ' + clientTask.RouteToMethod + ' handlerComponentKey: ' + handlerComponentKey;
 
@@ -1163,6 +1163,52 @@ function ProcessClientTasks(clientTasks, component)
         if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
         {
             window.location.replace(location.origin + clientTask.Url);
+
+            continue;
+        }
+
+        if (clientTask.TaskId === ClientTaskId.OnOutsideClicked)
+        {
+            // avoid multiple attach we need to ensure attach a listener at once
+            {
+                const customEventListenerMapKey = 'OnOutsideClicked(IdOfElement:' + clientTask.IdOfElement + ', remoteMethodName:' + clientTask.RouteToMethod + ')';
+
+                if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
+                {
+                    continue;
+                }
+
+                component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+            }
+
+            const handlerComponentKey = clientTask.HandlerComponentKey;
+
+            function onDocumentClick(e)
+            {
+                const element = document.getElementById(clientTask.IdOfElement);
+                if (element == null)
+                {
+                    throw CreateNewDeveloperError("Element not found for calculating OnOutsideClicked operation. id: " + clientTask.IdOfElement);
+                }
+                const isClickedOutside = !element.contains(e.target)
+                if (isClickedOutside)
+                {
+                    const handlerComponent = COMPONENT_CACHE.FindComponentByKey(handlerComponentKey);
+                    if (handlerComponent === null)
+                    {
+                        throw CreateNewDeveloperError('Handler component not found. Handler component key is ' + handlerComponentKey);
+                    }
+
+                    StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/handlerComponent, /*eventArguments*/[]);
+                }
+            }
+
+            document.addEventListener('click', onDocumentClick);
+
+            component[ON_COMPONENT_DESTROY].push(() =>
+            {
+                document.removeEventListener('click', onDocumentClick);
+            });
 
             continue;
         }

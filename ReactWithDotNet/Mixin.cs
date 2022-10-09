@@ -248,6 +248,24 @@ public static partial class Mixin
         }
     }
 
+    public static void Apply(this HtmlElement htmlElement, params HtmlElementModifier[] modifiers)
+    {
+        if (modifiers is null)
+        {
+            return;
+        }
+
+        foreach (var modify in modifiers)
+        {
+            if (modify is null)
+            {
+                continue;
+            }
+
+            modify.Modify(htmlElement);
+        }
+    }
+
     public static StyleModifier Background(string background) => new(style => style.background = background);
 
     public static StyleModifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
@@ -460,6 +478,21 @@ public static partial class Mixin
         return new StyleModifier(apply);
 
         void apply(Style instance)
+        {
+            instance.Apply(modifiers);
+        }
+    }
+
+    public static HtmlElementModifier When(bool condition, params HtmlElementModifier[] modifiers)
+    {
+        if (!condition)
+        {
+            return null;
+        }
+
+        return new HtmlElementModifier(apply);
+
+        void apply(HtmlElement instance)
         {
             instance.Apply(modifiers);
         }
