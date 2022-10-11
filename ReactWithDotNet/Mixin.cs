@@ -18,6 +18,8 @@ public static partial class Mixin
 
     public static StyleModifier BoxSizingBorderBox => new(style => style.boxSizing = "border-box");
 
+    public static StyleModifier BoxSizingContentBox => new(style => style.boxSizing = "content-box");
+
     /// <summary>
     ///     style.color = 'white'
     /// </summary>
@@ -276,6 +278,11 @@ public static partial class Mixin
     public static StyleModifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
 
     public static StyleModifier Border(string border) => new(style => style.border = border);
+    
+    public static StyleModifier Border(string top, string right, string bottom, string left) => new(style => style.border = $"{top} {right} {bottom} {left}");
+
+    public static StyleModifier Border(double top, double right, double bottom, double left) => Border(top.AsPixel(), right.AsPixel(), bottom.AsPixel(), left.AsPixel());
+
     public static StyleModifier BorderBottom(string borderBottom) => new(style => style.borderBottom = borderBottom);
     public static StyleModifier BorderLeft(string borderLeft) => new(style => style.borderLeft = borderLeft);
 

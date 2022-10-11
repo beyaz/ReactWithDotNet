@@ -128,6 +128,9 @@ public sealed partial class Style
 
     public string boxShadow { get; set; }
 
+    /// <summary>
+    /// Allows us to include the padding and border in an element's total width and height.
+    /// </summary>
     public string boxSizing { get; set; }
 
     public string captionSide { get; set; }
