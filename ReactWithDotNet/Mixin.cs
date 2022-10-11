@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Globalization;
 using System.Text.Json;
 
 namespace ReactWithDotNet;
@@ -272,6 +273,16 @@ public static partial class Mixin
             modify.Modify(htmlElement);
         }
     }
+
+    /// <summary>
+    /// style.opacity = <paramref name="opacity"/>
+    /// </summary>
+    public static StyleModifier Opacity(string opacity) => new(style => style.opacity = opacity);
+
+    /// <summary>
+    /// style.opacity = <paramref name="opacity"/>
+    /// </summary>
+    public static StyleModifier Opacity(double opacity) => new(style => style.opacity = opacity.ToString(CultureInfo.InvariantCulture));
 
     public static StyleModifier Background(string background) => new(style => style.background = background);
 

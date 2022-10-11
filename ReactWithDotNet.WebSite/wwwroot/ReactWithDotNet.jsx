@@ -595,7 +595,7 @@ function tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArgum
 
             if (cachedMethodInfo.MethodName === remoteMethodName && eventArguments.length === 1)
             {
-                if (isTwoLiteralObjectEquivent(eventArguments[0], cachedMethodInfo.Parameter))
+                if (isEquivent(eventArguments[0], cachedMethodInfo.Parameter))
                 {
                     return cachedMethodInfo;
                 }                       
@@ -1044,12 +1044,25 @@ function ProcessClientTasks(clientTasks, component)
             NotNull(component);
 
             TraceClientTask(component, 'GotoMethod', clientTask.MethodName);
-            
+
+            const remoteMethodName      = clientTask.MethodName;
+            const remoteMethodArguments = clientTask.MethodArguments || [];
+
             PushToFunctionExecutionQueue(() =>
             {
                 setTimeout(() =>
                 {
-                    StartAction(/*remoteMethodName*/clientTask.MethodName, /*component*/component, /*eventArguments*/clientTask.MethodArguments || []);
+                    const cachedMethodInfo = tryToFindCachedMethodInfo(component, remoteMethodName, remoteMethodArguments);
+                    if (cachedMethodInfo)
+                    {
+                        const newState = CaclculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
+
+                        component.setState(newState);
+
+                        return;
+                    }
+
+                    StartAction(remoteMethodName, /*component*/component, remoteMethodArguments);
 
                 }, clientTask.Timeout);
 
