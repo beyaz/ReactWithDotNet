@@ -154,6 +154,11 @@ public sealed class ClientTaskCollection
         ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
     }
 
+    public void ListenEventOnlyOnce(JsClientEventInfo eventInfo, Action routeToMethod)
+    {
+        taskList.Add(new ClientTask { TaskId = (int)TaskId.ListenEventOnlyOnce, EventName = eventInfo.Name, RouteToMethod = routeToMethod.Method.Name });
+    }
+
     public void NavigateToUrl(string url)
     {
         taskList.Add(new ClientTask { TaskId = (int)TaskId.NavigateToUrl, Url = url });
@@ -200,7 +205,8 @@ enum TaskId
     InitializeDotnetComponentEventListener = 5,
     GotoMethod = 6,
     NavigateToUrl = 7,
-    OnOutsideClicked =8
+    OnOutsideClicked =8,
+    ListenEventOnlyOnce = 9
 }
 public class JsClientEventInfo
 {

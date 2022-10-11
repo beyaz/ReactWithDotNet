@@ -281,7 +281,8 @@ var ClientTaskId =
     InitializeDotnetComponentEventListener: 5,
     GotoMethod: 6,
     NavigateToUrl: 7,
-    OnOutsideClicked: 8
+    OnOutsideClicked: 8,
+    ListenEventOnlyOnce: 9
 }
 
 function IfNull(value, defaultValue)
@@ -1113,6 +1114,36 @@ function ProcessClientTasks(clientTasks, component)
 
             continue;
         }
+
+        if (clientTask.TaskId === ClientTaskId.ListenEventOnlyOnce)
+        {
+            NotNull(component);
+
+            TraceClientTask(component, 'ListenEventOnlyOnce', clientTask.EventName);
+
+            const onEventFired = (e) =>
+            {
+                EventBus.Remove(clientTask.EventName, onEventFired);
+
+                const eventArgumentsAsArray = e.detail;
+
+                StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/component, /*eventArguments*/eventArgumentsAsArray);
+            };
+
+            NotNull(component[ON_COMPONENT_DESTROY]);
+
+            component[ON_COMPONENT_DESTROY].push(() =>
+            {
+                TraceClientTask(component, 'UNDO-ListenEvent', clientTask.EventName);
+                EventBus.Remove(clientTask.EventName, onEventFired);
+            });
+
+            EventBus.On(clientTask.EventName, onEventFired);
+
+            continue;
+        }
+
+        
 
         if (clientTask.TaskId === ClientTaskId.InitializeDotnetComponentEventListener)
         {
