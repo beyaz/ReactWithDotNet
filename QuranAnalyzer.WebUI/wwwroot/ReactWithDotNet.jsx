@@ -1438,19 +1438,6 @@ function DefineComponent(componentDeclaration)
             }
         }
 
-        componentWillUnmount()
-        {            
-            const length = this[ON_COMPONENT_DESTROY].length;
-            for (var i = 0; i < length; i++)
-            {
-                this[ON_COMPONENT_DESTROY][i]();
-            }            
-
-            COMPONENT_CACHE.Unregister(this);
-
-            TraceComponent(this, "componentWillUnmount");
-        }
-
         componentDidUpdate(previousProps, previousState)
         {
             TraceComponent(this, "componentDidUpdate");
@@ -1463,8 +1450,20 @@ function DefineComponent(componentDeclaration)
                 partialState[ClientTasks] = null;
 
                 this.setState(partialState, ()=> ProcessClientTasks(clientTasks, this));
-            }
-            
+            }            
+        }
+
+        componentWillUnmount()
+        {            
+            const length = this[ON_COMPONENT_DESTROY].length;
+            for (var i = 0; i < length; i++)
+            {
+                this[ON_COMPONENT_DESTROY][i]();
+            }            
+
+            COMPONENT_CACHE.Unregister(this);
+
+            TraceComponent(this, "componentWillUnmount");
         }
 
         static getDerivedStateFromProps(nextProps, prevState) 
