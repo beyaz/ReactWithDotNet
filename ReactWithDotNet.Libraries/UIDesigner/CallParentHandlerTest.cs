@@ -1,5 +1,10 @@
 ﻿namespace ReactWithDotNet.CallParentHandlerTest;
 
+static class Event
+{
+    public static JsClientEventInfo<int> OnMode3 = new(nameof(OnMode3));
+    public static JsClientEventInfo<int> OnMode4 = new(nameof(OnMode4));
+}
 class ModelA
 {
     public string PropA { get; set; }
@@ -45,6 +50,11 @@ class ComponentA : ReactComponent<ModelA>
         {
             DispatchEvent(()=> OnCountMod3, state.ClickCount);
         }
+
+        if (state.ClickCount % 2 == 0)
+        {
+            ClientTask.DispatchEvent(Event.OnMode3,state.ClickCount);
+        }
     }
 }
 
@@ -57,11 +67,24 @@ class ModelB
 
 class ComponentB : ReactComponent<ModelB>
 {
-   
+    [ReactCustomEvent]
+    public Action<int> OnCountMod4 { get; set; }
 
     protected override void constructor()
     {
         state = new ModelB { PropB = "B" };
+        
+        
+    }
+
+    protected override void componentDidMount()
+    {
+        ClientTask.ListenEvent(Event.OnMode3, OnMode3);
+    }
+
+    void OnMode3(int valueInA)
+    {
+        state.ClickCount += valueInA;
     }
 
     protected override Element render()
@@ -76,8 +99,17 @@ class ComponentB : ReactComponent<ModelB>
                 padding = "50px"
             },
             innerText = state.PropB + state.ClickCount,
-            onClick   = _ => state.ClickCount++
+            onClick   = OnBClicked
         };
+    }
+
+    void OnBClicked(MouseEvent _)
+    {
+        state.ClickCount++;
+        if (state.ClickCount % 4 == 0)
+        {
+            DispatchEvent(() => OnCountMod4, state.ClickCount);
+        }
     }
 }
 
@@ -96,7 +128,7 @@ class Container : ReactComponent<ContainerModel>
             children =
             {
                 new ComponentA{ OnCountMod3 = OnCountMod3},
-                new ComponentB(),
+                new ComponentB{OnCountMod4 = OnCountMod4},
                 new div{text = state.CalledFromChild}
             }
         };
@@ -106,7 +138,11 @@ class Container : ReactComponent<ContainerModel>
     void OnCountMod3(int arg1)
     {
         state.CalledFromChild = "Called:" + arg1;
+    }
 
+    void OnCountMod4(int arg1)
+    {
+        state.CalledFromChild = "Called:" + arg1;
     }
 }
 
