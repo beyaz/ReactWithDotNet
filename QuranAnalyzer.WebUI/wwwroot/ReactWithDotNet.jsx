@@ -534,6 +534,16 @@ class ComponentCache
 
 const COMPONENT_CACHE = new ComponentCache();
 
+function GetComponentByKey(key)
+{
+    const component = COMPONENT_CACHE.FindComponentByKey(key);
+    if (component == null)
+    {
+        throw CreateNewDeveloperError("Component not found. Component key is " + key);
+    }
+
+    return component;
+}
 
 function isEquivent(a, b)
 {
@@ -635,11 +645,7 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
             arguments[0].stopPropagation();
         }
 
-        const targetComponent = COMPONENT_CACHE.FindComponentByKey(targetComponentKey);
-        if (targetComponent === null)
-        {
-            throw CreateNewDeveloperError('Target component not found. Target component key is ' + targetComponentKey);
-        }
+        const targetComponent = GetComponentByKey(targetComponentKey);
 
         let eventArguments = Array.prototype.slice.call(arguments);
 
@@ -1169,11 +1175,7 @@ function ProcessClientTasks(clientTasks, component)
             {
                 const eventArgumentsAsArray = e.detail;
 
-                const handlerComponent = COMPONENT_CACHE.FindComponentByKey(handlerComponentKey);
-                if (handlerComponent === null)
-                {
-                    throw CreateNewDeveloperError('Handler component not found. Handler component key is ' + handlerComponentKey);
-                }
+                const handlerComponent = GetComponentByKey(handlerComponentKey);
 
                 StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/handlerComponent, /*eventArguments*/eventArgumentsAsArray);
             };
@@ -1237,11 +1239,7 @@ function ProcessClientTasks(clientTasks, component)
                 const isClickedOutside = !element.contains(e.target)
                 if (isClickedOutside)
                 {
-                    const handlerComponent = COMPONENT_CACHE.FindComponentByKey(handlerComponentKey);
-                    if (handlerComponent === null)
-                    {
-                        throw CreateNewDeveloperError('Handler component not found. Handler component key is ' + handlerComponentKey);
-                    }
+                    const handlerComponent = GetComponentByKey(handlerComponentKey);
 
                     StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/handlerComponent, /*eventArguments*/[]);
                 }
