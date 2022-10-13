@@ -1415,6 +1415,8 @@ function DefineComponent(componentDeclaration)
         {
             TraceComponent(this, "componentDidMount");
 
+            const me = this;
+
             const clientTasks = this.state[ClientTasks];            
             if (clientTasks)
             {
@@ -1422,17 +1424,42 @@ function DefineComponent(componentDeclaration)
 
                 partialState[ClientTasks] = null;
 
-                this.setState(partialState, ()=> ProcessClientTasks(clientTasks, this));
+                this.setState(partialState, ()=> ProcessClientTasks(clientTasks, me));
             }
 
             const hasComponentDidMountMethod = this.state[HasComponentDidMountMethod];
             if (hasComponentDidMountMethod)
             {
+                // try call from cache
+                {
+                    const cachedMethodInfo = tryToFindCachedMethodInfo(this, 'componentDidMount', []);
+                    if (cachedMethodInfo)
+                    {
+                        const newState = CaclculateNewStateFromJsonElement(this.state, cachedMethodInfo.ElementAsJson);
+
+                        newState[HasComponentDidMountMethod] = null;
+
+                        const incomingClientTasks = newState[ClientTasks];
+
+                        function stateCallback()
+                        {
+                            if (incomingClientTasks)
+                            {
+                                ProcessClientTasks(incomingClientTasks, me);
+                            }
+                        }
+
+                        this.setState(newState, stateCallback);
+
+                        return;
+                    }
+                }
+
                 const partialState = {};
 
                 partialState[HasComponentDidMountMethod] = null;
 
-                this.setState(partialState, ()=>StartAction(/*remoteMethodName*/'componentDidMount', /*component*/this, /*eventArguments*/[]));
+                this.setState(partialState, ()=>StartAction(/*remoteMethodName*/'componentDidMount', /*component*/me, /*eventArguments*/[]));
             }
         }
 
