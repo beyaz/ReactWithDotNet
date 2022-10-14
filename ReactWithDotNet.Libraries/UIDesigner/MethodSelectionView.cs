@@ -111,9 +111,10 @@ class MethodSelectionView
             {
                 new SingleSelectionTree<MetadataNode>
                 {
+                    filterValue = "link",
                     filter            = true,
                     filterBy          = nameof(MetadataNode.Name),
-                    filterPlaceholder = "Search Method",
+                    filterPlaceholder = "Search react components or methods which returns Element",
                     nodeTemplate      = nodeTemplate,
                     value             = GetNodes(),
                     onSelectionChange = OnSelectionChange,

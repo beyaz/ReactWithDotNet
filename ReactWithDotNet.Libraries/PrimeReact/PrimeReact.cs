@@ -2,6 +2,8 @@
 
 public class ElementBase : ThirdPartyReactComponent
 {
+    protected const string Prefix = "ReactWithDotNet.PrimeReact.";
+    
     [React]
     public string tooltip { get; set; }
 
