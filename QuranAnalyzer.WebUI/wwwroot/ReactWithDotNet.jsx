@@ -1295,7 +1295,12 @@ function HandleAction(data)
 
         ProcessDynamicCssClasses(response.DynamicStyles);
 
-        data.component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), OnReactStateReady);
+        function stateCallback()
+        {
+            OnReactStateReady();
+        }
+
+        data.component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
     }
 
     SendRequest(request, onSuccess);
