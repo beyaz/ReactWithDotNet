@@ -91,34 +91,34 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
                 },
 
 
-                new AutoComplete<EnvironmentInfo>
-                {
-                    suggestions = state.Suggestions, //.Select(x=>x.Name),
-                    dropdown    = true,
-                    field       = nameof(EnvironmentInfo.Name),
+                //new AutoComplete<EnvironmentInfo>
+                //{
+                //    suggestions = state.Suggestions, //.Select(x=>x.Name),
+                //    dropdown    = true,
+                //    field       = nameof(EnvironmentInfo.Name),
 
-                    value = state.SelectedEnvironment ?? (object)state.SelectedEnvironmentAsString,
-                    onChange = e =>
-                    {
-                        state.SelectedEnvironment = e.GetValue<EnvironmentInfo>();
-                        if (state.SelectedEnvironment == null)
-                        {
-                            state.SelectedEnvironmentAsString = e.GetValue<string>();
-                        }
-                        else
-                        {
-                            state.SelectedEnvironmentAsString = null;
-                        }
-                    },
-                    completeMethod = e =>
-                    {
-                        state.Suggestions = state.ItemsSource.Where(x => x.Name.Contains(e.query, StringComparison.OrdinalIgnoreCase)).ToList();
-                    },
-                    itemTemplate = item => new HStack
-                    {
-                        new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
-                    }
-                }
+                //    value = state.SelectedEnvironment ?? state.SelectedEnvironmentAsString,
+                //    onChange = e =>
+                //    {
+                //        state.SelectedEnvironment = e.value;
+                //        if (state.SelectedEnvironment == null)
+                //        {
+                //            state.SelectedEnvironmentAsString = e.value;
+                //        }
+                //        else
+                //        {
+                //            state.SelectedEnvironmentAsString = null;
+                //        }
+                //    },
+                //    completeMethod = e =>
+                //    {
+                //        state.Suggestions = state.ItemsSource.Where(x => x.Name.Contains(e.query, StringComparison.OrdinalIgnoreCase)).ToList();
+                //    },
+                //    itemTemplate = item => new HStack
+                //    {
+                //        new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
+                //    }
+                //}
             }
         };
 

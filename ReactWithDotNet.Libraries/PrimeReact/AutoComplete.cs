@@ -82,6 +82,16 @@ public class AutoComplete : ElementBase
 public class AutoComplete<TSuggestion> : ElementBase
 {
     [React]
+    public bool? autoFocus { get; set; }
+    
+    
+    /// <summary>
+    /// Delay between keystrokes to wait before sending a query.
+    /// </summary>
+    [React]
+    public double? delay{ get; set; }
+    
+    [React]
     public object value { get; set; }
     
     /// <summary>
@@ -94,7 +104,7 @@ public class AutoComplete<TSuggestion> : ElementBase
     ///     Callback to invoke when autocomplete value changes.
     /// </summary>
     [React]
-    public Action<AutoCompleteChangeParams> onChange { get; set; }
+    public Action<AutoCompleteChangeParams<TSuggestion>> onChange { get; set; }
 
     /// <summary>
     ///     Callback to invoke to search for suggestions.
@@ -169,6 +179,12 @@ public class AutoCompleteChangeParams
         
         return (T)value;
     }
+}
+
+
+public sealed class AutoCompleteChangeParams<TSuggestion>
+{
+    public TSuggestion value { get; set; }
 }
 
 public class AutoCompleteCompleteMethodParams

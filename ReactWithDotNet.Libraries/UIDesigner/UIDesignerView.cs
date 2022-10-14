@@ -47,6 +47,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     protected override Element render()
     {
+        return BuildFolderSelectionPart();
         var propertyPanel = new FlexColumn(Padding(5))
         {
             BuildFolderSelectionPart(),
@@ -261,18 +262,23 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         var LastQuery      = state.SelectedFolderLastQuery;
         var Suggestions    = state.SelectedFolderSuggestions;
 
-        var autoComplete = new AutoComplete
+        var autoComplete = new AutoComplete<Pair>
         {
-            suggestions    = Suggestions.Where(x => x.Contains(LastQuery ?? "", StringComparison.OrdinalIgnoreCase)).ToList(),
+            field = "Key",
+            dropdown = true,
+            forceSelection = true,
+            autoFocus = true,
+            delay = 1000,
+            suggestions    = Suggestions.Where(x => x.Contains(LastQuery ?? "", StringComparison.OrdinalIgnoreCase)).ToList().Select(x=>new Pair{Key = x,Value = x}),
             value          = SelectedFolder,
             onChange       = OnFolderChange,
             completeMethod = OnFolderComplete,
-            itemTemplate = item => new FlexRow(AlignItemsCenter)
-            {
-                new img { src = GetSvgUrl("Folder"), width = 20, height = 20 },
+            //itemTemplate = item => new FlexRow(AlignItemsCenter)
+            //{
+            //    new img { src = GetSvgUrl("Folder"), width = 20, height = 20 },
 
-                new div { text = item, style = { marginLeft = "7px" } }
-            }
+            //    new div { text = item, style = { marginLeft = "7px" } }
+            //}
         };
 
         return new div
@@ -304,11 +310,14 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         state.SelectedAssemblyLastQuery = e.query;
     }
 
-    void OnFolderChange(AutoCompleteChangeParams e)
+    //void OnFolderChange(AutoCompleteChangeParams<string> e)
+    //{
+    //    state.SelectedFolder = e.value;
+    //}
+    void OnFolderChange(AutoCompleteChangeParams<Pair> e)
     {
-        state.SelectedFolder = e.GetValue<string>();
+        state.SelectedFolder = e.value?.Key;
     }
-
     void OnFolderComplete(AutoCompleteCompleteMethodParams e)
     {
         state.SelectedFolderLastQuery = e.query;
@@ -331,3 +340,11 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         StateCache.SaveState(state);
     }
 }
+
+class Pair
+{
+    public string Key { get; set; }
+    public string Value { get; set; }
+}
+
+
