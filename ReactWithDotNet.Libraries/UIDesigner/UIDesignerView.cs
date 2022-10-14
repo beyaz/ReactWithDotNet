@@ -11,15 +11,38 @@ namespace ReactWithDotNet.UIDesigner;
 
 class UIDesignerView : ReactComponent<UIDesignerModel>
 {
-    #region Static Fields
-    static JsClientEventInfo OnBrowserInactive = new(nameof(OnBrowserInactive));
     static JsClientFunctionInfo<int> InitializeUIDesignerEvents = new(nameof(InitializeUIDesignerEvents));
-    #endregion
+    static JsClientEventInfo OnBrowserInactive = new(nameof(OnBrowserInactive));
 
-    #region Public Methods
     public void Refresh()
     {
         SaveState();
+    }
+
+    protected override void componentDidMount()
+    {
+        ClientTask.ListenEvent(OnBrowserInactive, Refresh);
+        ClientTask.CallJsFunction(InitializeUIDesignerEvents, 1000);
+    }
+
+    protected override void constructor()
+    {
+        state = StateCache.ReadState() ?? new UIDesignerModel();
+
+        var defaultAssemblyDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar;
+
+        var suggestionDirectories = new List<string>();
+        if (state.SelectedFolderSuggestions is not null)
+        {
+            suggestionDirectories.AddRange(state.SelectedFolderSuggestions);
+        }
+
+        if (!suggestionDirectories.Contains(defaultAssemblyDirectory))
+        {
+            suggestionDirectories.Add(defaultAssemblyDirectory);
+        }
+
+        state.SelectedFolderSuggestions = suggestionDirectories;
     }
 
     protected override Element render()
@@ -86,7 +109,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                             {
                                 state.SelectedDotNetMemberSpecification = new DotNetMemberSpecification();
                             }
-                            
                         }
 
                         SaveState();
@@ -125,7 +147,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         }
                     }
                 }
-                
             }
         };
 
@@ -167,10 +188,10 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         propertyPanel
                     }
                 },
-                new SplitterPanel(DisplayFlex,JustifyContentCenter)
+                new SplitterPanel(DisplayFlex, JustifyContentCenter)
                 {
-                    size  = 75,
-                    
+                    size = 75,
+
                     children =
                     {
                         outputPanel
@@ -190,38 +211,6 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 width = "100%", height = "100%", padding = "7px"
             }
         };
-    }
-    #endregion
-
-    #region Methods
-    protected override void componentDidMount()
-    {
-        ClientTask.ListenEvent(OnBrowserInactive, Refresh);
-        ClientTask.CallJsFunction(InitializeUIDesignerEvents, 1000);
-    }
-
-    protected override void constructor()
-    {
-        state = StateCache.ReadState() ?? new UIDesignerModel();
-
-        var defaultAssemblyDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar;
-
-        var suggestionDirectories = new List<string>();
-        if (state.SelectedFolderSuggestions is not null)
-        {
-            suggestionDirectories.AddRange(state.SelectedFolderSuggestions);
-        }
-
-        if (!suggestionDirectories.Contains(defaultAssemblyDirectory))
-        {
-            suggestionDirectories.Add(defaultAssemblyDirectory);
-        }
-
-        state.SelectedFolderSuggestions = suggestionDirectories;
-        
-        
-
-
     }
 
     Element BuildAssemblySelectionPart()
@@ -287,8 +276,8 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 style = { display = "flex", alignItems = "center" },
                 children =
                 {
-                    new img { src  = GetSvgUrl("Folder"), width = 20, height = 20 },
-                    
+                    new img { src = GetSvgUrl("Folder"), width = 20, height = 20 },
+
                     new div { text = item, style = { marginLeft = "7px" } }
                 }
             }
@@ -340,16 +329,13 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     void SaveState()
     {
-
         if (state.SelectedComponentTypeReference.HasValue())
         {
             var selectedDotNetMemberSpecificationAsJson = JsonSerializer.Serialize(state.SelectedDotNetMemberSpecification, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true });
-            
+
             StateCache.SaveToCache(state.SelectedComponentTypeReference + state.MetadataToken, selectedDotNetMemberSpecificationAsJson);
         }
 
         StateCache.SaveState(state);
     }
-    #endregion
 }
-
