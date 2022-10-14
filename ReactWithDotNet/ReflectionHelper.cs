@@ -20,6 +20,43 @@ static class ReflectionHelper
         return null;
     }
 
+    public static PropertyInfo FindProperty(this Type type, string propertyName, BindingFlags bindingFlags)
+    {
+        while (type != null)
+        {
+            var propertyInfo = type.GetProperty(propertyName, bindingFlags);
+            if (propertyInfo != null)
+            {
+                return propertyInfo;
+            }
+            type = type.BaseType;
+        }
+
+        return null;
+    }
+
+    public static MethodInfo FindMethodOrGetProperty(this Type type, string propertyNameOrMethodName, BindingFlags bindingFlags)
+    {
+        while (type != null)
+        {
+            var propertyInfo = type.GetProperty(propertyNameOrMethodName, bindingFlags);
+            if (propertyInfo != null)
+            {
+                return propertyInfo.GetMethod;
+            }
+
+            var methodInfo = type.GetMethod(propertyNameOrMethodName, bindingFlags);
+            if (methodInfo != null)
+            {
+                return methodInfo;
+            }
+
+            type = type.BaseType;
+        }
+
+        return null;
+    }
+
     public static T DeepCopy<T>(T value)
     {
         var json = JsonConvert.SerializeObject(value);

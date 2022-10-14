@@ -329,8 +329,11 @@ partial class ElementSerializer
                     {
                         var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
 
-                        var methodInfoForGettingParameters = dotNetTypeOfReactComponent.FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-
+                        var methodInfoForGettingParameters = dotNetTypeOfReactComponent.FindMethodOrGetProperty(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                        if (methodInfoForGettingParameters is null)
+                        {
+                            throw new InvalidOperationException($"Method not found method name is {nameofMethodForGettingParameters}");
+                        }
                         var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
                         if (parameters == null)
                         {
