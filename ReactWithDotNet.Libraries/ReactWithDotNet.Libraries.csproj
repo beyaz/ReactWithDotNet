@@ -26,6 +26,10 @@
       <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ReactSuite\" />
+    </ItemGroup>
+
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <Exec Command="copy /y &quot;$(TargetDir)ReactWithDotNet.Libraries.*&quot; &quot;D:\work\git\alyavillashotels\AlyaVillas.WebUI\Libs\&quot;" />
     </Target>   
