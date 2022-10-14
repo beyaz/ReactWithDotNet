@@ -408,7 +408,7 @@ static partial class ElementSerializer
 
             var itemTemplates = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[]
             {
-                (Func<object, IReadOnlyDictionary<string, object>>)(item => ((Element)func.DynamicInvoke(item)).ToMap(context))
+                (Func<object, IReadOnlyDictionary<string, object>>)(item => ((Element)func.DynamicInvoke(item)).ToMap2(context))
             });
 
             var template = new ItemTemplate
@@ -418,7 +418,7 @@ static partial class ElementSerializer
 
             if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
             {
-                template.___TemplateForNull___ = Try(() => ((Element)func.DynamicInvoke((object)null))?.ToMap(context)).value;
+                template.___TemplateForNull___ = Try(() => ((Element)func.DynamicInvoke((object)null))?.ToMap2(context)).value;
             }
 
             return (template, false);

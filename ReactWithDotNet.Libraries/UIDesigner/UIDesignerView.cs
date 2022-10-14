@@ -47,7 +47,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     protected override Element render()
     {
-        return BuildFolderSelectionPart();
+        return new FolderSelectionTextBox();
         var propertyPanel = new FlexColumn(Padding(5))
         {
             BuildFolderSelectionPart(),
@@ -348,3 +348,55 @@ class Pair
 }
 
 
+class FolderSelectionTextBox : ReactComponent
+{
+    public string selectedCountry1 { get; set; }
+
+    public string LastQuery { get; set; }
+
+    IReadOnlyList<string> Suggestions { get; set; } = new[]
+    {
+        // Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar
+        "a",
+        "abc",
+        "abcde"
+    };
+
+    public string SelectedFolder { get; set; }
+    
+    protected override Element render()
+    {
+        //  <AutoComplete value={selectedCountry1} suggestions={filteredCountries} completeMethod={searchCountry} field="name" onChange={(e) => setSelectedCountry1(e.value)} aria-label="Countries" dropdownAriaLabel="Select Country" />
+
+
+        var suggestions =   Suggestions.Where(x => x.Contains(LastQuery ?? "", StringComparison.OrdinalIgnoreCase)).ToList().Select(x => new Pair { Key = x, Value = x });
+        
+        return new AutoComplete<Pair,string>
+        {
+            field          = "Key",
+            dropdown       = true,
+            forceSelection = true,
+            autoFocus      = true,
+            delay          = 1000,
+            suggestions    = suggestions,
+            value          = SelectedFolder,
+            onChange       = OnFolderChange,
+            completeMethod = OnFolderComplete,
+            itemTemplate = item => new FlexRow(AlignItemsCenter, Width(100), Height(50))
+            {
+                new img { src = GetSvgUrl("Folder"), width = 20, height = 20 },
+
+                new div { text = item.Key, style = { marginLeft = "7px" } }
+            }
+        };
+    }
+
+    void OnFolderChange(AutoCompleteChangeParams<string> e)
+    {
+        SelectedFolder = e.value;
+    }
+    void OnFolderComplete(AutoCompleteCompleteMethodParams e)
+    {
+        LastQuery = e.query;
+    }
+}
