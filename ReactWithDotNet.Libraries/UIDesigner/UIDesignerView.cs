@@ -47,103 +47,99 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     protected override Element render()
     {
-        var propertyPanel = new VStack
+        var propertyPanel = new FlexColumn(Padding(5))
         {
-            style = { margin = "5px" },
-            children =
+            BuildFolderSelectionPart(),
+            Space(10),
+            BuildAssemblySelectionPart(),
+            Space(10),
+            new MethodSelectionView
             {
-                BuildFolderSelectionPart(),
-                new VSpace(10),
-                BuildAssemblySelectionPart(),
-                new VSpace(10),
-                new MethodSelectionView
+                SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
+                OnSelectionChange = e =>
                 {
-                    SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
-                    OnSelectionChange = e =>
+                    SaveState();
+
+                    state.SelectedMethodName = null;
+                    state.MetadataToken      = null;
+
+                    state.SelectedMethodTreeNodeKey = e.value;
+
+                    string typeReference = null;
+
+                    var fullAssemblyPath = Path.Combine(state.SelectedFolder, state.SelectedAssembly);
+
+                    string fullClassName = null;
+
+                    var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
+                    if (node is not null)
                     {
-                        SaveState();
-
-                        state.SelectedMethodName = null;
-                        state.MetadataToken      = null;
-
-                        state.SelectedMethodTreeNodeKey = e.value;
-
-                        string typeReference = null;
-
-                        var fullAssemblyPath = Path.Combine(state.SelectedFolder, state.SelectedAssembly);
-
-                        string fullClassName = null;
-
-                        var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
-                        if (node is not null)
+                        if (node.IsClass)
                         {
-                            if (node.IsClass)
-                            {
-                                fullClassName = $"{node.NamespaceName}.{node.Name}";
-                            }
-
-                            if (node.IsMethod)
-                            {
-                                fullClassName = $"{node.DeclaringTypeFullName}";
-
-                                state.MetadataToken      = node.MetadataToken;
-                                state.SelectedMethodName = node.Name;
-                            }
+                            fullClassName = $"{node.NamespaceName}.{node.Name}";
                         }
 
-                        if (fullClassName is not null)
+                        if (node.IsMethod)
                         {
-                            typeReference = $"{fullClassName},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
+                            fullClassName = $"{node.DeclaringTypeFullName}";
+
+                            state.MetadataToken      = node.MetadataToken;
+                            state.SelectedMethodName = node.Name;
                         }
+                    }
 
-                        state.SelectedComponentTypeReference = typeReference;
+                    if (fullClassName is not null)
+                    {
+                        typeReference = $"{fullClassName},{Path.GetFileNameWithoutExtension(state.SelectedAssembly)}";
+                    }
 
-                        if (typeReference != null)
+                    state.SelectedComponentTypeReference = typeReference;
+
+                    if (typeReference != null)
+                    {
+                        var json = StateCache.ReadFromCache(typeReference + state.MetadataToken);
+                        if (json.HasValue())
                         {
-                            var json = StateCache.ReadFromCache(typeReference + state.MetadataToken);
-                            if (json.HasValue())
-                            {
-                                state.SelectedDotNetMemberSpecification = JsonConvert.DeserializeObject<DotNetMemberSpecification>(json);
-                            }
-                            else
-                            {
-                                state.SelectedDotNetMemberSpecification = new DotNetMemberSpecification();
-                            }
+                            state.SelectedDotNetMemberSpecification = JsonConvert.DeserializeObject<DotNetMemberSpecification>(json);
                         }
+                        else
+                        {
+                            state.SelectedDotNetMemberSpecification = new DotNetMemberSpecification();
+                        }
+                    }
 
-                        SaveState();
-                    },
-                    AssemblyFilePath = state.SelectedFolder.HasValue() && state.SelectedAssembly.HasValue() ? Path.Combine(state.SelectedFolder, state.SelectedAssembly) : null
-                }.render(),
-                new VSpace(10),
-                new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
+                    SaveState();
+                },
+                AssemblyFilePath = state.SelectedFolder.HasValue() && state.SelectedAssembly.HasValue() ? Path.Combine(state.SelectedFolder, state.SelectedAssembly) : null
+            }.render(),
+            Space(10),
+            new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
 
-                new TabView
+            new TabView
+            {
+                new TabPanel
                 {
-                    new TabPanel
+                    header = "Instance json",
+                    children =
                     {
-                        header = "Instance json",
-                        children =
+                        new Editor
                         {
-                            new Editor
-                            {
-                                valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
-                                highlight = "json",
-                                style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
-                            }
+                            valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
+                            highlight = "json",
+                            style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                         }
-                    },
-                    new TabPanel
+                    }
+                },
+                new TabPanel
+                {
+                    header = "Parameters json",
+                    children =
                     {
-                        header = "Parameters json",
-                        children =
+                        new Editor
                         {
-                            new Editor
-                            {
-                                valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
-                                highlight = "json",
-                                style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
-                            }
+                            valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
+                            highlight = "json",
+                            style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                         }
                     }
                 }
