@@ -348,7 +348,7 @@ class Pair
 }
 
 
-class FolderSelectionTextBox : ReactComponent
+class FolderSelectionTextBox_ : ReactComponent
 {
     public string selectedCountry1 { get; set; }
 
@@ -398,5 +398,42 @@ class FolderSelectionTextBox : ReactComponent
     void OnFolderComplete(AutoCompleteCompleteMethodParams e)
     {
         LastQuery = e.query;
+    }
+}
+
+
+class FolderSelectionTextBox : ReactComponent
+{
+    public string Value { get; set; }
+
+
+    IReadOnlyList<string> Suggestions { get; set; } = new[]
+    {
+        // Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar
+        "a",
+        "abc",
+        "abcde"
+    };
+
+    public string SelectedFolder { get; set; }
+
+    protected override Element render()
+    {
+        var suggestions = Suggestions.Where(x => x.Contains(Value ?? "", StringComparison.OrdinalIgnoreCase)).ToList();
+
+        return new ReactWithDotNet.Libraries.ReactSuite.AutoComplete
+        {
+            data = suggestions,
+            value          = SelectedFolder,
+            onChange       = OnChange
+        };
+    }
+
+    IEnumerable<string> AAA => new List<string> { "b", "bc" };
+
+    [CacheThisMethodByTheseParameters(nameof(AAA))]
+    void OnChange(string value)
+    {
+        Value = value;
     }
 }
