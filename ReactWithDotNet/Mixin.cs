@@ -274,22 +274,12 @@ public static partial class Mixin
         }
     }
 
-    /// <summary>
-    /// style.opacity = <paramref name="opacity"/>
-    /// </summary>
-    public static StyleModifier Opacity(string opacity) => new(style => style.opacity = opacity);
-
-    /// <summary>
-    /// style.opacity = <paramref name="opacity"/>
-    /// </summary>
-    public static StyleModifier Opacity(double opacity) => new(style => style.opacity = opacity.ToString(CultureInfo.InvariantCulture));
-
     public static StyleModifier Background(string background) => new(style => style.background = background);
 
     public static StyleModifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
 
     public static StyleModifier Border(string border) => new(style => style.border = border);
-    
+
     public static StyleModifier Border(string top, string right, string bottom, string left) => new(style => style.border = $"{top} {right} {bottom} {left}");
 
     public static StyleModifier Border(double top, double right, double bottom, double left) => Border(top.AsPixel(), right.AsPixel(), bottom.AsPixel(), left.AsPixel());
@@ -436,6 +426,16 @@ public static partial class Mixin
     }
 
     public static HtmlElementModifier OnClick(Action<MouseEvent> onClickHandler) => new(element => element.onClick = onClickHandler);
+
+    /// <summary>
+    ///     style.opacity = <paramref name="opacity" />
+    /// </summary>
+    public static StyleModifier Opacity(string opacity) => new(style => style.opacity = opacity);
+
+    /// <summary>
+    ///     style.opacity = <paramref name="opacity" />
+    /// </summary>
+    public static StyleModifier Opacity(double opacity) => new(style => style.opacity = opacity.ToString(CultureInfo.InvariantCulture));
 
     /// <summary>
     ///     style.right = right
@@ -604,5 +604,167 @@ public static partial class Mixin
     public static StyleModifier PaddingLeftTop(double paddingLeftTop) => new(style => style.paddingLeftTop = paddingLeftTop.AsPixel());
     public static StyleModifier PaddingLeftBottom(double paddingLeftBottom) => new(style => style.paddingLeftBottom = paddingLeftBottom.AsPixel());
     public static StyleModifier PaddingTopRight(double paddingTopRight) => new(style => style.paddingTopRight = paddingTopRight.AsPixel());
+    #endregion
+
+    #region short
+    #region margin
+    /// <summary>
+    ///     style.margin = <paramref name="margin" /> + 'px'
+    /// </summary>
+    public static StyleModifier m(double margin) => Margin(margin);
+
+    /// <summary>
+    ///     style.margin = <paramref name="margin" />
+    /// </summary>
+    public static StyleModifier m(string margin) => Margin(margin);
+
+    /// <summary>
+    ///     style.marginRight = <paramref name="marginRight" /> + 'px'
+    /// </summary>
+    public static StyleModifier mr(double marginRight) => MarginRight(marginRight);
+
+    /// <summary>
+    ///     style.marginRight = <paramref name="marginRight" />
+    /// </summary>
+    public static StyleModifier mr(string marginRight) => MarginRight(marginRight);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="marginLeft" /> + 'px'
+    /// </summary>
+    public static StyleModifier ml(double marginLeft) => MarginLeft(marginLeft);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="marginLeft" />
+    /// </summary>
+    public static StyleModifier ml(string marginLeft) => MarginLeft(marginLeft);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="marginTop" /> + 'px'
+    /// </summary>
+    public static StyleModifier mt(double marginTop) => MarginTop(marginTop);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="marginTop" />
+    /// </summary>
+    public static StyleModifier mt(string marginTop) => MarginTop(marginTop);
+
+    /// <summary>
+    ///     style.marginBottom = <paramref name="marginBottom" /> + 'px'
+    /// </summary>
+    public static StyleModifier mb(double marginBottom) => MarginBottom(marginBottom);
+
+    /// <summary>
+    ///     style.marginBottom = <paramref name="marginBottom" />
+    /// </summary>
+    public static StyleModifier mb(string marginBottom) => MarginBottom(marginBottom);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.marginRight = <paramref name="value" /> + 'px'
+    /// </summary>
+    public static StyleModifier mx(double value) => MarginLeftRight(value);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="value" />
+    ///     <br />
+    ///     style.marginRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier mx(string value) => MarginLeftRight(value);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.marginBottom = <paramref name="value" /> + 'px'
+    /// </summary>
+    public static StyleModifier my(double value) => MarginTopBottom(value);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="value" />
+    ///     <br />
+    ///     style.marginBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier my(string value) => MarginTopBottom(value);
+    #endregion
+
+    #region padding
+    /// <summary>
+    ///     style.padding = <paramref name="padding" /> + 'px'
+    /// </summary>
+    public static StyleModifier p(double padding) => Padding(padding);
+
+    /// <summary>
+    ///     style.padding = <paramref name="padding" />
+    /// </summary>
+    public static StyleModifier p(string padding) => Padding(padding);
+
+    /// <summary>
+    ///     style.paddingRight = <paramref name="paddingRight" /> + 'px'
+    /// </summary>
+    public static StyleModifier pr(double paddingRight) => PaddingRight(paddingRight);
+
+    /// <summary>
+    ///     style.paddingRight = <paramref name="paddingRight" />
+    /// </summary>
+    public static StyleModifier pr(string paddingRight) => PaddingRight(paddingRight);
+
+    /// <summary>
+    ///     style.paddingLeft = <paramref name="paddingLeft" /> + 'px'
+    /// </summary>
+    public static StyleModifier pl(double paddingLeft) => PaddingLeft(paddingLeft);
+
+    /// <summary>
+    ///     style.paddingLeft = <paramref name="paddingLeft" />
+    /// </summary>
+    public static StyleModifier pl(string paddingLeft) => PaddingLeft(paddingLeft);
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="paddingTop" /> + 'px'
+    /// </summary>
+    public static StyleModifier pt(double paddingTop) => PaddingTop(paddingTop);
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="paddingTop" />
+    /// </summary>
+    public static StyleModifier pt(string paddingTop) => PaddingTop(paddingTop);
+
+    /// <summary>
+    ///     style.paddingBottom = <paramref name="paddingBottom" /> + 'px'
+    /// </summary>
+    public static StyleModifier pb(double paddingBottom) => PaddingBottom(paddingBottom);
+
+    /// <summary>
+    ///     style.paddingBottom = <paramref name="paddingBottom" />
+    /// </summary>
+    public static StyleModifier pb(string paddingBottom) => PaddingBottom(paddingBottom);
+
+    /// <summary>
+    ///     style.paddingLeft = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.paddingRight = <paramref name="value" /> + 'px'
+    /// </summary>
+    public static StyleModifier px(double value) => PaddingLeftRight(value);
+
+    /// <summary>
+    ///     style.paddingLeft = <paramref name="value" />
+    ///     <br />
+    ///     style.paddingRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier px(string value) => PaddingLeftRight(value);
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.paddingBottom = <paramref name="value" /> + 'px'
+    /// </summary>
+    public static StyleModifier py(double value) => PaddingTopBottom(value);
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="value" />
+    ///     <br />
+    ///     style.paddingBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier py(string value) => PaddingTopBottom(value);
+    #endregion
     #endregion
 }
