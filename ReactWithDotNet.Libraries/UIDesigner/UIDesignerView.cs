@@ -81,7 +81,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                     SaveState();
                 },
                 AssemblyFilePath = state.SelectedAssemblyFilePath
-            }.render(),
+            },
             Space(10),
             new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
 

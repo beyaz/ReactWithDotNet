@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using ReactWithDotNet.PrimeReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
@@ -20,8 +17,17 @@ class MetadataNode : TreeNode
     public string DeclaringTypeNamespaceName { get; set; }
 }
 
-class MethodSelectionView 
+class MethodSelectionModel
 {
+    public string Filter { get; set; }
+}
+class MethodSelectionView : ReactComponent<MethodSelectionModel>
+{
+    protected override void constructor()
+    {
+        state = new MethodSelectionModel();
+    }
+
     public Action<SingleSelectionTreeSelectionParams> OnSelectionChange { get; set; }
 
     public string SelectedMethodTreeNodeKey { get; set; }
@@ -102,7 +108,7 @@ class MethodSelectionView
         };
     }
 
-    public  Element render()
+    protected  override Element render()
     {
         return new div
         {
@@ -111,7 +117,7 @@ class MethodSelectionView
             {
                 new SingleSelectionTree<MetadataNode>
                 {
-                    filterValue = "link",
+                    filterValueBind = ()=>state.Filter,
                     filter            = true,
                     filterBy          = nameof(MetadataNode.Name),
                     filterPlaceholder = "Search react components or methods which returns Element",

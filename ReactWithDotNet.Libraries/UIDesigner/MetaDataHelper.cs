@@ -138,6 +138,11 @@ class MetadataHelper
 
     static MetadataNode createFromMethod(MethodInfo methodInfo)
     {
+        if (methodInfo.Name == "render" || methodInfo.Name == "InvokeRender")
+        {
+            return null;
+        }
+        
         // is function component
         if (methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
         {
