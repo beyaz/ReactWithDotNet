@@ -36,7 +36,7 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
             // try invoke as static function
             {
-                var fullAssemblyPath = Path.Combine(state.SelectedFolder ?? string.Empty, state.SelectedAssembly ?? string.Empty);
+                var fullAssemblyPath = state.SelectedAssemblyFilePath;
                 if (File.Exists(fullAssemblyPath))
                 {
                     var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);

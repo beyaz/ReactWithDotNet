@@ -1,32 +1,21 @@
-﻿using System.IO;
-using System.Reflection;
-
-namespace ReactWithDotNet.UIDesigner;
+﻿namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
 class UIDesignerModel
 {
-    public DotNetMemberSpecification SelectedDotNetMemberSpecification { get; set; } = new();
+    public int? MetadataToken { get; set; }
 
     public int ScreenWidth { get; set; } = 100;
 
-    public string SelectedAssembly { get; set; }
-    public string SelectedAssemblyLastQuery { get; set; }
+    public string SelectedAssemblyFilePath { get; set; }
+
     public string SelectedComponentTypeReference { get; set; }
-    public string SelectedFolder { get; set; }
 
-    public string SelectedFolderLastQuery { get; set; }
+    public DotNetMemberSpecification SelectedDotNetMemberSpecification { get; set; } = new();
 
-    public IReadOnlyList<string> SelectedFolderSuggestions { get; set; } = new[]
-    {
-        Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar
-    };
+    public string SelectedMethodName { get; set; }
 
     public string SelectedMethodTreeNodeKey { get; set; }
-
-    public int? MetadataToken { get; set; }
-    
-    public string SelectedMethodName { get; set; }
 }
 
 [Serializable]
