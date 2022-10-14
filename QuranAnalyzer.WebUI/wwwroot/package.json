@@ -17,6 +17,8 @@
         "primeicons": "^5.0.0",
         "primereact": "^8.2.0",
 
+        "rsuite": "^5.19.1",
+
         "react-xarrows": "^2.0.2",
 
         "prismjs": "^1.28.0",
