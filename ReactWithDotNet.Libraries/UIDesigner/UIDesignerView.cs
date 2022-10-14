@@ -11,19 +11,19 @@ namespace ReactWithDotNet.UIDesigner;
 
 class UIDesignerView : ReactComponent<UIDesignerModel>
 {
-    static JsClientFunctionInfo<int> InitializeUIDesignerEvents = new(nameof(InitializeUIDesignerEvents));
-    static JsClientEventInfo OnBrowserInactive = new(nameof(OnBrowserInactive));
+    //static JsClientFunctionInfo<int> InitializeUIDesignerEvents = new(nameof(InitializeUIDesignerEvents));
+    //static JsClientEventInfo OnBrowserInactive = new(nameof(OnBrowserInactive));
 
-    public void Refresh()
-    {
-        SaveState();
-    }
+    //public void Refresh()
+    //{
+    //    SaveState();
+    //}
 
-    protected override void componentDidMount()
-    {
-        ClientTask.ListenEvent(OnBrowserInactive, Refresh);
-        ClientTask.CallJsFunction(InitializeUIDesignerEvents, 1000);
-    }
+    //protected override void componentDidMount()
+    //{
+    //    ClientTask.ListenEvent(OnBrowserInactive, Refresh);
+    //    ClientTask.CallJsFunction(InitializeUIDesignerEvents, 1000);
+    //}
 
     protected override void constructor()
     {
@@ -267,15 +267,11 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             value          = SelectedFolder,
             onChange       = OnFolderChange,
             completeMethod = OnFolderComplete,
-            itemTemplate = item => new div
+            itemTemplate = item => new FlexRow(AlignItemsCenter)
             {
-                style = { display = "flex", alignItems = "center" },
-                children =
-                {
-                    new img { src = GetSvgUrl("Folder"), width = 20, height = 20 },
+                new img { src = GetSvgUrl("Folder"), width = 20, height = 20 },
 
-                    new div { text = item, style = { marginLeft = "7px" } }
-                }
+                new div { text = item, style = { marginLeft = "7px" } }
             }
         };
 

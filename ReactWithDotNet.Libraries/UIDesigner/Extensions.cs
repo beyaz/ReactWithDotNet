@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ReactWithDotNet.UIDesigner;
+﻿namespace ReactWithDotNet.UIDesigner;
 
 static class Extensions
 {
