@@ -1,16 +1,18 @@
-
 import ReactWithDotNet from "../ReactWithDotNet.jsx";
 
-//import 'rsuite/styles/index.less';
+import 'rsuite/dist/rsuite.min.css';
 
 import { AutoComplete } from 'rsuite';
 
-const Prefix = "ReactWithDotNet.Libraries.ReactSuite.";
+function register(name, value)
+{
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.ReactSuite." + name, value);
+}
 
-ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete", AutoComplete);
 
-ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete::OnChange", function (args)
+register("AutoComplete", AutoComplete);
+register("AutoComplete::OnChange", function (args)
 {
     return [args[0]];
-})
+});
 

@@ -409,13 +409,11 @@ class FolderSelectionTextBox : ReactComponent
 
     IReadOnlyList<string> Suggestions { get; set; } = new[]
     {
-        // Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar
+        Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + Path.DirectorySeparatorChar,
         "a",
         "abc",
         "abcde"
     };
-
-    public string SelectedFolder { get; set; }
 
     protected override Element render()
     {
@@ -423,15 +421,14 @@ class FolderSelectionTextBox : ReactComponent
 
         return new ReactWithDotNet.Libraries.ReactSuite.AutoComplete
         {
-            data = suggestions,
-            value          = SelectedFolder,
-            onChange       = OnChange
+            id="x",
+            data     = suggestions,
+            value    = Value,
+            onChange = OnChange
         };
     }
 
-    IEnumerable<string> AAA => new List<string> { "b", "bc" };
 
-    [CacheThisMethodByTheseParameters(nameof(AAA))]
     void OnChange(string value)
     {
         Value = value;

@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ReactWithDotNet.Libraries.ReactSuite;
-
-
-public class ElementBase : ThirdPartyReactComponent
-{
-   
-}
+﻿namespace ReactWithDotNet.Libraries.ReactSuite;
 
 public sealed class AutoComplete : ElementBase
 {
@@ -16,9 +6,12 @@ public sealed class AutoComplete : ElementBase
     public IEnumerable<string> data { get; set; }
 
     [React]
-    public string value { get; set; }
+    public string id { get; set; }
 
     [React]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.ReactSuite.AutoComplete::OnChange")]
+    [ReactGrabEventArgumentsByUsingFunction(Prefix + nameof(AutoComplete) + "::OnChange")]
     public Action<string> onChange { get; set; }
+
+    [React]
+    public string value { get; set; }
 }
