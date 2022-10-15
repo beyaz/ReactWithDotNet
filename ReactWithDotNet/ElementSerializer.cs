@@ -397,9 +397,19 @@ static partial class ElementSerializer
                 return (null, true);
             }
 
+            IReadOnlyDictionary<string, object> convertToReactNode(object item)
+            {
+                var reactNode = (Element)func.DynamicInvoke(item);
+
+                reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString();
+
+
+                return reactNode.ToMap2(context);
+            }
+
             var itemTemplates = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[]
             {
-                (Func<object, IReadOnlyDictionary<string, object>>)(item => ((Element)func.DynamicInvoke(item)).ToMap2(context))
+                convertToReactNode
             });
 
             var template = new ItemTemplate

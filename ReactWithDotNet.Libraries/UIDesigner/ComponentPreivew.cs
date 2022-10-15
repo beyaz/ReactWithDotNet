@@ -89,6 +89,7 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
                                     if (instance is ReactStatefulComponent component)
                                     {
+                                        component.key     = "0";
                                         component.Context = Context;
                                         component.InvokeConstructor();
                                     }
@@ -117,6 +118,7 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
                 if (instance is ReactStatefulComponent component)
                 {
+                    component.key     = "0";
                     component.Context = Context;
                     component.InvokeConstructor();
 
