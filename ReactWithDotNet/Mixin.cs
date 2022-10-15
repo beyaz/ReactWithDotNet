@@ -534,6 +534,14 @@ public static partial class Mixin
         return condition ? element : null;
     }
 
+    /// <summary>
+    ///     Calls given <paramref name="elementFunc" /> when condition is true otherwise returns null
+    /// </summary>
+    public static Element When(bool condition, Func<Element> elementFunc)
+    {
+        return condition ? elementFunc() : null;
+    }
+
     public static StyleModifier Width(double width) => new(style => style.width = width.AsPixel());
     public static StyleModifier Width(string width) => new(style => style.width = width);
 

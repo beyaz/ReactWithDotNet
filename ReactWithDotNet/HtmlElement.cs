@@ -47,12 +47,15 @@ public abstract class HtmlElement : Element
     ///     Gets or sets the on click.
     /// </summary>
     [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onClick { get; set; }
 
     [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onMouseEnter { get; set; }
 
     [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onMouseLeave { get; set; }
 
     [React]

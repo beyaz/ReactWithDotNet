@@ -36,7 +36,7 @@ static partial class Mixin
                 {
                     TaskId              = (int)TaskId.InitializeDotnetComponentEventListener,
                     EventName           = GetEventKey(reactComponent, propertyInfo.Name),
-                    HandlerComponentKey = target.key,
+                    HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
                     RouteToMethod       = @delegate.Method.Name
                 });
             }
@@ -49,7 +49,11 @@ static partial class Mixin
 
     internal static string GetEventKey(ReactStatefulComponent reactComponent, string propertyName)
     {
-        return $"{reactComponent.GetType().FullName}::{propertyName}::{reactComponent.key}";
+        if (reactComponent.ComponentUniqueIdentifier is null)
+        {
+            throw DeveloperException("ComponentUniqueIdentifier cannot be null");
+        }
+        return $"{reactComponent.GetType().FullName}::{propertyName}::{reactComponent.ComponentUniqueIdentifier}";
     }
 }
 
@@ -128,7 +132,7 @@ public sealed class ClientTaskCollection
                 TaskId        = (int)TaskId.OnOutsideClicked,
                 IdOfElement   = idOfElement,
                 RouteToMethod = action.Method.Name,
-                HandlerComponentKey = target.key
+                HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
             });
         }
         else

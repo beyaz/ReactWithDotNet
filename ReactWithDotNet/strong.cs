@@ -124,6 +124,7 @@ public class select : HtmlElement
     public Expression<Func<string>> valueBind { get; set; }
 
     [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
     public Action<ChangeEvent> onChange { get; set; }
 
     public select()

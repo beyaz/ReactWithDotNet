@@ -15,6 +15,7 @@ public sealed class ClientStateInfo
     public IReadOnlyDictionary<string, object> DotNetProperties { get; set; }
     public string FullTypeNameOfState { get; set; }
     public string StateAsJson { get; set; }
+    public string FullTypeNameOfComponent { get; set; }
 }
 
 [Serializable]
@@ -27,8 +28,10 @@ public class ComponentRequest
     public double ClientWidth { get; set; }
 
     public int ComponentKey { get; set; }
+    
+    public int LastUsedComponentUniqueIdentifier { get; set; }
 
-    public int NextAvailableKey { get; set; }
+    public int ComponentUniqueIdentifier { get; set; }
 
     public string[] EventArgumentsAsJsonArray { get; set; }
 
@@ -52,7 +55,7 @@ public class ComponentResponse
 
     public LinkedList<string> Trace { get; set; }
 
-    public int NextAvailableKey { get; set; }
+    public int LastUsedComponentUniqueIdentifier { get; set; }
 }
 
 public static class ComponentRequestHandler
@@ -96,7 +99,9 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
-            instance.Context = context;
+            instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier;
+            instance.key                       = "0";
+            instance.Context                   = context;
             instance.InvokeConstructor();
 
             // maybe developer forget init state
@@ -113,7 +118,7 @@ public static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
-                ComponentRefId                 = request.NextAvailableKey,
+                ComponentUniqueIdentifierNextValue = request.LastUsedComponentUniqueIdentifier +1,
                 StateTree                      = stateTree,
                 BeforeSerializeElementToClient = beforeSerializeElementToClient,
                 ReactContext                   = context
@@ -138,10 +143,10 @@ public static class ComponentRequestHandler
 
             return new ComponentResponse
             {
-                ElementAsJson = map,
-                Trace         = tracer.traceMessages,
-                DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList(),
-                NextAvailableKey = serializerContext.ComponentRefId
+                ElementAsJson    = map,
+                Trace            = tracer.traceMessages,
+                DynamicStyles    = serializerContext.DynamicStyles.CalculateCssClassList(),
+                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue
             };
         }
 
@@ -162,6 +167,8 @@ public static class ComponentRequestHandler
             {
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
+
+            instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier;
 
             // transfer properties
             {
@@ -228,6 +235,7 @@ public static class ComponentRequestHandler
 
             // Invoke method
 
+            
             instance.key = request.ComponentKey.ToString();
             request.ComponentKey++;
             
@@ -249,10 +257,10 @@ public static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
-                ComponentRefId                 = request.NextAvailableKey,
-                StateTree                      = stateTree,
-                BeforeSerializeElementToClient = beforeSerializeElementToClient,
-                ReactContext                   = context
+                ComponentUniqueIdentifierNextValue = request.LastUsedComponentUniqueIdentifier + 1,
+                StateTree                          = stateTree,
+                BeforeSerializeElementToClient     = beforeSerializeElementToClient,
+                ReactContext                       = context
             };
 
             var tracer = serializerContext.Tracer;
@@ -275,10 +283,10 @@ public static class ComponentRequestHandler
 
             return new ComponentResponse
             {
-                ElementAsJson = map,
-                Trace         = tracer.traceMessages,
-                DynamicStyles = serializerContext.DynamicStyles.CalculateCssClassList(),
-                NextAvailableKey = serializerContext.ComponentRefId
+                ElementAsJson                     = map,
+                Trace                             = tracer.traceMessages,
+                DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
+                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue
             };
         }
 

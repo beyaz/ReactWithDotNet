@@ -32,39 +32,30 @@ sealed class ElementSerializerContext
 
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
-    readonly Stack<(int componentRefId, string breadCrumpPathInStateTree, int currentOrderInStateTree)> CapturedValuesForCachedMethods = new();
+    readonly Stack<(string breadCrumpPathInStateTree, int currentOrderInStateTree)> CapturedValuesForCachedMethods = new();
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
-    public int ComponentRefId { get; set; }
+    public int ComponentUniqueIdentifierNextValue { get; set; }
 
     public ReactContext ReactContext { get; init; }
 
     public StateTree StateTree { get; init; }
     public bool SkipHandleCachableMethods { get; set; }
 
+    // TODO: remove
     public void EnterToModeWorkingForCachedMethods()
     {
-        CapturedValuesForCachedMethods.Push((ComponentRefId, StateTree.BreadCrumpPath, StateTree.CurrentOrder));
+        CapturedValuesForCachedMethods.Push((StateTree.BreadCrumpPath, StateTree.CurrentOrder));
     }
 
     public void ExitFromModeWorkingForCachedMethods()
     {
-        var (componentRefId, breadCrumpPathInStateTree, currentOrderInStateTree) = CapturedValuesForCachedMethods.Pop();
+        var (breadCrumpPathInStateTree, currentOrderInStateTree) = CapturedValuesForCachedMethods.Pop();
 
         // restore previous values
-        ComponentRefId           = componentRefId;
         StateTree.BreadCrumpPath = breadCrumpPathInStateTree;
         StateTree.CurrentOrder   = currentOrderInStateTree;
-    }
-
-    public string GetNextUniqueValue()
-    {
-        var nextUniqueValue = ComponentRefId.ToString();
-
-        ComponentRefId++;
-
-        return nextUniqueValue;
     }
 }
 
@@ -310,7 +301,7 @@ static partial class ElementSerializer
         {
             if (action.Target is ReactStatefulComponent target)
             {
-                propertyValue = new RemoteMethodInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name, TargetKey = target.key };
+                propertyValue = new RemoteMethodInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name, HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier };
             }
             else
             {
@@ -331,7 +322,7 @@ static partial class ElementSerializer
                         {
                             IsRemoteMethod                   = true,
                             remoteMethodName                 = @delegate.Method.Name,
-                            TargetKey                        = target.key,
+                            HandlerComponentUniqueIdentifier                        = target.ComponentUniqueIdentifier.Value,
                             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
                             StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null
                         };
@@ -472,11 +463,21 @@ static partial class ElementSerializer
 
     static void InitializeKeyIfNotExists(Element element, ElementSerializerContext context)
     {
-        element.key ??= context.GetNextUniqueValue();
-
-        foreach (var sibling in element.children.Where(sibling => sibling != null))
+        if (element.key == null)
         {
-            sibling.key ??= context.GetNextUniqueValue();
+            throw new DeveloperException("key of react component cannot be null");
+        }
+
+        var orderOfChild = 0;
+
+        foreach (var sibling in element.children)
+        {
+            if (sibling is not null)
+            {
+                sibling.key ??= orderOfChild.ToString();
+            }
+
+            orderOfChild++;
         }
     }
 

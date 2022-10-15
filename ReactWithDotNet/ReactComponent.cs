@@ -69,6 +69,10 @@ public abstract class ReactStatefulComponent : Element
     [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; set; }
 
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    protected internal int? ComponentUniqueIdentifier { get; set; }
+
     internal object Clone()
     {
         return MemberwiseClone();

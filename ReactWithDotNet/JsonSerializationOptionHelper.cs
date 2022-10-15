@@ -175,7 +175,8 @@ sealed class RemoteMethodInfo
 
     public string remoteMethodName { get; set; }
 
-    public string TargetKey { get; set; }
+    public int? HandlerComponentUniqueIdentifier { get; set; }
+    
     public string FunctionNameOfGrabEventArguments { get; set; }
 
     public bool? StopPropagation { get; set; }

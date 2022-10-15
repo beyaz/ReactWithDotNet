@@ -102,6 +102,8 @@ partial class ElementSerializer
             // process React dot net component
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
+               
+                reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
 
                 context.componentStack.Push(reactStatefulComponent);
 
@@ -129,8 +131,11 @@ partial class ElementSerializer
                         {
                             if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
                             {
-                                var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                                statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
+                                if (reactStatefulComponent.GetType().GetFullName() == clientStateInfo.FullTypeNameOfComponent)
+                                {
+                                    var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                                    statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
+                                }
                             }
                         }
 
@@ -159,7 +164,8 @@ partial class ElementSerializer
                 {
                     node.DotNetComponentRenderMethodInvoked = true;
 
-                    node.DotNetComponentRootElement = reactStatefulComponent.InvokeRender();
+                    node.DotNetComponentRootElement     = reactStatefulComponent.InvokeRender();
+                    node.DotNetComponentRootElement.key = "0";
 
                     if (reactStatefulComponent.modifiers is not null)
                     {
@@ -209,6 +215,7 @@ partial class ElementSerializer
 
                 var map = new Dictionary<string, object>
                 {
+                    {"$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier},
                     { ___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap },
                     { DotNetState, state },
                     { ___Type___, GetReactComponentTypeInfo(reactStatefulComponent) },
@@ -245,7 +252,7 @@ partial class ElementSerializer
                         var elementSerializerContext = new ElementSerializerContext
                         {
                             BeforeSerializeElementToClient = context.BeforeSerializeElementToClient,
-                            ComponentRefId                 = int.Parse(reactStatefulComponent.key) + 1,
+                            ComponentUniqueIdentifierNextValue = context.ComponentUniqueIdentifierNextValue+1,
                             ReactContext                   = context.ReactContext,
                             SkipHandleCachableMethods      = true,
                             StateTree = new StateTree
