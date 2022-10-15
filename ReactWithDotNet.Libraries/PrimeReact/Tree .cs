@@ -61,6 +61,7 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     public Func<TTreeNode, Element> nodeTemplate { get; set; }
 
     [React]
+    [ReactGrabEventArgumentsByUsingFunction(Prefix+"CalculateParametersOf > SingleSelectionTree > onSelectionChange")]
     public Action<SingleSelectionTreeSelectionParams> onSelectionChange { get; set; }
 
     [React]

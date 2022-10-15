@@ -23,28 +23,40 @@ import { Panel } from 'primereact/panel';
 import { Tooltip } from 'primereact/tooltip';
 import { Message } from 'primereact/message';
 
+function register(name, value)
+{
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact." + name, value);
+}
 
-// primereact
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Button", Button);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputText", InputText);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputTextarea", InputTextarea);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.BlockUI", BlockUI);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Card", Card);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabView", TabView);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.TabPanel", TabPanel);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.SplitterPanel", SplitterPanel);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Splitter", Splitter);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ListBox", ListBox);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Dropdown", Dropdown);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Column", Column);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.DataTable", DataTable);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Checkbox", Checkbox);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputMask", InputMask);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.AutoComplete", AutoComplete);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.InputSwitch", InputSwitch);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel", Panel);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tooltip", Tooltip);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Message", Message);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Panel::GetHeaderTemplate", (key)=> ReactWithDotNet.GetExternalJsObject(key) );
+register("Button", Button);
+register("InputText", InputText);
+register("InputTextarea", InputTextarea);
+register("BlockUI", BlockUI);
+register("Card", Card);
+register("TabView", TabView);
+register("TabPanel", TabPanel);
+register("SplitterPanel", SplitterPanel);
+register("Splitter", Splitter);
+register("Slider", Slider);
+register("ListBox", ListBox);
+register("Dropdown", Dropdown);
+register("Column", Column);
+register("DataTable", DataTable);
+register("Checkbox", Checkbox);
+register("InputMask", InputMask);
+register("AutoComplete", AutoComplete);
+register("Tree", Tree);
+register("InputSwitch", InputSwitch);
+register("Panel", Panel);
+register("Tooltip", Tooltip);
+register("Message", Message);
+register("Panel::GetHeaderTemplate", (key) => ReactWithDotNet.GetExternalJsObject(key));
+
+register("CalculateParametersOf > SingleSelectionTree > onSelectionChange", function (argumentsAsArray)
+{
+    //const originalEvent = argumentsAsArray[0].originalEvent;
+
+    const value = argumentsAsArray[0].value;
+
+    return [{ value: value }];
+});
