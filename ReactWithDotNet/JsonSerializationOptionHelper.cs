@@ -6,7 +6,7 @@ using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet;
 
-static class JsonSerializationOptionHelper
+static partial class JsonSerializationOptionHelper
 {
     #region Public Methods
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
@@ -22,7 +22,11 @@ static class JsonSerializationOptionHelper
 
         options.Converters.Add(new StyleConverter());
         options.Converters.Add(new JsMapConverter());
+
+        options.Converters.Add(new ValueTupleFactory());
         
+
+
 
         return options;
     }

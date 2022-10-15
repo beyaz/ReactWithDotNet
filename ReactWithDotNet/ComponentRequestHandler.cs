@@ -99,7 +99,7 @@ public static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
-            instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier;
+            instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier++;
             instance.key                       = "0";
             instance.Context                   = context;
             instance.InvokeConstructor();
@@ -118,10 +118,10 @@ public static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
-                ComponentUniqueIdentifierNextValue = request.LastUsedComponentUniqueIdentifier +1,
-                StateTree                      = stateTree,
-                BeforeSerializeElementToClient = beforeSerializeElementToClient,
-                ReactContext                   = context
+                ComponentUniqueIdentifierNextValue = request.ComponentUniqueIdentifier,
+                StateTree                          = stateTree,
+                BeforeSerializeElementToClient     = beforeSerializeElementToClient,
+                ReactContext                       = context
             };
 
             var tracer = serializerContext.Tracer;

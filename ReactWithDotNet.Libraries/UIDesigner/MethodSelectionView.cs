@@ -23,12 +23,19 @@ class MethodSelectionModel
 }
 class MethodSelectionView : ReactComponent<MethodSelectionModel>
 {
+    public string Filter { get; set; }
     protected override void constructor()
     {
-        state = new MethodSelectionModel();
+        state = new MethodSelectionModel { Filter = Filter };
     }
 
-    public Action<SingleSelectionTreeSelectionParams> OnSelectionChange { get; set; }
+    [ReactCustomEvent]
+    public Action<(string value, string filter)> SelectionChanged { get; set; }
+
+    void OnSelectionChanged(SingleSelectionTreeSelectionParams e)
+    {
+        DispatchEvent(()=> SelectionChanged,(e.value,state.Filter));
+    }
 
     public string SelectedMethodTreeNodeKey { get; set; }
 
@@ -123,7 +130,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
                     filterPlaceholder = "Search react components or methods which returns Element",
                     nodeTemplate      = nodeTemplate,
                     value             = GetNodes(),
-                    onSelectionChange = OnSelectionChange,
+                    onSelectionChange = OnSelectionChanged,
                     selectionKeys     = SelectedMethodTreeNodeKey,
                     style = { MaxHeight(250), OverflowScroll }
                 }

@@ -25,61 +25,9 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         {
             new MethodSelectionView
             {
+                Filter = state.SelectedMethodTreeFilter,
                 SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
-                OnSelectionChange = e =>
-                {
-                    SaveState();
-
-                    state.SelectedMethodName = null;
-                    state.MetadataToken      = null;
-
-                    state.SelectedMethodTreeNodeKey = e.value;
-
-                    string typeReference = null;
-
-                    var fullAssemblyPath = state.SelectedAssemblyFilePath;
-
-                    string fullClassName = null;
-
-                    var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
-                    if (node is not null)
-                    {
-                        if (node.IsClass)
-                        {
-                            fullClassName = $"{node.NamespaceName}.{node.Name}";
-                        }
-
-                        if (node.IsMethod)
-                        {
-                            fullClassName = $"{node.DeclaringTypeFullName}";
-
-                            state.MetadataToken      = node.MetadataToken;
-                            state.SelectedMethodName = node.Name;
-                        }
-                    }
-
-                    if (fullClassName is not null)
-                    {
-                        typeReference = $"{fullClassName},{Path.GetFileNameWithoutExtension(state.SelectedAssemblyFilePath)}";
-                    }
-
-                    state.SelectedComponentTypeReference = typeReference;
-
-                    if (typeReference != null)
-                    {
-                        var json = StateCache.ReadFromCache(typeReference + state.MetadataToken);
-                        if (json.HasValue())
-                        {
-                            state.SelectedDotNetMemberSpecification = JsonConvert.DeserializeObject<DotNetMemberSpecification>(json);
-                        }
-                        else
-                        {
-                            state.SelectedDotNetMemberSpecification = new DotNetMemberSpecification();
-                        }
-                    }
-
-                    SaveState();
-                },
+                SelectionChanged = OnElementSelected,
                 AssemblyFilePath = state.SelectedAssemblyFilePath
             },
             Space(10),
@@ -179,13 +127,61 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         };
     }
 
-   
+    void OnElementSelected((string value, string filter) e)
+    {
+        SaveState();
 
-   
+        state.SelectedMethodName = null;
+        state.MetadataToken      = null;
 
-   
+        state.SelectedMethodTreeNodeKey = e.value;
+        state.SelectedMethodTreeFilter  = e.filter;
 
-    
+        string typeReference = null;
+
+        var fullAssemblyPath = state.SelectedAssemblyFilePath;
+
+        string fullClassName = null;
+
+        var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
+        if (node is not null)
+        {
+            if (node.IsClass)
+            {
+                fullClassName = $"{node.NamespaceName}.{node.Name}";
+            }
+
+            if (node.IsMethod)
+            {
+                fullClassName = $"{node.DeclaringTypeFullName}";
+
+                state.MetadataToken      = node.MetadataToken;
+                state.SelectedMethodName = node.Name;
+            }
+        }
+
+        if (fullClassName is not null)
+        {
+            typeReference = $"{fullClassName},{Path.GetFileNameWithoutExtension(state.SelectedAssemblyFilePath)}";
+        }
+
+        state.SelectedComponentTypeReference = typeReference;
+
+        if (typeReference != null)
+        {
+            var json = StateCache.ReadFromCache(typeReference + state.MetadataToken);
+            if (json.HasValue())
+            {
+                state.SelectedDotNetMemberSpecification = JsonConvert.DeserializeObject<DotNetMemberSpecification>(json);
+            }
+            else
+            {
+                state.SelectedDotNetMemberSpecification = new DotNetMemberSpecification();
+            }
+        }
+
+        SaveState();
+    }
 
     void OnWidthChanged(SliderChangeParams e)
     {

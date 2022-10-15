@@ -16,7 +16,9 @@ class UIDesignerModel
     public string SelectedMethodName { get; set; }
 
     public string SelectedMethodTreeNodeKey { get; set; }
-    
+
+    public string SelectedMethodTreeFilter{ get; set; }
+
 }
 
 [Serializable]
