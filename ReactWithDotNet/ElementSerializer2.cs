@@ -103,7 +103,7 @@ partial class ElementSerializer
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
                
-                reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
+               
 
                 context.componentStack.Push(reactStatefulComponent);
 
@@ -135,6 +135,7 @@ partial class ElementSerializer
                                 {
                                     var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
                                     statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
+                                    reactStatefulComponent.ComponentUniqueIdentifier = clientStateInfo.ComponentUniqueIdentifier;
                                 }
                             }
                         }
@@ -147,6 +148,8 @@ partial class ElementSerializer
                 }
 
                 reactStatefulComponent.Context = context.ReactContext;
+                
+                reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
 
                 var state = statePropertyInfo.GetValue(reactStatefulComponent);
                 if (state == null)

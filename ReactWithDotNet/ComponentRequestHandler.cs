@@ -16,6 +16,7 @@ public sealed class ClientStateInfo
     public string FullTypeNameOfState { get; set; }
     public string StateAsJson { get; set; }
     public string FullTypeNameOfComponent { get; set; }
+    public int? ComponentUniqueIdentifier { get; set; }
 }
 
 [Serializable]

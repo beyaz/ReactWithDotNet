@@ -53,7 +53,7 @@ static partial class Mixin
         {
             throw DeveloperException("ComponentUniqueIdentifier cannot be null");
         }
-        return $"{reactComponent.GetType().FullName}::{propertyName}::{reactComponent.ComponentUniqueIdentifier}";
+        return $"{{Property: '{reactComponent.GetType().FullName}::{propertyName}', ComponentUniqueIdentifier: {reactComponent.ComponentUniqueIdentifier}}}";
     }
 }
 
