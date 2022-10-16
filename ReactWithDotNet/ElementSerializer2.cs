@@ -262,6 +262,7 @@ partial class ElementSerializer
                             }
                         };
                         elementSerializerContext.componentStack.Push(context.componentStack.Peek());
+                        elementSerializerContext.DynamicStyles.listOfClasses.AddRange(context.DynamicStyles.listOfClasses);
 
                         return elementSerializerContext;
                     }
@@ -277,11 +278,15 @@ partial class ElementSerializer
                         cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
 
                         var newElementSerializerContext = createNewElementSerializerContext();
-
+                        
                         var cachedVersion = ToMap2(component, newElementSerializerContext);
 
                         context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
 
+                        // take back dynamic styles
+                        context.DynamicStyles.listOfClasses.Clear();
+                        context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
+                        
                         var cachableMethodInfo = new CachableMethodInfo
                         {
                             MethodName       = cachableMethod.Name,
@@ -365,6 +370,10 @@ partial class ElementSerializer
                             var cachedVersion = ToMap2(component, newElementSerializerContext);
 
                             context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
+                            
+                            // take back dynamic styles
+                            context.DynamicStyles.listOfClasses.Clear();
+                            context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
 
                             var cachableMethodInfo = new CachableMethodInfo
                             {

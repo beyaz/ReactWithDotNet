@@ -2,7 +2,7 @@ namespace ReactWithDotNet;
 
 class DynamicStyleContentForEmbeddInClient
 {
-    readonly List<CssClassInfo> listOfClasses = new();
+    internal readonly List<CssClassInfo> listOfClasses = new();
 
     public string GetClassName(CssClassInfo cssClassInfo)
     {
