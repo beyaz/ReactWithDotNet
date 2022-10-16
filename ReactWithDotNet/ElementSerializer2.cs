@@ -84,7 +84,7 @@ partial class ElementSerializer
                 {
                     node.ElementAsHtmlElement.BeforeSerialize(node.Parent?.ElementAsHtmlElement);
                 }
-                
+
                 context.TryCallBeforeSerializeElementToClient(node.Element);
 
                 node.ElementAsJsonMap = LeafToMap(node.Element, context);
@@ -102,8 +102,6 @@ partial class ElementSerializer
             // process React dot net component
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
-               
-               
 
                 context.componentStack.Push(reactStatefulComponent);
 
@@ -127,7 +125,7 @@ partial class ElementSerializer
                         stateTree.BreadCrumpPath = node.BreadCrumpPath + "," + stateTree.CurrentOrder;
                         stateTree.CurrentOrder   = 0;
 
-                        if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
+                        if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out var clientStateInfo))
                         {
                             if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
                             {
@@ -148,7 +146,7 @@ partial class ElementSerializer
                 }
 
                 reactStatefulComponent.Context = context.ReactContext;
-                
+
                 reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
 
                 var state = statePropertyInfo.GetValue(reactStatefulComponent);
@@ -177,9 +175,8 @@ partial class ElementSerializer
                             node.DotNetComponentRootElement.ProcessModifier(modifier);
                         }
                     }
-                    
-                    reactStatefulComponent.ConvertReactEventsToTaskForEventBus();
 
+                    reactStatefulComponent.ConvertReactEventsToTaskForEventBus();
 
                     node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement, context);
 
@@ -198,16 +195,15 @@ partial class ElementSerializer
 
                 foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
                 {
-                    if (propertyInfo.Name == nameof(reactStatefulComponent.Context) 
+                    if (propertyInfo.Name == nameof(reactStatefulComponent.Context)
                         || propertyInfo.Name == nameof(reactStatefulComponent.Children)
                         || propertyInfo.Name == nameof(Element.children)
                         || propertyInfo.Name == nameof(reactStatefulComponent.key)
                         || propertyInfo.Name == nameof(reactStatefulComponent.ClientTask)
                         || propertyInfo.Name == "state"
-                        || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate)) 
+                        || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
                         || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
                         || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
-
                        )
                     {
                         continue;
@@ -218,7 +214,7 @@ partial class ElementSerializer
 
                 var map = new Dictionary<string, object>
                 {
-                    {"$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier},
+                    { "$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier },
                     { ___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap },
                     { DotNetState, state },
                     { ___Type___, GetReactComponentTypeInfo(reactStatefulComponent) },
@@ -254,10 +250,10 @@ partial class ElementSerializer
                     {
                         var elementSerializerContext = new ElementSerializerContext
                         {
-                            BeforeSerializeElementToClient = context.BeforeSerializeElementToClient,
-                            ComponentUniqueIdentifierNextValue = context.ComponentUniqueIdentifierNextValue+1,
-                            ReactContext                   = context.ReactContext,
-                            SkipHandleCachableMethods      = true,
+                            BeforeSerializeElementToClient     = context.BeforeSerializeElementToClient,
+                            ComponentUniqueIdentifierNextValue = context.ComponentUniqueIdentifierNextValue + 1,
+                            ReactContext                       = context.ReactContext,
+                            SkipHandleCachableMethods          = true,
                             StateTree = new StateTree
                             {
                                 BreadCrumpPath = context.StateTree.BreadCrumpPath,
@@ -344,6 +340,7 @@ partial class ElementSerializer
                         {
                             throw new InvalidOperationException($"Method not found method name is {nameofMethodForGettingParameters}");
                         }
+
                         var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
                         if (parameters == null)
                         {
