@@ -10,13 +10,25 @@ namespace ReactWithDotNet.UIDesigner;
 
 class UIDesignerView : ReactComponent<UIDesignerModel>
 {
+    static JsClientEventInfo OnBrowserInactive = new(nameof(OnBrowserInactive));
+    static JsClientFunctionInfo<int> InitializeUIDesignerEvents = new(nameof(InitializeUIDesignerEvents));
     
-
     protected override void constructor()
     {
-        state =   StateCache.ReadState() ?? new UIDesignerModel();
-        
+        state = StateCache.ReadState() ?? new UIDesignerModel();
+
         state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
+    }
+
+    public void Refresh()
+    {
+        SaveState();
+    }
+
+    protected override void componentDidMount()
+    {
+        ClientTask.ListenEvent(OnBrowserInactive, Refresh);
+        ClientTask.CallJsFunction(InitializeUIDesignerEvents, 1000);
     }
 
     protected override Element render()
@@ -25,10 +37,10 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         {
             new MethodSelectionView
             {
-                Filter = state.SelectedMethodTreeFilter,
+                Filter                    = state.SelectedMethodTreeFilter,
                 SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
-                SelectionChanged = OnElementSelected,
-                AssemblyFilePath = state.SelectedAssemblyFilePath
+                SelectionChanged          = OnElementSelected,
+                AssemblyFilePath          = state.SelectedAssemblyFilePath
             },
             Space(10),
             new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
@@ -200,9 +212,3 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
         StateCache.SaveState(state);
     }
 }
-
-
-
-
-
-
