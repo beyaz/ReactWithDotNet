@@ -31,6 +31,10 @@ public class input : HtmlElement
     public string defaultValue { get; set; }
 
     [React]
+    public string placeholder { get; set; }
+    
+
+    [React]
     public bool? readOnly { get; set; }
     
 

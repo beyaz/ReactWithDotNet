@@ -18,6 +18,8 @@ static class ReactWithDotNetIntegration
 
         htmlContent = htmlContent.Replace("~/", RootFolderName + "/");
 
+        context.Response.ContentType = "text/html; charset=UTF-8";
+        
         await context.Response.WriteAsync(htmlContent);
     }
     
@@ -33,6 +35,7 @@ static class ReactWithDotNetIntegration
 
         htmlContent = enablePrimeReactCssList(htmlContent);
 
+        context.Response.ContentType = "text/html; charset=UTF-8";
 
         await context.Response.WriteAsync(htmlContent);
 
@@ -66,6 +69,8 @@ static class ReactWithDotNetIntegration
 
         htmlContent = changeComponent();
 
+        context.Response.ContentType = "text/html; charset=UTF-8";
+        
         await context.Response.WriteAsync(htmlContent);
 
         string changeComponent()
