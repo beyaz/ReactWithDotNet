@@ -52,7 +52,7 @@ register("Tooltip", Tooltip);
 register("Message", Message);
 register("Panel::GetHeaderTemplate", (key) => ReactWithDotNet.GetExternalJsObject(key));
 
-register("CalculateParametersOf > SingleSelectionTree > onSelectionChange", function (argumentsAsArray)
+register("GrabOnlyValueParameterFromCommonPrimeReactEvent", function (argumentsAsArray)
 {
     //const originalEvent = argumentsAsArray[0].originalEvent;
 

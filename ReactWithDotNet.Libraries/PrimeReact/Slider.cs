@@ -53,12 +53,14 @@ public class Slider : ElementBase
     /// Callback to invoke on value change via slide.
     /// </summary>
     [React]
+    [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<SliderChangeParams> onChange { get; set; }
 
     /// <summary>
     /// Callback to invoke when slide ends.
     /// </summary>
     [React]
+    [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<SliderChangeParams> onSlideEnd { get; set; }
 }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace ReactWithDotNet.PrimeReact;
 
 
@@ -61,7 +59,7 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     public Func<TTreeNode, Element> nodeTemplate { get; set; }
 
     [React]
-    [ReactGrabEventArgumentsByUsingFunction(Prefix+"CalculateParametersOf > SingleSelectionTree > onSelectionChange")]
+    [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<SingleSelectionTreeSelectionParams> onSelectionChange { get; set; }
 
     [React]
