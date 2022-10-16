@@ -44,7 +44,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         {
                             valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
                             highlight = "json",
-                            style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                            style     = { minHeight = "400px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                         }
                     }
                 },
@@ -57,7 +57,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                         {
                             valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
                             highlight = "json",
-                            style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                            style     = { minHeight = "400px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                         }
                     }
                 }
