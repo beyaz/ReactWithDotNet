@@ -165,14 +165,18 @@ partial class ElementSerializer
                 {
                     node.DotNetComponentRenderMethodInvoked = true;
 
-                    node.DotNetComponentRootElement     = reactStatefulComponent.InvokeRender();
-                    node.DotNetComponentRootElement.key = "0";
+                    node.DotNetComponentRootElement = reactStatefulComponent.InvokeRender();
 
-                    if (reactStatefulComponent.modifiers is not null)
+                    if (node.DotNetComponentRootElement is not null)
                     {
-                        foreach (var modifier in reactStatefulComponent.modifiers)
+                        node.DotNetComponentRootElement.key = "0";
+
+                        if (reactStatefulComponent.modifiers is not null)
                         {
-                            node.DotNetComponentRootElement.ProcessModifier(modifier);
+                            foreach (var modifier in reactStatefulComponent.modifiers)
+                            {
+                                node.DotNetComponentRootElement.ProcessModifier(modifier);
+                            }
                         }
                     }
 

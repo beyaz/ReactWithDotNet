@@ -1,7 +1,7 @@
 /**
  *  == ReactWithDotNet ==
  *  Written by Abdullah Beyaztaş
- *  Manages react ui by using react render informations which incoming from server.
+ *  Manages react ui by using react render information which incoming from server.
  */
 
 import React from 'react';
@@ -1227,7 +1227,7 @@ function CaclculateNewStateFromJsonElement(componentState, jsonElement)
 
     newState[DotNetState]     = NotNull(jsonElement[DotNetState]);
     newState[SyncId]          = ShouldBeNumber(componentState[SyncId]) + 1;
-    newState[RootNode]        = NotNull(jsonElement[RootNode]);
+    newState[RootNode]        = jsonElement[RootNode];
     newState[ClientTasks]     = jsonElement[ClientTasks];
     newState[DotNetProperties] = jsonElement[DotNetProperties];
     newState[DotNetComponentUniqueIdentifier] = jsonElement[DotNetComponentUniqueIdentifier];
@@ -1307,7 +1307,7 @@ function DefineComponent(componentDeclaration)
 
             initialState[DotNetState] = NotNull(props.$jsonNode[DotNetState]);
             initialState[SyncId] = ShouldBeNumber(props[SyncId]);
-            initialState[RootNode] = NotNull(props.$jsonNode[RootNode]);
+            initialState[RootNode] = props.$jsonNode[RootNode];
             initialState[DotNetProperties] = NotNull(props.$jsonNode[DotNetProperties]);
             initialState[DotNetComponentUniqueIdentifier] = NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier]);
 
@@ -1455,7 +1455,7 @@ function DefineComponent(componentDeclaration)
                 const partialState = {};
 
                 partialState[SyncId] = syncIdInProp;
-                partialState[RootNode] = NotNull(nextProps.$jsonNode[RootNode]);
+                partialState[RootNode] = nextProps.$jsonNode[RootNode];
                 partialState[ClientTasks] = nextProps.$jsonNode[ClientTasks];
                 partialState[DotNetProperties] = NotNull(nextProps.$jsonNode[DotNetProperties]);
                 
