@@ -56,7 +56,7 @@ partial class ElementSerializer
             if (node.ElementIsFakeChild)
             {
                 node.IsCompleted      = true;
-                node.ElementAsJsonMap = new Dictionary<string, object> { { "$FakeChild", node.ElementAsFakeChild.Index } };
+                node.ElementAsJsonMap = new JsMap2 { { "$FakeChild", node.ElementAsFakeChild.Index } };
                 continue;
             }
 
@@ -216,7 +216,7 @@ partial class ElementSerializer
                     dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
                 }
 
-                var map = new Dictionary<string, object>
+                var map = new JsMap2
                 {
                     { "$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier },
                     { ___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap },
@@ -529,9 +529,9 @@ partial class ElementSerializer
         return new Exception(message);
     }
 
-    static Dictionary<string, object> LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
+    static JsMap2 LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
     {
-        var map = new Dictionary<string, object>
+        var map = new JsMap2
         {
             { "$tag", htmlElement.Type }
         };
@@ -555,9 +555,9 @@ partial class ElementSerializer
         return map;
     }
 
-    static Dictionary<string, object> LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
+    static JsMap2 LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
-        var map = new Dictionary<string, object>
+        var map = new JsMap2
         {
             { "$tag", thirdPartyReactComponent.Type }
         };
@@ -576,7 +576,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static Dictionary<string, object> LeafToMap(Element element, ElementSerializerContext context)
+    static JsMap2 LeafToMap(Element element, ElementSerializerContext context)
     {
         if (element is HtmlElement htmlElement)
         {

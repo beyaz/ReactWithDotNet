@@ -1,6 +1,12 @@
 namespace ReactWithDotNet;
 
-sealed class JsMap
+interface IReadOnlyJsMap
+{
+    int Count { get; }
+    void Foreach(Action<string, object> action);
+}
+
+sealed class JsMap : IReadOnlyJsMap
 {
     int count;
 
