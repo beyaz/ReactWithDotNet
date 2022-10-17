@@ -12,6 +12,7 @@ namespace ReactWithDotNet.PrimeReact
     public class Button : ElementBase
     {
         [React]
+        [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
         public Action<MouseEvent> onClick { get; set; }
         
         /// <summary>

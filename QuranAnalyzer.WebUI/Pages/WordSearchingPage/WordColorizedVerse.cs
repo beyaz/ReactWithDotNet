@@ -57,7 +57,7 @@ class WordColorizedVerse : ReactComponent
                             }
                         };
 
-                        html.Append(span);
+                        html.Append($"<span style=\"{span.style.ToCss()}\">{span.innerText}</span>");
 
                         cursor = endIndex + 1;
 

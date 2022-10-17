@@ -375,10 +375,12 @@ static partial class ElementSerializer
 
         if (propertyValue is Element element)
         {
+            element.key ??= "0";
+            
             propertyValue = new InnerElementInfo
             {
                 IsElement = true,
-                Element   = element.ToMap(context)
+                Element   = element.ToMap2(context)
             };
         }
 
