@@ -549,6 +549,13 @@ public static partial class Mixin
     public static StyleModifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
     public static StyleModifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
 
+    /// <summary>
+    /// style.width = <paramref name="pixelValue"/> + 'px'
+    /// <br/>
+    /// style.height = <paramref name="pixelValue"/> + 'px'
+    /// </summary>
+    public static StyleModifier wh(double pixelValue) => WidthHeight(pixelValue);
+
     public static StyleModifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
 
     internal static string AsPixel(this double value) => value + "px";

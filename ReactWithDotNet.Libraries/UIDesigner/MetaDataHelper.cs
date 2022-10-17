@@ -169,7 +169,37 @@ class MetadataHelper
                 continue;
             }
 
+            if (methodInfo.GetParameters().Any(p=> isNotValidForJson(p.ParameterType)))
+            {
+                continue;
+            }
+
             visit(methodInfo);
+        }
+
+        bool isNotValidForJson(Type t)
+        {
+            if (t == typeof(Element) || t.BaseType == typeof(HtmlElement))
+            {
+                return true;
+            }
+
+            if (typeof(Element).IsAssignableFrom(t.BaseType))
+            {
+                return true;
+            }
+            
+            if (typeof(ReactStatefulComponent).IsAssignableFrom(t.BaseType))
+            {
+                return true;
+            }
+
+            if (typeof(MulticastDelegate).IsAssignableFrom(t.BaseType))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 
