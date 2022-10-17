@@ -415,8 +415,8 @@ partial class ElementSerializer
 
         return node.ElementAsJsonMap;
     }
-
-    static void AddReactAttributes(Dictionary<string, object> map, Element element, ElementSerializerContext context)
+    
+    static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
         var stopwatch = new Stopwatch();
 
@@ -430,7 +430,7 @@ partial class ElementSerializer
                 continue;
             }
 
-            map.Add(GetPropertyName(propertyInfo), propertyValue);
+            add(GetPropertyName(propertyInfo), propertyValue);
         }
 
         stopwatch.Stop();
@@ -545,7 +545,7 @@ partial class ElementSerializer
             }
         }
 
-        AddReactAttributes(map, htmlElement, context);
+        AddReactAttributes(map.Add, htmlElement, context);
 
         if (htmlElement.innerText is not null)
         {
@@ -571,7 +571,7 @@ partial class ElementSerializer
             }
         }
 
-        AddReactAttributes(map, thirdPartyReactComponent, context);
+        AddReactAttributes(map.Add, thirdPartyReactComponent, context);
 
         return map;
     }
