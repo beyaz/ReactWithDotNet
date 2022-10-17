@@ -368,6 +368,11 @@ public static partial class Mixin
     }
 
     /// <summary>
+    ///     a.href = <paramref name="href" />
+    /// </summary>
+    public static HtmlElementModifier Href(string href) => new(element => ((a)element).href = href);
+
+    /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
     public static HtmlElementModifier Id(string id) => new(element => element.id = id);
@@ -490,6 +495,11 @@ public static partial class Mixin
     ///     </br>
     /// </summary>
     public static HtmlElement Space(double valueInPx) => new Space(valueInPx);
+
+    /// <summary>
+    ///     img.src = <paramref name="src" />
+    /// </summary>
+    public static HtmlElementModifier Src(string src) => new(element => ((img)element).src = src);
 
     public static HtmlElementModifier Text(string innerText) => new(element => element.text = innerText);
     public static StyleModifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
