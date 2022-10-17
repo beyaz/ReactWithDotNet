@@ -50,6 +50,11 @@ public static partial class Mixin
     public static StyleModifier FlexDirectionColumn => new(style => style.flexDirection = "column");
 
     /// <summary>
+    ///     style.flexDirection = "column-reverse"
+    /// </summary>
+    public static StyleModifier FlexDirectionColumnReverse => new(style => style.flexDirection = "column-reverse");
+
+    /// <summary>
     ///     flexDirection = "row"
     /// </summary>
     public static StyleModifier FlexDirectionRow => new(style => style.flexDirection = "row");
@@ -113,6 +118,11 @@ public static partial class Mixin
     ///     <para>justifyContent = "center"</para>
     /// </summary>
     public static StyleModifier JustifyContentCenter => new(style => style.justifyContent = "center");
+
+    /// <summary>
+    ///     <para>style.justifyContent = "flex-end"</para>
+    /// </summary>
+    public static StyleModifier JustifyContentFlexEnd => new(style => style.justifyContent = "flex-end");
 
     /// <summary>
     ///     <para>style.justifyContent = "flex-start"</para>
@@ -375,6 +385,14 @@ public static partial class Mixin
     public static StyleModifier Left(double left) => Left(left.AsPixel());
     public static StyleModifier Left(string left) => new(style => style.left = left);
     public static StyleModifier LeftRight(string valueForLeftAndRight) => new(style => style.leftRight = valueForLeftAndRight);
+
+    /// <summary>
+    ///     style.left = <paramref name="pixelValue" /> + 'px'
+    ///     <br />
+    ///     style.right = <paramref name="pixelValue" /> + 'px'
+    /// </summary>
+    public static StyleModifier LeftRight(double pixelValue) => new(style => style.leftRight = pixelValue.AsPixel());
+
     public static StyleModifier LeftRightBottom(string valueForLeftAndRightAndBottom) => new(style => style.leftRightBottom = valueForLeftAndRightAndBottom);
 
     public static StyleModifier LineHeight(string lineHeight) => new(style => style.lineHeight = lineHeight);
@@ -489,9 +507,24 @@ public static partial class Mixin
 
     public static StyleModifier Top(double top) => Top(top.AsPixel());
     public static StyleModifier Top(string top) => new(style => style.top = top);
+
     public static StyleModifier TopBottom(string valueForTopAndBottom) => new(style => style.topBottom = valueForTopAndBottom);
 
+    /// <summary>
+    ///     style.top = <paramref name="pixelValue" /> + 'px'
+    ///     <br />
+    ///     style.bottom = <paramref name="pixelValue" /> + 'px'
+    /// </summary>
+    public static StyleModifier TopBottom(double pixelValue) => new(style => style.topBottom = pixelValue.AsPixel());
+
     public static StyleModifier Transition(string transition) => new(style => style.transition = transition);
+
+    /// <summary>
+    ///     style.width = <paramref name="pixelValue" /> + 'px'
+    ///     <br />
+    ///     style.height = <paramref name="pixelValue" /> + 'px'
+    /// </summary>
+    public static StyleModifier wh(double pixelValue) => WidthHeight(pixelValue);
 
     /// <summary>
     ///     Apply given modifiers when condition is true
@@ -548,13 +581,6 @@ public static partial class Mixin
     public static StyleModifier WidthAsPercentOf(double valueAsPercent) => new(style => style.width = valueAsPercent + "%");
     public static StyleModifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
     public static StyleModifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
-
-    /// <summary>
-    /// style.width = <paramref name="pixelValue"/> + 'px'
-    /// <br/>
-    /// style.height = <paramref name="pixelValue"/> + 'px'
-    /// </summary>
-    public static StyleModifier wh(double pixelValue) => WidthHeight(pixelValue);
 
     public static StyleModifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
 
