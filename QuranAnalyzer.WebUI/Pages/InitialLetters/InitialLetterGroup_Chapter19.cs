@@ -46,7 +46,7 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

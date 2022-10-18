@@ -35,7 +35,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -69,7 +69,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -89,7 +89,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -109,7 +109,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -129,7 +129,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -149,7 +149,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -169,7 +169,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

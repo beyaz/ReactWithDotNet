@@ -32,7 +32,7 @@ class InitialLetterGroup_Alif_Laam_Miim_Ra : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

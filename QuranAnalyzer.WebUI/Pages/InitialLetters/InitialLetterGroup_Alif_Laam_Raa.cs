@@ -32,7 +32,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -68,7 +68,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -104,7 +104,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -140,7 +140,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -176,7 +176,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

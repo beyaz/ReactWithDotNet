@@ -34,7 +34,7 @@ class InitialLetterGroup_Chapter42_AinSinKaf : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

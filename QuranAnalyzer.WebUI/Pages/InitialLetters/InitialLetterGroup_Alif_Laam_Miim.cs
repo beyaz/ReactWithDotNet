@@ -32,7 +32,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -67,7 +67,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -103,7 +103,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -139,7 +139,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -175,7 +175,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -211,7 +211,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

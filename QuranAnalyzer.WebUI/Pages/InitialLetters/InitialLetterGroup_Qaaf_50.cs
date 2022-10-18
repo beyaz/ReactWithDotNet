@@ -34,7 +34,7 @@ class InitialLetterGroup_Qaaf_50 : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

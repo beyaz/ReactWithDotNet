@@ -34,7 +34,7 @@ class InitialLetterGroup_Chapter36_YaSin : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

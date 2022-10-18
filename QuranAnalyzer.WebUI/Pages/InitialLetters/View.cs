@@ -59,7 +59,7 @@ class CountingResult: ReactComponent
     }
 }
 
-class InitialLetterLineGroup: ReactComponent
+class InitialLetterLineGroup_old: ReactComponent
 {
     public List<InitialLetter> Items { get; } = new();
 
@@ -174,7 +174,7 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                             new td { new Chapter { ChapterNumber = 7, ChapterName = "Araf" } },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -195,7 +195,7 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -235,7 +235,7 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                             new td { new Chapter { ChapterNumber = 38, ChapterName = "Sad" } },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {

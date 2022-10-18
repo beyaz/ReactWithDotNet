@@ -43,7 +43,7 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -78,7 +78,7 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             new td {  new Chapter { ChapterNumber = 20, ChapterName = "Taha" }  },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -95,7 +95,7 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             new td {  new Chapter { ChapterNumber = 26, ChapterName = "Şuara" }   },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -113,7 +113,7 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             new td {  new Chapter { ChapterNumber = 27, ChapterName = "Neml" }   },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
@@ -130,7 +130,7 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             new td {  new Chapter { ChapterNumber = 28, ChapterName = "Kasas" }  },
                             new td
                             {
-                                new InitialLetterLineGroup
+                                new InitialLetterLineGroup_old
                                 {
                                     Items =
                                     {
