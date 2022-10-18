@@ -3,17 +3,17 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-
 class Tracer
 {
     public int traceIndentLevel;
-    
+
     internal readonly LinkedList<string> traceMessages = new();
 
     public void Trace(string message)
     {
         traceMessages.AddLast("".PadRight(traceIndentLevel) + message);
     }
+
     public void Trace(LinkedList<string> messageList)
     {
         foreach (var message in messageList)
@@ -31,17 +31,15 @@ sealed class ElementSerializerContext
 
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
-    readonly Stack<(string breadCrumpPathInStateTree, int currentOrderInStateTree)> CapturedValuesForCachedMethods = new();
-
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
     public int ComponentUniqueIdentifierNextValue { get; set; }
 
     public ReactContext ReactContext { get; init; }
 
-    public StateTree StateTree { get; init; }
     public bool SkipHandleCachableMethods { get; set; }
-    
+
+    public StateTree StateTree { get; init; }
 }
 
 static partial class ElementSerializer
@@ -90,75 +88,6 @@ static partial class ElementSerializer
         return propertyName;
     }
 
-    static (Style style, bool noNeedToExport) GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
-    {
-        var pseudos = new List<CssPseudoCodeInfo>();
-
-        if (style._hover is not null)
-        {
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name      = "hover",
-                BodyOfCss = style._hover.ToCss().Replace(";", " !important;")
-            });
-        }
-
-        if (style._before is not null)
-        {
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name      = "before",
-                BodyOfCss = style._before.ToCss().Replace(";", " !important;")
-            });
-        }
-
-        if (style._after is not null)
-        {
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name      = "after",
-                BodyOfCss = style._after.ToCss().Replace(";", " !important;")
-            });
-        }
-
-        if (style._active is not null)
-        {
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name      = "active",
-                BodyOfCss = style._active.ToCss().Replace(";", " !important;")
-            });
-        }
-
-        if (pseudos.Count > 0)
-        {
-            var cssClassName = context.DynamicStyles.GetClassName(new CssClassInfo
-            {
-                Name    = context.componentStack.Peek().GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
-                Pseudos = pseudos
-            });
-            
-            if (instance is HtmlElement htmlElement)
-            {
-                htmlElement.AddClass(cssClassName);
-            }
-            else if(instance is ThirdPartyReactComponent thirdPartyReactComponent)
-            {
-                thirdPartyReactComponent.AddClass(cssClassName);
-            }
-            else
-            {
-                throw new NotImplementedException("Style attribute problem TODO: beyaz");
-            }
-        }
-
-        if (IsEmptyStyle(style))
-        {
-            return (null, true);
-        }
-
-        return (style, false);
-    }
     static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, ElementSerializerContext context)
     {
         var propertyValue = propertyInfo.GetValue(instance);
@@ -218,7 +147,7 @@ static partial class ElementSerializer
                         {
                             IsRemoteMethod                   = true,
                             remoteMethodName                 = @delegate.Method.Name,
-                            HandlerComponentUniqueIdentifier                        = target.ComponentUniqueIdentifier,
+                            HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
                             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
                             StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null
                         };
@@ -272,7 +201,7 @@ static partial class ElementSerializer
         if (propertyValue is Element element)
         {
             element.key ??= "0";
-            
+
             propertyValue = new InnerElementInfo
             {
                 IsElement = true,
@@ -344,6 +273,76 @@ static partial class ElementSerializer
         return reactStatefulComponent.GetType().GetFullName();
     }
 
+    static (Style style, bool noNeedToExport) GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
+    {
+        var pseudos = new List<CssPseudoCodeInfo>();
+
+        if (style._hover is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "hover",
+                BodyOfCss = style._hover.ToCss().Replace(";", " !important;")
+            });
+        }
+
+        if (style._before is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "before",
+                BodyOfCss = style._before.ToCss().Replace(";", " !important;")
+            });
+        }
+
+        if (style._after is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "after",
+                BodyOfCss = style._after.ToCss().Replace(";", " !important;")
+            });
+        }
+
+        if (style._active is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "active",
+                BodyOfCss = style._active.ToCss().Replace(";", " !important;")
+            });
+        }
+
+        if (pseudos.Count > 0)
+        {
+            var cssClassName = context.DynamicStyles.GetClassName(new CssClassInfo
+            {
+                Name    = context.componentStack.Peek().GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
+                Pseudos = pseudos
+            });
+
+            if (instance is HtmlElement htmlElement)
+            {
+                htmlElement.AddClass(cssClassName);
+            }
+            else if (instance is ThirdPartyReactComponent thirdPartyReactComponent)
+            {
+                thirdPartyReactComponent.AddClass(cssClassName);
+            }
+            else
+            {
+                throw new NotImplementedException("Style attribute problem TODO: beyaz");
+            }
+        }
+
+        if (IsEmptyStyle(style))
+        {
+            return (null, true);
+        }
+
+        return (style, false);
+    }
+
     static string GetTypeFullNameOfState(object reactStatefulComponent)
     {
         return reactStatefulComponent.GetType().GetProperty("state")!.PropertyType.GetFullName();
@@ -400,7 +399,6 @@ static partial class ElementSerializer
         return false;
     }
 
-   
     static (T value, Exception exception) Try<T>(Func<T> func)
     {
         try
