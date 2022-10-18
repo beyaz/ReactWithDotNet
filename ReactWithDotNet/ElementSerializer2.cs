@@ -529,7 +529,7 @@ partial class ElementSerializer
         return new Exception(message);
     }
 
-    static JsMap2 LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
+    static JsMap LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
     {
         var map = new JsMap();
         map.Add( "$tag", htmlElement.Type );
@@ -553,7 +553,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsMap2 LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
+    static JsMap LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
         var map = new JsMap();
         map.Add("$tag", thirdPartyReactComponent.Type);
@@ -572,7 +572,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsMap2 LeafToMap(Element element, ElementSerializerContext context)
+    static JsMap LeafToMap(Element element, ElementSerializerContext context)
     {
         if (element is HtmlElement htmlElement)
         {
