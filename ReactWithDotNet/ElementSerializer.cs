@@ -256,13 +256,12 @@ static partial class ElementSerializer
         var reactTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
         if (reactTransformValueInClient is not null)
         {
-            var dictionary = new Dictionary<string, object>
-            {
-                { "$transformValueFunction", reactTransformValueInClient.TransformFunction },
-                { "RawValue", propertyValue }
-            };
+            var jsonMap = new JsonMap();
 
-            return (dictionary, false);
+            jsonMap.Add("$transformValueFunction", reactTransformValueInClient.TransformFunction);
+            jsonMap.Add("RawValue", propertyValue);
+
+            return (jsonMap, false);
         }
 
         return (propertyValue, false);
