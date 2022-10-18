@@ -783,17 +783,19 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                     const length = itemTemplates.length;
                     for (let j = 0; j < length; j++)
                     {
-                        const key = itemTemplates[j].Key;
+                        const templateInfo = itemTemplates[j];
+
+                        const key = templateInfo.Key;
 
                         // try find as TreeNode
                         if (key.key != null && item && item.key != null && key.key === item.key)
                         {
-                            return ConvertToReactElement(CreateNewBuildContext(), itemTemplates[j].Value);
+                            return ConvertToReactElement(CreateNewBuildContext(), templateInfo.Value);
                         }
 
                         if (JSON.stringify(key) === JSON.stringify(item))
                         {
-                            return ConvertToReactElement(CreateNewBuildContext(), itemTemplates[j].Value);
+                            return ConvertToReactElement(CreateNewBuildContext(), templateInfo.Value);
                         }
                     }
 
