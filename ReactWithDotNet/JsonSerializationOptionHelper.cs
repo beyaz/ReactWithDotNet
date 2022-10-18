@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -147,18 +146,18 @@ static partial class JsonSerializationOptionHelper
         }
     }
 
-    class JsMapConverter : JsonConverter<JsMap>
+    class JsMapConverter : JsonConverter<JsonMap>
     {
-        public override JsMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override JsonMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override void Write(Utf8JsonWriter writer, JsMap jsMap, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, JsonMap jsonMap, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
-            jsMap.Foreach(add);
+            jsonMap.Foreach(add);
 
             writer.WriteEndObject();
 

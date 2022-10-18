@@ -56,7 +56,7 @@ partial class ElementSerializer
             if (node.ElementIsFakeChild)
             {
                 node.IsCompleted      = true;
-                var jsMap = new JsMap();
+                var jsMap = new JsonMap();
                 jsMap.Add("$FakeChild", node.ElementAsFakeChild.Index);
                 node.ElementAsJsonMap = jsMap;
                 continue;
@@ -197,7 +197,7 @@ partial class ElementSerializer
 
                 const string DotNetState = "$State";
 
-                var dotNetProperties = new JsMap();
+                var dotNetProperties = new JsonMap();
 
                 foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
                 {
@@ -218,7 +218,7 @@ partial class ElementSerializer
                     dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
                 }
 
-                var map = new JsMap();
+                var map = new JsonMap();
                 map.Add("$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier);
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
                 map.Add(DotNetState, state);
@@ -529,9 +529,9 @@ partial class ElementSerializer
         return new Exception(message);
     }
 
-    static JsMap LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
+    static JsonMap LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
     {
-        var map = new JsMap();
+        var map = new JsonMap();
         map.Add( "$tag", htmlElement.Type );
 
         if (htmlElement._style is not null)
@@ -553,9 +553,9 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsMap LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
+    static JsonMap LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
-        var map = new JsMap();
+        var map = new JsonMap();
         map.Add("$tag", thirdPartyReactComponent.Type);
         
         if (thirdPartyReactComponent._style is not null)
@@ -572,7 +572,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsMap LeafToMap(Element element, ElementSerializerContext context)
+    static JsonMap LeafToMap(Element element, ElementSerializerContext context)
     {
         if (element is HtmlElement htmlElement)
         {

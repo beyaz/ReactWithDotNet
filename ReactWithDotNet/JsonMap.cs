@@ -6,7 +6,7 @@ interface IReadOnlyJsMap
     void Foreach(Action<string, object> action);
 }
 
-sealed class JsMap : IReadOnlyJsMap
+sealed class JsonMap : IReadOnlyJsMap
 {
     int count;
 
