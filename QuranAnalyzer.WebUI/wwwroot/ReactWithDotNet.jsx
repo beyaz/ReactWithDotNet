@@ -781,21 +781,34 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                     }
 
                     const length = itemTemplates.length;
-                    for (let j = 0; j < length; j++)
+
+                    // try to match by key
                     {
-                        const templateInfo = itemTemplates[j];
-
-                        const key = templateInfo.Key;
-
-                        // try find as TreeNode
-                        if (item && item.key != null && key.key != null && key.key === item.key)
+                        for (let j = 0; j < length; j++)
                         {
-                            return ConvertToReactElement(CreateNewBuildContext(), templateInfo.Value);
+                            const itemInTemplateInfo     = itemTemplates[j].Item;
+                            const jsonNodeInTemplateInfo = itemTemplates[j].ElementAsJson;
+
+                            // try find as TreeNode
+                            if (item && item.key != null && itemInTemplateInfo.key != null && itemInTemplateInfo.key === item.key)
+                            {
+                                return ConvertToReactElement(CreateNewBuildContext(), jsonNodeInTemplateInfo);
+                            }
                         }
+                    }
+                    
 
-                        if (JSON.stringify(key) === JSON.stringify(item))
+                    // try to match whole data
+                    {
+                        for (let j = 0; j < length; j++)
                         {
-                            return ConvertToReactElement(CreateNewBuildContext(), templateInfo.Value);
+                            const itemInTemplateInfo     = itemTemplates[j].Item;
+                            const jsonNodeInTemplateInfo = itemTemplates[j].ElementAsJson;
+
+                            if (JSON.stringify(itemInTemplateInfo) === JSON.stringify(item))
+                            {
+                                return ConvertToReactElement(CreateNewBuildContext(), jsonNodeInTemplateInfo);
+                            }
                         }
                     }
 

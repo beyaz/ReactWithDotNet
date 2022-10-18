@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 [Serializable]
 public class ReactAttribute : Attribute
@@ -31,12 +29,21 @@ public class ReactDefaultValueAttribute : Attribute
 [Serializable]
 public class ReactTemplateAttribute : Attribute
 {
+    public string MethodNameForGettingItemsSource { get; }
+
+    public ReactTemplateAttribute(string methodNameForGettingItemsSource)
+    {
+        MethodNameForGettingItemsSource = methodNameForGettingItemsSource ?? throw new ArgumentNullException(nameof(methodNameForGettingItemsSource));
+    }
+    
 }
 
 [Serializable]
 public class ReactTemplateForNullAttribute : Attribute
 {
 }
+
+
 
 [AttributeUsage(AttributeTargets.Class)]
 public class ReactRealTypeAttribute : Attribute

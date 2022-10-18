@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -51,24 +52,17 @@ public class Dropdown<TOption> : Dropdown
     public  TOption value { get; set; }
 
     [React]
-    [ReactTemplate]
+    [ReactTemplate(nameof(GetItemSourceForCalculatingItemTemplates))]
     public  Func<TOption,Element> itemTemplate { get; set; }
 
-    [React]
-    [ReactTemplate]
-    [ReactTemplateForNull]
-    public  Func<TOption, Element> valueTemplate { get; set; }
+    //[React]
+    //[ReactTemplate(nameof(GetItemSourceForCalculatingValueTemplate))]
+    //[ReactTemplateForNull]
+    //public  Func<TOption, Element> valueTemplate { get; set; }
 
-    internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
+    IEnumerable GetItemSourceForCalculatingItemTemplates()
     {
-        var map = new List<KeyValuePair<object, object>>();
-
-        foreach (var option in options)
-        {
-            map.Add(new KeyValuePair<object, object>(option, toMap(option)));
-        }
-
-        return map;
+        return options;
     }
 }
 

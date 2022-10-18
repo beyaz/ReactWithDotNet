@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -209,25 +210,25 @@ static partial class ElementSerializer
             };
         }
 
-        if (propertyInfo.GetCustomAttribute<ReactTemplateAttribute>() is not null)
+        var templateAttribute = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>();
+        if (templateAttribute is not null)
         {
-            var method = instance.GetType().GetMethod("GetItemTemplates", BindingFlags.Instance | BindingFlags.NonPublic);
-            if (method == null)
-            {
-                throw new MissingMethodException("GetItemTemplates");
-            }
-
             var func = (Delegate)propertyInfo.GetValue(instance);
-
             if (func == null)
             {
                 return (null, true);
+            }
+            
+            var method = instance.GetType().GetMethod(templateAttribute.MethodNameForGettingItemsSource, BindingFlags.Instance | BindingFlags.NonPublic);
+            if (method == null)
+            {
+                throw new MissingMethodException(templateAttribute.MethodNameForGettingItemsSource);
             }
 
             IReadOnlyJsonMap convertToReactNode(object item)
             {
                 var reactNode = (Element)func.DynamicInvoke(item);
-                if (reactNode is not null)
+                if (reactNode is not null && item is not null)
                 {
                     reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString();
                 }
@@ -235,19 +236,27 @@ static partial class ElementSerializer
                 return reactNode.ToJsonMap(context);
             }
 
-            var itemTemplates = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[]
+            var itemTemplates = (IEnumerable)method.Invoke(instance, new object[]{});
+
+            var results = new List<ItemTemplateInfo>();
+
+            if (itemTemplates is not null)
             {
-                convertToReactNode
-            });
+                foreach (var item in itemTemplates)
+                {
+                    results.Add(new ItemTemplateInfo { Item = item, ElementAsJson = convertToReactNode(item) });
+                }
+            }
+           
 
             var template = new ItemTemplate
             {
-                ___ItemTemplates___ = itemTemplates
+                ___ItemTemplates___ = results
             };
 
             if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
             {
-                template.___TemplateForNull___ = Try(() => ((Element)func.DynamicInvoke((object)null))?.ToJsonMap(context)).value;
+                template.___TemplateForNull___ = convertToReactNode(null);
             }
 
             return (template, false);
@@ -398,18 +407,6 @@ static partial class ElementSerializer
         return false;
     }
 
-    static (T value, Exception exception) Try<T>(Func<T> func)
-    {
-        try
-        {
-            return (func(), null);
-        }
-        catch (Exception exception)
-        {
-            return (default, exception);
-        }
-    }
-
     static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element)
     {
         if (element is null || context.BeforeSerializeElementToClient is null)
@@ -431,6 +428,12 @@ static partial class ElementSerializer
 
 class ItemTemplate
 {
-    public List<KeyValuePair<object, object>> ___ItemTemplates___ { get; set; }
-    public object ___TemplateForNull___ { get; set; }
+    public IEnumerable<ItemTemplateInfo> ___ItemTemplates___ { get; set; }
+    public IReadOnlyJsonMap ___TemplateForNull___ { get; set; }
+}
+
+sealed class ItemTemplateInfo
+{
+    public IReadOnlyJsonMap ElementAsJson { get; set; }
+    public object Item { get; set; }
 }

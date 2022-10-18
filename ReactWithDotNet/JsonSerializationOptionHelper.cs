@@ -23,6 +23,9 @@ static partial class JsonSerializationOptionHelper
        
         options.Converters.Add(new JsMapConverter());
 
+        options.Converters.Add(new IReadOnlyJsonMapConverter());
+        
+
 
         options.Converters.Add(new ValueTupleFactory());
         
@@ -168,9 +171,32 @@ static partial class JsonSerializationOptionHelper
                 JsonSerializer.Serialize(writer, value, options);
             }
         }
-
-        
     }
+
+    class IReadOnlyJsonMapConverter : JsonConverter<IReadOnlyJsonMap>
+    {
+        public override IReadOnlyJsonMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, IReadOnlyJsonMap jsonMap, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+
+            jsonMap.Foreach(add);
+
+            writer.WriteEndObject();
+
+            void add(string key, object value)
+            {
+                writer.WritePropertyName(key);
+
+                JsonSerializer.Serialize(writer, value, options);
+            }
+        }
+    }
+    
 }
 
 [Serializable]

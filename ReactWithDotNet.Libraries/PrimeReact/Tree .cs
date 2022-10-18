@@ -1,4 +1,6 @@
 ﻿
+using System.Collections;
+
 namespace ReactWithDotNet.PrimeReact;
 
 
@@ -55,7 +57,7 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     public string filterBy { get; set; }
 
     [React]
-    [ReactTemplate]
+    [ReactTemplate(nameof(GetItemSourceForCalculatingTemplates))]
     public Func<TTreeNode, Element> nodeTemplate { get; set; }
 
     [React]
@@ -74,20 +76,11 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     [React]
     public string selectionMode { get; set; } = "single";
 
-    internal List<KeyValuePair<object, object>> GetItemTemplates(Func<object, IReadOnlyDictionary<string, object>> toMap)
+    internal IEnumerable GetItemSourceForCalculatingTemplates()
     {
         initializeKeys(value);
 
-        var nodeList = toList(value);
-
-        var map = new List<KeyValuePair<object, object>>();
-
-        foreach (var node in nodeList)
-        {
-            map.Add(new KeyValuePair<object, object>(node, toMap(node)));
-        }
-
-        return map;
+        return toList(value);
 
         static IReadOnlyList<TreeNode> toList(IEnumerable<TreeNode> nodes)
         {

@@ -769,29 +769,46 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             }
 
             // tryProcessAsItemsTemplate
-            if (propValue.___ItemTemplates___)
+            const itemTemplates = propValue.___ItemTemplates___;
+            const itemTemplateForNull = propValue.___TemplateForNull___;
+            if (itemTemplates)
             {
                 props[propName] = function(item)
                 {
-                    if (item == null && propValue.___TemplateForNull___)
+                    if (item == null && itemTemplateForNull)
                     {
-                        return ConvertToReactElement(CreateNewBuildContext(), propValue.___TemplateForNull___);
+                        return ConvertToReactElement(CreateNewBuildContext(), itemTemplateForNull);
                     }
 
-                    const length = propValue.___ItemTemplates___.length;
-                    for (let j = 0; j < length; j++)
+                    const length = itemTemplates.length;
+
+                    // try to match by key
                     {
-                        const key = propValue.___ItemTemplates___[j].Key;
-
-                        // try find as TreeNode
-                        if (key.key != null && item && item.key != null && key.key === item.key)
+                        for (let j = 0; j < length; j++)
                         {
-                            return ConvertToReactElement(CreateNewBuildContext(), propValue.___ItemTemplates___[j].Value);
+                            const itemInTemplateInfo     = itemTemplates[j].Item;
+                            const jsonNodeInTemplateInfo = itemTemplates[j].ElementAsJson;
+
+                            // try find as TreeNode
+                            if (item && item.key != null && itemInTemplateInfo.key != null && itemInTemplateInfo.key === item.key)
+                            {
+                                return ConvertToReactElement(CreateNewBuildContext(), jsonNodeInTemplateInfo);
+                            }
                         }
+                    }
+                    
 
-                        if (JSON.stringify(key) === JSON.stringify(item))
+                    // try to match whole data
+                    {
+                        for (let j = 0; j < length; j++)
                         {
-                            return ConvertToReactElement(CreateNewBuildContext(), propValue.___ItemTemplates___[j].Value);
+                            const itemInTemplateInfo     = itemTemplates[j].Item;
+                            const jsonNodeInTemplateInfo = itemTemplates[j].ElementAsJson;
+
+                            if (JSON.stringify(itemInTemplateInfo) === JSON.stringify(item))
+                            {
+                                return ConvertToReactElement(CreateNewBuildContext(), jsonNodeInTemplateInfo);
+                            }
                         }
                     }
 
