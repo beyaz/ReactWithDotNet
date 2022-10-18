@@ -769,29 +769,31 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             }
 
             // tryProcessAsItemsTemplate
-            if (propValue.___ItemTemplates___)
+            const itemTemplates = propValue.___ItemTemplates___;
+            const itemTemplateForNull = propValue.___TemplateForNull___;
+            if (itemTemplates)
             {
                 props[propName] = function(item)
                 {
-                    if (item == null && propValue.___TemplateForNull___)
+                    if (item == null && itemTemplateForNull)
                     {
-                        return ConvertToReactElement(CreateNewBuildContext(), propValue.___TemplateForNull___);
+                        return ConvertToReactElement(CreateNewBuildContext(), itemTemplateForNull);
                     }
 
-                    const length = propValue.___ItemTemplates___.length;
+                    const length = itemTemplates.length;
                     for (let j = 0; j < length; j++)
                     {
-                        const key = propValue.___ItemTemplates___[j].Key;
+                        const key = itemTemplates[j].Key;
 
                         // try find as TreeNode
                         if (key.key != null && item && item.key != null && key.key === item.key)
                         {
-                            return ConvertToReactElement(CreateNewBuildContext(), propValue.___ItemTemplates___[j].Value);
+                            return ConvertToReactElement(CreateNewBuildContext(), itemTemplates[j].Value);
                         }
 
                         if (JSON.stringify(key) === JSON.stringify(item))
                         {
-                            return ConvertToReactElement(CreateNewBuildContext(), propValue.___ItemTemplates___[j].Value);
+                            return ConvertToReactElement(CreateNewBuildContext(), itemTemplates[j].Value);
                         }
                     }
 
