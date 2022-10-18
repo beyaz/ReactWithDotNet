@@ -134,6 +134,12 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier JustifyContentSpaceBetween => new(style => style.justifyContent = "space-between");
 
+    /// <summary>
+    ///     <para>style.justifyContent = "space-evenly"</para>
+    /// </summary>
+    public static StyleModifier JustifyContentSpaceEvenly=> new(style => style.justifyContent = "space-evenly");
+    
+
     public static StyleModifier LineHeight10 => LineHeight(10);
     public static StyleModifier LineHeight11 => LineHeight(11);
     public static StyleModifier LineHeight12 => LineHeight(12);

@@ -76,6 +76,15 @@ class InitialLetterLineGroup_old: ReactComponent
     }
 }
 
+[ReactRealType(typeof(div))]
+class InitialLetterLineGroup : HtmlElement
+{
+    public InitialLetterLineGroup()
+    {
+        this.Apply(DisplayFlex, FlexDirectionRow, JustifyContentSpaceEvenly, Margin(1));
+    }
+}
+
 class Chapter : ReactComponent
 {
     public int ChapterNumber { get; set; }
