@@ -132,7 +132,7 @@ public static class ComponentRequestHandler
 
             tracer.traceIndentLevel++;
 
-            var map = instance.ToMap2(serializerContext);
+            var map = instance.ToJsonMap(serializerContext);
 
             tracer.traceIndentLevel--;
 
@@ -272,7 +272,7 @@ public static class ComponentRequestHandler
 
             tracer.traceIndentLevel++;
 
-            var map = instance.ToMap2(serializerContext);
+            var map = instance.ToJsonMap(serializerContext);
 
             tracer.traceIndentLevel--;
             

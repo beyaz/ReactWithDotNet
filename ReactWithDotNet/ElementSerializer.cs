@@ -205,7 +205,7 @@ static partial class ElementSerializer
             propertyValue = new InnerElementInfo
             {
                 IsElement = true,
-                Element   = element.ToMap2(context)
+                Element   = element.ToJsonMap(context)
             };
         }
 
@@ -224,7 +224,7 @@ static partial class ElementSerializer
                 return (null, true);
             }
 
-            IReadOnlyJsMap convertToReactNode(object item)
+            IReadOnlyJsonMap convertToReactNode(object item)
             {
                 var reactNode = (Element)func.DynamicInvoke(item);
                 if (reactNode is not null)
@@ -232,7 +232,7 @@ static partial class ElementSerializer
                     reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString();
                 }
 
-                return reactNode.ToMap2(context);
+                return reactNode.ToJsonMap(context);
             }
 
             var itemTemplates = (List<KeyValuePair<object, object>>)method.Invoke(instance, new object[]
@@ -247,7 +247,7 @@ static partial class ElementSerializer
 
             if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
             {
-                template.___TemplateForNull___ = Try(() => ((Element)func.DynamicInvoke((object)null))?.ToMap2(context)).value;
+                template.___TemplateForNull___ = Try(() => ((Element)func.DynamicInvoke((object)null))?.ToJsonMap(context)).value;
             }
 
             return (template, false);

@@ -1,12 +1,12 @@
 namespace ReactWithDotNet;
 
-interface IReadOnlyJsMap
+interface IReadOnlyJsonMap
 {
     int Count { get; }
     void Foreach(Action<string, object> action);
 }
 
-sealed class JsonMap : IReadOnlyJsMap
+sealed class JsonMap : IReadOnlyJsonMap
 {
     int count;
 

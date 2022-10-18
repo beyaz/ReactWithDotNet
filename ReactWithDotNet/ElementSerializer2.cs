@@ -7,7 +7,7 @@ namespace ReactWithDotNet;
 
 partial class ElementSerializer
 {
-    public static IReadOnlyJsMap ToMap2(this Element element, ElementSerializerContext context)
+    public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
     {
         var node = ConvertToNode(element, context);
 
@@ -283,7 +283,7 @@ partial class ElementSerializer
 
                         var newElementSerializerContext = createNewElementSerializerContext();
                         
-                        var cachedVersion = ToMap2(component, newElementSerializerContext);
+                        var cachedVersion = ToJsonMap(component, newElementSerializerContext);
 
                         context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
 
@@ -371,7 +371,7 @@ partial class ElementSerializer
 
                             var newElementSerializerContext = createNewElementSerializerContext();
 
-                            var cachedVersion = ToMap2(component, newElementSerializerContext);
+                            var cachedVersion = ToJsonMap(component, newElementSerializerContext);
 
                             context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
                             
@@ -638,7 +638,7 @@ partial class ElementSerializer
         public HtmlElement ElementAsHtmlElement { get; set; }
         public HtmlTextNode ElementasHtmlTextElement { get; set; }
 
-        public IReadOnlyJsMap ElementAsJsonMap { get; set; }
+        public IReadOnlyJsonMap ElementAsJsonMap { get; set; }
 
         public ThirdPartyReactComponent ElementAsThirdPartyReactComponent { get; set; }
 
