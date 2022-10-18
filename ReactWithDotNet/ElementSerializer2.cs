@@ -62,7 +62,7 @@ partial class ElementSerializer
                 continue;
             }
 
-            InitializeKeyIfNotExists(node.Element, context);
+            InitializeKeyIfNotExists(node.Element);
 
             if (node.ElementIsHtmlTextElement)
             {

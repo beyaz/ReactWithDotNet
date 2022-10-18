@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -42,21 +41,7 @@ sealed class ElementSerializerContext
 
     public StateTree StateTree { get; init; }
     public bool SkipHandleCachableMethods { get; set; }
-
-    // TODO: remove
-    public void EnterToModeWorkingForCachedMethods()
-    {
-        CapturedValuesForCachedMethods.Push((StateTree.BreadCrumpPath, StateTree.CurrentOrder));
-    }
-
-    public void ExitFromModeWorkingForCachedMethods()
-    {
-        var (breadCrumpPathInStateTree, currentOrderInStateTree) = CapturedValuesForCachedMethods.Pop();
-
-        // restore previous values
-        StateTree.BreadCrumpPath = breadCrumpPathInStateTree;
-        StateTree.CurrentOrder   = currentOrderInStateTree;
-    }
+    
 }
 
 static partial class ElementSerializer
@@ -65,95 +50,6 @@ static partial class ElementSerializer
     const string ___RootNode___ = "$RootNode";
     const string ___Type___ = "$Type";
     const string ___TypeOfState___ = "$TypeOfState";
-
-    public static IReadOnlyDictionary<string, object> ToMap(this Element element, ElementSerializerContext context)
-    {
-        if (element == null)
-        {
-            return null;
-        }
-
-        if (element is FakeChild fakeChild)
-        {
-            return new Dictionary<string, object> { { "$FakeChild", fakeChild.Index } };
-        }
-
-        InitializeKeyIfNotExists(element, context);
-
-        if (element is ReactStatefulComponent reactStatefulComponent)
-        {
-            // push
-            {
-                context.componentStack.Push(reactStatefulComponent);
-            }
-
-            // process
-            var returnMap = ToMap(reactStatefulComponent, context);
-
-            // pop
-            {
-                var popudComponent = context.componentStack.Pop();
-                if (!ReferenceEquals(popudComponent, reactStatefulComponent))
-                {
-                    throw new Exception("Abdullah todo");
-                }
-            }
-
-            return returnMap;
-        }
-
-        context.TryCallBeforeSerializeElementToClient(element);
-
-        var map = new Dictionary<string, object>();
-
-        var htmlElement = element as HtmlElement;
-
-        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
-        {
-            map.Add("$tag", thirdPartyReactComponent.Type);
-        }
-        else if (htmlElement is not null)
-        {
-            map.Add("$tag", htmlElement.Type);
-        }
-
-        foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
-        {
-            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, context);
-            if (noNeedToExport)
-            {
-                continue;
-            }
-
-            map.Add(GetPropertyName(propertyInfo), propertyValue);
-        }
-
-        if (htmlElement?.innerText is not null)
-        {
-            map.Add("$text", htmlElement.innerText);
-        }
-
-        if (element.children.Count > 0)
-        {
-            var childElements = new List<object>();
-
-            foreach (var child in element.children)
-            {
-                if (child is HtmlTextNode textNode)
-                {
-                    context.TryCallBeforeSerializeElementToClient(child);
-                    childElements.Add(textNode.innerText);
-                    continue;
-                }
-
-                childElements.Add(ToMap(child, context));
-            }
-
-            map.Add("$children", childElements);
-        }
-
-        return map;
-    }
 
     static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
     {
@@ -322,7 +218,7 @@ static partial class ElementSerializer
                         {
                             IsRemoteMethod                   = true,
                             remoteMethodName                 = @delegate.Method.Name,
-                            HandlerComponentUniqueIdentifier                        = target.ComponentUniqueIdentifier.Value,
+                            HandlerComponentUniqueIdentifier                        = target.ComponentUniqueIdentifier,
                             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
                             StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null
                         };
@@ -402,9 +298,10 @@ static partial class ElementSerializer
             IReadOnlyJsMap convertToReactNode(object item)
             {
                 var reactNode = (Element)func.DynamicInvoke(item);
-
-                reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString();
-
+                if (reactNode is not null)
+                {
+                    reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString();
+                }
 
                 return reactNode.ToMap2(context);
             }
@@ -473,7 +370,7 @@ static partial class ElementSerializer
         return false;
     }
 
-    static void InitializeKeyIfNotExists(Element element, ElementSerializerContext context)
+    static void InitializeKeyIfNotExists(Element element)
     {
         if (element.key == null)
         {
@@ -503,207 +400,7 @@ static partial class ElementSerializer
         return false;
     }
 
-    static IReadOnlyDictionary<string, object> ToMap(ReactStatefulComponent reactStatefulComponent, ElementSerializerContext context, bool handleCachableMethods = true)
-    {
-        var statePropertyInfo = reactStatefulComponent.GetType().GetProperty("state");
-        if (statePropertyInfo == null)
-        {
-            throw new MissingMemberException(reactStatefulComponent.GetType().GetFullName(), "state");
-        }
-
-        var map = new Dictionary<string, object>();
-
-        var stateTree      = context.StateTree;
-        var breadCrumpPath = stateTree.BreadCrumpPath;
-        var stateOrder     = stateTree.CurrentOrder;
-
-        if (statePropertyInfo.GetValue(reactStatefulComponent) is null)
-        {
-            stateTree.BreadCrumpPath = breadCrumpPath + "," + stateTree.CurrentOrder;
-            stateTree.CurrentOrder   = 0;
-
-            if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out ClientStateInfo clientStateInfo))
-            {
-                if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
-                {
-                    var stateValue = Json.DeserializeJsonByNewtonsoft(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                    statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
-                }
-            }
-
-            if (stateTree.BreadCrumpPath != "0")
-            {
-                stateOrder++;
-            }
-        }
-
-        reactStatefulComponent.Context = context.ReactContext;
-
-        var state = statePropertyInfo.GetValue(reactStatefulComponent);
-        if (state == null)
-        {
-            reactStatefulComponent.InvokeConstructor();
-
-            // maybe developer forget init state
-            if (reactStatefulComponent is ReactComponent<EmptyState> reactComponent && reactComponent.state == null)
-            {
-                reactComponent.state = new EmptyState();
-            }
-        }
-
-        map.Add(___RootNode___, ToMap(reactStatefulComponent.InvokeRender(), context));
-
-        state = statePropertyInfo.GetValue(reactStatefulComponent);
-
-        const string DotNetState = "$State";
-
-        map.Add(DotNetState, state);
-
-        map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
-        map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
-        if (HasComponentDidMountMethod(reactStatefulComponent))
-        {
-            map.Add(___HasComponentDidMountMethod___, true);
-        }
-
-        map.Add(nameof(reactStatefulComponent.key), reactStatefulComponent.key);
-
-        if (reactStatefulComponent.ClientTask.taskList.Count > 0)
-        {
-            map.Add("$ClientTasks", reactStatefulComponent.ClientTask.taskList);
-        }
-
-        var dotNetProperties = new Dictionary<string, object>();
-
-        foreach (var propertyInfo in reactStatefulComponent.GetType().GetProperties())
-        {
-            if (propertyInfo.Name == nameof(reactStatefulComponent.Context) ||
-                propertyInfo.Name == nameof(reactStatefulComponent.Children) ||
-                propertyInfo.Name == nameof(reactStatefulComponent.key) ||
-                propertyInfo.Name == nameof(reactStatefulComponent.ClientTask) ||
-                propertyInfo.Name == "state" ||
-                propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
-               )
-            {
-                continue;
-            }
-
-            dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
-        }
-
-        map.Add("DotNetProperties", dotNetProperties);
-
-        stateTree.BreadCrumpPath = breadCrumpPath;
-        stateTree.CurrentOrder   = stateOrder;
-
-        if (handleCachableMethods)
-        {
-            List<CachableMethodInfo> cachedMethods = null;
-
-            foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null))
-            {
-                context.EnterToModeWorkingForCachedMethods();
-
-                var component = cloneComponent();
-
-                cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
-
-                var cachedVersion = ToMap(component, context, false);
-
-                var cachableMethodInfo = new CachableMethodInfo
-                {
-                    MethodName       = cachableMethod.Name,
-                    IgnoreParameters = true,
-                    ElementAsJson    = cachedVersion
-                };
-
-                cachedMethods ??= new List<CachableMethodInfo>();
-
-                cachedMethods.Add(cachableMethodInfo);
-
-                context.ExitFromModeWorkingForCachedMethods();
-            }
-
-            ReactStatefulComponent cloneComponent()
-            {
-                var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
-
-                foreach (var (key, _) in dotNetProperties)
-                {
-                    var dotNetPropertyInfo = component.GetType().GetProperty(key);
-                    if (dotNetPropertyInfo == null)
-                    {
-                        throw new Exception();
-                    }
-
-                    dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyInfo.GetValue(component)));
-                }
-
-                if (statePropertyInfo == null)
-                {
-                    throw new Exception();
-                }
-
-                statePropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(state));
-
-                component.ClientTask = ReflectionHelper.DeepCopy(component.ClientTask);
-
-                return component;
-            }
-
-            foreach (var cachableMethod in reactStatefulComponent.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null))
-            {
-                var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
-
-                var methodInfoForGettingParameters = reactStatefulComponent.GetType().FindMethod(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-
-                var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
-                if (parameters == null)
-                {
-                    throw new InvalidOperationException($"Method should return IEnumerable<{cachableMethod.GetParameters().FirstOrDefault()}>");
-                }
-
-                foreach (var parameter in parameters)
-                {
-                    context.EnterToModeWorkingForCachedMethods();
-
-                    var component = cloneComponent();
-
-                    try
-                    {
-                        cachableMethod.Invoke(component, new[] { parameter });
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new InvalidOperationException("Error occured when calculating cache method", exception);
-                    }
-
-                    var cachedVersion = ToMap(component, context, false);
-
-                    var cachableMethodInfo = new CachableMethodInfo
-                    {
-                        MethodName    = cachableMethod.Name,
-                        Parameter     = parameter,
-                        ElementAsJson = cachedVersion
-                    };
-
-                    cachedMethods ??= new List<CachableMethodInfo>();
-
-                    cachedMethods.Add(cachableMethodInfo);
-
-                    context.ExitFromModeWorkingForCachedMethods();
-                }
-            }
-
-            if (cachedMethods?.Any() == true)
-            {
-                map.Add("$CachedMethods", cachedMethods);
-            }
-        }
-
-        return map;
-    }
-
+   
     static (T value, Exception exception) Try<T>(Func<T> func)
     {
         try
