@@ -81,9 +81,12 @@ class InitialLetterLineGroup : ReactComponent
 {
     protected override Element render()
     {
-        return new FlexRow(Margin(1), JustifyContentSpaceEvenly)
+        return new FlexRow
         {
-            Children = children
+            Margin(1),
+            JustifyContentSpaceEvenly,
+            
+            Children(children)
         };
     }
 }

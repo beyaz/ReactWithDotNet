@@ -824,4 +824,11 @@ public static partial class Mixin
     public static StyleModifier py(string value) => PaddingTopBottom(value);
     #endregion
     #endregion
+
+
+
+    /// <summary>
+    ///     Adds elements to children
+    /// </summary>
+    public static HtmlElementModifier Children(IEnumerable<Element> children) => new(element => element.Children = children);
 }
