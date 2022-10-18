@@ -3,6 +3,19 @@ using static QuranAnalyzer.ArabicLetter;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
+class Note : ReactComponent
+{
+    public string Text { get; set; }
+    
+    protected override Element render()
+    {
+        return new FlexRow(PaddingLeftRight("10%"), PaddingTop(50))
+        {
+            new strong{Text("Not:"), MarginRight(5)}, new div{ Text(Text) }
+        };
+    }
+}
+
 class InitialLetterGroup_Chapter19 : InitialLetterGroup
 {
 
@@ -16,7 +29,6 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
     {
         return new div
         {
-
             new table
             {
                 style = { width = "100%" },
@@ -73,7 +85,15 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
             new Arrow { start = Id(19, Haa), end  = IdOfCountingResult},
             new Arrow { start = Id(19, Yaa), end  = IdOfCountingResult},
             new Arrow { start = Id(19, Ayn), end  = IdOfCountingResult},
-            new Arrow { start = Id(19, Saad), end = IdOfCountingResult}
+            new Arrow { start = Id(19, Saad), end = IdOfCountingResult},
+
+
+            new Note
+            {
+                Text =@"Meryem suresi Kuran'da en baştan 19. sıradadır. 
+                        Aynı zamanda en çok başlangıç harfi olan suredir. 
+                        Sadece bu sureye mahsus olmak üzere, surenin başında 5 tane başlangıç harfi vardır."
+            }
         };
     }
 }
