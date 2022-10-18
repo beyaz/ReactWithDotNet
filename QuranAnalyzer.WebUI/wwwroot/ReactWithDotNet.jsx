@@ -788,7 +788,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                         const key = templateInfo.Key;
 
                         // try find as TreeNode
-                        if (key.key != null && item && item.key != null && key.key === item.key)
+                        if (item && item.key != null && key.key != null && key.key === item.key)
                         {
                             return ConvertToReactElement(CreateNewBuildContext(), templateInfo.Value);
                         }
