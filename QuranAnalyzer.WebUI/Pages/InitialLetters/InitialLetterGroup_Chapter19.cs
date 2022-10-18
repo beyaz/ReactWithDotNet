@@ -46,16 +46,13 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
-                                        new InitialLetter { id = Id(19, Qaaf), text = Qaaf },
-                                        new InitialLetter { id = Id(19, Haa), text  = Haa_ },
-                                        new InitialLetter { id = Id(19, Yaa), text  = Yaa },
-                                        new InitialLetter { id = Id(19, Ayn), text  = Ayn },
-                                        new InitialLetter { id = Id(19, Saad), text = Saad }
-                                    }
+                                    new InitialLetter { id = Id(19, Qaaf), text = Qaaf },
+                                    new InitialLetter { id = Id(19, Haa), text  = Haa_ },
+                                    new InitialLetter { id = Id(19, Yaa), text  = Yaa },
+                                    new InitialLetter { id = Id(19, Ayn), text  = Ayn },
+                                    new InitialLetter { id = Id(19, Saad), text = Saad }
                                 }
                             },
                             new td

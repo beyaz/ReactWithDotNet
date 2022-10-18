@@ -76,12 +76,15 @@ class InitialLetterLineGroup_old: ReactComponent
     }
 }
 
-[ReactRealType(typeof(div))]
-class InitialLetterLineGroup : HtmlElement
+
+class InitialLetterLineGroup : ReactComponent
 {
-    public InitialLetterLineGroup()
+    protected override Element render()
     {
-        this.Apply(DisplayFlex, FlexDirectionRow, JustifyContentSpaceEvenly, Margin(1));
+        return new FlexRow(Margin(1), JustifyContentSpaceEvenly)
+        {
+            Children = children
+        };
     }
 }
 
