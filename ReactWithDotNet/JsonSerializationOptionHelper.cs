@@ -21,7 +21,9 @@ static partial class JsonSerializationOptionHelper
         options.Converters.Add(new PrimeReactTreeNodeConverter());
 
         options.Converters.Add(new StyleConverter());
+       
         options.Converters.Add(new JsMapConverter());
+
 
         options.Converters.Add(new ValueTupleFactory());
         
@@ -164,9 +166,11 @@ static partial class JsonSerializationOptionHelper
             {
                 writer.WritePropertyName(key);
 
-                JsonSerializer.Serialize(writer, value);
+                JsonSerializer.Serialize(writer, value, options);
             }
         }
+
+        
     }
 }
 

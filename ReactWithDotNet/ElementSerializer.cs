@@ -399,7 +399,7 @@ static partial class ElementSerializer
                 return (null, true);
             }
 
-            IReadOnlyDictionary<string, object> convertToReactNode(object item)
+            IReadOnlyJsMap convertToReactNode(object item)
             {
                 var reactNode = (Element)func.DynamicInvoke(item);
 

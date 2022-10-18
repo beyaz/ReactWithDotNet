@@ -7,7 +7,7 @@ namespace ReactWithDotNet;
 
 partial class ElementSerializer
 {
-    public static IReadOnlyDictionary<string, object> ToMap2(this Element element, ElementSerializerContext context)
+    public static IReadOnlyJsMap ToMap2(this Element element, ElementSerializerContext context)
     {
         var node = ConvertToNode(element, context);
 
@@ -56,7 +56,9 @@ partial class ElementSerializer
             if (node.ElementIsFakeChild)
             {
                 node.IsCompleted      = true;
-                node.ElementAsJsonMap = new JsMap2 { { "$FakeChild", node.ElementAsFakeChild.Index } };
+                var jsMap = new JsMap();
+                jsMap.Add("$FakeChild", node.ElementAsFakeChild.Index);
+                node.ElementAsJsonMap = jsMap;
                 continue;
             }
 
@@ -216,16 +218,14 @@ partial class ElementSerializer
                     dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
                 }
 
-                var map = new JsMap2
-                {
-                    { "$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier },
-                    { ___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap },
-                    { DotNetState, state },
-                    { ___Type___, GetReactComponentTypeInfo(reactStatefulComponent) },
-                    { ___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent) },
-                    { nameof(Element.key), reactStatefulComponent.key },
-                    { "DotNetProperties", dotNetProperties }
-                };
+                var map = new JsMap();
+                map.Add("$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier);
+                map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
+                map.Add(DotNetState, state);
+                map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
+                map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
+                map.Add(nameof(Element.key), reactStatefulComponent.key);
+                map.Add("DotNetProperties", dotNetProperties);
 
                 if (HasComponentDidMountMethod(reactStatefulComponent))
                 {
@@ -531,10 +531,8 @@ partial class ElementSerializer
 
     static JsMap2 LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
     {
-        var map = new JsMap2
-        {
-            { "$tag", htmlElement.Type }
-        };
+        var map = new JsMap();
+        map.Add( "$tag", htmlElement.Type );
 
         if (htmlElement._style is not null)
         {
@@ -557,11 +555,9 @@ partial class ElementSerializer
 
     static JsMap2 LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
-        var map = new JsMap2
-        {
-            { "$tag", thirdPartyReactComponent.Type }
-        };
-
+        var map = new JsMap();
+        map.Add("$tag", thirdPartyReactComponent.Type);
+        
         if (thirdPartyReactComponent._style is not null)
         {
             var (style, noNeedToExport) = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent._style, context);
@@ -642,7 +638,7 @@ partial class ElementSerializer
         public HtmlElement ElementAsHtmlElement { get; set; }
         public HtmlTextNode ElementasHtmlTextElement { get; set; }
 
-        public IReadOnlyDictionary<string, object> ElementAsJsonMap { get; set; }
+        public IReadOnlyJsMap ElementAsJsonMap { get; set; }
 
         public ThirdPartyReactComponent ElementAsThirdPartyReactComponent { get; set; }
 
