@@ -59,24 +59,6 @@ class CountingResult: ReactComponent
     }
 }
 
-class InitialLetterLineGroup_old: ReactComponent
-{
-    public List<InitialLetter> Items { get; } = new();
-
-    protected override Element render()
-    {
-        return new div
-        {
-            style =
-            {
-                display = "flex", margin = "1px", justifyContent = "space-evenly"
-            },
-            Children = Items
-        };
-    }
-}
-
-
 class InitialLetterLineGroup : ReactComponent
 {
     protected override Element render()
@@ -189,15 +171,14 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                             new td { new Chapter { ChapterNumber = 7, ChapterName = "Araf" } },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                   
                                         new InitialLetter { id = Id(7,Alif), text = Alif },
                                         new InitialLetter { id = Id(7,Laam), text = Laam },
                                         new InitialLetter { id = Id(7,Miim), text = Miim },
                                         new InitialLetter { id = Id(7,Saad), text = Saad, IsSelected = true }
-                                    }
+                                    
                                 }
                             }
                         },
@@ -210,17 +191,16 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(19,Qaaf), text = Qaaf },
                                         new InitialLetter { id = Id(19,Haa), text  = Haa_ },
                                         new InitialLetter { id = Id(19,Yaa), text  = Yaa },
                                         new InitialLetter { id = Id(19,Ayn), text  = Ayn },
                                         new InitialLetter { id = Id(19,Saad), text = Saad, IsSelected = true }
 
-                                    }
+                                    
                                 }
                             },
                             new td
@@ -250,12 +230,11 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                             new td { new Chapter { ChapterNumber = 38, ChapterName = "Sad" } },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                   
                                         new InitialLetter { id = Id(38,Saad), text = Saad, IsSelected = true }
-                                    }
+                                    
                                 }
                             }
                         }

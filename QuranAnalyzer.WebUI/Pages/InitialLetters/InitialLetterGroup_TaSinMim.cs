@@ -43,17 +43,16 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(19,Qaaf), text = Qaaf },
                                         new InitialLetter { id = Id(19,Haa), text  = Haa_,IsSelected = true  },
                                         new InitialLetter { id = Id(19,Yaa), text  = Yaa },
                                         new InitialLetter { id = Id(19,Ayn), text  = Ayn },
                                         new InitialLetter { id = Id(19,Saad), text = Saad}
 
-                                    }
+                                    
                                 }
                             },
                             new td
@@ -78,13 +77,12 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             new td {  new Chapter { ChapterNumber = 20, ChapterName = "Taha" }  },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(20,Taa_), text = Taa_ ,IsSelected = true},
                                         new InitialLetter { id = Id(20,Haa), text  = Haa ,IsSelected  = true}
-                                    }
+                                    
                                 }
                             }
                         },
@@ -95,14 +93,13 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             new td {  new Chapter { ChapterNumber = 26, ChapterName = "Şuara" }   },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(26,Taa_), text = Taa_,IsSelected  = true },
                                         new InitialLetter { id = Id(26,Siin), text = Siin ,IsSelected = true},
                                         new InitialLetter { id = Id(26,Miim), text = Miim ,IsSelected = true}
-                                    }
+                                    
                                 }
                             }
                         },
@@ -113,13 +110,12 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             new td {  new Chapter { ChapterNumber = 27, ChapterName = "Neml" }   },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(27,Taa_), text = Taa_ ,IsSelected = true},
                                         new InitialLetter { id = Id(27,Siin), text = Siin ,IsSelected = true}
-                                    }
+                                    
                                 }
                             }
                         },
@@ -130,14 +126,13 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             new td {  new Chapter { ChapterNumber = 28, ChapterName = "Kasas" }  },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(28,Taa_), text = Taa_ ,IsSelected = true},
                                         new InitialLetter { id = Id(28,Siin), text = Siin ,IsSelected = true},
                                         new InitialLetter { id = Id(28,Miim), text = Miim ,IsSelected = true}
-                                    }
+                                    
                                 }
                             }
                         }

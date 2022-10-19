@@ -35,13 +35,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(40,Haa), text  = Haa },
                                         new InitialLetter { id = Id(40,Miim), text = Miim }
-                                    }
+                                    
                                 }
                             },
                             new td
@@ -70,13 +69,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(41,Haa), text  = Haa },
                                         new InitialLetter { id = Id(41,Miim), text = Miim }
-                                    }
+                                    
                                 }
                             },
                             
@@ -91,13 +89,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(42, Haa), text  = Haa },
                                         new InitialLetter { id = Id(42, Miim), text = Miim },
-                                    }
+                                    
                                 }
                             }
                         },
@@ -111,13 +108,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(43,Haa), text  = Haa },
                                         new InitialLetter { id = Id(43,Miim), text = Miim }
-                                    }
+                                    
                                 }
                             }
                         },
@@ -131,13 +127,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                   
                                         new InitialLetter { id = Id(44, Haa), text  = Haa },
                                         new InitialLetter { id = Id(44, Miim), text = Miim }
-                                    }
+                                    
                                 }
                             },
                             new td
@@ -168,13 +163,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                   
                                         new InitialLetter { id = Id(45,Haa), text  = Haa },
                                         new InitialLetter { id = Id(45,Miim), text = Miim }
-                                    }
+                                    
                                 }
                             }
                         },
@@ -188,13 +182,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(46, Haa), text  = Haa },
                                         new InitialLetter { id = Id(46, Miim), text = Miim }
-                                    }
+                                    
                                 }
                             }
                         }

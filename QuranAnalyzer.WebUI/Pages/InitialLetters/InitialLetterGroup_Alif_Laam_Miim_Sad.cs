@@ -32,15 +32,14 @@ class InitialLetterGroup_Alif_Laam_Miim_Sad : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(7, Alif), text = Alif },
                                         new InitialLetter { id = Id(7, Laam), text = Laam },
                                         new InitialLetter { id = Id(7, Miim), text = Miim },
                                         new InitialLetter { id = Id(7, Saad), text = Saad },
-                                    }
+                                    
                                 }
                             },
                             new td

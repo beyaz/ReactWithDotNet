@@ -34,16 +34,14 @@ class InitialLetterGroup_Chapter42_AinSinKaf : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
 
-                                        new InitialLetter { id = Id(42, Ayn) , text = Ayn  },
+                                    new InitialLetter { id = Id(42, Ayn) , text = Ayn  },
                                         new InitialLetter { id = Id(42, Siin), text = Siin },
                                         new InitialLetter { id = Id(42, Qaaf), text = Qaaf }
                                     
-                                    }
+                                    
                                 }
                             },
                             new td

@@ -34,12 +34,11 @@ class InitialLetterGroup_NunWawNun : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(68, Nun), text = Nun }
-                                    }
+                                    
                                 }
                             },
                             new td

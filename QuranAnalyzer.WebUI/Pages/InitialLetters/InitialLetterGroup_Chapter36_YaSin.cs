@@ -34,13 +34,12 @@ class InitialLetterGroup_Chapter36_YaSin : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                   
                                         new InitialLetter { id = Id(36, Yaa), text = Yaa },
                                         new InitialLetter { id = Id(36, Siin), text = Siin },
-                                    }
+                                    
                                 }
                             },
                             new td

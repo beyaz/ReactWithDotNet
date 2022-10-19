@@ -34,12 +34,11 @@ class InitialLetterGroup_Qaaf_50 : InitialLetterGroup
                             },
                             new td
                             {
-                                new InitialLetterLineGroup_old
+                                new InitialLetterLineGroup
                                 {
-                                    Items =
-                                    {
+                                    
                                         new InitialLetter { id = Id(50, Qaaf), text = Qaaf }
-                                    }
+                                    
                                 }
                             },
                             new td
