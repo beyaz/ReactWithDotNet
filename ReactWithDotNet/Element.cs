@@ -39,14 +39,8 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         }
     }
 
-    /// <summary>
-    ///     Imports filled values given style
-    /// </summary>
-    [System.Text.Json.Serialization.JsonIgnore]
-    public IEnumerable<Element> Children
-    {
-        set => children.AddRange(value);
-    }
+    
+    
 
     /// <summary>
     ///     Gets or sets the key.

@@ -202,7 +202,6 @@ partial class ElementSerializer
                 foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
                 {
                     if (propertyInfo.Name == nameof(reactStatefulComponent.Context)
-                        || propertyInfo.Name == nameof(reactStatefulComponent.Children)
                         || propertyInfo.Name == nameof(Element.children)
                         || propertyInfo.Name == nameof(reactStatefulComponent.key)
                         || propertyInfo.Name == nameof(reactStatefulComponent.ClientTask)

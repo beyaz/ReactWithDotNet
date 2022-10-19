@@ -95,11 +95,6 @@ public sealed class FlexRow : HtmlElement
         style.flexDirection = "row";
     }
 
-    public FlexRow(IEnumerable<Element> children):this()
-    {
-        Children = children;
-    }
-
     public override string Type => nameof(div);
 }
 
@@ -116,11 +111,6 @@ public sealed class FlexColumn : HtmlElement
     {
         style.display       = "flex";
         style.flexDirection = "column";
-    }
-
-    public FlexColumn(IEnumerable<Element> children) : this()
-    {
-        Children = children;
     }
 
     public override string Type => nameof(div);

@@ -830,5 +830,21 @@ public static partial class Mixin
     /// <summary>
     ///     Adds elements to children
     /// </summary>
-    public static HtmlElementModifier Children(IEnumerable<Element> children) => new(element => element.Children = children);
+    public static HtmlElementModifier Children(IEnumerable<Element> children)
+    {
+        if (children is null)
+        {
+            return null;
+        }
+
+        var array = children.ToArray();
+        
+        void modifyHtmlElement(HtmlElement element)
+        {
+            element.children.Clear();
+            element.children.AddRange(array);
+        }
+
+        return new(modifyHtmlElement);
+    }
 }
