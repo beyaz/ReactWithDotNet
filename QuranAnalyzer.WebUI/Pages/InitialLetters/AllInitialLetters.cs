@@ -49,7 +49,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
 
         var headers = new FlexColumn(TextAlignCenter, CursorPointer)
         {
-            Children = Tabs.Select(x => CreateTabHeader(x.TabHeader, x.contenType.FullName))
+            Children(Tabs.Select(x => CreateTabHeader(x.TabHeader, x.contenType.FullName)))
         };
 
         return new FlexRow(Width100Percent, Border("1px solid #dee2e6"))

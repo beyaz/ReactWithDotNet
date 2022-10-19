@@ -167,7 +167,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 new VSpace(30),
                 new div
                 {
-                   Children = resultVerseList
+                   Children(resultVerseList)
                 }
             }
         };

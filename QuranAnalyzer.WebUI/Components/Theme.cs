@@ -84,8 +84,8 @@ class Article : ReactComponent
     {
         return new article
         {
-            style = { MarginLeftRight(8), PaddingLeftRight(16) },
-            Children = children
+            MarginLeftRight(8), PaddingLeftRight(16),
+            Children(children)
         };
     }
 }

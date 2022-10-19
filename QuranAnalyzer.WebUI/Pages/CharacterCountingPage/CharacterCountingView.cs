@@ -150,7 +150,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 new VSpace(30),
                 new div
                 {
-                    Children = resultVerseList
+                    Children(resultVerseList)
                 }
             }
         };
