@@ -20,6 +20,7 @@ public sealed class div : HtmlElement
     }
 
     public div(params IModifier[] modifiers) : base(modifiers) { }
+    
     public div(Style style) : base(style) { }
 
    

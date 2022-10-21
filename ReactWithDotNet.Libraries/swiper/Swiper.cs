@@ -1,11 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 #pragma warning disable CS1591
 namespace ReactWithDotNet.Libraries.swiper;
 
 public class Swiper : ThirdPartyReactComponent
 {
+    public Swiper()
+    {
+        
+    }
+
+    public Swiper(params StyleModifier[] modifiers):base(modifiers)
+    {
+    }
+
+    public Swiper(IEnumerable<Element> children)
+    {
+        if (children is not null)
+        {
+            this.children.Clear();
+            this.children.AddRange(children);
+        }
+        
+    }
+
     [React]
     public SwiperAutoplay autoplay { get; } = new();
 

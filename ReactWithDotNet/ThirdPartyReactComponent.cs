@@ -66,6 +66,20 @@ public abstract class ThirdPartyReactComponent : Element
         }
     }
 
+    public static Element operator |(ThirdPartyReactComponent element, StyleModifier modifier)
+    {
+        element.ProcessModifier(modifier);
+
+        return element;
+    }
+
+    public static Element operator +(ThirdPartyReactComponent element, StyleModifier modifier)
+    {
+        element.ProcessModifier(modifier);
+
+        return element;
+    }
+
     protected internal sealed override void ProcessModifier(IModifier modifier)
     {
         if (modifier == null)
