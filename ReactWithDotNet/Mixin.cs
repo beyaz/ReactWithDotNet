@@ -38,6 +38,14 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier DirectionRtl => new(style => style.direction = "rtl");
 
+    /// <summary>
+    ///     style.display = 'block'
+    /// </summary>
+    public static StyleModifier DisplayBlock => new(style => style.display = "block");
+
+    /// <summary>
+    ///     style.display = 'flex'
+    /// </summary>
     public static StyleModifier DisplayFlex => new(style => style.display = "flex");
 
     /// <summary>
@@ -137,8 +145,7 @@ public static partial class Mixin
     /// <summary>
     ///     <para>style.justifyContent = "space-evenly"</para>
     /// </summary>
-    public static StyleModifier JustifyContentSpaceEvenly=> new(style => style.justifyContent = "space-evenly");
-    
+    public static StyleModifier JustifyContentSpaceEvenly => new(style => style.justifyContent = "space-evenly");
 
     public static StyleModifier LineHeight10 => LineHeight(10);
     public static StyleModifier LineHeight11 => LineHeight(11);
@@ -314,6 +321,28 @@ public static partial class Mixin
     public static StyleModifier BottomRight(double bottomAndRight) => Bottom(bottomAndRight) | Right(bottomAndRight);
 
     public static StyleModifier BoxShadow(string boxShadow) => new(style => style.boxShadow = boxShadow);
+
+    /// <summary>
+    ///     Adds elements to children
+    /// </summary>
+    public static HtmlElementModifier Children(IEnumerable<Element> children)
+    {
+        if (children is null)
+        {
+            return null;
+        }
+
+        var array = children.ToArray();
+
+        void modifyHtmlElement(HtmlElement element)
+        {
+            element.children.Clear();
+            element.children.AddRange(array);
+        }
+
+        return new(modifyHtmlElement);
+    }
+
     public static HtmlElementModifier ClassName(string className) => new(element => element.className = className);
 
     public static StyleModifier Color(string color) => new(style => style.color = color);
@@ -533,6 +562,14 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier TopBottom(double pixelValue) => new(style => style.topBottom = pixelValue.AsPixel());
 
+    /// <summary>
+    ///     style.transform = <paramref name="transform" />
+    /// </summary>
+    public static StyleModifier Transform(string transform) => new(style => style.transform = transform);
+
+    /// <summary>
+    ///     style.transition = <paramref name="transition" />
+    /// </summary>
     public static StyleModifier Transition(string transition) => new(style => style.transition = transition);
 
     /// <summary>
@@ -824,27 +861,4 @@ public static partial class Mixin
     public static StyleModifier py(string value) => PaddingTopBottom(value);
     #endregion
     #endregion
-
-
-
-    /// <summary>
-    ///     Adds elements to children
-    /// </summary>
-    public static HtmlElementModifier Children(IEnumerable<Element> children)
-    {
-        if (children is null)
-        {
-            return null;
-        }
-
-        var array = children.ToArray();
-        
-        void modifyHtmlElement(HtmlElement element)
-        {
-            element.children.Clear();
-            element.children.AddRange(array);
-        }
-
-        return new(modifyHtmlElement);
-    }
 }
