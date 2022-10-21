@@ -124,6 +124,37 @@ public abstract class HtmlElement : Element
     {
         this.Apply(modifier);
     }
+
+
+    #region Operators
+    public static HtmlElement operator +(HtmlElement element, HtmlElementModifier modifier)
+    {
+        element.ProcessModifier(modifier);
+
+        return element;
+    }
+
+    public static HtmlElement operator |(HtmlElement element, HtmlElementModifier modifier)
+    {
+        element.ProcessModifier(modifier);
+
+        return element;
+    }
+
+    public static HtmlElement operator +(HtmlElement element, StyleModifier modifier)
+    {
+        element.ProcessModifier(modifier);
+
+        return element;
+    }
+
+    public static HtmlElement operator |(HtmlElement element, StyleModifier modifier)
+    {
+        element.ProcessModifier(modifier);
+
+        return element;
+    }
+    #endregion
 }
 
 [Serializable]
