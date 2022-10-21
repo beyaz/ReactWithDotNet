@@ -154,6 +154,15 @@ public abstract class HtmlElement : Element
 
         return element;
     }
+
+    public static HtmlElement operator +(HtmlElement element, IEnumerable<Element> children)
+    {
+        element.children.Clear();
+        element.children.AddRange(children);
+
+        return element;
+    }
+    
     #endregion
 }
 
