@@ -1,17 +1,6 @@
 ﻿namespace ReactWithDotNet;
 
-public sealed class div : HtmlElement
-{
-    public div()
-    {
-    }
 
-    public div(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-
- 
-}
 
 public class button : HtmlElement
 {
@@ -66,131 +55,12 @@ public class input : HtmlElement
 }
 
 
-/// <summary>
-/// Defines a paragraph
-/// </summary>
-public class p : HtmlElement
-{
-    /// <summary>
-    /// Defines a paragraph
-    /// </summary>
-    public p()
-    {
-    }
 
-    /// <summary>
-    /// Defines a paragraph
-    /// </summary>
-    public p(string text)
-    {
-        this.text = text;
-    }
-    
-    /// <summary>
-    /// Defines a paragraph
-    /// </summary>
-    public static implicit operator p(string text)
-    {
-        return new p { text = text };
-    }
-
-    /// <summary>
-    /// Defines a paragraph
-    /// </summary>
-    public p(params IModifier[] modifiers) : base(modifiers) { }
-}
 public class pre : HtmlElement
 {
 }
 
-public class h6 : HtmlElement
-{
-    public h6()
-    {
 
-    }
-    public h6(params IModifier[] modifiers) : base(modifiers) { }
-}
-public class h5 : HtmlElement
-{
-    public h5()
-    {
-        
-    }
-    public h5(params IModifier[] modifiers) : base(modifiers) { }
-    
-}
-
-public class h4 : HtmlElement
-{
-    public h4()
-    {
-    }
-
-    public h4(string innerText)
-    {
-        this.innerText = innerText;
-    }
-    public h4(params IModifier[] modifiers) : base(modifiers) { }
-   
-}
-
-public class h3 : HtmlElement
-{
-    public h3()
-    {
-    }
-
-    public h3(string innerText)
-    {
-        this.innerText = innerText;
-    }
-    public h3(params IModifier[] modifiers) : base(modifiers) { }
-   
-}
-
-public class h2 : HtmlElement
-{
-
-
-    public h2()
-    {
-    }
-
-    public h2(string innerText)
-    {
-        this.innerText = innerText;
-    }
-
-    public h2(params IModifier[] modifiers) : base(modifiers) { }
-}
-
-public class h1 : HtmlElement
-{
-    public h1()
-    {
-    }
-
-    public h1(string innerText)
-    {
-        this.innerText = innerText;
-    }
-
-    public h1(params IModifier[] modifiers) : base(modifiers) { }
-}
-public class header : HtmlElement
-{
-    public header()
-    {
-    }
-
-    public header(string innerText)
-    {
-        this.innerText = innerText;
-    }
-
-    public header(params IModifier[] modifiers):base(modifiers) { }
-}
 
 public class a : HtmlElement
 {

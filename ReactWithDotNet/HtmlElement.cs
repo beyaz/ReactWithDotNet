@@ -15,7 +15,10 @@ public abstract class HtmlElement : Element
         this.Apply(modifiers);
     }
 
-   
+    protected HtmlElement(string innerText)
+    {
+        text = innerText;
+    }
 
     /// <summary>
     ///     Gets or sets the name of the class.
