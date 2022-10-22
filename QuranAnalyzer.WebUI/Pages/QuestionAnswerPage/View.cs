@@ -49,7 +49,7 @@ class QuestionLink : ReactComponent
                     {
                         innerText = Question,
                         style     ={ paddingLeft = "14px", paddingTopBottom = "10px"}
-                    }
+                    } | TextDecorationUnderline | CursorPointer
                 }
 
             }
@@ -88,13 +88,20 @@ public class View : ReactComponent
                             }
                         },
 
-                        new pre{text =@"Bu bölümde 19 meselesi etrafında dönen tartışmalı konuları ele aldım. 
-Elimden geldiğince tartışılan konuları en kısa ve tarafsız bir şekilde özetlemeye çalıştım.  
-Tekrar hatırlatmakta fayda görüyorum. 
-Aşağıdaki soruların cevaplarının doğru olup olmadığı siz okuyucuya bırakılmıştır. 
+                        @"Bu bölümde 19 meselesi etrafında dönen tartışmalı konuları ele aldım. 
+Elimden geldiğince tartışılan konuları en kısa ve tarafsız bir şekilde özetlemeye çalıştım.",
+                        new br(),
+                        new br(),
+                        @"Tekrar hatırlatmakta fayda görüyorum.",
+                        new br(),
+                        new br(),
+                        @"Aşağıdaki soruların cevaplarının doğru olup olmadığı siz okuyucuya bırakılmıştır. 
 İmana dair bir meselenin üzerinde düşünlüp içselleştirilmedikten sonra bir faydasının olmayacağına inanıyorum.
-Bu sebeple ben burada tartışmayı aktarayım üzerine düşünmek / bir karara varmak size kalsın." },
+Bu sebeple ben burada tartışmayı aktarayım üzerine düşünmek-araştırmak ve bir karara varmak size kalsın." ,
 
+                        new br(),
+                        new br(),
+                        new br(),
                         new div
                         { 
                             new QuestionLink{Question = "Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden hiç bir alimden/hocadan duymuyoruz?"},

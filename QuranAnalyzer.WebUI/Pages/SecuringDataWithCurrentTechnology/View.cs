@@ -30,22 +30,19 @@ TC kimlik numaranızda bulunan rakamlar sizce rastgele rakamlar mı? Yoksa belli
                 }
             },
 
-            new p
-            {
-                text = @"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkda oluşmuş. 
+            (p)@"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkda oluşmuş. 
 11 hane olan TC kimlik numaranızın ilk 10 hanesinin rakamlarının toplamının 10'a bölümünden kalan sayı 11. hanedeki sayı ile hep aynıdır.
-Özetle şunu söyleyebiliriz"
-            },
-
-            new Important(@"TC kimlik numaranızdaki ilk 10 rakamın toplamını 10'a bölerseniz elinizde kalan sayı 11.hanedeki rakamı verir."),
-
+Özetle şunu söyleyebiliriz",
+            new br(),
+            (div)@"TC kimlik numaranızdaki ilk 10 rakamın toplamını 10'a bölerseniz elinizde kalan sayı 11.hanedeki rakamı verir." | FontWeight500,
+            new br(),
             new p
             {
                 text = @"Bu kural bütün TC kimlik numaraları için geçerlidir. Hatta TC kimlik numarası aslında 9 hanedir. 
 İlk 9 rakam belli bir hesaplama (algoritma) sonucu 10. hanedeki rakamı verir. 
 İlk 10 hanedeki rakam da yukarıda detaylarını incelediğimiz yöntem ile 11. hanedeki rakamı verir.
 Özetle en sağdaki son iki rakam aslında doğrulama rakamlarıdır.
-Böylelikle bir 11 haneden oluşan bir sayının TC kimlik numarası olup olmadığı tespit edilebilir.
+Böylelikle herhangi 11 haneden oluşan bir sayının TC kimlik numarası olup olmadığı tespit edilebilir.
 
 "
             },
@@ -72,9 +69,12 @@ Muhtemelen hatalı iban diye size uyarı verecektir.",
             new div { text = "İbanın doğrulaması şu şekilde yapılıyor." },
             new VSpace(5),
 
-            new li { text = "İlk 4 hane sona taşınır." },
-            new li { text = "Her bir harf yerine o harf için belirlenen rakamsal karşılıklar yazılır." },
-            new li { text = "Bütün bu rakamı 97 ye böldüğünüzde kalan 1 ise iban doğrudur - değil ise yanlıştır." },
+            new ul
+            {
+                (li) "İlk 4 hane sona taşınır.",
+                (li) "Her bir harf yerine o harf için belirlenen rakamsal karşılıklar yazılır." ,
+                (li) "Bütün bu rakamı 97 ye böldüğünüzde kalan 1 ise iban doğrudur - değil ise yanlıştır." 
+            },
             new br(),
             new div { text = "İşte bu yukarıdaki resimde gördüğünüz iki hane olan kontrol rakamları(check digits) bu Mod97 hesaplamasından 1 sonucu gelecek şekilde ayarlanıyor." },
 
@@ -102,16 +102,18 @@ Bu sayede A cihazı B cihazından gelen verileri kontrol eder ve duruma göre bo
             new p
             {
                 text = @" Özetlersek günümüz bilgisayar dünyasında bir verinin doğruluğu, 
-doğru iletilip iletilmediği bu saydığımız yöntemler ile olmaktadır. Elbette bu yazıda basit olanlardan sadece bir kaçı ele alındı.
-Para transferleri, bitcoin, QR ile yapılan bazı işlemlerden tutun okuduğunuz şu yazının sizin cihazınıza kadar iletilmesinde bile bu yöntemler kullanılıyor.
+doğru iletilip iletilmediği bu saydığımız yöntemler ile olmaktadır. 
+Çok daha karmaşık doğrulama-şifreleme yöntemleri olmakla beraber elbette bu yazıda basit olanlardan sadece bir kaçı ele alındı.
+Para transferleri, bitcoin, QR ile yapılan işlemlerden tutun okuduğunuz şu yazının sizin cihazınıza kadar iletilmesinde bile bu yöntemler kullanılıyor.
+Doğrulama bilgisi veri içinde beraber gönderiliyor.
 "
             },
-            new VSpace(15),
+            new VSpace(20),
 
-            (p)@" İyi de bu anlatılanların Kuran ile 19 ile ne alakası var ?",
+            (p)@" İyi de bu anlatılanların Kuran ile 19 ile ne alakası var ?"|FontWeight500,
 
             (p)@"Aynen burada bahsedilen örneklerde olduğu gibi bir doğrulama kodu Kuran içinde olabilir mi ? 
-Bu sayede Kuran'ın Yaratıcıdan gelen bir kitap olduğunu daha iyi anlayabilelim diye Kuran'ın içine bir doğrulama kodu-sayısı-anahtarı eklenmiş olabilir mi ?",
+Bu sayede Kuran'ın Yaratıcıdan gelen bir kitap olduğunu daha iyi anlayabilelim diye Kuran'ın içine bir doğrulama kodu-sayısı-anahtarı olabilir mi ?",
 
             new VSpace(15)
         };
