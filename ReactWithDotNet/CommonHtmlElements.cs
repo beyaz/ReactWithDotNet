@@ -36,6 +36,32 @@ public sealed class p : HtmlElement
     public static implicit operator p(string text) => new() { text = text };
 }
 
+    /// <summary>
+    ///     Preformatted text
+    /// </summary>
+public sealed class pre : HtmlElement
+{
+    /// <summary>
+    ///     Preformatted text
+    /// </summary>
+    public pre() { }
+
+    /// <summary>
+    ///     Preformatted text
+    /// </summary>
+    public pre(string innerText) : base(innerText) {  }
+
+    /// <summary>
+    ///     Preformatted text
+    /// </summary>
+    public pre(params IModifier[] modifiers) : base(modifiers) { }
+
+    /// <summary>
+    ///     Preformatted text
+    /// </summary>
+    public static implicit operator pre(string text) => new() { text = text };
+}
+
 public sealed class h1 : HtmlElement
 {
     public h1() { }

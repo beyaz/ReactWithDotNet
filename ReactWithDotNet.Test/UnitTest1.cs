@@ -18,6 +18,9 @@ namespace ReactWithDotNet.Test
 
                 new { Tag = "p", Comment = "Defines a paragraph" },
 
+                new { Tag = "pre", Comment = "Preformatted text" },
+                
+
                 new { Tag = "h1", Comment = Empty },
                 new { Tag = "h2", Comment = Empty },
                 new { Tag = "h3", Comment = Empty },

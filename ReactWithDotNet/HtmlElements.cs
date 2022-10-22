@@ -56,9 +56,6 @@ public class input : HtmlElement
 
 
 
-public class pre : HtmlElement
-{
-}
 
 
 
