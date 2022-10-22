@@ -641,7 +641,7 @@ partial class ElementSerializer
         public Element DotNetComponentRootElement { get; set; }
         public Node DotNetComponentRootNode { get; set; }
 
-        public Element Element { get; set; }
+        public Element Element { get; init; }
 
         public ReactStatefulComponent ElementAsDotNetReactComponent { get; set; }
 
