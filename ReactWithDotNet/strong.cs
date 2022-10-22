@@ -390,14 +390,91 @@ public class article : HtmlElement
         return new article { text = text };
     }
 }
+
+/// <summary>
+/// Defines an unordered (bulleted) list.
+/// </summary>
 public class ul : HtmlElement
 {
+    /// <summary>
+    /// Defines an unordered (bulleted) list.
+    /// </summary>
     public ul()
     {
     }
 
+    /// <summary>
+    /// Defines an unordered (bulleted) list.
+    /// </summary>
     public ul(params IModifier[] modifiers) : base(modifiers)
     {
+    }
+
+    /// <summary>
+    /// Defines an unordered (bulleted) list.
+    /// </summary>
+    public static implicit operator ul(string text)
+    {
+        return new ul { text = text };
+    }
+}
+
+/// <summary>
+/// Defines an ordered list. An ordered list can be numerical or alphabetical.
+/// </summary>
+public class ol : HtmlElement
+{
+    /// <summary>
+    /// Defines an ordered list. An ordered list can be numerical or alphabetical.
+    /// </summary>
+    public ol()
+    {
+    }
+
+    /// <summary>
+    /// Defines an ordered list. An ordered list can be numerical or alphabetical.
+    /// </summary>
+    public ol(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
+
+    /// <summary>
+    /// Defines an ordered list. An ordered list can be numerical or alphabetical.
+    /// </summary>
+    public static implicit operator ol(string text)
+    {
+        return new ol { text = text };
+    }
+}
+
+/// <summary>
+/// The &lt;li&gt; HTML element is used to represent an item in a list. It must be contained in a parent element: an ordered list (&lt;ol&gt;), an unordered list (&lt;ul&gt;), or a menu (&lt;menu&gt;). In menus and unordered lists, list items are usually displayed using bullet points. In ordered lists, they are usually displayed with an ascending counter on the left, such as a number or letter.
+/// </summary>
+public class li : HtmlElement
+{
+
+    /// <summary>
+    /// The &lt;li&gt; HTML element is used to represent an item in a list. It must be contained in a parent element: an ordered list (&lt;ol&gt;), an unordered list (&lt;ul&gt;), or a menu (&lt;menu&gt;). In menus and unordered lists, list items are usually displayed using bullet points. In ordered lists, they are usually displayed with an ascending counter on the left, such as a number or letter.
+    /// </summary>
+    public li()
+    {
+    }
+
+
+    /// <summary>
+    /// The &lt;li&gt; HTML element is used to represent an item in a list. It must be contained in a parent element: an ordered list (&lt;ol&gt;), an unordered list (&lt;ul&gt;), or a menu (&lt;menu&gt;). In menus and unordered lists, list items are usually displayed using bullet points. In ordered lists, they are usually displayed with an ascending counter on the left, such as a number or letter.
+    /// </summary>
+    public li(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
+
+
+    /// <summary>
+    /// The &lt;li&gt; HTML element is used to represent an item in a list. It must be contained in a parent element: an ordered list (&lt;ol&gt;), an unordered list (&lt;ul&gt;), or a menu (&lt;menu&gt;). In menus and unordered lists, list items are usually displayed using bullet points. In ordered lists, they are usually displayed with an ascending counter on the left, such as a number or letter.
+    /// </summary>
+    public static implicit operator li(string text)
+    {
+        return new li { text = text };
     }
 }
 

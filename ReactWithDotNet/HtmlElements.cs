@@ -183,12 +183,7 @@ public class a : HtmlElement
     public a(params IModifier[] modifiers) : base(modifiers) { }
 
 }
-public class lu : HtmlElement
-{
-}
-public class li : HtmlElement
-{
-}
+
 public class img : HtmlElement
 {
     [React]
