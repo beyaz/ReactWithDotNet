@@ -1,8 +1,18 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿namespace ReactWithDotNet;
 
-namespace ReactWithDotNet;
+public sealed class div : HtmlElement
+{
+    public div()
+    {
+    }
 
+    public div(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
+
+    [React]
+    public string role { get; set; }
+}
 
 public class button : HtmlElement
 {
@@ -57,17 +67,37 @@ public class input : HtmlElement
 }
 
 
-
+/// <summary>
+/// Defines a paragraph
+/// </summary>
 public class p : HtmlElement
 {
+    /// <summary>
+    /// Defines a paragraph
+    /// </summary>
     public p()
     {
     }
 
-    public p(string innerText)
+    /// <summary>
+    /// Defines a paragraph
+    /// </summary>
+    public p(string text)
     {
-        this.innerText = innerText;
+        this.text = text;
     }
+    
+    /// <summary>
+    /// Defines a paragraph
+    /// </summary>
+    public static implicit operator p(string text)
+    {
+        return new p { text = text };
+    }
+
+    /// <summary>
+    /// Defines a paragraph
+    /// </summary>
     public p(params IModifier[] modifiers) : base(modifiers) { }
 }
 public class pre : HtmlElement
@@ -135,7 +165,6 @@ public class h2 : HtmlElement
     }
 
     public h2(params IModifier[] modifiers) : base(modifiers) { }
-    public h2(Style style) : base(style) { }
 }
 
 public class h1 : HtmlElement
@@ -150,7 +179,6 @@ public class h1 : HtmlElement
     }
 
     public h1(params IModifier[] modifiers) : base(modifiers) { }
-    public h1(Style style) : base(style) { }
 }
 public class header : HtmlElement
 {
@@ -164,7 +192,6 @@ public class header : HtmlElement
     }
 
     public header(params IModifier[] modifiers):base(modifiers) { }
-    public header(Style style):base(style) { }
 }
 
 public class a : HtmlElement
@@ -174,11 +201,7 @@ public class a : HtmlElement
     
     [React]
     public string target { get; set; }
-
-
-    [React]
-    public string title { get; set; }
-
+    
     public a() { }
     public a(params IModifier[] modifiers) : base(modifiers) { }
 

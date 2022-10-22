@@ -63,9 +63,12 @@ Böylelikle bir 11 haneden oluşan bir sayının TC kimlik numarası olup olmad�
 rastgele olşturulmuş bir sayı değildir.
 "
             },
-            new p(@"Hatta mobil şubenizden bir ibana para gönderirken ibandaki herhangi bir rakamı bilerek yanlış girin.
-Muhtemelen hatalı iban diye size uyarı verecektir."),
-            new p("Peki bu ibanın hatalı olup olmadığını nasıl bilinebiliyor ?"),
+            
+            (p)@"Hatta mobil şubenizden bir ibana para gönderirken ibandaki herhangi bir rakamı bilerek yanlış girin.
+Muhtemelen hatalı iban diye size uyarı verecektir.",
+            
+            (p)"Peki bu ibanın hatalı olup olmadığını nasıl bilinebiliyor ?",
+            
             new div { text = "İbanın doğrulaması şu şekilde yapılıyor." },
             new VSpace(5),
 
@@ -105,10 +108,10 @@ Para transferleri, bitcoin, QR ile yapılan bazı işlemlerden tutun okuduğunuz
             },
             new VSpace(15),
 
-            new p(@" İyi de bu anlatılanların Kuran ile 19 ile ne alakası var ?"),
+            (p)@" İyi de bu anlatılanların Kuran ile 19 ile ne alakası var ?",
 
-            new p(@"Aynen burada bahsedilen örneklerde olduğu gibi bir doğrulama kodu Kuran içinde olabilir mi ? 
-Bu sayede Kuran'ın Yaratıcıdan gelen bir kitap olduğunu daha iyi anlayabilelim diye Kuran'ın içine bir doğrulama kodu-sayısı-anahtarı eklenmiş olabilir mi ?"),
+            (p)@"Aynen burada bahsedilen örneklerde olduğu gibi bir doğrulama kodu Kuran içinde olabilir mi ? 
+Bu sayede Kuran'ın Yaratıcıdan gelen bir kitap olduğunu daha iyi anlayabilelim diye Kuran'ın içine bir doğrulama kodu-sayısı-anahtarı eklenmiş olabilir mi ?",
 
             new VSpace(15)
         };
