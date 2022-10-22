@@ -14,12 +14,21 @@ namespace ReactWithDotNet.Test
         {
             var map = new[]
             {
+                new { Tag = "article", Comment = "Specifies independent, self-contained content." },
+
                 new { Tag = "div", Comment = Empty },
 
                 new { Tag = "p", Comment = "Defines a paragraph" },
 
                 new { Tag = "pre", Comment = "Preformatted text" },
-                
+
+
+                new { Tag = "ol", Comment = "Ordered list" },
+
+                new { Tag = "ul", Comment = "Unordered (bulleted) list" },
+
+                new { Tag = "li", Comment = "List item" },
+
 
                 new { Tag = "h1", Comment = Empty },
                 new { Tag = "h2", Comment = Empty },
@@ -29,6 +38,28 @@ namespace ReactWithDotNet.Test
                 new { Tag = "h6", Comment = Empty },
 
                 new { Tag = "header", Comment = Empty },
+
+                new { Tag = "span", Comment = "Inline container used to mark up a part of a text, or a part of a document." },
+
+                new { Tag = "sup", Comment = "Superscript text" },
+                
+                new { Tag = "sub", Comment = "Subscript text" },
+                
+                new { Tag = "ins", Comment = "Inserted text" },
+                
+                new { Tag = "del", Comment = "Deleted text" },
+                
+                new { Tag = "small", Comment = "Smaller text" },
+                
+                new { Tag = "mark", Comment = "Marked text" },
+                
+                new { Tag = "em", Comment = "Emphasized text" },
+                
+                new { Tag = "b", Comment = "Bold text" },
+                
+                new { Tag = "i", Comment = "Italic text" },
+                
+                new { Tag = "strong", Comment = "Important text" },
             };
 
             var list = new List<string>
