@@ -56,15 +56,8 @@ public class input : HtmlElement
     public Expression<Func<bool>> checkedBind { get; set; }
 }
 
-public class i : HtmlElement
-{
-    public i() { }
-    public i(params IModifier[] modifiers) : base(modifiers) { }
-    public i(Style style) : base(style) { }
-}
-public class b : HtmlElement
-{
-}
+
+
 public class p : HtmlElement
 {
     public p()
