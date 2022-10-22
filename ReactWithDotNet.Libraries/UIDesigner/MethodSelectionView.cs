@@ -80,30 +80,31 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
     {
         if (node.IsMethod)
         {
-            return new HStack
+            return new FlexRow(AlignItemsCenter)
             {
-                new img { src = GetSvgUrl("Method"), width = 20, height = 20 },
+                new img { Src(GetSvgUrl("Method")), wh(17), mt(5)},
                 
-                new div(node.FullNameWithoutReturnType) { style = { marginLeft = "5px" } }
+                new div(node.FullNameWithoutReturnType) { MarginLeft(5) }
             };
         }
 
         if (node.IsClass)
         {
-            return new HStack
+            return new FlexRow(AlignItemsCenter)
             {
-                new img { src              = GetSvgUrl("Class"), width = 20, height = 20 },
-                new div(node.Name) { style = { marginLeft = "5px" } }
+                new img { Src(GetSvgUrl("Class")), wh(17)},
+                
+                new div(node.Name) { MarginLeft(5) }
             };
         }
 
         if (node.IsNamespace)
         {
-            return new HStack
+            return new FlexRow(AlignItemsCenter)
             {
-                new img { src = GetSvgUrl("Namespace"), width = 20, height = 20 },
+                new img { Src(GetSvgUrl("Namespace")), wh(17)},
                 
-                new div(node.Name) { style = { marginLeft = "5px" } }
+                new div(node.Name) {  MarginLeft(5)  }
             };
         }
 
