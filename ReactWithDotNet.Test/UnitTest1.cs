@@ -73,7 +73,13 @@ namespace ReactWithDotNet.Test
 
                 new TagInfo{Tag = "fieldset", EnableStringIntegration = false},
 
-                new TagInfo{Tag = "legend", EnableStringIntegration = false}
+                new TagInfo{Tag = "legend", EnableStringIntegration = false},
+
+                new TagInfo{Tag = "nav", EnableStringIntegration = false},
+
+                new TagInfo{Tag = "main", EnableStringIntegration = false},
+
+                new TagInfo{Tag = "footer", EnableStringIntegration = false}
             };
 
             var list = new List<string>

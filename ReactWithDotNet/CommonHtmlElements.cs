@@ -566,3 +566,24 @@ public sealed class legend : HtmlElement
     public legend(params IModifier[] modifiers) : base(modifiers) { }
 }
 
+public sealed class nav : HtmlElement
+{
+    public nav() { }
+
+    public nav(params IModifier[] modifiers) : base(modifiers) { }
+}
+
+public sealed class main : HtmlElement
+{
+    public main() { }
+
+    public main(params IModifier[] modifiers) : base(modifiers) { }
+}
+
+public sealed class footer : HtmlElement
+{
+    public footer() { }
+
+    public footer(params IModifier[] modifiers) : base(modifiers) { }
+}
+
