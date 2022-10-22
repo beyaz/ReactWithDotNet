@@ -6,41 +6,32 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataNode : TreeNode
 {
-    public string Name { get; set; }
-    public bool IsNamespace { get; set; }
-    public bool IsClass { get; set; }
-    public bool IsMethod { get; set; }
-    public string FullNameWithoutReturnType { get; set; }
-    public int MetadataToken { get; set; }
-    public string NamespaceName { get; set; }
     public string DeclaringTypeFullName { get; set; }
     public string DeclaringTypeNamespaceName { get; set; }
+    public string FullNameWithoutReturnType { get; set; }
+    public bool IsClass { get; set; }
+    public bool IsMethod { get; set; }
+    public bool IsNamespace { get; set; }
+    public int MetadataToken { get; set; }
+    public string Name { get; set; }
+    public string NamespaceName { get; set; }
 }
 
 class MethodSelectionModel
 {
     public string Filter { get; set; }
 }
+
 class MethodSelectionView : ReactComponent<MethodSelectionModel>
 {
+    public string AssemblyFilePath { get; set; }
+    
     public string Filter { get; set; }
-    protected override void constructor()
-    {
-        state = new MethodSelectionModel { Filter = Filter };
-    }
-
-    [ReactCustomEvent]
-    public Action<(string value, string filter)> SelectionChanged { get; set; }
-
-    void OnSelectionChanged(SingleSelectionTreeSelectionParams e)
-    {
-        DispatchEvent(()=> SelectionChanged,(e.value,state.Filter));
-    }
 
     public string SelectedMethodTreeNodeKey { get; set; }
 
-    public string AssemblyFilePath { get; set; }
-
+    [ReactCustomEvent]
+    public Action<(string value, string filter)> SelectionChanged { get; set; }
 
     public static MetadataNode FindTreeNode(string AssemblyFilePath, string treeNodeKey)
     {
@@ -48,7 +39,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         {
             return null;
         }
-        
+
         if (!File.Exists(AssemblyFilePath))
         {
             return null;
@@ -60,12 +51,71 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         foreach (var index in treeNodeKey.Split('|').Select(int.Parse))
         {
             current = nodes[index];
-            nodes   = current.children.Select(x=>(MetadataNode)x).ToArray();
+            nodes   = current.children.Select(x => (MetadataNode)x).ToArray();
         }
 
         return current;
     }
-    
+
+    protected override void constructor()
+    {
+        state = new MethodSelectionModel { Filter = Filter };
+    }
+
+    protected override Element render()
+    {
+        return new div(Padding(3))
+        {
+            new SingleSelectionTree<MetadataNode>
+            {
+                filterValueBind   = () => state.Filter,
+                filter            = true,
+                filterBy          = nameof(MetadataNode.Name),
+                filterPlaceholder = "Search react components or methods which returns Element",
+                nodeTemplate      = nodeTemplate,
+                value             = GetNodes(),
+                onSelectionChange = OnSelectionChanged,
+                selectionKeys     = SelectedMethodTreeNodeKey,
+                style             = { MaxHeight(250), OverflowScroll }
+            }
+        };
+    }
+
+    static Element nodeTemplate(MetadataNode node)
+    {
+        if (node.IsMethod)
+        {
+            return new FlexRow(AlignItemsCenter)
+            {
+                new img { Src(GetSvgUrl("Method")), wh(17), mt(5) },
+
+                new div(node.FullNameWithoutReturnType) { MarginLeft(5) }
+            };
+        }
+
+        if (node.IsClass)
+        {
+            return new FlexRow(AlignItemsCenter)
+            {
+                new img { Src(GetSvgUrl("Class")), wh(17) },
+
+                new div(node.Name) { MarginLeft(5) }
+            };
+        }
+
+        if (node.IsNamespace)
+        {
+            return new FlexRow(AlignItemsCenter)
+            {
+                new img { Src(GetSvgUrl("Namespace")), wh(17) },
+
+                new div(node.Name) { MarginLeft(5) }
+            };
+        }
+
+        return new div();
+    }
+
     IEnumerable<MetadataNode> GetNodes()
     {
         if (!string.IsNullOrWhiteSpace(AssemblyFilePath) && File.Exists(AssemblyFilePath))
@@ -76,66 +126,8 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         return new List<MetadataNode>();
     }
 
-    static Element nodeTemplate(MetadataNode node)
+    void OnSelectionChanged(SingleSelectionTreeSelectionParams e)
     {
-        if (node.IsMethod)
-        {
-            return new FlexRow(AlignItemsCenter)
-            {
-                new img { Src(GetSvgUrl("Method")), wh(17), mt(5)},
-                
-                new div(node.FullNameWithoutReturnType) { MarginLeft(5) }
-            };
-        }
-
-        if (node.IsClass)
-        {
-            return new FlexRow(AlignItemsCenter)
-            {
-                new img { Src(GetSvgUrl("Class")), wh(17)},
-                
-                new div(node.Name) { MarginLeft(5) }
-            };
-        }
-
-        if (node.IsNamespace)
-        {
-            return new FlexRow(AlignItemsCenter)
-            {
-                new img { Src(GetSvgUrl("Namespace")), wh(17)},
-                
-                new div(node.Name) {  MarginLeft(5)  }
-            };
-        }
-
-        return new HStack
-        {
-            new img { src = GetSvgUrl("Namespace"), width = 20, height = 20 },
-            
-            new div("aloha") { style = { marginLeft = "5px" } }
-        };
-    }
-
-    protected  override Element render()
-    {
-        return new div
-        {
-            style = { padding = "3px" },
-            children =
-            {
-                new SingleSelectionTree<MetadataNode>
-                {
-                    filterValueBind = ()=>state.Filter,
-                    filter            = true,
-                    filterBy          = nameof(MetadataNode.Name),
-                    filterPlaceholder = "Search react components or methods which returns Element",
-                    nodeTemplate      = nodeTemplate,
-                    value             = GetNodes(),
-                    onSelectionChange = OnSelectionChanged,
-                    selectionKeys     = SelectedMethodTreeNodeKey,
-                    style = { MaxHeight(250), OverflowScroll }
-                }
-            }
-        };
+        DispatchEvent(() => SelectionChanged, (e.value, state.Filter));
     }
 }
