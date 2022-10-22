@@ -108,7 +108,7 @@ class RedBorder:ReactComponent<RedBorderModel>
         {
             style   = { border = state.BorderWidth + "px solid red" },
             onClick = _ => state.BorderWidth++
-        }| Children(children);
+        } + Children(children);
     }
 }
 

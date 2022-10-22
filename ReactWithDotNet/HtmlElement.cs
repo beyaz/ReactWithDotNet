@@ -127,6 +127,14 @@ public abstract class HtmlElement : Element
 
 
     #region Operators
+
+    public static HtmlElement operator +(HtmlElement element, Style style)
+    {
+        element.style.Import(style);
+
+        return element;
+    }
+    
     public static HtmlElement operator +(HtmlElement element, HtmlElementModifier modifier)
     {
         element.ProcessModifier(modifier);
