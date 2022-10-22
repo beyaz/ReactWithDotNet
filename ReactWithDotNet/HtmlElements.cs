@@ -111,7 +111,6 @@ public class h6 : HtmlElement
 
     }
     public h6(params IModifier[] modifiers) : base(modifiers) { }
-    public h6(Style style) : base(style) { }
 }
 public class h5 : HtmlElement
 {
@@ -120,7 +119,7 @@ public class h5 : HtmlElement
         
     }
     public h5(params IModifier[] modifiers) : base(modifiers) { }
-    public h5(Style style) : base(style) { }
+    
 }
 
 public class h4 : HtmlElement
@@ -134,7 +133,7 @@ public class h4 : HtmlElement
         this.innerText = innerText;
     }
     public h4(params IModifier[] modifiers) : base(modifiers) { }
-    public h4(Style style) : base(style) { }
+   
 }
 
 public class h3 : HtmlElement
@@ -148,7 +147,7 @@ public class h3 : HtmlElement
         this.innerText = innerText;
     }
     public h3(params IModifier[] modifiers) : base(modifiers) { }
-    public h3(Style style) : base(style) { }
+   
 }
 
 public class h2 : HtmlElement

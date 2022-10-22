@@ -15,10 +15,7 @@ public abstract class HtmlElement : Element
         this.Apply(modifiers);
     }
 
-    protected HtmlElement(Style style)// TODO: try remove
-    {
-        this.style.Import(style);
-    }
+   
 
     /// <summary>
     ///     Gets or sets the name of the class.
