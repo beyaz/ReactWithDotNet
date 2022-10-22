@@ -89,7 +89,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             {
                 new img { Src(GetSvgUrl("Method")), wh(17), mt(5) },
 
-                new div(node.FullNameWithoutReturnType) { MarginLeft(5) }
+                new div {Text(node.FullNameWithoutReturnType), MarginLeft(5) }
             };
         }
 
@@ -99,7 +99,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             {
                 new img { Src(GetSvgUrl("Class")), wh(17) },
 
-                new div(node.Name) { MarginLeft(5) }
+                new div {Text(node.Name), MarginLeft(5) }
             };
         }
 
@@ -109,7 +109,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             {
                 new img { Src(GetSvgUrl("Namespace")), wh(17) },
 
-                new div(node.Name) { MarginLeft(5) }
+                new div {Text(node.Name), MarginLeft(5) }
             };
         }
 

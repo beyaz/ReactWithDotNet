@@ -13,9 +13,9 @@ public class PreInformationView : ReactComponent
             new VSpace(10),
             new LargeTitle("Kuran Hakkında Bazı Bilgiler"),
             new VSpace(15),
-            new div(@"
+            @"
 Bu bölümde Kuran hakkında dikkat çeken bazı bilgiler verilecektir.
-"),
+",
             new VSpace(15),
             new li { text = "Kuran toplamda 114 tane sure adı verilen bölümden oluşur. Mesela 1. sure Fatiha suresidir." },
             new VSpace(15),

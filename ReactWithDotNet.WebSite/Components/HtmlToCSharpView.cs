@@ -56,7 +56,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             style = { width_height = "100%", padding = "10px", display = "flex", flexDirection = "column" },
             children =
             {
-                new div("Html to ReactWithDotNet") { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
+                new div(Text("Html to ReactWithDotNet")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
                 new Splitter
                 {
                     layout = SplitterLayoutType.horizontal,

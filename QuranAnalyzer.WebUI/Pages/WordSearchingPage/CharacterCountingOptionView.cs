@@ -75,7 +75,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                     width  = iconSize,
                                     height = iconSize
                                 },
-                                new div("Arapça Klavye")
+                                new div(Text("Arapça Klavye"))
                                 {
                                     style =
                                     {
@@ -101,7 +101,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                     width  = iconSize,
                                     height = iconSize
                                 },
-                                new div("Mushaf Ayarları")
+                                new div(Text("Mushaf Ayarları"))
                                 {
                                     style =
                                     {

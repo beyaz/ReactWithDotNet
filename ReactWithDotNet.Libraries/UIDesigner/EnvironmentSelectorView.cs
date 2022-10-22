@@ -78,7 +78,7 @@ class EnvironmentSelectorView : ReactComponent<EnvironmentSelectorModel>
                     placeholder = "Select environment",
                     itemTemplate = item => new HStack
                     {
-                        new img { src = "dll.svg", width = 30, height = 30 }, new div(item.Name) { style = { marginLeft = "5px" } }
+                        new img { src = "dll.svg", width = 30, height = 30 }, new div(Text(item.Name)) { style = { marginLeft = "5px" } }
                     },
 
                     //valueTemplate = item => item == null ? new HStack { new div("Seçiniz"){style = { margin = "5px"}} } :

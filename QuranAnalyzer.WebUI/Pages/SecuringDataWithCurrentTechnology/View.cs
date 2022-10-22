@@ -12,9 +12,9 @@ public class View : ReactComponent
             new VSpace(10),
             new LargeTitle("Günümüz teknolojisinde veri iletimi nasıl sağlanır ?"),
             new VSpace(15),
-            new div(@"
+            @"
 TC kimlik numaranızda bulunan rakamlar sizce rastgele rakamlar mı? Yoksa belli bir düzeni / mantığı mı var ?
-"),
+",
 
             new p { text = "Mesela aşağıdaki TC Kimlik noları inceleyelim." },
             new div

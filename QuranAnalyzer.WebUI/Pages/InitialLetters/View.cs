@@ -46,7 +46,7 @@ class CountingResult: ReactComponent
             id    = id,
             children =
             {
-                new div($"19 x {MultipleOf}"),
+                new div(Text($"19 x {MultipleOf}")),
                 new a
                 {
                     innerText = "incele",

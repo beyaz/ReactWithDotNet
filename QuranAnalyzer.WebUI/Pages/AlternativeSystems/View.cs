@@ -11,7 +11,8 @@ public class AlternativeSystemsView : ReactComponent
             new VSpace(10),
             new LargeTitle("Alternatif 19 Sistemleri"),
             new VSpace(15),
-            new div(@"
+            
+            @"
 Kuran üzerinde 19 ile ilgili bilgiler duyulmaya başladıkça başka insanlar da 19 üzerine çalışma yapmaya başladılar.
 Bu kişiler de günümüz bilgisayar yazılımlarını kullanarak bazı sayımlar yapıyorlar ve 19'un katı olan bazı sayılar elde ediyorlar.
 Duruma göre bu kişilerin çalışmalarını da inceleyeilirsiniz.
@@ -34,7 +35,7 @@ Bu saydığım isimler sadece Türkiye'de olan resim. Elbette başka ülkelerde 
 
 Not: Bu sitede sadece Reşad Halife tarafından ortaya konan başlangıç harfleri üzerindeki verileri içermektedir.
 
-"),
+",
             new VSpace(15)
         };
     }

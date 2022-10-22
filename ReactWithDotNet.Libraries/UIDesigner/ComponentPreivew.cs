@@ -109,7 +109,7 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
                 var type = FindType(state.SelectedComponentTypeReference);
                 if (type == null)
                 {
-                    return new div("type not found.@" + state.SelectedComponentTypeReference);
+                    return "type not found.@" + state.SelectedComponentTypeReference;
                 }
 
                 var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties : "{}", type);
@@ -125,14 +125,14 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
                     return component;
                 }
 
-                return new div(instance.ToString());
+                return instance.ToString();
             }
 
             
         }
         catch (Exception exception)
         {
-            return new div(exception.ToString());
+            return exception.ToString();
         }
     }
 

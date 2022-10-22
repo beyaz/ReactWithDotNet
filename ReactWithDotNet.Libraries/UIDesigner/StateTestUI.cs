@@ -144,7 +144,7 @@ class Container1 : ReactComponent<ModelContainer1>
                 new ComponentB(),
                 conditionalRender(),
                 new ComponentC(),
-                new div(state.Container1Text + state.ClickCount),
+                new div(Text(state.Container1Text + state.ClickCount)),
             },
             onClick = _ => state.ClickCount++
         };
@@ -179,7 +179,7 @@ class Container2 : ReactComponent<ModelContainer2>
                 new ComponentA(),
                 new ComponentB(),
                 new ComponentC(),
-                new div(state.Container2Text + state.ClickCount++)
+                new div(Text(state.Container2Text + state.ClickCount++))
             },
             onClick = _ => state.ClickCount++
         };

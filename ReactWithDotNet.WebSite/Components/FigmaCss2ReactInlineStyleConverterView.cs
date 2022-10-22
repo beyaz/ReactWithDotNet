@@ -53,7 +53,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             style = { width_height = "100%", padding = "10px", display = "flex", flexDirection = "column" },
             children =
             {
-                new div("Figma css to React inline style") { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
+                new div(Text("Figma css to React inline style")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
                 new Splitter
                 {
                     layout = SplitterLayoutType.horizontal,
