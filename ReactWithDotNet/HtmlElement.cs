@@ -29,6 +29,49 @@ public abstract class HtmlElement : Element
     [React]
     public virtual string id { get; set; }
 
+    [React]
+    public string role { get; set; }
+
+    /// <summary>
+    /// Provides a hint for generating a keyboard shortcut for the current element. This attribute consists of a space-separated list of characters. The browser should use the first one that exists on the computer keyboard layout.
+    /// </summary>
+    [React]
+    public string accesskey { get; set; }
+    
+    
+    /// <summary>
+    /// An enumerated attribute that is used to specify whether an element's attribute values and the values of its Text node children are to be translated when the page is localized, or whether to leave them unchanged. It can have the following values:
+    /// <br/>
+    /// empty string or yes, which indicates that the element will be translated.
+    /// <br/>
+    /// no, which indicates that the element will not be translated.
+    /// </summary>
+    [React]
+    public string translate { get; set; }
+
+    [React]
+    public bool? autofocus { get; set; }
+
+    /// <summary>
+    /// A space-separated list of the part names of the element. Part names allows CSS to select and style specific elements in a shadow tree via the ::part pseudo-element.
+    /// </summary>
+    [React]
+    public string part { get; set; }
+
+    /// <summary>
+    /// Helps define the language of an element: the language that non-editable elements are in, or the language that editable elements should be written in by the user. The attribute contains one "language tag" (made of hyphen-separated "language subtags") in the format defined in RFC 5646: Tags for Identifying Languages (also known as BCP 47). xml:lang has priority over it.
+    /// </summary>
+    [React]
+    public string lang { get; set; }
+
+    /// <summary>
+    /// An enumerated attribute defines whether the element may be checked for spelling errors. It may have the following values:<br/>
+    /// empty string or true, which indicates that the element should be, if possible, checked for spelling errors;<br/>
+    /// false, which indicates that the element should not be checked for spelling errors.
+    /// </summary>
+    [React]
+    public string spellcheck { get; set; }
+
     [JsonIgnore]
     public string innerHTML
     {
