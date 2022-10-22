@@ -1,26 +1,7 @@
 ﻿namespace ReactWithDotNet;
 
-public class aside : HtmlElement
-{
-    public aside()
-    {
-    }
 
-    public aside(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
 
-public class section : HtmlElement
-{
-    public section()
-    {
-    }
-
-    public section(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
 
 
 
@@ -29,27 +10,9 @@ public class br : HtmlElement
 {
 }
 
-public class fieldset : HtmlElement
-{
-    public fieldset()
-    {
-    }
 
-    public fieldset(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
 
-public class legend : HtmlElement
-{
-    public legend()
-    {
-    }
 
-    public legend(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
 
 public class iframe : HtmlElement
 {

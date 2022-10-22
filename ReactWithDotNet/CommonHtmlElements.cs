@@ -12,12 +12,12 @@ public sealed class article : HtmlElement
     /// <summary>
     ///     Specifies independent, self-contained content.
     /// </summary>
-    public article(string innerText) : base(innerText) {  }
+    public article(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Specifies independent, self-contained content.
     /// </summary>
-    public article(params IModifier[] modifiers) : base(modifiers) { }
+    public article(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Specifies independent, self-contained content.
@@ -29,9 +29,9 @@ public sealed class div : HtmlElement
 {
     public div() { }
 
-    public div(string innerText) : base(innerText) {  }
-
     public div(params IModifier[] modifiers) : base(modifiers) { }
+
+    public div(string innerText) : base(innerText) {  }
 
     public static implicit operator div(string text) => new() { text = text };
 }
@@ -49,12 +49,12 @@ public sealed class p : HtmlElement
     /// <summary>
     ///     Defines a paragraph
     /// </summary>
-    public p(string innerText) : base(innerText) {  }
+    public p(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Defines a paragraph
     /// </summary>
-    public p(params IModifier[] modifiers) : base(modifiers) { }
+    public p(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Defines a paragraph
@@ -75,12 +75,12 @@ public sealed class pre : HtmlElement
     /// <summary>
     ///     Preformatted text
     /// </summary>
-    public pre(string innerText) : base(innerText) {  }
+    public pre(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Preformatted text
     /// </summary>
-    public pre(params IModifier[] modifiers) : base(modifiers) { }
+    public pre(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Preformatted text
@@ -101,12 +101,12 @@ public sealed class ol : HtmlElement
     /// <summary>
     ///     Ordered list
     /// </summary>
-    public ol(string innerText) : base(innerText) {  }
+    public ol(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Ordered list
     /// </summary>
-    public ol(params IModifier[] modifiers) : base(modifiers) { }
+    public ol(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Ordered list
@@ -127,12 +127,12 @@ public sealed class ul : HtmlElement
     /// <summary>
     ///     Unordered (bulleted) list
     /// </summary>
-    public ul(string innerText) : base(innerText) {  }
+    public ul(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Unordered (bulleted) list
     /// </summary>
-    public ul(params IModifier[] modifiers) : base(modifiers) { }
+    public ul(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Unordered (bulleted) list
@@ -153,12 +153,12 @@ public sealed class li : HtmlElement
     /// <summary>
     ///     List item
     /// </summary>
-    public li(string innerText) : base(innerText) {  }
+    public li(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     List item
     /// </summary>
-    public li(params IModifier[] modifiers) : base(modifiers) { }
+    public li(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     List item
@@ -170,9 +170,9 @@ public sealed class h1 : HtmlElement
 {
     public h1() { }
 
-    public h1(string innerText) : base(innerText) {  }
-
     public h1(params IModifier[] modifiers) : base(modifiers) { }
+
+    public h1(string innerText) : base(innerText) {  }
 
     public static implicit operator h1(string text) => new() { text = text };
 }
@@ -181,9 +181,9 @@ public sealed class h2 : HtmlElement
 {
     public h2() { }
 
-    public h2(string innerText) : base(innerText) {  }
-
     public h2(params IModifier[] modifiers) : base(modifiers) { }
+
+    public h2(string innerText) : base(innerText) {  }
 
     public static implicit operator h2(string text) => new() { text = text };
 }
@@ -192,9 +192,9 @@ public sealed class h3 : HtmlElement
 {
     public h3() { }
 
-    public h3(string innerText) : base(innerText) {  }
-
     public h3(params IModifier[] modifiers) : base(modifiers) { }
+
+    public h3(string innerText) : base(innerText) {  }
 
     public static implicit operator h3(string text) => new() { text = text };
 }
@@ -203,9 +203,9 @@ public sealed class h4 : HtmlElement
 {
     public h4() { }
 
-    public h4(string innerText) : base(innerText) {  }
-
     public h4(params IModifier[] modifiers) : base(modifiers) { }
+
+    public h4(string innerText) : base(innerText) {  }
 
     public static implicit operator h4(string text) => new() { text = text };
 }
@@ -214,9 +214,9 @@ public sealed class h5 : HtmlElement
 {
     public h5() { }
 
-    public h5(string innerText) : base(innerText) {  }
-
     public h5(params IModifier[] modifiers) : base(modifiers) { }
+
+    public h5(string innerText) : base(innerText) {  }
 
     public static implicit operator h5(string text) => new() { text = text };
 }
@@ -225,9 +225,9 @@ public sealed class h6 : HtmlElement
 {
     public h6() { }
 
-    public h6(string innerText) : base(innerText) {  }
-
     public h6(params IModifier[] modifiers) : base(modifiers) { }
+
+    public h6(string innerText) : base(innerText) {  }
 
     public static implicit operator h6(string text) => new() { text = text };
 }
@@ -236,9 +236,9 @@ public sealed class header : HtmlElement
 {
     public header() { }
 
-    public header(string innerText) : base(innerText) {  }
-
     public header(params IModifier[] modifiers) : base(modifiers) { }
+
+    public header(string innerText) : base(innerText) {  }
 
     public static implicit operator header(string text) => new() { text = text };
 }
@@ -256,12 +256,12 @@ public sealed class span : HtmlElement
     /// <summary>
     ///     Inline container used to mark up a part of a text, or a part of a document.
     /// </summary>
-    public span(string innerText) : base(innerText) {  }
+    public span(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Inline container used to mark up a part of a text, or a part of a document.
     /// </summary>
-    public span(params IModifier[] modifiers) : base(modifiers) { }
+    public span(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Inline container used to mark up a part of a text, or a part of a document.
@@ -282,12 +282,12 @@ public sealed class sup : HtmlElement
     /// <summary>
     ///     Superscript text
     /// </summary>
-    public sup(string innerText) : base(innerText) {  }
+    public sup(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Superscript text
     /// </summary>
-    public sup(params IModifier[] modifiers) : base(modifiers) { }
+    public sup(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Superscript text
@@ -308,12 +308,12 @@ public sealed class sub : HtmlElement
     /// <summary>
     ///     Subscript text
     /// </summary>
-    public sub(string innerText) : base(innerText) {  }
+    public sub(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Subscript text
     /// </summary>
-    public sub(params IModifier[] modifiers) : base(modifiers) { }
+    public sub(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Subscript text
@@ -334,12 +334,12 @@ public sealed class ins : HtmlElement
     /// <summary>
     ///     Inserted text
     /// </summary>
-    public ins(string innerText) : base(innerText) {  }
+    public ins(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Inserted text
     /// </summary>
-    public ins(params IModifier[] modifiers) : base(modifiers) { }
+    public ins(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Inserted text
@@ -360,12 +360,12 @@ public sealed class del : HtmlElement
     /// <summary>
     ///     Deleted text
     /// </summary>
-    public del(string innerText) : base(innerText) {  }
+    public del(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Deleted text
     /// </summary>
-    public del(params IModifier[] modifiers) : base(modifiers) { }
+    public del(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Deleted text
@@ -386,12 +386,12 @@ public sealed class small : HtmlElement
     /// <summary>
     ///     Smaller text
     /// </summary>
-    public small(string innerText) : base(innerText) {  }
+    public small(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Smaller text
     /// </summary>
-    public small(params IModifier[] modifiers) : base(modifiers) { }
+    public small(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Smaller text
@@ -412,12 +412,12 @@ public sealed class mark : HtmlElement
     /// <summary>
     ///     Marked text
     /// </summary>
-    public mark(string innerText) : base(innerText) {  }
+    public mark(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Marked text
     /// </summary>
-    public mark(params IModifier[] modifiers) : base(modifiers) { }
+    public mark(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Marked text
@@ -438,12 +438,12 @@ public sealed class em : HtmlElement
     /// <summary>
     ///     Emphasized text
     /// </summary>
-    public em(string innerText) : base(innerText) {  }
+    public em(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Emphasized text
     /// </summary>
-    public em(params IModifier[] modifiers) : base(modifiers) { }
+    public em(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Emphasized text
@@ -464,12 +464,12 @@ public sealed class b : HtmlElement
     /// <summary>
     ///     Bold text
     /// </summary>
-    public b(string innerText) : base(innerText) {  }
+    public b(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Bold text
     /// </summary>
-    public b(params IModifier[] modifiers) : base(modifiers) { }
+    public b(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Bold text
@@ -490,12 +490,12 @@ public sealed class i : HtmlElement
     /// <summary>
     ///     Italic text
     /// </summary>
-    public i(string innerText) : base(innerText) {  }
+    public i(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Italic text
     /// </summary>
-    public i(params IModifier[] modifiers) : base(modifiers) { }
+    public i(string innerText) : base(innerText) {  }
 
     /// <summary>
     ///     Italic text
@@ -516,16 +516,53 @@ public sealed class strong : HtmlElement
     /// <summary>
     ///     Important text
     /// </summary>
-    public strong(string innerText) : base(innerText) {  }
-
-    /// <summary>
-    ///     Important text
-    /// </summary>
     public strong(params IModifier[] modifiers) : base(modifiers) { }
 
     /// <summary>
     ///     Important text
     /// </summary>
+    public strong(string innerText) : base(innerText) {  }
+
+    /// <summary>
+    ///     Important text
+    /// </summary>
     public static implicit operator strong(string text) => new() { text = text };
+}
+
+    /// <summary>
+    ///     Section in a document
+    /// </summary>
+public sealed class section : HtmlElement
+{
+    /// <summary>
+    ///     Section in a document
+    /// </summary>
+    public section() { }
+
+    /// <summary>
+    ///     Section in a document
+    /// </summary>
+    public section(params IModifier[] modifiers) : base(modifiers) { }
+}
+
+public sealed class aside : HtmlElement
+{
+    public aside() { }
+
+    public aside(params IModifier[] modifiers) : base(modifiers) { }
+}
+
+public sealed class fieldset : HtmlElement
+{
+    public fieldset() { }
+
+    public fieldset(params IModifier[] modifiers) : base(modifiers) { }
+}
+
+public sealed class legend : HtmlElement
+{
+    public legend() { }
+
+    public legend(params IModifier[] modifiers) : base(modifiers) { }
 }
 

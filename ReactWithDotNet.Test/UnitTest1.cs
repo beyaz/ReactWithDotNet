@@ -9,57 +9,71 @@ namespace ReactWithDotNet.Test
     [TestClass]
     public class UnitTest1
     {
+        class TagInfo
+        {
+            public string Tag { get; set; }
+            public string Comment { get; set; }
+            public bool EnableStringIntegration { get; set; } = true;
+        }
         [TestMethod]
         public void ExportCommonHtmlElements()
         {
-            var map = new[]
+            TagInfo[] map = 
             {
-                new { Tag = "article", Comment = "Specifies independent, self-contained content." },
+                new TagInfo  { Tag = "article", Comment = "Specifies independent, self-contained content." },
 
-                new { Tag = "div", Comment = Empty },
+                new TagInfo { Tag = "div", Comment = Empty },
 
-                new { Tag = "p", Comment = "Defines a paragraph" },
+                new TagInfo { Tag = "p", Comment = "Defines a paragraph" },
 
-                new { Tag = "pre", Comment = "Preformatted text" },
-
-
-                new { Tag = "ol", Comment = "Ordered list" },
-
-                new { Tag = "ul", Comment = "Unordered (bulleted) list" },
-
-                new { Tag = "li", Comment = "List item" },
+                new TagInfo { Tag = "pre", Comment = "Preformatted text" },
 
 
-                new { Tag = "h1", Comment = Empty },
-                new { Tag = "h2", Comment = Empty },
-                new { Tag = "h3", Comment = Empty },
-                new { Tag = "h4", Comment = Empty },
-                new { Tag = "h5", Comment = Empty },
-                new { Tag = "h6", Comment = Empty },
+                new TagInfo { Tag = "ol", Comment = "Ordered list" },
 
-                new { Tag = "header", Comment = Empty },
+                new TagInfo { Tag = "ul", Comment = "Unordered (bulleted) list" },
 
-                new { Tag = "span", Comment = "Inline container used to mark up a part of a text, or a part of a document." },
+                new TagInfo { Tag = "li", Comment = "List item" },
 
-                new { Tag = "sup", Comment = "Superscript text" },
+
+                new TagInfo { Tag = "h1", Comment = Empty },
+                new TagInfo { Tag = "h2", Comment = Empty },
+                new TagInfo { Tag = "h3", Comment = Empty },
+                new TagInfo { Tag = "h4", Comment = Empty },
+                new TagInfo { Tag = "h5", Comment = Empty },
+                new TagInfo { Tag = "h6", Comment = Empty },
+
+                new TagInfo { Tag = "header", Comment = Empty },
+
+                new TagInfo { Tag = "span", Comment = "Inline container used to mark up a part of a text, or a part of a document." },
+
+                new TagInfo { Tag = "sup", Comment = "Superscript text" },
                 
-                new { Tag = "sub", Comment = "Subscript text" },
+                new TagInfo { Tag = "sub", Comment = "Subscript text" },
                 
-                new { Tag = "ins", Comment = "Inserted text" },
+                new TagInfo { Tag = "ins", Comment = "Inserted text" },
                 
-                new { Tag = "del", Comment = "Deleted text" },
+                new TagInfo { Tag = "del", Comment = "Deleted text" },
                 
-                new { Tag = "small", Comment = "Smaller text" },
+                new TagInfo { Tag = "small", Comment = "Smaller text" },
                 
-                new { Tag = "mark", Comment = "Marked text" },
+                new TagInfo { Tag = "mark", Comment = "Marked text" },
                 
-                new { Tag = "em", Comment = "Emphasized text" },
+                new TagInfo { Tag = "em", Comment = "Emphasized text" },
                 
-                new { Tag = "b", Comment = "Bold text" },
+                new TagInfo { Tag = "b", Comment = "Bold text" },
                 
-                new { Tag = "i", Comment = "Italic text" },
+                new TagInfo { Tag = "i", Comment = "Italic text" },
                 
-                new { Tag = "strong", Comment = "Important text" },
+                new TagInfo { Tag = "strong", Comment = "Important text" },
+
+                new TagInfo { Tag = "section", Comment = "Section in a document", EnableStringIntegration = false },
+
+                new TagInfo{Tag = "aside", EnableStringIntegration = false},
+
+                new TagInfo{Tag = "fieldset", EnableStringIntegration = false},
+
+                new TagInfo{Tag = "legend", EnableStringIntegration = false}
             };
 
             var list = new List<string>
@@ -78,15 +92,18 @@ namespace ReactWithDotNet.Test
 
                 list.Add(Empty);
                 addComment();
-                list.Add($"    public {item.Tag}(string innerText) : base(innerText) {{  }}");
-
-                list.Add(Empty);
-                addComment();
                 list.Add($"    public {item.Tag}(params IModifier[] modifiers) : base(modifiers) {{ }}");
 
-                list.Add(Empty);
-                addComment();
-                list.Add($"    public static implicit operator {item.Tag}(string text) => new() {{ text = text }};");
+                if (item.EnableStringIntegration)
+                {
+                    list.Add(Empty);
+                    addComment();
+                    list.Add($"    public {item.Tag}(string innerText) : base(innerText) {{  }}");
+
+                    list.Add(Empty);
+                    addComment();
+                    list.Add($"    public static implicit operator {item.Tag}(string text) => new() {{ text = text }};");
+                }
 
                 list.Add("}");
                 
