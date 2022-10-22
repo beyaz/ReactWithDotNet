@@ -11,7 +11,7 @@ class Note : ReactComponent
     {
         return new FlexRow(PaddingLeftRight("10%"), PaddingTop(50))
         {
-            new strong{Text("Not:"), MarginRight(5)}, new div{ Text(Text) }
+            new strong{Text("Not:"), MarginRight(5)}, new div{ Children(children) }
         };
     }
 }
@@ -87,9 +87,9 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
 
             new Note
             {
-                Text =@"Meryem suresi Kuran'da en baştan 19. sıradadır. 
-                        Aynı zamanda en çok başlangıç harfi olan suredir. 
-                        Sadece bu sureye mahsus olmak üzere, surenin başında 5 tane başlangıç harfi vardır."
+                @"Meryem suresi Kuran'da en baştan ",  new strong{Text("19.")} ," sıradadır.",
+                @"Aynı zamanda", new strong{Text(" en çok başlangıç harfi olan") }," suredir. ",
+                "Sadece bu sureye mahsus olmak üzere, surenin başında 5 tane başlangıç harfi vardır."
             }
         };
     }
