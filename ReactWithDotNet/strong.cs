@@ -96,6 +96,11 @@ public class strong : HtmlElement
     public strong(params IModifier[] modifiers) : base(modifiers)
     {
     }
+
+    public static implicit operator strong(string text)
+    {
+        return new strong { text = text };
+    }
 }
 
 public class span : HtmlElement

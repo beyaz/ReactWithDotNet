@@ -29,50 +29,46 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
     {
         return new div
         {
-            new table
+            new table(Width("100%"))
             {
-                style = { width = "100%" },
-                children =
+                new tbody
                 {
-                    new tbody
+                    HeaderTr,
+                    HeaderSpace,
+                    new tr
                     {
-                        HeaderTr,
-                        HeaderSpace,
-                        new tr
+                        new td
                         {
-                            new td
+                            new Chapter { ChapterNumber = 19, ChapterName = "Meryem" }
+                        },
+                        new td
+                        {
+                            new InitialLetterLineGroup
                             {
-                                new Chapter { ChapterNumber = 19, ChapterName = "Meryem" }
-                            },
-                            new td
+                                new InitialLetter { id = Id(19, Qaaf), text = Qaaf },
+                                new InitialLetter { id = Id(19, Haa), text  = Haa_ },
+                                new InitialLetter { id = Id(19, Yaa), text  = Yaa },
+                                new InitialLetter { id = Id(19, Ayn), text  = Ayn },
+                                new InitialLetter { id = Id(19, Saad), text = Saad }
+                            }
+                        },
+                        new td
+                        {
+                            rowSpan = 99,
+                            children =
                             {
-                                new InitialLetterLineGroup
+                                new div
                                 {
-                                    new InitialLetter { id = Id(19, Qaaf), text = Qaaf },
-                                    new InitialLetter { id = Id(19, Haa), text  = Haa_ },
-                                    new InitialLetter { id = Id(19, Yaa), text  = Yaa },
-                                    new InitialLetter { id = Id(19, Ayn), text  = Ayn },
-                                    new InitialLetter { id = Id(19, Saad), text = Saad }
-                                }
-                            },
-                            new td
-                            {
-                                rowSpan = 99,
-                                children =
-                                {
-                                    new div
+                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
+                                    children =
                                     {
-                                        style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                        children =
-                                        {
-                                            countingResult
-                                        }
+                                        countingResult
                                     }
                                 }
                             }
-                        },
+                        }
+                    },
 
-                    }
                 }
 
             },
@@ -87,8 +83,8 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
 
             new Note
             {
-                @"Meryem suresi Kuran'da en baştan ",  new strong{Text("19.")} ," sıradadır.",
-                @"Aynı zamanda", new strong{Text(" en çok başlangıç harfi olan") }," suredir. ",
+                @"Meryem suresi Kuran'da en baştan ",  (strong)"19." ," sıradadır. ",
+                @"Aynı zamanda", (strong)" en çok başlangıç harfi olan", " suredir. ",
                 "Sadece bu sureye mahsus olmak üzere, surenin başında 5 tane başlangıç harfi vardır."
             }
         };

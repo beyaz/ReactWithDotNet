@@ -2,7 +2,7 @@
 
 public class table : HtmlElement
 {
-
+    public table(params IModifier[] modifiers) : base(modifiers) { }
 }
 public class tbody : HtmlElement
 {
