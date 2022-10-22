@@ -214,7 +214,20 @@ partial class ElementSerializer
                         continue;
                     }
 
-                    dotNetProperties.Add(propertyInfo.Name, propertyInfo.GetValue(reactStatefulComponent));
+                    var propertyValue = propertyInfo.GetValue(reactStatefulComponent);
+
+                    // skip default values
+                    {
+                        var defaultValueOfProperty = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null;
+
+                        if (propertyValue == defaultValueOfProperty)
+                        {
+                            continue;
+                        }
+                    }
+
+                    dotNetProperties.Add(propertyInfo.Name, propertyValue);
+                    
                 }
 
                 var map = new JsonMap();
