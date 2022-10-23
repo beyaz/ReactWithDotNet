@@ -106,6 +106,24 @@ public static partial class Mixin
     public static StyleModifier FontWeight700 => FontWeight("700");
     public static StyleModifier FontWeight800 => FontWeight("800");
 
+    public static StyleModifier FontWeightBold => FontWeight700;
+
+    /// <summary>
+    /// style.fontWeight = '600'
+    /// </summary>
+    public static StyleModifier FontWeightSemiBold => FontWeight600;
+
+    /// <summary>
+    /// style.fontWeight = '800'
+    /// </summary>
+    public static StyleModifier FontWeightExtraBold => FontWeight800;
+
+
+    /// <summary>
+    /// style.fontWeight = '500'
+    /// </summary>
+    public static StyleModifier FontWeightMedium=> FontWeight500;
+
     /// <summary>
     ///     style.height = "100%"
     /// </summary>

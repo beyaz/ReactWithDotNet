@@ -44,14 +44,14 @@ public class LetterColorizer : ReactComponent
                         innerText = letterInfo.MatchedLetter,
                         style =
                         {
-                            color        = GetColor(j),
-                            border       = "1px dashed rgb(218, 220, 224)",
-                            borderRadius = "4px",
-                            fontWeight   = "bold"
+                           FontWeightBold,
+                           BorderRadius(4),
+                           Border("1px dashed rgb(218, 220, 224)"),
+                           Color(GetColor(j))
                         }
                     };
 
-                    html.Append(span);
+                    html.Append($"<span style=\"{span.style.ToCss()}\">{span.innerText}</span>");
 
                     cursor = letterInfo.StartIndex + len;
 
