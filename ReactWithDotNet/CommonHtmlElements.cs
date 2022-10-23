@@ -1,7 +1,7 @@
 namespace ReactWithDotNet;
-    /// <summary>
-    ///     Specifies independent, self-contained content.
-    /// </summary>
+/// <summary>
+///     Specifies independent, self-contained content.
+/// </summary>
 public sealed class article : HtmlElement
 {
     /// <summary>
@@ -36,9 +36,9 @@ public sealed class div : HtmlElement
     public static implicit operator div(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Defines a paragraph
-    /// </summary>
+/// <summary>
+///     Defines a paragraph
+/// </summary>
 public sealed class p : HtmlElement
 {
     /// <summary>
@@ -62,9 +62,9 @@ public sealed class p : HtmlElement
     public static implicit operator p(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Preformatted text
-    /// </summary>
+/// <summary>
+///     Preformatted text
+/// </summary>
 public sealed class pre : HtmlElement
 {
     /// <summary>
@@ -88,9 +88,9 @@ public sealed class pre : HtmlElement
     public static implicit operator pre(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Ordered list
-    /// </summary>
+/// <summary>
+///     Ordered list
+/// </summary>
 public sealed class ol : HtmlElement
 {
     /// <summary>
@@ -114,9 +114,9 @@ public sealed class ol : HtmlElement
     public static implicit operator ol(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Unordered (bulleted) list
-    /// </summary>
+/// <summary>
+///     Unordered (bulleted) list
+/// </summary>
 public sealed class ul : HtmlElement
 {
     /// <summary>
@@ -140,9 +140,9 @@ public sealed class ul : HtmlElement
     public static implicit operator ul(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     List item
-    /// </summary>
+/// <summary>
+///     List item
+/// </summary>
 public sealed class li : HtmlElement
 {
     /// <summary>
@@ -243,9 +243,9 @@ public sealed class header : HtmlElement
     public static implicit operator header(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Inline container used to mark up a part of a text, or a part of a document.
-    /// </summary>
+/// <summary>
+///     Inline container used to mark up a part of a text, or a part of a document.
+/// </summary>
 public sealed class span : HtmlElement
 {
     /// <summary>
@@ -269,9 +269,9 @@ public sealed class span : HtmlElement
     public static implicit operator span(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Superscript text
-    /// </summary>
+/// <summary>
+///     Superscript text
+/// </summary>
 public sealed class sup : HtmlElement
 {
     /// <summary>
@@ -295,9 +295,9 @@ public sealed class sup : HtmlElement
     public static implicit operator sup(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Subscript text
-    /// </summary>
+/// <summary>
+///     Subscript text
+/// </summary>
 public sealed class sub : HtmlElement
 {
     /// <summary>
@@ -321,9 +321,9 @@ public sealed class sub : HtmlElement
     public static implicit operator sub(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Inserted text
-    /// </summary>
+/// <summary>
+///     Inserted text
+/// </summary>
 public sealed class ins : HtmlElement
 {
     /// <summary>
@@ -347,9 +347,9 @@ public sealed class ins : HtmlElement
     public static implicit operator ins(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Deleted text
-    /// </summary>
+/// <summary>
+///     Deleted text
+/// </summary>
 public sealed class del : HtmlElement
 {
     /// <summary>
@@ -373,9 +373,9 @@ public sealed class del : HtmlElement
     public static implicit operator del(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Smaller text
-    /// </summary>
+/// <summary>
+///     Smaller text
+/// </summary>
 public sealed class small : HtmlElement
 {
     /// <summary>
@@ -399,9 +399,9 @@ public sealed class small : HtmlElement
     public static implicit operator small(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Marked text
-    /// </summary>
+/// <summary>
+///     Marked text
+/// </summary>
 public sealed class mark : HtmlElement
 {
     /// <summary>
@@ -425,9 +425,9 @@ public sealed class mark : HtmlElement
     public static implicit operator mark(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Emphasized text
-    /// </summary>
+/// <summary>
+///     Emphasized text
+/// </summary>
 public sealed class em : HtmlElement
 {
     /// <summary>
@@ -451,9 +451,9 @@ public sealed class em : HtmlElement
     public static implicit operator em(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Bold text
-    /// </summary>
+/// <summary>
+///     Bold text
+/// </summary>
 public sealed class b : HtmlElement
 {
     /// <summary>
@@ -477,9 +477,9 @@ public sealed class b : HtmlElement
     public static implicit operator b(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Italic text
-    /// </summary>
+/// <summary>
+///     Italic text
+/// </summary>
 public sealed class i : HtmlElement
 {
     /// <summary>
@@ -503,9 +503,9 @@ public sealed class i : HtmlElement
     public static implicit operator i(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Important text
-    /// </summary>
+/// <summary>
+///     Important text
+/// </summary>
 public sealed class strong : HtmlElement
 {
     /// <summary>
@@ -529,9 +529,9 @@ public sealed class strong : HtmlElement
     public static implicit operator strong(string text) => new() { text = text };
 }
 
-    /// <summary>
-    ///     Section in a document
-    /// </summary>
+/// <summary>
+///     Section in a document
+/// </summary>
 public sealed class section : HtmlElement
 {
     /// <summary>

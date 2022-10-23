@@ -89,7 +89,7 @@ namespace ReactWithDotNet.Test
 
             foreach (var item in map)
             {
-                addComment();
+                addComment(null);
                 list.Add($"public sealed class {item.Tag} : HtmlElement");
                 list.Add("{");
 
@@ -115,13 +115,13 @@ namespace ReactWithDotNet.Test
                 
                 list.Add(Empty);
 
-                void addComment()
+                void addComment(string padding = "    ")
                 {
                     if (IsNullOrWhiteSpace(item.Comment) == false)
                     {
-                        list.Add($"    /// <summary>");
-                        list.Add($"    ///     {item.Comment}");
-                        list.Add($"    /// </summary>");
+                        list.Add($"{padding}/// <summary>");
+                        list.Add($"{padding}///     {item.Comment}");
+                        list.Add($"{padding}/// </summary>");
                     }
                 }
             }
