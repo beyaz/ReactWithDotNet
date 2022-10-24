@@ -30,6 +30,13 @@ static class Extensions
         return "data:image/svg+xml;base64," + imageBase64;
     }
 
+    static string GetDataUriFromSvgBytes(byte[] bytesOfSvgFile)
+    {
+        var imageBase64 = Convert.ToBase64String(bytesOfSvgFile);
+
+        return "data:image/svg+xml;base64," + imageBase64;
+    }
+
     static byte[] GetEmbeddedFile(string resourceFilePathInAssembly)
     {
         var assembly = typeof(Extensions).Assembly;
