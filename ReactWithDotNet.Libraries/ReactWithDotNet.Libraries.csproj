@@ -28,6 +28,14 @@
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <Exec Command="copy /y &quot;$(TargetDir)ReactWithDotNet.Libraries.*&quot; &quot;D:\work\git\alyavillashotels\AlyaVillas.WebUI\Libs\&quot;" />
-    </Target>   
-    
+    </Target>
+	
+    <ItemGroup>
+      <EmbeddedResource Include="UIDesigner\Resources\Class.svg" />
+      <EmbeddedResource Include="UIDesigner\Resources\dll.svg" />
+      <EmbeddedResource Include="UIDesigner\Resources\Folder.svg" />
+      <EmbeddedResource Include="UIDesigner\Resources\Method.svg" />
+      <EmbeddedResource Include="UIDesigner\Resources\Namespace.svg" />
+    </ItemGroup>
+	
 </Project>
