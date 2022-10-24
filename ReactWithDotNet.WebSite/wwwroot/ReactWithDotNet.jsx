@@ -73,24 +73,6 @@ function OnDocumentReady(callback)
     }, 10);
 }
 
-function PickupPropertiesToNewObject(obj, dotSeperatedPropertyNames)
-{
-    const returnObj = {};
-
-    for (let key in obj)
-    {
-        if (obj.hasOwnProperty(key))
-        {
-            if (dotSeperatedPropertyNames.indexOf('.' + key + '.') >= 0)
-            {
-                returnObj[key] = obj[key];
-            }
-        }
-    }
-
-    return returnObj;
-}
-
 function IsEmptyObject(obj)
 {
     if (IsSerializablePrimitiveJsValue(obj))
@@ -1507,16 +1489,29 @@ function SendRequest(request, onSuccess)
 {
     IsWaitingRemoteResponse = true;
 
-    BeforeSendRequest(request);
+    request.ClientWidth  = document.documentElement.clientWidth;
+    request.ClientHeight = document.documentElement.clientHeight;
+    request.SearchPartOfUrl = window.location.search;
 
-    ReactWithDotNet.SendRequest(request, onSuccess);
+    const url = ReactWithDotNet.RequestHandlerUrl;
 
-    function BeforeSendRequest(request)
+    const options =
     {
-        request.ClientWidth  = document.documentElement.clientWidth;
-        request.ClientHeight = document.documentElement.clientHeight;
-        request.SearchPartOfUrl = window.location.search;
+        method: "POST",
+        headers:
+        {
+            'Accept': "application/json",
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(request)
+    };
+
+    if (ReactWithDotNet.BeforeSendRequest)
+    {
+        options = ReactWithDotNet.BeforeSendRequest(options);
     }
+
+    window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json));
 }
 
 var LastUsedComponentUniqueIdentifier = 0;
@@ -1584,24 +1579,6 @@ function RenderComponentIn(obj)
 function CallJsFunctionInPath(clientTask)
 {
     GetExternalJsObject(clientTask.JsFunctionPath).apply(null, clientTask.JsFunctionArguments);
-}
-
-function Fetch(url, options, processResponse, callback)
-{
-    window.fetch(url, options).then(response => processResponse(response)).then(json => callback(json));
-
-    // if you want to use your custom api then override here
-    // jquery example
-    //var jqueryOptions =
-    //{
-    //    url: url,
-    //    method: options.method,
-    //    contentType: 'application/json',
-    //    data: options.body
-    //};
-    //$.ajax(jqueryOptions, 'json').done(function (response) {
-    //    callback(response);
-    //});
 }
 
 function CopyToClipboard(text) 
@@ -1753,21 +1730,7 @@ var ReactWithDotNet =
     StartAction: StartAction,
     DispatchEvent: EventBus.Dispatch,
     RenderComponentIn: RenderComponentIn,
-    SendRequest: function (request, callback)
-    {
-        Fetch(ReactWithDotNet.RequestHandlerUrl, {
-                method: "POST",
-                headers:
-                {
-                    'Accept': "application/json",
-                    'Content-Type': "application/json"
-                },
-                body: JSON.stringify(request)
-            },
-            response => response.json(),
-            json => callback(json)
-        );
-    },
+    BeforeSendRequest: x=>x,
     RegisterExternalJsObject: RegisterExternalJsObject,
     GetExternalJsObject: GetExternalJsObject
 };
