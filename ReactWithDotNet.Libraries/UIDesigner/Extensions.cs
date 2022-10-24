@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -19,17 +18,8 @@ static class Extensions
 
     public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
 
-    public static string GetSvgUrl(string svgFileName) => SvgFileToDataUri($"wwwroot/integration/ReactWithDotNet-UIDesigner/{svgFileName}.svg");
-
-    static string SvgFileToDataUri(string filePath)
-    {
-        var imageBytes  = File.ReadAllBytes(filePath);
-        
-        var imageBase64 = Convert.ToBase64String(imageBytes);
-        
-        return "data:image/svg+xml;base64," + imageBase64;
-    }
-
+    public static string GetSvgUrl(string svgFileName) => GetDataUriFromSvgBytes(GetEmbeddedFile($"ReactWithDotNet.Libraries.UIDesigner.Resources.{svgFileName}.svg"));
+    
     static string GetDataUriFromSvgBytes(byte[] bytesOfSvgFile)
     {
         var imageBase64 = Convert.ToBase64String(bytesOfSvgFile);
