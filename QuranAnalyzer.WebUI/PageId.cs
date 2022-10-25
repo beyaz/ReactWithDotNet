@@ -27,7 +27,7 @@ static class QueryKey
 
 static class ResourceAccess
 {
-    public static string Img(string fileName) => ReactWithDotNetIntegration.RootFolderName + "/img/" +fileName;
+    public static string Img(string fileName) => "wwwroot/img/" + fileName;
 }
 
 class ApplicationEventName
