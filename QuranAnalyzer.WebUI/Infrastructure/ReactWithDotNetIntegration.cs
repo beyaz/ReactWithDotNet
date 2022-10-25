@@ -85,8 +85,11 @@ static class ReactWithDotNetIntegration
 
         htmlContent = changeComponent(htmlContent);
 
-        htmlContent = enablePrimeReactCssList(htmlContent);
-
+        htmlContent += Environment.NewLine +
+                       @"<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css'>
+                         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css'>
+                         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css'>";
+        
         context.Response.ContentType = "text/html; charset=UTF-8";
 
         await context.Response.WriteAsync(htmlContent);
@@ -102,12 +105,6 @@ static class ReactWithDotNetIntegration
 
                 return line;
             }));
-        }
-
-        static string enablePrimeReactCssList(string htmlContent)
-        {
-            return htmlContent.Replace("<!--ReactWithDotNet-UIDesigner", string.Empty)
-                              .Replace("ReactWithDotNet-UIDesigner-->", string.Empty);
         }
     }
 }
