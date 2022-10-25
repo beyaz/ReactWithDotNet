@@ -161,6 +161,11 @@ public static partial class Mixin
     public static StyleModifier JustifyContentSpaceBetween => new(style => style.justifyContent = "space-between");
 
     /// <summary>
+    ///     <para>style.justifyContent = "space-around"</para>
+    /// </summary>
+    public static StyleModifier JustifyContentSpaceAround=> new(style => style.justifyContent = "space-around");
+
+    /// <summary>
     ///     <para>style.justifyContent = "space-evenly"</para>
     /// </summary>
     public static StyleModifier JustifyContentSpaceEvenly => new(style => style.justifyContent = "space-evenly");

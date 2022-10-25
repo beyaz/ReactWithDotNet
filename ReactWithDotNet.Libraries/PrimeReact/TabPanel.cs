@@ -39,13 +39,8 @@ public class TabView : ElementBase
     [React]
     public Action<TabViewTabChangeParams> onTabChange { get; set; }
 
-    public TabView(Action<TabViewTabChangeParams> onChange)
-    {
-        onTabChange = onChange;
-    }
-    public TabView()
-    {
-    }
+    
+   
 
 
 }

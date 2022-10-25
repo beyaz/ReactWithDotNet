@@ -18,7 +18,7 @@ class UIDesignerModel
     public string SelectedMethodTreeNodeKey { get; set; }
 
     public string SelectedMethodTreeFilter{ get; set; }
-
+    public bool IsInstanceEditorActive { get; set; }
 }
 
 [Serializable]

@@ -33,6 +33,21 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
 
     protected override Element render()
     {
+        var editor = new Editor
+        {
+            valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
+            highlight = "json",
+            style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+        };
+        if (state.IsInstanceEditorActive == false)
+        {
+            editor = new Editor
+            {
+                valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
+                highlight = "json",
+                style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+            };
+        }
         var propertyPanel = new FlexColumn(Padding(5), Height("100%"))
         {
             new MethodSelectionView
@@ -43,37 +58,28 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 AssemblyFilePath          = state.SelectedAssemblyFilePath
             },
             Space(10),
-            new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged, style = { margin = "10px", padding = "5px" } },
+            new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged } | Margin(10) | Padding(4),
 
-            new TabView
+            new FlexColumn(Height("100%"))
             {
-                new TabPanel
+                new FlexRow(JustifyContentSpaceAround,Color("#6c757d"),CursorPointer)
                 {
-                    header = "Instance json",
-                    children =
+                    new div(Text("Instance json"))
                     {
-                        new Editor
-                        {
-                            valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
-                            highlight = "json",
-                            style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
-                        }
+                        OnClick(_=>state.IsInstanceEditorActive = true),
+                        When(state.IsInstanceEditorActive,Opacity(0.5)),
+                        Padding(10)
+                    },
+                    new div(Text("Parameters json"))
+                    {
+                        OnClick(_=>state.IsInstanceEditorActive = false),
+                        When(!state.IsInstanceEditorActive,Opacity(0.5)),
+                        Padding(10)
+                        
                     }
                 },
-                new TabPanel
-                {
-                    header = "Parameters json",
-                    children =
-                    {
-                        new Editor
-                        {
-                            valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
-                            highlight = "json",
-                            style     = { minHeight = "200px", border = "1px dashed blue", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
-                        }
-                    }
-                }
-            }|Height("100%")
+                editor |Height("100%")
+            }
         };
 
         var outputPanel = new div
@@ -108,7 +114,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             {
                 new SplitterPanel
                 {
-                    size = 25,
+                    size = 15,
                     children =
                     {
                         propertyPanel
@@ -116,7 +122,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
                 },
                 new SplitterPanel(DisplayFlex, JustifyContentCenter)
                 {
-                    size = 75,
+                    size = 85,
 
                     children =
                     {

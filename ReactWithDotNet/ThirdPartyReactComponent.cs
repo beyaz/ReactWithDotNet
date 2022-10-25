@@ -44,15 +44,6 @@ public abstract class ThirdPartyReactComponent : Element
         }
     }
 
-    /// <summary>
-    ///     Imports filled values given style
-    /// </summary>
-    [JsonIgnore]
-    public Style Style
-    {
-        set => style.Import(value);
-    }
-
     [JsonPropertyName("$type")]
     public virtual string Type
     {
