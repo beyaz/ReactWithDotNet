@@ -3,19 +3,12 @@ using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class ComponentPreivew: ReactComponent<UIDesignerModel>
+class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesignerModel>
 {
-   
-
-    protected override void constructor()
-    {
-        state = StateCache.ReadState() ?? new UIDesignerModel();
-    }
-
     public void Refresh()
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
-        
+
         ClientTask.GotoMethod(700, Refresh);
     }
 
@@ -24,16 +17,30 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
         ClientTask.GotoMethod(700, Refresh);
     }
 
+    protected override void constructor()
+    {
+        state = StateCache.ReadState() ?? new UIDesignerModel();
+    }
+
     protected override Element render()
     {
         return createElement();
+    }
+
+    static Type FindType(string typeReference)
+    {
+        if (!string.IsNullOrWhiteSpace(typeReference))
+        {
+            return Type.GetType(typeReference, false);
+        }
+
+        return null;
     }
 
     Element createElement()
     {
         try
         {
-
             // try invoke as static function
             {
                 var fullAssemblyPath = state.SelectedAssemblyFilePath;
@@ -51,7 +58,7 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
                                 var methodParameters = methodInfo.GetParameters();
 
-                                var jsObject = (JObject)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification. JsonTextForDotNetMethodParameters.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
+                                var jsObject = (JObject)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
                                 foreach (var parameterInfo in methodParameters)
                                 {
                                     var parameterName = parameterInfo.Name;
@@ -96,13 +103,10 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
                                     return (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
                                 }
-
                             }
                         }
                     }
                 }
-
-
             }
 
             {
@@ -113,8 +117,6 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
                 }
 
                 var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties : "{}", type);
-
-
 
                 if (instance is ReactStatefulComponent component)
                 {
@@ -127,24 +129,10 @@ class ComponentPreivew: ReactComponent<UIDesignerModel>
 
                 return instance.ToString();
             }
-
-            
         }
         catch (Exception exception)
         {
             return exception.ToString();
         }
     }
-
-    static Type FindType(string typeReference)
-    {
-        if (!string.IsNullOrWhiteSpace(typeReference))
-        {
-            return Type.GetType(typeReference, false);
-        }
-
-        return null;
-    }
-
-    
 }

@@ -71,7 +71,7 @@ static class ReactWithDotNetIntegration
             {
                 if (line.Trim().Contains("fullTypeNameOfReactComponent"))
                 {
-                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ComponentPreivew,ReactWithDotNet.Libraries',";
+                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet.Libraries',";
                 }
 
                 return line;
@@ -97,7 +97,7 @@ static class ReactWithDotNetIntegration
             {
                 if (line.Trim().Contains("fullTypeNameOfReactComponent"))
                 {
-                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.UIDesignerView,ReactWithDotNet.Libraries',";
+                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesigner,ReactWithDotNet.Libraries',";
                 }
 
                 return line;

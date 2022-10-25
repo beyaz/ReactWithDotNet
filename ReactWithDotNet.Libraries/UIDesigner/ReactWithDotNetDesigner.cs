@@ -8,7 +8,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class UIDesignerView : ReactComponent<UIDesignerModel>
+class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 {
     static JsClientEventInfo OnBrowserInactive = new(nameof(OnBrowserInactive));
     static JsClientFunctionInfo<int> InitializeUIDesignerEvents = new(nameof(InitializeUIDesignerEvents));
