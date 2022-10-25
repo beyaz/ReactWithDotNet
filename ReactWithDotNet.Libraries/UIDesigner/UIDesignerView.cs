@@ -60,7 +60,7 @@ class UIDesignerView : ReactComponent<UIDesignerModel>
             Space(10),
             new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged } | Margin(10) | Padding(4),
 
-            new FlexColumn(Height("100%"))
+            new FlexColumn(Height100Percent)
             {
                 new FlexRow(JustifyContentSpaceAround,Color("#6c757d"),CursorPointer)
                 {
