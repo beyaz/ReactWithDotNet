@@ -1,13 +1,36 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace QuranAnalyzer.WebUI;
 
 static class ReactWithDotNetIntegration
 {
-    public static async Task HandleReactWithDotNetRequest(HttpContext context)
+    public static void ConfigureReactWithDotNet(this IEndpointRouteBuilder endpoints)
+    {
+        endpoints.MapGet("/", HomePage);
+        endpoints.MapPost($"/{nameof(HandleReactWithDotNetRequest)}", HandleReactWithDotNetRequest);
+        endpoints.MapGet($"/{nameof(ReactWithDotNetDesigner)}", ReactWithDotNetDesigner);
+        endpoints.MapGet($"/{nameof(ReactWithDotNetDesignerComponentPreview)}", ReactWithDotNetDesignerComponentPreview);
+    }
+
+    static async Task<string> GetIndexHtmlFileContent()
+    {
+        const string RootFolderName = "wwwroot";
+
+        var filePath = Path.Combine(RootFolderName, "index.html");
+
+        var htmlContent = await File.ReadAllTextAsync(filePath);
+
+        htmlContent = htmlContent.Replace("~/", RootFolderName + "/");
+
+        return htmlContent;
+    }
+
+    static async Task HandleReactWithDotNetRequest(HttpContext context)
     {
         ComponentRequest componentRequest = null;
 
@@ -23,7 +46,7 @@ static class ReactWithDotNetIntegration
         await context.Response.WriteAsync(response.ToJson());
     }
 
-    public static async Task HomePage(HttpContext context)
+    static async Task HomePage(HttpContext context)
     {
         var htmlContent = await GetIndexHtmlFileContent();
 
@@ -32,7 +55,7 @@ static class ReactWithDotNetIntegration
         await context.Response.WriteAsync(htmlContent);
     }
 
-    public static async Task UIDesignerComponentPreview(HttpContext context)
+    static async Task ReactWithDotNetDesignerComponentPreview(HttpContext context)
     {
         var htmlContent = await GetIndexHtmlFileContent();
 
@@ -56,7 +79,7 @@ static class ReactWithDotNetIntegration
         }
     }
 
-    public static async Task UIDesignerPage(HttpContext context)
+    static async Task ReactWithDotNetDesigner(HttpContext context)
     {
         var htmlContent = await GetIndexHtmlFileContent();
 
@@ -86,18 +109,5 @@ static class ReactWithDotNetIntegration
             return htmlContent.Replace("<!--ReactWithDotNet-UIDesigner", string.Empty)
                               .Replace("ReactWithDotNet-UIDesigner-->", string.Empty);
         }
-    }
-
-    static async Task<string> GetIndexHtmlFileContent()
-    {
-        const string RootFolderName = "wwwroot";
-
-        var filePath = Path.Combine(RootFolderName, "index.html");
-
-        var htmlContent = await File.ReadAllTextAsync(filePath);
-
-        htmlContent = htmlContent.Replace("~/", RootFolderName + "/");
-
-        return htmlContent;
     }
 }

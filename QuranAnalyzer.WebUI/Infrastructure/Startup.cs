@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using static QuranAnalyzer.WebUI.ReactWithDotNetIntegration;
 
 namespace QuranAnalyzer.WebUI;
 
@@ -31,19 +30,15 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapGet("/", HomePage);
-            endpoints.MapPost("/HandleReactWithDotNetRequest", HandleReactWithDotNetRequest);
-            endpoints.MapGet("/ReactWithDotNetDesigner", UIDesignerPage);
-            endpoints.MapGet("/ReactWithDotNetDesigner.ComponentPreview", UIDesignerComponentPreview);
-
+            endpoints.ConfigureReactWithDotNet();
+            
             endpoints.MapControllers();
         });
     }
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
-
-        services.AddControllers().AddJsonOptions(j => { j.JsonSerializerOptions.ModifyForReactWithDotNet(); });
+        services.AddControllers()
+                .AddJsonOptions(jsonOptions => { jsonOptions.JsonSerializerOptions.ModifyForReactWithDotNet(); });
     }
 }
