@@ -47,6 +47,35 @@ static class ReactWithDotNetIntegration
         await context.Response.WriteAsync(htmlContent);
     }
 
+    static async Task ReactWithDotNetDesigner(HttpContext context)
+    {
+        var htmlContent = await GetIndexHtmlFileContent();
+
+        htmlContent = changeComponent(htmlContent);
+
+        htmlContent += Environment.NewLine +
+                       @"<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css'>
+                         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css'>
+                         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css'>";
+
+        context.Response.ContentType = "text/html; charset=UTF-8";
+
+        await context.Response.WriteAsync(htmlContent);
+
+        static string changeComponent(string htmlContent)
+        {
+            return string.Join(Environment.NewLine, htmlContent.Split(Environment.NewLine).Select(line =>
+            {
+                if (line.Trim().Contains("fullTypeNameOfReactComponent"))
+                {
+                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesigner,ReactWithDotNet.Libraries',";
+                }
+
+                return line;
+            }));
+        }
+    }
+
     static async Task ReactWithDotNetDesignerComponentPreview(HttpContext context)
     {
         var htmlContent = await GetIndexHtmlFileContent();
@@ -64,35 +93,6 @@ static class ReactWithDotNetIntegration
                 if (line.Trim().Contains("fullTypeNameOfReactComponent"))
                 {
                     return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet.Libraries',";
-                }
-
-                return line;
-            }));
-        }
-    }
-
-    static async Task ReactWithDotNetDesigner(HttpContext context)
-    {
-        var htmlContent = await GetIndexHtmlFileContent();
-
-        htmlContent = changeComponent(htmlContent);
-
-        htmlContent += Environment.NewLine +
-                       @"<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css'>
-                         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css'>
-                         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css'>";
-        
-        context.Response.ContentType = "text/html; charset=UTF-8";
-
-        await context.Response.WriteAsync(htmlContent);
-
-        static string changeComponent(string htmlContent)
-        {
-            return string.Join(Environment.NewLine, htmlContent.Split(Environment.NewLine).Select(line =>
-            {
-                if (line.Trim().Contains("fullTypeNameOfReactComponent"))
-                {
-                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesigner,ReactWithDotNet.Libraries',";
                 }
 
                 return line;
