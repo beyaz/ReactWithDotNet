@@ -9,8 +9,7 @@ class divWithBorder: HtmlElement
     
     public divWithBorder()
     {
-        this.Apply(BorderRadius(5),
-                   Border("1px solid rgb(218, 220, 224)"));
+        this.Apply(BorderRadius(5),ComponentBorder);
     }
 }
 

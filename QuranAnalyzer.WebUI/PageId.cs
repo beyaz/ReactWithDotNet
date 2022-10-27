@@ -58,7 +58,9 @@ class SettingsFile
 static class App
 {
     public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
-    
+
+    public static StyleModifier ComponentBorder => Border("1px solid rgb(218, 220, 224)");
+
     public static SettingsFile Settings = JsonConvert.DeserializeObject<SettingsFile>(File.ReadAllText("Settings.json"));
 
     public static void Log(string message)

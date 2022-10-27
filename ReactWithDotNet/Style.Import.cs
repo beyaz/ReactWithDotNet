@@ -3908,6 +3908,10 @@ partial class Style
         {
             active.Import(newStyle._active);
         }
+        if (newStyle._focus is not null)
+        {
+            focus.Import(newStyle._focus);
+        }
     }
 
     [JsonIgnore]

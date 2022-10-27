@@ -65,4 +65,19 @@ partial class Style
         }
     }
 
+    internal Style _focus;
+
+    [JsonIgnore]
+    public Style focus
+    {
+        get
+        {
+            if (_focus == null)
+            {
+                _focus = new Style();
+            }
+            return _focus;
+        }
+    }
+
 }

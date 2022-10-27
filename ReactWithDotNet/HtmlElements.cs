@@ -149,3 +149,33 @@ public class option : HtmlElement
 public class style : HtmlElement
 {
 }
+
+
+public class textarea : HtmlElement
+{
+   
+
+    [React]
+    public int? cols { get; set; }
+
+    [React]
+    public int? rows { get; set; }
+    
+
+    [React]
+    public string name { get; set; }
+
+    [React]
+    public string placeholder { get; set; }
+
+    [React]
+    public bool? readOnly { get; set; }
+    
+
+    [React]
+    public string value { get; set; }
+
+    [React]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    public Expression<Func<string>> valueBind { get; set; }
+}

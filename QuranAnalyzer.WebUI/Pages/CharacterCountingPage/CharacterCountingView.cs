@@ -66,9 +66,18 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     {
                         new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
 
-                        new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true },
+                        // new TextArea { ValueBind = () => state.SearchScript },
+                        new textarea 
+                        {
+                            valueBind = () => state.SearchScript, 
+                            rows = 4, 
+                            style =
+                            {
+                                focus = {Border("1px solid #6366F1") }
+                            }
+                        } | ComponentBorder | BorderRadius(5),
 
-                        new ErrorText { Text = state.SearchScriptErrorMessage }
+        new ErrorText { Text = state.SearchScriptErrorMessage }
                     },
 
                     new VSpace(3),

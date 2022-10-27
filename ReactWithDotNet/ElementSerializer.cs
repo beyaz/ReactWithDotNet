@@ -321,6 +321,15 @@ static partial class ElementSerializer
             });
         }
 
+        if (style._focus is not null)
+        {
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "focus",
+                BodyOfCss = style._focus.ToCss().Replace(";", " !important;")
+            });
+        }
+
         if (pseudos.Count > 0)
         {
             var cssClassName = context.DynamicStyles.GetClassName(new CssClassInfo
