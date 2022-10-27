@@ -64,11 +64,11 @@ class ArabicKeyboardLetterView : ReactComponent
                 BorderRadius(5),
                 Background("rgb(248 249 251)"),
                 CursorPointer,
-                Hover(Border("1px solid #7daee7"), Background("whitesmoke"),Color("YellowGreen"))
+                Hover(Border("1px solid #7daee7"))
             },
             children =
             {
-                new div(PaddingLeftRight(5), FontSize(35), FontFamily_Lateef)
+                new div(PaddingLeftRight(5), FontSize(35), FontFamily_Lateef,  Hover(Color("#7daee7")))
                 {
                     text = ArabicLetter
                 },
