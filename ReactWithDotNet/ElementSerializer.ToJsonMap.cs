@@ -133,7 +133,7 @@ partial class ElementSerializer
                             {
                                 if (reactStatefulComponent.GetType().GetFullName() == clientStateInfo.FullTypeNameOfComponent)
                                 {
-                                    var stateValue = Json.DeserializeJson(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
+                                    var stateValue = DeserializeJson(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
                                     statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
                                     reactStatefulComponent.ComponentUniqueIdentifier = clientStateInfo.ComponentUniqueIdentifier;
                                 }

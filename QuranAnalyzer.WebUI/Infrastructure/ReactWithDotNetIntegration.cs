@@ -36,7 +36,7 @@ static class ReactWithDotNetIntegration
 
         using (var reader = new StreamReader(context.Request.Body, Encoding.UTF8, true, 1024, true))
         {
-            componentRequest = (ComponentRequest)Json.DeserializeJson(await reader.ReadToEndAsync(), typeof(ComponentRequest));
+            componentRequest = DeserializeJson<ComponentRequest>(await reader.ReadToEndAsync());
         }
 
         var response = ComponentRequestHandler.HandleRequest(componentRequest, Type.GetType);
