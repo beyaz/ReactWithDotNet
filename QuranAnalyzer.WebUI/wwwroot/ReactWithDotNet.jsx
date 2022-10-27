@@ -1495,7 +1495,7 @@ function SendRequest(request, onSuccess)
 
     const url = ReactWithDotNet.RequestHandlerUrl;
 
-    const options =
+    let options =
     {
         method: "POST",
         headers:
