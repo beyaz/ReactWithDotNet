@@ -77,10 +77,10 @@ static class App
         }
     }
 
-    public static ReactContextKey<Theme> Theme = new(nameof(Theme));
+    public static ReactContextKey<ThemeColors> Theme = new(nameof(Theme));
 }
 
-class Theme
+class ThemeColors
 {
-    public string BluePrimary => "rgb(218, 220, 224)";
+    public string BluePrimary => "rgb(25 118 210)";
 }

@@ -76,6 +76,8 @@ public static class ComponentRequestHandler
 
         var context = CreateContext(request);
 
+        input.OnReactContextCreated?.Invoke(context);
+
         if (request.MethodName == "FetchComponent")
         {
             return fetchComponent();

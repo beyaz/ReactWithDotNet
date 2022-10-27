@@ -33,7 +33,11 @@ static class ReactWithDotNetIntegration
     {
         var input = new ProcessReactWithDotNetRequestInput
         {
-            HttpContext = context
+            HttpContext = context,
+            OnReactContextCreated = reactContext =>
+            {
+                reactContext.Set(Theme, new ThemeColors());
+            }
         };
         await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
     }

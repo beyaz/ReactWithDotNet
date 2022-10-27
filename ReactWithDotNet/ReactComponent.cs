@@ -55,6 +55,8 @@ public sealed class ReactContextKey<TValue>
     {
         Key = key;
     }
+
+    public TValue this[ReactContext reactContext] => reactContext.TryGetValue(this);
 }
 
 public abstract class ReactStatefulComponent : Element

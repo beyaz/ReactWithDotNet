@@ -12,6 +12,9 @@ public sealed class ProcessReactWithDotNetRequestInput
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; set; }
 
     public HttpContext HttpContext { get; set; }
+
+
+    public Action<ReactContext> OnReactContextCreated { get; set; }
 }
 
 public static class ReactWithDotNetRequestProcessor

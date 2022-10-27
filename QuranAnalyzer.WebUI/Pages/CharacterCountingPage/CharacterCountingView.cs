@@ -76,7 +76,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                                 ComponentBorder,
                                 BorderRadius(5),
                                 
-                                Focus(Border("1px solid #6366F1"))
+                                Focus(Border($"1px solid {Theme[Context].BluePrimary}"))
                             }
                         },
 

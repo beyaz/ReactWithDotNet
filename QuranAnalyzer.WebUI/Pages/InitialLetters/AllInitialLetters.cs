@@ -84,8 +84,8 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             {
                 Color("rgba(0, 0, 0, 0.6)"),
                 Padding(10),
-                BorderRight($"1px solid {(isSelected ? "#1976d2" : "#dee2e6")}"),
-                When(isSelected, Background("#deecf9"), Color("#1976d2"))
+                BorderRight($"1px solid {(isSelected ? Theme[Context].BluePrimary : "#dee2e6")}"),
+                When(isSelected, Background("#deecf9"), Color(Theme[Context].BluePrimary))
             },
 
             onClick = OnTabHeaderClick
