@@ -76,11 +76,9 @@ static class App
             stream.WriteLine(message);
         }
     }
-
-    public static ReactContextKey<ThemeColors> Theme = new(nameof(Theme));
 }
 
-class ThemeColors
+public abstract class ReactComponent : ReactWithDotNet.ReactComponent
 {
     public string BluePrimary => "rgb(25 118 210)";
 }
