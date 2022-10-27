@@ -12,11 +12,11 @@ using static Array;
 [Serializable]
 public sealed class ClientStateInfo
 {
+    public int? ComponentUniqueIdentifier { get; set; }
     public IReadOnlyDictionary<string, object> DotNetProperties { get; set; }
+    public string FullTypeNameOfComponent { get; set; }
     public string FullTypeNameOfState { get; set; }
     public string StateAsJson { get; set; }
-    public string FullTypeNameOfComponent { get; set; }
-    public int? ComponentUniqueIdentifier { get; set; }
 }
 
 [Serializable]
@@ -29,8 +29,6 @@ public class ComponentRequest
     public double ClientWidth { get; set; }
 
     public int ComponentKey { get; set; }
-    
-    public int LastUsedComponentUniqueIdentifier { get; set; }
 
     public int ComponentUniqueIdentifier { get; set; }
 
@@ -39,6 +37,8 @@ public class ComponentRequest
     public string EventHandlerMethodName { get; set; }
 
     public string FullName { get; set; }
+
+    public int LastUsedComponentUniqueIdentifier { get; set; }
 
     public string MethodName { get; set; }
 
@@ -54,9 +54,9 @@ public class ComponentResponse
 
     public string ErrorMessage { get; set; }
 
-    public LinkedList<string> Trace { get; set; }
-
     public int LastUsedComponentUniqueIdentifier { get; set; }
+
+    public LinkedList<string> Trace { get; set; }
 }
 
 public static class ComponentRequestHandler
@@ -68,14 +68,13 @@ public static class ComponentRequestHandler
 
     public static ComponentResponse HandleRequest(ProcessReactWithDotNetRequestInput input)
     {
-        ComponentRequest request = input.componentRequest;
+        var request = input.componentRequest;
 
-        Func<string, Type> findType = input.findType;
+        var findType = input.findType;
 
-        Action<Element, ReactContext> beforeSerializeElementToClient = input.BeforeSerializeElementToClient;
+        var beforeSerializeElementToClient = input.BeforeSerializeElementToClient;
 
-
-        var              context = CreateContext(request);
+        var context = CreateContext(request);
 
         if (request.MethodName == "FetchComponent")
         {
@@ -134,7 +133,6 @@ public static class ComponentRequestHandler
 
             var tracer = serializerContext.Tracer;
 
-
             tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
             tracer.traceIndentLevel++;
@@ -147,13 +145,11 @@ public static class ComponentRequestHandler
 
             tracer.Trace($"Total time in ReactWithDotnet is {stopwatch.ElapsedMilliseconds} milliseconds.");
 
-
-
             return new ComponentResponse
             {
-                ElementAsJson    = map,
-                Trace            = tracer.traceMessages,
-                DynamicStyles    = serializerContext.DynamicStyles.CalculateCssClassList(),
+                ElementAsJson                     = map,
+                Trace                             = tracer.traceMessages,
+                DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
                 LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue
             };
         }
@@ -163,7 +159,7 @@ public static class ComponentRequestHandler
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            
+
             var type = findType(request.FullName);
             if (type == null)
             {
@@ -243,10 +239,9 @@ public static class ComponentRequestHandler
 
             // Invoke method
 
-            
             instance.key = request.ComponentKey.ToString();
             request.ComponentKey++;
-            
+
             try
             {
                 methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
@@ -255,7 +250,6 @@ public static class ComponentRequestHandler
             {
                 return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
             }
-
 
             var stateTree = new StateTree
             {
@@ -273,8 +267,8 @@ public static class ComponentRequestHandler
 
             var tracer = serializerContext.Tracer;
 
-            tracer.Trace(($"Method '{methodInfo.Name}' invoked in {stopwatch.ElapsedMilliseconds} milliseconds."));
-            
+            tracer.Trace($"Method '{methodInfo.Name}' invoked in {stopwatch.ElapsedMilliseconds} milliseconds.");
+
             tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
             tracer.traceIndentLevel++;
@@ -282,12 +276,10 @@ public static class ComponentRequestHandler
             var map = instance.ToJsonMap(serializerContext);
 
             tracer.traceIndentLevel--;
-            
+
             tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
             tracer.Trace($"Total time in ReactWithDotnet is {stopwatch.ElapsedMilliseconds} milliseconds.");
-
-            
 
             return new ComponentResponse
             {

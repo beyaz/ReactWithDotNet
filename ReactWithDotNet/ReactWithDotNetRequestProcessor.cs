@@ -5,9 +5,10 @@ namespace ReactWithDotNet;
 
 public sealed class ProcessReactWithDotNetRequestInput
 {
-    public ComponentRequest componentRequest;
+    internal ComponentRequest componentRequest;
 
-    public Func<string, Type> findType;
+    internal Func<string, Type> findType;
+
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; set; }
 
     public HttpContext HttpContext { get; set; }
@@ -17,22 +18,23 @@ public static class ReactWithDotNetRequestProcessor
 {
     public static async Task ProcessReactWithDotNetRequest(ProcessReactWithDotNetRequestInput input)
     {
-        var context = input.HttpContext;
+        var httpContext = input.HttpContext;
 
-        ComponentRequest componentRequest = null;
-        {
-            using var reader = new StreamReader(context.Request.Body, Encoding.UTF8, true, 1024, true);
-            
-            componentRequest = DeserializeJson<ComponentRequest>(await reader.ReadToEndAsync());
-        }
-        input.componentRequest = componentRequest;
+        input.componentRequest = await readJson();
 
         input.findType = Type.GetType;
 
         var response = ComponentRequestHandler.HandleRequest(input);
 
-        context.Response.ContentType = "application/json";
+        httpContext.Response.ContentType = "application/json";
 
-        await context.Response.WriteAsync(response.ToJson());
+        await httpContext.Response.WriteAsync(response.ToJson());
+
+        async Task<ComponentRequest> readJson()
+        {
+            using var reader = new StreamReader(httpContext.Request.Body, Encoding.UTF8, true, 1024, true);
+
+            return DeserializeJson<ComponentRequest>(await reader.ReadToEndAsync());
+        }
     }
 }
