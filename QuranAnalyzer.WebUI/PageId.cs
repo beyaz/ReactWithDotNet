@@ -76,4 +76,11 @@ static class App
             stream.WriteLine(message);
         }
     }
+
+    public static ReactContextKey<Theme> Theme = new(nameof(Theme));
+}
+
+class Theme
+{
+    public string BluePrimary => "rgb(218, 220, 224)";
 }
