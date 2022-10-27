@@ -73,11 +73,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             rows = 4, 
                             style =
                             {
-                                focus = {Border("1px solid #6366F1") }
+                                ComponentBorder,
+                                BorderRadius(5),
+                                
+                                Focus(Border("1px solid #6366F1"))
                             }
-                        } | ComponentBorder | BorderRadius(5),
+                        },
 
-        new ErrorText { Text = state.SearchScriptErrorMessage }
+                        new ErrorText { Text = state.SearchScriptErrorMessage }
                     },
 
                     new VSpace(3),

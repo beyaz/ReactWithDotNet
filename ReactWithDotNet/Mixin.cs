@@ -404,6 +404,16 @@ public static partial class Mixin
 
     public static StyleModifier Hover(params StyleModifier[] modifiers)
     {
+        return Pseudo(x => x.hover, modifiers);
+    }
+
+    public static StyleModifier Focus(params StyleModifier[] modifiers)
+    {
+        return Pseudo(x => x.focus, modifiers);
+    }
+
+    static StyleModifier Pseudo(Func<Style,Style> accessToPseudo, StyleModifier[] modifiers)
+    {
         void apply(Style instance)
         {
             if (modifiers is null)
@@ -418,7 +428,7 @@ public static partial class Mixin
                     continue;
                 }
 
-                modify.Modify(instance.hover);
+                modify.Modify(accessToPseudo(instance));
             }
         }
 
