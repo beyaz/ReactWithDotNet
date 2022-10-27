@@ -1,5 +1,4 @@
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -32,18 +31,11 @@ static class ReactWithDotNetIntegration
 
     static async Task HandleReactWithDotNetRequest(HttpContext context)
     {
-        ComponentRequest componentRequest = null;
-
-        using (var reader = new StreamReader(context.Request.Body, Encoding.UTF8, true, 1024, true))
+        var input = new ProcessReactWithDotNetRequestInput
         {
-            componentRequest = DeserializeJson<ComponentRequest>(await reader.ReadToEndAsync());
-        }
-
-        var response = ComponentRequestHandler.HandleRequest(componentRequest, Type.GetType);
-
-        context.Response.ContentType = "application/json";
-
-        await context.Response.WriteAsync(response.ToJson());
+            HttpContext = context
+        };
+        await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
     }
 
     static async Task HomePage(HttpContext context)

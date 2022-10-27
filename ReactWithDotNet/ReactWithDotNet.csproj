@@ -1,29 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>    
-  </PropertyGroup>  
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
 
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    </PropertyGroup>  
+    </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <WarningLevel>3</WarningLevel>
-    </PropertyGroup>  
+        <WarningLevel>3</WarningLevel>
+    </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <WarningLevel>3</WarningLevel>
-    </PropertyGroup>  
+        <WarningLevel>3</WarningLevel>
+    </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    </ItemGroup>  
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="copy /y &quot;$(TargetDir)ReactWithDotNet.*&quot; &quot;D:\work\git\alyavillashotels\AlyaVillas.WebUI\Libs\&quot;" />
+        <Exec Command="copy /y &quot;$(TargetDir)ReactWithDotNet.*&quot; &quot;D:\work\git\alyavillashotels\AlyaVillas.WebUI\Libs\&quot;" />
     </Target>
 
 </Project>

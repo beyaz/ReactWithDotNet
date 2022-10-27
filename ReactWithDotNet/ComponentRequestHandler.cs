@@ -66,9 +66,16 @@ public static class ComponentRequestHandler
         return $"{type.FullName},{type.Assembly.GetName().Name}";
     }
 
-    public static ComponentResponse HandleRequest(ComponentRequest request, Func<string, Type> findType, Action<Element, ReactContext> beforeSerializeElementToClient = null)
+    public static ComponentResponse HandleRequest(ProcessReactWithDotNetRequestInput input)
     {
-        var context = CreateContext(request);
+        ComponentRequest request = input.componentRequest;
+
+        Func<string, Type> findType = input.findType;
+
+        Action<Element, ReactContext> beforeSerializeElementToClient = input.BeforeSerializeElementToClient;
+
+
+        var              context = CreateContext(request);
 
         if (request.MethodName == "FetchComponent")
         {
