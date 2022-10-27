@@ -23,6 +23,11 @@ public sealed class article : HtmlElement
     ///     Specifies independent, self-contained content.
     /// </summary>
     public static implicit operator article(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Specifies independent, self-contained content.
+    /// </summary>
+    public article(Style style) : base(style) { }
 }
 
 public sealed class div : HtmlElement
@@ -34,6 +39,8 @@ public sealed class div : HtmlElement
     public div(string innerText) : base(innerText) {  }
 
     public static implicit operator div(string text) => new() { text = text };
+
+    public div(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -60,6 +67,11 @@ public sealed class p : HtmlElement
     ///     Defines a paragraph
     /// </summary>
     public static implicit operator p(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Defines a paragraph
+    /// </summary>
+    public p(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -86,6 +98,11 @@ public sealed class pre : HtmlElement
     ///     Preformatted text
     /// </summary>
     public static implicit operator pre(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Preformatted text
+    /// </summary>
+    public pre(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -112,6 +129,11 @@ public sealed class ol : HtmlElement
     ///     Ordered list
     /// </summary>
     public static implicit operator ol(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Ordered list
+    /// </summary>
+    public ol(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -138,6 +160,11 @@ public sealed class ul : HtmlElement
     ///     Unordered (bulleted) list
     /// </summary>
     public static implicit operator ul(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Unordered (bulleted) list
+    /// </summary>
+    public ul(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -164,6 +191,11 @@ public sealed class li : HtmlElement
     ///     List item
     /// </summary>
     public static implicit operator li(string text) => new() { text = text };
+
+    /// <summary>
+    ///     List item
+    /// </summary>
+    public li(Style style) : base(style) { }
 }
 
 public sealed class h1 : HtmlElement
@@ -175,6 +207,8 @@ public sealed class h1 : HtmlElement
     public h1(string innerText) : base(innerText) {  }
 
     public static implicit operator h1(string text) => new() { text = text };
+
+    public h1(Style style) : base(style) { }
 }
 
 public sealed class h2 : HtmlElement
@@ -186,6 +220,8 @@ public sealed class h2 : HtmlElement
     public h2(string innerText) : base(innerText) {  }
 
     public static implicit operator h2(string text) => new() { text = text };
+
+    public h2(Style style) : base(style) { }
 }
 
 public sealed class h3 : HtmlElement
@@ -197,6 +233,8 @@ public sealed class h3 : HtmlElement
     public h3(string innerText) : base(innerText) {  }
 
     public static implicit operator h3(string text) => new() { text = text };
+
+    public h3(Style style) : base(style) { }
 }
 
 public sealed class h4 : HtmlElement
@@ -208,6 +246,8 @@ public sealed class h4 : HtmlElement
     public h4(string innerText) : base(innerText) {  }
 
     public static implicit operator h4(string text) => new() { text = text };
+
+    public h4(Style style) : base(style) { }
 }
 
 public sealed class h5 : HtmlElement
@@ -219,6 +259,8 @@ public sealed class h5 : HtmlElement
     public h5(string innerText) : base(innerText) {  }
 
     public static implicit operator h5(string text) => new() { text = text };
+
+    public h5(Style style) : base(style) { }
 }
 
 public sealed class h6 : HtmlElement
@@ -230,6 +272,8 @@ public sealed class h6 : HtmlElement
     public h6(string innerText) : base(innerText) {  }
 
     public static implicit operator h6(string text) => new() { text = text };
+
+    public h6(Style style) : base(style) { }
 }
 
 public sealed class header : HtmlElement
@@ -241,6 +285,8 @@ public sealed class header : HtmlElement
     public header(string innerText) : base(innerText) {  }
 
     public static implicit operator header(string text) => new() { text = text };
+
+    public header(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -267,6 +313,11 @@ public sealed class span : HtmlElement
     ///     Inline container used to mark up a part of a text, or a part of a document.
     /// </summary>
     public static implicit operator span(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Inline container used to mark up a part of a text, or a part of a document.
+    /// </summary>
+    public span(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -293,6 +344,11 @@ public sealed class sup : HtmlElement
     ///     Superscript text
     /// </summary>
     public static implicit operator sup(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Superscript text
+    /// </summary>
+    public sup(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -319,6 +375,11 @@ public sealed class sub : HtmlElement
     ///     Subscript text
     /// </summary>
     public static implicit operator sub(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Subscript text
+    /// </summary>
+    public sub(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -345,6 +406,11 @@ public sealed class ins : HtmlElement
     ///     Inserted text
     /// </summary>
     public static implicit operator ins(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Inserted text
+    /// </summary>
+    public ins(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -371,6 +437,11 @@ public sealed class del : HtmlElement
     ///     Deleted text
     /// </summary>
     public static implicit operator del(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Deleted text
+    /// </summary>
+    public del(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -397,6 +468,11 @@ public sealed class small : HtmlElement
     ///     Smaller text
     /// </summary>
     public static implicit operator small(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Smaller text
+    /// </summary>
+    public small(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -423,6 +499,11 @@ public sealed class mark : HtmlElement
     ///     Marked text
     /// </summary>
     public static implicit operator mark(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Marked text
+    /// </summary>
+    public mark(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -449,6 +530,11 @@ public sealed class em : HtmlElement
     ///     Emphasized text
     /// </summary>
     public static implicit operator em(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Emphasized text
+    /// </summary>
+    public em(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -475,6 +561,11 @@ public sealed class b : HtmlElement
     ///     Bold text
     /// </summary>
     public static implicit operator b(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Bold text
+    /// </summary>
+    public b(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -501,6 +592,11 @@ public sealed class i : HtmlElement
     ///     Italic text
     /// </summary>
     public static implicit operator i(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Italic text
+    /// </summary>
+    public i(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -527,6 +623,11 @@ public sealed class strong : HtmlElement
     ///     Important text
     /// </summary>
     public static implicit operator strong(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Important text
+    /// </summary>
+    public strong(Style style) : base(style) { }
 }
 
 /// <summary>
@@ -543,6 +644,11 @@ public sealed class section : HtmlElement
     ///     Section in a document
     /// </summary>
     public section(params IModifier[] modifiers) : base(modifiers) { }
+
+    /// <summary>
+    ///     Section in a document
+    /// </summary>
+    public section(Style style) : base(style) { }
 }
 
 public sealed class aside : HtmlElement
@@ -550,6 +656,8 @@ public sealed class aside : HtmlElement
     public aside() { }
 
     public aside(params IModifier[] modifiers) : base(modifiers) { }
+
+    public aside(Style style) : base(style) { }
 }
 
 public sealed class fieldset : HtmlElement
@@ -557,6 +665,8 @@ public sealed class fieldset : HtmlElement
     public fieldset() { }
 
     public fieldset(params IModifier[] modifiers) : base(modifiers) { }
+
+    public fieldset(Style style) : base(style) { }
 }
 
 public sealed class legend : HtmlElement
@@ -564,6 +674,8 @@ public sealed class legend : HtmlElement
     public legend() { }
 
     public legend(params IModifier[] modifiers) : base(modifiers) { }
+
+    public legend(Style style) : base(style) { }
 }
 
 public sealed class nav : HtmlElement
@@ -571,6 +683,8 @@ public sealed class nav : HtmlElement
     public nav() { }
 
     public nav(params IModifier[] modifiers) : base(modifiers) { }
+
+    public nav(Style style) : base(style) { }
 }
 
 public sealed class main : HtmlElement
@@ -578,6 +692,8 @@ public sealed class main : HtmlElement
     public main() { }
 
     public main(params IModifier[] modifiers) : base(modifiers) { }
+
+    public main(Style style) : base(style) { }
 }
 
 public sealed class footer : HtmlElement
@@ -585,5 +701,7 @@ public sealed class footer : HtmlElement
     public footer() { }
 
     public footer(params IModifier[] modifiers) : base(modifiers) { }
+
+    public footer(Style style) : base(style) { }
 }
 

@@ -111,6 +111,10 @@ namespace ReactWithDotNet.Test
                     list.Add($"    public static implicit operator {item.Tag}(string text) => new() {{ text = text }};");
                 }
 
+                list.Add(Empty);
+                addComment();
+                list.Add($"    public {item.Tag}(Style style) : base(style) {{ }}");
+
                 list.Add("}");
                 
                 list.Add(Empty);

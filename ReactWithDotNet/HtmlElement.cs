@@ -20,6 +20,11 @@ public abstract class HtmlElement : Element
         text = innerText;
     }
 
+    protected HtmlElement(Style style)
+    {
+        this.style.Import(style);
+    }
+
     /// <summary>
     ///     Gets or sets the name of the class.
     /// </summary>
