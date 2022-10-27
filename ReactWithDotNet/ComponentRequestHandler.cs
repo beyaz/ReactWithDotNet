@@ -299,7 +299,7 @@ public static class ComponentRequestHandler
                 return $"MissingMember at {typeOfInstance.FullName}::state";
             }
 
-            var state = Json.DeserializeJsonByNewtonsoft(stateAsJson, statePropertyInfo.PropertyType);
+            var state = Json.DeserializeJson(stateAsJson, statePropertyInfo.PropertyType);
 
             statePropertyInfo.SetValue(instance, state);
 
@@ -318,7 +318,7 @@ public static class ComponentRequestHandler
 
             for (var i = 0; i < parameterInfoList.Length; i++)
             {
-                eventArguments[i] = Json.DeserializeJsonByNewtonsoft(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
+                eventArguments[i] = Json.DeserializeJson(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
             }
 
             return eventArguments;
@@ -340,7 +340,7 @@ public static class ComponentRequestHandler
 
 public static class Json
 {
-    public static object DeserializeJsonByNewtonsoft(string json, Type returnType)
+    public static object DeserializeJson(string json, Type returnType)
     {
         try
         {

@@ -58,7 +58,7 @@ class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesignerModel>
 
                                 var methodParameters = methodInfo.GetParameters();
 
-                                var jsObject = (JObject)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
+                                var jsObject = (JObject)Json.DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
                                 foreach (var parameterInfo in methodParameters)
                                 {
                                     var parameterName = parameterInfo.Name;
@@ -92,7 +92,7 @@ class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesignerModel>
                                         return new div { text = "Method declaring type is null." };
                                     }
 
-                                    var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification?.JsonTextForDotNetInstanceProperties : "{}", declaringType);
+                                    var instance = (Element)Json.DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification?.JsonTextForDotNetInstanceProperties : "{}", declaringType);
 
                                     if (instance is ReactStatefulComponent component)
                                     {
@@ -116,7 +116,7 @@ class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesignerModel>
                     return "type not found.@" + state.SelectedComponentTypeReference;
                 }
 
-                var instance = (Element)Json.DeserializeJsonByNewtonsoft(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties : "{}", type);
+                var instance = (Element)Json.DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties : "{}", type);
 
                 if (instance is ReactStatefulComponent component)
                 {
