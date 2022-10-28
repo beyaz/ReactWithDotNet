@@ -284,8 +284,6 @@ public sealed class JsClientFunctionInfo<EventArgument1, EventArgument2, EventAr
 
 public static class JsClient
 {
-    #region Static Fields
-    public static JsClientFunctionInfo<string> CopyToClipboard = new(nameof(CopyToClipboard));
 
     public static JsClientFunctionInfo<int> ListenWindowResizeEvent = new(nameof(ListenWindowResizeEvent));
 
@@ -294,7 +292,12 @@ public static class JsClient
         component.ClientTask.CallJsFunction("ReactWithDotNet::Core::SetCookie", cookieName, cookieValue, expiredays);
     }
 
+    public static void CopyToClipboard(ReactStatefulComponent component, string text)
+    {
+        component.ClientTask.CallJsFunction($"ReactWithDotNet::Core::{nameof(CopyToClipboard)}", text);
+    }
+
 
     public static JsClientEventInfo WindowResize = new(nameof(WindowResize));
-    #endregion
+    
 }

@@ -104,7 +104,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         {
             state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines(figmaCssText).Select(processLine));
 
-            ClientTask.CallJsFunction(JsClient.CopyToClipboard, state.ReactInlineStyle);
+            JsClient.CopyToClipboard(this, state.ReactInlineStyle);
 
             state.StatusMessage = "Copied to clipboard.";
 
