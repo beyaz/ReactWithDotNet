@@ -117,6 +117,10 @@ public sealed class ClientTaskCollection
     {
         GotoMethod(timeout, action.Method.Name);
     }
+    public void GotoMethod(Action action)
+    {
+        GotoMethod(0, action.Method.Name);
+    }
 
     public void GotoMethod<TArgument>(int timeout, Action<TArgument> action, TArgument argument)
     {
