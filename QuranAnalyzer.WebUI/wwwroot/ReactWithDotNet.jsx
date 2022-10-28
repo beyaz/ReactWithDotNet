@@ -720,11 +720,11 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                  */
             if (propValue.$isBinding === true)
             {
-                const targetProp = propValue.targetProp;
-                const eventName = propValue.eventName;
-                const sourcePath = propValue.sourcePath;
+                const targetProp    = propValue.targetProp;
+                const eventName     = propValue.eventName;
+                const sourcePath    = propValue.sourcePath;
                 const jsValueAccess = propValue.jsValueAccess;
-                const defaultValue = propValue.defaultValue;
+                const defaultValue  = propValue.defaultValue;
 
                 props[targetProp] = IfNull(GetValueInPath(component.state[DotNetState], sourcePath), defaultValue);
                 props[eventName] = function(e)
