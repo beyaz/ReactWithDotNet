@@ -6,6 +6,17 @@ public class TextArea:ReactComponent
         
     protected override Element render()
     {
-        return new textarea { valueBind = ValueBind, rows = 2 };
+        return new textarea
+        {
+            valueBind = ValueBind,
+            rows = 4,
+            style =
+            {
+                ComponentBorder,
+                BorderRadius(5),
+
+                Focus(Border($"1px solid {BluePrimary}"))
+            }
+        };
     }
 }

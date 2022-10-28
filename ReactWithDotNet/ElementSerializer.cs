@@ -170,10 +170,37 @@ static partial class ElementSerializer
             propertyValue is Expression<Func<string>> ||
             propertyValue is Expression<Func<bool>>)
         {
+
+            static object getTargetValueFromExpression(PropertyInfo pi,LambdaExpression expression)
+            {
+                if (expression.Body is MemberExpression memberExpression)
+                {
+                    while (true)
+                    {
+                        if (memberExpression.Expression is MemberExpression me)
+                        {
+                            memberExpression = me;
+                            continue;
+                        }
+
+                        if (memberExpression.Expression is ConstantExpression constantExpression)
+                        {
+                            return constantExpression.Value;
+                        }
+
+                        throw HandlerMethodShouldBelongToReactComponent(pi, expression.ToString());
+                    }
+                }
+
+                throw HandlerMethodShouldBelongToReactComponent(pi, expression.ToString());
+            }
+            
             string[] calculateSourcePathFunc()
             {
                 if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
                 {
+                    
+
                     return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
                 }
 
@@ -194,6 +221,11 @@ static partial class ElementSerializer
             if (bindInfo == null)
             {
                 return (null, true);
+            }
+
+            if (getTargetValueFromExpression(propertyInfo, propertyValue as LambdaExpression) is ReactStatefulComponent target)
+            {
+                bindInfo.HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
             }
 
             return (bindInfo, false);
@@ -368,6 +400,11 @@ static partial class ElementSerializer
     static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo)
     {
         throw new InvalidOperationException("Delegate method should belong to ReactComponent. Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name);
+    }
+
+    static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo, string bindingPath)
+    {
+        throw new InvalidOperationException("Delegate method should belong to ReactComponent. Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name + $" Given bindingPath:{bindingPath} is invalid.");
     }
 
     static bool HasComponentDidMountMethod(object reactStatefulComponent)

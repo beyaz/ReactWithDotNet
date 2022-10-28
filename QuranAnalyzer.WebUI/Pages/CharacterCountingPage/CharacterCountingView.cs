@@ -64,21 +64,9 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 {
                     new VStack
                     {
-                        new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                        new div { text = "Arama Komutut", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
 
-                        // new TextArea { ValueBind = () => state.SearchScript },
-                        new textarea 
-                        {
-                            valueBind = () => state.SearchScript, 
-                            rows = 4, 
-                            style =
-                            {
-                                ComponentBorder,
-                                BorderRadius(5),
-                                
-                                Focus(Border($"1px solid {BluePrimary}"))
-                            }
-                        },
+                        new TextArea { ValueBind = () => state.SearchScript },
 
                         new ErrorText { Text = state.SearchScriptErrorMessage }
                     },

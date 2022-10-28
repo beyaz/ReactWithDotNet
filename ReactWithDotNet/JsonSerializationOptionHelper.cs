@@ -230,6 +230,7 @@ public sealed class BindInfo
     public string[] sourcePath { get; set; }
 
     public string targetProp { get; set; }
+    public int? HandlerComponentUniqueIdentifier { get; set; }
 }
 
 // todo: check usage

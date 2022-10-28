@@ -720,23 +720,27 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                  */
             if (propValue.$isBinding === true)
             {
-                const targetProp = propValue.targetProp;
-                const eventName = propValue.eventName;
-                const sourcePath = propValue.sourcePath;
+                const targetProp    = propValue.targetProp;
+                const eventName     = propValue.eventName;
+                const sourcePath    = propValue.sourcePath;
                 const jsValueAccess = propValue.jsValueAccess;
                 const defaultValue = propValue.defaultValue;
 
-                props[targetProp] = IfNull(GetValueInPath(component.state[DotNetState], sourcePath), defaultValue);
+                const handlerComponentUniqueIdentifier = propValue.HandlerComponentUniqueIdentifier;
+
+                props[targetProp] = IfNull(GetValueInPath(GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier).state[DotNetState], sourcePath), defaultValue);
                 props[eventName] = function(e)
                 {
-                    const modifiedDotNetState = Clone(component.state[DotNetState]);
+                     const targetComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
+
+                    const modifiedDotNetState = Clone(targetComponent.state[DotNetState]);
 
                     SetValueInPath(modifiedDotNetState, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
 
                     const newState = {};
                     newState[DotNetState] = modifiedDotNetState;
 
-                    component.setState(newState);
+                    targetComponent.setState(newState);
                 }
 
                 continue;
@@ -1495,7 +1499,7 @@ function SendRequest(request, onSuccess)
 
     const url = ReactWithDotNet.RequestHandlerUrl;
 
-    const options =
+    let options =
     {
         method: "POST",
         headers:
