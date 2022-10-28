@@ -1659,7 +1659,15 @@ const ExternalJsObjectMap = {
         return new Date(dotnetDateAsJsonString);
     },
     "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments": (argumentsAsArray) => [ConvertToSyntheticMouseEvent(argumentsAsArray[0])],
-    "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments":(argumentsAsArray) => [ConvertToSyntheticChangeEvent(argumentsAsArray[0])]
+    "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments": (argumentsAsArray) => [ConvertToSyntheticChangeEvent(argumentsAsArray[0])],
+    "ReactWithDotNet::Core::SetCookie": function (cookieName, cookieValue, expiredays) 
+    {
+        var exdate = new Date();
+
+        exdate.setDate(exdate.getDate() + expiredays);
+
+		document.cookie = cookieName + "=" + escape(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
+	}
 };
 
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)

@@ -181,7 +181,7 @@ public sealed class ClientTaskCollection
     #region Methods
     internal ClientTask[] ToArray() => taskList.ToArray();
 
-    void CallJsFunction(string JsFunctionPath, params object[] JsFunctionArguments)
+    public void CallJsFunction(string JsFunctionPath, params object[] JsFunctionArguments)
     {
         taskList.Add(new ClientTask { TaskId = (int)TaskId.CallJsFunction, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
     }
@@ -288,6 +288,12 @@ public static class JsClient
     public static JsClientFunctionInfo<string> CopyToClipboard = new(nameof(CopyToClipboard));
 
     public static JsClientFunctionInfo<int> ListenWindowResizeEvent = new(nameof(ListenWindowResizeEvent));
+
+    public static void SetCookie(ReactStatefulComponent component, string cookieName, string cookieValue, int expiredays)
+    {
+        component.ClientTask.CallJsFunction("ReactWithDotNet::Core::SetCookie", cookieName, cookieValue, expiredays);
+    }
+
 
     public static JsClientEventInfo WindowResize = new(nameof(WindowResize));
     #endregion

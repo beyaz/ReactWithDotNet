@@ -44,6 +44,16 @@ public sealed class ReactContext
 
         return default;
     }
+
+    public TValue TryGetValue<TValue>(string key)
+    {
+        if (map.TryGetValue(key, out var value))
+        {
+            return (TValue)value;
+        }
+
+        return default;
+    }
 }
 
 // ReSharper disable once UnusedTypeParameter
