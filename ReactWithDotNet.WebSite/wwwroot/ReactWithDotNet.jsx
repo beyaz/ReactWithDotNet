@@ -1632,7 +1632,7 @@ function ListenWindowResizeEvent(resizeTimeout)
 
         timeout = setTimeout(function ()
         {
-            ReactWithDotNet.DispatchEvent('WindowResize', []);
+            ReactWithDotNet.DispatchEvent('ReactWithDotNet::Core::OnWindowResize', []);
         }, resizeTimeout);
     });
 }
@@ -1649,7 +1649,7 @@ const ExternalJsObjectMap = {
 
         return value;
     },
-    'ListenWindowResizeEvent': ListenWindowResizeEvent,
+    'ReactWithDotNet::Core::ListenWindowResizeEvent': ListenWindowResizeEvent,
     'ReactWithDotNet::Core::ConvertDotnetSerializedStringDateToJsDate': function (dotnetDateAsJsonString)
     {
         if (dotnetDateAsJsonString == null || dotnetDateAsJsonString === '')
