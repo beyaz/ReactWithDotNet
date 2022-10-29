@@ -11,17 +11,7 @@ sealed class IndexFileContent
 
     public string GetFileContent()
     {
-        var sb = new StringBuilder();
-
-        foreach (var item in GetLines())
-        {
-            foreach (var line in item)
-            {
-                sb.AppendLine(line);
-            }
-        }
-
-        return sb.ToString();
+        return GetLines().Aggregate(new StringBuilder(), (sb, line) => line.WriteTo(sb)).ToString();
     }
 
     static string GetFullName(Type type)
@@ -29,59 +19,80 @@ sealed class IndexFileContent
         return $"{type.FullName},{type.Assembly.GetName().Name}";
     }
 
-    IEnumerable<IReadOnlyList<string>> GetLines()
+    IEnumerable<Line> GetLines()
     {
-        
-        
-        return new List<List<string>>
+        return new List<Line>
         {
-            new()
-            {
-                "<!DOCTYPE html>",
+            "<!DOCTYPE html>",
 
-                "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' dir='ltr'>",
+            "<html lang='en' xmlns='http://www.w3.org/1999/xhtml' dir='ltr'>",
 
-                "<head>",
-                "    <meta charset='utf-8' />",
-                "    <meta name='viewport' content='width=device-width, initial-scale=1'>",
+            "<head>",
+            "    <meta charset='utf-8' />",
+            "    <meta name='viewport' content='width=device-width, initial-scale=1'>",
 
-                "    <meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />",
-                "    <meta http-equiv='Pragma' content='no-cache' />",
-                "    <meta http-equiv='Expires' content='0' />",
+            "    <meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />",
+            "    <meta http-equiv='Pragma' content='no-cache' />",
+            "    <meta http-equiv='Expires' content='0' />",
 
-                "    <title>Quran Analyzer</title>",
-                "",
-                "    <!-- Font -->",
-                "    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
-                "",
-                $"    <link rel='stylesheet' href='{RootFolderName}/index.css'>",
-                "</head>",
-            },
+            "    <title>Quran Analyzer</title>",
 
-            new()
-            {
-                "<body>",
-                "    <div id='app'>",
-                $"        <script src='{RootFolderName}/index.js'></script>",
-                "    </div>",
-                "</body>",
-            },
+            "    <!-- Font -->",
+            "    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
 
-            new()
-            {
-                "</html>",
+            $"    <link rel='stylesheet' href='{RootFolderName}/index.css'>",
 
-                "",
+            Head,
 
-                "<script type='text/javascript'>",
-                "",
-                "    ReactWithDotNet.RenderComponentIn({",
-                $"        fullTypeNameOfReactComponent: '{GetFullName(Component)}',",
-                "        containerHtmlElementId: 'app'",
-                "    });",
-                "",
-                "</script>"
-            }
+            "</head>",
+
+            "<body>",
+            "    <div id='app'>",
+            $"        <script src='{RootFolderName}/index.js'></script>",
+            "    </div>",
+            "</body>",
+
+            "</html>",
+
+            "<script type='text/javascript'>",
+            "    ReactWithDotNet.RenderComponentIn({",
+            $"        fullTypeNameOfReactComponent: '{GetFullName(Component)}',",
+            "        containerHtmlElementId: 'app'",
+            "    });",
+            "</script>"
         };
+    }
+
+    class Line
+    {
+        string value;
+        string[] values;
+
+        public static implicit operator Line(string line)
+        {
+            return new Line { value = line };
+        }
+
+        public static implicit operator Line(string[] lines)
+        {
+            return new Line { values = lines };
+        }
+
+        public StringBuilder WriteTo(StringBuilder sb)
+        {
+            if (values?.Length > 0)
+            {
+                foreach (var item in values)
+                {
+                    sb.AppendLine(item);
+                }
+
+                return sb;
+            }
+
+            sb.AppendLine(value);
+
+            return sb;
+        }
     }
 }
