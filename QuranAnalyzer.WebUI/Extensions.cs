@@ -33,4 +33,25 @@ static class Extensions
         {"بايىم",("bi-eyyam","günler")}
     };
 
+    public static void ArabicKeyboardPressed(this Client client, string arabicLetter)
+    {
+        client.DispatchEvent(nameof(ArabicKeyboardPressed), arabicLetter);
+    }
+    public static void OnHamburgerMenuClosed(this Client client)
+    {
+        client.DispatchEvent(nameof(OnHamburgerMenuClosed));
+    }
+
+    
+
+    public static void OnHamburgerMenuOpened(this Client client)
+    {
+        client.DispatchEvent(nameof(OnHamburgerMenuOpened));
+    }
+    public static void MushafOptionChanged(this Client client, MushafOption mushafOption)
+    {
+        client.DispatchEvent(nameof(MushafOptionChanged), mushafOption);
+    }
+    
+
 }

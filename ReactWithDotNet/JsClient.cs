@@ -9,6 +9,11 @@ partial class Mixin
         client.CallJsFunction(core + nameof(CopyToClipboard), text);
     }
 
+    public static void DispatchEvent(this Client client, string eventName, params object[] eventArguments)
+    {
+        client.CallJsFunction(core + nameof(DispatchEvent), eventName, eventArguments);
+    }
+
     public static void GotoMethod(this Client client, Action action, int timeout)
     {
         GotoMethod(client, timeout, action.Method.Name);

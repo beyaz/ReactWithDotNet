@@ -80,6 +80,6 @@ class MushafOptionsView : ReactComponent<MushafOption>
 
     void FireMushafOptionChanged()
     {
-        Client.DispatchEvent(ApplicationEventName.MushafOptionChanged, state);
+        Client.MushafOptionChanged(state);
     }
 }

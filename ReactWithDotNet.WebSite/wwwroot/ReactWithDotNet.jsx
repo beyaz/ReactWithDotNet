@@ -974,14 +974,7 @@ function ProcessClientTasks(clientTasks, component)
             continue;
         }     
 
-        if (clientTask.TaskId === ClientTaskId.DispatchEvent)
-        {
-            TraceClientTask(component, 'DispatchEvent', clientTask.EventName);
-
-            EventBus.Dispatch(clientTask.EventName, clientTask.EventArguments);
-
-            continue;
-        }
+       
 
         if (clientTask.TaskId === ClientTaskId.ListenEvent)
         {
@@ -1690,6 +1683,11 @@ RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMe
         StartAction(remoteMethodName, component, remoteMethodArguments);
 
     }, timeout);  
+});
+
+RegisterCoreFunction("DispatchEvent", function(eventName, eventArguments)
+{
+    EventBus.Dispatch(eventName, eventArguments); 
 });
 
 function CreateNewDeveloperError(message)

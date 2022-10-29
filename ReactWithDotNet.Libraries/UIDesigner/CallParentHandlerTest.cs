@@ -53,8 +53,16 @@ class ComponentA : ReactComponent<ModelA>
 
         if (state.ClickCount % 2 == 0)
         {
-            Client.DispatchEvent(Event.OnMode3,state.ClickCount);
+            Client.OnMode3(state.ClickCount);
         }
+    }
+}
+
+static class Extensions
+{
+    public static void OnMode3(this Client client, int count)
+    {
+        client.DispatchEvent(nameof(OnMode3),count);
     }
 }
 

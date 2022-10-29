@@ -84,15 +84,7 @@ public sealed class Client
 
     #region Public Methods
 
-    public void DispatchEvent<EventArgument1>(JsClientEventInfo<EventArgument1> eventInfo, EventArgument1 argument)
-    {
-        DispatchEvent(eventInfo.Name, argument);
-    }
-
-    public void DispatchEvent(JsClientEventInfo eventInfo)
-    {
-        DispatchEvent(eventInfo.Name);
-    }
+   
     
     public void OnOutsideClicked(string idOfElement, Action action)
     {
@@ -147,12 +139,7 @@ public sealed class Client
         taskList.Add(new ClientTask { TaskId = (int)TaskId.CallJsFunction, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
     }
 
-    internal void DispatchEvent(string eventName, params object[] eventArguments)
-    {
-        taskList.Add(new ClientTask { TaskId = (int)TaskId.DispatchEvent, EventName = eventName, EventArguments = eventArguments });
-    }
-
-  
+   
 
     internal void ListenEvent(string eventName, string routeToMethod)
     {
