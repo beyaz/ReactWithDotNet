@@ -83,25 +83,6 @@ public sealed class ClientTaskCollection
     #endregion
 
     #region Public Methods
-    public void CallJsFunction(JsClientFunctionInfo info)
-    {
-        CallJsFunction(info.Name);
-    }
-
-    public void CallJsFunction<P1>(JsClientFunctionInfo<P1> info, P1 parameter)
-    {
-        CallJsFunction(info.Name, parameter);
-    }
-
-    public void CallJsFunction<P1, P2>(JsClientFunctionInfo<P1, P2> info, P1 parameter1, P2 parameter2)
-    {
-        CallJsFunction(info.Name, parameter1, parameter2);
-    }
-
-    public void CallJsFunction<P1, P2, P3>(JsClientFunctionInfo<P1, P2, P3> info, P1 parameter1, P2 parameter2, P3 parameter3)
-    {
-        CallJsFunction(info.Name, parameter1, parameter2, parameter3);
-    }
 
     public void DispatchEvent<EventArgument1>(JsClientEventInfo<EventArgument1> eventInfo, EventArgument1 argument)
     {
@@ -238,46 +219,3 @@ public sealed class JsClientEventInfo<EventArgument1> : JsClientEventInfo
     }
     #endregion
 }
-
-#region JsClientFunctionInfo
-public class JsClientFunctionInfo
-{
-    #region Fields
-    public readonly string Name;
-    #endregion
-
-    #region Constructors
-    public JsClientFunctionInfo(string name)
-    {
-        Name = name;
-    }
-    #endregion
-}
-
-public sealed class JsClientFunctionInfo<EventArgument1> : JsClientFunctionInfo
-{
-    #region Constructors
-    public JsClientFunctionInfo(string name) : base(name)
-    {
-    }
-    #endregion
-}
-
-public sealed class JsClientFunctionInfo<EventArgument1, EventArgument2> : JsClientFunctionInfo
-{
-    #region Constructors
-    public JsClientFunctionInfo(string name) : base(name)
-    {
-    }
-    #endregion
-}
-
-public sealed class JsClientFunctionInfo<EventArgument1, EventArgument2, EventArgument3> : JsClientFunctionInfo
-{
-    #region Constructors
-    public JsClientFunctionInfo(string name) : base(name)
-    {
-    }
-    #endregion
-}
-#endregion

@@ -11,7 +11,6 @@ namespace ReactWithDotNet.UIDesigner;
 class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 {
     static JsClientEventInfo OnBrowserInactive = new(nameof(OnBrowserInactive));
-    static JsClientFunctionInfo<int> InitializeUIDesignerEvents = new(nameof(InitializeUIDesignerEvents));
     
     protected override void constructor()
     {
@@ -28,7 +27,7 @@ class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
     protected override void componentDidMount()
     {
         ClientTask.ListenEvent(OnBrowserInactive, Refresh);
-        ClientTask.CallJsFunction(InitializeUIDesignerEvents, 1000);
+        ClientTask.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
 
     protected override Element render()
