@@ -2,16 +2,16 @@
 
 namespace QuranAnalyzer.WebUI;
 
-sealed class IndexFileContent
+sealed class HtmlContentGenerator
 {
-    public Type Component { get; set; }
+    public string[] Stylesheets { get; set; }
+    
+    public Type TargetReactComponent { get; set; }
 
-    public string[] Head { get; set; }
-
-    public string RootFolderName { get; set; }
-
-    public string GetFileContent()
+    public string GetHtmlContent()
     {
+        const string root = "wwwroot";
+            
         var lines = new List<Line>
         {
             "<!DOCTYPE html>",
@@ -31,15 +31,15 @@ sealed class IndexFileContent
             "    <!-- Font -->",
             "    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
 
-            $"    <link rel='stylesheet' href='{RootFolderName}/index.css'>",
+            $"    <link rel='stylesheet' href='{root}/index.css'>",
 
-            Head,
+            Stylesheets,
 
             "</head>",
 
             "<body>",
             "    <div id='app'>",
-            $"        <script src='{RootFolderName}/index.js'></script>",
+            $"        <script src='{root}/index.js'></script>",
             "    </div>",
             "</body>",
 
@@ -47,7 +47,7 @@ sealed class IndexFileContent
 
             "<script type='text/javascript'>",
             "    ReactWithDotNet.RenderComponentIn({",
-            $"        fullTypeNameOfReactComponent: '{GetFullName(Component)}',",
+            $"        fullTypeNameOfReactComponent: '{GetFullName(TargetReactComponent)}',",
             "        containerHtmlElementId: 'app'",
             "    });",
             "</script>"

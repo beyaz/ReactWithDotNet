@@ -1,8 +1,9 @@
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using QuranAnalyzer.WebUI.Pages.MainPage;
+using ReactWithDotNet.UIDesigner;
 
 namespace QuranAnalyzer.WebUI;
 
@@ -16,19 +17,6 @@ static class ReactWithDotNetIntegration
         endpoints.MapGet($"/{nameof(ReactWithDotNetDesignerComponentPreview)}", ReactWithDotNetDesignerComponentPreview);
     }
 
-    static async Task<string> GetIndexHtmlFileContent()
-    {
-        const string RootFolderName = "wwwroot";
-
-        var filePath = Path.Combine(RootFolderName, "index.html");
-
-        var htmlContent = await File.ReadAllTextAsync(filePath);
-
-        htmlContent = htmlContent.Replace("~/", RootFolderName + "/");
-
-        return htmlContent;
-    }
-
     static async Task HandleReactWithDotNetRequest(HttpContext context)
     {
         var input = new ProcessReactWithDotNetRequestInput
@@ -40,13 +28,12 @@ static class ReactWithDotNetIntegration
 
     static async Task HomePage(HttpContext context)
     {
-        var file = new IndexFileContent
+        var htmlContentGenerator = new HtmlContentGenerator
         {
-            RootFolderName = "wwwroot",
-            Component      = typeof(Pages.MainPage.View)
+            TargetReactComponent = typeof(View)
         };
 
-        var htmlContent = file.GetFileContent();
+        var htmlContent = htmlContentGenerator.GetHtmlContent();
 
         context.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -57,12 +44,11 @@ static class ReactWithDotNetIntegration
     {
         context.Response.ContentType = "text/html; charset=UTF-8";
 
-        var file = new IndexFileContent
+        var htmlContentGenerator = new HtmlContentGenerator
         {
-            RootFolderName = "wwwroot",
-            Component      = typeof(ReactWithDotNet.UIDesigner.ReactWithDotNetDesigner),
-            
-            Head=new []
+            TargetReactComponent = typeof(ReactWithDotNetDesigner),
+
+            Stylesheets = new[]
             {
                 "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css'>",
                 "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css'>",
@@ -70,7 +56,7 @@ static class ReactWithDotNetIntegration
             }
         };
 
-        var htmlContent = file.GetFileContent();
+        var htmlContent = htmlContentGenerator.GetHtmlContent();
 
         await context.Response.WriteAsync(htmlContent);
     }
@@ -78,14 +64,13 @@ static class ReactWithDotNetIntegration
     static async Task ReactWithDotNetDesignerComponentPreview(HttpContext context)
     {
         context.Response.ContentType = "text/html; charset=UTF-8";
-        
-        var file = new IndexFileContent
+
+        var htmlContentGenerator = new HtmlContentGenerator
         {
-            RootFolderName = "wwwroot",
-            Component      = typeof(ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview)
+            TargetReactComponent = typeof(ReactWithDotNetDesignerComponentPreview)
         };
 
-        var htmlContent = file.GetFileContent();
+        var htmlContent = htmlContentGenerator.GetHtmlContent();
 
         await context.Response.WriteAsync(htmlContent);
     }
