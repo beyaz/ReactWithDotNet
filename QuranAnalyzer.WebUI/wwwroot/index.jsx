@@ -55,21 +55,3 @@ ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", OnMainDivScro
 
 import React from 'react';
 import { Ripple } from 'primereact/ripple';
-const QuranAnalyzer_WebUI_PanelHeaderTemplate = (options) => 
-{
-    const toggleIcon = options.collapsed ? 'pi pi-chevron-down' : 'pi pi-chevron-up';
-
-    return (
-        <div className={options.className} style={{justifyContent:'start', background:'#fefeff'}}>
-            <button className={options.togglerClassName} onClick={options.onTogglerClick}>
-                <span className={toggleIcon}></span>
-                <Ripple/>
-            </button>
-            <span className={`${options.titleClassName} pl-1`}>
-                {options.props.header}
-            </span>
-        </div>
-    );
-}
-
-ReactWithDotNet.RegisterExternalJsObject("QuranAnalyzer_WebUI_PanelHeaderTemplate", QuranAnalyzer_WebUI_PanelHeaderTemplate);

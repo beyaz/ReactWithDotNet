@@ -216,5 +216,3 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     }
     #endregion
 }
-
-// TODO: check and remove : QuranAnalyzer_WebUI_PanelHeaderTemplate
