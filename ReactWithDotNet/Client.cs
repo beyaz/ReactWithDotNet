@@ -78,26 +78,23 @@ public sealed class EmptyState
 
 public sealed class Client
 {
-    
     internal readonly List<ClientTask> taskList = new();
     
     public void CallJsFunction(string jsFunctionPath, params object[] jsFunctionArguments)
     {
-        taskList.Add(new ClientTask { TaskId = (int)TaskId.CallJsFunction, JsFunctionPath = jsFunctionPath, JsFunctionArguments = jsFunctionArguments });
+        taskList.Add(new ClientTask {  JsFunctionPath = jsFunctionPath, JsFunctionArguments = jsFunctionArguments });
     }
 }
-enum TaskId
+
+sealed class ClientTask
 {
-    CallJsFunction = 1,
-    ListenEvent = 2,
-    DispatchEvent = 3,
-    
-    InitializeDotnetComponentEventListener = 5,
-    
-    NavigateToUrl = 7,
-    OnOutsideClicked =8,
-    ListenEventOnlyOnce = 9
+
+    public string JsFunctionPath { get; set; }
+    public object[] JsFunctionArguments { get; set; }
+
+
 }
+
 public class JsClientEventInfo
 {
     #region Fields
