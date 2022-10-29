@@ -37,7 +37,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
     
     protected override void componentDidMount()
     {
-        Client.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
+        Client.OnArabicKeyboardPressed(ArabicKeyboardPressed);
     }
 
     protected override Element render()

@@ -37,21 +37,48 @@ static class Extensions
     {
         client.DispatchEvent(nameof(ArabicKeyboardPressed), arabicLetter);
     }
+    public static void OnArabicKeyboardPressed(this Client client, Action<string> handlerAction)
+    {
+        client.ListenEvent(ArabicKeyboardPressed, handlerAction);
+    }
+    
+        
     public static void OnHamburgerMenuClosed(this Client client)
     {
         client.DispatchEvent(nameof(OnHamburgerMenuClosed));
     }
+    public static void ListenOnHamburgerMenuClosed(this Client client, Action handler)
+    {
+        client.ListenEvent(OnHamburgerMenuClosed, handler);
+    }
 
-    
 
     public static void OnHamburgerMenuOpened(this Client client)
     {
         client.DispatchEvent(nameof(OnHamburgerMenuOpened));
     }
+
+    public static void HandleHamburgerMenuOpened(this Client client, Action handler)
+    {
+        client.ListenEvent(OnHamburgerMenuOpened,handler);
+    }
+
     public static void MushafOptionChanged(this Client client, MushafOption mushafOption)
     {
         client.DispatchEvent(nameof(MushafOptionChanged), mushafOption);
     }
-    
+    public static void HandleMushafOptionChanged(this Client client, Action<MushafOption> handler)
+    {
+        client.ListenEvent(MushafOptionChanged, handler);
+    }
+
+    public static void MainContentDivScrollChanged(this Client client, double mainDivScrollY)
+    {
+        client.DispatchEvent(nameof(MainContentDivScrollChanged));
+    }
+    public static void MainContentDivScrollChanged(this Client client, Action<double> handlerAction)
+    {
+        client.ListenEvent(MainContentDivScrollChanged, handlerAction);
+    }
 
 }

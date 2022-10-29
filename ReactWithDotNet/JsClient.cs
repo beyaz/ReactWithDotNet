@@ -54,6 +54,24 @@ partial class Mixin
         client.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
     }
 
+   static void ListenEvent(this Client client, string eventName, string routeToMethod)
+    {
+        client.CallJsFunction(core + nameof(ListenEvent), eventName, routeToMethod);
+    }
+
+
+
+   public static void ListenEvent(this Client client, Action<Client> attachMethod, Action handler)
+   {
+       ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
+   }
+
+    public static void ListenEvent<EventArgument1>(this Client client, Action<Client, EventArgument1> attachMethod, Action<EventArgument1> handler)
+    {
+        ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
+    }
+
+
     public static void PushHistory(this Client client, string title, string url)
     {
         client.CallJsFunction(core + nameof(PushHistory), title, url);

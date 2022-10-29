@@ -5,6 +5,16 @@ namespace ReactWithDotNet.UIDesigner;
 
 static class Extensions
 {
+
+    public static void OnBrowserInactive(this Client client)
+    {
+        client.DispatchEvent(nameof(OnBrowserInactive));
+    }
+    public static void OnBrowserInactive(this Client client, Action handlerAction)
+    {
+        client.ListenEvent(OnBrowserInactive, handlerAction);
+    }
+    
     public static string GetSvgUrl(string svgFileName)
     {
         var resourceFilePathInAssembly = $"ReactWithDotNet.Libraries.UIDesigner.Resources.{svgFileName}.svg";

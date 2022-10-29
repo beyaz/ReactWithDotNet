@@ -30,18 +30,6 @@ static class ResourceAccess
     public static string Img(string fileName) => "wwwroot/img/" + fileName;
 }
 
-class ApplicationEventName
-{
-
-    public static JsClientEventInfo<string> ArabicKeyboardPressed = new(nameof(ArabicKeyboardPressed));
-    public static JsClientEventInfo<double> MainContentDivScrollChanged = new(nameof(MainContentDivScrollChanged));
-
-    public static JsClientEventInfo<MushafOption> MushafOptionChanged = new(nameof(MushafOptionChanged));
-
-    public static JsClientEventInfo OnHamburgerMenuClosed = new(nameof(OnHamburgerMenuClosed));
-    public static JsClientEventInfo OnHamburgerMenuOpened = new(nameof(OnHamburgerMenuOpened));
-}
-
 static class ContextKey
 {
     public static ReactContextKey<MushafOption> MushafOptionKey = new(nameof(MushafOptionKey));

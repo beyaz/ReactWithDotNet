@@ -24,8 +24,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     #region Methods
     protected override void componentDidMount()
     {
-        Client.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
-        Client.ListenEvent(ApplicationEventName.MushafOptionChanged, MushafOptionChanged);
+        Client.OnArabicKeyboardPressed(ArabicKeyboardPressed);
+        Client.HandleMushafOptionChanged(MushafOptionChanged);
     }
 
     protected override void constructor()

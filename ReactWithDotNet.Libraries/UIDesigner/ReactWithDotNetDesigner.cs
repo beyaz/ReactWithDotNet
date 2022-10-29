@@ -10,8 +10,6 @@ namespace ReactWithDotNet.UIDesigner;
 
 class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 {
-    static JsClientEventInfo OnBrowserInactive = new(nameof(OnBrowserInactive));
-    
     protected override void constructor()
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
@@ -26,7 +24,7 @@ class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
     protected override void componentDidMount()
     {
-        Client.ListenEvent(OnBrowserInactive, Refresh);
+        Client.OnBrowserInactive(Refresh);
         Client.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
 

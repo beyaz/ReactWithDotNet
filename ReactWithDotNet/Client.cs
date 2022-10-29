@@ -108,15 +108,7 @@ public sealed class Client
 
   
 
-    public void ListenEvent<EventArgument1>(JsClientEventInfo<EventArgument1> eventInfo, Action<EventArgument1> routeToMethod)
-    {
-        ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
-    }
-
-    public void ListenEvent(JsClientEventInfo eventInfo, Action routeToMethod)
-    {
-        ListenEvent(eventInfo.Name, routeToMethod.Method.Name);
-    }
+ 
 
     public void ListenEventOnlyOnce(JsClientEventInfo eventInfo, Action routeToMethod)
     {
@@ -141,13 +133,10 @@ public sealed class Client
 
    
 
-    internal void ListenEvent(string eventName, string routeToMethod)
-    {
-        taskList.Add(new ClientTask { TaskId = (int)TaskId.ListenEvent, EventName = eventName, RouteToMethod = routeToMethod });
-    }
+   
     #endregion
 
-   
+
 }
 enum TaskId
 {

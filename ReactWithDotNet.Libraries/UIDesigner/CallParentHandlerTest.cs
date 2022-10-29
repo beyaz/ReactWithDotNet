@@ -64,6 +64,10 @@ static class Extensions
     {
         client.DispatchEvent(nameof(OnMode3),count);
     }
+    public static void OnMode3(this Client client, Action<int> handlerAction)
+    {
+        client.ListenEvent(OnMode3, handlerAction);
+    }
 }
 
 class ModelB
@@ -87,7 +91,7 @@ class ComponentB : ReactComponent<ModelB>
 
     protected override void componentDidMount()
     {
-        Client.ListenEvent(Event.OnMode3, OnMode3);
+        Client.OnMode3(OnMode3);
     }
 
     void OnMode3(int valueInA)
