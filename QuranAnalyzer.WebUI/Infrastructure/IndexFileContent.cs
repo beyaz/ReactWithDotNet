@@ -7,21 +7,12 @@ sealed class IndexFileContent
     public Type Component { get; set; }
 
     public string[] Head { get; set; }
+
     public string RootFolderName { get; set; }
 
     public string GetFileContent()
     {
-        return GetLines().Aggregate(new StringBuilder(), (sb, line) => line.WriteTo(sb)).ToString();
-    }
-
-    static string GetFullName(Type type)
-    {
-        return $"{type.FullName},{type.Assembly.GetName().Name}";
-    }
-
-    IEnumerable<Line> GetLines()
-    {
-        return new List<Line>
+        var lines = new List<Line>
         {
             "<!DOCTYPE html>",
 
@@ -61,6 +52,13 @@ sealed class IndexFileContent
             "    });",
             "</script>"
         };
+
+        return lines.Aggregate(new StringBuilder(), (sb, line) => line.WriteTo(sb)).ToString();
+    }
+
+    static string GetFullName(Type type)
+    {
+        return $"{type.FullName},{type.Assembly.GetName().Name}";
     }
 
     class Line
