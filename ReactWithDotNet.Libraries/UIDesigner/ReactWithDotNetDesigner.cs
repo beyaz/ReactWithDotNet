@@ -8,7 +8,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
+public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 {
     protected override void constructor()
     {

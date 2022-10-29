@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesignerModel>
+public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesignerModel>
 {
     public void Refresh()
     {

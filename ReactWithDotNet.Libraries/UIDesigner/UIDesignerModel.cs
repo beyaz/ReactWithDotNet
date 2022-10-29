@@ -1,7 +1,7 @@
 ﻿namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
-class UIDesignerModel
+public class UIDesignerModel
 {
     public int? MetadataToken { get; set; }
 
@@ -22,7 +22,7 @@ class UIDesignerModel
 }
 
 [Serializable]
-class DotNetMemberSpecification
+public class DotNetMemberSpecification
 {
     public string JsonTextForDotNetInstanceProperties { get; set; }
 

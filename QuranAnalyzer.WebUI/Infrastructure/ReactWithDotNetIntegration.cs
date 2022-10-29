@@ -40,7 +40,13 @@ static class ReactWithDotNetIntegration
 
     static async Task HomePage(HttpContext context)
     {
-        var htmlContent = await GetIndexHtmlFileContent();
+        var file = new IndexFileContent
+        {
+            RootFolderName = "wwwroot",
+            Component      = typeof(Pages.MainPage.View)
+        };
+
+        var htmlContent = file.GetFileContent();
 
         context.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -49,54 +55,38 @@ static class ReactWithDotNetIntegration
 
     static async Task ReactWithDotNetDesigner(HttpContext context)
     {
-        var htmlContent = await GetIndexHtmlFileContent();
-
-        htmlContent = changeComponent(htmlContent);
-
-        htmlContent += Environment.NewLine +
-                       @"<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css'>
-                         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css'>
-                         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css'>";
-
         context.Response.ContentType = "text/html; charset=UTF-8";
 
-        await context.Response.WriteAsync(htmlContent);
-
-        static string changeComponent(string htmlContent)
+        var file = new IndexFileContent
         {
-            return string.Join(Environment.NewLine, htmlContent.Split(Environment.NewLine).Select(line =>
+            RootFolderName = "wwwroot",
+            Component      = typeof(ReactWithDotNet.UIDesigner.ReactWithDotNetDesigner),
+            
+            Head=new []
             {
-                if (line.Trim().Contains("fullTypeNameOfReactComponent"))
-                {
-                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesigner,ReactWithDotNet.Libraries',";
-                }
+                "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css'>",
+                "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css'>",
+                "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css'>"
+            }
+        };
 
-                return line;
-            }));
-        }
+        var htmlContent = file.GetFileContent();
+
+        await context.Response.WriteAsync(htmlContent);
     }
 
     static async Task ReactWithDotNetDesignerComponentPreview(HttpContext context)
     {
-        var htmlContent = await GetIndexHtmlFileContent();
-
-        htmlContent = changeComponent();
-
         context.Response.ContentType = "text/html; charset=UTF-8";
+        
+        var file = new IndexFileContent
+        {
+            RootFolderName = "wwwroot",
+            Component      = typeof(ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview)
+        };
+
+        var htmlContent = file.GetFileContent();
 
         await context.Response.WriteAsync(htmlContent);
-
-        string changeComponent()
-        {
-            return string.Join(Environment.NewLine, htmlContent.Split(Environment.NewLine).Select(line =>
-            {
-                if (line.Trim().Contains("fullTypeNameOfReactComponent"))
-                {
-                    return "fullTypeNameOfReactComponent: 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet.Libraries',";
-                }
-
-                return line;
-            }));
-        }
     }
 }
