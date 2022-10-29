@@ -1562,7 +1562,7 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventNa
 
         if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
         {
-            continue;
+            return;
         }
 
         component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
@@ -1600,7 +1600,7 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
 
         if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
         {
-            continue;
+            return;
         }
 
         component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;

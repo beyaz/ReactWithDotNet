@@ -7,13 +7,19 @@ class BackdropView: ReactComponent
 
     protected override Element render()
     {
+        if (IsActive is false)
+        {
+            return null;
+        }
+        
         return new div
         {
-            className = "p-blockui p-component-overlay p-component-overlay-enter", 
             style =
             {
-                When(!IsActive,DisplayNone),
-                Zindex(3)
+                Zindex(3),
+                PositionAbsolute,
+                TopBottom(0),LeftRight(0),
+                BackgroundColor("rgba(0, 0, 0, 0.5)")
             },
             onClick = OnBackdropClicked
         };
