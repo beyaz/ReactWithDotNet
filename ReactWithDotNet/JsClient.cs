@@ -4,10 +4,7 @@ public static class JsClient
 {
     const string core = "ReactWithDotNet::Core::";
 
-    public static void CopyToClipboard(ReactStatefulComponent component, string text)
-    {
-        component.Client.CallJsFunction(core + nameof(CopyToClipboard), text);
-    }
+  
 
     public static void ListenWindowResizeEvent(ReactStatefulComponent component, int resizeTimeout)
     {
@@ -28,4 +25,16 @@ public static class JsClient
     {
         component.Client.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
     }
+}
+
+partial class Mixin
+{
+    const string core = "ReactWithDotNet::Core::";
+    public static void CopyToClipboard(this ClientTaskCollection client, string text)
+    {
+        client.CallJsFunction(core + nameof(CopyToClipboard), text);
+    }
+
+    
+    
 }

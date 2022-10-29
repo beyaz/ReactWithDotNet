@@ -107,7 +107,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             state.ReactInlineStyle = HtmlToCSharp(state.FigmaCss);
 
-            JsClient.CopyToClipboard(this, state.ReactInlineStyle);
+            Client.CopyToClipboard(state.ReactInlineStyle);
 
             state.StatusMessage = "Copied to clipboard.";
 
