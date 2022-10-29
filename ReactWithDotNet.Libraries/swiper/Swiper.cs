@@ -88,9 +88,6 @@ public class Swiper : ThirdPartyReactComponent
     [React]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
     public SwiperNavigationOption navigation { get; } = new();
-    //todo override with boolean
-
-
 }
 
 public sealed class SwiperNavigationOption
