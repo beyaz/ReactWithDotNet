@@ -30,7 +30,7 @@ public static class JsClient
 partial class Mixin
 {
     const string core = "ReactWithDotNet::Core::";
-    public static void CopyToClipboard(this ClientTaskCollection client, string text)
+    public static void CopyToClipboard(this Client client, string text)
     {
         client.CallJsFunction(core + nameof(CopyToClipboard), text);
     }

@@ -75,7 +75,7 @@ public abstract class ReactStatefulComponent : Element
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
-    public ClientTaskCollection Client { get; internal set; } = new();
+    public Client Client { get; internal set; } = new();
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]

@@ -76,7 +76,7 @@ public sealed class EmptyState
 {
 }
 
-public sealed class ClientTaskCollection
+public sealed class Client
 {
     #region Fields
     internal readonly List<ClientTask> taskList = new();
