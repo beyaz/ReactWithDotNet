@@ -30,15 +30,15 @@ static partial class Mixin
 
             if (@delegate.Target is ReactStatefulComponent target)
             {
-                propertyInfo.SetValue(reactComponent, null);
-
-                reactComponent.Client.taskList.Add(new ClientTask
+                if (target.ComponentUniqueIdentifier is null)
                 {
-                    TaskId              = (int)TaskId.InitializeDotnetComponentEventListener,
-                    EventName           = GetEventKey(reactComponent, propertyInfo.Name),
-                    HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
-                    RouteToMethod       = @delegate.Method.Name
-                });
+                    throw DeveloperException("ComponentUniqueIdentifier not initialized yet");
+                }
+                
+                propertyInfo.SetValue(reactComponent, null);
+                
+                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventKey(reactComponent, propertyInfo.Name), @delegate.Method.Name, target.ComponentUniqueIdentifier.GetValueOrDefault());
+                
             }
             else
             {
@@ -78,33 +78,13 @@ public sealed class EmptyState
 
 public sealed class Client
 {
-    #region Fields
+    
     internal readonly List<ClientTask> taskList = new();
-    #endregion
-
-    #region Public Methods
-
-   
     
-  
-
-    
-    #endregion
-
-    #region Methods
-    internal ClientTask[] ToArray() => taskList.ToArray();
-
     public void CallJsFunction(string JsFunctionPath, params object[] JsFunctionArguments)
     {
         taskList.Add(new ClientTask { TaskId = (int)TaskId.CallJsFunction, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
     }
-
-   
-
-   
-    #endregion
-
-
 }
 enum TaskId
 {

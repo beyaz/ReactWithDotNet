@@ -53,6 +53,8 @@ partial class Mixin
     {
         ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
     }
+   
+    
 
     public static void ListenEventOnlyOnce(Client client, string eventName, Action handler)
     {
@@ -104,5 +106,11 @@ partial class Mixin
     static void ListenEvent(this Client client, string eventName, string routeToMethod)
     {
         client.CallJsFunction(core + nameof(ListenEvent), eventName, routeToMethod);
+    }
+
+
+    internal static void InitializeDotnetComponentEventListener(this Client client, string eventName,string handlerMethodName, int handlerComponentUniqueIdentifier)
+    {
+        client.CallJsFunction(core + nameof(InitializeDotnetComponentEventListener), eventName, handlerMethodName, handlerComponentUniqueIdentifier);
     }
 }
