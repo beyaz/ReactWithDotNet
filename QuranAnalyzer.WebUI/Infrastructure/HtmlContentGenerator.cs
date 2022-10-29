@@ -5,13 +5,13 @@ namespace QuranAnalyzer.WebUI;
 sealed class HtmlContentGenerator
 {
     public string[] Stylesheets { get; set; }
-    
+
     public Type TargetReactComponent { get; set; }
 
     public string GetHtmlContent()
     {
         const string root = "wwwroot";
-            
+
         var lines = new List<Line>
         {
             "<!DOCTYPE html>",
@@ -47,7 +47,7 @@ sealed class HtmlContentGenerator
 
             "<script type='text/javascript'>",
             "    ReactWithDotNet.RenderComponentIn({",
-            $"        fullTypeNameOfReactComponent: '{GetFullName(TargetReactComponent)}',",
+            $"        fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',",
             "        containerHtmlElementId: 'app'",
             "    });",
             "</script>"
@@ -56,14 +56,10 @@ sealed class HtmlContentGenerator
         return lines.Aggregate(new StringBuilder(), (sb, line) => line.WriteTo(sb)).ToString();
     }
 
-    static string GetFullName(Type type)
-    {
-        return $"{type.FullName},{type.Assembly.GetName().Name}";
-    }
-
     class Line
     {
         string value;
+
         string[] values;
 
         public static implicit operator Line(string line)

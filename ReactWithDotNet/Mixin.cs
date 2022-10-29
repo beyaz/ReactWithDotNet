@@ -6,6 +6,11 @@ namespace ReactWithDotNet;
 
 public static partial class Mixin
 {
+    public static string GetFullName(this Type type)
+    {
+        return $"{type.FullName},{type.Assembly.GetName().Name}";
+    }
+    
     public static StyleModifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
 
     /// <summary>
@@ -412,7 +417,7 @@ public static partial class Mixin
         return Pseudo(x => x.focus, modifiers);
     }
 
-    static StyleModifier Pseudo(Func<Style,Style> accessToPseudo, StyleModifier[] modifiers)
+    static StyleModifier Pseudo(Func<Style, Style> accessToPseudo, StyleModifier[] modifiers)
     {
         void apply(Style instance)
         {

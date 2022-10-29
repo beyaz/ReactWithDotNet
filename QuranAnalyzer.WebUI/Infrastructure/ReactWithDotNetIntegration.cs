@@ -28,23 +28,15 @@ static class ReactWithDotNetIntegration
 
     static async Task HomePage(HttpContext context)
     {
-        var htmlContentGenerator = new HtmlContentGenerator
+        await context.WriteHtmlResponse(new HtmlContentGenerator
         {
             TargetReactComponent = typeof(View)
-        };
-
-        var htmlContent = htmlContentGenerator.GetHtmlContent();
-
-        context.Response.ContentType = "text/html; charset=UTF-8";
-
-        await context.Response.WriteAsync(htmlContent);
+        });
     }
 
     static async Task ReactWithDotNetDesigner(HttpContext context)
     {
-        context.Response.ContentType = "text/html; charset=UTF-8";
-
-        var htmlContentGenerator = new HtmlContentGenerator
+        await context.WriteHtmlResponse(new HtmlContentGenerator
         {
             TargetReactComponent = typeof(ReactWithDotNetDesigner),
 
@@ -54,21 +46,20 @@ static class ReactWithDotNetIntegration
                 "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css'>",
                 "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css'>"
             }
-        };
-
-        var htmlContent = htmlContentGenerator.GetHtmlContent();
-
-        await context.Response.WriteAsync(htmlContent);
+        });
     }
 
     static async Task ReactWithDotNetDesignerComponentPreview(HttpContext context)
     {
-        context.Response.ContentType = "text/html; charset=UTF-8";
-
-        var htmlContentGenerator = new HtmlContentGenerator
+        await context.WriteHtmlResponse(new HtmlContentGenerator
         {
             TargetReactComponent = typeof(ReactWithDotNetDesignerComponentPreview)
-        };
+        });
+    }
+
+    static async Task WriteHtmlResponse(this HttpContext context, HtmlContentGenerator htmlContentGenerator)
+    {
+        context.Response.ContentType = "text/html; charset=UTF-8";
 
         var htmlContent = htmlContentGenerator.GetHtmlContent();
 

@@ -59,12 +59,10 @@ public class ComponentResponse
     public LinkedList<string> Trace { get; set; }
 }
 
-public static class ComponentRequestHandler
+
+static class ComponentRequestHandler
 {
-    public static string GetFullName(this Type type)
-    {
-        return $"{type.FullName},{type.Assembly.GetName().Name}";
-    }
+   
 
     public static ComponentResponse HandleRequest(ProcessReactWithDotNetRequestInput input)
     {
