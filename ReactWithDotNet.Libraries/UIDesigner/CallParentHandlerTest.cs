@@ -1,10 +1,6 @@
 ﻿namespace ReactWithDotNet.CallParentHandlerTest;
 
-static class Event
-{
-    public static JsClientEventInfo<int> OnMode3 = new(nameof(OnMode3));
-    public static JsClientEventInfo<int> OnMode4 = new(nameof(OnMode4));
-}
+
 class ModelA
 {
     public string PropA { get; set; }

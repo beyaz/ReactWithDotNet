@@ -84,16 +84,15 @@ public sealed class Client
     {
         taskList.Add(new ClientTask {  JsFunctionPath = jsFunctionPath, JsFunctionArguments = jsFunctionArguments });
     }
+
+    internal  sealed class ClientTask
+    {
+        public string JsFunctionPath { get; set; }
+        public object[] JsFunctionArguments { get; set; }
+    }
 }
 
-sealed class ClientTask
-{
 
-    public string JsFunctionPath { get; set; }
-    public object[] JsFunctionArguments { get; set; }
-
-
-}
 
 public class JsClientEventInfo
 {
