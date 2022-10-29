@@ -16,7 +16,7 @@ class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
     public void OpenHamburgerMenu(MouseEvent e)
     {
         state.HamburgerMenuIsOpen = true;
-        Client.OnHamburgerMenuOpened();
+        Client.OnHamburgerMenuOpened___();
     }
 
     protected override Element render()

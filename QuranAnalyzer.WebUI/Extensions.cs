@@ -53,21 +53,21 @@ static class Extensions
     }
 
 
-    public static void OnHamburgerMenuOpened(this Client client)
+    public static void OnHamburgerMenuOpened___(this Client client)
     {
-        client.DispatchEvent(nameof(OnHamburgerMenuOpened));
+        client.DispatchEvent(nameof(OnHamburgerMenuOpened___));
     }
 
     public static void HandleHamburgerMenuOpened(this Client client, Action handler)
     {
-        client.ListenEvent(OnHamburgerMenuOpened,handler);
+        client.ListenEvent(OnHamburgerMenuOpened___,handler);
     }
 
     public static void MushafOptionChanged(this Client client, MushafOption mushafOption)
     {
         client.DispatchEvent(nameof(MushafOptionChanged), mushafOption);
     }
-    public static void HandleMushafOptionChanged(this Client client, Action<MushafOption> handler)
+    public static void OnMushafOptionChanged(this Client client, Action<MushafOption> handler)
     {
         client.ListenEvent(MushafOptionChanged, handler);
     }
@@ -76,7 +76,7 @@ static class Extensions
     {
         client.DispatchEvent(nameof(MainContentDivScrollChanged));
     }
-    public static void MainContentDivScrollChanged(this Client client, Action<double> handlerAction)
+    public static void OnMainContentDivScrollChanged(this Client client, Action<double> handlerAction)
     {
         client.ListenEvent(MainContentDivScrollChanged, handlerAction);
     }

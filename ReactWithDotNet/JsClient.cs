@@ -44,14 +44,14 @@ partial class Mixin
         GotoMethod(client, 3, action.Method.Name, argument1, argument2);
     }
 
-    public static void ListenEvent(this Client client, Action<Client> attachMethod, Action handler)
+    public static void ListenEvent(this Client client, Action<Client> triggerMethod, Action handler)
     {
-        ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
+        ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
     }
 
-    public static void ListenEvent<EventArgument1>(this Client client, Action<Client, EventArgument1> attachMethod, Action<EventArgument1> handler)
+    public static void ListenEvent<EventArgument1>(this Client client, Action<Client, EventArgument1> triggerMethod, Action<EventArgument1> handler)
     {
-        ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
+        ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
     }
 
     public static void ListenEventOnlyOnce(Client client, string eventName, Action handler)
