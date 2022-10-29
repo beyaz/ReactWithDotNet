@@ -14,36 +14,6 @@ partial class Mixin
         client.CallJsFunction(core + nameof(DispatchEvent), eventName, eventArguments);
     }
 
-    public static void GotoMethod(this Client client, Action action, int timeout)
-    {
-        GotoMethod(client, timeout, action.Method.Name);
-    }
-
-    public static void GotoMethod(this Client client, Action action)
-    {
-        GotoMethod(client, 0, action.Method.Name);
-    }
-
-    public static void GotoMethod<TArgument>(this Client client, Action<TArgument> action, TArgument argument, int timeout)
-    {
-        GotoMethod(client, timeout, action.Method.Name, argument);
-    }
-
-    public static void GotoMethod<TArgument>(this Client client, Action<TArgument> action, TArgument argument)
-    {
-        GotoMethod(client, 3, action.Method.Name, argument);
-    }
-
-    public static void GotoMethod<TArgument1, TArgument2>(this Client client, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2, int timeout)
-    {
-        GotoMethod(client, timeout, action.Method.Name, argument1, argument2);
-    }
-
-    public static void GotoMethod<TArgument1, TArgument2>(this Client client, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
-    {
-        GotoMethod(client, 3, action.Method.Name, argument1, argument2);
-    }
-
     public static void ListenEvent(this Client client, Action<Client> triggerMethod, Action handler)
     {
         ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
@@ -101,11 +71,6 @@ partial class Mixin
         client.CallJsFunction(core + nameof(InitializeDotnetComponentEventListener), eventName, handlerMethodName, handlerComponentUniqueIdentifier);
     }
 
-    static void GotoMethod(Client client, int timeout, string methodName, params object[] methodArguments)
-    {
-        client.CallJsFunction(core + nameof(GotoMethod), timeout, methodName, methodArguments);
-    }
-
     static void ListenEvent(this Client client, string eventName, string routeToMethod)
     {
         client.CallJsFunction(core + nameof(ListenEvent), eventName, routeToMethod);
@@ -115,4 +80,41 @@ partial class Mixin
     {
         client.CallJsFunction(core + nameof(ListenEventOnlyOnce), eventName, handlerMethodName);
     }
+
+    #region GotoMethod
+    public static void GotoMethod(this Client client, Action action, int timeout)
+    {
+        GotoMethod(client, timeout, action.Method.Name);
+    }
+
+    public static void GotoMethod(this Client client, Action action)
+    {
+        GotoMethod(client, 0, action.Method.Name);
+    }
+
+    public static void GotoMethod<TArgument>(this Client client, Action<TArgument> action, TArgument argument, int timeout)
+    {
+        GotoMethod(client, timeout, action.Method.Name, argument);
+    }
+
+    public static void GotoMethod<TArgument>(this Client client, Action<TArgument> action, TArgument argument)
+    {
+        GotoMethod(client, 3, action.Method.Name, argument);
+    }
+
+    public static void GotoMethod<TArgument1, TArgument2>(this Client client, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2, int timeout)
+    {
+        GotoMethod(client, timeout, action.Method.Name, argument1, argument2);
+    }
+
+    public static void GotoMethod<TArgument1, TArgument2>(this Client client, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
+    {
+        GotoMethod(client, 3, action.Method.Name, argument1, argument2);
+    }
+
+    static void GotoMethod(Client client, int timeout, string methodName, params object[] methodArguments)
+    {
+        client.CallJsFunction(core + nameof(GotoMethod), timeout, methodName, methodArguments);
+    }
+    #endregion
 }
