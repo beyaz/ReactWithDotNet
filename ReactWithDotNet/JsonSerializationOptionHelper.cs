@@ -233,11 +233,6 @@ public sealed class BindInfo
     public int? HandlerComponentUniqueIdentifier { get; set; }
 }
 
-// todo: check usage
-public class JsonWriterContext
-{
-}
-
 public class InnerElementInfo
 {
     public object Element { get; set; }
