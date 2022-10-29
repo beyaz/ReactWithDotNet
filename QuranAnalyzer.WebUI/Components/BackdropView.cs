@@ -22,6 +22,6 @@ class BackdropView: ReactComponent
     [CacheThisMethod]
     void OnBackdropClicked(MouseEvent e)
     {
-        Client.OnHamburgerMenuClosed();
+        Client.HamburgerMenuClosed();
     }
 }

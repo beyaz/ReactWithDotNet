@@ -10,13 +10,13 @@ class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
     public void CloseHamburgerMenu(MouseEvent e)
     {
         state.HamburgerMenuIsOpen = false;
-        Client.OnHamburgerMenuClosed();
+        Client.HamburgerMenuClosed();
     }
 
     public void OpenHamburgerMenu(MouseEvent e)
     {
         state.HamburgerMenuIsOpen = true;
-        Client.OnHamburgerMenuOpened___();
+        Client.HamburgerMenuOpened();
     }
 
     protected override Element render()
