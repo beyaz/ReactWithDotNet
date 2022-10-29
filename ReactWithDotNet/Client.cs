@@ -34,11 +34,10 @@ static partial class Mixin
                 {
                     throw DeveloperException("ComponentUniqueIdentifier not initialized yet");
                 }
-                
+
                 propertyInfo.SetValue(reactComponent, null);
-                
+
                 reactComponent.Client.InitializeDotnetComponentEventListener(GetEventKey(reactComponent, propertyInfo.Name), @delegate.Method.Name, target.ComponentUniqueIdentifier.GetValueOrDefault());
-                
             }
             else
             {
@@ -53,6 +52,7 @@ static partial class Mixin
         {
             throw DeveloperException("ComponentUniqueIdentifier cannot be null");
         }
+
         return $"{{Property: '{reactComponent.GetType().FullName}::{propertyName}', ComponentUniqueIdentifier: {reactComponent.ComponentUniqueIdentifier}}}";
     }
 }
@@ -79,40 +79,15 @@ public sealed class EmptyState
 public sealed class Client
 {
     internal readonly List<ClientTask> taskList = new();
-    
+
     public void CallJsFunction(string jsFunctionPath, params object[] jsFunctionArguments)
     {
-        taskList.Add(new ClientTask {  JsFunctionPath = jsFunctionPath, JsFunctionArguments = jsFunctionArguments });
+        taskList.Add(new ClientTask { JsFunctionPath = jsFunctionPath, JsFunctionArguments = jsFunctionArguments });
     }
 
-    internal  sealed class ClientTask
+    internal sealed class ClientTask
     {
-        public string JsFunctionPath { get; set; }
         public object[] JsFunctionArguments { get; set; }
+        public string JsFunctionPath { get; set; }
     }
-}
-
-
-
-public class JsClientEventInfo
-{
-    #region Fields
-    public readonly string Name;
-    #endregion
-
-    #region Constructors
-    public JsClientEventInfo(string name)
-    {
-        Name = name;
-    }
-    #endregion
-}
-
-public sealed class JsClientEventInfo<EventArgument1> : JsClientEventInfo
-{
-    #region Constructors
-    public JsClientEventInfo(string name) : base(name)
-    {
-    }
-    #endregion
 }
