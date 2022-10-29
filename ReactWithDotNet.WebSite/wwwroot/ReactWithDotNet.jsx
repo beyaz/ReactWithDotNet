@@ -961,171 +961,14 @@ function ProcessClientTasks(clientTasks, component)
 
     for (let i = 0; i < clientTasks.length; i++)
     {
-        const clientTask = clientTasks[i];
+        const jsFunctionPath      = clientTasks[i].JsFunctionPath;
+        const jsFunctionArguments = clientTasks[i].JsFunctionArguments;
 
-        if (clientTask.TaskId === ClientTaskId.CallJsFunction)
+        PushToFunctionExecutionQueue(() =>
         {
-            PushToFunctionExecutionQueue(() =>
-            {
-                InvokeJsFunctionInPath(component, clientTask.JsFunctionPath, clientTask.JsFunctionArguments);
-                OnReactStateReady();
-            });
-
-            continue;
-        }     
-
-       
-
-        if (clientTask.TaskId === ClientTaskId.ListenEvent)
-        {
-            NotNull(component);
-
-            TraceClientTask(component, 'ListenEvent', clientTask.EventName);
-
-            const onEventFired = (e) =>
-            {
-                const eventArgumentsAsArray = e.detail;
-
-                StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/component, /*eventArguments*/eventArgumentsAsArray);
-            };
-
-            NotNull(component[ON_COMPONENT_DESTROY]);
-
-            component[ON_COMPONENT_DESTROY].push(() =>
-            {
-                TraceClientTask(component, 'UNDO-ListenEvent', clientTask.EventName);
-                EventBus.Remove(clientTask.EventName, onEventFired);
-            });
-
-            EventBus.On(clientTask.EventName, onEventFired);
-
-            continue;
-        }
-
-        if (clientTask.TaskId === ClientTaskId.ListenEventOnlyOnce)
-        {
-            NotNull(component);
-
-            TraceClientTask(component, 'ListenEventOnlyOnce', clientTask.EventName);
-
-            const onEventFired = (e) =>
-            {
-                EventBus.Remove(clientTask.EventName, onEventFired);
-
-                const eventArgumentsAsArray = e.detail;
-
-                StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/component, /*eventArguments*/eventArgumentsAsArray);
-            };
-
-            NotNull(component[ON_COMPONENT_DESTROY]);
-
-            component[ON_COMPONENT_DESTROY].push(() =>
-            {
-                TraceClientTask(component, 'UNDO-ListenEvent', clientTask.EventName);
-                EventBus.Remove(clientTask.EventName, onEventFired);
-            });
-
-            EventBus.On(clientTask.EventName, onEventFired);
-
-            continue;
-        }
-
-        
-
-        if (clientTask.TaskId === ClientTaskId.InitializeDotnetComponentEventListener)
-        {
-            NotNull(component);
-
-            TraceClientTask(component, 'InitializeDotnetComponentEventListener', clientTask.EventName);
-
-            const handlerComponentUniqueIdentifier = clientTask.HandlerComponentUniqueIdentifier;
-
-            // avoid multiple attach we need to ensure attach a listener at once
-            {
-                const customEventListenerMapKey = clientTask.EventName + ', RemoteMethodName: ' + clientTask.RouteToMethod + ' handlerComponentUniqueIdentifier: ' + handlerComponentUniqueIdentifier;
-
-                if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
-                {
-                    continue;
-                }
-
-                component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
-            }
-
-            const onEventFired = (e) =>
-            {
-                const eventArgumentsAsArray = e.detail;
-
-                const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
-
-                StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/handlerComponent, /*eventArguments*/eventArgumentsAsArray);
-            };
-
-            NotNull(component[ON_COMPONENT_DESTROY]);
-
-            component[ON_COMPONENT_DESTROY].push(() =>
-            {
-                TraceClientTask(component, 'UNDO-ListenEvent', clientTask.EventName);
-                EventBus.Remove(clientTask.EventName, onEventFired);
-            });
-
-            EventBus.On(clientTask.EventName, onEventFired);
-
-            continue;
-        }        
-                
-       
-
-        if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
-        {
-            window.location.replace(location.origin + clientTask.Url);
-
-            continue;
-        }
-
-        if (clientTask.TaskId === ClientTaskId.OnOutsideClicked)
-        {
-            const handlerComponentUniqueIdentifier = NotNull(clientTask.HandlerComponentUniqueIdentifier);
-
-            // avoid multiple attach we need to ensure attach a listener at once
-            {
-                const customEventListenerMapKey = 'OnOutsideClicked(IdOfElement:' + clientTask.IdOfElement + ', remoteMethodName:' + clientTask.RouteToMethod + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
-
-                if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
-                {
-                    continue;
-                }
-
-                component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
-            }
-
-            function onDocumentClick(e)
-            {
-                const element = document.getElementById(clientTask.IdOfElement);
-                if (element == null)
-                {
-                    throw CreateNewDeveloperError("Element not found for calculating OnOutsideClicked operation. id: " + clientTask.IdOfElement);
-                }
-                const isClickedOutside = !element.contains(e.target)
-                if (isClickedOutside)
-                {
-                    const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
-
-                    StartAction(/*remoteMethodName*/clientTask.RouteToMethod, /*component*/handlerComponent, /*eventArguments*/[]);
-                }
-            }
-
-            document.addEventListener('click', onDocumentClick);
-
-            component[ON_COMPONENT_DESTROY].push(() =>
-            {
-                document.removeEventListener('click', onDocumentClick);
-            });
-
-            continue;
-        }
-
-        throw CreateNewDeveloperError("ClientTask not recognized.");
+            InvokeJsFunctionInPath(component, jsFunctionPath, jsFunctionArguments);
+            OnReactStateReady();
+        });
     }
 }
 
@@ -1689,6 +1532,132 @@ RegisterCoreFunction("DispatchEvent", function(eventName, eventArguments)
 {
     EventBus.Dispatch(eventName, eventArguments); 
 });
+
+RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
+{
+    const component = this;
+
+    const onEventFired = (e) =>
+    {
+        const eventArgumentsAsArray = e.detail;
+
+        StartAction(remoteMethodName, component, eventArgumentsAsArray);
+    };
+
+    NotNull(component[ON_COMPONENT_DESTROY]);
+
+    component[ON_COMPONENT_DESTROY].push(() =>
+    {
+        EventBus.Remove(eventName, onEventFired);
+    });
+
+    EventBus.On(eventName, onEventFired); 
+});
+
+RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodName)
+{
+    const component = this;
+
+    const onEventFired = (e) =>
+    {
+        EventBus.Remove(eventName, onEventFired);
+
+        const eventArgumentsAsArray = e.detail;
+
+        StartAction(remoteMethodName, component, eventArgumentsAsArray);
+    };
+
+    NotNull(component[ON_COMPONENT_DESTROY]);
+
+    component[ON_COMPONENT_DESTROY].push(() =>
+    {
+        EventBus.Remove(eventName, onEventFired);
+    });
+
+    EventBus.On(eventName, onEventFired);
+});
+
+
+RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventName, remoteMethodName, handlerComponentUniqueIdentifier)
+{
+    const component = this;
+
+    // avoid multiple attach we need to ensure attach a listener at once
+    {
+        const customEventListenerMapKey = eventName + ', RemoteMethodName: ' + remoteMethodName + ' handlerComponentUniqueIdentifier: ' + handlerComponentUniqueIdentifier;
+
+        if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
+        {
+            continue;
+        }
+
+        component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+    }
+
+    const onEventFired = (e) =>
+    {
+        const eventArgumentsAsArray = e.detail;
+
+        const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
+
+        StartAction(remoteMethodName, handlerComponent, eventArgumentsAsArray);
+    };
+
+    component[ON_COMPONENT_DESTROY].push(() =>
+    {
+        EventBus.Remove(eventName, onEventFired);
+    });
+
+    EventBus.On(eventName, onEventFired);
+});
+
+RegisterCoreFunction("NavigateToUrl", function (url)
+{
+     window.location.replace(location.origin + url);
+});  
+
+RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
+{
+    const component = this;
+
+    // avoid multiple attach we need to ensure attach a listener at once
+    {
+        const customEventListenerMapKey = 'OnOutsideClicked(IdOfElement:' + idOfElement + ', remoteMethodName:' + remoteMethodName + ', @handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier + ')';
+
+        if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
+        {
+            continue;
+        }
+
+        component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
+    }
+
+    function onDocumentClick(e)
+    {
+        const element = document.getElementById(idOfElement);
+        if (element == null)
+        {
+            throw CreateNewDeveloperError("Element not found for calculating OnOutsideClicked operation. id: " + idOfElement);
+        }
+        const isClickedOutside = !element.contains(e.target)
+        if (isClickedOutside)
+        {
+            const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
+
+            StartAction(remoteMethodName, handlerComponent, /*eventArguments*/[]);
+        }
+    }
+
+    document.addEventListener('click', onDocumentClick);
+
+    component[ON_COMPONENT_DESTROY].push(() =>
+    {
+        document.removeEventListener('click', onDocumentClick);
+    });
+});
+
+           
+
 
 function CreateNewDeveloperError(message)
 {

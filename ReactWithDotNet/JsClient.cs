@@ -44,33 +44,47 @@ partial class Mixin
         GotoMethod(client, 3, action.Method.Name, argument1, argument2);
     }
 
-    public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
+    public static void ListenEvent(this Client client, Action<Client> attachMethod, Action handler)
     {
-        client.CallJsFunction(core + nameof(ListenWindowResizeEvent), resizeTimeout);
+        ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
     }
-
-    public static void OnWindowResize(this Client client, Action handlerAction)
-    {
-        client.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
-    }
-
-   static void ListenEvent(this Client client, string eventName, string routeToMethod)
-    {
-        client.CallJsFunction(core + nameof(ListenEvent), eventName, routeToMethod);
-    }
-
-
-
-   public static void ListenEvent(this Client client, Action<Client> attachMethod, Action handler)
-   {
-       ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
-   }
 
     public static void ListenEvent<EventArgument1>(this Client client, Action<Client, EventArgument1> attachMethod, Action<EventArgument1> handler)
     {
         ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
     }
 
+    public static void ListenEventOnlyOnce(Client client, string eventName, Action handler)
+    {
+        client.CallJsFunction(core + nameof(ListenEventOnlyOnce), eventName, handler.Method.Name);
+    }
+
+    public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
+    {
+        client.CallJsFunction(core + nameof(ListenWindowResizeEvent), resizeTimeout);
+    }
+
+    public static void NavigateToUrl(Client client, string url)
+    {
+        client.CallJsFunction(core + nameof(NavigateToUrl), url);
+    }
+
+    public static void OnOutsideClicked(Client client, string idOfElement, Action action)
+    {
+        if (action.Target is ReactStatefulComponent target)
+        {
+            client.CallJsFunction(core + nameof(OnOutsideClicked), idOfElement, action.Method.Name, target.ComponentUniqueIdentifier);
+        }
+        else
+        {
+            throw DeveloperException("Action handler method should belong to React component");
+        }
+    }
+
+    public static void OnWindowResize(this Client client, Action handlerAction)
+    {
+        client.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
+    }
 
     public static void PushHistory(this Client client, string title, string url)
     {
@@ -85,5 +99,10 @@ partial class Mixin
     static void GotoMethod(Client client, int timeout, string methodName, params object[] methodArguments)
     {
         client.CallJsFunction(core + nameof(GotoMethod), timeout, methodName, methodArguments);
+    }
+
+    static void ListenEvent(this Client client, string eventName, string routeToMethod)
+    {
+        client.CallJsFunction(core + nameof(ListenEvent), eventName, routeToMethod);
     }
 }

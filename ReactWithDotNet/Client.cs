@@ -86,39 +86,7 @@ public sealed class Client
 
    
     
-    public void OnOutsideClicked(string idOfElement, Action action)
-    {
-        if (action.Target is ReactStatefulComponent target)
-        {
-            taskList.Add(new ClientTask
-            {
-                TaskId        = (int)TaskId.OnOutsideClicked,
-                IdOfElement   = idOfElement,
-                RouteToMethod = action.Method.Name,
-                HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
-            });
-        }
-        else
-        {
-            throw DeveloperException("Action handler method should belong to React component");
-        }
-            
-        
-    }
-
   
-
- 
-
-    public void ListenEventOnlyOnce(JsClientEventInfo eventInfo, Action routeToMethod)
-    {
-        taskList.Add(new ClientTask { TaskId = (int)TaskId.ListenEventOnlyOnce, EventName = eventInfo.Name, RouteToMethod = routeToMethod.Method.Name });
-    }
-
-    public void NavigateToUrl(string url)
-    {
-        taskList.Add(new ClientTask { TaskId = (int)TaskId.NavigateToUrl, Url = url });
-    }
 
     
     #endregion
