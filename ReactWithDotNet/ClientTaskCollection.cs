@@ -153,10 +153,7 @@ public sealed class ClientTaskCollection
         taskList.Add(new ClientTask { TaskId = (int)TaskId.NavigateToUrl, Url = url });
     }
 
-    public void PushHistory(string title, string url)
-    {
-        taskList.Add(new ClientTask { TaskId = (int)TaskId.PushHistory, Title = title, Url = url });
-    }
+    
     #endregion
 
     #region Methods
@@ -190,7 +187,7 @@ enum TaskId
     CallJsFunction = 1,
     ListenEvent = 2,
     DispatchEvent = 3,
-    PushHistory = 4,
+    
     InitializeDotnetComponentEventListener = 5,
     GotoMethod = 6,
     NavigateToUrl = 7,

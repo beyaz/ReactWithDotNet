@@ -59,11 +59,11 @@ public class Swiper : ThirdPartyReactComponent
     
 
     [React]
-    [ReactTransformValueInClient("ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
     public SwiperPagination pagination { get; } = new();
 
     [React]
-    [ReactTransformValueInClient("ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
     public SwiperScrollbar scrollbar { get; } = new();
 
     [React]
@@ -86,7 +86,7 @@ public class Swiper : ThirdPartyReactComponent
     
 
     [React]
-    [ReactTransformValueInClient("ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
     public SwiperNavigationOption navigation { get; } = new();
     //todo override with boolean
 

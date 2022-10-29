@@ -28,7 +28,7 @@ public class InputText : ElementBase
     /// <para>Type: string/regex</para>
     /// </summary>
     [React]
-    [ReactTransformValueInClient("RegExp")]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::RegExp")]
     public string keyfilter { get; set; }
 
     [React]

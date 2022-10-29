@@ -24,4 +24,9 @@ public static class JsClient
     {
         component.ClientTask.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
     }
+
+    public static void PushHistory(ReactStatefulComponent component, string title, string url)
+    {
+        component.ClientTask.CallJsFunction(core + nameof(PushHistory), title, url);
+    }
 }

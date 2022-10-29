@@ -1640,7 +1640,7 @@ function ListenWindowResizeEvent(resizeTimeout)
 const ExternalJsObjectMap = {
     'RegExp': (x) => new RegExp(x),
     'ReactWithDotNet::Core::CopyToClipboard': CopyToClipboard,
-    'ReplaceNullWhenEmpty': function (value)
+    'ReactWithDotNet::Core::ReplaceNullWhenEmpty': function (value)
     {
         if (IsEmptyObject(value))
         {
