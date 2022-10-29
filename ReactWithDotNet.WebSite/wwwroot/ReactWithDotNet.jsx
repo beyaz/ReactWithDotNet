@@ -222,7 +222,7 @@ var ClientTaskId =
     DispatchEvent: 3,
    
     InitializeDotnetComponentEventListener: 5,
-    GotoMethod: 6,
+    
     NavigateToUrl: 7,
     OnOutsideClicked: 8,
     ListenEventOnlyOnce: 9
@@ -972,42 +972,7 @@ function ProcessClientTasks(clientTasks, component)
             });
 
             continue;
-        }
-
-        if (clientTask.TaskId === ClientTaskId.GotoMethod)
-        {
-            NotNull(component);
-
-            TraceClientTask(component, 'GotoMethod', clientTask.MethodName);
-
-            const remoteMethodName      = clientTask.MethodName;
-            const remoteMethodArguments = clientTask.MethodArguments || [];
-
-            PushToFunctionExecutionQueue(() =>
-            {
-                setTimeout(() =>
-                {
-                    const cachedMethodInfo = tryToFindCachedMethodInfo(component, remoteMethodName, remoteMethodArguments);
-                    if (cachedMethodInfo)
-                    {
-                        const newState = CaclculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
-
-                        component.setState(newState);
-
-                        return;
-                    }
-
-                    StartAction(remoteMethodName, /*component*/component, remoteMethodArguments);
-
-                }, clientTask.Timeout);
-
-                OnReactStateReady();
-            });
-
-            continue;
-        }
-
-     
+        }     
 
         if (clientTask.TaskId === ClientTaskId.DispatchEvent)
         {
@@ -1704,7 +1669,28 @@ RegisterCoreFunction("PushHistory", function (title, url)
     window.history.replaceState({}, title, url);    
 });
 
+RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMethodArguments)
+{
+    const component = this;
 
+    remoteMethodArguments = remoteMethodArguments || [];
+
+    setTimeout(() =>
+    {
+        const cachedMethodInfo = tryToFindCachedMethodInfo(component, remoteMethodName, remoteMethodArguments);
+        if (cachedMethodInfo)
+        {
+            const newState = CaclculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
+
+            component.setState(newState);
+
+            return;
+        }
+
+        StartAction(remoteMethodName, component, remoteMethodArguments);
+
+    }, timeout);  
+});
 
 function CreateNewDeveloperError(message)
 {

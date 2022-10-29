@@ -111,7 +111,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
             state.StatusMessage = "Copied to clipboard.";
 
-            Client.GotoMethod(2000, ClearStatusMessage);
+            Client.GotoMethod(ClearStatusMessage, 2000);
         }
         catch (Exception exception)
         {

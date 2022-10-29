@@ -50,7 +50,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         if (state.SearchScriptErrorMessage.HasValue())
         {
-            Client.GotoMethod(5000, ClearErrorMessage);
+            Client.GotoMethod(ClearErrorMessage,5000);
         }
 
         var searchPanel = new divWithBorder
@@ -208,7 +208,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             state.IsBlocked = true;
             Client.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={script.AsString()}");
-            Client.GotoMethod(5, OnCaclculateClicked, _);
+            Client.GotoMethod(OnCaclculateClicked, _);
             return;
         }
 

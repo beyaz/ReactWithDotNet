@@ -93,20 +93,6 @@ public sealed class Client
     {
         DispatchEvent(eventInfo.Name);
     }
-
-    public void GotoMethod(int timeout, Action action)
-    {
-        GotoMethod(timeout, action.Method.Name);
-    }
-    public void GotoMethod(Action action)
-    {
-        GotoMethod(0, action.Method.Name);
-    }
-
-    public void GotoMethod<TArgument>(int timeout, Action<TArgument> action, TArgument argument)
-    {
-        GotoMethod(timeout, action.Method.Name, argument);
-    }
     
     public void OnOutsideClicked(string idOfElement, Action action)
     {
@@ -128,10 +114,7 @@ public sealed class Client
         
     }
 
-    public void GotoMethod<TArgument1, TArgument2>(int timeout, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
-    {
-        GotoMethod(timeout, action.Method.Name, argument1, argument2);
-    }
+  
 
     public void ListenEvent<EventArgument1>(JsClientEventInfo<EventArgument1> eventInfo, Action<EventArgument1> routeToMethod)
     {
@@ -169,10 +152,7 @@ public sealed class Client
         taskList.Add(new ClientTask { TaskId = (int)TaskId.DispatchEvent, EventName = eventName, EventArguments = eventArguments });
     }
 
-    void GotoMethod(int timeout, string methodName, params object[] methodArguments)
-    {
-        taskList.Add(new ClientTask { TaskId = (int)TaskId.GotoMethod, MethodName = methodName, MethodArguments = methodArguments, Timeout = timeout });
-    }
+  
 
     internal void ListenEvent(string eventName, string routeToMethod)
     {
@@ -189,7 +169,7 @@ enum TaskId
     DispatchEvent = 3,
     
     InitializeDotnetComponentEventListener = 5,
-    GotoMethod = 6,
+    
     NavigateToUrl = 7,
     OnOutsideClicked =8,
     ListenEventOnlyOnce = 9

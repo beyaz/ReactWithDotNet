@@ -108,7 +108,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
 
             state.StatusMessage = "Copied to clipboard.";
 
-            Client.GotoMethod(2000, ClearStatusMessage);
+            Client.GotoMethod(ClearStatusMessage, 2000);
         }
         catch (Exception exception)
         {
