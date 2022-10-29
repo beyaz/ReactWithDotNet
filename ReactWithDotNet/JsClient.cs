@@ -53,8 +53,6 @@ partial class Mixin
     {
         ListenEvent(client, attachMethod.Method.Name, handler.Method.Name);
     }
-   
-    
 
     public static void ListenEventOnlyOnce(Client client, string eventName, Action handler)
     {
@@ -98,6 +96,11 @@ partial class Mixin
         client.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
     }
 
+    internal static void InitializeDotnetComponentEventListener(this Client client, string eventName, string handlerMethodName, int handlerComponentUniqueIdentifier)
+    {
+        client.CallJsFunction(core + nameof(InitializeDotnetComponentEventListener), eventName, handlerMethodName, handlerComponentUniqueIdentifier);
+    }
+
     static void GotoMethod(Client client, int timeout, string methodName, params object[] methodArguments)
     {
         client.CallJsFunction(core + nameof(GotoMethod), timeout, methodName, methodArguments);
@@ -106,11 +109,5 @@ partial class Mixin
     static void ListenEvent(this Client client, string eventName, string routeToMethod)
     {
         client.CallJsFunction(core + nameof(ListenEvent), eventName, routeToMethod);
-    }
-
-
-    internal static void InitializeDotnetComponentEventListener(this Client client, string eventName,string handlerMethodName, int handlerComponentUniqueIdentifier)
-    {
-        client.CallJsFunction(core + nameof(InitializeDotnetComponentEventListener), eventName, handlerMethodName, handlerComponentUniqueIdentifier);
     }
 }
