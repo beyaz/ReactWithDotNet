@@ -81,9 +81,9 @@ public sealed class Client
     
     internal readonly List<ClientTask> taskList = new();
     
-    public void CallJsFunction(string JsFunctionPath, params object[] JsFunctionArguments)
+    public void CallJsFunction(string jsFunctionPath, params object[] jsFunctionArguments)
     {
-        taskList.Add(new ClientTask { TaskId = (int)TaskId.CallJsFunction, JsFunctionPath = JsFunctionPath, JsFunctionArguments = JsFunctionArguments });
+        taskList.Add(new ClientTask { TaskId = (int)TaskId.CallJsFunction, JsFunctionPath = jsFunctionPath, JsFunctionArguments = jsFunctionArguments });
     }
 }
 enum TaskId
