@@ -54,9 +54,9 @@ partial class Mixin
         ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
     }
 
-    public static void ListenEventOnlyOnce(Client client, string eventName, Action handler)
+    public static void ListenEventOnlyOnce(this Client client, Action<Client> triggerMethod, Action handler)
     {
-        client.CallJsFunction(core + nameof(ListenEventOnlyOnce), eventName, handler.Method.Name);
+        ListenEventOnlyOnce(client, triggerMethod.Method.Name, handler.Method.Name);
     }
 
     public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
@@ -64,12 +64,12 @@ partial class Mixin
         client.CallJsFunction(core + nameof(ListenWindowResizeEvent), resizeTimeout);
     }
 
-    public static void NavigateToUrl(Client client, string url)
+    public static void NavigateToUrl(this Client client, string url)
     {
         client.CallJsFunction(core + nameof(NavigateToUrl), url);
     }
 
-    public static void OnOutsideClicked(Client client, string idOfElement, Action action)
+    public static void OnOutsideClicked(this Client client, string idOfElement, Action action)
     {
         if (action.Target is ReactStatefulComponent target)
         {
@@ -109,5 +109,10 @@ partial class Mixin
     static void ListenEvent(this Client client, string eventName, string routeToMethod)
     {
         client.CallJsFunction(core + nameof(ListenEvent), eventName, routeToMethod);
+    }
+
+    static void ListenEventOnlyOnce(Client client, string eventName, string handlerMethodName)
+    {
+        client.CallJsFunction(core + nameof(ListenEventOnlyOnce), eventName, handlerMethodName);
     }
 }
