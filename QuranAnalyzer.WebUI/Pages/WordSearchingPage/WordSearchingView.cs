@@ -218,7 +218,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            JsClient.PushHistory(this,"", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={script.AsString()}");
+            Client.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={script.AsString()}");
             Client.GotoMethod(5, OnCaclculateClicked, _);
             return;
         }
