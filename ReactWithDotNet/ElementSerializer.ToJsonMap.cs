@@ -204,7 +204,7 @@ partial class ElementSerializer
                     if (propertyInfo.Name == nameof(reactStatefulComponent.Context)
                         || propertyInfo.Name == nameof(Element.children)
                         || propertyInfo.Name == nameof(reactStatefulComponent.key)
-                        || propertyInfo.Name == nameof(reactStatefulComponent.ClientTask)
+                        || propertyInfo.Name == nameof(reactStatefulComponent.Client)
                         || propertyInfo.Name == "state"
                         || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
                         || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
@@ -244,9 +244,9 @@ partial class ElementSerializer
                     map.Add(___HasComponentDidMountMethod___, true);
                 }
 
-                if (reactStatefulComponent.ClientTask.taskList.Count > 0)
+                if (reactStatefulComponent.Client.taskList.Count > 0)
                 {
-                    map.Add("$ClientTasks", reactStatefulComponent.ClientTask.taskList);
+                    map.Add("$ClientTasks", reactStatefulComponent.Client.taskList);
                 }
 
                 stateTree.BreadCrumpPath = node.BreadCrumpPath;
@@ -345,7 +345,7 @@ partial class ElementSerializer
 
                         statePropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(state));
 
-                        component.ClientTask = ReflectionHelper.DeepCopy(component.ClientTask);
+                        component.Client = ReflectionHelper.DeepCopy(component.Client);
 
                         return component;
                     }

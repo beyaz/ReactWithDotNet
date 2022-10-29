@@ -26,8 +26,8 @@ class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
     protected override void componentDidMount()
     {
-        ClientTask.ListenEvent(OnBrowserInactive, Refresh);
-        ClientTask.CallJsFunction("InitializeUIDesignerEvents", 1000);
+        Client.ListenEvent(OnBrowserInactive, Refresh);
+        Client.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
 
     protected override Element render()

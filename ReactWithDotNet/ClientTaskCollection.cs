@@ -32,7 +32,7 @@ static partial class Mixin
             {
                 propertyInfo.SetValue(reactComponent, null);
 
-                reactComponent.ClientTask.taskList.Add(new ClientTask
+                reactComponent.Client.taskList.Add(new ClientTask
                 {
                     TaskId              = (int)TaskId.InitializeDotnetComponentEventListener,
                     EventName           = GetEventKey(reactComponent, propertyInfo.Name),

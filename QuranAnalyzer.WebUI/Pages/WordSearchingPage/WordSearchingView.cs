@@ -37,7 +37,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
     
     protected override void componentDidMount()
     {
-        ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
+        Client.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
     }
 
     protected override Element render()
@@ -219,7 +219,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         {
             state.IsBlocked = true;
             JsClient.PushHistory(this,"", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={script.AsString()}");
-            ClientTask.GotoMethod(5, OnCaclculateClicked, _);
+            Client.GotoMethod(5, OnCaclculateClicked, _);
             return;
         }
 

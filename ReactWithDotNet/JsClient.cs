@@ -6,26 +6,26 @@ public static class JsClient
 
     public static void CopyToClipboard(ReactStatefulComponent component, string text)
     {
-        component.ClientTask.CallJsFunction(core + nameof(CopyToClipboard), text);
+        component.Client.CallJsFunction(core + nameof(CopyToClipboard), text);
     }
 
     public static void ListenWindowResizeEvent(ReactStatefulComponent component, int resizeTimeout)
     {
-        component.ClientTask.CallJsFunction(core + nameof(ListenWindowResizeEvent), resizeTimeout);
+        component.Client.CallJsFunction(core + nameof(ListenWindowResizeEvent), resizeTimeout);
     }
 
     public static void OnWindowResize(ReactStatefulComponent component, Action handlerAction)
     {
-        component.ClientTask.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
+        component.Client.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
     }
 
     public static void PushHistory(ReactStatefulComponent component, string title, string url)
     {
-        component.ClientTask.CallJsFunction(core + nameof(PushHistory), title, url);
+        component.Client.CallJsFunction(core + nameof(PushHistory), title, url);
     }
 
     public static void SetCookie(ReactStatefulComponent component, string cookieName, string cookieValue, int expiredays)
     {
-        component.ClientTask.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
+        component.Client.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
     }
 }

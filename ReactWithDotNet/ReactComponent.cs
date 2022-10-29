@@ -75,7 +75,7 @@ public abstract class ReactStatefulComponent : Element
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
-    public ClientTaskCollection ClientTask { get; internal set; } = new();
+    public ClientTaskCollection Client { get; internal set; } = new();
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
@@ -122,7 +122,7 @@ public abstract class ReactStatefulComponent : Element
     /// </summary>
     protected void DispatchEvent(Expression<Func<Action>> expressionForAccessingCustomReactEventProperty)
     {
-        ClientTask.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)));
+        Client.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)));
     }
 
     /// <summary>
@@ -135,7 +135,7 @@ public abstract class ReactStatefulComponent : Element
     /// </summary>
     protected void DispatchEvent<A>(Expression<Func<Action<A>>> expressionForAccessingCustomReactEventProperty, A a)
     {
-        ClientTask.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
+        Client.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ public abstract class ReactStatefulComponent : Element
     /// </summary>
     protected void DispatchEvent<A, B>(Expression<Func<Action<A, B>>> expressionForAccessingCustomReactEventProperty, A a, B b)
     {
-        ClientTask.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b);
+        Client.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b);
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ public abstract class ReactStatefulComponent : Element
     /// </summary>
     protected void DispatchEvent<A, B, C>(Expression<Func<Action<A, B>>> expressionForAccessingCustomReactEventProperty, A a, B b, C c)
     {
-        ClientTask.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b, c);
+        Client.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b, c);
     }
 
     protected abstract Element render();

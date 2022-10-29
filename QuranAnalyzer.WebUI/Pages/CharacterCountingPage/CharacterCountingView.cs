@@ -24,8 +24,8 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     #region Methods
     protected override void componentDidMount()
     {
-        ClientTask.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
-        ClientTask.ListenEvent(ApplicationEventName.MushafOptionChanged, MushafOptionChanged);
+        Client.ListenEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicKeyboardPressed);
+        Client.ListenEvent(ApplicationEventName.MushafOptionChanged, MushafOptionChanged);
     }
 
     protected override void constructor()
@@ -50,7 +50,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         if (state.SearchScriptErrorMessage.HasValue())
         {
-            ClientTask.GotoMethod(5000, ClearErrorMessage);
+            Client.GotoMethod(5000, ClearErrorMessage);
         }
 
         var searchPanel = new divWithBorder
@@ -208,7 +208,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             state.IsBlocked = true;
             JsClient.PushHistory(this,"", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={script.AsString()}");
-            ClientTask.GotoMethod(5, OnCaclculateClicked, _);
+            Client.GotoMethod(5, OnCaclculateClicked, _);
             return;
         }
 

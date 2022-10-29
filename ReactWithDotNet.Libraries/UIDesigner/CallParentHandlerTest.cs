@@ -53,7 +53,7 @@ class ComponentA : ReactComponent<ModelA>
 
         if (state.ClickCount % 2 == 0)
         {
-            ClientTask.DispatchEvent(Event.OnMode3,state.ClickCount);
+            Client.DispatchEvent(Event.OnMode3,state.ClickCount);
         }
     }
 }
@@ -79,7 +79,7 @@ class ComponentB : ReactComponent<ModelB>
 
     protected override void componentDidMount()
     {
-        ClientTask.ListenEvent(Event.OnMode3, OnMode3);
+        Client.ListenEvent(Event.OnMode3, OnMode3);
     }
 
     void OnMode3(int valueInA)

@@ -85,6 +85,6 @@ class ArabicKeyboardLetterView : ReactComponent
     [CacheThisMethod]
     void OnArabicKeyboardLetterClicked(MouseEvent e)
     {
-        ClientTask.DispatchEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicLetter);
+        Client.DispatchEvent(ApplicationEventName.ArabicKeyboardPressed, ArabicLetter);
     }
 }
