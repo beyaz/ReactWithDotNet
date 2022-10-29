@@ -2,11 +2,7 @@
 
 public static class JsClient
 {
-
-    public static void SetCookie(ReactStatefulComponent component, string cookieName, string cookieValue, int expiredays)
-    {
-        component.ClientTask.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
-    }
+    const string core = "ReactWithDotNet::Core::";
 
     public static void CopyToClipboard(ReactStatefulComponent component, string text)
     {
@@ -18,8 +14,6 @@ public static class JsClient
         component.ClientTask.CallJsFunction(core + nameof(ListenWindowResizeEvent), resizeTimeout);
     }
 
-    const string core = "ReactWithDotNet::Core::";
-
     public static void OnWindowResize(ReactStatefulComponent component, Action handlerAction)
     {
         component.ClientTask.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
@@ -28,5 +22,10 @@ public static class JsClient
     public static void PushHistory(ReactStatefulComponent component, string title, string url)
     {
         component.ClientTask.CallJsFunction(core + nameof(PushHistory), title, url);
+    }
+
+    public static void SetCookie(ReactStatefulComponent component, string cookieName, string cookieValue, int expiredays)
+    {
+        component.ClientTask.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
     }
 }

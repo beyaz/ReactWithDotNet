@@ -220,7 +220,7 @@ var ClientTaskId =
     CallJsFunction: 1,
     ListenEvent: 2,
     DispatchEvent: 3,
-    PushHistory: 4,
+   
     InitializeDotnetComponentEventListener: 5,
     GotoMethod: 6,
     NavigateToUrl: 7,
@@ -996,12 +996,7 @@ function ProcessClientTasks(clientTasks, component)
             continue;
         }
 
-        if (clientTask.TaskId === ClientTaskId.PushHistory)
-        {
-            window.history.replaceState({}, clientTask.Title, clientTask.Url);
-
-            continue;
-        }
+     
 
         if (clientTask.TaskId === ClientTaskId.DispatchEvent)
         {
@@ -1585,7 +1580,37 @@ function CallJsFunctionInPath(clientTask)
     GetExternalJsObject(clientTask.JsFunctionPath).apply(null, clientTask.JsFunctionArguments);
 }
 
-function CopyToClipboard(text) 
+const ExternalJsObjectMap = {};
+
+function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
+{
+    if (ExternalJsObjectMap[key] != null)
+    {
+        console.log(key + ' already registered.');
+    }
+    return ExternalJsObjectMap[key] = value;
+}
+function GetExternalJsObject(key)
+{
+    const value = ExternalJsObjectMap[key];
+    if (value == null)
+    {
+        throw CreateNewDeveloperError(key + ' External js object not not found. You should register by using method: ReactWithDotNet.RegisterExternalJsObject');
+    }
+
+    return value;
+}
+
+function RegisterCoreFunction(name, fn)
+{
+    RegisterExternalJsObject("ReactWithDotNet::Core::" + name, fn);
+}
+
+ExternalJsObjectMap["ReactWithDotNet.GetExternalJsObject"] = GetExternalJsObject;
+
+RegisterCoreFunction('RegExp', (x) => new RegExp(x));
+
+RegisterCoreFunction('CopyToClipboard', function (text) 
 {
     if (navigator.clipboard && navigator.clipboard.writeText)
     {
@@ -1596,7 +1621,7 @@ function CopyToClipboard(text)
     if (window.clipboardData && window.clipboardData.setData) 
     {
         // IE specific code path to prevent textarea being shown while dialog is visible.
-        return clipboardData.setData("Text", text); 
+        return clipboardData.setData("Text", text);
 
     }
 
@@ -1621,9 +1646,19 @@ function CopyToClipboard(text)
             document.body.removeChild(textarea);
         }
     }
-}
+});
 
-function ListenWindowResizeEvent(resizeTimeout)
+RegisterCoreFunction('ReplaceNullWhenEmpty', function(value)
+{
+    if (IsEmptyObject(value))
+    {
+        return null;
+    }
+
+    return value;
+});
+
+RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout)
 {
     var timeout = null;
     window.addEventListener('resize', function () 
@@ -1635,61 +1670,36 @@ function ListenWindowResizeEvent(resizeTimeout)
             ReactWithDotNet.DispatchEvent('ReactWithDotNet::Core::OnWindowResize', []);
         }, resizeTimeout);
     });
-}
+});
 
-const ExternalJsObjectMap = {
-    'RegExp': (x) => new RegExp(x),
-    'ReactWithDotNet::Core::CopyToClipboard': CopyToClipboard,
-    'ReactWithDotNet::Core::ReplaceNullWhenEmpty': function (value)
-    {
-        if (IsEmptyObject(value))
-        {
-            return null;
-        }
-
-        return value;
-    },
-    'ReactWithDotNet::Core::ListenWindowResizeEvent': ListenWindowResizeEvent,
-    'ReactWithDotNet::Core::ConvertDotnetSerializedStringDateToJsDate': function (dotnetDateAsJsonString)
-    {
-        if (dotnetDateAsJsonString == null || dotnetDateAsJsonString === '')
-        {
-            return null;
-        }
-        return new Date(dotnetDateAsJsonString);
-    },
-    "ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments": (argumentsAsArray) => [ConvertToSyntheticMouseEvent(argumentsAsArray[0])],
-    "ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments": (argumentsAsArray) => [ConvertToSyntheticChangeEvent(argumentsAsArray[0])],
-    "ReactWithDotNet::Core::SetCookie": function (cookieName, cookieValue, expiredays) 
-    {
-        var exdate = new Date();
-
-        exdate.setDate(exdate.getDate() + expiredays);
-
-		document.cookie = cookieName + "=" + escape(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
-	}
-};
-
-function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
+RegisterCoreFunction('ConvertDotnetSerializedStringDateToJsDate', function(dotnetDateAsJsonString)
 {
-    if (ExternalJsObjectMap[key] != null)
+    if (dotnetDateAsJsonString == null || dotnetDateAsJsonString === '')
     {
-        console.log(key + ' already registered.');
+        return null;
     }
-    return ExternalJsObjectMap[key] = value;
-}
-function GetExternalJsObject(key)
+    return new Date(dotnetDateAsJsonString);
+});
+
+RegisterCoreFunction("CalculateSyntheticMouseEventArguments", (argumentsAsArray) => [ConvertToSyntheticMouseEvent(argumentsAsArray[0])]);
+
+RegisterCoreFunction("CalculateSyntheticChangeEventArguments", (argumentsAsArray) => [ConvertToSyntheticChangeEvent(argumentsAsArray[0])]);
+
+RegisterCoreFunction("SetCookie", function (cookieName, cookieValue, expiredays)
 {
-    const value = ExternalJsObjectMap[key];
-    if (value == null)
-    {
-        throw CreateNewDeveloperError(key + ' External js object not not found. You should register by using method: ReactWithDotNet.RegisterExternalJsObject');
-    }
+    var exdate = new Date();
 
-    return value;
-}
+    exdate.setDate(exdate.getDate() + expiredays);
 
-ExternalJsObjectMap["ReactWithDotNet.GetExternalJsObject"] = GetExternalJsObject;
+    document.cookie = cookieName + "=" + escape(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
+});
+
+RegisterCoreFunction("PushHistory", function (title, url)
+{
+    window.history.replaceState({}, title, url);    
+});
+
+
 
 function CreateNewDeveloperError(message)
 {
