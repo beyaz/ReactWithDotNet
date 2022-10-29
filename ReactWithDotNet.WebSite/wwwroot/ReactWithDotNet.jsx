@@ -215,19 +215,6 @@ function Clone(obj)
     return JSON.parse(JSON.stringify(obj));
 }
 
-var ClientTaskId =
-{
-    CallJsFunction: 1,
-    ListenEvent: 2,
-    DispatchEvent: 3,
-   
-    InitializeDotnetComponentEventListener: 5,
-    
-    NavigateToUrl: 7,
-    OnOutsideClicked: 8,
-    ListenEventOnlyOnce: 9
-}
-
 function IfNull(value, defaultValue)
 {
     if (defaultValue === undefined)
@@ -937,19 +924,6 @@ function ConvertToShadowHtmlElement(htmlElement)
         tagName: htmlElement.tagName,        
         value: value
     };
-}
-
-const EnableTraceOfClientTask = false;
-function TraceClientTask(component, actionName, actionValue)
-{
-    if (!EnableTraceOfClientTask)
-    {
-        return;
-    }
-
-    const fullTypeName = component[DotNetTypeOfReactComponent];
-
-    console.log(fullTypeName + " -> " + actionName + " -> " + actionValue);
 }
 
 function ProcessClientTasks(clientTasks, component)
