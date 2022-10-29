@@ -82,7 +82,7 @@ partial class Mixin
     }
 
     #region GotoMethod
-    public static void GotoMethod(this Client client, Action action, int timeout)
+    public static void GotoMethod(this Client client, int timeout, Action action)
     {
         GotoMethod(client, timeout, action.Method.Name);
     }
@@ -92,7 +92,7 @@ partial class Mixin
         GotoMethod(client, 0, action.Method.Name);
     }
 
-    public static void GotoMethod<TArgument>(this Client client, Action<TArgument> action, TArgument argument, int timeout)
+    public static void GotoMethod<TArgument>(this Client client, int timeout, Action<TArgument> action, TArgument argument)
     {
         GotoMethod(client, timeout, action.Method.Name, argument);
     }
@@ -102,7 +102,7 @@ partial class Mixin
         GotoMethod(client, 3, action.Method.Name, argument);
     }
 
-    public static void GotoMethod<TArgument1, TArgument2>(this Client client, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2, int timeout)
+    public static void GotoMethod<TArgument1, TArgument2>(this Client client, int timeout, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
     {
         GotoMethod(client, timeout, action.Method.Name, argument1, argument2);
     }

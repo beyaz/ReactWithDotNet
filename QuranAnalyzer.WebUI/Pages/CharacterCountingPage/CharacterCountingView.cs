@@ -50,7 +50,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         if (state.SearchScriptErrorMessage.HasValue())
         {
-            Client.GotoMethod(ClearErrorMessage,5000);
+            Client.GotoMethod(5000,ClearErrorMessage);
         }
 
         var searchPanel = new divWithBorder

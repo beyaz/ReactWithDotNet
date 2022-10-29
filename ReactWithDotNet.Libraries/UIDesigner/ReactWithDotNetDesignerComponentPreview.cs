@@ -9,12 +9,12 @@ class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesignerModel>
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
 
-        Client.GotoMethod(Refresh, 700);
+        Client.GotoMethod(700,Refresh);
     }
 
     protected override void componentDidMount()
     {
-        Client.GotoMethod(Refresh, 700);
+        Client.GotoMethod(700,Refresh);
     }
 
     protected override void constructor()
