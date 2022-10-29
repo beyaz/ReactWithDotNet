@@ -963,6 +963,17 @@ function ProcessClientTasks(clientTasks, component)
     {
         const clientTask = clientTasks[i];
 
+        if (clientTask.TaskId === ClientTaskId.CallJsFunction)
+        {
+            PushToFunctionExecutionQueue(() =>
+            {
+                InvokeJsFunctionInPath(component, clientTask.JsFunctionPath, clientTask.JsFunctionArguments);
+                OnReactStateReady();
+            });
+
+            continue;
+        }
+
         if (clientTask.TaskId === ClientTaskId.GotoMethod)
         {
             NotNull(component);
@@ -1105,18 +1116,7 @@ function ProcessClientTasks(clientTasks, component)
             continue;
         }        
                 
-        if (clientTask.TaskId === ClientTaskId.CallJsFunction)
-        {
-            TraceClientTask(component, 'CallJsFunction', clientTask.JsFunctionPath);
-
-            PushToFunctionExecutionQueue(() =>
-            {
-                CallJsFunctionInPath(clientTask);
-                OnReactStateReady();
-            });
-
-            continue;
-        }
+       
 
         if (clientTask.TaskId === ClientTaskId.NavigateToUrl)
         {
@@ -1578,6 +1578,11 @@ function RenderComponentIn(obj)
 function CallJsFunctionInPath(clientTask)
 {
     GetExternalJsObject(clientTask.JsFunctionPath).apply(null, clientTask.JsFunctionArguments);
+}
+
+function InvokeJsFunctionInPath(callerReactComponent, jsFunctionPath, jsFunctionArguments)
+{
+    GetExternalJsObject(jsFunctionPath).apply(callerReactComponent, jsFunctionArguments);
 }
 
 const ExternalJsObjectMap = {};
