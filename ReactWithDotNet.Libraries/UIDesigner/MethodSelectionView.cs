@@ -66,7 +66,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
     {
         return new div(Padding(3))
         {
-            new style{Text(".p-tree-toggler-icon{font-size:11px;}") },
+          
             new SingleSelectionTree<MetadataNode>
             {
                 filterValueBind   = () => state.Filter,
@@ -78,7 +78,25 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
                 onSelectionChange = OnSelectionChanged,
                 selectionKeys     = SelectedMethodTreeNodeKey,
                 style             = { MaxHeight(250), OverflowScroll, PrimaryBackground },
-            }
+            },
+
+              new style{Text($@"
+
+.p-tree-toggler-icon{{ {new Style {
+    FontSize11
+
+}} 
+}}
+
+.p-tree-toggler{{ {new Style {
+    MarginRight("0.3rem"),
+    wh(10)
+
+}} 
+}}
+
+
+") }
         };
     }
 

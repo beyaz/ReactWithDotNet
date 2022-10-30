@@ -4,6 +4,11 @@ namespace ReactWithDotNet;
 
 partial class Style
 {
+    public override string ToString()
+    {
+        return ToCss();
+    }
+
     public string ToCss()
     {
         var sb = new StringBuilder();
