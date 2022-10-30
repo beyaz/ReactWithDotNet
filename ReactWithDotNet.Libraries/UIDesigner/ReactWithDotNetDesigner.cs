@@ -65,7 +65,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 AssemblyFilePath          = state.SelectedAssemblyFilePath
             },
             Space(10),
-            new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged } | Margin(10) | Padding(4),
+            new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged } | Margin(10) | Padding(5),
 
             new FlexColumn(Height100Percent)
             {
