@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Newtonsoft.Json;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -34,7 +30,7 @@ class MetadataHelper
         {
             if (returnMethodInfo == null)
             {
-                if (JsonConvert.SerializeObject(createFromMethod(methodInfo)) == JsonConvert.SerializeObject(node))
+                if (createFromMethod(methodInfo)?.MetadataToken == node.MetadataToken)
                 {
                     returnMethodInfo = methodInfo;
                 }
