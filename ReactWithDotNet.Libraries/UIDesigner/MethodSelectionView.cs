@@ -77,7 +77,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
                 value             = GetNodes(),
                 onSelectionChange = OnSelectionChanged,
                 selectionKeys     = SelectedMethodTreeNodeKey,
-                style             = {  PrimaryBackground },
+                style             = {  PrimaryBackground, Width(450) },
                 
             },
 
@@ -97,7 +97,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
 .p-tree-filter-icon.pi.pi-search{{ {new Style { FontSize(15) } }  }}
 
 ") }
-        } | Padding(3) | Height(250) | Width("100%");
+        } | Padding(3) | Height(250) | MaxWidth(450);
     }
 
     static Element nodeTemplate(MetadataNode node)
