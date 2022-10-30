@@ -17,48 +17,44 @@ class InitialLetterGroup_Qaaf_50 : InitialLetterGroup
         return new div
         {
 
-            new table
+            new table(Width(Percent(100)))
             {
-                style = { width = "100%" },
-                children =
+                new tbody
                 {
-                    new tbody
+                    HeaderTr,
+                    HeaderSpace,
+                    new tr
                     {
-                        HeaderTr,
-                        HeaderSpace,
-                        new tr
+                        new td
                         {
-                            new td
+                            new Chapter { ChapterNumber = 50, ChapterName = "Kaf" }
+                        },
+                        new td
+                        {
+                            new InitialLetterLineGroup
                             {
-                                new Chapter { ChapterNumber = 50, ChapterName = "Kaf" }
-                            },
-                            new td
+
+                                new InitialLetter { id = Id(50, Qaaf), text = Qaaf }
+
+                            }
+                        },
+                        new td
+                        {
+                            rowSpan = 99,
+                            children =
                             {
-                                new InitialLetterLineGroup
+                                new div
                                 {
-                                    
-                                        new InitialLetter { id = Id(50, Qaaf), text = Qaaf }
-                                    
-                                }
-                            },
-                            new td
-                            {
-                                rowSpan = 99,
-                                children =
-                                {
-                                    new div
+                                    style = { marginTop = "0px", display = "flex", justifyContent = "center" },
+                                    children =
                                     {
-                                        style = { marginTop = "0px", display = "flex", justifyContent = "center" },
-                                        children =
-                                        {
-                                            countingResult
-                                        }
+                                        countingResult
                                     }
                                 }
                             }
-                        },
-                        
-                    }
+                        }
+                    },
+
                 }
 
             },

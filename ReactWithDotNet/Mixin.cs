@@ -695,6 +695,11 @@ public static partial class Mixin
     public static StyleModifier Width(double width) => new(style => style.width = width.AsPixel());
     public static StyleModifier Width(string width) => new(style => style.width = width);
 
+    /// <summary>
+    ///     <paramref name="value"/> + '%'
+    /// </summary>
+    public static string Percent(double value)=>value+"%";
+
     public static StyleModifier WidthAsPercentOf(double valueAsPercent) => new(style => style.width = valueAsPercent + "%");
     public static StyleModifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
     public static StyleModifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
