@@ -59,4 +59,6 @@ static class Extensions
             return (default, exception);
         }
     }
+
+    public static StyleModifier PrimaryBackground => Background("rgb(249, 249, 249");
 }

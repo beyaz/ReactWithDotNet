@@ -4,6 +4,7 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
+using static ReactWithDotNet.UIDesigner.Extensions;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -45,7 +46,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
             };
         }
-        var propertyPanel = new FlexColumn(Padding(5), Height("100%"))
+        var propertyPanel = new FlexColumn(Padding(5), Height("100%"), FontSize15, PrimaryBackground)
         {
             new MethodSelectionView
             {

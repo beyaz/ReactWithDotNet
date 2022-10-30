@@ -76,7 +76,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
                 value             = GetNodes(),
                 onSelectionChange = OnSelectionChanged,
                 selectionKeys     = SelectedMethodTreeNodeKey,
-                style             = { MaxHeight(250), OverflowScroll }
+                style             = { MaxHeight(250), OverflowScroll, PrimaryBackground }
             }
         };
     }
@@ -87,9 +87,9 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         {
             return new FlexRow(AlignItemsCenter)
             {
-                new img { Src(GetSvgUrl("Method")), wh(17), mt(5) },
+                new img { Src(GetSvgUrl("Method")), wh(14), mt(5) },
 
-                new div {Text(node.FullNameWithoutReturnType), MarginLeft(5) }
+                new div {Text(node.FullNameWithoutReturnType), MarginLeft(5), FontSize12 }
             };
         }
 
@@ -97,9 +97,9 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         {
             return new FlexRow(AlignItemsCenter)
             {
-                new img { Src(GetSvgUrl("Class")), wh(17) },
+                new img { Src(GetSvgUrl("Class")), wh(14) },
 
-                new div {Text(node.Name), MarginLeft(5) }
+                new div {Text(node.Name), MarginLeft(5), FontSize13 }
             };
         }
 
@@ -107,9 +107,9 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         {
             return new FlexRow(AlignItemsCenter)
             {
-                new img { Src(GetSvgUrl("Namespace")), wh(17) },
+                new img { Src(GetSvgUrl("Namespace")), wh(14) },
 
-                new div {Text(node.Name), MarginLeft(5) }
+                new div {Text(node.Name), MarginLeft(5), FontSize14 }
             };
         }
 
