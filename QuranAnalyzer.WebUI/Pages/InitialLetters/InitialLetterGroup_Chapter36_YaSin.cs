@@ -45,13 +45,9 @@ class InitialLetterGroup_Chapter36_YaSin : InitialLetterGroup
                                 rowSpan = 99,
                                 children =
                                 {
-                                    new div
+                                    new FlexRow(JustifyContentCenter, mt(50))
                                     {
-                                        style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                        children =
-                                        {
-                                            countingResult
-                                        }
+                                        countingResult
                                     }
                                 }
                             }

@@ -47,13 +47,9 @@ class InitialLetterGroup_Chapter42_AinSinKaf : InitialLetterGroup
                                 rowSpan = 99,
                                 children =
                                 {
-                                    new div
+                                    new FlexRow(JustifyContentCenter,MarginTop(50))
                                     {
-                                        style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                        children =
-                                        {
-                                            countingResult
-                                        }
+                                        countingResult
                                     }
                                 }
                             }

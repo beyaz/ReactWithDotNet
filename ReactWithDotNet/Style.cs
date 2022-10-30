@@ -297,10 +297,6 @@ public sealed partial class Style
 
     public string imeMode { get; set; }
 
-    /// <summary>
-    /// <para>˄ ~ ˅</para>
-    /// <para>center | flex-start | flex-end | space-between | space-around | space-evenly</para>
-    /// </summary>
     public string justifyContent { get; set; }
 
     public string left { get; set; }
