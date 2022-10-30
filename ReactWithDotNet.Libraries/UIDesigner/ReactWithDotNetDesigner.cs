@@ -35,7 +35,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         {
             valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
             highlight = "json",
-            style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "14px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+            style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
         };
         if (state.IsInstanceEditorActive == false)
         {
@@ -43,18 +43,17 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             {
                 valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
                 highlight = "json",
-                style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "14px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
             };
         }
         var propertyPanel = new FlexColumn(Padding(5), Height("100%"), FontSize15, PrimaryBackground)
         {
             new style{Text($@"
 
-.token.punctuation{{ {new Style { FontWeight900, FontFamily("'Courier New', Courier, monospace") }.ToCssWithImportant()} }}
 
-.token.operator{{ {new Style { FontWeight900,  FontFamily("'Courier New', Courier, monospace") }.ToCssWithImportant()} }}
 
-.token.property{{ {new Style { FontWeight400, Color("#189af6") }.ToCssWithImportant()} }}
+.token.property{{ {new Style {   Color("#189af6") }.ToCssWithImportant()} }}
+
 
 
 ") },
@@ -77,14 +76,16 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                         OnClick(_=>state.IsInstanceEditorActive = true),
                         When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3")),
                         Padding(10),
-                        FlexGrow(1)
+                        FlexGrow(1),
+                        FontSize13
                     },
                     new div(Text("Parameters json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = false),
                         When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3")),
                         Padding(10),
-                        FlexGrow(1)
+                        FlexGrow(1),
+                        FontSize13
 
                     }
                 },
