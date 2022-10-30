@@ -77,7 +77,8 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
                 value             = GetNodes(),
                 onSelectionChange = OnSelectionChanged,
                 selectionKeys     = SelectedMethodTreeNodeKey,
-                style             = { MaxHeight(250), OverflowScroll, PrimaryBackground },
+                style             = {  PrimaryBackground },
+                
             },
 
               new style{Text($@"
@@ -88,8 +89,15 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
 
 .p-tree-filter{{ {new Style{ FontSize13 } }  }}
 
+.custom .p-scrollpanel-bar{{ {new Style { BackgroundColor("#a6a6a6") } }  }}
+
+.p-inputtext:enabled:focus{{box-shadow:none !important;}}
+
+.p-tree-filter.p-inputtext.p-component{{ {new Style { Padding(5) } }  }}
+.p-tree-filter-icon.pi.pi-search{{ {new Style { FontSize(15) } }  }}
+
 ") }
-        } | Padding(3);
+        } | Padding(3) | Height(250) | Width("100%");
     }
 
     static Element nodeTemplate(MetadataNode node)

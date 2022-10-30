@@ -46,7 +46,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 style     = { minHeight = "200px", borderRadius = "3px",border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
             };
         }
-        var propertyPanel = new FlexColumn(Padding(5), Height("100%"), FontSize15, PrimaryBackground)
+        var propertyPanel = new FlexColumn(Padding(5), Height("100%"),Width("100%"), FontSize15, PrimaryBackground)
         {
             new style{Text($@"
 
