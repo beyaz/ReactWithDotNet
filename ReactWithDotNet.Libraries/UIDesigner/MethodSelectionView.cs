@@ -25,7 +25,7 @@ class MethodSelectionModel
 class MethodSelectionView : ReactComponent<MethodSelectionModel>
 {
     public string AssemblyFilePath { get; set; }
-    
+
     public string Filter { get; set; }
 
     public string SelectedMethodTreeNodeKey { get; set; }
@@ -64,44 +64,48 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
 
     protected override Element render()
     {
-        return new ScrollPanel
+        var tree = new SingleSelectionTree<MetadataNode>
         {
-          
-            className = "custom",
-            children ={ new SingleSelectionTree<MetadataNode>
-                      {
-                          filterValueBind   = () => state.Filter,
-                          filter            = true,
-                          filterBy          = nameof(MetadataNode.Name),
-                          filterPlaceholder = "Search react components or methods which returns Element",
-                          nodeTemplate      = nodeTemplate,
-                          value             = GetNodes(),
-                          onSelectionChange = OnSelectionChanged,
-                          selectionKeys     = SelectedMethodTreeNodeKey,
-                          style             = {  PrimaryBackground, Width(450) },
+            filterValueBind   = () => state.Filter,
+            filter            = true,
+            filterBy          = nameof(MetadataNode.Name),
+            filterPlaceholder = "Search react components or methods which returns Element",
+            nodeTemplate      = nodeTemplate,
+            value             = GetNodes(),
+            onSelectionChange = OnSelectionChanged,
+            selectionKeys     = SelectedMethodTreeNodeKey,
+            style             = { PrimaryBackground, Width(450) },
+        };
 
-                      },
-
-                      new style{
-                          Text($@"
+        var csscustomizeForTree = new style
+        {
+            Text($@"
 
 .p-tree-toggler-icon{{ {new Style { FontSize11 }.ToCssWithImportant()} }}
 
 .p-tree-toggler{{ {new Style { MarginRight("0.3rem"), wh(11) }.ToCssWithImportant()} }}
 
-.p-tree-filter{{ {new Style{ FontSize13 } }  }}
+.p-tree-filter{{ {new Style { FontSize13 }}  }}
 
-.custom .p-scrollpanel-bar{{ {new Style { BackgroundColor("#a6a6a6") } }  }}
+.custom .p-scrollpanel-bar{{ {new Style { BackgroundColor("#a6a6a6") }}  }}
 
 .p-inputtext:enabled:focus{{box-shadow:none !important;}}
 
-.p-tree-filter.p-inputtext.p-component{{ {new Style { Padding(5) } }  }}
-.p-tree-filter-icon.pi.pi-search{{ {new Style { FontSize(15) } }  }}
+.p-tree-filter.p-inputtext.p-component{{ {new Style { Padding(5) }}  }}
+.p-tree-filter-icon.pi.pi-search{{ {new Style { FontSize(15) }}  }}
 
-") }}
-            
-           
-        } | Padding(3) | Height(250) | MaxWidth(450);
+")
+        };
+
+        return new ScrollPanel
+        {
+            className = "custom",
+            style =
+            {
+                Padding(3), Height(250), MaxWidth(450)
+            },
+            children = { tree, csscustomizeForTree }
+        };
     }
 
     static Element nodeTemplate(MetadataNode node)
@@ -112,7 +116,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             {
                 new img { Src(GetSvgUrl("Method")), wh(14), mt(5) },
 
-                new div {Text(node.FullNameWithoutReturnType), MarginLeft(5), FontSize13 }
+                new div { Text(node.FullNameWithoutReturnType), MarginLeft(5), FontSize13 }
             };
         }
 
@@ -122,7 +126,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             {
                 new img { Src(GetSvgUrl("Class")), wh(14) },
 
-                new div {Text(node.Name), MarginLeft(5), FontSize13 }
+                new div { Text(node.Name), MarginLeft(5), FontSize13 }
             };
         }
 
@@ -132,7 +136,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             {
                 new img { Src(GetSvgUrl("Namespace")), wh(14) },
 
-                new div {Text(node.Name), MarginLeft(5), FontSize13 }
+                new div { Text(node.Name), MarginLeft(5), FontSize13 }
             };
         }
 
