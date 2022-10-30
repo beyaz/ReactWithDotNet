@@ -66,6 +66,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
     {
         return new div(Padding(3))
         {
+            new style{Text(".p-tree-toggler-icon{font-size:11px;}") },
             new SingleSelectionTree<MetadataNode>
             {
                 filterValueBind   = () => state.Filter,
