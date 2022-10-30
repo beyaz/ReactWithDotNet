@@ -26,11 +26,9 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
         return new div
         {
 
-            new table
+            new table(Width(Percent(100)))
             {
-                style = { width = "100%" },
-                children =
-                {
+                
                     new tbody
                     {
                         HeaderTr,
@@ -137,7 +135,7 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                             }
                         }
                     }
-                }
+                
 
             },
 

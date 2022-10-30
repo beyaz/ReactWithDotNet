@@ -17,11 +17,9 @@ class InitialLetterGroup_Qaaf_42 : InitialLetterGroup
         return new div
         {
 
-            new table
+            new table(Width(Percent(100)))
             {
-                style = { width = "100%" },
-                children =
-                {
+               
                     new tbody
                     {
                         HeaderTr,
@@ -46,20 +44,18 @@ class InitialLetterGroup_Qaaf_42 : InitialLetterGroup
                                 rowSpan = 99,
                                 children =
                                 {
-                                    new div
+                                    new FlexRow(JustifyContentCenter)
                                     {
-                                        style = { marginTop = "0px", display = "flex", justifyContent = "center" },
-                                        children =
-                                        {
+                                        
                                             countingResult
-                                        }
+                                        
                                     }
                                 }
                             }
                         },
                         
                     }
-                }
+                
 
             },
 

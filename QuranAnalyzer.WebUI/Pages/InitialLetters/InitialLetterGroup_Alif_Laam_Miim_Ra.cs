@@ -15,11 +15,9 @@ class InitialLetterGroup_Alif_Laam_Miim_Ra : InitialLetterGroup
         return new div
         {
 
-            new table
+            new table(Width(Percent(100)))
             {
-                style = { width = "100%" },
-                children =
-                {
+               
                     new tbody
                     {
                         HeaderTr,
@@ -59,7 +57,7 @@ class InitialLetterGroup_Alif_Laam_Miim_Ra : InitialLetterGroup
                         },
                        }
 
-                },
+                
 
 
             },
