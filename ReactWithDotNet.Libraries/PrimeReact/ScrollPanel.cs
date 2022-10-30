@@ -6,5 +6,5 @@
 public sealed class ScrollPanel : ElementBase
 {
     [React]
-    public string className { get; set; } = "custom";
+    public string className { get; set; }
 }

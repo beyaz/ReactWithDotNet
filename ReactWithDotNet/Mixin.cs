@@ -379,6 +379,24 @@ public static partial class Mixin
         return new(modifyHtmlElement);
     }
 
+    public static HtmlElementModifier Children(params Element[] children)
+    {
+        if (children is null)
+        {
+            return null;
+        }
+
+        var array = children.ToArray();
+
+        void modifyHtmlElement(HtmlElement element)
+        {
+            element.children.Clear();
+            element.children.AddRange(array);
+        }
+
+        return new(modifyHtmlElement);
+    }
+
     public static HtmlElementModifier ClassName(string className) => new(element => element.className = className);
 
     public static StyleModifier Color(string color) => new(style => style.color = color);

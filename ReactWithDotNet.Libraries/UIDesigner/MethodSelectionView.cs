@@ -67,21 +67,23 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         return new ScrollPanel
         {
           
-            new SingleSelectionTree<MetadataNode>
-            {
-                filterValueBind   = () => state.Filter,
-                filter            = true,
-                filterBy          = nameof(MetadataNode.Name),
-                filterPlaceholder = "Search react components or methods which returns Element",
-                nodeTemplate      = nodeTemplate,
-                value             = GetNodes(),
-                onSelectionChange = OnSelectionChanged,
-                selectionKeys     = SelectedMethodTreeNodeKey,
-                style             = {  PrimaryBackground, Width(450) },
-                
-            },
+            className = "custom",
+            children ={ new SingleSelectionTree<MetadataNode>
+                      {
+                          filterValueBind   = () => state.Filter,
+                          filter            = true,
+                          filterBy          = nameof(MetadataNode.Name),
+                          filterPlaceholder = "Search react components or methods which returns Element",
+                          nodeTemplate      = nodeTemplate,
+                          value             = GetNodes(),
+                          onSelectionChange = OnSelectionChanged,
+                          selectionKeys     = SelectedMethodTreeNodeKey,
+                          style             = {  PrimaryBackground, Width(450) },
 
-              new style{Text($@"
+                      },
+
+                      new style{
+                          Text($@"
 
 .p-tree-toggler-icon{{ {new Style { FontSize11 }.ToCssWithImportant()} }}
 
@@ -96,7 +98,9 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
 .p-tree-filter.p-inputtext.p-component{{ {new Style { Padding(5) } }  }}
 .p-tree-filter-icon.pi.pi-search{{ {new Style { FontSize(15) } }  }}
 
-") }
+") }}
+            
+           
         } | Padding(3) | Height(250) | MaxWidth(450);
     }
 
