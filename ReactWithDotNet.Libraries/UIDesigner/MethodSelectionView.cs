@@ -76,7 +76,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
                 value             = GetNodes(),
                 onSelectionChange = OnSelectionChanged,
                 selectionKeys     = SelectedMethodTreeNodeKey,
-                style             = { MaxHeight(250), OverflowScroll, PrimaryBackground }
+                style             = { MaxHeight(250), OverflowScroll, PrimaryBackground },
             }
         };
     }

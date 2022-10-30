@@ -43,6 +43,9 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     [ReactBind(targetProp = nameof(filterValue), jsValueAccess = "e.value", eventName = "onFilterValueChange")]
     public Expression<Func<string>> filterValueBind { get; set; }
 
+
+    
+
     /// <summary>
     ///     Placeholder text to show when filter input is empty.
     /// </summary>
