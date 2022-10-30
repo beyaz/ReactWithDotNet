@@ -35,7 +35,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         {
             valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
             highlight = "json",
-            style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+            style     = { minHeight = "200px", borderRadius = "3px", border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
         };
         if (state.IsInstanceEditorActive == false)
         {
@@ -43,7 +43,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             {
                 valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
                 highlight = "json",
-                style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                style     = { minHeight = "200px", borderRadius = "3px",border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
             };
         }
         var propertyPanel = new FlexColumn(Padding(5), Height("100%"), FontSize15, PrimaryBackground)
@@ -74,7 +74,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                     new div(Text("Instance json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = true),
-                        When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3")),
+                        When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"),FontWeight600),
                         Padding(10),
                         FlexGrow(1),
                         FontSize13
@@ -82,7 +82,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                     new div(Text("Parameters json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = false),
-                        When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3")),
+                        When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"),FontWeight600),
                         Padding(10),
                         FlexGrow(1),
                         FontSize13
