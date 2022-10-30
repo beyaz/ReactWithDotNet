@@ -6,6 +6,13 @@ namespace ReactWithDotNet;
 
 public static partial class Mixin
 {
+
+    /// <summary>
+    ///     style.flexGrow = <paramref name="growValue"/>
+    /// </summary>
+    public static StyleModifier FlexGrow(double growValue) => new(style => style.flexGrow = growValue + "");
+    
+    
     public static string GetFullName(this Type type)
     {
         return $"{type.FullName},{type.Assembly.GetName().Name}";
@@ -110,6 +117,7 @@ public static partial class Mixin
     public static StyleModifier FontWeight600 => FontWeight("600");
     public static StyleModifier FontWeight700 => FontWeight("700");
     public static StyleModifier FontWeight800 => FontWeight("800");
+    public static StyleModifier FontWeight900 => FontWeight("900");
 
     public static StyleModifier FontWeightBold => FontWeight700;
 

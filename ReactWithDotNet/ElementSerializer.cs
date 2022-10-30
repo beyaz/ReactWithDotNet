@@ -322,7 +322,7 @@ static partial class ElementSerializer
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "hover",
-                BodyOfCss = style._hover.ToCss().Replace(";", " !important;")
+                BodyOfCss = style._hover.ToCssWithImportant()
             });
         }
 
@@ -331,7 +331,7 @@ static partial class ElementSerializer
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "before",
-                BodyOfCss = style._before.ToCss().Replace(";", " !important;")
+                BodyOfCss = style._before.ToCssWithImportant()
             });
         }
 
@@ -340,7 +340,7 @@ static partial class ElementSerializer
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "after",
-                BodyOfCss = style._after.ToCss().Replace(";", " !important;")
+                BodyOfCss = style._after.ToCssWithImportant()
             });
         }
 
@@ -349,7 +349,7 @@ static partial class ElementSerializer
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "active",
-                BodyOfCss = style._active.ToCss().Replace(";", " !important;")
+                BodyOfCss = style._active.ToCssWithImportant()
             });
         }
 
@@ -358,7 +358,7 @@ static partial class ElementSerializer
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "focus",
-                BodyOfCss = style._focus.ToCss().Replace(";", " !important;")
+                BodyOfCss = style._focus.ToCssWithImportant()
             });
         }
 

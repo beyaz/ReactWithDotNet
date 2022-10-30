@@ -82,19 +82,11 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
 
               new style{Text($@"
 
-.p-tree-toggler-icon{{ {new Style {
-    FontSize11
+.p-tree-toggler-icon{{ {new Style { FontSize11 }.ToCssWithImportant()} }}
 
-}} 
-}}
+.p-tree-toggler{{ {new Style { MarginRight("0.3rem"), wh(11) }.ToCssWithImportant()} }}
 
-.p-tree-toggler{{ {new Style {
-    MarginRight("0.3rem"),
-    wh(10)
-
-}} 
-}}
-
+.p-tree-filter{{ {new Style{ FontSize13 } }  }}
 
 ") }
         };
@@ -108,7 +100,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             {
                 new img { Src(GetSvgUrl("Method")), wh(14), mt(5) },
 
-                new div {Text(node.FullNameWithoutReturnType), MarginLeft(5), FontSize12 }
+                new div {Text(node.FullNameWithoutReturnType), MarginLeft(5), FontSize13 }
             };
         }
 
@@ -128,7 +120,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             {
                 new img { Src(GetSvgUrl("Namespace")), wh(14) },
 
-                new div {Text(node.Name), MarginLeft(5), FontSize14 }
+                new div {Text(node.Name), MarginLeft(5), FontSize13 }
             };
         }
 

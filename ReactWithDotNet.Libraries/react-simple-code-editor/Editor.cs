@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace ReactWithDotNet.react_simple_code_editor;
+﻿namespace ReactWithDotNet.react_simple_code_editor;
 
 public class Editor : ThirdPartyReactComponent
 {

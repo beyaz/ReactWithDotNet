@@ -35,7 +35,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         {
             valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
             highlight = "json",
-            style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+            style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "14px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
         };
         if (state.IsInstanceEditorActive == false)
         {
@@ -43,11 +43,21 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             {
                 valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
                 highlight = "json",
-                style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "16px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                style     = { minHeight = "200px", border = "1px dashed #d9d9d9", fontSize = "14px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
             };
         }
         var propertyPanel = new FlexColumn(Padding(5), Height("100%"), FontSize15, PrimaryBackground)
         {
+            new style{Text($@"
+
+.token.punctuation{{ {new Style { FontWeight900, FontFamily("'Courier New', Courier, monospace") }.ToCssWithImportant()} }}
+
+.token.operator{{ {new Style { FontWeight900,  FontFamily("'Courier New', Courier, monospace") }.ToCssWithImportant()} }}
+
+.token.property{{ {new Style { FontWeight400, Color("#189af6") }.ToCssWithImportant()} }}
+
+
+") },
             new MethodSelectionView
             {
                 Filter                    = state.SelectedMethodTreeFilter,
@@ -60,20 +70,22 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
             new FlexColumn(Height100Percent)
             {
-                new FlexRow(JustifyContentSpaceAround,Color("#6c757d"),CursorPointer)
+                new FlexRow(Color("#6c757d"),CursorPointer, TextAlignCenter)
                 {
                     new div(Text("Instance json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = true),
-                        When(state.IsInstanceEditorActive,Opacity(0.5)),
-                        Padding(10)
+                        When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3")),
+                        Padding(10),
+                        FlexGrow(1)
                     },
                     new div(Text("Parameters json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = false),
-                        When(!state.IsInstanceEditorActive,Opacity(0.5)),
-                        Padding(10)
-                        
+                        When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3")),
+                        Padding(10),
+                        FlexGrow(1)
+
                     }
                 },
                 editor |Height("100%")

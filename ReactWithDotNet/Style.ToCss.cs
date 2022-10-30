@@ -11,14 +11,29 @@ partial class Style
 
     public string ToCss()
     {
+        return ToCss(isImportant: false);
+    }
+
+   
+    public string ToCssWithImportant()
+    {
+        return ToCss(isImportant: true);
+    }
+
+
+    string ToCss(bool isImportant)
+    {
         var sb = new StringBuilder();
+
+        var seperator = isImportant ? " !important;" : ";";
+        
 
         if (alignContent != null)
         {
             sb.Append("align-content");
             sb.Append(": ");
             sb.Append(alignContent);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (alignItems != null)
@@ -26,7 +41,7 @@ partial class Style
             sb.Append("align-items");
             sb.Append(": ");
             sb.Append(alignItems);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (alignSelf != null)
@@ -34,7 +49,7 @@ partial class Style
             sb.Append("align-self");
             sb.Append(": ");
             sb.Append(alignSelf);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (all != null)
@@ -42,7 +57,7 @@ partial class Style
             sb.Append("all");
             sb.Append(": ");
             sb.Append(all);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animation != null)
@@ -50,7 +65,7 @@ partial class Style
             sb.Append("animation");
             sb.Append(": ");
             sb.Append(animation);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animationDelay != null)
@@ -58,7 +73,7 @@ partial class Style
             sb.Append("animation-delay");
             sb.Append(": ");
             sb.Append(animationDelay);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animationDirection != null)
@@ -66,7 +81,7 @@ partial class Style
             sb.Append("animation-direction");
             sb.Append(": ");
             sb.Append(animationDirection);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animationDuration != null)
@@ -74,7 +89,7 @@ partial class Style
             sb.Append("animation-duration");
             sb.Append(": ");
             sb.Append(animationDuration);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animationFillMode != null)
@@ -82,7 +97,7 @@ partial class Style
             sb.Append("animation-fill-mode");
             sb.Append(": ");
             sb.Append(animationFillMode);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animationIterationCount != null)
@@ -90,7 +105,7 @@ partial class Style
             sb.Append("animation-iteration-count");
             sb.Append(": ");
             sb.Append(animationIterationCount);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animationName != null)
@@ -98,7 +113,7 @@ partial class Style
             sb.Append("animation-name");
             sb.Append(": ");
             sb.Append(animationName);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animationPlayState != null)
@@ -106,7 +121,7 @@ partial class Style
             sb.Append("animation-play-state");
             sb.Append(": ");
             sb.Append(animationPlayState);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (animationTimingFunction != null)
@@ -114,7 +129,7 @@ partial class Style
             sb.Append("animation-timing-function");
             sb.Append(": ");
             sb.Append(animationTimingFunction);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backfaceVisibility != null)
@@ -122,7 +137,7 @@ partial class Style
             sb.Append("backface-visibility");
             sb.Append(": ");
             sb.Append(backfaceVisibility);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (background != null)
@@ -130,7 +145,7 @@ partial class Style
             sb.Append("background");
             sb.Append(": ");
             sb.Append(background);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundAttachment != null)
@@ -138,7 +153,7 @@ partial class Style
             sb.Append("background-attachment");
             sb.Append(": ");
             sb.Append(backgroundAttachment);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundBlendMode != null)
@@ -146,7 +161,7 @@ partial class Style
             sb.Append("background-blend-mode");
             sb.Append(": ");
             sb.Append(backgroundBlendMode);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundClip != null)
@@ -154,7 +169,7 @@ partial class Style
             sb.Append("background-clip");
             sb.Append(": ");
             sb.Append(backgroundClip);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundColor != null)
@@ -162,7 +177,7 @@ partial class Style
             sb.Append("background-color");
             sb.Append(": ");
             sb.Append(backgroundColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundImage != null)
@@ -170,7 +185,7 @@ partial class Style
             sb.Append("background-image");
             sb.Append(": ");
             sb.Append(backgroundImage);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundOrigin != null)
@@ -178,7 +193,7 @@ partial class Style
             sb.Append("background-origin");
             sb.Append(": ");
             sb.Append(backgroundOrigin);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundPosition != null)
@@ -186,7 +201,7 @@ partial class Style
             sb.Append("background-position");
             sb.Append(": ");
             sb.Append(backgroundPosition);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundRepeat != null)
@@ -194,7 +209,7 @@ partial class Style
             sb.Append("background-repeat");
             sb.Append(": ");
             sb.Append(backgroundRepeat);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (backgroundSize != null)
@@ -202,7 +217,7 @@ partial class Style
             sb.Append("background-size");
             sb.Append(": ");
             sb.Append(backgroundSize);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (border != null)
@@ -210,7 +225,7 @@ partial class Style
             sb.Append("border");
             sb.Append(": ");
             sb.Append(border);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderBottom != null)
@@ -218,7 +233,7 @@ partial class Style
             sb.Append("border-bottom");
             sb.Append(": ");
             sb.Append(borderBottom);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderBottomColor != null)
@@ -226,7 +241,7 @@ partial class Style
             sb.Append("border-bottom-color");
             sb.Append(": ");
             sb.Append(borderBottomColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderBottomLeftRadius != null)
@@ -234,7 +249,7 @@ partial class Style
             sb.Append("border-bottom-left-radius");
             sb.Append(": ");
             sb.Append(borderBottomLeftRadius);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderBottomRightRadius != null)
@@ -242,7 +257,7 @@ partial class Style
             sb.Append("border-bottom-right-radius");
             sb.Append(": ");
             sb.Append(borderBottomRightRadius);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderBottomStyle != null)
@@ -250,7 +265,7 @@ partial class Style
             sb.Append("border-bottom-style");
             sb.Append(": ");
             sb.Append(borderBottomStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderBottomWidth != null)
@@ -258,7 +273,7 @@ partial class Style
             sb.Append("border-bottom-width");
             sb.Append(": ");
             sb.Append(borderBottomWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderCollapse != null)
@@ -266,7 +281,7 @@ partial class Style
             sb.Append("border-collapse");
             sb.Append(": ");
             sb.Append(borderCollapse);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderColor != null)
@@ -274,7 +289,7 @@ partial class Style
             sb.Append("border-color");
             sb.Append(": ");
             sb.Append(borderColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderImage != null)
@@ -282,7 +297,7 @@ partial class Style
             sb.Append("border-image");
             sb.Append(": ");
             sb.Append(borderImage);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderImageOutset != null)
@@ -290,7 +305,7 @@ partial class Style
             sb.Append("border-image-outset");
             sb.Append(": ");
             sb.Append(borderImageOutset);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderImageRepeat != null)
@@ -298,7 +313,7 @@ partial class Style
             sb.Append("border-image-repeat");
             sb.Append(": ");
             sb.Append(borderImageRepeat);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderImageSlice != null)
@@ -306,7 +321,7 @@ partial class Style
             sb.Append("border-image-slice");
             sb.Append(": ");
             sb.Append(borderImageSlice);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderImageSource != null)
@@ -314,7 +329,7 @@ partial class Style
             sb.Append("border-image-source");
             sb.Append(": ");
             sb.Append(borderImageSource);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderImageWidth != null)
@@ -322,7 +337,7 @@ partial class Style
             sb.Append("border-image-width");
             sb.Append(": ");
             sb.Append(borderImageWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderLeft != null)
@@ -330,7 +345,7 @@ partial class Style
             sb.Append("border-left");
             sb.Append(": ");
             sb.Append(borderLeft);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderLeftColor != null)
@@ -338,7 +353,7 @@ partial class Style
             sb.Append("border-left-color");
             sb.Append(": ");
             sb.Append(borderLeftColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderLeftStyle != null)
@@ -346,7 +361,7 @@ partial class Style
             sb.Append("border-left-style");
             sb.Append(": ");
             sb.Append(borderLeftStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderLeftWidth != null)
@@ -354,7 +369,7 @@ partial class Style
             sb.Append("border-left-width");
             sb.Append(": ");
             sb.Append(borderLeftWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderRadius != null)
@@ -362,7 +377,7 @@ partial class Style
             sb.Append("border-radius");
             sb.Append(": ");
             sb.Append(borderRadius);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderRight != null)
@@ -370,7 +385,7 @@ partial class Style
             sb.Append("border-right");
             sb.Append(": ");
             sb.Append(borderRight);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderRightColor != null)
@@ -378,7 +393,7 @@ partial class Style
             sb.Append("border-right-color");
             sb.Append(": ");
             sb.Append(borderRightColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderRightStyle != null)
@@ -386,7 +401,7 @@ partial class Style
             sb.Append("border-right-style");
             sb.Append(": ");
             sb.Append(borderRightStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderRightWidth != null)
@@ -394,7 +409,7 @@ partial class Style
             sb.Append("border-right-width");
             sb.Append(": ");
             sb.Append(borderRightWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderSpacing != null)
@@ -402,7 +417,7 @@ partial class Style
             sb.Append("border-spacing");
             sb.Append(": ");
             sb.Append(borderSpacing);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderStyle != null)
@@ -410,7 +425,7 @@ partial class Style
             sb.Append("border-style");
             sb.Append(": ");
             sb.Append(borderStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderTop != null)
@@ -418,7 +433,7 @@ partial class Style
             sb.Append("border-top");
             sb.Append(": ");
             sb.Append(borderTop);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderTopColor != null)
@@ -426,7 +441,7 @@ partial class Style
             sb.Append("border-top-color");
             sb.Append(": ");
             sb.Append(borderTopColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderTopLeftRadius != null)
@@ -434,7 +449,7 @@ partial class Style
             sb.Append("border-top-left-radius");
             sb.Append(": ");
             sb.Append(borderTopLeftRadius);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderTopRightRadius != null)
@@ -442,7 +457,7 @@ partial class Style
             sb.Append("border-top-right-radius");
             sb.Append(": ");
             sb.Append(borderTopRightRadius);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderTopStyle != null)
@@ -450,7 +465,7 @@ partial class Style
             sb.Append("border-top-style");
             sb.Append(": ");
             sb.Append(borderTopStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderTopWidth != null)
@@ -458,7 +473,7 @@ partial class Style
             sb.Append("border-top-width");
             sb.Append(": ");
             sb.Append(borderTopWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (borderWidth != null)
@@ -466,7 +481,7 @@ partial class Style
             sb.Append("border-width");
             sb.Append(": ");
             sb.Append(borderWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (bottom != null)
@@ -474,7 +489,7 @@ partial class Style
             sb.Append("bottom");
             sb.Append(": ");
             sb.Append(bottom);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (boxDecorationBreak != null)
@@ -482,7 +497,7 @@ partial class Style
             sb.Append("box-decoration-break");
             sb.Append(": ");
             sb.Append(boxDecorationBreak);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (boxShadow != null)
@@ -490,7 +505,7 @@ partial class Style
             sb.Append("box-shadow");
             sb.Append(": ");
             sb.Append(boxShadow);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (boxSizing != null)
@@ -498,7 +513,7 @@ partial class Style
             sb.Append("box-sizing");
             sb.Append(": ");
             sb.Append(boxSizing);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (captionSide != null)
@@ -506,7 +521,7 @@ partial class Style
             sb.Append("caption-side");
             sb.Append(": ");
             sb.Append(captionSide);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (clear != null)
@@ -514,7 +529,7 @@ partial class Style
             sb.Append("clear");
             sb.Append(": ");
             sb.Append(clear);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (clip != null)
@@ -522,7 +537,7 @@ partial class Style
             sb.Append("clip");
             sb.Append(": ");
             sb.Append(clip);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (clipPath != null)
@@ -530,7 +545,7 @@ partial class Style
             sb.Append("clip-path");
             sb.Append(": ");
             sb.Append(clipPath);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (color != null)
@@ -538,7 +553,7 @@ partial class Style
             sb.Append("color");
             sb.Append(": ");
             sb.Append(color);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columns != null)
@@ -546,7 +561,7 @@ partial class Style
             sb.Append("columns");
             sb.Append(": ");
             sb.Append(columns);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnCount != null)
@@ -554,7 +569,7 @@ partial class Style
             sb.Append("column-count");
             sb.Append(": ");
             sb.Append(columnCount);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnFill != null)
@@ -562,7 +577,7 @@ partial class Style
             sb.Append("column-fill");
             sb.Append(": ");
             sb.Append(columnFill);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnGap != null)
@@ -570,7 +585,7 @@ partial class Style
             sb.Append("column-gap");
             sb.Append(": ");
             sb.Append(columnGap);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (rowGap != null)
@@ -578,7 +593,7 @@ partial class Style
             sb.Append("row-gap");
             sb.Append(": ");
             sb.Append(rowGap);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gap != null)
@@ -586,7 +601,7 @@ partial class Style
             sb.Append("gap");
             sb.Append(": ");
             sb.Append(gap);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnRule != null)
@@ -594,7 +609,7 @@ partial class Style
             sb.Append("column-rule");
             sb.Append(": ");
             sb.Append(columnRule);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnRuleColor != null)
@@ -602,7 +617,7 @@ partial class Style
             sb.Append("column-rule-color");
             sb.Append(": ");
             sb.Append(columnRuleColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnRuleStyle != null)
@@ -610,7 +625,7 @@ partial class Style
             sb.Append("column-rule-style");
             sb.Append(": ");
             sb.Append(columnRuleStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnRuleWidth != null)
@@ -618,7 +633,7 @@ partial class Style
             sb.Append("column-rule-width");
             sb.Append(": ");
             sb.Append(columnRuleWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnSpan != null)
@@ -626,7 +641,7 @@ partial class Style
             sb.Append("column-span");
             sb.Append(": ");
             sb.Append(columnSpan);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (columnWidth != null)
@@ -634,7 +649,7 @@ partial class Style
             sb.Append("column-width");
             sb.Append(": ");
             sb.Append(columnWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (content != null)
@@ -642,23 +657,23 @@ partial class Style
             sb.Append("content");
             sb.Append(": ");
             sb.Append("'" + content + "'");
-            sb.Append(";");
+            sb.Append(seperator);
         }
-        
+
         if (contentVisibility != null)
         {
             sb.Append("content-visibility");
             sb.Append(": ");
             sb.Append(contentVisibility);
-            sb.Append(";");
+            sb.Append(seperator);
         }
-        
+
         if (counterIncrement != null)
         {
             sb.Append("counter-increment");
             sb.Append(": ");
             sb.Append(counterIncrement);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (counterReset != null)
@@ -666,7 +681,7 @@ partial class Style
             sb.Append("counter-reset");
             sb.Append(": ");
             sb.Append(counterReset);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (cssFloat != null)
@@ -674,7 +689,7 @@ partial class Style
             sb.Append("css-float");
             sb.Append(": ");
             sb.Append(cssFloat);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (cssText != null)
@@ -682,7 +697,7 @@ partial class Style
             sb.Append("css-text");
             sb.Append(": ");
             sb.Append(cssText);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (cursor != null)
@@ -690,7 +705,7 @@ partial class Style
             sb.Append("cursor");
             sb.Append(": ");
             sb.Append(cursor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (direction != null)
@@ -698,7 +713,7 @@ partial class Style
             sb.Append("direction");
             sb.Append(": ");
             sb.Append(direction);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (display != null)
@@ -706,7 +721,7 @@ partial class Style
             sb.Append("display");
             sb.Append(": ");
             sb.Append(display);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (dominantBaseline != null)
@@ -714,7 +729,7 @@ partial class Style
             sb.Append("dominant-baseline");
             sb.Append(": ");
             sb.Append(dominantBaseline);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (emptyCells != null)
@@ -722,7 +737,7 @@ partial class Style
             sb.Append("empty-cells");
             sb.Append(": ");
             sb.Append(emptyCells);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fill != null)
@@ -730,7 +745,7 @@ partial class Style
             sb.Append("fill");
             sb.Append(": ");
             sb.Append(fill);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fillOpacity != null)
@@ -738,7 +753,7 @@ partial class Style
             sb.Append("fill-opacity");
             sb.Append(": ");
             sb.Append(fillOpacity);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fillRule != null)
@@ -746,7 +761,7 @@ partial class Style
             sb.Append("fill-rule");
             sb.Append(": ");
             sb.Append(fillRule);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (filter != null)
@@ -754,7 +769,7 @@ partial class Style
             sb.Append("filter");
             sb.Append(": ");
             sb.Append(filter);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (flex != null)
@@ -762,7 +777,7 @@ partial class Style
             sb.Append("flex");
             sb.Append(": ");
             sb.Append(flex);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (flexBasis != null)
@@ -770,7 +785,7 @@ partial class Style
             sb.Append("flex-basis");
             sb.Append(": ");
             sb.Append(flexBasis);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (flexDirection != null)
@@ -778,7 +793,7 @@ partial class Style
             sb.Append("flex-direction");
             sb.Append(": ");
             sb.Append(flexDirection);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (flexFlow != null)
@@ -786,7 +801,7 @@ partial class Style
             sb.Append("flex-flow");
             sb.Append(": ");
             sb.Append(flexFlow);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (flexGrow != null)
@@ -794,7 +809,7 @@ partial class Style
             sb.Append("flex-grow");
             sb.Append(": ");
             sb.Append(flexGrow);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (flexShrink != null)
@@ -802,7 +817,7 @@ partial class Style
             sb.Append("flex-shrink");
             sb.Append(": ");
             sb.Append(flexShrink);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (flexWrap != null)
@@ -810,7 +825,7 @@ partial class Style
             sb.Append("flex-wrap");
             sb.Append(": ");
             sb.Append(flexWrap);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (floodColor != null)
@@ -818,7 +833,7 @@ partial class Style
             sb.Append("flood-color");
             sb.Append(": ");
             sb.Append(floodColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (floodOpacity != null)
@@ -826,7 +841,7 @@ partial class Style
             sb.Append("flood-opacity");
             sb.Append(": ");
             sb.Append(floodOpacity);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (font != null)
@@ -834,7 +849,7 @@ partial class Style
             sb.Append("font");
             sb.Append(": ");
             sb.Append(font);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontFamily != null)
@@ -842,7 +857,7 @@ partial class Style
             sb.Append("font-family");
             sb.Append(": ");
             sb.Append(fontFamily);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontFeatureSettings != null)
@@ -850,7 +865,7 @@ partial class Style
             sb.Append("font-feature-settings");
             sb.Append(": ");
             sb.Append(fontFeatureSettings);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontKerning != null)
@@ -858,7 +873,7 @@ partial class Style
             sb.Append("font-kerning");
             sb.Append(": ");
             sb.Append(fontKerning);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontLanguageOverride != null)
@@ -866,7 +881,7 @@ partial class Style
             sb.Append("font-language-override");
             sb.Append(": ");
             sb.Append(fontLanguageOverride);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontSize != null)
@@ -874,7 +889,7 @@ partial class Style
             sb.Append("font-size");
             sb.Append(": ");
             sb.Append(fontSize);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontSizeAdjust != null)
@@ -882,7 +897,7 @@ partial class Style
             sb.Append("font-size-adjust");
             sb.Append(": ");
             sb.Append(fontSizeAdjust);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontStretch != null)
@@ -890,7 +905,7 @@ partial class Style
             sb.Append("font-stretch");
             sb.Append(": ");
             sb.Append(fontStretch);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontStyle != null)
@@ -898,7 +913,7 @@ partial class Style
             sb.Append("font-style");
             sb.Append(": ");
             sb.Append(fontStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontSynthesis != null)
@@ -906,7 +921,7 @@ partial class Style
             sb.Append("font-synthesis");
             sb.Append(": ");
             sb.Append(fontSynthesis);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontVariant != null)
@@ -914,7 +929,7 @@ partial class Style
             sb.Append("font-variant");
             sb.Append(": ");
             sb.Append(fontVariant);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontVariantAlternates != null)
@@ -922,7 +937,7 @@ partial class Style
             sb.Append("font-variant-alternates");
             sb.Append(": ");
             sb.Append(fontVariantAlternates);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontVariantCaps != null)
@@ -930,7 +945,7 @@ partial class Style
             sb.Append("font-variant-caps");
             sb.Append(": ");
             sb.Append(fontVariantCaps);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontVariantEastAsian != null)
@@ -938,7 +953,7 @@ partial class Style
             sb.Append("font-variant-east-asian");
             sb.Append(": ");
             sb.Append(fontVariantEastAsian);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontVariantLigatures != null)
@@ -946,7 +961,7 @@ partial class Style
             sb.Append("font-variant-ligatures");
             sb.Append(": ");
             sb.Append(fontVariantLigatures);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontVariantNumeric != null)
@@ -954,7 +969,7 @@ partial class Style
             sb.Append("font-variant-numeric");
             sb.Append(": ");
             sb.Append(fontVariantNumeric);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontVariantPosition != null)
@@ -962,7 +977,7 @@ partial class Style
             sb.Append("font-variant-position");
             sb.Append(": ");
             sb.Append(fontVariantPosition);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (fontWeight != null)
@@ -970,7 +985,7 @@ partial class Style
             sb.Append("font-weight");
             sb.Append(": ");
             sb.Append(fontWeight);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (grid != null)
@@ -978,7 +993,7 @@ partial class Style
             sb.Append("grid");
             sb.Append(": ");
             sb.Append(grid);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridArea != null)
@@ -986,7 +1001,7 @@ partial class Style
             sb.Append("grid-area");
             sb.Append(": ");
             sb.Append(gridArea);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridAutoColumns != null)
@@ -994,7 +1009,7 @@ partial class Style
             sb.Append("grid-auto-columns");
             sb.Append(": ");
             sb.Append(gridAutoColumns);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridAutoFlow != null)
@@ -1002,7 +1017,7 @@ partial class Style
             sb.Append("grid-auto-flow");
             sb.Append(": ");
             sb.Append(gridAutoFlow);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridAutoPosition != null)
@@ -1010,7 +1025,7 @@ partial class Style
             sb.Append("grid-auto-position");
             sb.Append(": ");
             sb.Append(gridAutoPosition);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridAutoRows != null)
@@ -1018,7 +1033,7 @@ partial class Style
             sb.Append("grid-auto-rows");
             sb.Append(": ");
             sb.Append(gridAutoRows);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridColumn != null)
@@ -1026,7 +1041,7 @@ partial class Style
             sb.Append("grid-column");
             sb.Append(": ");
             sb.Append(gridColumn);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridColumnStart != null)
@@ -1034,7 +1049,7 @@ partial class Style
             sb.Append("grid-column-start");
             sb.Append(": ");
             sb.Append(gridColumnStart);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridColumnEnd != null)
@@ -1042,7 +1057,7 @@ partial class Style
             sb.Append("grid-column-end");
             sb.Append(": ");
             sb.Append(gridColumnEnd);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridRow != null)
@@ -1050,7 +1065,7 @@ partial class Style
             sb.Append("grid-row");
             sb.Append(": ");
             sb.Append(gridRow);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridRowStart != null)
@@ -1058,7 +1073,7 @@ partial class Style
             sb.Append("grid-row-start");
             sb.Append(": ");
             sb.Append(gridRowStart);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridRowEnd != null)
@@ -1066,7 +1081,7 @@ partial class Style
             sb.Append("grid-row-end");
             sb.Append(": ");
             sb.Append(gridRowEnd);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridTemplate != null)
@@ -1074,7 +1089,7 @@ partial class Style
             sb.Append("grid-template");
             sb.Append(": ");
             sb.Append(gridTemplate);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridTemplateAreas != null)
@@ -1082,7 +1097,7 @@ partial class Style
             sb.Append("grid-template-areas");
             sb.Append(": ");
             sb.Append(gridTemplateAreas);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridTemplateRows != null)
@@ -1090,7 +1105,7 @@ partial class Style
             sb.Append("grid-template-rows");
             sb.Append(": ");
             sb.Append(gridTemplateRows);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (gridTemplateColumns != null)
@@ -1098,7 +1113,7 @@ partial class Style
             sb.Append("grid-template-columns");
             sb.Append(": ");
             sb.Append(gridTemplateColumns);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (height != null)
@@ -1106,7 +1121,7 @@ partial class Style
             sb.Append("height");
             sb.Append(": ");
             sb.Append(height);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (hyphens != null)
@@ -1114,7 +1129,7 @@ partial class Style
             sb.Append("hyphens");
             sb.Append(": ");
             sb.Append(hyphens);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (icon != null)
@@ -1122,7 +1137,7 @@ partial class Style
             sb.Append("icon");
             sb.Append(": ");
             sb.Append(icon);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (imageRendering != null)
@@ -1130,7 +1145,7 @@ partial class Style
             sb.Append("image-rendering");
             sb.Append(": ");
             sb.Append(imageRendering);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (imageResolution != null)
@@ -1138,7 +1153,7 @@ partial class Style
             sb.Append("image-resolution");
             sb.Append(": ");
             sb.Append(imageResolution);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (imageOrientation != null)
@@ -1146,7 +1161,7 @@ partial class Style
             sb.Append("image-orientation");
             sb.Append(": ");
             sb.Append(imageOrientation);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (imeMode != null)
@@ -1154,7 +1169,7 @@ partial class Style
             sb.Append("ime-mode");
             sb.Append(": ");
             sb.Append(imeMode);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (justifyContent != null)
@@ -1162,7 +1177,7 @@ partial class Style
             sb.Append("justify-content");
             sb.Append(": ");
             sb.Append(justifyContent);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (left != null)
@@ -1170,7 +1185,7 @@ partial class Style
             sb.Append("left");
             sb.Append(": ");
             sb.Append(left);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (letterSpacing != null)
@@ -1178,7 +1193,7 @@ partial class Style
             sb.Append("letter-spacing");
             sb.Append(": ");
             sb.Append(letterSpacing);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (lightingColor != null)
@@ -1186,7 +1201,7 @@ partial class Style
             sb.Append("lighting-color");
             sb.Append(": ");
             sb.Append(lightingColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (lineHeight != null)
@@ -1194,7 +1209,7 @@ partial class Style
             sb.Append("line-height");
             sb.Append(": ");
             sb.Append(lineHeight);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (listStyle != null)
@@ -1202,7 +1217,7 @@ partial class Style
             sb.Append("list-style");
             sb.Append(": ");
             sb.Append(listStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (listStyleImage != null)
@@ -1210,7 +1225,7 @@ partial class Style
             sb.Append("list-style-image");
             sb.Append(": ");
             sb.Append(listStyleImage);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (listStylePosition != null)
@@ -1218,7 +1233,7 @@ partial class Style
             sb.Append("list-style-position");
             sb.Append(": ");
             sb.Append(listStylePosition);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (listStyleType != null)
@@ -1226,7 +1241,7 @@ partial class Style
             sb.Append("list-style-type");
             sb.Append(": ");
             sb.Append(listStyleType);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (margin != null)
@@ -1234,7 +1249,7 @@ partial class Style
             sb.Append("margin");
             sb.Append(": ");
             sb.Append(margin);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (marginBottom != null)
@@ -1242,7 +1257,7 @@ partial class Style
             sb.Append("margin-bottom");
             sb.Append(": ");
             sb.Append(marginBottom);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (marginLeft != null)
@@ -1250,7 +1265,7 @@ partial class Style
             sb.Append("margin-left");
             sb.Append(": ");
             sb.Append(marginLeft);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (marginRight != null)
@@ -1258,7 +1273,7 @@ partial class Style
             sb.Append("margin-right");
             sb.Append(": ");
             sb.Append(marginRight);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (marginTop != null)
@@ -1266,7 +1281,7 @@ partial class Style
             sb.Append("margin-top");
             sb.Append(": ");
             sb.Append(marginTop);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (marks != null)
@@ -1274,7 +1289,7 @@ partial class Style
             sb.Append("marks");
             sb.Append(": ");
             sb.Append(marks);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (mask != null)
@@ -1282,7 +1297,7 @@ partial class Style
             sb.Append("mask");
             sb.Append(": ");
             sb.Append(mask);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (maskType != null)
@@ -1290,7 +1305,7 @@ partial class Style
             sb.Append("mask-type");
             sb.Append(": ");
             sb.Append(maskType);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (maxHeight != null)
@@ -1298,7 +1313,7 @@ partial class Style
             sb.Append("max-height");
             sb.Append(": ");
             sb.Append(maxHeight);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (maxWidth != null)
@@ -1306,7 +1321,7 @@ partial class Style
             sb.Append("max-width");
             sb.Append(": ");
             sb.Append(maxWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (minHeight != null)
@@ -1314,7 +1329,7 @@ partial class Style
             sb.Append("min-height");
             sb.Append(": ");
             sb.Append(minHeight);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (minWidth != null)
@@ -1322,7 +1337,7 @@ partial class Style
             sb.Append("min-width");
             sb.Append(": ");
             sb.Append(minWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (mixBlendMode != null)
@@ -1330,7 +1345,7 @@ partial class Style
             sb.Append("mix-blend-mode");
             sb.Append(": ");
             sb.Append(mixBlendMode);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (navDown != null)
@@ -1338,7 +1353,7 @@ partial class Style
             sb.Append("nav-down");
             sb.Append(": ");
             sb.Append(navDown);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (navIndex != null)
@@ -1346,7 +1361,7 @@ partial class Style
             sb.Append("nav-index");
             sb.Append(": ");
             sb.Append(navIndex);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (navLeft != null)
@@ -1354,7 +1369,7 @@ partial class Style
             sb.Append("nav-left");
             sb.Append(": ");
             sb.Append(navLeft);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (navRight != null)
@@ -1362,7 +1377,7 @@ partial class Style
             sb.Append("nav-right");
             sb.Append(": ");
             sb.Append(navRight);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (navUp != null)
@@ -1370,7 +1385,7 @@ partial class Style
             sb.Append("nav-up");
             sb.Append(": ");
             sb.Append(navUp);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (objectFit != null)
@@ -1378,7 +1393,7 @@ partial class Style
             sb.Append("object-fit");
             sb.Append(": ");
             sb.Append(objectFit);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (objectPosition != null)
@@ -1386,7 +1401,7 @@ partial class Style
             sb.Append("object-position");
             sb.Append(": ");
             sb.Append(objectPosition);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (opacity != null)
@@ -1394,7 +1409,7 @@ partial class Style
             sb.Append("opacity");
             sb.Append(": ");
             sb.Append(opacity);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (order != null)
@@ -1402,7 +1417,7 @@ partial class Style
             sb.Append("order");
             sb.Append(": ");
             sb.Append(order);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (orphans != null)
@@ -1410,7 +1425,7 @@ partial class Style
             sb.Append("orphans");
             sb.Append(": ");
             sb.Append(orphans);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (outline != null)
@@ -1418,7 +1433,7 @@ partial class Style
             sb.Append("outline");
             sb.Append(": ");
             sb.Append(outline);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (outlineColor != null)
@@ -1426,7 +1441,7 @@ partial class Style
             sb.Append("outline-color");
             sb.Append(": ");
             sb.Append(outlineColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (outlineOffset != null)
@@ -1434,7 +1449,7 @@ partial class Style
             sb.Append("outline-offset");
             sb.Append(": ");
             sb.Append(outlineOffset);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (outlineStyle != null)
@@ -1442,7 +1457,7 @@ partial class Style
             sb.Append("outline-style");
             sb.Append(": ");
             sb.Append(outlineStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (outlineWidth != null)
@@ -1450,7 +1465,7 @@ partial class Style
             sb.Append("outline-width");
             sb.Append(": ");
             sb.Append(outlineWidth);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (overflow != null)
@@ -1458,7 +1473,7 @@ partial class Style
             sb.Append("overflow");
             sb.Append(": ");
             sb.Append(overflow);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (overflowWrap != null)
@@ -1466,7 +1481,7 @@ partial class Style
             sb.Append("overflow-wrap");
             sb.Append(": ");
             sb.Append(overflowWrap);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (overflowX != null)
@@ -1474,7 +1489,7 @@ partial class Style
             sb.Append("overflow-x");
             sb.Append(": ");
             sb.Append(overflowX);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (overflowY != null)
@@ -1482,7 +1497,7 @@ partial class Style
             sb.Append("overflow-y");
             sb.Append(": ");
             sb.Append(overflowY);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (overflowClipBox != null)
@@ -1490,7 +1505,7 @@ partial class Style
             sb.Append("overflow-clip-box");
             sb.Append(": ");
             sb.Append(overflowClipBox);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (padding != null)
@@ -1498,7 +1513,7 @@ partial class Style
             sb.Append("padding");
             sb.Append(": ");
             sb.Append(padding);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (paddingBottom != null)
@@ -1506,7 +1521,7 @@ partial class Style
             sb.Append("padding-bottom");
             sb.Append(": ");
             sb.Append(paddingBottom);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (paddingLeft != null)
@@ -1514,7 +1529,7 @@ partial class Style
             sb.Append("padding-left");
             sb.Append(": ");
             sb.Append(paddingLeft);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (paddingRight != null)
@@ -1522,7 +1537,7 @@ partial class Style
             sb.Append("padding-right");
             sb.Append(": ");
             sb.Append(paddingRight);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (paddingTop != null)
@@ -1530,7 +1545,7 @@ partial class Style
             sb.Append("padding-top");
             sb.Append(": ");
             sb.Append(paddingTop);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (pageBreakAfter != null)
@@ -1538,7 +1553,7 @@ partial class Style
             sb.Append("page-break-after");
             sb.Append(": ");
             sb.Append(pageBreakAfter);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (pageBreakBefore != null)
@@ -1546,7 +1561,7 @@ partial class Style
             sb.Append("page-break-before");
             sb.Append(": ");
             sb.Append(pageBreakBefore);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (pageBreakInside != null)
@@ -1554,7 +1569,7 @@ partial class Style
             sb.Append("page-break-inside");
             sb.Append(": ");
             sb.Append(pageBreakInside);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (perspective != null)
@@ -1562,7 +1577,7 @@ partial class Style
             sb.Append("perspective");
             sb.Append(": ");
             sb.Append(perspective);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (perspectiveOrigin != null)
@@ -1570,7 +1585,7 @@ partial class Style
             sb.Append("perspective-origin");
             sb.Append(": ");
             sb.Append(perspectiveOrigin);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (pointerEvents != null)
@@ -1578,7 +1593,7 @@ partial class Style
             sb.Append("pointer-events");
             sb.Append(": ");
             sb.Append(pointerEvents);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (position != null)
@@ -1586,7 +1601,7 @@ partial class Style
             sb.Append("position");
             sb.Append(": ");
             sb.Append(position);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (quotes != null)
@@ -1594,7 +1609,7 @@ partial class Style
             sb.Append("quotes");
             sb.Append(": ");
             sb.Append(quotes);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (resize != null)
@@ -1602,7 +1617,7 @@ partial class Style
             sb.Append("resize");
             sb.Append(": ");
             sb.Append(resize);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (right != null)
@@ -1610,7 +1625,7 @@ partial class Style
             sb.Append("right");
             sb.Append(": ");
             sb.Append(right);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (tableLayout != null)
@@ -1618,7 +1633,7 @@ partial class Style
             sb.Append("table-layout");
             sb.Append(": ");
             sb.Append(tableLayout);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (tabSize != null)
@@ -1626,7 +1641,7 @@ partial class Style
             sb.Append("tab-size");
             sb.Append(": ");
             sb.Append(tabSize);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textAlign != null)
@@ -1634,7 +1649,7 @@ partial class Style
             sb.Append("text-align");
             sb.Append(": ");
             sb.Append(textAlign);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textAlignLast != null)
@@ -1642,7 +1657,7 @@ partial class Style
             sb.Append("text-align-last");
             sb.Append(": ");
             sb.Append(textAlignLast);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textCombineHorizontal != null)
@@ -1650,7 +1665,7 @@ partial class Style
             sb.Append("text-combine-horizontal");
             sb.Append(": ");
             sb.Append(textCombineHorizontal);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textDecoration != null)
@@ -1658,7 +1673,7 @@ partial class Style
             sb.Append("text-decoration");
             sb.Append(": ");
             sb.Append(textDecoration);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textDecorationColor != null)
@@ -1666,7 +1681,7 @@ partial class Style
             sb.Append("text-decoration-color");
             sb.Append(": ");
             sb.Append(textDecorationColor);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textDecorationLine != null)
@@ -1674,7 +1689,7 @@ partial class Style
             sb.Append("text-decoration-line");
             sb.Append(": ");
             sb.Append(textDecorationLine);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textDecorationStyle != null)
@@ -1682,7 +1697,7 @@ partial class Style
             sb.Append("text-decoration-style");
             sb.Append(": ");
             sb.Append(textDecorationStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textIndent != null)
@@ -1690,7 +1705,7 @@ partial class Style
             sb.Append("text-indent");
             sb.Append(": ");
             sb.Append(textIndent);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textOrientation != null)
@@ -1698,7 +1713,7 @@ partial class Style
             sb.Append("text-orientation");
             sb.Append(": ");
             sb.Append(textOrientation);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textOverflow != null)
@@ -1706,7 +1721,7 @@ partial class Style
             sb.Append("text-overflow");
             sb.Append(": ");
             sb.Append(textOverflow);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textRendering != null)
@@ -1714,7 +1729,7 @@ partial class Style
             sb.Append("text-rendering");
             sb.Append(": ");
             sb.Append(textRendering);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textShadow != null)
@@ -1722,7 +1737,7 @@ partial class Style
             sb.Append("text-shadow");
             sb.Append(": ");
             sb.Append(textShadow);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textTransform != null)
@@ -1730,7 +1745,7 @@ partial class Style
             sb.Append("text-transform");
             sb.Append(": ");
             sb.Append(textTransform);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (textUnderlinePosition != null)
@@ -1738,7 +1753,7 @@ partial class Style
             sb.Append("text-underline-position");
             sb.Append(": ");
             sb.Append(textUnderlinePosition);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (top != null)
@@ -1746,7 +1761,7 @@ partial class Style
             sb.Append("top");
             sb.Append(": ");
             sb.Append(top);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (touchAction != null)
@@ -1754,7 +1769,7 @@ partial class Style
             sb.Append("touch-action");
             sb.Append(": ");
             sb.Append(touchAction);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (transform != null)
@@ -1762,7 +1777,7 @@ partial class Style
             sb.Append("transform");
             sb.Append(": ");
             sb.Append(transform);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (transformOrigin != null)
@@ -1770,7 +1785,7 @@ partial class Style
             sb.Append("transform-origin");
             sb.Append(": ");
             sb.Append(transformOrigin);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (transformStyle != null)
@@ -1778,7 +1793,7 @@ partial class Style
             sb.Append("transform-style");
             sb.Append(": ");
             sb.Append(transformStyle);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (transition != null)
@@ -1786,7 +1801,7 @@ partial class Style
             sb.Append("transition");
             sb.Append(": ");
             sb.Append(transition);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (transitionDelay != null)
@@ -1794,7 +1809,7 @@ partial class Style
             sb.Append("transition-delay");
             sb.Append(": ");
             sb.Append(transitionDelay);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (transitionDuration != null)
@@ -1802,7 +1817,7 @@ partial class Style
             sb.Append("transition-duration");
             sb.Append(": ");
             sb.Append(transitionDuration);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (transitionProperty != null)
@@ -1810,7 +1825,7 @@ partial class Style
             sb.Append("transition-property");
             sb.Append(": ");
             sb.Append(transitionProperty);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (transitionTimingFunction != null)
@@ -1818,7 +1833,7 @@ partial class Style
             sb.Append("transition-timing-function");
             sb.Append(": ");
             sb.Append(transitionTimingFunction);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (unicodeBidi != null)
@@ -1826,7 +1841,7 @@ partial class Style
             sb.Append("unicode-bidi");
             sb.Append(": ");
             sb.Append(unicodeBidi);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (unicodeRange != null)
@@ -1834,7 +1849,7 @@ partial class Style
             sb.Append("unicode-range");
             sb.Append(": ");
             sb.Append(unicodeRange);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (verticalAlign != null)
@@ -1842,7 +1857,7 @@ partial class Style
             sb.Append("vertical-align");
             sb.Append(": ");
             sb.Append(verticalAlign);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (visibility != null)
@@ -1850,7 +1865,7 @@ partial class Style
             sb.Append("visibility");
             sb.Append(": ");
             sb.Append(visibility);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (whiteSpace != null)
@@ -1858,7 +1873,7 @@ partial class Style
             sb.Append("white-space");
             sb.Append(": ");
             sb.Append(whiteSpace);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (widows != null)
@@ -1866,7 +1881,7 @@ partial class Style
             sb.Append("widows");
             sb.Append(": ");
             sb.Append(widows);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (width != null)
@@ -1874,7 +1889,7 @@ partial class Style
             sb.Append("width");
             sb.Append(": ");
             sb.Append(width);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (willChange != null)
@@ -1882,7 +1897,7 @@ partial class Style
             sb.Append("will-change");
             sb.Append(": ");
             sb.Append(willChange);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (wordBreak != null)
@@ -1890,7 +1905,7 @@ partial class Style
             sb.Append("word-break");
             sb.Append(": ");
             sb.Append(wordBreak);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (wordSpacing != null)
@@ -1898,7 +1913,7 @@ partial class Style
             sb.Append("word-spacing");
             sb.Append(": ");
             sb.Append(wordSpacing);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (wordWrap != null)
@@ -1906,7 +1921,7 @@ partial class Style
             sb.Append("word-wrap");
             sb.Append(": ");
             sb.Append(wordWrap);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (writingMode != null)
@@ -1914,7 +1929,7 @@ partial class Style
             sb.Append("writing-mode");
             sb.Append(": ");
             sb.Append(writingMode);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (zIndex != null)
@@ -1922,7 +1937,7 @@ partial class Style
             sb.Append("z-index");
             sb.Append(": ");
             sb.Append(zIndex);
-            sb.Append(";");
+            sb.Append(seperator);
         }
 
         if (sb.Length == 0)
