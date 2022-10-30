@@ -101,7 +101,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             },
             style =
             {
-                border = "1px dashed #e0e0e0",
+                border = "1px solid #e0e0e0",
                 width  = state.ScreenWidth + "%",
                 height = "100%"
             }
