@@ -21,6 +21,7 @@ import { Tree } from 'primereact/tree';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Panel } from 'primereact/panel';
 import { Tooltip } from 'primereact/tooltip';
+import { ScrollPanel } from 'primereact/scrollpanel';
 import { Message } from 'primereact/message';
 
 function register(name, value)
@@ -50,6 +51,8 @@ register("InputSwitch", InputSwitch);
 register("Panel", Panel);
 register("Tooltip", Tooltip);
 register("Message", Message);
+register("ScrollPanel", ScrollPanel);
+
 register("Panel::GetHeaderTemplate", (key) => ReactWithDotNet.GetExternalJsObject(key));
 
 register("GrabOnlyValueParameterFromCommonPrimeReactEvent", function (argumentsAsArray)

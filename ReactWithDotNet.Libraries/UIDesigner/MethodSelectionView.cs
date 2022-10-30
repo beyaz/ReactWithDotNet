@@ -64,7 +64,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
 
     protected override Element render()
     {
-        return new div(Padding(3))
+        return new ScrollPanel
         {
           
             new SingleSelectionTree<MetadataNode>
@@ -89,7 +89,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
 .p-tree-filter{{ {new Style{ FontSize13 } }  }}
 
 ") }
-        };
+        } | Padding(3);
     }
 
     static Element nodeTemplate(MetadataNode node)
