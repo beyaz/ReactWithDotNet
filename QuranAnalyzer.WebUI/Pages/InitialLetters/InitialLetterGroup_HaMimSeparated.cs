@@ -46,14 +46,9 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 rowSpan = 6,
                                 children =
                                 {
-                                    new div
+                                    new FlexRow(JustifyContentCenter,mt(-50))
                                     {
-                                        style = { marginTop = "-50px", display = "flex", justifyContent = "center" },
-                                        children =
-                                        {
-                                            new CountingResult { id = IdOfCountingResult_1, MultipleOf = 59, SearchScript = GetLetterCountingScript("40:*,41:*,42:*", Haa, Miim) },
-
-                                        }
+                                        new CountingResult { id = IdOfCountingResult_1, MultipleOf = 59, SearchScript = GetLetterCountingScript("40:*,41:*,42:*", Haa, Miim) },
                                     }
                                 }
                             }
@@ -138,14 +133,9 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 rowSpan = 6,
                                 children =
                                 {
-                                    new div
+                                    new FlexRow(JustifyContentCenter,mt(-50))
                                     {
-                                        style = { marginTop = "-50px", display = "flex", justifyContent = "center" },
-                                        children =
-                                        {
-                                            new CountingResult { id = IdOfCountingResult_2, MultipleOf = 54, SearchScript = GetLetterCountingScript("43:*,44:*,45:*,46:*", Haa, Miim) }
-
-                                        }
+                                        new CountingResult { id = IdOfCountingResult_2, MultipleOf = 54, SearchScript = GetLetterCountingScript("43:*,44:*,45:*,46:*", Haa, Miim) }
                                     }
                                 }
 

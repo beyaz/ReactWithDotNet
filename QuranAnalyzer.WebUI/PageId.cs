@@ -49,7 +49,9 @@ static class App
 
     public static StyleModifier ComponentBorder => Border($"1px solid {BluePrimary}");
 
-    public static string BluePrimary => "rgb(218, 220, 224)";
+    public static string BluePrimary => "#1976d2";
+
+    public static string BorderColor = "#dee2e6";
 
     public static SettingsFile Settings = JsonConvert.DeserializeObject<SettingsFile>(File.ReadAllText("Settings.json"));
 
@@ -66,7 +68,3 @@ static class App
     }
 }
 
-public abstract class ReactComponent : ReactWithDotNet.ReactComponent
-{
-    public string BluePrimary => "rgb(25 118 210)";
-}

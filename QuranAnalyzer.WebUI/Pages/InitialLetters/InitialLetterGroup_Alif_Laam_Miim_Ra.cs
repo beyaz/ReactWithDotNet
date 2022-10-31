@@ -42,15 +42,11 @@ class InitialLetterGroup_Alif_Laam_Miim_Ra : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(13), MultipleOf = 78, SearchScript = GetLetterCountingScript("13:*", Alif, Laam, Miim, Raa)
-                                        }
+                                        id = IdOfCountingResult(13), MultipleOf = 78, SearchScript = GetLetterCountingScript("13:*", Alif, Laam, Miim, Raa)
                                     }
                                 }
                             }

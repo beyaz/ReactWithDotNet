@@ -41,15 +41,11 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(2), MultipleOf = 521, SearchScript = GetLetterCountingScript("2:*", Alif, Laam, Miim)
-                                        }
+                                        id = IdOfCountingResult(2), MultipleOf = 521, SearchScript = GetLetterCountingScript("2:*", Alif, Laam, Miim)
                                     }
                                 }
                             }
@@ -75,15 +71,11 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(3), MultipleOf = 298, SearchScript = GetLetterCountingScript("3:*", Alif, Laam, Miim)
-                                        }
+                                        id = IdOfCountingResult(3), MultipleOf = 298, SearchScript = GetLetterCountingScript("3:*", Alif, Laam, Miim)
                                     }
                                 }
                             }
@@ -110,15 +102,11 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(29), MultipleOf = 88, SearchScript = GetLetterCountingScript("29:*", Alif, Laam, Miim)
-                                        }
+                                        id = IdOfCountingResult(29), MultipleOf = 88, SearchScript = GetLetterCountingScript("29:*", Alif, Laam, Miim)
                                     }
                                 }
                             }
@@ -145,15 +133,11 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(30), MultipleOf = 66, SearchScript = GetLetterCountingScript("30:*", Alif, Laam, Miim)
-                                        }
+                                        id = IdOfCountingResult(30), MultipleOf = 66, SearchScript = GetLetterCountingScript("30:*", Alif, Laam, Miim)
                                     }
                                 }
                             }
@@ -180,15 +164,11 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(31), MultipleOf = 43, SearchScript = GetLetterCountingScript("31:*", Alif, Laam, Miim)
-                                        }
+                                        id = IdOfCountingResult(31), MultipleOf = 43, SearchScript = GetLetterCountingScript("31:*", Alif, Laam, Miim)
                                     }
                                 }
                             }
@@ -215,15 +195,11 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(32), MultipleOf = 30, SearchScript = GetLetterCountingScript("32:*", Alif, Laam, Miim)
-                                        }
+                                        id = IdOfCountingResult(32), MultipleOf = 30, SearchScript = GetLetterCountingScript("32:*", Alif, Laam, Miim)
                                     }
                                 }
                             }

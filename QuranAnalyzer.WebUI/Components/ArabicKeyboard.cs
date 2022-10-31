@@ -60,7 +60,7 @@ class ArabicKeyboardLetterView : ReactComponent
                 FlexDirectionColumn,
                 AlignItemsCenter,
                 Margin(5),
-                Border("1px solid #dee2e6"),
+                Border($"1px solid {BorderColor}"),
                 BorderRadius(5),
                 Background("rgb(248 249 251)"),
                 CursorPointer,

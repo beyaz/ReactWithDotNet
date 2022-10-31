@@ -5,13 +5,9 @@ namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 class InitialLetterGroup_TaSinMim : InitialLetterGroup
 {
-    static string Id(int chapterNumber, string letter) => $"TaSinMim-{chapterNumber}-{letter}";
-
-    static string IdOfCountingResult => $"TaSinMim-{nameof(IdOfCountingResult)}";
-
     static Element countingResult => new CountingResult
     {
-        id = IdOfCountingResult,
+        id         = IdOfCountingResult,
         MultipleOf = 93,
 
         SearchScript = GetLetterCountingScript("19:*", Haa_) + ";" +
@@ -21,135 +17,120 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                        GetLetterCountingScript("28:*", Taa_, Siin, Miim)
     };
 
+    static string IdOfCountingResult => $"TaSinMim-{nameof(IdOfCountingResult)}";
+
     protected override Element render()
     {
         return new div
         {
-
             new table(Width(Percent(100)))
             {
-                
-                    new tbody
+                new tbody
+                {
+                    HeaderTr,
+                    HeaderSpace,
+                    new tr
                     {
-                        HeaderTr,
-                        HeaderSpace,
-                        new tr
+                        new td
                         {
-                            new td
+                            new Chapter { ChapterNumber = 19, ChapterName = "Meryem" }
+                        },
+                        new td
+                        {
+                            new InitialLetterLineGroup
                             {
-                                new Chapter { ChapterNumber = 19, ChapterName = "Meryem" }
-                            },
-                            new td
-                            {
-                                new InitialLetterLineGroup
-                                {
-                                    
-                                        new InitialLetter { id = Id(19,Qaaf), text = Qaaf },
-                                        new InitialLetter { id = Id(19,Haa), text  = Haa_,IsSelected = true  },
-                                        new InitialLetter { id = Id(19,Yaa), text  = Yaa },
-                                        new InitialLetter { id = Id(19,Ayn), text  = Ayn },
-                                        new InitialLetter { id = Id(19,Saad), text = Saad}
-
-                                    
-                                }
-                            },
-                            new td
-                            {
-                                rowSpan = 99,
-                                children =
-                                {
-                                    new div
-                                    {
-                                        style = { marginTop = "-50px", display = "flex", justifyContent = "center" },
-                                        children =
-                                        {
-                                            countingResult
-                                        }
-                                    }
-                                }
+                                new InitialLetter { id = Id(19, Qaaf), text = Qaaf },
+                                new InitialLetter { id = Id(19, Haa), text  = Haa_, IsSelected = true },
+                                new InitialLetter { id = Id(19, Yaa), text  = Yaa },
+                                new InitialLetter { id = Id(19, Ayn), text  = Ayn },
+                                new InitialLetter { id = Id(19, Saad), text = Saad }
                             }
                         },
-                        RowSpace,
-                        new tr
+                        new td
                         {
-                            new td {  new Chapter { ChapterNumber = 20, ChapterName = "Taha" }  },
-                            new td
+                            rowSpan = 99,
+                            children =
                             {
-                                new InitialLetterLineGroup
+                                new FlexRow(JustifyContentCenter, mt(-50))
                                 {
-                                    
-                                        new InitialLetter { id = Id(20,Taa_), text = Taa_ ,IsSelected = true},
-                                        new InitialLetter { id = Id(20,Haa), text  = Haa ,IsSelected  = true}
-                                    
-                                }
-                            }
-                        },
-
-                        RowSpace,
-                        new tr
-                        {
-                            new td {  new Chapter { ChapterNumber = 26, ChapterName = "Şuara" }   },
-                            new td
-                            {
-                                new InitialLetterLineGroup
-                                {
-                                    
-                                        new InitialLetter { id = Id(26,Taa_), text = Taa_,IsSelected  = true },
-                                        new InitialLetter { id = Id(26,Siin), text = Siin ,IsSelected = true},
-                                        new InitialLetter { id = Id(26,Miim), text = Miim ,IsSelected = true}
-                                    
-                                }
-                            }
-                        },
-
-                        RowSpace,
-                        new tr
-                        {
-                            new td {  new Chapter { ChapterNumber = 27, ChapterName = "Neml" }   },
-                            new td
-                            {
-                                new InitialLetterLineGroup
-                                {
-                                    
-                                        new InitialLetter { id = Id(27,Taa_), text = Taa_ ,IsSelected = true},
-                                        new InitialLetter { id = Id(27,Siin), text = Siin ,IsSelected = true}
-                                    
-                                }
-                            }
-                        },
-
-                        RowSpace,
-                        new tr
-                        {
-                            new td {  new Chapter { ChapterNumber = 28, ChapterName = "Kasas" }  },
-                            new td
-                            {
-                                new InitialLetterLineGroup
-                                {
-                                    
-                                        new InitialLetter { id = Id(28,Taa_), text = Taa_ ,IsSelected = true},
-                                        new InitialLetter { id = Id(28,Siin), text = Siin ,IsSelected = true},
-                                        new InitialLetter { id = Id(28,Miim), text = Miim ,IsSelected = true}
-                                    
+                                    countingResult
                                 }
                             }
                         }
-                    }
-                
+                    },
+                    RowSpace,
+                    new tr
+                    {
+                        new td { new Chapter { ChapterNumber = 20, ChapterName = "Taha" } },
+                        new td
+                        {
+                            new InitialLetterLineGroup
+                            {
+                                new InitialLetter { id = Id(20, Taa_), text = Taa_, IsSelected = true },
+                                new InitialLetter { id = Id(20, Haa), text  = Haa, IsSelected  = true }
+                            }
+                        }
+                    },
 
+                    RowSpace,
+                    new tr
+                    {
+                        new td { new Chapter { ChapterNumber = 26, ChapterName = "Şuara" } },
+                        new td
+                        {
+                            new InitialLetterLineGroup
+                            {
+                                new InitialLetter { id = Id(26, Taa_), text = Taa_, IsSelected = true },
+                                new InitialLetter { id = Id(26, Siin), text = Siin, IsSelected = true },
+                                new InitialLetter { id = Id(26, Miim), text = Miim, IsSelected = true }
+                            }
+                        }
+                    },
+
+                    RowSpace,
+                    new tr
+                    {
+                        new td { new Chapter { ChapterNumber = 27, ChapterName = "Neml" } },
+                        new td
+                        {
+                            new InitialLetterLineGroup
+                            {
+                                new InitialLetter { id = Id(27, Taa_), text = Taa_, IsSelected = true },
+                                new InitialLetter { id = Id(27, Siin), text = Siin, IsSelected = true }
+                            }
+                        }
+                    },
+
+                    RowSpace,
+                    new tr
+                    {
+                        new td { new Chapter { ChapterNumber = 28, ChapterName = "Kasas" } },
+                        new td
+                        {
+                            new InitialLetterLineGroup
+                            {
+                                new InitialLetter { id = Id(28, Taa_), text = Taa_, IsSelected = true },
+                                new InitialLetter { id = Id(28, Siin), text = Siin, IsSelected = true },
+                                new InitialLetter { id = Id(28, Miim), text = Miim, IsSelected = true }
+                            }
+                        }
+                    }
+                }
             },
 
-            new Arrow{start =Id(19,Haa ),end = IdOfCountingResult,},
-            new Arrow{start =Id(20,Taa_),end = IdOfCountingResult},
-            new Arrow{start =Id(20,Haa ),end = IdOfCountingResult,StartAnchorFromRight = true},
-            new Arrow{start =Id(26,Taa_),end = IdOfCountingResult,StartAnchorFromTop   = true},
-            new Arrow{start =Id(26,Siin),end = IdOfCountingResult,StartAnchorFromTop   = true},
-            new Arrow{start =Id(26,Miim),end = IdOfCountingResult,StartAnchorFromTop   = true},
-            new Arrow{start =Id(27,Taa_),end = IdOfCountingResult, StartAnchorFromTop  = true},
-            new Arrow{start =Id(27,Siin),end = IdOfCountingResult, StartAnchorFromTop  = true},
-            new Arrow{start =Id(28,Taa_),end = IdOfCountingResult, StartAnchorFromTop  = true},
-            new Arrow{start =Id(28,Siin),end = IdOfCountingResult, StartAnchorFromTop  = true},
-            new Arrow{start =Id(28,Miim),end = IdOfCountingResult, StartAnchorFromTop  = true},
+            new Arrow { start = Id(19, Haa), end  = IdOfCountingResult, },
+            new Arrow { start = Id(20, Taa_), end = IdOfCountingResult },
+            new Arrow { start = Id(20, Haa), end  = IdOfCountingResult, StartAnchorFromRight = true },
+            new Arrow { start = Id(26, Taa_), end = IdOfCountingResult, StartAnchorFromTop   = true },
+            new Arrow { start = Id(26, Siin), end = IdOfCountingResult, StartAnchorFromTop   = true },
+            new Arrow { start = Id(26, Miim), end = IdOfCountingResult, StartAnchorFromTop   = true },
+            new Arrow { start = Id(27, Taa_), end = IdOfCountingResult, StartAnchorFromTop   = true },
+            new Arrow { start = Id(27, Siin), end = IdOfCountingResult, StartAnchorFromTop   = true },
+            new Arrow { start = Id(28, Taa_), end = IdOfCountingResult, StartAnchorFromTop   = true },
+            new Arrow { start = Id(28, Siin), end = IdOfCountingResult, StartAnchorFromTop   = true },
+            new Arrow { start = Id(28, Miim), end = IdOfCountingResult, StartAnchorFromTop   = true },
         };
     }
+
+    static string Id(int chapterNumber, string letter) => $"TaSinMim-{chapterNumber}-{letter}";
 }

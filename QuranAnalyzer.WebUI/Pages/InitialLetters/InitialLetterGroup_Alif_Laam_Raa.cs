@@ -41,15 +41,11 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(10), MultipleOf = 131, SearchScript = GetLetterCountingScript("10:*", Alif, Laam, Raa)
-                                        }
+                                        id = IdOfCountingResult(10), MultipleOf = 131, SearchScript = GetLetterCountingScript("10:*", Alif, Laam, Raa)
                                     }
                                 }
                             }
@@ -76,15 +72,11 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(11), MultipleOf = 131, SearchScript = GetLetterCountingScript("11:*", Alif, Laam, Raa)
-                                        }
+                                        id = IdOfCountingResult(11), MultipleOf = 131, SearchScript = GetLetterCountingScript("11:*", Alif, Laam, Raa)
                                     }
                                 }
                             }
@@ -111,15 +103,11 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(12), MultipleOf = 125, SearchScript = GetLetterCountingScript("12:*", Alif, Laam, Raa)
-                                        }
+                                        id = IdOfCountingResult(12), MultipleOf = 125, SearchScript = GetLetterCountingScript("12:*", Alif, Laam, Raa)
                                     }
                                 }
                             }
@@ -146,15 +134,11 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(14), MultipleOf = 63, SearchScript = GetLetterCountingScript("14:*", Alif, Laam, Raa)
-                                        }
+                                        id = IdOfCountingResult(14), MultipleOf = 63, SearchScript = GetLetterCountingScript("14:*", Alif, Laam, Raa)
                                     }
                                 }
                             }
@@ -181,15 +165,11 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new div
+                                new FlexRow(JustifyContentCenter,mt(50))
                                 {
-                                    style = { marginTop = "50px", display = "flex", justifyContent = "center" },
-                                    children =
+                                    new CountingResult
                                     {
-                                        new CountingResult
-                                        {
-                                            id = IdOfCountingResult(15), MultipleOf = 48, SearchScript = GetLetterCountingScript("15:*", Alif, Laam, Raa)
-                                        }
+                                        id = IdOfCountingResult(15), MultipleOf = 48, SearchScript = GetLetterCountingScript("15:*", Alif, Laam, Raa)
                                     }
                                 }
                             }

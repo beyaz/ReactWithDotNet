@@ -2,9 +2,7 @@
 
 class AllInitialLettersModel
 {
-    #region Public Properties
     public string SelectedTabIdentifier { get; set; }
-    #endregion
 }
 
 class AllInitialLetters : ReactComponent<AllInitialLettersModel>
@@ -17,7 +15,6 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
         };
     }
 
-    #region Static Fields
     static (string TabHeader, Type contenType)[] Tabs =
     {
         ("Kaf 1", typeof(InitialLetterGroup_Qaaf_50)),
@@ -37,9 +34,6 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
 
         ("Nun", typeof(InitialLetterGroup_NunWawNun)),
     };
-    #endregion
-
-    #region Methods
     protected override Element render()
     {
         var contentContainer = new div(StretchWidthHeight)
@@ -52,7 +46,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             Children(Tabs.Select(x => CreateTabHeader(x.TabHeader, x.contenType.FullName)))
         };
 
-        return new FlexRow(Width100Percent, Border("1px solid #dee2e6"))
+        return new FlexRow(Width(Percent(100)), Border($"1px solid {BorderColor}"))
         {
             headers,
             contentContainer
@@ -84,7 +78,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             {
                 Color("rgba(0, 0, 0, 0.6)"),
                 Padding(10),
-                BorderRight($"1px solid {(isSelected ? BluePrimary : "#dee2e6")}"),
+                BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}"),
                 When(isSelected, Background("#deecf9"), Color(BluePrimary))
             },
 
@@ -93,5 +87,4 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
     }
     
     void OnTabHeaderClick(MouseEvent e) => state.SelectedTabIdentifier = e.FirstNotEmptyId;
-    #endregion
 }

@@ -574,6 +574,7 @@ public static partial class Mixin
     /// </summary>
     public static string Solid_1px_(string color) => "1px solid " + (color ?? throw new ArgumentNullException(nameof(color)));
 
+
     /// <summary>
     ///     <br>if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value</br>
     ///     <br>
