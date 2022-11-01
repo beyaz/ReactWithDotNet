@@ -71,7 +71,15 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         children.Add(element);
     }
-
+    
+    public void Add(IEnumerable<Element> elements)
+    {
+        if (elements is not null)
+        {
+            children.AddRange(elements);
+        }
+    }
+    
     public void Add(IModifier modifier)
     {
         ProcessModifier(modifier);

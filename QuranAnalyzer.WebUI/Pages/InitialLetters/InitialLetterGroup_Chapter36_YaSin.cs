@@ -62,20 +62,23 @@ class InitialLetterGroup_Chapter36_YaSin : InitialLetterGroup
             {
                 @"Belki de ismi en yaygın olarak bilinen sure Yasin suresidir.",
                 " Bu sure " , Letter("Ye","ي") , " ve ",Letter("Sin","س"), " olmak üzere iki tane başlangıç harfi ile başlar.",
-                " Yüzyıllar boyu bu harfler için farklı farklı bir çok fikir ortaya atılmıştır.",
-                " Size bir mektup geldiğini hayal edin ve mektubun ilk satırında sadece bir K harfi olduğunu düşünün. " +
-                " İster istemez burada bir kasıt ararsınız. Bir açıklama beklersiniz.",
-                " Bu surede toplamda 57(19x3) adet Kaf(ق) harfi vardır.",
-                " İsterseniz incele linkine tıklayarak bu sayımları kendiniz yapabilirsiniz."
+                " Bu iki harfin Yasin suresindeki toplam geçiş adeti ise ",Total(285),"' tir."
             },
             
             new Arrow { start = Id(36, Yaa), end = IdOfCountingResult},
             new Arrow { start = Id(36, Siin), end = IdOfCountingResult},
         };
 
-        static Element Letter(string trName, string arabicLetter)
+        static IEnumerable<Element> Letter(string trName, string arabicLetter)
         {
-            return new div{ trName, "(", (strong)arabicLetter, ")" };
+            return new Element[]{ trName, "(", (strong)arabicLetter, ")" };
+        }
+
+        static IEnumerable<Element> Total(int total)
+        {
+            var detail = new small { "(", (b)"19", "x",(total / 19).ToString(),")" };
+            
+            return new Element[] { total.ToString(), detail };
         }
     }
 }
