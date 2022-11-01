@@ -74,7 +74,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             value             = GetNodes(),
             onSelectionChange = OnSelectionChanged,
             selectionKeys     = SelectedMethodTreeNodeKey,
-            style             = { PrimaryBackground, Width(450) },
+            style             = { PrimaryBackground, Width(440) },
         };
 
         var csscustomizeForTree = new style

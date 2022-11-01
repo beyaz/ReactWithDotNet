@@ -47,6 +47,16 @@ class InitialLetterGroup_Qaaf_50 : InitialLetterGroup
                 }
             },
 
+            new Note
+            {
+                @"Kuranda 50. surenin adı  'Kaf Suresi' dir. İlginç bir şekilde surenin başında sadece bir tane Kaf(" , (strong)"ق" , ") harfi vardır.",
+                " Yüzyıllar boyu bu harfler için farklı farklı bir çok fikir ortaya atılmıştır.",
+                " Size bir mektup geldiğini hayal edin ve mektubun ilk satırında sadece bir K harfi olduğunu düşünün. " +
+                " İster istemez burada bir kasıt ararsınız. Bir açıklama beklersiniz.",
+                " Bu surede toplamda 57(19x3) adet Kaf(ق) harfi vardır.",
+                " İsterseniz incele linkine tıklayarak bu sayımları kendiniz yapabilirsiniz."
+            },
+
             new Arrow { start = Id(50, Qaaf), end = IdOfCountingResult, StartAnchorFromRight = true }
         };
     }

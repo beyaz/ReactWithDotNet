@@ -9,7 +9,7 @@ class Note : ReactComponent
     
     protected override Element render()
     {
-        return new FlexRow(PaddingLeftRight("10%"), PaddingTop(50))
+        return new FlexRow(PaddingLeftRight(Percent(10)), PaddingTop(50))
         {
             new strong{Text("Not:"), MarginRight(5)}, new div{ Children(children) }
         };
@@ -18,7 +18,6 @@ class Note : ReactComponent
 
 class InitialLetterGroup_Chapter19 : InitialLetterGroup
 {
-
     static string Id(int chapterNumber, string letter) => $"Chapter19-{chapterNumber}-{letter}";
 
     static string IdOfCountingResult => $"Chapter19-{nameof(IdOfCountingResult)}";
