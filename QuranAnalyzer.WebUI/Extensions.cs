@@ -81,4 +81,25 @@ static class Extensions
     {
         client.ListenEvent(MushafOptionChanged, handler);
     }
+
+    public static string GetTurkishPronunciationOfArabicLetter(string arabicLetter)
+    {
+        if (arabicLetter == ArabicLetter.Yaa)
+        {
+            return "Ye";
+        }
+
+        if (arabicLetter == ArabicLetter.Siin)
+        {
+            return "Sin";
+        }
+
+        if (arabicLetter == ArabicLetter.Qaaf)
+        {
+            return "Kaf";
+        }
+
+        throw new NotImplementedException(arabicLetter);
+    }
 }
+

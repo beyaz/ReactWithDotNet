@@ -89,6 +89,8 @@ public static partial class Mixin
     public static StyleModifier FlexWrap => new(style => style.flexWrap = "wrap");
     public static StyleModifier FlexWrapReverse => new(style => style.flexWrap = "wrap-reverse");
 
+    
+
     public static StyleModifier FontSize10 => FontSize(10);
     public static StyleModifier FontSize11 => FontSize(11);
     public static StyleModifier FontSize12 => FontSize(12);
@@ -407,6 +409,14 @@ public static partial class Mixin
     public static StyleModifier FontFamily(string fontFamily) => new(style => style.fontFamily = fontFamily);
 
     public static StyleModifier FontSize(string fontSize) => new(style => style.fontSize = fontSize);
+
+
+    public static StyleModifier FontStyle(string fontStyle) => new(style => style.fontStyle = fontStyle);
+
+    public static StyleModifier FontStyleNormal => FontStyle("normal");
+    public static StyleModifier FontStyleBold=> FontStyle("bold");
+    public static StyleModifier FontStyleItalic=> FontStyle("italic");
+
     public static StyleModifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
 
     public static StyleModifier FontWeight(string fontWeight) => new(style => style.fontWeight = fontWeight);

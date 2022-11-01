@@ -144,6 +144,11 @@ abstract class InitialLetterGroup : ReactComponent
     protected tr RowSpace => new tr { style = { height = "10px" } };
 
     protected tr HeaderSpace => new tr { style = { height = "15px" } };
+
+    protected string GetPronunciationOfArabicLetter(string arabicLetter)
+    {
+        return GetTurkishPronunciationOfArabicLetter(arabicLetter);
+    }
 }
 
 class InitialLetterGroup_Saad: InitialLetterGroup
