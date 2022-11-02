@@ -22,7 +22,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                 PositionFixed,
                 Top(0),
                 Left(0),
-                Width100Percent,
+                Width("100%"),
                 Height(50),
                 Zindex(1),
                 BorderBottom("1px solid #dadce0")

@@ -15,7 +15,7 @@ class InitialLetterGroup_Alif_Laam_Miim_Sad : InitialLetterGroup
         return new div
         {
 
-            new table(Width(Percent(100)))
+            new table(Width("100%"))
             {
                
                     new tbody

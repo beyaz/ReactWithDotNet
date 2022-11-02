@@ -46,7 +46,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             Children(Tabs.Select(x => CreateTabHeader(x.TabHeader, x.contenType.FullName)))
         };
 
-        return new FlexRow(Width(Percent(100)), Border($"1px solid {BorderColor}"))
+        return new FlexRow(Width("100%"), Border($"1px solid {BorderColor}"))
         {
             headers,
             contentContainer

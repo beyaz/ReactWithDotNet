@@ -13,7 +13,7 @@ class InitialLetterGroup_HaMim : InitialLetterGroup
     {
         return new div
         {
-            new table(Width(Percent(100)))
+            new table(Width("100%"))
             {
                 new tbody
                 {

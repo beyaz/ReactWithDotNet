@@ -46,7 +46,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 style     = { minHeight = "200px", borderRadius = "3px",border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
             };
         }
-        var propertyPanel = new FlexColumn(Padding(5), Height(Percent(100)),Width(Percent(100)), FontSize15, PrimaryBackground)
+        var propertyPanel = new FlexColumn(Padding(5), Height("100%"),Width("100%"), FontSize15, PrimaryBackground)
         {
             new style{Text($@"
 
@@ -67,7 +67,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             Space(10),
             new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged } | Margin(10) | Padding(5),
 
-            new FlexColumn(Height100Percent)
+            new FlexColumn(Height("100%"))
             {
                 new FlexRow(Color("#6c757d"),CursorPointer, TextAlignCenter)
                 {

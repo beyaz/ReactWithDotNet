@@ -6,7 +6,6 @@ namespace ReactWithDotNet;
 
 public static partial class Mixin
 {
-
     /// <summary>
     ///     style.flexGrow = <paramref name="growValue"/>
     /// </summary>
@@ -139,16 +138,10 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier FontWeightMedium=> FontWeight500;
 
-    /// <summary>
-    ///     style.height = "100%"
-    /// </summary>
-    public static StyleModifier Height100Percent => HeightAsPercentOf(100);
+   
 
     public static StyleModifier Height100vh => new(style => style.height = "100vh");
 
-    public static StyleModifier Height25Percent => HeightAsPercentOf(25);
-    public static StyleModifier Height50Percent => HeightAsPercentOf(50);
-    public static StyleModifier Height75Percent => HeightAsPercentOf(75);
 
     /// <summary>
     ///     style.height = "auto"
@@ -258,14 +251,10 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier TextDecorationUnderline => TextDecoration("underline");
 
-    /// <summary>
-    ///     style.width = "100%"
-    /// </summary>
-    public static StyleModifier Width100Percent => WidthAsPercentOf(100);
+   
 
-    public static StyleModifier Width25Percent => WidthAsPercentOf(25);
-    public static StyleModifier Width50Percent => WidthAsPercentOf(50);
-    public static StyleModifier Width75Percent => WidthAsPercentOf(75);
+
+    
     public static StyleModifier WidthAuto => new(style => style.width = "auto");
 
     public static TParent appendChild<TParent, TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
@@ -427,11 +416,7 @@ public static partial class Mixin
     public static StyleModifier Height(double height) => Height(height.AsPixel());
     public static StyleModifier Height(string height) => new(style => style.height = height);
 
-    /// <summary>
-    ///     height = valueAsPercent + "%"
-    /// </summary>
-    public static StyleModifier HeightAsPercentOf(double valueAsPercent) => new(style => style.height = valueAsPercent + "%");
-
+    
     public static string HexToRgb(string hexColor, double opacity = 1)
     {
         var color = ColorTranslator.FromHtml(hexColor);
@@ -706,12 +691,8 @@ public static partial class Mixin
     public static StyleModifier Width(double width) => new(style => style.width = width.AsPixel());
     public static StyleModifier Width(string width) => new(style => style.width = width);
 
-    /// <summary>
-    ///     <paramref name="value"/> + '%'
-    /// </summary>
-    public static string Percent(double value)=>value+"%";
+   
 
-    public static StyleModifier WidthAsPercentOf(double valueAsPercent) => new(style => style.width = valueAsPercent + "%");
     public static StyleModifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
     public static StyleModifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
 
