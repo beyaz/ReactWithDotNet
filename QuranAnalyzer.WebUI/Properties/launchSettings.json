@@ -19,6 +19,14 @@
                 "commandName": "Project",
                 "hotReloadProfile": "aspnetcore"
             }
+        },
+
+        "QuranAnalyzer.WebUI": {
+            "commandName": "Project",
+            "applicationUrl": "https://localhost:44382",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
         }
     }
 }
