@@ -20,12 +20,22 @@ class InitialLetter : ReactComponent
         {
             color = "red";
         }
-        
-        return new div
+
+        var pronuncation = GetPronunciationOfArabicLetter(text);
+
+        return new FlexColumn(TextAlignCenter)
         {
-            style = { border = $"{(IsSelected?2:1)}px solid {color}", borderRadius = "0.5rem", padding = "5px" },
+            style = { border = $"{(IsSelected ? 2 : 1)}px solid {color}", borderRadius = "0.5rem", padding = "5px" },
             id    = id,
-            text  = text
+            children =
+            {
+                new div
+                {
+                    text = text
+                },
+                new div(pronuncation){FontSize("70%"), FontWeight600}
+            }
+          
         };
     }
 }
@@ -126,12 +136,18 @@ class Arrow: ReactComponent
             dashness    = true,
             //curveness  = 1.02,
             endAnchor = "left"
-
         };
     }
 }
 
 
+abstract class ReactComponent : ReactWithDotNet.ReactComponent
+{
+    protected string GetPronunciationOfArabicLetter(string arabicLetter)
+    {
+        return GetTurkishPronunciationOfArabicLetter(arabicLetter);
+    }
+}
 abstract class InitialLetterGroup : ReactComponent
 {
     protected tr HeaderTr => new tr
@@ -145,9 +161,11 @@ abstract class InitialLetterGroup : ReactComponent
 
     protected tr HeaderSpace => new tr { style = { height = "15px" } };
 
-    protected string GetPronunciationOfArabicLetter(string arabicLetter)
+  
+
+    protected IEnumerable<Element> AsLetter(string arabicLetter)
     {
-        return GetTurkishPronunciationOfArabicLetter(arabicLetter);
+        return (GetPronunciationOfArabicLetter(arabicLetter), arabicLetter).AsLetter();
     }
 }
 

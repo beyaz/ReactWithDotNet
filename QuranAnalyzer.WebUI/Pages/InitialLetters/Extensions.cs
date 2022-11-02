@@ -6,7 +6,7 @@ static class Extensions
     {
         var (trName, arabicLetter) = letter;
 
-        return new Element[] { trName, "(", (strong)arabicLetter, ")" };
+        return new Element[] { (strong)trName, "(", (strong)arabicLetter, ")" };
     }
 
     public static IEnumerable<Element> AsMultipleOf19(this int total)

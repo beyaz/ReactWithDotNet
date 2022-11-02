@@ -49,11 +49,11 @@ class InitialLetterGroup_Qaaf_42 : InitialLetterGroup
 
             new Note
             {
-                @"42. surede yine Kaf(", (strong)"ق", ") başlangıç harfi vardır.",
-                " Bu surede toplamda 57(19x3) adet Kaf(ق) harfi vardır.",
+                @"42. surede yine ", AsLetter(Qaaf), " başlangıç harfi vardır.",
+                " Bu surede toplamda ", 57.AsMultipleOf19(), " adet ", AsLetter(Qaaf), " harfi vardır.",
                 new br(), new br(),
-                " Özetlemek gerekirse Kuranda Kaf(ق) başlangıç harfi içeren iki tane sure var.",
-                "  Bu iki sure de kendi içlerinde eşit sayıda yani ", 57.AsMultipleOf19(), " adet Kaf(ق) harfi içerir."
+                " Özetlemek gerekirse Kuranda ", AsLetter(Qaaf), " başlangıç harfi içeren iki tane sure vardır.",
+                "  Bu iki sure de kendi içlerinde eşit sayıda yani ", 57.AsMultipleOf19(), " adet ", AsLetter(Qaaf), " harfi içerir."
             },
 
             new Arrow { start = Id(42, Qaaf), end = IdOfCountingResult, StartAnchorFromRight = true }

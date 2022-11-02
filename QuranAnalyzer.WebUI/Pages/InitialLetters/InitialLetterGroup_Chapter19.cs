@@ -80,7 +80,8 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
             {
                 @"Meryem suresi Kuran'da en baştan ",  (strong)"19." ," sıradadır. ",
                 @"Aynı zamanda", (strong)" en çok başlangıç harfi olan", " suredir. ",
-                "Sadece bu sureye mahsus olmak üzere, surenin başında 5 tane başlangıç harfi vardır."
+                " 5 tane başlangıç harfi vardır.",
+                " Bu beş tane başlangıç harfinin toplam geçiş adeti ise yine 19 un bir katı olan ", 798.AsMultipleOf19() ,"'dir."
             }
         };
     }

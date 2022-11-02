@@ -99,6 +99,11 @@ static class Extensions
             return "Kaf";
         }
 
+        if (arabicLetter == ArabicLetter.Ayn)
+        {
+            return "Ayn";
+        }
+
         throw new NotImplementedException(arabicLetter);
     }
 }

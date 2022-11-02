@@ -5,65 +5,64 @@ namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 class InitialLetterGroup_Chapter42_AinSinKaf : InitialLetterGroup
 {
-
-    static string Id(int chapterNumber, string letter) => $"42_AinSinKaf-{chapterNumber}-{letter}";
+    static Element countingResult => new CountingResult { id = IdOfCountingResult, MultipleOf = 11, SearchScript = GetLetterCountingScript("42:*", Ayn, Siin, Qaaf) };
 
     static string IdOfCountingResult => $"42_AinSinKaf-{nameof(IdOfCountingResult)}";
-
-    static Element countingResult => new CountingResult { id = IdOfCountingResult, MultipleOf = 11, SearchScript = GetLetterCountingScript("42:*", Ayn, Siin, Qaaf) };
 
     protected override Element render()
     {
         return new div
         {
-
             new table(Width("100%"))
             {
-               
-                    new tbody
+                new tbody
+                {
+                    HeaderTr,
+                    HeaderSpace,
+                    new tr
                     {
-                        HeaderTr,
-                        HeaderSpace,
-                        new tr
+                        new td
                         {
-                            new td
+                            new Chapter { ChapterNumber = 42, ChapterName = "Şura" }
+                        },
+                        new td
+                        {
+                            new InitialLetterLineGroup
                             {
-                                new Chapter { ChapterNumber = 42, ChapterName = "Şura" }
-                            },
-                            new td
-                            {
-                                new InitialLetterLineGroup
-                                {
-
-                                    new InitialLetter { id = Id(42, Ayn) , text = Ayn  },
-                                        new InitialLetter { id = Id(42, Siin), text = Siin },
-                                        new InitialLetter { id = Id(42, Qaaf), text = Qaaf }
-                                    
-                                    
-                                }
-                            },
-                            new td
-                            {
-                                rowSpan = 99,
-                                children =
-                                {
-                                    new FlexRow(JustifyContentCenter,MarginTop(50))
-                                    {
-                                        countingResult
-                                    }
-                                }
+                                new InitialLetter { id = Id(42, Ayn), text  = Ayn },
+                                new InitialLetter { id = Id(42, Siin), text = Siin },
+                                new InitialLetter { id = Id(42, Qaaf), text = Qaaf }
                             }
                         },
-
-                    }
-                
-
+                        new td
+                        {
+                            rowSpan = 99,
+                            children =
+                            {
+                                new FlexRow(JustifyContentCenter, MarginTop(70))
+                                {
+                                    countingResult
+                                }
+                            }
+                        }
+                    },
+                }
             },
 
+            new Note
+            {
+                @"Kurandaki başlangıç harfleri surenin sadece ilk ayetinde olur.",
+                " Bunun tek istisnası 42. suredir.",
+                " Bu surenin hem 1. ayeti hem 2.ayeti başlangıç harflerinden oluşur. ",
+                AsLetter(Ayn), " , ", AsLetter(Siin), " , ", AsLetter(Qaaf), " harflerinin bu sure boyunca geçiş adeti ise yine 19 un katı olan ",
+                209.AsMultipleOf19(), " sayısıdır."
+            },
 
-            new Arrow { start = Id(42, Ayn), end  = IdOfCountingResult},
-            new Arrow { start = Id(42, Siin), end = IdOfCountingResult},
-            new Arrow { start = Id(42, Qaaf), end  = IdOfCountingResult},
+            new Arrow { start = Id(42, Ayn), end  = IdOfCountingResult },
+            new Arrow { start = Id(42, Siin), end = IdOfCountingResult },
+            new Arrow { start = Id(42, Qaaf), end = IdOfCountingResult },
         };
     }
+
+    static string Id(int chapterNumber, string letter) => $"42_AinSinKaf-{chapterNumber}-{letter}";
 }

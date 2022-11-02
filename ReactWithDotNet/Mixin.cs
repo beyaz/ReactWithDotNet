@@ -403,7 +403,6 @@ public static partial class Mixin
     public static StyleModifier FontStyle(string fontStyle) => new(style => style.fontStyle = fontStyle);
 
     public static StyleModifier FontStyleNormal => FontStyle("normal");
-    public static StyleModifier FontStyleBold=> FontStyle("bold");
     public static StyleModifier FontStyleItalic=> FontStyle("italic");
 
     public static StyleModifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
