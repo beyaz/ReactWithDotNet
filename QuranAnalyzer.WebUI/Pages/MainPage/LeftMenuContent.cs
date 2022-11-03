@@ -7,31 +7,21 @@ class LeftMenuContent: ReactComponent
 {
     protected override Element render()
     {
-        return new div
+        return new FlexColumn(AlignItemsCenter,Width("100%"), Height("100%"), TextAlignCenter, Gap(20))
         {
-            children =
-            {
-                new VSpace(20),
-                toSidebarMenuItem("1 - Anasayfa",PageId.MainPage),
-                new VSpace(20),
-                toSidebarMenuItem("2 - Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.SecuringDataWithCurrentTechnology),
-                new VSpace(20),
-                toSidebarMenuItem("3 - Ön Bilgiler",PageId.PreInformation),
-                new VSpace(20),
-                toSidebarMenuItem("4 - Başlangıç Harfleri",PageId.InitialLetters),
-                new VSpace(20),
-                toSidebarMenuItem("5 - Soru - Cevap",PageId.QuestionAnswerPage),
-                new VSpace(20),
-                toSidebarMenuItem("6 - İletişim",PageId.ContactPage),
-            },
-            style =
-            {
-                width_height  = "100%",
-                display       = "flex",
-                flexDirection = "column",
-                alignItems    = "center",
-                textAlign     = "center"
-            }
+            toSidebarMenuItem("1 - Anasayfa",PageId.MainPage),
+
+            toSidebarMenuItem("2 - Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.SecuringDataWithCurrentTechnology),
+
+            toSidebarMenuItem("3 - Ön Bilgiler",PageId.PreInformation),
+
+            toSidebarMenuItem("4 - Tanım",PageId.Definition),
+
+            toSidebarMenuItem("5 - Başlangıç Harfleri",PageId.InitialLetters),
+
+            toSidebarMenuItem("6 - Soru - Cevap",PageId.QuestionAnswerPage),
+
+            toSidebarMenuItem("7 - İletişim",PageId.ContactPage)
         };
 
         static Element toSidebarMenuItem(string text, string id)

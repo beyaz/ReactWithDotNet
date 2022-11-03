@@ -17,6 +17,7 @@ static class PageId
     public const string PageIdOfMushafOptionsDetail = "7";
     public const string WordSearchingPage = "8";
     public const string AlternativeSystems = "9";
+    public const string Definition = "10";
 }
 
 static class QueryKey

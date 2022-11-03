@@ -144,6 +144,11 @@ class View : ReactComponent<MainViewModel>
                 return new AlternativeSystems.AlternativeSystemsView();
             }
 
+            if (state.PageId == PageId.Definition)
+            {
+                return new DefinitionPage.DefinitionView();
+            }
+
             return new MainPageContent();
         }
     }
