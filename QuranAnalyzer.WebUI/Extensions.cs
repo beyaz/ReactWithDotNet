@@ -104,6 +104,26 @@ static class Extensions
             return "Ayn";
         }
 
+        if (arabicLetter == ArabicLetter.Kaaf)
+        {
+            return "Kef";
+        }
+
+        if (arabicLetter == ArabicLetter.Haa)
+        {
+            return "Ha";
+        }
+
+        if (arabicLetter == ArabicLetter.Saad)
+        {
+            return "Sad";
+        }
+
+        if (arabicLetter == ArabicLetter.Haa_)
+        {
+            return "Ha";
+        }
+
         throw new NotImplementedException(arabicLetter);
     }
 }
