@@ -217,7 +217,7 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(19,Qaaf), text = Qaaf },
+                                        new InitialLetter { id = Id(19,Kaaf), text = Kaaf },
                                         new InitialLetter { id = Id(19,Haa), text  = Haa_ },
                                         new InitialLetter { id = Id(19,Yaa), text  = Yaa },
                                         new InitialLetter { id = Id(19,Ayn), text  = Ayn },
@@ -265,7 +265,19 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                 }
 
             },
-            
+
+            new Note
+            {
+                AsLetter(Saad), @" başlangıç harfi olarak 3 surenin başında vardır.",
+                " Bu üç suredeki toplam geçiş adeti ise ", 152.AsMultipleOf19(), "'dir.",
+                " Buradaki girift yapıya dikkatli bakınız.",
+                " Mesela 19. suredeki ",AsLetter(Saad) , 
+                " harfi hem 19. suredeki toplam ile uyumlu " ,
+                " hemde bu 3 suredeki geçiş adeti ile uyumludur.",
+                " Eğer 19.surede bir tane fazla ",AsLetter(Saad)," harfi olsaydı bu ahenk bozulurdu."
+            },
+
+
             new Arrow { start = Id(7,Saad),  end = IdOfCountingResult, dashness = true, StartAnchorFromRight = true },
             new Arrow { start = Id(19,Saad), end = IdOfCountingResult, dashness = true, StartAnchorFromRight = true },
             new Arrow { start = Id(38,Saad), end = IdOfCountingResult, dashness = true, StartAnchorFromRight = true },

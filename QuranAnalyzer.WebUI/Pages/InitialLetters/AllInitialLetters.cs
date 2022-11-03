@@ -19,8 +19,8 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
     {
         ("Kaf 1", typeof(InitialLetterGroup_Qaaf_50)),
         ("Kaf 2", typeof(InitialLetterGroup_Qaaf_42)),
-        ("Ya-Sin", typeof(InitialLetterGroup_Chapter36_YaSin)),
-        ("42_AinSinKaf", typeof(InitialLetterGroup_Chapter42_AinSinKaf)),
+        ("Ya Sin", typeof(InitialLetterGroup_Chapter36_YaSin)),
+        ("Ayn Sin Kaf", typeof(InitialLetterGroup_Chapter42_AinSinKaf)),
         ("Meryem", typeof(InitialLetterGroup_Chapter19)),
         ("Elif Lam Mim", typeof(InitialLetterGroup_Alif_Laam_Miim)),
         ("Elif Lam Ra", typeof(InitialLetterGroup_Alif_Laam_Raa)),

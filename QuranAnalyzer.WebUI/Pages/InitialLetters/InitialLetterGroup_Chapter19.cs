@@ -44,8 +44,8 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(19, Qaaf), text = Qaaf },
-                                new InitialLetter { id = Id(19, Haa), text  = Haa_ },
+                                new InitialLetter { id = Id(19, Kaaf), text = Kaaf },
+                                new InitialLetter { id = Id(19, Haa_), text = Haa_ },
                                 new InitialLetter { id = Id(19, Yaa), text  = Yaa },
                                 new InitialLetter { id = Id(19, Ayn), text  = Ayn },
                                 new InitialLetter { id = Id(19, Saad), text = Saad }
@@ -56,7 +56,7 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
                             rowSpan = 99,
                             children =
                             {
-                                new FlexRow(JustifyContentCenter,MarginTop(50))
+                                new FlexRow(JustifyContentCenter,MarginTop(70))
                                 {
                                     countingResult
                                 }
@@ -69,8 +69,8 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
             },
 
 
-            new Arrow { start = Id(19, Qaaf), end = IdOfCountingResult},
-            new Arrow { start = Id(19, Haa), end  = IdOfCountingResult},
+            new Arrow { start = Id(19, Kaaf), end = IdOfCountingResult},
+            new Arrow { start = Id(19, Haa_), end = IdOfCountingResult},
             new Arrow { start = Id(19, Yaa), end  = IdOfCountingResult},
             new Arrow { start = Id(19, Ayn), end  = IdOfCountingResult},
             new Arrow { start = Id(19, Saad), end = IdOfCountingResult},

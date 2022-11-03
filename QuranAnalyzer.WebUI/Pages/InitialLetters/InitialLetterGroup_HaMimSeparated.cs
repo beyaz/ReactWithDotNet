@@ -93,6 +93,10 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         },
 
                         RowSpace,
+                        RowSpace,
+                        RowSpace,
+                        RowSpace,
+                        RowSpace,
                         new tr
                         {
                             new td
@@ -184,6 +188,16 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
 
             },
 
+
+            new Note
+            {
+                @" Başlangıç harfleri genelde surelerin ilk ayetinde olur. Bunun tek istisnası 42. suredir. ",
+                " 42. sure diğerlerinden farklı olarak 2. ayetinde de başlangıç harfi barındırır.",
+                new br(),
+                " Şekilden de görüldüğü üzere 42. suredeki bu olay farklı bir ahenk daha katar. " ,
+                " Sanki bu 7 surede var olan ", AsLetter(Haa), " - ", AsLetter(Miim)," tablosunu 19.un katları şeklinde ikiye bölüyormuş gibi düşünebilirsiniz."
+            },
+            
             new Arrow{start =Id(40,Haa ), end = IdOfCountingResult_1, StartAnchorFromRight = true},
             new Arrow{start =Id(40,Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true},
             new Arrow{start =Id(41,Haa ), end = IdOfCountingResult_1,StartAnchorFromRight  = true},
