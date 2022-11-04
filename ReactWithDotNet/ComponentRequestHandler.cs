@@ -48,7 +48,7 @@ public class ComponentRequest
 [Serializable]
 public class ComponentResponse
 {
-    public string[] DynamicStyles { get; set; }
+    public object DynamicStyles { get; set; }
 
     public object ElementAsJson { get; set; }
 

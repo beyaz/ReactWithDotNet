@@ -1638,30 +1638,50 @@ function CreateNewDeveloperError(message)
     return new Error('ReactWithDotNet developer error occured.' + message);
 }
 
-const DynamicCssClassList = [];
+const DynamicStyles = [];
 var ReactWithDotNetDynamicCssElement = null;
 
-function ProcessDynamicCssClasses(arrayOfDynamicCssClasses)
+function ProcessDynamicCssClasses(dynamicStyles)
 {
-    if (arrayOfDynamicCssClasses == null || arrayOfDynamicCssClasses.length === 0)
+    if (dynamicStyles == null || dynamicStyles.length === 0)
     {
         return;
     }
 
     let hasChange = false;
 
-    for (var i = 0; i < arrayOfDynamicCssClasses.length; i++)
+    for (var key in dynamicStyles)
     {
-        var cssClass = arrayOfDynamicCssClasses[i];
-
-        if (DynamicCssClassList.indexOf(cssClass) >= 0)
+        if (dynamicStyles.hasOwnProperty(key)) 
         {
-            continue;
+            const cssSelector = key;
+            const cssBody = dynamicStyles[key];
+
+            let shouldInsert = true;
+
+            for (var i = 0; i < DynamicStyles.length; i++)
+            {
+                if (DynamicStyles[i].cssSelector === cssSelector)
+                {
+                    if (DynamicStyles[i].cssBody === cssBody)
+                    {
+                        shouldInsert = false;
+                        break;
+                    }
+
+                    hasChange = true;
+                    DynamicStyles[i].cssBody = cssBody;
+                    break;
+                }
+            }
+
+            if (shouldInsert)
+            {
+                hasChange = true;
+
+                DynamicStyles.push({cssSelector: cssSelector, cssBody: cssBody});
+            }           
         }
-
-        hasChange = true;
-
-        DynamicCssClassList.push(cssClass);
     }
 
     if (hasChange)
@@ -1673,7 +1693,20 @@ function ProcessDynamicCssClasses(arrayOfDynamicCssClasses)
             document.head.appendChild(ReactWithDotNetDynamicCssElement);
         }
 
-        ReactWithDotNetDynamicCssElement.innerHTML = DynamicCssClassList.join("\n");
+        const arr = [];
+        for (var i = 0; i < DynamicStyles.length; i++)
+        {
+            const cssSelector = DynamicStyles[i].cssSelector;
+            const cssBody = DynamicStyles[i].cssBody;
+
+            arr.push("");
+            arr.push(cssSelector);
+            arr.push("{");
+            arr.push(cssBody);
+            arr.push("}");            
+        }
+
+        ReactWithDotNetDynamicCssElement.innerHTML = arr.join("\n");
     }
 }
 

@@ -38,14 +38,21 @@ class DynamicStyleContentForEmbeddInClient
         return cssClassInfo.Name;
     }
 
-    public string[] CalculateCssClassList()
+    public JsonMap CalculateCssClassList()
     {
         if (!listOfClasses.Any())
         {
             return null;
         }
 
-        return listOfClasses.Select(x => x.CalculateCssCode()).ToArray();
+        var jsonMap = new JsonMap();
+
+        foreach (var cssClassInfo in listOfClasses)
+        {
+            cssClassInfo.WriteTo(jsonMap);
+        }
+
+        return jsonMap;
     }
 }
 
@@ -80,9 +87,13 @@ class CssClassInfo
 {
     public string Name { get; init; }
     public IReadOnlyList<CssPseudoCodeInfo> Pseudos { get; init; }
-
-    public string CalculateCssCode()
+    
+    public void WriteTo(JsonMap jsonMap)
     {
-        return string.Join(Environment.NewLine, Pseudos.Select(x => $".{Name}:{x.Name} {{ {x.BodyOfCss} }}"));
+        foreach (var pseudoCodeInfo in Pseudos)
+        {
+            jsonMap.Add($".{Name}:{pseudoCodeInfo.Name}", pseudoCodeInfo.BodyOfCss);
+        }
+
     }
 }
