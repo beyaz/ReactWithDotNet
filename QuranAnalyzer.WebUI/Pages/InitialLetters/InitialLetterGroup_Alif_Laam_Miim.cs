@@ -33,9 +33,9 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(2, Alif), text = Alif },
-                                        new InitialLetter { id = Id(2, Laam), text = Laam },
-                                        new InitialLetter { id = Id(2, Miim), text = Miim },
+                                        new InitialLetter { Id = Id(2, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(2, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(2, Miim), Letter = Miim },
                                     
                                 }
                             },
@@ -63,9 +63,9 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(3, Alif), text = Alif },
-                                        new InitialLetter { id = Id(3, Laam), text = Laam },
-                                        new InitialLetter { id = Id(3, Miim), text = Miim },
+                                        new InitialLetter { Id = Id(3, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(3, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(3, Miim), Letter = Miim },
                                     
                                 }
                             },
@@ -94,9 +94,9 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(29, Alif), text = Alif },
-                                        new InitialLetter { id = Id(29, Laam), text = Laam },
-                                        new InitialLetter { id = Id(29, Miim), text = Miim },
+                                        new InitialLetter { Id = Id(29, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(29, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(29, Miim), Letter = Miim },
                                     
                                 }
                             },
@@ -125,9 +125,9 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(30, Alif), text = Alif },
-                                        new InitialLetter { id = Id(30, Laam), text = Laam },
-                                        new InitialLetter { id = Id(30, Miim), text = Miim },
+                                        new InitialLetter { Id = Id(30, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(30, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(30, Miim), Letter = Miim },
                                     
                                 }
                             },
@@ -156,9 +156,9 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                   
-                                        new InitialLetter { id = Id(31, Alif), text = Alif },
-                                        new InitialLetter { id = Id(31, Laam), text = Laam },
-                                        new InitialLetter { id = Id(31, Miim), text = Miim },
+                                        new InitialLetter { Id = Id(31, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(31, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(31, Miim), Letter = Miim },
                                     
                                 }
                             },
@@ -187,9 +187,9 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(32, Alif), text = Alif },
-                                        new InitialLetter { id = Id(32, Laam), text = Laam },
-                                        new InitialLetter { id = Id(32, Miim), text = Miim },
+                                        new InitialLetter { Id = Id(32, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(32, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(32, Miim), Letter = Miim },
                                     
                                 }
                             },

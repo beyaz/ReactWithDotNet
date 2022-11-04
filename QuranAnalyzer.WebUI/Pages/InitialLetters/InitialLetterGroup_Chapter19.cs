@@ -44,11 +44,11 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(19, Kaaf), text = Kaaf },
-                                new InitialLetter { id = Id(19, Haa_), text = Haa_ },
-                                new InitialLetter { id = Id(19, Yaa), text  = Yaa },
-                                new InitialLetter { id = Id(19, Ayn), text  = Ayn },
-                                new InitialLetter { id = Id(19, Saad), text = Saad }
+                                new InitialLetter { Id = Id(19, Kaaf), Letter = Kaaf },
+                                new InitialLetter { Id = Id(19, Haa_), Letter = Haa_ },
+                                new InitialLetter { Id = Id(19, Yaa), Letter  = Yaa },
+                                new InitialLetter { Id = Id(19, Ayn), Letter  = Ayn },
+                                new InitialLetter { Id = Id(19, Saad), Letter = Saad }
                             }
                         },
                         new td

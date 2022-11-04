@@ -33,9 +33,9 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(10, Alif), text = Alif },
-                                        new InitialLetter { id = Id(10, Laam), text = Laam },
-                                        new InitialLetter { id = Id(10, Raa), text = Raa },
+                                        new InitialLetter { Id = Id(10, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(10, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(10, Raa), Letter = Raa },
                                     
                                 }
                             },
@@ -64,9 +64,9 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(11, Alif), text = Alif },
-                                        new InitialLetter { id = Id(11, Laam), text = Laam },
-                                        new InitialLetter { id = Id(11, Raa), text  = Raa },
+                                        new InitialLetter { Id = Id(11, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(11, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(11, Raa), Letter  = Raa },
                                     
                                 }
                             },
@@ -95,9 +95,9 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(12, Alif), text = Alif },
-                                        new InitialLetter { id = Id(12, Laam), text = Laam },
-                                        new InitialLetter { id = Id(12, Raa), text  = Raa },
+                                        new InitialLetter { Id = Id(12, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(12, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(12, Raa), Letter  = Raa },
                                     
                                 }
                             },
@@ -126,9 +126,9 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(14, Alif), text = Alif },
-                                        new InitialLetter { id = Id(14, Laam), text = Laam },
-                                        new InitialLetter { id = Id(14, Raa), text  = Raa },
+                                        new InitialLetter { Id = Id(14, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(14, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(14, Raa), Letter  = Raa },
                                     
                                 }
                             },
@@ -157,9 +157,9 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(15, Alif), text = Alif },
-                                        new InitialLetter { id = Id(15, Laam), text = Laam },
-                                        new InitialLetter { id = Id(15, Raa), text  = Raa },
+                                        new InitialLetter { Id = Id(15, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(15, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(15, Raa), Letter  = Raa },
                                     
                                 }
                             },

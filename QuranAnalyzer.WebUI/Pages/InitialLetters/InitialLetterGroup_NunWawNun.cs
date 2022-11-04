@@ -35,7 +35,7 @@ class InitialLetterGroup_NunWawNun : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(68, Nun), text = Nun }
+                                        new InitialLetter { Id = Id(68, Nun), Letter = Nun }
                                     
                                 }
                             },

@@ -36,8 +36,8 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(40,Haa), text  = Haa },
-                                        new InitialLetter { id = Id(40,Miim), text = Miim }
+                                        new InitialLetter { Id = Id(40,Haa), Letter  = Haa },
+                                        new InitialLetter { Id = Id(40,Miim), Letter = Miim }
                                     
                                 }
                             },
@@ -65,8 +65,8 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(41,Haa), text  = Haa },
-                                        new InitialLetter { id = Id(41,Miim), text = Miim }
+                                        new InitialLetter { Id = Id(41,Haa), Letter  = Haa },
+                                        new InitialLetter { Id = Id(41,Miim), Letter = Miim }
                                     
                                 }
                             },
@@ -85,8 +85,8 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(42, Haa), text  = Haa },
-                                        new InitialLetter { id = Id(42, Miim), text = Miim },
+                                        new InitialLetter { Id = Id(42, Haa), Letter  = Haa },
+                                        new InitialLetter { Id = Id(42, Miim), Letter = Miim },
                                     
                                 }
                             }
@@ -108,8 +108,8 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(43,Haa), text  = Haa },
-                                        new InitialLetter { id = Id(43,Miim), text = Miim }
+                                        new InitialLetter { Id = Id(43,Haa), Letter  = Haa },
+                                        new InitialLetter { Id = Id(43,Miim), Letter = Miim }
                                     
                                 }
                             }
@@ -127,8 +127,8 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                    
-                                        new InitialLetter { id = Id(44, Haa), text  = Haa },
-                                        new InitialLetter { id = Id(44, Miim), text = Miim }
+                                        new InitialLetter { Id = Id(44, Haa), Letter  = Haa },
+                                        new InitialLetter { Id = Id(44, Miim), Letter = Miim }
                                     
                                 }
                             },
@@ -158,8 +158,8 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                    
-                                        new InitialLetter { id = Id(45,Haa), text  = Haa },
-                                        new InitialLetter { id = Id(45,Miim), text = Miim }
+                                        new InitialLetter { Id = Id(45,Haa), Letter  = Haa },
+                                        new InitialLetter { Id = Id(45,Miim), Letter = Miim }
                                     
                                 }
                             }
@@ -177,8 +177,8 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(46, Haa), text  = Haa },
-                                        new InitialLetter { id = Id(46, Miim), text = Miim }
+                                        new InitialLetter { Id = Id(46, Haa), Letter  = Haa },
+                                        new InitialLetter { Id = Id(46, Miim), Letter = Miim }
                                     
                                 }
                             }

@@ -7,11 +7,14 @@ namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 class InitialLetter : ReactComponent
 {
-    public string text { get; set; }
+    public string Letter { get; set; }
 
-    public string id { get; set; }
+    public string Id { get; set; }
 
     public bool IsSelected { get; set; }
+
+    public int? Count { get; set; }
+    public string CountColor { get; set; }
 
     protected override Element render()
     {
@@ -21,21 +24,14 @@ class InitialLetter : ReactComponent
             color = "red";
         }
 
-        var pronuncation = GetPronunciationOfArabicLetter(text);
-
-        return new FlexColumn(TextAlignCenter)
+        var pronuncation = GetPronunciationOfArabicLetter(Letter);
+        
+        return new FlexColumn(Id(Id), TextAlignCenter, Border($"{(IsSelected ? 2 : 1)}px solid {color}"), BorderRadius("0.5rem"), Padding("5px"))
         {
-            style = { border = $"{(IsSelected ? 2 : 1)}px solid {color}", borderRadius = "0.5rem", padding = "5px" },
-            id    = id,
-            children =
-            {
-                new div
-                {
-                    text = text
-                },
-                new div(pronuncation){FontSize("70%"), FontWeight600}
-            }
-          
+            new div(Text(Letter)),
+            new div(pronuncation){FontSize("70%"), FontWeight600},
+            
+            When(Count.HasValue, new div(Text(Count.ToString()),Color(CountColor),FontSize("70%"), FontWeight600))
         };
     }
 }
@@ -197,10 +193,10 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                    
-                                        new InitialLetter { id = Id(7,Alif), text = Alif },
-                                        new InitialLetter { id = Id(7,Laam), text = Laam },
-                                        new InitialLetter { id = Id(7,Miim), text = Miim },
-                                        new InitialLetter { id = Id(7,Saad), text = Saad, IsSelected = true }
+                                        new InitialLetter { Id = Id(7,Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(7,Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(7,Miim), Letter = Miim },
+                                        new InitialLetter { Id = Id(7,Saad), Letter = Saad, IsSelected = true }
                                     
                                 }
                             }
@@ -217,11 +213,11 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(19,Kaaf), text = Kaaf },
-                                        new InitialLetter { id = Id(19,Haa), text  = Haa_ },
-                                        new InitialLetter { id = Id(19,Yaa), text  = Yaa },
-                                        new InitialLetter { id = Id(19,Ayn), text  = Ayn },
-                                        new InitialLetter { id = Id(19,Saad), text = Saad, IsSelected = true }
+                                        new InitialLetter { Id = Id(19,Kaaf), Letter = Kaaf },
+                                        new InitialLetter { Id = Id(19,Haa), Letter  = Haa_ },
+                                        new InitialLetter { Id = Id(19,Yaa), Letter  = Yaa },
+                                        new InitialLetter { Id = Id(19,Ayn), Letter  = Ayn },
+                                        new InitialLetter { Id = Id(19,Saad), Letter = Saad, IsSelected = true }
 
                                     
                                 }
@@ -256,7 +252,7 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                    
-                                        new InitialLetter { id = Id(38,Saad), text = Saad, IsSelected = true }
+                                        new InitialLetter { Id = Id(38,Saad), Letter = Saad, IsSelected = true }
                                     
                                 }
                             }

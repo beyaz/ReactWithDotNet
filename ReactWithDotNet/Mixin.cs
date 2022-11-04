@@ -596,6 +596,8 @@ public static partial class Mixin
     public static HtmlElementModifier Src(string src) => new(element => ((img)element).src = src);
 
     public static HtmlElementModifier Text(string innerText) => new(element => element.text = innerText);
+
+
     public static StyleModifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
 
     public static StyleModifier TextDecoration(string textDecoration) => new(style => style.textDecoration = textDecoration);

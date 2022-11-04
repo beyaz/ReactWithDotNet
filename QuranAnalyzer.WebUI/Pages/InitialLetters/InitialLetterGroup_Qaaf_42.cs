@@ -29,7 +29,7 @@ class InitialLetterGroup_Qaaf_42 : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(42, Qaaf), text = Qaaf }
+                                new InitialLetter { Id = Id(42, Qaaf), Letter = Qaaf }
                             }
                         },
                         new td

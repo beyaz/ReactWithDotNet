@@ -39,11 +39,11 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(19, Qaaf), text = Qaaf },
-                                new InitialLetter { id = Id(19, Haa), text  = Haa_, IsSelected = true },
-                                new InitialLetter { id = Id(19, Yaa), text  = Yaa },
-                                new InitialLetter { id = Id(19, Ayn), text  = Ayn },
-                                new InitialLetter { id = Id(19, Saad), text = Saad }
+                                new InitialLetter { Id = Id(19, Qaaf), Letter = Qaaf },
+                                new InitialLetter { Id = Id(19, Haa), Letter  = Haa_, IsSelected = true },
+                                new InitialLetter { Id = Id(19, Yaa), Letter  = Yaa },
+                                new InitialLetter { Id = Id(19, Ayn), Letter  = Ayn },
+                                new InitialLetter { Id = Id(19, Saad), Letter = Saad }
                             }
                         },
                         new td
@@ -66,8 +66,8 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(20, Taa_), text = Taa_, IsSelected = true },
-                                new InitialLetter { id = Id(20, Haa), text  = Haa, IsSelected  = true }
+                                new InitialLetter { Id = Id(20, Taa_), Letter = Taa_, IsSelected = true },
+                                new InitialLetter { Id = Id(20, Haa), Letter  = Haa, IsSelected  = true }
                             }
                         }
                     },
@@ -80,9 +80,9 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(26, Taa_), text = Taa_, IsSelected = true },
-                                new InitialLetter { id = Id(26, Siin), text = Siin, IsSelected = true },
-                                new InitialLetter { id = Id(26, Miim), text = Miim, IsSelected = true }
+                                new InitialLetter { Id = Id(26, Taa_), Letter = Taa_, IsSelected = true },
+                                new InitialLetter { Id = Id(26, Siin), Letter = Siin, IsSelected = true },
+                                new InitialLetter { Id = Id(26, Miim), Letter = Miim, IsSelected = true }
                             }
                         }
                     },
@@ -95,8 +95,8 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(27, Taa_), text = Taa_, IsSelected = true },
-                                new InitialLetter { id = Id(27, Siin), text = Siin, IsSelected = true }
+                                new InitialLetter { Id = Id(27, Taa_), Letter = Taa_, IsSelected = true },
+                                new InitialLetter { Id = Id(27, Siin), Letter = Siin, IsSelected = true }
                             }
                         }
                     },
@@ -109,9 +109,9 @@ class InitialLetterGroup_TaSinMim : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(28, Taa_), text = Taa_, IsSelected = true },
-                                new InitialLetter { id = Id(28, Siin), text = Siin, IsSelected = true },
-                                new InitialLetter { id = Id(28, Miim), text = Miim, IsSelected = true }
+                                new InitialLetter { Id = Id(28, Taa_), Letter = Taa_, IsSelected = true },
+                                new InitialLetter { Id = Id(28, Siin), Letter = Siin, IsSelected = true },
+                                new InitialLetter { Id = Id(28, Miim), Letter = Miim, IsSelected = true }
                             }
                         }
                     }

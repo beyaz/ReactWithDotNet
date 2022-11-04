@@ -29,9 +29,9 @@ class InitialLetterGroup_Chapter42_AinSinKaf : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(42, Ayn), text  = Ayn },
-                                new InitialLetter { id = Id(42, Siin), text = Siin },
-                                new InitialLetter { id = Id(42, Qaaf), text = Qaaf }
+                                new InitialLetter { Id = Id(42, Ayn), Letter  = Ayn },
+                                new InitialLetter { Id = Id(42, Siin), Letter = Siin },
+                                new InitialLetter { Id = Id(42, Qaaf), Letter = Qaaf }
                             }
                         },
                         new td

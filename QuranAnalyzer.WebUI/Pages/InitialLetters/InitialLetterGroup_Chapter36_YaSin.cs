@@ -29,8 +29,8 @@ class InitialLetterGroup_Chapter36_YaSin : InitialLetterGroup
                         {
                             new InitialLetterLineGroup
                             {
-                                new InitialLetter { id = Id(36, Yaa), text  = Yaa },
-                                new InitialLetter { id = Id(36, Siin), text = Siin },
+                                new InitialLetter { Id = Id(36, Yaa), Letter  = Yaa },
+                                new InitialLetter { Id = Id(36, Siin), Letter = Siin },
                             }
                         },
                         new td

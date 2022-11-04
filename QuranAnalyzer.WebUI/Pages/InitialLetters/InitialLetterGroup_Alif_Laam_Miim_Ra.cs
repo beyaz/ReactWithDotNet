@@ -33,10 +33,10 @@ class InitialLetterGroup_Alif_Laam_Miim_Ra : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { id = Id(13, Alif), text = Alif },
-                                        new InitialLetter { id = Id(13, Laam), text = Laam },
-                                        new InitialLetter { id = Id(13, Miim), text = Miim },
-                                        new InitialLetter { id = Id(13, Raa), text = Raa },
+                                        new InitialLetter { Id = Id(13, Alif), Letter = Alif },
+                                        new InitialLetter { Id = Id(13, Laam), Letter = Laam },
+                                        new InitialLetter { Id = Id(13, Miim), Letter = Miim },
+                                        new InitialLetter { Id = Id(13, Raa), Letter = Raa },
                                     
                                 }
                             },
