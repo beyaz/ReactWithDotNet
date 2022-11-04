@@ -12,6 +12,9 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
     static string IdOfCountingResult_1 => $"HaMimSeparated-{nameof(IdOfCountingResult_1)}";
     static string IdOfCountingResult_2 => $"HaMimSeparated-{nameof(IdOfCountingResult_2)}";
 
+    public bool ShowCounts { get; set; }
+    
+    
     protected override Element render()
     {
         
@@ -95,6 +98,19 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         RowSpace,
                         RowSpace,
                         RowSpace,
+                        new tr
+                        {
+                            new td
+                            {
+                            },
+                            new td
+                            {
+                                new FlexRow
+                                {
+                                    new QuranAnalyzer.WebUI.Components.Switch{IsChecked = ShowCounts, ValueChange = x=>ShowCounts=x},(strong)"Geçiş adetlerini göster"
+                                }
+                            }
+                        },
                         RowSpace,
                         RowSpace,
                         new tr

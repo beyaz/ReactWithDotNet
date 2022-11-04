@@ -4,6 +4,9 @@ public class Switch : ReactComponent
 {
     public bool IsChecked { get; set; }
     
+    [ReactCustomEvent]
+    public Action<bool> ValueChange { get; set; }
+    
     protected override Element render()
     {
         Style style = new()
@@ -18,8 +21,7 @@ public class Switch : ReactComponent
 
             Width("3rem"),
             Height("1.75rem"),
-            PositionRelative
-
+            PositionRelative,
         };
 
         var before = new Style
@@ -41,12 +43,22 @@ public class Switch : ReactComponent
             style.background = "#6366F1";
             before.transform = "translateX(1.25rem)";
         }
+        else
+        {
+            before.transform = "translateX(0rem)";
+        }
         
         style.before.Import(before);
 
         return new div(style)
         {
-            OnClick(_=>IsChecked = !IsChecked)
+            OnClick(OnClickHandler)
         };
+    }
+
+    void OnClickHandler(MouseEvent _)
+    {
+        IsChecked = !IsChecked;
+        DispatchEvent(()=>ValueChange,IsChecked);
     }
 }
