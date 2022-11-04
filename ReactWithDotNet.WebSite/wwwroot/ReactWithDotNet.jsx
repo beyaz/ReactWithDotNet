@@ -1650,28 +1650,37 @@ function ProcessDynamicCssClasses(dynamicStyles)
 
     let hasChange = false;
 
-    for (var i = 0; i < dynamicStyles.length; i++)
+    for (var key in dynamicStyles)
     {
-        const obj = dynamicStyles[i];
-        for (var key in obj)
+        if (dynamicStyles.hasOwnProperty(key)) 
         {
-            if (obj.hasOwnProperty(key)) 
-            {
-                const cssSelector = key;
-                const cssBody = obj[key];
+            const cssSelector = key;
+            const cssBody = dynamicStyles[key];
 
-                for (var j = 0; j < DynamicStyles.length; j++)
+            let shouldInsert = true;
+
+            for (var i = 0; i < DynamicStyles.length; i++)
+            {
+                if (DynamicStyles[i].cssSelector === cssSelector)
                 {
-                    if (DynamicStyles[j].cssSelector === cssSelector && DynamicStyles[j].cssBody === cssBody)
+                    if (DynamicStyles[i].cssBody === cssBody)
                     {
-                        continue;
+                        shouldInsert = false;
+                        break;
                     }
 
                     hasChange = true;
-
-                    DynamicStyles.push({cssSelector: cssSelector, cssBody: cssBody});
+                    DynamicStyles[i].cssBody = cssBody;
+                    break;
                 }
             }
+
+            if (shouldInsert)
+            {
+                hasChange = true;
+
+                DynamicStyles.push({cssSelector: cssSelector, cssBody: cssBody});
+            }           
         }
     }
 

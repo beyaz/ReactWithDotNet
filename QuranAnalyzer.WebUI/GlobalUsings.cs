@@ -5,3 +5,4 @@ global using System.Collections.Generic;
 global using System.Linq;
 global using static ReactWithDotNet.Mixin;
 global using static  QuranAnalyzer.WebUI.App;
+global using static QuranAnalyzer.WebUI.Extensions;

@@ -16,40 +16,42 @@ class QuestionLink : ReactComponent
 {
     public string Question { get; set; }
 
+    public string Url { get; set; }
+
     protected override Element render()
     {
-        return new div
+        return new FlexRow(AlignItemsCenter)
             {
-                style = { display = "flex", alignItems = "center" },
-                children =
+                new div(wh(24))
                 {
-                    new div
+                    new svg
                     {
-                        style ={width_height = "24px"},
-                        children =
+                        new path
                         {
-                            new svg
-                            {
-                                new path
-                                {
-                                    d    = "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z",
-                                    fill = "#0b57d0"
+                            d    = "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z",
+                            fill = "#0b57d0"
 
-                                },
-                                new path
-                                {
-                                    d    = "M0 0h24v24H0z",
-                                    fill = "none"
-                                }
-                            }
+                        },
+                        new path
+                        {
+                            d    = "M0 0h24v24H0z",
+                            fill = "none"
                         }
                     }
-                   ,
-                    new div
+                }
+               ,
+                new a
+                {
+                    href      = Url,
+                    innerText = Question,
+                    style =
                     {
-                        innerText = Question,
-                        style     ={ paddingLeft = "14px", paddingTopBottom = "10px"}
-                    } | TextDecorationUnderline | CursorPointer
+                        PaddingLeft(10),
+                        PaddingTopBottom(10),
+                        Color("#575757"), Hover(Color("rgb(165 107 107)")),
+                        CursorPointer,
+                        TextDecorationUnderline
+                    }
                 }
 
             }
@@ -104,14 +106,16 @@ Bu sebeple ben burada tartışmayı aktarayım üzerine düşünmek-araştırmak
                         new br(),
                         new div
                         { 
-                            new QuestionLink{Question = "Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden hiç bir alimden/hocadan duymuyoruz?"},
-                            new QuestionLink{Question = "19 sistemi nin olması için Kurandan iki ayet atılması gerekiyor mu ? Yoksa sistem çöküyormuş doğru mu ?"},
-                            new QuestionLink{ Question  = "Elif sayımlarının doğru olduğu ne malum ?"},
-                            new QuestionLink{Question   = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?"},
-                            new QuestionLink{Question   = "Reşad Halife kimdir ?"},
-                            new QuestionLink{Question   = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?"},
-                            new QuestionLink{Question   = "Paralel 19 sistemleri"},
-                            new QuestionLink{Question   = "Allah mı? Tanrı mı ?"},
+                            new QuestionLink{Question  = "Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden hiç bir alimden/hocadan duymuyoruz?"},
+                            new QuestionLink{Question  = "19 sistemi nin olması için Kurandan iki ayet atılması gerekiyor mu ? Yoksa sistem çöküyormuş doğru mu ?"},
+                            new QuestionLink{ Question = "Elif sayımlarının doğru olduğu ne malum ?"},
+                            new QuestionLink{Question  = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?"},
+                            new QuestionLink{Question  = "Reşad Halife kimdir ?"},
+                            new QuestionLink{Question  = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?"},
+                            
+                            new QuestionLink{Question  = "Paralel 19 sistemleri", Url = GetPageLink(PageId.AlternativeSystems),},
+                            
+                            new QuestionLink{Question  = "Allah mı? Tanrı mı ?"},
 
 
                         }
