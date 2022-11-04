@@ -11,12 +11,12 @@ public class AlternativeSystemsView : ReactComponent
             new VSpace(10),
             new LargeTitle("Alternatif 19 Sistemleri"),
             new VSpace(15),
-            
+
             @"
 Kuran üzerinde 19 ile ilgili bilgiler duyulmaya başladıkça başka insanlar da 19 üzerine çalışma yapmaya başladılar.
 Bu kişiler de günümüz bilgisayar yazılımlarını kullanarak bazı sayımlar yapıyorlar ve 19'un katı olan bazı sayılar elde ediyorlar.
 Duruma göre bu kişilerin çalışmalarını da inceleyeilirsiniz.
-İmran Akdemir, Gökmen Altay, İki Sayının Sahibi gibi  isimler de çalışma yapıyorlar.
+İmran Akdemir, Gökmen Altay İki Sayının Sahibi gibi  isimler de çalışma yapıyorlar.
 Bu isimlerin ortaya attıkları iddaları incelerken muhtemelen ilk duyacağınız cümle şu olacaktır.
 'Uyduruk 19 sistemi', 'Sahte 19 sistemi' vb kelimler söyledikten sonra 19 ile ilgili kendi buldukları verilerin gerçek 19 sistemi olduğunu ileri sürüyorlar.
 Bu kişilerin ortaya attıkları iddalara karşı cevaplar da var onları da dinlemenizi öneririm.
