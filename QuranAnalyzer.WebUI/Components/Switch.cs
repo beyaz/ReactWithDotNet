@@ -11,13 +11,13 @@ public class Switch : ReactComponent
     {
         Style style = new()
         {
-            ComponentBorder,
+            //ComponentBorder,
             Background("#ced4da"),
             BorderRadius(30),
             CursorPointer,
             Transition("background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s"),
 
-            Focus(Border($"1px solid {BluePrimary}")),
+            Hover(Background("#b6bfc8")),
 
             Width("3rem"),
             Height("1.75rem"),
@@ -40,8 +40,9 @@ public class Switch : ReactComponent
 
         if (IsChecked)
         {
-            style.background = "#6366F1";
-            before.transform = "translateX(1.25rem)";
+            style.background       = "#6366F1";
+            style.hover.background = "#4f46e5";
+            before.transform       = "translateX(1.25rem)";
         }
         else
         {

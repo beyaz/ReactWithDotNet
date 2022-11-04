@@ -105,9 +105,9 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow
+                                new FlexRow(AlignItemsCenter, Gap(5))
                                 {
-                                    new QuranAnalyzer.WebUI.Components.Switch{IsChecked = ShowCounts, ValueChange = x=>ShowCounts=x},(strong)"Geçiş adetlerini göster"
+                                    new QuranAnalyzer.WebUI.Components.Switch{IsChecked = ShowCounts, ValueChange = x=>ShowCounts=x},"Geçiş adetlerini göster"
                                 }
                             }
                         },
