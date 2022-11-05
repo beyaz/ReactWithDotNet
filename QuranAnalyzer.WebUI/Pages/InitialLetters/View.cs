@@ -12,7 +12,8 @@ class InitialLetter : ReactComponent
 
     public bool IsSelected { get; set; }
 
-    public int? Count { get; set; }
+    public (int? count, string url) Count { get; set; }
+    
     public string CountColor { get; set; }
 
     protected override Element render()
@@ -30,7 +31,7 @@ class InitialLetter : ReactComponent
             new div(Text(Letter)),
             new div(pronuncation){FontSize("70%"), FontWeight600},
             
-            When(Count.HasValue, new div(Text(Count.ToString()),Color(CountColor),FontSize("70%"), FontWeight600))
+            When(Count.count.HasValue, new a(Text(Count.count.ToString()), Href(Count.url), Color(CountColor),FontSize("70%"), FontWeight600, TextDecorationUnderline))
         };
     }
 }

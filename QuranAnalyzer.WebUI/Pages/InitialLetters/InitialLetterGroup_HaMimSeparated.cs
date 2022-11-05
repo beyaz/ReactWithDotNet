@@ -17,6 +17,14 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
     
     protected override Element render()
     {
+        (int? count, string url) getOnlyOneLetterCountingInfo(string verseSelectScript, string letter, int? count)
+        {
+            if (!ShowCounts)
+            {
+                return default;
+            }
+            return (count, Extensions.GetUrlOfLetterCountingSearchScript(GetLetterCountingScript(verseSelectScript, letter)));
+        }
         
         return new div
         {
@@ -39,8 +47,18 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { Id = Id(40,Haa), Letter  = Haa },
-                                        new InitialLetter { Id = Id(40,Miim), Letter = Miim }
+                                        new InitialLetter 
+                                        {
+                                            Id = Id(40,Haa), 
+                                            Letter  = Haa, 
+                                            Count = getOnlyOneLetterCountingInfo("40:*", Haa,64)
+                                        },
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(40,Miim), 
+                                            Letter = Miim,
+                                            Count  = getOnlyOneLetterCountingInfo("40:*", Miim,380)
+                                        }
                                     
                                 }
                             },
@@ -68,8 +86,18 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { Id = Id(41,Haa), Letter  = Haa },
-                                        new InitialLetter { Id = Id(41,Miim), Letter = Miim }
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(41,Haa), 
+                                            Letter = Haa,
+                                            Count  = getOnlyOneLetterCountingInfo("41:*", Haa,48)
+                                        },
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(41,Miim), 
+                                            Letter = Miim,
+                                            Count  = getOnlyOneLetterCountingInfo("41:*", Miim,276)
+                                        }
                                     
                                 }
                             },
@@ -88,8 +116,19 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { Id = Id(42, Haa), Letter  = Haa },
-                                        new InitialLetter { Id = Id(42, Miim), Letter = Miim },
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(42, Haa), 
+                                            Letter = Haa,
+                                            Count  = getOnlyOneLetterCountingInfo("42:*", Haa,53)
+                                        },
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(42, Miim), 
+                                            Letter = Miim,
+                                            Count  = getOnlyOneLetterCountingInfo("42:*", Miim,300)
+
+                                        },
                                     
                                 }
                             }
@@ -100,15 +139,21 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         RowSpace,
                         new tr
                         {
+                            new td(),
+                            new td(),
                             new td
                             {
-                            },
-                            new td
-                            {
-                                new FlexRow(AlignItemsCenter, Gap(5))
+                                
+                                style = { DisplayFlex, JustifyContentCenter },
+                                children =
                                 {
-                                    new QuranAnalyzer.WebUI.Components.Switch{IsChecked = ShowCounts, ValueChange = x=>ShowCounts=x},"Geçiş adetlerini göster"
+                                    new FlexRow(AlignItemsCenter, Gap(5))
+                                    {
+                                        new QuranAnalyzer.WebUI.Components.Switch{IsChecked = ShowCounts, ValueChange = x=>ShowCounts=x},"Geçiş adetlerini göster"
+                                    }
                                 }
+                                    
+                               
                             }
                         },
                         RowSpace,
@@ -124,8 +169,18 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { Id = Id(43,Haa), Letter  = Haa },
-                                        new InitialLetter { Id = Id(43,Miim), Letter = Miim }
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(43,Haa), 
+                                            Letter = Haa,
+                                            Count  = getOnlyOneLetterCountingInfo("43:*", Haa,44)
+                                        },
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(43,Miim), 
+                                            Letter = Miim,
+                                            Count  = getOnlyOneLetterCountingInfo("43:*", Miim,324)
+                                        }
                                     
                                 }
                             }
@@ -143,8 +198,18 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                    
-                                        new InitialLetter { Id = Id(44, Haa), Letter  = Haa },
-                                        new InitialLetter { Id = Id(44, Miim), Letter = Miim }
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(44, Haa), 
+                                            Letter = Haa,
+                                            Count  = getOnlyOneLetterCountingInfo("44:*", Haa,16)
+                                        },
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(44, Miim),
+                                            Letter = Miim,
+                                            Count  = getOnlyOneLetterCountingInfo("44:*", Miim,150)
+                                        }
                                     
                                 }
                             },
@@ -174,8 +239,18 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                    
-                                        new InitialLetter { Id = Id(45,Haa), Letter  = Haa },
-                                        new InitialLetter { Id = Id(45,Miim), Letter = Miim }
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(45,Haa), 
+                                            Letter = Haa,
+                                            Count  = getOnlyOneLetterCountingInfo("45:*", Haa,31)
+                                        },
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(45,Miim),
+                                            Letter = Miim,
+                                            Count  = getOnlyOneLetterCountingInfo("45:*", Miim,200)
+                                        }
                                     
                                 }
                             }
@@ -193,8 +268,18 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                     
-                                        new InitialLetter { Id = Id(46, Haa), Letter  = Haa },
-                                        new InitialLetter { Id = Id(46, Miim), Letter = Miim }
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(46, Haa),
+                                            Letter = Haa,
+                                            Count  = getOnlyOneLetterCountingInfo("46:*", Haa,36)
+                                        },
+                                        new InitialLetter
+                                        {
+                                            Id     = Id(46, Miim), 
+                                            Letter = Miim,
+                                            Count  = getOnlyOneLetterCountingInfo("46:*", Miim,225)
+                                        }
                                     
                                 }
                             }
@@ -214,23 +299,25 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                 " Sanki bu 7 surede var olan ", AsLetter(Haa), " - ", AsLetter(Miim)," tablosunu 19.un katları şeklinde ikiye bölüyormuş gibi düşünebilirsiniz."
             },
             
-            new Arrow{start =Id(40,Haa ), end = IdOfCountingResult_1, StartAnchorFromRight = true},
-            new Arrow{start =Id(40,Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true},
-            new Arrow{start =Id(41,Haa ), end = IdOfCountingResult_1,StartAnchorFromRight  = true},
-            new Arrow{start =Id(41,Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true},
-            new Arrow{start =Id(42,Haa ), end = IdOfCountingResult_1, StartAnchorFromRight = true},
-            new Arrow{start =Id(42,Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true},
-            
-            new Arrow{start =Id(43,Haa ), end = IdOfCountingResult_2, StartAnchorFromRight = true},
-            new Arrow{start =Id(43,Miim), end = IdOfCountingResult_2, StartAnchorFromRight = true},
-            
-            new Arrow{start =Id(44,Haa ), end = IdOfCountingResult_2, StartAnchorFromRight = false},
-            new Arrow{start =Id(44,Miim), end = IdOfCountingResult_2, StartAnchorFromRight = false},
-            
-            new Arrow{start =Id(45,Haa ), end = IdOfCountingResult_2, StartAnchorFromTop   = true},
-            new Arrow{start =Id(45,Miim), end = IdOfCountingResult_2, StartAnchorFromRight = true},
-            new Arrow{start =Id(46,Haa ), end = IdOfCountingResult_2, StartAnchorFromTop   = true},
-            new Arrow{start =Id(46,Miim), end = IdOfCountingResult_2, StartAnchorFromRight = true},
+   
+       new Arrow{start =Id(40,Haa ), end = IdOfCountingResult_1, StartAnchorFromRight = true},
+       new Arrow{start =Id(40,Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true},
+       new Arrow{start =Id(41,Haa ), end = IdOfCountingResult_1,StartAnchorFromRight  = true},
+       new Arrow{start =Id(41,Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true},
+       new Arrow{start =Id(42,Haa ), end = IdOfCountingResult_1, StartAnchorFromRight = true},
+       new Arrow{start =Id(42,Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true},
+
+       new Arrow{start =Id(43,Haa ), end = IdOfCountingResult_2, StartAnchorFromRight = true},
+       new Arrow{start =Id(43,Miim), end = IdOfCountingResult_2, StartAnchorFromRight = true},
+
+       new Arrow{start =Id(44,Haa ), end = IdOfCountingResult_2, StartAnchorFromRight = false},
+       new Arrow{start =Id(44,Miim), end = IdOfCountingResult_2, StartAnchorFromRight = false},
+
+       new Arrow{start =Id(45,Haa ), end = IdOfCountingResult_2, StartAnchorFromTop   = true},
+       new Arrow{start =Id(45,Miim), end = IdOfCountingResult_2, StartAnchorFromRight = true},
+       new Arrow{start =Id(46,Haa ), end = IdOfCountingResult_2, StartAnchorFromTop   = true},
+       new Arrow{start =Id(46,Miim), end = IdOfCountingResult_2, StartAnchorFromRight = true},
+   
         };
     }
 }

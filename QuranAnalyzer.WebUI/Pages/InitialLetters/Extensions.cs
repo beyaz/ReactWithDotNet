@@ -15,4 +15,9 @@ static class Extensions
 
         return new Element[] { total.ToString(), detail };
     }
+
+    public static string GetUrlOfLetterCountingSearchScript(string searchScriptOfLetterCounting)
+    {
+        return $"?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={searchScriptOfLetterCounting}";
+    }
 }
