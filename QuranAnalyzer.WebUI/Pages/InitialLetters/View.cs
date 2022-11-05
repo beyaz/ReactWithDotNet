@@ -12,7 +12,7 @@ class InitialLetter : ReactComponent
 
     public bool IsSelected { get; set; }
 
-    public (int? count, string url) Count { get; set; }
+    public (int? count, string url, string color) Count { get; set; }
     
     public string CountColor { get; set; }
 
@@ -31,7 +31,7 @@ class InitialLetter : ReactComponent
             new div(Text(Letter)),
             new div(pronuncation){FontSize("70%"), FontWeight600},
             
-            When(Count.count.HasValue, new a(Text(Count.count.ToString()), Href(Count.url), Color(CountColor),FontSize("70%"), FontWeight600, TextDecorationUnderline))
+            When(Count.count.HasValue, new a(Text(Count.count.ToString()), Href(Count.url), Color(Count.color),FontSize("70%"), FontWeight600, TextDecorationUnderline))
         };
     }
 }
@@ -41,6 +41,8 @@ class CountingResult: ReactComponent
     public string id { get; set; }
 
     public int MultipleOf { get; set; }
+
+    public string MultipleOfColor { get; set; }
 
     public string SearchScript { get; set; }
 
@@ -52,7 +54,10 @@ class CountingResult: ReactComponent
             id    = id,
             children =
             {
-                new div(Text($"19 x {MultipleOf}")),
+                new FlexRow(AlignItemsCenter)
+                {
+                    "19",(small)" x ",  new small(MultipleOf.ToString()){ When(MultipleOfColor.HasValue(), Color(MultipleOfColor)) }
+                },
                 new a
                 {
                     innerText = "incele",
