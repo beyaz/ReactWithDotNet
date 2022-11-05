@@ -1,6 +1,5 @@
 ﻿using ReactWithDotNet.react_xarrows;
 using static QuranAnalyzer.ArabicLetter;
-using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
