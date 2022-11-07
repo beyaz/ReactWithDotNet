@@ -6,15 +6,9 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataHelper
 {
-    static bool IsReactComponent(Type type)
-    {
-        return type.IsSubclassOf(typeof(ReactStatefulComponent));
-    }
-
     public static MethodInfo FindMethodInfo(Assembly assembly, MetadataNode node)
     {
         MethodInfo returnMethodInfo = null;
-
 
         VisitTypes(assembly, visitType);
 
@@ -22,7 +16,7 @@ class MetadataHelper
         {
             if (returnMethodInfo == null)
             {
-              VisitMethods(type,visitMethodInfo);
+                VisitMethods(type, visitMethodInfo);
             }
         }
 
@@ -35,9 +29,7 @@ class MetadataHelper
                     returnMethodInfo = methodInfo;
                 }
             }
-            
         }
-
 
         return returnMethodInfo;
     }
@@ -51,33 +43,6 @@ class MetadataHelper
         VisitTypes(assembly, visit);
 
         return types;
-    }
-
-    static void VisitTypes(Assembly assembly, Action<Type> visit)
-    {
-        foreach (var type in assembly.GetTypes())
-        {
-            if (type.IsAbstract)
-            {
-                continue;
-            }
-
-            if (!IsReactComponent(type))
-            {
-                continue;
-            }
-
-            visit(type);
-            foreach (var nestedType in type.GetNestedTypes())
-            {
-                if (!IsReactComponent(nestedType))
-                {
-                    continue;
-                }
-                
-                visit(nestedType);
-            }
-        }
     }
 
     public static IEnumerable<MetadataNode> GetMetadataNodes(string assemblyFilePath)
@@ -104,8 +69,6 @@ class MetadataHelper
             return items;
         }
 
-
-
         static MetadataNode classToMetaData(Type x)
         {
             var classNode = new MetadataNode
@@ -115,7 +78,6 @@ class MetadataHelper
                 NamespaceName = x.Namespace
             };
 
-
             VisitMethods(x, m =>
             {
                 var node = createFromMethod(m);
@@ -123,13 +85,32 @@ class MetadataHelper
                 {
                     classNode.children.Add(node);
                 }
-                
             });
 
             return classNode;
         }
+    }
 
+    public static Assembly LoadAssembly(string assemblyFilePath)
+    {
+        return Assembly.LoadFile(assemblyFilePath);
+    }
 
+    public static (Assembly assembly, MetadataLoadContext metadataLoadContext) ReadAssembly(string assemblyFilePath)
+    {
+        var coreAssemblies = Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll");
+
+        var optionalLibraries = Directory.GetFiles(Path.GetDirectoryName(assemblyFilePath), "*.dll");
+
+        var libraries = new List<string>();
+        libraries.AddRange(coreAssemblies);
+        libraries.AddRange(optionalLibraries);
+
+        var resolver = new PathAssemblyResolver(libraries);
+
+        var metadataContext = new MetadataLoadContext(resolver);
+
+        return (metadataContext.LoadFromAssemblyPath(assemblyFilePath), metadataContext);
     }
 
     static MetadataNode createFromMethod(MethodInfo methodInfo)
@@ -138,7 +119,7 @@ class MetadataHelper
         {
             return null;
         }
-        
+
         // is function component
         if (methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
         {
@@ -156,6 +137,11 @@ class MetadataHelper
         return null;
     }
 
+    static bool IsReactComponent(Type type)
+    {
+        return type.IsSubclassOf(typeof(ReactStatefulComponent));
+    }
+
     static void VisitMethods(Type type, Action<MethodInfo> visit)
     {
         foreach (var methodInfo in type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
@@ -165,7 +151,7 @@ class MetadataHelper
                 continue;
             }
 
-            if (methodInfo.GetParameters().Any(p=> isNotValidForJson(p.ParameterType)))
+            if (methodInfo.GetParameters().Any(p => isNotValidForJson(p.ParameterType)))
             {
                 continue;
             }
@@ -184,7 +170,7 @@ class MetadataHelper
             {
                 return true;
             }
-            
+
             if (typeof(ReactStatefulComponent).IsAssignableFrom(t.BaseType))
             {
                 return true;
@@ -199,25 +185,30 @@ class MetadataHelper
         }
     }
 
-    public static Assembly LoadAssembly(string assemblyFilePath)
+    static void VisitTypes(Assembly assembly, Action<Type> visit)
     {
-        return Assembly.LoadFile(assemblyFilePath);
-    }
-    
-    public static (Assembly assembly, MetadataLoadContext metadataLoadContext) ReadAssembly(string assemblyFilePath)
-    {
-        var coreAssemblies = Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll");
+        foreach (var type in assembly.GetTypes())
+        {
+            if (type.IsAbstract)
+            {
+                continue;
+            }
 
-        var optionalLibraries = Directory.GetFiles(Path.GetDirectoryName(assemblyFilePath), "*.dll");
+            if (!IsReactComponent(type))
+            {
+                continue;
+            }
 
-        var libraries = new List<string>();
-        libraries.AddRange(coreAssemblies);
-        libraries.AddRange(optionalLibraries);
+            visit(type);
+            foreach (var nestedType in type.GetNestedTypes())
+            {
+                if (!IsReactComponent(nestedType))
+                {
+                    continue;
+                }
 
-        var resolver = new PathAssemblyResolver(libraries);
-
-        var metadataContext = new MetadataLoadContext(resolver);
-
-        return (metadataContext.LoadFromAssemblyPath(assemblyFilePath), metadataContext);
+                visit(nestedType);
+            }
+        }
     }
 }
