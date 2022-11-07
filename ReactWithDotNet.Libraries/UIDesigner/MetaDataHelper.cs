@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class MetadataHelper
+static class MetadataHelper
 {
     public static MethodInfo FindMethodInfo(Assembly assembly, MetadataNode node)
     {
@@ -24,7 +24,7 @@ class MetadataHelper
         {
             if (returnMethodInfo == null)
             {
-                if (createFromMethod(methodInfo)?.MetadataToken == node.MetadataToken)
+                if (ConvertToMetadataNode(methodInfo)?.MetadataToken == node.MetadataToken)
                 {
                     returnMethodInfo = methodInfo;
                 }
@@ -32,17 +32,6 @@ class MetadataHelper
         }
 
         return returnMethodInfo;
-    }
-
-    public static List<Type> GetAllTypes(Assembly assembly)
-    {
-        var types = new List<Type>();
-
-        void visit(Type type) => types.Add(type);
-
-        VisitTypes(assembly, visit);
-
-        return types;
     }
 
     public static IEnumerable<MetadataNode> GetMetadataNodes(string assemblyFilePath)
@@ -57,7 +46,8 @@ class MetadataHelper
             {
                 var nodeForNamespace = new MetadataNode
                 {
-                    Name        = namespaceName,
+                    Name = namespaceName,
+
                     IsNamespace = true
                 };
 
@@ -78,14 +68,7 @@ class MetadataHelper
                 NamespaceName = x.Namespace
             };
 
-            VisitMethods(x, m =>
-            {
-                var node = createFromMethod(m);
-                if (node != null)
-                {
-                    classNode.children.Add(node);
-                }
-            });
+            VisitMethods(x, m => { classNode.children.Add(ConvertToMetadataNode(m)); });
 
             return classNode;
         }
@@ -113,53 +96,56 @@ class MetadataHelper
         return (metadataContext.LoadFromAssemblyPath(assemblyFilePath), metadataContext);
     }
 
-    static MetadataNode createFromMethod(MethodInfo methodInfo)
+    static MetadataNode ConvertToMetadataNode(MethodInfo methodInfo)
+    {
+        return new MetadataNode
+        {
+            IsMethod                   = true,
+            Name                       = methodInfo.Name,
+            FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
+            MetadataToken              = methodInfo.MetadataToken,
+            DeclaringTypeFullName      = methodInfo.DeclaringType?.FullName,
+            DeclaringTypeNamespaceName = methodInfo.DeclaringType?.Namespace
+        };
+    }
+
+    static List<Type> GetAllTypes(Assembly assembly)
+    {
+        var types = new List<Type>();
+
+        void visit(Type type) => types.Add(type);
+
+        VisitTypes(assembly, visit);
+
+        return types;
+    }
+
+    static bool IsValidForExport(MethodInfo methodInfo)
     {
         if (methodInfo.Name == "render" || methodInfo.Name == "InvokeRender")
         {
-            return null;
+            return false;
+        }
+
+        if (methodInfo.Name.Contains("|") || methodInfo.Name.StartsWith("set_"))
+        {
+            return false;
+        }
+
+        if (methodInfo.GetParameters().Any(p => isNotValidForJson(p.ParameterType)))
+        {
+            return false;
         }
 
         // is function component
         if (methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
         {
-            return new MetadataNode
-            {
-                IsMethod                   = true,
-                Name                       = methodInfo.Name,
-                FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
-                MetadataToken              = methodInfo.MetadataToken,
-                DeclaringTypeFullName      = methodInfo.DeclaringType?.FullName,
-                DeclaringTypeNamespaceName = methodInfo.DeclaringType?.Namespace
-            };
+            return true;
         }
 
-        return null;
-    }
+        return false;
 
-    static bool IsReactComponent(Type type)
-    {
-        return type.IsSubclassOf(typeof(ReactStatefulComponent));
-    }
-
-    static void VisitMethods(Type type, Action<MethodInfo> visit)
-    {
-        foreach (var methodInfo in type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
-        {
-            if (methodInfo.Name.Contains("|") || methodInfo.Name.StartsWith("set_"))
-            {
-                continue;
-            }
-
-            if (methodInfo.GetParameters().Any(p => isNotValidForJson(p.ParameterType)))
-            {
-                continue;
-            }
-
-            visit(methodInfo);
-        }
-
-        bool isNotValidForJson(Type t)
+        static bool isNotValidForJson(Type t)
         {
             if (t == typeof(Element) || t.BaseType == typeof(HtmlElement))
             {
@@ -185,30 +171,36 @@ class MetadataHelper
         }
     }
 
+    static void VisitMethods(Type type, Action<MethodInfo> visit)
+    {
+        const BindingFlags AllFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+
+        foreach (var methodInfo in type.GetMethods(AllFlags).Where(IsValidForExport))
+        {
+            visit(methodInfo);
+        }
+    }
+
     static void VisitTypes(Assembly assembly, Action<Type> visit)
     {
-        foreach (var type in assembly.GetTypes())
+        foreach (var type in assembly.GetTypes().Where(isValidForExport))
+        {
+            visit(type);
+
+            foreach (var nestedType in type.GetNestedTypes().Where(isValidForExport))
+            {
+                visit(nestedType);
+            }
+        }
+
+        static bool isValidForExport(Type type)
         {
             if (type.IsAbstract)
             {
-                continue;
+                return false;
             }
 
-            if (!IsReactComponent(type))
-            {
-                continue;
-            }
-
-            visit(type);
-            foreach (var nestedType in type.GetNestedTypes())
-            {
-                if (!IsReactComponent(nestedType))
-                {
-                    continue;
-                }
-
-                visit(nestedType);
-            }
+            return type.IsSubclassOf(typeof(ReactStatefulComponent));
         }
     }
 }
