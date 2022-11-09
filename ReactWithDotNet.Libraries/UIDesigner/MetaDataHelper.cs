@@ -4,6 +4,39 @@ using System.Runtime.InteropServices;
 
 namespace ReactWithDotNet.UIDesigner;
 
+public  struct AssemblyReference
+{
+    public string Name { get; set; }
+}
+public struct TypeReference
+{
+    public string Name { get; set; }
+
+    public string NamespaceName { get; set; }
+
+    public AssemblyReference Assembly{ get; set; }
+}
+
+public struct MethodReference
+{
+    public string Name { get; set; }
+
+    public TypeReference DeclaringType { get; set; }
+
+    public bool IsStatic { get; set; }
+
+    public IReadOnlyList<ParameterReference> Parameters { get; set; }
+    public string FullNameWithoutReturnType { get; set; }
+    public int MetadataToken { get; set; }
+}
+
+public struct ParameterReference
+{
+    public string Name { get; set; }
+
+    public TypeReference ParameterType { get; set; }
+}
+
 static class MetadataHelper
 {
     public static MethodInfo FindMethodInfo(Assembly assembly, MetadataNode node)
@@ -83,6 +116,56 @@ static class MetadataHelper
 
             return x.Name;
         }
+        
+    }
+
+    static AssemblyReference AsReference(this Assembly assembly)
+    {
+        return new AssemblyReference { Name = assembly.GetName().Name };
+    }
+    static TypeReference AsReference(this Type x)
+    {
+        return new TypeReference
+        {
+            Name          = GetName(x),
+            NamespaceName = x.Namespace,
+            Assembly = x.Assembly.AsReference()
+        };
+
+        static string GetName(Type x)
+        {
+            if (x.IsNested)
+            {
+                return GetName(x.DeclaringType) + "+" + x.Name;
+            }
+
+            return x.Name;
+        }
+    }
+
+    static MethodReference AsReference(this MethodInfo methodInfo)
+    {
+        return new MethodReference
+        {
+            
+            Name     = methodInfo.Name,
+            IsStatic = methodInfo.IsStatic,
+            FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
+            MetadataToken              = methodInfo.MetadataToken,
+            
+            DeclaringType = methodInfo.DeclaringType.AsReference(),
+            Parameters = methodInfo.GetParameters().Select(AsReference).ToList()
+
+        };
+    }
+
+    static ParameterReference AsReference(this ParameterInfo parameterInfo)
+    {
+        return new ParameterReference
+        {
+            Name                      = parameterInfo.Name,
+            ParameterType             = parameterInfo.ParameterType.AsReference()
+        };
     }
 
     public static Assembly LoadAssembly(string assemblyFilePath)
