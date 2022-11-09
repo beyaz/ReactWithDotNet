@@ -15,6 +15,8 @@ class MetadataNode : TreeNode
     public int MetadataToken { get; set; }
     public string Name { get; set; }
     public string NamespaceName { get; set; }
+    public bool IsStaticMethod { get; set; }
+    public string AssemblyName { get; set; }
 }
 
 class MethodSelectionModel

@@ -64,13 +64,24 @@ static class MetadataHelper
             var classNode = new MetadataNode
             {
                 IsClass       = true,
-                Name          = x.IsNested ? x.DeclaringType?.Name + "+" + x.Name : x.Name,
-                NamespaceName = x.Namespace
+                Name          = GetName(x),
+                NamespaceName = x.Namespace,
+                AssemblyName      = x.Assembly.GetName().Name
             };
 
             VisitMethods(x, m => { classNode.children.Add(ConvertToMetadataNode(m)); });
 
             return classNode;
+        }
+
+        static string GetName(Type x)
+        {
+            if (x.IsNested)
+            {
+                return GetName(x.DeclaringType )+ "+" + x.Name;
+            }
+
+            return x.Name;
         }
     }
 
@@ -105,7 +116,8 @@ static class MetadataHelper
             FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
             MetadataToken              = methodInfo.MetadataToken,
             DeclaringTypeFullName      = methodInfo.DeclaringType?.FullName,
-            DeclaringTypeNamespaceName = methodInfo.DeclaringType?.Namespace
+            DeclaringTypeNamespaceName = methodInfo.DeclaringType?.Namespace,
+            IsStaticMethod = methodInfo.IsStatic
         };
     }
 

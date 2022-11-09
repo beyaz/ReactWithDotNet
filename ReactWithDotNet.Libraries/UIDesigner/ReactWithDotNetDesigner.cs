@@ -16,6 +16,11 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         state = StateCache.ReadState() ?? new UIDesignerModel();
 
         state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
+
+        if (state.SelectedMethodTreeNodeKey.HasValue())
+        {
+            OnElementSelected((state.SelectedMethodTreeNodeKey, state.SelectedMethodTreeFilter));
+        }
     }
 
     public void Refresh()
@@ -71,14 +76,14 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             {
                 new FlexRow(Color("#6c757d"),CursorPointer, TextAlignCenter)
                 {
-                    new div(Text("Instance json"))
+                    When(!state.SelectedMethodIsStatic,new div(Text("Instance json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = true),
                         When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"),FontWeight600),
                         Padding(10),
                         FlexGrow(1),
                         FontSize13
-                    },
+                    }),
                     new div(Text("Parameters json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = false),
@@ -186,8 +191,9 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             {
                 fullClassName = $"{node.DeclaringTypeFullName}";
 
-                state.MetadataToken      = node.MetadataToken;
-                state.SelectedMethodName = node.Name;
+                state.MetadataToken          = node.MetadataToken;
+                state.SelectedMethodName     = node.Name;
+                state.SelectedMethodIsStatic = node.IsStaticMethod;
             }
         }
 
