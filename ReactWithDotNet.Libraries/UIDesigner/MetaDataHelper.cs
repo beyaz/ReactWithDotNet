@@ -4,11 +4,13 @@ using System.Runtime.InteropServices;
 
 namespace ReactWithDotNet.UIDesigner;
 
-public  struct AssemblyReference
+[Serializable]
+public  sealed class AssemblyReference
 {
     public string Name { get; set; }
 }
-public struct TypeReference
+[Serializable]
+public sealed class TypeReference
 {
     public string Name { get; set; }
 
@@ -17,7 +19,8 @@ public struct TypeReference
     public AssemblyReference Assembly{ get; set; }
 }
 
-public struct MethodReference
+[Serializable]
+public sealed class  MethodReference
 {
     public string Name { get; set; }
 
@@ -30,7 +33,8 @@ public struct MethodReference
     public int MetadataToken { get; set; }
 }
 
-public struct ParameterReference
+[Serializable]
+public sealed class ParameterReference
 {
     public string Name { get; set; }
 
@@ -57,7 +61,7 @@ static class MetadataHelper
         {
             if (returnMethodInfo == null)
             {
-                if (ConvertToMetadataNode(methodInfo)?.MetadataToken == node.MetadataToken)
+                if (ConvertToMetadataNode(methodInfo).MethodReference.MetadataToken == node.MethodReference.MetadataToken)
                 {
                     returnMethodInfo = methodInfo;
                 }
@@ -97,6 +101,8 @@ static class MetadataHelper
             var classNode = new MetadataNode
             {
                 IsClass       = true,
+                TypeReference =x.AsReference(),
+                
                 Name          = GetName(x),
                 NamespaceName = x.Namespace,
                 AssemblyName      = x.Assembly.GetName().Name
@@ -194,13 +200,12 @@ static class MetadataHelper
     {
         return new MetadataNode
         {
-            IsMethod                   = true,
+            IsMethod        = true,
+            MethodReference = methodInfo.AsReference(),
+            
             Name                       = methodInfo.Name,
-            FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
-            MetadataToken              = methodInfo.MetadataToken,
             DeclaringTypeFullName      = methodInfo.DeclaringType?.FullName,
-            DeclaringTypeNamespaceName = methodInfo.DeclaringType?.Namespace,
-            IsStaticMethod = methodInfo.IsStatic
+            
         };
     }
 

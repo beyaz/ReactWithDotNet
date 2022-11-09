@@ -7,16 +7,14 @@ namespace ReactWithDotNet.UIDesigner;
 class MetadataNode : TreeNode
 {
     public string DeclaringTypeFullName { get; set; }
-    public string DeclaringTypeNamespaceName { get; set; }
-    public string FullNameWithoutReturnType { get; set; }
     public bool IsClass { get; set; }
     public bool IsMethod { get; set; }
     public bool IsNamespace { get; set; }
-    public int MetadataToken { get; set; }
     public string Name { get; set; }
     public string NamespaceName { get; set; }
-    public bool IsStaticMethod { get; set; }
     public string AssemblyName { get; set; }
+    public MethodReference MethodReference { get; set; }
+    public TypeReference TypeReference { get; set; }
 }
 
 class MethodSelectionModel
@@ -126,7 +124,7 @@ background:#c8d3db !important;
             {
                 new img { Src(GetSvgUrl("Method")), wh(14), mt(5) },
 
-                new div { Text(node.FullNameWithoutReturnType), MarginLeft(5), FontSize13 }
+                new div { Text(node.MethodReference.FullNameWithoutReturnType), MarginLeft(5), FontSize13 }
             };
         }
 
@@ -136,7 +134,7 @@ background:#c8d3db !important;
             {
                 new img { Src(GetSvgUrl("Class")), wh(14) },
 
-                new div { Text(node.Name), MarginLeft(5), FontSize13 }
+                new div { Text(node.TypeReference.Name), MarginLeft(5), FontSize13 }
             };
         }
 

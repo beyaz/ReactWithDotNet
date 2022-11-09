@@ -191,9 +191,9 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             {
                 fullClassName = $"{node.DeclaringTypeFullName}";
 
-                state.MetadataToken          = node.MetadataToken;
+                state.MetadataToken          = node.MethodReference.MetadataToken;
                 state.SelectedMethodName     = node.Name;
-                state.SelectedMethodIsStatic = node.IsStaticMethod;
+                state.SelectedMethodIsStatic = node.MethodReference.IsStatic;
             }
         }
 
