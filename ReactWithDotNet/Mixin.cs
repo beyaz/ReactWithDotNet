@@ -923,4 +923,8 @@ public static partial class Mixin
     public static StyleModifier py(string value) => PaddingTopBottom(value);
     #endregion
     #endregion
+
+
+
+    public static HtmlElementModifier RowSpan(int? rowSpan) => new(element => ((td)element).rowSpan = rowSpan);
 }
