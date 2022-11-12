@@ -24,6 +24,7 @@ static class QueryKey
 {
     public static string Page = "p";
     public static string SearchQuery = "q";
+    public static string FactIndex = "f";
 }
 
 static class ResourceAccess

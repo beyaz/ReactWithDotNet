@@ -14,7 +14,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             SelectedTabIdentifier = Tabs.FirstOrDefault().contenType.FullName
         };
 
-        var value = Context.Query[QueryKey.SearchQuery];
+        var value = Context.Query[QueryKey.FactIndex];
         if (value is not null && int.TryParse(value, out int index) && index >0 && index<Tabs.Count)
         {
             state.SelectedTabIdentifier = Tabs[index].contenType.FullName;
@@ -103,6 +103,6 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
     {
         var index = Tabs.FindIndex(x => x.contenType.FullName == state.SelectedTabIdentifier);
         
-        Client.PushHistory("", $"/?{QueryKey.Page}={PageId.InitialLetters}&{QueryKey.SearchQuery}={index}");
+        Client.PushHistory("", $"/?{QueryKey.Page}={PageId.InitialLetters}&{QueryKey.FactIndex}={index}");
     }
 }
