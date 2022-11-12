@@ -148,7 +148,12 @@ static class Extensions
         {
             return "Ta";
         }
-        
+
+        if (arabicLetter == ArabicLetter.Nun)
+        {
+            return "Nun";
+        }
+
         throw new NotImplementedException(arabicLetter);
     }
 }

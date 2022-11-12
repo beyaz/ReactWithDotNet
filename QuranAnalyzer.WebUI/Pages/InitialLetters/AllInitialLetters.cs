@@ -13,9 +13,15 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
         {
             SelectedTabIdentifier = Tabs.FirstOrDefault().contenType.FullName
         };
+
+        var value = Context.Query[QueryKey.SearchQuery];
+        if (value is not null && int.TryParse(value, out int index) && index >0 && index<Tabs.Count)
+        {
+            state.SelectedTabIdentifier = Tabs[index].contenType.FullName;
+        }
     }
 
-    static (string TabHeader, Type contenType)[] Tabs =
+    static List<(string TabHeader, Type contenType)> Tabs =new()
     {
         ("Kaf 1", typeof(InitialLetterGroup_Qaaf_50)),
         ("Kaf 2", typeof(InitialLetterGroup_Qaaf_42)),
@@ -86,5 +92,17 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
         };
     }
     
-    void OnTabHeaderClick(MouseEvent e) => state.SelectedTabIdentifier = e.FirstNotEmptyId;
+    void OnTabHeaderClick(MouseEvent e)
+    {
+        state.SelectedTabIdentifier = e.FirstNotEmptyId;
+
+        UpdateUrl();
+    }
+
+    void UpdateUrl()
+    {
+        var index = Tabs.FindIndex(x => x.contenType.FullName == state.SelectedTabIdentifier);
+        
+        Client.PushHistory("", $"/?{QueryKey.Page}={PageId.InitialLetters}&{QueryKey.SearchQuery}={index}");
+    }
 }
