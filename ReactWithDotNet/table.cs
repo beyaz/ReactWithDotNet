@@ -6,7 +6,12 @@ public class table : HtmlElement
 }
 public class tbody : HtmlElement
 {
+    public tbody()
+    {
+        
+    }
 
+    public tbody(params IModifier[] modifiers) : base(modifiers) { }
 }
 public class tr : HtmlElement
 {
@@ -15,6 +20,8 @@ public class tr : HtmlElement
 
     [React]
     public int? colSpan { get; set; }
+
+    public tr(params IModifier[] modifiers) : base(modifiers) { }
 }
 
 public class th : HtmlElement
@@ -24,6 +31,8 @@ public class th : HtmlElement
 
     [React]
     public int? colSpan { get; set; }
+
+    public th(params IModifier[] modifiers) : base(modifiers) { }
 }
 
 public class td : HtmlElement
@@ -33,4 +42,10 @@ public class td : HtmlElement
 
     [React]
     public int? colSpan { get; set; }
+
+    public td()
+    {
+        
+    }
+    public td(params IModifier[] modifiers) : base(modifiers) { }
 }

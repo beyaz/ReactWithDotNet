@@ -5,14 +5,14 @@ namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
 {
-    public bool ShowCounts { get; set; }
+    bool ShowCounts => Context.Query[QueryKey.ShowNumbers] == "1";
 
     static string IdOfCountingResult_1 => $"HaMimSeparated-{nameof(IdOfCountingResult_1)}";
     static string IdOfCountingResult_2 => $"HaMimSeparated-{nameof(IdOfCountingResult_2)}";
 
     protected override Element render()
     {
-        const string firstColor  = "#d62454";
+        const string firstColor  = "#871F78";
         const string secondColor = "#c75fe0";
 
         (int? count, string url, string color) getOnlyOneLetterCountingInfo(string verseSelectScript, string letter, int? count, string color)
@@ -59,7 +59,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         },
                         new td
                         {
-                            rowSpan = 6,
+                            rowSpan = 5,
                             children =
                             {
                                 new FlexRow(JustifyContentCenter, mt(-50))
@@ -128,28 +128,70 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                             }
                         }
                     },
-
-                    RowSpace,
                     RowSpace,
                     RowSpace,
                     new tr
                     {
                         new td(),
-                        new td(),
-                        new td
+                        
+                        new td(DisplayFlex, JustifyContentCenter, When(ShowCounts is false, DisplayNone))
                         {
-                            style = { DisplayFlex, JustifyContentCenter },
-                            children =
+                            new FlexRow
                             {
-                                new FlexRow(AlignItemsCenter, Gap(5))
-                                {
-                                    new Switch { IsChecked = ShowCounts, ValueChange = x => ShowCounts = x }, "Geçiş adetlerini göster"
-                                }
+                                "Yukarıdaki geçiş adetlerinin rakamları toplamı 59'dur"
                             }
-                        }
+                        },
+                        new td(),
+                    },
+
+                    RowSpace,
+                    RowSpace,
+
+                    new tr
+                    {
+                        new td(),
+                        
+                        new td(DisplayFlex, JustifyContentCenter)
+                        {
+                            new FlexRow(AlignItemsCenter, Gap(5))
+                            {
+                                new Switch { IsChecked = ShowCounts, ValueChange = x =>
+                                    {
+                                        var showNumbers = x ? 1 : 0;
+                                        if (Context.Query[QueryKey.ShowNumbers] == null)
+                                        {
+                                            Client.NavigateToUrl("?"+Context.QueryAsString + $"&{QueryKey.ShowNumbers}={showNumbers}");
+                                        }
+                                        else
+                                        {
+                                            Context.Query[QueryKey.ShowNumbers] = showNumbers.ToString();
+
+                                            Client.NavigateToUrl("?"+Context.Query);
+                                        }
+
+                                    }
+                                }, 
+                                "Geçiş adetlerini göster"
+                            }
+                        },
+                        new td()
                     },
                     RowSpace,
                     RowSpace,
+                    new tr
+                    {
+                        new td(),
+                        
+                        new td(DisplayFlex, JustifyContentCenter,When(ShowCounts is false, DisplayNone))
+                        {
+                            new FlexRow
+                            {
+                                "Aşağıdaki geçiş adetlerinin rakamları toplamı 54'dür"
+                            }
+                        },
+                        new td(),
+                    },
+                    
                     new tr
                     {
                         new td
@@ -282,10 +324,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                 " 42. sure diğerlerinden farklı olarak 2. ayetinde de başlangıç harfi barındırır.",
                 new br(),
                 " Şekilden de görüldüğü üzere 42. suredeki bu olay farklı bir ahenk daha katar. ",
-                " Sanki bu 7 surede var olan ", AsLetter(Haa), " - ", AsLetter(Miim), " tablosunu 19.un katları şeklinde ikiye bölüyormuş gibi düşünebilirsiniz."
+                " Sanki bu 7 surede var olan ", AsLetter(Haa), " - ", AsLetter(Miim), " tablosunu 19.un katları şeklinde ikiye bölüyormuş gibi düşünebilirsiniz.",
+                new br(),
+                "Hatta bu iki şemadaki sayımların rakamları toplamı dahi çarpanı vermektedir."
             },
 
-            new Arrow { start = Id(40, Haa), end  = IdOfCountingResult_1, StartAnchorFromRight = true },
+            new Arrow { start = Id(40, Haa), end  = IdOfCountingResult_1, StartAnchorFromRight = true},
             new Arrow { start = Id(40, Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true },
             new Arrow { start = Id(41, Haa), end  = IdOfCountingResult_1, StartAnchorFromRight = true },
             new Arrow { start = Id(41, Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true },

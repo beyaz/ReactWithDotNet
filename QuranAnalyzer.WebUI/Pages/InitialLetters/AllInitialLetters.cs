@@ -19,6 +19,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
         {
             state.SelectedTabIdentifier = Tabs[index].contenType.FullName;
         }
+
     }
 
     static List<(string TabHeader, Type contenType)> Tabs =new()

@@ -56,7 +56,7 @@ class CountingResult: ReactComponent
             {
                 new FlexRow(AlignItemsCenter)
                 {
-                    "19",(small)" x ",  new small(MultipleOf.ToString()){ When(MultipleOfColor.HasValue(), Color(MultipleOfColor)) }
+                    new div("19"){FontWeight500}, (small)" x ",  new small(MultipleOf.ToString()){ When(MultipleOfColor.HasValue(), Color(MultipleOfColor)) }
                 },
                 new a
                 {
