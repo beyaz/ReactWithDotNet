@@ -136,9 +136,9 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         
                         new td(DisplayFlex, JustifyContentCenter, When(ShowCounts is false, DisplayNone))
                         {
-                            new FlexRow
+                            new div(TextAlignCenter,MaxWidth(300))
                             {
-                                "Yukarıdaki geçiş adetlerinin rakamları toplamı 59'dur"
+                                "Yukarıdaki geçiş adetlerinin rakamları toplamı ",(span)"59"|Color(firstColor),"'dur"
                             }
                         },
                         new td(),
@@ -184,9 +184,9 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         
                         new td(DisplayFlex, JustifyContentCenter,When(ShowCounts is false, DisplayNone))
                         {
-                            new FlexRow
+                            new div(TextAlignCenter,MaxWidth(300))
                             {
-                                "Aşağıdaki geçiş adetlerinin rakamları toplamı 54'dür"
+                                "Aşağıdaki geçiş adetlerinin rakamları toplamı ",(span)"54"|Color(firstColor),"'dür"
                             }
                         },
                         new td(),
@@ -326,7 +326,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                 " Şekilden de görüldüğü üzere 42. suredeki bu olay farklı bir ahenk daha katar. ",
                 " Sanki bu 7 surede var olan ", AsLetter(Haa), " - ", AsLetter(Miim), " tablosunu 19.un katları şeklinde ikiye bölüyormuş gibi düşünebilirsiniz.",
                 new br(),
-                "Hatta bu iki şemadaki sayımların rakamları toplamı dahi çarpanı vermektedir."
+                "Hatta bu iki şemadaki sayımların rakamları toplamı dahi kendi çarpanı vermektedir."
             },
 
             new Arrow { start = Id(40, Haa), end  = IdOfCountingResult_1, StartAnchorFromRight = true},

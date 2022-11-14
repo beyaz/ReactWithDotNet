@@ -1,5 +1,4 @@
 ﻿using QuranAnalyzer.WebUI.Components;
-using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -60,7 +59,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             children =
             {
                 new h4 { text = "Harf Arama", style = { textAlign = "center" } },
-                new VStack
+                new FlexColumn
                 {
                     new VStack
                     {
@@ -77,13 +76,24 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                     new VSpace(20),
 
-                    new Button
+                    new FlexRow(JustifyContentFlexEnd)
                     {
-                        label     = "Ara",
-                        onClick   = OnCaclculateClicked,
-                        className = "p-button-outlined",
-                        style     = { alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px" }
+                        new FlexRowCentered
+                        {
+                            children  ={"Ara"},
+                            onClick   = OnCaclculateClicked,
+                            style =
+                            {
+                                Color(BluePrimary),
+                                Border($"1px solid {BluePrimary}"),
+                                Background("transparent"),
+                                BorderRadius(5),
+                                Padding(10,30),
+                                CursorPointer
+                            }
+                        }
                     }
+                    
                 }
             }
         };
