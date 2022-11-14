@@ -198,6 +198,19 @@ public sealed class li : HtmlElement
     public li(Style style) : base(style) { }
 }
 
+public sealed partial class label : HtmlElement
+{
+    public label() { }
+
+    public label(params IModifier[] modifiers) : base(modifiers) { }
+
+    public label(string innerText) : base(innerText) {  }
+
+    public static implicit operator label(string text) => new() { text = text };
+
+    public label(Style style) : base(style) { }
+}
+
 public sealed class h1 : HtmlElement
 {
     public h1() { }

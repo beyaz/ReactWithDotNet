@@ -6,7 +6,7 @@ public class button : HtmlElement
     public string type { get; set; }
 }
 
-public class label : HtmlElement
+partial class label 
 {
     [React]
     public string htmlFor { get; set; }

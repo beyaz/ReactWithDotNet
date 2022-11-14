@@ -14,6 +14,7 @@ namespace ReactWithDotNet.Test
             public string Tag { get; set; }
             public string Comment { get; set; }
             public bool EnableStringIntegration { get; set; } = true;
+            public bool CreateClassAsPartial { get; set; }
         }
         [TestMethod]
         public void ExportCommonHtmlElements()
@@ -35,6 +36,7 @@ namespace ReactWithDotNet.Test
 
                 new TagInfo { Tag = "li", Comment = "List item" },
 
+                new TagInfo { Tag = "label", CreateClassAsPartial = true},
 
                 new TagInfo { Tag = "h1", Comment = Empty },
                 new TagInfo { Tag = "h2", Comment = Empty },
@@ -90,7 +92,13 @@ namespace ReactWithDotNet.Test
             foreach (var item in map)
             {
                 addComment(null);
-                list.Add($"public sealed class {item.Tag} : HtmlElement");
+                
+                var partialModifier = "";
+                if (item.CreateClassAsPartial)
+                {
+                    partialModifier = " partial";
+                }
+                list.Add($"public sealed{partialModifier} class {item.Tag} : HtmlElement");
                 list.Add("{");
 
                 addComment();
