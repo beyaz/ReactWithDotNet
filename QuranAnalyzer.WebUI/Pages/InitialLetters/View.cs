@@ -142,13 +142,7 @@ class Arrow: ReactComponent
 }
 
 
-abstract class ReactComponent : ReactWithDotNet.ReactComponent
-{
-    protected string GetPronunciationOfArabicLetter(string arabicLetter)
-    {
-        return GetTurkishPronunciationOfArabicLetter(arabicLetter);
-    }
-}
+
 abstract class InitialLetterGroup : ReactComponent
 {
     protected tr HeaderTr => new tr

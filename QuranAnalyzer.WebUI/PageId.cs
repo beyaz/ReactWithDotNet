@@ -71,3 +71,10 @@ static class App
     }
 }
 
+abstract class ReactComponent : ReactWithDotNet.ReactComponent
+{
+    protected string GetPronunciationOfArabicLetter(string arabicLetter)
+    {
+        return GetTurkishPronunciationOfArabicLetter(arabicLetter);
+    }
+}

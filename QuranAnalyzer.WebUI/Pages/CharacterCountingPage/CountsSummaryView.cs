@@ -1,5 +1,4 @@
 ﻿using ReactWithDotNet.react_xarrows;
-using static QuranAnalyzer.WebUI.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -85,9 +84,17 @@ class CountsSummaryView : ReactComponent
                 }
             };
             
-            if (TranslateMap.ContainsKey(name))
+            var pronunciation = GetPronunciationOfArabicLetter(name);
+            if (pronunciation is not null)
             {
-                mean.text = $"({TranslateMap[name].tr})";
+                mean.text = pronunciation;
+            }
+            else
+            {
+                if (TranslateMap.ContainsKey(name))
+                {
+                    mean.text = $"({TranslateMap[name].tr})";
+                }
             }
             
             var countView = new HPanel

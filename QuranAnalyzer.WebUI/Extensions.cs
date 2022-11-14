@@ -154,7 +154,7 @@ static class Extensions
             return "Nun";
         }
 
-        throw new NotImplementedException(arabicLetter);
+        return null;
     }
 }
 
