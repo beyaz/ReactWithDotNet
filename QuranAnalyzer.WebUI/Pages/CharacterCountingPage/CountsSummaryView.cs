@@ -95,6 +95,23 @@ class CountsSummaryView : ReactComponent
             {
                 mean.text = GetPronunciationOfArabicWord(name)?.trMean;
             }
+
+            static Element countAsElement(string text,string color, string pronunciation, int count, string id)
+            {
+                return new FlexRow
+                {
+                    new FlexColumn(AlignItemsCenter)
+                    {
+                        new div { text = text, style = { color = color} },
+                        new div{ Text(pronunciation), FontSize("0.6rem"), FontWeight700}
+                    },
+                    new div { text = ":", style = { marginLeftRight = "4px" } },
+
+                    new div { text = count.ToString(), id = id}
+                };
+            }
+
+            
             
             var countView = new HPanel
             {

@@ -222,12 +222,16 @@ static class MetadataHelper
 
     static bool IsValidForExport(MethodInfo methodInfo)
     {
+        if (methodInfo.Name.Contains("countAsElement"))
+        {
+            methodInfo.Name.ToString();
+        }
         if (methodInfo.Name == "render" || methodInfo.Name == "InvokeRender")
         {
             return false;
         }
 
-        if (methodInfo.Name.Contains("|") || methodInfo.Name.StartsWith("set_"))
+        if (/*methodInfo.Name.Contains("|") ||*/ methodInfo.Name.StartsWith("set_"))
         {
             return false;
         }

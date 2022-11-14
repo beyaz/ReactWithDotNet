@@ -42,7 +42,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             highlight = "json",
             style     = { minHeight = "200px", borderRadius = "3px", border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
         };
-        if (state.IsInstanceEditorActive == false)
+        if (state.IsInstanceEditorActive == false||state.SelectedMethodIsStatic)
         {
             editor = new Editor
             {
