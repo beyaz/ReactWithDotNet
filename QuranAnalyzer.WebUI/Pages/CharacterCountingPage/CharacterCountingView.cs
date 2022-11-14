@@ -113,11 +113,21 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         foreach (var (chapterFilter, searchLetters) in searchScript.Lines)
         {
-            summaryInfoList.AddRange(searchLetters.AsListOf(x => new SummaryInfo
+            foreach (var summaryInfo in searchLetters.AsListOf(x => new SummaryInfo
+                     {
+                         Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
+                         Name  = x.MatchedLetter
+                     }))
             {
-                Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
-                Name  = x.MatchedLetter
-            }));
+                if (summaryInfoList.Any(x=>x.Name == summaryInfo.Name))
+                {
+                    summaryInfoList.First(x => x.Name == summaryInfo.Name).Count += summaryInfo.Count;
+                    continue;
+                }
+                
+                summaryInfoList.Add(summaryInfo);
+            }
+            
 
             foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
             {

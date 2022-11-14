@@ -2,15 +2,35 @@
 
 static class Extensions
 {
-    public static IReadOnlyDictionary<string, (string reading, string tr)> TranslateMap = new Dictionary<string, (string reading, string tr)>
+    public static (string reading, string trMean)? GetTurkishPronunciationOfArabicWord(string arabicWord)
     {
-        { "ايام", ("eyyam", "günler") },
-        { "يومين", ("yevmeyn", "2 gün") },
-        { "الايام", ("el-eyyam", "günler") },
-        { "اياما", ("eyyamen", "günler") },
-        { "واياما", ("ve eyyamen", "günler") },
-        { "بايىم", ("bi-eyyam", "günler") }
-    };
+        if (arabicWord == "ايام")
+        {
+            return ("eyyam", "günler");
+        }
+        if (arabicWord == "يومين")
+        {
+            return ("yevmeyn", "2 gün");
+        }
+        if (arabicWord == "الايام")
+        {
+            return ("el-eyyam", "günler");
+        }
+        if (arabicWord == "اياما")
+        {
+            return ("eyyamen", "günler");
+        }
+        if (arabicWord == "واياما")
+        {
+            return ("ve eyyamen", "günler");
+        }
+        if (arabicWord == "بايىم")
+        {
+            return ("bi-eyyam", "günler");
+        }
+        
+        return null;
+    }
 
     public static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*|ايام;*|يومين;*|الايام;*|اياما;*|واياما;*|بايىم";
 

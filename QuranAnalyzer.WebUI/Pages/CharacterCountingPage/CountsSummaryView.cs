@@ -56,7 +56,7 @@ class CountsSummaryView : ReactComponent
             });
         }
 
-        var countsView = new HPanel
+        var countsView = new FlexRow(Gap(20))
         {
             style =
             {
@@ -65,7 +65,7 @@ class CountsSummaryView : ReactComponent
                 fontSize       = "0.9rem",
                 flexWrap       = "wrap",
                 marginTop      = "20px"
-            },
+            }
         };
 
         
@@ -78,31 +78,33 @@ class CountsSummaryView : ReactComponent
             {
                 style =
                 {
-                    fontSize = "0.6rem",
-                    marginRight = "1px",
-                    marginLeft = "3px"
+                    FontSize("0.6rem"),
+                    FontWeight700
+                    
+                    //marginRight = "1px",
+                    //marginLeft = "3px"
                 }
             };
             
             var pronunciation = GetPronunciationOfArabicLetter(name);
             if (pronunciation is not null)
             {
-                mean.text = pronunciation;
+                mean.text = "("+pronunciation+")";
             }
             else
             {
-                if (TranslateMap.ContainsKey(name))
-                {
-                    mean.text = $"({TranslateMap[name].tr})";
-                }
+                mean.text = GetPronunciationOfArabicWord(name)?.trMean;
             }
             
             var countView = new HPanel
             {
                 children =
                 {
-                    new div { text = name, style = { color = LetterColorPalette.GetColor(j) } },
-                    mean,
+                    new FlexColumn(AlignItemsCenter)
+                    {
+                        new div { text = name, style = { color = LetterColorPalette.GetColor(j) } },
+                        mean
+                    },
                     new div { text = ":", style = { marginLeftRight = "4px" } },
 
                     new div { text = counts[j].Count.ToString(), id = "subTotal-" + j }
