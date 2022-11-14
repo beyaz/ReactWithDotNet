@@ -52,49 +52,39 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             Client.GotoMethod(5000,ClearErrorMessage);
         }
 
-        var searchPanel = new divWithBorder
+        var searchPanel = new divWithBorder(PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
         {
-            style = { paddingLeftRight = "15px", paddingBottom = "15px" },
-
-            children =
+            When(state.IsBlocked,()=>new div{PositionAbsolute,LeftRight(0),TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"),Zindex(3)}),
+            When(state.IsBlocked,()=>new FlexRowCentered
             {
-                new h4 { text = "Harf Arama", style = { textAlign = "center" } },
-                new FlexColumn
+                PositionAbsolute,FontWeight700, LeftRight(0),TopBottom(0),Zindex(4),
+                Children(new LoadingIcon()|wh(17)|mr(5),"Lütfen bekleyiniz...")
+            }),
+            
+            new h4 { text = "Harf Arama", style = { TextAlignCenter } },
+            new FlexColumn
+            {
+                
+                new VStack
                 {
-                    new VStack
-                    {
-                        new div { text = "Arama Komutut", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                    new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
 
-                        new TextArea { ValueBind = () => state.SearchScript },
+                    new TextArea { ValueBind = () => state.SearchScript },
 
-                        new ErrorText { Text = state.SearchScriptErrorMessage }
-                    },
+                    new ErrorText { Text = state.SearchScriptErrorMessage }
+                },
 
-                    new VSpace(3),
+                new VSpace(3),
 
-                    new CharacterCountingOptionView(),
+                new CharacterCountingOptionView(),
 
-                    new VSpace(20),
+                new VSpace(20),
 
-                    new FlexRow(JustifyContentFlexEnd)
-                    {
-                        new FlexRowCentered
-                        {
-                            children  ={"Ara"},
-                            onClick   = OnCaclculateClicked,
-                            style =
-                            {
-                                Color(BluePrimary),
-                                Border($"1px solid {BluePrimary}"),
-                                Background("transparent"),
-                                BorderRadius(5),
-                                Padding(10,30),
-                                CursorPointer
-                            }
-                        }
-                    }
-                    
+                new FlexRow(JustifyContentFlexEnd)
+                {
+                    new ActionButton{Label = "Ara",OnClick = OnCaclculateClicked}
                 }
+
             }
         };
 
@@ -114,7 +104,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         if (state.IsBlocked)
         {
-            return CalculatingComponent.WithBlockUI(searchPanel);
+            return searchPanel;
         }
 
         var resultVerseList = new List<LetterColorizer>();
@@ -194,7 +184,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
     }
 
-    void OnCaclculateClicked(MouseEvent _)
+    void OnCaclculateClicked()
     {
         state.SearchScriptErrorMessage = null;
         if (state.SearchScript.HasNoValue())
@@ -218,7 +208,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             state.IsBlocked = true;
             Client.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={script.AsString()}");
-            Client.GotoMethod(OnCaclculateClicked, _);
+            Client.GotoMethod(OnCaclculateClicked);
             return;
         }
 

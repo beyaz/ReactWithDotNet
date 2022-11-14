@@ -11,6 +11,12 @@ class divWithBorder: HtmlElement
     {
         this.Apply(BorderRadius(5),ComponentBorder);
     }
+
+    public divWithBorder(params IModifier[] modifiers)
+    {
+        this.Apply(BorderRadius(5), ComponentBorder);
+        this.Apply(modifiers);
+    }
 }
 
 class LargeTitle : ReactComponent

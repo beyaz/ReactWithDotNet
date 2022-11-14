@@ -9,7 +9,7 @@ public class TextArea:ReactComponent
         return new textarea
         {
             valueBind = ValueBind,
-            rows = 4,
+            rows = 6,
             style =
             {
                 ComponentBorder,
