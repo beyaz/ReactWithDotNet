@@ -38,7 +38,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
     {
         bool canShowInstanceEditor()
         {
-            if (state.SelectedMethodIsStatic || state.SelectedMethod?.IsStatic == true)
+            if (state.SelectedMethod?.IsStatic == true)
             {
                 return false;
             }
@@ -48,12 +48,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
         bool canShowParametersEditor()
         {
-            if (state.SelectedMethodParameterCount > 0)
-            {
-                return true;
-            }
-
-            if (state.SelectedMethod?.Parameters?.Count > 0)
+            if (state.SelectedMethod?.Parameters.Count > 0)
             {
                 return true;
             }
@@ -213,8 +208,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
     {
         SaveState();
 
-        state.SelectedMethodName = null;
-        state.MetadataToken      = null;
+        state.SelectedMethod     = null;
 
         state.SelectedMethodTreeNodeKey = e.value;
         state.SelectedMethodTreeFilter  = e.filter;
@@ -230,25 +224,14 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         {
             if (node.IsClass)
             {
-                fullClassName = $"{node.NamespaceName}.{node.Name}";
+                fullClassName = $"{node.TypeReference.FullName}";
             }
-
-            state.SelectedMethodIsStatic       = false;
-            state.SelectedMethodParameterCount = 0;
-
-
-            state.SelectedMethod = null;
 
             if (node.IsMethod)
             {
-                fullClassName = $"{node.DeclaringTypeFullName}";
+                fullClassName = $"{node.MethodReference.DeclaringType.FullName}";
 
                 state.SelectedMethod = node.MethodReference;
-
-                state.MetadataToken          = node.MethodReference.MetadataToken;
-                state.SelectedMethodName     = node.Name;
-                state.SelectedMethodIsStatic = node.MethodReference.IsStatic;
-                state.SelectedMethodParameterCount = node.MethodReference.Parameters.Count;
             }
         }
 
@@ -261,7 +244,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
         if (typeReference != null)
         {
-            var json = StateCache.ReadFromCache(typeReference + state.MetadataToken);
+            var json = StateCache.ReadFromCache(typeReference + state.SelectedMethod?.MetadataToken);
             if (json.HasValue())
             {
                 state.SelectedDotNetMemberSpecification = JsonConvert.DeserializeObject<DotNetMemberSpecification>(json);
@@ -286,7 +269,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         {
             var selectedDotNetMemberSpecificationAsJson = JsonSerializer.Serialize(state.SelectedDotNetMemberSpecification, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true });
 
-            StateCache.SaveToCache(state.SelectedComponentTypeReference + state.MetadataToken, selectedDotNetMemberSpecificationAsJson);
+            StateCache.SaveToCache(state.SelectedComponentTypeReference + state.SelectedMethod?.MetadataToken, selectedDotNetMemberSpecificationAsJson);
         }
 
         StateCache.SaveState(state);

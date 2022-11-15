@@ -16,6 +16,8 @@ public sealed class TypeReference
 
     public string NamespaceName { get; set; }
 
+    public string FullName { get; set; }
+
     public AssemblyReference Assembly{ get; set; }
 }
 
@@ -83,7 +85,7 @@ static class MetadataHelper
             {
                 var nodeForNamespace = new MetadataNode
                 {
-                    Name = namespaceName,
+                    NamespaceReference = namespaceName,
 
                     IsNamespace = true
                 };
@@ -101,27 +103,14 @@ static class MetadataHelper
             var classNode = new MetadataNode
             {
                 IsClass       = true,
-                TypeReference =x.AsReference(),
-                
-                Name          = GetName(x),
-                NamespaceName = x.Namespace,
-                AssemblyName      = x.Assembly.GetName().Name
+                TypeReference =x.AsReference()
             };
 
             VisitMethods(x, m => { classNode.children.Add(ConvertToMetadataNode(m)); });
 
             return classNode;
         }
-
-        static string GetName(Type x)
-        {
-            if (x.IsNested)
-            {
-                return GetName(x.DeclaringType )+ "+" + x.Name;
-            }
-
-            return x.Name;
-        }
+        
         
     }
 
@@ -133,6 +122,7 @@ static class MetadataHelper
     {
         return new TypeReference
         {
+            FullName = x.FullName,
             Name          = GetName(x),
             NamespaceName = x.Namespace,
             Assembly = x.Assembly.AsReference()
@@ -201,11 +191,7 @@ static class MetadataHelper
         return new MetadataNode
         {
             IsMethod        = true,
-            MethodReference = methodInfo.AsReference(),
-            
-            Name                       = methodInfo.Name,
-            DeclaringTypeFullName      = methodInfo.DeclaringType?.FullName,
-            
+            MethodReference = methodInfo.AsReference()
         };
     }
 
@@ -222,10 +208,6 @@ static class MetadataHelper
 
     static bool IsValidForExport(MethodInfo methodInfo)
     {
-        if (methodInfo.Name.Contains("countAsElement"))
-        {
-            methodInfo.Name.ToString();
-        }
         if (methodInfo.Name == "render" || methodInfo.Name == "InvokeRender")
         {
             return false;

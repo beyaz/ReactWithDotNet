@@ -6,13 +6,11 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataNode : TreeNode
 {
-    public string DeclaringTypeFullName { get; set; }
     public bool IsClass { get; set; }
     public bool IsMethod { get; set; }
     public bool IsNamespace { get; set; }
-    public string Name { get; set; }
-    public string NamespaceName { get; set; }
-    public string AssemblyName { get; set; }
+    
+    public string NamespaceReference { get; set; }
     public MethodReference MethodReference { get; set; }
     public TypeReference TypeReference { get; set; }
 }
@@ -68,7 +66,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         {
             filterValueBind   = () => state.Filter,
             filter            = true,
-            filterBy          = nameof(MetadataNode.Name),
+            filterBy          = nameof(MetadataNode.NamespaceReference),
             filterPlaceholder = "Search react components or methods which returns Element",
             nodeTemplate      = nodeTemplate,
             value             = GetNodes(),
@@ -144,7 +142,7 @@ background:#c8d3db !important;
             {
                 new img { Src(GetSvgUrl("Namespace")), wh(14) },
 
-                new div { Text(node.Name), MarginLeft(5), FontSize13 }
+                new div { Text(node.NamespaceReference), MarginLeft(5), FontSize13 }
             };
         }
 

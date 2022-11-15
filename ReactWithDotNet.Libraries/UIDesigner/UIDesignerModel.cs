@@ -3,8 +3,6 @@
 [Serializable]
 public class UIDesignerModel
 {
-    public int? MetadataToken { get; set; }
-
     public int ScreenWidth { get; set; } = 100;
 
     public string SelectedAssemblyFilePath { get; set; }
@@ -13,14 +11,10 @@ public class UIDesignerModel
 
     public DotNetMemberSpecification SelectedDotNetMemberSpecification { get; set; } = new();
 
-    public string SelectedMethodName { get; set; }
-
     public string SelectedMethodTreeNodeKey { get; set; }
 
     public string SelectedMethodTreeFilter{ get; set; }
     public bool IsInstanceEditorActive { get; set; }
-    public bool SelectedMethodIsStatic { get; set; }
-    public int SelectedMethodParameterCount { get; set; }
     public MethodReference SelectedMethod { get; set; }
 }
 
