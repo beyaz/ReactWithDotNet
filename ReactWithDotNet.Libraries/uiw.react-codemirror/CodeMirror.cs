@@ -9,7 +9,7 @@ public class CodeMirror : ThirdPartyReactComponent
     
     [React]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
-    public CodeMirrorOption basicSetup { get; } = new();
+    public CodeMirrorBasicSetup basicSetup { get; } = new();
 
     [React]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + nameof(CodeMirror) + "::OnChange")]
@@ -25,12 +25,9 @@ public class CodeMirror : ThirdPartyReactComponent
 }
 
 
-public sealed class CodeMirrorOption
+// https://uiwjs.github.io/react-codemirror/#/extensions/basic-setup
+public sealed class CodeMirrorBasicSetup
 {
-    public string? mode { get; set; }
-    
-    public string? placeholder { get; set; }
-
     public bool? highlightActiveLine { get; set; }
 
     public bool? highlightActiveLineGutter { get; set; }
