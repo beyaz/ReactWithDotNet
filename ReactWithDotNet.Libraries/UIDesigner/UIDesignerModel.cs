@@ -21,6 +21,7 @@ public class UIDesignerModel
     public bool IsInstanceEditorActive { get; set; }
     public bool SelectedMethodIsStatic { get; set; }
     public int SelectedMethodParameterCount { get; set; }
+    public MethodReference SelectedMethod { get; set; }
 }
 
 [Serializable]

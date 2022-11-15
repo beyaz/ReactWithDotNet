@@ -38,7 +38,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
     {
         bool canShowInstanceEditor()
         {
-            if (state.SelectedMethodIsStatic)
+            if (state.SelectedMethodIsStatic || state.SelectedMethod?.IsStatic == true)
             {
                 return false;
             }
@@ -49,6 +49,11 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         bool canShowParametersEditor()
         {
             if (state.SelectedMethodParameterCount > 0)
+            {
+                return true;
+            }
+
+            if (state.SelectedMethod?.Parameters?.Count > 0)
             {
                 return true;
             }
@@ -230,10 +235,15 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
             state.SelectedMethodIsStatic       = false;
             state.SelectedMethodParameterCount = 0;
-            
+
+
+            state.SelectedMethod = null;
+
             if (node.IsMethod)
             {
                 fullClassName = $"{node.DeclaringTypeFullName}";
+
+                state.SelectedMethod = node.MethodReference;
 
                 state.MetadataToken          = node.MethodReference.MetadataToken;
                 state.SelectedMethodName     = node.Name;
