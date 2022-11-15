@@ -108,3 +108,15 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
     protected internal abstract void ProcessModifier(IModifier modifier);
 }
+
+
+public sealed class Fragment : Element
+{
+    protected internal override void ProcessModifier(IModifier modifier)
+    {
+        foreach (var element in children)
+        {
+            element.ProcessModifier(modifier);
+        }
+    }
+}

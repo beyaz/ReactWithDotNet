@@ -70,6 +70,18 @@ partial class ElementSerializer
                 continue;
             }
 
+            if (node.ElementIsFragment)
+            {
+                if (node.IsChildrenOpened is false)
+                {
+                    OpenChildren(node, context);
+                    continue;
+                }
+
+                node.IsCompleted = true;
+                continue;
+            }
+
             if (node.ElementIsHtmlElement || node.ElementIsThirdPartyReactComponent)
             {
                 if (node.IsChildrenOpened is false)
@@ -526,12 +538,21 @@ partial class ElementSerializer
             return node;
         }
 
+        if (element is Fragment fragment)
+        {
+            node.ElementIsFragment = true;
+            node.ElementAsFragment = fragment;
+            return node;
+        }
+
         if (element is HtmlElement htmlElement)
         {
             node.ElementIsHtmlElement = true;
             node.ElementAsHtmlElement = htmlElement;
             return node;
         }
+        
+        
 
         throw FatalError("Node type not recognized");
     }
@@ -609,18 +630,32 @@ partial class ElementSerializer
         {
             return;
         }
+        
+        var targetNode = node;
+        if (node.ElementIsFragment)
+        {
+            targetNode = node.Parent;
+        }
 
-        Node child = null;
+        var child = targetNode.FirstChild;
+        if (child is not null)
+        {
+            while (child.HasNextSibling)
+            {
+                child = child.NextSibling;
+            }
+        }
+        
 
         foreach (var item in children)
         {
             var childNode = ConvertToNode(item, context);
 
-            childNode.Parent = node;
+            childNode.Parent = targetNode;
 
             if (child == null)
             {
-                node.FirstChild = childNode;
+                targetNode.FirstChild = childNode;
 
                 child = childNode;
 
@@ -635,6 +670,7 @@ partial class ElementSerializer
 
     class Node
     {
+        public bool ElementIsFragment { get; set; }
         public string BreadCrumpPath { get; set; }
         public int? CurrentOrder { get; set; }
         public bool DotNetComponentRenderMethodInvoked { get; set; }
@@ -682,5 +718,6 @@ partial class ElementSerializer
         public Node Parent { get; set; }
 
         public ElementSerializerContext SerializerContext { get; set; }
+        public Fragment ElementAsFragment { get; set; }
     }
 }

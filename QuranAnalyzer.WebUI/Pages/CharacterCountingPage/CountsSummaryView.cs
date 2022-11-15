@@ -73,27 +73,14 @@ class CountsSummaryView : ReactComponent
         {
             var name = counts[j].Name;
 
-
-            var mean = new div
-            {
-                style =
-                {
-                    FontSize("0.6rem"),
-                    FontWeight700
-                    
-                    //marginRight = "1px",
-                    //marginLeft = "3px"
-                }
-            };
-            
             var pronunciation = GetPronunciationOfArabicLetter(name);
             if (pronunciation is not null)
             {
-                mean.text = "("+pronunciation+")";
+                pronunciation = "("+pronunciation+")";
             }
             else
             {
-                mean.text = GetPronunciationOfArabicWord(name)?.trMean;
+                pronunciation = GetPronunciationOfArabicWord(name)?.trMean;
             }
 
             static Element countAsElement(string text,string color, string pronunciation, int count, string id)
@@ -105,31 +92,14 @@ class CountsSummaryView : ReactComponent
                         new div { text = text, style = { color = color} },
                         new div{ Text(pronunciation), FontSize("0.6rem"), FontWeight700}
                     },
-                    new div { text = ":", style = { marginLeftRight = "4px" } },
+                        new div { text = ":", style = { marginLeftRight = "4px" } },
 
-                    new div { text = count.ToString(), id = id}
+                        new div { text = count.ToString(), id = id},
+                      
                 };
             }
 
-            
-            
-            var countView = new HPanel
-            {
-                children =
-                {
-                    new FlexColumn(AlignItemsCenter)
-                    {
-                        new div { text = name, style = { color = LetterColorPalette.GetColor(j) } },
-                        mean
-                    },
-                    new div { text = ":", style = { marginLeftRight = "4px" } },
-
-                    new div { text = counts[j].Count.ToString(), id = "subTotal-" + j }
-                },
-                style = { marginLeft = "10px" }
-            };
-
-            countsView.appendChild(countView);
+            countsView.appendChild(countAsElement(name, LetterColorPalette.GetColor(j), pronunciation, counts[j].Count, "subTotal-" + j));
 
             returnDiv.appendChild(new Xarrow
             {
