@@ -73,35 +73,7 @@ class CountsSummaryView : ReactComponent
         {
             var name = counts[j].Name;
 
-            var pronunciation = GetPronunciationOfArabicLetter(name);
-            if (pronunciation is not null)
-            {
-                pronunciation = "("+pronunciation+")";
-            }
-            else
-            {
-                pronunciation = GetPronunciationOfArabicWord(name)?.trMean;
-            }
-
-            static Element countAsElement(string text,string color, string pronunciation, int count, string id)
-            {
-                return new FlexRow
-                {
-                    new FlexColumn(AlignItemsCenter)
-                    {
-                        new div { text = text, style = { color = color} },
-                        new div{ Text(pronunciation), FontSize("0.6rem"), FontWeight700}
-                    },
-                       
-                           new div { text = ":", style = { marginLeftRight = "4px" } },
-
-                           new div { text = count.ToString(), id = id},
-                       
-                      
-                };
-            }
-
-            countsView.appendChild(countAsElement(name, LetterColorPalette.GetColor(j), pronunciation, counts[j].Count, "subTotal-" + j));
+            countsView.appendChild(CountAsElement(name, LetterColorPalette.GetColor(j), GetPronunciation(name), counts[j].Count, "subTotal-" + j));
 
             returnDiv.appendChild(new Xarrow
             {
@@ -119,6 +91,39 @@ class CountsSummaryView : ReactComponent
         returnDiv.appendChild(countsView);
 
         return returnDiv;
+    }
+
+    string GetPronunciation(string name)
+    {
+        var pronunciation = GetPronunciationOfArabicLetter(name);
+        if (pronunciation is not null)
+        {
+            pronunciation = "(" + pronunciation + ")";
+        }
+        else
+        {
+            pronunciation = GetPronunciationOfArabicWord(name)?.trMean;
+        }
+
+        return pronunciation;
+    }
+
+    static Element CountAsElement(string text, string color, string pronunciation, int count, string id)
+    {
+        return new FlexRow
+        {
+            new FlexColumn(AlignItemsCenter)
+            {
+                new div { text = text, style = { color = color} },
+                new div{ Text(pronunciation), FontSize("0.6rem"), FontWeight700}
+            },
+                       
+            new div { text = ":", style = { marginLeftRight = "4px" } },
+
+            new div { text = count.ToString(), id = id},
+                       
+                      
+        };
     }
     #endregion
 
