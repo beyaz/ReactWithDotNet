@@ -36,21 +36,37 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
     protected override Element render()
     {
-        var editor = new Editor
+        bool canShowInstanceEditor()
         {
-            valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
-            highlight = "json",
-            style     = { minHeight = "200px", borderRadius = "3px", border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
-        };
-        if (state.IsInstanceEditorActive == false||state.SelectedMethodIsStatic)
+            if (state.SelectedMethodIsStatic)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        Element createJsonEditor()
         {
-            editor = new Editor
+            if (state.IsInstanceEditorActive)
+            {
+                return new Editor
+                {
+                    valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
+                    highlight = "json",
+                    style     = { minHeight = "200px", borderRadius = "3px", border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                };
+            }
+
+            return new Editor
             {
                 valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
                 highlight = "json",
-                style     = { minHeight = "200px", borderRadius = "3px",border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                style     = { minHeight = "200px", borderRadius = "3px", border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
             };
         }
+        
+        
         var propertyPanel = new FlexColumn(Padding(5), Height("100%"),Width("100%"), FontSize15, PrimaryBackground)
         {
             new style{Text($@"
@@ -72,11 +88,14 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             Space(10),
             new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged } | Margin(10) | Padding(5),
 
+            
+            
             new FlexColumn(Height("100%"))
             {
+                // header
                 new FlexRow(Color("#6c757d"),CursorPointer, TextAlignCenter)
                 {
-                    When(!state.SelectedMethodIsStatic,new div(Text("Instance json"))
+                    When(canShowInstanceEditor(), new div(Text("Instance json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = true),
                         When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"),FontWeight600),
@@ -94,7 +113,8 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
                     }
                 },
-                editor |Height("100%")
+                // content
+                createJsonEditor() |Height("100%")
             }
         };
 
@@ -187,6 +207,8 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 fullClassName = $"{node.NamespaceName}.{node.Name}";
             }
 
+            state.SelectedMethodIsStatic = false;
+            
             if (node.IsMethod)
             {
                 fullClassName = $"{node.DeclaringTypeFullName}";
