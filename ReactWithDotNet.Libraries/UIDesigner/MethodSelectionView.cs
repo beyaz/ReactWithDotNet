@@ -66,7 +66,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
         {
             filterValueBind   = () => state.Filter,
             filter            = true,
-            filterBy          = nameof(MetadataNode.NamespaceReference),
+            filterBy          = nameof(MetadataNode.label),
             filterPlaceholder = "Search react components or methods which returns Element",
             nodeTemplate      = nodeTemplate,
             value             = GetNodes(),
@@ -122,7 +122,7 @@ background:#c8d3db !important;
             {
                 new img { Src(GetSvgUrl("Method")), wh(14), mt(5) },
 
-                new div { Text(node.MethodReference.FullNameWithoutReturnType), MarginLeft(5), FontSize13 }
+                new div { Text(node.label), MarginLeft(5), FontSize13 }
             };
         }
 
@@ -132,7 +132,7 @@ background:#c8d3db !important;
             {
                 new img { Src(GetSvgUrl("Class")), wh(14) },
 
-                new div { Text(node.TypeReference.Name), MarginLeft(5), FontSize13 }
+                new div { Text(node.label), MarginLeft(5), FontSize13 }
             };
         }
 
@@ -142,7 +142,7 @@ background:#c8d3db !important;
             {
                 new img { Src(GetSvgUrl("Namespace")), wh(14) },
 
-                new div { Text(node.NamespaceReference), MarginLeft(5), FontSize13 }
+                new div { Text(node.label), MarginLeft(5), FontSize13 }
             };
         }
 

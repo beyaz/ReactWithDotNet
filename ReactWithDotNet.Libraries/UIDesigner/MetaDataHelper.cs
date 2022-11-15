@@ -86,8 +86,8 @@ static class MetadataHelper
                 var nodeForNamespace = new MetadataNode
                 {
                     NamespaceReference = namespaceName,
-
-                    IsNamespace = true
+                    IsNamespace        = true,
+                    label = namespaceName
                 };
 
                 nodeForNamespace.children.AddRange(types.Where(x => x.Namespace == namespaceName).Select(classToMetaData));
@@ -103,7 +103,8 @@ static class MetadataHelper
             var classNode = new MetadataNode
             {
                 IsClass       = true,
-                TypeReference =x.AsReference()
+                TypeReference =x.AsReference(),
+                label = x.Name
             };
 
             VisitMethods(x, m => { classNode.children.Add(ConvertToMetadataNode(m)); });
@@ -191,7 +192,8 @@ static class MetadataHelper
         return new MetadataNode
         {
             IsMethod        = true,
-            MethodReference = methodInfo.AsReference()
+            MethodReference = methodInfo.AsReference(),
+            label = methodInfo.AsReference().FullNameWithoutReturnType
         };
     }
 
