@@ -2,6 +2,7 @@
 import ReactWithDotNet from "../ReactWithDotNet.jsx";
 
 import "./react-simple-code-editor";
+import "./uiw.react-codemirror";
 
 function InitializeUIDesignerEvents(timeoutInMilliseconds)
 {

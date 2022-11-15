@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text.Json;
 using Newtonsoft.Json;
+using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
 using static ReactWithDotNet.UIDesigner.Extensions;
@@ -50,11 +51,24 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         {
             if (state.IsInstanceEditorActive)
             {
-                return new Editor
+                
+                return new CodeMirror
                 {
+                    //extensions = {"json","eclipse"},
+                    extensions = { "json", "githubLight" },
+                    //theme = "githubLight",
                     valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
-                    highlight = "json",
-                    style     = { minHeight = "200px", borderRadius = "3px", border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                    options   =
+                    {
+                        placeholder = "You can write instance properties here as json", 
+                        //highlightActiveLine = false,
+                        //mode = "js"
+                    },
+                    style = { 
+                        minHeight = "200px", 
+                        borderRadius    = "3px", border = "1px solid #d9d9d9",
+                        fontWeight = "600", fontSize = "11px",
+                        fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
                 };
             }
 
@@ -75,6 +89,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
 .token.property{{ {new Style {   Color("#189af6") }.ToCssWithImportant()} }}
 
+.cm-editor{{ {new Style { Height("calc(100% - 2px)") }.ToCssWithImportant()} }}
 
 
 ") },
