@@ -54,21 +54,21 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 
                 return new CodeMirror
                 {
-                    //extensions = {"json","eclipse"},
                     extensions = { "json", "githubLight" },
-                    //theme = "githubLight",
                     valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
-                    options   =
+                    basicSetup =
                     {
                         placeholder = "You can write instance properties here as json", 
-                        //highlightActiveLine = false,
-                        //mode = "js"
+                        highlightActiveLine = false,
+                        highlightActiveLineGutter = false,
                     },
                     style = { 
-                        minHeight = "200px", 
+                        // minHeight = "200px", 
                         borderRadius    = "3px", border = "1px solid #d9d9d9",
-                        fontWeight = "600", fontSize = "11px",
-                        fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                        //fontWeight = "500", 
+                        fontSize = "11px",
+                        //fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace"
+                        }
                 };
             }
 

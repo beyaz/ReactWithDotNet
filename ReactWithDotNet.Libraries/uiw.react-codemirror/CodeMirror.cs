@@ -6,10 +6,10 @@ public class CodeMirror : ThirdPartyReactComponent
     
     [React]
     public string? value { get; set; }
-
+    
     [React]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
-    public CodeMirrorOption options { get; } = new();
+    public CodeMirrorOption basicSetup { get; } = new();
 
     [React]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + nameof(CodeMirror) + "::OnChange")]
@@ -32,4 +32,6 @@ public sealed class CodeMirrorOption
     public string? placeholder { get; set; }
 
     public bool? highlightActiveLine { get; set; }
+
+    public bool? highlightActiveLineGutter { get; set; }
 }
