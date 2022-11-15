@@ -92,9 +92,11 @@ class CountsSummaryView : ReactComponent
                         new div { text = text, style = { color = color} },
                         new div{ Text(pronunciation), FontSize("0.6rem"), FontWeight700}
                     },
-                        new div { text = ":", style = { marginLeftRight = "4px" } },
+                       
+                           new div { text = ":", style = { marginLeftRight = "4px" } },
 
-                        new div { text = count.ToString(), id = id},
+                           new div { text = count.ToString(), id = id},
+                       
                       
                 };
             }

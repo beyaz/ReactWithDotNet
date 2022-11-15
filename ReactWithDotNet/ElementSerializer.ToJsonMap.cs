@@ -75,6 +75,9 @@ partial class ElementSerializer
                 if (node.IsChildrenOpened is false)
                 {
                     OpenChildren(node, context);
+                    
+                    node.ElementAsFragment.ArrangeChildren();
+                    
                     continue;
                 }
 

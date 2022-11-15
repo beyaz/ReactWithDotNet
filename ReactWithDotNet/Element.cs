@@ -112,11 +112,83 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
 public sealed class Fragment : Element
 {
+    internal readonly Style style;
+    internal List<IModifier> modifiers;
+
     protected internal override void ProcessModifier(IModifier modifier)
     {
-        foreach (var element in children)
+        if (modifier is null)
         {
-            element.ProcessModifier(modifier);
+            return;
+        }
+
+        modifiers ??= new List<IModifier>();
+
+        modifiers.Add(modifier);
+    }
+
+    public Fragment()
+    {
+        
+    }
+    
+    public Fragment(params IModifier[] modifiers)
+    {
+        if (modifiers is null || modifiers.Length == 0)
+        {
+            return;
+        }
+
+        this.modifiers ??= new List<IModifier>();
+
+        this.modifiers.AddRange(modifiers);
+    }
+
+    public Fragment(Style style)
+    {
+        this.style = style;
+    }
+
+    internal void ArrangeChildren()
+    {
+        if (modifiers is not null)
+        {
+            foreach (var modifier in modifiers)
+            {
+                foreach (var child in children)
+                {
+                    child?.ProcessModifier(modifier);
+                }
+            }
+        }
+
+        if (style is not null)
+        {
+            foreach (var child in children)
+            {
+                if (child is null)
+                {
+                    continue;
+                }
+                
+                if (child is HtmlElement htmlElement)
+                {
+                    htmlElement.style.Import(style);
+                    continue;
+                }
+
+                if (child is ThirdPartyReactComponent thirdPartyReactComponent)
+                {
+                    thirdPartyReactComponent.style.Import(style);
+                    continue;
+                }
+
+                //if (child is ReactStatefulComponent reactStatefulComponent)
+                //{
+                //    reactStatefulComponent.style.Import(style);
+                //    continue;
+                //}
+            }
         }
     }
 }
