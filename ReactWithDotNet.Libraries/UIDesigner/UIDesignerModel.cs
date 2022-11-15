@@ -20,6 +20,7 @@ public class UIDesignerModel
     public string SelectedMethodTreeFilter{ get; set; }
     public bool IsInstanceEditorActive { get; set; }
     public bool SelectedMethodIsStatic { get; set; }
+    public int SelectedMethodParameterCount { get; set; }
 }
 
 [Serializable]

@@ -4,7 +4,6 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using ReactWithDotNet.PrimeReact;
-using ReactWithDotNet.react_simple_code_editor;
 using static ReactWithDotNet.UIDesigner.Extensions;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -47,33 +46,40 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             return true;
         }
 
-        Element createJsonEditor()
+        bool canShowParametersEditor()
         {
-            if (state.IsInstanceEditorActive)
+            if (state.SelectedMethodParameterCount > 0)
             {
-                return new CodeMirror
-                {
-                    extensions = { "json", "githubLight" },
-                    valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties,
-                    basicSetup =
-                    {
-                        highlightActiveLine = false,
-                        highlightActiveLineGutter = false,
-                    },
-                    style = 
-                    { 
-                        BorderRadius(3),
-                        Border("1px solid #d9d9d9"),
-                        FontSize11
-                    }
-                };
+                return true;
             }
 
-            return new Editor
+            return false;
+        }
+
+        Element createJsonEditor()
+        {
+            Expression<Func<string>> valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters;
+            
+            if (state.IsInstanceEditorActive)
             {
-                valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters,
-                highlight = "json",
-                style     = { minHeight = "200px", borderRadius = "3px", border = "1px solid #d9d9d9", fontWeight = "600", fontSize = "11px", fontFamily = "ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace" }
+                valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties;
+            }
+
+            return new CodeMirror
+            {
+                extensions = { "json", "githubLight" },
+                valueBind  = valueBind,
+                basicSetup =
+                {
+                    highlightActiveLine       = false,
+                    highlightActiveLineGutter = false,
+                },
+                style =
+                {
+                    BorderRadius(3),
+                    Border("1px solid #d9d9d9"),
+                    FontSize11
+                }
             };
         }
         
@@ -115,7 +121,8 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                         FlexGrow(1),
                         FontSize13
                     }),
-                    new div(Text("Parameters json"))
+
+                    When(canShowParametersEditor(), new div(Text("Parameters json"))
                     {
                         OnClick(_=>state.IsInstanceEditorActive = false),
                         When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"),FontWeight600),
@@ -123,7 +130,9 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                         FlexGrow(1),
                         FontSize13
 
-                    }
+                    }),
+                    
+                    
                 },
                 // content
                 createJsonEditor() |Height("100%")
@@ -219,7 +228,8 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 fullClassName = $"{node.NamespaceName}.{node.Name}";
             }
 
-            state.SelectedMethodIsStatic = false;
+            state.SelectedMethodIsStatic       = false;
+            state.SelectedMethodParameterCount = 0;
             
             if (node.IsMethod)
             {
@@ -228,6 +238,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 state.MetadataToken          = node.MethodReference.MetadataToken;
                 state.SelectedMethodName     = node.Name;
                 state.SelectedMethodIsStatic = node.MethodReference.IsStatic;
+                state.SelectedMethodParameterCount = node.MethodReference.Parameters.Count;
             }
         }
 
