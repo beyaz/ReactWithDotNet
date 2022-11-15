@@ -33,28 +33,28 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         Client.OnBrowserInactive(Refresh);
         Client.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
-
-    protected override Element render()
+    bool canShowInstanceEditor()
     {
-        bool canShowInstanceEditor()
+        if (state.SelectedMethod?.IsStatic == true)
         {
-            if (state.SelectedMethod?.IsStatic == true)
-            {
-                return false;
-            }
+            return false;
+        }
 
+        return true;
+    }
+
+    bool canShowParametersEditor()
+    {
+        if (state.SelectedMethod?.Parameters.Count > 0)
+        {
             return true;
         }
 
-        bool canShowParametersEditor()
-        {
-            if (state.SelectedMethod?.Parameters.Count > 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        return false;
+    }
+    protected override Element render()
+    {
+       
 
         Element createJsonEditor()
         {
@@ -253,6 +253,16 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             {
                 state.SelectedDotNetMemberSpecification = new DotNetMemberSpecification();
             }
+        }
+
+        if (canShowInstanceEditor() && canShowParametersEditor() == false)
+        {
+            state.IsInstanceEditorActive = true;
+        }
+
+        if (canShowParametersEditor() && canShowInstanceEditor() == false)
+        {
+            state.IsInstanceEditorActive = false;
         }
 
         SaveState();
