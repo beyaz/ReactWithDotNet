@@ -145,7 +145,14 @@ public class option : HtmlElement
 public class style : HtmlElement
 {
 }
+public class link : HtmlElement
+{
+    [React]
+    public string href { get; set; }
 
+    [React]
+    public string rel { get; set; }
+}
 
 public class textarea : HtmlElement
 {

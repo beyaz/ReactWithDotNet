@@ -86,14 +86,17 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         
         var propertyPanel = new FlexColumn(Padding(5), Height("100%"),Width("100%"), FontSize15, PrimaryBackground)
         {
+            new link{href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet"},
+            
             new style{Text($@"
 
 
 
 .token.property{{ {new Style {   Color("#189af6") }.ToCssWithImportant()} }}
 
-.cm-editor{{ {new Style { Height("calc(100% - 2px)") }.ToCssWithImportant()} }}
+.cm-editor{{ {new Style { Height("calc(100% - 2px)"), Color("#DE3163") }.ToCssWithImportant()} }}
 
+.ͼ16 {{ {new Style { FontWeight600, FontFamily("'IBM Plex Mono', monospace") }.ToCssWithImportant()} }}
 
 ") },
             new MethodSelectionView

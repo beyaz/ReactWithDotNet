@@ -88,7 +88,29 @@ public static partial class Mixin
     public static StyleModifier FlexWrap => new(style => style.flexWrap = "wrap");
     public static StyleModifier FlexWrapReverse => new(style => style.flexWrap = "wrap-reverse");
 
-    
+
+
+
+    /// <summary>
+    /// style.textTransform = <paramref name="textTransform"/>
+    /// </summary>
+    public static StyleModifier TextTransform(string textTransform) => new(style => style.textTransform = textTransform);
+
+    /// <summary>
+    /// style.textTransform = 'uppercase'
+    /// </summary>
+    public static StyleModifier TextTransformUpperCase => TextTransform("uppercase");
+
+    /// <summary>
+    /// style.textTransform = 'lowercase'
+    /// </summary>
+    public static StyleModifier TextTransformLowerCase => TextTransform("lowercase");
+
+    /// <summary>
+    /// style.textTransform = 'capitalize'
+    /// </summary>
+    public static StyleModifier TextTransformCapitalize => TextTransform("capitalize");
+
 
     public static StyleModifier FontSize10 => FontSize(10);
     public static StyleModifier FontSize11 => FontSize(11);
