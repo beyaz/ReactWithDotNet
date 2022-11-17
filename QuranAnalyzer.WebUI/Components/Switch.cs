@@ -1,5 +1,23 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
+class SwitchWithLabel: ReactComponent
+{
+    public string label;
+    public bool value;
+    public Action<bool> valueChange;
+    
+    protected override Element render()
+    {
+        return new FlexRow(AlignItemsCenter, Gap(5))
+        {
+            new Switch
+            {
+                IsChecked = value, ValueChange = valueChange
+            },
+            label
+        };
+    }
+}
 public class Switch : ReactComponent
 {
     public bool IsChecked { get; set; }
@@ -59,6 +77,11 @@ public class Switch : ReactComponent
 
     void OnClickHandler(MouseEvent _)
     {
+        if (ValueChange == null)
+        {
+            return;
+        }
+        
         IsChecked = !IsChecked;
         DispatchEvent(()=>ValueChange,IsChecked);
     }

@@ -99,7 +99,7 @@ Elimden geldiğince tartışılan konuları en kısa ve tarafsız bir şekilde �
                         new br(),
                         @"Aşağıdaki soruların cevaplarının doğru olup olmadığı siz okuyucuya bırakılmıştır. 
 İmana dair bir meselenin üzerinde düşünlüp içselleştirilmedikten sonra bir faydasının olmayacağına inanıyorum.
-Bu sebeple ben burada tartışmayı aktarayım üzerine düşünmek-araştırmak ve bir karara varmak size kalsın." ,
+Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söylediğini aktarayım sonrasında üzerine düşünmek-araştırmak ve bir karara varmak size kalsın." ,
 
                         new br(),
                         new br(),

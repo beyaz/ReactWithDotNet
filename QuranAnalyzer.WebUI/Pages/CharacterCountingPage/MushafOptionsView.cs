@@ -14,32 +14,30 @@ class MushafOptionsView : ReactComponent
     {
         return new FlexColumn(JustifyContentCenter, Gap(10))
         {
-            createSwitchWithLabel("Elif sayımları için Tanzil.net'i referans al",Model.UseElifReferencesFromTanzil,x =>
+            new SwitchWithLabel
             {
-                Model.UseElifReferencesFromTanzil = x;
-                FireMushafOptionChanged();
-            }),
+                label = "Elif sayımları için Tanzil.net'i referans al",
+                value = Model.UseElifReferencesFromTanzil,
+                valueChange = x =>
+                {
+                    Model.UseElifReferencesFromTanzil = x;
+                    FireMushafOptionChanged();
+                }
+            },
 
-            createSwitchWithLabel("7:69 daki bestaten'i Sad olarak say",Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,x =>
+            new SwitchWithLabel
             {
-                Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x;
-                FireMushafOptionChanged();
-            }),
+                label = "7:69 daki bestaten'i Sad olarak say",
+                value = Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
+                valueChange = x =>
+                {
+                    Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x;
+                    FireMushafOptionChanged();
+                }
+            },
 
             new a { Text("Mushaf ayarları hakkında detaylı bilgi"), Href(GetPageLink(PageIdOfMushafOptionsDetail)), MarginTop(10) }
         };
-
-        Element createSwitchWithLabel(string label, bool value, Action<bool> valueChange)
-        {
-            return new FlexRow(AlignItemsCenter, Gap(5))
-            {
-                new Switch
-                {
-                    IsChecked = value, ValueChange = valueChange
-                },
-               label
-            };
-        }
     }
 
     void FireMushafOptionChanged()
