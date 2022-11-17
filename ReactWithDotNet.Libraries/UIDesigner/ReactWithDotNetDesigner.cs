@@ -78,7 +78,8 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 {
                     BorderRadius(3),
                     Border("1px solid #d9d9d9"),
-                    FontSize11
+                    FontSize11,
+                    MaxWidth(450)
                 }
             };
         }
