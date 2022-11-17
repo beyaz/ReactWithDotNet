@@ -2,12 +2,7 @@
 
 static class Extensions
 {
-    public static IEnumerable<Element> AsLetter(this (string pronunciation, string arabicLetter) letter)
-    {
-        var (trName, arabicLetter) = letter;
-
-        return new Element[] { (strong)trName, "(", (strong)arabicLetter, ")" };
-    }
+   
 
     public static IEnumerable<Element> AsMultipleOf19(this int total)
     {

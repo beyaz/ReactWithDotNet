@@ -158,10 +158,7 @@ abstract class InitialLetterGroup : ReactComponent
 
   
 
-    protected IEnumerable<Element> AsLetter(string arabicLetter)
-    {
-        return (GetPronunciationOfArabicLetter(arabicLetter), arabicLetter).AsLetter();
-    }
+   
 }
 
 class InitialLetterGroup_Saad: InitialLetterGroup

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
+using QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 namespace QuranAnalyzer.WebUI;
 
@@ -83,5 +84,11 @@ public abstract class ReactComponent : ReactWithDotNet.ReactComponent
         return GetTurkishPronunciationOfArabicWord(arabicWord);
     }
 
+    protected IEnumerable<Element> AsLetter(string arabicLetter)
+    {
+        string pronunciation = GetPronunciationOfArabicLetter(arabicLetter);
+
+        return new Element[] { (strong)pronunciation, "(", (strong)arabicLetter, ")" };
+    }
     
 }
