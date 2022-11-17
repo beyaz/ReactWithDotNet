@@ -22,6 +22,8 @@ class MethodSelectionModel
 
 class MethodSelectionView : ReactComponent<MethodSelectionModel>
 {
+    public int Width { get; set; }
+    
     public string AssemblyFilePath { get; set; }
 
     public string Filter { get; set; }
@@ -72,7 +74,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             value             = GetNodes(),
             onSelectionChange = OnSelectionChanged,
             selectionKeys     = SelectedMethodTreeNodeKey,
-            style             = { PrimaryBackground, Width(440) },
+            style             = { PrimaryBackground, Width(Width) },
         };
 
         var csscustomizeForTree = new style
@@ -108,7 +110,7 @@ background:#c8d3db !important;
             className = "custom",
             style =
             {
-                Padding(3), Height(250), MaxWidth(450)
+                Padding(3), Height(250), 
             },
             children = { tree, csscustomizeForTree }
         };

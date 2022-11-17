@@ -661,6 +661,7 @@ public static partial class Mixin
     ///     style.height = <paramref name="pixelValue" /> + 'px'
     /// </summary>
     public static StyleModifier wh(double pixelValue) => WidthHeight(pixelValue);
+    
 
     /// <summary>
     ///     Apply given modifiers when condition is true

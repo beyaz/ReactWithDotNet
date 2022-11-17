@@ -54,7 +54,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
     }
     protected override Element render()
     {
-       
+        const int width = 500;
 
         Element createJsonEditor()
         {
@@ -79,13 +79,13 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                     BorderRadius(3),
                     Border("1px solid #d9d9d9"),
                     FontSize11,
-                    MaxWidth(450)
+                    MaxWidth(width)
                 }
             };
         }
         
         
-        var propertyPanel = new FlexColumn(Padding(5), Height("100%"),Width("100%"), FontSize15, PrimaryBackground)
+        var propertyPanel = new FlexColumn(PaddingLeftRight(5), Height("100%"),Width("100%"), FontSize15, PrimaryBackground)
         {
             new link{href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet"},
             
@@ -105,7 +105,8 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 Filter                    = state.SelectedMethodTreeFilter,
                 SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
                 SelectionChanged          = OnElementSelected,
-                AssemblyFilePath          = state.SelectedAssemblyFilePath
+                AssemblyFilePath          = state.SelectedAssemblyFilePath,
+                Width = width
             },
             Space(10),
             new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged } | Margin(10) | Padding(5),
@@ -162,48 +163,15 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { width_height = "100%", border = "none" } };
         }
 
-        var mainPanel = new Splitter
+        return  new FlexRow(WidthHeight("100%"))
         {
-            layout = SplitterLayoutType.horizontal,
-            style =
+            new div(BorderRight("1px dotted #d9d9d9"), Width(width))
             {
-                width  = "100%",
-                height = "100%"
+                propertyPanel
             },
-
-            children =
+            new div(DisplayFlex, JustifyContentCenter,FlexGrow(1), Padding(7))
             {
-                new SplitterPanel
-                {
-                    style = { BorderRight("1px dotted #d9d9d9") },
-                    size  = 10,
-                    children =
-                    {
-                        propertyPanel
-                    }
-                },
-                new SplitterPanel(DisplayFlex, JustifyContentCenter)
-                {
-                    style = { BorderLeft("1px dotted #d9d9d9") },
-                    size = 90,
-
-                    children =
-                    {
-                        outputPanel
-                    }
-                }
-            }
-        };
-
-        return new div
-        {
-            children =
-            {
-                mainPanel
-            },
-            style =
-            {
-                width = "100%", height = "100%", padding = "7px"
+                outputPanel
             }
         };
     }
