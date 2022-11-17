@@ -11,6 +11,8 @@ class CharacterCountingOptionState
 
 class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
 {
+    public MushafOption MushafOption { get; set; } = new();
+    
     void KeyboardClicked(MouseEvent e)
     {
         if (state.ShowKeyborad == true)
@@ -131,11 +133,20 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                         new div
                         {
                             style    = { display = state.ShowMushafOptions == true ? null : "none" },
-                            children = { new MushafOptionsView() }
+                            children = { new MushafOptionsView{ Model = MushafOption, MushafOptionChanged = OnMushafOptionChanged } }
                         }
                     }
                 }
             }
         };
     }
+
+    void OnMushafOptionChanged(MushafOption mushafOption)
+    {
+        MushafOption = mushafOption;
+        DispatchEvent(() => MushafOptionChanged, mushafOption);
+    }
+
+    [ReactCustomEvent]
+    public Action<MushafOption> MushafOptionChanged { get; set; }
 }

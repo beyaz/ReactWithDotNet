@@ -28,6 +28,8 @@ public class Startup
 
         app.UseStaticFiles("/wwwroot");
 
+        app.UseResponseCompression();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.ConfigureReactWithDotNet();
@@ -38,6 +40,11 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddResponseCompression(options =>
+        {
+            options.EnableForHttps = true;
+        });
+        
         services.AddControllers()
                 .AddJsonOptions(jsonOptions => { jsonOptions.JsonSerializerOptions.ModifyForReactWithDotNet(); });
     }

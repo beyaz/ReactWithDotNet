@@ -72,10 +72,7 @@ static class Extensions
         client.DispatchEvent(nameof(MainContentDivScrollChanged));
     }
 
-    public static void MushafOptionChanged(this Client client, MushafOption mushafOption)
-    {
-        client.DispatchEvent(nameof(MushafOptionChanged), mushafOption);
-    }
+   
 
     public static void OnArabicKeyboardPressed(this Client client, Action<string> handlerAction)
     {
@@ -97,10 +94,7 @@ static class Extensions
         client.ListenEvent(MainContentDivScrollChanged, handlerAction);
     }
 
-    public static void OnMushafOptionChanged(this Client client, Action<MushafOption> handler)
-    {
-        client.ListenEvent(MushafOptionChanged, handler);
-    }
+   
 
     public static string GetTurkishPronunciationOfArabicLetter(string arabicLetter)
     {

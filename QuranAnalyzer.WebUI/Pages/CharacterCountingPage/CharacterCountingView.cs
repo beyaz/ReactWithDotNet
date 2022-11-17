@@ -24,7 +24,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     protected override void componentDidMount()
     {
         Client.OnArabicKeyboardPressed(ArabicKeyboardPressed);
-        Client.OnMushafOptionChanged(MushafOptionChanged);
     }
 
     protected override void constructor()
@@ -76,7 +75,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                 new VSpace(3),
 
-                new CharacterCountingOptionView(),
+                new CharacterCountingOptionView{MushafOption = state.MushafOption,MushafOptionChanged = MushafOptionChanged},
 
                 new VSpace(20),
 

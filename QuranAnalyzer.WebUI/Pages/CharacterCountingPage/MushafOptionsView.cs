@@ -1,21 +1,18 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.PrimeReact;
-using static QuranAnalyzer.WebUI.Extensions;
 using static QuranAnalyzer.WebUI.PageId;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
-class MushafOptionsView : ReactComponent<MushafOption>
+class MushafOptionsView : ReactComponent
 {
-    protected override void constructor()
-    {
-        state = Context.TryGetValue(ContextKey.MushafOptionKey) ?? new MushafOption();
-    }
-
+    public MushafOption Model { get; set; } = new();
+    
+    [ReactCustomEvent]
+    public Action<MushafOption> MushafOptionChanged { get; set; }
+    
     protected override Element render()
     {
-        state = Context.TryGetValue(ContextKey.MushafOptionKey) ?? state;
-
         return new div
         {
             children =
@@ -27,10 +24,10 @@ class MushafOptionsView : ReactComponent<MushafOption>
                     {
                         new InputSwitch
                         {
-                            @checked = state.UseElifReferencesFromTanzil,
+                            @checked = Model.UseElifReferencesFromTanzil,
                             onChange = x =>
                             {
-                                state.UseElifReferencesFromTanzil = x.value;
+                                Model.UseElifReferencesFromTanzil = x.value;
                                 FireMushafOptionChanged();
                             }
                         },
@@ -46,9 +43,9 @@ class MushafOptionsView : ReactComponent<MushafOption>
 
                         new FlexRow(AlignItemsCenter, Gap(5))
                         {
-                            new Switch { IsChecked = state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten, ValueChange = x =>
+                            new Switch { IsChecked = Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten, ValueChange = x =>
                                 {
-                                    state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x;
+                                    Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x;
                                     FireMushafOptionChanged();
                                 }
                             },
@@ -66,10 +63,10 @@ class MushafOptionsView : ReactComponent<MushafOption>
                     {
                         new InputSwitch
                         {
-                            @checked = state.CountHamzaAsAlif,
+                            @checked = Model.CountHamzaAsAlif,
                             onChange = x =>
                             {
-                                state.CountHamzaAsAlif = x.value;
+                                Model.CountHamzaAsAlif = x.value;
                                 FireMushafOptionChanged();
                             }
                         },
@@ -84,6 +81,6 @@ class MushafOptionsView : ReactComponent<MushafOption>
 
     void FireMushafOptionChanged()
     {
-        Client.MushafOptionChanged(state);
+        DispatchEvent(()=>MushafOptionChanged, Model);
     }
 }
