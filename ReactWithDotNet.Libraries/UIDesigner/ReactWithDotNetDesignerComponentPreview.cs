@@ -96,8 +96,9 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
 
                                     if (instance is ReactStatefulComponent component)
                                     {
-                                        component.key     = "0";
-                                        component.Context = Context;
+                                        component.ComponentUniqueIdentifier = 1000;
+                                        component.key                      = "0";
+                                        component.Context                  = Context;
                                         component.InvokeConstructor();
                                     }
 
