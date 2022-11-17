@@ -149,6 +149,11 @@ class View : ReactComponent<MainViewModel>
                 return new DefinitionPage.DefinitionView();
             }
 
+            if (state.PageId == PageId.PageIdOfMushafOptionsDetail)
+            {
+                return new MushafOptionsDetail.View();
+            }
+
             return new MainPageContent();
         }
     }

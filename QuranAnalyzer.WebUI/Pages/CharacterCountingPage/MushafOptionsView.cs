@@ -1,5 +1,4 @@
 ﻿using QuranAnalyzer.WebUI.Components;
-using ReactWithDotNet.PrimeReact;
 using static QuranAnalyzer.WebUI.PageId;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
@@ -13,70 +12,34 @@ class MushafOptionsView : ReactComponent
     
     protected override Element render()
     {
-        return new div
+        return new FlexColumn(JustifyContentCenter, Gap(10))
         {
-            children =
+            createSwitchWithLabel("Elif sayımları için Tanzil.net'i referans al",Model.UseElifReferencesFromTanzil,x =>
             {
-                new div
-                {
-                    style = { display = "flex", flexDirection = "row", alignItems = "center" },
-                    children =
-                    {
-                        new InputSwitch
-                        {
-                            @checked = Model.UseElifReferencesFromTanzil,
-                            onChange = x =>
-                            {
-                                Model.UseElifReferencesFromTanzil = x.value;
-                                FireMushafOptionChanged();
-                            }
-                        },
-                        new HSpace(15),
-                        new h5 { text = "Elif sayımları için Tanzil.net'i referans al" }
-                    }
-                },
-                new div
-                {
-                    style = { display = "flex", flexDirection = "row", alignItems = "center" },
-                    children =
-                    {
+                Model.UseElifReferencesFromTanzil = x;
+                FireMushafOptionChanged();
+            }),
 
-                        new FlexRow(AlignItemsCenter, Gap(5))
-                        {
-                            new Switch { IsChecked = Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten, ValueChange = x =>
-                                {
-                                    Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x;
-                                    FireMushafOptionChanged();
-                                }
-                            },
-                            "7:69 daki bestaten'i Sad olarak say"
-                        },
+            createSwitchWithLabel("7:69 daki bestaten'i Sad olarak say",Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,x =>
+            {
+                Model.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x;
+                FireMushafOptionChanged();
+            }),
 
-
-                        
-                    }
-                },
-                new div
-                {
-                    style = { display = "flex", flexDirection = "row", alignItems = "center" },
-                    children =
-                    {
-                        new InputSwitch
-                        {
-                            @checked = Model.CountHamzaAsAlif,
-                            onChange = x =>
-                            {
-                                Model.CountHamzaAsAlif = x.value;
-                                FireMushafOptionChanged();
-                            }
-                        },
-                        new HSpace(15),
-                        new h5 { text = "Hemzeleri Elif(ﺍ) olarak say" }
-                    }
-                },
-                new a { text = "Mushaf ayarları hakkında detaylı bilgi", href = GetPageLink(PageIdOfMushafOptionsDetail), }
-            }
+            new a { Text("Mushaf ayarları hakkında detaylı bilgi"), Href(GetPageLink(PageIdOfMushafOptionsDetail)), MarginTop(10) }
         };
+
+        Element createSwitchWithLabel(string label, bool value, Action<bool> valueChange)
+        {
+            return new FlexRow(AlignItemsCenter, Gap(5))
+            {
+                new Switch
+                {
+                    IsChecked = value, ValueChange = valueChange
+                },
+               label
+            };
+        }
     }
 
     void FireMushafOptionChanged()

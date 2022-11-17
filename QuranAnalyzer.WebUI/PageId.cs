@@ -14,10 +14,10 @@ static class PageId
     public const string QuestionAnswerPage = "5";
     public const string ContactPage = "6";
     public const string CharacterCounting = "7";
-    public const string PageIdOfMushafOptionsDetail = "7";
     public const string WordSearchingPage = "8";
     public const string AlternativeSystems = "9";
     public const string Definition = "10";
+    public const string PageIdOfMushafOptionsDetail = "11";
 }
 
 static class QueryKey

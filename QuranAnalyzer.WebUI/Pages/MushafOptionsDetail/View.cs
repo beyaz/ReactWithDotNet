@@ -1,15 +1,19 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 
-namespace QuranAnalyzer.WebUI.Pages.AlternativeSystems;
+namespace QuranAnalyzer.WebUI.Pages.MushafOptionsDetail;
 
-public class AlternativeSystemsView : ReactComponent
+public class View : ReactComponent
 {
     protected override Element render()
     {
         return new Article
         {
+
+            
+        
+        
             new VSpace(10),
-            new LargeTitle("Alternatif 19 Sistemleri"),
+            new LargeTitle("Bu Sitedeki Kullanılan Mushaf Hakkında"),
             new VSpace(15),
 
             @"
@@ -33,7 +37,7 @@ Elbetteki madalyonun diğer yüzünde 19 olayını daha tarafsız inceleyen Gür
 
 Bu saydığım isimler sadece Türkiye'de olan resim. Elbette başka ülkelerde de buna benzer ayrışmalar var.
 
-Not: Bu sitede sadece Reşad Halife tarafından keşfedilen başlangıç harfleri üzerindeki verileri içermektedir.
+Not: Bu sitede sadece Reşad Halife tarafından ortaya konan başlangıç harfleri üzerindeki verileri içermektedir.
 
 ",
             new VSpace(15)

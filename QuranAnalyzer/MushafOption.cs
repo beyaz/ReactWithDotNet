@@ -9,8 +9,6 @@ public sealed class MushafOption
     
     public bool UseElifReferencesFromTanzil { get; set; }
 
-    public bool CountHamzaAsAlif { get; set; } = true;
-
     public bool Use_Laam_SpecifiedByTanzil { get; set; }
 
     public bool Chapter_68_Should_Single_Nun { get; set; }
