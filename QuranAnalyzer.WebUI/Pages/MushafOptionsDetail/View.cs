@@ -56,6 +56,9 @@ public class View : ReactComponent
             "Bundan dolayıdırki bu ayarları kullabilirsiniz. " ,
             "Mesela Elif(ﺍ) harfleri için isterseniz tanzil.net'i referans alarak sayımlar yapın isterseniz Reşad Halifenin Elif sayımlarını baz alarak yapın.",
             "Sonuçta tanzil.net deki mushafı da 'Hamid Zarrabi-Zadeh' adında iranlı bir öğretim üyesi bilgisayara aktarmış. İkisi de insan :) ",
+            new br(),
+            new br(),
+            "Konuyu daha fazla detaya boğmamak için burada ",
             new VSpace(15)
         };
     }
