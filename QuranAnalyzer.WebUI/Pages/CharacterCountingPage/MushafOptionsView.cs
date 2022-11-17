@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.PrimeReact;
+﻿using QuranAnalyzer.WebUI.Components;
+using ReactWithDotNet.PrimeReact;
 using static QuranAnalyzer.WebUI.Extensions;
 using static QuranAnalyzer.WebUI.PageId;
 
@@ -42,17 +43,20 @@ class MushafOptionsView : ReactComponent<MushafOption>
                     style = { display = "flex", flexDirection = "row", alignItems = "center" },
                     children =
                     {
-                        new InputSwitch
+
+                        new FlexRow(AlignItemsCenter, Gap(5))
                         {
-                            @checked = state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten,
-                            onChange = x =>
-                            {
-                                state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x.value;
-                                FireMushafOptionChanged();
-                            }
+                            new Switch { IsChecked = state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten, ValueChange = x =>
+                                {
+                                    state.Use_Sad_in_Surah_7_Verse_69_in_word_bestaten = x;
+                                    FireMushafOptionChanged();
+                                }
+                            },
+                            "7:69 daki bestaten'i Sad olarak say"
                         },
-                        new HSpace(15),
-                        new h5 { text = "7:69 daki bestaten'i Sad olarak say" }
+
+
+                        
                     }
                 },
                 new div

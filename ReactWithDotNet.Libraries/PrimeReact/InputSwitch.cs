@@ -27,6 +27,7 @@ public class InputSwitch : ElementBase
     ///     Callback to invoke on value change
     /// </summary>
     [React]
+    [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<InputSwitchChangeTargetOptions> onChange { get; set; }
 }
 
