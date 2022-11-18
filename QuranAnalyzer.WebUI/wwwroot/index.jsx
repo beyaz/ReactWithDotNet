@@ -11,6 +11,7 @@ import "./integration/ReactWithDotNet-UIDesigner";
 import "./integration/primereact";
 import "./integration/rsuite";
 import "./integration/react-xarrows";
+import "./integration/google-map-react";
 
 
 // your app specific imports and codes
