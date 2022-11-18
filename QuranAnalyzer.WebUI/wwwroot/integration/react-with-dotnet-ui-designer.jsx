@@ -1,7 +1,7 @@
 
 import ReactWithDotNet from "../ReactWithDotNet.jsx";
 
-import "./uiw.react-codemirror";
+import "./uiw-react-codemirror";
 import { Slider } from 'primereact/slider';
 import { Tree } from 'primereact/tree';
 
