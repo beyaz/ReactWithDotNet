@@ -36,10 +36,10 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        path: 'QuranAnalyzer.WebUI/copy.txt'
+        directory: 'QuranAnalyzer.WebUI/'
 
     - uses: djnicholson/release-action@v2.11
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: 'release.zip'
+        file: 'QuranAnalyzer.WebUI/release.zip'
