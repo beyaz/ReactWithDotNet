@@ -26,9 +26,7 @@
       <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
     </ItemGroup>
 
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="copy /y &quot;$(TargetDir)ReactWithDotNet.Libraries.*&quot; &quot;D:\work\git\alyavillashotels\AlyaVillas.WebUI\Libs\&quot;" />
-    </Target>
+
 	
     <ItemGroup>
       <EmbeddedResource Include="UIDesigner\Resources\Class.svg" />
