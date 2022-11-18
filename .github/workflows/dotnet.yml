@@ -52,7 +52,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: '/QuranAnalyzer.WebUI/bin/Debug/netcoreapp3.1/'
+        directory: '/QuranAnalyzer.WebUI/bin/Release/netcoreapp3.1/'
 
     - uses: djnicholson/release-action@v2.11
       with:
