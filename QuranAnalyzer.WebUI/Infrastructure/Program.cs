@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -7,7 +8,14 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        CreateHostBuilder(args).Build().Run();
+        try
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+        catch (Exception e)
+        {
+            File.WriteAllText("Error.txt",e.ToString());
+        }
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
