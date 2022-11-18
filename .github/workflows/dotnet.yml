@@ -46,6 +46,14 @@ jobs:
           # If not specified, defaults to true.
           skip-build: false
 
+
+    - uses: enricomarino/actions@v2
+      with:
+        # The folder to inspect
+        source: # default is /
+
+
+
     - uses: actions/checkout@master
     - name: Archive Release
       uses: thedoctor0/zip-release@main
