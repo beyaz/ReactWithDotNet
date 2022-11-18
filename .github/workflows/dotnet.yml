@@ -38,6 +38,6 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.2
       with:
-        server: ftp://quraninspector.somee.com/www.QuranInspector.somee.com
-        username: beyaz1404
-        password: fgth_56Wq@kjn3*
+        server: ftp://speedtest.tele2.net
+        username: anonymous 
+        password: anonymous
