@@ -36,11 +36,11 @@ jobs:
 
           # (Optional) Additional command line arguments to be passed to 'dotnet test'.
           # If not specified, defaults to 'packages'.
-          output-dir: 'A_A'
+          output-dir: 'A_A/'
 
           # (Optional) The build configuration.
           # If not specified, defaults to 'Release'.
-          build-configuration: Release
+          build-configuration: Debug
 
           # (Optional) Whether to skip the build using the '--no-build' flag.
           # If not specified, defaults to true.
