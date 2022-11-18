@@ -35,3 +35,9 @@ jobs:
         type: 'zip'
         filename: 'release.zip'
         exclusions: '*.git* /*node_modules/* .editorconfig'
+
+    - uses: djnicholson/release-action@v2.11
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        asset-name: 'release.zip'
+        file: 'out/dist/release.zip'
