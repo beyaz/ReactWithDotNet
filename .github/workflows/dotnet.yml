@@ -46,14 +46,11 @@ jobs:
          # If not specified, defaults to true.
          skip-build: false
 
-
-    #- uses: actions/checkout@master
-    #- name: Archive Release
     - uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: 'QuranAnalyzer/bin/Release/netcoreapp3.1/'
+        directory: 'QuranAnalyzer.WebUI/bin/Release/netcoreapp3.1/'
 
     - uses: djnicholson/release-action@v2.11
       with:
