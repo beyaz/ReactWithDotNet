@@ -31,7 +31,7 @@ jobs:
       run: |
         set-location QuranAnalyzer.WebUI/wwwroot/
         npm install
-        npm run-script build-for-production
+        npm run-script build-production
       shell: pwsh
 
     - uses: EasyDesk/action-dotnet-publish@v1

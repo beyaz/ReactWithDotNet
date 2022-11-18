@@ -2,7 +2,8 @@
 import ReactWithDotNet from "../ReactWithDotNet.jsx";
 
 import "./uiw.react-codemirror";
-import "./primereact";
+import { Slider } from 'primereact/slider';
+import { Tree } from 'primereact/tree';
 
 function InitializeUIDesignerEvents(timeoutInMilliseconds)
 {
@@ -23,3 +24,6 @@ function OnBrowserInactive(timeoutInMilliseconds, callback)
 }
 
 ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", InitializeUIDesignerEvents);
+
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);

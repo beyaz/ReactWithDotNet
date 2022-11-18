@@ -367,3 +367,4 @@ MigrationBackup/
 /ReactWithDotNet.WebSite/wwwroot/index.css
 /AlyaVillas.WebUI/wwwroot/integration/swiper.js
 /QuranAnalyzer.WebUI/wwwroot/integration/uiw.react-codemirror.js
+*.js
