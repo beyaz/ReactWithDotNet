@@ -40,4 +40,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: 'out/dist/release.zip'
+        file: 'release.zip'
