@@ -53,10 +53,10 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: 'QuranAnalyzer.WebUI/A_A'
+        directory: 'QuranAnalyzer.WebUI/A_B/'
 
-    - uses: djnicholson/release-action@v2.11
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        asset-name: 'release.zip'
-        file: 'A_A/release.zip'
+  #  - uses: djnicholson/release-action@v2.11
+  #    with:
+  #      token: ${{ secrets.GITHUB_TOKEN }}
+  #      asset-name: 'release.zip'
+  #      file: 'A_A/release.zip'
