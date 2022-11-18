@@ -55,8 +55,8 @@ jobs:
         filename: 'release.zip'
         directory: 'QuranAnalyzer/bin/Release/netcoreapp3.1/'
 
-  #  - uses: djnicholson/release-action@v2.11
-  #    with:
-  #      token: ${{ secrets.GITHUB_TOKEN }}
-  #      asset-name: 'release.zip'
-  #      file: 'A_A/release.zip'
+    - uses: djnicholson/release-action@v2.11
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        asset-name: 'release.zip'
+        file: 'release.zip'
