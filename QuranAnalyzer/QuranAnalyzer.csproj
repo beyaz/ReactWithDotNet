@@ -14,4 +14,10 @@
       <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Data.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
