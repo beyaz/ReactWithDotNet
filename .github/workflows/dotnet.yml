@@ -53,7 +53,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: 'ReactDotNet/QuranAnalyzer.WebUI/A_B/'
+        directory: 'ReactDotNet/ReactDotNet/QuranAnalyzer.WebUI/A_B/'
 
   #  - uses: djnicholson/release-action@v2.11
   #    with:
