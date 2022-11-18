@@ -36,7 +36,7 @@ jobs:
 
           # (Optional) Additional command line arguments to be passed to 'dotnet test'.
           # If not specified, defaults to 'packages'.
-          #output-dir: 'A_A/'
+          #output-dir: 'A_A'
 
           # (Optional) The build configuration.
           # If not specified, defaults to 'Release'.
@@ -47,23 +47,16 @@ jobs:
           skip-build: false
 
 
-    - uses: enricomarino/actions@v2
-      with:
-        # The folder to inspect
-        source: # default is /
-
-
-
     - uses: actions/checkout@master
     - name: Archive Release
       uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: '/home/runner/work/ReactDotNet/ReactDotNet/packages/'
+        directory: 'A_A'
 
     - uses: djnicholson/release-action@v2.11
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: '/home/runner/work/ReactDotNet/ReactDotNet/packages/release.zip'
+        file: 'A_A/release.zip'
