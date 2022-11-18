@@ -28,7 +28,9 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Script
-      run: npm install --prefix QuranAnalyzer.WebUI/wwwroot/
+      run: |
+        npm install --prefix QuranAnalyzer.WebUI/wwwroot/
+        npm run-script build --prefix QuranAnalyzer.WebUI/wwwroot/
       shell: pwsh
 
     - name: Script
