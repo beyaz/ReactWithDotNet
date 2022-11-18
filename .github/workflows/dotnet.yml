@@ -28,7 +28,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Script
-      run: npm install
+      run: npm install --prefix QuranAnalyzer.WebUI/wwwroot/
       shell: pwsh
 
     - uses: EasyDesk/action-dotnet-publish@v1
