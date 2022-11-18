@@ -2,9 +2,9 @@
 import ReactWithDotNet from "../ReactWithDotNet.jsx";
 
 // primereact
-import { Button } from 'primereact/buttonp';
-import { InputText } from 'primereact/input-text';
-import { InputTextarea } from 'primereact/InputTextarea';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import { InputTextarea } from 'primereact/inputtextarea';
 import { BlockUI } from 'primereact/BlockUI';
 import { Card } from 'primereact/Card';
 import { TabView, TabPanel } from 'primereact/tabview';
