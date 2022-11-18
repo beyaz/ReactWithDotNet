@@ -29,8 +29,9 @@ jobs:
 
     - name: Script
       run: |
-        npm install --prefix QuranAnalyzer.WebUI/wwwroot/
-        npm run-script build --prefix QuranAnalyzer.WebUI/wwwroot/
+        set-location QuranAnalyzer.WebUI/wwwroot/
+        npm install
+        npm run-script build
       shell: pwsh
 
     - name: Script
