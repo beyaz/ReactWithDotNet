@@ -1628,11 +1628,6 @@ tbody.rs-anim-collapse.rs-anim-in {
   text-decoration: none;
   width: 100%;
 }
-.ReactVirtualized__Grid .rs-auto-complete-item {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 .rs-auto-complete-item-focus,
 .rs-auto-complete-item:focus,
 .rs-auto-complete-item:hover {
@@ -3746,11 +3741,6 @@ tbody.rs-anim-collapse.rs-anim-in {
   text-decoration: none;
   width: 100%;
 }
-.ReactVirtualized__Grid .rs-picker-cascader-row {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 .rs-picker-cascader-row:hover {
   background-color: rgba(204, 233, 255, .5);
   background-color: var(--rs-listbox-option-hover-bg);
@@ -3854,11 +3844,6 @@ tbody.rs-anim-collapse.rs-anim-in {
   text-decoration: none;
   width: 100%;
   word-break: break-word;
-}
-.ReactVirtualized__Grid .rs-picker-cascader-menu-item {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .rs-picker-cascader-menu-items-has-children .rs-picker-cascader-menu-item {
   padding-right: 32px;
@@ -4203,12 +4188,6 @@ label:hover .rs-checkbox-wrapper .rs-checkbox-inner:before {
 .rs-check-tree.rs-check-tree-virtualized {
   overflow: hidden;
 }
-.rs-check-tree.rs-check-tree-virtualized .ReactVirtualized__Grid.ReactVirtualized__List {
-  padding: 0 12px 12px 0;
-}
-.rs-check-tree.rs-check-tree-virtualized .ReactVirtualized__Grid.ReactVirtualized__List:focus {
-  outline: none;
-}
 .rs-check-tree .rs-check-item .rs-checkbox-checker > label {
   margin: 0;
   padding: 8px 12px 8px 50px;
@@ -4329,9 +4308,6 @@ label:hover .rs-checkbox-wrapper .rs-checkbox-inner:before {
 .rs-picker-menu .rs-check-tree {
   padding: 0 12px 12px 0;
 }
-.rs-picker-menu .rs-check-tree.rs-check-tree-virtualized {
-  padding: 0;
-}
 .rs-picker-menu .rs-check-tree-node > .rs-check-tree-node-label .rs-check-tree-node-text-wrapper {
   display: inline-block;
   overflow: hidden;
@@ -4343,10 +4319,6 @@ label:hover .rs-checkbox-wrapper .rs-checkbox-inner:before {
 [dir=rtl] .rs-check-tree-node-expand-icon-wrapper {
   padding-right: inherit;
   right: 0;
-}
-[dir=rtl] .ReactVirtualized__Grid__innerScrollContainer .rs-check-tree-node > .rs-check-tree-node-label .rs-check-item .rs-checkbox-checker > label:before {
-  padding-right: inherit;
-  right: 46px;
 }
 .rs-container {
   -webkit-box-orient: vertical;
@@ -4394,6 +4366,15 @@ label:hover .rs-checkbox-wrapper .rs-checkbox-inner:before {
 }
 .rs-picker-date-inline .rs-calendar {
   height: 286px;
+}
+.rs-picker-date-predefined {
+  border-right: 1px solid #e5e5ea;
+  border-right: 1px solid var(--rs-border-primary);
+  height: 325px;
+  padding: 4px 0;
+}
+.rs-picker-date-predefined .rs-btn {
+  display: block;
 }
 .rs-picker-menu .rs-picker-toolbar {
   max-width: 100%;
@@ -10576,6 +10557,9 @@ textarea.rs-picker-search-input {
   max-width: 100%;
   vertical-align: middle;
 }
+.rs-picker-toggle {
+  min-width: 75px;
+}
 .rs-picker-toggle.rs-btn .rs-ripple-pond {
   display: none !important;
 }
@@ -11631,9 +11615,6 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
 .rs-tree-menu.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-search-icon {
   top: 7px;
 }
-.rs-picker-menu .ReactVirtualized__Grid.ReactVirtualized__List:focus {
-  outline: none;
-}
 .rs-picker-menu.rs-picker-inline {
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -11705,11 +11686,6 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
 }
 .rs-theme-high-contrast .rs-check-item .rs-checkbox-checker > label:before {
   background: none;
-}
-.ReactVirtualized__Grid .rs-check-item .rs-checkbox-checker > label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .rs-checkbox-disabled.rs-check-item .rs-checkbox-checker > label {
   cursor: not-allowed;
@@ -12951,11 +12927,6 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
   text-decoration: none;
   width: 100%;
 }
-.ReactVirtualized__Grid .rs-picker-select-menu-item {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 .rs-picker-select-menu-item.rs-picker-select-menu-item-focus,
 .rs-picker-select-menu-item:focus,
 .rs-picker-select-menu-item:hover {
@@ -14174,12 +14145,6 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
   box-shadow: none;
   z-index: 5;
 }
-.rs-table-cell,
-.rs-table-cell-group,
-.rs-table-row {
-  -webkit-transition: background-color .3s linear;
-  transition: background-color .3s linear;
-}
 .rs-table-hover .rs-table-row:hover .rs-table-cell,
 .rs-table-hover .rs-table-row:hover .rs-table-cell-group,
 .rs-table-hover .rs-table-row:not(.rs-table-row-header):hover {
@@ -14336,6 +14301,17 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
 .rs-table-cell-rowspan {
   border-bottom: 1px solid #f2f2f5 !important;
   border-bottom: 1px solid var(--rs-border-secondary) !important;
+}
+.rs-table-cell-full-text:hover {
+  -webkit-box-shadow: inset 0 0 2px #3498ff;
+  -webkit-box-shadow: inset var(--rs-primary-500) 0 0 2px;
+  box-shadow: inset 0 0 2px #3498ff;
+  box-shadow: inset var(--rs-primary-500) 0 0 2px;
+  width: auto !important;
+  z-index: 1 !important;
+}
+.rs-table-cell-full-text:hover .rs-table-cell-content {
+  width: auto !important;
 }
 .rs-table-cell-header-sortable .rs-table-cell-content {
   cursor: pointer;
@@ -15431,12 +15407,6 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
 .rs-tree.rs-tree-virtualized {
   overflow: hidden;
 }
-.rs-tree.rs-tree-virtualized .ReactVirtualized__Grid.ReactVirtualized__List {
-  padding: 0 12px 12px 0;
-}
-.rs-tree.rs-tree-virtualized .ReactVirtualized__Grid.ReactVirtualized__List:focus {
-  outline: none;
-}
 .rs-tree-node {
   font-size: 0;
   margin: 0 0 4px;
@@ -15636,9 +15606,6 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
 [dir=rtl] .rs-tree-node-expand-icon-wrapper {
   padding-right: inherit;
   right: 0;
-}
-[dir=rtl] .ReactVirtualized__Grid__innerScrollContainer .rs-tree-node > .rs-tree-node-label:before {
-  display: none;
 }
 .rs-uploader-trigger input[type=file] {
   clip: rect(1px 1px 1px 1px);

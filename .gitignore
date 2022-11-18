@@ -352,15 +352,16 @@ MigrationBackup/
 /.local-chromium/Win64-884014/chrome-win
 /ReactDotNet.ComponentPreviewVsExtension/.local-chromium/Win64-884014/chrome-win
 
+/QuranAnalyzer.WebUI/wwwroot/index.js
+/QuranAnalyzer.WebUI/wwwroot/index.css
 /QuranAnalyzer.WebUI/index.css
 /QuranAnalyzer.WebUI/package-lock.json
 /QuranAnalyzer.WebUI/wwwroot/integration/primereact.js
 /QuranAnalyzer.WebUI/wwwroot/integration/react-xarrows.js
 /QuranAnalyzer.WebUI/wwwroot/integration/react-simple-code-editor.js
 /QuranAnalyzer.WebUI/wwwroot/integration/ReactWithDotNet-UIDesigner.js
-/AlyaVillas.WebUI/wwwroot/package-lock.json
-/AlyaVillas.WebUI/wwwroot/index.js
-/AlyaVillas.WebUI/wwwroot/index.css
+
+
 /ReactWithDotNet.WebSite/wwwroot/package-lock.json
 /ReactWithDotNet.WebSite/wwwroot/index.js
 /ReactWithDotNet.WebSite/wwwroot/index.css

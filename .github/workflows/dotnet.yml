@@ -27,6 +27,12 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
+    - name: Script
+      run: |
+        set-location QuranAnalyzer.WebUI/wwwroot/
+        npm install
+        npm run-script build-for-production
+      shell: pwsh
 
     - uses: EasyDesk/action-dotnet-publish@v1
       with:
@@ -36,11 +42,11 @@ jobs:
 
          # (Optional) Additional command line arguments to be passed to 'dotnet test'.
          # If not specified, defaults to 'packages'.
-         #output-dir: 'QuranAnalyzer.WebUI/A_B/'
+         #output-dir: 'packages'
 
          # (Optional) The build configuration.
          # If not specified, defaults to 'Release'.
-         #build-configuration: Debug
+         #build-configuration: Release
 
          # (Optional) Whether to skip the build using the '--no-build' flag.
          # If not specified, defaults to true.
