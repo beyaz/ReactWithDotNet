@@ -52,7 +52,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: '/home/runner/work/ReactDotNet/ReactDotNet/QuranAnalyzer.WebUI/bin/Release/netcoreapp3.1/'
+        path: '/home/runner/work/ReactDotNet/ReactDotNet/QuranAnalyzer.WebUI/bin/Release/netcoreapp3.1/'
 
     - uses: djnicholson/release-action@v2.11
       with:
