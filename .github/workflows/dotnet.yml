@@ -52,10 +52,10 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: 'packages/'
+        directory: 'ReactDotNet/packages/'
 
     - uses: djnicholson/release-action@v2.11
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: 'packages/release.zip'
+        file: 'ReactDotNet/packages/release.zip'
