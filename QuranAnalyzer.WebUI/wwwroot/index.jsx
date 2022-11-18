@@ -2,15 +2,10 @@
 import ReactWithDotNet from "./ReactWithDotNet";
 
 // import libraries which you use in your porject
-import "./integration/primereact";
-import "./integration/rsuite";
 import "./integration/react-xarrows";
-import "./integration/google-map-react";
-
 
 // your app specific imports and codes
 import './app.css'
-
 
 var currentScrollY = 0;
 
