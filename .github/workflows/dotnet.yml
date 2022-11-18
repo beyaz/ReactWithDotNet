@@ -53,7 +53,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        path: 'QuranAnalyzer/bin/Release/netcoreapp3.1/'
+        directory: 'QuranAnalyzer/bin/Release/netcoreapp3.1/'
 
   #  - uses: djnicholson/release-action@v2.11
   #    with:
