@@ -1,5 +1,6 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet;
+using ReactWithDotNet.Libraries.google_map_react;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -9,6 +10,12 @@ class MainPageContent : ReactComponent
     {
         return new div
         {
+            
+            new GoogleMap
+            {
+                defaultCenter = { lat = 59.95 ,lng = 30.33 }, defaultZoom = 11, style = { Height(400), Width(500), PositionRelative }
+            },
+            
             new LargeTitle("Bu sitede ne var?"),
             @"
 Bir kaç yıl önce Kuran hakkında 19 Sistemi - 19 Mucizesi benzeri isimlerle duyduğum bir konu üzerine vakit buldukça araştırma yapma fırsatım oldu.

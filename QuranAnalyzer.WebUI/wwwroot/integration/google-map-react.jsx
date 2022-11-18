@@ -1,6 +1,7 @@
 ﻿import ReactWithDotNet from "../ReactWithDotNet.jsx";
 
-import  GoogleMap  from 'google-map-react';
+import GoogleMap from 'google-map-react';
+
 
 function register(name, value)
 {
