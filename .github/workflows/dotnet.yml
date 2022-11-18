@@ -59,4 +59,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: 'release.zip'
+        file: 'QuranAnalyzer/bin/Release/netcoreapp3.1/release.zip'
