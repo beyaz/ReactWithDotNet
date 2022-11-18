@@ -28,18 +28,35 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
 
+    - uses: EasyDesk/action-dotnet-publish@v1
+      with:
+         # (Optional) The path to the project that should be published.
+         # If not specified, defaults to '.'.
+         path: 'QuranAnalyzer.WebUI'
+
+         # (Optional) Additional command line arguments to be passed to 'dotnet test'.
+         # If not specified, defaults to 'packages'.
+         output-dir: 'QuranAnalyzer.WebUI/A_B/'
+
+         # (Optional) The build configuration.
+         # If not specified, defaults to 'Release'.
+         #build-configuration: Debug
+
+         # (Optional) Whether to skip the build using the '--no-build' flag.
+         # If not specified, defaults to true.
+         skip-build: false
 
 
-    - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@main
+    #- uses: actions/checkout@master
+    #- name: Archive Release
+    - uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: 'QuranAnalyzer.WebUI/'
+        directory: 'QuranAnalyzer/bin/Release/netcoreapp3.1/'
 
     - uses: djnicholson/release-action@v2.11
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: 'QuranAnalyzer.WebUI/release.zip'
+        file: 'QuranAnalyzer/bin/Release/netcoreapp3.1/release.zip'
