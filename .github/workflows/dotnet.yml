@@ -53,7 +53,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: 'A_A'
+        directory: 'QuranAnalyzer.WebUI/A_A'
 
     - uses: djnicholson/release-action@v2.11
       with:
