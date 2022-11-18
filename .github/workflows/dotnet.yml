@@ -42,4 +42,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: 'release.zip'
+        file: 'QuranAnalyzer.WebUI/release.zip'
