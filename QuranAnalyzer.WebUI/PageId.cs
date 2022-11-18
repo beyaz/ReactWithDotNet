@@ -19,6 +19,8 @@ static class PageId
     public const string AlternativeSystems = "9";
     public const string Definition = "10";
     public const string PageIdOfMushafOptionsDetail = "11";
+    public const string WhoIsReshadKhalifePage = "12";
+    
 }
 
 static class QueryKey

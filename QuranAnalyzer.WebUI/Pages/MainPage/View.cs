@@ -154,6 +154,11 @@ class View : ReactComponent<MainViewModel>
                 return new MushafOptionsDetail.View();
             }
 
+            if (state.PageId == PageId.WhoIsReshadKhalifePage)
+            {
+                return new WhoIsReshadKhalifePage();
+            }
+
             return new MainPageContent();
         }
     }
