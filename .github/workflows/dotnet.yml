@@ -28,6 +28,13 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
 
+
+    - uses: actions/checkout@v2
+    - uses: vimtor/action-zip@v1
+      with:
+        files: dist/QuranAnalyzer.WebUI/copy.txt
+        dest: result.zip
+
     - uses: actions/checkout@master
     - name: Archive Release
       uses: thedoctor0/zip-release@main
@@ -40,4 +47,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: 'release.zip'
+        file: 'result.zip'
