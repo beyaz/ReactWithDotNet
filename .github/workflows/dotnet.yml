@@ -27,9 +27,11 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-steps:
-    uses: brpaz/action-semantic-release@v1
-    with:
-        dry_run: "false"
-        install_plugins: "semantic-release-docker semantic-release-gcr"
-        branch: master
+
+    - uses: actions/checkout@master
+    - name: Archive Release
+      uses: thedoctor0/zip-release@main
+      with:
+        type: 'zip'
+        filename: 'release.zip'
+        exclusions: '*.git* /*node_modules/* .editorconfig'
