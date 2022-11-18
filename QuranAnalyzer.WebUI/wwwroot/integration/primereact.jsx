@@ -3,7 +3,7 @@ import ReactWithDotNet from "../ReactWithDotNet.jsx";
 
 // primereact
 import { Button } from 'primereact/button';
-import { InputText } from 'primereact/InputText';
+import { InputText } from 'primereact/inputText';
 import { InputTextarea } from 'primereact/InputTextarea';
 import { BlockUI } from 'primereact/BlockUI';
 import { Card } from 'primereact/Card';
