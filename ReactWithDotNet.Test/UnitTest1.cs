@@ -17,6 +17,7 @@ namespace ReactWithDotNet.Test
             public bool CreateClassAsPartial { get; set; }
         }
         [TestMethod]
+        [Ignore]
         public void ExportCommonHtmlElements()
         {
             TagInfo[] map = 
