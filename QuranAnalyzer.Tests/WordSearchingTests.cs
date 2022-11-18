@@ -3,6 +3,7 @@
 namespace QuranAnalyzer;
 
 [TestClass]
+[Ignore]
 public class WordSearchingTests
 {
     static void CountShouldBe(string searchWord, int expected)

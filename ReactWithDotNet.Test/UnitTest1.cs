@@ -7,6 +7,7 @@ using static System.String;
 namespace ReactWithDotNet.Test
 {
     [TestClass]
+    [Ignore]
     public class UnitTest1
     {
         class TagInfo
@@ -17,7 +18,6 @@ namespace ReactWithDotNet.Test
             public bool CreateClassAsPartial { get; set; }
         }
         [TestMethod]
-        [Ignore]
         public void ExportCommonHtmlElements()
         {
             TagInfo[] map = 
