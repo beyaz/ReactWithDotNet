@@ -44,7 +44,7 @@ public class Startup
     {
         services.Configure<GzipCompressionProviderOptions>(options =>
         {
-            options.Level = CompressionLevel.Fastest;
+            options.Level = CompressionLevel.Optimal;
         });
         services.AddResponseCompression(options =>
         {
