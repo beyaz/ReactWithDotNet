@@ -1,5 +1,3 @@
-const isProduction = process.env.NODE_ENV === 'production';
-
 // import core library
 import ReactWithDotNet from "./ReactWithDotNet";
 
@@ -51,7 +49,3 @@ function OnMainDivScrollChanged(e)
 }
 
 ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", OnMainDivScrollChanged);
-
-
-import React from 'react';
-import { Ripple } from 'primereact/ripple';
