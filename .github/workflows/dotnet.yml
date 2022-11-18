@@ -46,9 +46,6 @@ jobs:
          # If not specified, defaults to true.
          skip-build: false
 
-
-    #- uses: actions/checkout@master
-    #- name: Archive Release
     - uses: thedoctor0/zip-release@main
       with:
         type: 'zip'
