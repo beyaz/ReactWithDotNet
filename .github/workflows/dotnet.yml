@@ -50,10 +50,10 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        directory: 'QuranAnalyzer.WebUI/bin/Release/netcoreapp3.1/'
+        directory: 'packages/'
 
     - uses: djnicholson/release-action@v2.11
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         asset-name: 'release.zip'
-        file: 'QuranAnalyzer.WebUI/bin/Release/netcoreapp3.1/release.zip'
+        file: 'packages/release.zip'
