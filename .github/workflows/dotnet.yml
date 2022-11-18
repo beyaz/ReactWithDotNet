@@ -32,7 +32,7 @@ jobs:
       shell: pwsh
 
     - name: Script
-      run: npm run-script build-for-production --prefix QuranAnalyzer.WebUI/wwwroot/
+      run: npm run-script build --prefix QuranAnalyzer.WebUI/wwwroot/
       shell: pwsh
 
     - uses: EasyDesk/action-dotnet-publish@v1
