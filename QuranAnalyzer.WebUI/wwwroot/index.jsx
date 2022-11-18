@@ -4,9 +4,11 @@ const isProduction = process.env.NODE_ENV === 'production';
 import ReactWithDotNet from "./ReactWithDotNet";
 
 // import helper tool for design your component in hotreload mode
-
+import "./integration/ReactWithDotNet-UIDesigner";
 
 // import libraries which you use in your porject
+import "./integration/primereact";
+import "./integration/rsuite";
 import "./integration/react-xarrows";
 import "./integration/google-map-react";
 
