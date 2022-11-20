@@ -33,7 +33,8 @@ jobs:
         npm install
         npm run-script build-production
         Remove-Item 'react-with-dotnet' -Recurse
-        Remove-Item 'package.json'        
+        Remove-Item 'package.json'
+        Remove-Item 'package-lock.json'
       shell: pwsh
 
     - uses: EasyDesk/action-dotnet-publish@v1
