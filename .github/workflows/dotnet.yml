@@ -38,13 +38,6 @@ jobs:
         Remove-Item 'index-development.jsx'
         Remove-Item 'index.jsx'
         Remove-Item 'app.css'
-        set-location QuranAnalyzer.WebUI/
-        Remove-Item 'ReactWithDotNet.Libraries.pdb'
-        Remove-Item 'ReactWithDotNet.Libraries.xml'
-        Remove-Item 'ReactWithDotNet.pdb'
-        Remove-Item 'ReactWithDotNet.xml'
-        Remove-Item 'QuranAnalyzer.WebUI.pdb'
-        Remove-Item 'QuranAnalyzer.pdb'
       shell: pwsh
 
     - uses: EasyDesk/action-dotnet-publish@v1
@@ -64,6 +57,18 @@ jobs:
          # (Optional) Whether to skip the build using the '--no-build' flag.
          # If not specified, defaults to true.
          skip-build: false
+
+
+    - name: Script
+      run: |
+        Remove-Item 'packages/ReactWithDotNet.Libraries.pdb'
+        Remove-Item 'packages/ReactWithDotNet.Libraries.xml'
+        Remove-Item 'packages/ReactWithDotNet.pdb'
+        Remove-Item 'packages/ReactWithDotNet.xml'
+        Remove-Item 'packages/QuranAnalyzer.WebUI.pdb'
+        Remove-Item 'packages/QuranAnalyzer.pdb'
+      shell: pwsh
+
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.2
