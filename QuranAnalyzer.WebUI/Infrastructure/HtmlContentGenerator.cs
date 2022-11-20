@@ -28,12 +28,6 @@ sealed class HtmlContentGenerator
 
             "    <title>Quran Analyzer</title>",
 
-            "<script type='text/javascript'>",
-            "    window.onerror = function(error, url, line){",
-            "        alert(error); alert(url);  alert(line);",
-            "    };",
-            "</script>",
-
             "    <!-- Font -->",
             "    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
 
@@ -44,7 +38,6 @@ sealed class HtmlContentGenerator
             "</head>",
 
             "<body>",
-            "<div>t3</div>",
             "    <div id='app'>",
             $"        <script src='{root}/index.js'></script>",
             "    </div>",
