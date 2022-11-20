@@ -39,13 +39,14 @@ sealed class HtmlContentGenerator
 
             //Stylesheets,
 
-            //"</head>",
+            "</head>",
 
-            //"<body>",
-            //"    <div id='app'>",
-            //$"        <script src='{root}/index.js'></script>",
-            //"    </div>",
-            //"</body>",
+            "<body>",
+            "<div>tt</div>",
+            "    <div id='app'>",
+            $"        <script src='{root}/index.js'></script>",
+            "    </div>",
+            "</body>",
 
             "</html>",
 
