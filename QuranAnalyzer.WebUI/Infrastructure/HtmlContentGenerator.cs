@@ -44,7 +44,7 @@ sealed class HtmlContentGenerator
             "</head>",
 
             "<body>",
-            "<div>t2</div>",
+            "<div>t3</div>",
             "    <div id='app'>",
             $"        <script src='{root}/index.js'></script>",
             "    </div>",
