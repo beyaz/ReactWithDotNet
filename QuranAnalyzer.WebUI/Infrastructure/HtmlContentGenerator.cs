@@ -29,32 +29,32 @@ sealed class HtmlContentGenerator
             "    <title>Quran Analyzer</title>",
 
             "<script type='text/javascript'>alert('A');</script>",
-            "<script src='//cdn.jsdelivr.net/npm/eruda'></script>",
-            "<script type='text/javascript'>eruda.init();</script>",
+            //"<script src='//cdn.jsdelivr.net/npm/eruda'></script>",
+            //"<script type='text/javascript'>eruda.init();</script>",
 
-            "    <!-- Font -->",
-            "    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
+            //"    <!-- Font -->",
+            //"    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
 
-            $"    <link rel='stylesheet' href='{root}/index.css'>",
+            //$"    <link rel='stylesheet' href='{root}/index.css'>",
 
-            Stylesheets,
+            //Stylesheets,
 
-            "</head>",
+            //"</head>",
 
-            "<body>",
-            "    <div id='app'>",
-            $"        <script src='{root}/index.js'></script>",
-            "    </div>",
-            "</body>",
+            //"<body>",
+            //"    <div id='app'>",
+            //$"        <script src='{root}/index.js'></script>",
+            //"    </div>",
+            //"</body>",
 
             "</html>",
 
-            "<script type='text/javascript'>",
-            "    ReactWithDotNet.RenderComponentIn({",
-            $"        fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',",
-            "        containerHtmlElementId: 'app'",
-            "    });",
-            "</script>"
+            //"<script type='text/javascript'>",
+            //"    ReactWithDotNet.RenderComponentIn({",
+            //$"        fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',",
+            //"        containerHtmlElementId: 'app'",
+            //"    });",
+            //"</script>"
         };
 
         return lines.Aggregate(new StringBuilder(), (sb, line) => line.WriteTo(sb)).ToString();
