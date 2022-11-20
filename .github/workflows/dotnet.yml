@@ -62,7 +62,7 @@ jobs:
         # FTP account password
         ftp-password: fgth_56Wq@kjn3*
         # The local folder to copy, defaults to root project folder
-        local-dir: /packages/
+        local-dir: packages/
 
     - uses: thedoctor0/zip-release@main
       with:
