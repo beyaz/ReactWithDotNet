@@ -13,7 +13,6 @@ public sealed class ProcessReactWithDotNetRequestInput
 
     public HttpContext HttpContext { get; set; }
 
-
     public Action<ReactContext> OnReactContextCreated { get; set; }
 }
 

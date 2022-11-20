@@ -62,31 +62,38 @@ public class ComponentResponse
 
 static class ComponentRequestHandler
 {
-   
-
     public static ComponentResponse HandleRequest(ProcessReactWithDotNetRequestInput input)
     {
-        var request = input.componentRequest;
-
+        var request  = input.componentRequest;
+        
         var findType = input.findType;
 
         var beforeSerializeElementToClient = input.BeforeSerializeElementToClient;
 
-        var context = CreateContext(request);
-
-        input.OnReactContextCreated?.Invoke(context);
-
-        if (request.MethodName == "FetchComponent")
+        ReactContext context = null;
+            
+        try
         {
-            return fetchComponent();
-        }
+            context = CreateContext(request);
 
-        if (request.MethodName == "HandleComponentEvent")
+            input.OnReactContextCreated?.Invoke(context);
+
+            if (request.MethodName == "FetchComponent")
+            {
+                return fetchComponent();
+            }
+
+            if (request.MethodName == "HandleComponentEvent")
+            {
+                return handleComponentEvent();
+            }
+
+            return new ComponentResponse { ErrorMessage = $"Not implemented method. {request.MethodName}" };
+        }
+        catch (Exception exception)
         {
-            return handleComponentEvent();
+            return new ComponentResponse { ErrorMessage = exception.ToString() };
         }
-
-        return new ComponentResponse { ErrorMessage = $"Not implemented method. {request.MethodName}" };
 
         ComponentResponse fetchComponent()
         {
