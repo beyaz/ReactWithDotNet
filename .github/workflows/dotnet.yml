@@ -38,6 +38,12 @@ jobs:
         Remove-Item 'index-development.jsx'
         Remove-Item 'index.jsx'
         Remove-Item 'app.css'
+        Remove-Item 'ReactWithDotNet.Libraries.pdb'
+        Remove-Item 'ReactWithDotNet.Libraries.xml'
+        Remove-Item 'ReactWithDotNet.pdb'
+        Remove-Item 'ReactWithDotNet.xml'
+        Remove-Item 'QuranAnalyzer.WebUI.pdb'
+        Remove-Item 'QuranAnalyzer.pdb'
       shell: pwsh
 
     - uses: EasyDesk/action-dotnet-publish@v1
@@ -57,11 +63,6 @@ jobs:
          # (Optional) Whether to skip the build using the '--no-build' flag.
          # If not specified, defaults to true.
          skip-build: false
-
-    #- name: Remove File
-    #  uses: JesseTG/rm@v1.0.0
-    #  with:
-    #    path: packages/wwwroot/react-with-dotnet
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.2
