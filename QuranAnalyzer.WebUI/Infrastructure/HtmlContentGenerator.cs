@@ -28,6 +28,10 @@ sealed class HtmlContentGenerator
 
             "    <title>Quran Analyzer</title>",
 
+
+            "<script src='//cdn.jsdelivr.net/npm/eruda'></script>",
+            "<script>eruda.init();</script>",
+
             "    <!-- Font -->",
             "    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
 
