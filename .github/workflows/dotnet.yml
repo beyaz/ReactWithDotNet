@@ -38,6 +38,7 @@ jobs:
         Remove-Item 'index-development.jsx'
         Remove-Item 'index.jsx'
         Remove-Item 'app.css'
+        set-location QuranAnalyzer.WebUI/
         Remove-Item 'ReactWithDotNet.Libraries.pdb'
         Remove-Item 'ReactWithDotNet.Libraries.xml'
         Remove-Item 'ReactWithDotNet.pdb'
