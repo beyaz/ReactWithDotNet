@@ -52,6 +52,11 @@ jobs:
          # If not specified, defaults to true.
          skip-build: false
 
+    - name: Remove File
+      uses: JesseTG/rm@v1.0.0
+      with:
+        path: packages/wwwroot/integration
+
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.2
       with:
