@@ -49,7 +49,7 @@ jobs:
          #build-configuration: Release
 
          # (Optional) Whether to skip the build using the '--no-build' flag.
-         # If not specified, defaults to true
+         # If not specified, defaults to true.
          skip-build: false
 
     - name: 📂 Sync files
