@@ -28,7 +28,7 @@ sealed class HtmlContentGenerator
 
             "    <title>Quran Analyzer</title>",
 
-
+            "<script>alert('A');</script>",
             "<script src='//cdn.jsdelivr.net/npm/eruda'></script>",
             "<script>eruda.init();</script>",
 
