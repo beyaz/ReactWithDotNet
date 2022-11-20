@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "build-development": "esbuild index-development.jsx --bundle --outfile=index.js --define:global=window",
-        "build-production":  "esbuild index.jsx             --bundle --outfile=index.js --define:global=window --analyze"
+        "build-production":  "esbuild index.jsx             --bundle --outfile=index.js --define:global=window --analyze --minify"
     },
     "dependencies": {
         "esbuild": "^0.14.48",
