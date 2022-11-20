@@ -59,6 +59,7 @@ jobs:
         username: beyaz1404-001
         password: fgth_56Wq@kjn3*
         local-dir: packages/
+        server-dir: site1/
 
     - uses: thedoctor0/zip-release@main
       with:
