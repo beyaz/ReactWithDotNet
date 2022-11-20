@@ -31,7 +31,7 @@ jobs:
       run: |
         set-location QuranAnalyzer.WebUI/wwwroot/
         npm install
-        npm run-script build-development
+        npm run-script build-production
         Remove-Item 'react-with-dotnet' -Recurse
         Remove-Item 'package.json'
         Remove-Item 'package-lock.json'
