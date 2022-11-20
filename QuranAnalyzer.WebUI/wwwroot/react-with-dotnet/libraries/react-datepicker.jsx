@@ -1,4 +1,4 @@
-import ReactWithDotNet from "../ReactWithDotNet.jsx";
+import ReactWithDotNet from "../react-with-dotnet";
 
 import DatePicker from "react-datepicker";
 

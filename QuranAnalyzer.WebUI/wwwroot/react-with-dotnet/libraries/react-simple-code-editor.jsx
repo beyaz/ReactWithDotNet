@@ -1,5 +1,5 @@
 
-import ReactWithDotNet from "../ReactWithDotNet.jsx";
+import ReactWithDotNet from "../react-with-dotnet";
 
 // react-simple-code-editor
 import Editor  from 'react-simple-code-editor';

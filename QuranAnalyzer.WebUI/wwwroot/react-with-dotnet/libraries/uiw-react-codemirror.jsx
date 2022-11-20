@@ -1,4 +1,4 @@
-import ReactWithDotNet from "../ReactWithDotNet.jsx";
+import ReactWithDotNet from "../react-with-dotnet";
 
 // https://uiwjs.github.io/react-codemirror/#/theme/data/github/light
 import CodeMirror from '@uiw/react-codemirror';

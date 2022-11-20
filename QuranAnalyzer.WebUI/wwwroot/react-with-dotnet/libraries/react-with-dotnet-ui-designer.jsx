@@ -1,5 +1,5 @@
 
-import ReactWithDotNet from "../ReactWithDotNet.jsx";
+import ReactWithDotNet from "../react-with-dotnet";
 
 import "./uiw-react-codemirror";
 import { Slider } from 'primereact/slider';

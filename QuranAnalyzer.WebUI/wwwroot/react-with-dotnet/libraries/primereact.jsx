@@ -1,5 +1,5 @@
 
-import ReactWithDotNet from "../ReactWithDotNet.jsx";
+import ReactWithDotNet from "../react-with-dotnet";
 
 // primereact
 import { Button } from 'primereact/button';

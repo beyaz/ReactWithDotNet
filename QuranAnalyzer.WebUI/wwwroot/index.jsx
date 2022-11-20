@@ -1,8 +1,8 @@
 // import core library
-import ReactWithDotNet from "./ReactWithDotNet";
+import ReactWithDotNet from "./react-with-dotnet/react-with-dotnet";
 
 // import libraries which you use in your porject
-import "./integration/react-xarrows";
+import "./react-with-dotnet/libraries/react-xarrows";
 
 // your app specific imports and codes
 import './app.css'

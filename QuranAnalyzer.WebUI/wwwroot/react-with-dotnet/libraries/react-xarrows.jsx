@@ -1,5 +1,5 @@
 
-import ReactWithDotNet from "../ReactWithDotNet.jsx";
+import ReactWithDotNet from "../react-with-dotnet";
 
 // react-xarrows
 import Xarrow from "react-xarrows";
