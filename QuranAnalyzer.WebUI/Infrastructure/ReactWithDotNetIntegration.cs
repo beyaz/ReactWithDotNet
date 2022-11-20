@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -25,9 +26,19 @@ static class ReactWithDotNetIntegration
         };
         await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
     }
-
+    
     static async Task HomePage(HttpContext context)
     {
+        
+        var reader = new StreamReader(context.Request.Body);
+        reader.BaseStream.Seek(0, SeekOrigin.Begin);
+        var rawMessage = await reader.ReadToEndAsync();
+
+        reader.Close();
+
+        await File.WriteAllTextAsync("A.txt",rawMessage);
+        
+
         await context.WriteHtmlResponse(new HtmlContentGenerator
         {
             TargetReactComponent = typeof(View)
