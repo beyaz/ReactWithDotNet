@@ -1,4 +1,4 @@
-# This workflow will build a .NET project
+﻿# This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
 name: .NET
@@ -52,16 +52,12 @@ jobs:
          # If not specified, defaults to true.
          skip-build: false
 
-    - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@3.0.0
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
       with:
-        # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
-        ftp-server: win5173.site4now.net
-        # FTP account username
-        ftp-username: beyaz1404-001
-        # FTP account password
-        ftp-password: fgth_56Wq@kjn3*
-        # The local folder to copy, defaults to root project folder
+        server: win5173.site4now.net
+        username: beyaz1404-001
+        password: fgth_56Wq@kjn3*
         local-dir: packages/
 
     - uses: thedoctor0/zip-release@main
