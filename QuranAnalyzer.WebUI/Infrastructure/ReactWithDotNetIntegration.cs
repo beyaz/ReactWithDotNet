@@ -1,4 +1,3 @@
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -29,12 +28,6 @@ static class ReactWithDotNetIntegration
     
     static async Task HomePage(HttpContext context)
     {
-        var i = 0;
-        foreach (var keyValuePair in context.Request.Headers)
-        {
-            await File.WriteAllTextAsync($"{i++}.txt",keyValuePair.Key + ":" + keyValuePair.Value);
-        }
-
         await context.WriteHtmlResponse(new HtmlContentGenerator
         {
             TargetReactComponent = typeof(View)
