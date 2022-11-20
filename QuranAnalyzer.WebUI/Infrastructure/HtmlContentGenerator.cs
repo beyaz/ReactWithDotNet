@@ -27,22 +27,18 @@ sealed class HtmlContentGenerator
             "    <meta http-equiv='Expires' content='0' />",
 
             "    <title>Quran Analyzer</title>",
+            
+            "    <!-- Font -->",
+            "    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
 
-            "<script type='text/javascript'>alert('A');</script>",
-            //"<script src='//cdn.jsdelivr.net/npm/eruda'></script>",
-            //"<script type='text/javascript'>eruda.init();</script>",
+            $"    <link rel='stylesheet' href='{root}/index.css'>",
 
-            //"    <!-- Font -->",
-            //"    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
-
-            //$"    <link rel='stylesheet' href='{root}/index.css'>",
-
-            //Stylesheets,
+            Stylesheets,
 
             "</head>",
 
             "<body>",
-            "<div>tt</div>",
+            "<div>t1</div>",
             "    <div id='app'>",
             $"        <script src='{root}/index.js'></script>",
             "    </div>",
@@ -50,12 +46,12 @@ sealed class HtmlContentGenerator
 
             "</html>",
 
-            //"<script type='text/javascript'>",
-            //"    ReactWithDotNet.RenderComponentIn({",
-            //$"        fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',",
-            //"        containerHtmlElementId: 'app'",
-            //"    });",
-            //"</script>"
+            "<script type='text/javascript'>",
+            "    ReactWithDotNet.RenderComponentIn({",
+            $"        fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',",
+            "        containerHtmlElementId: 'app'",
+            "    });",
+            "</script>"
         };
 
         return lines.Aggregate(new StringBuilder(), (sb, line) => line.WriteTo(sb)).ToString();
