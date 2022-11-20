@@ -62,7 +62,7 @@ jobs:
       with:
         server: win5173.site4now.net
         username: beyaz1404-001
-        password: fgth_56Wq@kjn3*
+        password: ${{ secrets.FTP_PASSWORD }}
         local-dir: packages/
         server-dir: 19sisteminedir/
 
