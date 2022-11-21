@@ -170,8 +170,7 @@ static partial class ElementSerializer
             propertyValue is Expression<Func<string>> ||
             propertyValue is Expression<Func<bool>>)
         {
-
-            static object getTargetValueFromExpression(PropertyInfo pi,LambdaExpression expression)
+            static object getTargetValueFromExpression(PropertyInfo pi, LambdaExpression expression)
             {
                 if (expression.Body is MemberExpression memberExpression)
                 {
@@ -194,13 +193,11 @@ static partial class ElementSerializer
 
                 throw HandlerMethodShouldBelongToReactComponent(pi, expression.ToString());
             }
-            
+
             string[] calculateSourcePathFunc()
             {
                 if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
                 {
-                    
-
                     return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
                 }
 
@@ -250,7 +247,7 @@ static partial class ElementSerializer
             {
                 return (null, true);
             }
-            
+
             var method = instance.GetType().GetMethod(templateAttribute.MethodNameForGettingItemsSource, BindingFlags.Instance | BindingFlags.NonPublic);
             if (method == null)
             {
@@ -268,7 +265,7 @@ static partial class ElementSerializer
                 return reactNode.ToJsonMap(context);
             }
 
-            var itemTemplates = (IEnumerable)method.Invoke(instance, new object[]{});
+            var itemTemplates = (IEnumerable)method.Invoke(instance, new object[] { });
 
             var results = new List<ItemTemplateInfo>();
 
@@ -279,7 +276,6 @@ static partial class ElementSerializer
                     results.Add(new ItemTemplateInfo { Item = item, ElementAsJson = convertToReactNode(item) });
                 }
             }
-           
 
             var template = new ItemTemplate
             {
