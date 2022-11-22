@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Emit;
 using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
@@ -214,35 +215,47 @@ partial class ElementSerializer
 
                 var dotNetProperties = new JsonMap();
 
-                foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
+                if (!DotNetPropertiesOfType.TryGetValue(dotNetTypeOfReactComponent,out var propertyAccessors))
                 {
-                    if (propertyInfo.Name == nameof(reactStatefulComponent.Context)
-                        || propertyInfo.Name == nameof(Element.children)
-                        || propertyInfo.Name == nameof(reactStatefulComponent.key)
-                        || propertyInfo.Name == nameof(reactStatefulComponent.Client)
-                        || propertyInfo.Name == "state"
-                        || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
-                        || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
-                        || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
-                       )
+                    propertyAccessors = new List<PropertyAccessInfo>();
+
+                    foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
+                    {
+                        if (propertyInfo.Name == nameof(reactStatefulComponent.Context)
+                            || propertyInfo.Name == nameof(Element.children)
+                            || propertyInfo.Name == nameof(reactStatefulComponent.key)
+                            || propertyInfo.Name == nameof(reactStatefulComponent.Client)
+                            || propertyInfo.Name == "state"
+                            || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
+                            || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
+                            || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
+                           )
+                        {
+                            continue;
+                        }
+
+                        propertyAccessors.Add(new PropertyAccessInfo
+                        {
+                            getValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
+                            propertyInfo = propertyInfo,
+                            defaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
+                        });
+                    }
+
+                    DotNetPropertiesOfType.TryAdd(dotNetTypeOfReactComponent, propertyAccessors);
+                }
+                
+
+                foreach (var item in propertyAccessors)
+                {
+                    var propertyValue = item.getValueFunc(reactStatefulComponent);
+
+                    if (item.defaultValue == propertyValue)
                     {
                         continue;
                     }
 
-                    var propertyValue = propertyInfo.GetValue(reactStatefulComponent);
-
-                    // skip default values
-                    {
-                        var defaultValueOfProperty = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null;
-
-                        if (propertyValue == defaultValueOfProperty)
-                        {
-                            continue;
-                        }
-                    }
-
-                    dotNetProperties.Add(propertyInfo.Name, propertyValue);
-                    
+                    dotNetProperties.Add(item.propertyInfo.Name, propertyValue);
                 }
 
                 var map = new JsonMap();
@@ -442,7 +455,18 @@ partial class ElementSerializer
 
         return node.ElementAsJsonMap;
     }
+
+    class PropertyAccessInfo
+    {
+        public PropertyInfo propertyInfo;
+        public Func<object, object> getValueFunc;
+        public object defaultValue;
+    }
+    static readonly Dictionary<Type, List<PropertyAccessInfo>> DotNetPropertiesOfType = new();
     
+    
+    
+
     static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
         var stopwatch = new Stopwatch();

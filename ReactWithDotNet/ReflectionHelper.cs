@@ -1,10 +1,50 @@
 ﻿using System.Reflection;
+using System.Reflection.Emit;
 using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
 static class ReflectionHelper
 {
+    public static Func<object, object> CreateGetFunction(PropertyInfo propertyInfo)
+    {
+        var getMethod = propertyInfo.GetGetMethod();
+        if (getMethod == null)
+        {
+            return null;
+        }
+
+        var declaringType = propertyInfo.DeclaringType;
+        if (declaringType == null)
+        {
+            return null;
+        }
+
+        var dmGet = new DynamicMethod("Get", typeof(object), new[] { typeof(object) });
+
+        var ilGenerator = dmGet.GetILGenerator();
+
+        ilGenerator.Emit(OpCodes.Ldarg_0);
+        ilGenerator.Emit(OpCodes.Castclass, declaringType);
+        ilGenerator.Emit(OpCodes.Callvirt, getMethod);
+
+        if (propertyInfo.PropertyType.IsValueType)
+        {
+            ilGenerator.Emit(OpCodes.Box, propertyInfo.PropertyType);
+        }
+
+        ilGenerator.Emit(OpCodes.Ret);
+
+        return (Func<object, object>)dmGet.CreateDelegate(typeof(Func<object, object>));
+    }
+
+    public static T DeepCopy<T>(T value)
+    {
+        var json = JsonConvert.SerializeObject(value);
+
+        return (T)JsonConvert.DeserializeObject(json, value.GetType());
+    }
+
     public static MethodInfo FindMethod(this Type type, string methodName, BindingFlags bindingFlags)
     {
         while (type != null)
@@ -14,21 +54,7 @@ static class ReflectionHelper
             {
                 return methodInfo;
             }
-            type = type.BaseType;
-        }
 
-        return null;
-    }
-
-    public static PropertyInfo FindProperty(this Type type, string propertyName, BindingFlags bindingFlags)
-    {
-        while (type != null)
-        {
-            var propertyInfo = type.GetProperty(propertyName, bindingFlags);
-            if (propertyInfo != null)
-            {
-                return propertyInfo;
-            }
             type = type.BaseType;
         }
 
@@ -57,17 +83,26 @@ static class ReflectionHelper
         return null;
     }
 
-    public static T DeepCopy<T>(T value)
+    public static PropertyInfo FindProperty(this Type type, string propertyName, BindingFlags bindingFlags)
     {
-        var json = JsonConvert.SerializeObject(value);
+        while (type != null)
+        {
+            var propertyInfo = type.GetProperty(propertyName, bindingFlags);
+            if (propertyInfo != null)
+            {
+                return propertyInfo;
+            }
 
-        return (T)JsonConvert.DeserializeObject(json,value.GetType());
+            type = type.BaseType;
+        }
+
+        return null;
     }
 
     public static bool IsGenericAction1or2or3(this Type type)
     {
         var typeDefinition = type.GetGenericTypeDefinition();
-        
-        return typeDefinition == typeof(Action<>) || typeDefinition == typeof(Action<,>)|| typeDefinition == typeof(Action<,,>);
+
+        return typeDefinition == typeof(Action<>) || typeDefinition == typeof(Action<,>) || typeDefinition == typeof(Action<,,>);
     }
 }
