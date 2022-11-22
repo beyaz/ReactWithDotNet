@@ -98,7 +98,7 @@ static partial class ElementSerializer
         var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
 
         {
-            var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+            var isDefaultValue = propertyValue == property.defaultValue;
 
             if (isDefaultValue)
             {
@@ -118,7 +118,7 @@ static partial class ElementSerializer
         }
 
         {
-            var isDefaultValue = propertyValue == propertyInfo.PropertyType.GetDefaultValue();
+            var isDefaultValue = propertyValue == property.defaultValue;
             if (isDefaultValue)
             {
                 return (null, true);
