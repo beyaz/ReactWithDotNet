@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
-using System.Reflection.Emit;
 using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
 partial class ElementSerializer
 {
+    static readonly Dictionary<Type, List<PropertyAccessInfo>> DotNetPropertiesOfType = new();
+
     public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
     {
         var node = ConvertToNode(element, context);
@@ -56,7 +57,7 @@ partial class ElementSerializer
 
             if (node.ElementIsFakeChild)
             {
-                node.IsCompleted      = true;
+                node.IsCompleted = true;
                 var jsMap = new JsonMap();
                 jsMap.Add("$FakeChild", node.ElementAsFakeChild.Index);
                 node.ElementAsJsonMap = jsMap;
@@ -76,9 +77,9 @@ partial class ElementSerializer
                 if (node.IsChildrenOpened is false)
                 {
                     OpenChildren(node, context);
-                    
+
                     node.ElementAsFragment.ArrangeChildren();
-                    
+
                     continue;
                 }
 
@@ -215,7 +216,7 @@ partial class ElementSerializer
 
                 var dotNetProperties = new JsonMap();
 
-                if (!DotNetPropertiesOfType.TryGetValue(dotNetTypeOfReactComponent,out var propertyAccessors))
+                if (!DotNetPropertiesOfType.TryGetValue(dotNetTypeOfReactComponent, out var propertyAccessors))
                 {
                     propertyAccessors = new List<PropertyAccessInfo>();
 
@@ -244,7 +245,6 @@ partial class ElementSerializer
 
                     DotNetPropertiesOfType.TryAdd(dotNetTypeOfReactComponent, propertyAccessors);
                 }
-                
 
                 foreach (var item in propertyAccessors)
                 {
@@ -322,7 +322,7 @@ partial class ElementSerializer
                         cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
 
                         var newElementSerializerContext = createNewElementSerializerContext();
-                        
+
                         var cachedVersion = ToJsonMap(component, newElementSerializerContext);
 
                         context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
@@ -330,7 +330,7 @@ partial class ElementSerializer
                         // take back dynamic styles
                         context.DynamicStyles.listOfClasses.Clear();
                         context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
-                        
+
                         var cachableMethodInfo = new CachableMethodInfo
                         {
                             MethodName       = cachableMethod.Name,
@@ -414,7 +414,7 @@ partial class ElementSerializer
                             var cachedVersion = ToJsonMap(component, newElementSerializerContext);
 
                             context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
-                            
+
                             // take back dynamic styles
                             context.DynamicStyles.listOfClasses.Clear();
                             context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
@@ -455,17 +455,6 @@ partial class ElementSerializer
 
         return node.ElementAsJsonMap;
     }
-
-    class PropertyAccessInfo
-    {
-        public PropertyInfo propertyInfo;
-        public Func<object, object> getValueFunc;
-        public object defaultValue;
-    }
-    static readonly Dictionary<Type, List<PropertyAccessInfo>> DotNetPropertiesOfType = new();
-    
-    
-    
 
     static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
@@ -578,8 +567,6 @@ partial class ElementSerializer
             node.ElementAsHtmlElement = htmlElement;
             return node;
         }
-        
-        
 
         throw FatalError("Node type not recognized");
     }
@@ -592,7 +579,7 @@ partial class ElementSerializer
     static JsonMap LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
     {
         var map = new JsonMap();
-        map.Add( "$tag", htmlElement.Type );
+        map.Add("$tag", htmlElement.Type);
 
         if (htmlElement._style is not null)
         {
@@ -617,7 +604,7 @@ partial class ElementSerializer
     {
         var map = new JsonMap();
         map.Add("$tag", thirdPartyReactComponent.Type);
-        
+
         if (thirdPartyReactComponent._style is not null)
         {
             var (style, noNeedToExport) = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent._style, context);
@@ -657,7 +644,7 @@ partial class ElementSerializer
         {
             return;
         }
-        
+
         var targetNode = node;
         if (node.ElementIsFragment)
         {
@@ -672,7 +659,6 @@ partial class ElementSerializer
                 child = child.NextSibling;
             }
         }
-        
 
         foreach (var item in children)
         {
@@ -697,7 +683,6 @@ partial class ElementSerializer
 
     class Node
     {
-        public bool ElementIsFragment { get; set; }
         public string BreadCrumpPath { get; set; }
         public int? CurrentOrder { get; set; }
         public bool DotNetComponentRenderMethodInvoked { get; set; }
@@ -709,6 +694,7 @@ partial class ElementSerializer
         public ReactStatefulComponent ElementAsDotNetReactComponent { get; set; }
 
         public FakeChild ElementAsFakeChild { get; set; }
+        public Fragment ElementAsFragment { get; set; }
 
         public HtmlElement ElementAsHtmlElement { get; set; }
         public HtmlTextNode ElementasHtmlTextElement { get; set; }
@@ -720,6 +706,7 @@ partial class ElementSerializer
         public bool ElementIsDotNetReactComponent { get; set; }
 
         public bool ElementIsFakeChild { get; set; }
+        public bool ElementIsFragment { get; set; }
         public bool ElementIsHtmlElement { get; set; }
         public bool ElementIsHtmlTextElement { get; set; }
 
@@ -745,6 +732,12 @@ partial class ElementSerializer
         public Node Parent { get; set; }
 
         public ElementSerializerContext SerializerContext { get; set; }
-        public Fragment ElementAsFragment { get; set; }
+    }
+
+    class PropertyAccessInfo
+    {
+        public object defaultValue;
+        public Func<object, object> getValueFunc;
+        public PropertyInfo propertyInfo;
     }
 }
