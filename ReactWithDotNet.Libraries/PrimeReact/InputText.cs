@@ -1,18 +1,12 @@
-﻿
-using System;
-using System.Linq.Expressions;
-
-namespace ReactWithDotNet.PrimeReact;
+﻿namespace ReactWithDotNet.PrimeReact;
 
 public class InputText : ElementBase
 {
 
     [React]
-    [ReactDefaultValue(DefaultValue = "" )]
     public string value { get; set; }
 
     [React]
-    [ReactDefaultValue(DefaultValue = "")]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 

@@ -50,19 +50,12 @@ static partial class ElementSerializer
     const string ___Type___ = "$Type";
     const string ___TypeOfState___ = "$TypeOfState";
 
-    static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, ReactDefaultValueAttribute reactDefaultValueAttribute, Func<string[]> calculateSourcePathFunc)
+    static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, Func<string[]> calculateSourcePathFunc)
     {
         var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
         if (reactBindAttribute == null)
         {
             return null;
-        }
-
-        string defaultValue = null;
-
-        if (reactDefaultValueAttribute != null)
-        {
-            defaultValue = reactDefaultValueAttribute.DefaultValue;
         }
 
         return new BindInfo
@@ -72,7 +65,7 @@ static partial class ElementSerializer
             sourcePath    = calculateSourcePathFunc(),
             IsBinding     = true,
             jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
-            defaultValue  = defaultValue
+            defaultValue  = null // todo: check here in client
         };
     }
 
@@ -93,20 +86,12 @@ static partial class ElementSerializer
     {
         var propertyInfo = property.propertyInfo;
             
-        var propertyValue = propertyInfo.GetValue(instance);
+        var propertyValue = property.getValueFunc(instance);
 
-        var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();
-
+        var isDefaultValue = propertyValue == property.defaultValue;
+        if (isDefaultValue)
         {
-            var isDefaultValue = propertyValue == property.defaultValue;
-
-            if (isDefaultValue)
-            {
-                if (reactDefaultValueAttribute != null)
-                {
-                    propertyValue = reactDefaultValueAttribute.DefaultValue;
-                }
-            }
+            return (null, true);
         }
 
         // check inline
@@ -114,14 +99,6 @@ static partial class ElementSerializer
             if (propertyValue is Style style)
             {
                 return GetStylePropertyValueOfHtmlElementForSerialize(instance, style, context);
-            }
-        }
-
-        {
-            var isDefaultValue = propertyValue == property.defaultValue;
-            if (isDefaultValue)
-            {
-                return (null, true);
             }
         }
 
@@ -216,7 +193,7 @@ static partial class ElementSerializer
                 throw new NotImplementedException();
             }
 
-            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, reactDefaultValueAttribute, calculateSourcePathFunc);
+            var bindInfo = GetExpressionAsBindingInfo(propertyInfo,  calculateSourcePathFunc);
             if (bindInfo == null)
             {
                 return (null, true);
