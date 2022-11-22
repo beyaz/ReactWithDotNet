@@ -9,6 +9,8 @@ partial class ElementSerializer
 {
     static readonly Dictionary<Type, List<PropertyAccessInfo>> DotNetPropertiesOfType = new();
 
+    static readonly Dictionary<Type, List<PropertyAccessInfo>> ReactAttributedPropertiesOfType = new();
+
     public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
     {
         var node = ConvertToNode(element, context);
@@ -458,12 +460,29 @@ partial class ElementSerializer
 
     static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
-        var stopwatch = new Stopwatch();
-
-        stopwatch.Start();
-
-        foreach (var propertyInfo in element.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
+        var elementType = element.GetType();
+        
+        if (!ReactAttributedPropertiesOfType.TryGetValue(elementType, out var reactProperties))
         {
+            reactProperties = new List<PropertyAccessInfo>();
+
+            foreach (var propertyInfo in elementType.GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
+            {
+                reactProperties.Add(new PropertyAccessInfo
+                {
+                    getValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
+                    propertyInfo = propertyInfo,
+                    defaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
+                });
+            }
+
+            ReactAttributedPropertiesOfType.TryAdd(elementType, reactProperties);
+        }
+
+        foreach (var item in reactProperties)
+        {
+            var propertyInfo = item.propertyInfo;
+            
             var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, context);
             if (noNeedToExport)
             {
@@ -471,13 +490,6 @@ partial class ElementSerializer
             }
 
             add(GetPropertyName(propertyInfo), propertyValue);
-        }
-
-        stopwatch.Stop();
-
-        if (stopwatch.ElapsedMilliseconds > 10)
-        {
-            context.Tracer.Trace($"{element.GetType().FullName} > attribute cacculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
         }
     }
 
