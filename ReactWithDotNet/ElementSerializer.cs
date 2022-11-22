@@ -89,8 +89,10 @@ static partial class ElementSerializer
         return propertyName;
     }
 
-    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyInfo propertyInfo, ElementSerializerContext context)
+    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
     {
+        var propertyInfo = property.propertyInfo;
+            
         var propertyValue = propertyInfo.GetValue(instance);
 
         var reactDefaultValueAttribute = propertyInfo.GetCustomAttribute<ReactDefaultValueAttribute>();

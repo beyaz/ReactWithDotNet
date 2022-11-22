@@ -483,7 +483,7 @@ partial class ElementSerializer
         {
             var propertyInfo = item.propertyInfo;
             
-            var (propertyValue, noNeedToExport) = getPropertyValue(element, propertyInfo, context);
+            var (propertyValue, noNeedToExport) = getPropertyValue(element, item, context);
             if (noNeedToExport)
             {
                 continue;
