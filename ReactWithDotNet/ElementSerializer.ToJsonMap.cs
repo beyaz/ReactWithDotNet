@@ -239,9 +239,9 @@ partial class ElementSerializer
 
                         propertyAccessors.Add(new PropertyAccessInfo
                         {
-                            getValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
-                            propertyInfo = propertyInfo,
-                            defaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
+                            GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
+                            PropertyInfo = propertyInfo,
+                            DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
                         });
                     }
 
@@ -250,14 +250,14 @@ partial class ElementSerializer
 
                 foreach (var item in propertyAccessors)
                 {
-                    var propertyValue = item.getValueFunc(reactStatefulComponent);
+                    var propertyValue = item.GetValueFunc(reactStatefulComponent);
 
-                    if (item.defaultValue == propertyValue)
+                    if (item.DefaultValue == propertyValue)
                     {
                         continue;
                     }
 
-                    dotNetProperties.Add(item.propertyInfo.Name, propertyValue);
+                    dotNetProperties.Add(item.PropertyInfo.Name, propertyValue);
                 }
 
                 var map = new JsonMap();
@@ -470,9 +470,9 @@ partial class ElementSerializer
             {
                 reactProperties.Add(new PropertyAccessInfo
                 {
-                    getValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
-                    propertyInfo = propertyInfo,
-                    defaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
+                    GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
+                    PropertyInfo = propertyInfo,
+                    DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
                 });
             }
 
@@ -481,7 +481,7 @@ partial class ElementSerializer
 
         foreach (var item in reactProperties)
         {
-            var propertyInfo = item.propertyInfo;
+            var propertyInfo = item.PropertyInfo;
             
             var (propertyValue, noNeedToExport) = getPropertyValue(element, item, context);
             if (noNeedToExport)
@@ -748,8 +748,8 @@ partial class ElementSerializer
 
     class PropertyAccessInfo
     {
-        public object defaultValue;
-        public Func<object, object> getValueFunc;
-        public PropertyInfo propertyInfo;
+        public object DefaultValue { get; init; }
+        public Func<object, object> GetValueFunc { get; init; }
+        public PropertyInfo PropertyInfo { get; init; }
     }
 }

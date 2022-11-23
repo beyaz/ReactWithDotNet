@@ -84,11 +84,11 @@ static partial class ElementSerializer
 
     static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
     {
-        var propertyInfo = property.propertyInfo;
+        var propertyInfo = property.PropertyInfo;
             
-        var propertyValue = property.getValueFunc(instance);
+        var propertyValue = property.GetValueFunc(instance);
 
-        var isDefaultValue = propertyValue == property.defaultValue;
+        var isDefaultValue = propertyValue == property.DefaultValue;
         if (isDefaultValue)
         {
             return (null, true);
