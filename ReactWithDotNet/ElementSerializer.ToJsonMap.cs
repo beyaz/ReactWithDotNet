@@ -223,7 +223,7 @@ partial class ElementSerializer
                 {
                     propertyAccessors = new List<PropertyAccessInfo>();
 
-                    foreach (var propertyInfo in dotNetTypeOfReactComponent.GetProperties())
+                    foreach (var propertyInfo in dotNetTypeOfReactComponent.GetSerializableProperties())
                     {
                         if (propertyInfo.Name == nameof(reactStatefulComponent.Context)
                             || propertyInfo.Name == nameof(Element.children)
@@ -462,7 +462,7 @@ partial class ElementSerializer
         {
             reactProperties = new List<PropertyAccessInfo>();
 
-            foreach (var propertyInfo in elementType.GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
+            foreach (var propertyInfo in elementType.GetSerializableProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
             {
                 reactProperties.Add(propertyInfo.ToFastAccess());
             }
@@ -523,7 +523,7 @@ partial class ElementSerializer
         {
             reactCustomEventProperties = new List<PropertyAccessInfo>();
 
-            foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
+            foreach (var propertyInfo in reactComponent.GetType().GetSerializableProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
             {
                 var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
                 var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();

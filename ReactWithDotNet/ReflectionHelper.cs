@@ -6,6 +6,11 @@ namespace ReactWithDotNet;
 
 static class ReflectionHelper
 {
+    public static IEnumerable<PropertyInfo> GetSerializableProperties(this Type type)
+    {
+        return type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
+    }
+    
     public static Func<object, object> CreateGetFunction(PropertyInfo propertyInfo)
     {
         var getMethod = propertyInfo.GetGetMethod();
@@ -20,7 +25,9 @@ static class ReflectionHelper
             return null;
         }
 
-        var dmGet = new DynamicMethod("Get", typeof(object), new[] { typeof(object) });
+        var propertyName = propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name;
+       
+        var dmGet = new DynamicMethod("Get_"+ propertyName, typeof(object), new[] { typeof(object) });
 
         var ilGenerator = dmGet.GetILGenerator();
 
