@@ -18,7 +18,7 @@ partial class ElementSerializer
     {
         var type = reactComponent.GetType();
         
-        if (!ReactAttributedPropertiesOfType.TryGetValue(type, out var reactCustomEventProperties))
+        if (!CustomEventPropertiesOfType.TryGetValue(type, out var reactCustomEventProperties))
         {
             reactCustomEventProperties = new List<PropertyAccessInfo>();
             
@@ -35,25 +35,18 @@ partial class ElementSerializer
 
                 throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
             }
+
+            CustomEventPropertiesOfType.TryAdd(type, reactCustomEventProperties);
         } 
         
-        foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
+        foreach (var fastPropertyInfo in reactCustomEventProperties)
         {
-            var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
-            var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
-
-            if (isAction || isGenericAction)
-            {
-                convertToTask(propertyInfo);
-                continue;
-            }
-
-            throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
+            convertToTask(fastPropertyInfo);
         }
 
-        void convertToTask(PropertyInfo propertyInfo)
+        void convertToTask(PropertyAccessInfo fastPropertyInfo)
         {
-            var @delegate = (Delegate)propertyInfo.GetValue(reactComponent);
+            var @delegate = (Delegate)fastPropertyInfo.GetValueFunc(reactComponent);
             if (@delegate is null)
             {
                 return;
@@ -66,6 +59,8 @@ partial class ElementSerializer
                     throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
                 }
 
+                var propertyInfo = fastPropertyInfo.PropertyInfo;
+                
                 propertyInfo.SetValue(reactComponent, null);
 
                 reactComponent.Client.InitializeDotnetComponentEventListener(GetEventKey(reactComponent, propertyInfo.Name), @delegate.Method.Name, target.ComponentUniqueIdentifier.GetValueOrDefault());
