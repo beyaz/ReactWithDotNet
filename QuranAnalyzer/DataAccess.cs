@@ -10,7 +10,12 @@ public static class DataAccess
     
     static DataAccess()
     {
-        var chapters = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(@"Data.json"));
+        var filePath = @"Data.json";
+        if (!File.Exists(filePath))
+        {
+            filePath = Path.Combine("bin", "Debug", "netcoreapp3.1", filePath);
+        }
+        var chapters = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(filePath));
 
         AllSurahs = chapters.AsListOf(chapter => new Surah
         {
