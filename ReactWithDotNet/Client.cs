@@ -17,7 +17,7 @@ static partial class Mixin
                 continue;
             }
 
-            throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<..>");
+            throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
         }
 
         void convertToTask(PropertyInfo propertyInfo)
