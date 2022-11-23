@@ -77,11 +77,6 @@ public class Switch : ReactComponent
 
     void OnClickHandler(MouseEvent _)
     {
-        if (ValueChange == null)
-        {
-            return;
-        }
-        
         IsChecked = !IsChecked;
         DispatchEvent(()=>ValueChange,IsChecked);
     }
