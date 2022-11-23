@@ -1,51 +1,7 @@
-﻿using System.Reflection;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 static partial class Mixin
 {
-    internal static void ConvertReactEventsToTaskForEventBus(this ReactStatefulComponent reactComponent)
-    {
-        foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
-        {
-            var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
-            var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
-
-            if (isAction || isGenericAction)
-            {
-                convertToTask(propertyInfo);
-                continue;
-            }
-
-            throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
-        }
-
-        void convertToTask(PropertyInfo propertyInfo)
-        {
-            var @delegate = (Delegate)propertyInfo.GetValue(reactComponent);
-            if (@delegate is null)
-            {
-                return;
-            }
-
-            if (@delegate.Target is ReactStatefulComponent target)
-            {
-                if (target.ComponentUniqueIdentifier is null)
-                {
-                    throw DeveloperException("ComponentUniqueIdentifier not initialized yet");
-                }
-
-                propertyInfo.SetValue(reactComponent, null);
-
-                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventKey(reactComponent, propertyInfo.Name), @delegate.Method.Name, target.ComponentUniqueIdentifier.GetValueOrDefault());
-            }
-            else
-            {
-                throw DeveloperException("Action handler method should belong to React component");
-            }
-        }
-    }
-
     internal static string GetEventKey(ReactStatefulComponent reactComponent, string propertyName)
     {
         if (reactComponent.ComponentUniqueIdentifier is null)

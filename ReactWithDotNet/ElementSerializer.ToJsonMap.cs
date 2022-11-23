@@ -11,6 +11,72 @@ partial class ElementSerializer
 
     static readonly Dictionary<Type, List<PropertyAccessInfo>> ReactAttributedPropertiesOfType = new();
 
+
+    static readonly Dictionary<Type, List<PropertyAccessInfo>> CustomEventPropertiesOfType = new();
+    
+    static void ConvertReactEventsToTaskForEventBus(this ReactStatefulComponent reactComponent)
+    {
+        var type = reactComponent.GetType();
+        
+        if (!ReactAttributedPropertiesOfType.TryGetValue(type, out var reactCustomEventProperties))
+        {
+            reactCustomEventProperties = new List<PropertyAccessInfo>();
+            
+            foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
+            {
+                var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
+                var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
+
+                if (isAction || isGenericAction)
+                {
+                    reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
+                    continue;
+                }
+
+                throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
+            }
+        } 
+        
+        foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
+        {
+            var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
+            var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
+
+            if (isAction || isGenericAction)
+            {
+                convertToTask(propertyInfo);
+                continue;
+            }
+
+            throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
+        }
+
+        void convertToTask(PropertyInfo propertyInfo)
+        {
+            var @delegate = (Delegate)propertyInfo.GetValue(reactComponent);
+            if (@delegate is null)
+            {
+                return;
+            }
+
+            if (@delegate.Target is ReactStatefulComponent target)
+            {
+                if (target.ComponentUniqueIdentifier is null)
+                {
+                    throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
+                }
+
+                propertyInfo.SetValue(reactComponent, null);
+
+                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventKey(reactComponent, propertyInfo.Name), @delegate.Method.Name, target.ComponentUniqueIdentifier.GetValueOrDefault());
+            }
+            else
+            {
+                throw DeveloperException("Action handler method should belong to React component");
+            }
+        }
+    }
+    
     public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
     {
         var node = ConvertToNode(element, context);
@@ -237,12 +303,7 @@ partial class ElementSerializer
                             continue;
                         }
 
-                        propertyAccessors.Add(new PropertyAccessInfo
-                        {
-                            GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
-                            PropertyInfo = propertyInfo,
-                            DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
-                        });
+                        propertyAccessors.Add(propertyInfo.ToFastAccess());
                     }
 
                     DotNetPropertiesOfType.TryAdd(dotNetTypeOfReactComponent, propertyAccessors);
@@ -458,6 +519,15 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
+    static PropertyAccessInfo ToFastAccess(this PropertyInfo propertyInfo)
+    {
+        return new PropertyAccessInfo
+        {
+            GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
+            PropertyInfo = propertyInfo,
+            DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
+        };
+    }
     static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
         var elementType = element.GetType();
@@ -468,12 +538,7 @@ partial class ElementSerializer
 
             foreach (var propertyInfo in elementType.GetProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
             {
-                reactProperties.Add(new PropertyAccessInfo
-                {
-                    GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
-                    PropertyInfo = propertyInfo,
-                    DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
-                });
+                reactProperties.Add(propertyInfo.ToFastAccess());
             }
 
             ReactAttributedPropertiesOfType.TryAdd(elementType, reactProperties);
