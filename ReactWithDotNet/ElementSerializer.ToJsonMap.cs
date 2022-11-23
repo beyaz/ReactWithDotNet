@@ -7,71 +7,11 @@ namespace ReactWithDotNet;
 
 partial class ElementSerializer
 {
+    static readonly Dictionary<Type, List<PropertyAccessInfo>> CustomEventPropertiesOfType = new();
     static readonly Dictionary<Type, List<PropertyAccessInfo>> DotNetPropertiesOfType = new();
 
     static readonly Dictionary<Type, List<PropertyAccessInfo>> ReactAttributedPropertiesOfType = new();
 
-
-    static readonly Dictionary<Type, List<PropertyAccessInfo>> CustomEventPropertiesOfType = new();
-    
-    static void ConvertReactEventsToTaskForEventBus(this ReactStatefulComponent reactComponent)
-    {
-        var type = reactComponent.GetType();
-        
-        if (!CustomEventPropertiesOfType.TryGetValue(type, out var reactCustomEventProperties))
-        {
-            reactCustomEventProperties = new List<PropertyAccessInfo>();
-            
-            foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
-            {
-                var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
-                var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
-
-                if (isAction || isGenericAction)
-                {
-                    reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
-                    continue;
-                }
-
-                throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
-            }
-
-            CustomEventPropertiesOfType.TryAdd(type, reactCustomEventProperties);
-        } 
-        
-        foreach (var fastPropertyInfo in reactCustomEventProperties)
-        {
-            convertToTask(fastPropertyInfo);
-        }
-
-        void convertToTask(PropertyAccessInfo fastPropertyInfo)
-        {
-            var @delegate = (Delegate)fastPropertyInfo.GetValueFunc(reactComponent);
-            if (@delegate is null)
-            {
-                return;
-            }
-
-            if (@delegate.Target is ReactStatefulComponent target)
-            {
-                if (target.ComponentUniqueIdentifier is null)
-                {
-                    throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
-                }
-
-                var propertyInfo = fastPropertyInfo.PropertyInfo;
-                
-                propertyInfo.SetValue(reactComponent, null);
-
-                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventKey(reactComponent, propertyInfo.Name), @delegate.Method.Name, target.ComponentUniqueIdentifier.GetValueOrDefault());
-            }
-            else
-            {
-                throw DeveloperException("Action handler method should belong to React component");
-            }
-        }
-    }
-    
     public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
     {
         var node = ConvertToNode(element, context);
@@ -514,19 +454,10 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
-    static PropertyAccessInfo ToFastAccess(this PropertyInfo propertyInfo)
-    {
-        return new PropertyAccessInfo
-        {
-            GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
-            PropertyInfo = propertyInfo,
-            DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
-        };
-    }
     static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
         var elementType = element.GetType();
-        
+
         if (!ReactAttributedPropertiesOfType.TryGetValue(elementType, out var reactProperties))
         {
             reactProperties = new List<PropertyAccessInfo>();
@@ -542,7 +473,7 @@ partial class ElementSerializer
         foreach (var item in reactProperties)
         {
             var propertyInfo = item.PropertyInfo;
-            
+
             var (propertyValue, noNeedToExport) = getPropertyValue(element, item, context);
             if (noNeedToExport)
             {
@@ -582,6 +513,64 @@ partial class ElementSerializer
         node.ElementAsJsonMap = map;
 
         node.IsCompleted = true;
+    }
+
+    static void ConvertReactEventsToTaskForEventBus(this ReactStatefulComponent reactComponent)
+    {
+        var type = reactComponent.GetType();
+
+        if (!CustomEventPropertiesOfType.TryGetValue(type, out var reactCustomEventProperties))
+        {
+            reactCustomEventProperties = new List<PropertyAccessInfo>();
+
+            foreach (var propertyInfo in reactComponent.GetType().GetProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
+            {
+                var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
+                var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
+
+                if (isAction || isGenericAction)
+                {
+                    reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
+                    continue;
+                }
+
+                throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
+            }
+
+            CustomEventPropertiesOfType.TryAdd(type, reactCustomEventProperties);
+        }
+
+        foreach (var fastPropertyInfo in reactCustomEventProperties)
+        {
+            convertToTask(fastPropertyInfo);
+        }
+
+        void convertToTask(PropertyAccessInfo fastPropertyInfo)
+        {
+            var @delegate = (Delegate)fastPropertyInfo.GetValueFunc(reactComponent);
+            if (@delegate is null)
+            {
+                return;
+            }
+
+            if (@delegate.Target is ReactStatefulComponent target)
+            {
+                if (target.ComponentUniqueIdentifier is null)
+                {
+                    throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
+                }
+
+                var propertyInfo = fastPropertyInfo.PropertyInfo;
+
+                propertyInfo.SetValue(reactComponent, null);
+
+                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventKey(reactComponent, propertyInfo.Name), @delegate.Method.Name, target.ComponentUniqueIdentifier.GetValueOrDefault());
+            }
+            else
+            {
+                throw DeveloperException("Action handler method should belong to React component");
+            }
+        }
     }
 
     static Node ConvertToNode(Element element, ElementSerializerContext elementSerializerContext)
@@ -751,6 +740,16 @@ partial class ElementSerializer
 
             child = childNode;
         }
+    }
+
+    static PropertyAccessInfo ToFastAccess(this PropertyInfo propertyInfo)
+    {
+        return new PropertyAccessInfo
+        {
+            GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
+            PropertyInfo = propertyInfo,
+            DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
+        };
     }
 
     class Node
