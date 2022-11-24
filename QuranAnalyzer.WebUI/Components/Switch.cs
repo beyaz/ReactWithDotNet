@@ -5,14 +5,15 @@ class SwitchWithLabel: ReactComponent
     public string label;
     public bool value;
     public Action<bool> valueChange;
-    
+    public bool IsDisabled;
+
     protected override Element render()
     {
         return new FlexRow(AlignItemsCenter, Gap(5))
         {
             new Switch
             {
-                IsChecked = value, ValueChange = valueChange
+                IsChecked = value, ValueChange = valueChange, IsDisabled = IsDisabled
             },
             label
         };
@@ -21,7 +22,8 @@ class SwitchWithLabel: ReactComponent
 public class Switch : ReactComponent
 {
     public bool IsChecked { get; set; }
-    
+    public bool IsDisabled { get; set; }
+
     [ReactCustomEvent]
     public Action<bool> ValueChange { get; set; }
     
@@ -71,7 +73,7 @@ public class Switch : ReactComponent
 
         return new div(style)
         {
-            OnClick(OnClickHandler)
+            When(!IsDisabled,OnClick(OnClickHandler))
         };
     }
 

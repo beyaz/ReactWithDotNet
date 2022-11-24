@@ -69,7 +69,7 @@ En bilindik mushaflara örnek vercek olur isek Medine mushafı ve Osman mushafı
                 {
                     new SwitchWithLabel
                     {
-                        label = "Elif sayımları için Tanzil.net'i referans al"
+                        label = "Elif sayımları için Tanzil.net'i referans al", IsDisabled = true
                     },
                     
                     "Bu seçeneği seçerseniz Tanzil.netdeki Elif sayımlarını referans alır. Seçmez iseniz Reşad Halife'nin Elif sayımlarını referans alır."
