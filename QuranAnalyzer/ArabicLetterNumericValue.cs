@@ -1,7 +1,12 @@
 ﻿namespace QuranAnalyzer;
 
-class ArabicLetterNumericValue
+public static class ArabicLetterNumericValue
 {
+    public static int GetNumericalValue(int arabicLetterIndex)
+    {
+        return NumericValueMap[arabicLetterIndex];
+    }
+
     // @formatter:off
     public const int Alif = 1;
     public const int Baa = 2;
@@ -31,5 +36,37 @@ class ArabicLetterNumericValue
     public const int Haa_ = 5;
     public const int Waaw = 6;
     public const int Yaa = 10;
+
+    static readonly int[] NumericValueMap =
+    {
+        Alif,
+        Baa,
+        Taa,
+        Thaa,
+        Jiim,
+        Haa,
+        Khaa,
+        Daal,
+        Dhaal,
+        Raa,
+        Zay,
+        Siin,
+        Shiin,
+        Saad,
+        Daad,
+        Taa_,
+        Zaa,
+        Ayn,
+        Ghayn,
+        Faa,
+        Qaaf,
+        Kaaf,
+        Laam,
+        Miim,
+        Nun,
+        Haa_,
+        Waaw,
+        Yaa
+    };
     // @formatter:on
 }

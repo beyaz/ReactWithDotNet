@@ -1,16 +1,51 @@
-﻿using static QuranAnalyzer.QuranAnalyzerMixin;
+﻿using ReactWithDotNet;
+using static QuranAnalyzer.QuranAnalyzerMixin;
 using static QuranAnalyzer.ArabicLetterIndex;
 using static QuranAnalyzer.VerseFilter;
 
 namespace QuranAnalyzer;
 
 [TestClass]
-[Ignore]
+// [Ignore]
 public class CharacterCountingTests
 {
+
+
+    [TestMethod]
+    public void SearchVerseNumbersThatContainsAllInitialLetters()
+    {
+        var allInitialLetters = new[] { Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun };
+
+        allInitialLetters.Select(ArabicLetterNumericValue.GetNumericalValue).Sum().Should().Be(693);
+        
+        var option = new MushafOption {  };
+        
+        GetVerseList("*").Then(verses => verses.Where(isContainsAllInitialLetters).ToList()).Value.Count.Should().Be(114);
+
+       
+        
+        bool isContainsAllInitialLetters(Verse verse)
+        {
+          
+            
+            foreach (var initialLetterIndex in allInitialLetters)
+            {
+                if (GetCountOfLetterInVerse(verse, initialLetterIndex, option) <= 0)
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+    }
+
+
+
+
     #region Public Methods
-    
-    
+
+
     [TestMethod]
     public void AnalyzeVerseTest()
     {
