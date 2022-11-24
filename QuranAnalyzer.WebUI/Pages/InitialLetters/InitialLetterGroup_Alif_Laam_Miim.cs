@@ -12,6 +12,8 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
 
     protected override Element render()
     {
+        var resultContainerCss = JustifyContentCenter | mt(65);
+        
         return new div
         {
 
@@ -41,7 +43,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -71,7 +73,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -102,7 +104,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -133,7 +135,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -164,7 +166,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -195,7 +197,7 @@ class InitialLetterGroup_Alif_Laam_Miim : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {

@@ -35,8 +35,8 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
         ("Elif Lam Mim Ra", typeof(InitialLetterGroup_Alif_Laam_Miim_Ra)),
 
         ("Saad", typeof(InitialLetterGroup_Saad)),
-        ("Ha Mim", typeof(InitialLetterGroup_HaMim)),
-        ("Ha Mim", typeof(InitialLetterGroup_HaMimSeparated)),
+        ("Ha Mim 1", typeof(InitialLetterGroup_HaMim)),
+        ("Ha Mim 2", typeof(InitialLetterGroup_HaMimSeparated)),
         ("Ta Sin Mim", typeof(InitialLetterGroup_TaSinMim)),
 
         ("Nun", typeof(InitialLetterGroup_NunWawNun)),
@@ -48,7 +48,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             CreateTabContent()
         };
 
-        var headers = new FlexColumn(TextAlignCenter, CursorPointer)
+        var headers = new FlexColumn(TextAlignCenter, CursorPointer, JustifyContentSpaceAround)
         {
             Children(Tabs.Select(x => CreateTabHeader(x.TabHeader, x.contenType.FullName)))
         };
