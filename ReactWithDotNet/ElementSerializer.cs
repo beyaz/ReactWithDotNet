@@ -339,9 +339,11 @@ static partial class ElementSerializer
 
         if (pseudos.Count > 0)
         {
+            var cmp = context.componentStack.Peek();
+            
             var cssClassName = context.DynamicStyles.GetClassName(new CssClassInfo
             {
-                Name    = context.componentStack.Peek().GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
+                Name    = "_"+cmp.ComponentUniqueIdentifier + "_" + cmp.GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
                 Pseudos = pseudos
             });
 

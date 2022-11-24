@@ -6,14 +6,6 @@ class DynamicStyleContentForEmbeddInClient
 
     public string GetClassName(CssClassInfo cssClassInfo)
     {
-        foreach (var item in listOfClasses)
-        {
-            if (item.Pseudos.SequenceEqual(cssClassInfo.Pseudos))
-            {
-                return item.Name;
-            }
-        }
-
         // change name until is unique
         { 
             var suffix = 0;

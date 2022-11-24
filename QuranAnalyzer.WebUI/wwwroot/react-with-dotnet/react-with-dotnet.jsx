@@ -1189,7 +1189,17 @@ function DefineComponent(componentDeclaration)
             for (var i = 0; i < length; i++)
             {
                 this[ON_COMPONENT_DESTROY][i]();
-            }            
+            }
+
+            // remove related dynamic styles
+            for (let i = 0; i < DynamicStyles.length; i++)
+            {
+                if (this.$DotNetComponentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
+                {
+                    DynamicStyles.splice(i, 1);
+                    i--;
+                }
+            }
 
             COMPONENT_CACHE.Unregister(this);
 
@@ -1679,7 +1689,13 @@ function ProcessDynamicCssClasses(dynamicStyles)
             {
                 hasChange = true;
 
-                DynamicStyles.push({cssSelector: cssSelector, cssBody: cssBody});
+                const componentUniqueIdentifier = parseInt(cssSelector.split('-')[0].substr(2));
+                if (isNaN(componentUniqueIdentifier))
+                {
+                    throw CreateNewDeveloperError('componentUniqueIdentifier cannot calculated from ' + cssSelector);
+                }
+
+                DynamicStyles.push({cssSelector: cssSelector, cssBody: cssBody, componentUniqueIdentifier: componentUniqueIdentifier});
             }           
         }
     }
