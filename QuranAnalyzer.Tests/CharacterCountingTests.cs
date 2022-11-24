@@ -1,12 +1,11 @@
-﻿using ReactWithDotNet;
-using static QuranAnalyzer.QuranAnalyzerMixin;
+﻿using static QuranAnalyzer.QuranAnalyzerMixin;
 using static QuranAnalyzer.ArabicLetterIndex;
 using static QuranAnalyzer.VerseFilter;
 
 namespace QuranAnalyzer;
 
 [TestClass]
-// [Ignore]
+[Ignore]
 public class CharacterCountingTests
 {
 
@@ -18,12 +17,38 @@ public class CharacterCountingTests
 
         allInitialLetters.Select(ArabicLetterNumericValue.GetNumericalValue).Sum().Should().Be(693);
         
-        var option = new MushafOption {  };
-        
-        GetVerseList("*").Then(verses => verses.Where(isContainsAllInitialLetters).ToList()).Value.Count.Should().Be(114);
+        var option = new MushafOption ();
 
-       
+        var verseList = GetVerseList("*").Then(verses => verses.Where(isContainsAllInitialLetters).ToList()).Value;
+
+        verseList.Count.Should().Be(114);
+
+
+        var numbers = new List<int>();
         
+        var currentChapter = -1;
+        
+        foreach (var verse in verseList)
+        {
+            if (currentChapter == verse.ChapterNumber)
+            {
+                numbers.Add(int.Parse(verse.Index));
+                continue;
+            }
+
+            currentChapter = verse.ChapterNumber;
+
+            numbers.Add(verse.ChapterNumber);
+
+            numbers.Add(int.Parse(verse.Index));
+        }
+
+        var str   = string.Join(" + ", numbers);
+        
+        var total = numbers.Sum();
+
+        total.Should().Be(9702);
+
         bool isContainsAllInitialLetters(Verse verse)
         {
           
