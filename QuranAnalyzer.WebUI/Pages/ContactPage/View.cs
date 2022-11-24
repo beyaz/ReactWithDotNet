@@ -1,12 +1,13 @@
-﻿using System;
-using ReactWithDotNet;
-using ReactWithDotNet.PrimeReact;
+﻿using QuranAnalyzer.WebUI.Components;
 
 namespace QuranAnalyzer.WebUI.Pages.ContactPage;
 
 
 public class View : ReactComponent
 {
+    public bool IsChecked1 { get; set; }
+    public bool IsChecked2 { get; set; }
+    
     protected override Element render()
     {
         return new div
@@ -35,11 +36,26 @@ public class View : ReactComponent
                 style={marginTop = "22px"},
                children=
                {
-                   new InputText(),
-                   new InputTextarea{ rows = 6},
-                   new Button{ label       = "Gönder"}
+                   new Switch
+                   {
+                       IsChecked = IsChecked1, ValueChange = ValueChange1
+                   },
+                   new Switch
+                   {
+                       IsChecked = IsChecked2, ValueChange = ValueChange2
+                   },
                }
             } 
         };
+    }
+
+    void ValueChange1(bool obj)
+    {
+        IsChecked1 = obj;
+    }
+
+    void ValueChange2(bool obj)
+    {
+        IsChecked2 = obj;
     }
 }
