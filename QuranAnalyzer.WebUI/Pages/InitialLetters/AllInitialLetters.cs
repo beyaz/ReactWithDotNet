@@ -84,7 +84,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             style =
             {
                 Color("rgba(0, 0, 0, 0.6)"),
-                Padding(10),
+                Padding(12),
                 BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}"),
                 When(isSelected, Background("#deecf9"), Color(BluePrimary))
             },

@@ -248,7 +248,7 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                    
-                                        new InitialLetter { Id = Id(38,Saad), Letter = Saad, IsSelected = true }
+                                        new InitialLetter { Id = Id(38,Saad), Letter = Saad, IsSelected = true } | ml(100)
                                     
                                 }
                             }

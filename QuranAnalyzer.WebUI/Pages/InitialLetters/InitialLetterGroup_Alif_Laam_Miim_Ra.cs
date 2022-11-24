@@ -42,7 +42,7 @@ class InitialLetterGroup_Alif_Laam_Miim_Ra : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(JustifyContentCenter,mt(65))
                                 {
                                     new CountingResult
                                     {

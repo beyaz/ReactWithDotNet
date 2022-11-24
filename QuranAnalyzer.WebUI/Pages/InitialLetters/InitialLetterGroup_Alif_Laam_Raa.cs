@@ -1,5 +1,4 @@
-﻿using static QuranAnalyzer.WebUI.Extensions;
-using static QuranAnalyzer.ArabicLetter;
+﻿using static QuranAnalyzer.ArabicLetter;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
@@ -12,6 +11,8 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
 
     protected override Element render()
     {
+        var resultContainerCss = JustifyContentCenter | mt(65);
+        
         return new div
         {
 
@@ -41,7 +42,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -72,7 +73,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -103,7 +104,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -134,7 +135,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {
@@ -165,7 +166,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
                             },
                             new td
                             {
-                                new FlexRow(JustifyContentCenter,mt(50))
+                                new FlexRow(resultContainerCss)
                                 {
                                     new CountingResult
                                     {

@@ -1,5 +1,4 @@
-﻿using static QuranAnalyzer.WebUI.Extensions;
-using static QuranAnalyzer.ArabicLetter;
+﻿using static QuranAnalyzer.ArabicLetter;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
@@ -9,7 +8,7 @@ class Note : ReactComponent
     
     protected override Element render()
     {
-        return new FlexRow(PaddingLeftRight("10%"), PaddingTop(50))
+        return new FlexRow(PaddingLeftRight("5%"), PaddingTop(50))
         {
             new strong{Text("Not:"), MarginRight(5)}, new div{ Children(children) }
         };
