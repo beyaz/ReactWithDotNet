@@ -84,6 +84,12 @@ public abstract class ThirdPartyReactComponent : Element
             return;
         }
 
+        if (modifier is ElementModifier elementModifier)
+        {
+            elementModifier.Modify(this);
+            return;
+        }
+
         throw new InvalidOperationException("Expected only StyleModifier but found HtmlModifier");
     }
 }

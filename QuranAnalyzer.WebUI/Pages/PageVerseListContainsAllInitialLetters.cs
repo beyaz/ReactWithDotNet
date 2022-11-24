@@ -29,22 +29,22 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                 "Peki bu 14 başlangıç harfinin hepsini birden içeren ayetlerde bir ilginçlik olabilir mi?",
                 new br(),
                 new br(),
-                "Aşağıdaki ufak program yardımı ile bu bilgiyi inceleyelim.",
+                "Aşağıdaki program yardımı ile bu bilgiyi inceleyelim.",
                 "Not: Komut satırlarında değişiklik yaparak farklı aramalar yapabilirsiniz.",
                 Space(10),
-                new FlexColumn(ComponentBorder)
+                new FlexColumn(ComponentBorder, Gap(5))
                 {
-                    new FlexRow
+                    new FlexRow(AlignItemsCenter)
                     {
-                        "Ayetleri Seç:", new input{type = "text", style = { Width(200) }, valueBind = ()=>state.VerseFilterScript }, (small)"* demek tüm Kuran boyunca arama yapılacağı anlamına gelir"
+                        "Ayetleri Seç:", new input{type = "text", style = { Width(50),mr(5), ml(5) }, valueBind = ()=>state.VerseFilterScript }, (small)" (* demek tüm Kuran boyunca arama yapılacağı anlamına gelir)"
                     },
 
                     new FlexRow
                     {
-                        "Aranacak Harfler:", new input{type = "text", style = { Width(200) }, valueBind = ()=>state.Letters }
+                        "Aranacak Harfler:", new input{type = "text", style = { Width(200) ,mr(5), ml(5)}, valueBind = ()=>state.Letters }
                     },
                     
-                    new FlexRow(AlignItemsFlexEnd)
+                    new FlexRow(JustifyContentFlexEnd, mr(20), mb(20))
                     {
                         new ActionButton{Label = "Ara"}
                     }
@@ -59,7 +59,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                         {
                             Height(250) , ComponentBorder , Margin(10) ,
                             
-                          Children(Enumerable.Range(1,114).Select(i=>new Fragment
+                          Children(Enumerable.Range(1,114).Select(i=>new div
                           {
                               i.ToString(),
                               new br()

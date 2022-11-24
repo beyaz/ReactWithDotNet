@@ -3,7 +3,7 @@
 public interface IModifier
 {
     internal void Modify(Style style);
-    internal void Modify(HtmlElement htmlElement);
+    internal void Modify(Element htmlElement);
 }
 
 public sealed class StyleModifier : IModifier
@@ -15,14 +15,26 @@ public sealed class StyleModifier : IModifier
         this.modifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
     }
 
-    void IModifier.Modify(HtmlElement instance)
+    void IModifier.Modify(Element instance)
     {
         if (instance == null)
         {
             throw new ArgumentNullException(nameof(instance));
         }
 
-        modifyStyle(instance.style);
+        if (instance is HtmlElement htmlElement)
+        {
+            modifyStyle(htmlElement.style);
+            return;
+        }
+
+        if (instance is ThirdPartyReactComponent thirdPartyReactComponent)
+        {
+            modifyStyle(thirdPartyReactComponent.style);
+            return;
+        }
+
+        throw new ArgumentException($"Style modifier cannot operate on {instance.GetType().FullName}");
     }
 
     void IModifier.Modify(Style style)
@@ -52,21 +64,21 @@ public sealed class StyleModifier : IModifier
     }
 }
 
-public sealed class HtmlElementModifier : IModifier
+public sealed class ElementModifier : IModifier
 {
-    readonly Action<HtmlElement> modifyHtmlElement;
+    readonly Action<Element> modifyHtmlElement;
 
-    public HtmlElementModifier(Action<HtmlElement> modifyHtmlElement)
+    public ElementModifier(Action<Element> modifyHtmlElement)
     {
         this.modifyHtmlElement = modifyHtmlElement ?? throw new ArgumentNullException(nameof(modifyHtmlElement));
     }
 
-    void IModifier.Modify(HtmlElement htmlElement)
+    void IModifier.Modify(Element htmlElement)
     {
         Modify(htmlElement);
     }
 
-    internal void Modify(HtmlElement htmlElement)
+    internal void Modify(Element htmlElement)
     {
         if (htmlElement == null)
         {
@@ -81,19 +93,14 @@ public sealed class HtmlElementModifier : IModifier
         throw new InvalidOperationException("HtmlElementModifier cannot be use for style");
     }
 
-    //public static implicit operator HtmlElementModifier(string text)
-    //{
-    //    return Mixin.Text(text);
-    //}
-
-    public static HtmlElementModifier operator |(HtmlElementModifier a, HtmlElementModifier b)
+    public static ElementModifier operator |(ElementModifier a, ElementModifier b)
     {
-        void modify(HtmlElement htmlElement)
+        void modify(Element htmlElement)
         {
             ((IModifier)a).Modify(htmlElement);
             ((IModifier)b).Modify(htmlElement);
         }
 
-        return new HtmlElementModifier(modify);
+        return new ElementModifier(modify);
     }
 }

@@ -286,7 +286,7 @@ public static partial class Mixin
         return element;
     }
 
-    public static void Apply(this HtmlElement htmlElement, params IModifier[] modifiers)
+    public static void Apply(this Element htmlElement, params IModifier[] modifiers)
     {
         if (modifiers is null)
         {
@@ -302,7 +302,7 @@ public static partial class Mixin
 
             if (modify is StyleModifier styleModifier)
             {
-                styleModifier.Modify(htmlElement.style);
+                ((IModifier)styleModifier).Modify(htmlElement);
                 continue;
             }
 
@@ -328,7 +328,7 @@ public static partial class Mixin
         }
     }
 
-    public static void Apply(this HtmlElement htmlElement, params HtmlElementModifier[] modifiers)
+    public static void Apply(this HtmlElement htmlElement, params ElementModifier[] modifiers)
     {
         if (modifiers is null)
         {
@@ -374,7 +374,7 @@ public static partial class Mixin
     /// <summary>
     ///     Adds elements to children
     /// </summary>
-    public static HtmlElementModifier Children(IEnumerable<Element> children)
+    public static ElementModifier Children(IEnumerable<Element> children)
     {
         if (children is null)
         {
@@ -383,7 +383,7 @@ public static partial class Mixin
 
         var array = children.ToArray();
 
-        void modifyHtmlElement(HtmlElement element)
+        void modifyHtmlElement(Element element)
         {
             element.children.Clear();
             element.children.AddRange(array);
@@ -392,7 +392,7 @@ public static partial class Mixin
         return new(modifyHtmlElement);
     }
 
-    public static HtmlElementModifier Children(params Element[] children)
+    public static ElementModifier Children(params Element[] children)
     {
         if (children is null)
         {
@@ -401,7 +401,7 @@ public static partial class Mixin
 
         var array = children.ToArray();
 
-        void modifyHtmlElement(HtmlElement element)
+        void modifyHtmlElement(Element element)
         {
             element.children.Clear();
             element.children.AddRange(array);
@@ -410,7 +410,7 @@ public static partial class Mixin
         return new(modifyHtmlElement);
     }
 
-    public static HtmlElementModifier ClassName(string className) => new(element => element.className = className);
+    public static ElementModifier ClassName(string className) => new(element => ((HtmlElement)element).className = className);
 
     public static StyleModifier Color(string color) => new(style => style.color = color);
 
@@ -485,22 +485,22 @@ public static partial class Mixin
     /// <summary>
     ///     a.href = <paramref name="href" />
     /// </summary>
-    public static HtmlElementModifier Href(string href) => new(element => ((a)element).href = href);
+    public static ElementModifier Href(string href) => new(element => ((a)element).href = href);
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier Id(string id) => new(element => element.id = id);
+    public static ElementModifier Id(string id) => new(element => ((HtmlElement)element).id = id);
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier Id(int id) => new(element => element.id = id.ToString());
+    public static ElementModifier Id(int id) => new(element => ((HtmlElement)element).id = id.ToString());
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier Id(long id) => new(element => element.id = id.ToString());
+    public static ElementModifier Id(long id) => new(element => ((HtmlElement)element).id = id.ToString());
 
     public static StyleModifier Left(double left) => Left(left.AsPixel());
     public static StyleModifier Left(string left) => new(style => style.left = left);
@@ -563,7 +563,7 @@ public static partial class Mixin
         return JsonSerializationOptionHelper.Modify(options);
     }
 
-    public static HtmlElementModifier OnClick(Action<MouseEvent> onClickHandler) => new(element => element.onClick = onClickHandler);
+    public static ElementModifier OnClick(Action<MouseEvent> onClickHandler) => new(element => ((HtmlElement)element).onClick = onClickHandler);
 
     /// <summary>
     ///     style.opacity = <paramref name="opacity" />
@@ -615,9 +615,9 @@ public static partial class Mixin
     /// <summary>
     ///     img.src = <paramref name="src" />
     /// </summary>
-    public static HtmlElementModifier Src(string src) => new(element => ((img)element).src = src);
+    public static ElementModifier Src(string src) => new(element => ((img)element).src = src);
 
-    public static HtmlElementModifier Text(string innerText) => new(element => element.text = innerText);
+    public static ElementModifier Text(string innerText) => new(element => ((HtmlElement)element).text = innerText);
 
 
     public static StyleModifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
@@ -681,16 +681,16 @@ public static partial class Mixin
         }
     }
 
-    public static HtmlElementModifier When(bool condition, params HtmlElementModifier[] modifiers)
+    public static ElementModifier When(bool condition, params IModifier[] modifiers)
     {
         if (!condition)
         {
             return null;
         }
 
-        return new HtmlElementModifier(apply);
+        return new ElementModifier(apply);
 
-        void apply(HtmlElement instance)
+        void apply(Element instance)
         {
             instance.Apply(modifiers);
         }
@@ -949,5 +949,5 @@ public static partial class Mixin
 
 
 
-    public static HtmlElementModifier RowSpan(int? rowSpan) => new(element => ((td)element).rowSpan = rowSpan);
+    public static ElementModifier RowSpan(int? rowSpan) => new(element => ((td)element).rowSpan = rowSpan);
 }

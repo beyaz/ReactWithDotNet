@@ -183,14 +183,14 @@ public abstract class HtmlElement : Element
         return element;
     }
     
-    public static HtmlElement operator +(HtmlElement element, HtmlElementModifier modifier)
+    public static HtmlElement operator +(HtmlElement element, ElementModifier modifier)
     {
         element.ProcessModifier(modifier);
 
         return element;
     }
 
-    public static HtmlElement operator |(HtmlElement element, HtmlElementModifier modifier)
+    public static HtmlElement operator |(HtmlElement element, ElementModifier modifier)
     {
         element.ProcessModifier(modifier);
 
