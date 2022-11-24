@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 [Serializable]
 public sealed partial class Style
