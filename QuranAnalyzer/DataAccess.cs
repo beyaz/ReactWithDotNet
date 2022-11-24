@@ -31,6 +31,7 @@ public static class DataAccess
             return new Verse
             {
                 Index             = v._index,
+                IndexAsNumber     = int.Parse(v._index),
                 Bismillah         = v._bismillah,
                 Text              = v._text,
                 ChapterNumber     = int.Parse(chapter._index),
@@ -77,6 +78,7 @@ public sealed class Verse
 
     public string Id { get; init; }
     public string Index { get; init; }
+    public int IndexAsNumber { get; init; }
     public string Text { get; init; }
     public string TextWithBismillah { get; init; }
 
