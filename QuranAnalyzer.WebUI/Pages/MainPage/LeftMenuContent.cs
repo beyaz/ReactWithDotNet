@@ -1,7 +1,4 @@
-﻿using ReactWithDotNet;
-using static QuranAnalyzer.WebUI.Extensions;
-
-namespace QuranAnalyzer.WebUI.Pages.MainPage;
+﻿namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
 class LeftMenuContent: ReactComponent
 {
