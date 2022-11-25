@@ -4,8 +4,6 @@ namespace QuranAnalyzer.WebUI;
 
 sealed class HtmlContentGenerator
 {
-    public string[] Stylesheets { get; set; }
-
     public Type TargetReactComponent { get; set; }
 
     public string GetHtmlContent()
@@ -32,9 +30,6 @@ sealed class HtmlContentGenerator
             "    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap'>",
 
             $"    <link rel='stylesheet' href='{root}/index.css'>",
-
-            Stylesheets,
-
             "</head>",
 
             "<body>",

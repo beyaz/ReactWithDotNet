@@ -165,6 +165,10 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
         return  new FlexRow(WidthHeight("100%"))
         {
+            new link{rel = "stylesheet",href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css"},
+            new link{rel = "stylesheet",href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css"},
+            new link{rel = "stylesheet",href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css"},
+
             new div(BorderRight("1px dotted #d9d9d9"), Width(width))
             {
                 propertyPanel
