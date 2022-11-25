@@ -187,6 +187,17 @@ partial class ElementSerializer
                 {
                     node.DotNetComponentRenderMethodInvoked = true;
 
+                    if (reactStatefulComponent.modifiers is not null)
+                    {
+                        foreach (var modifier in reactStatefulComponent.modifiers)
+                        {
+                            if (modifier is ComponentModifier componentModifier)
+                            {
+                                componentModifier.Modify(node.ElementAsDotNetReactComponent);
+                            }
+                        }
+                    }
+                    
                     node.DotNetComponentRootElement = reactStatefulComponent.InvokeRender();
 
                     if (node.DotNetComponentRootElement is not null)
@@ -197,6 +208,10 @@ partial class ElementSerializer
                         {
                             foreach (var modifier in reactStatefulComponent.modifiers)
                             {
+                                if (modifier is ComponentModifier)
+                                {
+                                    continue;
+                                }
                                 node.DotNetComponentRootElement.ProcessModifier(modifier);
                             }
                         }
