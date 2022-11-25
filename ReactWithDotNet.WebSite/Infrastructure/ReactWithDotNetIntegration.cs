@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using ReactWithDotNet.UIDesigner;
+using ReactWithDotNet.WebSite;
 
 namespace QuranAnalyzer.WebUI;
 
@@ -11,9 +12,9 @@ static class ReactWithDotNetIntegration
     public static void ConfigureReactWithDotNet(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/", HomePage);
-        endpoints.MapPost($"/{nameof(HandleReactWithDotNetRequest)}", HandleReactWithDotNetRequest);
-        endpoints.MapGet($"/{nameof(ReactWithDotNetDesigner)}", ReactWithDotNetDesigner);
-        endpoints.MapGet($"/{nameof(ReactWithDotNetDesignerComponentPreview)}", ReactWithDotNetDesignerComponentPreview);
+        endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), ReactWithDotNetDesigner);
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), ReactWithDotNetDesignerComponentPreview);
     }
 
     static async Task HandleReactWithDotNetRequest(HttpContext context)
@@ -29,7 +30,7 @@ static class ReactWithDotNetIntegration
     {
         await context.WriteHtmlResponse(new HtmlContentGenerator
         {
-            TargetReactComponent = typeof(ReactWithDotNet.WebSite.MainWindow)
+            TargetReactComponent = typeof(MainWindow)
         });
     }
 
