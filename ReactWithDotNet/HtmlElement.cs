@@ -170,7 +170,10 @@ public abstract class HtmlElement : Element
 
     protected internal sealed override void ProcessModifier(IModifier modifier)
     {
-        this.Apply(modifier);
+        if (modifier is not null)
+        {
+            modifier.Modify(this);
+        }
     }
 
 

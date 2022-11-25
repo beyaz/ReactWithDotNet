@@ -42,19 +42,24 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                         {
                             new FlexRow(AlignItemsCenter)
                             {
-                                "Ayetleri Seç:", 
+                                (strong)"Ayetleri Seç:", 
                                 
                                 new TextInput
                                 {
-                                    Width(50), mr(5), ml(5),
-                                    TextInput.Bind(()=>state.VerseFilterScript)
-                                }, 
+                                    TextInput.Bind(()=>state.VerseFilterScript),
+                                    Width(100), mr(5), ml(5)
+                                },
                                 (small)" (* demek tüm Kuran boyunca arama yapılacağı anlamına gelir)"
                             },
 
                             new FlexRow
                             {
-                                "Aranacak Harfler:", new input{type = "text", style = { Width(200) ,mr(5), ml(5)}, valueBind = ()=>state.Letters }
+                                "Aranacak Harfler:",
+                                new TextInput
+                                {
+                                    TextInput.Bind(()=>state.Letters),
+                                    Width(250), mr(5), ml(5)
+                                },
                             },
 
                             new FlexRow(JustifyContentFlexEnd, mr(20), mb(20))

@@ -35,6 +35,7 @@ public class TextInput: ReactComponent
             {
                 ComponentBorder,
                 BorderRadius(5),
+                Padding(5),
                 Focus(Border($"1px solid {BluePrimary}"))
             }
         };

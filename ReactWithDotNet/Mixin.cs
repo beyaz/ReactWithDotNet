@@ -300,12 +300,6 @@ public static partial class Mixin
                 continue;
             }
 
-            if (modify is StyleModifier styleModifier)
-            {
-                ((IModifier)styleModifier).Modify(element);
-                continue;
-            }
-
             modify.Modify(element);
         }
     }
@@ -325,24 +319,6 @@ public static partial class Mixin
             }
 
             modify.Modify(style);
-        }
-    }
-
-    public static void Apply(this HtmlElement htmlElement, params ElementModifier[] modifiers)
-    {
-        if (modifiers is null)
-        {
-            return;
-        }
-
-        foreach (var modify in modifiers)
-        {
-            if (modify is null)
-            {
-                continue;
-            }
-
-            modify.Modify(htmlElement);
         }
     }
 

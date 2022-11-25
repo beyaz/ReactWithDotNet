@@ -2,8 +2,7 @@
 
 public interface IModifier
 {
-    internal void Modify(Style style);
-    internal void Modify(Element element);
+    internal void Modify(object instance);
 }
 
 public sealed class StyleModifier : IModifier
@@ -13,43 +12,6 @@ public sealed class StyleModifier : IModifier
     public StyleModifier(Action<Style> modifyStyle)
     {
         this.modifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
-    }
-
-    void IModifier.Modify(Element element)
-    {
-        if (element == null)
-        {
-            throw new ArgumentNullException(nameof(element));
-        }
-
-        if (element is HtmlElement htmlElement)
-        {
-            modifyStyle(htmlElement.style);
-            return;
-        }
-
-        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
-        {
-            modifyStyle(thirdPartyReactComponent.style);
-            return;
-        }
-
-        throw new ArgumentException($"Style modifier cannot operate on {element.GetType().FullName}");
-    }
-
-    void IModifier.Modify(Style style)
-    {
-        Modify(style);
-    }
-
-    internal void Modify(Style style)
-    {
-        if (style == null)
-        {
-            throw new ArgumentNullException(nameof(style));
-        }
-
-        modifyStyle(style);
     }
 
     public static StyleModifier operator |(StyleModifier a, StyleModifier b)
@@ -62,6 +24,44 @@ public sealed class StyleModifier : IModifier
 
         return new StyleModifier(modify);
     }
+
+    void IModifier.Modify(object instance)
+    {
+        if (instance == null)
+        {
+            throw new ArgumentNullException(nameof(instance));
+        }
+
+        if (instance is Style style)
+        {
+            modifyStyle(style);
+            return;
+        }
+
+        if (instance is HtmlElement htmlElement)
+        {
+            modifyStyle(htmlElement.style);
+            return;
+        }
+
+        if (instance is ThirdPartyReactComponent thirdPartyReactComponent)
+        {
+            modifyStyle(thirdPartyReactComponent.style);
+            return;
+        }
+
+        throw new ArgumentException($"Style modifier cannot operate on {instance.GetType().FullName}");
+    }
+
+    internal void Modify(Style style)
+    {
+        if (style == null)
+        {
+            throw new ArgumentNullException(nameof(style));
+        }
+
+        modifyStyle(style);
+    }
 }
 
 public sealed class ElementModifier : IModifier
@@ -71,26 +71,6 @@ public sealed class ElementModifier : IModifier
     public ElementModifier(Action<Element> modifyElement)
     {
         this.modifyElement = modifyElement ?? throw new ArgumentNullException(nameof(modifyElement));
-    }
-
-    void IModifier.Modify(Element element)
-    {
-        Modify(element);
-    }
-
-    internal void Modify(Element element)
-    {
-        if (element == null)
-        {
-            throw new ArgumentNullException(nameof(element));
-        }
-
-        modifyElement(element);
-    }
-
-    void IModifier.Modify(Style style)
-    {
-        throw new InvalidOperationException("HtmlElementModifier cannot be use for style");
     }
 
     public static ElementModifier operator |(ElementModifier a, ElementModifier b)
@@ -103,42 +83,55 @@ public sealed class ElementModifier : IModifier
 
         return new ElementModifier(modify);
     }
-}
 
-public sealed class ComponentModifier : IModifier
-{
-
-    public void Modify(object instance)
+    void IModifier.Modify(object instance)
     {
-        if (instance is ReactComponent reactComponent)
+        if (instance is Element element)
         {
-            modifyElement(reactComponent);
+            Modify(element);
+            return;
         }
 
-        throw new DeveloperException($"Expected react component but found {instance.GetType().FullName}");
-    }
-    
-    readonly Action<ReactComponent> modifyElement;
-
-    public ComponentModifier(Action<ReactComponent> modifyElement)
-    {
-        this.modifyElement = modifyElement ?? throw new ArgumentNullException(nameof(modifyElement));
-    }
-
-    void IModifier.Modify(Element element)
-    {
-        Modify(element);
+        throw new ArgumentException($"ElementModifier cannot operate on {instance.GetType().FullName}");
     }
 
     internal void Modify(Element element)
     {
-        
-    }
+        if (element == null)
+        {
+            throw new ArgumentNullException(nameof(element));
+        }
 
-    void IModifier.Modify(Style style)
+        modifyElement(element);
+    }
+}
+
+public sealed class ComponentModifier : IModifier
+{
+    readonly Action<ReactStatefulComponent> modify;
+
+    public ComponentModifier(Action<ReactStatefulComponent> modifyComponent)
     {
-        throw new InvalidOperationException("HtmlElementModifier cannot be use for style");
+        modify = modifyComponent ?? throw new ArgumentNullException(nameof(modifyComponent));
     }
 
-    
+    void IModifier.Modify(object instance)
+    {
+        if (instance is ReactStatefulComponent reactComponent)
+        {
+            Modify(reactComponent);
+        }
+
+        throw new ArgumentException($"ComponentModifier cannot operate on {instance.GetType().FullName}");
+    }
+
+    internal void Modify(ReactStatefulComponent reactComponent)
+    {
+        if (reactComponent == null)
+        {
+            throw new ArgumentNullException(nameof(reactComponent));
+        }
+
+        modify(reactComponent);
+    }
 }
