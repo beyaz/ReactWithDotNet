@@ -39,4 +39,6 @@ public class TextInput: ReactComponent
             }
         };
     }
+
+    public static ElementModifier Bind(Expression<Func<string>> expression) => new(x => ((TextInput)x).ValueBind = expression);
 }

@@ -46,10 +46,8 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                                 
                                 new TextInput
                                 {
-                                    Width(50),
-                                    mr(5), 
-                                    ml(5), 
-                                    ValueBind = ()=>state.VerseFilterScript
+                                    Width(50), mr(5), ml(5),
+                                    TextInput.Bind(()=>state.VerseFilterScript)
                                 }, 
                                 (small)" (* demek tüm Kuran boyunca arama yapılacağı anlamına gelir)"
                             },
