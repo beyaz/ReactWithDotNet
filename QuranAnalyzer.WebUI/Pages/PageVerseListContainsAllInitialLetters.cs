@@ -32,42 +32,60 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                 "Aşağıdaki program yardımı ile bu bilgiyi inceleyelim.",
                 "Not: Komut satırlarında değişiklik yaparak farklı aramalar yapabilirsiniz.",
                 Space(10),
-                new FlexColumn(ComponentBorder, Gap(5))
+                
+                new FlexRow(Gap(10))
                 {
-                    new FlexRow(AlignItemsCenter)
+                    new StickyLeftMenu{Labels = new []{"1","2","3"}, SelectedIndex = 0},
+                    new FlexColumn
                     {
-                        "Ayetleri Seç:", new input{type = "text", style = { Width(50),mr(5), ml(5) }, valueBind = ()=>state.VerseFilterScript }, (small)" (* demek tüm Kuran boyunca arama yapılacağı anlamına gelir)"
-                    },
-
-                    new FlexRow
-                    {
-                        "Aranacak Harfler:", new input{type = "text", style = { Width(200) ,mr(5), ml(5)}, valueBind = ()=>state.Letters }
-                    },
-                    
-                    new FlexRow(JustifyContentFlexEnd, mr(20), mb(20))
-                    {
-                        new ActionButton{Label = "Ara"}
-                    }
-                },
-                Space(10),
-                    new FlexColumn(ComponentBorder)
-                    {
-                        new h4("Sonuçlar"),
-
-                        new h6("Bulunan ayet sayısı: 114"),
-                        new FreeScrollBar
+                        new FlexColumn(ComponentBorder, Gap(5))
                         {
-                            Height(250) , ComponentBorder , Margin(10) ,
-                            
-                          Children(Enumerable.Range(1,114).Select(i=>new div
-                          {
-                              i.ToString(),
-                              new br()
-                          }))
-                        },
+                            new FlexRow(AlignItemsCenter)
+                            {
+                                "Ayetleri Seç:", 
+                                
+                                new TextInput
+                                {
+                                    Width(50),
+                                    mr(5), 
+                                    ml(5), 
+                                    ValueBind = ()=>state.VerseFilterScript
+                                }, 
+                                (small)" (* demek tüm Kuran boyunca arama yapılacağı anlamına gelir)"
+                            },
 
-                        
-                    },
+                            new FlexRow
+                            {
+                                "Aranacak Harfler:", new input{type = "text", style = { Width(200) ,mr(5), ml(5)}, valueBind = ()=>state.Letters }
+                            },
+
+                            new FlexRow(JustifyContentFlexEnd, mr(20), mb(20))
+                            {
+                                new ActionButton{Label = "Ara"}
+                            }
+                        },
+                        Space(10),
+                        new FlexColumn(ComponentBorder)
+                        {
+                            new h4("Sonuçlar"),
+
+                            new h6("Bulunan ayet sayısı: 114"),
+                            new FreeScrollBar
+                            {
+                                Height(250) , ComponentBorder , Margin(10) ,
+
+                                Children(Enumerable.Range(1,114).Select(i=>new div
+                                {
+                                    i.ToString(),
+                                    new br()
+                                }))
+                            },
+
+
+                        },
+                    }
+                }
+                
                     
             },
 

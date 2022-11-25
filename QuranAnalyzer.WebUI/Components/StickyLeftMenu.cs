@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-class StickyLeftMenu : ReactComponent
+class StickyLeftMenu : ReactComponent // TODO: Check name
 {
     [ReactCustomEvent]
     public Action<int?> Click { get; set; }
@@ -13,9 +13,6 @@ class StickyLeftMenu : ReactComponent
     {
         return new div
         {
-            MarginLeft(24),
-            PositionSticky,
-
             new FlexColumn
             {
                 Children(Labels?.Select((x, i) => createText(x, i == SelectedIndex, i))),
