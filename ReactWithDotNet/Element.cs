@@ -85,6 +85,23 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         ProcessModifier(modifier);
     }
 
+    public void Add(Style style)
+    {
+        if (this is HtmlElement htmlElement)
+        {
+            htmlElement.style.Import(style);
+        }
+        else if (this is ThirdPartyReactComponent thirdPartyReactComponent)
+        {
+            thirdPartyReactComponent.style.Import(style);
+        }
+        else
+        {
+            // TODO: check here apply to root element
+            throw new DeveloperException("style alement cannot be attached to " + GetType().FullName);
+        }
+    }
+
     /// <summary>
     ///     Gets the enumerator.
     /// </summary>

@@ -358,6 +358,11 @@ public static partial class Mixin
 
     public static StyleModifier BorderBottom(string borderBottom) => new(style => style.borderBottom = borderBottom);
     public static StyleModifier BorderLeft(string borderLeft) => new(style => style.borderLeft = borderLeft);
+    
+    /// <summary>
+    /// style.content = <paramref name="content"/>
+    /// </summary>
+    public static StyleModifier Content(string content) => new(style => style.content = content);
 
     public static StyleModifier BorderRadius(string borderRadius) => new(style => style.borderRadius = borderRadius);
     public static StyleModifier BorderRadius(double borderRadius) => BorderRadius(borderRadius.AsPixel());
@@ -721,6 +726,29 @@ public static partial class Mixin
     public static StyleModifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
 
     public static StyleModifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
+
+    /// <summary>
+    /// style.listStyle = <paramref name="listStyle"/>
+    /// </summary>
+    public static StyleModifier ListStyle(string listStyle) => new(style => style.listStyle = listStyle);
+
+
+
+    /// <summary>
+    /// style.listStyle = 'none'
+    /// </summary>
+    public static StyleModifier ListStyleNone() => ListStyle("none");
+
+    /// <summary>
+    /// style.listStyle = 'square'
+    /// </summary>
+    public static StyleModifier ListStyleSquare() => ListStyle("square");
+
+    /// <summary>
+    /// style.listStyle = 'inside'
+    /// </summary>
+    public static StyleModifier ListStyleInside() => ListStyle("inside");
+
 
     internal static string AsPixel(this double value) => value + "px";
 
