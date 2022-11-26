@@ -4,7 +4,7 @@ using ReactWithDotNet.Libraries.react_free_scrollbar;
 
 namespace QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
 
-class VerseListThatContainsLettersCalculatorModel
+class CalculatorModel
 {
     public string ErrorText { get; set; }
     public bool IsProcessing { get; set; }
@@ -13,7 +13,7 @@ class VerseListThatContainsLettersCalculatorModel
     public bool ShowResults { get; set; }
 }
 
-class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatContainsLettersCalculatorModel>
+class Calculator : ReactComponent<CalculatorModel>
 {
     public string Letters, SearchScript;
 
@@ -23,7 +23,7 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
 
     protected override void constructor()
     {
-        state = new VerseListThatContainsLettersCalculatorModel
+        state = new CalculatorModel
         {
             SearchScript = SearchScript,
             Letters      = Letters

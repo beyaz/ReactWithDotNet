@@ -32,7 +32,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
                     new StickyLeftMenu { Labels = new[] { "1", "2", "3" }, SelectedIndex = SelectedIndex, Click = i => SelectedIndex = i },
                     When(SelectedIndex == 0, () => new FlexColumn(Padding(10), FlexGrow(1))
                     {
-                        new VerseListThatContainsLettersCalculator
+                        new Calculator
                         {
                             SearchScript = "*",
                             Letters      = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
