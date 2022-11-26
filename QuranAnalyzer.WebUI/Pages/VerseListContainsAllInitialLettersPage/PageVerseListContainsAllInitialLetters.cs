@@ -11,7 +11,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
     {
         static Element raisePanel(Element element) => new div
         {
-            BoxShadow("rgb(201 180 180) 0px 0px 12px 1px"), Padding(15), BorderRadius(5), MarginTopBottom(10),
+            BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadius(5), MarginTopBottom(10),
             element
         };
         
