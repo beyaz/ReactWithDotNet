@@ -2,14 +2,22 @@
 
 class VerseListThatContainsLettersCalculatorModel
 {
+    public string SearchScript { get; set; }
+    
     public string ErrorText { get; set; }
     public IReadOnlyList<LetterInfo> LetterInfoList { get; set; }
     public string Letters { get; set; }
+
+    
 }
 
 class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatContainsLettersCalculatorModel>
 {
+    public bool ShowResults { get; set; }
+    
     public string Letters;
+
+    
 
     protected override void constructor()
     {
@@ -23,24 +31,42 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
     {
         return new FlexColumn
         {
-            new Label { Text = "Harfler" },
-            new FlexRow(Gap(3))
+            new FlexRow
             {
+                Gap(3),
+                
+                new Label { Text = "Ayet Seç" },
                 new TextInput
                 {
-                    TextInput.Bind(() => state.Letters),
+                    TextInput.Bind(() => state.SearchScript),
                     FlexGrow(1)
-                },
+                }
+            },
+
+             new FlexRow
+             {
+                 Gap(3),
+
+                 new Label { Text = "Harfler" },
+                 new TextInput
+                 {
+                     TextInput.Bind(() => state.Letters),
+                     FlexGrow(1)
+                 }
+             },
+             
+            new FlexRow(JustifyContentSpaceEvenly)
+            {
+                new ErrorText { Text     = state.ErrorText },
                 new ActionButton { Label = "Hesapla", OnClick = OnClick }
             },
 
-            new ErrorText { Text = state.ErrorText },
 
-            When(state.LetterInfoList?.Count > 0, () => GetCalculationText(state.LetterInfoList.Select(x => x.ToString()).ToArray()))
+            When(ShowResults, GetCalculationText)
         };
     }
 
-    Element GetCalculationText(string[] arabicLetters)
+    Element GetCalculationText()
     {
         var totalView = new FlexRowCentered();
 
@@ -49,39 +75,75 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             totalView, new span { Text("="), MarginLeftRight(5) }
         };
 
-        var total = 0;
+        Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
+        var verseList = VerseFilter.GetVerseList(state.SearchScript).Unwrap();
 
-        for (var i = 0; i < arabicLetters.Length; i++)
-        {
-            if (i > 0)
-            {
-                container.Add((span)" + " + MarginLeftRight(5));
-            }
+        //var allInitialLetters = new[] { Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun };
+        
+        //bool isContainsAllInitialLetters(Verse verse)
+        //{
 
-            var arabicLetter  = arabicLetters[i];
-            var pronunciation = GetPronunciationOfArabicLetter(arabicLetter);
-            var numericValue  = ArabicLetterNumericValue.GetNumericalValue(ArabicLetter.AllArabicLetters.GetIndex(arabicLetter).Value);
 
-            var item = new ArabicLetterWithNumericValue
-            {
-                ArabicLetter               = arabicLetter,
-                Pronunciation              = pronunciation,
-                NumericValueOfArabicLetter = numericValue
-            };
-            container.Add(item.BuildUi());
+        //    foreach (var initialLetterIndex in allInitialLetters)
+        //    {
+        //        if ( QuranAnalyzerMixin.GetCountOfLetterInVerse(verse, initialLetterIndex, option) <= 0)
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            total += numericValue;
-        }
+        //    return true;
+        //}
 
-        totalView.text = total.ToString();
+        //var total = 0;
+
+        //for (var i = 0; i < arabicLetters.Length; i++)
+        //{
+        //    if (i > 0)
+        //    {
+        //        container.Add((span)" + " + MarginLeftRight(5));
+        //    }
+
+        //    var arabicLetter  = arabicLetters[i];
+        //    var pronunciation = GetPronunciationOfArabicLetter(arabicLetter);
+        //    var numericValue  = ArabicLetterNumericValue.GetNumericalValue(ArabicLetter.AllArabicLetters.GetIndex(arabicLetter).Value);
+
+        //    var item = new ArabicLetterWithNumericValue
+        //    {
+        //        ArabicLetter               = arabicLetter,
+        //        Pronunciation              = pronunciation,
+        //        NumericValueOfArabicLetter = numericValue
+        //    };
+        //    container.Add(item.BuildUi());
+
+        //    total += numericValue;
+        //}
+
+        //totalView.text = total.ToString();
 
         return container;
     }
 
     void OnClick()
     {
+        ShowResults     = false;
         state.ErrorText = null;
 
+        if (state.SearchScript.HasNoValue())
+        {
+            state.ErrorText = "Ayet seçmelisiniz. Tüm Kuran boyunca arama yapmak için * yazabilirsiniz.";
+            return;
+        }
+
+        var verseList = VerseFilter.GetVerseList(state.SearchScript);
+        if (verseList.IsFail)
+        {
+            state.ErrorText = verseList.FailMessage;
+            return;
+        }
+
+        
+        
         if (state.Letters.HasNoValue())
         {
             state.ErrorText = "En az bir tane Arapça karakter girilmelidir.";
@@ -95,33 +157,13 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             return;
         }
 
-        state.LetterInfoList = letters;
-    }
-
-    class ArabicLetterWithNumericValue
-    {
-        public string ArabicLetter { get; set; }
-        public int NumericValueOfArabicLetter { get; set; }
-        public string Pronunciation { get; set; }
-
-        public Element BuildUi()
+        if (letters.Count == 0)
         {
-            return new FlexColumn
-            {
-                AlignItemsCenter,
-                Margin(5),
-                Border($"1px solid {BorderColor}"),
-                BorderRadius(5),
-
-                new div(PaddingLeftRight(5), FontSize(15), FontFamily_Lateef)
-                {
-                    ArabicLetter
-                },
-                new div(MarginLeftRight(2), FontSize("0.6rem"))
-                {
-                    Pronunciation, " - ", (small)NumericValueOfArabicLetter.ToString()
-                }
-            };
+            state.ErrorText = "En az bir tane Arapça karakter girilmelidir.";
+            return;
         }
+        
+        ShowResults = true;
     }
+    
 }

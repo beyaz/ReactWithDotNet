@@ -146,7 +146,6 @@ public sealed class Response<TValue> : Response
     public TValue Value { get; set; }
     #endregion
 
-    #region Public Methods
     public static Response<TValue> Fail(Response response)
     {
         var newResponse = new Response<TValue>();
@@ -208,7 +207,16 @@ public sealed class Response<TValue> : Response
     {
         return new Response<TValue> {Value = value};
     }
-    #endregion
+
+    public TValue Unwrap()
+    {
+        if (IsFail)
+        {
+            throw new Exception(FailMessage);
+        }
+
+        return Value;
+    }
 }
 
 public static class FpExtensions
