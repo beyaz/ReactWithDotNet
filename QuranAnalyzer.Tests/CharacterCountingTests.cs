@@ -8,69 +8,7 @@ namespace QuranAnalyzer;
 [Ignore]
 public class CharacterCountingTests
 {
-
-
-    [TestMethod]
-    public void SearchVerseNumbersThatContainsAllInitialLetters()
-    {
-        var allInitialLetters = new[] { Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun };
-
-        allInitialLetters.Select(ArabicLetterNumericValue.GetNumericalValue).Sum().Should().Be(693);
-        
-        var option = new MushafOption ();
-
-        var verseList = GetVerseList("*").Then(verses => verses.Where(isContainsAllInitialLetters).ToList()).Value;
-
-        verseList.Count.Should().Be(114);
-
-
-        var numbers = new List<int>();
-        
-        var currentChapter = -1;
-        
-        foreach (var verse in verseList)
-        {
-            if (currentChapter == verse.ChapterNumber)
-            {
-                numbers.Add(int.Parse(verse.Index));
-                continue;
-            }
-
-            currentChapter = verse.ChapterNumber;
-
-            numbers.Add(verse.ChapterNumber);
-
-            numbers.Add(int.Parse(verse.Index));
-        }
-
-        var str   = string.Join(" + ", numbers);
-        
-        var total = numbers.Sum();
-
-        total.Should().Be(9702);
-
-        bool isContainsAllInitialLetters(Verse verse)
-        {
-          
-            
-            foreach (var initialLetterIndex in allInitialLetters)
-            {
-                if (GetCountOfLetterInVerse(verse, initialLetterIndex, option) <= 0)
-                {
-                    return false;
-                }
-            }
-            
-            return true;
-        }
-    }
-
-
-
-
     #region Public Methods
-
-
     [TestMethod]
     public void AnalyzeVerseTest()
     {
@@ -85,7 +23,7 @@ public class CharacterCountingTests
         CountShouldBe("10:*", Raa, 257);
         CountShouldBe("10:*", Laam, 913);
         CountShouldBe("10:*", Alif, AlifAccordingToTanzil, 1323);
-        CountShouldBe("10:*", Alif,  1319);
+        CountShouldBe("10:*", Alif, 1319);
     }
 
     [TestMethod]
@@ -93,9 +31,9 @@ public class CharacterCountingTests
     {
         CountShouldBe("11:*", Raa, 325);
         CountShouldBe("11:*", Laam, new MushafOption { Use_Laam_SpecifiedByTanzil = true }, 795);
-        CountShouldBe("11:*", Laam,  794);
+        CountShouldBe("11:*", Laam, 794);
         CountShouldBe("11:*", Alif, AlifAccordingToTanzil, 1373);
-        CountShouldBe("11:*", Alif,  1370);
+        CountShouldBe("11:*", Alif, 1370);
     }
 
     [TestMethod]
@@ -104,7 +42,7 @@ public class CharacterCountingTests
         CountShouldBe("12:*", Raa, 257);
         CountShouldBe("12:*", Laam, 812);
         CountShouldBe("12:*", Alif, AlifAccordingToTanzil, 1315);
-        CountShouldBe("12:*", Alif,  1306);
+        CountShouldBe("12:*", Alif, 1306);
     }
 
     [TestMethod]
@@ -114,7 +52,7 @@ public class CharacterCountingTests
         CountShouldBe("13:*", Miim, 260);
         CountShouldBe("13:*", Laam, 480);
         CountShouldBe("13:*", Alif, AlifAccordingToTanzil, 610);
-        CountShouldBe("13:*", Alif,  605);
+        CountShouldBe("13:*", Alif, 605);
     }
 
     [TestMethod]
@@ -123,7 +61,7 @@ public class CharacterCountingTests
         CountShouldBe("14:*", Raa, 160);
         CountShouldBe("14:*", Laam, 452);
         CountShouldBe("14:*", Alif, AlifAccordingToTanzil, 589);
-        CountShouldBe("14:*", Alif,  585);
+        CountShouldBe("14:*", Alif, 585);
     }
 
     [TestMethod]
@@ -132,7 +70,7 @@ public class CharacterCountingTests
         CountShouldBe("15:*", Raa, 96);
         CountShouldBe("15:*", Laam, 323);
         CountShouldBe("15:*", Alif, AlifAccordingToTanzil, 493);
-        CountShouldBe("15:*", Alif,  493);
+        CountShouldBe("15:*", Alif, 493);
     }
 
     [TestMethod]
@@ -151,7 +89,7 @@ public class CharacterCountingTests
         CountShouldBe("2:*", Miim, 2195);
         CountShouldBe("2:*", Laam, 3202);
         CountShouldBe("2:*", Alif, AlifAccordingToTanzil, 4504);
-        CountShouldBe("2:*", Alif,  4502);
+        CountShouldBe("2:*", Alif, 4502);
     }
 
     [TestMethod]
@@ -179,7 +117,7 @@ public class CharacterCountingTests
         CountShouldBe("3:*", Miim, 1249);
         CountShouldBe("3:*", Laam, 1892);
         CountShouldBe("3:*", Alif, AlifAccordingToTanzil, 2511);
-        CountShouldBe("3:*", Alif,  2521);
+        CountShouldBe("3:*", Alif, 2521);
     }
 
     [TestMethod]
@@ -206,7 +144,7 @@ public class CharacterCountingTests
     public void Chapter_68()
     {
         CountShouldBe("68:*", Nun, 133);
-        CountShouldBe("68:*", Nun, new MushafOption{Chapter_68_Should_Single_Nun = true} ,132);
+        CountShouldBe("68:*", Nun, new MushafOption { Chapter_68_Should_Single_Nun = true }, 132);
     }
 
     [TestMethod]
@@ -224,7 +162,7 @@ public class CharacterCountingTests
         CountShouldBe("7:*", Miim, 1164);
         CountShouldBe("7:*", Laam, 1530);
         CountShouldBe("7:*", Alif, AlifAccordingToTanzil, 2521);
-        CountShouldBe("7:*", Alif,  2529);
+        CountShouldBe("7:*", Alif, 2529);
     }
 
     [TestMethod]
@@ -259,7 +197,6 @@ public class CharacterCountingTests
     #endregion
 
     #region Methods
-    
     static void CountShouldBe(string searchScript, int arabicLetterIndex, int expectedCount)
     {
         GetVerseList(searchScript).Then(verses => GetCountOfLetter(verses, arabicLetterIndex)).ShouldBe(expectedCount);
@@ -269,6 +206,5 @@ public class CharacterCountingTests
     {
         GetVerseList(searchScript).Then(verses => GetCountOfLetter(verses, arabicLetterIndex, option)).ShouldBe(expectedCount);
     }
-    
     #endregion
 }
