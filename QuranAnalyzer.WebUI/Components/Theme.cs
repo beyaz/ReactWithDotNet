@@ -32,7 +32,7 @@ class LargeTitle : ReactComponent
     {
         return new div
         {
-            style    = { FontSize18, TextAlignCenter, FontWeight500},
+            style    = { FontSize18, TextAlignCenter},
             text = text
         };
     }

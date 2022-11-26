@@ -28,7 +28,7 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
 
     protected override Element render()
     {
-        return new FlexColumn(Gap(9))
+        return new FlexColumn(Gap(10))
         {
             new FlexColumn
             {

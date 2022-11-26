@@ -53,7 +53,7 @@ public class Label : ReactComponent
     {
         return new label
         {
-            text = Text, style = { FontWeight500 }
+            text = Text, style = { FontSize15 }
         };
     }
 }
