@@ -22,6 +22,19 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
         };
     }
 
+    Element BuildNumericValueCalculator()
+    {
+        return new FlexRow
+        {
+            new Label{Text = "Harfler"},
+            new TextInput
+            {
+                TextInput.Bind(()=>state.VerseFilterScript),
+                Width(100), mr(5), ml(5)
+            }
+        };
+    }
+
     protected override Element render()
     {
         return new Article

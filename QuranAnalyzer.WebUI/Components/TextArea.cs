@@ -43,3 +43,17 @@ public class TextInput: ReactComponent
 
     public static ComponentModifier Bind(Expression<Func<string>> expression) => new(x => ((TextInput)x).ValueBind = expression);
 }
+
+
+public class Label : ReactComponent
+{
+    public string Text;
+
+    protected override Element render()
+    {
+        return new label
+        {
+            text = Text
+        };
+    }
+}
