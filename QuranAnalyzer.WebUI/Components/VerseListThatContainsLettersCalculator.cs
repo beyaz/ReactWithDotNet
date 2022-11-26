@@ -1,19 +1,19 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-class NumericValueCalculatorModel
+class VerseListThatContainsLettersCalculatorModel
 {
     public string ErrorText { get; set; }
     public IReadOnlyList<LetterInfo> LetterInfoList { get; set; }
     public string Letters { get; set; }
 }
 
-class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
+class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatContainsLettersCalculatorModel>
 {
     public string Letters;
 
     protected override void constructor()
     {
-        state = new NumericValueCalculatorModel
+        state = new VerseListThatContainsLettersCalculatorModel
         {
             Letters = Letters
         };
@@ -125,6 +125,3 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
         }
     }
 }
-
-
-
