@@ -3,6 +3,8 @@
 class NumericValueCalculatorModel
 {
     public string Letters { get; set; }
+    public string ErrorText { get; set; }
+    public IReadOnlyList<LetterInfo> LetterInfoList { get; set; }
 }
 class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
 {
@@ -17,30 +19,39 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
 
     protected override Element render()
     {
+        
         return new FlexColumn
         {
             new Label{Text = "Harfler"},
-            new FlexRow
+            new FlexRow(Gap(3))
             {
                 new TextInput
                 {
                     TextInput.Bind( ()=>state.Letters),
-                    FlexGrow(9)
+                    FlexGrow(1)
                 },
                 new ActionButton{ Label = "Hesapla", OnClick = OnClick}
-            }
+            },
+
+            new ErrorText { Text = state.ErrorText },
+            
+            When(state.LetterInfoList?.Count > 0,()=>GetCalculationText(state.LetterInfoList.Select(x=>x.ToString()).ToArray()))
         };
         
         
     }
 
-    static Element GetCalculationText(string[] arabicLetters)
+    Element GetCalculationText(string[] arabicLetters)
     {
-        var container = new FlexRow(FlexWrap, Padding(10))
+        var totalView = new FlexRowCentered();
+        
+        var container = new FlexRow(FlexWrap, Padding(10),AlignItemsCenter)
         {
-
+            totalView, new span{Text("="),MarginLeftRight(5)}
         };
 
+        var total = 0;
+        
         for (var i = 0; i < arabicLetters.Length; i++)
         {
             if (i>0)
@@ -48,17 +59,73 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
                 container.Add((span)" + "+MarginLeftRight(5));
             }
             
-            var arabicLetter = arabicLetters[i];
-            var numericValue = ArabicLetterNumericValue.GetNumericalValue(ArabicLetter.AllArabicLetters.GetIndex(arabicLetter).Value);
+            var arabicLetter                       = arabicLetters[i];
+            var pronunciation = GetPronunciationOfArabicLetter(arabicLetter);
+            var numericValue                       = ArabicLetterNumericValue.GetNumericalValue(ArabicLetter.AllArabicLetters.GetIndex(arabicLetter).Value);
 
-            container.Add(new FlexRow { new div(Text(arabicLetter), FontFamily_Lateef), (small)$"({numericValue})" });
+            var item = new ArabicLetterWithNumericValue
+            {
+                ArabicLetter               = arabicLetter,
+                Pronunciation              = pronunciation,
+                NumericValueOfArabicLetter = numericValue
+            };
+            container.Add(item.BuildUi());
+
+            total += numericValue;
         }
+
+
+        totalView.text = total.ToString();
 
         return container;
     }
     
     void OnClick()
     {
+        state.ErrorText = null;
         
+        if (state.Letters.HasNoValue())
+        {
+            state.ErrorText = "En az bir tane Arapça karakter girilmelidir.";
+            return;
+        }
+
+        var (letters, exception) = Analyzer.AnalyzeText(state.Letters.Replace(" ",""));
+        if (exception is not null)
+        {
+            state.ErrorText = exception;
+            return;
+        }
+        
+        state.LetterInfoList = letters;
+    }
+}
+
+class ArabicLetterWithNumericValue: ReactComponent
+{
+    public string ArabicLetter { get; set; }
+    public string Pronunciation { get; set; }
+    public int NumericValueOfArabicLetter { get; set; }
+
+    protected override Element render() => BuildUi();
+    
+    public Element BuildUi()
+    {
+        return new FlexColumn
+        {
+            AlignItemsCenter,
+            Margin(5),
+            Border($"1px solid {BorderColor}"),
+            BorderRadius(5),
+
+            new div(PaddingLeftRight(5), FontSize(15), FontFamily_Lateef)
+            {
+                ArabicLetter
+            },
+            new div(MarginLeftRight(2), FontSize("0.6rem"))
+            {
+                Pronunciation, " - ",(small)NumericValueOfArabicLetter.ToString()
+            }
+        };
     }
 }

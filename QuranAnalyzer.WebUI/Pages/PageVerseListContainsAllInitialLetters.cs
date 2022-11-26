@@ -1,5 +1,6 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.Libraries.react_free_scrollbar;
+using static QuranAnalyzer.ArabicLetter;
 
 namespace QuranAnalyzer.WebUI.Pages;
 
@@ -24,14 +25,9 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
 
     Element BuildNumericValueCalculator()
     {
-        return new FlexRow
+        return new NumericValueCalculator
         {
-            new Label{Text = "Harfler"},
-            new TextInput
-            {
-                TextInput.Bind(()=>state.VerseFilterScript),
-                Width(100), mr(5), ml(5)
-            }
+            Letters = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
         };
     }
 
@@ -60,7 +56,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                 new FlexRow(Gap(10))
                 {
                     new StickyLeftMenu{Labels = new []{"1","2","3"}, SelectedIndex = state.SelectedIndex, Click = i=>state.SelectedIndex =i},
-                    When(state.SelectedIndex == 0, () => new FlexColumn
+                    When(state.SelectedIndex == 0, () => new FlexColumn(FlexGrow(1))
                     {
                         new FlexColumn(ComponentBorder, Gap(5))
                         {
@@ -111,57 +107,9 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
 
                         }
                     }),
-                    When(state.SelectedIndex == 1, () => new FlexColumn
+                    When(state.SelectedIndex == 1, () => new FlexColumn(Padding(10),FlexGrow(1))
                     {
-                        new FlexColumn(ComponentBorder, Gap(5))
-                        {
-                            new FlexRow(AlignItemsCenter)
-                            {
-                                (strong)"Sayısal karşılığını Hesapla",
-
-                                new TextInput
-                                {
-                                    TextInput.Bind(()=>state.VerseFilterScript),
-                                    Width(100), mr(5), ml(5)
-                                },
-                                (small)" (* demek tüm Kuran boyunca arama yapılacağı anlamına gelir)"
-                            },
-
-                            new FlexRow
-                            {
-                                "Aranacak Harfler:",
-                                new TextInput
-                                {
-                                    TextInput.Bind(()=>state.Letters),
-                                    Width(250), mr(5), ml(5)
-                                },
-                                new input{type = "text"}
-                            },
-
-                            new FlexRow(JustifyContentFlexEnd, mr(20), mb(20))
-                            {
-                                new ActionButton{Label = "Ara"}
-                            }
-                        },
-                        Space(10),
-                        new FlexColumn(ComponentBorder)
-                        {
-                            new h4("Sonuçlar"),
-
-                            new h6("Bulunan ayet sayısı: 114"),
-                            new FreeScrollBar
-                            {
-                                Height(250) , ComponentBorder , Margin(10) ,
-
-                                Children(Enumerable.Range(1,114).Select(i=>new div
-                                {
-                                    i.ToString(),
-                                    new br()
-                                }))
-                            },
-
-
-                        }
+                        BuildNumericValueCalculator()
                     })
 
                 }

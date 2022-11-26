@@ -133,7 +133,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
         }
         catch (Exception exception)
         {
-            return exception.ToString();
+            return new div(exception.ToString());
         }
     }
 }
