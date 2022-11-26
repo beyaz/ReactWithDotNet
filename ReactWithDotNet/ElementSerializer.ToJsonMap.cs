@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -7,10 +8,9 @@ namespace ReactWithDotNet;
 
 partial class ElementSerializer
 {
-    static readonly Dictionary<Type, List<PropertyAccessInfo>> CustomEventPropertiesOfType = new();
-    static readonly Dictionary<Type, List<PropertyAccessInfo>> DotNetPropertiesOfType = new();
-
-    static readonly Dictionary<Type, List<PropertyAccessInfo>> ReactAttributedPropertiesOfType = new();
+    static readonly ConcurrentDictionary<Type, List<PropertyAccessInfo>> CustomEventPropertiesOfType = new();
+    static readonly ConcurrentDictionary<Type, List<PropertyAccessInfo>> DotNetPropertiesOfType = new();
+    static readonly ConcurrentDictionary<Type, List<PropertyAccessInfo>> ReactAttributedPropertiesOfType = new();
 
     public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
     {

@@ -122,6 +122,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                                     TextInput.Bind(()=>state.Letters),
                                     Width(250), mr(5), ml(5)
                                 },
+                                new input{type = "text"}
                             },
 
                             new FlexRow(JustifyContentFlexEnd, mr(20), mb(20))
