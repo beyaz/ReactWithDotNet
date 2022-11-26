@@ -78,25 +78,28 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
         var letterIndexList = letterInfoList.Select(x => x.ArabicLetterIndex).ToImmutableList();
         var verseList       = VerseFilter.GetVerseList(state.SearchScript).Unwrap().Where(isContainsGivenLetters).ToList();
 
-        var container = new FlexColumn(Padding(10), AlignItemsCenter)
+        Element showVerseList()
         {
-            (strong)$"{verseList.Count} adet ayet bulundu.",
-
-            new FreeScrollBar
+            return new FlexColumn(Padding(10), AlignItemsCenter)
             {
-                Height(300), Width("100%"), ComponentBorder, BorderRadius(5),
-                Children(verseList.Select(verse => new LetterColorizer
+                (strong)$"{verseList.Count} adet ayet bulundu.",
+
+                new FreeScrollBar
                 {
-                    VerseTextNodes          = verse.AnalyzedFullText,
-                    ChapterNumber           = verse.ChapterNumber.ToString(),
-                    VerseNumber             = verse.Index,
-                    LettersForColorizeNodes = letterInfoList,
-                    VerseText               = verse.TextWithBismillah,
-                    Verse                   = verse,
-                    MushafOption            = option
-                }))
-            }
-        };
+                    Height(300), Width("100%"), ComponentBorder, BorderRadius(5),
+                    Children(verseList.Select(verse => new LetterColorizer
+                    {
+                        VerseTextNodes          = verse.AnalyzedFullText,
+                        ChapterNumber           = verse.ChapterNumber.ToString(),
+                        VerseNumber             = verse.Index,
+                        LettersForColorizeNodes = letterInfoList,
+                        VerseText               = verse.TextWithBismillah,
+                        Verse                   = verse,
+                        MushafOption            = option
+                    }))
+                }
+            };
+        }
 
         bool isContainsGivenLetters(Verse verse)
         {
@@ -111,7 +114,52 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             return true;
         }
 
-        return container;
+        Element showNumbers()
+        {
+            var total = 0;
+
+            var items = new List<Element>();
+            
+
+            var currentChapter = -1;
+
+            foreach (var verse in verseList)
+            {
+                if (items.Count>0)
+                {
+                    items.Add(new div("+") { MarginLeftRight(3) });
+                }
+            
+                
+                if (currentChapter == verse.ChapterNumber)
+                {
+                    items.Add(verse.Index);
+                    total += verse.IndexAsNumber;
+                    continue;
+                }
+
+                currentChapter = verse.ChapterNumber;
+
+                items.Add(new span(currentChapter.ToString()){Color("red")});
+                items.Add(new div("+") { MarginLeftRight(3) });
+                items.Add(verse.Index);
+
+                total += verse.ChapterNumber;
+                total += verse.IndexAsNumber;
+
+            }
+            
+            items.Insert(0,total.ToString());
+            items.Insert(1, new div("=") { MarginLeftRight(3) });
+
+            return new FlexRow(FlexWrap)
+            {
+                Children(items)
+            };
+
+        }
+
+        return showNumbers();
     }
 
     void OnClick()
