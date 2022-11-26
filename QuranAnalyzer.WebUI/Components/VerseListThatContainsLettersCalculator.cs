@@ -1,4 +1,6 @@
-﻿namespace QuranAnalyzer.WebUI.Components;
+﻿using System.Collections.Immutable;
+
+namespace QuranAnalyzer.WebUI.Components;
 
 class VerseListThatContainsLettersCalculatorModel
 {
@@ -15,7 +17,7 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
 {
     public bool ShowResults { get; set; }
     
-    public string Letters;
+    public string Letters,SearchScript;
 
     
 
@@ -23,6 +25,7 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
     {
         state = new VerseListThatContainsLettersCalculatorModel
         {
+            SearchScript = SearchScript,
             Letters = Letters
         };
     }
@@ -68,58 +71,44 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
 
     Element GetCalculationText()
     {
-        var totalView = new FlexRowCentered();
+        var option    = new MushafOption();
 
-        var container = new FlexRow(FlexWrap, Padding(10), AlignItemsCenter)
+        var letterInfoList  = Analyzer.AnalyzeText(state.Letters.Replace(" ", "")).Unwrap();
+        var letterIndexList = letterInfoList.Select(x=>x.ArabicLetterIndex).ToImmutableList();
+        var verseList       = VerseFilter.GetVerseList(state.SearchScript).Unwrap().Where(isContainsGivenLetters).ToList();
+
+
+        var container = new FlexRow(Padding(10), AlignItemsCenter)
         {
-            totalView, new span { Text("="), MarginLeftRight(5) }
+           (strong)$"{verseList.Count} adet ayet bulundu."
         };
 
-        Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
-        var verseList = VerseFilter.GetVerseList(state.SearchScript).Unwrap();
-
-        //var allInitialLetters = new[] { Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun };
+        container.children.AddRange(verseList.Select(verse => new LetterColorizer
+        {
+            VerseTextNodes          = verse.AnalyzedFullText,
+            ChapterNumber           = verse.ChapterNumber.ToString(),
+            VerseNumber             = verse.Index,
+            LettersForColorizeNodes = letterInfoList,
+            VerseText               = verse.TextWithBismillah,
+            Verse                   = verse,
+            MushafOption            = option
+        }));
         
-        //bool isContainsAllInitialLetters(Verse verse)
-        //{
 
+        bool isContainsGivenLetters(Verse verse)
+        {
+            foreach (var arabicLetterIndex in letterIndexList)
+            {
+                if (QuranAnalyzerMixin.GetCountOfLetterInVerse(verse, arabicLetterIndex, option) <= 0)
+                {
+                    return false;
+                }
+            }
 
-        //    foreach (var initialLetterIndex in allInitialLetters)
-        //    {
-        //        if ( QuranAnalyzerMixin.GetCountOfLetterInVerse(verse, initialLetterIndex, option) <= 0)
-        //        {
-        //            return false;
-        //        }
-        //    }
+            return true;
+        }
 
-        //    return true;
-        //}
-
-        //var total = 0;
-
-        //for (var i = 0; i < arabicLetters.Length; i++)
-        //{
-        //    if (i > 0)
-        //    {
-        //        container.Add((span)" + " + MarginLeftRight(5));
-        //    }
-
-        //    var arabicLetter  = arabicLetters[i];
-        //    var pronunciation = GetPronunciationOfArabicLetter(arabicLetter);
-        //    var numericValue  = ArabicLetterNumericValue.GetNumericalValue(ArabicLetter.AllArabicLetters.GetIndex(arabicLetter).Value);
-
-        //    var item = new ArabicLetterWithNumericValue
-        //    {
-        //        ArabicLetter               = arabicLetter,
-        //        Pronunciation              = pronunciation,
-        //        NumericValueOfArabicLetter = numericValue
-        //    };
-        //    container.Add(item.BuildUi());
-
-        //    total += numericValue;
-        //}
-
-        //totalView.text = total.ToString();
+        
 
         return container;
     }
