@@ -17,6 +17,10 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
 {
     public string Letters, SearchScript;
 
+    public bool ShowNumbers { get; set; }
+
+    public bool ShowVerseList { get; set; }
+
     protected override void constructor()
     {
         state = new VerseListThatContainsLettersCalculatorModel
@@ -78,6 +82,18 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
         var letterIndexList = letterInfoList.Select(x => x.ArabicLetterIndex).ToImmutableList();
         var verseList       = VerseFilter.GetVerseList(state.SearchScript).Unwrap().Where(isContainsGivenLetters).ToList();
 
+        if (ShowNumbers)
+        {
+            return showNumbers();
+        }
+
+        if (ShowVerseList)
+        {
+            return showVerseList();
+        }
+
+        throw new InvalidOperationException();
+
         Element showVerseList()
         {
             return new FlexColumn(Padding(10), AlignItemsCenter)
@@ -119,18 +135,16 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             var total = 0;
 
             var items = new List<Element>();
-            
 
             var currentChapter = -1;
 
             foreach (var verse in verseList)
             {
-                if (items.Count>0)
+                if (items.Count > 0)
                 {
                     items.Add(new div("+") { MarginLeftRight(3) });
                 }
-            
-                
+
                 if (currentChapter == verse.ChapterNumber)
                 {
                     items.Add(verse.Index);
@@ -140,26 +154,22 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
 
                 currentChapter = verse.ChapterNumber;
 
-                items.Add(new span(currentChapter.ToString()){Color("red")});
+                items.Add(new span(currentChapter.ToString()) { Color("red") });
                 items.Add(new div("+") { MarginLeftRight(3) });
                 items.Add(verse.Index);
 
                 total += verse.ChapterNumber;
                 total += verse.IndexAsNumber;
-
             }
-            
-            items.Insert(0,total.ToString());
+
+            items.Insert(0, total.ToString());
             items.Insert(1, new div("=") { MarginLeftRight(3) });
 
             return new FlexRow(FlexWrap)
             {
                 Children(items)
             };
-
         }
-
-        return showNumbers();
     }
 
     void OnClick()
