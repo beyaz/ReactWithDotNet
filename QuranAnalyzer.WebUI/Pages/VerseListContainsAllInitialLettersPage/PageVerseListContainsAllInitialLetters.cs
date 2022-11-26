@@ -9,6 +9,12 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
 
     protected override Element render()
     {
+        static Element raisePanel(Element element) => new div
+        {
+            BoxShadow("rgb(201 180 180) 0px 0px 12px 1px"), Padding(15), BorderRadius(5), MarginTopBottom(10),
+            element
+        };
+        
         return new Article
         {
             new VSpace(10),
@@ -27,25 +33,31 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
                 "Not: Komut satırlarında değişiklik yaparak farklı aramalar yapabilirsiniz.",
                 Space(10),
 
-                new FlexRow(Gap(10))
+                raisePanel(new NumericValueCalculator
                 {
-                    new StickyLeftMenu { Labels = new[] { "1", "2", "3" }, SelectedIndex = SelectedIndex, Click = i => SelectedIndex = i },
-                    When(SelectedIndex == 0, () => new FlexColumn(Padding(10), FlexGrow(1))
-                    {
-                        new Calculator
-                        {
-                            SearchScript = "*",
-                            Letters      = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
-                        }
-                    }),
-                    When(SelectedIndex == 1, () => new FlexColumn(Padding(10), FlexGrow(1))
-                    {
-                        new NumericValueCalculator
-                        {
-                            Letters = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
-                        }
-                    })
-                }
+                    Letters = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
+                }),
+               
+
+                Space(10),
+                "Madde1",
+                Space(10),
+
+                raisePanel(new Calculator
+                {
+                    ShowVerseList = true,
+                    SearchScript  = "*",
+                    Letters       = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
+                }),
+                
+                raisePanel(new Calculator
+                {
+                    ShowNumbers  = true,
+                    SearchScript = "*",
+                    Letters      = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
+                }),
+
+                "Son söz"
             },
 
             new VSpace(15)
