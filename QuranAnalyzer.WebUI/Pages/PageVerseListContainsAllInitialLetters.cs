@@ -56,7 +56,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                 new FlexRow(Gap(10))
                 {
                     new StickyLeftMenu{Labels = new []{"1","2","3"}, SelectedIndex = state.SelectedIndex, Click = i=>state.SelectedIndex =i},
-                    When(state.SelectedIndex == 0, () => new FlexColumn(FlexGrow(1))
+                    When(state.SelectedIndex == 0, () => new FlexColumn(Padding(10),FlexGrow(1))
                     {
                         new VerseListThatContainsLettersCalculator
                         {

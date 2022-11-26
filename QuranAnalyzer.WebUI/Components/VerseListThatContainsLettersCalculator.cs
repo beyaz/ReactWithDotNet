@@ -1,43 +1,40 @@
 ﻿using System.Collections.Immutable;
+using ReactWithDotNet.Libraries.react_free_scrollbar;
 
 namespace QuranAnalyzer.WebUI.Components;
 
 class VerseListThatContainsLettersCalculatorModel
 {
-    public string SearchScript { get; set; }
-    
     public string ErrorText { get; set; }
     public IReadOnlyList<LetterInfo> LetterInfoList { get; set; }
     public string Letters { get; set; }
-
-    
+    public string SearchScript { get; set; }
 }
 
 class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatContainsLettersCalculatorModel>
 {
-    public bool ShowResults { get; set; }
-    
-    public string Letters,SearchScript;
+    public string Letters, SearchScript;
 
-    
+    public bool IsProcessing { get; set; }
+    public bool ShowResults { get; set; }
 
     protected override void constructor()
     {
         state = new VerseListThatContainsLettersCalculatorModel
         {
             SearchScript = SearchScript,
-            Letters = Letters
+            Letters      = Letters
         };
     }
 
     protected override Element render()
     {
-        return new FlexColumn
+        return new FlexColumn(Gap(9))
         {
-            new FlexRow
+            new FlexColumn
             {
                 Gap(3),
-                
+
                 new Label { Text = "Ayet Seç" },
                 new TextInput
                 {
@@ -46,54 +43,61 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
                 }
             },
 
-             new FlexRow
-             {
-                 Gap(3),
-
-                 new Label { Text = "Harfler" },
-                 new TextInput
-                 {
-                     TextInput.Bind(() => state.Letters),
-                     FlexGrow(1)
-                 }
-             },
-             
-            new FlexRow(JustifyContentSpaceEvenly)
+            new FlexColumn
             {
-                new ErrorText { Text     = state.ErrorText },
-                new ActionButton { Label = "Hesapla", OnClick = OnClick }
+                Gap(3),
+
+                new Label { Text = "Harfler" },
+                new TextInput
+                {
+                    TextInput.Bind(() => state.Letters),
+                    FlexGrow(1)
+                }
             },
 
+            new FlexRow(AlignItemsCenter, state.ErrorText.HasValue() ? JustifyContentSpaceBetween : JustifyContentFlexEnd)
+            {
+                new ErrorText { Text     = state.ErrorText },
+                new ActionButton { Label = "Hesapla", OnClick = OnClick, IsProcessing = IsProcessing }
+            },
 
             When(ShowResults, GetCalculationText)
         };
     }
 
+    void Calculate()
+    {
+        ShowResults  = true;
+        IsProcessing = false;
+    }
+
     Element GetCalculationText()
     {
-        var option    = new MushafOption();
+        var option = new MushafOption();
 
         var letterInfoList  = Analyzer.AnalyzeText(state.Letters.Replace(" ", "")).Unwrap();
-        var letterIndexList = letterInfoList.Select(x=>x.ArabicLetterIndex).ToImmutableList();
+        var letterIndexList = letterInfoList.Select(x => x.ArabicLetterIndex).ToImmutableList();
         var verseList       = VerseFilter.GetVerseList(state.SearchScript).Unwrap().Where(isContainsGivenLetters).ToList();
 
-
-        var container = new FlexRow(Padding(10), AlignItemsCenter)
+        var container = new FlexColumn(Padding(10), AlignItemsCenter)
         {
-           (strong)$"{verseList.Count} adet ayet bulundu."
+            (strong)$"{verseList.Count} adet ayet bulundu.",
+
+            new FreeScrollBar
+            {
+                Height(300), Width("100%"), ComponentBorder, BorderRadius(5),
+                Children(verseList.Select(verse => new LetterColorizer
+                {
+                    VerseTextNodes          = verse.AnalyzedFullText,
+                    ChapterNumber           = verse.ChapterNumber.ToString(),
+                    VerseNumber             = verse.Index,
+                    LettersForColorizeNodes = letterInfoList,
+                    VerseText               = verse.TextWithBismillah,
+                    Verse                   = verse,
+                    MushafOption            = option
+                }))
+            }
         };
-
-        container.children.AddRange(verseList.Select(verse => new LetterColorizer
-        {
-            VerseTextNodes          = verse.AnalyzedFullText,
-            ChapterNumber           = verse.ChapterNumber.ToString(),
-            VerseNumber             = verse.Index,
-            LettersForColorizeNodes = letterInfoList,
-            VerseText               = verse.TextWithBismillah,
-            Verse                   = verse,
-            MushafOption            = option
-        }));
-        
 
         bool isContainsGivenLetters(Verse verse)
         {
@@ -107,8 +111,6 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
 
             return true;
         }
-
-        
 
         return container;
     }
@@ -131,8 +133,6 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             return;
         }
 
-        
-        
         if (state.Letters.HasNoValue())
         {
             state.ErrorText = "En az bir tane Arapça karakter girilmelidir.";
@@ -151,8 +151,8 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             state.ErrorText = "En az bir tane Arapça karakter girilmelidir.";
             return;
         }
-        
-        ShowResults = true;
+
+        IsProcessing = true;
+        Client.GotoMethod(Calculate);
     }
-    
 }

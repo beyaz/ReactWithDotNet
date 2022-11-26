@@ -3,12 +3,20 @@
     public class ActionButton : ReactComponent
     {
         public string Label { get; set; }
+
+        public bool IsProcessing { get; set; }
+
+        
         
         protected override Element render()
         {
             return new FlexRowCentered
             {
-                children = { Label },
+                children =
+                {
+                    When(IsProcessing,new LoadingIcon{ wh(17)}),
+                    When(!IsProcessing,new div(Label))
+                },
                 onClick  = ActionButtonOnClick,
                 style =
                 {
