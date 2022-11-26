@@ -6,17 +6,16 @@ namespace QuranAnalyzer.WebUI.Components;
 class VerseListThatContainsLettersCalculatorModel
 {
     public string ErrorText { get; set; }
+    public bool IsProcessing { get; set; }
     public IReadOnlyList<LetterInfo> LetterInfoList { get; set; }
     public string Letters { get; set; }
     public string SearchScript { get; set; }
+    public bool ShowResults { get; set; }
 }
 
 class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatContainsLettersCalculatorModel>
 {
     public string Letters, SearchScript;
-
-    public bool IsProcessing { get; set; }
-    public bool ShowResults { get; set; }
 
     protected override void constructor()
     {
@@ -58,17 +57,17 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             new FlexRow(AlignItemsCenter, state.ErrorText.HasValue() ? JustifyContentSpaceBetween : JustifyContentFlexEnd)
             {
                 new ErrorText { Text     = state.ErrorText },
-                new ActionButton { Label = "Hesapla", OnClick = OnClick, IsProcessing = IsProcessing }
+                new ActionButton { Label = "Hesapla", OnClick = OnClick, IsProcessing = state.IsProcessing }
             },
 
-            When(ShowResults, GetCalculationText)
+            When(state.ShowResults, GetCalculationText)
         };
     }
 
     void Calculate()
     {
-        ShowResults  = true;
-        IsProcessing = false;
+        state.ShowResults  = true;
+        state.IsProcessing = false;
     }
 
     Element GetCalculationText()
@@ -117,8 +116,8 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
 
     void OnClick()
     {
-        ShowResults     = false;
-        state.ErrorText = null;
+        state.ShowResults = false;
+        state.ErrorText   = null;
 
         if (state.SearchScript.HasNoValue())
         {
@@ -152,7 +151,7 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             return;
         }
 
-        IsProcessing = true;
+        state.IsProcessing = true;
         Client.GotoMethod(Calculate);
     }
 }
