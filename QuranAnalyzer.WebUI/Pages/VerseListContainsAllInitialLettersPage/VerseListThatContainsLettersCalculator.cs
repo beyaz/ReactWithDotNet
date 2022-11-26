@@ -8,7 +8,6 @@ class VerseListThatContainsLettersCalculatorModel
 {
     public string ErrorText { get; set; }
     public bool IsProcessing { get; set; }
-    public IReadOnlyList<LetterInfo> LetterInfoList { get; set; }
     public string Letters { get; set; }
     public string SearchScript { get; set; }
     public bool ShowResults { get; set; }
