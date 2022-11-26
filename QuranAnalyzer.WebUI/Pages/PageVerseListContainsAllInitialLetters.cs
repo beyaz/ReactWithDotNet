@@ -8,9 +8,20 @@ class PageVerseListContainsAllInitialLettersModel
     public string VerseFilterScript { get; set; }
 
     public string Letters { get; set; }
+
+    public int? SelectedIndex { get; set; }
 }
 class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListContainsAllInitialLettersModel>
 {
+    protected override void constructor()
+    {
+        state = new PageVerseListContainsAllInitialLettersModel
+        {
+            SelectedIndex = 0,
+            VerseFilterScript = ""
+        };
+    }
+
     protected override Element render()
     {
         return new Article
@@ -35,15 +46,15 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                 
                 new FlexRow(Gap(10))
                 {
-                    new StickyLeftMenu{Labels = new []{"1","2","3"}, SelectedIndex = 0},
-                    new FlexColumn
+                    new StickyLeftMenu{Labels = new []{"1","2","3"}, SelectedIndex = state.SelectedIndex, Click = i=>state.SelectedIndex =i},
+                    When(state.SelectedIndex == 0, () => new FlexColumn
                     {
                         new FlexColumn(ComponentBorder, Gap(5))
                         {
                             new FlexRow(AlignItemsCenter)
                             {
-                                (strong)"Ayetleri Seç:", 
-                                
+                                (strong)"Ayetleri Seç:",
+
                                 new TextInput
                                 {
                                     TextInput.Bind(()=>state.VerseFilterScript),
@@ -85,8 +96,60 @@ class PageVerseListContainsAllInitialLetters : ReactComponent<PageVerseListConta
                             },
 
 
+                        }
+                    }),
+                    When(state.SelectedIndex == 1, () => new FlexColumn
+                    {
+                        new FlexColumn(ComponentBorder, Gap(5))
+                        {
+                            new FlexRow(AlignItemsCenter)
+                            {
+                                (strong)"Sayısal karşılığını Hesapla",
+
+                                new TextInput
+                                {
+                                    TextInput.Bind(()=>state.VerseFilterScript),
+                                    Width(100), mr(5), ml(5)
+                                },
+                                (small)" (* demek tüm Kuran boyunca arama yapılacağı anlamına gelir)"
+                            },
+
+                            new FlexRow
+                            {
+                                "Aranacak Harfler:",
+                                new TextInput
+                                {
+                                    TextInput.Bind(()=>state.Letters),
+                                    Width(250), mr(5), ml(5)
+                                },
+                            },
+
+                            new FlexRow(JustifyContentFlexEnd, mr(20), mb(20))
+                            {
+                                new ActionButton{Label = "Ara"}
+                            }
                         },
-                    }
+                        Space(10),
+                        new FlexColumn(ComponentBorder)
+                        {
+                            new h4("Sonuçlar"),
+
+                            new h6("Bulunan ayet sayısı: 114"),
+                            new FreeScrollBar
+                            {
+                                Height(250) , ComponentBorder , Margin(10) ,
+
+                                Children(Enumerable.Range(1,114).Select(i=>new div
+                                {
+                                    i.ToString(),
+                                    new br()
+                                }))
+                            },
+
+
+                        }
+                    })
+
                 }
                 
                     

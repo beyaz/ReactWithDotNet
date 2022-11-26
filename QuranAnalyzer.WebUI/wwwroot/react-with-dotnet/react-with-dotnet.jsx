@@ -707,22 +707,22 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                  */
             if (propValue.$isBinding === true)
             {
-                const targetProp    = propValue.targetProp;
-                const eventName     = propValue.eventName;
-                const sourcePath    = propValue.sourcePath;
+                const targetProp        = propValue.targetProp;
+                const eventName         = propValue.eventName;
+                const sourcePath        = propValue.sourcePath;
                 const jsValueAccess = propValue.jsValueAccess;
-                const defaultValue = propValue.defaultValue;
+                const transformFunction = GetExternalJsObject(IfNull(propValue.transformFunction , 'ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull'));
 
                 const handlerComponentUniqueIdentifier = propValue.HandlerComponentUniqueIdentifier;
 
-                props[targetProp] = IfNull(GetValueInPath(GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier).state[DotNetState], sourcePath), defaultValue);
+                props[targetProp] = transformFunction(GetValueInPath(GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier).state[DotNetState], sourcePath));
                 props[eventName] = function(e)
                 {
                      const targetComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
                     const modifiedDotNetState = Clone(targetComponent.state[DotNetState]);
 
-                    SetValueInPath(modifiedDotNetState, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
+                    SetValueInPath(modifiedDotNetState, sourcePath, transformFunction(GetValueInPath({ e: e }, jsValueAccess)));
 
                     const newState = {};
                     newState[DotNetState] = modifiedDotNetState;
@@ -1443,6 +1443,21 @@ RegisterCoreFunction('ReplaceNullWhenEmpty', function(value)
     if (IsEmptyObject(value))
     {
         return null;
+    }
+
+    return value;
+});
+
+RegisterCoreFunction('EmptyTransformFunction', function(value)
+{
+   return value;
+});
+
+RegisterCoreFunction('ReplaceEmptyStringWhenIsNull', function(value)
+{
+    if (value == null)
+    {
+        return '';
     }
 
     return value;

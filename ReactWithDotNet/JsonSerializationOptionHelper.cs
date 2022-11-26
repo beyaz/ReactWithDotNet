@@ -219,7 +219,8 @@ sealed class RemoteMethodInfo
 [Serializable]
 public sealed class BindInfo
 {
-    public string defaultValue { get; set; }
+    public string transformFunction { get; set; }
+    
     public string eventName { get; set; }
 
     [JsonPropertyName("$isBinding")]

@@ -58,6 +58,8 @@ static partial class ElementSerializer
             return null;
         }
 
+        var transformValueInClientAttribute = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
+
         return new BindInfo
         {
             targetProp    = reactBindAttribute.targetProp,
@@ -65,7 +67,7 @@ static partial class ElementSerializer
             sourcePath    = calculateSourcePathFunc(),
             IsBinding     = true,
             jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
-            defaultValue  = null // todo: check here in client
+            transformFunction = transformValueInClientAttribute?.TransformFunction
         };
     }
 

@@ -39,10 +39,12 @@ public class input : HtmlElement
     public string type { get; set; }
 
     [React]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
     public string value { get; set; }
 
     [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
     public Expression<Func<string>> valueBind { get; set; }
 }
 

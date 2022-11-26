@@ -20,7 +20,9 @@ static class PageId
     public const string Definition = "10";
     public const string PageIdOfMushafOptionsDetail = "11";
     public const string WhoIsReshadKhalifePage = "12";
+    public const string PageVerseListContainsAllInitialLetters = "13";
     
+
 }
 
 static class QueryKey

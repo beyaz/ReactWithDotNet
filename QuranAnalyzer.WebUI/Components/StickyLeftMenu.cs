@@ -59,7 +59,7 @@ class StickyLeftMenu : ReactComponent // TODO: Check name
 
     void OnClicked(MouseEvent _)
     {
-        SelectedIndex = int.TryParse(_.target.id, out var index) ? index : null;
+        SelectedIndex = int.TryParse(_.FirstNotEmptyId, out var index) ? index : null;
 
         DispatchEvent(() => Click, SelectedIndex);
     }
