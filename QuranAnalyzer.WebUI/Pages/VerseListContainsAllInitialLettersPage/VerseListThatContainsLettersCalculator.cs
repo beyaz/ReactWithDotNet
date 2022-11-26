@@ -1,7 +1,8 @@
 ﻿using System.Collections.Immutable;
+using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.Libraries.react_free_scrollbar;
 
-namespace QuranAnalyzer.WebUI.Components;
+namespace QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
 
 class VerseListThatContainsLettersCalculatorModel
 {

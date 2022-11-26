@@ -1,8 +1,7 @@
 ﻿using QuranAnalyzer.WebUI.Components;
-using ReactWithDotNet.Libraries.react_free_scrollbar;
 using static QuranAnalyzer.ArabicLetter;
 
-namespace QuranAnalyzer.WebUI.Pages;
+namespace QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
 
 class PageVerseListContainsAllInitialLettersModel
 {
