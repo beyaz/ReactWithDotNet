@@ -43,7 +43,7 @@ public static class Analyzer
         return false;
     }
     
-    public static (IReadOnlyList<LetterInfo> value, string exception) AnalyzeText(string line, bool isHemzeActive = true)
+    public static Response<IReadOnlyList<LetterInfo>> AnalyzeText(string line, bool isHemzeActive = true)
     {
         var items = new List<LetterInfo>();
 
@@ -76,10 +76,10 @@ public static class Analyzer
                 }
             }
 
-            return (null, $"Arapça karakter girilmelidir. Yanlış girilen karakter:{line[cursor]}");
+            return $"Arapça karakter girilmelidir. Yanlış girilen karakter:{line[cursor]}";
         }
 
-        return (items, null);
+        return items;
     }
 
     public static bool IsArabicLetter(LetterInfo info)

@@ -44,13 +44,13 @@ class SearchScript
                 return "Arama komutunda yanlışlık var. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
             }
 
-            var (letterInfoList, exception) = Analyzer.AnalyzeText(clearText(arr[1]));
-            if (exception is not null)
+            var letterInfoList = Analyzer.AnalyzeText(clearText(arr[1]));
+            if (letterInfoList.IsFail)
             {
-                return exception;
+                return letterInfoList.FailMessage;
             }
 
-            var letters = letterInfoList.Where(Analyzer.IsArabicLetter).ToList();
+            var letters = letterInfoList.Value.Where(Analyzer.IsArabicLetter).ToList();
             if (letters.Count == 0)
             {
                 return "Arama komutunda yanlışlık var. En az bir harf girmelisiniz. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";

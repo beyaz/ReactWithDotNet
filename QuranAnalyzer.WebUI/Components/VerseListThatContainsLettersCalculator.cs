@@ -150,14 +150,14 @@ class VerseListThatContainsLettersCalculator : ReactComponent<VerseListThatConta
             return;
         }
 
-        var (letters, exception) = Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
-        if (exception is not null)
+        var letters = Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
+        if (letters.IsFail)
         {
-            state.ErrorText = exception;
+            state.ErrorText = letters.FailMessage;
             return;
         }
 
-        if (letters.Count == 0)
+        if (letters.Value.Count == 0)
         {
             state.ErrorText = "En az bir tane Arapça karakter girilmelidir.";
             return;

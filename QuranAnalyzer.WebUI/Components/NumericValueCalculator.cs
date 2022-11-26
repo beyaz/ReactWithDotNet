@@ -88,14 +88,14 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
             return;
         }
 
-        var (letters, exception) = Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
-        if (exception is not null)
+        var letters = Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
+        if (letters.IsFail)
         {
-            state.ErrorText = exception;
+            state.ErrorText = letters.FailMessage;
             return;
         }
 
-        state.LetterInfoList = letters;
+        state.LetterInfoList = letters.Value;
     }
 
     class ArabicLetterWithNumericValue
