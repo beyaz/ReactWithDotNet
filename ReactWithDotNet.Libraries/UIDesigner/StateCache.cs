@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using System.Text.Json;
 
@@ -7,17 +6,17 @@ namespace ReactWithDotNet.UIDesigner;
 
 class StateCache
 {
+    #region Properties
+    static string StateFilePath => Path.Combine(CacheDirectory, $@"{nameof(UIDesignerModel)}.json");
+    #endregion
+
     #region Static Fields
-    static readonly string CacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReactWithDotNet.UIDesigner") + 
+    static readonly string CacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReactWithDotNetDesigner") +
                                             Path.DirectorySeparatorChar +
-                                            (System.Reflection.Assembly.GetEntryAssembly()?.GetName().Name ?? "UnknowAssembly")+
+                                            (Assembly.GetEntryAssembly()?.GetName().Name ?? "UnknowAssembly") +
                                             Path.DirectorySeparatorChar;
 
     static readonly object fileLock = new();
-    #endregion
-
-    #region Properties
-    static string StateFilePath => Path.Combine(CacheDirectory, $@"{nameof(UIDesignerModel)}.json");
     #endregion
 
     #region Public Methods
@@ -33,7 +32,6 @@ class StateCache
 
     public static UIDesignerModel ReadState()
     {
-        
         if (File.Exists(StateFilePath))
         {
             var json = File.ReadAllText(StateFilePath);
@@ -55,7 +53,7 @@ class StateCache
     {
         lock (fileLock)
         {
-            WriteAllText(StateFilePath, JsonSerializer.Serialize(state, new JsonSerializerOptions{ WriteIndented = true, IgnoreNullValues = true}));
+            WriteAllText(StateFilePath, JsonSerializer.Serialize(state, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
         }
     }
 
@@ -73,13 +71,12 @@ class StateCache
 
     static void WriteAllText(string path, string contents)
     {
-        
         if (!Directory.Exists(Path.GetDirectoryName(path)))
         {
             Directory.CreateDirectory(Path.GetDirectoryName(path));
         }
-        
-        File.WriteAllText(path,contents);
+
+        File.WriteAllText(path, contents);
     }
     #endregion
 }
