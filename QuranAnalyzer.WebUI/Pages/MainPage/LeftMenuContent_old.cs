@@ -5,7 +5,7 @@ class LeftMenu : ReactComponent
     public static IReadOnlyList<(string text, string pageId)> MenuItems = new List<(string text, string pageId)>
     {
         ("Anasayfa",PageId.MainPage),
-        ("Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.SecuringDataWithCurrentTechnology),
+        ("Teknolojide Veri İletimi",PageId.SecuringDataWithCurrentTechnology),
         ("Ön Bilgiler",PageId.PreInformation),
         ("Tanım",PageId.Definition),
         ("Başlangıç Harfleri",PageId.InitialLetters),
@@ -31,7 +31,7 @@ class LeftMenu : ReactComponent
             string text       = MenuItems[index].text;
             bool   isSelected = index == SelectedIndex;
                               
-            var textColor = isSelected ? "#1EA7FD" : "#666666";
+            var textColor = isSelected ? "rgb(30 167 253)" : "#666666";
 
 
             return new a(DisplayFlex,FlexDirectionRow,Gap(10), AlignItemsCenter, MarginTopBottom(5), Id(index),PositionRelative, Href(MenuItems[index].pageId))
@@ -62,7 +62,7 @@ class LeftMenu : ReactComponent
                     MarginTop(-30),
                     Height(18),
                     Left(3.5),
-                    BorderLeft("1px solid rgb(238, 238, 238)"),
+                    When(index>0,BorderLeft("1px solid rgb(238, 238, 238)"))
                 }
             };
         }
