@@ -22,13 +22,7 @@ class LeftMenu : ReactComponent
             new FlexColumn
             {
                 Children(MenuItems.Select((_, i) => createText(i))),
-                new div
-                {
-                    PositionAbsolute,
-                    TopBottom(17),
-                    Left(3.5),
-                    BorderLeft("1px solid #EEEEEE"),
-                }
+               
             }
         };
 
@@ -40,9 +34,19 @@ class LeftMenu : ReactComponent
             var textColor = isSelected ? "#1EA7FD" : "#666666";
 
 
-            return new FlexRow(Gap(10), AlignItemsCenter, MarginTopBottom(5), Id(index))
+            return new a(DisplayFlex,FlexDirectionRow,Gap(10), AlignItemsCenter, MarginTopBottom(5), Id(index),PositionRelative, Href(MenuItems[index].pageId))
             {
-               
+                TextDecorationNone,
+                Color("inherit"),
+                Color("rgb(68, 68, 68)"),
+                Hover(Color("rgb(173 164 164)")),
+               new div
+               {
+                   wh(8),
+                   Background("rgb(221 221 221)"),
+                   BorderRadius("1em"),
+                   Zindex(1)
+               },
                 new FlexRowCentered
                 {
                     Text(text),
@@ -50,6 +54,15 @@ class LeftMenu : ReactComponent
                     //BorderRadius("50%"),
                     // wh(30),
                     //Color(textColor)
+                },
+
+                new div
+                {
+                    PositionAbsolute,
+                    MarginTop(-30),
+                    Height(18),
+                    Left(3.5),
+                    BorderLeft("1px solid rgb(238, 238, 238)"),
                 }
             };
         }
