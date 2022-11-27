@@ -1,10 +1,8 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
-
-
-class LeftMenuContent_old : ReactComponent
+class LeftMenu : ReactComponent
 {
-    public static IReadOnlyList<(string text, string pageId)> Menu = new List<(string text, string pageId)>
+    public static IReadOnlyList<(string text, string pageId)> MenuItems = new List<(string text, string pageId)>
     {
         ("Anasayfa",PageId.MainPage),
         ("Günümüz Teknolojisinde Veri Nasıl Korunur",PageId.SecuringDataWithCurrentTechnology),
@@ -14,6 +12,53 @@ class LeftMenuContent_old : ReactComponent
         ("Soru - Cevap",PageId.QuestionAnswerPage),
         ("İletişim",PageId.ContactPage)
     };
+
+    public int? SelectedIndex { get; set; }
+    
+    protected override Element render()
+    {
+        return new div
+        {
+            new FlexColumn
+            {
+                Children(MenuItems.Select((_, i) => createText(i))),
+                new div
+                {
+                    PositionAbsolute,
+                    TopBottom(17),
+                    Left(3.5),
+                    BorderLeft("1px solid #EEEEEE"),
+                }
+            }
+        };
+
+        Element createText(int index)
+        {
+            string text       = MenuItems[index].text;
+            bool   isSelected = index == SelectedIndex;
+                              
+            var textColor = isSelected ? "#1EA7FD" : "#666666";
+
+
+            return new FlexRow(Gap(10), AlignItemsCenter, MarginTopBottom(5), Id(index))
+            {
+               
+                new FlexRowCentered
+                {
+                    Text(text),
+                    //Background("#EEF2FF"),
+                    //BorderRadius("50%"),
+                    // wh(30),
+                    //Color(textColor)
+                }
+            };
+        }
+    }
+}
+
+class LeftMenuContent_old : ReactComponent
+{
+ 
 
     protected override Element render()
     {
