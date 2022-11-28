@@ -359,7 +359,7 @@ static partial class ElementSerializer
             }
             else
             {
-                throw new NotImplementedException("Style attribute problem TODO: beyaz");
+                throw new NotImplementedException("Style attribute problem occured.");
             }
         }
 
