@@ -707,25 +707,33 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                  */
             if (propValue.$isBinding === true)
             {
-                const targetProp        = propValue.targetProp;
-                const eventName         = propValue.eventName;
-                const sourcePath        = propValue.sourcePath;
+                const targetProp    = propValue.targetProp;
+                const eventName     = propValue.eventName;
+                const sourcePath    = propValue.sourcePath;
+                const sourceIsState = propValue.sourceIsState;
+                
                 const jsValueAccess = propValue.jsValueAccess;
                 const transformFunction = GetExternalJsObject(IfNull(propValue.transformFunction , 'ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull'));
 
                 const handlerComponentUniqueIdentifier = propValue.HandlerComponentUniqueIdentifier;
 
-                props[targetProp] = transformFunction(GetValueInPath(GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier).state[DotNetState], sourcePath));
+                let accessToSource = DotNetProperties;
+                if (sourceIsState)
+                {
+                    accessToSource = DotNetState;
+                }
+
+                props[targetProp] = transformFunction(GetValueInPath(GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier).state[accessToSource], sourcePath));
                 props[eventName] = function(e)
                 {
                      const targetComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
-                    const modifiedDotNetState = Clone(targetComponent.state[DotNetState]);
+                    const modifiedDotNetState = Clone(targetComponent.state[accessToSource]);
 
                     SetValueInPath(modifiedDotNetState, sourcePath, transformFunction(GetValueInPath({ e: e }, jsValueAccess)));
 
                     const newState = {};
-                    newState[DotNetState] = modifiedDotNetState;
+                    newState[accessToSource] = modifiedDotNetState;
 
                     targetComponent.setState(newState);
                 }

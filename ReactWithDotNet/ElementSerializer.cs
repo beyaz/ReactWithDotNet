@@ -50,7 +50,7 @@ static partial class ElementSerializer
     const string ___Type___ = "$Type";
     const string ___TypeOfState___ = "$TypeOfState";
 
-    static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, Func<string[]> calculateSourcePathFunc)
+    static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, Func<(IReadOnlyList<string> path, bool isConnectedToState)> calculateSourcePathFunc)
     {
         var reactBindAttribute = propertyInfo.GetCustomAttribute<ReactBindAttribute>();
         if (reactBindAttribute == null)
@@ -60,13 +60,15 @@ static partial class ElementSerializer
 
         var transformValueInClientAttribute = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
 
+        var (path, isConnectedToState) = calculateSourcePathFunc();
         return new BindInfo
         {
-            targetProp    = reactBindAttribute.targetProp,
-            eventName     = reactBindAttribute.eventName,
-            sourcePath    = calculateSourcePathFunc(),
-            IsBinding     = true,
-            jsValueAccess = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
+            targetProp        = reactBindAttribute.targetProp,
+            eventName         = reactBindAttribute.eventName,
+            sourcePath        = path,
+            sourceIsState     = isConnectedToState,
+            IsBinding         = true,
+            jsValueAccess     = reactBindAttribute.jsValueAccess.Split('.', StringSplitOptions.RemoveEmptyEntries),
             transformFunction = transformValueInClientAttribute?.TransformFunction
         };
     }
@@ -175,21 +177,21 @@ static partial class ElementSerializer
                 throw HandlerMethodShouldBelongToReactComponent(pi, expression.ToString());
             }
 
-            string[] calculateSourcePathFunc()
+            (IReadOnlyList<string> path, bool isConnectedToState) calculateSourcePathFunc()
             {
                 if (propertyValue is Expression<Func<string>> bindingExpressionAsString)
                 {
-                    return bindingExpressionAsString.AsBindingSourcePathInState().Split(".".ToCharArray());
+                    return bindingExpressionAsString.AsBindingPath();
                 }
 
                 if (propertyValue is Expression<Func<int>> bindingExpressionAsInt32)
                 {
-                    return bindingExpressionAsInt32.AsBindingSourcePathInState().Split(".".ToCharArray());
+                    return bindingExpressionAsInt32.AsBindingPath();
                 }
 
                 if (propertyValue is Expression<Func<bool>> bindingExpressionAsBoolean)
                 {
-                    return bindingExpressionAsBoolean.AsBindingSourcePathInState().Split(".".ToCharArray());
+                    return bindingExpressionAsBoolean.AsBindingPath();
                 }
 
                 throw new NotImplementedException();

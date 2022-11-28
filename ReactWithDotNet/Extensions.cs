@@ -2,7 +2,8 @@
 
 static class Extensions
 {
-    public static string AsBindingSourcePathInState<T>(this Expression<Func<T>> propertyAccessor)
+
+    public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath<T>(this Expression<Func<T>> propertyAccessor)
     {
         var memberExpression = propertyAccessor.Body as MemberExpression;
         if (memberExpression == null)
@@ -10,34 +11,32 @@ static class Extensions
             throw new ArgumentException(propertyAccessor.ToString());
         }
 
-        var bindingPath = NameofAllPath(memberExpression);
+        var path = new List<string>();
 
-        return bindingPath;
-
-        static string NameofAllPath(MemberExpression memberExpression)
+        while (memberExpression != null)
         {
-            var path = new List<string>();
+            path.Add(memberExpression.Member.Name);
 
-            while (memberExpression != null)
-            {
-                path.Add(memberExpression.Member.Name);
+            memberExpression = memberExpression.Expression as MemberExpression;
+        }
 
-                memberExpression = memberExpression.Expression as MemberExpression;
-            }
+        if (path.Count == 0)
+        {
+            return default;
+        }
 
-            if (path.Count == 0)
-            {
-                return null;
-            }
-
+        if (path[^1] == "state")
+        {
             path.RemoveAt(path.Count - 1);
 
             path.Reverse();
 
-            const string Separator = ".";
-
-            return string.Join(Separator, path);
+            return (path, true);
         }
+        
+        path.Reverse();
+
+        return (path, false);
     }
 
     public static Exception DeveloperException(string message)

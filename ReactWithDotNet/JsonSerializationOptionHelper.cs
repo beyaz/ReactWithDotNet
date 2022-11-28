@@ -228,10 +228,11 @@ public sealed class BindInfo
 
     public string[] jsValueAccess { get; set; }
 
-    public string[] sourcePath { get; set; }
+    public IReadOnlyList<string> sourcePath { get; set; }
 
     public string targetProp { get; set; }
     public int? HandlerComponentUniqueIdentifier { get; set; }
+    public bool sourceIsState { get; set; }
 }
 
 public class InnerElementInfo
