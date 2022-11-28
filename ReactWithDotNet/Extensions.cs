@@ -2,7 +2,6 @@
 
 static class Extensions
 {
-
     public static string AsBindingSourcePathInState<T>(this Expression<Func<T>> propertyAccessor)
     {
         string NameofAllPath(MemberExpression memberExpression)
@@ -30,7 +29,6 @@ static class Extensions
             return string.Join(Separator, path);
         }
 
-
         var memberExpression = propertyAccessor.Body as MemberExpression;
         if (memberExpression == null)
         {
@@ -40,6 +38,11 @@ static class Extensions
         var bindingPath = NameofAllPath(memberExpression);
 
         return bindingPath;
+    }
+
+    public static Exception DeveloperException(string message)
+    {
+        return new DeveloperException(message);
     }
 
     public static object GetDefaultValue(this Type t)
@@ -98,23 +101,16 @@ static class Extensions
 
         return data;
     }
-
-    public static Exception DeveloperException(string message)
-    {
-        return new DeveloperException(message);
-    }
 }
 
 [Serializable]
-public sealed class DeveloperException: Exception
+public sealed class DeveloperException : Exception
 {
-    public DeveloperException(string message): base(message)
+    public DeveloperException(string message) : base(message)
     {
-        
     }
 
-    public DeveloperException(string message, Exception innerException) : base(message,innerException)
+    public DeveloperException(string message, Exception innerException) : base(message, innerException)
     {
-
     }
 }
