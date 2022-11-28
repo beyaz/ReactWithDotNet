@@ -79,15 +79,30 @@ class CssClassInfo
 {
     public string Name { get; init; }
     public IReadOnlyList<CssPseudoCodeInfo> Pseudos { get; init; }
-    
+    public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries { get; set; }
+    public int? ComponentUniqueIdentifier { get; set; }
+
     public void WriteTo(JsonMap jsonMap)
     {
-        foreach (var pseudoCodeInfo in Pseudos)
+        if (Pseudos is not null)
         {
-            var cssSelector = $".{Name}:{pseudoCodeInfo.Name}";
-            var cssBody = pseudoCodeInfo.BodyOfCss;
-            
-            jsonMap.Add(cssSelector, cssBody);
+            foreach (var pseudoCodeInfo in Pseudos)
+            {
+                var cssSelector = $".{Name}:{pseudoCodeInfo.Name}";
+                var cssBody     = pseudoCodeInfo.BodyOfCss;
+
+                jsonMap.Add(cssSelector, cssBody);
+            }
+        }
+
+        if (MediaQueries != null)
+        {
+            foreach (var (mediaRule, cssBody) in MediaQueries)
+            {
+                var cssSelector = $"@media {mediaRule} {{ .{Name}";
+
+                jsonMap.Add(cssSelector, cssBody);
+            }
         }
     }
 }

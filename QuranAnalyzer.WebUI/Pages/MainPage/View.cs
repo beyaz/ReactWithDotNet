@@ -72,16 +72,21 @@ class View : ReactComponent<MainViewModel>
                     children =
                     {
                         new BackdropView { IsActive = IsBackDropActive },
-                        new FlexRow(PaddingLeftRight("10%"))
+                        new FlexRow(PaddingLeftRight(5))
                         {
                             style    =
                             {
                                 marginLeftRight = "10px", marginTop = "30px", width = "100%" ,
-                                MediaQuery =
+                                MediaQueries =
                                 {
-                                    {"(min-width:500px)",new Style {
-                                        PaddingLeftRight("5%")
-                                    }}
+                                    new MediaQuery("(min-width: 600px)", new Style
+                                    {
+                                        MarginLeftRight("5%")
+                                    }),
+                                    new MediaQuery("(min-width: 1200px)", new Style
+                                    {
+                                        MarginLeftRight("10%")
+                                    })
                                 }
                             },
                             children =

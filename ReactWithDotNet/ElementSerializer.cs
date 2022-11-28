@@ -292,10 +292,12 @@ static partial class ElementSerializer
 
     static (Style style, bool noNeedToExport) GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
     {
-        var pseudos = new List<CssPseudoCodeInfo>();
+        List<CssPseudoCodeInfo> pseudos = null;
 
         if (style._hover is not null)
         {
+            pseudos = new List<CssPseudoCodeInfo>();
+
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "hover",
@@ -305,6 +307,8 @@ static partial class ElementSerializer
 
         if (style._before is not null)
         {
+            pseudos ??= new List<CssPseudoCodeInfo>();
+            
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "before",
@@ -314,6 +318,8 @@ static partial class ElementSerializer
 
         if (style._after is not null)
         {
+            pseudos ??= new List<CssPseudoCodeInfo>();
+            
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "after",
@@ -323,6 +329,8 @@ static partial class ElementSerializer
 
         if (style._active is not null)
         {
+            pseudos ??= new List<CssPseudoCodeInfo>();
+            
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "active",
@@ -332,21 +340,25 @@ static partial class ElementSerializer
 
         if (style._focus is not null)
         {
+            pseudos ??= new List<CssPseudoCodeInfo>();
+            
             pseudos.Add(new CssPseudoCodeInfo
             {
                 Name      = "focus",
                 BodyOfCss = style._focus.ToCssWithImportant()
             });
         }
-
-        if (pseudos.Count > 0)
+        
+        if (pseudos is not null || style._mediaQueries is not null)
         {
             var cmp = context.componentStack.Peek();
             
             var cssClassName = context.DynamicStyles.GetClassName(new CssClassInfo
             {
+                ComponentUniqueIdentifier= cmp.ComponentUniqueIdentifier,
                 Name    = "_"+cmp.ComponentUniqueIdentifier + "_" + cmp.GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
-                Pseudos = pseudos
+                Pseudos = pseudos,
+                MediaQueries = style._mediaQueries?.Select(pair => (pair.query, pair.style.ToCssWithImportant())).ToList()
             });
 
             if (instance is HtmlElement htmlElement)

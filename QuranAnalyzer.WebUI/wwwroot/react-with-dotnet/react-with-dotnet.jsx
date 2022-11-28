@@ -1704,7 +1704,10 @@ function ProcessDynamicCssClasses(dynamicStyles)
             {
                 hasChange = true;
 
-                const componentUniqueIdentifier = parseInt(cssSelector.split('-')[0].substr(2));
+                let startIndex = cssSelector.indexOf('._');
+                let endIndex = cssSelector.indexOf('_', startIndex + 2);
+
+                const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 2, endIndex));
                 if (isNaN(componentUniqueIdentifier))
                 {
                     throw CreateNewDeveloperError('componentUniqueIdentifier cannot calculated from ' + cssSelector);
@@ -1734,7 +1737,11 @@ function ProcessDynamicCssClasses(dynamicStyles)
             arr.push(cssSelector);
             arr.push("{");
             arr.push(cssBody);
-            arr.push("}");            
+            arr.push("}");
+            if (cssSelector.indexOf('@media ') === 0)
+            {
+                arr.push("}"); // for closing media rule bracket
+            }
         }
 
         ReactWithDotNetDynamicCssElement.innerHTML = arr.join("\n");

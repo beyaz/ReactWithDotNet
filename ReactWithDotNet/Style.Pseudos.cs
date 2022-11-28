@@ -80,18 +80,40 @@ partial class Style
         }
     }
 
-    internal Dictionary<string, Style> _mediaQuery;
+    internal List<MediaQuery> _mediaQueries;
 
     [JsonIgnore]
-    public Dictionary<string, Style> MediaQuery
+    public List<MediaQuery> MediaQueries
     {
         get
         {
-            if (_mediaQuery == null)
+            if (_mediaQueries == null)
             {
-                _mediaQuery = new Dictionary<string, Style>();
+                _mediaQueries = new List<MediaQuery>();
             }
-            return _mediaQuery;
+            return _mediaQueries;
         }
+    }
+}
+
+/// <summary>
+/// Example:
+/// <br/>
+/// new MediaQuery("only screen and (max-width: 600px)", new Style { width:"5px" }
+/// </summary>
+public sealed class MediaQuery
+{
+    internal readonly string query;
+    internal readonly Style style;
+
+    /// <summary>
+    /// Example:
+    /// <br/>
+    /// new MediaQuery("only screen and (max-width: 600px)", new Style { width:"5px" }
+    /// </summary>
+    public MediaQuery(string query, Style style)
+    {
+        this.query = query;
+        this.style = style;
     }
 }
