@@ -26,7 +26,6 @@ partial class Style
         var sb = new StringBuilder();
 
         var seperator = isImportant ? " !important;" : ";";
-        
 
         if (alignContent != null)
         {
