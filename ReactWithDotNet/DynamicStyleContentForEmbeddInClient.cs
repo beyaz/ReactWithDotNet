@@ -84,7 +84,10 @@ class CssClassInfo
     {
         foreach (var pseudoCodeInfo in Pseudos)
         {
-            jsonMap.Add($".{Name}:{pseudoCodeInfo.Name}", pseudoCodeInfo.BodyOfCss);
+            var cssSelector = $".{Name}:{pseudoCodeInfo.Name}";
+            var cssBody = pseudoCodeInfo.BodyOfCss;
+            
+            jsonMap.Add(cssSelector, cssBody);
         }
 
     }
