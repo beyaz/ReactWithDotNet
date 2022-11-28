@@ -89,6 +89,5 @@ class CssClassInfo
             
             jsonMap.Add(cssSelector, cssBody);
         }
-
     }
 }
