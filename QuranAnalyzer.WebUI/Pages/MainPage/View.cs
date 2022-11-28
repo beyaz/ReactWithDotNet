@@ -51,6 +51,9 @@ class View : ReactComponent<MainViewModel>
 
     protected override Element render()
     {
+        
+        
+        
         var IsBackDropActive = state.HamburgerMenuIsOpen;
 
         var top = new FixedTopPanelContainer();
@@ -69,10 +72,23 @@ class View : ReactComponent<MainViewModel>
                     children =
                     {
                         new BackdropView { IsActive = IsBackDropActive },
-                        new div
+                        new FlexRow(PaddingLeftRight("10%"))
                         {
-                            style    = { marginLeftRight = "10px", marginTop = "10px", maxWidth = "800px", width = "100%" },
-                            children = { buildMainContent() }
+                            style    =
+                            {
+                                marginLeftRight = "10px", marginTop = "30px", width = "100%" ,
+                                MediaQuery =
+                                {
+                                    {"(min-width:500px)",new Style {
+                                        PaddingLeftRight("5%")
+                                    }}
+                                }
+                            },
+                            children =
+                            {
+                                new LeftMenu{MinWidth(230), MarginTop(100),PositionSticky,Top(30)},
+                                buildMainContent()
+                            }
                         }
                     }
                 }

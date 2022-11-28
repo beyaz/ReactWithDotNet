@@ -80,4 +80,18 @@ partial class Style
         }
     }
 
+    internal Dictionary<string, Style> _mediaQuery;
+
+    [JsonIgnore]
+    public Dictionary<string, Style> MediaQuery
+    {
+        get
+        {
+            if (_mediaQuery == null)
+            {
+                _mediaQuery = new Dictionary<string, Style>();
+            }
+            return _mediaQuery;
+        }
+    }
 }

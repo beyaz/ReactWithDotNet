@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
-using QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 namespace QuranAnalyzer.WebUI;
 

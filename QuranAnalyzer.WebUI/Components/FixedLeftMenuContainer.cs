@@ -10,7 +10,7 @@ class FixedLeftMenuContainer : ReactComponent
     {
         return new div
         {
-            children = { new LeftMenuContent_old() },
+            children = { new LeftMenu() },
             style =
             {
                 position   = "fixed",
