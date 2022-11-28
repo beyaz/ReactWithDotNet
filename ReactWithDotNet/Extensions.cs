@@ -4,7 +4,17 @@ static class Extensions
 {
     public static string AsBindingSourcePathInState<T>(this Expression<Func<T>> propertyAccessor)
     {
-        string NameofAllPath(MemberExpression memberExpression)
+        var memberExpression = propertyAccessor.Body as MemberExpression;
+        if (memberExpression == null)
+        {
+            throw new ArgumentException(propertyAccessor.ToString());
+        }
+
+        var bindingPath = NameofAllPath(memberExpression);
+
+        return bindingPath;
+
+        static string NameofAllPath(MemberExpression memberExpression)
         {
             var path = new List<string>();
 
@@ -28,16 +38,6 @@ static class Extensions
 
             return string.Join(Separator, path);
         }
-
-        var memberExpression = propertyAccessor.Body as MemberExpression;
-        if (memberExpression == null)
-        {
-            throw new ArgumentException(propertyAccessor.ToString());
-        }
-
-        var bindingPath = NameofAllPath(memberExpression);
-
-        return bindingPath;
     }
 
     public static Exception DeveloperException(string message)
