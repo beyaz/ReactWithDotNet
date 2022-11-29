@@ -789,6 +789,8 @@ public static partial class Mixin
     public static StyleModifier PaddingTopRight(double paddingTopRight) => new(style => style.paddingTopRight = paddingTopRight.AsPixel());
     #endregion
 
+    public static StyleModifier MediaQuery(string query, Style styleForOverride) => new(style => style.MediaQueries.Add(new MediaQuery(query, styleForOverride)));
+
     #region short
     #region margin
     /// <summary>

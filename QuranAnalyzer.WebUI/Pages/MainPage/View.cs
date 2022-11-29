@@ -44,7 +44,7 @@ class View : ReactComponent<MainViewModel>
         Context.Set(ContextKey.HamburgerMenuIsOpen,state.HamburgerMenuIsOpen);
     }
 
-     void OnHamburgerMenuOpened()
+    void OnHamburgerMenuOpened()
     {
         state.HamburgerMenuIsOpen = true;
     }
@@ -72,28 +72,17 @@ class View : ReactComponent<MainViewModel>
                     children =
                     {
                         new BackdropView { IsActive = IsBackDropActive },
-                        new FlexRow(PaddingLeftRight(5))
+                        
+                        new MainContentContainer
                         {
-                            style    =
+                            MarginTop(30),
+                            
+                            new LeftMenu
                             {
-                                marginLeftRight = "10px", marginTop = "30px", width = "100%" ,
-                                MediaQueries =
-                                {
-                                    new MediaQuery("(min-width: 600px)", new Style
-                                    {
-                                        MarginLeftRight("5%")
-                                    }),
-                                    new MediaQuery("(min-width: 1200px)", new Style
-                                    {
-                                        MarginLeftRight("10%")
-                                    })
-                                }
+                                MinWidth(230), MarginTop(100),PositionSticky,Top(30),
+                                MediaQuery("(max-width: 800px)", new Style{DisplayNone})
                             },
-                            children =
-                            {
-                                new LeftMenu{MinWidth(230), MarginTop(100),PositionSticky,Top(30)},
-                                buildMainContent()
-                            }
+                            buildMainContent()
                         }
                     }
                 }

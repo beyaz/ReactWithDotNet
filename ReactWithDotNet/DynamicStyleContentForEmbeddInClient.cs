@@ -15,8 +15,9 @@ class DynamicStyleContentForEmbeddInClient
                 {
                     cssClassInfo = new CssClassInfo
                     {
-                        Name    = cssClassInfo.Name + suffix++,
-                        Pseudos = cssClassInfo.Pseudos
+                        Name         = cssClassInfo.Name + suffix++,
+                        Pseudos      = cssClassInfo.Pseudos,
+                        MediaQueries = cssClassInfo.MediaQueries
                     };
 
                     continue;
