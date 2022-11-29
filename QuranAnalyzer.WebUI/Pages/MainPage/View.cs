@@ -79,9 +79,10 @@ class View : ReactComponent<MainViewModel>
                             
                             new LeftMenu
                             {
-                                MinWidth(230), MarginTop(100),PositionSticky,Top(30),
-                                MediaQuery("(max-width: 800px)", new Style{DisplayNone})
-                            },
+                                SelectedPageId = state.PageId
+
+                            }+ MinWidth(230) + MarginTop(100) + PositionSticky +Top(30) + MediaQuery("(max-width: 800px)", new Style{DisplayNone}),
+                            
                             buildMainContent()
                         }
                     }

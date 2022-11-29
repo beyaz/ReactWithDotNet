@@ -2,7 +2,7 @@
 
 class LeftMenu : ReactComponent
 {
-    public static IReadOnlyList<(string text, string pageId)> MenuItems = new List<(string text, string pageId)>
+    static List<(string text, string pageId)> MenuItems = new List<(string text, string pageId)>
     {
         ("Anasayfa", PageId.MainPage),
         ("Teknolojide Veri İletimi", PageId.SecuringDataWithCurrentTechnology),
@@ -13,7 +13,18 @@ class LeftMenu : ReactComponent
         ("İletişim", PageId.ContactPage)
     };
 
+    
     public int? SelectedIndex { get; set; }
+
+    public string SelectedPageId { get; set; }
+
+    protected override void constructor()
+    {
+        if (SelectedPageId is not null)
+        {
+            SelectedIndex = MenuItems.FindIndex(x => x.pageId == SelectedPageId);
+        }
+    }
 
     protected override Element render()
     {
