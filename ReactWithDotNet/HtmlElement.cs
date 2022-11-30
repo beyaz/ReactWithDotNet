@@ -177,9 +177,9 @@ public abstract class HtmlElement : Element
         return element;
     }
     
-    public static HtmlElement operator +(HtmlElement htmlElement, ElementModifier elementModifier)
+    public static HtmlElement operator +(HtmlElement htmlElement, HtmlElementModifier htmlElementModifier)
     {
-        elementModifier.modifyElement(htmlElement);
+        htmlElementModifier.modifyHtmlElement(htmlElement);
 
         return htmlElement;
     }
