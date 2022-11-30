@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
@@ -64,5 +65,11 @@ public abstract class ThirdPartyReactComponent : Element
         modifier.modifyStyle(thirdPartyReactComponent.style);
 
         return thirdPartyReactComponent;
+    }
+
+    [SuppressMessage("ReSharper", "ParameterHidesMember")]
+    public void Add(Style style)
+    {
+        this.style.Import(style);
     }
 }

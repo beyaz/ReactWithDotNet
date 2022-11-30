@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Web;
@@ -179,6 +180,12 @@ public abstract class ReactStatefulComponent : Element
         }
 
         return propertyNameOfCustomReactEvent;
+    }
+
+    [SuppressMessage("ReSharper", "ParameterHidesMember")]
+    public void Add(Style style)
+    {
+        this.style.Import(style);
     }
 }
 

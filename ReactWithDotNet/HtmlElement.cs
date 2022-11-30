@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
@@ -202,7 +203,13 @@ public abstract class HtmlElement : Element
     {
         htmlElementModifier?.modifyHtmlElement(this);
     }
-    
+
+    [SuppressMessage("ReSharper", "ParameterHidesMember")]
+    public void Add(Style style)
+    {
+        this.style.Import(style);
+    }
+
 
     #endregion
 }
