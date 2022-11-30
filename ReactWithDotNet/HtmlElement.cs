@@ -193,16 +193,6 @@ public abstract class HtmlElement : Element
         return htmlElement;
     }
 
-   
-    // TODO: check usage then maybe remove
-    public static HtmlElement operator +(HtmlElement element, IEnumerable<Element> children)
-    {
-        element.children.Clear();
-        element.children.AddRange(children);
-
-        return element;
-    }
-
     public void Add(StyleModifier styleModifier)
     {
         styleModifier?.modifyStyle(style);

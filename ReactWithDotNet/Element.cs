@@ -85,9 +85,12 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         {
             thirdPartyReactComponent.style.Import(style);
         }
+        else if (this is ReactStatefulComponent reactStatefulComponent)
+        {
+            reactStatefulComponent.style.Import(style);
+        }
         else
         {
-            // TODO: check here apply to root element
             throw new DeveloperException("style alement cannot be attached to " + GetType().FullName);
         }
     }

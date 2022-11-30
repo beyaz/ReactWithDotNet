@@ -104,11 +104,11 @@ class RedBorder:ReactComponent<RedBorderModel>
 
     protected override Element render()
     {
-        return new div
+        return new div(Children(children))
         {
             style   = { border = state.BorderWidth + "px solid red" },
             onClick = _ => state.BorderWidth++
-        } + Children(children);
+        };
     }
 }
 
