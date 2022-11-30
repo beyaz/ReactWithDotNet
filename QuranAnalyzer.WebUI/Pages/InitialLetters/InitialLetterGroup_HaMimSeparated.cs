@@ -138,7 +138,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         {
                             new div(TextAlignCenter,MaxWidth(300))
                             {
-                                "Yukarıdaki geçiş adetlerinin rakamları toplamı ",(span)"59"|Color(firstColor),"'dur",
+                                "Yukarıdaki geçiş adetlerinin rakamları toplamı ",(span)"59"+Color(firstColor),"'dur",
                                 new br(),
                                 (small)"59 = (6+4 + 3+8+0 + 4+8 + 2+7+6 + 5+3 + 3+0+0)"
                             }
@@ -188,7 +188,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         {
                             new div(TextAlignCenter,MaxWidth(300))
                             {
-                                "Aşağıdaki geçiş adetlerinin rakamları toplamı ",(span)"54"|Color(firstColor),"'dür",
+                                "Aşağıdaki geçiş adetlerinin rakamları toplamı ",(span)"54"+Color(firstColor),"'dür",
                                 new br(),
                                 (small)"54 = (4+4 + 3+2+4 + 1+6 + 1+5+0 + 3+1 + 2+0+0 + 3+6 + 2+2+5)"
                             }

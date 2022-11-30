@@ -52,12 +52,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return element;
     }
 
-    public static Element operator |(Element element, StyleModifier modifier)
-    {
-        element.ProcessModifier(modifier);
-
-        return element;
-    }
+ 
 
     public static implicit operator Element(string text)
     {

@@ -109,7 +109,11 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 Width = width
             },
             Space(10),
-            new Slider { max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged } | Margin(10) | Padding(5),
+            new Slider
+            {
+                max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged ,
+                style = { Margin(10) , Padding(5) }
+            },
 
             
             
@@ -140,7 +144,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                     
                 },
                 // content
-                createJsonEditor() |Height("100%")
+                createJsonEditor() + Height("100%")
             }
         };
 

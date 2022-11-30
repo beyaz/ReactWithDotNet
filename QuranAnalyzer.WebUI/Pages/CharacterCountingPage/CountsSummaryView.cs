@@ -136,7 +136,7 @@ class CountsSummaryView : ReactComponent
                 new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
                 new FlexRow(MarginLeftRight(5), AlignItemsCenter,Color("red"))
                 {
-                    new div("19"), (small)$"x {total / 19}"|MarginLeftRight(3)
+                    new div("19"), (small)$"x {total / 19}"+MarginLeftRight(3)
                 },
                 new div { innerText = ")" }
             },

@@ -193,12 +193,7 @@ public abstract class HtmlElement : Element
         return element;
     }
 
-    public static HtmlElement operator |(HtmlElement element, ElementModifier modifier)
-    {
-        element.ProcessModifier(modifier);
 
-        return element;
-    }
 
     public static HtmlElement operator +(HtmlElement element, StyleModifier modifier)
     {
@@ -207,13 +202,8 @@ public abstract class HtmlElement : Element
         return element;
     }
 
-    public static HtmlElement operator |(HtmlElement element, StyleModifier modifier)
-    {
-        element.ProcessModifier(modifier);
-
-        return element;
-    }
-
+   
+    // TODO: check usage then maybe remove
     public static HtmlElement operator +(HtmlElement element, IEnumerable<Element> children)
     {
         element.children.Clear();

@@ -347,8 +347,8 @@ public static partial class Mixin
     public static StyleModifier Bottom(string bottom) => new(style => style.bottom = bottom);
     public static StyleModifier Bottom(double bottom) => Bottom(bottom.AsPixel());
 
-    public static StyleModifier BottomRight(string bottomAndRight) => Bottom(bottomAndRight) | Right(bottomAndRight);
-    public static StyleModifier BottomRight(double bottomAndRight) => Bottom(bottomAndRight) | Right(bottomAndRight);
+    public static StyleModifier BottomRight(string bottomAndRight) => Bottom(bottomAndRight) + Right(bottomAndRight);
+    public static StyleModifier BottomRight(double bottomAndRight) => Bottom(bottomAndRight) + Right(bottomAndRight);
 
     public static StyleModifier BoxShadow(string boxShadow) => new(style => style.boxShadow = boxShadow);
 

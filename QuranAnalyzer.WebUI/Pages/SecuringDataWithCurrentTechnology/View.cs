@@ -34,7 +34,7 @@ TC kimlik numaranızda bulunan rakamlar sizce rastgele rakamlar mı? Yoksa belli
 11 hane olan TC kimlik numaranızın ilk 10 hanesinin rakamlarının toplamının 10'a bölümünden kalan sayı 11. hanedeki sayı ile hep aynıdır.
 Özetle şunu söyleyebiliriz",
             new br(),
-            (div)@"TC kimlik numaranızdaki ilk 10 rakamın toplamını 10'a bölerseniz elinizde kalan sayı 11.hanedeki rakamı verir." | FontWeight500,
+            (div)@"TC kimlik numaranızdaki ilk 10 rakamın toplamını 10'a bölerseniz elinizde kalan sayı 11.hanedeki rakamı verir." + FontWeight500,
             new br(),
             new p
             {
@@ -110,7 +110,7 @@ Doğrulama bilgisi veri içinde beraber gönderiliyor.
             },
             new VSpace(20),
 
-            (p)@" İyi de bu anlatılanların Kuran ile 19 ile ne alakası var ?"|FontWeight500,
+            (p)@" İyi de bu anlatılanların Kuran ile 19 ile ne alakası var ?"+FontWeight500,
 
             (p)@"Aynen burada bahsedilen örneklerde olduğu gibi bir doğrulama kodu Kuran içinde olabilir mi ? 
 Bu sayede Kuran'ın Yaratıcıdan gelen bir kitap olduğunu daha iyi anlayabilelim diye Kuran'ın içine bir doğrulama kodu-sayısı-anahtarı olabilir mi ?",

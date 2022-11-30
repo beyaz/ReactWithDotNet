@@ -14,7 +14,7 @@ public sealed class StyleModifier : IModifier
         this.modifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
     }
 
-    public static StyleModifier operator |(StyleModifier a, StyleModifier b)
+    public static StyleModifier operator +(StyleModifier a, StyleModifier b)
     {
         void modify(Style style)
         {
@@ -73,7 +73,7 @@ public sealed class ElementModifier : IModifier
         this.modifyElement = modifyElement ?? throw new ArgumentNullException(nameof(modifyElement));
     }
 
-    public static ElementModifier operator |(ElementModifier a, ElementModifier b)
+    public static ElementModifier operator +(ElementModifier a, ElementModifier b)
     {
         void modify(Element htmlElement)
         {

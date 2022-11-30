@@ -60,7 +60,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             When(state.IsBlocked,()=>new FlexRowCentered
             {
                 PositionAbsolute,FontWeight700, LeftRight(0),TopBottom(0),Zindex(4),
-                Children(new LoadingIcon()|wh(17)|mr(5),"Lütfen bekleyiniz...")
+                Children(new LoadingIcon{wh(17),mr(5)},"Lütfen bekleyiniz...")
             }),
             
             new h4 { text = "Harf Arama", style = { TextAlignCenter } },
