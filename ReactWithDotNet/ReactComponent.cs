@@ -71,6 +71,21 @@ public sealed class ReactContextKey<TValue>
 
 public abstract class ReactStatefulComponent : Element
 {
+
+    internal Style _styleForRootElement;
+
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    public Style style
+    {
+        get
+        {
+            _styleForRootElement ??= new Style();
+
+            return _styleForRootElement;
+        }
+    }
+    
     internal List<IModifier> modifiers;
 
     [JsonIgnore]

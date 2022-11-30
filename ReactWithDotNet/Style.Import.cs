@@ -3912,6 +3912,10 @@ partial class Style
         {
             focus.Import(newStyle._focus);
         }
+        if (newStyle._mediaQueries is not null && newStyle._mediaQueries.Count > 0)
+        {
+            MediaQueries.AddRange(newStyle._mediaQueries);
+        }
     }
 
     [JsonIgnore]

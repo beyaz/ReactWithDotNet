@@ -6,11 +6,14 @@ class MainContentContainer : ReactComponent
     {
         return new FlexRow
         {
+            JustifyContentCenter,
+            
             Children(children),
 
             PaddingLeftRight(5),
             Width("100%"),
             Height("100%"),
+            
 
             MediaQuery("(min-width: 600px)", new Style
             {
