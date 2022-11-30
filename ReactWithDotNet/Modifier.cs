@@ -46,6 +46,17 @@ public sealed class ElementModifier : IModifier
     }
 }
 
+public sealed class HtmlElementModifier : IModifier
+{
+    internal readonly Action<HtmlElement> modifyHtmlElement;
+
+    public HtmlElementModifier(Action<HtmlElement> modifyHtmlElement)
+    {
+        this.modifyHtmlElement = modifyHtmlElement ?? throw new ArgumentNullException(nameof(modifyHtmlElement));
+    }
+    
+}
+
 public sealed class ComponentModifier : IModifier
 {
     internal readonly Action<ReactStatefulComponent> modify;
@@ -88,6 +99,12 @@ static class ModifyHelper
                 return;
             }
 
+            if (modifier is HtmlElementModifier htmlElementModifier)
+            {
+                htmlElementModifier.modifyHtmlElement(htmlElement);
+                return;
+            }
+            
             if (modifier is ElementModifier elementModifier)
             {
                 elementModifier.modifyElement(htmlElement);

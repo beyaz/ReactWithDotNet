@@ -205,7 +205,12 @@ public abstract class HtmlElement : Element
 
     public void Add(StyleModifier styleModifier)
     {
-        styleModifier.modifyStyle(style);
+        styleModifier?.modifyStyle(style);
+    }
+
+    public void Add(HtmlElementModifier htmlElementModifier)
+    {
+        htmlElementModifier?.modifyHtmlElement(this);
     }
     
 

@@ -390,7 +390,7 @@ public static partial class Mixin
         return new(modifyHtmlElement);
     }
 
-    public static ElementModifier ClassName(string className) => new(element => ((HtmlElement)element).className = className);
+    public static HtmlElementModifier ClassName(string className) => new(element => element.className = className);
 
     public static StyleModifier Color(string color) => new(style => style.color = color);
 
@@ -465,22 +465,22 @@ public static partial class Mixin
     /// <summary>
     ///     a.href = <paramref name="href" />
     /// </summary>
-    public static ElementModifier Href(string href) => new(element => ((a)element).href = href);
+    public static HtmlElementModifier Href(string href) => new(element => ((a)element).href = href);
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static ElementModifier Id(string id) => new(element => ((HtmlElement)element).id = id);
+    public static HtmlElementModifier Id(string id) => new(element => element.id = id);
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static ElementModifier Id(int id) => new(element => ((HtmlElement)element).id = id.ToString());
+    public static HtmlElementModifier Id(int id) => new(element => element.id = id.ToString());
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static ElementModifier Id(long id) => new(element => ((HtmlElement)element).id = id.ToString());
+    public static HtmlElementModifier Id(long id) => new(element => element.id = id.ToString());
 
     public static StyleModifier Left(double left) => Left(left.AsPixel());
     public static StyleModifier Left(string left) => new(style => style.left = left);
@@ -543,7 +543,7 @@ public static partial class Mixin
         return JsonSerializationOptionHelper.Modify(options);
     }
 
-    public static ElementModifier OnClick(Action<MouseEvent> onClickHandler) => new(element => ((HtmlElement)element).onClick = onClickHandler);
+    public static HtmlElementModifier OnClick(Action<MouseEvent> onClickHandler) => new(element => element.onClick = onClickHandler);
 
     /// <summary>
     ///     style.opacity = <paramref name="opacity" />
@@ -595,9 +595,9 @@ public static partial class Mixin
     /// <summary>
     ///     img.src = <paramref name="src" />
     /// </summary>
-    public static ElementModifier Src(string src) => new(element => ((img)element).src = src);
+    public static HtmlElementModifier Src(string src) => new(element => ((img)element).src = src);
 
-    public static ElementModifier Text(string innerText) => new(element => ((HtmlElement)element).text = innerText);
+    public static HtmlElementModifier Text(string innerText) => new(element => ((HtmlElement)element).text = innerText);
 
 
     public static StyleModifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
@@ -954,5 +954,5 @@ public static partial class Mixin
 
 
 
-    public static ElementModifier RowSpan(int? rowSpan) => new(element => ((td)element).rowSpan = rowSpan);
+    public static HtmlElementModifier RowSpan(int? rowSpan) => new(element => ((td)element).rowSpan = rowSpan);
 }
