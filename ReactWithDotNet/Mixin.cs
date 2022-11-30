@@ -293,32 +293,31 @@ public static partial class Mixin
             return;
         }
 
-        foreach (var modify in modifiers)
+        foreach (var modifier in modifiers)
         {
-            if (modify is null)
+            if (modifier is null)
             {
                 continue;
             }
-
-            modify.Modify(element);
+            ModifyHelper.ProcessModifier(element,modifier);
         }
     }
 
-    public static void Apply(this Style style, params StyleModifier[] modifiers)
+    public static void Apply(this Style style, params StyleModifier[] styleModifiers)
     {
-        if (modifiers is null)
+        if (styleModifiers is null)
         {
             return;
         }
 
-        foreach (var modify in modifiers)
+        foreach (var styleModifier in styleModifiers)
         {
-            if (modify is null)
+            if (styleModifier is null)
             {
                 continue;
             }
 
-            modify.Modify(style);
+            styleModifier.modifyStyle(style);
         }
     }
 
@@ -440,23 +439,23 @@ public static partial class Mixin
         return Pseudo(x => x.focus, modifiers);
     }
 
-    static StyleModifier Pseudo(Func<Style, Style> accessToPseudo, StyleModifier[] modifiers)
+    static StyleModifier Pseudo(Func<Style, Style> accessToPseudo, StyleModifier[] styleModifiers)
     {
         void apply(Style instance)
         {
-            if (modifiers is null)
+            if (styleModifiers is null)
             {
                 return;
             }
 
-            foreach (var modify in modifiers)
+            foreach (var styleModifier in styleModifiers)
             {
-                if (modify is null)
+                if (styleModifier is null)
                 {
                     continue;
                 }
 
-                modify.Modify(accessToPseudo(instance));
+                styleModifier.modifyStyle(accessToPseudo(instance));
             }
         }
 

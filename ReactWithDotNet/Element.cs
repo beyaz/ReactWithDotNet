@@ -6,11 +6,6 @@ namespace ReactWithDotNet;
 sealed class FakeChild : Element
 {
     public int Index { get; set; }
-
-    protected internal override void ProcessModifier(IModifier modifier)
-    {
-        throw new NotImplementedException("Fake childs cannot modify");
-    }
 }
 
 /// <summary>
@@ -45,10 +40,10 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     [React]
     public string key { get; set; }
 
-    public static Element operator +(Element element, StyleModifier modifier)
+    public static Element operator +(Element element, StyleModifier styleModifier)
     {
-        element.ProcessModifier(modifier);
-
+        ModifyHelper.ProcessModifier(element, styleModifier);
+        
         return element;
     }
 
@@ -77,7 +72,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     
     public void Add(IModifier modifier)
     {
-        ProcessModifier(modifier);
+        ModifyHelper.ProcessModifier(this, modifier);
     }
 
     public void Add(Style style)
@@ -117,6 +112,4 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return Enumerable.Empty<IModifier>().GetEnumerator();
     }
-
-    protected internal abstract void ProcessModifier(IModifier modifier);
 }

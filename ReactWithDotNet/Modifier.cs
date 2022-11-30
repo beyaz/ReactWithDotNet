@@ -2,12 +2,11 @@
 
 public interface IModifier
 {
-    internal void Modify(object instance);
 }
 
 public sealed class StyleModifier : IModifier
 {
-    readonly Action<Style> modifyStyle;
+    internal readonly Action<Style> modifyStyle;
 
     public StyleModifier(Action<Style> modifyStyle)
     {
@@ -18,55 +17,17 @@ public sealed class StyleModifier : IModifier
     {
         void modify(Style style)
         {
-            ((IModifier)a).Modify(style);
-            ((IModifier)b).Modify(style);
+            a.modifyStyle(style);
+            b.modifyStyle(style);
         }
 
         return new StyleModifier(modify);
-    }
-
-    void IModifier.Modify(object instance)
-    {
-        if (instance == null)
-        {
-            throw new ArgumentNullException(nameof(instance));
-        }
-
-        if (instance is Style style)
-        {
-            modifyStyle(style);
-            return;
-        }
-
-        if (instance is HtmlElement htmlElement)
-        {
-            modifyStyle(htmlElement.style);
-            return;
-        }
-
-        if (instance is ThirdPartyReactComponent thirdPartyReactComponent)
-        {
-            modifyStyle(thirdPartyReactComponent.style);
-            return;
-        }
-
-        throw new ArgumentException($"Style modifier cannot operate on {instance.GetType().FullName}");
-    }
-
-    internal void Modify(Style style)
-    {
-        if (style == null)
-        {
-            throw new ArgumentNullException(nameof(style));
-        }
-
-        modifyStyle(style);
     }
 }
 
 public sealed class ElementModifier : IModifier
 {
-    readonly Action<Element> modifyElement;
+    internal readonly Action<Element> modifyElement;
 
     public ElementModifier(Action<Element> modifyElement)
     {
@@ -75,63 +36,93 @@ public sealed class ElementModifier : IModifier
 
     public static ElementModifier operator +(ElementModifier a, ElementModifier b)
     {
-        void modify(Element htmlElement)
+        void modify(Element element)
         {
-            ((IModifier)a).Modify(htmlElement);
-            ((IModifier)b).Modify(htmlElement);
+            ModifyHelper.ProcessModifier(element, a);
+            ModifyHelper.ProcessModifier(element, b);
         }
 
         return new ElementModifier(modify);
-    }
-
-    void IModifier.Modify(object instance)
-    {
-        if (instance is Element element)
-        {
-            Modify(element);
-            return;
-        }
-
-        throw new ArgumentException($"ElementModifier cannot operate on {instance.GetType().FullName}");
-    }
-
-    internal void Modify(Element element)
-    {
-        if (element == null)
-        {
-            throw new ArgumentNullException(nameof(element));
-        }
-
-        modifyElement(element);
     }
 }
 
 public sealed class ComponentModifier : IModifier
 {
-    readonly Action<ReactStatefulComponent> modify;
+    internal readonly Action<ReactStatefulComponent> modify;
 
     public ComponentModifier(Action<ReactStatefulComponent> modifyComponent)
     {
         modify = modifyComponent ?? throw new ArgumentNullException(nameof(modifyComponent));
     }
+}
 
-    void IModifier.Modify(object instance)
+static class ModifyHelper
+{
+    public static void ProcessModifier(Element element, IModifier modifier)
     {
-        if (instance is ReactStatefulComponent reactComponent)
+        if (modifier == null || element is null)
         {
-            Modify(reactComponent);
+            return;
         }
 
-        throw new ArgumentException($"ComponentModifier cannot operate on {instance.GetType().FullName}");
-    }
-
-    internal void Modify(ReactStatefulComponent reactComponent)
-    {
-        if (reactComponent == null)
+        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
         {
-            throw new ArgumentNullException(nameof(reactComponent));
+            if (modifier is StyleModifier styleModifier)
+            {
+                styleModifier.modifyStyle(thirdPartyReactComponent.style);
+                return;
+            }
+
+            if (modifier is ElementModifier elementModifier)
+            {
+                elementModifier.modifyElement(thirdPartyReactComponent);
+                return;
+            }
         }
 
-        modify(reactComponent);
+        if (element is HtmlElement htmlElement)
+        {
+            if (modifier is StyleModifier styleModifier)
+            {
+                styleModifier.modifyStyle(htmlElement.style);
+                return;
+            }
+
+            if (modifier is ElementModifier elementModifier)
+            {
+                elementModifier.modifyElement(htmlElement);
+                return;
+            }
+        }
+
+        if (element is Fragment fragment)
+        {
+            fragment.modifiers ??= new List<IModifier>();
+
+            fragment.modifiers.Add(modifier);
+            return;
+        }
+
+        if (element is FakeChild)
+        {
+            throw new DeveloperException("Fake child cannot modify. Because fake child is in client.");
+        }
+
+        if (element is ReactStatefulComponent reactStatefulComponent)
+        {
+            if (modifier is ComponentModifier componentModifier)
+            {
+                componentModifier.modify(reactStatefulComponent);
+                return;
+            }
+
+            reactStatefulComponent.modifiers ??= new List<IModifier>();
+
+            reactStatefulComponent.modifiers.Add(modifier);
+
+            return;
+        }
+
+        throw new DeveloperException("Modifier is not suitable for element. Element is " + element.GetType().FullName);
     }
 }

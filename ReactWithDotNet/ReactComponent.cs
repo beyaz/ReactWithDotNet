@@ -109,18 +109,6 @@ public abstract class ReactStatefulComponent : Element
 
     internal Element InvokeRender() => render();
 
-    protected internal sealed override void ProcessModifier(IModifier modifier)
-    {
-        if (modifier is null)
-        {
-            return;
-        }
-
-        modifiers ??= new List<IModifier>();
-
-        modifiers.Add(modifier);
-    }
-
     protected virtual void componentDidMount()
     {
     }

@@ -18,7 +18,7 @@ partial class Style : IEnumerable<StyleModifier>
 
     public void Add(StyleModifier modifier)
     {
-        modifier?.Modify(this);
+        modifier?.modifyStyle(this);
     } 
     #endregion
 

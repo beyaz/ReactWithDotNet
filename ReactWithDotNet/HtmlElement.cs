@@ -168,15 +168,6 @@ public abstract class HtmlElement : Element
     {
     }
 
-    protected internal sealed override void ProcessModifier(IModifier modifier)
-    {
-        if (modifier is not null)
-        {
-            modifier.Modify(this);
-        }
-    }
-
-
     #region Operators
 
     public static HtmlElement operator +(HtmlElement element, Style style)
@@ -186,20 +177,20 @@ public abstract class HtmlElement : Element
         return element;
     }
     
-    public static HtmlElement operator +(HtmlElement element, ElementModifier modifier)
+    public static HtmlElement operator +(HtmlElement htmlElement, ElementModifier elementModifier)
     {
-        element.ProcessModifier(modifier);
+        elementModifier.modifyElement(htmlElement);
 
-        return element;
+        return htmlElement;
     }
 
 
 
-    public static HtmlElement operator +(HtmlElement element, StyleModifier modifier)
+    public static HtmlElement operator +(HtmlElement htmlElement, StyleModifier styleModifier)
     {
-        element.ProcessModifier(modifier);
+        styleModifier.modifyStyle(htmlElement.style);
 
-        return element;
+        return htmlElement;
     }
 
    
@@ -211,7 +202,13 @@ public abstract class HtmlElement : Element
 
         return element;
     }
+
+    public void Add(StyleModifier styleModifier)
+    {
+        styleModifier.modifyStyle(style);
+    }
     
+
     #endregion
 }
 

@@ -59,32 +59,10 @@ public abstract class ThirdPartyReactComponent : Element
 
 
 
-    public static Element operator +(ThirdPartyReactComponent element, StyleModifier modifier)
+    public static Element operator +(ThirdPartyReactComponent thirdPartyReactComponent, StyleModifier modifier)
     {
-        element.ProcessModifier(modifier);
+        modifier.modifyStyle(thirdPartyReactComponent.style);
 
-        return element;
-    }
-
-    protected internal sealed override void ProcessModifier(IModifier modifier)
-    {
-        if (modifier == null)
-        {
-            return;
-        }
-
-        if (modifier is StyleModifier styleModifier)
-        {
-            styleModifier.Modify(style);
-            return;
-        }
-
-        if (modifier is ElementModifier elementModifier)
-        {
-            elementModifier.Modify(this);
-            return;
-        }
-
-        throw new InvalidOperationException("Expected only StyleModifier but found HtmlModifier");
+        return thirdPartyReactComponent;
     }
 }

@@ -28,21 +28,10 @@ public sealed class Fragment : Element
             {
                 foreach (var child in children)
                 {
-                    child?.ProcessModifier(modifier);
+                    ModifyHelper.ProcessModifier(child,modifier);
                 }
             }
         }
     }
-
-    protected internal override void ProcessModifier(IModifier modifier)
-    {
-        if (modifier is null)
-        {
-            return;
-        }
-
-        modifiers ??= new List<IModifier>();
-
-        modifiers.Add(modifier);
-    }
+    
 }

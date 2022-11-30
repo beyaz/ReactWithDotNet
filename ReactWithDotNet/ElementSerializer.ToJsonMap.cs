@@ -193,7 +193,7 @@ partial class ElementSerializer
                         {
                             if (modifier is ComponentModifier componentModifier)
                             {
-                                componentModifier.Modify(node.ElementAsDotNetReactComponent);
+                                componentModifier.modify(node.ElementAsDotNetReactComponent);
                             }
                         }
                     }
@@ -206,7 +206,7 @@ partial class ElementSerializer
 
                         if (reactStatefulComponent._styleForRootElement is not null)
                         {
-                            node.DotNetComponentRootElement.ProcessModifier(new StyleModifier(style => style.Import(reactStatefulComponent._styleForRootElement)));
+                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, new StyleModifier(style => style.Import(reactStatefulComponent._styleForRootElement)));
                         }
                         
                         if (reactStatefulComponent.modifiers is not null)
@@ -217,7 +217,8 @@ partial class ElementSerializer
                                 {
                                     continue;
                                 }
-                                node.DotNetComponentRootElement.ProcessModifier(modifier);
+
+                                ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
                             }
                         }
                     }
