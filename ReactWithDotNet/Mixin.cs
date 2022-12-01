@@ -790,6 +790,37 @@ public static partial class Mixin
 
     public static StyleModifier MediaQuery(string query, Style styleForOverride) => new(style => style.MediaQueries.Add(new MediaQuery(query, styleForOverride)));
 
+    /// <summary>
+    /// max-width: 767px
+    /// </summary>
+    public static StyleModifier MediaQueryOnSmartphone(Style styleForOverride) => MediaQuery("(max-width: 767px)", styleForOverride);
+
+    /// <summary>
+    /// max-width: 767px
+    /// </summary>
+    public static StyleModifier MediaQueryOnSmartphone(params StyleModifier[] styleModifiers) => MediaQueryOnSmartphone(new Style(styleModifiers));
+
+    /// <summary>
+    /// min-width: 768px and max-width: 1023px
+    /// </summary>
+    public static StyleModifier MediaQueryOnTablet(Style styleForOverride) => MediaQuery("(min-width: 768px) and (max-width: 1023px)", styleForOverride);
+    /// <summary>
+    /// min-width: 768px and max-width: 1023px
+    /// </summary>
+    public static StyleModifier MediaQueryOnTablet(params StyleModifier[] styleModifiers) => MediaQueryOnTablet(new Style(styleModifiers));
+
+
+    /// <summary>
+    /// min-width: 1024px
+    /// </summary>
+    public static StyleModifier MediaQueryOnDesktop(Style styleForOverride) => MediaQuery("(min-width: 1024px)", styleForOverride);
+
+    /// <summary>
+    /// min-width: 1024px
+    /// </summary>
+    public static StyleModifier MediaQueryOnDesktop(params StyleModifier[] styleModifiers) => MediaQueryOnDesktop(new Style(styleModifiers));
+
+
     #region short
     #region margin
     /// <summary>

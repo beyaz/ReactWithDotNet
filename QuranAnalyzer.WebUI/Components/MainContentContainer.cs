@@ -13,17 +13,12 @@ class MainContentContainer : ReactComponent
             PaddingLeftRight(5),
             Width("100%"),
             Height("100%"),
-            
 
-            MediaQuery("(min-width: 600px)", new Style
-            {
-                MarginLeftRight("5%")
-            }),
+            MediaQueryOnSmartphone(MarginLeftRight("5%")),
+            MediaQueryOnTablet(MarginLeftRight("10%")),
+            MediaQueryOnDesktop(MarginLeftRight("15%")),
             
-            MediaQuery("(min-width: 1200px)", new Style
-            {
-                MarginLeftRight("10%")
-            })
+           
         };
     }
 }

@@ -5,6 +5,21 @@ namespace ReactWithDotNet;
 
 partial class Style : IEnumerable<StyleModifier>
 {
+    public Style()
+    {
+        
+    }
+    public Style(params StyleModifier[] styleModifiers)
+    {
+        if (styleModifiers is not null)
+        {
+            foreach (var styleModifier in styleModifiers)
+            {
+                styleModifier?.modifyStyle(this);
+            }
+        }
+    }
+
     #region IEnumerable<Modifier>
     public IEnumerator<StyleModifier> GetEnumerator()
     {
