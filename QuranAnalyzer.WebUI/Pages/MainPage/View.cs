@@ -51,47 +51,32 @@ class View : ReactComponent<MainViewModel>
 
     protected override Element render()
     {
-        
-        
-        
-        var IsBackDropActive = state.HamburgerMenuIsOpen;
-
-        var top = new FixedTopPanelContainer();
-
-        var left = new FixedLeftMenuContainer { IsOpen = state.HamburgerMenuIsOpen };
-        
         var main = new div
         {
             id = "main",
             onScroll = "OnMainDivScrollChanged",
             children =
             {
-                new div
+                new FlexRow(JustifyContentCenter, Height("100%"))
                 {
-                    style = { display = "flex", justifyContent = "center", height = "100%" },
-                    children =
+                    new MainContentContainer
                     {
-                        new BackdropView { IsActive = IsBackDropActive },
-                        
-                        new MainContentContainer
+                        MarginTop(30),
+
+                        new LeftMenu
                         {
-                            MarginTop(30),
-                            
-                            new LeftMenu
+                            SelectedPageId = state.PageId,
+                            style =
                             {
-                                SelectedPageId = state.PageId,
-                                style =
-                                {
-                                    MinWidth(230) , 
-                                    MarginTop(100) ,
-                                    PositionSticky ,
-                                    Top(30) ,
-                                    MediaQuery("(max-width: 800px)", new Style{DisplayNone})
-                                }
-                            },
-                            
-                            buildMainContent()
-                        }
+                                MinWidth(230) ,
+                                MarginTop(100) ,
+                                PositionSticky ,
+                                Top(30) ,
+                                MediaQuery("(max-width: 800px)", new Style{DisplayNone})
+                            }
+                        },
+
+                        buildMainContent()
                     }
                 }
             },
@@ -100,20 +85,19 @@ class View : ReactComponent<MainViewModel>
             {
                 position     = "fixed",
                 top          = "0px",
-                left         = IsBackDropActive ? "400px" : "0px",
+                left         =  "0px",
                 marginTop    = "50px",
                 marginBottom = "27px",
 
-                width     = IsBackDropActive ? "calc(100% - 400px)" : "100%",
+                width     =  "100%",
                 height    = "calc(100% - 65px)",
                 overflowY = "auto"
             }
         };
 
-        return new div
+        return new div(WidthHeight("100%"))
         {
-            children = { top, left, main },
-            style    = { width_height = "100%" }
+            new FixedTopPanelContainer(), main
         };
 
         Element buildMainContent()

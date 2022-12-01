@@ -2,7 +2,7 @@
 
 namespace QuranAnalyzer.WebUI.Components;
 
-class FixedLeftMenuContainer : ReactComponent
+class FixedLeftMenuContainer : ReactComponent // TODO:remove this
 {
     public bool IsOpen { get; set; }
 

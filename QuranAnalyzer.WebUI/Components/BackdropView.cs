@@ -1,7 +1,7 @@
 ﻿
 namespace QuranAnalyzer.WebUI.Components;
 
-class BackdropView: ReactComponent
+class BackdropView: ReactComponent // todo:check and remove
 {
     public bool IsActive { get; set; }
 
