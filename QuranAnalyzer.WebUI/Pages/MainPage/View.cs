@@ -83,12 +83,8 @@ class View : ReactComponent<MainViewModel>
 
             style =
             {
-                position     = "fixed",
-                top          = "0px",
-                left         =  "0px",
-                marginTop    = "50px",
-                marginBottom = "27px",
-
+                position  = "fixed",
+                marginTop = "50px",
                 width     =  "100%",
                 height    = "calc(100% - 65px)",
                 overflowY = "auto"
