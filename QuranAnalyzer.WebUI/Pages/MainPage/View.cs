@@ -54,6 +54,7 @@ class View : ReactComponent<MainViewModel>
         return new div(WidthHeightMaximized, OverflowYAuto, OnScroll("OnMainDivScrollChanged"))
         {
             new FixedTopPanelContainer(),
+            
             new main(DisplayFlex,FlexDirectionRow, JustifyContentCenter, HeightMaximized)
             {
                 new MainContentContainer
