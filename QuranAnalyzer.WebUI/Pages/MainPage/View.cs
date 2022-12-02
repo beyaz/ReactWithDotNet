@@ -51,32 +51,31 @@ class View : ReactComponent<MainViewModel>
 
     protected override Element render()
     {
-        var main = new main(DisplayFlex,FlexDirectionRow, JustifyContentCenter, HeightMaximized)
-        {
-            new MainContentContainer
-            {
-                MarginTop(30),
-
-                new LeftMenu
-                {
-                    SelectedPageId = state.PageId,
-                    style =
-                    {
-                        MinWidth(230) ,
-                        MarginTop(100) ,
-                        PositionSticky ,
-                        Top(30) ,
-                        MediaQuery("(max-width: 800px)", new Style{DisplayNone})
-                    }
-                },
-
-                buildMainContent()
-            }
-        };
-
         return new div(WidthHeightMaximized, OverflowYAuto, OnScroll("OnMainDivScrollChanged"))
         {
-            new FixedTopPanelContainer(), main
+            new FixedTopPanelContainer(),
+            new main(DisplayFlex,FlexDirectionRow, JustifyContentCenter, HeightMaximized)
+            {
+                new MainContentContainer
+                {
+                    MarginTop(30),
+
+                    new LeftMenu
+                    {
+                        SelectedPageId = state.PageId,
+                        style =
+                        {
+                            MinWidth(230) ,
+                            MarginTop(100) ,
+                            PositionSticky ,
+                            Top(30) ,
+                            MediaQuery("(max-width: 800px)", new Style{DisplayNone})
+                        }
+                    },
+
+                    buildMainContent()
+                }
+            }
         };
 
         Element buildMainContent()
