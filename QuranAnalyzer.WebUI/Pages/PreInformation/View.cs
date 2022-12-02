@@ -8,14 +8,13 @@ public class PreInformationView : ReactComponent
     {
         return new Article
         {
-            new VSpace(10),
             new LargeTitle("Kuran Hakkında Bazı Bilgiler"),
            
             
-            (p)@"Bu bölümde Kuran hakkında dikkat çeken bazı bilgiler verilecektir.",
+            (p)@"Bu bölümde Kuran hakkında dikkat çeken bazı bilgiler verilecektir." + ml(10),
             
 
-            new ul
+            new ul(PaddingBottom(30))
             {
                 new li
                 {
@@ -73,8 +72,7 @@ Dilerseniz aşağıdaki linklerden bu sayımları kendiniz yapabilirsiniz.",
                     new br(),
                     new a { href = PageUrlOfDays30, text = "Adem ve İsa kelimelerinin geçiş adeti" }
                 }
-            },
-            new VSpace(15)
+            }
         };
     }
 }
