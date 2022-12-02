@@ -28,12 +28,9 @@ class LeftMenu : ReactComponent
 
     protected override Element render()
     {
-        return new div
+        return new FlexColumn(Gap(15))
         {
-            new FlexColumn(Gap(15))
-            {
-                Children(MenuItems.Select((_, i) => createText(i))),
-            }
+            Children(MenuItems.Select((_, i) => createText(i))),
         };
 
         Element createText(int index)
