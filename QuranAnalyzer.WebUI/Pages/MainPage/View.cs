@@ -91,7 +91,7 @@ class View : ReactComponent<MainViewModel>
             }
         };
 
-        return new div(WidthHeight("100%"))
+        return new div(MaximizeWidthHeight)
         {
             new FixedTopPanelContainer(), main
         };
