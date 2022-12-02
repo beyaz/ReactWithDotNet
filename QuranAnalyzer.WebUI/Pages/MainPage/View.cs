@@ -53,47 +53,41 @@ class View : ReactComponent<MainViewModel>
     {
         var main = new main
         {
-            id = "main",
-            onScroll = "OnMainDivScrollChanged",
-            children =
+            new FlexRow(JustifyContentCenter, MaximizeHeight)
             {
-                new FlexRow(JustifyContentCenter, Height("100%"))
+                new MainContentContainer
                 {
-                    new MainContentContainer
+                    MarginTop(30),
+
+                    new LeftMenu
                     {
-                        MarginTop(30),
-
-                        new LeftMenu
+                        SelectedPageId = state.PageId,
+                        style =
                         {
-                            SelectedPageId = state.PageId,
-                            style =
-                            {
-                                MinWidth(230) ,
-                                MarginTop(100) ,
-                                PositionSticky ,
-                                Top(30) ,
-                                MediaQuery("(max-width: 800px)", new Style{DisplayNone})
-                            }
-                        },
+                            MinWidth(230) ,
+                            MarginTop(100) ,
+                            PositionSticky ,
+                            Top(30) ,
+                            MediaQuery("(max-width: 800px)", new Style{DisplayNone})
+                        }
+                    },
 
-                        buildMainContent()
-                    }
+                    buildMainContent()
                 }
-            },
-
-            style =
-            {
-                position  = "fixed",
-                marginTop = "50px",
-                width     =  "100%",
-                height    = "calc(100% - 65px)",
-                overflowY = "auto"
             }
         };
 
         return new div(MaximizeWidthHeight)
         {
-            new FixedTopPanelContainer(), main
+            onScroll = "OnMainDivScrollChanged",
+            children =
+            {
+                new FixedTopPanelContainer(), main
+            },
+            style =
+            {
+                overflowY = "auto"
+            }
         };
 
         Element buildMainContent()
