@@ -51,7 +51,7 @@ class View : ReactComponent<MainViewModel>
 
     protected override Element render()
     {
-        var main = new div
+        var main = new main
         {
             id = "main",
             onScroll = "OnMainDivScrollChanged",
