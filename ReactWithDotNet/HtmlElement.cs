@@ -107,6 +107,17 @@ public abstract class HtmlElement : Element
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onMouseLeave { get; set; }
 
+
+    /// <summary>
+    /// Handler <paramref name="value"/> should be in client js codes.<br/>
+    /// <br/>
+    /// Sample Usage:<br/>
+    /// <br/>
+    /// ReactWithDotNet.RegisterExternalJsObject(<paramref name="value"/>, function(e){<br/>
+    /// ...<br/>
+    /// ...<br/>
+    /// });
+    /// </summary>
     [React]
     [ReactTransformValueInClient("ReactWithDotNet.GetExternalJsObject")]
     public string onScroll { get; set; }

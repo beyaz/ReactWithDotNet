@@ -202,19 +202,19 @@ public static partial class Mixin
     /// <summary>
     ///     height: 100%
     /// </summary>
-    public static StyleModifier MaximizeHeight => Height("100%");
+    public static StyleModifier HeightMaximized => Height("100%");
 
     /// <summary>
     ///     width: 100%
     /// </summary>
-    public static StyleModifier MaximizeWidth => Width("100%");
+    public static StyleModifier WidthMaximized => Width("100%");
 
     /// <summary>
     ///     width: 100%
     ///     <br />
     ///     height: 100%
     /// </summary>
-    public static StyleModifier MaximizeWidthHeight => WidthHeight("100%");
+    public static StyleModifier WidthHeightMaximized => WidthHeight("100%");
 
     /// <summary>
     ///     overflow = "hidden"
@@ -225,6 +225,13 @@ public static partial class Mixin
     ///     overflow = "scroll"
     /// </summary>
     public static StyleModifier OverflowScroll => new(style => style.overflow = "scroll");
+
+    /// <summary>
+    /// overflowY: auto
+    /// </summary>
+    public static StyleModifier OverflowYAuto=> new(style => style.overflowY = "auto");
+
+    
 
     public static StyleModifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
 
@@ -451,6 +458,19 @@ public static partial class Mixin
     ///     initialize id attribute of html element
     /// </summary>
     public static HtmlElementModifier Id(int id) => new(element => element.id = id.ToString());
+
+
+    /// <summary>
+    /// Handler <paramref name="jsMethodName"/> should be in client js codes.<br/>
+    /// <br/>
+    /// Sample Usage:<br/>
+    /// <br/>
+    /// ReactWithDotNet.RegisterExternalJsObject(<paramref name="jsMethodName"/>, function(e){<br/>
+    /// ...<br/>
+    /// ...<br/>
+    /// });
+    /// </summary>
+    public static HtmlElementModifier OnScroll(string jsMethodName) => new(element => element.onScroll=jsMethodName);
 
     /// <summary>
     ///     initialize id attribute of html element

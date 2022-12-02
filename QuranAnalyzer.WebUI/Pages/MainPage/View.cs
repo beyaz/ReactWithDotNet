@@ -53,7 +53,7 @@ class View : ReactComponent<MainViewModel>
     {
         var main = new main
         {
-            new FlexRow(JustifyContentCenter, MaximizeHeight)
+            new FlexRow(JustifyContentCenter, HeightMaximized)
             {
                 new MainContentContainer
                 {
@@ -77,17 +77,9 @@ class View : ReactComponent<MainViewModel>
             }
         };
 
-        return new div(MaximizeWidthHeight)
+        return new div(WidthHeightMaximized, OverflowYAuto, OnScroll("OnMainDivScrollChanged"))
         {
-            onScroll = "OnMainDivScrollChanged",
-            children =
-            {
-                new FixedTopPanelContainer(), main
-            },
-            style =
-            {
-                overflowY = "auto"
-            }
+            new FixedTopPanelContainer(), main
         };
 
         Element buildMainContent()
