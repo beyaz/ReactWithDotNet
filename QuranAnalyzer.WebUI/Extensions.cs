@@ -67,9 +67,9 @@ static class Extensions
 
     public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
 
-    public static void MainContentDivScrollChanged(this Client client, double mainDivScrollY)
+    public static void MainContentDivScrollChangedOverZero(this Client client, double mainDivScrollY)
     {
-        client.DispatchEvent(nameof(MainContentDivScrollChanged));
+        client.DispatchEvent(nameof(MainContentDivScrollChangedOverZero));
     }
 
    
@@ -89,9 +89,9 @@ static class Extensions
         client.ListenEvent(HamburgerMenuOpened, handler);
     }
 
-    public static void OnMainContentDivScrollChanged(this Client client, Action<double> handlerAction)
+    public static void OnMainContentDivScrollChangedOverZero(this Client client, Action<double> handlerAction)
     {
-        client.ListenEvent(MainContentDivScrollChanged, handlerAction);
+        client.ListenEvent(MainContentDivScrollChangedOverZero, handlerAction);
     }
 
    

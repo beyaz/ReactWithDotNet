@@ -33,7 +33,7 @@ ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", function (e)
     {
         currentScrollY = scrollY;
 
-        ReactWithDotNet.DispatchEvent('MainContentDivScrollChanged', [scrollY]);
+        ReactWithDotNet.DispatchEvent('MainContentDivScrollChangedOverZero', [scrollY]);
     }
     else
     {
