@@ -11,7 +11,7 @@ public class PreInformationView : ReactComponent
             new LargeTitle("Kuran Hakkında Bazı Bilgiler"),
            
             
-            (p)@"Bu bölümde Kuran hakkında dikkat çeken bazı bilgiler verilecektir." + ml(10),
+            (p)@"Bu bölümde Kuran hakkında dikkat çeken bazı bilgiler verilecektir.",
             
 
             new ul
