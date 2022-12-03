@@ -14,7 +14,7 @@ public class PreInformationView : ReactComponent
             (p)@"Bu bölümde Kuran hakkında dikkat çeken bazı bilgiler verilecektir." + ml(10),
             
 
-            new ul(PaddingBottom(30))
+            new ul
             {
                 new li
                 {

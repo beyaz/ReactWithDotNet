@@ -106,7 +106,6 @@ Doğrulama bilgisi veri içinde beraber gönderiliyor.
 
             new p
             {
-                PaddingBottom(30),
                 @"Aynen burada bahsedilen örneklerde olduğu gibi bir doğrulama kodu Kuran içinde olabilir mi ? 
 Bu sayede Kuran'ın Yaratıcıdan gelen bir kitap olduğunu daha iyi anlayabilelim diye Kuran'ın içine bir doğrulama kodu-sayısı-anahtarı olabilir mi ?"
             }

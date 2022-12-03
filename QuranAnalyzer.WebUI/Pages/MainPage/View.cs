@@ -59,7 +59,7 @@ class View : ReactComponent<MainViewModel>
             {
                 new MainContentContainer
                 {
-                    MarginTop(30),
+                    MarginTopBottom(30),
 
                     new LeftMenu
                     {
