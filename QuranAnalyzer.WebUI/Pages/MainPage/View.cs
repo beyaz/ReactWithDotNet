@@ -67,7 +67,7 @@ class View : ReactComponent<MainViewModel>
                         style =
                         {
                             MinWidth(230) ,
-                            PositionSticky ,
+                            //PositionSticky ,
                             MarginTop(100) ,
                             MediaQuery("(max-width: 800px)", new Style{DisplayNone})
                         }

@@ -23,7 +23,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                 Top(0),
                 Width("100%"),
                 Height(50),
-                Zindex(1),
+                Zindex(2),
                 BorderBottom("1px solid #dadce0"),
                 Background("white")
             },
