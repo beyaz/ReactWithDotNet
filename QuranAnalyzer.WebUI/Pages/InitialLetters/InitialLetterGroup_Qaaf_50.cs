@@ -42,7 +42,7 @@ class InitialLetterGroup_Qaaf_50 : InitialLetterGroup
                                 }
                             }
                         }
-                    },
+                    }
                 }
             },
 
