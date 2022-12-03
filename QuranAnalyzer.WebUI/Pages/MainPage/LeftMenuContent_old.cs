@@ -6,7 +6,7 @@ class LeftMenuContent_old : ReactComponent
 
     protected override Element render()
     {
-        return new FlexColumn(AlignItemsCenter, Width("100%"), Height("100%"), TextAlignCenter, Gap(20))
+        return new FlexColumn(AlignItemsCenter, WidthMaximized, Height("100%"), TextAlignCenter, Gap(20))
         {
             toSidebarMenuItem("1 - Anasayfa", PageId.MainPage),
 

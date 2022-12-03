@@ -53,7 +53,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         var searchPanel = new divWithBorder(PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
         {
-            Width("100%"),
+            WidthMaximized,
             MaxWidth(800),
             
             When(state.IsBlocked,()=>new div{PositionAbsolute,LeftRight(0),TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"),Zindex(3)}),
@@ -167,7 +167,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             }
         };
 
-        return new FlexColumn(AlignItemsStretch,Width("100%"), MaxWidth(800))
+        return new FlexColumn(AlignItemsStretch,WidthMaximized, MaxWidth(800))
         {
             searchPanel, results
         };

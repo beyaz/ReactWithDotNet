@@ -16,7 +16,7 @@ class InitialLetterGroup_Alif_Laam_Raa : InitialLetterGroup
         return new div
         {
 
-            new table(Width("100%"))
+            new table(WidthMaximized)
             {
                 
                     new tbody

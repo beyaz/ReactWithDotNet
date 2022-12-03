@@ -13,7 +13,7 @@ class InitialLetterGroup_Qaaf_42 : InitialLetterGroup
     {
         return new div
         {
-            new table(Width("100%"))
+            new table(WidthMaximized)
             {
                 new tbody
                 {
