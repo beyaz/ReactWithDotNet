@@ -55,7 +55,7 @@ class View : ReactComponent<MainViewModel>
         {
             new FixedTopPanelContainer(),
             
-            new main(DisplayFlex,FlexDirectionRow, JustifyContentCenter, HeightMaximized)
+            new main(DisplayFlex,FlexDirectionRow, JustifyContentCenter, HeightAuto)
             {
                 new MainContentContainer
                 {
