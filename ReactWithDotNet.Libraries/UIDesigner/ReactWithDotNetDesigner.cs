@@ -164,7 +164,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
         Element createElement()
         {
-            return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { width_height = "100%", border = "none" } };
+            return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { Border("none"), WidthMaximized, HeightMaximized } };
         }
 
         return  new FlexRow(WidthHeight("100%"))
