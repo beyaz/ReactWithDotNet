@@ -19,7 +19,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
         {
             style =
             {
-                PositionFixed,
+                PositionSticky,
                 Top(0),
                 Width("100%"),
                 Height(50),
