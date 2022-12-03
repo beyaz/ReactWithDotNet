@@ -50,7 +50,7 @@ sealed class HtmlContentGenerator
             @"
                <style>
                    html, body {
-                       height: 100%;
+                       height: auto;
                        margin: 0;
                        font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                        font-size: 16px;
@@ -58,7 +58,8 @@ sealed class HtmlContentGenerator
                    }
                    
                    #app {
-                       height: 100%; width: 100%;
+                       width: 100%;
+                       height: auto;
                    }
                    
                    input:focus, textarea:focus, select:focus {

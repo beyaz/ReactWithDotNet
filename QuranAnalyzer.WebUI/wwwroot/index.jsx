@@ -10,18 +10,9 @@ import './app.css'
 
 var currentScrollY = 0;
 
-ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", function (e)
+document.addEventListener('scroll', () => 
 {
-    
-
-    var scrollY = e.target.scrollTop;
-
-    // force xarrows reRender
-    {
-        var timeoutForResize;
-        clearTimeout(timeoutForResize);
-        timeoutForResize = setTimeout(()=>{window.dispatchEvent(new Event('resize'));}, 100);
-    }
+    var scrollY = window.scrollY;
 
     function canFireAction()
     {
@@ -32,7 +23,7 @@ ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", function (e)
 
         if (currentScrollY > 0)
         {
-            return true;   
+            return true;
         }
 
         return false;

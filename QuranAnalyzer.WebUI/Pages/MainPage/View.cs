@@ -51,7 +51,7 @@ class View : ReactComponent<MainViewModel>
 
     protected override Element render()
     {
-        return new div(WidthHeightMaximized, OverflowYAuto, OnScroll("OnMainDivScrollChanged"))
+        return new div(WidthMaximized, HeightAuto)
         {
             new FixedTopPanelContainer(),
             

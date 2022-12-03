@@ -48,15 +48,16 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
             CreateTabContent()
         };
 
-        var headers = new FlexColumn(TextAlignCenter, CursorPointer, JustifyContentSpaceAround)
+        var headers = new FlexColumn(TextAlignCenter, CursorPointer, JustifyContentFlexStart)
         {
             Children(Tabs.Select(x => CreateTabHeader(x.TabHeader, x.contenType.FullName)))
         };
 
-        return new FlexRow(WidthMaximized, Border($"1px solid {BorderColor}"))
+        return new FlexRow(WidthMaximized, Border($"1px solid {BorderColor}"), PositionRelative)
         {
             headers,
-            contentContainer
+            contentContainer,
+            new div{PositionAbsolute, Top(0),Bottom(0),Width(1),MarginLeft(100+10+10+1),BackgroundColor(BorderColor) }
         };
     }
 
@@ -83,9 +84,11 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
 
             style =
             {
+                Width(100),
                 Color("rgba(0, 0, 0, 0.6)"),
                 Padding(10),
-                BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}"),
+                // BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}"),
+                When(isSelected,BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}")),
                 When(isSelected, Background("#deecf9"), Color(BluePrimary))
             },
 
