@@ -43,7 +43,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
     };
     protected override Element render()
     {
-        var contentContainer = new div(StretchWidthHeight)
+        var contentContainer = new FlexColumn(JustifyContentFlexStart,WidthHeightMaximized, MarginTop(30))
         {
             CreateTabContent()
         };
