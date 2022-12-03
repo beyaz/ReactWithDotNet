@@ -10,7 +10,7 @@ import './app.css'
 
 var currentScrollY = 0;
 
-function OnMainDivScrollChanged(e)
+ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", function (e)
 {
     var scrollY = e.target.scrollTop;
 
@@ -39,6 +39,4 @@ function OnMainDivScrollChanged(e)
     {
         currentScrollY = scrollY;
     }
-}
-
-ReactWithDotNet.RegisterExternalJsObject("OnMainDivScrollChanged", OnMainDivScrollChanged);
+});
