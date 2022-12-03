@@ -28,7 +28,7 @@ public static class ReactWithDotNetRequestProcessor
 
         var response = ComponentRequestHandler.HandleRequest(input);
 
-        httpContext.Response.ContentType = "application/json";
+        httpContext.Response.ContentType = "application/json; charset=utf-8";
 
         await httpContext.Response.WriteAsync(response.ToJson());
 
