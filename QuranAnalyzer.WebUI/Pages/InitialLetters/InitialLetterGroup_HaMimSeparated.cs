@@ -328,7 +328,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                 " 42. sure diğerlerinden farklı olarak 2. ayetinde de başlangıç harfi barındırır.",
                 new br(),
                 " Şekilden de görüldüğü üzere 42. suredeki bu olay farklı bir ahenk daha katar. ",
-                " Sanki bu 7 surede var olan ", AsLetter(Haa), " - ", AsLetter(Miim), " tablosunu 19.un katları şeklinde ikiye bölüyormuş gibi düşünebilirsiniz.",
+                " Sanki bu 7 surede var olan ", AsLetter(Haa), " - ", AsLetter(Miim), " tablosunu 19.un katları şeklinde ikiye bölüyormuş gibi düşünebilirsiniz. ",
                 "Hatta bu iki şemadaki sayımların rakamları toplamı dahi kendi çarpanı vermektedir."
             },
 
