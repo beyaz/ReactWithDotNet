@@ -9,36 +9,30 @@ public class View : ReactComponent
     {
         return new Article
         {
-            new VSpace(10),
             new LargeTitle("Günümüz teknolojisinde veri iletimi nasıl sağlanır ?"),
-            new VSpace(15),
-            @"
-TC kimlik numaranızda bulunan rakamlar sizce rastgele rakamlar mı? Yoksa belli bir düzeni / mantığı mı var ?
-",
 
-            new p { text = "Mesela aşağıdaki TC Kimlik noları inceleyelim." },
+            (p)@"TC kimlik numaranızda bulunan rakamlar sizce rastgele rakamlar mı? Yoksa belli bir düzeni / mantığı mı var?",
+
+            new p { "Mesela aşağıdaki TC Kimlik noları inceleyelim." },
             new div
             {
-                style = { textAlign = "center" },
-                children =
-                {
-                    new div { innerHTML = "1056227229<b>6<b>", },
+                TextAlignCenter,
+                new div { innerHTML = "1056227229<b>6<b>", },
 
-                    new div { innerHTML = "2569375209<b>8<b>" },
+                new div { innerHTML = "2569375209<b>8<b>" },
 
-                    new div { innerHTML = "7547453160<b>2<b>" },
-                }
+                new div { innerHTML = "7547453160<b>2<b>" }
             },
 
             (p)@"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkda oluşmuş. 
 11 hane olan TC kimlik numaranızın ilk 10 hanesinin rakamlarının toplamının 10'a bölümünden kalan sayı 11. hanedeki sayı ile hep aynıdır.
 Özetle şunu söyleyebiliriz",
-            new br(),
-            (div)@"TC kimlik numaranızdaki ilk 10 rakamın toplamını 10'a bölerseniz elinizde kalan sayı 11.hanedeki rakamı verir." + FontWeight500,
-            new br(),
+
+            @"TC kimlik numaranızdaki ilk 10 rakamın toplamını 10'a bölerseniz elinizde kalan sayı 11.hanedeki rakamı verir.",
+
             new p
             {
-                text = @"Bu kural bütün TC kimlik numaraları için geçerlidir. Hatta TC kimlik numarası aslında 9 hanedir. 
+                @"Bu kural bütün TC kimlik numaraları için geçerlidir. Hatta TC kimlik numarası aslında 9 hanedir. 
 İlk 9 rakam belli bir hesaplama (algoritma) sonucu 10. hanedeki rakamı verir. 
 İlk 10 hanedeki rakam da yukarıda detaylarını incelediğimiz yöntem ile 11. hanedeki rakamı verir.
 Özetle en sağdaki son iki rakam aslında doğrulama rakamlarıdır.
@@ -47,44 +41,40 @@ Böylelikle herhangi 11 haneden oluşan bir sayının TC kimlik numarası olup o
 "
             },
 
-            new VSpace(20),
-
             new LargeTitle("IBAN"),
 
-            new p { text  = "Peki ya bankanızın size vermiş oluğu IBAN bilgisinde buna benzer bir şey olabilir mi ?" },
+            new p { "Bankanızın size vermiş oluğu IBAN bilgisinde buna benzer bir şey olabilir mi?" },
             new img { src = Img("IBAN.jpg"), style = { width = "100%", maxWidth = "600px", height = "auto", display = "block", marginLeftRight = "auto" } },
 
             new p
             {
-                text = @"Yukarıdaki resimde gördüğünüz 'Kontrol Basamakları' diye işaret edilen 56 rakamı 
+                @"Yukarıdaki resimde gördüğünüz 'Kontrol Basamakları' diye işaret edilen 56 rakamı 
 rastgele olşturulmuş bir sayı değildir.
 "
             },
-            
+
             (p)@"Hatta mobil şubenizden bir ibana para gönderirken ibandaki herhangi bir rakamı bilerek yanlış girin.
 Muhtemelen hatalı iban diye size uyarı verecektir.",
-            
+
             (p)"Peki bu ibanın hatalı olup olmadığını nasıl bilinebiliyor ?",
-            
+
             new div { text = "İbanın doğrulaması şu şekilde yapılıyor." },
-            new VSpace(5),
 
             new ul
             {
-                (li) "İlk 4 hane sona taşınır.",
-                (li) "Her bir harf yerine o harf için belirlenen rakamsal karşılıklar yazılır." ,
-                (li) "Bütün bu rakamı 97 ye böldüğünüzde kalan 1 ise iban doğrudur - değil ise yanlıştır." 
+                (li)"İlk 4 hane sona taşınır.",
+                (li)"Her bir harf yerine o harf için belirlenen rakamsal karşılıklar yazılır.",
+                (li)"Bütün bu rakamı 97 ye böldüğünüzde kalan 1 ise iban doğrudur - değil ise yanlıştır."
             },
-            new br(),
+
             new div { text = "İşte bu yukarıdaki resimde gördüğünüz iki hane olan kontrol rakamları(check digits) bu Mod97 hesaplamasından 1 sonucu gelecek şekilde ayarlanıyor." },
 
-            new VSpace(20),
-            new LargeTitle("Parity Bit"),
+            new LargeTitle("Parity Bit") + mt(15),
 
             new p { text = "Şuan bu yazıları okuduğunuz cihaz internetten aldığı verileri sizce nasıl kontrol ediyor?" },
             new div
             {
-                text = @"Bilgisayarlar birbirlerine verileri gönderirken aslında sadece 0-1 rakamlarını gönderiyorlar. 
+                @"Bilgisayarlar birbirlerine verileri gönderirken aslında sadece 0-1 rakamlarını gönderiyorlar. 
 Gönderilecek verinin 0-1 rakamlarından oluşan karşılıkları paketler halinde gönderilir.
 Her bir paketin içinde de binlerce byte ismini verdikleri 8 haneli rakamlar vardır. 
 İşte bu paketlerin doğru olup olmaması da yine benzer bir yöntem ile yapılmaktadır."
@@ -94,28 +84,32 @@ Her bir paketin içinde de binlerce byte ismini verdikleri 8 haneli rakamlar var
 
             new p
             {
-                text = @"Dikkat edilir ise sağındaki rakamların toplamı çift ise en baştaki değer 0 olur tek ise 1 olur.
+                @"Dikkat edilir ise sağındaki rakamların toplamı çift ise en baştaki değer 0 olur tek ise 1 olur.
 Bu sayede A cihazı B cihazından gelen verileri kontrol eder ve duruma göre bozuk gelen paketler tekrar istenir.
 "
             },
 
             new p
             {
-                text = @" Özetlersek günümüz bilgisayar dünyasında bir verinin doğruluğu, 
+                @" Özetlersek günümüz bilgisayar dünyasında bir verinin doğruluğu, 
 doğru iletilip iletilmediği bu saydığımız yöntemler ile olmaktadır. 
 Çok daha karmaşık doğrulama-şifreleme yöntemleri olmakla beraber elbette bu yazıda basit olanlardan sadece bir kaçı ele alındı.
 Para transferleri, bitcoin, QR ile yapılan işlemlerden tutun okuduğunuz şu yazının sizin cihazınıza kadar iletilmesinde bile bu yöntemler kullanılıyor.
 Doğrulama bilgisi veri içinde beraber gönderiliyor.
 "
             },
-            new VSpace(20),
 
-            (p)@" İyi de bu anlatılanların Kuran ile 19 ile ne alakası var ?"+FontWeight500,
+            new p(FontWeight600)
+            {
+                " İyi de bu anlatılanların Kuran ile 19 ile ne alakası var?"
+            },
 
-            (p)@"Aynen burada bahsedilen örneklerde olduğu gibi bir doğrulama kodu Kuran içinde olabilir mi ? 
-Bu sayede Kuran'ın Yaratıcıdan gelen bir kitap olduğunu daha iyi anlayabilelim diye Kuran'ın içine bir doğrulama kodu-sayısı-anahtarı olabilir mi ?",
-
-            new VSpace(15)
+            new p
+            {
+                PaddingBottom(30),
+                @"Aynen burada bahsedilen örneklerde olduğu gibi bir doğrulama kodu Kuran içinde olabilir mi ? 
+Bu sayede Kuran'ın Yaratıcıdan gelen bir kitap olduğunu daha iyi anlayabilelim diye Kuran'ın içine bir doğrulama kodu-sayısı-anahtarı olabilir mi ?"
+            }
         };
     }
 }
