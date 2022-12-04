@@ -33,7 +33,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                 {
                     new SiteTitle() + MarginLeft(30),
 
-                    new SvgHamburgerIcon() + MarginRight(30)
+                    new SvgHamburgerIcon()  + new Style{ MarginRight(30) }
                     
                 }
 

@@ -187,6 +187,13 @@ public abstract class ReactStatefulComponent : Element
     {
         this.style.Import(style);
     }
+
+    public static ReactStatefulComponent operator +(ReactStatefulComponent component, Style style)
+    {
+        component.style.Import(style);
+
+        return component;
+    }
 }
 
 public abstract class ReactComponent : ReactComponent<EmptyState>
