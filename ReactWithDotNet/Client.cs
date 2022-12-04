@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using Newtonsoft.Json;
+
+namespace ReactWithDotNet;
 
 static partial class Mixin
 {
@@ -15,16 +17,13 @@ static partial class Mixin
 
 public abstract class ReactComponent<TState> : ReactStatefulComponent where TState : new()
 {
-    #region Public Properties
+    [JsonProperty]
     public TState state { get; protected internal set; }
-    #endregion
-
-    #region Methods
+    
     protected override void constructor()
     {
         state = new TState();
     }
-    #endregion
 }
 
 [Serializable]

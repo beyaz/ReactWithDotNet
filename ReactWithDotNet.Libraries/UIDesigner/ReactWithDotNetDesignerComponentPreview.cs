@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -9,12 +10,12 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
     {
         state = StateCache.ReadState() ?? new UIDesignerModel();
 
-        Client.GotoMethod(700,Refresh);
+        Client.GotoMethod(700, Refresh);
     }
 
     protected override void componentDidMount()
     {
-        Client.GotoMethod(700,Refresh);
+        Client.GotoMethod(700, Refresh);
     }
 
     protected override void constructor()
@@ -97,8 +98,8 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
                                     if (instance is ReactStatefulComponent component)
                                     {
                                         component.ComponentUniqueIdentifier = 1000;
-                                        component.key                      = "0";
-                                        component.Context                  = Context;
+                                        component.key                       = "0";
+                                        component.Context                   = Context;
                                         component.InvokeConstructor();
                                     }
 
@@ -123,7 +124,11 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
                 {
                     component.key     = "0";
                     component.Context = Context;
-                    component.InvokeConstructor();
+
+                    if (type.GetProperty("state", BindingFlags.Instance | BindingFlags.Public)?.GetValue(instance) is null)
+                    {
+                        component.InvokeConstructor();
+                    }
 
                     return component;
                 }
