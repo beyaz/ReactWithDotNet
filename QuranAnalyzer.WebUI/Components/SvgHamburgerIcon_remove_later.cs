@@ -5,7 +5,7 @@ class SvgHamburgerIconModel
     public bool HamburgerMenuIsOpen { get; set; }
 }
 
-class SvgHamburgerIcon : ReactComponent<SvgHamburgerIconModel>
+class SvgHamburgerIcon_remove_later : ReactComponent<SvgHamburgerIconModel>
 {
     public void CloseHamburgerMenu(MouseEvent e)
     {
