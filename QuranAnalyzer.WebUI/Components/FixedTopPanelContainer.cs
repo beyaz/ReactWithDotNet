@@ -1,9 +1,13 @@
 ﻿
+using QuranAnalyzer.WebUI.Pages.MainPage;
+
 namespace QuranAnalyzer.WebUI.Components;
 
 class FixedTopPanelContainerModel
 {
     public double MainDivScrollY { get; set; }
+
+    public bool IsMenuVisible { get; set; }
 }
 class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 {
@@ -33,12 +37,37 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                 {
                     new SiteTitle() + MarginLeft(30),
 
-                    new SvgHamburgerIcon()  + new Style
+                    new div
                     {
-                        DisplayNone,
+                        DisplayNone, MediaQueryOnSmartphone(new Style{DisplayBlock}),
                         MarginRight(30),
-                        MediaQueryOnSmartphone(new Style{DisplayBlock})
+                        OnClick(_=>state.IsMenuVisible = !state.IsMenuVisible),
+                        new SvgHamburgerIcon()  + new Style
+                        {
+                            When(state.IsMenuVisible, DisplayNone),
+                        },
+
+                        new MenuCloseIcon()  + new Style
+                        {
+                            DisplayNone,
+                            When(state.IsMenuVisible, DisplayBlock),
+                        },
+                        PositionRelative,
+                        new div
+                        {
+                            DisplayNone,
+                            When(state.IsMenuVisible, DisplayBlock),
+                            PositionAbsolute,
+                            Background("white"),
+                            MarginLeft(-200), MarginTop(-10),
+                            Zindex(3),
+                            BoxShadow( "0px 0px 8px rgb(0 0 0 / 20%)"),
+                            Padding(30),
+                            BorderRadius(5),
+                            new LeftMenu()
+                        }
                     }
+                  
                     
                 }
 
