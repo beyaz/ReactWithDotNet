@@ -13,18 +13,9 @@ class LeftMenu : ReactComponent
         ("İletişim", PageId.ContactPage)
     };
 
-    
-    public int? SelectedIndex { get; set; }
-
     public string SelectedPageId { get; set; }
 
-    protected override void constructor()
-    {
-        if (SelectedPageId is not null)
-        {
-            SelectedIndex = MenuItems.FindIndex(x => x.pageId == SelectedPageId);
-        }
-    }
+    int? SelectedIndex => MenuItems.FindIndex(x => x.pageId == SelectedPageId);
 
     protected override Element render()
     {
@@ -43,10 +34,10 @@ class LeftMenu : ReactComponent
 
             return new a(Href(GetPageLink(MenuItems[index].pageId)))
             {
-                DisplayFlex, FlexDirectionRow, AlignItemsCenter, Gap(10),  
+                DisplayFlex, FlexDirectionRow, AlignItemsCenter, Gap(10),
                 PositionRelative,
                 TextDecorationNone,
-                
+
                 // C i r c l e
                 new div
                 {
@@ -55,7 +46,7 @@ class LeftMenu : ReactComponent
                     BorderRadius("1em"),
                     Zindex(1)
                 },
-                
+
                 // T e x t
                 new FlexRowCentered
                 {
@@ -75,9 +66,6 @@ class LeftMenu : ReactComponent
                 }
             };
         }
-        
-        
-        
     }
 }
 
