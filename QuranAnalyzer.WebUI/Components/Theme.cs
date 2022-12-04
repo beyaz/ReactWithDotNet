@@ -1,7 +1,10 @@
 ﻿
 namespace QuranAnalyzer.WebUI.Components;
 
-
+static class Theme
+{
+    public static string TextColor = "rgb(51, 51, 51)";
+}
 
 class divWithBorder: HtmlElement
 {
