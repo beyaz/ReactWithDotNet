@@ -39,14 +39,14 @@ public class DefinitionView : ReactComponent
 
             new p
             {
-                (strong)"Peki bu kitapların doğru olduğu ne malum ?",
+                (strong)"Peki bu kitapların doğru olduğu ne malum?",
             },
 
             new p
             {
                 " Evet soru gayet haklı bir soru. Eğer bu kitapların içinde akla mantığa ters bir tek cümle var ise kitabın tamamına şüphe ile yaklaşmak zorundayız.",
                 " Önceki nesillerin bu soruyu çokca dillendirmemesi bizim neslimizi bağlamaz. ",
-                " Zaten bu bundan 100 yıl öncesinde bu soruyu müslüman bir coğrafyada zaten dillendiremezdiniz.",
+                " Kaldıki bu bundan 100 yıl öncesinde bu soruyu müslüman bir coğrafyada zaten dillendiremezdiniz.",
             },
             new p
             {
@@ -86,6 +86,7 @@ public class DefinitionView : ReactComponent
                 "İşte bu sorunun cevabı yine Kuranın kendisinden çıkmış durumda.",
                 " Bilgeler Bilgesi olan  Kuranın üzerine biz insanların anlayabileceği kolaylıkta fakat taklit edemeyeceği zorlukta bir sayısal harmoni-örüntü-imza-desen eklemiş. ",
                 " Eklemiş ki bu kitabın kendisinden gelen bir kitap olduğuna emin olunsun ve içerisindeki dehşetli uyarılara kulak asılsın, verilen müjdeler için çaba sarfedilsin.",
+                " Bilim ve teknolojinin patlama yaptığı bu çağda 'Bilgeler Bilgesi' biz insanoğluna yine çağın diline uygun olarak teknoloji üzerinden bilgisayar ile bir mesaj veriyor.",
                 " Tanrı'nın bu matematiksel imzası 19 sayısı üzerine kuruludur.",
                 " Kurandaki bir çok matematiksel verinin 19 rakamı ile ilişkili olmasıdır.",
                 " Bu matematiksel veriler öyle bir derecedeki insanoğlunun günümüz bilgisayarları ile yapabileceğinden çok daha üst seviyededir. ",
@@ -95,7 +96,7 @@ public class DefinitionView : ReactComponent
             new p
             {
                 " İddia kısaca bu şekildedir. Gelin bu iddiayı beraber inceleyelim. Yalnız başımıza karar verelim.",
-                (strong)" Bu sitedeki anlatılan kısım sadece başlangıç harleri ile ilgili kısımdır.",
+                (strong)" Bu sitedeki anlatılan kısım 19 sisteminin en temel verisi olup sadece başlangıç harleri ile ilgili kısımdır.",
                 " Bunun dışında 19 sisteminin alt başlıkları diyebileceğimiz  büyük sayılar ile ilgili veyahut harflerin sayısal değerleri ile ilgili başka bir çok ilginç verisi var."
             }
         };
