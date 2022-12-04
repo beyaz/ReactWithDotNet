@@ -2,22 +2,19 @@
 
 class AllInitialLettersModel
 {
-    public string SelectedTabIdentifier { get; set; }
+    public int SelectedTabIndex { get; set; }
 }
 
 class AllInitialLetters : ReactComponent<AllInitialLettersModel>
 {
     protected override void constructor()
     {
-        state = new AllInitialLettersModel
-        {
-            SelectedTabIdentifier = Tabs.FirstOrDefault().contenType.FullName
-        };
+        state = new AllInitialLettersModel();
 
         var value = Context.Query[QueryKey.FactIndex];
         if (value is not null && int.TryParse(value, out int index) && index >0 && index<Tabs.Count)
         {
-            state.SelectedTabIdentifier = Tabs[index].contenType.FullName;
+            state.SelectedTabIndex = index;
         }
 
     }
@@ -50,7 +47,7 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
 
         var headers = new FlexColumn(TextAlignCenter, CursorPointer, JustifyContentFlexStart)
         {
-            Children(Tabs.Select(x => CreateTabHeader(x.TabHeader, x.contenType.FullName)))
+            Children(Tabs.Select((x,i) => CreateTabHeader(x.TabHeader, i)))
         };
 
         return new FlexRow(WidthMaximized, Border($"1px solid {BorderColor}"), PositionRelative)
@@ -63,23 +60,15 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
 
     Element CreateTabContent()
     {
-        Element content = new div();
-
-        if (state.SelectedTabIdentifier.HasValue())
-        {
-            content = (Element)Activator.CreateInstance(Type.GetType(state.SelectedTabIdentifier) ?? throw new TypeLoadException(state.SelectedTabIdentifier));
-        }
-
-        return content;
+        return (Element)Activator.CreateInstance(Tabs[state.SelectedTabIndex].contenType);
     }
 
-    Element CreateTabHeader(string text, string identifier)
+    Element CreateTabHeader(string text, int index)
     {
-        var isSelected = state.SelectedTabIdentifier == identifier;
+        var isSelected = state.SelectedTabIndex == index;
 
-        return new div
+        return new a(Href(GetTabUrl(index)))
         {
-            id   = identifier,
             text = text,
 
             style =
@@ -87,26 +76,15 @@ class AllInitialLetters : ReactComponent<AllInitialLettersModel>
                 Width(100),
                 Color("rgba(0, 0, 0, 0.6)"),
                 Padding(10),
-                // BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}"),
+                TextDecorationNone,
                 When(isSelected,BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}")),
                 When(isSelected, Background("#deecf9"), Color(BluePrimary))
-            },
-
-            onClick = OnTabHeaderClick
+            }
         };
     }
     
-    void OnTabHeaderClick(MouseEvent e)
+    static string GetTabUrl(int index)
     {
-        state.SelectedTabIdentifier = e.FirstNotEmptyId;
-
-        UpdateUrl();
-    }
-
-    void UpdateUrl()
-    {
-        var index = Tabs.FindIndex(x => x.contenType.FullName == state.SelectedTabIdentifier);
-        
-        Client.PushHistory("", $"/?{QueryKey.Page}={PageId.InitialLetters}&{QueryKey.FactIndex}={index}");
+        return $"/?{QueryKey.Page}={PageId.InitialLetters}&{QueryKey.FactIndex}={index}";
     }
 }
