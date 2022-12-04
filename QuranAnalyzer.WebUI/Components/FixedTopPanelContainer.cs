@@ -37,7 +37,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                 {
                     new SiteTitle() + MarginLeft(30),
 
-                    new div
+                    new div(PositionRelative)
                     {
                         DisplayNone, MediaQueryOnSmartphone(new Style{DisplayBlock}),
                         MarginRight(30),
@@ -49,15 +49,13 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 
                         new MenuCloseIcon()  + new Style
                         {
-                            DisplayNone,
-                            When(state.IsMenuVisible, DisplayBlock),
+                            DisplayNone, When(state.IsMenuVisible, DisplayBlock)
                         },
-                        PositionRelative,
-                        new div
+                        
+                        new div(PositionAbsolute)
                         {
-                            DisplayNone,
-                            When(state.IsMenuVisible, DisplayBlock),
-                            PositionAbsolute,
+                            DisplayNone, When(state.IsMenuVisible, DisplayBlock),
+                            
                             Background("white"),
                             MarginLeft(-200), MarginTop(-10),
                             Zindex(3),
