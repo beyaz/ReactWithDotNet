@@ -15,7 +15,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 
     protected override Element render()
     {
-        var top = new div
+        var top = new FlexColumn(JustifyContentCenter)
         {
             style =
             {
@@ -29,11 +29,15 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
             },
             children =
             {
-                new nav(DisplayFlex, JustifyContentFlexStart, AlignItemsCenter)
+                new nav(DisplayFlex, FlexDirectionRow, JustifyContentSpaceBetween, AlignItemsCenter)
                 {
-                    new SvgHamburgerIcon(),
-                    new SiteTitle()
+                    new SiteTitle() + MarginLeft(30),
+
+                    new SvgHamburgerIcon() + MarginRight(30)
+                    
                 }
+
+
             }
         };
 
