@@ -16,7 +16,9 @@ public class UIDesignerModel
     public string SelectedComponentTypeReference { get; set; }
 
     public DotNetMemberSpecification SelectedDotNetMemberSpecification { get; set; } = new();
-
+    
+    public TypeReference SelectedType{ get; set; }
+    
     public MethodReference SelectedMethod { get; set; }
 
     public string SelectedMethodTreeFilter { get; set; }

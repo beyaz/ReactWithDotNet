@@ -188,7 +188,8 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
     {
         SaveState();
 
-        state.SelectedMethod     = null;
+        state.SelectedType   = null;
+        state.SelectedMethod = null;
 
         state.SelectedMethodTreeNodeKey = e.value;
         state.SelectedMethodTreeFilter  = e.filter;
@@ -205,6 +206,8 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             if (node.IsClass)
             {
                 fullClassName = $"{node.TypeReference.FullName}";
+
+                state.SelectedType = node.TypeReference;
             }
 
             if (node.IsMethod)
