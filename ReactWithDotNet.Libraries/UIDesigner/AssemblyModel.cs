@@ -142,4 +142,48 @@ static class AssemblyModelHelper
             ParameterType = parameterInfo.ParameterType.AsReference()
         };
     }
+
+
+    public static Type TryLoadFrom(Assembly assembly, TypeReference typeReference)
+    {
+        if (assembly == null)
+        {
+            throw new ArgumentNullException(nameof(assembly));
+        }
+
+        if (typeReference == null)
+        {
+            throw new ArgumentNullException(nameof(typeReference));
+        }
+
+        foreach (var type in assembly.GetTypes())
+        {
+            var value = findMatchedType(type);
+            if (value is not null)
+            {
+                return value;
+            }
+        }
+
+        return null;
+
+        Type findMatchedType(Type type)
+        {
+            if (typeReference.Equals(type.AsReference()))
+            {
+                return type;
+            }
+
+            foreach (var nestedType in type.GetNestedTypes())
+            {
+                var value = findMatchedType(nestedType);
+                if (value is not null)
+                {
+                    return value;
+                }
+            }
+
+            return null;
+        }
+    }
 }
