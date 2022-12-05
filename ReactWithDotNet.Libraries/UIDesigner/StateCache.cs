@@ -57,11 +57,11 @@ class StateCache
         }
     }
 
-    public static void SaveToCache(string type, string json)
+    public static void SaveToCache(string fileNameWithoutExtension, string jsonContent)
     {
         lock (fileLock)
         {
-            WriteAllText(GetCacheFilePath(type), json);
+            WriteAllText(GetCacheFilePath(fileNameWithoutExtension), jsonContent);
         }
     }
     #endregion
