@@ -40,113 +40,113 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
 
     Element createElement()
     {
+        MethodInfo methodInfo = null;
+
         try
         {
             // try invoke as static function
+
+            var fullAssemblyPath = state.SelectedAssemblyFilePath;
+            if (File.Exists(fullAssemblyPath))
             {
-                var fullAssemblyPath = state.SelectedAssemblyFilePath;
-                if (File.Exists(fullAssemblyPath))
+
+                var assembly = MetadataHelper.LoadAssembly(fullAssemblyPath);
+                if (state.SelectedMethod is not null)
                 {
-
-                    var assembly = MetadataHelper.LoadAssembly(fullAssemblyPath);
-                    if (state.SelectedMethod is not null)
+                    methodInfo = assembly.TryLoadFrom(state.SelectedMethod);
+                    if (methodInfo != null)
                     {
-                        
-                    }
+                        var invocationParameters = new List<object>();
 
+                        var methodParameters = methodInfo.GetParameters();
 
-                    var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
-                    if (node is not null)
-                    {
-                        if (node.IsMethod)
+                        var jsObject = (JObject)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
+                        foreach (var parameterInfo in methodParameters)
                         {
-                            var methodInfo = MetadataHelper.FindMethodInfo(MetadataHelper.LoadAssembly(fullAssemblyPath), node);
-                            if (methodInfo != null)
+                            var parameterName = parameterInfo.Name;
+                            var parameterType = parameterInfo.ParameterType;
+
+                            if (parameterName is not null)
                             {
-                                var invocationParameters = new List<object>();
-
-                                var methodParameters = methodInfo.GetParameters();
-
-                                var jsObject = (JObject)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
-                                foreach (var parameterInfo in methodParameters)
+                                var parameterValueAsJsonObject = jsObject[parameterName];
+                                if (parameterValueAsJsonObject is not null)
                                 {
-                                    var parameterName = parameterInfo.Name;
-                                    var parameterType = parameterInfo.ParameterType;
-
-                                    if (parameterName is not null)
-                                    {
-                                        var parameterValueAsJsonObject = jsObject[parameterName];
-                                        if (parameterValueAsJsonObject is not null)
-                                        {
-                                            invocationParameters.Add(parameterValueAsJsonObject.ToObject(parameterType));
-                                            continue;
-                                        }
-
-                                        return new div { text = $"Missing parameter {parameterName}" };
-                                    }
-
-                                    return new div { text = "parameterName not be evaluated" };
+                                    invocationParameters.Add(parameterValueAsJsonObject.ToObject(parameterType));
+                                    continue;
                                 }
 
-                                if (methodInfo.IsStatic)
-                                {
-                                    return (Element)methodInfo.Invoke(null, invocationParameters.ToArray());
-                                }
-
-                                // invoke as instance
-                                {
-                                    var declaringType = methodInfo.DeclaringType;
-                                    if (declaringType is null)
-                                    {
-                                        return new div { text = "Method declaring type is null." };
-                                    }
-
-                                    var instance = (Element)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification?.JsonTextForDotNetInstanceProperties : "{}", declaringType);
-
-                                    if (instance is ReactStatefulComponent component)
-                                    {
-                                        component.ComponentUniqueIdentifier = 1000;
-                                        component.key                       = "0";
-                                        component.Context                   = Context;
-                                        component.InvokeConstructor();
-                                    }
-
-                                    return (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
-                                }
+                                return new div { text = $"Missing parameter {parameterName}" };
                             }
+
+                            return new div { text = "parameterName not be evaluated" };
+                        }
+
+                        if (methodInfo.IsStatic)
+                        {
+                            return (Element)methodInfo.Invoke(null, invocationParameters.ToArray());
+                        }
+
+                        // invoke as instance
+                        {
+                            var declaringType = methodInfo.DeclaringType;
+                            if (declaringType is null)
+                            {
+                                return new div { text = "Method declaring type is null." };
+                            }
+
+                            var instance = (Element)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification?.JsonTextForDotNetInstanceProperties : "{}", declaringType);
+
+                            if (instance is ReactStatefulComponent component)
+                            {
+                                component.ComponentUniqueIdentifier = 1000;
+                                component.key                       = "0";
+                                component.Context                   = Context;
+                                component.InvokeConstructor();
+                            }
+
+                            return (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
                         }
                     }
                 }
-            }
 
-            {
-                var type = FindType(state.SelectedComponentTypeReference);
-                if (type == null)
+                if (state.SelectedType is not null)
                 {
-                    return "type not found.@" + state.SelectedComponentTypeReference;
-                }
-
-                var instance = (Element)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties : "{}", type);
-
-                if (instance is ReactStatefulComponent component)
-                {
-                    component.key     = "0";
-                    component.Context = Context;
-
-                    if (type.GetProperty("state", BindingFlags.Instance | BindingFlags.Public)?.GetValue(instance) is null)
+                    var type = assembly.TryLoadFrom(state.SelectedType);
+                    if (type == null)
                     {
-                        component.InvokeConstructor();
+                        return "type not found.@" + state.SelectedComponentTypeReference;
                     }
 
-                    return component;
+                    var instance = (Element)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties : "{}", type);
+
+                    if (instance is ReactStatefulComponent component)
+                    {
+                        component.key     = "0";
+                        component.Context = Context;
+
+                        if (type.GetProperty("state", BindingFlags.Instance | BindingFlags.Public)?.GetValue(instance) is null)
+                        {
+                            component.InvokeConstructor();
+                        }
+
+                        return component;
+                    }
+
+                    return instance.ToString();
                 }
 
-                return instance.ToString();
+
             }
+
+
+
         }
         catch (Exception exception)
         {
             return new div(exception.ToString());
         }
+
+        return "Element not created. Select type or method from left panel";
     }
+
 }

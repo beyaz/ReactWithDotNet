@@ -143,7 +143,7 @@ static class AssemblyModelHelper
         };
     }
 
-    public static Type TryLoadFrom(Assembly assembly, TypeReference typeReference)
+    public static Type TryLoadFrom(this Assembly assembly, TypeReference typeReference)
     {
         if (assembly == null)
         {
@@ -171,7 +171,7 @@ static class AssemblyModelHelper
         return foundedType;
     }
 
-    public static MethodInfo TryLoadFrom(Assembly assembly, MethodReference methodReference)
+    public static MethodInfo TryLoadFrom(this Assembly assembly, MethodReference methodReference)
     {
         if (assembly == null)
         {
