@@ -1,13 +1,10 @@
 
-import ReactWithDotNet from "../ReactWithDotNet.jsx";
+import ReactWithDotNet from "../react-with-dotnet";
 
 // react-simple-code-editor
 import Editor  from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-css';
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-csharp';
 import 'prismjs/themes/prism.css';
 
 const GetHighlightFunction = (language) =>

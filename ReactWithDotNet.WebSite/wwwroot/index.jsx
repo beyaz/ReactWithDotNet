@@ -1,10 +1,7 @@
-// import helper tool for design your component in hotreload mode
-import "./integration/ReactWithDotNet-UIDesigner";
+// import core library
+import ReactWithDotNet from "./react-with-dotnet/react-with-dotnet";
 
 // import libraries which you use in your porject
-import "./integration/primereact";
-import "./integration/react-simple-code-editor";
-
-// your app specific imports and codes
-import './app.css'
+import "./react-with-dotnet/libraries/primereact";
+import "./react-with-dotnet/libraries/react-free-scrollbar";
 

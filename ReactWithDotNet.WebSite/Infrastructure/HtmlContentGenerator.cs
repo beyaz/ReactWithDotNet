@@ -27,10 +27,7 @@ sealed class HtmlContentGenerator
             "    <title>React with DotNet</title>",
 
             "    <!-- Font -->",
-            "    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;500;700&display=swap\">",
-            "    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Marcellus:wght@400;500;700&display=swap\">",
-
-            $"    <link rel='stylesheet' href='{root}/index.css'>",
+            "    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,800,900&amp;display=swap' media='all'>",
 
             "</head>",
 
@@ -47,7 +44,30 @@ sealed class HtmlContentGenerator
             $"        fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',",
             "        containerHtmlElementId: 'app'",
             "    });",
-            "</script>"
+            "</script>",
+            "",
+            
+            "",
+            @"
+               <style>
+                   html, body {
+                       height: 100vh;
+                       margin: 0;
+                       font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                       font-size: 16px;
+                       color: rgb(51, 51, 51);
+                   }
+                   
+                   #app {
+                       width: 100%;
+                       height: 100vh;
+                   }
+                   
+                   input:focus, textarea:focus, select:focus {
+                       outline: none;
+                   }
+               </style>
+              "
         };
 
         return lines.Aggregate(new StringBuilder(), (sb, line) => line.WriteTo(sb)).ToString();

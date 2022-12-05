@@ -2,11 +2,13 @@
     "name": "quran-analyzer-web-ui",
     "version": "1.0.0",
     "scripts": {
-        "build": "esbuild index.jsx --bundle --outfile=index.js --define:global=window",
-        "build-for-production": "esbuild index.jsx --bundle --outfile=index.js --define:global=window --minify --analyze --define:process.env.NODE_ENV=\\\"production\\\""
+        "build-development": "esbuild index-development.jsx --bundle --outfile=index.js --define:global=window",
+        "build-production":  "esbuild index.jsx             --bundle --outfile=index.js --define:global=window --analyze --minify --target=es2016"
     },
     "dependencies": {
         "esbuild": "^0.14.48",
+        "install": "^0.13.0",
+        "npm": "^8.15.0",
 
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -15,12 +17,25 @@
         "primeicons": "^5.0.0",
         "primereact": "^8.2.0",
 
+        "rsuite": "^5.19.1",
+
         "react-xarrows": "^2.0.2",
 
-        "install": "^0.13.0",
-        "npm": "^8.15.0",
         "prismjs": "^1.28.0",
+
         "react-simple-code-editor": "^0.11.2",
-        "swiper": "^8.4.2"
+
+        "swiper": "^8.4.2",
+
+        "react-datepicker": "^4.8.0",
+
+        "@uiw/react-codemirror": "^4.13.2",
+        "@uiw/codemirror-extensions-langs": "^4.13.2",
+        "@uiw/codemirror-theme-github": "^4.13.2",
+        "@uiw/codemirror-extensions-basic-setup": "^4.13.2",
+
+        "google-map-react": "^2.2.0",
+
+        "react-free-scrollbar": "^0.3.4"
     }
 }

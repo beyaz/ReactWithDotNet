@@ -710,22 +710,30 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                 const targetProp    = propValue.targetProp;
                 const eventName     = propValue.eventName;
                 const sourcePath    = propValue.sourcePath;
+                const sourceIsState = propValue.sourceIsState;
+                
                 const jsValueAccess = propValue.jsValueAccess;
-                const defaultValue = propValue.defaultValue;
+                const transformFunction = GetExternalJsObject(IfNull(propValue.transformFunction , 'ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull'));
 
                 const handlerComponentUniqueIdentifier = propValue.HandlerComponentUniqueIdentifier;
 
-                props[targetProp] = IfNull(GetValueInPath(GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier).state[DotNetState], sourcePath), defaultValue);
+                let accessToSource = DotNetProperties;
+                if (sourceIsState)
+                {
+                    accessToSource = DotNetState;
+                }
+
+                props[targetProp] = transformFunction(GetValueInPath(GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier).state[accessToSource], sourcePath));
                 props[eventName] = function(e)
                 {
                      const targetComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
-                    const modifiedDotNetState = Clone(targetComponent.state[DotNetState]);
+                    const modifiedDotNetState = Clone(targetComponent.state[accessToSource]);
 
-                    SetValueInPath(modifiedDotNetState, sourcePath, IfNull(GetValueInPath({ e: e }, jsValueAccess)), defaultValue);
+                    SetValueInPath(modifiedDotNetState, sourcePath, transformFunction(GetValueInPath({ e: e }, jsValueAccess)));
 
                     const newState = {};
-                    newState[DotNetState] = modifiedDotNetState;
+                    newState[accessToSource] = modifiedDotNetState;
 
                     targetComponent.setState(newState);
                 }
@@ -1189,7 +1197,17 @@ function DefineComponent(componentDeclaration)
             for (var i = 0; i < length; i++)
             {
                 this[ON_COMPONENT_DESTROY][i]();
-            }            
+            }
+
+            // remove related dynamic styles
+            for (let i = 0; i < DynamicStyles.length; i++)
+            {
+                if (this.$DotNetComponentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
+                {
+                    DynamicStyles.splice(i, 1);
+                    i--;
+                }
+            }
 
             COMPONENT_CACHE.Unregister(this);
 
@@ -1438,6 +1456,21 @@ RegisterCoreFunction('ReplaceNullWhenEmpty', function(value)
     return value;
 });
 
+RegisterCoreFunction('EmptyTransformFunction', function(value)
+{
+   return value;
+});
+
+RegisterCoreFunction('ReplaceEmptyStringWhenIsNull', function(value)
+{
+    if (value == null)
+    {
+        return '';
+    }
+
+    return value;
+});
+
 RegisterCoreFunction('ListenWindowResizeEvent', function (resizeTimeout)
 {
     var timeout = null;
@@ -1679,7 +1712,16 @@ function ProcessDynamicCssClasses(dynamicStyles)
             {
                 hasChange = true;
 
-                DynamicStyles.push({cssSelector: cssSelector, cssBody: cssBody});
+                let startIndex = cssSelector.indexOf('._');
+                let endIndex = cssSelector.indexOf('_', startIndex + 2);
+
+                const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 2, endIndex));
+                if (isNaN(componentUniqueIdentifier))
+                {
+                    throw CreateNewDeveloperError('componentUniqueIdentifier cannot calculated from ' + cssSelector);
+                }
+
+                DynamicStyles.push({cssSelector: cssSelector, cssBody: cssBody, componentUniqueIdentifier: componentUniqueIdentifier});
             }           
         }
     }
@@ -1703,7 +1745,11 @@ function ProcessDynamicCssClasses(dynamicStyles)
             arr.push(cssSelector);
             arr.push("{");
             arr.push(cssBody);
-            arr.push("}");            
+            arr.push("}");
+            if (cssSelector.indexOf('@media ') === 0)
+            {
+                arr.push("}"); // for closing media rule bracket
+            }
         }
 
         ReactWithDotNetDynamicCssElement.innerHTML = arr.join("\n");

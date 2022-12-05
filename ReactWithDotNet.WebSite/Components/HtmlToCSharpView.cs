@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
+using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using ReactWithDotNet.PrimeReact;
 using ReactWithDotNet.react_simple_code_editor;
 
@@ -17,7 +18,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 {
     protected override Element render()
     {
-        var cssEditor = new Editor
+        Element cssEditor = new Editor
         {
             onValueChange = OnCssValueChanged,
             value         = state.FigmaCss,
@@ -30,7 +31,29 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 fontFamily = "Consolas"
             }
         };
-        var csharpEditor = new Editor
+        
+        cssEditor = new CodeMirror
+        {
+            extensions    = { "html", "githubLight" },
+            onChange = OnCssValueChanged,
+            value         = state.FigmaCss,
+            basicSetup =
+            {
+                highlightActiveLine       = false,
+                highlightActiveLineGutter = false,
+            },
+            style =
+            {
+                HeightMaximized,
+                MinHeight(200),
+                BorderRadius(3),
+                Border("1px solid #d9d9d9"),
+                FontSize11,
+                FontFamily("Consolas")
+            }
+        };
+        
+        Element csharpEditor = new Editor
         {
             value     = state.ReactInlineStyle,
             highlight = "csharp",
@@ -41,6 +64,26 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 minHeight  = "200px",
                 fontSize   = "11px",
                 fontFamily = "Consolas"
+            }
+        };
+        
+        csharpEditor = new CodeMirror
+        {
+            extensions = { "json", "githubLight" },
+            valueBind  = () => state.ReactInlineStyle,
+            basicSetup =
+            {
+                highlightActiveLine       = false,
+                highlightActiveLineGutter = false,
+            },
+            style =
+            {
+                HeightMaximized,
+                MinHeight(200),
+                BorderRadius(3),
+                Border("1px solid #d9d9d9"),
+                FontSize11,
+                FontFamily("Consolas")
             }
         };
 
@@ -56,6 +99,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             style = { width_height = "100%", padding = "10px", display = "flex", flexDirection = "column" },
             children =
             {
+                new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css" },
+                new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
+                new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css" },
+
+                
                 new div(Text("Html to ReactWithDotNet")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
                 new Splitter
                 {
