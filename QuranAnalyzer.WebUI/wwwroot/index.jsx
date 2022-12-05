@@ -5,9 +5,6 @@ import ReactWithDotNet from "./react-with-dotnet/react-with-dotnet";
 import "./react-with-dotnet/libraries/react-xarrows";
 import "./react-with-dotnet/libraries/react-free-scrollbar";
 
-// your app specific imports and codes
-import './app.css'
-
 var currentScrollY = 0;
 
 document.addEventListener('scroll', () => 

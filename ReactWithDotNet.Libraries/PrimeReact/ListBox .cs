@@ -6,6 +6,7 @@ public abstract class ListBox : ElementBase
     
 }
 
+[ReactRealType(typeof(ListBox))]
 public class ListBoxSingleSelection<TOption> : ListBox
 {
     /// <summary>
