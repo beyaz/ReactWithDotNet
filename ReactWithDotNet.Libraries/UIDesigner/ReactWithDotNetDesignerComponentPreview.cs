@@ -47,6 +47,14 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
                 var fullAssemblyPath = state.SelectedAssemblyFilePath;
                 if (File.Exists(fullAssemblyPath))
                 {
+
+                    var assembly = MetadataHelper.LoadAssembly(fullAssemblyPath);
+                    if (state.SelectedMethod is not null)
+                    {
+                        
+                    }
+
+
                     var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
                     if (node is not null)
                     {
