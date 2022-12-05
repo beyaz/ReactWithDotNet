@@ -1,10 +1,12 @@
-﻿namespace ReactWithDotNet.UIDesigner;
+﻿using System.Reflection;
+
+namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
 public sealed class AssemblyReference
 {
     public string Name { get; set; }
-    
+
     public override string ToString()
     {
         return Name;
@@ -62,3 +64,54 @@ public sealed class ParameterReference
     }
 }
 
+static class AssemblyModelHelper
+{
+    public static AssemblyReference AsReference(this Assembly assembly)
+    {
+        return new AssemblyReference { Name = assembly.GetName().Name };
+    }
+
+    public static TypeReference AsReference(this Type x)
+    {
+        return new TypeReference
+        {
+            FullName      = x.FullName,
+            Name          = GetName(x),
+            NamespaceName = x.Namespace,
+            Assembly      = x.Assembly.AsReference()
+        };
+
+        static string GetName(Type x)
+        {
+            if (x.IsNested)
+            {
+                return GetName(x.DeclaringType) + "+" + x.Name;
+            }
+
+            return x.Name;
+        }
+    }
+
+    public static MethodReference AsReference(this MethodInfo methodInfo)
+    {
+        return new MethodReference
+        {
+            Name                      = methodInfo.Name,
+            IsStatic                  = methodInfo.IsStatic,
+            FullNameWithoutReturnType = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
+            MetadataToken             = methodInfo.MetadataToken,
+
+            DeclaringType = methodInfo.DeclaringType.AsReference(),
+            Parameters    = methodInfo.GetParameters().Select(AsReference).ToList()
+        };
+    }
+
+    public static ParameterReference AsReference(this ParameterInfo parameterInfo)
+    {
+        return new ParameterReference
+        {
+            Name          = parameterInfo.Name,
+            ParameterType = parameterInfo.ParameterType.AsReference()
+        };
+    }
+}
