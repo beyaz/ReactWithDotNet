@@ -3,14 +3,13 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using ReactWithDotNet.PrimeReact;
-using ReactWithDotNet.react_simple_code_editor;
 
 namespace ReactWithDotNet.WebSite.Components;
 
 class HtmlToCSharpViewModel
 {
-    public string FigmaCss { get; set; }
-    public string ReactInlineStyle { get; set; }
+    public string CSharpCode { get; set; }
+    public string HtmlText { get; set; }
     public string StatusMessage { get; set; }
 }
 
@@ -18,25 +17,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 {
     protected override Element render()
     {
-        Element cssEditor = new Editor
+        var htmlEditor = new CodeMirror
         {
-            onValueChange = OnCssValueChanged,
-            value         = state.FigmaCss,
-            highlight     = "css",
-            style =
-            {
-                height     = "100%",
-                minHeight  = "200px",
-                fontSize   = "11px",
-                fontFamily = "Consolas"
-            }
-        };
-        
-        cssEditor = new CodeMirror
-        {
-            extensions    = { "html", "githubLight" },
-            onChange = OnCssValueChanged,
-            value         = state.FigmaCss,
+            extensions = { "html", "githubLight" },
+            onChange   = OnHtmlValueChanged,
+            value      = state.HtmlText,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -52,25 +37,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 FontFamily("Consolas")
             }
         };
-        
-        Element csharpEditor = new Editor
+
+        var csharpEditor = new CodeMirror
         {
-            value     = state.ReactInlineStyle,
-            highlight = "csharp",
-            
-            style =
-            {
-                height     = "100%",
-                minHeight  = "200px",
-                fontSize   = "11px",
-                fontFamily = "Consolas"
-            }
-        };
-        
-        csharpEditor = new CodeMirror
-        {
-            extensions = { "json", "githubLight" },
-            valueBind  = () => state.ReactInlineStyle,
+            extensions = { "githubLight" },
+            valueBind  = () => state.CSharpCode,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -103,7 +74,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
                 new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css" },
 
-                
                 new div(Text("Html to ReactWithDotNet")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
                 new Splitter
                 {
@@ -120,7 +90,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                             size = 30,
                             children =
                             {
-                                cssEditor
+                                htmlEditor
                             }
                         },
                         new SplitterPanel
@@ -139,39 +109,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         };
     }
 
-    void OnCssValueChanged(string figmaCssText)
-    {
-        state.StatusMessage = null;
-
-        state.FigmaCss = figmaCssText;
-
-        if (string.IsNullOrWhiteSpace(figmaCssText))
-        {
-            state.ReactInlineStyle = null;
-            return;
-        }
-
-        try
-        {
-            state.ReactInlineStyle = HtmlToCSharp(state.FigmaCss);
-
-            Client.CopyToClipboard(state.ReactInlineStyle);
-
-            state.StatusMessage = "Copied to clipboard.";
-
-            Client.GotoMethod(2000,ClearStatusMessage);
-        }
-        catch (Exception exception)
-        {
-            state.StatusMessage = "Error occured: " + exception;
-        }
-    }
-
-    void ClearStatusMessage()
-    {
-        state.StatusMessage = null;
-    }
-
     static string HtmlToCSharp(string htmlRootNode)
     {
         if (string.IsNullOrWhiteSpace(htmlRootNode))
@@ -179,7 +116,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             return null;
         }
 
-        HtmlDocument document = new HtmlDocument();
+        var document = new HtmlDocument();
 
         document.LoadHtml(htmlRootNode);
 
@@ -195,6 +132,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             attributeName = "className";
         }
+
         if (attributeName == "for")
         {
             attributeName = "htmlFor";
@@ -215,8 +153,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             attributeName = "preserveAspectRatio";
         }
 
-        
-
         if (attributeName.Contains("-"))
         {
             return lines;
@@ -229,10 +165,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 return lines;
             }
         }
-
-        
-
-
 
         if (attributeName == "style")
         {
@@ -271,8 +203,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
     static List<string> ToCSharpCode(HtmlAttributeCollection htmlAttributes)
     {
-        var  attributeLines = new List<string>();
-        
+        var attributeLines = new List<string>();
+
         if (htmlAttributes.Any())
         {
             attributeLines.AddRange(htmlAttributes.Select(ToCSharpCode).Aggregate((a, b) =>
@@ -289,7 +221,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 string.Join(", ", attributeLines)
             };
         }
-        
+
         return attributeLines;
     }
 
@@ -300,7 +232,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             htmlNodeName = "clipPath";
         }
-        
+
         if (htmlNodeName == "#text")
         {
             if (string.IsNullOrWhiteSpace(htmlNode.InnerText))
@@ -309,8 +241,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             }
 
             return new List<string> { '"' + htmlNode.InnerText + '"' };
-
         }
+
         if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
         {
             var attributeLines = ToCSharpCode(htmlNode.Attributes);
@@ -363,7 +295,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                         $"new {htmlNodeName}()"
                     };
                 }
-                    
             }
         }
 
@@ -378,11 +309,12 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             var attributes = ToCSharpCode(htmlNode.Attributes);
             foreach (var attribute in attributes)
             {
-                if (attribute[^1]=='=' || attribute[^1] == '{' || attribute[^1] == ',')
+                if (attribute[^1] == '=' || attribute[^1] == '{' || attribute[^1] == ',')
                 {
                     lines.Add(attribute);
                     continue;
                 }
+
                 lines.Add(attribute + ",");
             }
 
@@ -392,7 +324,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 children.Add(ToCSharpCode(child));
             }
-            
+
             // remove empty childs
             children.RemoveAll(x => x.Count == 0);
 
@@ -400,11 +332,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 lines.Add("children =");
                 lines.Add("{");
-                
+
                 foreach (var child in children)
                 {
                     lines.AddRange(child);
-                    
+
                     lines[^1] += ",";
                 }
 
@@ -418,7 +350,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 lines[^1] = lines[^1].Remove(lines[^1].Length - 1);
             }
-            
+
             lines.Add("}");
 
             return lines;
@@ -433,7 +365,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         foreach (var line in lines)
         {
-            var paddingAsString = "".PadRight(padding*4, ' ');
+            var paddingAsString = "".PadRight(padding * 4, ' ');
             if (line == "{")
             {
                 sb.AppendLine(paddingAsString + line);
@@ -443,14 +375,15 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
             if (line == "}" || line == "},")
             {
-                if (padding ==0)
+                if (padding == 0)
                 {
                     throw new InvalidOperationException("Padding is already zero.");
                 }
+
                 padding--;
-                paddingAsString = "".PadRight(padding*4, ' ');
+                paddingAsString = "".PadRight(padding * 4, ' ');
                 sb.AppendLine(paddingAsString + line);
-                
+
                 continue;
             }
 
@@ -458,5 +391,38 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         }
 
         return sb.ToString();
+    }
+
+    void ClearStatusMessage()
+    {
+        state.StatusMessage = null;
+    }
+
+    void OnHtmlValueChanged(string htmlText)
+    {
+        state.StatusMessage = null;
+
+        state.HtmlText = htmlText;
+
+        if (string.IsNullOrWhiteSpace(htmlText))
+        {
+            state.CSharpCode = null;
+            return;
+        }
+
+        try
+        {
+            state.CSharpCode = HtmlToCSharp(state.HtmlText);
+
+            Client.CopyToClipboard(state.CSharpCode);
+
+            state.StatusMessage = "Copied to clipboard.";
+
+            Client.GotoMethod(2000, ClearStatusMessage);
+        }
+        catch (Exception exception)
+        {
+            state.StatusMessage = "Error occured: " + exception;
+        }
     }
 }
