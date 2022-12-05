@@ -13,6 +13,7 @@ class HtmlToCSharpViewModel
     public string StatusMessage { get; set; }
 }
 
+
 class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 {
     protected override Element render()
@@ -65,47 +66,45 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
 
-        return new div
+        return new FlexColumn
         {
-            style = { width_height = "100%", padding = "10px", display = "flex", flexDirection = "column" },
-            children =
-            {
-                new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css" },
-                new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
-                new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css" },
+            WidthHeightMaximized,
+            Padding(10),
 
-                new div(Text("Html to ReactWithDotNet")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
-                new Splitter
+            PrimeReactCssLibs,
+
+
+            new div(Text("Html to ReactWithDotNet")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
+            new Splitter
+            {
+                layout = SplitterLayoutType.horizontal,
+                style =
                 {
-                    layout = SplitterLayoutType.horizontal,
-                    style =
+                    width  = "100%",
+                    height = "100%"
+                },
+                children =
+                {
+                    new SplitterPanel
                     {
-                        width  = "100%",
-                        height = "100%"
+                        size = 30,
+                        children =
+                        {
+                            htmlEditor
+                        }
                     },
-                    children =
+                    new SplitterPanel
                     {
-                        new SplitterPanel
+                        size = 70,
+                        children =
                         {
-                            size = 30,
-                            children =
-                            {
-                                htmlEditor
-                            }
-                        },
-                        new SplitterPanel
-                        {
-                            size = 70,
-                            children =
-                            {
-                                csharpEditor
-                            }
+                            csharpEditor
                         }
                     }
-                },
+                }
+            },
 
-                statusMessageEditor
-            }
+            statusMessageEditor
         };
     }
 

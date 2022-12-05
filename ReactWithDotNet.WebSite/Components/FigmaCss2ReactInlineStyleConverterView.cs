@@ -35,11 +35,11 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
                 FontFamily("Consolas")
             }
         };
-        
+
         var csharpEditor = new CodeMirror
         {
             extensions = { "java", "githubLight" },
-            value  = state.ReactInlineStyle,
+            value      = state.ReactInlineStyle,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -63,52 +63,50 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
 
-        return new div
+        return new FlexColumn
         {
-            
+            WidthHeightMaximized,
+            Padding(10),
 
-            
-            style = { width_height = "100%", padding = "10px", display = "flex", flexDirection = "column" },
-            children =
+            PrimeReactCssLibs,
+
+            new div(Text("Figma css to React inline style")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
+            new Splitter
             {
-                new link { rel                                           = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css" },
-                new link { rel                                           = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
-                new link { rel                                           = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css" },
-                
-                
-                new div(Text("Figma css to React inline style")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
-                new Splitter
+                layout = SplitterLayoutType.horizontal,
+                style =
                 {
-                    layout = SplitterLayoutType.horizontal,
-                    style =
+                    width  = "100%",
+                    height = "100%"
+                },
+                children =
+                {
+                    new SplitterPanel
                     {
-                        width  = "100%",
-                        height = "100%"
+                        size = 50,
+                        children =
+                        {
+                            cssEditor
+                        }
                     },
-                    children =
+                    new SplitterPanel
                     {
-                        new SplitterPanel
+                        size = 50,
+                        children =
                         {
-                            size = 50,
-                            children =
-                            {
-                                cssEditor
-                            }
-                        },
-                        new SplitterPanel
-                        {
-                            size = 50,
-                            children =
-                            {
-                                csharpEditor
-                            }
+                            csharpEditor
                         }
                     }
-                },
+                }
+            },
 
-                statusMessageEditor
-            }
+            statusMessageEditor
         };
+    }
+
+    void ClearStatusMessage()
+    {
+        state.StatusMessage = null;
     }
 
     void OnCssValueChanged(string figmaCssText)
@@ -131,7 +129,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
 
             state.StatusMessage = "Copied to clipboard.";
 
-            Client.GotoMethod(2000,ClearStatusMessage);
+            Client.GotoMethod(2000, ClearStatusMessage);
         }
         catch (Exception exception)
         {
@@ -171,10 +169,5 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
 
             return key;
         }
-    }
-
-    void ClearStatusMessage()
-    {
-        state.StatusMessage = null;
     }
 }
