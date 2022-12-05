@@ -235,6 +235,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             StateCache.Save(state.SelectedType, state);
         }
 
-        StateCache.SaveState(state);
+        StateCache.Save(state);
     }
 }

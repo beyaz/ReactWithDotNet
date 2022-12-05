@@ -6,29 +6,13 @@ namespace ReactWithDotNet.UIDesigner;
 
 class StateCache
 {
-    #region Properties
-    static string StateFilePath => Path.Combine(CacheDirectory, $@"{nameof(ReactWithDotNetDesignerModel)}.json");
-    #endregion
-
-    #region Static Fields
     static readonly string CacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReactWithDotNetDesigner") +
                                             Path.DirectorySeparatorChar +
                                             (Assembly.GetEntryAssembly()?.GetName().Name ?? "UnknowAssembly") +
                                             Path.DirectorySeparatorChar;
 
     static readonly object fileLock = new();
-    #endregion
-
-    #region Public Methods
-    public static string ReadFromCache(string type)
-    {
-        if (File.Exists(GetCacheFilePath(type)))
-        {
-            return File.ReadAllText(GetCacheFilePath(type));
-        }
-
-        return null;
-    }
+    static string StateFilePath => Path.Combine(CacheDirectory, $@"{nameof(ReactWithDotNetDesignerModel)}.json");
 
     public static ReactWithDotNetDesignerModel ReadState()
     {
@@ -38,15 +22,18 @@ class StateCache
 
             try
             {
-                var state= JsonSerializer.Deserialize<ReactWithDotNetDesignerModel>(json) ?? new ReactWithDotNetDesignerModel();
-                if (state.SelectedMethod is not null)
+                var state = JsonSerializer.Deserialize<ReactWithDotNetDesignerModel>(json);
+                if (state is not null)
                 {
-                    return TryRead(state.SelectedMethod) ?? state;
-                }
+                    if (state.SelectedMethod is not null)
+                    {
+                        return TryRead(state.SelectedMethod) ?? state;
+                    }
 
-                if (state.SelectedType is not null)
-                {
-                    return TryRead(state.SelectedType) ?? state;
+                    if (state.SelectedType is not null)
+                    {
+                        return TryRead(state.SelectedType) ?? state;
+                    }
                 }
 
                 return state;
@@ -57,25 +44,23 @@ class StateCache
             }
         }
 
-        return new ReactWithDotNetDesignerModel();
+        return null;
     }
 
-    public static void SaveState(ReactWithDotNetDesignerModel state)
+    public static void Save(ReactWithDotNetDesignerModel state)
     {
         lock (fileLock)
         {
-            WriteAllText(StateFilePath, JsonSerializer.Serialize(state, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
+            var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
+            {
+                WriteIndented    = true,
+                IgnoreNullValues = true
+            });
+
+            WriteAllText(StateFilePath, jsonContent);
         }
     }
 
-    public static void SaveFileToCache(string fileNameWithoutExtension, string jsonContent)
-    {
-        lock (fileLock)
-        {
-            WriteAllText(GetCacheFilePath(fileNameWithoutExtension), jsonContent);
-        }
-    }
-    
     public static void Save(TypeReference typeReference, ReactWithDotNetDesignerModel state)
     {
         var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
@@ -83,8 +68,8 @@ class StateCache
             WriteIndented    = true,
             IgnoreNullValues = true
         });
-        
-        SaveFileToCache(GetFileName(typeReference), jsonContent);
+
+        SaveToFile(GetFileName(typeReference), jsonContent);
     }
 
     public static void Save(MethodReference methodReference, ReactWithDotNetDesignerModel state)
@@ -95,12 +80,16 @@ class StateCache
             IgnoreNullValues = true
         });
 
-        SaveFileToCache(GetFileName(methodReference), jsonContent);
+        SaveToFile(GetFileName(methodReference), jsonContent);
     }
 
-
-    static string GetFileName(MethodReference methodReference) => methodReference.ToString().GetHashCode().ToString();
-    static string GetFileName(TypeReference typeReference) => typeReference.ToString().GetHashCode().ToString();
+    public static void SaveToFile(string fileNameWithoutExtension, string jsonContent)
+    {
+        lock (fileLock)
+        {
+            WriteAllText(GetCacheFilePath(fileNameWithoutExtension), jsonContent);
+        }
+    }
 
     public static ReactWithDotNetDesignerModel TryRead(MethodReference methodReference)
     {
@@ -138,10 +127,10 @@ class StateCache
         }
     }
 
-    #endregion
-
-    #region Methods
     static string GetCacheFilePath(string type) => $@"{CacheDirectory}{type}.json";
+
+    static string GetFileName(MethodReference methodReference) => methodReference.ToString().GetHashCode().ToString();
+    static string GetFileName(TypeReference typeReference) => typeReference.ToString().GetHashCode().ToString();
 
     static void WriteAllText(string path, string contents)
     {
@@ -152,5 +141,4 @@ class StateCache
 
         File.WriteAllText(path, contents);
     }
-    #endregion
 }
