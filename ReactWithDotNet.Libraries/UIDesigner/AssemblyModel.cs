@@ -171,6 +171,40 @@ static class AssemblyModelHelper
         return foundedType;
     }
 
+    public static MethodInfo TryLoadFrom(Assembly assembly, MethodReference methodReference)
+    {
+        if (assembly == null)
+        {
+            throw new ArgumentNullException(nameof(assembly));
+        }
+
+        if (methodReference == null)
+        {
+            throw new ArgumentNullException(nameof(methodReference));
+        }
+
+        MethodInfo foundedMethodInfo = null;
+
+        assembly.VisitTypes(type =>
+        {
+            if (foundedMethodInfo == null)
+            {
+                type.VisitMethods(methodInfo =>
+                {
+                    if (foundedMethodInfo == null)
+                    {
+                        if (methodReference.Equals(methodInfo.AsReference()))
+                        {
+                            foundedMethodInfo = methodInfo;
+                        }
+                    }
+                });
+            }
+        });
+
+        return foundedMethodInfo;
+    }
+
     public static void VisitMethods(this Type type, Action<MethodInfo> visitAction)
     {
         const BindingFlags AllFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
