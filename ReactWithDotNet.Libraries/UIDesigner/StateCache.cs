@@ -57,7 +57,7 @@ class StateCache
         }
     }
 
-    public static void SaveToCache(string fileNameWithoutExtension, string jsonContent)
+    public static void SaveFileToCache(string fileNameWithoutExtension, string jsonContent)
     {
         lock (fileLock)
         {

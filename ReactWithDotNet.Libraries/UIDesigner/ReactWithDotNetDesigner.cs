@@ -259,7 +259,7 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         {
             var selectedDotNetMemberSpecificationAsJson = JsonSerializer.Serialize(state.SelectedDotNetMemberSpecification, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true });
 
-            StateCache.SaveToCache(state.SelectedComponentTypeReference + state.SelectedMethod?.MetadataToken, selectedDotNetMemberSpecificationAsJson);
+            StateCache.SaveFileToCache(state.SelectedComponentTypeReference + state.SelectedMethod?.MetadataToken, selectedDotNetMemberSpecificationAsJson);
         }
 
         StateCache.SaveState(state);
