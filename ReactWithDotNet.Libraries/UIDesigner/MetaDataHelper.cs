@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using ReactWithDotNet.UIDesigner.AssemblyModel;
 
 namespace ReactWithDotNet.UIDesigner;
 

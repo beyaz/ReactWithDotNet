@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using ReactWithDotNet.PrimeReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
-using ReactWithDotNet.UIDesigner.AssemblyModel;
 namespace ReactWithDotNet.UIDesigner;
 
 class MetadataNode : TreeNode

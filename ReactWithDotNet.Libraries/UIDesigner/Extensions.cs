@@ -5,16 +5,8 @@ namespace ReactWithDotNet.UIDesigner;
 
 static class Extensions
 {
+    public static StyleModifier PrimaryBackground => Background("rgb(249, 249, 249");
 
-    public static void OnBrowserInactive(this Client client)
-    {
-        client.DispatchEvent(nameof(OnBrowserInactive));
-    }
-    public static void OnBrowserInactive(this Client client, Action handlerAction)
-    {
-        client.ListenEvent(OnBrowserInactive, handlerAction);
-    }
-    
     public static string GetSvgUrl(string svgFileName)
     {
         var resourceFilePathInAssembly = $"ReactWithDotNet.Libraries.UIDesigner.Resources.{svgFileName}.svg";
@@ -48,6 +40,16 @@ static class Extensions
 
     public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
 
+    public static void OnBrowserInactive(this Client client)
+    {
+        client.DispatchEvent(nameof(OnBrowserInactive));
+    }
+
+    public static void OnBrowserInactive(this Client client, Action handlerAction)
+    {
+        client.ListenEvent(OnBrowserInactive, handlerAction);
+    }
+
     public static (T value, Exception exception) Try<T>(Func<T> func)
     {
         try
@@ -59,6 +61,4 @@ static class Extensions
             return (default, exception);
         }
     }
-
-    public static StyleModifier PrimaryBackground => Background("rgb(249, 249, 249");
 }

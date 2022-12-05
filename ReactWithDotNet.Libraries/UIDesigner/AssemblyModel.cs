@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.UIDesigner.AssemblyModel;
+﻿namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
 public sealed class AssemblyReference
