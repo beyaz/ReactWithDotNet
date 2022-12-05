@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
+using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using ReactWithDotNet.PrimeReact;
-using ReactWithDotNet.react_simple_code_editor;
 
 namespace ReactWithDotNet.WebSite.Components;
 
@@ -15,29 +15,44 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
 {
     protected override Element render()
     {
-        var cssEditor = new Editor
+        var cssEditor = new CodeMirror
         {
-            onValueChange = OnCssValueChanged,
-            value         = state.FigmaCss,
-            highlight     = "css",
+            extensions = { "css", "githubLight" },
+            onChange   = OnCssValueChanged,
+            value      = state.FigmaCss,
+            basicSetup =
+            {
+                highlightActiveLine       = false,
+                highlightActiveLineGutter = false,
+            },
             style =
             {
-                height     = "100%",
-                minHeight  = "200px",
-                fontSize   = "15px",
-                fontFamily = "Consolas"
+                HeightMaximized,
+                MinHeight(200),
+                BorderRadius(3),
+                Border("1px solid #d9d9d9"),
+                FontSize11,
+                FontFamily("Consolas")
             }
         };
-        var csharpEditor = new Editor
+        
+        var csharpEditor = new CodeMirror
         {
-            value     = state.ReactInlineStyle,
-            highlight = "csharp",
+            extensions = { "java", "githubLight" },
+            value  = state.ReactInlineStyle,
+            basicSetup =
+            {
+                highlightActiveLine       = false,
+                highlightActiveLineGutter = false,
+            },
             style =
             {
-                height     = "100%",
-                minHeight  = "200px",
-                fontSize   = "15px",
-                fontFamily = "Consolas"
+                HeightMaximized,
+                MinHeight(200),
+                BorderRadius(3),
+                Border("1px solid #d9d9d9"),
+                FontSize11,
+                FontFamily("Consolas")
             }
         };
 
@@ -50,9 +65,17 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
 
         return new div
         {
+            
+
+            
             style = { width_height = "100%", padding = "10px", display = "flex", flexDirection = "column" },
             children =
             {
+                new link { rel                                           = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css" },
+                new link { rel                                           = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
+                new link { rel                                           = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css" },
+                
+                
                 new div(Text("Figma css to React inline style")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
                 new Splitter
                 {
