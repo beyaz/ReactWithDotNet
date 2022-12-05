@@ -1,28 +1,12 @@
-﻿using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using Newtonsoft.Json;
+﻿using System.Reflection;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using ReactWithDotNet.PrimeReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ReactWithDotNet.UIDesigner;
 
-public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
+public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
 {
-    protected override void constructor()
-    {
-        state = StateCache.ReadState() ?? new UIDesignerModel();
-
-        state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
-
-        if (state.SelectedMethodTreeNodeKey.HasValue())
-        {
-            OnElementSelected((state.SelectedMethodTreeNodeKey, state.SelectedMethodTreeFilter));
-        }
-    }
-
     public void Refresh()
     {
         SaveState();
@@ -33,36 +17,30 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         Client.OnBrowserInactive(Refresh);
         Client.CallJsFunction("InitializeUIDesignerEvents", 1000);
     }
-    bool canShowInstanceEditor()
-    {
-        if (state.SelectedMethod?.IsStatic == true)
-        {
-            return false;
-        }
 
-        return true;
+    protected override void constructor()
+    {
+        state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
+
+        state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
+
+        if (state.SelectedMethodTreeNodeKey.HasValue())
+        {
+            OnElementSelected((state.SelectedMethodTreeNodeKey, state.SelectedMethodTreeFilter));
+        }
     }
 
-    bool canShowParametersEditor()
-    {
-        if (state.SelectedMethod?.Parameters.Count > 0)
-        {
-            return true;
-        }
-
-        return false;
-    }
     protected override Element render()
     {
         const int width = 500;
 
         Element createJsonEditor()
         {
-            Expression<Func<string>> valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters;
-            
+            Expression<Func<string>> valueBind = () => state.JsonTextForDotNetMethodParameters;
+
             if (state.IsInstanceEditorActive)
             {
-                valueBind = () => state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties;
+                valueBind = () => state.JsonTextForDotNetInstanceProperties;
             }
 
             return new CodeMirror
@@ -83,49 +61,49 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
                 }
             };
         }
-        
-        
-        var propertyPanel = new FlexColumn(PaddingLeftRight(5), Height("100%"),Width("100%"), FontSize15, PrimaryBackground)
+
+        var propertyPanel = new FlexColumn(PaddingLeftRight(5), Height("100%"), Width("100%"), FontSize15, PrimaryBackground)
         {
-            new link{href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet"},
-            
-            new style{Text($@"
+            new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
+
+            new style
+            {
+                Text($@"
 
 
 
-.token.property{{ {new Style {   Color("#189af6") }.ToCssWithImportant()} }}
+.token.property{{ {new Style { Color("#189af6") }.ToCssWithImportant()} }}
 
 .cm-editor{{ {new Style { Height("calc(100% - 2px)"), Color("#DE3163") }.ToCssWithImportant()} }}
 
 .ͼ16 {{ {new Style { FontWeight600, FontFamily("'IBM Plex Mono', monospace") }.ToCssWithImportant()} }}
 
-") },
+")
+            },
             new MethodSelectionView
             {
                 Filter                    = state.SelectedMethodTreeFilter,
                 SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
                 SelectionChanged          = OnElementSelected,
                 AssemblyFilePath          = state.SelectedAssemblyFilePath,
-                Width = width
+                Width                     = width
             },
             Space(10),
             new Slider
             {
-                max = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged ,
-                style = { Margin(10) , Padding(5) }
+                max   = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged,
+                style = { Margin(10), Padding(5) }
             },
 
-            
-            
             new FlexColumn(Height("100%"))
             {
                 // header
-                new FlexRow(Color("#6c757d"),CursorPointer, TextAlignCenter)
+                new FlexRow(Color("#6c757d"), CursorPointer, TextAlignCenter)
                 {
                     When(canShowInstanceEditor(), new div(Text("Instance json"))
                     {
-                        OnClick(_=>state.IsInstanceEditorActive = true),
-                        When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"),FontWeight600),
+                        OnClick(_ => state.IsInstanceEditorActive = true),
+                        When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
                         Padding(10),
                         FlexGrow(1),
                         FontSize13
@@ -133,15 +111,12 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
                     When(canShowParametersEditor(), new div(Text("Parameters json"))
                     {
-                        OnClick(_=>state.IsInstanceEditorActive = false),
-                        When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"),FontWeight600),
+                        OnClick(_ => state.IsInstanceEditorActive = false),
+                        When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
                         Padding(10),
                         FlexGrow(1),
                         FontSize13
-
                     }),
-                    
-                    
                 },
                 // content
                 createJsonEditor() + Height("100%")
@@ -167,21 +142,41 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { Border("none"), WidthMaximized, HeightMaximized } };
         }
 
-        return  new FlexRow(WidthHeight("100%"))
+        return new FlexRow(WidthHeight("100%"))
         {
-            new link{rel = "stylesheet",href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css"},
-            new link{rel = "stylesheet",href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css"},
-            new link{rel = "stylesheet",href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css"},
+            new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css" },
+            new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
+            new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css" },
 
             new div(BorderRight("1px dotted #d9d9d9"), Width(width))
             {
                 propertyPanel
             },
-            new div(DisplayFlex, JustifyContentCenter,FlexGrow(1), Padding(7))
+            new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7))
             {
                 outputPanel
             }
         };
+    }
+
+    bool canShowInstanceEditor()
+    {
+        if (state.SelectedMethod?.IsStatic == true)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    bool canShowParametersEditor()
+    {
+        if (state.SelectedMethod?.Parameters.Count > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     void OnElementSelected((string value, string filter) e)
@@ -194,47 +189,19 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         state.SelectedMethodTreeNodeKey = e.value;
         state.SelectedMethodTreeFilter  = e.filter;
 
-        string typeReference = null;
-
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
-
-        string fullClassName = null;
 
         var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
         if (node is not null)
         {
             if (node.IsClass)
             {
-                fullClassName = $"{node.TypeReference.FullName}";
-
                 state.SelectedType = node.TypeReference;
             }
 
             if (node.IsMethod)
             {
-                fullClassName = $"{node.MethodReference.DeclaringType.FullName}";
-
                 state.SelectedMethod = node.MethodReference;
-            }
-        }
-
-        if (fullClassName is not null)
-        {
-            typeReference = $"{fullClassName},{Path.GetFileNameWithoutExtension(state.SelectedAssemblyFilePath)}";
-        }
-
-        state.SelectedComponentTypeReference = typeReference;
-
-        if (typeReference != null)
-        {
-            var json = StateCache.ReadFromCache(typeReference + state.SelectedMethod?.MetadataToken);
-            if (json.HasValue())
-            {
-                state.SelectedDotNetMemberSpecification = JsonConvert.DeserializeObject<DotNetMemberSpecification>(json);
-            }
-            else
-            {
-                state.SelectedDotNetMemberSpecification = new DotNetMemberSpecification();
             }
         }
 
@@ -258,13 +225,6 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
     void SaveState()
     {
-        if (state.SelectedComponentTypeReference.HasValue())
-        {
-            var selectedDotNetMemberSpecificationAsJson = JsonSerializer.Serialize(state.SelectedDotNetMemberSpecification, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true });
-
-            StateCache.SaveFileToCache(state.SelectedComponentTypeReference + state.SelectedMethod?.MetadataToken, selectedDotNetMemberSpecificationAsJson);
-        }
-
         if (state.SelectedMethod is not null)
         {
             StateCache.Save(state.SelectedMethod, state);
@@ -274,9 +234,6 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
         {
             StateCache.Save(state.SelectedType, state);
         }
-
-
-
 
         StateCache.SaveState(state);
     }

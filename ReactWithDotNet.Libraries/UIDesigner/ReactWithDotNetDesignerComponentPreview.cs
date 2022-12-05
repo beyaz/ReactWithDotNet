@@ -4,11 +4,11 @@ using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet.UIDesigner;
 
-public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesignerModel>
+public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithDotNetDesignerModel>
 {
     public void Refresh()
     {
-        state = StateCache.ReadState() ?? new UIDesignerModel();
+        state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         Client.GotoMethod(700, Refresh);
     }
@@ -20,7 +20,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
 
     protected override void constructor()
     {
-        state = StateCache.ReadState() ?? new UIDesignerModel();
+        state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
     }
 
     protected override Element render()
@@ -40,8 +40,6 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
 
     Element createElement()
     {
-        MethodInfo methodInfo = null;
-
         try
         {
             // try invoke as static function
@@ -49,18 +47,17 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
             var fullAssemblyPath = state.SelectedAssemblyFilePath;
             if (File.Exists(fullAssemblyPath))
             {
-
                 var assembly = MetadataHelper.LoadAssembly(fullAssemblyPath);
                 if (state.SelectedMethod is not null)
                 {
-                    methodInfo = assembly.TryLoadFrom(state.SelectedMethod);
+                    var methodInfo = assembly.TryLoadFrom(state.SelectedMethod);
                     if (methodInfo != null)
                     {
                         var invocationParameters = new List<object>();
 
                         var methodParameters = methodInfo.GetParameters();
 
-                        var jsObject = (JObject)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
+                        var jsObject = (JObject)DeserializeJson(state.JsonTextForDotNetMethodParameters.HasValue() ? state.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
                         foreach (var parameterInfo in methodParameters)
                         {
                             var parameterName = parameterInfo.Name;
@@ -94,7 +91,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
                                 return new div { text = "Method declaring type is null." };
                             }
 
-                            var instance = (Element)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification?.JsonTextForDotNetInstanceProperties : "{}", declaringType);
+                            var instance = (Element)DeserializeJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", declaringType);
 
                             if (instance is ReactStatefulComponent component)
                             {
@@ -114,10 +111,10 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
                     var type = assembly.TryLoadFrom(state.SelectedType);
                     if (type == null)
                     {
-                        return "type not found.@" + state.SelectedComponentTypeReference;
+                        return "type not found.@" + state.SelectedType.FullName;
                     }
 
-                    var instance = (Element)DeserializeJson(state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties.HasValue() ? state.SelectedDotNetMemberSpecification.JsonTextForDotNetInstanceProperties : "{}", type);
+                    var instance = (Element)DeserializeJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", type);
 
                     if (instance is ReactStatefulComponent component)
                     {
@@ -134,12 +131,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
 
                     return instance.ToString();
                 }
-
-
             }
-
-
-
         }
         catch (Exception exception)
         {
@@ -148,5 +140,4 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<UIDesigner
 
         return "Element not created. Select type or method from left panel";
     }
-
 }

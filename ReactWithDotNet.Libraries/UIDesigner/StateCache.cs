@@ -7,7 +7,7 @@ namespace ReactWithDotNet.UIDesigner;
 class StateCache
 {
     #region Properties
-    static string StateFilePath => Path.Combine(CacheDirectory, $@"{nameof(UIDesignerModel)}.json");
+    static string StateFilePath => Path.Combine(CacheDirectory, $@"{nameof(ReactWithDotNetDesignerModel)}.json");
     #endregion
 
     #region Static Fields
@@ -30,7 +30,7 @@ class StateCache
         return null;
     }
 
-    public static UIDesignerModel ReadState()
+    public static ReactWithDotNetDesignerModel ReadState()
     {
         if (File.Exists(StateFilePath))
         {
@@ -38,7 +38,7 @@ class StateCache
 
             try
             {
-                var state= JsonSerializer.Deserialize<UIDesignerModel>(json) ?? new UIDesignerModel();
+                var state= JsonSerializer.Deserialize<ReactWithDotNetDesignerModel>(json) ?? new ReactWithDotNetDesignerModel();
                 if (state.SelectedMethod is not null)
                 {
                     return TryRead(state.SelectedMethod) ?? state;
@@ -53,14 +53,14 @@ class StateCache
             }
             catch (Exception)
             {
-                return new UIDesignerModel();
+                return new ReactWithDotNetDesignerModel();
             }
         }
 
-        return new UIDesignerModel();
+        return new ReactWithDotNetDesignerModel();
     }
 
-    public static void SaveState(UIDesignerModel state)
+    public static void SaveState(ReactWithDotNetDesignerModel state)
     {
         lock (fileLock)
         {
@@ -76,7 +76,7 @@ class StateCache
         }
     }
     
-    public static void Save(TypeReference typeReference, UIDesignerModel state)
+    public static void Save(TypeReference typeReference, ReactWithDotNetDesignerModel state)
     {
         var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
         {
@@ -87,7 +87,7 @@ class StateCache
         SaveFileToCache(GetFileName(typeReference), jsonContent);
     }
 
-    public static void Save(MethodReference methodReference, UIDesignerModel state)
+    public static void Save(MethodReference methodReference, ReactWithDotNetDesignerModel state)
     {
         var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
         {
@@ -102,7 +102,7 @@ class StateCache
     static string GetFileName(MethodReference methodReference) => methodReference.ToString().GetHashCode().ToString();
     static string GetFileName(TypeReference typeReference) => typeReference.ToString().GetHashCode().ToString();
 
-    public static UIDesignerModel TryRead(MethodReference methodReference)
+    public static ReactWithDotNetDesignerModel TryRead(MethodReference methodReference)
     {
         var filePath = GetCacheFilePath(GetFileName(methodReference));
         if (!File.Exists(filePath))
@@ -112,7 +112,7 @@ class StateCache
 
         try
         {
-            return JsonSerializer.Deserialize<UIDesignerModel>(File.ReadAllText(filePath));
+            return JsonSerializer.Deserialize<ReactWithDotNetDesignerModel>(File.ReadAllText(filePath));
         }
         catch (Exception)
         {
@@ -120,7 +120,7 @@ class StateCache
         }
     }
 
-    public static UIDesignerModel TryRead(TypeReference typeReference)
+    public static ReactWithDotNetDesignerModel TryRead(TypeReference typeReference)
     {
         var filePath = GetCacheFilePath(GetFileName(typeReference));
         if (!File.Exists(filePath))
@@ -130,7 +130,7 @@ class StateCache
 
         try
         {
-            return JsonSerializer.Deserialize<UIDesignerModel>(File.ReadAllText(filePath));
+            return JsonSerializer.Deserialize<ReactWithDotNetDesignerModel>(File.ReadAllText(filePath));
         }
         catch (Exception)
         {
