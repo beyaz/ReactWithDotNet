@@ -4,6 +4,7 @@ import ReactWithDotNet from "../react-with-dotnet";
 import "./uiw-react-codemirror";
 import { Slider } from 'primereact/slider';
 import { Tree } from 'primereact/tree';
+import { ListBox } from 'primereact/listbox';
 import { ScrollPanel } from 'primereact/scrollpanel';
 
 function InitializeUIDesignerEvents(timeoutInMilliseconds)
@@ -28,6 +29,7 @@ ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", Initializ
 
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ListBox", ListBox);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ScrollPanel", ScrollPanel);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.GrabOnlyValueParameterFromCommonPrimeReactEvent", function (argumentsAsArray)
 {
