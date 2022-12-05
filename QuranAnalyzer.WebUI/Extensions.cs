@@ -51,7 +51,7 @@ static class Extensions
         return chapterFilter + "|" + string.Join(string.Empty, arabicLetters);
     }
 
-    public static string GetPageLink(string pageId) => Settings.RootLocation + $"?{QueryKey.Page}=" + pageId;
+    public static string GetPageLink(string pageId) =>  $"/?{QueryKey.Page}=" + pageId;
 
     public static void HamburgerMenuClosed(this Client client)
     {

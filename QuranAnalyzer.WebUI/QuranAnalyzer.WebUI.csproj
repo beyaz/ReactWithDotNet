@@ -10,12 +10,6 @@
         <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <None Include="Settings.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
     </PropertyGroup>

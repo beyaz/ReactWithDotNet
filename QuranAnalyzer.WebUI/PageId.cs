@@ -59,20 +59,6 @@ static class App
     public static string BluePrimary => "#1976d2";
 
     public static string BorderColor = "#dee2e6";
-
-    public static SettingsFile Settings = JsonConvert.DeserializeObject<SettingsFile>(File.ReadAllText("Settings.json"));
-
-    public static void Log(string message)
-    {
-        if (Settings.IsLogEnabled)
-        {
-            var path = Settings.LogFilePath;
-
-            using var file   = File.Exists(path) ? File.Open(path, FileMode.Append) : File.Open(path, FileMode.CreateNew);
-            using var stream = new StreamWriter(file);
-            stream.WriteLine(message);
-        }
-    }
 }
 
 public abstract class ReactComponent : ReactWithDotNet.ReactComponent
