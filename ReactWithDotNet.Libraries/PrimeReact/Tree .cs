@@ -13,7 +13,7 @@ public sealed class SingleSelectionTreeSelectionParams
     public string value { get; set; }
 }
 
-public class Tree : ElementBase
+public abstract class Tree : ElementBase
 {
 }
 

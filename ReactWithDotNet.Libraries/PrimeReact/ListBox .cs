@@ -1,37 +1,18 @@
-﻿using System.Collections;
-
+﻿
 namespace ReactWithDotNet.PrimeReact;
 
-public class BlockUI : ElementBase
+public abstract class ListBox : ElementBase
 {
-        
-
-    /// <summary>
-    /// Controls the blocked state.
-    /// </summary>
-    [React]
-    public bool blocked { get; set; }
-
-
-    [React]
-    public Element template { get; set; }
-        
-
+    
 }
 
-[Serializable]
-public class ListBoxChangeParams
-{
-    public string value { get; set; }
-}
-
-public class ListBox : ElementBase
+public class ListBoxSingleSelection<TOption> : ListBox
 {
     /// <summary>
     /// An array of objects to display as the available options.
     /// </summary>
     [React]
-    public IEnumerable options { get; set; }
+    public IEnumerable<TOption> options { get; set; }
 
     /// <summary>
     /// Selected value to display.
@@ -59,7 +40,7 @@ public class ListBox : ElementBase
 
 
     [React]
-    public Action<ListBoxChangeParams> onChange { get; set; }
+    public Action<ListBoxChangeParams<TOption>> onChange { get; set; }
 
     /// <summary>
     ///     Inline style of inner list element.
@@ -69,10 +50,16 @@ public class ListBox : ElementBase
 
     [React]
     [ReactTemplate(nameof(GetItemSourceForCalculatingItemTemplates))]
-    public Func<string, Element> itemTemplate { get; set; }
+    public Func<TOption, Element> itemTemplate { get; set; }
 
-    IEnumerable GetItemSourceForCalculatingItemTemplates()
+    IEnumerable<TOption> GetItemSourceForCalculatingItemTemplates()
     {
         return options;
     }
+}
+
+[Serializable]
+public class ListBoxChangeParams<TOption>
+{
+    public TOption value { get; set; }
 }
