@@ -7,6 +7,11 @@ public sealed class AssemblyReference
 {
     public string Name { get; set; }
 
+    public bool Equals(AssemblyReference other)
+    {
+        return Name == other?.Name;
+    }
+
     public override string ToString()
     {
         return Name;
@@ -23,6 +28,11 @@ public sealed class TypeReference
     public string Name { get; set; }
 
     public string NamespaceName { get; set; }
+
+    public bool Equals(TypeReference other)
+    {
+        return Assembly.Equals(other?.Assembly) && FullName == other?.FullName;
+    }
 
     public override string ToString()
     {
@@ -44,6 +54,24 @@ public sealed class MethodReference
     public string Name { get; set; }
 
     public IReadOnlyList<ParameterReference> Parameters { get; set; }
+
+    public bool Equals(MethodReference other)
+    {
+        if (DeclaringType is not null)
+        {
+            if (DeclaringType.Equals(other?.DeclaringType) == false)
+            {
+                return false;
+            }
+        }
+
+        if (FullNameWithoutReturnType != other?.FullNameWithoutReturnType)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     public override string ToString()
     {
