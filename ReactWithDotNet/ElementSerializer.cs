@@ -242,7 +242,7 @@ static partial class ElementSerializer
                 var reactNode = (Element)func.DynamicInvoke(item);
                 if (reactNode is not null && item is not null)
                 {
-                    reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString();
+                    reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString()??"0";
                 }
 
                 return reactNode.ToJsonMap(context);

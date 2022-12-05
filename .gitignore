@@ -368,3 +368,4 @@ MigrationBackup/
 /AlyaVillas.WebUI/wwwroot/integration/swiper.js
 /QuranAnalyzer.WebUI/wwwroot/integration/uiw.react-codemirror.js
 *.js
+/QuranAnalyzer.WebUI/wwwroot/package-lock.json
