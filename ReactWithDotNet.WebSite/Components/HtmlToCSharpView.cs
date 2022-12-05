@@ -41,7 +41,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         var csharpEditor = new CodeMirror
         {
             extensions = { "java", "githubLight" },
-            valueBind  = () => state.CSharpCode,
+            value  =  state.CSharpCode,
             basicSetup =
             {
                 highlightActiveLine       = false,
