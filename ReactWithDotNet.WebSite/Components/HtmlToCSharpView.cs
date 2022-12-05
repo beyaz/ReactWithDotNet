@@ -40,7 +40,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         var csharpEditor = new CodeMirror
         {
-            extensions = { "githubLight" },
+            extensions = { "java", "githubLight" },
             valueBind  = () => state.CSharpCode,
             basicSetup =
             {

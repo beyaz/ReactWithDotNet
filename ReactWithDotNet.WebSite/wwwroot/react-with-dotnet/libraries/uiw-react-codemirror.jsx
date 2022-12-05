@@ -5,6 +5,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
+import { java } from '@codemirror/lang-java';
 import { githubLight} from '@uiw/codemirror-theme-github';
 
 function register(name, value)
@@ -35,6 +36,11 @@ register("CodeMirror::ConvertToExtension", function (/*string[]*/stringArray)
         if (name == "css")
         {
             return css();
+        }
+
+        if (name == "java")
+        {
+            return java();
         }
 
         if (name == "githubLight")
