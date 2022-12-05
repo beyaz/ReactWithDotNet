@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace ReactWithDotNet.UIDesigner;
 
-
 static class MetadataHelper
 {
     public static MethodInfo FindMethodInfo(Assembly assembly, MetadataNode node)
@@ -97,12 +96,6 @@ static class MetadataHelper
         return (metadataContext.LoadFromAssemblyPath(assemblyFilePath), metadataContext);
     }
 
- 
-
-  
-
-
-
     static MetadataNode ConvertToMetadataNode(MethodInfo methodInfo)
     {
         return new MetadataNode
@@ -177,25 +170,24 @@ static class MetadataHelper
 
     static void VisitMethods(Type type, Action<MethodInfo> visit)
     {
-        const BindingFlags AllFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
-
-        foreach (var methodInfo in type.GetMethods(AllFlags).Where(IsValidForExport))
+        type.VisitMethods(methodInfo =>
         {
-            visit(methodInfo);
-        }
+            if (IsValidForExport(methodInfo))
+            {
+                visit(methodInfo);
+            }
+        });
     }
 
     static void VisitTypes(Assembly assembly, Action<Type> visit)
     {
-        foreach (var type in assembly.GetTypes().Where(isValidForExport))
+        assembly.VisitTypes(type =>
         {
-            visit(type);
-
-            foreach (var nestedType in type.GetNestedTypes().Where(isValidForExport))
+            if (isValidForExport(type))
             {
-                visit(nestedType);
+                visit(type);
             }
-        }
+        });
 
         static bool isValidForExport(Type type)
         {

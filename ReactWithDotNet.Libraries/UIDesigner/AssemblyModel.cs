@@ -156,34 +156,58 @@ static class AssemblyModelHelper
             throw new ArgumentNullException(nameof(typeReference));
         }
 
-        foreach (var type in assembly.GetTypes())
+        Type foundedType = null;
+        
+        assembly.VisitTypes(type =>
         {
-            var value = findMatchedType(type);
-            if (value is not null)
+            if (foundedType == null)
             {
-                return value;
+                if (typeReference.Equals(type.AsReference()))
+                {
+                    foundedType = type;
+                }
             }
+        });
+
+        return foundedType;
+        
+    }
+
+    public static void VisitMethods(this Type type, Action<MethodInfo> visitAction)
+    {
+        const BindingFlags AllFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+
+        foreach (var methodInfo in type.GetMethods(AllFlags))
+        {
+            visitAction(methodInfo);
+        }
+    }
+    
+    public static void VisitTypes(this Assembly assembly, Action<Type> visitAction)
+    {
+        if (assembly == null)
+        {
+            throw new ArgumentNullException(nameof(assembly));
         }
 
-        return null;
-
-        Type findMatchedType(Type type)
+        if (visitAction == null)
         {
-            if (typeReference.Equals(type.AsReference()))
-            {
-                return type;
-            }
+            throw new ArgumentNullException(nameof(visitAction));
+        }
+
+        foreach (var type in assembly.GetTypes())
+        {
+            visitType(type);
+        }
+
+        void visitType(Type type)
+        {
+            visitAction(type);
 
             foreach (var nestedType in type.GetNestedTypes())
             {
-                var value = findMatchedType(nestedType);
-                if (value is not null)
-                {
-                    return value;
-                }
+                visitType(nestedType);
             }
-
-            return null;
         }
     }
 }
