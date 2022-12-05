@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.UIDesigner;
+﻿using ReactWithDotNet.UIDesigner.AssemblyModel;
+
+namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
 public class UIDesignerModel

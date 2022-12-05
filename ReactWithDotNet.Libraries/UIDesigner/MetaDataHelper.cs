@@ -1,47 +1,9 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using ReactWithDotNet.UIDesigner.AssemblyModel;
 
 namespace ReactWithDotNet.UIDesigner;
-
-[Serializable]
-public  sealed class AssemblyReference
-{
-    public string Name { get; set; }
-}
-[Serializable]
-public sealed class TypeReference
-{
-    public string Name { get; set; }
-
-    public string NamespaceName { get; set; }
-
-    public string FullName { get; set; }
-
-    public AssemblyReference Assembly{ get; set; }
-}
-
-[Serializable]
-public sealed class  MethodReference
-{
-    public string Name { get; set; }
-
-    public TypeReference DeclaringType { get; set; }
-
-    public bool IsStatic { get; set; }
-
-    public IReadOnlyList<ParameterReference> Parameters { get; set; }
-    public string FullNameWithoutReturnType { get; set; }
-    public int MetadataToken { get; set; }
-}
-
-[Serializable]
-public sealed class ParameterReference
-{
-    public string Name { get; set; }
-
-    public TypeReference ParameterType { get; set; }
-}
 
 static class MetadataHelper
 {
@@ -87,7 +49,7 @@ static class MetadataHelper
                 {
                     NamespaceReference = namespaceName,
                     IsNamespace        = true,
-                    label = namespaceName
+                    label              = namespaceName
                 };
 
                 nodeForNamespace.children.AddRange(types.Where(x => x.Namespace == namespaceName).Select(classToMetaData));
@@ -103,66 +65,14 @@ static class MetadataHelper
             var classNode = new MetadataNode
             {
                 IsClass       = true,
-                TypeReference =x.AsReference(),
-                label = x.Name
+                TypeReference = x.AsReference(),
+                label         = x.Name
             };
 
             VisitMethods(x, m => { classNode.children.Add(ConvertToMetadataNode(m)); });
 
             return classNode;
         }
-        
-        
-    }
-
-    static AssemblyReference AsReference(this Assembly assembly)
-    {
-        return new AssemblyReference { Name = assembly.GetName().Name };
-    }
-    static TypeReference AsReference(this Type x)
-    {
-        return new TypeReference
-        {
-            FullName = x.FullName,
-            Name          = GetName(x),
-            NamespaceName = x.Namespace,
-            Assembly = x.Assembly.AsReference()
-        };
-
-        static string GetName(Type x)
-        {
-            if (x.IsNested)
-            {
-                return GetName(x.DeclaringType) + "+" + x.Name;
-            }
-
-            return x.Name;
-        }
-    }
-
-    static MethodReference AsReference(this MethodInfo methodInfo)
-    {
-        return new MethodReference
-        {
-            
-            Name     = methodInfo.Name,
-            IsStatic = methodInfo.IsStatic,
-            FullNameWithoutReturnType  = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
-            MetadataToken              = methodInfo.MetadataToken,
-            
-            DeclaringType = methodInfo.DeclaringType.AsReference(),
-            Parameters = methodInfo.GetParameters().Select(AsReference).ToList()
-
-        };
-    }
-
-    static ParameterReference AsReference(this ParameterInfo parameterInfo)
-    {
-        return new ParameterReference
-        {
-            Name                      = parameterInfo.Name,
-            ParameterType             = parameterInfo.ParameterType.AsReference()
-        };
     }
 
     public static Assembly LoadAssembly(string assemblyFilePath)
@@ -187,13 +97,62 @@ static class MetadataHelper
         return (metadataContext.LoadFromAssemblyPath(assemblyFilePath), metadataContext);
     }
 
+    static AssemblyReference AsReference(this Assembly assembly)
+    {
+        return new AssemblyReference { Name = assembly.GetName().Name };
+    }
+
+    static TypeReference AsReference(this Type x)
+    {
+        return new TypeReference
+        {
+            FullName      = x.FullName,
+            Name          = GetName(x),
+            NamespaceName = x.Namespace,
+            Assembly      = x.Assembly.AsReference()
+        };
+
+        static string GetName(Type x)
+        {
+            if (x.IsNested)
+            {
+                return GetName(x.DeclaringType) + "+" + x.Name;
+            }
+
+            return x.Name;
+        }
+    }
+
+    static MethodReference AsReference(this MethodInfo methodInfo)
+    {
+        return new MethodReference
+        {
+            Name                      = methodInfo.Name,
+            IsStatic                  = methodInfo.IsStatic,
+            FullNameWithoutReturnType = string.Join(" ", methodInfo.ToString()!.Split(new[] { ' ' }).Skip(1)),
+            MetadataToken             = methodInfo.MetadataToken,
+
+            DeclaringType = methodInfo.DeclaringType.AsReference(),
+            Parameters    = methodInfo.GetParameters().Select(AsReference).ToList()
+        };
+    }
+
+    static ParameterReference AsReference(this ParameterInfo parameterInfo)
+    {
+        return new ParameterReference
+        {
+            Name          = parameterInfo.Name,
+            ParameterType = parameterInfo.ParameterType.AsReference()
+        };
+    }
+
     static MetadataNode ConvertToMetadataNode(MethodInfo methodInfo)
     {
         return new MetadataNode
         {
             IsMethod        = true,
             MethodReference = methodInfo.AsReference(),
-            label = methodInfo.AsReference().FullNameWithoutReturnType
+            label           = methodInfo.AsReference().FullNameWithoutReturnType
         };
     }
 
@@ -215,7 +174,7 @@ static class MetadataHelper
             return false;
         }
 
-        if (/*methodInfo.Name.Contains("|") ||*/ methodInfo.Name.StartsWith("set_"))
+        if ( /*methodInfo.Name.Contains("|") ||*/ methodInfo.Name.StartsWith("set_"))
         {
             return false;
         }
