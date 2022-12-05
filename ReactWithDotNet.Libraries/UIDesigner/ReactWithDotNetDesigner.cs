@@ -186,8 +186,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         state.SelectedType   = null;
         state.SelectedMethod = null;
 
-        state.SelectedMethodTreeNodeKey = e.value;
-        state.SelectedMethodTreeFilter  = e.filter;
+        state.JsonTextForDotNetInstanceProperties = null;
+        state.JsonTextForDotNetMethodParameters   = null;
+        
+        state.SelectedMethodTreeNodeKey           = e.value;
+        state.SelectedMethodTreeFilter            = e.filter;
 
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
 
@@ -197,11 +200,13 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             if (node.IsClass)
             {
                 state.SelectedType = node.TypeReference;
+                state = StateCache.TryRead(state.SelectedType) ?? state;
             }
 
             if (node.IsMethod)
             {
                 state.SelectedMethod = node.MethodReference;
+                state                = StateCache.TryRead(state.SelectedMethod) ?? state;
             }
         }
 
@@ -214,8 +219,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         {
             state.IsInstanceEditorActive = false;
         }
-
-        SaveState();
     }
 
     void OnWidthChanged(SliderChangeParams e)
