@@ -64,6 +64,18 @@ class StateCache
             WriteAllText(GetCacheFilePath(fileNameWithoutExtension), jsonContent);
         }
     }
+    
+    public static void Save(MethodReference methodReference, UIDesignerModel state)
+    {
+        var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
+        {
+            WriteIndented    = true,
+            IgnoreNullValues = true
+        });
+        
+        SaveFileToCache(methodReference.ToString().GetHashCode().ToString(), jsonContent);
+    }
+
     #endregion
 
     #region Methods

@@ -261,13 +261,16 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
 
             StateCache.SaveFileToCache(state.SelectedComponentTypeReference + state.SelectedMethod?.MetadataToken, selectedDotNetMemberSpecificationAsJson);
 
-            if (state.SelectedMethod is not null)
-            {
-                
-            }
+            
         }
 
-        
+        if (state.SelectedMethod is not null)
+        {
+            StateCache.Save(state.SelectedMethod, state);
+        }
+
+       
+
 
         StateCache.SaveState(state);
     }
