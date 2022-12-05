@@ -3,6 +3,12 @@
 [Serializable]
 public class UIDesignerModel
 {
+    public bool IsInstanceEditorActive { get; set; }
+
+    public string JsonTextForDotNetInstanceProperties { get; set; }
+
+    public string JsonTextForDotNetMethodParameters { get; set; }
+
     public int ScreenWidth { get; set; } = 100;
 
     public string SelectedAssemblyFilePath { get; set; }
@@ -11,11 +17,11 @@ public class UIDesignerModel
 
     public DotNetMemberSpecification SelectedDotNetMemberSpecification { get; set; } = new();
 
-    public string SelectedMethodTreeNodeKey { get; set; }
-
-    public string SelectedMethodTreeFilter{ get; set; }
-    public bool IsInstanceEditorActive { get; set; }
     public MethodReference SelectedMethod { get; set; }
+
+    public string SelectedMethodTreeFilter { get; set; }
+
+    public string SelectedMethodTreeNodeKey { get; set; }
 }
 
 [Serializable]
