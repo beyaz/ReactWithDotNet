@@ -38,7 +38,18 @@ class StateCache
 
             try
             {
-                return JsonSerializer.Deserialize<UIDesignerModel>(json);
+                var state= JsonSerializer.Deserialize<UIDesignerModel>(json) ?? new UIDesignerModel();
+                if (state.SelectedMethod is not null)
+                {
+                    return TryRead(state.SelectedMethod) ?? state;
+                }
+
+                if (state.SelectedType is not null)
+                {
+                    return TryRead(state.SelectedType) ?? state;
+                }
+
+                return state;
             }
             catch (Exception)
             {
@@ -65,7 +76,7 @@ class StateCache
         }
     }
     
-    public static void Save(MethodReference methodReference, UIDesignerModel state)
+    public static void Save(TypeReference typeReference, UIDesignerModel state)
     {
         var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
         {
@@ -73,7 +84,58 @@ class StateCache
             IgnoreNullValues = true
         });
         
-        SaveFileToCache(methodReference.ToString().GetHashCode().ToString(), jsonContent);
+        SaveFileToCache(GetFileName(typeReference), jsonContent);
+    }
+
+    public static void Save(MethodReference methodReference, UIDesignerModel state)
+    {
+        var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
+        {
+            WriteIndented    = true,
+            IgnoreNullValues = true
+        });
+
+        SaveFileToCache(GetFileName(methodReference), jsonContent);
+    }
+
+
+    static string GetFileName(MethodReference methodReference) => methodReference.ToString().GetHashCode().ToString();
+    static string GetFileName(TypeReference typeReference) => typeReference.ToString().GetHashCode().ToString();
+
+    public static UIDesignerModel TryRead(MethodReference methodReference)
+    {
+        var filePath = GetCacheFilePath(GetFileName(methodReference));
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<UIDesignerModel>(File.ReadAllText(filePath));
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    public static UIDesignerModel TryRead(TypeReference typeReference)
+    {
+        var filePath = GetCacheFilePath(GetFileName(typeReference));
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<UIDesignerModel>(File.ReadAllText(filePath));
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     #endregion

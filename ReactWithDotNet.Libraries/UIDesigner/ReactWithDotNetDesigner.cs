@@ -263,8 +263,6 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             var selectedDotNetMemberSpecificationAsJson = JsonSerializer.Serialize(state.SelectedDotNetMemberSpecification, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true });
 
             StateCache.SaveFileToCache(state.SelectedComponentTypeReference + state.SelectedMethod?.MetadataToken, selectedDotNetMemberSpecificationAsJson);
-
-            
         }
 
         if (state.SelectedMethod is not null)
@@ -272,7 +270,12 @@ public class ReactWithDotNetDesigner : ReactComponent<UIDesignerModel>
             StateCache.Save(state.SelectedMethod, state);
         }
 
-       
+        if (state.SelectedType is not null)
+        {
+            StateCache.Save(state.SelectedType, state);
+        }
+
+
 
 
         StateCache.SaveState(state);
