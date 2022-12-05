@@ -143,7 +143,6 @@ static class AssemblyModelHelper
         };
     }
 
-
     public static Type TryLoadFrom(Assembly assembly, TypeReference typeReference)
     {
         if (assembly == null)
@@ -157,7 +156,7 @@ static class AssemblyModelHelper
         }
 
         Type foundedType = null;
-        
+
         assembly.VisitTypes(type =>
         {
             if (foundedType == null)
@@ -170,7 +169,6 @@ static class AssemblyModelHelper
         });
 
         return foundedType;
-        
     }
 
     public static void VisitMethods(this Type type, Action<MethodInfo> visitAction)
@@ -182,7 +180,7 @@ static class AssemblyModelHelper
             visitAction(methodInfo);
         }
     }
-    
+
     public static void VisitTypes(this Assembly assembly, Action<Type> visitAction)
     {
         if (assembly == null)
