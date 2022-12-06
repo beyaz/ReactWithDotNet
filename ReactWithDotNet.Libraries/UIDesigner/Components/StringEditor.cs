@@ -40,7 +40,7 @@ class ValueInfoListEditor : ReactComponent
                 options = ValueInfoList,
                 optionLabel = nameof(ValueInfo.Label),
                 filter = true,
-                itemTemplate = item=>new ValueInfoStringEditor{ Model = item} + MarginTopBottom(30),
+                itemTemplate = item=>new ValueInfoStringEditor{ Model = item} + MarginTopBottom(15),
                 style = { MaxHeight(300) },
                 filterPlaceholder = "Search properties"
             }
