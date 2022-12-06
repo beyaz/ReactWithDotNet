@@ -10,6 +10,10 @@ public class ElementBase : ThirdPartyReactComponent
     public string tooltip { get; set; }
 
     [React]
+    public string id { get; set; }
+    
+
+    [React]
     public TooltipOptions tooltipOptions { get; set; }
 
     [React]
