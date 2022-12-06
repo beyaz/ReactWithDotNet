@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Collections;
 
-namespace ReactWithDotNet.PrimeReact;
+namespace ReactWithDotNet.Libraries.PrimeReact;
 
 public abstract class Dropdown : ElementBase
 {

@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.PrimeReact;
+﻿namespace ReactWithDotNet.Libraries.PrimeReact;
 
 /// <summary>
 /// Splitter is utilized to separate and resize panels.

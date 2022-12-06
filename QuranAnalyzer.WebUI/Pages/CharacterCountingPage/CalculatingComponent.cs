@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.PrimeReact;
+﻿using ReactWithDotNet.Libraries.PrimeReact;
+using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 

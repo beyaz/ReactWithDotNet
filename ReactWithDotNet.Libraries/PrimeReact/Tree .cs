@@ -1,7 +1,8 @@
 ﻿
 using System.Collections;
+using ReactWithDotNet.PrimeReact;
 
-namespace ReactWithDotNet.PrimeReact;
+namespace ReactWithDotNet.Libraries.PrimeReact;
 
 
 

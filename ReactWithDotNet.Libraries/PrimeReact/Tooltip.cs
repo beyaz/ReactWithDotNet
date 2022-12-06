@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.PrimeReact;
+﻿namespace ReactWithDotNet.Libraries.PrimeReact;
 
 public class Tooltip : ElementBase
 {

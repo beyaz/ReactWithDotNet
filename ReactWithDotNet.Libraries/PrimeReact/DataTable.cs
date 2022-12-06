@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace ReactWithDotNet.PrimeReact;
+namespace ReactWithDotNet.Libraries.PrimeReact;
 
 public class Column  : ElementBase
 {

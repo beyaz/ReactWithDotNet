@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ReactWithDotNet.PrimeReact;
+﻿namespace ReactWithDotNet.Libraries.PrimeReact;
 
 [Serializable]
 public class Message : ElementBase
