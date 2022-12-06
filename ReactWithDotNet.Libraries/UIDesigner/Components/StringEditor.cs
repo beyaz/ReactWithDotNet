@@ -14,11 +14,12 @@ class ValueInfoStringEditor : ReactComponent
     
     protected override Element render()
     {
-        return new div(ClassName("field"))
+        return new div(ClassName("field"), WidthMaximized)
         {
             new span(ClassName("p-float-label"))
             {
-                new InputTextarea{id="textarea", valueBind = ()=>Model.Value, rows = 1},
+                new InputTextarea{id ="textarea", valueBind = ()=>Model.Value, rows = 1, autoResize = true,style = { HeightAuto, WidthMaximized }},
+                
                 new label{htmlFor = "textarea", text = Model.Label}
             }
         };
@@ -34,9 +35,14 @@ class ValueInfoListEditor : ReactComponent
     {
         return new FlexColumn
         {
-            new ValueInfoStringEditor
+            new ListBoxSingleSelection<ValueInfo>
             {
-                Model = new ValueInfo{Label = "Abc", Value = "tt"}
+                options = ValueInfoList,
+                optionLabel = nameof(ValueInfo.Label),
+                filter = true,
+                itemTemplate = item=>new ValueInfoStringEditor{ Model = item} + MarginTopBottom(30),
+                style = { MaxHeight(300) },
+                filterPlaceholder = "Search properties"
             }
         };
     }

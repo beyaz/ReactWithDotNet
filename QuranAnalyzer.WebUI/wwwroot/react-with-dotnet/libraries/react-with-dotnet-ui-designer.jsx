@@ -6,6 +6,7 @@ import { Slider } from 'primereact/slider';
 import { Tree } from 'primereact/tree';
 import { ListBox } from 'primereact/listbox';
 import { ScrollPanel } from 'primereact/scrollpanel';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 function InitializeUIDesignerEvents(timeoutInMilliseconds)
 {
@@ -30,6 +31,7 @@ ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", Initializ
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.Slider", Slider);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.Tree", Tree);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.ListBox", ListBox);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.InputTextarea", InputTextarea);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.ScrollPanel", ScrollPanel);
 ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.GrabOnlyValueParameterFromCommonPrimeReactEvent", function (argumentsAsArray)
 {

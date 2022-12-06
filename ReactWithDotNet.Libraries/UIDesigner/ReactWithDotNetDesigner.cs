@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ReactWithDotNet.Libraries.PrimeReact;
+using ReactWithDotNet.Libraries.UIDesigner.Components;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using ReactWithDotNet.PrimeReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
@@ -88,6 +89,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 SelectionChanged          = OnElementSelected,
                 AssemblyFilePath          = state.SelectedAssemblyFilePath,
                 Width                     = width
+            },
+            
+            new ValueInfoListEditor
+            {
+                ValueInfoList = Enumerable.Range(1,20).Select(i=>new ValueInfo{Label = "A.B.C__"+i, Value = "Value"+i}).ToList()
             },
             Space(10),
             new Slider

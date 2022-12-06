@@ -13,6 +13,13 @@ public class ListBoxSingleSelection<TOption> : ListBox
     [React]
     public bool filter { get; set; }
 
+    /// <summary>
+    /// Placeholder text to show when filter input is empty.
+    /// </summary>
+    [React]
+    public string filterPlaceholder { get; set; }
+    
+
     [React]
     [ReactTemplate(nameof(GetItemSourceForCalculatingItemTemplates))]
     public Func<TOption, Element> itemTemplate { get; set; }
