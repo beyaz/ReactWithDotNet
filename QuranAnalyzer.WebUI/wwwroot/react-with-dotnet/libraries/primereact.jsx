@@ -26,7 +26,7 @@ import { Message } from 'primereact/message';
 
 function register(name, value)
 {
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact." + name, value);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact." + name, value);
 }
 
 register("Button", Button);

@@ -2,7 +2,7 @@
 
 public class ElementBase : ThirdPartyReactComponent
 {
-    protected const string Prefix = "ReactWithDotNet.PrimeReact.";
+    protected const string Prefix = "ReactWithDotNet.Libraries.PrimeReact.";
     protected const string GrabOnlyValueParameterFromCommonPrimeReactEvent = "GrabOnlyValueParameterFromCommonPrimeReactEvent";
 
 

@@ -27,11 +27,11 @@ function OnBrowserInactive(timeoutInMilliseconds, callback)
 
 ReactWithDotNet.RegisterExternalJsObject("InitializeUIDesignerEvents", InitializeUIDesignerEvents);
 
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Slider", Slider);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.Tree", Tree);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ListBox", ListBox);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.ScrollPanel", ScrollPanel);
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact.GrabOnlyValueParameterFromCommonPrimeReactEvent", function (argumentsAsArray)
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.Slider", Slider);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.Tree", Tree);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.ListBox", ListBox);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.ScrollPanel", ScrollPanel);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact.GrabOnlyValueParameterFromCommonPrimeReactEvent", function (argumentsAsArray)
 {
     //const originalEvent = argumentsAsArray[0].originalEvent;
 
