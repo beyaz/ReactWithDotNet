@@ -46,6 +46,21 @@ public class input : HtmlElement
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
     public Expression<Func<string>> valueBind { get; set; }
+
+
+    /// <summary>
+    ///     Occurs when an element loses focus.
+    /// </summary>
+    [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
+    public Action<MouseEvent> onBlur { get; set; }
+
+    /// <summary>
+    ///     occurs when an element gets focus.
+    /// </summary>
+    [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
+    public Action<MouseEvent> onFocus { get; set; }
 }
 
 public class a : HtmlElement
