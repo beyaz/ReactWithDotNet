@@ -34,6 +34,9 @@ namespace ReactWithDotNet.Test
             Extensions.AsBindingPath(() => state.PropA1).isConnectedToState.Should().BeTrue();
 
 
+            Extensions.AsBindingPath(() => state.NestedB.NestedA.PropA2).path.Should().BeEquivalentTo("NestedB.NestedA.PropA2".Split('.'));
+            Extensions.AsBindingPath(() => state.NestedB.NestedA.PropA2).isConnectedToState.Should().BeTrue();
+
         }
     }
 }
