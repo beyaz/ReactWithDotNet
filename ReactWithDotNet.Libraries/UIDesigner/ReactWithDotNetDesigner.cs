@@ -34,6 +34,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         state.ValueInfoListForParameters = new List<ValueInfo>
         {
             new ValueInfo { Label = "Parameter_A", Value = "Parameter_A" },
+            new ValueInfo { Label = "Parameter_B", Value = "Parameter_B" },
+            new ValueInfo { Label = "Parameter_B", Value = "Parameter_B" },
             new ValueInfo { Label = "Parameter_B", Value = "Parameter_B" }
         };
 
@@ -55,6 +57,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             state.ValueInfoListForParameters[index].Value = valueInfo.Value;
         }
     }
+
+    string Get(int i)
+    {
+        return state.ValueInfoListForParameters[i].Value;
+    }
+    
     protected override Element render()
     {
         const int width = 500;
@@ -64,16 +72,20 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
             var propertyEditor = new FlexColumn
             {
-                state.ValueInfoListForParameters.Select((x,i)=>new ValueInfoStringEditor{ Model = x,Index = i, 
-                                                            valueBind = ()=>state.ValueInfoListForParameters[i].Value})
+                state.ValueInfoListForParameters.Select((x,i)=>new ValueInfoStringEditor{ 
+                    Model = x,Index = i, 
+                    valueBind = ()=> state.ValueInfoListForParameters[i].Value
+
+                }
+                                                        )
             };
 
             if (state.IsInstanceEditorActive)
             {
-                propertyEditor = new FlexColumn
-                {
-                    state.ValueInfoListForProperties.Select((x,i)=>new ValueInfoStringEditor{ Model = x,Index =i, valueBind = ()=>state.ValueInfoListForProperties[i].Value})
-                };
+                //propertyEditor = new FlexColumn
+                //{
+                //    state.ValueInfoListForProperties.Select((x,i)=>new ValueInfoStringEditor{ Model = x,Index =i, valueBind = ()=>state.ValueInfoListForProperties[i].Value})
+                //};
             }
 
 

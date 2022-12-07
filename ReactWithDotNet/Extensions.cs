@@ -11,12 +11,37 @@ static class Extensions
             throw new ArgumentException(propertyAccessor.ToString());
         }
 
+
+        
+            
         var path = new List<string>();
 
         while (memberExpression != null)
         {
             path.Add(memberExpression.Member.Name);
 
+            if (memberExpression.Expression is MethodCallExpression methodCallExpression)
+            {
+                if (methodCallExpression.Method.Name == "get_Item")
+                {
+                    if (methodCallExpression.Arguments[0] is MemberExpression memberExpression2)
+                    {
+                        if (memberExpression2.Expression is ConstantExpression constantExpression)
+                        {
+                            var index = constantExpression.Value.GetType().GetFields()[0].GetValue(constantExpression.Value);
+
+
+                            path.Add("[");
+                            path.Add(index?.ToString());
+                            path.Add("]");
+                            continue;
+                        }
+                    }
+
+                    
+                }
+               
+            }
             memberExpression = memberExpression.Expression as MemberExpression;
         }
 
