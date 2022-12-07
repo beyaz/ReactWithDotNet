@@ -24,6 +24,16 @@ static class Extensions
             {
                 if (methodCallExpression.Method.Name == "get_Item")
                 {
+                    if (methodCallExpression.Arguments[0] is ConstantExpression constantExpression1)
+                    {
+                        path.Add("[");
+                        path.Add(constantExpression1.Value.ToString());
+                        path.Add("]");
+                        
+                        memberExpression = methodCallExpression.Object as MemberExpression;
+                        continue;
+                    }
+                    
                     if (methodCallExpression.Arguments[0] is MemberExpression memberExpression2)
                     {
                         if (memberExpression2.Expression is ConstantExpression constantExpression)
