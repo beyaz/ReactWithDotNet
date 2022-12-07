@@ -2,18 +2,17 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReactWithDotNet.Libraries.UIDesigner.Components;
 
 namespace ReactWithDotNet.Test
 {
     [TestClass]
     public class BindingPathCalculation
     {
-
         class SampleClassA
         {
             public string PropA1 { get; set; }
             public string PropA2 { get; set; }
-            public SampleClassA NestedA { get; set; }
             public SampleClassB NestedB { get; set; }
 
             public IReadOnlyList<SampleClassB> Blist { get; set; }
@@ -25,8 +24,10 @@ namespace ReactWithDotNet.Test
             public string PropB2 { get; set; }
 
             public SampleClassA NestedA { get; set; }
-            public SampleClassA NestedB { get; set; }
         }
+
+       
+
 
         [TestMethod]
         public void _1_()
@@ -53,7 +54,10 @@ namespace ReactWithDotNet.Test
             Extensions.AsBindingPath(() => Models[3].Blist[4].NestedA.NestedB.PropB2).path.Should().BeEquivalentTo(expected);
         }
 
-        SampleClassA[] Models { get; set; } 
-        
+        SampleClassA[] Models { get; set; }
+
+
+       
+
     }
 }

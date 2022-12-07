@@ -2,10 +2,11 @@
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.UIDesigner.Components;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
-using ReactWithDotNet.PrimeReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
+
+
 
 public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
 {
@@ -30,38 +31,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         {
             OnElementSelected((state.SelectedMethodTreeNodeKey, state.SelectedMethodTreeFilter));
         }
-
-        state.ValueInfoListForParameters = new List<ValueInfo>
-        {
-            new ValueInfo { Label = "Parameter_A", Value = "Parameter_A" },
-            new ValueInfo { Label = "Parameter_B", Value = "Parameter_B" },
-            new ValueInfo { Label = "Parameter_B", Value = "Parameter_B" },
-            new ValueInfo { Label = "Parameter_B", Value = "Parameter_B" }
-        };
-
-        state.ValueInfoListForProperties = new List<ValueInfo>
-        {
-            new ValueInfo { Label = "Property_A", Value = "Property_A" },
-            new ValueInfo { Label = "Property_B", Value = "Property_B" }
-        };
     }
 
-    void UpdateValue(ValueInfo valueInfo, int index)
-    {
-        if (state.IsInstanceEditorActive)
-        {
-            state.ValueInfoListForProperties[index].Value = valueInfo.Value;
-        }
-        else
-        {
-            state.ValueInfoListForParameters[index].Value = valueInfo.Value;
-        }
-    }
+    
 
-    string Get(int i)
-    {
-        return state.ValueInfoListForParameters[i].Value;
-    }
+    
     
     protected override Element render()
     {
@@ -72,20 +46,15 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
             var propertyEditor = new FlexColumn
             {
-                state.ValueInfoListForParameters.Select((x,i)=>new ValueInfoStringEditor{ 
-                    Model = x,Index = i, 
-                    valueBind = ()=> state.ValueInfoListForParameters[i].Value
-
-                }
-                                                        )
+                state.ValueInfoListForParameters?.Select((x,i)=> new ValueInfoStringEditor { Model = x, valueBind = ()=> state.ValueInfoListForParameters[i].Value })
             };
 
             if (state.IsInstanceEditorActive)
             {
-                //propertyEditor = new FlexColumn
-                //{
-                //    state.ValueInfoListForProperties.Select((x,i)=>new ValueInfoStringEditor{ Model = x,Index =i, valueBind = ()=>state.ValueInfoListForProperties[i].Value})
-                //};
+                propertyEditor = new FlexColumn
+                {
+                    state.ValueInfoListForProperties?.Select((x,i)=> new ValueInfoStringEditor { Model = x, valueBind = ()=> state.ValueInfoListForParameters[i].Value })
+                };
             }
 
 
@@ -243,6 +212,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         state.SelectedType   = null;
         state.SelectedMethod = null;
 
+        state.ValueInfoListForProperties          = new List<ValueInfo>();
+        state.ValueInfoListForParameters          = new List<ValueInfo>();
         state.JsonTextForDotNetInstanceProperties = null;
         state.JsonTextForDotNetMethodParameters   = null;
         
@@ -258,6 +229,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             {
                 state.SelectedType = node.TypeReference;
                 state = StateCache.TryRead(state.SelectedType) ?? state;
+
+                //var type = Assembly.LoadFile(fullAssemblyPath).TryLoadFrom(state.SelectedType).GetProperties().Select();
+                
             }
 
             if (node.IsMethod)

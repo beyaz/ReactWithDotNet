@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ReactWithDotNet.Libraries\ReactWithDotNet.Libraries.csproj" />
     <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
   </ItemGroup>
 
