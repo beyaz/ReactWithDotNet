@@ -153,28 +153,30 @@ static partial class ElementSerializer
             propertyValue is Expression<Func<string>> ||
             propertyValue is Expression<Func<bool>>)
         {
-            static object getTargetValueFromExpression(PropertyInfo pi, LambdaExpression expression)
+            static object getTargetValueFromExpression(PropertyInfo pi, LambdaExpression lambdaExpression)
             {
-                if (expression.Body is MemberExpression memberExpression)
+                var expression = lambdaExpression.Body;
+                while (true)
                 {
-                    while (true)
+                    if (expression is MemberExpression memberExpression)
                     {
-                        if (memberExpression.Expression is MemberExpression me)
-                        {
-                            memberExpression = me;
-                            continue;
-                        }
-
-                        if (memberExpression.Expression is ConstantExpression constantExpression)
-                        {
-                            return constantExpression.Value;
-                        }
-
-                        throw HandlerMethodShouldBelongToReactComponent(pi, expression.ToString());
+                        expression = memberExpression.Expression;
+                        continue;
                     }
-                }
 
-                throw HandlerMethodShouldBelongToReactComponent(pi, expression.ToString());
+                    if (expression is ConstantExpression constantExpression)
+                    {
+                        return constantExpression.Value;
+                    }
+                    
+                    if (expression is MethodCallExpression methodCallExpression)
+                    {
+                        expression = methodCallExpression.Object;
+                        continue;
+                    }
+
+                    throw HandlerMethodShouldBelongToReactComponent(pi, lambdaExpression.ToString());
+                }
             }
 
             (IReadOnlyList<string> path, bool isConnectedToState) calculateSourcePathFunc()

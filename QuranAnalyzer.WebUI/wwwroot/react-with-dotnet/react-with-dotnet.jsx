@@ -142,7 +142,16 @@ function GetValueInPath(obj, steps)
             throw CreateNewDeveloperError("Path is not read. Path:" + steps.join("."));
         }
 
-        obj = obj[steps[i]];
+        let step = steps[i];
+
+        if (step === '[')
+        {
+            step = steps[i + 1];
+            i++; // skip [
+            i++; // skip name            
+        }
+
+        obj = obj[step];
     }
 
     return obj;
@@ -166,12 +175,20 @@ function SetValueInPath(obj, steps, value)
             obj[step] = {};
         }
 
+
         if (i === len - 1)
         {
             obj[step] = value;
         }
         else
         {
+            if (step === '[')
+            {
+                step = steps[i + 1];
+                i++; // skip [
+                i++; // skip name            
+            }
+
             obj = obj[step];
         }
     }

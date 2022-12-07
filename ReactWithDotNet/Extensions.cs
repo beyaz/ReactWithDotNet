@@ -5,32 +5,56 @@ static class Extensions
 
     public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath<T>(this Expression<Func<T>> propertyAccessor)
     {
-        var memberExpression = propertyAccessor.Body as MemberExpression;
-        if (memberExpression == null)
-        {
-            throw new ArgumentException(propertyAccessor.ToString());
-        }
+
+        var expression = propertyAccessor.Body;
+        
+
+       
 
 
         
             
         var path = new List<string>();
 
-        while (memberExpression != null)
+        while (expression is not null)
         {
-            path.Add(memberExpression.Member.Name);
+            if (expression is MemberExpression memberExpression)
+            {
+                path.Add(memberExpression.Member.Name);
 
-            if (memberExpression.Expression is MethodCallExpression methodCallExpression)
+                expression = memberExpression.Expression;
+
+                if (expression is ConstantExpression)
+                {
+                    break;
+                }
+                continue;
+            }
+
+            if (expression is BinaryExpression binaryExpression)
+            {
+                if (binaryExpression.Right is ConstantExpression constantExpression)
+                {
+                    path.Add("]");
+                    path.Add(constantExpression.Value.ToString());
+                    path.Add("[");
+
+                    expression = binaryExpression.Left;
+                    continue;
+                }
+            }
+
+            if (expression is MethodCallExpression methodCallExpression)
             {
                 if (methodCallExpression.Method.Name == "get_Item")
                 {
                     if (methodCallExpression.Arguments[0] is ConstantExpression constantExpression1)
                     {
-                        path.Add("[");
-                        path.Add(constantExpression1.Value.ToString());
                         path.Add("]");
-                        
-                        memberExpression = methodCallExpression.Object as MemberExpression;
+                        path.Add(constantExpression1.Value.ToString());
+                        path.Add("[");
+
+                        expression = methodCallExpression.Object;
                         continue;
                     }
                     
@@ -41,9 +65,11 @@ static class Extensions
                             var index = constantExpression.Value.GetType().GetFields()[0].GetValue(constantExpression.Value);
 
 
-                            path.Add("[");
-                            path.Add(index?.ToString());
                             path.Add("]");
+                            path.Add(index?.ToString());
+                            path.Add("[");
+
+                            expression = methodCallExpression.Object;
                             continue;
                         }
                     }
@@ -52,7 +78,8 @@ static class Extensions
                 }
                
             }
-            memberExpression = memberExpression.Expression as MemberExpression;
+
+            throw new DeveloperException(propertyAccessor.ToString());
         }
 
         if (path.Count == 0)

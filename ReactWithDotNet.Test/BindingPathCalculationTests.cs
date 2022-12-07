@@ -48,6 +48,8 @@ namespace ReactWithDotNet.Test
             Extensions.AsBindingPath(() => state.Blist[4].PropB1).isConnectedToState.Should().BeTrue();
 
 
+            expected = new List<string> { "Models", "[", "3", "]", "Blist", "[", "4", "]", "NestedA", "NestedB", "PropB2" };
+
             Extensions.AsBindingPath(() => Models[3].Blist[4].NestedA.NestedB.PropB2).path.Should().BeEquivalentTo(expected);
         }
 
