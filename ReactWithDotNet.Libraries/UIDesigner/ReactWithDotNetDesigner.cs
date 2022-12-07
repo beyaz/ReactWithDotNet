@@ -204,7 +204,35 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 state.SelectedType = node.TypeReference;
                 state              = StateCache.TryRead(state.SelectedType) ?? state;
 
-                //var type = Assembly.LoadFile(fullAssemblyPath).TryLoadFrom(state.SelectedType).GetProperties().Select();
+                // calculate json text
+                {
+                    var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? "{}");
+                    foreach (var propertyInfo in Assembly.LoadFile(fullAssemblyPath).TryLoadFrom(state.SelectedType)?.GetProperties() ?? new PropertyInfo[] { })
+                    {
+                        if (propertyInfo.DeclaringType == typeof(Element) ||
+                            propertyInfo.DeclaringType == typeof(ReactStatefulComponent))
+                        {
+                            continue;
+                        }
+
+                        if (propertyInfo.DeclaringType?.IsGenericType == true && 
+                            propertyInfo.DeclaringType.GetGenericTypeDefinition() == typeof(ReactComponent<>))
+                        {
+                            continue;
+                        }
+
+                        if (!map.ContainsKey(propertyInfo.Name))
+                        {
+                            map.Add(propertyInfo.Name, null);
+                        }
+                    }
+
+                    state.JsonTextForDotNetInstanceProperties = JsonConvert.SerializeObject(map, new JsonSerializerSettings
+                    {
+                        DefaultValueHandling = DefaultValueHandling.Include,
+                        Formatting           = Formatting.Indented
+                    });
+                }
             }
 
             if (node.IsMethod)
