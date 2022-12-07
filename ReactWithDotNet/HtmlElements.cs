@@ -61,6 +61,12 @@ public class input : HtmlElement
     [React]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onFocus { get; set; }
+
+
+    [React]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
+    public Action<ChangeEvent> onChange { get; set; }
+    
 }
 
 public class a : HtmlElement
