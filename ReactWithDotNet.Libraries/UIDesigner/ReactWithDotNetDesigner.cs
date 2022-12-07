@@ -30,14 +30,56 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         {
             OnElementSelected((state.SelectedMethodTreeNodeKey, state.SelectedMethodTreeFilter));
         }
+
+        state.ValueInfoListForParameters = new List<ValueInfo>
+        {
+            new ValueInfo { Label = "Parameter_A", Value = "Parameter_A" },
+            new ValueInfo { Label = "Parameter_B", Value = "Parameter_B" }
+        };
+
+        state.ValueInfoListForProperties = new List<ValueInfo>
+        {
+            new ValueInfo { Label = "Property_A", Value = "Property_A" },
+            new ValueInfo { Label = "Property_B", Value = "Property_B" }
+        };
     }
 
+    void UpdateValue(ValueInfo valueInfo, int index)
+    {
+        if (state.IsInstanceEditorActive)
+        {
+            state.ValueInfoListForProperties[index].Value = valueInfo.Value;
+        }
+        else
+        {
+            state.ValueInfoListForParameters[index].Value = valueInfo.Value;
+        }
+    }
     protected override Element render()
     {
         const int width = 500;
 
         Element createJsonEditor()
         {
+
+            var propertyEditor = new FlexColumn
+            {
+                state.ValueInfoListForParameters.Select((x,i)=>new ValueInfoStringEditor{ Model = x,Index = i, 
+                                                            valueBind = ()=>state.ValueInfoListForParameters[i].Value})
+            };
+
+            if (state.IsInstanceEditorActive)
+            {
+                propertyEditor = new FlexColumn
+                {
+                    state.ValueInfoListForProperties.Select((x,i)=>new ValueInfoStringEditor{ Model = x,Index =i, valueBind = ()=>state.ValueInfoListForProperties[i].Value})
+                };
+            }
+
+
+            return propertyEditor;
+
+
             Expression<Func<string>> valueBind = () => state.JsonTextForDotNetMethodParameters;
 
             if (state.IsInstanceEditorActive)
@@ -90,11 +132,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 AssemblyFilePath          = state.SelectedAssemblyFilePath,
                 Width                     = width
             },
-            
-            new ValueInfoListEditor
-            {
-                ValueInfoList = Enumerable.Range(1,20).Select(i=>new ValueInfo{Label = "A.B.C__"+i, Value = "Value"+i}).ToList()
-            },
+
             Space(10),
             new Slider
             {
