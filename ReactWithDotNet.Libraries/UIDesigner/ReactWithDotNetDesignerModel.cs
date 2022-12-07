@@ -1,6 +1,4 @@
-﻿using ReactWithDotNet.Libraries.UIDesigner.Components;
-
-namespace ReactWithDotNet.UIDesigner;
+﻿namespace ReactWithDotNet.UIDesigner;
 
 [Serializable]
 public class ReactWithDotNetDesignerModel
@@ -22,10 +20,5 @@ public class ReactWithDotNetDesignerModel
     public string SelectedMethodTreeNodeKey { get; set; }
 
     public TypeReference SelectedType { get; set; }
-
-
-    public IReadOnlyList<ValueInfo> ValueInfoListForProperties { get; set; } = new List<ValueInfo>();
-
-    public IReadOnlyList<ValueInfo> ValueInfoListForParameters { get; set; } = new List<ValueInfo>();
 }
 

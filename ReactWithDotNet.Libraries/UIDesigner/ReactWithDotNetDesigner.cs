@@ -1,12 +1,9 @@
 ﻿using System.Reflection;
 using ReactWithDotNet.Libraries.PrimeReact;
-using ReactWithDotNet.Libraries.UIDesigner.Components;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
-
-
 
 public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
 {
@@ -33,34 +30,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         }
     }
 
-    
-
-    
-    
     protected override Element render()
     {
         const int width = 500;
 
         Element createJsonEditor()
         {
-
-            var propertyEditor = new FlexColumn
-            {
-                state.ValueInfoListForParameters?.Select((x,i)=> new ValueInfoStringEditor { Model = x, valueBind = ()=> state.ValueInfoListForParameters[i].Value })
-            };
-
-            if (state.IsInstanceEditorActive)
-            {
-                propertyEditor = new FlexColumn
-                {
-                    state.ValueInfoListForProperties?.Select((x,i)=> new ValueInfoStringEditor { Model = x, valueBind = ()=> state.ValueInfoListForParameters[i].Value })
-                };
-            }
-
-
-            return propertyEditor;
-
-
             Expression<Func<string>> valueBind = () => state.JsonTextForDotNetMethodParameters;
 
             if (state.IsInstanceEditorActive)
@@ -212,13 +187,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         state.SelectedType   = null;
         state.SelectedMethod = null;
 
-        state.ValueInfoListForProperties          = new List<ValueInfo>();
-        state.ValueInfoListForParameters          = new List<ValueInfo>();
         state.JsonTextForDotNetInstanceProperties = null;
         state.JsonTextForDotNetMethodParameters   = null;
-        
-        state.SelectedMethodTreeNodeKey           = e.value;
-        state.SelectedMethodTreeFilter            = e.filter;
+
+        state.SelectedMethodTreeNodeKey = e.value;
+        state.SelectedMethodTreeFilter  = e.filter;
 
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
 
@@ -228,10 +201,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             if (node.IsClass)
             {
                 state.SelectedType = node.TypeReference;
-                state = StateCache.TryRead(state.SelectedType) ?? state;
+                state              = StateCache.TryRead(state.SelectedType) ?? state;
 
                 //var type = Assembly.LoadFile(fullAssemblyPath).TryLoadFrom(state.SelectedType).GetProperties().Select();
-                
             }
 
             if (node.IsMethod)
