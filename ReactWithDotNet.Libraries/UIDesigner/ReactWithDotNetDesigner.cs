@@ -133,7 +133,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             },
             style =
             {
-                border = "0.3px dotted #e0e0e0",
+                border = "0.3px dashed #e0e0e0",
                 width  = state.ScreenWidth + "%",
                 height = "100%"
             }
