@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -28,12 +28,7 @@ static class ReflectionHelper
         if (type.IsGenericType)
         {
             var genericTypeDefinition = type.GetGenericTypeDefinition();
-            if (genericTypeDefinition == typeof(IReadOnlyList<>) ||
-                genericTypeDefinition == typeof(IReadOnlyCollection<>) ||
-                genericTypeDefinition == typeof(IList<>) ||
-                genericTypeDefinition == typeof(ICollection<>) ||
-                genericTypeDefinition == typeof(List<>) ||
-                genericTypeDefinition == typeof(ImmutableList<>))
+            if (genericTypeDefinition.IsSubclassOf(typeof(IList)))
             {
                 var genericArgument = type.GetGenericArguments().FirstOrDefault();
                 if (genericArgument is not null)
