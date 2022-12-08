@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using static ReactWithDotNet.UIDesigner.Extensions;
@@ -273,19 +274,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
                     {
                         var name = parameterInfo.Name;
-
-                        var parameterType = parameterInfo.ParameterType;
-
-                        if (parameterType == typeof(Element) ||
-                            parameterType == typeof(ReactStatefulComponent))
+                        if (name == null)
                         {
                             continue;
                         }
 
-                        if (name != null && !map.ContainsKey(name))
-                        {
-                            map.Add(name, getDefaultValueForJson(parameterType));
-                        }
+                        ReflectionHelper.ArrangeMap(map, name, parameterInfo.ParameterType);
                     }
 
                     state.JsonTextForDotNetMethodParameters = JsonConvert.SerializeObject(map, new JsonSerializerSettings
