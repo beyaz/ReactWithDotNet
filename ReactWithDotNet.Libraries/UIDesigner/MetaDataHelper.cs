@@ -76,6 +76,10 @@ static class MetadataHelper
 
     public static Assembly LoadAssembly(string assemblyFilePath)
     {
+        if (Assembly.GetEntryAssembly()?.Location == assemblyFilePath)
+        {
+            return Assembly.GetEntryAssembly();
+        }
         return Assembly.LoadFile(assemblyFilePath);
     }
 

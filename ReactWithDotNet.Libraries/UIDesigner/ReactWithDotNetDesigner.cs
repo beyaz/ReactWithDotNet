@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 using Newtonsoft.Json;
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
@@ -199,6 +200,24 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
         if (node is not null)
         {
+            static object getDefaultValueForJson(Type type)
+            {
+                if (type.IsValueType)
+                {
+                    return Activator.CreateInstance(type);
+                }
+
+                if (type == typeof(string))
+                {
+                    return "";
+                }
+
+                if (type.IsSubclassOf(typeof(IEnumerable)))
+                {
+                    return "[]";
+                }
+                return null;
+            }
             if (node.IsClass)
             {
                 state.SelectedType = node.TypeReference;
@@ -207,7 +226,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 // calculate json text
                 {
                     var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? "{}");
-                    foreach (var propertyInfo in Assembly.LoadFile(fullAssemblyPath).TryLoadFrom(state.SelectedType)?.GetProperties() ?? new PropertyInfo[] { })
+                    foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedType)?.GetProperties() ?? new PropertyInfo[] { })
                     {
                         if (propertyInfo.DeclaringType == typeof(Element) ||
                             propertyInfo.DeclaringType == typeof(ReactStatefulComponent))
@@ -221,9 +240,17 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                             continue;
                         }
 
-                        if (!map.ContainsKey(propertyInfo.Name))
+                        var name         = propertyInfo.Name;
+                        var propertyType = propertyInfo.PropertyType;
+
+                        if (propertyType.BaseType == typeof(MulticastDelegate))
                         {
-                            map.Add(propertyInfo.Name, null);
+                            continue;
+                        }
+
+                        if (!map.ContainsKey(name))
+                        {
+                            map.Add(name, getDefaultValueForJson(propertyType));
                         }
                     }
 
@@ -243,14 +270,21 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 // calculate json text
                 {
                     var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? "{}");
-                    foreach (var parameterName in Assembly.LoadFile(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters().Select(p => p.Name) ?? new string[] { })
+                    foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
                     {
-                        if (parameterName != null)
+                        var name = parameterInfo.Name;
+
+                        var parameterType = parameterInfo.ParameterType;
+
+                        if (parameterType == typeof(Element) ||
+                            parameterType == typeof(ReactStatefulComponent))
                         {
-                            if (!map.ContainsKey(parameterName))
-                            {
-                                map.Add(parameterName, null);
-                            }
+                            continue;
+                        }
+
+                        if (name != null && !map.ContainsKey(name))
+                        {
+                            map.Add(name, getDefaultValueForJson(parameterType));
                         }
                     }
 
