@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Reflection;
+﻿using System.Reflection;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using static ReactWithDotNet.UIDesigner.Extensions;
@@ -201,24 +199,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
         if (node is not null)
         {
-            static object getDefaultValueForJson(Type type)
-            {
-                if (type.IsValueType)
-                {
-                    return Activator.CreateInstance(type);
-                }
-
-                if (type == typeof(string))
-                {
-                    return "";
-                }
-
-                if (type.IsSubclassOf(typeof(IEnumerable)))
-                {
-                    return "[]";
-                }
-                return null;
-            }
             if (node.IsClass)
             {
                 state.SelectedType = node.TypeReference;
@@ -227,8 +207,26 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 // calculate json text
                 {
                     var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? "{}");
-                    foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedType)?.GetProperties() ?? new PropertyInfo[] { })
+                    foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedType)?.GetProperties(BindingFlags.Instance|BindingFlags.Public) ?? new PropertyInfo[] { })
                     {
+                        var name         = propertyInfo.Name;
+                        var propertyType = propertyInfo.PropertyType;
+                        
+                        if (name is "state")
+                        {
+                            if (propertyType == typeof(EmptyState))
+                            {
+                                continue;
+                            }
+
+                            if (!map.ContainsKey(name))
+                            {
+                                map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));
+                                continue;
+                            }
+                        }
+                        
+                        
                         if (propertyInfo.DeclaringType == typeof(Element) ||
                             propertyInfo.DeclaringType == typeof(ReactStatefulComponent))
                         {
@@ -241,17 +239,18 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                             continue;
                         }
 
-                        var name         = propertyInfo.Name;
-                        var propertyType = propertyInfo.PropertyType;
+                       
 
                         if (propertyType.BaseType == typeof(MulticastDelegate))
                         {
                             continue;
                         }
 
+                      
+
                         if (!map.ContainsKey(name))
                         {
-                            map.Add(name, getDefaultValueForJson(propertyType));
+                            map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));
                         }
                     }
 
@@ -274,12 +273,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
                     {
                         var name = parameterInfo.Name;
-                        if (name == null)
+                        if (name == null|| map.ContainsKey(name))
                         {
                             continue;
                         }
 
-                        ReflectionHelper.ArrangeMap(map, name, parameterInfo.ParameterType);
+                        map.Add(name, ReflectionHelper.CreateDefaultValue(parameterInfo.ParameterType));
                     }
 
                     state.JsonTextForDotNetMethodParameters = JsonConvert.SerializeObject(map, new JsonSerializerSettings

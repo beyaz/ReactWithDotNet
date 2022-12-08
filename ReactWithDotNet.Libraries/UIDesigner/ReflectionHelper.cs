@@ -4,23 +4,7 @@ namespace ReactWithDotNet.UIDesigner;
 
 static class ReflectionHelper
 {
-    public static void ArrangeMap(Dictionary<string, object> map, string key, Type type)
-    {
-        if (key == null)
-        {
-            return;
-        }
-
-        if (map.ContainsKey(key))
-        {
-            return;
-        }
-
-        map.Add(key, CreateDefaultValue(type));
-    }
-
-
-    static object CreateDefaultValue(Type type)
+    public static object CreateDefaultValue(Type type)
     {
         if (type == typeof(string))
         {
