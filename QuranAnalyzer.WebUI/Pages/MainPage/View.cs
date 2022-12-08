@@ -68,7 +68,7 @@ class View : ReactComponent<MainViewModel>
                         {
                             MinWidth(230) ,
                             MarginTop(101) ,
-                            MediaQueryOnSmartphone(new Style{DisplayNone})
+                            MediaQueryOnMobile(new Style{DisplayNone})
                         }
                     },
 

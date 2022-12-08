@@ -39,7 +39,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 
                     new div(PositionRelative)
                     {
-                        DisplayNone, MediaQueryOnSmartphone(new Style{DisplayBlock}),
+                        DisplayNone, MediaQueryOnMobile(new Style{DisplayBlock}),
                         MarginRight(30),
                         OnClick(_=>state.IsMenuVisible = !state.IsMenuVisible),
                         new SvgHamburgerIcon()  + new Style

@@ -14,7 +14,7 @@ class MainContentContainer : ReactComponent
             WidthMaximized,
             Height("100%"),
 
-            MediaQueryOnSmartphone(MarginLeftRight("5%")),
+            MediaQueryOnMobile(MarginLeftRight("5%")),
             MediaQueryOnTablet(MarginLeftRight("10%")),
             MediaQueryOnDesktop(MarginLeftRight("15%")),
             

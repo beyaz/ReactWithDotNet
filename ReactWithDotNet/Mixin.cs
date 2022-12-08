@@ -548,12 +548,12 @@ public static partial class Mixin
     /// <summary>
     ///     max-width: 767px
     /// </summary>
-    public static StyleModifier MediaQueryOnSmartphone(Style styleForOverride) => MediaQuery("(max-width: 767px)", styleForOverride);
+    public static StyleModifier MediaQueryOnMobile(Style styleForOverride) => MediaQuery("(max-width: 767px)", styleForOverride);
 
     /// <summary>
     ///     max-width: 767px
     /// </summary>
-    public static StyleModifier MediaQueryOnSmartphone(params StyleModifier[] styleModifiers) => MediaQueryOnSmartphone(new Style(styleModifiers));
+    public static StyleModifier MediaQueryOnMobile(params StyleModifier[] styleModifiers) => MediaQueryOnMobile(new Style(styleModifiers));
 
     /// <summary>
     ///     min-width: 768px and max-width: 1023px
