@@ -202,92 +202,15 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             if (node.IsClass)
             {
                 state.SelectedType = node.TypeReference;
-                state              = StateCache.TryRead(state.SelectedType) ?? state;
 
-                // calculate json text
-                {
-                    var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? "{}");
-                    foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedType)?.GetProperties(BindingFlags.Instance|BindingFlags.Public) ?? new PropertyInfo[] { })
-                    {
-                        var name         = propertyInfo.Name;
-                        var propertyType = propertyInfo.PropertyType;
-                        
-                        if (name is "state")
-                        {
-                            if (propertyType == typeof(EmptyState))
-                            {
-                                continue;
-                            }
-
-                            if (!map.ContainsKey(name))
-                            {
-                                map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));
-                                continue;
-                            }
-                        }
-                        
-                        
-                        if (propertyInfo.DeclaringType == typeof(Element) ||
-                            propertyInfo.DeclaringType == typeof(ReactStatefulComponent))
-                        {
-                            continue;
-                        }
-
-                        if (propertyInfo.DeclaringType?.IsGenericType == true && 
-                            propertyInfo.DeclaringType.GetGenericTypeDefinition() == typeof(ReactComponent<>))
-                        {
-                            continue;
-                        }
-
-                       
-
-                        if (propertyType.BaseType == typeof(MulticastDelegate))
-                        {
-                            continue;
-                        }
-
-                      
-
-                        if (!map.ContainsKey(name))
-                        {
-                            map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));
-                        }
-                    }
-
-                    state.JsonTextForDotNetInstanceProperties = JsonConvert.SerializeObject(map, new JsonSerializerSettings
-                    {
-                        DefaultValueHandling = DefaultValueHandling.Include,
-                        Formatting           = Formatting.Indented
-                    });
-                }
+                state = StateCache.TryRead(state.SelectedType) ?? state;
             }
 
             if (node.IsMethod)
             {
                 state.SelectedMethod = node.MethodReference;
-                state                = StateCache.TryRead(state.SelectedMethod) ?? state;
 
-                // calculate json text
-                {
-                    var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? "{}");
-                    foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
-                    {
-                        var name = parameterInfo.Name;
-                        if (name == null|| map.ContainsKey(name))
-                        {
-                            continue;
-                        }
-
-                        map.Add(name, ReflectionHelper.CreateDefaultValue(parameterInfo.ParameterType));
-                    }
-
-                    state.JsonTextForDotNetMethodParameters = JsonConvert.SerializeObject(map, new JsonSerializerSettings
-                    {
-                        DefaultValueHandling = DefaultValueHandling.Include,
-                        Formatting           = Formatting.Indented
-                    });
-                }
-
+                state = StateCache.TryRead(state.SelectedMethod) ?? state;
             }
         }
 
@@ -299,6 +222,89 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         if (canShowParametersEditor() && canShowInstanceEditor() == false)
         {
             state.IsInstanceEditorActive = false;
+        }
+
+        if (canShowInstanceEditor())
+        {
+            initializeInstanceJson();
+        }
+
+        if (canShowParametersEditor())
+        {
+            initializeParametersJson();
+        }
+
+        void initializeInstanceJson()
+        {
+            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? "{}");
+            foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedType)?.GetProperties(BindingFlags.Instance | BindingFlags.Public) ?? new PropertyInfo[] { })
+            {
+                var name         = propertyInfo.Name;
+                var propertyType = propertyInfo.PropertyType;
+
+                if (name is "state")
+                {
+                    if (propertyType == typeof(EmptyState))
+                    {
+                        continue;
+                    }
+
+                    if (!map.ContainsKey(name))
+                    {
+                        map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));
+                        continue;
+                    }
+                }
+
+                if (propertyInfo.DeclaringType == typeof(Element) ||
+                    propertyInfo.DeclaringType == typeof(ReactStatefulComponent))
+                {
+                    continue;
+                }
+
+                if (propertyInfo.DeclaringType?.IsGenericType == true &&
+                    propertyInfo.DeclaringType.GetGenericTypeDefinition() == typeof(ReactComponent<>))
+                {
+                    continue;
+                }
+
+                if (propertyType.BaseType == typeof(MulticastDelegate))
+                {
+                    continue;
+                }
+
+                if (!map.ContainsKey(name))
+                {
+                    map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));
+                }
+            }
+
+            state.JsonTextForDotNetInstanceProperties = JsonConvert.SerializeObject(map, new JsonSerializerSettings
+            {
+                DefaultValueHandling = DefaultValueHandling.Include,
+                Formatting           = Formatting.Indented
+            });
+        }
+
+        void initializeParametersJson()
+        {
+            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? "{}");
+            foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
+            {
+                var name = parameterInfo.Name;
+                if (name == null || map.ContainsKey(name))
+                {
+                    continue;
+                }
+
+                map.Add(name, ReflectionHelper.CreateDefaultValue(parameterInfo.ParameterType));
+            }
+
+            state.JsonTextForDotNetMethodParameters = JsonConvert.SerializeObject(map, new JsonSerializerSettings
+            {
+                DefaultValueHandling = DefaultValueHandling.Include,
+                Formatting           = Formatting.Indented
+            });
         }
     }
 
