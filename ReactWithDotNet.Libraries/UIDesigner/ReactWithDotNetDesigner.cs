@@ -236,8 +236,24 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         void initializeInstanceJson()
         {
-            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? "{}");
-            foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedType)?.GetProperties(BindingFlags.Instance | BindingFlags.Public) ?? new PropertyInfo[] { })
+            var typeOfInstance = state.SelectedType;
+            if (typeOfInstance == null)
+            {
+                typeOfInstance = state.SelectedMethod?.DeclaringType;
+            }
+
+            if (typeOfInstance == null)
+            {
+                return;
+            }
+
+            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? string.Empty);
+            if (map == null)
+            {
+                map = new Dictionary<string, object>();
+            }
+
+            foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(typeOfInstance)?.GetProperties(BindingFlags.Instance | BindingFlags.Public) ?? new PropertyInfo[] { })
             {
                 var name         = propertyInfo.Name;
                 var propertyType = propertyInfo.PropertyType;
@@ -288,7 +304,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         void initializeParametersJson()
         {
-            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? "{}");
+            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? string.Empty);
+            if (map == null)
+            {
+                map = new Dictionary<string, object>();
+            }
+
             foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
             {
                 var name = parameterInfo.Name;
