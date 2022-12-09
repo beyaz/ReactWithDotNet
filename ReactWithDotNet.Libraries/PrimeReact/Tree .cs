@@ -1,5 +1,6 @@
 ﻿
 using System.Collections;
+using System.Reflection;
 using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.Libraries.PrimeReact;
@@ -100,11 +101,32 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
             static void pushToArray(TreeNode treeNode, List<TreeNode> items)
             {
                 items.Add(treeNode);
-                foreach (var child in treeNode.children)
+                var children = TryGetChildren(treeNode);
+                if (children != null)
                 {
-                    pushToArray(child, items);
+                    foreach (TreeNode child in children)
+                    {
+                        pushToArray(child, items);
+                    }
                 }
+                
             }
+        }
+
+        static IEnumerable TryGetChildren(TreeNode treeNode)
+        {
+            if (treeNode == null)
+            {
+                return null;
+            }
+
+            var propertyInfo = treeNode.GetType().GetProperty("children");
+            if (propertyInfo == null)
+            {
+                return null;
+            }
+
+            return (IEnumerable)propertyInfo.GetValue(treeNode);
         }
 
         static void initializeKeys(IEnumerable<TreeNode> nodes)
@@ -120,10 +142,14 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
             {
                 treeNode.key = key;
 
-                var i = 0;
-                foreach (var child in treeNode.children)
+                var children = TryGetChildren(treeNode);
+                if (children != null)
                 {
-                    initializeKey(child, $"{key}|{i++}");
+                    var i = 0;
+                    foreach (TreeNode child in children)
+                    {
+                        initializeKey(child, $"{key}|{i++}");
+                    }
                 }
             }
         }

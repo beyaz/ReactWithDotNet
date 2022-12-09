@@ -13,5 +13,5 @@ public class TreeNode
 
     public Style style { get; } = new ();
 
-    public List<TreeNode> children { get; } = new();
+   
 }

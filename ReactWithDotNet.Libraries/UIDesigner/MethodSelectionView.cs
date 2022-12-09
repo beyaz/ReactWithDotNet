@@ -13,6 +13,8 @@ class MetadataNode : TreeNode
     public string NamespaceReference { get; set; }
     public MethodReference MethodReference { get; set; }
     public TypeReference TypeReference { get; set; }
+
+    public List<MetadataNode> children { get; } = new();
 }
 
 class MethodSelectionModel
