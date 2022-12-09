@@ -91,6 +91,61 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     [React]
     public string selectionMode { get; set; } = "single";
 
+    public static TTreeNode FindNodeByKey(IReadOnlyList<TTreeNode> nodes, string treeNodeKey)
+    {
+        if (nodes == null)
+        {
+            throw new ArgumentNullException(nameof(nodes));
+        }
+
+        if (treeNodeKey == null)
+        {
+            throw new ArgumentNullException(nameof(treeNodeKey));
+        }
+
+        TTreeNode current = null;
+        foreach (var index in treeNodeKey.Split('|').Select(int.Parse))
+        {
+            if (nodes.Count <= index)
+            {
+                return null;
+            }
+            current = nodes[index];
+            nodes   = As<TTreeNode>(TryGetChildren(current)).ToArray();
+        }
+
+        return current;
+    }
+
+    static IEnumerable<T> As<T>(IEnumerable enumerable)
+    {
+        if (enumerable != null)
+        {
+            foreach (var value in enumerable)
+            {
+                yield return (T)value;
+            }
+        }
+        
+        yield return default;
+    }
+
+    static IEnumerable TryGetChildren(TreeNode treeNode)
+    {
+        if (treeNode == null)
+        {
+            return null;
+        }
+
+        var propertyInfo = treeNode.GetType().GetProperty("children");
+        if (propertyInfo == null)
+        {
+            return null;
+        }
+
+        return (IEnumerable)propertyInfo.GetValue(treeNode);
+    }
+    
     internal IEnumerable GetItemSourceForCalculatingTemplates()
     {
         initializeKeys(value);
@@ -123,21 +178,7 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
             }
         }
 
-        static IEnumerable TryGetChildren(TreeNode treeNode)
-        {
-            if (treeNode == null)
-            {
-                return null;
-            }
-
-            var propertyInfo = treeNode.GetType().GetProperty("children");
-            if (propertyInfo == null)
-            {
-                return null;
-            }
-
-            return (IEnumerable)propertyInfo.GetValue(treeNode);
-        }
+        
 
         static void initializeKeys(IEnumerable<TreeNode> nodes)
         {

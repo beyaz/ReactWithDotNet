@@ -48,18 +48,7 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
 
         var nodes = MetadataHelper.GetMetadataNodes(AssemblyFilePath).ToArray();
 
-        MetadataNode current = null;
-        foreach (var index in treeNodeKey.Split('|').Select(int.Parse))
-        {
-            if (nodes.Length <= index)
-            {
-                return null;
-            }
-            current = nodes[index];
-            nodes   = current.children.Select(x => (MetadataNode)x).ToArray();
-        }
-
-        return current;
+        return SingleSelectionTree<MetadataNode>.FindNodeByKey(nodes, treeNodeKey);
     }
 
     protected override void constructor()
