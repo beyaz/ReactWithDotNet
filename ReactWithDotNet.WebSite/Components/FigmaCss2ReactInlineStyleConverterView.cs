@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
-using ReactWithDotNet.PrimeReact;
 
 namespace ReactWithDotNet.WebSite.Components;
 

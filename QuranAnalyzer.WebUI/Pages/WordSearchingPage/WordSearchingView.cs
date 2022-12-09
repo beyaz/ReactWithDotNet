@@ -1,7 +1,6 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using ReactWithDotNet.Libraries.PrimeReact;
-using ReactWithDotNet.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 
