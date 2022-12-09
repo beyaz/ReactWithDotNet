@@ -127,7 +127,15 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier FontWeightSemiBold => FontWeight600;
 
+    /// <summary>
+    /// style.height = "100vh"
+    /// </summary>
     public static StyleModifier Height100vh => new(style => style.height = "100vh");
+
+    /// <summary>
+    /// style.width = "100vw"
+    /// </summary>
+    public static StyleModifier Width100vw => new(style => style.width = "100vw");
 
     /// <summary>
     ///     style.height = "auto"
@@ -208,6 +216,10 @@ public static partial class Mixin
     ///     width: 100%
     /// </summary>
     public static StyleModifier WidthMaximized => Width("100%");
+
+
+
+   
 
     /// <summary>
     ///     width: 100%
