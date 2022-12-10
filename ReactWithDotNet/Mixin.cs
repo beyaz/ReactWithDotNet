@@ -99,6 +99,25 @@ public static partial class Mixin
     public static StyleModifier FontSize29 => FontSize(25);
     public static StyleModifier FontSize30 => FontSize(25);
     public static StyleModifier FontSize9 => FontSize(9);
+
+
+    /// <summary>
+    /// style.fontSize = 'small'
+    /// </summary>
+    public static StyleModifier FontSizeSmall=> FontSize("small");
+
+    /// <summary>
+    /// style.fontSize = 'large'
+    /// </summary>
+    public static StyleModifier FontSizeLarge=> FontSize("large");
+
+    /// <summary>
+    /// style.fontSize = 'larger'
+    /// <br/>
+    /// Sets the font-size to a larger size than the parent element
+    /// </summary>
+    public static StyleModifier FontSizeLarger => FontSize("larger");
+
     public static StyleModifier FontStyleItalic => FontStyle("italic");
 
     public static StyleModifier FontStyleNormal => FontStyle("normal");
