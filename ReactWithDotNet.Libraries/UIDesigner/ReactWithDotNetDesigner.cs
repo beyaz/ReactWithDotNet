@@ -97,9 +97,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 style = { Margin(10), Padding(5) }
             },
 
-            new FlexColumn(Height("100%"))
+            new FlexColumn(HeightMaximized)
             {
-                // header
+                // h e a d e r
                 new FlexRow(Color("#6c757d"), CursorPointer, TextAlignCenter)
                 {
                     When(canShowInstanceEditor(), new div(Text("Instance json"))
@@ -118,10 +118,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                         Padding(10),
                         FlexGrow(1),
                         FontSize13
-                    }),
+                    })
                 },
-                // content
-                createJsonEditor() + Height("100%")
+                
+                // c o n t e n t
+                createJsonEditor() + HeightMaximized
             }
         };
 
