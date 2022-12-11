@@ -4,6 +4,8 @@ public class ElementBase : ThirdPartyReactComponent
 {
     protected const string Prefix = "ReactWithDotNet.Libraries.PrimeReact.";
     protected const string GrabOnlyValueParameterFromCommonPrimeReactEvent = "GrabOnlyValueParameterFromCommonPrimeReactEvent";
+    protected const string GrabWithoutOriginalEvent = "GrabWithoutOriginalEvent";
+    
 
 
     [React]

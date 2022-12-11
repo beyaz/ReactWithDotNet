@@ -63,3 +63,27 @@ register("GrabOnlyValueParameterFromCommonPrimeReactEvent", function (argumentsA
 
     return [{ value: value }];
 });
+
+register("GrabWithoutOriginalEvent", function (argumentsAsArray)
+{
+    const newInstance = {};
+
+    const obj = argumentsAsArray[0];
+
+    for(var propertyName in obj)
+	{
+        if(obj.hasOwnProperty(propertyName))
+        {
+            const value = obj[propertyName];
+
+            if (propertyName === 'originalEvent' && value && value._reactName)
+            {
+                continue;
+            }
+
+            newInstance[propertyName] = value;
+        }
+    }
+
+    return [newInstance];
+});
