@@ -147,7 +147,10 @@ public class AutoComplete<TSuggestion> : ElementBase
         return suggestions;
     }
 
-    
+    [React]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    public Style inputStyle { get; } = new();
+
 
 }
 
