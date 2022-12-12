@@ -93,8 +93,8 @@ public class AutoComplete<TSuggestion> : ElementBase
     public double? delay { get; set; }
 
     [React]
-    public object value { get; set; }
-
+    public TSuggestion value { get; set; }
+    
     /// <summary>
     ///     An array of suggestions to display.
     /// </summary>
