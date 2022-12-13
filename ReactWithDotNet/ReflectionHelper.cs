@@ -54,12 +54,6 @@ static class ReflectionHelper
 
     public static MethodInfo FindMethod(this Type type, string methodName, BindingFlags bindingFlags)
     {
-        var (metadataToken, _) = ResolveMethodNameWithToken(methodName);
-        if (metadataToken.HasValue)
-        {
-            return (MethodInfo)type.Module.ResolveMethod(metadataToken.Value);
-        }
-        
         while (type != null)
         {
             var methodInfo = type.GetMethod(methodName, bindingFlags);

@@ -84,32 +84,32 @@ partial class Mixin
     #region GotoMethod
     public static void GotoMethod(this Client client, int timeout, Action action)
     {
-        GotoMethod(client, timeout, action.Method.Name);
+        GotoMethod(client, timeout, action.Method.GetNameWithToken());
     }
 
     public static void GotoMethod(this Client client, Action action)
     {
-        GotoMethod(client, 0, action.Method.Name);
+        GotoMethod(client, 0, action.Method.GetNameWithToken());
     }
 
     public static void GotoMethod<TArgument>(this Client client, int timeout, Action<TArgument> action, TArgument argument)
     {
-        GotoMethod(client, timeout, action.Method.Name, argument);
+        GotoMethod(client, timeout, action.Method.GetNameWithToken(), argument);
     }
 
     public static void GotoMethod<TArgument>(this Client client, Action<TArgument> action, TArgument argument)
     {
-        GotoMethod(client, 3, action.Method.Name, argument);
+        GotoMethod(client, 3, action.Method.GetNameWithToken(), argument);
     }
 
     public static void GotoMethod<TArgument1, TArgument2>(this Client client, int timeout, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
     {
-        GotoMethod(client, timeout, action.Method.Name, argument1, argument2);
+        GotoMethod(client, timeout, action.Method.GetNameWithToken(), argument1, argument2);
     }
 
     public static void GotoMethod<TArgument1, TArgument2>(this Client client, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
     {
-        GotoMethod(client, 3, action.Method.Name, argument1, argument2);
+        GotoMethod(client, 3, action.Method.GetNameWithToken(), argument1, argument2);
     }
 
     static void GotoMethod(Client client, int timeout, string methodName, params object[] methodArguments)

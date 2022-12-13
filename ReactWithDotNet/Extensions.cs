@@ -9,15 +9,15 @@ static class Extensions
         return $"{methodInfo.MetadataToken}|{methodInfo.Name}";
     }
 
-    public static (int? metadataToken, string name) ResolveMethodNameWithToken(string nameWithToken)
+    public static int? TryGetMethodInfoMetadataTokenFromName(string nameWithToken)
     {
         var index = nameWithToken.IndexOf('|');
         if (index > 0)
         {
-            return (int.Parse(nameWithToken[..index]), nameWithToken[index..]);
+            return int.Parse(nameWithToken[..index]);
         }
 
-        return (null, nameWithToken);
+        return null;
     }
 
     public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath<T>(this Expression<Func<T>> propertyAccessor)
