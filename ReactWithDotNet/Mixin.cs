@@ -100,23 +100,22 @@ public static partial class Mixin
     public static StyleModifier FontSize30 => FontSize(25);
     public static StyleModifier FontSize9 => FontSize(9);
 
-
     /// <summary>
-    /// style.fontSize = 'small'
+    ///     style.fontSize = 'large'
     /// </summary>
-    public static StyleModifier FontSizeSmall=> FontSize("small");
+    public static StyleModifier FontSizeLarge => FontSize("large");
 
     /// <summary>
-    /// style.fontSize = 'large'
-    /// </summary>
-    public static StyleModifier FontSizeLarge=> FontSize("large");
-
-    /// <summary>
-    /// style.fontSize = 'larger'
-    /// <br/>
-    /// Sets the font-size to a larger size than the parent element
+    ///     style.fontSize = 'larger'
+    ///     <br />
+    ///     Sets the font-size to a larger size than the parent element
     /// </summary>
     public static StyleModifier FontSizeLarger => FontSize("larger");
+
+    /// <summary>
+    ///     style.fontSize = 'small'
+    /// </summary>
+    public static StyleModifier FontSizeSmall => FontSize("small");
 
     public static StyleModifier FontStyleItalic => FontStyle("italic");
 
@@ -147,19 +146,19 @@ public static partial class Mixin
     public static StyleModifier FontWeightSemiBold => FontWeight600;
 
     /// <summary>
-    /// style.height = "100vh"
+    ///     style.height = "100vh"
     /// </summary>
     public static StyleModifier Height100vh => new(style => style.height = "100vh");
-
-    /// <summary>
-    /// style.width = "100vw"
-    /// </summary>
-    public static StyleModifier Width100vw => new(style => style.width = "100vw");
 
     /// <summary>
     ///     style.height = "auto"
     /// </summary>
     public static StyleModifier HeightAuto => new(style => style.height = "auto");
+
+    /// <summary>
+    ///     height: 100%
+    /// </summary>
+    public static StyleModifier HeightMaximized => Height("100%");
 
     /// <summary>
     ///     <para>justifyContent = "center"</para>
@@ -227,27 +226,6 @@ public static partial class Mixin
     public static StyleModifier LineHeight9 => LineHeight(9);
 
     /// <summary>
-    ///     height: 100%
-    /// </summary>
-    public static StyleModifier HeightMaximized => Height("100%");
-
-    /// <summary>
-    ///     width: 100%
-    /// </summary>
-    public static StyleModifier WidthMaximized => Width("100%");
-
-
-
-   
-
-    /// <summary>
-    ///     width: 100%
-    ///     <br />
-    ///     height: 100%
-    /// </summary>
-    public static StyleModifier WidthHeightMaximized => WidthHeight("100%");
-
-    /// <summary>
     ///     overflow = "hidden"
     /// </summary>
     public static StyleModifier OverflowHidden => new(style => style.overflow = "hidden");
@@ -257,14 +235,12 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier OverflowScroll => new(style => style.overflow = "scroll");
 
-    /// <summary>
-    /// overflowY: auto
-    /// </summary>
-    public static StyleModifier OverflowYAuto=> new(style => style.overflowY = "auto");
-
-    
-
     public static StyleModifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
+
+    /// <summary>
+    ///     overflowY: auto
+    /// </summary>
+    public static StyleModifier OverflowYAuto => new(style => style.overflowY = "auto");
 
     /// <summary>
     ///     width = '100%' , height = '100%'
@@ -307,7 +283,24 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier TextTransformUpperCase => TextTransform("uppercase");
 
+    /// <summary>
+    ///     style.width = "100vw"
+    /// </summary>
+    public static StyleModifier Width100vw => new(style => style.width = "100vw");
+
     public static StyleModifier WidthAuto => new(style => style.width = "auto");
+
+    /// <summary>
+    ///     width: 100%
+    ///     <br />
+    ///     height: 100%
+    /// </summary>
+    public static StyleModifier WidthHeightMaximized => WidthHeight("100%");
+
+    /// <summary>
+    ///     width: 100%
+    /// </summary>
+    public static StyleModifier WidthMaximized => Width("100%");
 
     public static TParent appendChild<TParent, TChild>(this TParent element, TChild child) where TParent : Element where TChild : Element
     {
@@ -490,19 +483,6 @@ public static partial class Mixin
     /// </summary>
     public static HtmlElementModifier Id(int id) => new(element => element.id = id.ToString());
 
-
-    /// <summary>
-    /// Handler <paramref name="jsMethodName"/> should be in client js codes.<br/>
-    /// <br/>
-    /// Sample Usage:<br/>
-    /// <br/>
-    /// ReactWithDotNet.RegisterExternalJsObject(<paramref name="jsMethodName"/>, function(e){<br/>
-    /// ...<br/>
-    /// ...<br/>
-    /// });
-    /// </summary>
-    public static HtmlElementModifier OnScroll(string jsMethodName) => new(element => element.onScroll=jsMethodName);
-
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
@@ -621,7 +601,26 @@ public static partial class Mixin
         return JsonSerializationOptionHelper.Modify(options);
     }
 
-    public static HtmlElementModifier OnClick(Action<MouseEvent> onClickHandler) => new(element => element.onClick = onClickHandler);
+    public static HtmlElementModifier OnClick(Action<MouseEvent> onClickHandler)
+        => new(element => element.onClick = onClickHandler);
+
+    public static HtmlElementModifier OnMouseEnter(Action<MouseEvent> onMouseEnterHandler)
+        => new(element => element.onMouseEnter = onMouseEnterHandler);
+
+    public static HtmlElementModifier OnMouseLeave(Action<MouseEvent> onMouseLeaveHandler)
+        => new(element => element.onMouseLeave = onMouseLeaveHandler);
+
+    /// <summary>
+    ///     Handler <paramref name="jsMethodName" /> should be in client js codes.<br />
+    ///     <br />
+    ///     Sample Usage:<br />
+    ///     <br />
+    ///     ReactWithDotNet.RegisterExternalJsObject(<paramref name="jsMethodName" />, function(e){<br />
+    ///     ...<br />
+    ///     ...<br />
+    ///     });
+    /// </summary>
+    public static HtmlElementModifier OnScroll(string jsMethodName) => new(element => element.onScroll = jsMethodName);
 
     /// <summary>
     ///     style.opacity = <paramref name="opacity" />
@@ -686,6 +685,11 @@ public static partial class Mixin
     ///     style.textTransform = <paramref name="textTransform" />
     /// </summary>
     public static StyleModifier TextTransform(string textTransform) => new(style => style.textTransform = textTransform);
+
+    /// <summary>
+    ///     element.title = title
+    /// </summary>
+    public static HtmlElementModifier Title(string title) => new(element => element.title = title);
 
     public static string ToJson(this ComponentResponse value)
     {
