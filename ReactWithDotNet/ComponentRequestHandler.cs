@@ -238,12 +238,17 @@ static class ComponentRequestHandler
             }
 
             // Find method
-            var methodInfo = type.FindMethod(request.EventHandlerMethodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (methodInfo == null)
+            var metadataToken = TryGetMethodInfoMetadataTokenFromName(request.EventHandlerMethodName);
+            if (metadataToken == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}" };
             }
 
+            var methodInfo = (MethodInfo)type.Module.ResolveMethod(metadataToken.Value);
+            if (methodInfo == null)
+            {
+                return new ComponentResponse { ErrorMessage = $"Method not found.{type.FullName}::{request.EventHandlerMethodName}" };
+            }
             // Invoke method
 
             instance.key = request.ComponentKey.ToString();

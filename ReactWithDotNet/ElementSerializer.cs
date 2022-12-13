@@ -110,7 +110,12 @@ static partial class ElementSerializer
         {
             if (action.Target is ReactStatefulComponent target)
             {
-                propertyValue = new RemoteMethodInfo { IsRemoteMethod = true, remoteMethodName = action.Method.Name, HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier };
+                propertyValue = new RemoteMethodInfo {
+                    IsRemoteMethod = true, 
+                    remoteMethodName = action.Method.GetNameWithToken(),
+                    HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
+                    
+                };
             }
             else
             {
@@ -122,6 +127,7 @@ static partial class ElementSerializer
         {
             if (propertyInfo.PropertyType.IsGenericAction1or2or3())
             {
+                
                 var @delegate = (Delegate)propertyValue;
                 if (@delegate is not null)
                 {
@@ -130,7 +136,7 @@ static partial class ElementSerializer
                         propertyValue = new RemoteMethodInfo
                         {
                             IsRemoteMethod                   = true,
-                            remoteMethodName                 = @delegate.Method.Name,
+                            remoteMethodName                 = @delegate.Method.GetNameWithToken(),
                             HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
                             FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
                             StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null

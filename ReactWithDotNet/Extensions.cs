@@ -1,19 +1,29 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Reflection;
+
+namespace ReactWithDotNet;
 
 static class Extensions
 {
+    public static string GetNameWithToken(this MethodInfo methodInfo)
+    {
+        return $"{methodInfo.MetadataToken}|{methodInfo.Name}";
+    }
+
+    public static (int? metadataToken, string name) ResolveMethodNameWithToken(string nameWithToken)
+    {
+        var index = nameWithToken.IndexOf('|');
+        if (index > 0)
+        {
+            return (int.Parse(nameWithToken[..index]), nameWithToken[index..]);
+        }
+
+        return (null, nameWithToken);
+    }
 
     public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath<T>(this Expression<Func<T>> propertyAccessor)
     {
-
         var expression = propertyAccessor.Body;
-        
 
-       
-
-
-        
-            
         var path = new List<string>();
 
         while (expression is not null)
@@ -28,6 +38,7 @@ static class Extensions
                 {
                     break;
                 }
+
                 continue;
             }
 
@@ -57,13 +68,12 @@ static class Extensions
                         expression = methodCallExpression.Object;
                         continue;
                     }
-                    
+
                     if (methodCallExpression.Arguments[0] is MemberExpression memberExpression2)
                     {
                         if (memberExpression2.Expression is ConstantExpression constantExpression)
                         {
                             var index = constantExpression.Value.GetType().GetFields()[0].GetValue(constantExpression.Value);
-
 
                             path.Add("]");
                             path.Add(index?.ToString());
@@ -73,10 +83,7 @@ static class Extensions
                             continue;
                         }
                     }
-
-                    
                 }
-               
             }
 
             throw new DeveloperException(propertyAccessor.ToString());
@@ -95,7 +102,7 @@ static class Extensions
 
             return (path, true);
         }
-        
+
         path.Reverse();
 
         return (path, false);
