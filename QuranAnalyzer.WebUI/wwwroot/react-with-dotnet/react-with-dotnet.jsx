@@ -728,6 +728,9 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                 const eventName     = propValue.eventName;
                 const sourcePath    = propValue.sourcePath;
                 const sourceIsState = propValue.sourceIsState;
+
+                const debounceTimeout = propValue.DebounceTimeout;
+                const debounceHandler = propValue.DebounceHandler;
                 
                 const jsValueAccess = propValue.jsValueAccess;
                 const transformFunction = GetExternalJsObject(IfNull(propValue.transformFunction , 'ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull'));
@@ -751,6 +754,16 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
 
                     const newState = {};
                     newState[accessToSource] = modifiedDotNetState;
+
+                    if (debounceTimeout > 0)
+                    {
+                        clearTimeout(targetComponent.state[eventName + '-debounceTimeoutId']);
+
+                        newState[eventName + '-debounceTimeoutId'] = setTimeout(() =>
+                        {
+                            StartAction(debounceHandler, targetComponent, /*eventArguments*/[]);
+                        }, debounceTimeout);                        
+                    }
 
                     targetComponent.setState(newState);
                 }

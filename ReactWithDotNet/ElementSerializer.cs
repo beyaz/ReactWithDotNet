@@ -216,6 +216,17 @@ static partial class ElementSerializer
                 bindInfo.HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
             }
 
+            var debounceTimeout = instance.GetType().GetProperty(propertyInfo.Name + "DebounceTimeout")?.GetValue(instance) as int?;
+            if (debounceTimeout > 0)
+            {
+                var debounceHandler = instance.GetType().GetProperty(propertyInfo.Name + "DebounceHandler")?.GetValue(instance) as Action;
+                if (debounceHandler is not null)
+                {
+                    bindInfo.DebounceTimeout = debounceTimeout;
+                    bindInfo.DebounceHandler = debounceHandler.Method.GetNameWithToken();
+                }
+            }
+    
             return (bindInfo, false);
         }
 

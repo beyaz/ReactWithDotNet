@@ -176,6 +176,8 @@ public sealed class BindInfo
 
     public string targetProp { get; set; }
     public string transformFunction { get; set; }
+    public int? DebounceTimeout { get; set; }
+    public string DebounceHandler { get; set; }
 }
 
 public class InnerElementInfo
