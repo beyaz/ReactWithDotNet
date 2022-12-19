@@ -122,12 +122,10 @@ static class AssemblyModelHelper
 
     public static MethodReference AsReference(this MethodInfo methodInfo)
     {
-       
-
         return new MethodReference
         {
-            Name                      = methodInfo.Name,
-            IsStatic                  = methodInfo.IsStatic,
+            Name     = methodInfo.Name,
+            IsStatic = methodInfo.IsStatic,
             FullNameWithoutReturnType = string.Join(string.Empty, new List<string>
             {
                 methodInfo.Name,
@@ -135,12 +133,11 @@ static class AssemblyModelHelper
                 string.Join(", ", methodInfo.GetParameters().Select(parameterInfo => parameterInfo.ParameterType.Name + " " + parameterInfo.Name)),
                 ")"
             }),
-            MetadataToken             = methodInfo.MetadataToken,
+            MetadataToken = methodInfo.MetadataToken,
 
             DeclaringType = methodInfo.DeclaringType.AsReference(),
             Parameters    = methodInfo.GetParameters().Select(AsReference).ToList()
         };
-
     }
 
     public static ParameterReference AsReference(this ParameterInfo parameterInfo)
@@ -216,10 +213,19 @@ static class AssemblyModelHelper
 
     public static void VisitMethods(this Type type, Action<MethodInfo> visitAction)
     {
-        const BindingFlags AllFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
-
-        foreach (var methodInfo in type.GetMethods(AllFlags))
+        var flags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+        if (type.IsStaticClass())
         {
+            flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+        }
+
+        foreach (var methodInfo in type.GetMethods(flags))
+        {
+            if (methodInfo.DeclaringType == typeof(object))
+            {
+                continue;
+            }
+
             visitAction(methodInfo);
         }
     }

@@ -42,17 +42,23 @@ static class ReflectionHelper
 
         foreach (var propertyInfo in type.GetProperties())
         {
+            if (propertyInfo.GetIndexParameters().Length > 0)
+            {
+                continue;
+            }
+
             var existingValue = propertyInfo.GetValue(instance);
             if (existingValue == null)
             {
                 propertyInfo.SetValue(instance, CreateDefaultValue(propertyInfo.PropertyType));
             }
-            
         }
 
         return instance;
     }
 
-
-  
+    public static bool IsStaticClass(this Type type)
+    {
+        return type.IsClass && type.IsAbstract && type.IsSealed;
+    }
 }
