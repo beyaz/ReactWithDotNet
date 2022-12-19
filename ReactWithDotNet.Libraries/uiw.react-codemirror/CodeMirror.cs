@@ -19,6 +19,23 @@ public class CodeMirror : ThirdPartyReactComponent
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e", eventName = nameof(onChange))]
     public Expression<Func<string>> valueBind { get; set; }
 
+    /// <summary>
+    /// if you want to handle when user iteraction finished see example below<br/>
+    /// component.valueBind = ()=>state.UserInfo.Name<br/>
+    /// component.valueBindDebounceTimeout = 600 // milliseconds<br/>
+    /// component.valueBindDebounceHandler = OnUserIterationFinished<br/>
+    /// </summary>
+    public Action valueBindDebounceHandler { get; set; }
+
+
+    /// <summary>
+    /// if you want to handle when user iteraction finished see example below<br/>
+    /// component.valueBind = ()=>state.UserInfo.Name<br/>
+    /// component.valueBindDebounceTimeout = 600 // milliseconds<br/>
+    /// component.valueBindDebounceHandler = OnUserIterationFinished<br/>
+    /// </summary>
+    public int? valueBindDebounceTimeout { get; set; }
+
     [React]
     [ReactTransformValueInClient(Prefix + nameof(CodeMirror) + "::ConvertToExtension")]
     public List<string> extensions { get; } = new List<string>();

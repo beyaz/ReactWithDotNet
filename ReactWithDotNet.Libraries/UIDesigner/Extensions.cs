@@ -39,26 +39,4 @@ static class Extensions
     }
 
     public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
-
-    public static void OnBrowserInactive(this Client client)
-    {
-        client.DispatchEvent(nameof(OnBrowserInactive));
-    }
-
-    public static void OnBrowserInactive(this Client client, Action handlerAction)
-    {
-        client.ListenEvent(OnBrowserInactive, handlerAction);
-    }
-
-    public static (T value, Exception exception) Try<T>(Func<T> func)
-    {
-        try
-        {
-            return (func(), null);
-        }
-        catch (Exception exception)
-        {
-            return (default, exception);
-        }
-    }
 }

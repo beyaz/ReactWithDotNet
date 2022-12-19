@@ -16,25 +16,24 @@ class MetadataNode : TreeNode
     public List<MetadataNode> children { get; } = new();
 }
 
-class MethodSelectionModel
-{
-    public string Filter { get; set; }
-}
 
-class MethodSelectionView : ReactComponent<MethodSelectionModel>
+
+class MethodSelectionView : ReactComponent
 {
     public int Width { get; set; }
     
     public string AssemblyFilePath { get; set; }
 
-    public string Filter { get; set; }
-
     public string SelectedMethodTreeNodeKey { get; set; }
 
     [ReactCustomEvent]
-    public Action<(string value, string filter)> SelectionChanged { get; set; }
+    public Action<string> SelectionChanged { get; set; }
 
-    public static MetadataNode FindTreeNode(string AssemblyFilePath, string treeNodeKey)
+    public string ClassFilter { get; set; }
+    
+    public string MethodFilter { get; set; }
+
+    public static MetadataNode FindTreeNode(string AssemblyFilePath, string treeNodeKey, string classFilter, string methodFilter)
     {
         if (string.IsNullOrWhiteSpace(AssemblyFilePath) || string.IsNullOrWhiteSpace(treeNodeKey))
         {
@@ -46,24 +45,17 @@ class MethodSelectionView : ReactComponent<MethodSelectionModel>
             return null;
         }
 
-        var nodes = MetadataHelper.GetMetadataNodes(AssemblyFilePath).ToArray();
+        var nodes = MetadataHelper.GetMetadataNodes(AssemblyFilePath, classFilter,methodFilter).ToArray();
 
         return SingleSelectionTree<MetadataNode>.FindNodeByKey(nodes, treeNodeKey);
     }
 
-    protected override void constructor()
-    {
-        state = new MethodSelectionModel { Filter = Filter };
-    }
+   
 
     protected override Element render()
     {
         var tree = new SingleSelectionTree<MetadataNode>
         {
-            filterValueBind   = () => state.Filter,
-            filter            = true,
-            filterBy          = nameof(MetadataNode.label),
-            filterPlaceholder = "Search react components or methods which returns Element",
             nodeTemplate      = nodeTemplate,
             value             = GetNodes(),
             onSelectionChange = OnSelectionChanged,
@@ -149,7 +141,7 @@ background:#c8d3db !important;
     {
         if (!string.IsNullOrWhiteSpace(AssemblyFilePath) && File.Exists(AssemblyFilePath))
         {
-            return MetadataHelper.GetMetadataNodes(AssemblyFilePath);
+            return MetadataHelper.GetMetadataNodes(AssemblyFilePath, ClassFilter,MethodFilter);
         }
 
         return new List<MetadataNode>();
@@ -157,6 +149,6 @@ background:#c8d3db !important;
 
     void OnSelectionChanged(SingleSelectionTreeSelectionParams e)
     {
-        DispatchEvent(() => SelectionChanged, (e.value, state.Filter));
+        DispatchEvent(() => SelectionChanged, e.value);
     }
 }

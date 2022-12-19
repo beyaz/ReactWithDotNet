@@ -8,17 +8,6 @@ namespace ReactWithDotNet.UIDesigner;
 
 public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
 {
-    public void Refresh()
-    {
-        SaveState();
-    }
-
-    protected override void componentDidMount()
-    {
-        Client.OnBrowserInactive(Refresh);
-        Client.CallJsFunction("InitializeUIDesignerEvents", 1000);
-    }
-
     protected override void constructor()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
@@ -27,7 +16,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         if (state.SelectedMethodTreeNodeKey.HasValue())
         {
-            OnElementSelected((state.SelectedMethodTreeNodeKey, state.SelectedMethodTreeFilter));
+            OnElementSelected(state.SelectedMethodTreeNodeKey);
         }
     }
 
@@ -46,8 +35,10 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
             return new CodeMirror
             {
-                extensions = { "json", "githubLight" },
-                valueBind  = valueBind,
+                extensions               = { "json", "githubLight" },
+                valueBind                = valueBind,
+                valueBindDebounceTimeout = 700,
+                valueBindDebounceHandler = OnKeypressFinished,
                 basicSetup =
                 {
                     highlightActiveLine       = false,
@@ -67,6 +58,31 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         {
             new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
 
+            new FlexColumn(MarginLeftRight(3))
+            {
+                new div { Text("Filter by class name"), FontSizeSmall, FontWeight600, },
+
+                new InputText
+                {
+                    valueBind                = () => state.ClassFilter,
+                    valueBindDebounceTimeout = 700,
+                    valueBindDebounceHandler = OnKeypressFinished,
+                    style                    = { FontSize12 }
+                }
+            },
+            new FlexColumn(MarginLeftRight(3), MarginTopBottom(3))
+            {
+                new div { Text("Filter by method name"), FontSizeSmall, FontWeight600, },
+
+                new InputText
+                {
+                    valueBind                = () => state.MethodFilter,
+                    valueBindDebounceTimeout = 700,
+                    valueBindDebounceHandler = OnKeypressFinished,
+                    style                    = { FontSize12 }
+                }
+            },
+
             new style
             {
                 Text($@"
@@ -83,7 +99,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             },
             new MethodSelectionView
             {
-                Filter                    = state.SelectedMethodTreeFilter,
+                ClassFilter               = state.ClassFilter,
+                MethodFilter              = state.MethodFilter,
                 SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
                 SelectionChanged          = OnElementSelected,
                 AssemblyFilePath          = state.SelectedAssemblyFilePath,
@@ -120,7 +137,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                         FontSize13
                     })
                 },
-                
+
                 // c o n t e n t
                 createJsonEditor() + HeightMaximized
             }
@@ -182,7 +199,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         return false;
     }
 
-    void OnElementSelected((string value, string filter) e)
+    void OnElementSelected(string keyOfSelectedTreeNode)
     {
         SaveState();
 
@@ -192,12 +209,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         state.JsonTextForDotNetInstanceProperties = null;
         state.JsonTextForDotNetMethodParameters   = null;
 
-        state.SelectedMethodTreeNodeKey = e.value;
-        state.SelectedMethodTreeFilter  = e.filter;
+        state.SelectedMethodTreeNodeKey = keyOfSelectedTreeNode;
 
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
 
-        var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey);
+        var node = MethodSelectionView.FindTreeNode(fullAssemblyPath, state.SelectedMethodTreeNodeKey, state.ClassFilter, state.MethodFilter);
         if (node is not null)
         {
             if (node.IsClass)
@@ -328,6 +344,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 Formatting           = Formatting.Indented
             });
         }
+    }
+
+    void OnKeypressFinished()
+    {
+        SaveState();
     }
 
     void OnWidthChanged(SliderChangeParams e)

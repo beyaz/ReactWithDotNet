@@ -23,7 +23,7 @@ partial class Style : IEnumerable<StyleModifier>
     #region IEnumerable<Modifier>
     public IEnumerator<StyleModifier> GetEnumerator()
     {
-        throw new InvalidOperationException("Style data should be serialize after .ToDictionary() method called.");
+        yield break;
     }
 
     IEnumerator IEnumerable.GetEnumerator()
