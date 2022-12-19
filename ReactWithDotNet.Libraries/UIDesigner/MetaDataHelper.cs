@@ -67,16 +67,16 @@ static class MetadataHelper
             return items.Take(5).ToList();
         }
 
-        MetadataNode classToMetaData(Type x)
+        MetadataNode classToMetaData(Type type)
         {
             var classNode = new MetadataNode
             {
                 IsClass       = true,
-                TypeReference = x.AsReference(),
-                label         = x.Name
+                TypeReference = type.AsReference(),
+                label         = type.Name
             };
 
-            VisitMethods(x, m =>
+            VisitMethods(type, m =>
             {
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
