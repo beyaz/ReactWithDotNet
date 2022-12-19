@@ -128,10 +128,7 @@ static class MetadataHelper
             {
                 if (type.Name.IndexOf(classFilter, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    if (types.Count < 5)
-                    {
-                        types.Add(type);
-                    }
+                    types.Add(type);
                 }
 
                 return;
