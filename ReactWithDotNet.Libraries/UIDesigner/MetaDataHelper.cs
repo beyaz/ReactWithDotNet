@@ -52,19 +52,18 @@ static class MetadataHelper
                 };
 
                 var classNodes = types.Where(x => x.Namespace == namespaceName).Select(classToMetaData);
-                
 
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
                     classNodes = classNodes.Where(classNode => classNode.children.Count > 0).Take(5).OrderByDescending(classNode => classNode.children.Count);
                 }
+
                 nodeForNamespace.children.AddRange(classNodes);
 
-                if (nodeForNamespace.children.Count>0)
+                if (nodeForNamespace.children.Count > 0)
                 {
                     items.Add(nodeForNamespace);
                 }
-                
             }
 
             return items.Take(5).ToList();
@@ -107,6 +106,7 @@ static class MetadataHelper
         {
             return Assembly.GetEntryAssembly();
         }
+
         return Assembly.LoadFile(assemblyFilePath);
     }
 
@@ -228,17 +228,6 @@ static class MetadataHelper
 
     static void VisitTypes(Assembly assembly, Action<Type> visit)
     {
-        assembly.VisitTypes(type =>
-        {
-            if (isValidForExport(type))
-            {
-                visit(type);
-            }
-        });
-
-        static bool isValidForExport(Type type)
-        {
-            return type.IsSubclassOf(typeof(ReactStatefulComponent));
-        }
+        assembly.VisitTypes(visit);
     }
 }
