@@ -28,7 +28,7 @@ static class ReflectionHelper
         if (type.IsGenericType)
         {
             var genericTypeDefinition = type.GetGenericTypeDefinition();
-            if (genericTypeDefinition.IsSubclassOf(typeof(IList)))
+            if (genericTypeDefinition.GetInterfaces().Contains(typeof(IEnumerable)))
             {
                 var genericArgument = type.GetGenericArguments().FirstOrDefault();
                 if (genericArgument is not null)
