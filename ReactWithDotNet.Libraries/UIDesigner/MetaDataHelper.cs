@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
+﻿using System.Reflection;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -108,23 +106,6 @@ static class MetadataHelper
         }
 
         return Assembly.LoadFile(assemblyFilePath);
-    }
-
-    public static (Assembly assembly, MetadataLoadContext metadataLoadContext) ReadAssembly(string assemblyFilePath)
-    {
-        var coreAssemblies = Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll");
-
-        var optionalLibraries = Directory.GetFiles(Path.GetDirectoryName(assemblyFilePath), "*.dll");
-
-        var libraries = new List<string>();
-        libraries.AddRange(coreAssemblies);
-        libraries.AddRange(optionalLibraries);
-
-        var resolver = new PathAssemblyResolver(libraries);
-
-        var metadataContext = new MetadataLoadContext(resolver);
-
-        return (metadataContext.LoadFromAssemblyPath(assemblyFilePath), metadataContext);
     }
 
     static MetadataNode ConvertToMetadataNode(MethodInfo methodInfo)
