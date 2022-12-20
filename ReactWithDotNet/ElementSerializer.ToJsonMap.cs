@@ -352,7 +352,7 @@ partial class ElementSerializer
 
                         var cachableMethodInfo = new CachableMethodInfo
                         {
-                            MethodName       = cachableMethod.Name,
+                            MethodName       = cachableMethod.GetNameWithToken(),
                             IgnoreParameters = true,
                             ElementAsJson    = cachedVersion
                         };
@@ -440,7 +440,7 @@ partial class ElementSerializer
 
                             var cachableMethodInfo = new CachableMethodInfo
                             {
-                                MethodName    = cachableMethod.Name,
+                                MethodName    = cachableMethod.GetNameWithToken(),
                                 Parameter     = parameter,
                                 ElementAsJson = cachedVersion
                             };
