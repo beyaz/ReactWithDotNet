@@ -265,6 +265,8 @@ partial class ElementSerializer
                     DotNetPropertiesOfType.TryAdd(dotNetTypeOfReactComponent, propertyAccessors);
                 }
 
+                List<string> reactAttributeNames = null;
+                
                 foreach (var item in propertyAccessors)
                 {
                     var propertyValue = item.GetValueFunc(reactStatefulComponent);
@@ -275,6 +277,12 @@ partial class ElementSerializer
                     }
 
                     dotNetProperties.Add(item.PropertyInfo.Name, propertyValue);
+
+                    if (item.HasReactAttribute)
+                    {
+                        reactAttributeNames ??= new List<string>();
+                        reactAttributeNames.Add(item.PropertyInfo.Name);
+                    }
                 }
 
                 var map = new JsonMap();
@@ -285,6 +293,11 @@ partial class ElementSerializer
                 map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
                 map.Add(nameof(Element.key), reactStatefulComponent.key);
                 map.Add("DotNetProperties", dotNetProperties);
+
+                if (reactAttributeNames is not null)
+                {
+                    map.Add("$ReactAttributeNames", reactAttributeNames);
+                }
 
                 if (HasComponentDidMountMethod(reactStatefulComponent))
                 {
@@ -769,7 +782,8 @@ partial class ElementSerializer
         {
             GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
             PropertyInfo = propertyInfo,
-            DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null
+            DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
+            HasReactAttribute = propertyInfo.GetCustomAttribute<ReactAttribute>() is not null
         };
     }
 
@@ -831,5 +845,6 @@ partial class ElementSerializer
         public object DefaultValue { get; init; }
         public Func<object, object> GetValueFunc { get; init; }
         public PropertyInfo PropertyInfo { get; init; }
+        public bool HasReactAttribute { get; set; }
     }
 }

@@ -663,6 +663,16 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
             $jsonNode: jsonNode
         };
 
+        const reactAttributeNames = jsonNode.$ReactAttributeNames;
+        if (reactAttributeNames)
+        {
+            for (let i = 0; i < reactAttributeNames.length; i++)
+            {
+                const name = reactAttributeNames[i];
+                cmpProps[name] = jsonNode[DotNetProperties][name];
+            }
+        }
+
         cmpProps[SyncId] = GetNextSequence();
 
         return createElement(cmp, cmpProps);
