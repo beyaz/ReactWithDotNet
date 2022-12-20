@@ -1786,6 +1786,21 @@ function ProcessDynamicCssClasses(dynamicStyles)
     }
 }
 
+function IsMobile()
+{
+    return document.documentElement.clientWidth <= 767;
+}
+
+function IsTablet()
+{
+    return document.documentElement.clientWidth <= 1023 && IsMobile() === false;
+}
+
+function IsDesktop()
+{
+    return IsMobile() === false && IsTablet() === false;
+}
+
 var ReactWithDotNet =
 {
     RequestHandlerUrl: '/HandleReactWithDotNetRequest',
@@ -1795,8 +1810,14 @@ var ReactWithDotNet =
     RenderComponentIn: RenderComponentIn,
     BeforeSendRequest: x=>x,
     RegisterExternalJsObject: RegisterExternalJsObject,
-    GetExternalJsObject: GetExternalJsObject
+    GetExternalJsObject: GetExternalJsObject,
+
+    IsMediaMobile: IsMobile,
+    IsMediaTablet: IsTablet,
+    IsMediaDesktop: IsDesktop
 };
+
+
 
 window.ReactWithDotNet = ReactWithDotNet;
 
