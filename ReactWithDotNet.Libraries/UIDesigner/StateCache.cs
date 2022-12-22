@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace ReactWithDotNet.UIDesigner;
 
-class StateCache
+static class StateCache
 {
     static readonly string CacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReactWithDotNetDesigner") +
                                             Path.DirectorySeparatorChar +
