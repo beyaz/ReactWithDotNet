@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -129,8 +131,8 @@ class StateCache
 
     static string GetCacheFilePath(string type) => $@"{CacheDirectory}{type}.json";
 
-    static string GetFileName(MethodReference methodReference) => methodReference.ToString().GetHashCode().ToString();
-    static string GetFileName(TypeReference typeReference) => typeReference.ToString().GetHashCode().ToString();
+    static string GetFileName(MethodReference methodReference) => methodReference.ToString().GetHashString();
+    static string GetFileName(TypeReference typeReference) => typeReference.ToString().GetHashString();
 
     static void WriteAllText(string path, string contents)
     {
@@ -140,5 +142,28 @@ class StateCache
         }
 
         File.WriteAllText(path, contents);
+    }
+
+    static string GetHashString(this string text, string salt = "")
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
+
+        // Uses SHA256 to create the hash
+        using (var sha = new SHA256Managed())
+        {
+            // Convert the string to a byte array first, to be processed
+            var textBytes = Encoding.UTF8.GetBytes(text + salt);
+            var hashBytes = sha.ComputeHash(textBytes);
+
+            // Convert back to a string, removing the '-' that BitConverter adds
+            var hash = BitConverter
+                      .ToString(hashBytes)
+                      .Replace("-", string.Empty);
+
+            return hash;
+        }
     }
 }
