@@ -38,6 +38,9 @@ public abstract class HtmlElement : Element
     [React]
     public virtual string id { get; set; }
 
+    /// <summary>
+    /// Roles define the semantic meaning of content, allowing screen readers and other tools to present and support interaction with an object in a way that is consistent with user expectations of that type of object.
+    /// </summary>
     [React]
     public string role { get; set; }
 

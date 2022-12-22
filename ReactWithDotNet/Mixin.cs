@@ -484,6 +484,11 @@ public static partial class Mixin
     public static HtmlElementModifier Id(int id) => new(element => element.id = id.ToString());
 
     /// <summary>
+    /// Roles define the semantic meaning of content, allowing screen readers and other tools to present and support interaction with an object in a way that is consistent with user expectations of that type of object.
+    /// </summary>
+    public static HtmlElementModifier Role(int id) => new(element => element.role = id.ToString());
+
+    /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
     public static HtmlElementModifier Id(long id) => new(element => element.id = id.ToString());
