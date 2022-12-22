@@ -546,6 +546,8 @@ public static partial class Mixin
 
     public static StyleModifier MediaQuery(string query, Style styleForOverride) => new(style => style.MediaQueries.Add(new MediaQuery(query, styleForOverride)));
 
+    public static StyleModifier MediaQuery(string query, params StyleModifier[] styleModifiers) => MediaQuery(query, new Style(styleModifiers));
+
     /// <summary>
     ///     min-width: 1024px
     /// </summary>
