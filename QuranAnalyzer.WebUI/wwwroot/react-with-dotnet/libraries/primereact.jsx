@@ -23,6 +23,7 @@ import { Panel } from 'primereact/panel';
 import { Tooltip } from 'primereact/tooltip';
 import { ScrollPanel } from 'primereact/scrollpanel';
 import { Message } from 'primereact/message';
+import { Dialog } from 'primereact/dialog';
 
 function register(name, value)
 {
@@ -52,6 +53,7 @@ register("Panel", Panel);
 register("Tooltip", Tooltip);
 register("Message", Message);
 register("ScrollPanel", ScrollPanel);
+register("Dialog", Dialog);
 
 register("Panel::GetHeaderTemplate", (key) => ReactWithDotNet.GetExternalJsObject(key));
 

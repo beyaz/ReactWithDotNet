@@ -32,7 +32,7 @@ public class Dialog: ElementBase
     /// Title content of the dialog.
     /// </summary>
     [React]
-    public object header { get; set; }
+    public Element header { get; set; }
 
 
     /// <summary>
