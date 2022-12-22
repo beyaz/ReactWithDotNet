@@ -567,6 +567,16 @@ public static partial class Mixin
     public static StyleModifier MediaQueryOnMobile(params StyleModifier[] styleModifiers) => MediaQueryOnMobile(new Style(styleModifiers));
 
     /// <summary>
+    ///     max-width: 1023px
+    /// </summary>
+    public static StyleModifier MediaQueryOnMobileOrTablet(Style styleForOverride) => MediaQuery("(max-width: 1023px)", styleForOverride);
+
+    /// <summary>
+    ///     max-width: 1023px
+    /// </summary>
+    public static StyleModifier MediaQueryOnMobileOrTablet(params StyleModifier[] styleModifiers) => MediaQueryOnMobileOrTablet(new Style(styleModifiers));
+
+    /// <summary>
     ///     min-width: 768px and max-width: 1023px
     /// </summary>
     public static StyleModifier MediaQueryOnTablet(Style styleForOverride) => MediaQuery("(min-width: 768px) and (max-width: 1023px)", styleForOverride);
