@@ -12,6 +12,7 @@ public class TreeNode
     public string data { get; set; }
     public string icon { get; set; }
     public string className { get; set; }
+    public bool expanded { get; set; }
 
     public Style style { get; } = new();
 
@@ -86,7 +87,7 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     /// An array of keys to represent the state of the tree expansion state in controlled mode.
     /// </summary>
     [React]
-    public IEnumerable<string> expandedKeys { get; set; }
+    public IReadOnlyDictionary<string,bool> expandedKeys { get; set; }
 
     [React]
     public string selectionMode { get; set; } = "single";
