@@ -54,10 +54,22 @@ class MethodSelectionView : ReactComponent
 
     protected override Element render()
     {
+        var nodes = GetNodes().ToList();
+       
+        foreach (var namespaceNode in nodes.Take(2))
+        {
+            namespaceNode.expanded = true;
+
+            foreach (var classNode in namespaceNode.children.Take(3))
+            {
+                classNode.expanded = true;
+            }
+        }
+        
         var tree = new SingleSelectionTree<MetadataNode>
         {
             nodeTemplate      = nodeTemplate,
-            value             = GetNodes(),
+            value             = nodes,
             onSelectionChange = OnSelectionChanged,
             selectionKeys     = SelectedMethodTreeNodeKey,
             style             = { PrimaryBackground, Width(Width) },
