@@ -2,16 +2,26 @@
 
 namespace ReactWithDotNet;
 
+sealed class EventSenderInfo
+{
+    public string SenderPropertyFullName { get; set; }
+    
+    public int SenderComponentUniqueIdentifier { get; set; }
+}
 static partial class Mixin
 {
-    internal static string GetEventKey(ReactStatefulComponent reactComponent, string propertyName)
+    internal static EventSenderInfo GetEventSenderInfo(ReactStatefulComponent reactComponent, string propertyName)
     {
         if (reactComponent.ComponentUniqueIdentifier is null)
         {
             throw DeveloperException("ComponentUniqueIdentifier cannot be null");
         }
 
-        return $"{{Property: '{reactComponent.GetType().FullName}::{propertyName}', ComponentUniqueIdentifier: {reactComponent.ComponentUniqueIdentifier}}}";
+        return new EventSenderInfo
+        {
+            SenderPropertyFullName          = $"{reactComponent.GetType().FullName}::{propertyName}",
+            SenderComponentUniqueIdentifier = reactComponent.ComponentUniqueIdentifier.Value
+        };
     }
 }
 

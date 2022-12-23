@@ -597,7 +597,7 @@ partial class ElementSerializer
 
                 propertyInfo.SetValue(reactComponent, null);
 
-                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventKey(reactComponent, propertyInfo.Name), @delegate.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.GetValueOrDefault());
+                reactComponent.Client.InitializeDotnetComponentEventListener(GetEventSenderInfo(reactComponent, propertyInfo.Name), @delegate.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.GetValueOrDefault());
             }
             else
             {

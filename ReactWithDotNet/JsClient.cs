@@ -14,6 +14,11 @@ partial class Mixin
         client.CallJsFunction(core + nameof(DispatchEvent), eventName, eventArguments);
     }
 
+    internal static void DispatchDotNetCustomEvent(this Client client, EventSenderInfo eventName, params object[] eventArguments)
+    {
+        client.CallJsFunction(core + nameof(DispatchDotNetCustomEvent), eventName, eventArguments);
+    }
+
     public static void ListenEvent(this Client client, Action<Client> triggerMethod, Action handler)
     {
         ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
@@ -66,7 +71,7 @@ partial class Mixin
         client.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
     }
 
-    internal static void InitializeDotnetComponentEventListener(this Client client, string eventName, string handlerMethodName, int handlerComponentUniqueIdentifier)
+    internal static void InitializeDotnetComponentEventListener(this Client client, EventSenderInfo eventName, string handlerMethodName, int handlerComponentUniqueIdentifier)
     {
         client.CallJsFunction(core + nameof(InitializeDotnetComponentEventListener), eventName, handlerMethodName, handlerComponentUniqueIdentifier);
     }

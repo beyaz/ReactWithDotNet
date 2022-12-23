@@ -491,6 +491,14 @@ function GetComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIden
     return component;
 }
 
+/**
+ * @param {number} componentUniqueIdentifier
+ */
+function GetFirstAssignedUniqueIdentifierValueOfComponent(componentUniqueIdentifier)
+{
+    return GetComponentByDotNetComponentUniqueIdentifier(componentUniqueIdentifier)[DotNetComponentUniqueIdentifiers][0];
+}
+
 function isEquivent(a, b)
 {
 	if(a === b)
@@ -1580,6 +1588,19 @@ RegisterCoreFunction("DispatchEvent", function(eventName, eventArguments)
     EventBus.Dispatch(eventName, eventArguments); 
 });
 
+RegisterCoreFunction("DispatchDotNetCustomEvent", function(eventSenderInfo, eventArguments)
+{
+    const senderPropertyFullName = eventSenderInfo.SenderPropertyFullName;
+    const senderComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(eventSenderInfo.SenderComponentUniqueIdentifier);
+
+    eventName = [
+        'senderPropertyFullName:' + senderPropertyFullName,
+        'senderComponentUniqueIdentifier:' + senderComponentUniqueIdentifier
+    ].join(',');
+
+    EventBus.Dispatch(eventName, eventArguments); 
+});
+
 RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
 {
     const component = this;
@@ -1625,13 +1646,20 @@ RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodNam
 });
 
 
-RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventName, remoteMethodName, handlerComponentUniqueIdentifier)
+RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSenderInfo, remoteMethodName, handlerComponentUniqueIdentifier)
 {
     const component = this;
 
+    const senderPropertyFullName = eventSenderInfo.SenderPropertyFullName;
+    const senderComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(eventSenderInfo.SenderComponentUniqueIdentifier);
+
     // avoid multiple attach we need to ensure attach a listener at once
     {
-        const customEventListenerMapKey = eventName + ', RemoteMethodName: ' + remoteMethodName + ' handlerComponentUniqueIdentifier: ' + handlerComponentUniqueIdentifier;
+        const customEventListenerMapKey = [
+            'senderPropertyFullName:' + senderPropertyFullName,
+            'senderComponentUniqueIdentifier:' + senderComponentUniqueIdentifier,
+            'handlerComponentUniqueIdentifier:' + handlerComponentUniqueIdentifier
+        ].join(',');
 
         if (component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey])
         {
@@ -1649,6 +1677,11 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventNa
 
         StartAction(remoteMethodName, handlerComponent, eventArgumentsAsArray);
     };
+
+    eventName = [
+        'senderPropertyFullName:' + senderPropertyFullName,
+        'senderComponentUniqueIdentifier:' + senderComponentUniqueIdentifier
+    ].join(',');
 
     component[ON_COMPONENT_DESTROY].push(() =>
     {

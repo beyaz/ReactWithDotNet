@@ -126,7 +126,7 @@ public abstract class ReactStatefulComponent : Element
     /// </summary>
     protected void DispatchEvent(Expression<Func<Action>> expressionForAccessingCustomReactEventProperty)
     {
-        Client.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)));
+        Client.DispatchDotNetCustomEvent(Mixin.GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)));
     }
 
     /// <summary>
@@ -139,7 +139,7 @@ public abstract class ReactStatefulComponent : Element
     /// </summary>
     protected void DispatchEvent<A>(Expression<Func<Action<A>>> expressionForAccessingCustomReactEventProperty, A a)
     {
-        Client.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
+        Client.DispatchDotNetCustomEvent(Mixin.GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
     }
 
     /// <summary>
@@ -152,7 +152,7 @@ public abstract class ReactStatefulComponent : Element
     /// </summary>
     protected void DispatchEvent<A, B>(Expression<Func<Action<A, B>>> expressionForAccessingCustomReactEventProperty, A a, B b)
     {
-        Client.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b);
+        Client.DispatchDotNetCustomEvent(Mixin.GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b);
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public abstract class ReactStatefulComponent : Element
     /// </summary>
     protected void DispatchEvent<A, B, C>(Expression<Func<Action<A, B>>> expressionForAccessingCustomReactEventProperty, A a, B b, C c)
     {
-        Client.DispatchEvent(Mixin.GetEventKey(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b, c);
+        Client.DispatchDotNetCustomEvent(Mixin.GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b, c);
     }
 
     protected abstract Element render();
