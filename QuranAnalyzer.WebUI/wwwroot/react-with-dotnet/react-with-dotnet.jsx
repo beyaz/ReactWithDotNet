@@ -1588,15 +1588,24 @@ RegisterCoreFunction("DispatchEvent", function(eventName, eventArguments)
     EventBus.Dispatch(eventName, eventArguments); 
 });
 
+/**
+ * @param {string} senderPropertyFullName
+ * @param {number} senderComponentUniqueIdentifier
+ */
+function GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier)
+{
+    return [
+        'senderPropertyFullName:' + senderPropertyFullName,
+        'senderComponentUniqueIdentifier:' + senderComponentUniqueIdentifier
+    ].join(',');
+}
+
 RegisterCoreFunction("DispatchDotNetCustomEvent", function(eventSenderInfo, eventArguments)
 {
     const senderPropertyFullName = eventSenderInfo.SenderPropertyFullName;
     const senderComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(eventSenderInfo.SenderComponentUniqueIdentifier);
 
-    eventName = [
-        'senderPropertyFullName:' + senderPropertyFullName,
-        'senderComponentUniqueIdentifier:' + senderComponentUniqueIdentifier
-    ].join(',');
+    const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
 
     EventBus.Dispatch(eventName, eventArguments); 
 });
@@ -1678,10 +1687,7 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
         StartAction(remoteMethodName, handlerComponent, eventArgumentsAsArray);
     };
 
-    eventName = [
-        'senderPropertyFullName:' + senderPropertyFullName,
-        'senderComponentUniqueIdentifier:' + senderComponentUniqueIdentifier
-    ].join(',');
+    const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
 
     component[ON_COMPONENT_DESTROY].push(() =>
     {
