@@ -49,7 +49,8 @@ static class MetadataHelper
                     label              = namespaceName
                 };
 
-                var classNodes = types.Where(x => x.Namespace == namespaceName).Select(classToMetaData);
+                var classNodes = types.Where(x => x.Namespace == namespaceName).Select(classToMetaData).Where(x=>!ignoreClass(x));
+                
 
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
@@ -65,6 +66,19 @@ static class MetadataHelper
             }
 
             return items.Take(2).ToList();
+        }
+
+        static bool ignoreClass(MetadataNode classNode)
+        {
+            if (classNode.children.Count==0)
+            {
+                if (classNode.TypeReference.IsStaticClass)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         MetadataNode classToMetaData(Type type)
