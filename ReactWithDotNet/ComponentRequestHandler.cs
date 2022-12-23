@@ -157,7 +157,7 @@ static class ComponentRequestHandler
                 ElementAsJson                     = map,
                 Trace                             = tracer.traceMessages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
-                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue
+                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue-1
             };
         }
 
@@ -304,7 +304,7 @@ static class ComponentRequestHandler
                 ElementAsJson                     = map,
                 Trace                             = tracer.traceMessages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
-                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue
+                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue-1
             };
         }
 

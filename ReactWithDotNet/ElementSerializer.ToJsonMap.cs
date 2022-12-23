@@ -155,7 +155,6 @@ partial class ElementSerializer
                                 {
                                     var stateValue = DeserializeJson(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
                                     statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
-                                    reactStatefulComponent.ComponentUniqueIdentifier = clientStateInfo.ComponentUniqueIdentifier;
                                 }
                             }
                         }

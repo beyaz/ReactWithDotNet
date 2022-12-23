@@ -1346,7 +1346,7 @@ function SendRequest(request, onSuccess)
     window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json));
 }
 
-var LastUsedComponentUniqueIdentifier = 0;
+var LastUsedComponentUniqueIdentifier = 1;
 
 function RenderComponentIn(obj)
 {
