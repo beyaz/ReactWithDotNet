@@ -53,7 +53,7 @@ static class MetadataHelper
 
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
-                    classNodes = classNodes.Where(classNode => classNode.children.Count > 0).Take(5).OrderByDescending(classNode => classNode.children.Count);
+                    classNodes = classNodes.Where(classNode => classNode.children.Count > 0).Take(3).OrderByDescending(classNode => classNode.children.Count);
                 }
 
                 nodeForNamespace.children.AddRange(classNodes);
@@ -64,7 +64,7 @@ static class MetadataHelper
                 }
             }
 
-            return items.Take(5).ToList();
+            return items.Take(2).ToList();
         }
 
         MetadataNode classToMetaData(Type type)

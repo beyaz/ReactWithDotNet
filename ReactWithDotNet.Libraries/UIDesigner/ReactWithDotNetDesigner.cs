@@ -54,13 +54,18 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             };
         }
 
+        Element createLabel(string text)
+        {
+            return new small(Text(text), Color("rgb(73 86 193)"), FontWeight600);
+        }
+
         var propertyPanel = new FlexColumn(PaddingLeftRight(5), Height("100%"), Width("100%"), FontSize15, PrimaryBackground)
         {
             new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
 
             new FlexColumn(MarginLeftRight(3))
             {
-                new div { Text("Filter by class name"), FontSizeSmall, FontWeight600, },
+                createLabel("Filter by class name"),
 
                 new InputText
                 {
@@ -72,7 +77,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             },
             new FlexColumn(MarginLeftRight(3), MarginTopBottom(3))
             {
-                new div { Text("Filter by method name"), FontSizeSmall, FontWeight600, },
+                createLabel("Filter by method name"),
 
                 new InputText
                 {
@@ -97,6 +102,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
 ")
             },
+            Space(5),
             new MethodSelectionView
             {
                 ClassFilter               = state.ClassFilter,
@@ -107,11 +113,26 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 Width                     = width
             },
 
-            Space(10),
-            new Slider
+            Space(5),
+
+            new fieldset
             {
-                max   = 100, min = 0, value = state.ScreenWidth, onChange = OnWidthChanged,
-                style = { Margin(10), Padding(5) }
+                Border("1px solid #d9d9d9"),
+                BorderRadius(4),
+                new legend
+                {
+                    createLabel("Media Size")
+                },
+                new FlexRow(JustifyContentSpaceAround)
+                {
+                    MediaSizeButton(320),
+                    MediaSizeButton(480),
+                    MediaSizeButton(600),
+                    MediaSizeButton(768),
+                    MediaSizeButton(900),
+                    MediaSizeButton(1024),
+                    MediaSizeButton(1200)
+                }
             },
 
             new FlexColumn(HeightMaximized)
@@ -152,7 +173,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             style =
             {
                 Border("0.3px dashed #e0e0e0"),
-                Width(state.ScreenWidth + "%"),
+                Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
                 HeightMaximized
             }
         };
@@ -197,6 +218,33 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         }
 
         return false;
+    }
+
+    Element MediaSizeButton(int width)
+    {
+        const string BluePrimary = "#1976d2";
+
+        var isSelected = width == state.ScreenWidth;
+
+        return new FlexRowCentered
+        {
+            Id(width),
+            $"{width}px",
+            Color(BluePrimary),
+            Border($"1px solid {BluePrimary}"),
+            Background(isSelected ? "#dbdbe7" : "transparent"),
+            BorderRadius(5),
+            CursorPointer,
+            OnClick(MediaSizeButtonClicked),
+            Height(25),
+            Width(50),
+            FontSize12
+        };
+    }
+
+    void MediaSizeButtonClicked(MouseEvent e)
+    {
+        state.ScreenWidth = int.Parse(e.FirstNotEmptyId);
     }
 
     void OnElementSelected(string keyOfSelectedTreeNode)
@@ -349,11 +397,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
     void OnKeypressFinished()
     {
         SaveState();
-    }
-
-    void OnWidthChanged(SliderChangeParams e)
-    {
-        state.ScreenWidth = e.value;
     }
 
     void SaveState()
