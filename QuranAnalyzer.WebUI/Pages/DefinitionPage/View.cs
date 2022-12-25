@@ -6,6 +6,8 @@ public class DefinitionView : ReactComponent
 {
     protected override Element render()
     {
+        var ul_style = DisplayFlex+ FlexDirectionColumn+ Gap(8);
+        
         return new Article
         {
             new LargeTitle("Tanım"),
@@ -25,10 +27,10 @@ public class DefinitionView : ReactComponent
                 " İster istemez burada bir kasıt ararsınız. Bir açıklama beklersiniz.",
             },
 
-            new ul
+            new ul(ul_style)
             {
                 (li)" Ya mektubu gönderen kişi yahut yazıya döken kişi burada bir yazım hatası yapmıştır.",
-                (li)" Mektubu gönderen kişi burada kasıtlı bir şey yapmış ve bana bir şey demek istiyor.",
+                (li)" Mektubu gönderen kişi burada kasıtlı bir şey yapmış ve bana bir şey demek istiyor."
             },
 
             new p
@@ -53,11 +55,11 @@ public class DefinitionView : ReactComponent
                 "Bir kaç örnek ile konuyu detaylandıralım",
             },
 
-            new ul
+            new ul(ul_style)
             {
                 (li)"- Kuranda yüksekten düşen kayaların Allah korkusu ile düştüklerinden bahsedilir.",
 
-                (li)"- Kuranda seçim özgürlüğünün başka varlıklara da teklif edildiği fakat sadece biz insanların bunu kabul ettiğinden ve bunun cahilce bir hareken oduğundan bahsedilir.",
+                (li)"- Kuranda seçim özgürlüğünün başka varlıklara da teklif edildiği fakat sadece biz insanların bunu kabul ettiğinden ve bunun cahilce bir hareket oduğundan bahsedilir.",
 
                 (li)"- Kuranda göklerin Yaratıcı'nın sağ elinde dürülmüş olduğundan bahseder.",
             },
