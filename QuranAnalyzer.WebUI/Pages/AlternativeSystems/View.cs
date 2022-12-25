@@ -24,19 +24,22 @@ Youtube ' da bu konu ile ilgili yapılan eleştiri videosunu incelemenizi tavsiy
 
 new a{ href = "https://www.youtube.com/watch?v=ZBweugCUuyk", text = "Gürkan Engin İkiz Kod 7 & 19"},
 
-  new p{ @"Hatta sinema filmlerinin bir sahnesinde geçen bir arabaların plaka nolarını toplayıp çarparak Kurandan 19 ve 238 sayıları ile ilgili veriler bulan bile var.
-Şaka değil konuyu araştırırken gerçekten böyle videolara denk geldim."},
+  new p{ @"Hatta sinema filmlerinin bir sahnesinde geçen bir arabaların plaka numaralarını toplayıp çarparak Kurandan 19 ve 238 sayıları ile ilgili veriler bulan bile var.
+Şaka değil konuyu araştırırken gerçekten böyle videolara denk geldim. 
+Hatta Mustafa Kemal Atatürk'ün hayatındaki olan olayların tarihleri ile  19 rakamı arasında ilişkiler kurmaya çalışanlara bile denk gelebilirsiniz.
+Özetle bu konuyu araştırırken o da 19'un katı bu da 19 un katı şeklinde bir çok videoya - yazıya denk gelebilirsiniz.
+Tahminim o ki burada şeytanın bir oyunu olabilir. 19 meselesini sulandırarak, alakasız konularla ilişkilendirerek 19 gibi basit anlaşılır bir meseleyi anlaşılmaz işin içindne çıkılmaz bir hale getirmeye çalışıyor olabilir."},
 
   new p{@"Bu saydığım isimlerin ortak takıldıkları şey Reşad Halife'nin elçilik meselesi ve Tevbe 128-129 ile ilgili tartışılan iki konudur." },
   
-  new p{ @"Elbetteki madalyonun diğer yüzünde 19 olayını daha tarafsız inceleyen Gürkan Engin, KuranMucizeler.com gibi isimler de var.
+  new p{ @"Elbetteki madalyonun diğer yüzünde 19 olayını daha tarafsız inceleyen KuranMucizeler.com, Gürkan Engin gibi isimler de var.
 
 Bu saydığım isimler sadece Türkiye'de olan resim. Elbette başka ülkelerde de buna benzer ayrışmalar var.
 " },
   
   new p
   {
-      @"Not: Bu sitede sadece Reşad Halife tarafından keşfedilen başlangıç harfleri üzerindeki verileri incelemektedir. 
+      @"Not: Bu sitede sadece Reşad Halife tarafından keşfedilen 19 sisteminin en majör noktası olan başlangıç harfleri üzerindeki verileri incelemektedir. 
       Dilerseniz bu sitede kullanılan sayım programlarını kullanabilir ve alternatif 19 iddalarını inceleyebilirsiniz."
   }
         };
