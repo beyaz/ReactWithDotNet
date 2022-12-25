@@ -1,7 +1,4 @@
-﻿using System.IO;
-using Newtonsoft.Json;
-
-namespace QuranAnalyzer.WebUI;
+﻿namespace QuranAnalyzer.WebUI;
 
 
 
