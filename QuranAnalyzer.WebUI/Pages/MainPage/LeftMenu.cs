@@ -9,7 +9,7 @@ class LeftMenu : ReactComponent
         ("Ön Bilgiler", new[] { PageId.PreInformation }),
         ("Tanım", new[] { PageId.Definition }),
         ("Başlangıç Harfleri", new[] { PageId.InitialLetters }),
-        ("Soru - Cevap", new[] { PageId.QuestionAnswerPage, PageId.AlternativeSystems }),
+        ("Soru - Cevap", new[] { PageId.QuestionAnswerPage, PageId.AlternativeSystems,PageId.WhoIsReshadKhalifePage }),
         ("İletişim", new[] { PageId.ContactPage })
     };
 
