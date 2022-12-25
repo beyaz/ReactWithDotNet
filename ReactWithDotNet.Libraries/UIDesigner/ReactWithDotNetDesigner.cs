@@ -13,11 +13,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
-
-        if (state.SelectedMethodTreeNodeKey.HasValue())
-        {
-            OnElementSelected(state.SelectedMethodTreeNodeKey);
-        }
     }
 
     protected override Element render()
@@ -71,7 +66,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 {
                     valueBind                = () => state.ClassFilter,
                     valueBindDebounceTimeout = 700,
-                    valueBindDebounceHandler = OnKeypressFinished,
+                    valueBindDebounceHandler = OnFilterChanged,
                     style                    = { FontSize12 }
                 }
             },
@@ -83,7 +78,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 {
                     valueBind                = () => state.MethodFilter,
                     valueBindDebounceTimeout = 700,
-                    valueBindDebounceHandler = OnKeypressFinished,
+                    valueBindDebounceHandler = OnFilterChanged,
                     style                    = { FontSize12 }
                 }
             },
@@ -249,8 +244,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
     void OnElementSelected(string keyOfSelectedTreeNode)
     {
-        SaveState();
-
         state.SelectedType   = null;
         state.SelectedMethod = null;
 
@@ -299,6 +292,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             initializeParametersJson();
         }
 
+        SaveState();
+        
         void initializeInstanceJson()
         {
             var typeOfInstance = state.SelectedType;
@@ -397,6 +392,10 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
     void OnKeypressFinished()
     {
         SaveState();
+    }
+
+    void OnFilterChanged()
+    {
     }
 
     void SaveState()
