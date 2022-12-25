@@ -49,7 +49,7 @@ static class MetadataHelper
                     label              = namespaceName
                 };
 
-                var classNodes = types.Where(x => x.Namespace == namespaceName).Select(classToMetaData).Where(x => !ignoreClass(x));
+                var classNodes = types.Where(x => x.Namespace == namespaceName).Select(classToMetaData).Where(x => x is not null && !ignoreClass(x));
 
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
@@ -106,6 +106,14 @@ static class MetadataHelper
 
                 classNode.children.Add(ConvertToMetadataNode(m));
             });
+
+            if (classNode.children.Count == 0)
+            {
+                if (!type.IsSubclassOf(typeof(ReactStatefulComponent)))
+                {
+                    return null;
+                }
+            }
 
             return classNode;
         }
@@ -170,6 +178,8 @@ static class MetadataHelper
         return types;
     }
 
+    
+    
     static bool IsValidForExport(MethodInfo methodInfo)
     {
         if (methodInfo.Name == "render" || methodInfo.Name == "InvokeRender")
@@ -188,13 +198,18 @@ static class MetadataHelper
         }
 
         // is function component
-        if (methodInfo.ReturnType == typeof(Element) || methodInfo.ReturnType.IsSubclassOf(typeof(Element)))
+        if (IsElement(methodInfo.ReturnType))
         {
             return true;
         }
 
         return false;
 
+        static bool IsElement(Type type)
+        {
+            return type == typeof(Element) || type.IsSubclassOf(typeof(Element));
+        }
+        
         static bool isNotValidForJson(Type t)
         {
             if (t == typeof(Element) || t.BaseType == typeof(HtmlElement))
