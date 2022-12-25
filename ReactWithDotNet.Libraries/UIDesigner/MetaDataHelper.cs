@@ -49,8 +49,7 @@ static class MetadataHelper
                     label              = namespaceName
                 };
 
-                var classNodes = types.Where(x => x.Namespace == namespaceName).Select(classToMetaData).Where(x=>!ignoreClass(x));
-                
+                var classNodes = types.Where(x => x.Namespace == namespaceName).Select(classToMetaData).Where(x => !ignoreClass(x));
 
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
@@ -70,7 +69,7 @@ static class MetadataHelper
 
         static bool ignoreClass(MetadataNode classNode)
         {
-            if (classNode.children.Count==0)
+            if (classNode.children.Count == 0)
             {
                 if (classNode.TypeReference.IsStaticClass)
                 {
@@ -152,6 +151,21 @@ static class MetadataHelper
         }
 
         VisitTypes(assembly, visit);
+
+        if (types.Count == 0 && !string.IsNullOrWhiteSpace(classFilter))
+        {
+            // try search by namespace
+
+            void filterByNamespaceName(Type type)
+            {
+                if (type.FullName?.IndexOf(classFilter, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    types.Add(type);
+                }
+            }
+
+            VisitTypes(assembly, filterByNamespaceName);
+        }
 
         return types;
     }
