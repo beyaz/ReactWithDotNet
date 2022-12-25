@@ -2,20 +2,20 @@
 
 class LeftMenu : ReactComponent
 {
-    static List<(string text, string pageId)> MenuItems = new()
+    static List<(string text, IReadOnlyList<string> pageIdList)> MenuItems = new()
     {
-        ("Anasayfa", PageId.MainPage),
-        ("Teknolojide Veri İletimi", PageId.SecuringDataWithCurrentTechnology),
-        ("Ön Bilgiler", PageId.PreInformation),
-        ("Tanım", PageId.Definition),
-        ("Başlangıç Harfleri", PageId.InitialLetters),
-        ("Soru - Cevap", PageId.QuestionAnswerPage),
-        ("İletişim", PageId.ContactPage)
+        ("Anasayfa", new[] { PageId.MainPage }),
+        ("Teknolojide Veri İletimi", new[] { PageId.SecuringDataWithCurrentTechnology }),
+        ("Ön Bilgiler", new[] { PageId.PreInformation }),
+        ("Tanım", new[] { PageId.Definition }),
+        ("Başlangıç Harfleri", new[] { PageId.InitialLetters }),
+        ("Soru - Cevap", new[] { PageId.QuestionAnswerPage, PageId.AlternativeSystems }),
+        ("İletişim", new[] { PageId.ContactPage })
     };
 
     public string SelectedPageId { get; set; }
 
-    int? SelectedIndex => MenuItems.FindIndex(x => x.pageId == SelectedPageId);
+    int? SelectedIndex => MenuItems.FindIndex(x => x.pageIdList.Contains(SelectedPageId));
 
     protected override Element render()
     {
@@ -30,7 +30,7 @@ class LeftMenu : ReactComponent
 
             var textColor = isSelected ? "rgb(30 167 253)" : "rgb(173 164 164)";
 
-            return new a(Href(GetPageLink(MenuItems[index].pageId)))
+            return new a(Href(GetPageLink(MenuItems[index].pageIdList[0])))
             {
                 DisplayFlex, FlexDirectionRow, AlignItemsCenter, Gap(10),
                 PositionRelative,
