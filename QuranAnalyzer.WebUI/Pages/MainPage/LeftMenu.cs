@@ -2,7 +2,7 @@
 
 class LeftMenu : ReactComponent
 {
-    static List<(string text, string pageId)> MenuItems = new List<(string text, string pageId)>
+    static List<(string text, string pageId)> MenuItems = new()
     {
         ("Anasayfa", PageId.MainPage),
         ("Teknolojide Veri İletimi", PageId.SecuringDataWithCurrentTechnology),
@@ -21,14 +21,12 @@ class LeftMenu : ReactComponent
     {
         return new FlexColumn(Gap(20))
         {
-            Children(MenuItems.Select((_, i) => createText(i))),
+            MenuItems.Select((_, i) => createText(i, i == SelectedIndex))
         };
 
-        Element createText(int index)
+        Element createText(int index, bool isSelected)
         {
             var text = MenuItems[index].text;
-
-            var isSelected = index == SelectedIndex;
 
             var textColor = isSelected ? "rgb(30 167 253)" : "rgb(173 164 164)";
 
@@ -68,6 +66,3 @@ class LeftMenu : ReactComponent
         }
     }
 }
-
-
-

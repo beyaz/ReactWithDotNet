@@ -9,7 +9,6 @@ public class AlternativeSystemsView : ReactComponent
         return new Article
         {
             new LargeTitle("Alternatif 19 Sistemleri"),
-            new VSpace(15),
 
             new p{ @"
 Kuran üzerinde 19 ile ilgili bilgiler duyulmaya başladıkça başka insanlar da 19 üzerine çalışma yapmaya başladılar.
