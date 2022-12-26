@@ -23,10 +23,11 @@ import { Panel } from 'primereact/panel';
 import { Tooltip } from 'primereact/tooltip';
 import { ScrollPanel } from 'primereact/scrollpanel';
 import { Message } from 'primereact/message';
+import { Dialog } from 'primereact/dialog';
 
 function register(name, value)
 {
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.PrimeReact." + name, value);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact." + name, value);
 }
 
 register("Button", Button);
@@ -52,6 +53,7 @@ register("Panel", Panel);
 register("Tooltip", Tooltip);
 register("Message", Message);
 register("ScrollPanel", ScrollPanel);
+register("Dialog", Dialog);
 
 register("Panel::GetHeaderTemplate", (key) => ReactWithDotNet.GetExternalJsObject(key));
 
@@ -62,4 +64,28 @@ register("GrabOnlyValueParameterFromCommonPrimeReactEvent", function (argumentsA
     const value = argumentsAsArray[0].value;
 
     return [{ value: value }];
+});
+
+register("GrabWithoutOriginalEvent", function (argumentsAsArray)
+{
+    const newInstance = {};
+
+    const obj = argumentsAsArray[0];
+
+    for(var propertyName in obj)
+	{
+        if(obj.hasOwnProperty(propertyName))
+        {
+            const value = obj[propertyName];
+
+            if (propertyName === 'originalEvent' && value && value._reactName)
+            {
+                continue;
+            }
+
+            newInstance[propertyName] = value;
+        }
+    }
+
+    return [newInstance];
 });

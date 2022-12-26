@@ -2,38 +2,50 @@
 
 public class Tooltip : ReactComponent
 {
-    public string Label { get; set; }
-
-    public bool IsProcessing { get; set; }
+    public string Text { get; set; }
 
     protected override Element render()
     {
-        return new FlexRowCentered
+        var firstChild = children.FirstOrDefault() ?? new div{WidthHeight(50),Background("red")};
+
+        return new div(PositionRelative)
         {
-            children =
+            Children(firstChild, new span(FontWeightBold,FontSize11)
             {
-                When(IsProcessing,new LoadingIcon{ wh(17)}),
-                When(!IsProcessing,new div(Label))
-            },
-            onClick = ActionButtonOnClick,
-            style =
-            {
-                Color(BluePrimary),
-                Border($"1px solid {BluePrimary}"),
-                Background("transparent"),
-                BorderRadius(5),
-                Padding(10, 30),
-                CursorPointer
-            }
+                text = Text,
+                style =
+                {
+                    letterSpacing = "1px",
+                    display = "block",
+                    backgroundColor = "#211f1fd4",
+                    color           = "white",
+                    textAlign       = "center",
+                    borderRadius    = "6px",
+                    padding         = "4px 8px",
+                    position        = "absolute",
+                    zIndex          = "1",
+                    top             = "110%",
+                    left            = "10%",
+                    marginLeft      = "-60px",
+                    after =
+                    {
+                        content     = "",
+                        position    = "absolute",
+                        bottom      = "100%",
+                        left        = "40%",
+                        marginLeft  = "-5px",
+                        borderWidth = "5px",
+                        borderStyle = "solid",
+                        borderColor = "transparent transparent #211f1fd4 transparent"
+                    },
+                    hover =
+                    {
+                        display = "block"
+                    }
+                }
+            }),
+            
+            
         };
-    }
-
-    [ReactCustomEvent]
-    public Action OnClick { get; set; }
-
-
-    void ActionButtonOnClick(MouseEvent _)
-    {
-        DispatchEvent(() => OnClick);
     }
 }
