@@ -1,13 +1,11 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-public class ActionButton : ReactComponent
+public class Tooltip : ReactComponent
 {
     public string Label { get; set; }
 
     public bool IsProcessing { get; set; }
 
-        
-        
     protected override Element render()
     {
         return new FlexRowCentered
@@ -32,10 +30,10 @@ public class ActionButton : ReactComponent
 
     [ReactCustomEvent]
     public Action OnClick { get; set; }
-        
-        
+
+
     void ActionButtonOnClick(MouseEvent _)
     {
-        DispatchEvent(()=>OnClick);
+        DispatchEvent(() => OnClick);
     }
 }
