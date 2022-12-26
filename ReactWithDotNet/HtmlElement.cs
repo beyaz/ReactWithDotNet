@@ -6,6 +6,7 @@ namespace ReactWithDotNet;
 public abstract class HtmlElement : Element
 {
     internal Dictionary<string, string> _data;
+    
     internal Style _style;
 
     protected HtmlElement()

@@ -691,6 +691,14 @@ partial class ElementSerializer
             map.Add("$text", htmlElement.innerText);
         }
 
+        if (htmlElement._data is not null)
+        {
+            foreach (var (key, value) in htmlElement._data)
+            {
+                map.Add(key, value);
+            }
+        }
+
         return map;
     }
 
