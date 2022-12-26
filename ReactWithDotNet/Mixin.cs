@@ -131,6 +131,14 @@ public static partial class Mixin
     public static StyleModifier FontWeightBold => FontWeight700;
 
     /// <summary>
+    /// style.letterSpacing = <paramref name="letterSpacingAsPixel"/> + 'px'
+    /// </summary>
+    public static StyleModifier LetterSpacing(double letterSpacingAsPixel) => new(style => style.letterSpacing = letterSpacingAsPixel.AsPixel());
+
+
+
+
+    /// <summary>
     ///     style.fontWeight = '800'
     /// </summary>
     public static StyleModifier FontWeightExtraBold => FontWeight800;
