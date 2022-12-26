@@ -5,6 +5,7 @@ namespace ReactWithDotNet;
 
 public abstract class HtmlElement : Element
 {
+    internal Dictionary<string, string> _data;
     internal Style _style;
 
     protected HtmlElement()
@@ -27,6 +28,17 @@ public abstract class HtmlElement : Element
     }
 
     /// <summary>
+    ///     Provides a hint for generating a keyboard shortcut for the current element. This attribute consists of a
+    ///     space-separated list of characters. The browser should use the first one that exists on the computer keyboard
+    ///     layout.
+    /// </summary>
+    [React]
+    public string accesskey { get; set; }
+
+    [React]
+    public bool? autofocus { get; set; }
+
+    /// <summary>
     ///     Gets or sets the name of the class.
     /// </summary>
     [React]
@@ -35,54 +47,35 @@ public abstract class HtmlElement : Element
     [React]
     public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
 
+    /// <summary>
+    ///     The data-* attribute is used to store custom data private to the page or application.
+    ///     <br />
+    ///     The data-* attribute gives us the ability to embed custom data attributes on all HTML elements.
+    ///     <br />
+    ///     The stored (custom) data can then be used in the page's JavaScript to create a more engaging user experience
+    ///     (without any Ajax calls or server-side database queries).
+    ///     <br />
+    ///     The data-* attribute consist of two parts:
+    ///     <br />
+    ///     The attribute name should not contain any uppercase letters, and must be at least one character long after the
+    ///     prefix "data-"<br />
+    ///     The attribute value can be any string<br />
+    ///     Note: Custom attributes prefixed with "data-" will be completely ignored by the user agent.<br />
+    /// </summary>
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    public Dictionary<string, string> data
+    {
+        get
+        {
+            _data ??= new Dictionary<string, string>();
+
+            return _data;
+        }
+    }
+
     [React]
     public virtual string id { get; set; }
-
-    /// <summary>
-    /// Roles define the semantic meaning of content, allowing screen readers and other tools to present and support interaction with an object in a way that is consistent with user expectations of that type of object.
-    /// </summary>
-    [React]
-    public string role { get; set; }
-
-    /// <summary>
-    /// Provides a hint for generating a keyboard shortcut for the current element. This attribute consists of a space-separated list of characters. The browser should use the first one that exists on the computer keyboard layout.
-    /// </summary>
-    [React]
-    public string accesskey { get; set; }
-    
-    
-    /// <summary>
-    /// An enumerated attribute that is used to specify whether an element's attribute values and the values of its Text node children are to be translated when the page is localized, or whether to leave them unchanged. It can have the following values:
-    /// <br/>
-    /// empty string or yes, which indicates that the element will be translated.
-    /// <br/>
-    /// no, which indicates that the element will not be translated.
-    /// </summary>
-    [React]
-    public string translate { get; set; }
-
-    [React]
-    public bool? autofocus { get; set; }
-
-    /// <summary>
-    /// A space-separated list of the part names of the element. Part names allows CSS to select and style specific elements in a shadow tree via the ::part pseudo-element.
-    /// </summary>
-    [React]
-    public string part { get; set; }
-
-    /// <summary>
-    /// Helps define the language of an element: the language that non-editable elements are in, or the language that editable elements should be written in by the user. The attribute contains one "language tag" (made of hyphen-separated "language subtags") in the format defined in RFC 5646: Tags for Identifying Languages (also known as BCP 47). xml:lang has priority over it.
-    /// </summary>
-    [React]
-    public string lang { get; set; }
-
-    /// <summary>
-    /// An enumerated attribute defines whether the element may be checked for spelling errors. It may have the following values:<br/>
-    /// empty string or true, which indicates that the element should be, if possible, checked for spelling errors;<br/>
-    /// false, which indicates that the element should not be checked for spelling errors.
-    /// </summary>
-    [React]
-    public string spellcheck { get; set; }
 
     [JsonIgnore]
     public string innerHTML
@@ -94,6 +87,15 @@ public abstract class HtmlElement : Element
     ///     'innerText' property of element.
     /// </summary>
     public string innerText { get; set; }
+
+    /// <summary>
+    ///     Helps define the language of an element: the language that non-editable elements are in, or the language that
+    ///     editable elements should be written in by the user. The attribute contains one "language tag" (made of
+    ///     hyphen-separated "language subtags") in the format defined in RFC 5646: Tags for Identifying Languages (also known
+    ///     as BCP 47). xml:lang has priority over it.
+    /// </summary>
+    [React]
+    public string lang { get; set; }
 
     /// <summary>
     ///     Gets or sets the on click.
@@ -110,20 +112,42 @@ public abstract class HtmlElement : Element
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onMouseLeave { get; set; }
 
-
     /// <summary>
-    /// Handler <paramref name="value"/> should be in client js codes.<br/>
-    /// <br/>
-    /// Sample Usage:<br/>
-    /// <br/>
-    /// ReactWithDotNet.RegisterExternalJsObject(<paramref name="value"/>, function(e){<br/>
-    /// ...<br/>
-    /// ...<br/>
-    /// });
+    ///     Handler <paramref name="value" /> should be in client js codes.<br />
+    ///     <br />
+    ///     Sample Usage:<br />
+    ///     <br />
+    ///     ReactWithDotNet.RegisterExternalJsObject(<paramref name="value" />, function(e){<br />
+    ///     ...<br />
+    ///     ...<br />
+    ///     });
     /// </summary>
     [React]
     [ReactTransformValueInClient("ReactWithDotNet.GetExternalJsObject")]
     public string onScroll { get; set; }
+
+    /// <summary>
+    ///     A space-separated list of the part names of the element. Part names allows CSS to select and style specific
+    ///     elements in a shadow tree via the ::part pseudo-element.
+    /// </summary>
+    [React]
+    public string part { get; set; }
+
+    /// <summary>
+    ///     Roles define the semantic meaning of content, allowing screen readers and other tools to present and support
+    ///     interaction with an object in a way that is consistent with user expectations of that type of object.
+    /// </summary>
+    [React]
+    public string role { get; set; }
+
+    /// <summary>
+    ///     An enumerated attribute defines whether the element may be checked for spelling errors. It may have the following
+    ///     values:<br />
+    ///     empty string or true, which indicates that the element should be, if possible, checked for spelling errors;<br />
+    ///     false, which indicates that the element should not be checked for spelling errors.
+    /// </summary>
+    [React]
+    public string spellcheck { get; set; }
 
     /// <summary>
     ///     Gets the style.
@@ -162,6 +186,18 @@ public abstract class HtmlElement : Element
     [React]
     public string title { get; set; }
 
+    /// <summary>
+    ///     An enumerated attribute that is used to specify whether an element's attribute values and the values of its Text
+    ///     node children are to be translated when the page is localized, or whether to leave them unchanged. It can have the
+    ///     following values:
+    ///     <br />
+    ///     empty string or yes, which indicates that the element will be translated.
+    ///     <br />
+    ///     no, which indicates that the element will not be translated.
+    /// </summary>
+    [React]
+    public string translate { get; set; }
+
     [JsonPropertyName("$type")]
     public virtual string Type => GetType().Name.ToLower();
 
@@ -184,22 +220,19 @@ public abstract class HtmlElement : Element
     }
 
     #region Operators
-
     public static HtmlElement operator +(HtmlElement element, Style style)
     {
         element.style.Import(style);
 
         return element;
     }
-    
+
     public static HtmlElement operator +(HtmlElement htmlElement, HtmlElementModifier htmlElementModifier)
     {
         htmlElementModifier.modifyHtmlElement(htmlElement);
 
         return htmlElement;
     }
-
-
 
     public static HtmlElement operator +(HtmlElement htmlElement, StyleModifier styleModifier)
     {
@@ -223,8 +256,6 @@ public abstract class HtmlElement : Element
     {
         this.style.Import(style);
     }
-
-
     #endregion
 }
 
