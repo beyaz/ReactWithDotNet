@@ -207,7 +207,7 @@ partial class ElementSerializer
                         {
                             ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, new StyleModifier(style => style.Import(reactStatefulComponent._styleForRootElement)));
                         }
-                        
+
                         if (reactStatefulComponent.modifiers is not null)
                         {
                             foreach (var modifier in reactStatefulComponent.modifiers)
@@ -265,7 +265,7 @@ partial class ElementSerializer
                 }
 
                 List<string> reactAttributeNames = null;
-                
+
                 foreach (var item in propertyAccessors)
                 {
                     var propertyValue = item.GetValueFunc(reactStatefulComponent);
@@ -787,9 +787,9 @@ partial class ElementSerializer
     {
         return new PropertyAccessInfo
         {
-            GetValueFunc = ReflectionHelper.CreateGetFunction(propertyInfo),
-            PropertyInfo = propertyInfo,
-            DefaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
+            GetValueFunc      = ReflectionHelper.CreateGetFunction(propertyInfo),
+            PropertyInfo      = propertyInfo,
+            DefaultValue      = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
             HasReactAttribute = propertyInfo.GetCustomAttribute<ReactAttribute>() is not null
         };
     }
@@ -851,7 +851,7 @@ partial class ElementSerializer
     {
         public object DefaultValue { get; init; }
         public Func<object, object> GetValueFunc { get; init; }
-        public PropertyInfo PropertyInfo { get; init; }
         public bool HasReactAttribute { get; set; }
+        public PropertyInfo PropertyInfo { get; init; }
     }
 }
