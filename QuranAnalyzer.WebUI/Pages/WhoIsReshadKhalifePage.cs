@@ -85,7 +85,8 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                         }
                     },
 
-                    "Özetle şeytan aynen Hiristiyanlara yaptığı gibi sizi de tamda sevdiğiniz damarınızdan yani Muhammed peygambere olan sevginiz-saygınız üzerinden yakalamış durumda ve maalef farkında değilsiniz."
+                    "Özetle şeytan aynen Hiristiyanlara yaptığı gibi sizi de tamda sevdiğiniz damarınızdan yani Muhammed peygambere olan sevginiz-saygınız üzerinden yakalamış durumda ve maalef farkında değilsiniz.",
+                    "Hatta bu putlaştırma olayı sadece peygamber ile de sınırlı değil. Tarikat şeyhlerini cemaat liderlerini putlaştırmaya kadar gidiyor."
                 }
             },
             new ul
@@ -241,7 +242,37 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
 
             new p
             {
-
+                (b)"Sonuç olarak;",
+                new br(),
+                "Bu yukarıdaki belirtilen fikirler size doğru veya yanlış gelebilir. " ,
+                "Reşad Halife daha başka şeyler de söylüyor ama burada hepsine yer vermem mümkün değil.",
+                "Reşad Halife ısrarla şunu da söylüyor 'Eğer benden Kuranda referansı olmayan bir söz duyarsanız onu çöpe atabilirsiniz'.",
+                "Reşad 80 li yıllarda sanki bu zamandaki youtube-sosyal medya olaylarını tahmin etmiş gibi:) " ,
+                "bu fikirlerin bir kısmını cuma hutbelerinde bir kısmını kamera karşısına geçerek tek tek anlatmış.",
+                "Doğru namazın nasıl kılınacağı için video çekmiş.",
+                "Bilim adamı kimliği ile evrim hakkında video çekmiş. (Biyokimya doktorası olduğunu hatırlayın.)",
+                "Toplamda 10-15 tane videosu var. Ayrıca kendi yapmış olduğu Kuran çevirisi var. ",
+                "Bu yazıdan ancak bir kısmını bahsettiğim fikirleri onun ağzından dinleyebilirsiniz.",
+                "Açıkcası bu fikirler kadar olmasa da beni etkileyen şu kısma da değinerek yazıyı tamamlamış olayım.",
+                "Reşad Halife de gördüğüm durumlar şunlar.",
+                
+                "Bu adamın çok baskın bir tevhid anlayışı var. Allah'ı çok farklı ve güzel ve Kurandan referanslar ile anlatıyor." ,
+                "Bende sıradan bir yurdum insanıyım. Allah hakkında bir sürü hikaye dinledim. Kuran okudukça farkediyorum ki bu hikayelerin çoğu kurandan değilmiş." +
+                "Yani zihninizdeki Allah ile gerçekteki Allah farklı olabilir. Dolayısı ile Allahı Kuran üzerinden tanımak mecburiyetindeyiz. " +
+                "Bu konuda Reşad oldukça iyi bir eğitmen. Tevhid mesajını en yüksek tonda seslendirmeye çalışan biri." ,
+                
+                "Dinden kazanç sağlamıyor olması benim için önemli. Kazanç sadece para ile olmaz. Bazen şöhret ile de olur. " +
+                "19 sistemini ilk bulduğunda popülaritesi varken istese bu fikirlerini pek duyurmayıp o popülaritenin kaymağını yiyebilirdir.",
+                "Fakat o tam tersini yapıyor. Emeklilik parası ile gidip mescid kuruyor. " +
+                "Hadisleri dinin kaynağı olarak görmediğini ve dinin tek kaynağının kuran olduğunu üzerine basa basa tekrarlıyor.",
+                "Bu uğurda şöhreti elden gidiyor. Hatta bir video da kamera yanlışlıkla kayıyor arkasında toplamda 10 kişilik bir saf bile yok.",
+                "Zaten bu fikirleri yüzünden de 55 yaşında sabah namazında öldürülüyor.",
+                
+                new br(),
+                new br(),
+                "Elimden geldiğince bu adamın ne söylediğini anlatmaya çalıştım. Belki benim bakışımda hata vardır, Belki yanlış anlamışımdır. " +
+                " Fırsatınız var ise bu bilgileri lütfen kendiniz teyid ediniz."
+                
             }
         };
     }
