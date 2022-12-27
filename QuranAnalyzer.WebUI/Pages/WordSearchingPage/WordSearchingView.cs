@@ -1,6 +1,5 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
-using ReactWithDotNet.Libraries.PrimeReact;
 
 namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 
@@ -17,6 +16,11 @@ class WordSearchingViewModel
 
 class WordSearchingView : ReactComponent<WordSearchingViewModel>
 {
+    protected override void componentDidMount()
+    {
+        Client.OnArabicKeyboardPressed(ArabicKeyboardPressed);
+    }
+
     protected override void constructor()
     {
         state = new WordSearchingViewModel();
@@ -28,95 +32,71 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
             if (parseResponse.IsFail)
             {
                 state.SearchScriptErrorMessage = parseResponse.FailMessage;
+                Client.GotoMethod(3000, ClearErrorMessage);
                 return;
             }
 
             state.SearchScript = parseResponse.Value.AsReadibleString();
         }
     }
-    
-    protected override void componentDidMount()
-    {
-        Client.OnArabicKeyboardPressed(ArabicKeyboardPressed);
-    }
 
     protected override Element render()
     {
-        var searchPanel = new divWithBorder(PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
+        var searchPanel = new[]
         {
-            WidthMaximized,
-            MaxWidth(800),
-
-            new h4 { text = "Kelime Arama" , style = { textAlign = "center"}},
-
-            new VStack
+            When(state.IsBlocked, () => new div { PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3) }),
+            When(state.IsBlocked, () => new FlexRowCentered
             {
-                new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
+                Children(new LoadingIcon { wh(17), mr(5) }, "Lütfen bekleyiniz...")
+            }),
 
-                new TextArea { ValueBind = () => state.SearchScript,  style = { FontFamily_Lateef }}, // rows = 2, autoResize = true,
+            new h4 { text = "Kelime Arama", style = { textAlign = "center" } },
 
-                new ErrorText { Text = state.SearchScriptErrorMessage }
-            },
-
-            new VSpace(3),
-
-            new CharacterCountingOptionView(),
-
-            new VSpace(20),
-
-            new ActionButton
+            new FlexColumn
             {
-                Label   = "Ara",
-                OnClick = OnCaclculateClicked,
-                //className = "p-button-outlined",
-                style = { alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px" }
+                new FlexColumn
+                {
+                    new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+
+                    new TextArea { ValueBind = () => state.SearchScript, style = { FontFamily_Lateef } }, // rows = 2, autoResize = true,
+
+                    new ErrorText { Text = state.SearchScriptErrorMessage }
+                },
+
+                Space(3),
+
+                new CharacterCountingOptionView(),
+
+                Space(20),
+
+                new FlexRow(JustifyContentFlexEnd)
+                {
+                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked }
+                }
             }
         };
 
-
         if (state.ClickCount == 0)
         {
-            return searchPanel;
+            return Container(Panel(searchPanel));
         }
 
-        var parseResponse = SearchScript.ParseScript(state.SearchScript);
-        if (parseResponse.IsFail)
-        {
-            state.SearchScriptErrorMessage = parseResponse.FailMessage;
-            return searchPanel;
-        }
+        var searchScript = SearchScript.ParseScript(state.SearchScript).Unwrap();
 
-        var searchScript = parseResponse.Value;
-        
         if (state.IsBlocked)
         {
-            return CalculatingComponent.WithBlockUI(searchPanel);
+            return Container(Panel(searchPanel));
         }
-
-
-
 
         var matchMap = new Dictionary<string, List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>>();
 
-
-       
-     
-
         var summaryInfoList = new List<SummaryInfo>();
 
-       
-        
         foreach (var (chapterFilter, searchWord) in searchScript.Lines)
         {
-            var verseListResponse = VerseFilter.GetVerseList(chapterFilter);
-            if (verseListResponse.IsFail)
-            {
-                state.SearchScriptErrorMessage = verseListResponse.FailMessage;
-                return searchPanel;
-            }
+            var verseList = VerseFilter.GetVerseList(chapterFilter).Unwrap();
 
-            var verseList = verseListResponse.Value;
-            
             foreach (var verse in verseList)
             {
                 var startAndEndPointsOfSameWords = verse.GetStartAndEndPointsOfSameWords(searchWord);
@@ -124,12 +104,10 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 {
                     if (!matchMap.ContainsKey(verse.Id))
                     {
-                        matchMap.Add(verse.Id,new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>());
+                        matchMap.Add(verse.Id, new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>());
                     }
 
                     matchMap[verse.Id].Add((searchWord, startAndEndPointsOfSameWords));
-
-                   
 
                     // update summary
                     {
@@ -145,8 +123,8 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         }
 
         var resultVerseList = new List<WordColorizedVerse>();
-        
-        foreach (var (verseId, matchList) in matchMap.ToList().OrderBy(x=>x.Key, new VerseNumberComparer()))
+
+        foreach (var (verseId, matchList) in matchMap.ToList().OrderBy(x => x.Key, new VerseNumberComparer()))
         {
             resultVerseList.Add(new WordColorizedVerse
             {
@@ -155,33 +133,37 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
             });
         }
 
-        var results = new divWithBorder
+        var results = new Element[]
         {
-            style = { paddingLeftRight = "15px", paddingBottom = "15px", marginTop = "5px" },
-            children =
-            {
-                new h4("Sonuçlar"),
+            new h4("Sonuçlar"),
 
-                new CountsSummaryView { Counts = summaryInfoList },
-                new VSpace(30),
-                new div
-                {
-                   Children(resultVerseList)
-                }
+            new CountsSummaryView { Counts = summaryInfoList },
+            new VSpace(30),
+            new div
+            {
+                Children(resultVerseList)
             }
         };
 
-
-        return new FlexColumn(AlignItemsStretch, WidthMaximized, MaxWidth(800))
-        {
-            children = { searchPanel, results },
-            //style =
-            //{
-            //    display = "flex", flexDirection = "column", alignItems = "stretch"
-            //}
-        };
-        
+        return Container(Panel(searchPanel), Panel(results));
     }
+
+    static Element Container(params Element[] panels)
+    {
+        return new FlexColumn(Gap(10), AlignItemsStretch, WidthMaximized, MaxWidth(800))
+        {
+            Children(panels)
+        };
+    }
+
+    static Element Panel(IEnumerable<Element> rows)
+    {
+        return new FlexColumn(BorderRadius(5), ComponentBorder, PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
+        {
+            Children(rows)
+        };
+    }
+
     void ArabicKeyboardPressed(string letter)
     {
         state.SearchScriptErrorMessage = null;
@@ -193,13 +175,14 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
     {
         state.SearchScriptErrorMessage = null;
     }
-    
+
     void OnCaclculateClicked()
     {
         state.SearchScriptErrorMessage = null;
         if (state.SearchScript.HasNoValue())
         {
             state.SearchScriptErrorMessage = "Arama Komutu doldurulmalıdır";
+            Client.GotoMethod(1000, ClearErrorMessage);
             return;
         }
 
@@ -207,18 +190,19 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         if (scriptParseResponse.IsFail)
         {
             state.SearchScriptErrorMessage = scriptParseResponse.FailMessage;
+            Client.GotoMethod(3000, ClearErrorMessage);
             return;
         }
 
         var script = scriptParseResponse.Value;
-        
+
         state.ClickCount++;
 
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
             Client.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={script.AsString()}");
-            Client.GotoMethod( OnCaclculateClicked);
+            Client.GotoMethod(OnCaclculateClicked);
             return;
         }
 
