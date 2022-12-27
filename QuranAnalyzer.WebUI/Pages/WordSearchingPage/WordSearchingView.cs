@@ -42,35 +42,34 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
     protected override Element render()
     {
-        var searchPanel = new divWithBorder
+        var searchPanel = new divWithBorder(PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
         {
-            style = { paddingLeftRight = "15px", paddingBottom = "15px" },
-            children =
+            WidthMaximized,
+            MaxWidth(800),
+
+            new h4 { text = "Kelime Arama" , style = { textAlign = "center"}},
+
+            new VStack
             {
-                new h4 { text = "Kelime Arama" , style = { textAlign = "center"}},
+                new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
 
-                new VStack
-                {
-                    new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
-                    
-                    new InputTextarea { valueBind = () => state.SearchScript, rows = 2, autoResize = true, style = { FontFamily_Lateef }},
+                new TextArea { ValueBind = () => state.SearchScript,  style = { FontFamily_Lateef }}, // rows = 2, autoResize = true,
 
-                    new ErrorText { Text = state.SearchScriptErrorMessage }
-                },
+                new ErrorText { Text = state.SearchScriptErrorMessage }
+            },
 
-                new VSpace(3),
+            new VSpace(3),
 
-                new CharacterCountingOptionView(),
+            new CharacterCountingOptionView(),
 
-                new VSpace(20),
-                
-                new Button
-                {
-                    label     = "Ara",
-                    onClick   = OnCaclculateClicked,
-                    className = "p-button-outlined",
-                    style     = { alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px" }
-                }
+            new VSpace(20),
+
+            new ActionButton
+            {
+                Label   = "Ara",
+                OnClick = OnCaclculateClicked,
+                //className = "p-button-outlined",
+                style = { alignSelf = "flex-end", flexDirection = "column", paddingLeft = "50px", paddingRight = "50px" }
             }
         };
 
@@ -173,13 +172,13 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         };
 
 
-        return new div
+        return new FlexColumn(AlignItemsStretch, WidthMaximized, MaxWidth(800))
         {
             children = { searchPanel, results },
-            style =
-            {
-                display = "flex", flexDirection = "column", alignItems = "stretch"
-            }
+            //style =
+            //{
+            //    display = "flex", flexDirection = "column", alignItems = "stretch"
+            //}
         };
         
     }
@@ -195,7 +194,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         state.SearchScriptErrorMessage = null;
     }
     
-    void OnCaclculateClicked(MouseEvent _)
+    void OnCaclculateClicked()
     {
         state.SearchScriptErrorMessage = null;
         if (state.SearchScript.HasNoValue())
@@ -219,7 +218,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         {
             state.IsBlocked = true;
             Client.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={script.AsString()}");
-            Client.GotoMethod( OnCaclculateClicked, _);
+            Client.GotoMethod( OnCaclculateClicked);
             return;
         }
 
