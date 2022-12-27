@@ -34,6 +34,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             if (parseResponse.IsFail)
             {
                 state.SearchScriptErrorMessage = parseResponse.FailMessage;
+                Client.GotoMethod(3000, ClearErrorMessage);
                 return;
             }
 
@@ -43,11 +44,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     protected override Element render()
     {
-        if (state.SearchScriptErrorMessage.HasValue())
-        {
-            Client.GotoMethod(5000, ClearErrorMessage);
-        }
-
         var searchPanel = new[]
         {
             When(state.IsBlocked, () => new div { PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3) }),
@@ -86,14 +82,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return Container(Panel(searchPanel));
         }
 
-        var parseResponse = SearchScript.ParseScript(state.SearchScript);
-        if (parseResponse.IsFail)
-        {
-            state.SearchScriptErrorMessage = parseResponse.FailMessage;
-            return Container(Panel(searchPanel));
-        }
-
-        var searchScript = parseResponse.Value;
+        var searchScript = SearchScript.ParseScript(state.SearchScript).Unwrap();
 
         if (state.IsBlocked)
         {
@@ -108,7 +97,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         {
             foreach (var summaryInfo in searchLetters.AsListOf(x => new SummaryInfo
                      {
-                         Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Value,
+                         Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Unwrap(),
                          Name  = x.MatchedLetter
                      }))
             {
@@ -121,7 +110,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 summaryInfoList.Add(summaryInfo);
             }
 
-            foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
+            foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Unwrap())
             {
                 if (verse.AnalyzedFullText.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
                 {
@@ -193,9 +182,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     void OnCaclculateClicked()
     {
         state.SearchScriptErrorMessage = null;
+
         if (state.SearchScript.HasNoValue())
         {
             state.SearchScriptErrorMessage = "Arama Komutu doldurulmalıdır";
+            Client.GotoMethod(1000, ClearErrorMessage);
             return;
         }
 
@@ -203,6 +194,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (scriptParseResponse.IsFail)
         {
             state.SearchScriptErrorMessage = scriptParseResponse.FailMessage;
+            Client.GotoMethod(3000, ClearErrorMessage);
             return;
         }
 
