@@ -5,7 +5,6 @@ namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 [Serializable]
 public class CharacterCountingViewModel
 {
-    #region Public Properties
     public int ClickCount { get; set; }
 
     public bool IsBlocked { get; set; }
@@ -15,12 +14,10 @@ public class CharacterCountingViewModel
     public string SearchScript { get; set; }
 
     public string SearchScriptErrorMessage { get; set; }
-    #endregion
 }
 
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
-    #region Methods
     protected override void componentDidMount()
     {
         Client.OnArabicKeyboardPressed(ArabicKeyboardPressed);
@@ -44,73 +41,63 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         }
     }
 
-    static Element Panel(params Element[] rows)
-    {
-        return new FlexColumn(BorderRadius(5), ComponentBorder, PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
-        {
-            Children(rows)
-        };
-    }
-    
     protected override Element render()
     {
         if (state.SearchScriptErrorMessage.HasValue())
         {
-            Client.GotoMethod(5000,ClearErrorMessage);
+            Client.GotoMethod(5000, ClearErrorMessage);
         }
 
-        
-        var searchPanel = Panel(When(state.IsBlocked,()=>new div{PositionAbsolute,LeftRight(0),TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"),Zindex(3)}),
-                                When(state.IsBlocked,()=>new FlexRowCentered
-                                {
-                                    PositionAbsolute,FontWeight700, LeftRight(0),TopBottom(0),Zindex(4),
-                                    Children(new LoadingIcon{wh(17),mr(5)},"Lütfen bekleyiniz...")
-                                }),
-            
-                                new h4 { text = "Harf Arama", style = { TextAlignCenter } },
-                                new FlexColumn
-                                {
-                                    new FlexColumn
-                                    {
-                                        new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+        var searchPanel = new[]
+        {
+            When(state.IsBlocked, () => new div { PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3) }),
+            When(state.IsBlocked, () => new FlexRowCentered
+            {
+                PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
+                Children(new LoadingIcon { wh(17), mr(5) }, "Lütfen bekleyiniz...")
+            }),
+            new h4 { text = "Harf Arama", style = { TextAlignCenter } },
+            new FlexColumn
+            {
+                new FlexColumn
+                {
+                    new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
 
-                                        new TextArea { ValueBind = () => state.SearchScript },
+                    new TextArea { ValueBind = () => state.SearchScript },
 
-                                        new ErrorText { Text = state.SearchScriptErrorMessage }
-                                    },
+                    new ErrorText { Text = state.SearchScriptErrorMessage }
+                },
 
-                                    Space(3),
+                Space(3),
 
-                                    new CharacterCountingOptionView{MushafOption = state.MushafOption,MushafOptionChanged = MushafOptionChanged},
+                new CharacterCountingOptionView { MushafOption = state.MushafOption, MushafOptionChanged = MushafOptionChanged },
 
-                                    Space(20),
+                Space(20),
 
-                                    new FlexRow(JustifyContentFlexEnd)
-                                    {
-                                        new ActionButton{Label = "Ara",OnClick = OnCaclculateClicked}
-                                    }
-
-                                }
-                               );
+                new FlexRow(JustifyContentFlexEnd)
+                {
+                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked }
+                }
+            }
+        };
 
         if (state.ClickCount == 0)
         {
-            return Container(searchPanel);
-
+            return Container(Panel(searchPanel));
         }
 
         var parseResponse = SearchScript.ParseScript(state.SearchScript);
         if (parseResponse.IsFail)
         {
             state.SearchScriptErrorMessage = parseResponse.FailMessage;
-            return searchPanel;
+            return Container(Panel(searchPanel));
         }
 
         var searchScript = parseResponse.Value;
 
         if (state.IsBlocked)
         {
-            return Container(searchPanel);
+            return Container(Panel(searchPanel));
         }
 
         var resultVerseList = new List<LetterColorizer>();
@@ -125,15 +112,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                          Name  = x.MatchedLetter
                      }))
             {
-                if (summaryInfoList.Any(x=>x.Name == summaryInfo.Name))
+                if (summaryInfoList.Any(x => x.Name == summaryInfo.Name))
                 {
                     summaryInfoList.First(x => x.Name == summaryInfo.Name).Count += summaryInfo.Count;
                     continue;
                 }
-                
+
                 summaryInfoList.Add(summaryInfo);
             }
-            
 
             foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Value)
             {
@@ -155,20 +141,18 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             }
         }
 
-        var results = Panel
-        (
-         
-         new h4("Sonuçlar"),
-
+        var results = new Element[]
+        {
+            new h4("Sonuçlar"),
             new CountsSummaryView { Counts = summaryInfoList },
             new VSpace(30),
             new div
             {
                 Children(resultVerseList)
             }
-        );
+        };
 
-        return Container(searchPanel, results);
+        return Container(Panel(searchPanel), Panel(results));
     }
 
     static Element Container(params Element[] panels)
@@ -176,6 +160,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         return new FlexColumn(Gap(10), AlignItemsStretch, WidthMaximized, MaxWidth(800))
         {
             Children(panels)
+        };
+    }
+
+    static Element Panel(IEnumerable<Element> rows)
+    {
+        return new FlexColumn(BorderRadius(5), ComponentBorder, PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
+        {
+            Children(rows)
         };
     }
 
@@ -228,5 +220,4 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         state.IsBlocked = false;
     }
-    #endregion
 }
