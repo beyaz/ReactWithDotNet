@@ -31,7 +31,7 @@ class SearchScript
 
         static IEnumerable<string> parseToLines(string value)
         {
-            value = value.Replace(Environment.NewLine, ";");
+            value = value.Replace('\n', ';');
 
             return value.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
         }
