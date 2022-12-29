@@ -43,16 +43,16 @@ public static class VerseFilter
                 return (Error) $"arama kriterlerinde hata var.{searchItem}";
             }
 
-            return parseSureNumber()
-                  .Then(findSurahByNumber)
+            return parseChapterNumber()
+                  .Then(findChapterByNumber)
                   .Then(sura => collectVerseList(sura, arr[1]));
 
-            Response<int> parseSureNumber()
+            Response<int> parseChapterNumber()
             {
                 return ParseInt(arr[0]);
             }
 
-            Response<Surah> findSurahByNumber(int surahNumber)
+            Response<Surah> findChapterByNumber(int surahNumber)
             {
                 if (surahNumber <= 0 || surahNumber > AllSurahs.Count)
                 {
