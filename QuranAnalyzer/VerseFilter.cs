@@ -46,6 +46,11 @@ public static class VerseFilter
 
         Response<IReadOnlyList<Verse>> process(string searchItem)
         {
+            if (searchItem.Trim() == "*")
+            {
+                return AllSurahs.SelectMany(x => x.Verses).ToList();
+            }
+            
             var arr = searchItem.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
             {
