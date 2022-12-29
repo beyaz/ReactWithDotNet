@@ -122,7 +122,11 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
             }
         }
 
-        var resultVerseList = new List<WordColorizedVerse>();
+        var sumOfChapterNumbers = 0;
+        var sumOfVerseNumbers   = 0;
+        var sumOfCounts = 0;
+
+        var resultVerseList     = new List<WordColorizedVerse>();
 
         foreach (var (verseId, matchList) in matchMap.ToList().OrderBy(x => x.Key, new VerseNumberComparer()))
         {
@@ -131,8 +135,16 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 Verse     = VerseFilter.GetVerseById(verseId),
                 MatchList = matchList
             });
+
+            sumOfChapterNumbers += int.Parse(verseId.Split(':')[0]);
+            sumOfVerseNumbers   += int.Parse(verseId.Split(':')[1]);
+
+            sumOfCounts += matchList.Sum(x=>x.startPoints.Count).Unwrap();
         }
 
+        sumOfChapterNumbers.ToString();
+        
+        
         var results = new Element[]
         {
             new h4("Sonuçlar"),
