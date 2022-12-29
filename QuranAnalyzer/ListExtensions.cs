@@ -3,7 +3,6 @@ namespace QuranAnalyzer;
 
 public static class ListExtensions
 {
-    #region Public Methods
     public static Response<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TSource, Response<TAccumulate>> func, Func<TAccumulate, TAccumulate, TAccumulate> acumulate)
     {
         if (source == null)
@@ -69,7 +68,32 @@ public static class ListExtensions
 
         return source.Select(convertFunc).ToList();
     }
-    
-    
-    #endregion
+
+
+
+    /// <summary>
+    ///     Removes value from start of str
+    /// </summary>
+    public static string RemoveFromStart(this string data, string value)
+    {
+        return RemoveFromStart(data, value, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    ///     Removes value from start of str
+    /// </summary>
+    public static string RemoveFromStart(this string data, string value, StringComparison comparison)
+    {
+        if (data == null)
+        {
+            return null;
+        }
+
+        if (data.StartsWith(value, comparison))
+        {
+            return data.Substring(value.Length, data.Length - value.Length);
+        }
+
+        return data;
+    }
 }

@@ -20,17 +20,26 @@ public static class VerseFilter
         
         var returnList = new List<Verse>();
 
-        var items = searchScript.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        var items = searchScript.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
 
         foreach (var item in items)
         {
-            var response = process(item);
+            var shouldExtract = item[0]=='-';
+            
+            var response   = process(item.RemoveFromStart("-"));
             if (response.IsFail)
             {
                 return response;
             }
 
-            returnList.AddRange(response.Value);
+            if (shouldExtract)
+            {
+                returnList.RemoveAll(x=>response.Value.Any(y=>y.Id==x.Id));
+            }
+            else
+            {
+                returnList.AddRange(response.Value);
+            }
         }
 
         return returnList;
