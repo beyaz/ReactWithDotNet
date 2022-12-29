@@ -44,7 +44,7 @@ public static class DataAccess
                 Id                        = $"{chapter._index}:{v._index}",
                 TextWithBismillahWordList = analyzedFullText.GetWords(),
                 TextWithBismillahAnalyzed = analyzedFullText,
-                TextWithBismillah         = textWithBismillah,
+                TextWithBismillah         = textWithBismillah
             };
         }
     }
