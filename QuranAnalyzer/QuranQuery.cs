@@ -52,7 +52,7 @@ public static class QuranQuery
     {
         var returnList = new List<(LetterInfo start, LetterInfo end)>();
 
-        foreach (var word in verse.TextWithBismillahWordList)
+        foreach (var word in verse.TextWordList)
         {
             if (word.HasValueAndSame(searchWord))
             {

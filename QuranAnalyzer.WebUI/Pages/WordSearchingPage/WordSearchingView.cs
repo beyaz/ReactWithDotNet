@@ -99,10 +99,6 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
             foreach (var verse in verseList)
             {
-                if (verse.Bismillah is not null)
-                {
-                    continue;
-                }
                 var startAndEndPointsOfSameWords = verse.GetStartAndEndPointsOfSameWords(searchWord);
                 if (startAndEndPointsOfSameWords.Count > 0)
                 {
