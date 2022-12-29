@@ -18,7 +18,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
         return new Article
         {
             
-            new LargeTitle("Bütün Başlangıç Harflerini içeren ayetler"),
+            new LargeTitle("Bütün Başlangıç Harflerini İçeren Ayetler"),
 
             new FlexColumn(MarginTop(50))
             {
