@@ -29,18 +29,22 @@ public static class DataAccess
             var textWithBismillah = v._bismillah + " " + v._text;
             
             var analyzedFullText = AnalyzeText(textWithBismillah).Unwrap();
-            
+
+            var analyzedText = AnalyzeText(v._text).Unwrap();
+
             return new Verse
             {
-                Index             = v._index,
-                IndexAsNumber     = int.Parse(v._index),
-                Bismillah         = v._bismillah,
-                Text              = v._text,
-                ChapterNumber     = int.Parse(chapter._index),
-                Id                = $"{chapter._index}:{v._index}",
-                TextWithBismillahWordList          = analyzedFullText.GetWords(),
-                TextWithBismillahAnalyzed  = analyzedFullText,
-                TextWithBismillah = textWithBismillah,
+                Index                     = v._index,
+                IndexAsNumber             = int.Parse(v._index),
+                Bismillah                 = v._bismillah,
+                Text                      = v._text,
+                TextAnalyzed              = analyzedText,
+                TextWordList              = analyzedText.GetWords(),
+                ChapterNumber             = int.Parse(chapter._index),
+                Id                        = $"{chapter._index}:{v._index}",
+                TextWithBismillahWordList = analyzedFullText.GetWords(),
+                TextWithBismillahAnalyzed = analyzedFullText,
+                TextWithBismillah         = textWithBismillah,
             };
         }
     }
@@ -85,4 +89,6 @@ public sealed class Verse
     public string TextWithBismillah { get; init; }
 
     public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWithBismillahWordList { get; init; }
+    public IReadOnlyList<LetterInfo> TextAnalyzed { get; set; }
+    public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWordList { get; set; }
 }
