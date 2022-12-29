@@ -105,7 +105,7 @@ class Calculator : ReactComponent<CalculatorModel>
                     Height(300), WidthMaximized, ComponentBorder, BorderRadius(5),
                     Children(verseList.Select(verse => new LetterColorizer
                     {
-                        VerseTextNodes          = verse.AnalyzedFullText,
+                        VerseTextNodes          = verse.TextWithBismillahAnalyzed,
                         ChapterNumber           = verse.ChapterNumber.ToString(),
                         VerseNumber             = verse.Index,
                         LettersForColorizeNodes = letterInfoList,

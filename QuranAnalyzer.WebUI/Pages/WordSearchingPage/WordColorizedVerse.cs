@@ -7,7 +7,7 @@ class WordColorizedVerse : ReactComponent
 {
     public  Verse Verse { get; set; }
 
-    public IReadOnlyList<LetterInfo> VerseLetters => Verse.AnalyzedFullText;
+    public IReadOnlyList<LetterInfo> VerseLetters => Verse.TextWithBismillahAnalyzed;
 
     public IReadOnlyList<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startEndPoints)> MatchList { get; set; }
 

@@ -388,7 +388,7 @@ public static class QuranAnalyzerMixin
             }
         }
 
-        return verse.AnalyzedFullText.Count(x => x.ArabicLetterIndex == arabicLetterIndex);
+        return verse.TextWithBismillahAnalyzed.Count(x => x.ArabicLetterIndex == arabicLetterIndex);
     }
     #endregion
 }

@@ -36,8 +36,8 @@ public static class DataAccess
                 Text              = v._text,
                 ChapterNumber     = int.Parse(chapter._index),
                 Id                = $"{chapter._index}:{v._index}",
-                WordList          = analyzedFullText.GetWords(),
-                AnalyzedFullText  = analyzedFullText,
+                TextWithBismillahWordList          = analyzedFullText.GetWords(),
+                TextWithBismillahAnalyzed  = analyzedFullText,
                 TextWithBismillah = v._bismillah + v._text,
             };
         }
@@ -71,7 +71,7 @@ public sealed class Verse
     /// <summary>
     ///     bismillah + text
     /// </summary>
-    public IReadOnlyList<LetterInfo> AnalyzedFullText { get; init; }
+    public IReadOnlyList<LetterInfo> TextWithBismillahAnalyzed { get; init; }
 
     public string Bismillah { get; init; }
     public int ChapterNumber { get; init; }
@@ -82,5 +82,5 @@ public sealed class Verse
     public string Text { get; init; }
     public string TextWithBismillah { get; init; }
 
-    public IReadOnlyList<IReadOnlyList<LetterInfo>> WordList { get; init; }
+    public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWithBismillahWordList { get; init; }
 }

@@ -10,7 +10,7 @@ public class WordSearchingTests
     {
         var search = AnalyzeText(searchWord).Unwrap();
 
-        VerseFilter.GetVerseList("*").Value.Sum(v => v.WordList.Count(w => w.HasValueAndSame(search))).Value.Should().Be(expected);
+        VerseFilter.GetVerseList("*").Value.Sum(v => v.TextWithBismillahWordList.Count(w => w.HasValueAndSame(search))).Value.Should().Be(expected);
     }
 
     [TestMethod]
@@ -73,6 +73,6 @@ public class WordSearchingTests
     {
         var nunVavNun = AnalyzeText("نون").Unwrap();
 
-        VerseFilter.GetVerseList("*").Value.Count(v => v.WordList.Last().EndsWith(nunVavNun)).Should().Be(133);
+        VerseFilter.GetVerseList("*").Value.Count(v => v.TextWithBismillahWordList.Last().EndsWith(nunVavNun)).Should().Be(133);
     }
 }

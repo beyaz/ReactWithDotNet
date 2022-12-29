@@ -112,11 +112,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
             foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Unwrap())
             {
-                if (verse.AnalyzedFullText.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
+                if (verse.TextWithBismillahAnalyzed.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
                 {
                     var letterColorizer = new LetterColorizer
                     {
-                        VerseTextNodes          = verse.AnalyzedFullText,
+                        VerseTextNodes          = verse.TextWithBismillahAnalyzed,
                         ChapterNumber           = verse.ChapterNumber.ToString(),
                         VerseNumber             = verse.Index,
                         LettersForColorizeNodes = searchLetters,
