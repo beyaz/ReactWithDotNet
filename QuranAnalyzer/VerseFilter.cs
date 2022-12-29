@@ -62,9 +62,9 @@ public static class VerseFilter
                 return AllSurahs[--surahNumber];
             }
 
-            Response<IReadOnlyList<Verse>> collectVerseList(Surah sura, string ayaFilter)
+            Response<IReadOnlyList<Verse>> collectVerseList(Surah sura, string verseFilter)
             {
-                var filters = ayaFilter.Split("-".ToCharArray()).Where(x=>!string.IsNullOrWhiteSpace(x)).Select(x=>x.Trim()).ToArray();
+                var filters = verseFilter.Split("-".ToCharArray()).Where(x=>!string.IsNullOrWhiteSpace(x)).Select(x=>x.Trim()).ToArray();
 
 
                 if (filters.Length == 1)
@@ -79,21 +79,20 @@ public static class VerseFilter
 
                 if (filters.Length == 2)
                 {
-                    // return Apply(selectMultipe, Apply(ParseInt,filters[0]), Apply(ParseInt,filters[1]));
                     return Apply(selectMultipe, ParseInt(filters[0]), ParseInt(filters[1]));
                 }
                 
                 return (Error)$"Sure seçiminde yanlışlık var.{searchItem}";
 
 
-                Response<IReadOnlyList<Verse>> selectOne(int ayahIndex)
+                Response<IReadOnlyList<Verse>> selectOne(int verseIndex)
                 {
-                    if (ayahIndex <= 0 || ayahIndex > sura.Verses.Count)
+                    if (verseIndex <= 0 || verseIndex > sura.Verses.Count)
                     {
                         return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
                     }
 
-                    return new[] {sura.Verses[--ayahIndex]};
+                    return new[] {sura.Verses[--verseIndex]};
                 }
 
                 Response<IReadOnlyList<Verse>> selectMultipe(int verseStartIndex, int verseEndIndex)
