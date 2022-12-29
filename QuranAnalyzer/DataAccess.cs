@@ -26,7 +26,9 @@ public static class DataAccess
 
         static Verse toVerse(Surah_ chapter, Verse_ v)
         {
-            var analyzedFullText = AnalyzeText(v._bismillah + v._text).Unwrap();
+            var textWithBismillah = v._bismillah + " " + v._text;
+            
+            var analyzedFullText = AnalyzeText(textWithBismillah).Unwrap();
             
             return new Verse
             {
@@ -38,7 +40,7 @@ public static class DataAccess
                 Id                = $"{chapter._index}:{v._index}",
                 TextWithBismillahWordList          = analyzedFullText.GetWords(),
                 TextWithBismillahAnalyzed  = analyzedFullText,
-                TextWithBismillah = v._bismillah + v._text,
+                TextWithBismillah = textWithBismillah,
             };
         }
     }
