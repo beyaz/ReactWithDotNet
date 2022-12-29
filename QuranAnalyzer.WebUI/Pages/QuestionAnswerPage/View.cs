@@ -1,17 +1,5 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
 
-
-
-
-
-[Serializable]
-public sealed class QuestionAnswerPair
-{
-    public string Question { get; set; }
-    public string Answer { get; set; }
-
-}
-
 class QuestionLink : ReactComponent
 {
     public string Question { get; set; }

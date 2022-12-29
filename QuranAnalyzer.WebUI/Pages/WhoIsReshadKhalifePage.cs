@@ -59,7 +59,7 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                 "Bu buluştan sonra bir anda İslam dünyasında popüler oluyor. Öyleki Libya-İran gibi ülkelerden devlet başkanları seviyesinde özel davetler alıyor.",
                 "Hatta Türkiyede bile yankı buluyor. Öte yandan Reşad başka kitaplar yazılar makaleler de yayınlıyor. ",
                 "İşte Reşad'ın fikirleride bu yayınlar sayesinde duyulmaya başlayınca eskiden el üstünde tutulan bu insan artık ismi duyulunca geri adım atılan biri haline dönüşüyor.",
-                "Peki nedir bu adamın savunduğu fikirler? Bu fikirlerden bazılarını çok kısa şekilde belirtmeye çalıştım."
+                "Peki nedir bu adamın savunduğu fikirler? Bu fikirlerden bazılarını çok kısa şekilde belirtmeye çalıştım. Yazıda ben kendi anladıklarımı ifade etmeye çalıştım bu sebeple usluba pek takılmayın."
             },
 
             new ul
@@ -132,7 +132,7 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                     new br(),
                     new br(),
                     "- Bizler Tanrının oyuncakları mıyız? Ne yani önünde eğilenleri cennete koyan eğilmeyenleri cehenneme atan bir Tanrı figürü pek de hoş değil gibi",
-                    " Habire biz insanoğlunu yarıştırıyor.",
+                    " Habire biz insanoğlunu iyilik için yarıştırıyor.",
                     new br(),
                     new br(),
                     "- Madem Tanrı bu kadar güçlü neden bunca kötülüğe izin veriyor? ",
@@ -198,7 +198,7 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                     "İşte Reşad şunu söylüyor; Kuranda abdest 4 adımda diyor ise 4 adımdır. ",
                     "Fazladan ensemi yıkayayım, burnuma su çekeyim dersen, sen Kuranın öğretisini değil başka bir öğretiyi takip etmiş olursun.",
                     "Özetle Kuranda bir şeyin hükmü var ise onu takip et, eğer bir şeyin detayları verilmemiş ise demekki Yaratıcı bu kadarını uygun görmüştür.",
-                    " Çünkü detayın peşine düşersen bu Kuran eksiksizdir, detaylıdır, tamdır cümlelerini dikkate almamış olursun demektir."
+                    " Çünkü detayın peşine düşersen bu Kuran eksiksizdir, detaylıdır, tamdır cümlelerini boşa çıkarmış, dikkate almamış olursun demektir."
                 }
             },
 
