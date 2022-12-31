@@ -74,27 +74,18 @@ partial class ElementSerializer
                 node.IsCompleted = true;
                 continue;
             }
-
-            if (node.ElementIsFragment)
+            
+            if (node.ElementIsHtmlElement || node.ElementIsThirdPartyReactComponent || node.ElementIsFragment)
             {
                 if (node.IsChildrenOpened is false)
                 {
                     OpenChildren(node, context);
-
-                    node.ElementAsFragment.ArrangeChildren();
-
-                    continue;
                 }
 
-                node.IsCompleted = true;
-                continue;
-            }
-
-            if (node.ElementIsHtmlElement || node.ElementIsThirdPartyReactComponent)
-            {
-                if (node.IsChildrenOpened is false)
+                if (node.ElementIsFragment)
                 {
-                    OpenChildren(node, context);
+                    // Apply modifiers to children
+                    node.ElementAsFragment.ArrangeChildren();
                 }
 
                 if (node.HasFirstChild)
@@ -109,7 +100,7 @@ partial class ElementSerializer
 
                 context.TryCallBeforeSerializeElementToClient(node.Element);
 
-                node.ElementAsJsonMap = LeafToMap(node.Element, context);
+                node.ElementAsJsonMap = LeafToMap(node, context);
 
                 node.IsCompleted = true;
 
@@ -539,7 +530,7 @@ partial class ElementSerializer
             child = child.NextSibling;
         }
 
-        var map = LeafToMap(node.Element, context);
+        var map = LeafToMap(node, context);
 
         map.Add("$children", childElements);
 
@@ -702,6 +693,16 @@ partial class ElementSerializer
         return map;
     }
 
+    static JsonMap LeafToMap(Fragment fragment)
+    {
+        var map = new JsonMap();
+        
+        map.Add("$tag", "React.Fragment");
+        map.Add("key", fragment.key);
+        
+        return map;
+    }
+
     static JsonMap LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
         var map = new JsonMap();
@@ -721,16 +722,21 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsonMap LeafToMap(Element element, ElementSerializerContext context)
+    static JsonMap LeafToMap(Node node, ElementSerializerContext context)
     {
-        if (element is HtmlElement htmlElement)
+        if (node.ElementIsHtmlElement)
         {
-            return LeafToMap(htmlElement, context);
+            return LeafToMap(node.ElementAsHtmlElement, context);
         }
 
-        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
+        if (node.ElementIsThirdPartyReactComponent)
         {
-            return LeafToMap(thirdPartyReactComponent, context);
+            return LeafToMap(node.ElementAsThirdPartyReactComponent, context);
+        }
+
+        if (node.ElementIsFragment)
+        {
+            return LeafToMap(node.ElementAsFragment);
         }
 
         throw FatalError("Wrong Leaf");
@@ -748,11 +754,7 @@ partial class ElementSerializer
         }
 
         var targetNode = node;
-        if (node.ElementIsFragment)
-        {
-            targetNode = node.Parent;
-        }
-
+       
         var child = targetNode.FirstChild;
         if (child is not null)
         {
