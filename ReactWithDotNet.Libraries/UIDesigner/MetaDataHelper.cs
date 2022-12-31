@@ -212,6 +212,11 @@ static class MetadataHelper
         
         static bool isNotValidForJson(Type t)
         {
+            if (t == typeof(object))
+            {
+                return false;
+            }
+            
             if (t == typeof(Element) || t.BaseType == typeof(HtmlElement))
             {
                 return true;
