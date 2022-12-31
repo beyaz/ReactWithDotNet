@@ -10,7 +10,9 @@ class LeftMenu : ReactComponent
         ("Tanım", new[] { PageId.Definition }),
         ("Başlangıç Harfleri", new[] { PageId.InitialLetters }),
         ("Soru - Cevap", new[] { PageId.QuestionAnswerPage, PageId.AlternativeSystems, PageId.WhoIsReshadKhalifePage }),
-        ("İletişim", new[] { PageId.ContactPage })
+        ("İletişim", new[] { PageId.ContactPage }),
+        ("Harf Sayım Programı", new[] { PageId.CharacterCounting }),
+        ("Kelime Sayım Programı", new[] { PageId.WordSearchingPage })
     };
 
     public string SelectedPageId { get; set; }
