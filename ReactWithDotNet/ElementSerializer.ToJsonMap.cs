@@ -753,9 +753,7 @@ partial class ElementSerializer
             return;
         }
 
-        var targetNode = node;
-       
-        var child = targetNode.FirstChild;
+        var child = node.FirstChild;
         if (child is not null)
         {
             while (child.HasNextSibling)
@@ -768,11 +766,11 @@ partial class ElementSerializer
         {
             var childNode = ConvertToNode(item, context);
 
-            childNode.Parent = targetNode;
+            childNode.Parent = node;
 
             if (child == null)
             {
-                targetNode.FirstChild = childNode;
+                node.FirstChild = childNode;
 
                 child = childNode;
 
