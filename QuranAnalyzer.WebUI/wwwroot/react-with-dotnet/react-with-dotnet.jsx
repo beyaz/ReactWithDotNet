@@ -1426,7 +1426,9 @@ function InvokeJsFunctionInPath(callerReactComponent, jsFunctionPath, jsFunction
     GetExternalJsObject(jsFunctionPath).apply(callerReactComponent, jsFunctionArguments);
 }
 
-const ExternalJsObjectMap = {};
+const ExternalJsObjectMap = {
+    'React.Fragment': React.Fragment
+};
 
 function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
 {
