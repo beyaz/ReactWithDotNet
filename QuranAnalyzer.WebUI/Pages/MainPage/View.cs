@@ -138,7 +138,12 @@ class View : ReactComponent<MainViewModel>
             {
                 return new WhoIsReshadKhalifePage();
             }
+            if (state.PageId == PageId.WhyFamousPeopleAreSilentPage)
+            {
+                return new WhyFamousPeopleAreSilentPage();
+            }
 
+            
             if (state.PageId == PageId.PageVerseListContainsAllInitialLetters)
             {
                 return new PageVerseListContainsAllInitialLetters();

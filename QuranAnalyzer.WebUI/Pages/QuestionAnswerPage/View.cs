@@ -27,10 +27,17 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
             new br(),
             new FlexColumn
             {
-                new QuestionLink { Question = "19 sistemini ilk keşfeden kişi (Reşad Halife) kimdir? Ne söylüyor?", Url = GetPageLink(PageId.WhoIsReshadKhalifePage) },
+                new QuestionLink
+                {
+                    Question = "19 sistemini ilk keşfeden kişi (Reşad Halife) kimdir? Ne söylüyor?", 
+                    Url = GetPageLink(PageId.WhoIsReshadKhalifePage)
+                },
                 
-                new QuestionLink { Question = @"Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, 
-neden medyadaki hiç bir alimden/hocadan duymuyoruz?" },
+                new QuestionLink
+                {
+                    Question = @"Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden medyadaki hiç bir alimden/hocadan duymuyoruz?",
+                    Url      = GetPageLink(PageId.WhyFamousPeopleAreSilentPage)
+                },
                 new QuestionLink { Question = "19 sistemi nin olması için Kurandan iki ayet atılması gerekiyor mu ? Yoksa sistem çöküyormuş doğru mu ?" },
                 new QuestionLink { Question = "Elif sayımlarının doğru olduğu ne malum ?" },
                 new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?" },

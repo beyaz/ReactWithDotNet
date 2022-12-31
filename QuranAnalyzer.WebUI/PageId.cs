@@ -17,6 +17,8 @@ static class PageId
     public const string PageIdOfMushafOptionsDetail = "11";
     public const string WhoIsReshadKhalifePage = "12";
     public const string PageVerseListContainsAllInitialLetters = "13";
+
+    public const string WhyFamousPeopleAreSilentPage = "14"; 
 }
 
 static class QueryKey
