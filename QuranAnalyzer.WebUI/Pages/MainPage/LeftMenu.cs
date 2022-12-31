@@ -9,7 +9,7 @@ class LeftMenu : ReactComponent
         ("Ön Bilgiler", new[] { PageId.PreInformation }),
         ("Tanım", new[] { PageId.Definition }),
         ("Başlangıç Harfleri", new[] { PageId.InitialLetters }),
-        ("Soru - Cevap", new[] { PageId.QuestionAnswerPage, PageId.AlternativeSystems,PageId.WhoIsReshadKhalifePage }),
+        ("Soru - Cevap", new[] { PageId.QuestionAnswerPage, PageId.AlternativeSystems, PageId.WhoIsReshadKhalifePage }),
         ("İletişim", new[] { PageId.ContactPage })
     };
 
@@ -24,7 +24,7 @@ class LeftMenu : ReactComponent
             MenuItems.Select((_, i) => createText(i, i == SelectedIndex))
         };
 
-        Element createText(int index, bool isSelected)
+        static Element createText(int index, bool isSelected)
         {
             var text = MenuItems[index].text;
 
