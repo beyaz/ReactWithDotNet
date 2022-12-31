@@ -2,60 +2,55 @@
 
 namespace QuranAnalyzer.WebUI.Pages.ContactPage;
 
-
 public class View : ReactComponent
 {
-    public bool IsChecked1 { get; set; }
-    public bool IsChecked2 { get; set; }
-    
     protected override Element render()
     {
-        return new div
+        return new Article
         {
-            new div
+            new LargeTitle("İletişim"),
+
+            new p
             {
-                innerText = "İletişim",
-                style     =
+                "İsmim ", (b)"Abdullah Beyaztaş"
+            },
+            new p
+            {
+                (b)"Yazılım", ", ", (b)"Felsefe", " ve ", (b)"Kuran",
+                " olmak üzere bu üç konu üzerine ",
+                "öğrenmeyi, düşünmeyi seviyorum. ",
+                "Vaktim olduğu sürece bu üç konu üzerine istediğiniz kadar fikir alışverişine açığım. ",
+                "Aşağıdaki mail adresinden bana ulaşabilirsiniz",
+                new br(),
+                new br(),
+                "beyaz1404@gmail.com"
+            },
+            new FlexRowCentered
+            {
+                "* * *"
+            },
+            new p
+            {
+                "Bu sitede kullanılan tüm kodları aşağıda belirttiğim linkten inceleyebilirsiniz. ",
+                "Eğer programlama biliyorsanız bu kodları kullanarak kendi analizlerinizi yapabilirsiniz.",
+                new br(),
+                new FlexRowCentered
                 {
-                    display = "flex", alignItems = "center", justifyContent = "center",
-                    fontSize = "19px",
-                    marginTop = "20px"
-                    
+                    new a { href = "#", text = "TODO: Buraya güncelleyeceğim şimdilik dummy" } // TODO:
                 }
             },
-
-            new div
+            new FlexRowCentered
             {
-                
-                innerText = "Yazılım, Felsefe, Kuran bu üç konuda istediğiniz kadar fikir alışverişine açığım.",
-                style = { fontSize = "17px", marginLeftRight = "10px"}
+                "* * *"
             },
-
-            new VStack
+            new p
             {
-                style={marginTop = "22px"},
-               children=
-               {
-                   new Switch
-                   {
-                       IsChecked = IsChecked1, ValueChange = ValueChange1
-                   },
-                   new Switch
-                   {
-                       IsChecked = IsChecked2, ValueChange = ValueChange2
-                   },
-               }
-            } 
+                "Herhangi bir fikri empoze etmek niyeti ile bu siteyi kurmadım. ",
+                "Ara ara vakit buldukça bu konulara bakma fırsatım oldu. ",
+                "Elimden geldiğince tarafsız bir şekilde meseleyi ele incelemeye çalıştım. ",
+                "Gördüğüm resmi mümkün olduğunca kendi düşüncelerim minimum olacak şekilde aktarmaya çalıştım. ",
+                "Bu konular üzerine düşünen araştıran insanlara bir faydam oldu ise ne mutlu bana."
+            }
         };
-    }
-
-    void ValueChange1(bool obj)
-    {
-        IsChecked1 = obj;
-    }
-
-    void ValueChange2(bool obj)
-    {
-        IsChecked2 = obj;
     }
 }
