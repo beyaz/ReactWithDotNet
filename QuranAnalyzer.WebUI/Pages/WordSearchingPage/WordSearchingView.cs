@@ -64,11 +64,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                     new ErrorText { Text = state.SearchScriptErrorMessage }
                 },
 
-                Space(3),
-
-                new CharacterCountingOptionView(),
-
-                Space(20),
+                Space(15),
 
                 new FlexRow(JustifyContentFlexEnd)
                 {
