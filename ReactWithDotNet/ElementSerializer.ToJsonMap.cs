@@ -853,7 +853,7 @@ partial class ElementSerializer
     {
         public object DefaultValue { get; init; }
         public Func<object, object> GetValueFunc { get; init; }
-        public bool HasReactAttribute { get; set; }
+        public bool HasReactAttribute { get; init; }
         public PropertyInfo PropertyInfo { get; init; }
     }
 }
