@@ -214,7 +214,7 @@ static class MetadataHelper
         {
             if (t == typeof(object))
             {
-                return false;
+                return true;
             }
             
             if (t == typeof(Element) || t.BaseType == typeof(HtmlElement))
