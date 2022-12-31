@@ -1,59 +1,47 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
+﻿using QuranAnalyzer.WebUI.Components;
+
+namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
 
 public class View : ReactComponent
 {
     protected override Element render()
     {
-        return new div
+        return new Article
         {
-            new VSpace(15),
-            new div
+            new LargeTitle("Soru - Cevap"),
+            
+            new p
             {
-                style = { paddingLeftRight = "15px" },
-                children =
-                {
-                    new div
-                    {
-                        innerText = "Soru - Cevap",
-                        style =
-                        {
-                            marginBottom = "10px",
-                            fontWeight   = "500",
-                            textAlign    = "center"
-                        }
-                    },
-
-                    @"Bu bölümde 19 meselesi etrafında dönen tartışmalı konuları ele aldım. 
+                @"Bu bölümde 19 meselesi etrafında dönen tartışmalı konuları ele aldım. 
 Elimden geldiğince tartışılan konuları en kısa ve tarafsız bir şekilde özetlemeye çalıştım.",
-                    new br(),
-                    new br(),
-                    @"Tekrar hatırlatmakta fayda görüyorum.",
-                    new br(),
-                    new br(),
-                    @"Aşağıdaki soruların cevaplarının doğru olup olmadığı siz okuyucuya bırakılmıştır. 
+                new br(),
+                new br(),
+                @"Tekrar hatırlatmakta fayda görüyorum.",
+                new br(),
+                new br(),
+                @"Aşağıdaki soruların cevaplarının doğru olup olmadığı siz okuyucuya bırakılmıştır. 
 İmana dair bir meselenin üzerinde düşünlüp içselleştirilmedikten sonra bir faydasının olmayacağına inanıyorum.
 Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söylediğini aktarayım sonrasında üzerine düşünmek-araştırmak ve bir karara varmak size kalsın.",
 
-                    new br(),
-                    new br(),
-                    new br(),
-                    new div
-                    {
-                        new QuestionLink { Question = "Reşad Halife kimdir? Ne söylüyor?", Url = GetPageLink(PageId.WhoIsReshadKhalifePage) },
-                        new QuestionLink { Question = "Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden medyadaki hiç bir alimden/hocadan duymuyoruz?" },
-                        new QuestionLink { Question = "19 sistemi nin olması için Kurandan iki ayet atılması gerekiyor mu ? Yoksa sistem çöküyormuş doğru mu ?" },
-                        new QuestionLink { Question = "Elif sayımlarının doğru olduğu ne malum ?" },
-                        new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?" },
+            },
+            new br(),
+            new FlexColumn
+            {
+                new QuestionLink { Question = "19 sistemini ilk keşfeden kişi (Reşad Halife) kimdir? Ne söylüyor?", Url = GetPageLink(PageId.WhoIsReshadKhalifePage) },
+                
+                new QuestionLink { Question = @"Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, 
+neden medyadaki hiç bir alimden/hocadan duymuyoruz?" },
+                new QuestionLink { Question = "19 sistemi nin olması için Kurandan iki ayet atılması gerekiyor mu ? Yoksa sistem çöküyormuş doğru mu ?" },
+                new QuestionLink { Question = "Elif sayımlarının doğru olduğu ne malum ?" },
+                new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?" },
 
-                        new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?" },
+                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?" },
 
-                        new QuestionLink { Question = "Paralel 19 sistemleri", Url = GetPageLink(PageId.AlternativeSystems) },
+                new QuestionLink { Question = "Paralel 19 sistemleri", Url = GetPageLink(PageId.AlternativeSystems) },
 
-                        new QuestionLink { Question = "Edip Yüksel", Url = GetPageLink(PageId.AlternativeSystems) },
+                new QuestionLink { Question = "Edip Yüksel", Url = GetPageLink(PageId.AlternativeSystems) },
 
-                        new QuestionLink { Question = "Allah mı? Tanrı mı ?" }
-                    }
-                }
+                new QuestionLink { Question = "Allah mı? Tanrı mı ?" }
             }
         };
     }
