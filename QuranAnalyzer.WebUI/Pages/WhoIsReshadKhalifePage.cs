@@ -26,16 +26,13 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
             (h5)"İlk Yıllar ve Kariyer",
             new p
             {
-                new div
-                {
-                    new img {Src(Img("rh.png")), Width(200), HeightAuto, FloatLeft, MarginRight(20) },
+                new img {Src(Img("rh.png")), Width(200), HeightAuto, FloatLeft, MarginRight(20) },
 
-                    "1935 yılında Mısırda doğmuş. Babası tarikat şeyhi olan biridir. " +
-                    "Bunu özellikle belirttim. Ehli sünnet bir tarikat ortamında, dindar bir ailede doğup büyümüş birinden bahsediyoruz. " +
-                    "Mısırda üniversite kimya bölümünde okuyor. Onur derecesi alıyor. 25 li yaşlarda Amerikaya doktora için gidiyor ve biyokimya alanında yüksek lisans " +
-                    "ve doktorasını tamamlıyor. Kendi alanında konferanslar felan veriyor. Birleşmiş milletler kalkınma örgütünde kimyager olarak çalışıyor." +
-                    "Kısaca kariyer olarak oldukça iyi giden bir hayatı olmuş diyebiliriz."
-                }
+                "1935 yılında Mısırda doğmuş. Babası tarikat şeyhi olan biridir. " +
+                "Bunu özellikle belirttim. Ehli sünnet bir tarikat ortamında, dindar bir ailede doğup büyümüş birinden bahsediyoruz. " +
+                "Mısırda üniversite kimya bölümünde okuyor. Onur derecesi alıyor. 25 li yaşlarda Amerikaya doktora için gidiyor ve biyokimya alanında yüksek lisans " +
+                "ve doktorasını tamamlıyor. Kendi alanında konferanslar felan veriyor. Birleşmiş milletler kalkınma örgütünde kimyager olarak çalışıyor." +
+                "Kısaca kariyer olarak oldukça iyi giden bir hayatı olmuş diyebiliriz."
             },
             new p
             {
@@ -141,6 +138,11 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                     " Habire biz insanoğlunu iyilik için yarıştırıyor.",
                     new br(),
                     new br(),
+                    "- Türkiyede doğan Mehmet müslüman olduğu için eninde sonunda cennete gidecek fakat Almanya'da doğup büyüyen Hans müslüman olmadığı için cehenneme gidecek? " ,
+                    "Hans ortadoğuda bir yerde doğsaydı o da muhtemelen müslüman olacaktı. ",
+                    "Burada bir adaletsizlik yok mu?",
+                    new br(),
+                    new br(),
                     "- Madem Tanrı bu kadar güçlü neden bunca kötülüğe izin veriyor? ",
                     "Biz insanoğluna iyi-kötü arasında seçim yaptıracağına iyi-daha iyi arasında bir seçim yapsaydık da hepimiz cennete gisek daha iyi olmaz mı?",
                     " Daha çok puan alan cennette daha üst konuma gitseydi",
@@ -167,7 +169,7 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                     new br(),
                     "Bizler bu dünyaya imtahan için gönderildik.",
                     new br(),
-                    "İyi de niye?",
+                    "İyi de niye? Niye durup dururken imtahan oluyoruz?", new br(),
                     "İşte tam da burada Reşad Halife bu sorunun cevabını yine Kurandan veriyor. ",
                     "Kurandan verdiği referanslar ile niçin burada olduğumuz ile ilgili, yaratılış ile ilgili çok güzel bir açıklama yapıyor.",
                     new br(),
@@ -188,7 +190,6 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                     (b)"Yalnız Kuran!",
                     new br(),
                     "Ey İslam dünyası!. Sizler Allah'ın yüce kelamı dururken Muhammed peygambere ait olup olmadığı belli olmayan rivayatlere sarılıyorsunuz.",
-                    " Hatta bir sözün Muhammed peygamberimize ait olduğu kesin kez emin olsanız bile yine de o sözü dini bir hüküm kaynağı olarak göremezsiniz.",
                     "Dinin tek bir hüküm kaynağı vardır o da Kurandır.",
                     "Eğer bir şey Kuranda belirtilmiş ise o bizim için bağlayıcıdır eğer detayı verilmemiş ise demekki 'En Bilge Olan' o kadarını uygun görmüştür.",
                     " Çünkü Kuranda üzerine basa basa şu ifadeler vardır. ",

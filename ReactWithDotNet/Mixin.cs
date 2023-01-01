@@ -1100,5 +1100,28 @@ public static partial class Mixin
     /// <summary>
     ///     style.float = 'right'
     /// </summary>
-    public static StyleModifier FloatRight => Float("right");		
+    public static StyleModifier FloatRight => Float("right");
+
+
+
+    /// <summary>
+    ///     style.clear = value
+    /// </summary>
+    public static StyleModifier Clear(string value) =>
+        new(style => style.clear = value);
+		
+    /// <summary>
+    ///     style.clear = 'right'
+    /// </summary>
+    public static StyleModifier ClearRight => Clear("right");
+	
+    /// <summary>
+    ///     style.clear = 'left'
+    /// </summary>
+    public static StyleModifier ClearLeft => Clear("left");
+	
+    /// <summary>
+    ///     style.clear = 'both'
+    /// </summary>
+    public static StyleModifier ClearBoth => Clear("both");
 }
