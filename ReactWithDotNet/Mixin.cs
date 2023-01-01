@@ -1071,4 +1071,18 @@ public static partial class Mixin
     public static StyleModifier py(string value) => PaddingTopBottom(value);
     #endregion
     #endregion
+
+
+
+    /// <summary>
+    ///     style.backdropFilter = value
+    /// </summary>
+    public static StyleModifier BackdropFilter(string value) => 
+        new(style => style.backdropFilter = value);
+
+    /// <summary>
+    ///     style.backdropFilter = blur(px)
+    /// </summary>
+    public static StyleModifier BackdropFilterBlur(double px) =>
+        new(style => style.backdropFilter = $"blur({px}px)");
 }

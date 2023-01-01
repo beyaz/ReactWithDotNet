@@ -95,6 +95,11 @@ partial class Style
                 return animationTimingFunction;
             }
 
+			if (nameof(backdropFilter).Equals(cssAttributeName, StringComparison.OrdinalIgnoreCase))
+            {
+                return backdropFilter;
+            }
+			
             if (nameof(backfaceVisibility).Equals(cssAttributeName, StringComparison.OrdinalIgnoreCase))
             {
                 return backfaceVisibility;
@@ -1319,6 +1324,12 @@ partial class Style
                 return;
             }
 
+            if (nameof(backdropFilter).Equals(cssAttributeName, StringComparison.OrdinalIgnoreCase))
+            {
+                backdropFilter = value;
+                return;
+            }
+			
             if (nameof(backfaceVisibility).Equals(cssAttributeName, StringComparison.OrdinalIgnoreCase))
             {
                 backfaceVisibility = value;
@@ -2755,8 +2766,13 @@ partial class Style
         if (newStyle.animationTimingFunction != null)
         {
             animationTimingFunction = newStyle.animationTimingFunction;
+        }		
+		
+        if (newStyle.backdropFilter != null)
+        {
+            backdropFilter = newStyle.backdropFilter;
         }
-
+		
         if (newStyle.backfaceVisibility != null)
         {
             backfaceVisibility = newStyle.backfaceVisibility;
@@ -3988,7 +4004,12 @@ partial class Style
             {
                 return false;
             }
-
+			
+			if (backdropFilter != null)
+            {
+                return false;
+            }
+			
             if (backfaceVisibility != null)
             {
                 return false;

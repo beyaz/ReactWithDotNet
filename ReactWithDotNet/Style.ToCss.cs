@@ -130,6 +130,14 @@ partial class Style
             sb.Append(animationTimingFunction);
             sb.Append(seperator);
         }
+		
+        if (backdropFilter != null)
+        {
+            sb.Append("backdrop-filter");
+            sb.Append(": ");
+            sb.Append(backdropFilter);
+            sb.Append(seperator);
+        }
 
         if (backfaceVisibility != null)
         {

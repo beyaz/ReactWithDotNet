@@ -69,6 +69,11 @@ partial class Style
             action(nameof(animationTimingFunction), animationTimingFunction);
         }
 
+        if (backdropFilter != null)
+        {
+            action(nameof(backdropFilter), backdropFilter);
+        }
+		
         if (backfaceVisibility != null)
         {
             action(nameof(backfaceVisibility), backfaceVisibility);

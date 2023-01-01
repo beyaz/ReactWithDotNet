@@ -32,9 +32,11 @@ public sealed partial class Style
 
     public string animationTimingFunction { get; set; }
 
+	public string backdropFilter { get; set; }
+
     public string backfaceVisibility { get; set; }
 
-    public string background { get; set; }
+	public string background { get; set; }	
 
     public string backgroundAttachment { get; set; }
 
