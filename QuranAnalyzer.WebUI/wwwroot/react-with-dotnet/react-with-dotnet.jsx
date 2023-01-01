@@ -1276,24 +1276,21 @@ function DefineComponent(componentDeclaration)
 
                 if (componentActiveUniqueIdentifier !== componentNextUniqueIdentifier)
                 {
-                    const component = COMPONENT_CACHE.FindComponentByDotNetComponentUniqueIdentifier(componentActiveUniqueIdentifier);
-                    if (component)
-                    {
-                        component[DotNetComponentUniqueIdentifiers].push(componentNextUniqueIdentifier);
+                    const component = GetComponentByDotNetComponentUniqueIdentifier(componentActiveUniqueIdentifier);
 
-                        const partialState = {};
+                    component[DotNetComponentUniqueIdentifiers].push(componentNextUniqueIdentifier);
 
-                        partialState[DotNetComponentUniqueIdentifier] = componentNextUniqueIdentifier;
+                    const partialState = {};
 
-                        return partialState;
-                    }
-                    
+                    partialState[DotNetComponentUniqueIdentifier] = componentNextUniqueIdentifier;
+
+                    return partialState;                    
                 }
 
                 return null;
             }
 
-            if (syncIdInState !== syncIdInProp)
+            if (syncIdInState < syncIdInProp)
             {
                 const partialState = {};
 
