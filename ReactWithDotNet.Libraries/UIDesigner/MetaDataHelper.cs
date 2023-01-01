@@ -217,7 +217,8 @@ static class MetadataHelper
                 return true;
             }
             
-            if (t == typeof(Element) || t.BaseType == typeof(HtmlElement))
+            if (t == typeof(Element) || t.BaseType == typeof(HtmlElement) ||
+                t == typeof(Element[]) || t == typeof(IEnumerable<Element>))
             {
                 return true;
             }

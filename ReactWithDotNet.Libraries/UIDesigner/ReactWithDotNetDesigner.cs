@@ -240,6 +240,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
     void MediaSizeButtonClicked(MouseEvent e)
     {
         state.ScreenWidth = int.Parse(e.FirstNotEmptyId);
+        SaveState();
     }
 
     void OnElementSelected(string keyOfSelectedTreeNode)

@@ -12,6 +12,8 @@ class WordSearchingViewModel
     public string SearchScript { get; set; }
 
     public string SearchScriptErrorMessage { get; set; }
+
+    public bool IsHelpVisible { get; set; }
 }
 
 class WordSearchingView : ReactComponent<WordSearchingViewModel>
@@ -40,6 +42,83 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         }
     }
 
+    Element Help()
+    {
+        var arrowUp = new img
+        {
+            wh(20),
+            Src("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cG9seWdvbiBwb2ludHM9IjM5Ni42LDM1MiA0MTYsMzMxLjMgMjU2LDE2MCA5NiwzMzEuMyAxMTUuMywzNTIgMjU2LDIwMS41ICIvPjwvc3ZnPg==")
+        };
+
+        var arrowDown = new img
+        {
+            wh(20),
+            Src("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cG9seWdvbiBwb2ludHM9IjM5Ni42LDE2MCA0MTYsMTgwLjcgMjU2LDM1MiA5NiwxODAuNyAxMTUuMywxNjAgMjU2LDMxMC41ICIvPjwvc3ZnPg==")
+        };
+        
+        return new FlexRow(AlignItemsCenter, Gap(5), CursorPointer, OnClick(_ => state.IsHelpVisible = !state.IsHelpVisible))
+        {
+            state.IsHelpVisible ? arrowUp : arrowDown, "Örnek arama komutları"
+        };
+    }
+     static Element HelpDetail()
+    {
+        static Element commandText(string text)
+        {
+            return new td { (b)text } + Width(150) ;
+        }
+        return new div(TextAlignCenter)
+        {
+            MarginTop(30),
+            
+           new table
+           {
+               new tbody
+               {
+                   new tr
+                   {
+                       new th{"Komut"}+FontWeight500,new th{"Açıklama"}+FontWeight500
+                   },
+                   new tr{Height(15)},
+                   new tr
+                   {
+                       commandText("* | الله" ),
+                       new td{ "(Tüm Kuran boyunca geçen ", (b)"الله", " kelimesini aratır)" }
+                   },
+                   new tr{Height(10)},
+                   new tr
+                   {
+                       commandText("2:* | الله" ),
+                       new td{ "(2. surede geçen ", (b)"الله", " kelimesini aratır)" }
+                   },
+                   new tr{Height(10)},
+                   new tr
+                   {
+                       commandText("2:*, 3:*, 7:5-40 | الله"),
+                       new td{ "(2. surenin tamamında, 3. surenin tamamında ve 7. surenin 5 ila 40. ayetler arasında geçen ", (b)"الله", " kelimesini aratır)" }
+                   },
+                   new tr{Height(10)},
+                   new tr
+                   {
+                       commandText("2:*, -2:4, -2:8 | الله"),
+                       new td{ "(2. surenin tamamında(4. ve 8. ayetler hariç), geçen ", (b)"الله", " kelimesini aratır)" }
+                   },
+                   new tr{Height(10)},
+                   new tr
+                   {
+                       commandText("*, -9:128, -9:129 | الله"),
+                       new td{ "(Tüm mushaf boyunca (9:128 ve 9:129 hariç), geçen ", (b)"الله", " kelimesini aratır)" }
+                   }
+               }
+              
+           },
+           
+           
+           
+           
+        };
+    }
+    
     protected override Element render()
     {
         var searchPanel = new[]
@@ -66,10 +145,13 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
                 Space(15),
 
-                new FlexRow(JustifyContentFlexEnd)
+                new FlexRow(JustifyContentSpaceBetween)
                 {
+                    Help(),
                     new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked }
-                }
+                },
+
+                When(state.IsHelpVisible, HelpDetail)
             }
         };
 
