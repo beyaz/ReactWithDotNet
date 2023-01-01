@@ -1085,4 +1085,20 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier BackdropFilterBlur(double px) =>
         new(style => style.backdropFilter = $"blur({px}px)");
+
+    /// <summary>
+    ///     style.float = value
+    /// </summary>
+    public static StyleModifier Float(string value) =>
+        new(style => style.cssFloat = value);
+		
+    /// <summary>
+    ///     style.float = 'left'
+    /// </summary>
+    public static StyleModifier FloatLeft => Float("left");
+	
+    /// <summary>
+    ///     style.float = 'right'
+    /// </summary>
+    public static StyleModifier FloatRight => Float("right");		
 }

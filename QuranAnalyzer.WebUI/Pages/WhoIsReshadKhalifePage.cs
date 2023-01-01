@@ -1,4 +1,5 @@
 ﻿using QuranAnalyzer.WebUI.Components;
+using static QuranAnalyzer.WebUI.ResourceAccess;
 
 namespace QuranAnalyzer.WebUI.Pages;
 
@@ -25,11 +26,16 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
             (h5)"İlk Yıllar ve Kariyer",
             new p
             {
-                "1935 yılında Mısırda doğmuş. Babası tarikat şeyhi olan biridir. " +
-                "Bunu özellikle belirttim. Ehli sünnet bir tarikat ortamında, dindar bir ailede doğup büyümüş birinden bahsediyoruz. " +
-                "Mısırda üniversite kimya bölümünde okuyor. Onur derecesi alıyor. 25 li yaşlarda Amerikaya doktora için gidiyor ve biyokimya alanında yüksek lisans " +
-                "ve doktorasını tamamlıyor. Kendi alanında konferanslar felan veriyor. Birleşmiş milletler kalkınma örgütünde kimyager olarak çalışıyor." +
-                "Kısaca kariyer olarak oldukça iyi giden bir hayatı olmuş diyebiliriz."
+                new div
+                {
+                    new img {Src(Img("rh.png")), Width(200), HeightAuto, FloatLeft, MarginRight(20) },
+
+                    "1935 yılında Mısırda doğmuş. Babası tarikat şeyhi olan biridir. " +
+                    "Bunu özellikle belirttim. Ehli sünnet bir tarikat ortamında, dindar bir ailede doğup büyümüş birinden bahsediyoruz. " +
+                    "Mısırda üniversite kimya bölümünde okuyor. Onur derecesi alıyor. 25 li yaşlarda Amerikaya doktora için gidiyor ve biyokimya alanında yüksek lisans " +
+                    "ve doktorasını tamamlıyor. Kendi alanında konferanslar felan veriyor. Birleşmiş milletler kalkınma örgütünde kimyager olarak çalışıyor." +
+                    "Kısaca kariyer olarak oldukça iyi giden bir hayatı olmuş diyebiliriz."
+                }
             },
             new p
             {
