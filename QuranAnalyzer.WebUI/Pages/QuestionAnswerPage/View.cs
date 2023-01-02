@@ -32,7 +32,7 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                     Question = "19 sistemini ilk keşfeden kişi (Reşad Halife) kimdir? Ne söylüyor?", 
                     Url = GetPageLink(PageId.WhoIsReshadKhalifePage)
                 },
-                
+                new QuestionLink { Question = "Peki bu 19 sistemi hiç mi eleştiri almıyor? Kabul etmeyenler nereleri eleştiriyor?" },
                 new QuestionLink
                 {
                     Question = @"Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden medyadaki hiç bir alimden/hocadan duymuyoruz?",
@@ -44,12 +44,14 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
 
                     Url = GetPageLink(PageId.AdditionalVersesPage)
                 },
-                
-                new QuestionLink { Question = "Elif sayımlarının doğru olduğu ne malum ?" },
+
+                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?" },
+
+               
                 
                 new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?" },
 
-                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?" },
+             
 
                 new QuestionLink { Question = "Paralel 19 sistemleri", Url = GetPageLink(PageId.AlternativeSystems) },
 
