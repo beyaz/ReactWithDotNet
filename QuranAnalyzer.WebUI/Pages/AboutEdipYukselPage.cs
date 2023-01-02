@@ -6,6 +6,10 @@ public class AboutEdipYukselPage : ReactComponent
 {
     protected override Element render()
     {
+        var seperation = new FlexRowCentered(MarginTopBottom(10))
+        {
+            "* * *"
+        };
         return new Article
         {
             new LargeTitle("Edip Yüksel hakkında"),
@@ -14,39 +18,45 @@ public class AboutEdipYukselPage : ReactComponent
             {
                 "Bu konuyu araştırırken bu isim çok çıktığı için özel bir yazı yazma gereğini duydum. ",
 
-                "Türkçemizde güzel bir deyim vardır; ",(b)"Yiğidi öldür ama hakkını ver"," bu yazıda bu metodu uyguladım."
+                "Bazı konuların Edip tarafından daha farklı ele alındığını gözlemledim."
             },
             new p
             {
-                @"Öncelikle gördüğüm iyi şeyleri söyleyeyim",
-                
-                new br(),
-                
-                
-                "Hayatını okuduğunuzda, hapis yatması, kardeşinin öldürülmesi, Amerika'ya gitmek zorunda kalması, Reşad Halife ile tanışması felan oldukça ilginç bir hayatı olmuş. ",
-                "Gerçekten de cesaretine, zekasına diyecek herhangi bir lafımız zaten olamaz." ,
+
+                "Hayatını kısaca okuduğunuzu varsayıyorum. Hapis yatması, kardeşinin öldürülmesi, Amerika'ya gitmek zorunda kalması, Reşad Halife ile tanışması felan oldukça ilginç bir hayatı olmuş. ",
+                "Gerçekten de cesaretine, zekasına hayran bırakıyor. " ,
                 "Sosyal medyada 7 yaşından tut 70 yaşındakilerle bile oturup konuşması vesaire gerçekten iyi.",
                 new br(),
                 new br(),
-                "Eleştirdiğim nokta ise şu;",
-                new br(),
+                "Edip'in eleştiriye maruz kaldığı noktalar ise şu şekilde;",
+                seperation,
+                
                 "Temsil konumunda olan birinin biraz daha dikkatli davranması gerekiyor.",
                 new br(),
                 "Bunu biraz açayım. Maalesef insanlar fikirler ile insanları özdeştiriyorlar ve insanın hatalarını fıtratlarını otomatikmen fikirlere nispet ediyorlar.",
                 "Edip de zaten kendini Sokrates misali insanları rahatsız eden bir ", (b)"at sineği", " olarak tanımlıyor. ",
-                "Haliyle kimine göre bu tavır itici olarak gelebiliyor ve Edip'in söylediği bazı sözlerin de otomatikmen kulakardı edilmesine sebep oluyor. ",
+                "Haliyle kimine göre bu tavır itici olarak gelebiliyor ve Edip'in söylediği bazı sözlerin-fikirlerin de otomatikmen kulakardı edilmesine sebep oluyor. ",
                 
                 "Yahut Edip'in yalnızca Kuran söyleminin yanlış anlaşılmasına sebep olabiliyor. ",
-                "Yahut sanki Edip Reşadın bir numaralı talebesi imiş gibi, her yönü ile Reşadın fikirlerini aktaran biriymiş gibi anlaşılabiliyor.",
-                "Halbuki iki ayrı insan iki ayrı fıtrat.",
-                "Reşadın seskayıtlarında bir kere bile öfkelendiğini görmedim.",
-                "Reşad Halife nin yaptığı ingilizce çeviriyi bir kenara koyup kendi çeviri yapması felan pek de anlaşılır şeyler değil.",
-                "Özetle Edip'in Reşad Halifenin ölümü ardından Reşadın tavsiyelerini uygulayanlara sizler Reşadı putlaştırıyorsunuz muamelesi oldukça ilginç.",
-               
-                "Demiyorum ki Edip full hatalı. Ama Atatürk ile 19 meselesi arasında bağ kurması bana göre hatalı bir yaklaşım.",
-                "Namazın 3 vakit olduğu fikrini savunması hatalı.",
+                seperation,
 
-                "Sonuç olarak Reşad'ı veya 19 meselesini Edip yüksel üzerinden tanımaya kalkarsanız hatalı bir yaklaşım olur. "
+                "Sanki Edip, Reşadın bir numaralı talebesi imiş gibi, her yönü ile Reşadın fikirlerini aktaran biriymiş gibi anlaşılabiliyor.",
+                "Halbuki iki ayrı insan iki ayrı fıtrat.",
+                "Edip; Reşad'ın yanında 1-1.5 yıl kadar kalıyor.",
+                seperation,
+
+                "Reşad Halife nin yaptığı ingilizce çeviriyi bir kenara koyup kendi çeviri yapması biraz tezat oluşturuyor. " ,
+                seperation,
+
+                "Edip'in Reşad Halifenin ölümü ardından Reşadın tavsiyelerini uygulayanlara sizler Reşadı putlaştırıyorsunuz muamelesi var.",
+                seperation,
+                "Namazın 3 vakit olduğu fikrini savunması, Atatürk ile 19 meselesi arasında bağ kurması gibi konular var.",
+                seperation,
+                
+                "Demiyorum ki Edip full hatalı veya full doğru. " ,
+                "Bu yazıda sadece Edip üzerinde ve onun 19 ile olan yönü üzerine yaptığım gözlemlerimin bir kısmını paylaştım.",
+
+                "Sonuç olarak Reşad'ı veya 19 meselesini Edip yüksel üzerinden tanımaya kalkarsanız hatalı bir yaklaşım olabilir."
             }
 
         };

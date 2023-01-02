@@ -142,13 +142,19 @@ class View : ReactComponent<MainViewModel>
             {
                 return new WhyFamousPeopleAreSilentPage();
             }
+            if (state.PageId == PageId.AboutEdipYukselPage)
+            {
+                return new AboutEdipYukselPage();
+            }
 
-            
             if (state.PageId == PageId.PageVerseListContainsAllInitialLetters)
             {
                 return new PageVerseListContainsAllInitialLetters();
             }
-            
+            if (state.PageId == PageId.AdditionalVersesPage)
+            {
+                return new AdditionalVersesPage();
+            }
 
             return new MainPageContent();
         }
