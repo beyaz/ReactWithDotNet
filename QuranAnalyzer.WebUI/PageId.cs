@@ -21,7 +21,10 @@ static class PageId
     public const string WhyFamousPeopleAreSilentPage = "14";
     public const string AboutEdipYukselPage = "15";
     public const string AdditionalVersesPage = "16";
+    public const string WhereIsTheProblemPage = "17";
+
     
+
 
 }
 

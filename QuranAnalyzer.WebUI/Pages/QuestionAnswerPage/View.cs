@@ -32,7 +32,11 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                     Question = "19 sistemini ilk keşfeden kişi (Reşad Halife) kimdir? Ne söylüyor?", 
                     Url = GetPageLink(PageId.WhoIsReshadKhalifePage)
                 },
-                new QuestionLink { Question = "Peki bu 19 sistemi hiç mi eleştiri almıyor? Kabul etmeyenler nereleri eleştiriyor?" },
+                new QuestionLink
+                {
+                    Question = "Peki bu 19 sistemi hiç mi eleştiri almıyor? Kabul etmeyenler nereleri eleştiriyor?",
+                    Url      = GetPageLink(PageId.WhereIsTheProblemPage)
+                },
                 new QuestionLink
                 {
                     Question = @"Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden medyadaki hiç bir alimden/hocadan duymuyoruz?",
