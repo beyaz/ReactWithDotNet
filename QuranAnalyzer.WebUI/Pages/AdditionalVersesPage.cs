@@ -24,6 +24,14 @@ public class AdditionalVersesPage : ReactComponent
                 new br(),
                 "Peki nedir bu meselenin aslı?"
             },
+            new p{
+                "Önce net bir şekilde cvabı verelim.",
+                (b)"19 sisteminin en majör bileşeni başlangıç harfleri üzerine olan sistemdir. " ,
+                "Bu en majör bileşen olan başlangıç harflerinin, Tevbe suresinin toplamda 127 ayet mi yoksa 129 ayet mi olması ile hiç bir ilgisi yoktur.",
+                new br(),
+                "Hatta böyle bir kafa karışıklığına mahal vermemesi için ben bu sitede yaptığım tüm sayımları  " ,
+                "klasik elinize aldığınız bir kuran mushafı ile aynı olan Tanzil.net den aldığım mushaf ile yaptım."
+            },
             new p
             {
                 "Önce meselenin tarihi yönünü ele alalım. ",
@@ -108,7 +116,7 @@ public class AdditionalVersesPage : ReactComponent
             new p
             {
                 "Ben gene de Kurandan iki ayeti red etmeyeyim diye düşünebilirsiniz. " ,
-                "Ama meseleyi tersden ele alır iseniz Kuranda olmayan iki cümleye Allah sözü muamelesi yapmış da olursunuz."
+                "Ama meseleyi tersden ele alır iseniz Kuranda olmayan iki cümleye Allah sözü muamelesi yapmış da olabilirsiniz."
             },
             seperation,
             new p
@@ -117,7 +125,7 @@ public class AdditionalVersesPage : ReactComponent
                 new br(),
                 "Ufak da olsa kendi anlayışımı ifade istiyorum. " ,
                 "Açıkcası hayatında Kuran olmayan birinin Tevbe 128-129 Kuran'dandır veya değildir demesinin bence bir anlamı yok. " ,
-                "Yılan adamı yarı beline kadar yutmuş fakat adam az önce ensesinden ısıran sivri sineğin derdine düşmüş. O sivrisineğin kendisine hastalık bulaştırıp bulaştırmayacağının derdine düşmüş",
+                "Yılan adamı yarı beline kadar yutmuş fakat adam az önce ensesinden ısıran sivri sineğin derdine düşmüş. ",
                 new br(),
                 "Örnek biraz saçma gelebilir ama malesef durum böyle.  "
             }
