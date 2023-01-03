@@ -1667,6 +1667,8 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
     const senderPropertyFullName = eventSenderInfo.SenderPropertyFullName;
     const senderComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(eventSenderInfo.SenderComponentUniqueIdentifier);
 
+    handlerComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
+
     // avoid multiple attach we need to ensure attach a listener at once
     {
         const customEventListenerMapKey = [
@@ -1683,6 +1685,8 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
         component[CUSTOM_EVENT_LISTENER_MAP][customEventListenerMapKey] = 1;
     }
 
+    const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
+
     const onEventFired = (e) =>
     {
         const eventArgumentsAsArray = e.detail;
@@ -1691,8 +1695,6 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
 
         StartAction(remoteMethodName, handlerComponent, eventArgumentsAsArray);
     };
-
-    const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
 
     component[ON_COMPONENT_DESTROY].push(() =>
     {
@@ -1709,6 +1711,8 @@ RegisterCoreFunction("NavigateToUrl", function (url)
 
 RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
 {
+    handlerComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
+
     const component = this;
 
     // avoid multiple attach we need to ensure attach a listener at once
