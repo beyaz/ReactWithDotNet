@@ -37,7 +37,6 @@ jobs:
         Remove-Item 'package-lock.json'
         Remove-Item 'index-development.jsx'
         Remove-Item 'index.jsx'
-        Remove-Item 'app.css'
       shell: pwsh
 
     - uses: EasyDesk/action-dotnet-publish@v1
