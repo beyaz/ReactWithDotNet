@@ -6,10 +6,7 @@ public class AboutEdipYukselPage : ReactComponent
 {
     protected override Element render()
     {
-        var seperation = new FlexRowCentered(MarginTopBottom(10))
-        {
-            "* * *"
-        };
+        
         return new Article
         {
             new LargeTitle("Edip Yüksel hakkında"),
@@ -60,5 +57,7 @@ public class AboutEdipYukselPage : ReactComponent
             }
 
         };
+
+        static Element seperation() => new FlexRowCentered(MarginTopBottom(10)) { "* * *" };
     }
 }

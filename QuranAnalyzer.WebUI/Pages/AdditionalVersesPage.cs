@@ -6,10 +6,6 @@ public class AdditionalVersesPage : ReactComponent
 {
     protected override Element render()
     {
-        var seperation = new FlexRowCentered(MarginTopBottom(10))
-        {
-            "* * *"
-        };
         return new Article
         {
             new LargeTitle("Tevbe Suresi 128. ve 129. Meselesi"),
@@ -61,6 +57,7 @@ public class AdditionalVersesPage : ReactComponent
                 new br(),
                 "Hasılı iki kapak arasına girdikten sonra mesele kapanıyor."
             },
+            
             seperation,
             
             "Peki konunun 19 sistemi ile ne ilgisi var?",
@@ -73,17 +70,21 @@ public class AdditionalVersesPage : ReactComponent
                 "Aynı zamanda sayımları tekrar gözden geçiriyor ve normalde bir fazla vermesi gereken Allah kelimesi bilgisayar tarafından bir eksik verildiğini görüyor. Kendisi de şaşırıyor.",
                 "Bunun üzerine Bu iki sözün Kurandan olmadığına dair matemaiksel olarak da gösteriyor.",
                 "Ben sadece bu örneklerden bir tanesini aşağıdaki link üzerinde gösterdim. Dileyen var ise inceleyebilir. aşağıdaki örnek gibi 50 den fazla örnek var.",
-                new br(),
-                new FlexRowCentered
-                {
-                    new a{href = "#", text = "Bir örnek"}
-                },
-                new br(),
+                
+            },
+            new FlexRowCentered
+            {
+                new a{href = "#", text = "Bir örnek"}
+            },
+            new p
+            {
+                
                 "Özetlemek gerekir ise ",(b)" Bu bilgi Cebrail aracılığı ile geliyor. Ardından matematikle destekleniyor.",
                 new br(),
                 "Dünyada hiç bir kimse kendi kutsal saydığı kitapdan matematiğe uymuyor diye ayet atmaz. Reşad o kadar da aptal biri değil. " ,
                 "Burasını maalesef karıştırıyorlar."
             },
+
             seperation,
             new p
             {
@@ -130,5 +131,7 @@ public class AdditionalVersesPage : ReactComponent
                 "Örnek biraz saçma gelebilir ama malesef durum böyle.  "
             }
         };
+
+        static Element seperation() => new FlexRowCentered(MarginTopBottom(10)) { "* * *" };
     }
 }
