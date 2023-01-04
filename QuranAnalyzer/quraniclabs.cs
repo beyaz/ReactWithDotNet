@@ -5,52 +5,50 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace QuranAnalyzer
+namespace QuranAnalyzer;
+
+public static class QuranicLabs
 {
-    public static class QuranicLabs
+
+    public static void CacheToFile()
     {
-
-        public static void Cache()
+        foreach (var (chapter, verseCount) in ChapterLengthMap)
         {
-            foreach (var (chapter, verseCount) in ChapterLengthMap)
-            {
               
-                var json     = GetChapterAsJson(chapter, 1, verseCount);
-                var response = Newtonsoft.Json.JsonConvert.DeserializeObject<Response>(json);
-                if (response.success)
-                {
-                    File.WriteAllText($"d:\\QuranicLabs\\{chapter}.json", 
-                                      Newtonsoft.Json.JsonConvert.SerializeObject(response.data));
-                }
-                else
-                {
-                    response.ToString();
-                }
+            var json     = GetChapterAsJson(chapter, 1, verseCount);
+            var response = Newtonsoft.Json.JsonConvert.DeserializeObject<Response>(json);
+            if (response.success)
+            {
+                File.WriteAllText($"d:\\QuranicLabs\\{chapter}.json", 
+                                  Newtonsoft.Json.JsonConvert.SerializeObject(response.data));
             }
-            
-            
+            else
+            {
+                response.ToString();
+            }
         }
+    }
 
-        static string GetChapterAsJson(int chapter, int verseNumberStart, int verseNumberEnd)
-        {
-            using var webClient = new WebClient();
+    static string GetChapterAsJson(int chapter, int verseNumberStart, int verseNumberEnd)
+    {
+        using var webClient = new WebClient();
 
-            return webClient.DownloadString($"https://api.quraniclabs.com/quran/{chapter}/{verseNumberStart}-{verseNumberEnd}");
-        }
-
-
-        class Data
-        {
-            public string verse_text_arabic { get; set; }
-        }
-        class Response
-        {
-            public bool success { get; set; }
-            public Data[] data { get; set; }
-        }
+        return webClient.DownloadString($"https://api.quraniclabs.com/quran/{chapter}/{verseNumberStart}-{verseNumberEnd}");
+    }
 
 
-        public static readonly IReadOnlyDictionary<int, int> ChapterLengthMap = new Dictionary<int, int>
+    class Data
+    {
+        public string verse_text_arabic { get; set; }
+    }
+    class Response
+    {
+        public bool success { get; set; }
+        public Data[] data { get; set; }
+    }
+
+
+    public static readonly IReadOnlyDictionary<int, int> ChapterLengthMap = new Dictionary<int, int>
     {
         {1,7}
        ,{2,286}
@@ -168,5 +166,4 @@ namespace QuranAnalyzer
        ,{114,6}
 
     };
-    }
 }

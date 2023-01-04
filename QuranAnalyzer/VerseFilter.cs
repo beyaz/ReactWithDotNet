@@ -15,7 +15,7 @@ public static class VerseFilter
 
         if (searchScript.Trim() == "*")
         {
-            return AllSurahs.SelectMany(x => x.Verses).ToList();
+            return AllChapters.SelectMany(x => x.Verses).ToList();
         }
         
         var returnList = new List<Verse>();
@@ -48,7 +48,7 @@ public static class VerseFilter
         {
             if (searchItem.Trim() == "*")
             {
-                return AllSurahs.SelectMany(x => x.Verses).ToList();
+                return AllChapters.SelectMany(x => x.Verses).ToList();
             }
             
             var arr = searchItem.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -66,17 +66,17 @@ public static class VerseFilter
                 return ParseInt(arr[0]);
             }
 
-            Response<Surah> findChapterByNumber(int surahNumber)
+            Response<Chapter> findChapterByNumber(int surahNumber)
             {
-                if (surahNumber <= 0 || surahNumber > AllSurahs.Count)
+                if (surahNumber <= 0 || surahNumber > AllChapters.Count)
                 {
                     return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
                 }
 
-                return AllSurahs[--surahNumber];
+                return AllChapters[--surahNumber];
             }
 
-            Response<IReadOnlyList<Verse>> collectVerseList(Surah sura, string verseFilter)
+            Response<IReadOnlyList<Verse>> collectVerseList(Chapter sura, string verseFilter)
             {
                 var filters = verseFilter.Split("-".ToCharArray()).Where(x=>!string.IsNullOrWhiteSpace(x)).Select(x=>x.Trim()).ToArray();
 
@@ -140,7 +140,7 @@ public static class VerseFilter
         var chapterNumber = int.Parse(arr[0]);
         var verseNumber = int.Parse(arr[1]);
 
-        return AllSurahs[chapterNumber - 1].Verses[verseNumber - 1];
+        return AllChapters[chapterNumber - 1].Verses[verseNumber - 1];
     }
     
 }

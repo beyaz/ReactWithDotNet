@@ -6,7 +6,7 @@ namespace QuranAnalyzer;
 
 public static class DataAccess
 {
-    public static readonly IReadOnlyList<Surah> AllSurahs;
+    public static readonly IReadOnlyList<Chapter> AllChapters;
     
     static DataAccess()
     {
@@ -17,7 +17,7 @@ public static class DataAccess
         }
         var chapters = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(filePath));
 
-        AllSurahs = chapters.AsListOf(chapter => new Surah
+        AllChapters = chapters.AsListOf(chapter => new Chapter
         {
             Name  = chapter._name,
             Index = int.Parse(chapter._index),
@@ -64,7 +64,7 @@ public static class DataAccess
 }
 
 [Serializable]
-public sealed class Surah
+public sealed class Chapter
 {
     public int Index { get; init; }
     public string Name { get; init; }
