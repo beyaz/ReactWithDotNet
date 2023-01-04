@@ -7,15 +7,15 @@ namespace QuranAnalyzer;
 public static class DataAccess
 {
     public static readonly IReadOnlyList<Chapter> AllChapters;
-    
+
     static DataAccess()
     {
         AllChapters = ReadAllChaptersFromJsonfile(GetFilePath());
-        
+
         static string GetFilePath()
         {
             var filePath = @"Data.json";
-            
+
             if (!File.Exists(filePath))
             {
                 filePath = Path.Combine("bin", "Debug", "netcoreapp3.1", filePath);
@@ -60,7 +60,7 @@ public static class DataAccess
             };
         }
     }
-    
+
     class Surah_
     {
         public string _index { get; set; }
@@ -87,11 +87,6 @@ public sealed class Chapter
 [Serializable]
 public sealed class Verse
 {
-    /// <summary>
-    ///     bismillah + text
-    /// </summary>
-    public IReadOnlyList<LetterInfo> TextWithBismillahAnalyzed { get; init; }
-
     public string Bismillah { get; init; }
     public int ChapterNumber { get; init; }
 
@@ -99,9 +94,14 @@ public sealed class Verse
     public string Index { get; init; }
     public int IndexAsNumber { get; init; }
     public string Text { get; init; }
+    public IReadOnlyList<LetterInfo> TextAnalyzed { get; set; }
     public string TextWithBismillah { get; init; }
 
+    /// <summary>
+    ///     bismillah + text
+    /// </summary>
+    public IReadOnlyList<LetterInfo> TextWithBismillahAnalyzed { get; init; }
+
     public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWithBismillahWordList { get; init; }
-    public IReadOnlyList<LetterInfo> TextAnalyzed { get; set; }
     public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWordList { get; set; }
 }
