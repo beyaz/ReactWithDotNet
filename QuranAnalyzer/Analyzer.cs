@@ -1,10 +1,10 @@
-﻿using System.Globalization;
-
-namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer;
 
 public static class Analyzer
 {
-    
+    public const string Hamza = "ء";
+    public const string HamzaAbove = "ٔ";
+
     static readonly AlternativeForm[] AlternativeForms =
     {
         new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ" } },
@@ -15,12 +15,9 @@ public static class Analyzer
         new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
 
-    public const string Hamza = "ء";
-    public const string HamzaAbove = "ٔ";
-
     static readonly AlternativeForm[] AlternativeFormsWithHamza =
     {
-        new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ", Hamza,HamzaAbove } },
+        new() { ArabicLetterIndex = ArabicLetterIndex.Alif, Forms = new[] { "ٱ", "إ", "أ", "ﺍ", Hamza, HamzaAbove } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Zay, Forms  = new[] { "ز" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Jiim, Forms = new[] { "ج" } },
         new() { ArabicLetterIndex = ArabicLetterIndex.Haa_, Forms = new[] { "ة" } },
@@ -28,21 +25,6 @@ public static class Analyzer
         new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
 
-    public static bool HasValueAndSameAs(this LetterInfo a, LetterInfo b)
-    {
-        if (a is null || b is null)
-        {
-            return false;
-        }
-
-        if (a.ArabicLetterIndex >= 0 && a.ArabicLetterIndex == b.ArabicLetterIndex)
-        {
-            return true;
-        }
-
-        return false;
-    }
-    
     public static Response<IReadOnlyList<LetterInfo>> AnalyzeText(string line, bool isHemzeActive = true)
     {
         var items = new List<LetterInfo>();
@@ -59,27 +41,27 @@ public static class Analyzer
                 continue;
             }
 
-            // check is special char like space or
-            {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(line[cursor]);
+            items.Add(new LetterInfo { ArabicLetterIndex = -1, StartIndex = cursor, MatchedLetter = line[cursor].ToString() });
 
-                if (unicodeCategory == UnicodeCategory.NonSpacingMark ||
-                    unicodeCategory == UnicodeCategory.SpaceSeparator ||
-                    unicodeCategory == UnicodeCategory.ModifierLetter ||
-                    line[cursor] == '۩')
-                {
-                    items.Add(new LetterInfo { ArabicLetterIndex = -1, StartIndex = cursor, MatchedLetter = line[cursor].ToString() });
-
-                    cursor++;
-
-                    continue;
-                }
-            }
-
-            return $"Arapça karakter girilmelidir. Yanlış girilen karakter:{line[cursor]}";
+            cursor++;
         }
 
         return items;
+    }
+
+    public static bool HasValueAndSameAs(this LetterInfo a, LetterInfo b)
+    {
+        if (a is null || b is null)
+        {
+            return false;
+        }
+
+        if (a.ArabicLetterIndex >= 0 && a.ArabicLetterIndex == b.ArabicLetterIndex)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public static bool IsArabicLetter(LetterInfo info)
@@ -109,8 +91,6 @@ public static class Analyzer
 
         return null;
     }
-
-   
 
     static LetterInfo TryRead(string line, int startIndex, bool isHemzeActive)
     {
@@ -148,12 +128,10 @@ public static class Analyzer
         LetterInfo tryMatch(string searchCharacter, int arabicCharacterIndex) => TryMatch(line, startIndex, searchCharacter, arabicCharacterIndex);
         static AlternativeForm[] getAlternativeForms(bool isHemzeActive) => isHemzeActive ? AlternativeFormsWithHamza : AlternativeForms;
     }
-    
+
     class AlternativeForm
     {
         public int ArabicLetterIndex { get; init; }
         public string[] Forms { get; init; }
     }
-
-    
 }
