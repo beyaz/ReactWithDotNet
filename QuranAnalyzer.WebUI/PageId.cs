@@ -23,7 +23,10 @@ static class PageId
     public const string AdditionalVersesPage = "16";
     public const string WhereIsTheProblemPage = "17";
 
+    public const string LetterAnalyzerPage = "18";
     
+
+
 
 
 }
