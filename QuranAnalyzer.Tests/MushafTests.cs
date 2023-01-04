@@ -14,7 +14,7 @@ public class MushafTests
     public void AnalyzeVerseTest()
     {
 
-        QuranicLabs.Cache();
+        QuranicLabs.CacheToFile();
     }
 
   
