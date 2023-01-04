@@ -36,9 +36,9 @@ public static class QuranicLabs
             
             var textWithBismillah = bismillah + " " + v.verse_text_arabic;
 
-            var analyzedFullText = AnalyzeText(textWithBismillah).Unwrap();
+            var analyzedFullText = AnalyzeText(textWithBismillah);
 
-            var analyzedText = AnalyzeText(v.verse_text_arabic).Unwrap();
+            var analyzedText = AnalyzeText(v.verse_text_arabic);
 
             return new Verse
             {
