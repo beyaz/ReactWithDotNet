@@ -10,24 +10,36 @@ public static class DataAccess
     
     static DataAccess()
     {
-        var filePath = @"Data.json";
-        if (!File.Exists(filePath))
+        AllChapters = ReadAllChaptersFromJsonfile(GetFilePath());
+        
+        static string GetFilePath()
         {
-            filePath = Path.Combine("bin", "Debug", "netcoreapp3.1", filePath);
-        }
-        var chapters = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(filePath));
+            var filePath = @"Data.json";
+            
+            if (!File.Exists(filePath))
+            {
+                filePath = Path.Combine("bin", "Debug", "netcoreapp3.1", filePath);
+            }
 
-        AllChapters = chapters.AsListOf(chapter => new Chapter
+            return filePath;
+        }
+    }
+
+    static IReadOnlyList<Chapter> ReadAllChaptersFromJsonfile(string jsonFilePath)
+    {
+        var chapters = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(jsonFilePath));
+
+        return chapters.AsListOf(chapter => new Chapter
         {
-            Name  = chapter._name,
-            Index = int.Parse(chapter._index),
-            Verses = chapter.aya.AsListOf(v => toVerse(chapter,v))
+            Name   = chapter._name,
+            Index  = int.Parse(chapter._index),
+            Verses = chapter.aya.AsListOf(v => toVerse(chapter, v))
         });
 
         static Verse toVerse(Surah_ chapter, Verse_ v)
         {
             var textWithBismillah = v._bismillah + " " + v._text;
-            
+
             var analyzedFullText = AnalyzeText(textWithBismillah).Unwrap();
 
             var analyzedText = AnalyzeText(v._text).Unwrap();
@@ -48,6 +60,7 @@ public static class DataAccess
             };
         }
     }
+    
     class Surah_
     {
         public string _index { get; set; }
