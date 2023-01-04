@@ -60,8 +60,39 @@ class View : ReactComponent<ViewModel>
             return Container(Panel(searchPanel));
         }
 
-        var resultVerseList = new List<LetterColorizer>();
+        var letters = Analyzer.AnalyzeText(state.InputText);
+        
+        
 
+        var countMap = new Dictionary<int, int>();
+        
+        Element toElement(LetterInfo letterInfo)
+        {
+            if (letterInfo.ArabicLetterIndex<0)
+            {
+                return new div(letterInfo.ToString());
+            }
+
+            if (countMap.TryGetValue(letterInfo.ArabicLetterIndex, out var count))
+            {
+                count++;
+
+                countMap[letterInfo.ArabicLetterIndex] = count;
+            }
+            else
+            {
+                count = 1;
+                
+                countMap.Add(letterInfo.ArabicLetterIndex,count);
+            }
+
+            return new FlexColumn(Gap(3), Border($"1px solid {BorderColor}"))
+            {
+                new div{letterInfo.ToString()},
+                
+                new small{count.ToString()}
+            };
+        }
        
        
         var results = new Element[]
@@ -69,9 +100,9 @@ class View : ReactComponent<ViewModel>
             new h4("Sonuçlar"),
             
             new VSpace(30),
-            new div
+            new FlexRow(FlexWrap, Gap(3),DirectionRtl)
             {
-                Children(resultVerseList)
+                letters.Select(toElement)
             }
         };
 
