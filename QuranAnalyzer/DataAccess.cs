@@ -11,10 +11,19 @@ public static class DataAccess
     static DataAccess()
     {
         AllChapters = ReadAllChaptersFromJsonfile(GetFilePath());
+        
+        
 
         static string GetFilePath()
         {
+            var path = Path.GetDirectoryName(typeof(DataAccess).Assembly.Location) + Path.DirectorySeparatorChar;
+            
             var filePath = @"Data.json";
+
+            if (File.Exists(path+filePath))
+            {
+                return path + filePath;
+            }
 
             if (!File.Exists(filePath))
             {

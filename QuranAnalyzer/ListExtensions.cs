@@ -69,7 +69,20 @@ public static class ListExtensions
         return source.Select(convertFunc).ToList();
     }
 
+    public static IReadOnlyList<TTarget> AsListOf<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource,int, TTarget> convertFunc)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
 
+        if (convertFunc == null)
+        {
+            throw new ArgumentNullException(nameof(convertFunc));
+        }
+
+        return source.Select(convertFunc).ToList();
+    }
 
     /// <summary>
     ///     Removes value from start of str
