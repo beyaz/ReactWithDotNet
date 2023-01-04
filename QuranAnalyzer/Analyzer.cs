@@ -25,7 +25,7 @@ public static class Analyzer
         new() { ArabicLetterIndex = ArabicLetterIndex.Waaw, Forms = new[] { "ٯ", "ؤ" } }
     };
 
-    public static Response<IReadOnlyList<LetterInfo>> AnalyzeText(string line, bool isHemzeActive = true)
+    public static IReadOnlyList<LetterInfo> AnalyzeText(string line, bool isHemzeActive = true)
     {
         var items = new List<LetterInfo>();
 

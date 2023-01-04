@@ -18,9 +18,9 @@ class WordColorizedVerse : ReactComponent
             Verse = VerseFilter.GetVerseById("2:286");
             MatchList = new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo first, LetterInfo last)> startPoints)>
             {
-                (Analyzer.AnalyzeText("واليوم").Unwrap(), new [] { (VerseLetters[6], VerseLetters[9]), (VerseLetters[28], VerseLetters[33]),(VerseLetters[258], VerseLetters[268]) }),
-                (Analyzer.AnalyzeText("يوم").Unwrap(), new [] { (VerseLetters[45], VerseLetters[50]), (VerseLetters[68], VerseLetters[78]) }),
-                (Analyzer.AnalyzeText("باليوم").Unwrap(), new [] { (VerseLetters[96], VerseLetters[100]), (VerseLetters[178], VerseLetters[184]), (VerseLetters[228], VerseLetters[235]) })
+                (Analyzer.AnalyzeText("واليوم"), new [] { (VerseLetters[6], VerseLetters[9]), (VerseLetters[28], VerseLetters[33]),(VerseLetters[258], VerseLetters[268]) }),
+                (Analyzer.AnalyzeText("يوم"), new [] { (VerseLetters[45], VerseLetters[50]), (VerseLetters[68], VerseLetters[78]) }),
+                (Analyzer.AnalyzeText("باليوم"), new [] { (VerseLetters[96], VerseLetters[100]), (VerseLetters[178], VerseLetters[184]), (VerseLetters[228], VerseLetters[235]) })
             };
         }
 

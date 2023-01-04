@@ -78,7 +78,7 @@ class Calculator : ReactComponent<CalculatorModel>
     {
         var option = new MushafOption();
 
-        var letterInfoList  = Analyzer.AnalyzeText(state.Letters.Replace(" ", "")).Unwrap();
+        var letterInfoList  = Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
         var letterIndexList = letterInfoList.Select(x => x.ArabicLetterIndex).ToImmutableList();
         var verseList       = VerseFilter.GetVerseList(state.SearchScript).Unwrap().Where(isContainsGivenLetters).ToList();
 
@@ -197,13 +197,9 @@ class Calculator : ReactComponent<CalculatorModel>
         }
 
         var letters = Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
-        if (letters.IsFail)
-        {
-            state.ErrorText = letters.FailMessage;
-            return;
-        }
+        
 
-        if (letters.Value.Count == 0)
+        if (letters.Count == 0)
         {
             state.ErrorText = "En az bir tane Arapça karakter girilmelidir.";
             return;

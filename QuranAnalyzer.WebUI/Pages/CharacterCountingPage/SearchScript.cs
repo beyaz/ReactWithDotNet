@@ -45,12 +45,9 @@ class SearchScript
             }
 
             var letterInfoList = Analyzer.AnalyzeText(clearText(arr[1]));
-            if (letterInfoList.IsFail)
-            {
-                return letterInfoList.FailMessage;
-            }
+          
 
-            var letters = letterInfoList.Value.Where(Analyzer.IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
+            var letters = letterInfoList.Where(Analyzer.IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
             if (letters.Count == 0)
             {
                 return "Arama komutunda yanlışlık var. Arap alfabesine ait olmayan bir karakter kullanılmış. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";

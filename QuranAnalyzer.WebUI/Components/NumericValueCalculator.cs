@@ -90,13 +90,9 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
         }
 
         var letters = Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
-        if (letters.IsFail)
-        {
-            state.ErrorText = letters.FailMessage;
-            return;
-        }
+       
 
-        state.LetterInfoList = letters.Value;
+        state.LetterInfoList = letters;
     }
 
     class ArabicLetterWithNumericValue

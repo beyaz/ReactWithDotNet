@@ -49,9 +49,9 @@ public static class DataAccess
         {
             var textWithBismillah = v._bismillah + " " + v._text;
 
-            var analyzedFullText = AnalyzeText(textWithBismillah).Unwrap();
+            var analyzedFullText = AnalyzeText(textWithBismillah);
 
-            var analyzedText = AnalyzeText(v._text).Unwrap();
+            var analyzedText = AnalyzeText(v._text);
 
             return new Verse
             {

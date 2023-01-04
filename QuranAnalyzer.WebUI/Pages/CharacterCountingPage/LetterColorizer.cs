@@ -19,9 +19,9 @@ public class LetterColorizer : ReactComponent
 
     protected override Element render()
     {
-        var verseText = VerseTextNodes ??= Analyzer.AnalyzeText(VerseText).Unwrap().Where(Analyzer.IsArabicLetter).ToList();
+        var verseText = VerseTextNodes ??= Analyzer.AnalyzeText(VerseText).Where(Analyzer.IsArabicLetter).ToList();
 
-        var lettersForColorize = LettersForColorizeNodes ??= Analyzer.AnalyzeText(LettersForColorize).Unwrap().Where(Analyzer.IsArabicLetter).ToList();
+        var lettersForColorize = LettersForColorizeNodes ??= Analyzer.AnalyzeText(LettersForColorize).Where(Analyzer.IsArabicLetter).ToList();
 
         var cursor = 0;
 
