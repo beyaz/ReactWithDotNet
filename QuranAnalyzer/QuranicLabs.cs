@@ -4,12 +4,62 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json;
+using static QuranAnalyzer.Analyzer;
 
 namespace QuranAnalyzer;
 
 public static class QuranicLabs
 {
 
+    public static void Process()
+    {
+
+        var processed = DataAccess.AllChapters.AsListOf(chapter => new Chapter
+        {
+            Name   = chapter.Name,
+            Index  = chapter.Index,
+            Verses = JsonConvert.DeserializeObject<Data[]>(File.ReadAllText($"d:\\QuranicLabs\\{chapter.Index}.json")).AsListOf((v,i) => toVerse(chapter, v,i))
+        });
+
+
+        //DataAccess.AllChapters = processed;
+
+        static Verse toVerse(Chapter chapter, Data v, int index)
+        {
+            string bismillah = null;
+            
+            if (index==0)
+            {
+                bismillah = DataAccess.AllChapters[0].Verses[0].Text;
+            }
+            
+            var textWithBismillah = bismillah + " " + v.verse_text_arabic;
+
+            var analyzedFullText = AnalyzeText(textWithBismillah).Unwrap();
+
+            var analyzedText = AnalyzeText(v.verse_text_arabic).Unwrap();
+
+            return new Verse
+            {
+                Index                     = (index+1).ToString(),
+                IndexAsNumber             = index+1,
+                Bismillah                 = bismillah,
+                Text                      = v.verse_text_arabic,
+                TextAnalyzed              = analyzedText,
+                TextWordList              = analyzedText.GetWords(),
+                ChapterNumber             = chapter.Index,
+                Id                        = $"{chapter.Index}:{index + 1}",
+                TextWithBismillahWordList = analyzedFullText.GetWords(),
+                TextWithBismillahAnalyzed = analyzedFullText,
+                TextWithBismillah         = textWithBismillah
+            };
+        }
+        
+        
+       
+    }
+    
     public static void CacheToFile()
     {
         foreach (var (chapter, verseCount) in ChapterLengthMap)
