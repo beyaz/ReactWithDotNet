@@ -103,5 +103,6 @@ public sealed class Verse
     public IReadOnlyList<LetterInfo> TextWithBismillahAnalyzed { get; init; }
 
     public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWithBismillahWordList { get; init; }
+    
     public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWordList { get; set; }
 }
