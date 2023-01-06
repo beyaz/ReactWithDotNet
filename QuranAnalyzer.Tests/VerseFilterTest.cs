@@ -2,7 +2,7 @@
 namespace QuranAnalyzer;
 
 [TestClass]
-[Ignore]
+//[Ignore]
 public class VerseFilterTest
 {
     [TestMethod]
@@ -65,5 +65,21 @@ public class VerseFilterTest
     public void FilterWithStarWithManyWithSpecificAyahNumber_with_Error()
     {
         VerseFilter.GetVerseList(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
+    }
+
+    [TestMethod]
+    public void _4()
+    {
+        VerseFilter.GetVerseList("1:*, -1:3, -1:4").IsFail.Should().BeFalse();
+    }
+
+    [TestMethod]
+    public void _5()
+    {
+        VerseFilter.GetVerseList("1:3 --> 1:7").Unwrap().Count.Should().Be(5);
+
+        VerseFilter.GetVerseList("1:3 --> 2:4").Unwrap().Count.Should().Be(9);
+
+        VerseFilter.GetVerseList("1:3 --> 4:7").IsFail.Should().BeFalse();
     }
 }

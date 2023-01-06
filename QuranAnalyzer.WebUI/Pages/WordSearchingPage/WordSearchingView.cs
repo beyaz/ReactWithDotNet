@@ -108,14 +108,15 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                    {
                        commandText("*, -9:128, -9:129 | الله"),
                        new td{ "(Tüm mushaf boyunca (9:128 ve 9:129 hariç), geçen ", (b)"الله", " kelimesini aratır)" }
+                   },
+                   new tr{Height(10)},
+                   new tr
+                   {
+                       commandText("2:17 --> 5:4 | الله"),
+                       new td{ "(2. surenin 17. ayeti ile 5. surenin 4. ayeti arasında geçen ", (b)"الله", " kelimesini aratır)" }
                    }
                }
-              
-           },
-           
-           
-           
-           
+           }
         };
     }
     

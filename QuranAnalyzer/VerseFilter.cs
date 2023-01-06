@@ -44,13 +44,111 @@ public static class VerseFilter
 
         return returnList;
 
+        static Response<IReadOnlyList<Verse>> byRange(string begin, string end)
+        {
+            var verseBegin = getVerseById(begin);
+            var verseEnd = getVerseById(end);
+
+            if (verseBegin.IsFail)
+            {
+                return verseBegin.FailMessage;
+            }
+
+            if (verseEnd.IsFail)
+            {
+                return verseEnd.FailMessage;
+            }
+
+            if (verseBegin.Value.ChapterNumber > verseEnd.Value.ChapterNumber)
+            {
+                return $"Başlangıç {verseBegin.Value.ChapterNumber} bitişten {verseEnd.Value.ChapterNumber} büyük olamaz.";
+            }
+
+            var returnList = new List<Verse>();
+
+            foreach (var chapter in AllChapters)
+            {
+                if (chapter.Index < verseBegin.Value.ChapterNumber || chapter.Index > verseEnd.Value.ChapterNumber)
+                {
+                    continue;
+                }
+
+                foreach (var verse in chapter.Verses)
+                {
+                    if (chapter.Index == verseBegin.Value.ChapterNumber && verse.IndexAsNumber < verseBegin.Value.IndexAsNumber )
+                    {
+                        continue;
+                    }
+
+                    if (chapter.Index == verseEnd.Value.ChapterNumber && verse.IndexAsNumber > verseEnd.Value.IndexAsNumber)
+                    {
+                        continue;
+                    }
+                    
+                    returnList.Add(verse);
+                }
+            }
+
+            return returnList;
+        }
+
+        static Response<Verse> getVerseById(string verseId)
+        {
+            var arr = verseId.Split(":".ToCharArray(),StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+            if (arr.Length != 2)
+            {
+                return (Error)$"arama kriterlerinde hata var.{verseId}";
+            }
+
+            var chapter = ParseInt(arr[0]).Then(findChapterByNumber);
+            if (chapter.IsFail)
+            {
+                return chapter.FailMessage;
+            }
+            
+            var verseNumber = ParseInt(arr[1]);
+            if (verseNumber.IsFail)
+            {
+                return verseNumber.FailMessage;
+            }
+
+            if (verseNumber.Value <= 0 || verseNumber.Value > chapter.Value.Verses.Count)
+            {
+                return (Error)$"Sure seçiminde yanlışlık var.{verseId}";
+            }
+
+            return  chapter.Value.Verses[--verseNumber.Value];
+        }
+        
+        static Response<Chapter> findChapterByNumber(int surahNumber)
+        {
+            if (surahNumber <= 0 || surahNumber > AllChapters.Count)
+            {
+                return (Error)$"Sure seçiminde yanlışlık var.{surahNumber}";
+            }
+
+            return AllChapters[--surahNumber];
+        }
+
         Response<IReadOnlyList<Verse>> process(string searchItem)
         {
             if (searchItem.Trim() == "*")
             {
                 return AllChapters.SelectMany(x => x.Verses).ToList();
             }
-            
+
+            // is range
+            if (searchItem.Trim().Contains("-->", StringComparison.OrdinalIgnoreCase))
+            {
+                var range = searchItem.Split("-->".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                if (range.Length != 2)
+                {
+                    return (Error)$"arama kriterlerinde hata var.{searchItem}";
+                }
+
+                return byRange(range[0], range[1]);
+            }
+
             var arr = searchItem.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
             {
@@ -66,15 +164,7 @@ public static class VerseFilter
                 return ParseInt(arr[0]);
             }
 
-            Response<Chapter> findChapterByNumber(int surahNumber)
-            {
-                if (surahNumber <= 0 || surahNumber > AllChapters.Count)
-                {
-                    return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
-                }
-
-                return AllChapters[--surahNumber];
-            }
+            
 
             Response<IReadOnlyList<Verse>> collectVerseList(Chapter sura, string verseFilter)
             {
