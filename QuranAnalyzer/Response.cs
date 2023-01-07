@@ -290,6 +290,27 @@ public static class FpExtensions
         return nextFunc(response.Value);
     }
 
+    public static B Then<A, B>(this Response<A> response, Func<A, B> successFunc, Func<string, B> failFunc)
+    {
+        if (response.IsFail)
+        {
+            return failFunc(response.FailMessage);
+        }
+
+        return successFunc(response.Value);
+    }
+
+    public static C Then<A, B, C>(this Response<(A,B)> response, Func<A,B, C> successFunc, Func<string, C> failFunc)
+    {
+        if (response.IsFail)
+        {
+            return failFunc(response.FailMessage);
+        }
+
+        return successFunc(response.Value.Item1,response.Value.Item2);
+    }
+
+
     public static Response<B> Apply<A,B>(Func<A,Response<B>> functionAToB, A a)
     {
         return functionAToB(a);

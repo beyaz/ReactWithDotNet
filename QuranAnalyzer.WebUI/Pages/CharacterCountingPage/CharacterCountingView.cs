@@ -143,28 +143,31 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return (resultVerses, summaries);
         }
 
-        var responseCalculate = calculate();
-        if (responseCalculate.IsFail)
-        {
-            state.SearchScriptErrorMessage = responseCalculate.FailMessage;
 
-            return Container(Panel(searchPanel()));
-        }
+        return calculate().Then((resultVerseList, summaryInfoList) =>
+                                {
+                                    var results = new Element[]
+                                    {
+                                        new h4("Sonuçlar"),
+                                        new CountsSummaryView { Counts = summaryInfoList },
+                                        new VSpace(30),
+                                        new div
+                                        {
+                                            Children(resultVerseList)
+                                        }
+                                    };
 
-        var (resultVerseList, summaryInfoList) = responseCalculate.Value;
+                                    return Container(Panel(searchPanel()), Panel(results));
+                                },
+                                failMessage =>
+                                {
+                                    state.SearchScriptErrorMessage = failMessage;
 
-        var results = new Element[]
-        {
-            new h4("Sonuçlar"),
-            new CountsSummaryView { Counts = summaryInfoList },
-            new VSpace(30),
-            new div
-            {
-                Children(resultVerseList)
-            }
-        };
+                                    return Container(Panel(searchPanel()));
+                                });
 
-        return Container(Panel(searchPanel()), Panel(results));
+
+
     }
 
     static Element Container(params Element[] panels)
