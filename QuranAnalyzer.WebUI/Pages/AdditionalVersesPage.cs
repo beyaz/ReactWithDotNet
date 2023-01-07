@@ -122,6 +122,18 @@ public class AdditionalVersesPage : ReactComponent
             seperation,
             new p
             {
+                "Kuranda bütün surelerin başında besmele vardır. Sadece bir tek surenin başında besmele yoktur." ,
+                "Sanki kitabın yazarı özellikle buraya dikkat çekiyor. " ,
+                "Bunun sebebini araştırdığınızda ise çünkü bu surede inanmayanlara ültimatom veriliyor ondan dolayı başında besmele yok.",
+                "Yahut neden bir tek bu surenin başında besmele yok diye sorduğunuzda cevap olarak 'çünkü yok' deniliyor.",
+                "Bu veilen cevaplar sizi ne kadar tatmin eder orasını size kalmış. 19 sistemi işte burada şu açıklamayı yapar ",
+                " Çünkü 'Herşeyde Tam Kontrol Durumunda Olan' bu surenin içine fazladan iki söz eklenmesine müsade etmiştir. Müsada etmiş ki ",
+                "bu Kuranın bizzat kendisi tarafından korunduğunu insanlara göstermek istemiş. ",
+                "Bu sebeple bu sureye dikkat çekmek için ve Allah kelamı olmayan iki söz olduğu için başına besmele koymamıştır."
+            },
+            seperation,
+            new p
+            {
                 "Mesele etrafında dönen tartışmayı aktarmaya çalıştım. Umarım faydalı olmuştur.",
                 new br(),
                 "Ufak da olsa kendi anlayışımı ifade istiyorum. " ,
