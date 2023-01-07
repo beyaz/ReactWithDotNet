@@ -1,5 +1,6 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+using QuranAnalyzer.WebUI.Pages.Shared;
 
 namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 

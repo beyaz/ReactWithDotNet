@@ -4,6 +4,8 @@ class Helpcomponent : ReactComponent
 {
     public bool IsHelpVisible { get; set; }
 
+    public bool ShowHelpMessageForLetterSearch { get; set; }
+    
     protected override Element render()
     {
         if (IsHelpVisible)
@@ -18,7 +20,33 @@ class Helpcomponent : ReactComponent
         return Title();
     }
 
-    static Element HelpDetail()
+    string SearchItem
+    {
+        get
+        {
+            if (ShowHelpMessageForLetterSearch)
+            {
+                return ArabicLetter.Qaaf;
+            }
+
+            return "الله";
+        }
+    }
+
+    string DescriptionPart
+    {
+        get
+        {
+            if (ShowHelpMessageForLetterSearch)
+            {
+                return "harflerini";
+            }
+
+            return "kelimesini";
+        }
+    }
+    
+    Element HelpDetail()
     {
         return new div(TextAlignCenter)
         {
@@ -33,38 +61,38 @@ class Helpcomponent : ReactComponent
                     new tr { Height(15) },
                     new tr
                     {
-                        commandText("* | الله"),
-                        description("(Tüm Kuran boyunca geçen ", (b)"الله", " kelimesini aratır)")
+                        commandText($"* | {SearchItem}"),
+                        description("(Tüm mushaf boyunca geçen ", (b)SearchItem, $" {DescriptionPart} aratır)")
                     },
                     new tr { Height(10) },
                     new tr
                     {
-                        commandText("2:* | الله"),
-                        description("(2. surenin tamamında geçen ", (b)"الله", " kelimesini aratır)")
+                        commandText($"2:* | {SearchItem}"),
+                        description("(2. surenin tamamında geçen ", (b)SearchItem, $" {DescriptionPart} aratır)")
                     },
                     new tr { Height(10) },
                     new tr
                     {
-                        commandText("2:*, 3:*, 7:5-40 | الله"),
-                        description("(2. surenin tamamında, 3. surenin tamamında ve 7. surenin 5 ila 40. ayetler arasında geçen ", (b)"الله", " kelimesini aratır)")
+                        commandText($"2:*, 3:*, 7:5-40 | {SearchItem}"),
+                        description("(2. surenin tamamında, 3. surenin tamamında ve 7. surenin 5 ila 40. ayetler arasında geçen ", (b)SearchItem, $" {DescriptionPart} aratır)")
                     },
                     new tr { Height(10) },
                     new tr
                     {
-                        commandText("2:*, -2:4, -2:8 | الله"),
-                        description("(2. surenin tamamında(4. ve 8. ayetler hariç), geçen ", (b)"الله", " kelimesini aratır)")
+                        commandText($"2:*, -2:4, -2:8 | {SearchItem}"),
+                        description("(2. surenin tamamında(4. ve 8. ayetler hariç), geçen ", (b)SearchItem, $" {DescriptionPart} aratır)")
                     },
                     new tr { Height(10) },
                     new tr
                     {
-                        commandText("*, -9:128, -9:129 | الله"),
-                        description("(Tüm mushaf boyunca (9:128 ve 9:129 hariç), geçen ", (b)"الله", " kelimesini aratır)")
+                        commandText($"*, -9:128, -9:129 | {SearchItem}"),
+                        description("(Tüm mushaf boyunca (9:128 ve 9:129 hariç), geçen ", (b)SearchItem, $" {DescriptionPart} aratır)")
                     },
                     new tr { Height(10) },
                     new tr
                     {
-                        commandText("2:17 --> 5:4 | الله"),
-                        description("(2. surenin 17. ayeti ile 5. surenin 4. ayeti arasında geçen ", (b)"الله", " kelimesini aratır)")
+                        commandText($"2:17 --> 5:4 | {SearchItem}"),
+                        description("(2. surenin 17. ayeti ile 5. surenin 4. ayeti arasında geçen ", (b)SearchItem, $" {DescriptionPart} aratır)")
                     }
                 }
             }

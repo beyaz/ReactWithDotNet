@@ -1,4 +1,5 @@
 ﻿using QuranAnalyzer.WebUI.Components;
+using QuranAnalyzer.WebUI.Pages.Shared;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
@@ -69,10 +70,11 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 new CharacterCountingOptionView { MushafOption = state.MushafOption, MushafOptionChanged = MushafOptionChanged },
 
                 Space(20),
-
-                new FlexRow(JustifyContentFlexEnd)
+                
+                new FlexRow(JustifyContentSpaceBetween)
                 {
-                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked }
+                    new Helpcomponent{ShowHelpMessageForLetterSearch = true},
+                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked } + Height(22)
                 }
             }
         };
