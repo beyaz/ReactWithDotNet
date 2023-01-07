@@ -37,6 +37,7 @@ static class QueryKey
     public static string SearchQuery = "q";
     public static string FactIndex = "f";
     public static string ShowNumbers = "n";
+    public static string IncludeBizmillah = "b";
 }
 
 static class ResourceAccess

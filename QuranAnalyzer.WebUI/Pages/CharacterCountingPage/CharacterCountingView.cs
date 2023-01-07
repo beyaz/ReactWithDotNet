@@ -43,6 +43,12 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
             state.SearchScript = parseResponse.Value.AsReadibleString();
         }
+
+
+        if (Context.Query[QueryKey.IncludeBizmillah] == "0")
+        {
+            state.IncludeBismillah = false;
+        }
     }
 
     protected override Element render()
@@ -249,7 +255,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            Client.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={script.AsString()}");
+            Client.PushHistory("", $"/?{QueryKey.Page}={PageId.CharacterCounting}&{QueryKey.SearchQuery}={script.AsString()}&{QueryKey.IncludeBizmillah}={state.IncludeBismillah.AsNumber()}");
             Client.GotoMethod(OnCaclculateClicked);
             return;
         }
