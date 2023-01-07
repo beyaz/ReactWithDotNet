@@ -43,7 +43,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
     protected override Element render()
     {
-        var searchPanel = new[]
+        IEnumerable<Element> searchPanel ()=> new[]
         {
             When(state.IsBlocked, () => new div { PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3) }),
             When(state.IsBlocked, () => new FlexRowCentered
@@ -77,84 +77,108 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
         if (state.ClickCount == 0)
         {
-            return Container(Panel(searchPanel));
+            return Container(Panel(searchPanel()));
         }
 
         var searchScript = SearchScript.ParseScript(state.SearchScript).Unwrap();
 
         if (state.IsBlocked)
         {
-            return Container(Panel(searchPanel));
+            return Container(Panel(searchPanel()));
         }
 
-        var matchMap = new Dictionary<string, List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>>();
-
-        var summaryInfoList = new List<SummaryInfo>();
-
-        foreach (var (chapterFilter, searchWord) in searchScript.Lines)
+        Response<(List<WordColorizedVerse> resultVerseList, List<SummaryInfo> summaryInfoList)> calculate()
         {
-            var verseList = VerseFilter.GetVerseList(chapterFilter).Unwrap();
 
-            foreach (var verse in verseList)
+
+            var matchMap = new Dictionary<string, List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>>();
+
+            var summaries = new List<SummaryInfo>();
+
+            foreach (var (chapterFilter, searchWord) in searchScript.Lines)
             {
-                var startAndEndPointsOfSameWords = verse.GetStartAndEndPointsOfSameWords(searchWord);
-                if (startAndEndPointsOfSameWords.Count > 0)
+                var filteredVersesResponse = VerseFilter.GetVerseList(chapterFilter);
+                if (filteredVersesResponse.IsFail)
                 {
-                    if (!matchMap.ContainsKey(verse.Id))
-                    {
-                        matchMap.Add(verse.Id, new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>());
-                    }
+                    return filteredVersesResponse.ErrorsAsArray;
+                }
 
-                    matchMap[verse.Id].Add((searchWord, startAndEndPointsOfSameWords));
+                var filteredVerses = filteredVersesResponse.Value;
 
-                    // update summary
+                foreach (var verse in filteredVerses)
+                {
+                    var startAndEndPointsOfSameWords = verse.GetStartAndEndPointsOfSameWords(searchWord);
+                    if (startAndEndPointsOfSameWords.Count > 0)
                     {
-                        if (summaryInfoList.All(x => x.Name != searchWord.AsText()))
+                        if (!matchMap.ContainsKey(verse.Id))
                         {
-                            summaryInfoList.Add(new SummaryInfo { Name = searchWord.AsText() });
+                            matchMap.Add(verse.Id, new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>());
                         }
 
-                        summaryInfoList.First(x => x.Name == searchWord.AsText()).Count += startAndEndPointsOfSameWords.Count;
+                        matchMap[verse.Id].Add((searchWord, startAndEndPointsOfSameWords));
+
+                        // update summary
+                        {
+                            if (summaries.All(x => x.Name != searchWord.AsText()))
+                            {
+                                summaries.Add(new SummaryInfo { Name = searchWord.AsText() });
+                            }
+
+                            summaries.First(x => x.Name == searchWord.AsText()).Count += startAndEndPointsOfSameWords.Count;
+                        }
                     }
                 }
             }
-        }
 
-        var sumOfChapterNumbers = 0;
-        var sumOfVerseNumbers   = 0;
-        var sumOfCounts         = 0;
+            var sumOfChapterNumbers = 0;
+            var sumOfVerseNumbers   = 0;
+            var sumOfCounts         = 0;
 
-        var resultVerseList = new List<WordColorizedVerse>();
+            var resultVerses = new List<WordColorizedVerse>();
 
-        foreach (var (verseId, matchList) in matchMap.ToList().OrderBy(x => x.Key, new VerseNumberComparer()))
-        {
-            resultVerseList.Add(new WordColorizedVerse
+            foreach (var (verseId, matchList) in matchMap.ToList().OrderBy(x => x.Key, new VerseNumberComparer()))
             {
-                Verse     = VerseFilter.GetVerseById(verseId),
-                MatchList = matchList
-            });
+                resultVerses.Add(new WordColorizedVerse
+                {
+                    Verse     = VerseFilter.GetVerseById(verseId),
+                    MatchList = matchList
+                });
 
-            sumOfChapterNumbers += int.Parse(verseId.Split(':')[0]);
-            sumOfVerseNumbers   += int.Parse(verseId.Split(':')[1]);
+                sumOfChapterNumbers += int.Parse(verseId.Split(':')[0]);
+                sumOfVerseNumbers   += int.Parse(verseId.Split(':')[1]);
 
-            sumOfCounts += matchList.Sum(x => x.startPoints.Count).Unwrap();
-        }
-
-        sumOfChapterNumbers.ToString();
-
-        var results = new Element[]
-        {
-            new h4("Sonuçlar"),
-
-            new CountsSummaryView { Counts = summaryInfoList },
-            new VSpace(30),
-            new div
-            {
-                Children(resultVerseList)
+                sumOfCounts += matchList.Sum(x => x.startPoints.Count).Unwrap();
             }
-        };
 
-        return Container(Panel(searchPanel), Panel(results));
+            sumOfChapterNumbers.ToString();
+
+
+            return (resultVerses, summaries);
+        }
+
+        return calculate().Then((resultVerseList, summaryInfoList) =>
+                                {
+                                    var results = new Element[]
+                                    {
+                                        new h4("Sonuçlar"),
+
+                                        new CountsSummaryView { Counts = summaryInfoList },
+                                        new VSpace(30),
+                                        new div
+                                        {
+                                            Children(resultVerseList)
+                                        }
+                                    };
+
+                                    return Container(Panel(searchPanel()), Panel(results));
+                                },
+                                failMessage =>
+                                {
+                                    state.SearchScriptErrorMessage = failMessage;
+
+                                    return Container(Panel(searchPanel()));
+                                });
+        
     }
 
     static Element Container(params Element[] panels)

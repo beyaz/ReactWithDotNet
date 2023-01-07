@@ -27,7 +27,7 @@ class CountsSummaryView : ReactComponent
             style =
             {
                 marginTop    = "5px",
-                border       = "1px dashed rgb(218, 220, 224)",
+                border       = "2px solid rgb(218, 220, 224)",
                 borderRadius = "4px",
 
                 display       = "flex",

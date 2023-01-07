@@ -175,7 +175,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                                 {
                                     var results = new Element[]
                                     {
-                                        new h4("Sonuçlar"),
+                                        new h4("Sonuçlar") + TextAlignCenter,
                                         new CountsSummaryView { Counts = summaryInfoList },
                                         new VSpace(30),
                                         new div
