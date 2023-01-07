@@ -40,7 +40,7 @@ class Helpcomponent : ReactComponent
                     new tr
                     {
                         commandText("2:* | الله"),
-                        description("(2. surede geçen ", (b)"الله", " kelimesini aratır)")
+                        description("(2. surenin tamamında geçen ", (b)"الله", " kelimesini aratır)")
                     },
                     new tr { Height(10) },
                     new tr
@@ -81,14 +81,9 @@ class Helpcomponent : ReactComponent
         }
     }
 
-    void onClickHandler(MouseEvent _)
-    {
-        IsHelpVisible = !IsHelpVisible;
-    }
-
     Element Title()
     {
-        return new FlexRow(AlignItemsCenter, Gap(5), CursorPointer, OnClick(onClickHandler))
+        return new FlexRow(AlignItemsCenter, Gap(5), CursorPointer, OnClick(_ => IsHelpVisible = !IsHelpVisible))
         {
             new img
             {
