@@ -44,7 +44,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     protected override Element render()
     {
-        var searchPanel = new[]
+        IEnumerable<Element> searchPanel ()=> new []
         {
             When(state.IsBlocked, () => new div { PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3) }),
             When(state.IsBlocked, () => new FlexRowCentered
@@ -79,14 +79,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         if (state.ClickCount == 0)
         {
-            return Container(Panel(searchPanel));
+            return Container(Panel(searchPanel()));
         }
 
         var searchScript = SearchScript.ParseScript(state.SearchScript).Unwrap();
 
         if (state.IsBlocked)
         {
-            return Container(Panel(searchPanel));
+            return Container(Panel(searchPanel()));
         }
 
         var resultVerseList = new List<LetterColorizer>();
@@ -141,7 +141,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             }
         };
 
-        return Container(Panel(searchPanel), Panel(results));
+        return Container(Panel(searchPanel()), Panel(results));
     }
 
     static Element Container(params Element[] panels)
