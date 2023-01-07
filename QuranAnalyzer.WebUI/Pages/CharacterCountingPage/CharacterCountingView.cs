@@ -173,7 +173,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         return calculate().Then((resultVerseList, summaryInfoList) =>
                                 {
-                                    var results = new Element[]
+                                    Element[] results = 
                                     {
                                         new h4("Sonuçlar") + TextAlignCenter,
                                         new CountsSummaryView { Counts = summaryInfoList },

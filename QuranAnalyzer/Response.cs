@@ -310,6 +310,17 @@ public static class FpExtensions
         return successFunc(response.Value.Item1,response.Value.Item2);
     }
 
+    public static D Then<A, B, C, D>(this Response<(A, B,C)> response, Func<A, B, C,D> successFunc, Func<string, D> failFunc)
+    {
+        if (response.IsFail)
+        {
+            return failFunc(response.FailMessage);
+        }
+
+        return successFunc(response.Value.Item1, response.Value.Item2, response.Value.Item3);
+    }
+
+
 
     public static Response<B> Apply<A,B>(Func<A,Response<B>> functionAToB, A a)
     {

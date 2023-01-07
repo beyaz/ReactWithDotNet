@@ -43,7 +43,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
     protected override Element render()
     {
-        IEnumerable<Element> searchPanel ()=> new[]
+        IEnumerable<Element> searchPanel() => new[]
         {
             When(state.IsBlocked, () => new div { PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3) }),
             When(state.IsBlocked, () => new FlexRowCentered
@@ -87,10 +87,8 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
             return Container(Panel(searchPanel()));
         }
 
-        Response<(List<WordColorizedVerse> resultVerseList, List<SummaryInfo> summaryInfoList)> calculate()
+        Response<(List<WordColorizedVerse> resultVerseList, List<SummaryInfo> summaryInfoList, (int sumOfChapterNumbers, int sumOfVerseNumbers, int sumOfCounts))> calculate()
         {
-
-
             var matchMap = new Dictionary<string, List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>>();
 
             var summaries = new List<SummaryInfo>();
@@ -150,17 +148,14 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 sumOfCounts += matchList.Sum(x => x.startPoints.Count).Unwrap();
             }
 
-            sumOfChapterNumbers.ToString();
-
-
-            return (resultVerses, summaries);
+            return (resultVerses, summaries, (sumOfChapterNumbers, sumOfVerseNumbers, sumOfCounts));
         }
 
-        return calculate().Then((resultVerseList, summaryInfoList) =>
+        return calculate().Then((resultVerseList, summaryInfoList, _) =>
                                 {
-                                    var results = new Element[]
+                                    Element[] results =
                                     {
-                                        new h4("Sonuçlar"),
+                                        new h4("Sonuçlar") + TextAlignCenter,
 
                                         new CountsSummaryView { Counts = summaryInfoList },
                                         new VSpace(30),
@@ -178,7 +173,6 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
                                     return Container(Panel(searchPanel()));
                                 });
-        
     }
 
     static Element Container(params Element[] panels)
