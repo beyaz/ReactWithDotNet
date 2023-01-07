@@ -1,4 +1,4 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
+﻿namespace QuranAnalyzer.WebUI.Pages.Shared;
 
 class Helpcomponent : ReactComponent
 {
