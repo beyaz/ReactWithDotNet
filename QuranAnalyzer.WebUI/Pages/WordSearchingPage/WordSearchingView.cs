@@ -12,8 +12,6 @@ class WordSearchingViewModel
     public string SearchScript { get; set; }
 
     public string SearchScriptErrorMessage { get; set; }
-
-    public bool IsHelpVisible { get; set; }
 }
 
 class WordSearchingView : ReactComponent<WordSearchingViewModel>
@@ -42,86 +40,6 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         }
     }
 
-    Element Help()
-    {
-        void onClickHandler(MouseEvent _)
-        {
-            state.ClickCount = 0;
-            
-            state.IsHelpVisible = !state.IsHelpVisible;
-        }
-
-        return new FlexRow(AlignItemsCenter, Gap(5), CursorPointer, OnClick(onClickHandler))
-        {
-            new img
-            {
-                wh(20),
-                state.IsHelpVisible ? SrcArrowUp : SrcArrowDown
-            },
-            "Örnek arama komutları"
-        };
-    }
-     
-    static Element HelpDetail()
-    {
-        return new div(TextAlignCenter)
-        {
-            MarginTop(30),
-            
-           new table
-           {
-               new tbody
-               {
-                   new tr
-                   {
-                       new th{"Komut"}+FontWeight500,new th{"Açıklama"}+FontWeight500
-                   },
-                   new tr{Height(15)},
-                   new tr
-                   {
-                       commandText("* | الله" ),
-                       new td{ "(Tüm Kuran boyunca geçen ", (b)"الله", " kelimesini aratır)" }
-                   },
-                   new tr{Height(10)},
-                   new tr
-                   {
-                       commandText("2:* | الله" ),
-                       new td{ "(2. surede geçen ", (b)"الله", " kelimesini aratır)" }
-                   },
-                   new tr{Height(10)},
-                   new tr
-                   {
-                       commandText("2:*, 3:*, 7:5-40 | الله"),
-                       new td{ "(2. surenin tamamında, 3. surenin tamamında ve 7. surenin 5 ila 40. ayetler arasında geçen ", (b)"الله", " kelimesini aratır)" }
-                   },
-                   new tr{Height(10)},
-                   new tr
-                   {
-                       commandText("2:*, -2:4, -2:8 | الله"),
-                       new td{ "(2. surenin tamamında(4. ve 8. ayetler hariç), geçen ", (b)"الله", " kelimesini aratır)" }
-                   },
-                   new tr{Height(10)},
-                   new tr
-                   {
-                       commandText("*, -9:128, -9:129 | الله"),
-                       new td{ "(Tüm mushaf boyunca (9:128 ve 9:129 hariç), geçen ", (b)"الله", " kelimesini aratır)" }
-                   },
-                   new tr{Height(10)},
-                   new tr
-                   {
-                       commandText("2:17 --> 5:4 | الله"),
-                       new td{ "(2. surenin 17. ayeti ile 5. surenin 4. ayeti arasında geçen ", (b)"الله", " kelimesini aratır)" }
-                   }
-               }
-           }
-        };
-
-        static Element commandText(string text)
-        {
-            return new td { (b)text } + Width(150);
-        }
-    }
-    
     protected override Element render()
     {
         var searchPanel = new[]
@@ -150,11 +68,9 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
                 new FlexRow(JustifyContentSpaceBetween)
                 {
-                    Help(),
-                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked }
-                },
-
-                When(state.IsHelpVisible, HelpDetail)
+                    new Helpcomponent(),
+                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked } + Height(22)
+                }
             }
         };
 
@@ -205,9 +121,9 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
         var sumOfChapterNumbers = 0;
         var sumOfVerseNumbers   = 0;
-        var sumOfCounts = 0;
+        var sumOfCounts         = 0;
 
-        var resultVerseList     = new List<WordColorizedVerse>();
+        var resultVerseList = new List<WordColorizedVerse>();
 
         foreach (var (verseId, matchList) in matchMap.ToList().OrderBy(x => x.Key, new VerseNumberComparer()))
         {
@@ -220,12 +136,11 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
             sumOfChapterNumbers += int.Parse(verseId.Split(':')[0]);
             sumOfVerseNumbers   += int.Parse(verseId.Split(':')[1]);
 
-            sumOfCounts += matchList.Sum(x=>x.startPoints.Count).Unwrap();
+            sumOfCounts += matchList.Sum(x => x.startPoints.Count).Unwrap();
         }
 
         sumOfChapterNumbers.ToString();
-        
-        
+
         var results = new Element[]
         {
             new h4("Sonuçlar"),
