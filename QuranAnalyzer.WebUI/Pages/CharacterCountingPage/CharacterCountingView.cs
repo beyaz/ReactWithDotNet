@@ -8,6 +8,8 @@ public class CharacterCountingViewModel
 {
     public int ClickCount { get; set; }
 
+    public bool IncludeBismillah { get; set; } = true;
+
     public bool IsBlocked { get; set; }
 
     public MushafOption MushafOption { get; set; } = new();
@@ -67,13 +69,24 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                 Space(3),
 
-                new CharacterCountingOptionView { MushafOption = state.MushafOption, MushafOptionChanged = MushafOptionChanged },
+                new FlexRow
+                {
+                    new CharacterCountingOptionView { MushafOption = state.MushafOption, MushafOptionChanged = MushafOptionChanged },
+                    Space(30),
+                    new SwitchWithLabel
+                    {
+                        label       = "Besmele'yi dahil et",
+                        value       = state.IncludeBismillah,
+                        valueChange = OnIncludeBismillahChanged
+                    }
+                },
 
                 Space(20),
-                
+
                 new FlexRow(JustifyContentSpaceBetween)
                 {
-                    new Helpcomponent{ShowHelpMessageForLetterSearch = true},
+                    new Helpcomponent { ShowHelpMessageForLetterSearch = true },
+
                     new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked } + Height(22)
                 }
             }
@@ -107,11 +120,16 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                 var filteredVerses = filteredVersesResponse.Value;
 
-                foreach (var summaryInfo in searchLetters.AsListOf(x => new SummaryInfo
-                         {
-                             Count = QuranAnalyzerMixin.GetCountOfLetter(filteredVerses, x.ArabicLetterIndex, state.MushafOption),
-                             Name  = x.MatchedLetter
-                         }))
+                SummaryInfo getSummaryInfo(LetterInfo letterInfo)
+                {
+                    return new SummaryInfo
+                    {
+                        Count = QuranAnalyzerMixin.GetCountOfLetter(filteredVerses, letterInfo.ArabicLetterIndex, state.MushafOption, state.IncludeBismillah),
+                        Name  = letterInfo.MatchedLetter
+                    };
+                }
+
+                foreach (var summaryInfo in searchLetters.AsListOf(getSummaryInfo))
                 {
                     if (summaries.Any(x => x.Name == summaryInfo.Name))
                     {
@@ -124,11 +142,13 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                 foreach (var verse in filteredVerses)
                 {
-                    if (verse.TextWithBismillahAnalyzed.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
+                    var analyzedTextOfVerse = state.IncludeBismillah ? verse.TextWithBismillahAnalyzed : verse.TextAnalyzed;
+
+                    if (analyzedTextOfVerse.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
                     {
                         var letterColorizer = new LetterColorizer
                         {
-                            VerseTextNodes          = verse.TextWithBismillahAnalyzed,
+                            VerseTextNodes          = analyzedTextOfVerse,
                             ChapterNumber           = verse.ChapterNumber.ToString(),
                             VerseNumber             = verse.Index,
                             LettersForColorizeNodes = searchLetters,
@@ -144,7 +164,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
             return (resultVerses, summaries);
         }
-
 
         return calculate().Then((resultVerseList, summaryInfoList) =>
                                 {
@@ -167,9 +186,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                                     return Container(Panel(searchPanel()));
                                 });
-
-
-
     }
 
     static Element Container(params Element[] panels)
@@ -239,5 +255,12 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         }
 
         state.IsBlocked = false;
+    }
+
+    void OnIncludeBismillahChanged(bool isChecked)
+    {
+        state.ClickCount = 0;
+
+        state.IncludeBismillah = isChecked;
     }
 }

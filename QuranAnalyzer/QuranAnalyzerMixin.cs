@@ -303,14 +303,14 @@ public static class QuranAnalyzerMixin
     };
 
     #region Public Methods
-    public static int GetCountOfLetter(IReadOnlyList<Verse> verseList, int arabicLetterIndex, MushafOption option = null)
+    public static int GetCountOfLetter(IReadOnlyList<Verse> verseList, int arabicLetterIndex, MushafOption option = null, bool includeBismillah = true)
     {
         option ??= new MushafOption();
 
-        return verseList.Select(x => GetCountOfLetterInVerse(x, arabicLetterIndex, option)).Sum();
+        return verseList.Select(x => GetCountOfLetterInVerse(x, arabicLetterIndex, option, includeBismillah)).Sum();
     }
 
-    public static int GetCountOfLetterInVerse(Verse verse, int arabicLetterIndex, MushafOption option)
+    public static int GetCountOfLetterInVerse(Verse verse, int arabicLetterIndex, MushafOption option, bool includeBismillah)
     {
         if (verse == null)
         {
@@ -388,7 +388,10 @@ public static class QuranAnalyzerMixin
             }
         }
 
-        return verse.TextWithBismillahAnalyzed.Count(x => x.ArabicLetterIndex == arabicLetterIndex);
+        
+
+
+        return (includeBismillah ? verse.TextWithBismillahAnalyzed : verse.TextAnalyzed).Count(x => x.ArabicLetterIndex == arabicLetterIndex);
     }
     #endregion
 

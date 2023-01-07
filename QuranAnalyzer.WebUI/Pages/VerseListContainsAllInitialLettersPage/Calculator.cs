@@ -121,7 +121,7 @@ class Calculator : ReactComponent<CalculatorModel>
         {
             foreach (var arabicLetterIndex in letterIndexList)
             {
-                if (QuranAnalyzerMixin.GetCountOfLetterInVerse(verse, arabicLetterIndex, option) <= 0)
+                if (QuranAnalyzerMixin.GetCountOfLetterInVerse(verse, arabicLetterIndex, option,true) <= 0)
                 {
                     return false;
                 }
