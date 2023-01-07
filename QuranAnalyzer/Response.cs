@@ -70,6 +70,11 @@ public class Response
     public IReadOnlyList<Error> Errors => errors;
 
     /// <summary>
+    /// Returns as array of errors
+    /// </summary>
+    public Error[] ErrorsAsArray => errors.ToArray();
+
+    /// <summary>
     ///     Gets the fail message.
     /// </summary>
     public string FailMessage => string.Join(Environment.NewLine, errors.Select(e => e.Message));

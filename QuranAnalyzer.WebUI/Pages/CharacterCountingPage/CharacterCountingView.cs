@@ -44,7 +44,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     protected override Element render()
     {
-        IEnumerable<Element> searchPanel ()=> new []
+        IEnumerable<Element> searchPanel() => new[]
         {
             When(state.IsBlocked, () => new div { PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3) }),
             When(state.IsBlocked, () => new FlexRowCentered
@@ -89,46 +89,69 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             return Container(Panel(searchPanel()));
         }
 
-        var resultVerseList = new List<LetterColorizer>();
-
-        var summaryInfoList = new List<SummaryInfo>();
-
-        foreach (var (chapterFilter, searchLetters) in searchScript.Lines)
+        Response<(List<LetterColorizer> resultVerseList, List<SummaryInfo> summaryInfoList)> calculate()
         {
-            foreach (var summaryInfo in searchLetters.AsListOf(x => new SummaryInfo
-                     {
-                         Count = VerseFilter.GetVerseList(chapterFilter).Then(verses => QuranAnalyzerMixin.GetCountOfLetter(verses, x.ArabicLetterIndex, state.MushafOption)).Unwrap(),
-                         Name  = x.MatchedLetter
-                     }))
+            var resultVerses = new List<LetterColorizer>();
+
+            var summaries = new List<SummaryInfo>();
+
+            foreach (var (chapterFilter, searchLetters) in searchScript.Lines)
             {
-                if (summaryInfoList.Any(x => x.Name == summaryInfo.Name))
+                var filteredVersesResponse = VerseFilter.GetVerseList(chapterFilter);
+                if (filteredVersesResponse.IsFail)
                 {
-                    summaryInfoList.First(x => x.Name == summaryInfo.Name).Count += summaryInfo.Count;
-                    continue;
+                    return filteredVersesResponse.ErrorsAsArray;
                 }
 
-                summaryInfoList.Add(summaryInfo);
-            }
+                var filteredVerses = filteredVersesResponse.Value;
 
-            foreach (var verse in VerseFilter.GetVerseList(chapterFilter).Unwrap())
-            {
-                if (verse.TextWithBismillahAnalyzed.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
+                foreach (var summaryInfo in searchLetters.AsListOf(x => new SummaryInfo
+                         {
+                             Count = QuranAnalyzerMixin.GetCountOfLetter(filteredVerses, x.ArabicLetterIndex, state.MushafOption),
+                             Name  = x.MatchedLetter
+                         }))
                 {
-                    var letterColorizer = new LetterColorizer
+                    if (summaries.Any(x => x.Name == summaryInfo.Name))
                     {
-                        VerseTextNodes          = verse.TextWithBismillahAnalyzed,
-                        ChapterNumber           = verse.ChapterNumber.ToString(),
-                        VerseNumber             = verse.Index,
-                        LettersForColorizeNodes = searchLetters,
-                        VerseText               = verse.TextWithBismillah,
-                        Verse                   = verse,
-                        MushafOption            = state.MushafOption
-                    };
+                        summaries.First(x => x.Name == summaryInfo.Name).Count += summaryInfo.Count;
+                        continue;
+                    }
 
-                    resultVerseList.Add(letterColorizer);
+                    summaries.Add(summaryInfo);
+                }
+
+                foreach (var verse in filteredVerses)
+                {
+                    if (verse.TextWithBismillahAnalyzed.Any(x => searchLetters.Any(l => l.ArabicLetterIndex == x.ArabicLetterIndex)))
+                    {
+                        var letterColorizer = new LetterColorizer
+                        {
+                            VerseTextNodes          = verse.TextWithBismillahAnalyzed,
+                            ChapterNumber           = verse.ChapterNumber.ToString(),
+                            VerseNumber             = verse.Index,
+                            LettersForColorizeNodes = searchLetters,
+                            VerseText               = verse.TextWithBismillah,
+                            Verse                   = verse,
+                            MushafOption            = state.MushafOption
+                        };
+
+                        resultVerses.Add(letterColorizer);
+                    }
                 }
             }
+
+            return (resultVerses, summaries);
         }
+
+        var responseCalculate = calculate();
+        if (responseCalculate.IsFail)
+        {
+            state.SearchScriptErrorMessage = responseCalculate.FailMessage;
+
+            return Container(Panel(searchPanel()));
+        }
+
+        var (resultVerseList, summaryInfoList) = responseCalculate.Value;
 
         var results = new Element[]
         {
