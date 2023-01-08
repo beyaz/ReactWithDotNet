@@ -50,7 +50,8 @@ public class WhereIsTheProblemPage : ReactComponent
                 "Tabii bu fark maksimum 1-2 olacak şekilde bir fark. Mesela Bakara suresinin 282.inci ayetinde biri 108 öteki 107 saymış.",
                 new br(),
                 new br(),
-                "- Başka veriler Reşadın doğru saydığını gösteriyor."
+                "- Başka veriler Reşad'ın doğru saydığını gösteriyor.",
+                new a{href = "https://www.youtube.com/watch?v=KO1UgN7bXrM&t=715s"}
             }
 
 
