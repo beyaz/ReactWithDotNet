@@ -156,10 +156,7 @@ class View : ReactComponent<MainViewModel>
                 return new AdditionalVersesPage();
             }
 
-            if (state.PageId == PageId.LetterAnalyzerPage)
-            {
-                return new LetterAnalyzerPage.View();
-            }
+            
 
             
 
