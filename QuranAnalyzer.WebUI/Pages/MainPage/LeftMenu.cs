@@ -22,7 +22,6 @@ class LeftMenu : ReactComponent
         ("İletişim", new[] { PageId.ContactPage }),
         ("Harf Sayım Programı", new[] { PageId.CharacterCounting }),
         ("Kelime Sayım Programı", new[] { PageId.WordSearchingPage }),
-        // TODO: ("Harf Analiz Programı", new[] { PageId.LetterAnalyzerPage })
     };
 
     public string SelectedPageId { get; set; }
