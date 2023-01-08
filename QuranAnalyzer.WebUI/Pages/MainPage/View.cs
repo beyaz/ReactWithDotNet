@@ -156,9 +156,13 @@ class View : ReactComponent<MainViewModel>
                 return new AdditionalVersesPage();
             }
 
+            if (state.PageId == PageId.CountOfAllahPage)
+            {
+                return new QuranAnalyzer.WebUI.Pages.CountOfAllahPage.CountOfAllah();
+            }
             
 
-            
+
 
             return new MainPageContent();
         }

@@ -1,51 +1,41 @@
 ﻿using QuranAnalyzer.WebUI.Components;
 using static QuranAnalyzer.ArabicLetter;
 
-namespace QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
+namespace QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
 
-class PageVerseListContainsAllInitialLetters : ReactComponent
+class CountOfAllah : ReactComponent
 {
-    public int? SelectedIndex { get; set; }
-
     protected override Element render()
     {
-        static Element raisePanel(Element element) => new div
-        {
-            BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadius(5), MarginTopBottom(10),
-            element
-        };
-
         return new Article
         {
-            new LargeTitle("Bütün Başlangıç Harflerini İçeren Ayetler"),
+
+            
 
             new p
             {
-                "Toplamda 14 tane başlangıç harfi vardır. ",
-                "Kur’an’ın 29 suresinin 30 ayetinde bu başlangıç harfleri farklı kombinasyonlar oluşturacak şekilde surelerin başlarında bulunmaktadır.",
-                new br(),
-                new br(),
-                "Peki bu 14 başlangıç harfinin hepsini birden içeren ayetlerde bir ilginçlik olabilir mi?",
+                "Acaba Kuranda geçen her bir 'Allah' kelimesinin geçiş yerleri ile ilgili bir şey olabilir mi?",
                 new br(),
                 "İşte bu yazıda aşağıdaki programlar yardımı ile bu bilgi incelenecektir."
             },
-            new FlexRow(Gap(3))
-            {
-                (b)"Not:", "Komut satırları gerçek zamanlı olarak çalışmaktadır. İsterseniz komut satırlarında değişiklik yaparak farklı aramalar yapabilirsiniz."
-            },
-
+            
             seperation,
 
-            "Aşağıdaki program verilen harflerin sayısal değerini (aynen Roma rakamlarında olduğu gibi Arap harflerinin sayısal karşılığını) verir.",
-            raisePanel(new NumericValueCalculator
+            "Aşağıdaki program verilen kelimeleri arar. Bulunan kelimelerin geçtiği sure ve ayetlerin toplamını ve kaç adet olduğunu gösterir. ",
+            new br(),
+            "Önece basit bir arama yapalım ve programın nasıl çalıştığını gözlemleyelim.",
+            raisePanel(new Calculator
             {
-                Letters = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
+                Word         = "الله,والله,بالله,لله,ولله,تالله,فالله,فلله,ءالله,ابالله,وتالله",
+                SearchScript = "2:5 --> 2:9",
+                ShowDetails = true
             }),
             new VSpace(10),
             "Eğer 693 sayısını görüyor iseniz hesaplamalarımız doğru gidiyor demektir. ",
             "İlk bakışta bu rakam pek bir şey ifade etmiyor gibi gelebilir ama şimdlik aklınızın bir köşesinde tutun.",
 
             seperation,
+
 
             "Peki bu 14 başlangıç harfinin tamamını içeren ayet sayısı acaba kaçtır? Aşağıdaki program yardımı ile hesaplayalım.",
             new VSpace(10),
@@ -54,7 +44,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
             {
                 ShowVerseList = true,
                 SearchScript  = "*",
-                Letters       = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
+                Word       = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
             }),
 
             "Eğer 114 adet buldu iseniz işte burada ilginçlik başlıyor. ",
@@ -69,7 +59,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
             {
                 ShowNumbers  = true,
                 SearchScript = "*",
-                Letters      = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
+                Word      = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
             }),
 
             "Eğer sonuç olarak 9702 rakamını görüyor iseniz. Bu rakamı biraz inceleyelim. Bu rakam şu iki sayının çarpımından oluşmaktadır.",
@@ -78,6 +68,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
             new br(),
             "Toplam 14 tane başlangıç harfi vardır ve bu 14 harfin sayısal toplamının 693 olduğunu yazının ilk başında zaten hesaplamıştık. ",
             "Bu harflerin tamamını barındıran ayetlerin sure ve ayet numaraları toplamının da bu iki rakamın çarpımını(9702) vermesi oldukça ilginç.",
+
 
             new VSpace(40),
             (b)"Sonuç: ",
@@ -98,8 +89,16 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
             new br(),
             new br(),
             "Özetle burada bir ilginçlik var mı? yok mu? Artık bu soru ile başbaşa olan sizsiniz. :)"
+
+
         };
 
         static Element seperation() => new FlexRowCentered(MarginTopBottom(10)) { "* * *" };
+
+        static Element raisePanel(Element element) => new div
+        {
+            BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadius(5), MarginTopBottom(10),
+            element
+        };
     }
 }
