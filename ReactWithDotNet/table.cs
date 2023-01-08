@@ -4,6 +4,16 @@ public class table : HtmlElement
 {
     public table(params IModifier[] modifiers) : base(modifiers) { }
 }
+public class thead : HtmlElement
+{
+    public thead()
+    {
+
+    }
+
+    public thead(params IModifier[] modifiers) : base(modifiers) { }
+}
+
 public class tbody : HtmlElement
 {
     public tbody()
@@ -13,6 +23,19 @@ public class tbody : HtmlElement
 
     public tbody(params IModifier[] modifiers) : base(modifiers) { }
 }
+
+public class tfoot : HtmlElement
+{
+    public tfoot()
+    {
+
+    }
+
+    public tfoot(params IModifier[] modifiers) : base(modifiers) { }
+}
+
+
+
 public class tr : HtmlElement
 {
     [React]

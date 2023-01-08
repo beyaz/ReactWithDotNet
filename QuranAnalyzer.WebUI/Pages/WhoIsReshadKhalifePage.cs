@@ -272,7 +272,7 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                 "19 sistemini ilk bulduğunda popülaritesi varken istese bu fikirlerini pek duyurmayıp o popülaritenin kaymağını yiyebilirdir.",
                 "Fakat o tam tersini yapıyor. Emeklilik parası ile gidip mescid kuruyor. " +
                 "Hadisleri dinin kaynağı olarak görmediğini ve dinin tek kaynağının kuran olduğunu üzerine basa basa tekrarlıyor.",
-                "Bu uğurda şöhreti elden gidiyor. Hatta bir video da kamera yanlışlıkla kayıyor arkasında toplamda 10 kişilik bir saf bile yok.",
+                "Bu uğurda şöhreti elden gidiyor. Ölüm tehditleri aldığı halde geri adım atmıyor. Hatta bir videoda kamera yanlışlıkla kayıyor arkasında toplamda 10 kişilik bir saf bile yok.",
                 "Zaten bu fikirleri yüzünden de 55 yaşında sabah namazında öldürülüyor.",
                 
                 new br(),

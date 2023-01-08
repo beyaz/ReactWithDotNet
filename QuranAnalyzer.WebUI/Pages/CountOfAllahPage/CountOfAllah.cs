@@ -9,8 +9,8 @@ class CountOfAllah : ReactComponent
     {
         return new Article
         {
+            new LargeTitle("9. 128-129 üzerine ufak bir inceleme"),
 
-            
 
             new p
             {
@@ -23,72 +23,67 @@ class CountOfAllah : ReactComponent
 
             "Aşağıdaki program verilen kelimeleri arar. Bulunan kelimelerin geçtiği sure ve ayetlerin toplamını ve kaç adet olduğunu gösterir. ",
             new br(),
-            "Önece basit bir arama yapalım ve programın nasıl çalıştığını gözlemleyelim.",
+            "Önce basit bir arama yapalım ve programın nasıl çalıştığını gözlemleyelim.",
+            new br(),
+            "Mesela 2. surenin 60 ila 62. ayetleri arasında geçen 'Allah' kelimelerini aratalım.",
+            
             raisePanel(new Calculator
             {
                 Word         = "الله,والله,بالله,لله,ولله,تالله,فالله,فلله,ءالله,ابالله,وتالله",
-                SearchScript = "2:5 --> 2:9",
+                SearchScript = "2:60 --> 2:62",
                 ShowDetails = true
             }),
             new VSpace(10),
-            "Eğer 693 sayısını görüyor iseniz hesaplamalarımız doğru gidiyor demektir. ",
-            "İlk bakışta bu rakam pek bir şey ifade etmiyor gibi gelebilir ama şimdlik aklınızın bir köşesinde tutun.",
+            "Böylece programın neyi hesapladığını kısa bir veri üzerinde görmüş olduk. ",
+            
+            new p
+            {
+                "Peki tüm mushaf boyunca bu aramayı yapalım."
+            },
+            raisePanel(new Calculator
+            {
+                Word         = "الله,والله,بالله,لله,ولله,تالله,فالله,فلله,ءالله,ابالله,وتالله",
+                SearchScript = "*"
+            }),
+            
+            "Sonuçlardan da görüldüğü üzere bu toplamlarda herhangi bir ilginçlik yok.",
 
             seperation,
 
 
-            "Peki bu 14 başlangıç harfinin tamamını içeren ayet sayısı acaba kaçtır? Aşağıdaki program yardımı ile hesaplayalım.",
+            "Şimdi ise üzerinde tartışmanın döndüğü konu olan 9. surenin 128 ve 129 nolu cümleleri çıkarıp sayalım.",
             new VSpace(10),
 
             raisePanel(new Calculator
             {
-                ShowVerseList = true,
-                SearchScript  = "*",
-                Word       = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
+                Word         = "الله,والله,بالله,لله,ولله,تالله,فالله,فلله,ءالله,ابالله,وتالله",
+                SearchScript = "*, -9:128, -9:129"
             }),
 
-            "Eğer 114 adet buldu iseniz işte burada ilginçlik başlıyor. ",
-            "114 Kuran'daki toplam sure sayısıdır. ",
-            "Bulunan ilk ayet ise 2. sureinin 19. ayeti olması gibi  başka detaylar da var ama detayda boğulmamak için derine girmiyorum.",
-
-            seperation,
-
-            "Gelelim son hesaplamaya. Bu geçişlerin sure ve ayet numaralarını topladığımızda karşımıza hangi sayı çıkıyor.",
-
-            raisePanel(new Calculator
+            "Sanırım çok fazla söze gerek yok. Burada dikkat edilmesi gereken nokta şu;",
+            new br(),
+            "Herhangi bir surenin herhangi bir cümlesini  çıkarsanız veya herhangi bir sureye fazladan bir 'Allah' kelimesi ekleseniz bu tablo bozulurdu. ",
+            "İşte 19 sisteminin Kuranı koruması böyle oluyor.",
+            "Herhangi iki ayet değil özellikle bu bahsi geçen üzerinde bazı şüphelerin tartışmaların olduğu iki cümle çıkarılınca bu tablonun oluşması çok ilginç.",
+            "Özetle Kurandaki her bir 'Allah' kelimesinin geçiş yerleri dahi bir öneme sahiptir.",
+            
+            
+            
+            new br(),
+            new br(),
+            "İşte 'sırf 19 rakamına uymuyor diye Kurandan ayet atılıyor' iddasının aslı budur." ,
+            " Tabii şunu da belirtmem gerekiyor. Reşad bunun gibi 70 den fazla matematiksel veri de sunuyor.",
+            
+            
+            new p
             {
-                ShowNumbers  = true,
-                SearchScript = "*",
-                Word      = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
-            }),
-
-            "Eğer sonuç olarak 9702 rakamını görüyor iseniz. Bu rakamı biraz inceleyelim. Bu rakam şu iki sayının çarpımından oluşmaktadır.",
-            new br(),
-            new FlexRowCentered { "14 x 693 = 9702" },
-            new br(),
-            "Toplam 14 tane başlangıç harfi vardır ve bu 14 harfin sayısal toplamının 693 olduğunu yazının ilk başında zaten hesaplamıştık. ",
-            "Bu harflerin tamamını barındıran ayetlerin sure ve ayet numaraları toplamının da bu iki rakamın çarpımını(9702) vermesi oldukça ilginç.",
-
-
-            new VSpace(40),
-            (b)"Sonuç: ",
-            "Açıkcası herhangi bir kitapda buna benzer bir hesaplama ile önümüze böyle rakamlar koyulsa haklı olarak pek dikkate almayabilirdik. ",
-            "Sırf işine gelen rakamı bulmak için zorlamışsın diyebilirdirdik.",
-            new br(),
-            "Elbetteki eleştirmek isteyen her türlü bir yol bulabilir. Mesela niye rakamları çarpmak yerine topladın? ",
-            "Neden harfin sayısal karşılığını aldın da sırasını almadın? ",
-            "Benimde önüme bir kitap ver bende bazı şeyleri çarpar böler sana istediğin rakamı veriririm. Buna benzer şeyler söyleyebilirdik. ",
-            "Yahut tam tersi", new br(),
-            "Evet burada bir gariplik var  toplamda 114 sure olması ve bu başlangıç harflerini içeren toplamda 114 tane ayet olması vesaire vesaire...",
-            new br(),
-            new br(),
-            "Burada önemli olan olay şu: Eğer bir kitapda buna benzer 1-2 tane değil, ",
-            "düzinelerce ilginç ve hep aynı rakama yani 19 rakamına işaret eden verilerin olmasıdır. ",
-            "Kaldıki bu başlangıç harflerinden hemen sonraki cümlelerin şöyle başladığını hatırlayın.",
-            (b)"'Bu harfler kitabın kanıtlarıdır...'",
-            new br(),
-            new br(),
-            "Özetle burada bir ilginçlik var mı? yok mu? Artık bu soru ile başbaşa olan sizsiniz. :)"
+                "Burada kendi fikrimi şöyle ifade etmek istiyorum. ",
+                "Ben bu yazıda konunun ne olduğunun anlaşılması için sunulan verilerden sadece 1 tanesini örnek olarak inceledim. ",
+                "Bu şekilde 70 den fazla veri var. ",
+                "Başlangıç harfleri'nin bu Tevbe suresi üzerindeki tartışma ile pek ilgisi olmadığı için bu konuya dair bu yazı dışında herhangi bir yazı sunmadım. ",
+                "Umarım konuyu aktarabilmişimdir."
+                
+            }
 
 
         };

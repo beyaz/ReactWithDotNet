@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Threading;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using ReactWithDotNet.Libraries.react_free_scrollbar;
@@ -79,9 +80,7 @@ class Calculator : ReactComponent<CalculatorModel>
 
     Element GetCalculationText()
     {
-        var sumOfChapterNumbers = 0;
-        var sumOfVerseNumbers   = 0;
-        var sumOfCounts         = 0;
+       
 
         var filteredVerses = VerseFilter.GetVerseList(state.SearchScript).Unwrap();
 
@@ -96,12 +95,14 @@ class Calculator : ReactComponent<CalculatorModel>
             if (count > 0)
             {
                 details.Add((verse.ChapterNumber, verse.IndexAsNumber,count));
-
-                sumOfChapterNumbers += verse.ChapterNumber;
-                sumOfVerseNumbers   += verse.IndexAsNumber;
-                sumOfCounts         += count;
             }
         }
+
+
+        var sumOfChapterNumbers = details.Select(x=>x.chapterNumber).Sum();
+        var sumOfVerseNumbers   = details.Select(x => x.verseNumber).Sum();
+        var sumOfCounts         = details.Select(x => x.count).Sum();
+
 
         static IEnumerable<Element> numberToElement(int value)
         {
@@ -145,60 +146,97 @@ class Calculator : ReactComponent<CalculatorModel>
 
         if (ShowDetails)
         {
-            var header = new FlexRow(ComponentBorder)
+            return new table
             {
-                new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
+                new thead
                 {
-                    new b{"Sure No"},
-                },
-
-                new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
-                {
-                    new b{"Ayet No"},
-                },
-
-                new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
-                {
-                    new b{"Adet"},
-                }
-            };
-            
-            var detailsAsHtml = new FlexColumn(AlignItemsStretch)
-            {
-                details.Select(x => new FlexRow(ComponentBorder)
-                {
-                    new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
+                    new tr
                     {
-                        new FlexRow(AlignItemsFlexEnd)
+                        new th
+                        {
+                            new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
+                            {
+                                new b{"Sure No"}
+                            }
+                        },
+                        new th
+                        {
+                            new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
+                            {
+                                new b{"Ayet No"}
+                            }
+                        },
+                        new th
+                        {
+                            new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
+                            {
+                                new b{"Adet"}
+                            }
+                        }
+                    }
+                },
+                
+                new tbody
+                {
+                    details.Select(x => new tr(ComponentBorder)
+                    {
+                        new th(TextAlignCenter, FontWeight500)
                         {
                             x.chapterNumber.ToString()
-                        }
-                    },
+                        },
 
-                    new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
-                    {
-                        new FlexRow(AlignItemsFlexEnd)
+                        new th(TextAlignCenter,FontWeight500)
                         {
                             x.verseNumber.ToString()
-                        }
-                    },
+                        },
 
-                    new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
-                    {
-                        new FlexRow(AlignItemsFlexEnd)
+                        new th(TextAlignCenter,FontWeight500)
                         {
                             x.count.ToString()
                         }
+                    })
+                },
+                
+                new tfoot
+                {
+                    new th
+                    {
+                        new FlexColumn( AlignItemsCenter,ComponentBorder)
+                        {
+                            new b{"Toplam"},
+                            new FlexRow(AlignItemsFlexEnd)
+                            {
+                                numberToElement(sumOfChapterNumbers)
+                            }
+                        }
+                    },
+                    new th
+                    {
+                        new FlexColumn( AlignItemsCenter,ComponentBorder)
+                        {
+                            new b{"Toplam"},
+                            new FlexRow(AlignItemsFlexEnd)
+                            {
+                                numberToElement(sumOfVerseNumbers)
+                            }
+                        }
+                    },
+                    new th
+                    {
+                        new FlexColumn( AlignItemsCenter,ComponentBorder)
+                        {
+                            new b{"Toplam"},
+                            new FlexRow(AlignItemsFlexEnd)
+                            {
+                                numberToElement(sumOfCounts)
+                            }
+                        }
                     }
-                })
+                }
             };
-
-            return new FlexColumn
-            {
-                header,
-                detailsAsHtml,
-                results
-            };
+            
+            
+            
         }
         
         return results;
@@ -219,6 +257,12 @@ class Calculator : ReactComponent<CalculatorModel>
         if (verseList.IsFail)
         {
             state.ErrorText = verseList.FailMessage;
+            return;
+        }
+
+        if (verseList.Value.Count == 0)
+        {
+            state.ErrorText = "En az bir tane ayet seçilmelidir.";
             return;
         }
 

@@ -17,7 +17,8 @@ class LeftMenu : ReactComponent
             PageId.AboutEdipYukselPage,
             PageId.WhyFamousPeopleAreSilentPage,
             PageId.AdditionalVersesPage,
-            PageId.WhereIsTheProblemPage
+            PageId.WhereIsTheProblemPage,
+            PageId.CountOfAllahPage
         }),
         ("İletişim", new[] { PageId.ContactPage }),
         ("Harf Sayım Programı", new[] { PageId.CharacterCounting }),

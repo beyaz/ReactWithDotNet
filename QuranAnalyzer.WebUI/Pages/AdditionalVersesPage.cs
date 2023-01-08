@@ -74,7 +74,7 @@ public class AdditionalVersesPage : ReactComponent
             },
             new FlexRowCentered
             {
-                new a{href = "#", text = "Bir örnek"}
+                new a{href = GetPageLink(PageId.CountOfAllahPage), text = "9. 128-129 üzerine ufak bir inceleme"}
             },
             new p
             {
