@@ -19,26 +19,40 @@ public class WhereIsTheProblemPage : ReactComponent
                 @"Gayet haklı bir soru.",
                 new br(),
                 "Elinize sıradan bir Kuran alın bu sitede başlangıç haflerinde gösterilen her bir maddeyi bizzat kendiniz teyiz edebilirsiniz.",
+
+                new br(),
                 new br(),
                 "Sadece iki maddeyi teyid edemezsiniz.",
-                "1 - elinizdeki mushafta 68. sureyi açtığınızda surenin en başında sadece bir tane Nun harfi görürsünüz." +
-                " Ama 19 sistemini ilk keşfeden kişi burada tek nun değil çift nun harfi olduğunu söylüyor. " ,
-                " Hatta bu 19 sistemini ilk bu nun ile başlayan surede farkediyor. Eski mushaflarda bunun iki nun ile yazıldığını gördüm diyor.", 
+                new br(),
+                new br(),
+
+                "1 - Elinizdeki mushafta 68. sureyi açtığınızda surenin en başında sadece bir tane ", AsLetter(ArabicLetter.Nun), " harfi görürsünüz.",
+                " 19 sistemini ilk keşfeden kişi burada tek nun değil çift nun harfi olduğunu söylüyor. ",
+                " Hatta bu 19 sistemini ilk bu nun ile başlayan surede farkediyor. Eski mushaflarda bunun iki nun ile yazıldığını gördüm diyor.",
+
+                new br(),
+                new br(),
+                "2- Hangi mushafı kullanırsanız kullanın ", AsLetter(ArabicLetter.Alif), " harfi neredeyse tüm mushaflarda farklı sayıdadır. ",
+                "Mesela bazı cümleler bazı mushaflarda atıyorum 5 elif içerirken başka mushafda 6 elif harfi içerebilir. ",
+                "Özetle burada şu soru haklı olarak soruluyor. Ne malum Reşad'ın Elif harfini doğru saydığı? ",
+                "Neden onun sayımlarını doğru kabul edelim ki? ",
+                "Belki sırf 19 s uydurmak için fazladan elif harfi saymış olabilir? ",
+
+                new br(),
+                new br(),
                 
+                "- Eğer art niyetli olsa neden çok uzun ayetlerde bunu yapmadı. Şöyle açıklayayım; " ,
+                "mesela 2. surenin 233'üncü ayetinde Reşad ın aktarmış olduğu mushafta da Tanzil.net den alınan mushafta da aynı sayıda toplamda 53 tane elif sayımı yapılmış.",
+                new br(),
+                "Buna rağmen 2:81 de biri 8 elif saymış diğeri 7 elif saymış.",
+                "Eğer kandırma yoluna gidecek biri kısa ayetler yerine uzun cümlelerde bu şekilde bir oynamaya giderdi. ",
+                "Tam 81 farklı ayette Reşad ve Tanzil.net Elif harfini farklı saymışlar." ,
+                "Tabii bu fark maksimum 1-2 olacak şekilde bir fark. Mesela Bakara suresinin 282.inci ayetinde biri 108 öteki 107 saymış.",
                 new br(),
                 new br(),
-                "2- Hangi mushafı kullanırsanız kullanın elif harfi neredeyse tüm mushaflarda farklı sayıdadır. Mesela bazı cümleler bazı mushaflarda atıyorum 5 elif içerirken başka mushafda 6 elif harfi içerebilir.",
-                "Özetle burada şu soru haklı olarak soruluyor. Ne malum Reşad'ın Elif harfini doğru saydığı? " ,
-                "Neden onun sayımlarını doğru kabul edelim ki?",
-                "Belki sırf 19 s uydurmak için fazladan elif harfi saymış olabilir?",
-                
-                new br(),
-                new br(),
-                "- Neden çok uzun ayetlerde bunu yapmadı da kısa ayetlerde bunu yaptı ?",
-                "- Kesin bilebilir miyiz hayır.",
                 "- Başka veriler Reşadın doğru saydığını gösteriyor."
-            },
-            
+            }
+
 
         };
     }

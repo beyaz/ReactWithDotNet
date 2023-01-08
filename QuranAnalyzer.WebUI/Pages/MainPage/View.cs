@@ -160,7 +160,12 @@ class View : ReactComponent<MainViewModel>
             {
                 return new QuranAnalyzer.WebUI.Pages.CountOfAllahPage.CountOfAllah();
             }
-            
+
+            if (state.PageId == PageId.WhereIsTheProblemPage)
+            {
+                return new WhereIsTheProblemPage();
+            }
+
 
 
 
