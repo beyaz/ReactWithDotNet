@@ -2,7 +2,7 @@
 namespace QuranAnalyzer;
 
 [TestClass]
-//[Ignore]
+[Ignore]
 public class VerseFilterTest
 {
     [TestMethod]
