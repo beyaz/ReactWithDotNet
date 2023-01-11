@@ -102,10 +102,9 @@ public class LetterColorizer : ReactComponent
             innerHTML = html.ToString(),
             style =
             {
-                fontSize    = "1.4rem",
-                padding     = "5px",
-                direction   = "rtl",
-                marginRight = "auto"
+                FontSize(38),
+                Padding(5),
+                DirectionRtl
             }
         };
 
@@ -135,13 +134,12 @@ public class LetterColorizer : ReactComponent
             children = { topLegend, new VSpace(5), textView },
             style =
             {
-                marginTop    = "5px",
-                border       = "1px dashed rgb(218, 220, 224)",
-                borderRadius = "4px",
-
-                display       = "flex",
-                flexDirection = "column",
-                alignItems    = "flex-start"
+                DisplayFlex,
+                FlexDirectionColumn,
+                AlignItemsFlexEnd,
+                
+                Border("1px dashed rgb(218, 220, 224)"),
+                BorderRadius(4)
             }
         };
     }
