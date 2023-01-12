@@ -4,7 +4,7 @@ namespace ReactWithDotNet;
 
 static class Extensions
 {
-    static void Foreach<T>(IReadOnlyList<T> items, Action<T> action)
+    public static void Foreach<T>(this IReadOnlyList<T> items, Action<T> action)
     {
         if (items == null)
         {
