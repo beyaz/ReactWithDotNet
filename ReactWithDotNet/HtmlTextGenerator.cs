@@ -49,10 +49,9 @@ static class HtmlTextGenerator
 
                 if (propertyValue is string)
                 {
-                    sb.Append(" style=\"");
+                    sb.Append($" {propertyAccessInfo.PropertyInfo.Name}=\"");
                     sb.Append(propertyValue);
                     sb.Append("\"");
-                    continue;
                 }
             }
 
