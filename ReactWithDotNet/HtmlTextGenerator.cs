@@ -38,6 +38,24 @@ static class HtmlTextGenerator
                 }
             }
 
+            var reactAttributedPropertiesOfType = ElementSerializer.GetReactAttributedPropertiesOfType(element.GetType());
+            foreach (var propertyAccessInfo in reactAttributedPropertiesOfType)
+            {
+                var propertyValue = propertyAccessInfo.GetValueFunc(element);
+                if (propertyValue == propertyAccessInfo.DefaultValue)
+                {
+                    continue;
+                }
+
+                if (propertyValue is string)
+                {
+                    sb.Append(" style=\"");
+                    sb.Append(propertyValue);
+                    sb.Append("\"");
+                    continue;
+                }
+            }
+
             sb.Append(">");
 
             if (!string.IsNullOrWhiteSpace(htmlElement.innerText))

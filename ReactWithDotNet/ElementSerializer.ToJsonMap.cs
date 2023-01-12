@@ -478,10 +478,8 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
-    static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
+    internal static IReadOnlyList<PropertyAccessInfo> GetReactAttributedPropertiesOfType(Type elementType)
     {
-        var elementType = element.GetType();
-
         if (!ReactAttributedPropertiesOfType.TryGetValue(elementType, out var reactProperties))
         {
             reactProperties = new List<PropertyAccessInfo>();
@@ -493,6 +491,13 @@ partial class ElementSerializer
 
             ReactAttributedPropertiesOfType.TryAdd(elementType, reactProperties);
         }
+
+        return reactProperties;
+    }
+
+    static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
+    {
+        var reactProperties = GetReactAttributedPropertiesOfType(element.GetType());
 
         foreach (var item in reactProperties)
         {
@@ -847,7 +852,7 @@ partial class ElementSerializer
         public ElementSerializerContext SerializerContext { get; set; }
     }
 
-    class PropertyAccessInfo
+    internal class PropertyAccessInfo
     {
         public object DefaultValue { get; init; }
         public Func<object, object> GetValueFunc { get; init; }
