@@ -51,7 +51,7 @@ public class LetterColorizer : ReactComponent
                         }
                     };
 
-                    html.Append($"<span style=\"{span.style.ToCss()}\">{span.innerText}</span>");
+                    html.Append(span);
 
                     cursor = letterInfo.StartIndex + len;
 
@@ -74,7 +74,7 @@ public class LetterColorizer : ReactComponent
                 padding        = "5px",
                 justifyContent = "center",
                 flexWrap       = "wrap"
-            },
+            }
         };
 
         for (var j = 0; j < lettersForColorize.Count; j++)

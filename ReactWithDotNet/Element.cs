@@ -90,6 +90,14 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     }
 
     /// <summary>
+    ///     Represents element as html text as possible.
+    /// </summary>
+    public override string ToString()
+    {
+        return HtmlTextGenerator.ToHtml(this);
+    }
+
+    /// <summary>
     ///     Gets the enumerator.
     /// </summary>
     IEnumerator IEnumerable.GetEnumerator()

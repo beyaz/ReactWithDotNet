@@ -7,61 +7,69 @@ static class HtmlTextGenerator
     public static string ToHtml(Element element)
     {
         var sb = new StringBuilder();
-        
-        Append(sb,0, element);
+
+        Append(sb, 0, element);
 
         return sb.ToString();
     }
 
     static void Append(StringBuilder sb, int indent, Element element)
     {
-        void push(string value)
-        {
-            sb.Append("".PadLeft(indent, ' '));
-            sb.Append(value);
-        }
         
         if (element is HtmlElement htmlElement)
         {
+            
             var tag = htmlElement.Type;
+
+            var padding = "".PadLeft(indent, ' ');
             
-            push("<");
-            push(tag);
-            
+            sb.Append(padding); 
+            sb.Append("<");
+            sb.Append(tag);
 
             if (htmlElement._style is not null)
             {
                 var css = htmlElement._style.ToCss();
                 if (!string.IsNullOrWhiteSpace(css))
                 {
-                    push(" style=\"");
-                    push(css);
-                    push("\"");
+                    sb.Append(" style=\"");
+                    sb.Append(css);
+                    sb.Append("\"");
                 }
             }
-            push(">");
+
+            sb.Append(">");
 
             if (!string.IsNullOrWhiteSpace(htmlElement.innerText))
             {
-                sb.AppendLine();
-                push(htmlElement.innerText);
+                sb.Append(htmlElement.innerText);
             }
-            
-            if (htmlElement._children is not null)
+
+            if (!string.IsNullOrWhiteSpace(htmlElement.dangerouslySetInnerHTML?.__html))
+            {
+                sb.Append(htmlElement.dangerouslySetInnerHTML?.__html);
+            }
+
+            if (htmlElement._children?.Count > 0)
             {
                 foreach (var child in htmlElement.children)
                 {
                     sb.AppendLine();
-                    Append(sb,indent+2,child);
+                    Append(sb, indent + 2, child);
                 }
+
+                sb.AppendLine();
             }
 
-            push("</");
-            push(tag);
-            push(">");
-            
-            return;
+            sb.Append(padding);
+            sb.Append("</");
+            sb.Append(tag);
+            sb.Append(">");
         }
-        
+        else if (element is ReactStatefulComponent reactComponent)
+        {
+            var root = reactComponent.InvokeRender();
+            Append(sb, indent + 2, root);
+        }
     }
 }

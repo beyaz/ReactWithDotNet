@@ -180,7 +180,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                                         new VSpace(30),
                                         new div
                                         {
-                                            Children(resultVerseList)
+                                            dangerouslySetInnerHTML = string.Join(Environment.NewLine,resultVerseList.Select(x=>x.ToString()))
                                         }
                                     };
 
