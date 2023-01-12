@@ -4,6 +4,24 @@ namespace ReactWithDotNet;
 
 static class Extensions
 {
+    static void Foreach<T>(IReadOnlyList<T> items, Action<T> action)
+    {
+        if (items == null)
+        {
+            throw new ArgumentNullException(nameof(items));
+        }
+
+        if (items == null)
+        {
+            throw new ArgumentNullException(nameof(items));
+        }
+
+        for (var i = 0; i < items.Count; i++)
+        {
+            action(items[i]);
+        }
+    }
+    
     public static string GetNameWithToken(this MethodInfo methodInfo)
     {
         return $"{methodInfo.MetadataToken}|{methodInfo.Name}";

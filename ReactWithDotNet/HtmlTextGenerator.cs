@@ -1,4 +1,5 @@
 using System.Text;
+using static ReactWithDotNet.ElementSerializer;
 
 namespace ReactWithDotNet;
 
@@ -15,15 +16,13 @@ static class HtmlTextGenerator
 
     static void Append(StringBuilder sb, int indent, Element element)
     {
-        
         if (element is HtmlElement htmlElement)
         {
-            
             var tag = htmlElement.Type;
 
             var padding = "".PadLeft(indent, ' ');
-            
-            sb.Append(padding); 
+
+            sb.Append(padding);
             sb.Append("<");
             sb.Append(tag);
 
@@ -38,20 +37,20 @@ static class HtmlTextGenerator
                 }
             }
 
-            var reactAttributedPropertiesOfType = ElementSerializer.GetReactAttributedPropertiesOfType(element.GetType());
-            foreach (var propertyAccessInfo in reactAttributedPropertiesOfType)
-            {
-                var propertyValue = propertyAccessInfo.GetValueFunc(element);
-                if (propertyValue != propertyAccessInfo.DefaultValue)
+            GetReactAttributedPropertiesOfType(element.GetType())
+               .Foreach(propertyAccessInfo =>
                 {
-                    if (propertyValue is string)
+                    var propertyValue = propertyAccessInfo.GetValueFunc(element);
+                    if (propertyValue != propertyAccessInfo.DefaultValue)
                     {
-                        sb.Append($" {propertyAccessInfo.PropertyInfo.Name}=\"");
-                        sb.Append(propertyValue);
-                        sb.Append("\"");
+                        if (propertyValue is string)
+                        {
+                            sb.Append($" {propertyAccessInfo.PropertyInfo.Name}=\"");
+                            sb.Append(propertyValue);
+                            sb.Append("\"");
+                        }
                     }
-                }
-            }
+                });
 
             sb.Append(">");
 
