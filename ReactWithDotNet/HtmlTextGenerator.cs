@@ -42,16 +42,14 @@ static class HtmlTextGenerator
             foreach (var propertyAccessInfo in reactAttributedPropertiesOfType)
             {
                 var propertyValue = propertyAccessInfo.GetValueFunc(element);
-                if (propertyValue == propertyAccessInfo.DefaultValue)
+                if (propertyValue != propertyAccessInfo.DefaultValue)
                 {
-                    continue;
-                }
-
-                if (propertyValue is string)
-                {
-                    sb.Append($" {propertyAccessInfo.PropertyInfo.Name}=\"");
-                    sb.Append(propertyValue);
-                    sb.Append("\"");
+                    if (propertyValue is string)
+                    {
+                        sb.Append($" {propertyAccessInfo.PropertyInfo.Name}=\"");
+                        sb.Append(propertyValue);
+                        sb.Append("\"");
+                    }
                 }
             }
 
