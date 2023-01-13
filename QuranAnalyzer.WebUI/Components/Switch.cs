@@ -7,6 +7,8 @@ class SwitchWithLabel: ReactComponent
     public Action<bool> valueChange;
     public bool IsDisabled;
 
+    public double? LabelMaxWidth;
+
     protected override Element render()
     {
         return new FlexRow(AlignItemsCenter, Gap(5))
@@ -15,7 +17,7 @@ class SwitchWithLabel: ReactComponent
             {
                 IsChecked = value, ValueChange = valueChange, IsDisabled = IsDisabled
             },
-            label
+            new label{Text(label), When(LabelMaxWidth.HasValue,MaxWidth(LabelMaxWidth.GetValueOrDefault())) }
         };
     }
 }
