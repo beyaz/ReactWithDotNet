@@ -158,7 +158,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             ChapterNumber           = verse.ChapterNumber.ToString(),
                             VerseNumber             = verse.Index,
                             LettersForColorizeNodes = searchLetters,
-                            VerseText               = verse.TextWithBismillah,
+                            VerseText               = state.IncludeBismillah ? verse.TextWithBismillah: verse.Text,
                             Verse                   = verse,
                             MushafOption            = state.MushafOption
                         };
@@ -173,9 +173,34 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         return calculate().Then((resultVerseList, summaryInfoList) =>
                                 {
+                                    
+
+                                    string getCsv()
+                                    {
+                                        var header = "Sure No; Ayet No; Ayet";
+
+                                        var rows = string.Join('\n', resultVerseList.Select(x => $"{x.ChapterNumber};{x.VerseNumber};{x.VerseText}"));
+
+                                        var data = string.Join('\n', header,rows);
+                                        
+                                        data = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(data));
+
+                                        return data;
+                                    }
+                                    
+                                    
                                     Element[] results = 
                                     {
                                         new h4("Sonuçlar") + TextAlignCenter,
+                                        
+                                        //new a
+                                        //{
+                                        //    href = "data:text/csv;base64,77u/"+getCsv()
+                                        //   ,text   = "Exel olarak indir",
+                                        //    target = "_blank", 
+                                        //    download = "Arama Sonuçları.csv"
+                                        //},
+                                        
                                         new CountsSummaryView { Counts = summaryInfoList },
                                         new VSpace(30),
                                         new div
