@@ -36,6 +36,8 @@ public class ActionButton : ReactComponent
         
     void ActionButtonOnClick(MouseEvent _)
     {
+        IsProcessing = true;
+        
         DispatchEvent(()=>OnClick);
     }
 }

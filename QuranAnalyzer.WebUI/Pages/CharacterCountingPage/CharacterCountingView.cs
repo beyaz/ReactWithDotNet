@@ -93,7 +93,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 {
                     new Helpcomponent { ShowHelpMessageForLetterSearch = true },
 
-                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked } + Height(22)
+                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked, IsProcessing = state.IsBlocked} + Height(22)
                 }
             }
         };
