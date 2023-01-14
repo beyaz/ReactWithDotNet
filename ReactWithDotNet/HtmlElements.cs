@@ -103,6 +103,13 @@ public class a : HtmlElement
 
     [React]
     public string target { get; set; }
+
+    /// <summary>
+    /// Download file when clicking on the link (instead of navigating to the file):
+    /// </summary>
+    [React]
+    public string download { get; set; }
+    
 }
 
 public class img : HtmlElement
