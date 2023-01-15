@@ -51,7 +51,29 @@ public class WhereIsTheProblemPage : ReactComponent
                 new br(),
                 new br(),
                 "- Başka veriler Reşad'ın doğru saydığını gösteriyor.",
-                new a{href = "https://www.youtube.com/watch?v=KO1UgN7bXrM&t=715s"}
+                new br(),
+                new br(),
+                new FlexRowCentered
+                {
+                    new a
+                    {
+
+                        href = GetPageLink(PageId.PageVerseListContainsAllInitialLetters),
+                        text = "Bütün Başlangıç Harflerini İçeren Ayetler"
+                    }
+                },
+                new br(),
+                new FlexRowCentered
+                {
+                    new a
+                    {
+
+                        href = GetPageLink(PageId.AllInitialLettersCombined),
+                        text = "Başlangıç harflerinin yan yana yazılması ile oluşan büyük sayılar"
+                    }
+                }
+                
+               
             }
 
 
