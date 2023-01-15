@@ -1,8 +1,6 @@
 ﻿using System.Collections.Immutable;
-using System.Threading;
 using QuranAnalyzer.WebUI.Components;
-using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
-using ReactWithDotNet.Libraries.react_free_scrollbar;
+using ReactWithDotNet.Libraries.react_awesome_reveal;
 
 namespace QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
 
@@ -10,27 +8,27 @@ class CalculatorModel
 {
     public string ErrorText { get; set; }
     public bool IsProcessing { get; set; }
-    public string Word { get; set; }
     public string SearchScript { get; set; }
     public bool ShowResults { get; set; }
+    public string Word { get; set; }
 }
 
 class Calculator : ReactComponent<CalculatorModel>
 {
     public string Word, SearchScript;
 
+    public bool ShowDetails { get; set; }
+
     public bool ShowNumbers { get; set; }
 
     public bool ShowVerseList { get; set; }
-    
-    public bool ShowDetails { get; set; }
 
     protected override void constructor()
     {
         state = new CalculatorModel
         {
             SearchScript = SearchScript,
-            Word      = Word
+            Word         = Word
         };
     }
 
@@ -68,7 +66,19 @@ class Calculator : ReactComponent<CalculatorModel>
                 new ActionButton { Label = "Hesapla", OnClick = OnClick, IsProcessing = state.IsProcessing }
             },
 
-            When(state.ShowResults, GetCalculationText)
+            When(state.ShowResults, InFadeAnimation(GetCalculationText))
+        };
+    }
+
+    static Func<Element> InFadeAnimation(Func<Element> func)
+    {
+        return () => new Fade
+        {
+            triggerOnce = true,
+            children =
+            {
+                func()
+            }
         };
     }
 
@@ -80,63 +90,58 @@ class Calculator : ReactComponent<CalculatorModel>
 
     Element GetCalculationText()
     {
-       
-
         var filteredVerses = VerseFilter.GetVerseList(state.SearchScript).Unwrap();
 
         var searchWords = state.Word.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => Analyzer.AnalyzeText(x)).ToImmutableArray();
 
         var details = new List<(int chapterNumber, int verseNumber, int count)>();
-        
-        
+
         foreach (var verse in filteredVerses)
         {
             var count = searchWords.Sum(searchWord => verse.GetStartAndEndPointsOfSameWords(searchWord).Count).Unwrap();
             if (count > 0)
             {
-                details.Add((verse.ChapterNumber, verse.IndexAsNumber,count));
+                details.Add((verse.ChapterNumber, verse.IndexAsNumber, count));
             }
         }
 
-
-        var sumOfChapterNumbers = details.Select(x=>x.chapterNumber).Sum();
+        var sumOfChapterNumbers = details.Select(x => x.chapterNumber).Sum();
         var sumOfVerseNumbers   = details.Select(x => x.verseNumber).Sum();
         var sumOfCounts         = details.Select(x => x.count).Sum();
 
-
         static IEnumerable<Element> numberToElement(int value)
         {
-            if (value >0 && value%19 == 0)
+            if (value > 0 && value % 19 == 0)
             {
-                return new[] { (b)"19" + FontWeight600 + Color("#3b29b8"), (div)"x"+MarginLeftRight(3) + FontSizeSmall, (div)$"{value / 19}" + FontSizeSmall };
+                return new[] { (b)"19" + FontWeight600 + Color("#3b29b8"), (div)"x" + MarginLeftRight(3) + FontSizeSmall, (div)$"{value / 19}" + FontSizeSmall };
             }
-            
+
             return new[] { (div)value.ToString() };
         }
 
         var results = new FlexRow(ComponentBorder)
         {
-            new FlexColumn(FlexGrow(1), AlignItemsCenter,ComponentBorder)
+            new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
             {
-                new b{"Sure No Toplam"},
+                new b { "Sure No Toplam" },
                 new FlexRow(AlignItemsFlexEnd)
                 {
                     numberToElement(sumOfChapterNumbers)
                 }
             },
 
-            new FlexColumn(FlexGrow(1), AlignItemsCenter,ComponentBorder)
+            new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
             {
-                new b{"Ayet No Toplam"},
+                new b { "Ayet No Toplam" },
                 new FlexRow(AlignItemsFlexEnd)
                 {
                     numberToElement(sumOfVerseNumbers)
                 }
             },
 
-            new FlexColumn(FlexGrow(1), AlignItemsCenter,ComponentBorder)
+            new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
             {
-                new b{"Adet Toplam"},
+                new b { "Adet Toplam" },
                 new FlexRow(AlignItemsFlexEnd)
                 {
                     numberToElement(sumOfCounts)
@@ -146,7 +151,7 @@ class Calculator : ReactComponent<CalculatorModel>
 
         if (ShowDetails)
         {
-            return new table
+            return new table(WidthMaximized)
             {
                 new thead
                 {
@@ -156,26 +161,26 @@ class Calculator : ReactComponent<CalculatorModel>
                         {
                             new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
                             {
-                                new b{"Sure No"}
+                                new b { "Sure No" }
                             }
                         },
                         new th
                         {
                             new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
                             {
-                                new b{"Ayet No"}
+                                new b { "Ayet No" }
                             }
                         },
                         new th
                         {
                             new FlexColumn(FlexGrow(1), AlignItemsCenter, ComponentBorder)
                             {
-                                new b{"Adet"}
+                                new b { "Adet" }
                             }
                         }
                     }
                 },
-                
+
                 new tbody
                 {
                     details.Select(x => new tr(ComponentBorder)
@@ -185,60 +190,60 @@ class Calculator : ReactComponent<CalculatorModel>
                             x.chapterNumber.ToString()
                         },
 
-                        new th(TextAlignCenter,FontWeight500)
+                        new th(TextAlignCenter, FontWeight500)
                         {
                             x.verseNumber.ToString()
                         },
 
-                        new th(TextAlignCenter,FontWeight500)
+                        new th(TextAlignCenter, FontWeight500)
                         {
                             x.count.ToString()
                         }
                     })
                 },
-                
+
                 new tfoot
                 {
-                    new th
+                    new tr
                     {
-                        new FlexColumn( AlignItemsCenter,ComponentBorder)
+                        new th
                         {
-                            new b{"Toplam"},
-                            new FlexRow(AlignItemsFlexEnd)
+                            new FlexColumn(AlignItemsCenter, ComponentBorder)
                             {
-                                numberToElement(sumOfChapterNumbers)
+                                new b { "Toplam" },
+                                new FlexRow(AlignItemsFlexEnd)
+                                {
+                                    numberToElement(sumOfChapterNumbers)
+                                }
                             }
-                        }
-                    },
-                    new th
-                    {
-                        new FlexColumn( AlignItemsCenter,ComponentBorder)
+                        },
+                        new th
                         {
-                            new b{"Toplam"},
-                            new FlexRow(AlignItemsFlexEnd)
+                            new FlexColumn(AlignItemsCenter, ComponentBorder)
                             {
-                                numberToElement(sumOfVerseNumbers)
+                                new b { "Toplam" },
+                                new FlexRow(AlignItemsFlexEnd)
+                                {
+                                    numberToElement(sumOfVerseNumbers)
+                                }
                             }
-                        }
-                    },
-                    new th
-                    {
-                        new FlexColumn( AlignItemsCenter,ComponentBorder)
+                        },
+                        new th
                         {
-                            new b{"Toplam"},
-                            new FlexRow(AlignItemsFlexEnd)
+                            new FlexColumn(AlignItemsCenter, ComponentBorder)
                             {
-                                numberToElement(sumOfCounts)
+                                new b { "Toplam" },
+                                new FlexRow(AlignItemsFlexEnd)
+                                {
+                                    numberToElement(sumOfCounts)
+                                }
                             }
                         }
                     }
                 }
             };
-            
-            
-            
         }
-        
+
         return results;
     }
 
@@ -273,7 +278,6 @@ class Calculator : ReactComponent<CalculatorModel>
         }
 
         var letters = Analyzer.AnalyzeText(state.Word.Replace(" ", ""));
-        
 
         if (letters.Count == 0)
         {
@@ -282,6 +286,7 @@ class Calculator : ReactComponent<CalculatorModel>
         }
 
         state.IsProcessing = true;
+
         Client.GotoMethod(Calculate);
     }
 }
