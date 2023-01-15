@@ -163,7 +163,7 @@ class View : ReactComponent<MainViewModel>
 
             if (state.PageId == PageId.AllInitialLettersCombined)
             {
-                return new QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined.CountOfAllah();
+                return new QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined.View();
             }
 
             if (state.PageId == PageId.WhereIsTheProblemPage)

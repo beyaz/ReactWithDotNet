@@ -2,7 +2,7 @@
 
 namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
-class CountOfAllah : ReactComponent
+class View : ReactComponent
 {
     protected override Element render()
     {
