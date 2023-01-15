@@ -230,7 +230,7 @@ public abstract class HtmlElement : Element
 
     public static HtmlElement operator +(HtmlElement htmlElement, HtmlElementModifier htmlElementModifier)
     {
-        htmlElementModifier.modifyHtmlElement(htmlElement);
+        htmlElementModifier?.modifyHtmlElement(htmlElement);
 
         return htmlElement;
     }

@@ -3,6 +3,13 @@
 public class RevealBase : ThirdPartyReactComponent
 {
     /// <summary>
+    ///     Specifies if the animation should make element(s) disappear.<br />
+    ///     @default false
+    /// </summary>
+    [React]
+    public bool? reverse { get; set; }
+    
+    /// <summary>
     ///     <br />Stagger its children animations.
     ///     @default false
     /// </summary>
@@ -88,18 +95,11 @@ public class Bounce : RevealBase
     [React]
     public string direction { get; set; }
 
-    /// <summary>
-    ///     <br />Specifies if the animation should make element(s) disappear.
-    ///     <br />@default false
-    /// </summary>
-    [React]
-    public bool? reverse { get; set; }
+    
 }
 
 public class Fade : RevealBase
 {
-    [React]
-    public bool? reverse { get; set; }
     
     /// <summary>
     ///     <br /> Causes the animation to start farther. Only works with "down", "left", "right" and "up" directions.
@@ -126,13 +126,7 @@ public class Flip : RevealBase
     /// </summary>
     [React]
     public string direction { get; set; }
-
-    /// <summary>
-    ///     Specifies if the animation should make element(s) disappear. It only has effect if a direction is specified.<br />
-    ///     @default false
-    /// </summary>
-    [React]
-    public bool? reverse { get; set; }
+    
 }
 
 public class Hinge : RevealBase
@@ -152,13 +146,7 @@ public class Rotate : RevealBase
     /// </summary>
     [React]
     public string direction { get; set; }
-
-    /// <summary>
-    ///     Specifies if the animation should make element(s) disappear.<br />
-    ///     @default false
-    /// </summary>
-    [React]
-    public bool? reverse { get; set; }
+    
 }
 
 public class Slide : RevealBase
@@ -170,13 +158,7 @@ public class Slide : RevealBase
     /// </summary>
     [React]
     public string direction { get; set; }
-
-    /// <summary>
-    ///     Specifies if the animation should make element(s) disappear.<br />
-    ///     @default false
-    /// </summary>
-    [React]
-    public bool? reverse { get; set; }
+    
 }
 
 public class Zoom : RevealBase
@@ -188,11 +170,5 @@ public class Zoom : RevealBase
     /// </summary>
     [React]
     public string direction { get; set; }
-
-    /// <summary>
-    ///     Specifies if the animation should make element(s) disappear.<br />
-    ///     @default false
-    /// </summary>
-    [React]
-    public bool? reverse { get; set; }
+    
 }
