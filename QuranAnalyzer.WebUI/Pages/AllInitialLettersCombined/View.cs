@@ -67,78 +67,12 @@ class View : ReactComponent
 
             "Mesela yasin suresideki ya harfi o surede 580 defa geçer. Kaf harfi iki surede olmak üzere toplamda 114 defa geçer.",
             new br(),
-            new FlexRow(Gap(EnterJoInMode?5:5), FlexWrap)
-            {
-                CreateWithCount(ArabicLetter.Alif,17152),
-                CreateWithCount(ArabicLetter.Laam,11797),
-                CreateWithCount(ArabicLetter.Miim,8659),
-                CreateWithCount(ArabicLetter.Saad,152),
-                CreateWithCount(ArabicLetter.Raa,1232),
-                CreateWithCount(ArabicLetter.Kaaf,137),
-                CreateWithCount(ArabicLetter.Haa,426),
-                CreateWithCount(ArabicLetter.Yaa,580),
-                CreateWithCount(ArabicLetter.Ayn,215),
-                CreateWithCount(ArabicLetter.Taa,107),
-                CreateWithCount(ArabicLetter.Siin,397),
-                CreateWithCount(ArabicLetter.Haa_,292),
-                CreateWithCount(ArabicLetter.Qaaf,114),
-                CreateWithCount(ArabicLetter.Nun,133),
-                CreateWithCount("Toplam",41388)
-            },
+            raisePanel(new TotalCounts()),
             new br(),
             
-            new ActionButton{Label = "Yan yana yaz",OnClick = Join},
-
-            When(EnterJoInMode,()=>
-            raisePanel(new FlexRow
-            {
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Alif,17152),300),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Laam,11797),300),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Miim,8659),300),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Saad,152),400),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Raa,1232),500),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Kaaf,137),600),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Haa,426),800),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Yaa,580),900),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Ayn,215),1000),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Taa,107),1400),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Siin,392),1500),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Haa_,292),1600),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Qaaf,114),1700),
-                InFadeAnimation(CreateWithCount2(ArabicLetter.Nun,133),1800),
-                InFadeAnimation(CreateWithCount2("Toplam",41388),2000)
-            })),
-
-           new FlexRowCentered
-           {
-               new img
-               {
-                   src    = "wwwroot/img/arrow-down-double.svg",
-                   width  = 40,
-                   height = 40
-               }
-           }
-           ,
             
-                When(EnterJoInMode,()=>
-                         raisePanel(new FlexRow
-                         {
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Alif,17152),300),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Laam,11797),300),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Miim,8659),300),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Saad,152),400),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Raa,1232),500),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Kaaf,137),600),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Haa,426),800),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Yaa,580),900),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Ayn,215),1000),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Taa,107),1400),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Siin,392),1500),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Haa_,292),1600),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Qaaf,114),1700),
-                             InFadeAnimation(CreateWithCount2(ArabicLetter.Nun,133),1800),
-                             InFadeAnimation(CreateWithCount2("Toplam",41388),3000)
-                         })),
+            
+                
 
 
             new VSpace(10),
