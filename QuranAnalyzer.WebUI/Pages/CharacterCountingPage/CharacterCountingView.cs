@@ -1,4 +1,5 @@
-﻿using QuranAnalyzer.WebUI.Components;
+﻿using System.Text;
+using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.Shared;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
@@ -43,7 +44,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
             state.SearchScript = parseResponse.Value.AsReadibleString();
         }
-
 
         if (Context.Query[QueryKey.IncludeBizmillah] == "0")
         {
@@ -93,7 +93,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 {
                     new Helpcomponent { ShowHelpMessageForLetterSearch = true },
 
-                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked, IsProcessing = state.IsBlocked} + Height(22)
+                    new ActionButton { Label = "Ara", OnClick = OnCaclculateClicked, IsProcessing = state.IsBlocked } + Height(22)
                 }
             }
         };
@@ -158,7 +158,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                             ChapterNumber           = verse.ChapterNumber.ToString(),
                             VerseNumber             = verse.Index,
                             LettersForColorizeNodes = searchLetters,
-                            VerseText               = state.IncludeBismillah ? verse.TextWithBismillah: verse.Text,
+                            VerseText               = state.IncludeBismillah ? verse.TextWithBismillah : verse.Text,
                             Verse                   = verse,
                             MushafOption            = state.MushafOption
                         };
@@ -173,39 +173,36 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
         return calculate().Then((resultVerseList, summaryInfoList) =>
                                 {
-                                    
+                                    #pragma warning disable CS8321
+                                    a downloadAsExcel()
 
-                                    string getCsv()
                                     {
                                         var header = "Sure No; Ayet No; Ayet";
 
                                         var rows = string.Join('\n', resultVerseList.Select(x => $"{x.ChapterNumber};{x.VerseNumber};{x.VerseText}"));
 
-                                        var data = string.Join('\n', header,rows);
-                                        
-                                        data = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(data));
+                                        var data = string.Join('\n', header, rows);
 
-                                        return data;
+                                        data = Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
+
+                                        return new a
+                                        {
+                                            href     = "data:text/csv;base64,77u/" + data,
+                                            text     = "Exel olarak indir",
+                                            target   = "_blank",
+                                            download = "Arama Sonuçları.csv"
+                                        };
                                     }
-                                    
-                                    
-                                    Element[] results = 
+                                    #pragma warning restore CS8321
+
+                                    Element[] results =
                                     {
                                         new h4("Sonuçlar") + TextAlignCenter,
-                                        
-                                        //new a
-                                        //{
-                                        //    href = "data:text/csv;base64,77u/"+getCsv()
-                                        //   ,text   = "Exel olarak indir",
-                                        //    target = "_blank", 
-                                        //    download = "Arama Sonuçları.csv"
-                                        //},
-                                        
                                         new CountsSummaryView { Counts = summaryInfoList },
                                         new VSpace(30),
                                         new div
                                         {
-                                            dangerouslySetInnerHTML = string.Join(Environment.NewLine,resultVerseList.Select(x=>x.ToString()))
+                                            dangerouslySetInnerHTML = string.Join(Environment.NewLine, resultVerseList.Select(x => x.ToString()))
                                         }
                                     };
 
