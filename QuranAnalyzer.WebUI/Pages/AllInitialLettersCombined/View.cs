@@ -1,4 +1,5 @@
 ﻿using QuranAnalyzer.WebUI.Components;
+using ReactWithDotNet.Libraries.react_awesome_reveal;
 
 namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
@@ -6,76 +7,146 @@ class View : ReactComponent
 {
     protected override Element render()
     {
+         Element CreateWithCount(string arabicLetter, int count)
+         {
+             Element countView = new FlexRowCentered { count.ToString() };
+             
+             if (EnterJoInMode)
+             {
+                 countView = new Fade
+                 {
+                     reverse=true,
+                     direction = "down",
+                     children =
+                     {
+                         countView
+                     }
+                 };
+             }
+             return new FlexColumn(ComponentBorder, Gap(4))
+             {
+                 new FlexRow { AsLetter(arabicLetter) } + When(EnterJoInMode,FontSize10),
+                 countView
+             };
+         }
+
+        Element CreateWithCount2(string arabicLetter, int count)
+        {
+            Element countView = new FlexRowCentered { count.ToString() };
+
+            if (EnterJoInMode)
+            {
+                countView = new Fade
+                {
+                    direction = "down",
+                    children =
+                    {
+                        countView
+                    }
+                };
+            }
+            return new FlexColumn
+            {
+                //new FlexRow { AsLetter(arabicLetter) },
+                countView
+            };
+        }
+
         return new Article
         {
             new LargeTitle("Başlangıç harflerinin yan yana yazılması ile oluşan büyük sayılar"),
 
             new p
             {
-                "Acaba Kuranda geçen her bir 'Allah' kelimesinin geçiş yerleri ile ilgili bir şey olabilir mi?",
+                "Başlangıç harflerinin içinde bulunduğu sure ile ilişkili olduğunu 'Başlangıç Harfleri' sayfasında detaylı olarak öğrendik.",
                 new br(),
-                "İşte bu yazıda aşağıdaki programlar yardımı ile bu bilgi incelenecektir."
+                "Peki bu geçiş adetlerini yanyana yazsak acaba önümüze nasıl bir rakam çıkar?"
             },
 
             seperation,
 
-            "Aşağıdaki program verilen kelimeleri arar. Bulunan kelimelerin geçtiği sure ve ayetlerin toplamını ve kaç adet olduğunu gösterir. ",
+            "Mesela yasin suresideki ya harfi o surede 580 defa geçer. Kaf harfi iki surede olmak üzere toplamda 114 defa geçer.",
             new br(),
-            "Önce basit bir arama yapalım ve programın nasıl çalıştığını gözlemleyelim.",
-            new br(),
-            "Mesela 2. surenin 60 ila 62. ayetleri arasında geçen 'Allah' kelimelerini aratalım.",
-
-            raisePanel(new Calculator
+            new FlexRow(Gap(EnterJoInMode?5:5), FlexWrap)
             {
-                Word         = "الله,والله,بالله,لله,ولله,تالله,فالله,فلله,ءالله,ابالله,وتالله",
-                SearchScript = "2:60 --> 2:62",
-                ShowDetails  = true
-            }),
+                CreateWithCount(ArabicLetter.Alif,17152),
+                CreateWithCount(ArabicLetter.Laam,11797),
+                CreateWithCount(ArabicLetter.Miim,8659),
+                CreateWithCount(ArabicLetter.Saad,152),
+                CreateWithCount(ArabicLetter.Raa,1232),
+                CreateWithCount(ArabicLetter.Kaaf,137),
+                CreateWithCount(ArabicLetter.Haa,426),
+                CreateWithCount(ArabicLetter.Yaa,580),
+                CreateWithCount(ArabicLetter.Ayn,215),
+                CreateWithCount(ArabicLetter.Taa,107),
+                CreateWithCount(ArabicLetter.Siin,397),
+                CreateWithCount(ArabicLetter.Haa_,292),
+                CreateWithCount(ArabicLetter.Qaaf,114),
+                CreateWithCount(ArabicLetter.Nun,133),
+                CreateWithCount("Toplam",41388)
+            },
+            new br(),
+            
+            new ActionButton{Label = "Yan yana yaz",OnClick = Join},
+
+            When(EnterJoInMode,()=>
+            raisePanel(new FlexRow
+            {
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Alif,17152),300),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Laam,11797),300),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Miim,8659),300),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Saad,152),400),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Raa,1232),500),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Kaaf,137),600),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Haa,426),800),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Yaa,580),900),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Ayn,215),1000),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Taa,107),1400),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Siin,392),1500),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Haa_,292),1600),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Qaaf,114),1700),
+                InFadeAnimation(CreateWithCount2(ArabicLetter.Nun,133),1800),
+                InFadeAnimation(CreateWithCount2("Toplam",41388),2000)
+            })),
+
+           new FlexRowCentered
+           {
+               new img
+               {
+                   src    = "wwwroot/img/arrow-down-double.svg",
+                   width  = 40,
+                   height = 40
+               }
+           }
+           ,
+            
+                When(EnterJoInMode,()=>
+                         raisePanel(new FlexRow
+                         {
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Alif,17152),300),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Laam,11797),300),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Miim,8659),300),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Saad,152),400),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Raa,1232),500),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Kaaf,137),600),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Haa,426),800),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Yaa,580),900),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Ayn,215),1000),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Taa,107),1400),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Siin,392),1500),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Haa_,292),1600),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Qaaf,114),1700),
+                             InFadeAnimation(CreateWithCount2(ArabicLetter.Nun,133),1800),
+                             InFadeAnimation(CreateWithCount2("Toplam",41388),3000)
+                         })),
+
+
             new VSpace(10),
             "Böylece programın neyi hesapladığını kısa bir veri üzerinde görmüş olduk. ",
 
             new p
             {
-                "Peki tüm mushaf boyunca bu aramayı yapalım."
-            },
-            raisePanel(new Calculator
-            {
-                Word         = "الله,والله,بالله,لله,ولله,تالله,فالله,فلله,ءالله,ابالله,وتالله",
-                SearchScript = "*"
-            }),
-
-            "Sonuçlardan da görüldüğü üzere bu toplamlarda herhangi bir ilginçlik yok.",
-
-            seperation,
-
-            "Şimdi ise üzerinde tartışmanın döndüğü konu olan 9. surenin 128 ve 129 nolu cümleleri çıkarıp sayalım.",
-            new VSpace(10),
-
-            raisePanel(new Calculator
-            {
-                Word         = "الله,والله,بالله,لله,ولله,تالله,فالله,فلله,ءالله,ابالله,وتالله",
-                SearchScript = "*, -9:128, -9:129"
-            }),
-
-            "Sanırım çok fazla söze gerek yok. Burada dikkat edilmesi gereken nokta şu;",
-            new br(),
-            "Herhangi bir surenin herhangi bir cümlesini  çıkarsanız veya herhangi bir sureye fazladan bir 'Allah' kelimesi ekleseniz bu tablo bozulurdu. ",
-            "İşte 19 sisteminin Kuranı koruması böyle oluyor.",
-            "Herhangi iki ayet değil özellikle bu bahsi geçen üzerinde bazı şüphelerin tartışmaların olduğu iki cümle çıkarılınca bu tablonun oluşması çok ilginç.",
-            "Özetle Kurandaki her bir 'Allah' kelimesinin geçiş yerleri dahi bir öneme sahiptir.",
-
-            new br(),
-            new br(),
-            "İşte 'sırf 19 rakamına uymuyor diye Kurandan ayet atılıyor' iddasının aslı budur.",
-            " Tabii şunu da belirtmem gerekiyor. Reşad bunun gibi 70 den fazla matematiksel veri de sunuyor.",
-
-            new p
-            {
-                "Burada kendi fikrimi şöyle ifade etmek istiyorum. ",
-                "Ben bu yazıda konunun ne olduğunun anlaşılması için sunulan verilerden sadece 1 tanesini örnek olarak inceledim. ",
-                "Bu şekilde 70 den fazla veri var. ",
-                "Başlangıç harfleri'nin bu Tevbe suresi üzerindeki tartışma ile pek ilgisi olmadığı için bu konuya dair bu yazı dışında herhangi bir yazı sunmadım. ",
-                "Umarım konuyu aktarabilmişimdir."
+                "İlginç... "
             }
         };
 
@@ -86,5 +157,27 @@ class View : ReactComponent
             BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadius(5), MarginTopBottom(10),
             element
         };
+
+        static Element InFadeAnimation(Element element,int delay)
+        {
+            return new Fade
+            {
+                triggerOnce = true,
+                delay = delay,
+                children =
+                {
+                    element
+                }
+            };
+        }
+
+    }
+
+    public bool EnterJoInMode { get; set; }
+    
+    void Join()
+    {
+        EnterJoInMode = true;
+
     }
 }

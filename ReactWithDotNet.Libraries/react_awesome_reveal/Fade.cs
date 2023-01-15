@@ -98,6 +98,9 @@ public class Bounce : RevealBase
 
 public class Fade : RevealBase
 {
+    [React]
+    public bool? reverse { get; set; }
+    
     /// <summary>
     ///     <br /> Causes the animation to start farther. Only works with "down", "left", "right" and "up" directions.
     ///     <br /> @default false

@@ -237,7 +237,7 @@ public abstract class HtmlElement : Element
 
     public static HtmlElement operator +(HtmlElement htmlElement, StyleModifier styleModifier)
     {
-        styleModifier.modifyStyle(htmlElement.style);
+        styleModifier?.modifyStyle(htmlElement.style);
 
         return htmlElement;
     }
