@@ -359,6 +359,8 @@ public static partial class Mixin
 
     public static StyleModifier Border(string border) => new(style => style.border = border);
 
+    public static StyleModifier BorderNone => Border("none");
+
     public static StyleModifier Border(string top, string right, string bottom, string left) => new(style => style.border = $"{top} {right} {bottom} {left}");
 
     public static StyleModifier Border(double top, double right, double bottom, double left) => Border(top.AsPixel(), right.AsPixel(), bottom.AsPixel(), left.AsPixel());

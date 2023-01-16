@@ -131,10 +131,9 @@ class TotalCounts : ReactComponent
                 valueBindDebounceHandler = OnCountModified,
                 style =
                 {
-                    Border("none"),
                     Width(40),
                     TextAlignCenter,
-                    Focus(Border($"0.1px solid {BorderColor}"))
+                    Border($"0.1px solid {BorderColor}")
                 }
             }
         };
