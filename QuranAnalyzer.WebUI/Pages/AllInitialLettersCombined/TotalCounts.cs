@@ -102,13 +102,9 @@ class TotalCounts : ReactComponent
         return countView;
     }
 
-    class Pair
-    {
-        public string Text { get; set; }
-        public int Count { get; set; }
-    }
+   
 
-    static readonly IReadOnlyList<Pair> Records = new []
+    public IReadOnlyList<Pair> Records { get; set; } = new []
     {
         new Pair{Text = ArabicLetter.Alif,Count = 17152},
 new Pair{Text = ArabicLetter.Laam,Count = 11797},
@@ -200,4 +196,10 @@ new Pair{Text = "Toplam",Count = 41388}
             }
         };
     }
+}
+
+public class Pair
+{
+    public string Text { get; set; }
+    public int Count { get; set; }
 }
