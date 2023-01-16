@@ -2,7 +2,7 @@
 using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 using ReactWithDotNet.react_xarrows;
-
+    
 namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
 class TotalCounts : ReactComponent
@@ -174,20 +174,12 @@ class TotalCounts : ReactComponent
 
     class Arrow : ReactComponent
     {
-        public string color;
         public string end;
         public string start;
 
-        public bool dashness { get; set; }
-        public bool StartAnchorFromRight { get; set; }
-
-        public bool StartAnchorFromTop { get; set; }
-
-        public double? strokeWidth { get; set; } = 1;
-
         protected override Element render()
         {
-            color ??= "#a9acaa";
+            const string color = "#a9acaa";
 
             return new Xarrow
             {
@@ -195,7 +187,7 @@ class TotalCounts : ReactComponent
                 end         = end,
                 path        = "smooth",
                 color       = color,
-                strokeWidth = strokeWidth,
+                strokeWidth = 1,
                 startAnchor = "bottom",
                 dashness    = true,
                 endAnchor   = "top"
