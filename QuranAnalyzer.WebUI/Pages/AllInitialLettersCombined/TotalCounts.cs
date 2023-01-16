@@ -2,11 +2,47 @@
 using ReactWithDotNet;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 using System.Drawing;
+using ReactWithDotNet.react_xarrows;
 
 namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
 class TotalCounts : ReactComponent
 {
+
+    class Arrow : ReactComponent
+    {
+        public string start;
+        public string end;
+        public string color;
+
+
+        public bool StartAnchorFromTop { get; set; }
+        public bool StartAnchorFromRight { get; set; }
+
+
+        public bool dashness { get; set; }
+
+        public double? strokeWidth { get; set; } = 1;
+
+        protected override Element render()
+        {
+            color ??= "#a9acaa";
+
+            return new Xarrow
+            {
+                start       = start,
+                end         = end,
+                path        = "smooth",
+                color       = color,
+                strokeWidth = strokeWidth,
+                startAnchor = "bottom",
+                dashness    = true,
+                endAnchor = "top"
+            };
+        }
+    }
+    
+    
     public bool EnterJoInMode { get; set; }
     
     static Element InFadeAnimation(Element element, int delay)
@@ -30,19 +66,19 @@ class TotalCounts : ReactComponent
     {
         Element countView = new FlexRowCentered { count.ToString() };
 
-        if (EnterJoInMode)
-        {
-            countView = new Fade
-            {
-                reverse   = true,
-                direction = "down",
-                children =
-                {
-                    countView
-                }
-            };
-        }
-        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4))
+        //if (EnterJoInMode)
+        //{
+        //    countView = new Fade
+        //    {
+        //        reverse   = true,
+        //        direction = "down",
+        //        children =
+        //        {
+        //            countView
+        //        }
+        //    };
+        //}
+        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-"+arabicLetter))
         {
             new FlexRow { AsLetter(arabicLetter) },
             countView
@@ -50,7 +86,7 @@ class TotalCounts : ReactComponent
     }
     Element CreateWithCount2(string arabicLetter, int count)
     {
-        Element countView = new FlexRowCentered(ComponentBorder,BorderRadius(3)) { count.ToString() };
+        Element countView = new FlexRowCentered(ComponentBorder,BorderRadius(3),Id("end-"+arabicLetter)) { count.ToString() };
 
         if (EnterJoInMode)
         {
@@ -93,60 +129,74 @@ new Pair{Text = "Toplam",Count = 41388}
 
     protected override Element render()
     {
-        var delay = 600;
+        var delay = 200;
         
-        int nextDelay() => delay += 200;
-        
+        int nextDelay() => delay += 300;
+
         return new FlexColumn(Gap(10))
         {
             new FlexColumn
             {
-                new FlexRow(Gap(5), FlexWrap)
+                new FlexRow(Gap(5), FlexWrap, JustifyContentFlexEnd)
                 {
-                    Records.Select(x=>CreateWithCount(x.Text,x.Count))
+                    Records.Select(x => CreateWithCount(x.Text, x.Count))
                 }
             },
 
             new FlexRow(JustifyContentFlexEnd)
             {
-                new ActionButton { Label = "Hesapla", OnClick = Calculate }
-            }
-           ,
+                new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(EnterJoInMode,DisplayNone)
+            },
             new FlexColumn
             {
-                When(EnterJoInMode,() =>
+                When(EnterJoInMode, () =>
                          new FlexRow
                          {
-                             Records.Select(x=>InFadeAnimation(CreateWithCount2(x.Text,x.Count),nextDelay()))
+                             Records.Select(x => InFadeAnimation(new div
+                             {
+                                 new Arrow { start = "begin-"+x.Text, end = "end-"+x.Text },
+                                 CreateWithCount2(x.Text, x.Count)
+                                 
+                             }, nextDelay()))
                          }),
 
-                When(EnterJoInMode,()=>
+                //When(EnterJoInMode, () =>new div
+                //{
+                //    Records.Take(3).Select(x => InFadeAnimation(new Arrow { start = "begin-"+x.Text, end = "end-"+x.Text },nextDelay())),
 
-                         
-                     
-                     new FlexRowCentered
-                     {new Fade
+                //    Records.TakeLast(3).Select(x => InFadeAnimation(new Arrow { start = "begin-"+x.Text, end = "end-"+x.Text },nextDelay())),
+
+
+
+                //}),
+                When(EnterJoInMode, () =>
+
+
+
+                         new FlexRowCentered
                          {
-                             triggerOnce = true,
-                             delay       = nextDelay(),
-                             children =
-                         {
-                             new img
+                             new Fade
                              {
-                                 src    = "wwwroot/img/arrow-down-double.svg",
-                                 width  = 40,
-                                 height = 40
+                                 triggerOnce = true,
+                                 delay       = nextDelay(),
+                                 children =
+                                 {
+                                     new img
+                                     {
+                                         src    = "wwwroot/img/arrow-down-double.svg",
+                                         width  = 40,
+                                         height = 40
+                                     }
+                                 }
                              }
-                             }
-                         }
-                        
-                     })
-                    ,
 
-                     When(EnterJoInMode,()=> new FlexRow {
-                         
-                                  InFadeAnimation(new FlexRow{"gg"},nextDelay())
-                              })
+                         }),
+
+                When(EnterJoInMode, () => new FlexRow
+                {
+
+                    InFadeAnimation(new FlexRow { "gg" }, nextDelay())
+                })
             }
         };
     }
