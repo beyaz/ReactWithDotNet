@@ -91,7 +91,9 @@ class TotalCounts : ReactComponent
 
             new Fade
             {
+                triggerOnce  = true,
                 direction = "down",
+                delay = delayForAnimation + 200,
                 children =
                 {
                     new FlexRowCentered(ComponentBorder, BorderRadius(3), Id("end-" + record.Text)) { record.Count }
@@ -126,7 +128,8 @@ class TotalCounts : ReactComponent
         {
             new input
             {
-                type                     = "text", valueBind = () => Records[index].Count,
+                type                     = "text", 
+                valueBind = () => Records[index].Count,
                 valueBindDebounceTimeout = 200,
                 valueBindDebounceHandler = OnCountModified,
                 style =
