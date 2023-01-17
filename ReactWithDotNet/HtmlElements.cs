@@ -10,6 +10,10 @@ public class button : HtmlElement
 
 public class input : HtmlElement
 {
+    public input() { }
+
+    public input(params IModifier[] modifiers) : base(modifiers) { }
+    
     [React]
     public string autocomplete { get; set; }
 

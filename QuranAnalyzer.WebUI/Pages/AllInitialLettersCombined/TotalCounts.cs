@@ -285,29 +285,26 @@ class TotalCounts : ReactComponent
         return new div { bigNumber.ToString() };
     }
 
+    input CreateInput(Expression<Func<string>> bindingExpression)
+    {
+        return new input(Width(40), TextAlignCenter, Border($"0.1px solid {BorderColor}"))
+        {
+            type                     = "text",
+            valueBind                = bindingExpression,
+            valueBindDebounceTimeout = 200,
+            valueBindDebounceHandler = RecalculateTotalCounts
+        };
+    }
+
     Element CreateWithCount(int index)
     {
-        Element countView = new FlexRowCentered
-        {
-            new input
-            {
-                type                     = "text",
-                valueBind                = () => Records[index].Count,
-                valueBindDebounceTimeout = 200,
-                valueBindDebounceHandler = OnCountModified,
-                style =
-                {
-                    Width(40),
-                    TextAlignCenter,
-                    Border($"0.1px solid {BorderColor}")
-                }
-            }
-        };
-
         return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-" + Records[index].Text))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[index].Text) },
-            countView
+            new FlexRowCentered
+            {
+                CreateInput(() => Records[index].Count)
+            }
         };
     }
 
@@ -332,7 +329,7 @@ class TotalCounts : ReactComponent
         };
     }
 
-    void OnCountModified()
+    void RecalculateTotalCounts()
     {
         Records.SkipLast(1).Sum(x => ParseInt(x.Count)).Then(total => Records[^1].Count = total.ToString());
     }
