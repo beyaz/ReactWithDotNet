@@ -9,23 +9,23 @@ class TotalCounts : ReactComponent
 {
     public bool EnterJoInMode { get; set; }
 
-    public IReadOnlyList<Pair> Records { get; set; } = new[]
+    public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = new[]
     {
-        new Pair { Text = ArabicLetter.Alif, Count = "17152" },
-        new Pair { Text = ArabicLetter.Laam, Count = "11797" },
-        new Pair { Text = ArabicLetter.Miim, Count = "8659" },
-        new Pair { Text = ArabicLetter.Saad, Count = "152" },
-        new Pair { Text = ArabicLetter.Raa, Count  = "1232" },
-        new Pair { Text = ArabicLetter.Kaaf, Count = "137" },
-        new Pair { Text = ArabicLetter.Haa, Count  = "426" },
-        new Pair { Text = ArabicLetter.Yaa, Count  = "580" },
-        new Pair { Text = ArabicLetter.Ayn, Count  = "215" },
-        new Pair { Text = ArabicLetter.Taa, Count  = "107" },
-        new Pair { Text = ArabicLetter.Siin, Count = "392" },
-        new Pair { Text = ArabicLetter.Haa_, Count = "292" },
-        new Pair { Text = ArabicLetter.Qaaf, Count = "114" },
-        new Pair { Text = ArabicLetter.Nun, Count  = "133" },
-        new Pair { Text = "Toplam", Count          = "41388" }
+        new InitialLetterCountInfo { Text = ArabicLetter.Alif, Count = "17152" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Laam, Count = "11797" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Miim, Count = "8659" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Saad, Count = "152" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Raa, Count  = "1232" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Kaaf, Count = "137" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Haa, Count  = "426" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Yaa, Count  = "580" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Ayn, Count  = "215" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Taa, Count  = "107" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Siin, Count = "392" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Haa_, Count = "292" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Qaaf, Count = "114" },
+        new InitialLetterCountInfo { Text = ArabicLetter.Nun, Count  = "133" },
+        new InitialLetterCountInfo { Text = "Toplam", Count          = "41388" }
     };
 
     protected override Element render()
@@ -198,7 +198,7 @@ class TotalCounts : ReactComponent
     }
 }
 
-public class Pair
+public class InitialLetterCountInfo
 {
     public string Count { get; set; }
     public string Text { get; set; }
