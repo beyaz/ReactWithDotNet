@@ -5,7 +5,7 @@ using ReactWithDotNet.react_xarrows;
 
 namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
-class TotalCounts : ReactComponent
+class TotalCountsWithDetail : ReactComponent
 {
     public bool EnterJoInMode { get; set; }
 
@@ -122,6 +122,10 @@ class TotalCounts : ReactComponent
         return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-" + Records[index].Text))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[index].Text) },
+            new FlexColumn(AlignItemsCenter)
+            {
+                Records[index].Details?.Select((_,i)=> CreateInput(() => Records[index].Details[i].Count))
+            },
             new FlexRowCentered
             {
                 CreateInput(() => Records[index].Count)

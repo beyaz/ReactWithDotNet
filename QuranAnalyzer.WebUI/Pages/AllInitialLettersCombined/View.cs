@@ -69,6 +69,10 @@ class View : ReactComponent
             new br(),
             raisePanel(new TotalCounts()),
             new br(),
+            new br(),
+            
+            raisePanel(new TotalCountsWithDetail()),
+            
             
             
             
@@ -76,7 +80,6 @@ class View : ReactComponent
 
 
             new VSpace(10),
-            "Böylece programın neyi hesapladığını kısa bir veri üzerinde görmüş olduk. ",
 
             new p
             {
