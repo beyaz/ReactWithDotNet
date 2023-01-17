@@ -105,9 +105,11 @@ class TotalCountsWithDetail : ReactComponent
         return new div { bigNumber.ToString() };
     }
 
+    StyleModifier InputBorder => Border($"0.1px solid {BorderColor}");
+    
     input CreateInput(Expression<Func<string>> bindingExpression)
     {
-        return new input(Width(40), TextAlignCenter, Border($"0.1px solid {BorderColor}"))
+        return new input(Width(40), TextAlignCenter, InputBorder)
         {
             type                     = "text",
             valueBind                = bindingExpression,
@@ -122,12 +124,19 @@ class TotalCountsWithDetail : ReactComponent
         return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-" + Records[index].Text))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[index].Text) },
+            new FlexRow(Gap(5), FontWeight600,FontSize("0.8rem"), TextAlignCenter){ (small)"Sure No" + Width(50) , (small)"Adet" + Width(40)},
             new FlexColumn(AlignItemsCenter)
             {
-                Records[index].Details?.Select((_,i)=> CreateInput(() => Records[index].Details[i].Count))
+                Records[index].Details?.Select((_,i)=> new FlexRow(AlignItemsStretch)
+                {
+                    new small{ Records[index].Details[i].ChapterNumber.ToString()} + Width(50) + TextAlignCenter + FontSize("0.7rem") +InputBorder+
+                    DisplayFlex+JustifyContentCenter+AlignItemsCenter,
+                    CreateInput(() => Records[index].Details[i].Count)
+                })
             },
-            new FlexRowCentered
+            new FlexRow(AlignItemsStretch)
             {
+                new small{"Toplam"} + Width(50) + TextAlignCenter + FontSize("0.7rem") +InputBorder + DisplayFlex+JustifyContentCenter+AlignItemsCenter,
                 CreateInput(() => Records[index].Count)
             }
         };
@@ -156,6 +165,11 @@ class TotalCountsWithDetail : ReactComponent
 
     void RecalculateTotalCounts()
     {
+        foreach (var item in Records.SkipLast(1))
+        {
+            item.Details.Sum(x => ParseInt(x.Count)).Then(total => item.Count = total.ToString());
+        }
+
         Records.SkipLast(1).Sum(x => ParseInt(x.Count)).Then(total => Records[^1].Count = total.ToString());
     }
 
