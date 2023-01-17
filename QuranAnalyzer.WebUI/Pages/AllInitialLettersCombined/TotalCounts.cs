@@ -23,7 +23,15 @@ class TotalCounts : ReactComponent
         new InitialLetterCountInfo { Text = ArabicLetter.Taa, Count  = "107" },
         new InitialLetterCountInfo { Text = ArabicLetter.Siin, Count = "392" },
         new InitialLetterCountInfo { Text = ArabicLetter.Haa_, Count = "292" },
-        new InitialLetterCountInfo { Text = ArabicLetter.Qaaf, Count = "114" },
+        new InitialLetterCountInfo
+        {
+            Text = ArabicLetter.Qaaf, Count = "114" ,
+            Details = new List<CountInfo>
+            {
+                new CountInfo{ChapterNumber = 42, Count = "57"},
+                new CountInfo{ChapterNumber = 50, Count = "57"}
+            }
+        },
         new InitialLetterCountInfo { Text = ArabicLetter.Nun, Count  = "133" },
         new InitialLetterCountInfo { Text = "Toplam", Count          = "41388" }
     };
