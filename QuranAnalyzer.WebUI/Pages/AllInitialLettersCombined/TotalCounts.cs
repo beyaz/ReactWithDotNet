@@ -111,7 +111,7 @@ class TotalCounts : ReactComponent
         },
         new InitialLetterCountInfo
         {
-            Text = ArabicLetter.Haa, Count = "426",
+            Text = ArabicLetter.Haa_, Count = "426",
             Details = new List<CountInfo>
             {
                 new (){ChapterNumber = 19      ,Count    = "175" },
@@ -140,7 +140,7 @@ class TotalCounts : ReactComponent
         },
         new InitialLetterCountInfo
         {
-            Text = ArabicLetter.Taa, Count = "107",
+            Text = ArabicLetter.Taa_, Count = "107",
             Details = new List<CountInfo>
             {
                 new (){ChapterNumber = 20      ,Count = "28" },
@@ -163,7 +163,7 @@ class TotalCounts : ReactComponent
         },
         new InitialLetterCountInfo
         {
-            Text = ArabicLetter.Haa_, Count = "292" ,
+            Text = ArabicLetter.Haa, Count = "292" ,
             Details = new List<CountInfo>
             {
                 new (){ChapterNumber = 40      ,Count = "64" },
