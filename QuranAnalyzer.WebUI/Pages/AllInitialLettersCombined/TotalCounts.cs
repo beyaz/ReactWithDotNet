@@ -28,8 +28,8 @@ class TotalCounts : ReactComponent
             Text = ArabicLetter.Qaaf, Count = "114" ,
             Details = new List<CountInfo>
             {
-                new CountInfo{ChapterNumber = 42, Count = "57"},
-                new CountInfo{ChapterNumber = 50, Count = "57"}
+                new (){ChapterNumber = 42, Count = "57"},
+                new (){ChapterNumber = 50, Count = "57"}
             }
         },
         new InitialLetterCountInfo { Text = ArabicLetter.Nun, Count  = "133" },
