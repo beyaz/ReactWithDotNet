@@ -148,7 +148,7 @@ class TotalCounts : ReactComponent
                 }
             }
         };
-
+        
         return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-" + Records[index].Text))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[index].Text) },
