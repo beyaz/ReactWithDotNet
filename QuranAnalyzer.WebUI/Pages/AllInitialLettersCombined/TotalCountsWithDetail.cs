@@ -13,9 +13,15 @@ class TotalCountsWithDetail : ReactComponent
 
     public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = Extensions.AllInitialLetterTotalCounts;
 
-    static string GetIdOf(int recordIndex, bool isBegin)
+    static string GetIdOf(bool isBegin, int recordIndex, int? detailIndex)
     {
-        return $"{nameof(TotalCountsWithDetail)}-{(isBegin ? "begin" : "end")}-{recordIndex}";
+        return string.Join("-", 
+                           nameof(TotalCountsWithDetail),
+                           isBegin ? "begin" : "end",
+                           nameof(recordIndex),
+                           recordIndex,
+                           nameof(detailIndex),
+                           detailIndex);
     }
     
     protected override Element render()
@@ -78,33 +84,50 @@ class TotalCountsWithDetail : ReactComponent
     {
         var record = Records[recordIndex];
 
-        var needArrow = recordIndex < 3 || recordIndex + 3 >= Records.Count;
+        bool needArrow(int? detailIndex)
+        {
+            if (recordIndex == 0 && detailIndex < 3)
+            {
+                return true;
+            }
+
+            if (recordIndex == Records.Count - 1)
+            {
+                return true;
+            }
+
+            if (recordIndex == Records.Count - 2)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         if (record.Details is not null)
         {
-            return record.Details.Select(x =>
+            return record.Details.Select((x,i) => InFadeAnimation(new div
             {
-                return InFadeAnimation(new div
-                {
-                    //When(needArrow, new Arrow { start = "begin-" + record.Text, end = "end-" + record.Text }),
+                
+                
+                When(needArrow(i), new Arrow { start = GetIdOf(isBegin:true,recordIndex,i), end = GetIdOf(isBegin:false,recordIndex,i) }),
 
-                    new Fade
+                new Fade
+                {
+                    triggerOnce = true,
+                    direction   = "down",
+                    delay       = delayForAnimation + 200,
+                    children =
                     {
-                        triggerOnce = true,
-                        direction   = "down",
-                        delay       = delayForAnimation + 200,
-                        children =
-                        {
-                            new FlexRowCentered(ComponentBorder, BorderRadius(3), Id("end-" + record.Text)) { x.Count }
-                        }
+                        new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin:false,recordIndex,i))) { x.Count }
                     }
-                }, delayForAnimation);
-            });
+                }
+            }, delayForAnimation));
         }
 
         return InFadeAnimation(new div
         {
-            When(needArrow, new Arrow { start = "begin-" + record.Text, end = "end-" + record.Text }),
+            When(needArrow(null), new Arrow { start = GetIdOf(isBegin:true,recordIndex,null), end = GetIdOf(isBegin:false,recordIndex,null) }),
 
             new Fade
             {
@@ -113,7 +136,7 @@ class TotalCountsWithDetail : ReactComponent
                 delay       = delayForAnimation + 200,
                 children =
                 {
-                    new FlexRowCentered(ComponentBorder, BorderRadius(3), Id("end-" + record.Text)) { record.Count }
+                    new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin:false,recordIndex,null))) { record.Count }
                 }
             }
         }, delayForAnimation);
@@ -169,26 +192,26 @@ class TotalCountsWithDetail : ReactComponent
         };
     }
 
-    Element CreateWithCount(int index)
+    Element CreateWithCount(int recordIndex)
     {
         
-        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-" + Records[index].Text))
+        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-" + Records[recordIndex].Text))
         {
-            new FlexRow(JustifyContentCenter) { AsLetter(Records[index].Text) },
+            new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
             new FlexRow(Gap(5), FontWeight600,FontSize("0.8rem"), TextAlignCenter){ (small)"Sure No" + Width(50) , (small)"Adet" + Width(40)},
             new FlexColumn(AlignItemsCenter)
             {
-                Records[index].Details?.Select((_,i)=> new FlexRow(AlignItemsStretch)
+                Records[recordIndex].Details?.Select((_,i)=> new FlexRow(AlignItemsStretch)
                 {
-                    new small{ Records[index].Details[i].ChapterNumber.ToString()} + Width(50) + TextAlignCenter + FontSize("0.7rem") +InputBorder+
+                    new small{ Records[recordIndex].Details[i].ChapterNumber.ToString()} + Width(50) + TextAlignCenter + FontSize("0.7rem") +InputBorder+
                     DisplayFlex+JustifyContentCenter+AlignItemsCenter,
-                    CreateInput(() => Records[index].Details[i].Count)+Id($"detailed-begin-{index}-{i}")
+                    CreateInput(() => Records[recordIndex].Details[i].Count)+ Id(GetIdOf(isBegin:true,recordIndex,i))
                 })
             },
             new FlexRow(AlignItemsStretch)
             {
                 new small{"Toplam"} + Width(50) + TextAlignCenter + FontSize("0.7rem") +InputBorder + DisplayFlex+JustifyContentCenter+AlignItemsCenter,
-                CreateInput(() => Records[index].Count)
+                CreateInput(() => Records[recordIndex].Count)+Id(GetIdOf(isBegin:true,recordIndex,null))
             }
         };
     }
@@ -229,6 +252,8 @@ class TotalCountsWithDetail : ReactComponent
         public string end;
         public string start;
 
+        public string startAnchor = "left";
+
         protected override Element render()
         {
             const string color = "#a9acaa";
@@ -240,7 +265,7 @@ class TotalCountsWithDetail : ReactComponent
                 path        = "smooth",
                 color       = color,
                 strokeWidth = 1,
-                startAnchor = "bottom",
+                startAnchor = startAnchor,
                 dashness    = true,
                 endAnchor   = "top"
             };

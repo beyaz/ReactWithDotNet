@@ -49,9 +49,13 @@ class TotalCounts : ReactComponent
         };
     }
 
-    static string GetIdOf(int recordIndex, bool isBegin)
+    static string GetIdOf(bool isBegin, int recordIndex)
     {
-        return $"{nameof(TotalCounts)}-{(isBegin ? "begin" : "end")}-{recordIndex}";
+        return string.Join("-",
+                           nameof(TotalCounts),
+                           isBegin ? "begin" : "end",
+                           nameof(recordIndex),
+                           recordIndex);
     }
 
     static Element InFadeAnimation(Element element, int delay)
@@ -75,7 +79,7 @@ class TotalCounts : ReactComponent
 
         return InFadeAnimation(new div
         {
-            When(needArrow, new Arrow { start = GetIdOf(recordIndex, isBegin: true), end = GetIdOf(recordIndex, isBegin: false) }),
+            When(needArrow, new Arrow { start = GetIdOf(isBegin: true, recordIndex: recordIndex), end = GetIdOf(isBegin: false, recordIndex: recordIndex) }),
 
             new Fade
             {
@@ -84,7 +88,7 @@ class TotalCounts : ReactComponent
                 delay       = delayForAnimation + 200,
                 children =
                 {
-                    new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(recordIndex, isBegin: false))) { record.Count }
+                    new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex: recordIndex))) { record.Count }
                 }
             }
         }, delayForAnimation);
@@ -123,7 +127,7 @@ class TotalCounts : ReactComponent
 
     Element CreateWithCount(int recordIndex)
     {
-        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id(GetIdOf(recordIndex, isBegin: true)))
+        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id(GetIdOf(isBegin: true, recordIndex: recordIndex)))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
             new FlexRowCentered
