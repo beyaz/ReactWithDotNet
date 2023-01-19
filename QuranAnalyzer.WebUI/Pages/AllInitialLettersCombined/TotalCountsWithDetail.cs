@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
+using System.Text;
 using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 using ReactWithDotNet.react_xarrows;
@@ -34,9 +36,14 @@ class TotalCountsWithDetail : ReactComponent
             Space(20),
             new FlexColumn
             {
-                When(EnterJoInMode, () => new FlexRowCentered
+                When(EnterJoInMode, () => new FlexRowCentered(FlexWrap)
                 {
-                    Records.Select((_, i) => AnimateRecord(i, nextDelay()))
+                    Records.Select((_, i) => AnimateRecord(i, nextDelay())).Aggregate(new List<Element>(),(a,b)=>
+                    {
+                         a.AddRange(b);
+                         return a;
+
+                    })
                 }),
 
                 When(EnterJoInMode, () => EqualsTo(nextDelay())),
@@ -62,11 +69,33 @@ class TotalCountsWithDetail : ReactComponent
         };
     }
 
-    Element AnimateRecord(int recordIndex, int delayForAnimation)
+    IEnumerable<Element> AnimateRecord(int recordIndex, int delayForAnimation)
     {
         var record = Records[recordIndex];
 
         var needArrow = recordIndex < 3 || recordIndex + 3 >= Records.Count;
+
+        if (record.Details is not null)
+        {
+            return record.Details.Select(x =>
+            {
+                return InFadeAnimation(new div
+                {
+                    //When(needArrow, new Arrow { start = "begin-" + record.Text, end = "end-" + record.Text }),
+
+                    new Fade
+                    {
+                        triggerOnce = true,
+                        direction   = "down",
+                        delay       = delayForAnimation + 200,
+                        children =
+                        {
+                            new FlexRowCentered(ComponentBorder, BorderRadius(3), Id("end-" + record.Text)) { x.Count }
+                        }
+                    }
+                }, delayForAnimation);
+            });
+        }
 
         return InFadeAnimation(new div
         {
@@ -83,6 +112,8 @@ class TotalCountsWithDetail : ReactComponent
                 }
             }
         }, delayForAnimation);
+      
+
     }
 
     void Calculate()
@@ -92,17 +123,32 @@ class TotalCountsWithDetail : ReactComponent
 
     Element CalculateResult()
     {
-        var bigNumber = BigInteger.Parse(string.Join(string.Empty, Records.Select(x => x.Count)));
+        var sb = new StringBuilder();
+        foreach (var letterCountInfo in Records)
+        {
+            if (letterCountInfo.Details is not null)
+            {
+                foreach (var countInfo in letterCountInfo.Details)
+                {
+                    sb.Append(countInfo.Count);
+                }
+            }
+
+            // total count
+            sb.Append(letterCountInfo.Count);
+        }
+        
+        var bigNumber = BigInteger.Parse(sb.ToString());
 
         if (bigNumber % 19 == 0)
         {
-            return new FlexRow(AlignItemsFlexEnd, Gap(3))
+            return new FlexRow(AlignItemsFlexStart, Gap(3))
             {
-                (strong)"19", (small)"x", (small)(bigNumber / 19).ToString()
+                (strong)"19", (small)"x", (small)(bigNumber / 19).ToString() + OverflowWrapAnywhere
             };
         }
 
-        return new div { bigNumber.ToString() };
+        return new small { bigNumber.ToString(), OverflowWrapAnywhere };
     }
 
     StyleModifier InputBorder => Border($"0.1px solid {BorderColor}");
@@ -131,7 +177,7 @@ class TotalCountsWithDetail : ReactComponent
                 {
                     new small{ Records[index].Details[i].ChapterNumber.ToString()} + Width(50) + TextAlignCenter + FontSize("0.7rem") +InputBorder+
                     DisplayFlex+JustifyContentCenter+AlignItemsCenter,
-                    CreateInput(() => Records[index].Details[i].Count)
+                    CreateInput(() => Records[index].Details[i].Count)+Id($"detailed-begin-{index}-{i}")
                 })
             },
             new FlexRow(AlignItemsStretch)

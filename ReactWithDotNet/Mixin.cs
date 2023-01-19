@@ -246,6 +246,12 @@ public static partial class Mixin
     public static StyleModifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
 
     /// <summary>
+    /// style.overflowWrap = 'anywhere'
+    /// </summary>
+    public static StyleModifier OverflowWrapAnywhere => new(style => style.overflowWrap = "anywhere");
+    
+
+    /// <summary>
     ///     overflowY: auto
     /// </summary>
     public static StyleModifier OverflowYAuto => new(style => style.overflowY = "auto");
