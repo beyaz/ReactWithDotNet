@@ -80,6 +80,10 @@ class TotalCountsWithDetail : ReactComponent
         };
     }
 
+    static List<T> ListOf<T>(IEnumerable<T> enumerable, T lastItem)
+    {
+        return new List<T>(enumerable) { lastItem };
+    }
     IEnumerable<Element> AnimateRecord(int recordIndex, int delayForAnimation)
     {
         var record = Records[recordIndex];
@@ -106,10 +110,8 @@ class TotalCountsWithDetail : ReactComponent
 
         if (record.Details is not null)
         {
-            return record.Details.Select((x,i) => InFadeAnimation(new div
+            return ListOf( record.Details.Select((x,i) => InFadeAnimation(new div
             {
-                
-                
                 When(needArrow(i), new Arrow { start = GetIdOf(isBegin:true,recordIndex,i), end = GetIdOf(isBegin:false,recordIndex,i) }),
 
                 new Fade
@@ -122,7 +124,25 @@ class TotalCountsWithDetail : ReactComponent
                         new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin:false,recordIndex,i))) { x.Count }
                     }
                 }
-            }, delayForAnimation));
+            }, delayForAnimation)),
+
+                           InFadeAnimation(new div
+                           {
+                               When(needArrow(null), new Arrow { start = GetIdOf(isBegin:true,recordIndex,null), end = GetIdOf(isBegin:false,recordIndex,null) }),
+
+                               new Fade
+                               {
+                                   triggerOnce = true,
+                                   direction   = "down",
+                                   delay       = delayForAnimation + 200,
+                                   children =
+                                   {
+                                       new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin:false,recordIndex,null))) { record.Count }
+                                   }
+                               }
+                           }, delayForAnimation)
+
+                          );
         }
 
         return InFadeAnimation(new div
