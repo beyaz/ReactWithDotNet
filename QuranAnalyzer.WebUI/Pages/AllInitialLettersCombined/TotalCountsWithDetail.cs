@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Numerics;
 using System.Text;
 using QuranAnalyzer.WebUI.Components;
@@ -13,6 +13,11 @@ class TotalCountsWithDetail : ReactComponent
 
     public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = Extensions.AllInitialLetterTotalCounts;
 
+    static string GetIdOf(int recordIndex, bool isBegin)
+    {
+        return $"{nameof(TotalCountsWithDetail)}-{(isBegin ? "begin" : "end")}-{recordIndex}";
+    }
+    
     protected override Element render()
     {
         var delay = 200;

@@ -121,14 +121,14 @@ class TotalCounts : ReactComponent
         };
     }
 
-    Element CreateWithCount(int index)
+    Element CreateWithCount(int recordIndex)
     {
-        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id(GetIdOf(index, isBegin: true)))
+        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id(GetIdOf(recordIndex, isBegin: true)))
         {
-            new FlexRow(JustifyContentCenter) { AsLetter(Records[index].Text) },
+            new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
             new FlexRowCentered
             {
-                CreateInput(() => Records[index].Count)
+                CreateInput(() => Records[recordIndex].Count)
             }
         };
     }
