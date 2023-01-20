@@ -196,7 +196,7 @@ class View : ReactComponent<MainViewModel>
             {
                 Headless          = true,
                 IgnoreHTTPSErrors = true,
-                Args = new []{ "--enable-features=NetworkService" },
+                //Args = new []{ "--enable-features=NetworkService" },
                 
                 Product = Product.Chrome,
 
