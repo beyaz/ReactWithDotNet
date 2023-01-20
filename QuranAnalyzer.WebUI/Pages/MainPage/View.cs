@@ -197,6 +197,8 @@ class View : ReactComponent<MainViewModel>
             await page.GoToAsync("http://beyaz1404-001-site1.itempurl.com/?p=17");
             var content = await page.GetContentAsync();
 
+            await browser.CloseAsync();
+
             return content;
         }
     }
