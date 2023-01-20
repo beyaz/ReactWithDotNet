@@ -35,6 +35,7 @@ class TotalCountsWithDetail : ReactComponent
     
     protected override Element render()
     {
+        
         var nextDelay = CreateDelayAccessMethod();
 
         return new FlexColumn(Gap(10))
