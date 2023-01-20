@@ -60,11 +60,17 @@ class MethodSelectionView : ReactComponent
         {
             foreach (var namespaceNode in nodes)
             {
-                namespaceNode.expanded = true;
+                if (namespaceNode.children.Count <=2)
+                {
+                    namespaceNode.expanded = true;
+                }
 
                 foreach (var classNode in namespaceNode.children.Take(1))
                 {
-                    classNode.expanded = true;
+                    if (classNode.children.Count <= 2)
+                    {
+                        classNode.expanded = true;
+                    }
                 }
             }
         }
