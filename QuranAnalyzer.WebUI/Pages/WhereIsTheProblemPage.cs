@@ -8,7 +8,7 @@ public class WhereIsTheProblemPage : ReactComponent
     {
         return new Article
         {
-            new LargeTitle("Açık Kapılar"),
+            new LargeTitle("Eleştirilen Noktalar"),
 
             new p
             {
@@ -18,7 +18,7 @@ public class WhereIsTheProblemPage : ReactComponent
             {
                 @"Gayet haklı bir soru.",
                 new br(),
-                "Elinize sıradan bir Kuran alın bu sitede başlangıç haflerinde gösterilen her bir maddeyi bizzat kendiniz teyiz edebilirsiniz.",
+                "Elinize sıradan bir Kuran alın bu sitede başlangıç haflerinde gösterilen her bir maddeyi bizzat kendiniz teyid edebilirsiniz.",
 
                 new br(),
                 new br(),
@@ -28,7 +28,7 @@ public class WhereIsTheProblemPage : ReactComponent
 
                 "1 - Elinizdeki mushafta 68. sureyi açtığınızda surenin en başında sadece bir tane ", AsLetter(ArabicLetter.Nun), " harfi görürsünüz.",
                 " 19 sistemini ilk keşfeden kişi burada tek nun değil çift nun harfi olduğunu söylüyor. ",
-                " Hatta bu 19 sistemini ilk bu nun ile başlayan surede farkediyor. Eski mushaflarda bunun iki nun ile yazıldığını gördüm diyor.",
+                " Hatta bu 19 sistemini ilk bu nun ile başlayan surede farkediyor. Orjinal mushafta bunun iki nun ile yazıldığını gördüm diyor.",
 
                 new br(),
                 new br(),
@@ -50,7 +50,8 @@ public class WhereIsTheProblemPage : ReactComponent
                 "Tabii bu fark maksimum 1-2 olacak şekilde bir fark. Mesela Bakara suresinin 282.inci ayetinde biri 108 öteki 107 saymış.",
                 new br(),
                 new br(),
-                "- Başka veriler Reşad'ın doğru saydığını gösteriyor.",
+                "- İşte bu Elif harfinin sayımları konusunda başka veriler Reşad'ın doğru saydığını gösteriyor. " ,
+                " Aşağıda iki ayrı incelemeyi paylaşıyorum. Aşağıdaki iki ayrı veri de Reşad'dan çok sonra ortaya çıkmıştır. ",
                 new br(),
                 new br(),
                 new FlexRowCentered
@@ -71,9 +72,21 @@ public class WhereIsTheProblemPage : ReactComponent
                         href = GetPageLink(PageId.AllInitialLettersCombined),
                         text = "Başlangıç harflerinin yan yana yazılması ile oluşan büyük sayılar"
                     }
-                }
+                },
                 
-               
+                new br(),
+                
+                "Burada kendi yorumumu paylaşmak istiyorum.",
+                " Zaman içerisinde 19 ile ilgili veriler daha netlik kazanacak. " ,
+                " Mesela Sad harfi 3 ayrı sureye dağılmış diye garip gelebilir. " ,
+                " Reşad öldürüldükten 30 yıl sonra araştırmalar sayesinde sadece bir tek Sad harfinde bile çok muteşem veriler bulundu. " +
+                " Dilerseniz daha detaylı araştırabilirsiniz.",
+                new br(),
+                "Özetle 68. suredeki NuN olayı ve Elif sayımları üzerinde tartışılan noktalardır. " ,
+                " Belki de burası ilerde daha netlik kazanacak şimdilik bunun imtahan kısmıdır. " ,
+                " Yalnız Kuran fikrini kabullenemeyenler bu açık kapılardan çıkıp gidiyorlar. " ,
+                " 19 üzerinde muhteşem veriler varken Elif harfine takılıyor tüm sistemi çöpe atıyor. ",
+                " Umarım üzerinde tartışma yaşanan kısmını anlatabilmişimdir. Tercih sizin. "
             }
 
 
