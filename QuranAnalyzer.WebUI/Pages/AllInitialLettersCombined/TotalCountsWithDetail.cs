@@ -61,17 +61,6 @@ class TotalCountsWithDetail : ReactComponent
         return nextDelay;
     }
 
-    static string GetIdOf(bool isBegin, int recordIndex, int? detailIndex)
-    {
-        return string.Join("-",
-                           nameof(TotalCountsWithDetail),
-                           isBegin ? "begin" : "end",
-                           nameof(recordIndex),
-                           recordIndex,
-                           nameof(detailIndex),
-                           detailIndex);
-    }
-
     static Element InFadeAnimation(Element element, int delay)
     {
         return new Fade
@@ -143,7 +132,7 @@ class TotalCountsWithDetail : ReactComponent
                         {
                             triggerOnce = true,
                             direction   = "down",
-                            delay       = lastDelay + 200,
+                            delay       = lastDelay + 400,
                             children =
                             {
                                 new FlexRowCentered(ComponentBorder, BorderRadius(3), MarginRight(3), Id(GetIdOf(isBegin: false, recordIndex, i)))
@@ -305,6 +294,18 @@ class TotalCountsWithDetail : ReactComponent
                 }
             }
         };
+    }
+
+    string GetIdOf(bool isBegin, int recordIndex, int? detailIndex)
+    {
+        var seperator = IncludeChapterNumbers ? "-" : ".";
+        return string.Join(seperator,
+                           nameof(TotalCountsWithDetail),
+                           isBegin ? "begin" : "end",
+                           nameof(recordIndex),
+                           recordIndex,
+                           nameof(detailIndex),
+                           detailIndex);
     }
 
     void RecalculateTotalCounts()

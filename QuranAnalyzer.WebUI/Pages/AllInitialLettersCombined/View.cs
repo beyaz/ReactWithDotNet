@@ -19,20 +19,70 @@ class View : ReactComponent
 
             seperation,
 
-            "Mesela yasin suresideki ya harfi o surede 580 defa geçer. Kaf harfi iki surede olmak üzere toplamda 114 defa geçer.",
+            "Mesela Kaf harfi iki surede olmak üzere toplamda 114 defa geçer.",
+            new br(),
+            "Başlangıç harflerinin ait oldukları surelerdeki toplam geçiş adetlerini yan yana yazınca oluşan büyük rakam 19'un tam katıdır.",
             new br(),
             raisePanel(new TotalCounts()),
-            new br(),
-            new br(),
 
+            new br(),
+            "Yukarıdaki geçiş adetlerinden herhangi birini değiştirmeyi deneyebilirsiniz. Hesaplama gerçek zamanlı olarak çalışmaktadır.",
+            seperation,
+
+            "2. olarak bu geçiş adetlerini daha detaylı olarak yazalım. ",
+            "Mesela Mim harfi toplamda 17 surede olmak üzere 8659 defa geçer. ",
+            "Bu 17 suredeki geçiş adetlerini de bu toplamın önüne ekleyelim ve oluşan sayıyı inceleyelim. ",
+            "Aşağıda bulunan paneldeki hesapla düğmesine basarak bu işlemi hesaplayabilirsiniz.",
             raisePanel(new TotalCountsWithDetail()),
+            new br(),
+            "Yukarıdaki geçiş adetlerinden herhangi birini değiştirmeyi deneyebilirsiniz.",
+            seperation,
 
-            new VSpace(10),
+            "Son olarak olayı daha da zorlaştıralım. İlaveten sure numaraları da dahil edelim. ",
+            "Mesela Mim harfi toplamda 17 surede olmak üzere 8659 defa geçer. ",
+            "Bu 17 suredeki ", (strong)"sure no, o suredeki toplam geçiş adeti ", " şeklinde yan yana yazalım. Aşağıda bu işlemi hesaplayabilirsiniz.",
+            raisePanel(new TotalCountsWithDetail { IncludeChapterNumbers = true }),
+            new br(),
+            "Yukarıdaki geçiş adetlerinden herhangi birini değiştirmeyi deneyebilirsiniz. Hesaplama gerçek zamanlı olarak çalışmaktadır.",
+            seperation,
+
+            new SubTitle("Sonuç"),
+            new p
+            {
+                "Elbetteki herhangi bir sayının 19'a bölünme ihtimali 19 da 1 dir. " ,
+                "Sayının ne kadar büyük olduğununun bir önemi yoktur.",
+                new br(),
+                "Burada insanı hayrete düşüren olayı bir örnek ile açıklayalım." ,
+                new br(),
+                "Sadece ",AsLetter(ArabicLetter.Miim)," harfini ele alalım. Bu başlangıç harfi ile başlayan 17 surelerde toplamda 8659 adet geçer. " ,
+
+                "Eğer 46. suredeki ",AsLetter(ArabicLetter.Miim)," harfi bir fazla veya eksik olsaydı  hem bu yukarıda hesaplanan  büyük rakamlar 19'un katı olmazdı. ",
+                "Hem 'Başlangıç Harfleri' kısmında gözlemlediğimiz Ha-Mim ile ilgili veriler olmazdı.",
+                "Sadece bir yerden değil bir çok yerden kitlenen iç içe geçmeli bir yapı gibi düşünülebilir."
+            },
 
             new p
             {
-                "İlginç... "
+                "Kuranda özellikle ",(strong)"bu kitabın bir benzerinin oluştutulamayacağı"," vurgulanır. ",
+                "19 sistemi keşfedilinceye kadar olay sadece edebi açıdan ele alınıyordu. Edebi mucize olarak ele alınıyordu. " ,
+                "Bu edebi açıdan mucize olduğu yorumu ise bazı insanları tam tatmin etmiyordu. Çünkü edebiyat görecelidir. ",
+                "Kimine göre Necip Fazıl daha iyi şairdir kimine göre de Nazım Hikmet. ",
+                "Ama matematik yoruma daha kapalıdır. 2 + 2 Bağcılarda da 4 eder Berlinde de 4 eder. ",
+                "Tüm denizlerdeki kum tanelerinin adetini kesin olarak bilen bir yaratıcı Kuranın içine de böyle bir örüntü eklemiş. ",
+                "Böylelikle Kuranın korunacağı ve Kuranın bir benzerinin getirilemeyeceği iddalarını 19 sistemi ile ortaya koyuyor. ",
+            },
+
+            new p
+            {
+                "Neden 19?",
+                new br(),
+                "Elbette herşeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi." ,
+                " Arapça Vahid ( Türkçe tek anlamına gelir ) kelimesinin sayısal değeri ise 19 dur." +
+                " Mühim olan buradaki örüntüyü görebilmektir. " ,
+                " Böylelikle Allah var mı? yok mu? Kuran Allah kelamı mı değil mi ? gibi şüpheler giderilmiş olacak.",
+                " Kuran'ın Allah'dan geldiğine olan inancımızı sağlam bir zemine oturmuş olacağız."
             }
+
         };
 
         static Element seperation() => new FlexRowCentered(MarginTopBottom(10)) { "* * *" };
