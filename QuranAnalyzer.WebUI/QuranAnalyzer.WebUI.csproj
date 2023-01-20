@@ -5,6 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="PuppeteerSharp" Version="9.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\QuranAnalyzer\QuranAnalyzer.csproj" />
         <ProjectReference Include="..\ReactWithDotNet.Libraries\ReactWithDotNet.Libraries.csproj" />
         <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
