@@ -202,7 +202,9 @@ class View : ReactComponent<MainViewModel>
 
             });
             await using var page = await browser.NewPageAsync();
-            await page.GoToAsync("http://beyaz1404-001-site1.itempurl.com/?p=17");
+            // await page.GoToAsync("http://beyaz1404-001-site1.itempurl.com/?p=17");
+
+            await page.GoToAsync("https://www.google.com/search?q=--enable-features%3DNetworkService&oq=--enable-features%3DNetworkService&aqs=edge..69i57.239j0j4&sourceid=chrome&ie=UTF-8");
             var content = await page.GetContentAsync();
 
             await browser.CloseAsync();
