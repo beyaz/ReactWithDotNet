@@ -1,5 +1,4 @@
-﻿
-using System.Numerics;
+﻿using System.Numerics;
 using System.Text;
 using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
@@ -9,33 +8,14 @@ namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
 class TotalCountsWithDetail : ReactComponent
 {
-    static Func<int> CreateDelayAccessMethod()
-    {
-        var delay = 200;
-
-        int nextDelay() => delay += 300;
-
-        return nextDelay;
-    }
-    
     public bool EnterJoInMode { get; set; }
 
     public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = Extensions.AllInitialLetterTotalCounts;
 
-    static string GetIdOf(bool isBegin, int recordIndex, int? detailIndex)
-    {
-        return string.Join("-", 
-                           nameof(TotalCountsWithDetail),
-                           isBegin ? "begin" : "end",
-                           nameof(recordIndex),
-                           recordIndex,
-                           nameof(detailIndex),
-                           detailIndex);
-    }
-    
+    StyleModifier InputBorder => Border($"0.1px solid {BorderColor}");
+
     protected override Element render()
     {
-        
         var nextDelay = CreateDelayAccessMethod();
 
         return new FlexColumn(Gap(10))
@@ -53,7 +33,7 @@ class TotalCountsWithDetail : ReactComponent
                 new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(EnterJoInMode, DisplayNone)
             },
             Space(20),
-            When(EnterJoInMode, ()=>new FlexColumn
+            When(EnterJoInMode, () => new FlexColumn
             {
                 new FlexRowCentered(FlexWrap)
                 {
@@ -68,6 +48,26 @@ class TotalCountsWithDetail : ReactComponent
                 }
             })
         };
+    }
+
+    static Func<int> CreateDelayAccessMethod()
+    {
+        var delay = 200;
+
+        int nextDelay() => delay += 300;
+
+        return nextDelay;
+    }
+
+    static string GetIdOf(bool isBegin, int recordIndex, int? detailIndex)
+    {
+        return string.Join("-",
+                           nameof(TotalCountsWithDetail),
+                           isBegin ? "begin" : "end",
+                           nameof(recordIndex),
+                           recordIndex,
+                           nameof(detailIndex),
+                           detailIndex);
     }
 
     static Element InFadeAnimation(Element element, int delay)
@@ -109,15 +109,14 @@ class TotalCountsWithDetail : ReactComponent
 
             return false;
         }
-        
+
         var returnList = new List<Element>();
 
         var lastDelay = 0;
-        
+
         for (var recordIndex = 0; recordIndex < Records.Count; recordIndex++)
         {
             var record = Records[recordIndex];
-
 
             bool needArrow(int? detailIndex) => NeedArrow(recordIndex, detailIndex);
 
@@ -133,7 +132,7 @@ class TotalCountsWithDetail : ReactComponent
                     {
                         lastDelay = nextDelay();
                     }
-                    
+
                     returnList.Add(InFadeAnimation(new div
                     {
                         When(drawArrow, new Arrow { start = GetIdOf(isBegin: true, recordIndex, i), end = GetIdOf(isBegin: false, recordIndex, i) }),
@@ -142,7 +141,7 @@ class TotalCountsWithDetail : ReactComponent
                         {
                             triggerOnce = true,
                             direction   = "down",
-                            delay       = lastDelay+200,
+                            delay       = lastDelay + 200,
                             children =
                             {
                                 new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, i))) { x.Count }
@@ -164,16 +163,16 @@ class TotalCountsWithDetail : ReactComponent
                     {
                         When(drawArrow, new Arrow
                         {
-                            start = GetIdOf(isBegin: true, recordIndex, null), 
-                            end = GetIdOf(isBegin: false, recordIndex, null),
-                            startAnchor ="bottom"
+                            start       = GetIdOf(isBegin: true, recordIndex, null),
+                            end         = GetIdOf(isBegin: false, recordIndex, null),
+                            startAnchor = "bottom"
                         }),
 
                         new Fade
                         {
                             triggerOnce = true,
                             direction   = "down",
-                            delay       = lastDelay+200,
+                            delay       = lastDelay + 200,
                             children =
                             {
                                 new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, null))) { record.Count }
@@ -186,7 +185,7 @@ class TotalCountsWithDetail : ReactComponent
             }
 
             lastDelay = nextDelay();
-            
+
             // add total count
             returnList.Add(InFadeAnimation(new div
             {
@@ -196,20 +195,17 @@ class TotalCountsWithDetail : ReactComponent
                 {
                     triggerOnce = true,
                     direction   = "down",
-                    delay       = lastDelay+200,
+                    delay       = lastDelay + 200,
                     children =
                     {
                         new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, null))) { record.Count }
                     }
                 }
             }, lastDelay));
-
         }
-
 
         return returnList;
     }
-    
 
     void Calculate()
     {
@@ -232,7 +228,7 @@ class TotalCountsWithDetail : ReactComponent
             // total count
             sb.Append(letterCountInfo.Count);
         }
-        
+
         var bigNumber = BigInteger.Parse(sb.ToString());
 
         if (bigNumber % 19 == 0)
@@ -246,8 +242,6 @@ class TotalCountsWithDetail : ReactComponent
         return new small { bigNumber.ToString(), OverflowWrapAnywhere };
     }
 
-    StyleModifier InputBorder => Border($"0.1px solid {BorderColor}");
-    
     input CreateInput(Expression<Func<string>> bindingExpression)
     {
         return new input(Width(40), TextAlignCenter, InputBorder)
@@ -261,24 +255,23 @@ class TotalCountsWithDetail : ReactComponent
 
     Element CreateWithCount(int recordIndex)
     {
-        
         return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-" + Records[recordIndex].Text))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
-            new FlexRow(Gap(5), FontWeight600,FontSize("0.8rem"), TextAlignCenter){ (small)"Sure No" + Width(50) , (small)"Adet" + Width(40)},
+            new FlexRow(Gap(5), FontWeight600, FontSize("0.8rem"), TextAlignCenter) { (small)"Sure No" + Width(50), (small)"Adet" + Width(40) },
             new FlexColumn(AlignItemsCenter)
             {
-                Records[recordIndex].Details?.Select((_,i)=> new FlexRow(AlignItemsStretch)
+                Records[recordIndex].Details?.Select((_, i) => new FlexRow(AlignItemsStretch)
                 {
-                    new small{ Records[recordIndex].Details[i].ChapterNumber.ToString()} + Width(50) + TextAlignCenter + FontSize("0.7rem") +InputBorder+
-                    DisplayFlex+JustifyContentCenter+AlignItemsCenter,
-                    CreateInput(() => Records[recordIndex].Details[i].Count)+ Id(GetIdOf(isBegin:true,recordIndex,i))
+                    new small { Records[recordIndex].Details[i].ChapterNumber.ToString() } + Width(50) + TextAlignCenter + FontSize("0.7rem") + InputBorder +
+                    DisplayFlex + JustifyContentCenter + AlignItemsCenter,
+                    CreateInput(() => Records[recordIndex].Details[i].Count) + Id(GetIdOf(isBegin: true, recordIndex, i))
                 })
             },
             new FlexRow(AlignItemsStretch)
             {
-                new small{"Toplam"} + Width(50) + TextAlignCenter + FontSize("0.7rem") +InputBorder + DisplayFlex+JustifyContentCenter+AlignItemsCenter,
-                CreateInput(() => Records[recordIndex].Count)+Id(GetIdOf(isBegin:true,recordIndex,null))
+                new small { "Toplam" } + Width(50) + TextAlignCenter + FontSize("0.7rem") + InputBorder + DisplayFlex + JustifyContentCenter + AlignItemsCenter,
+                CreateInput(() => Records[recordIndex].Count) + Id(GetIdOf(isBegin: true, recordIndex, null))
             }
         };
     }
@@ -339,4 +332,3 @@ class TotalCountsWithDetail : ReactComponent
         }
     }
 }
-
