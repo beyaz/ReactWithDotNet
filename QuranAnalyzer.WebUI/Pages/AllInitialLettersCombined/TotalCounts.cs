@@ -31,21 +31,23 @@ class TotalCounts : ReactComponent
             {
                 new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(EnterJoInMode, DisplayNone)
             },
+            
             Space(20),
-            new FlexColumn
+
+            When(EnterJoInMode,()=>new FlexColumn
             {
-                When(EnterJoInMode, () => new FlexRowCentered
+                new FlexRowCentered
                 {
                     Records.Select((_, i) => AnimateRecord(i, nextDelay()))
-                }),
+                },
 
-                When(EnterJoInMode, () => EqualsTo(nextDelay())),
+                EqualsTo(nextDelay()),
 
-                When(EnterJoInMode, () => new FlexRowCentered
+                new FlexRowCentered
                 {
                     InFadeAnimation(new FlexRow { CalculateResult() }, nextDelay())
-                })
-            }
+                }
+            })
         };
     }
 
