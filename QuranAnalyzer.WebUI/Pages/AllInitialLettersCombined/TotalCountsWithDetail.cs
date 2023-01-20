@@ -10,6 +10,8 @@ class TotalCountsWithDetail : ReactComponent
 {
     public bool EnterJoInMode { get; set; }
 
+    public bool IncludeChapterNumbers { get; set; }
+
     public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = Extensions.AllInitialLetterTotalCounts;
 
     StyleModifier InputBorder => Border($"0.1px solid {BorderColor}");
@@ -144,7 +146,10 @@ class TotalCountsWithDetail : ReactComponent
                             delay       = lastDelay + 200,
                             children =
                             {
-                                new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, i))) { x.Count }
+                                new FlexRowCentered(ComponentBorder, BorderRadius(3), MarginRight(3), Id(GetIdOf(isBegin: false, recordIndex, i)))
+                                {
+                                    IncludeChapterNumbers ? x.ChapterNumber + ":" + x.Count : x.Count
+                                }
                             }
                         }
                     }, lastDelay));
@@ -221,6 +226,11 @@ class TotalCountsWithDetail : ReactComponent
             {
                 foreach (var countInfo in letterCountInfo.Details)
                 {
+                    if (IncludeChapterNumbers)
+                    {
+                        sb.Append(countInfo.ChapterNumber);
+                    }
+
                     sb.Append(countInfo.Count);
                 }
             }
