@@ -249,6 +249,11 @@ public static partial class Mixin
     /// style.overflowWrap = 'anywhere'
     /// </summary>
     public static StyleModifier OverflowWrapAnywhere => new(style => style.overflowWrap = "anywhere");
+
+    /// <summary>
+    /// style.overflowWrap = 'normal'
+    /// </summary>
+    public static StyleModifier OverflowWrapNormal => new(style => style.overflowWrap = "normal");
     
 
     /// <summary>

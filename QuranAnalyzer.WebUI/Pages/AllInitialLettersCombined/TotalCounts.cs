@@ -34,7 +34,7 @@ class TotalCounts : ReactComponent
 
             When(EnterJoInMode, () => new FlexColumn
             {
-                new FlexRowCentered
+                new FlexRowCentered(FlexWrap)
                 {
                     Records.Select((_, i) => AnimateRecord(i, nextDelay()))
                 },
@@ -97,7 +97,7 @@ class TotalCounts : ReactComponent
                 delay       = delayForAnimation + 200,
                 children =
                 {
-                    new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex: recordIndex))) { record.Count }
+                    new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex: recordIndex)), OverflowWrapNormal) { record.Count }
                 }
             }
         }, delayForAnimation);
@@ -114,13 +114,13 @@ class TotalCounts : ReactComponent
 
         if (bigNumber % 19 == 0)
         {
-            return new FlexRow(AlignItemsFlexEnd, Gap(3))
+            return new FlexRow(AlignItemsFlexStart, Gap(3))
             {
-                (strong)"19", (small)"x", (small)(bigNumber / 19).ToString()
+                (strong)"19", (small)"x", (small)(bigNumber / 19).ToString() + OverflowWrapAnywhere
             };
         }
 
-        return new div { bigNumber.ToString() };
+        return new div { bigNumber.ToString() } + OverflowWrapAnywhere;
     }
 
     input CreateInput(Expression<Func<string>> bindingExpression)
@@ -136,12 +136,12 @@ class TotalCounts : ReactComponent
 
     Element CreateWithCount(int recordIndex)
     {
-        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id(GetIdOf(isBegin: true, recordIndex: recordIndex)))
+        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
             new FlexRowCentered
             {
-                CreateInput(() => Records[recordIndex].Count)
+                CreateInput(() => Records[recordIndex].Count) + Id(GetIdOf(isBegin: true, recordIndex: recordIndex))
             }
         };
     }

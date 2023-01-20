@@ -9,6 +9,15 @@ namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
 class TotalCountsWithDetail : ReactComponent
 {
+    static Func<int> CreateDelayAccessMethod()
+    {
+        var delay = 200;
+
+        int nextDelay() => delay += 300;
+
+        return nextDelay;
+    }
+    
     public bool EnterJoInMode { get; set; }
 
     public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = Extensions.AllInitialLetterTotalCounts;
@@ -26,9 +35,7 @@ class TotalCountsWithDetail : ReactComponent
     
     protected override Element render()
     {
-        var delay = 200;
-
-        int nextDelay() => delay += 300;
+        var nextDelay = CreateDelayAccessMethod();
 
         return new FlexColumn(Gap(10))
         {
@@ -45,25 +52,25 @@ class TotalCountsWithDetail : ReactComponent
                 new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(EnterJoInMode, DisplayNone)
             },
             Space(20),
-            new FlexColumn
+            When(EnterJoInMode, ()=>new FlexColumn
             {
-                When(EnterJoInMode, () => new FlexRowCentered(FlexWrap)
+                new FlexRowCentered(FlexWrap)
                 {
                     Records.Select((_, i) => AnimateRecord(i, nextDelay())).Aggregate(new List<Element>(),(a,b)=>
                     {
-                         a.AddRange(b);
-                         return a;
+                        a.AddRange(b);
+                        return a;
 
                     })
-                }),
+                },
 
-                When(EnterJoInMode, () => EqualsTo(nextDelay())),
+                EqualsTo(nextDelay()),
 
-                When(EnterJoInMode, () => new FlexRowCentered
+                new FlexRowCentered
                 {
                     InFadeAnimation(new FlexRow { CalculateResult() }, nextDelay())
-                })
-            }
+                }
+            })
         };
     }
 
@@ -88,6 +95,7 @@ class TotalCountsWithDetail : ReactComponent
     {
         var record = Records[recordIndex];
 
+        
         bool needArrow(int? detailIndex)
         {
             if (recordIndex == 0 && detailIndex < 3)
@@ -110,39 +118,39 @@ class TotalCountsWithDetail : ReactComponent
 
         if (record.Details is not null)
         {
-            return ListOf( record.Details.Select((x,i) => InFadeAnimation(new div
-            {
-                When(needArrow(i), new Arrow { start = GetIdOf(isBegin:true,recordIndex,i), end = GetIdOf(isBegin:false,recordIndex,i) }),
+            return ListOf(record.Details.Select((x, i) => InFadeAnimation(new div
+                          {
+                              When(needArrow(i), new Arrow { start = GetIdOf(isBegin: true, recordIndex, i), end = GetIdOf(isBegin: false, recordIndex, i) }),
 
-                new Fade
-                {
-                    triggerOnce = true,
-                    direction   = "down",
-                    delay       = delayForAnimation + 200,
-                    children =
-                    {
-                        new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin:false,recordIndex,i))) { x.Count }
-                    }
-                }
-            }, delayForAnimation)),
+                              new Fade
+                              {
+                                  triggerOnce = true,
+                                  direction   = "down",
+                                  delay       = delayForAnimation + 200,
+                                  children =
+                                  {
+                                      new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, i))) { x.Count }
+                                  }
+                              }
+                          }, delayForAnimation)),
 
-                           InFadeAnimation(new div
-                           {
-                               When(needArrow(null), new Arrow { start = GetIdOf(isBegin:true,recordIndex,null), end = GetIdOf(isBegin:false,recordIndex,null) }),
+                          InFadeAnimation(new div
+                          {
+                              When(needArrow(null), new Arrow { start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) }),
 
-                               new Fade
-                               {
-                                   triggerOnce = true,
-                                   direction   = "down",
-                                   delay       = delayForAnimation + 200,
-                                   children =
-                                   {
-                                       new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin:false,recordIndex,null))) { record.Count }
-                                   }
-                               }
-                           }, delayForAnimation)
+                              new Fade
+                              {
+                                  triggerOnce = true,
+                                  direction   = "down",
+                                  delay       = delayForAnimation + 200,
+                                  children =
+                                  {
+                                      new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, null))) { record.Count }
+                                  }
+                              }
+                          }, delayForAnimation)
 
-                          );
+                         );
         }
 
         return InFadeAnimation(new div
