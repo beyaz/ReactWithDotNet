@@ -57,12 +57,7 @@ class TotalCountsWithDetail : ReactComponent
             {
                 new FlexRowCentered(FlexWrap)
                 {
-                    Records.Select((_, i) => AnimateRecord(i, nextDelay())).Aggregate(new List<Element>(),(a,b)=>
-                    {
-                        a.AddRange(b);
-                        return a;
-
-                    })
+                    AnimateRecords(nextDelay)
                 },
 
                 EqualsTo(nextDelay()),
@@ -92,12 +87,10 @@ class TotalCountsWithDetail : ReactComponent
     {
         return new List<T>(enumerable) { lastItem };
     }
-    IEnumerable<Element> AnimateRecord(int recordIndex, int delayForAnimation)
-    {
-        var record = Records[recordIndex];
 
-        
-        bool needArrow(int? detailIndex)
+    List<Element> AnimateRecords(Func<int> nextDelay)
+    {
+        bool NeedArrow(int recordIndex, int? detailIndex)
         {
             if (recordIndex == 0 && detailIndex < 3)
             {
@@ -116,62 +109,107 @@ class TotalCountsWithDetail : ReactComponent
 
             return false;
         }
+        
+        var returnList = new List<Element>();
 
-        if (record.Details is not null)
+        var lastDelay = 0;
+        
+        for (var recordIndex = 0; recordIndex < Records.Count; recordIndex++)
         {
-            return ListOf(record.Details.Select((x, i) => InFadeAnimation(new div
-                          {
-                              When(needArrow(i), new Arrow { start = GetIdOf(isBegin: true, recordIndex, i), end = GetIdOf(isBegin: false, recordIndex, i) }),
+            var record = Records[recordIndex];
 
-                              new Fade
-                              {
-                                  triggerOnce = true,
-                                  direction   = "down",
-                                  delay       = delayForAnimation + 200,
-                                  children =
-                                  {
-                                      new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, i))) { x.Count }
-                                  }
-                              }
-                          }, delayForAnimation)),
 
-                          InFadeAnimation(new div
-                          {
-                              When(needArrow(null), new Arrow { start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) }),
+            bool needArrow(int? detailIndex) => NeedArrow(recordIndex, detailIndex);
 
-                              new Fade
-                              {
-                                  triggerOnce = true,
-                                  direction   = "down",
-                                  delay       = delayForAnimation + 200,
-                                  children =
-                                  {
-                                      new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, null))) { record.Count }
-                                  }
-                              }
-                          }, delayForAnimation)
+            if (record.Details is not null)
+            {
+                for (var i = 0; i < record.Details.Count; i++)
+                {
+                    var x = record.Details[i];
 
-                         );
+                    var drawArrow = needArrow(i);
+
+                    if (drawArrow)
+                    {
+                        lastDelay = nextDelay();
+                    }
+                    
+                    returnList.Add(InFadeAnimation(new div
+                    {
+                        When(drawArrow, new Arrow { start = GetIdOf(isBegin: true, recordIndex, i), end = GetIdOf(isBegin: false, recordIndex, i) }),
+
+                        new Fade
+                        {
+                            triggerOnce = true,
+                            direction   = "down",
+                            delay       = lastDelay+200,
+                            children =
+                            {
+                                new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, i))) { x.Count }
+                            }
+                        }
+                    }, lastDelay));
+                }
+
+                {
+                    var drawArrow = needArrow(null);
+
+                    if (drawArrow)
+                    {
+                        lastDelay = nextDelay();
+                    }
+
+                    // add total count of letter
+                    returnList.Add(InFadeAnimation(new div
+                    {
+                        When(drawArrow, new Arrow
+                        {
+                            start = GetIdOf(isBegin: true, recordIndex, null), 
+                            end = GetIdOf(isBegin: false, recordIndex, null),
+                            startAnchor ="bottom"
+                        }),
+
+                        new Fade
+                        {
+                            triggerOnce = true,
+                            direction   = "down",
+                            delay       = lastDelay+200,
+                            children =
+                            {
+                                new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, null))) { record.Count }
+                            }
+                        }
+                    }, lastDelay));
+                }
+
+                continue;
+            }
+
+            lastDelay = nextDelay();
+            
+            // add total count
+            returnList.Add(InFadeAnimation(new div
+            {
+                When(needArrow(null), new Arrow { start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) }),
+
+                new Fade
+                {
+                    triggerOnce = true,
+                    direction   = "down",
+                    delay       = lastDelay+200,
+                    children =
+                    {
+                        new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin: false, recordIndex, null))) { record.Count }
+                    }
+                }
+            }, lastDelay));
+
         }
 
-        return InFadeAnimation(new div
-        {
-            When(needArrow(null), new Arrow { start = GetIdOf(isBegin:true,recordIndex,null), end = GetIdOf(isBegin:false,recordIndex,null) }),
 
-            new Fade
-            {
-                triggerOnce = true,
-                direction   = "down",
-                delay       = delayForAnimation + 200,
-                children =
-                {
-                    new FlexRowCentered(ComponentBorder, BorderRadius(3), Id(GetIdOf(isBegin:false,recordIndex,null))) { record.Count }
-                }
-            }
-        }, delayForAnimation);
-      
-
+        return returnList;
     }
+    
 
     void Calculate()
     {
