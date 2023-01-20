@@ -68,16 +68,16 @@ class View : ReactComponent
                 "Bu edebi açıdan mucize olduğu yorumu ise bazı insanları tam tatmin etmiyordu. Çünkü edebiyat görecelidir. ",
                 "Kimine göre Necip Fazıl daha iyi şairdir kimine göre de Nazım Hikmet. ",
                 "Ama matematik yoruma daha kapalıdır. 2 + 2 Bağcılarda da 4 eder Berlinde de 4 eder. ",
-                "Tüm denizlerdeki kum tanelerinin adetini kesin olarak bilen bir yaratıcı Kuranın içine de böyle bir örüntü eklemiş. ",
-                "Böylelikle Kuranın korunacağı ve Kuranın bir benzerinin getirilemeyeceği iddalarını 19 sistemi ile ortaya koyuyor. ",
+                "Tüm denizlerdeki kum tanelerinin adetini kesin olarak bilen bir yaratıcı Kuranın içine de böyle bir örüntüyü eklemiş. ",
+                "Böylelikle Kuranın korunacağı ve Kuranın bir benzerinin getirilemeyeceği iddalarını 19 sistemi ile daha anlamlı hale gelmiş oluyor. ",
             },
 
             new p
             {
                 "Neden 19?",
                 new br(),
-                "Elbette herşeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi." ,
-                " Arapça Vahid ( Türkçe tek anlamına gelir ) kelimesinin sayısal değeri ise 19 dur." +
+                "Elbette herşeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi. Eğer bu örüntü 29 üzerine olsaydı neden 29 diye sorulacaktı. " ,
+                " Arapça Vahid ( Türkçe tek anlamına gelir ) kelimesinin sayısal değeri ise 19 dur. Besmele 19 harftir. Daha bir çok açıklama yapılabilir. " ,
                 " Mühim olan buradaki örüntüyü görebilmektir. " ,
                 " Böylelikle Allah var mı? yok mu? Kuran Allah kelamı mı değil mi ? gibi şüpheler giderilmiş olacak.",
                 " Kuran'ın Allah'dan geldiğine olan inancımızı sağlam bir zemine oturmuş olacağız."
