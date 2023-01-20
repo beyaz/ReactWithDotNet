@@ -175,7 +175,14 @@ class View : ReactComponent<MainViewModel>
 
             if (state.PageId == "32")
             {
-                return new div(A().GetAwaiter().GetResult());
+                try
+                {
+                    return new div(A().GetAwaiter().GetResult());
+                }
+                catch (Exception exception)
+                {
+                    return new div(exception.ToString());
+                }
             }
 
 
