@@ -54,24 +54,19 @@ public class WhereIsTheProblemPage : ReactComponent
                 " Aşağıda iki ayrı incelemeyi paylaşıyorum. Aşağıdaki iki ayrı veri de Reşad'dan çok sonra ortaya çıkmıştır. ",
                 new br(),
                 new br(),
-                new FlexRowCentered
+                new a
                 {
-                    new a
-                    {
 
-                        href = GetPageLink(PageId.PageVerseListContainsAllInitialLetters),
-                        text = "Bütün Başlangıç Harflerini İçeren Ayetler"
-                    }
+                    href = GetPageLink(PageId.PageVerseListContainsAllInitialLetters),
+                    text = "Bütün Başlangıç Harflerini İçeren Ayetler"
                 },
                 new br(),
-                new FlexRowCentered
+                new br(),
+                new a
                 {
-                    new a
-                    {
 
-                        href = GetPageLink(PageId.AllInitialLettersCombined),
-                        text = "Başlangıç harflerinin yan yana yazılması ile oluşan büyük sayılar"
-                    }
+                    href = GetPageLink(PageId.AllInitialLettersCombined),
+                    text = "Başlangıç harflerinin yan yana yazılması ile oluşan büyük sayılar"
                 },
                 
                 new br(),
