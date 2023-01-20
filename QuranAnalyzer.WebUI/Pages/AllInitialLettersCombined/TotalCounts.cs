@@ -13,9 +13,7 @@ class TotalCounts : ReactComponent
 
     protected override Element render()
     {
-        var delay = 200;
-
-        int nextDelay() => delay += 300;
+        var nextDelay = CreateDelayAccessMethod();
 
         return new FlexColumn(Gap(10))
         {
@@ -31,10 +29,10 @@ class TotalCounts : ReactComponent
             {
                 new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(EnterJoInMode, DisplayNone)
             },
-            
+
             Space(20),
 
-            When(EnterJoInMode,()=>new FlexColumn
+            When(EnterJoInMode, () => new FlexColumn
             {
                 new FlexRowCentered
                 {
@@ -49,6 +47,15 @@ class TotalCounts : ReactComponent
                 }
             })
         };
+    }
+
+    static Func<int> CreateDelayAccessMethod()
+    {
+        var delay = 200;
+
+        int nextDelay() => delay += 300;
+
+        return nextDelay;
     }
 
     static string GetIdOf(bool isBegin, int recordIndex)
