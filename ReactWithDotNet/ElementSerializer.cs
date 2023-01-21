@@ -311,7 +311,7 @@ static partial class ElementSerializer
         return reactStatefulComponent.GetType().GetFullName();
     }
 
-    static (Style style, bool noNeedToExport) GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
+    static IReadOnlyList<CssPseudoCodeInfo> CalculatePseudos(Style style)
     {
         List<CssPseudoCodeInfo> pseudos = null;
 
@@ -321,7 +321,7 @@ static partial class ElementSerializer
 
             pseudos.Add(new CssPseudoCodeInfo
             {
-                Name      = "hover",
+                Name = "hover",
                 BodyOfCss = style._hover.ToCssWithImportant()
             });
         }
@@ -329,10 +329,10 @@ static partial class ElementSerializer
         if (style._before is not null)
         {
             pseudos ??= new List<CssPseudoCodeInfo>();
-            
+
             pseudos.Add(new CssPseudoCodeInfo
             {
-                Name      = "before",
+                Name = "before",
                 BodyOfCss = style._before.ToCssWithImportant()
             });
         }
@@ -340,10 +340,10 @@ static partial class ElementSerializer
         if (style._after is not null)
         {
             pseudos ??= new List<CssPseudoCodeInfo>();
-            
+
             pseudos.Add(new CssPseudoCodeInfo
             {
-                Name      = "after",
+                Name = "after",
                 BodyOfCss = style._after.ToCssWithImportant()
             });
         }
@@ -351,10 +351,10 @@ static partial class ElementSerializer
         if (style._active is not null)
         {
             pseudos ??= new List<CssPseudoCodeInfo>();
-            
+
             pseudos.Add(new CssPseudoCodeInfo
             {
-                Name      = "active",
+                Name = "active",
                 BodyOfCss = style._active.ToCssWithImportant()
             });
         }
@@ -362,14 +362,21 @@ static partial class ElementSerializer
         if (style._focus is not null)
         {
             pseudos ??= new List<CssPseudoCodeInfo>();
-            
+
             pseudos.Add(new CssPseudoCodeInfo
             {
-                Name      = "focus",
+                Name = "focus",
                 BodyOfCss = style._focus.ToCssWithImportant()
             });
         }
-        
+
+        return pseudos;
+    }
+
+    static (Style style, bool noNeedToExport) GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
+    {
+        var pseudos = CalculatePseudos(style);
+
         if (pseudos is not null || style._mediaQueries is not null)
         {
             var cmp = context.componentStack.Peek();
