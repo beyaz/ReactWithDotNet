@@ -30,7 +30,9 @@ static class ReactWithDotNetIntegration
     {
         await context.WriteHtmlResponse(new HtmlContentGenerator
         {
-            TargetReactComponent = typeof(View)
+            TargetReactComponent = typeof(View),
+            Page = new View(),
+            HttpContext = context
         });
     }
 
@@ -54,7 +56,7 @@ static class ReactWithDotNetIntegration
     {
         context.Response.ContentType = "text/html; charset=UTF-8";
 
-        var htmlContent = htmlContentGenerator.GetHtmlContent_old();
+        var htmlContent = htmlContentGenerator.GetHtmlContent();
 
         await context.Response.WriteAsync(htmlContent);
     }

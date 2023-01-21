@@ -16,9 +16,7 @@ class MainContentContainer : ReactComponent
 
             MediaQueryOnMobile(MarginLeftRight("5%")),
             MediaQueryOnTablet(MarginLeftRight("10%")),
-            MediaQueryOnDesktop(MarginLeftRight("15%")),
-            
-           
+            MediaQueryOnDesktop(MarginLeftRight("15%"))
         };
     }
 }
