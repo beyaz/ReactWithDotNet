@@ -29,6 +29,11 @@ static class HtmlTextGenerator
             
             var padding = "".PadLeft(indent, ' ');
 
+            if (htmlElement is html)
+            {
+                sb.AppendLine("<!DOCTYPE html>");
+            }
+            
             sb.Append(padding);
             sb.Append("<");
             sb.Append(tag);
@@ -52,7 +57,7 @@ static class HtmlTextGenerator
                     {
                         if (propertyValue is string)
                         {
-                            sb.Append($" {propertyAccessInfo.PropertyInfo.Name}=\"");
+                            sb.Append($" {getHtmlAttributeName(propertyAccessInfo.PropertyInfo.Name)}=\"");
                             sb.Append(propertyValue);
                             sb.Append("\"");
                         }
@@ -143,5 +148,18 @@ static class HtmlTextGenerator
             var root = reactComponent.InvokeRender();
             Append(sb, indent + 2, root, reactContext);
         }
+
+        static string getHtmlAttributeName(string dotnetPropertyName)
+        {
+            if (dotnetPropertyName == "httpEquiv")
+            {
+                return "http-equiv";
+            }
+
+            return dotnetPropertyName;
+        }
+        
     }
+    
+    
 }
