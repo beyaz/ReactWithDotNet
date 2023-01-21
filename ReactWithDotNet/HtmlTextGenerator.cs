@@ -59,7 +59,7 @@ static class HtmlTextGenerator
                 {
                     var className = reactContext.TryGetValue(Styles).GetClassName(new CssClassInfo
                     {
-                        Name         = "a",
+                        Name         = "rwd",
                         Pseudos      = pseudos,
                         MediaQueries = htmlElement._style._mediaQueries?.Select(pair => (pair.query, pair.style.ToCssWithImportant())).ToList()
                     });
