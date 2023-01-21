@@ -317,6 +317,7 @@ static partial class ElementSerializer
 
         if (style._hover is not null)
         {
+            // ReSharper disable once UseObjectOrCollectionInitializer
             pseudos = new List<CssPseudoCodeInfo>();
 
             pseudos.Add(new CssPseudoCodeInfo
