@@ -25,6 +25,7 @@ public class script : HtmlElement
 {
     [React]
     public string src { get; set; }
+    
     [React]
     public string type { get; set; }
 }

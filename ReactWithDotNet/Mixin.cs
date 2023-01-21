@@ -22,6 +22,8 @@ public static partial class Mixin
     /// </summary>
     public static HtmlElementModifier DirLtr => Dir("ltr");
 
+    public static HtmlElementModifier Lang(string lang) => new(element => element.lang = lang);
+
 
 
     public static StyleModifier AlignItemsBaseline => new(style => style.alignItems = "baseline");

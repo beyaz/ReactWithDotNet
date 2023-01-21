@@ -8,13 +8,16 @@ sealed class HtmlContentGenerator
     public Type TargetReactComponent { get; set; } = typeof(View);
 
 
-    public string GetContent()
+
+    public string GetContent(Element mainWindow)
     {
         const string root = "wwwroot";
         
         return new html
         {
-            DirLtr,
+            Lang("tr"),
+            DirLtr, 
+            
             new head
             {
                 new meta{charset   = "utf-8"},
@@ -25,27 +28,8 @@ sealed class HtmlContentGenerator
                 
                 new title{ "Quran Analyzer" },
                 
-                new link{rel ="stylesheet" , href = "https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,800,900&amp;display=swap", media ="all"}
-            },
-            new body
-            {
-                new div(Id("app"), WidthMaximized,Height100vh)
-                {
-                    new View(),
-                    new script{src=$"{root}/index.js"}
-                },
-                
-                new script
-                {
-                    type ="text/javascript",
-                    text = $@"
-ReactWithDotNet.RenderComponentIn({{
-  fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',
-  containerHtmlElementId: 'app'
-}});
-"
-                },
-                
+                new link{rel ="stylesheet" , href = "https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,800,900&amp;display=swap", media ="all"},
+
                 new style
                 {
                     @"
@@ -67,6 +51,34 @@ ReactWithDotNet.RenderComponentIn({{
                    }
 "
                 }
+            },
+            new body
+            {
+                new div(Id("app"), WidthMaximized,Height100vh)
+                {
+                    mainWindow,
+                   
+                },
+
+             
+
+
+                new script{src =$"{root}/index.js"},
+               
+
+
+                new script
+                {
+                    type ="text/javascript",
+                    text = $@"
+ReactWithDotNet.RenderComponentIn({{
+  fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',
+  containerHtmlElementId: 'app'
+}});
+"
+                }
+
+
             }
         }.ToString(ReactContext.Create("https://localhost:44382/?p=4",500,500));
     }

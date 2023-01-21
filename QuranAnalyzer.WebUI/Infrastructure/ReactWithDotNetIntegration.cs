@@ -54,7 +54,7 @@ static class ReactWithDotNetIntegration
     {
         context.Response.ContentType = "text/html; charset=UTF-8";
 
-        var htmlContent = htmlContentGenerator.GetHtmlContent();
+        var htmlContent = htmlContentGenerator.GetHtmlContent_old();
 
         await context.Response.WriteAsync(htmlContent);
     }

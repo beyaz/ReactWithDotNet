@@ -19,7 +19,7 @@ static class HtmlTextGenerator
         if (element is HtmlElement htmlElement)
         {
             var tag = htmlElement.Type;
-
+            
             if (element is HtmlTextNode textNode)
             {
                 sb.Append(textNode.innerText);
@@ -127,6 +127,14 @@ static class HtmlTextGenerator
                 sb.AppendLine();
             }
 
+            if (!hasInnerContent && element is script)
+            {
+                sb.Append("></");
+                sb.Append(tag);
+                sb.Append(">");
+                return;
+            }
+            
             if (hasInnerContent)
             {
                 sb.Append(padding);
