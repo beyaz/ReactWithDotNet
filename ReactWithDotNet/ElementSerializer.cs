@@ -311,7 +311,7 @@ static partial class ElementSerializer
         return reactStatefulComponent.GetType().GetFullName();
     }
 
-    static IReadOnlyList<CssPseudoCodeInfo> CalculatePseudos(Style style)
+    public static IReadOnlyList<CssPseudoCodeInfo> CalculatePseudos(Style style)
     {
         List<CssPseudoCodeInfo> pseudos = null;
 

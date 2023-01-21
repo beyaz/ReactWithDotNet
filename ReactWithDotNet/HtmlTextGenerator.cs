@@ -5,11 +5,17 @@ namespace ReactWithDotNet;
 
 static class HtmlTextGenerator
 {
+    static readonly ReactContextKey<DynamicStyleContentForEmbeddInClient> Styles = new(nameof(Styles));
+
     public static string ToHtml(Element element, ReactContext reactContext = null)
     {
         var sb = new StringBuilder();
 
-        Append(sb, 0, element, reactContext ?? new ReactContext());
+        reactContext ??= new ReactContext();
+
+        reactContext.Set(Styles,new DynamicStyleContentForEmbeddInClient());
+
+        Append(sb, 0, element, reactContext);
 
         return sb.ToString();
     }
@@ -46,6 +52,19 @@ static class HtmlTextGenerator
                     sb.Append(" style=\"");
                     sb.Append(css);
                     sb.Append("\"");
+                }
+
+                var pseudos = CalculatePseudos(htmlElement._style);
+                if (pseudos?.Count > 0|| htmlElement._style._mediaQueries?.Count > 0)
+                {
+                    var className = reactContext.TryGetValue(Styles).GetClassName(new CssClassInfo
+                    {
+                        Name         = "a",
+                        Pseudos      = pseudos,
+                        MediaQueries = htmlElement._style._mediaQueries?.Select(pair => (pair.query, pair.style.ToCssWithImportant())).ToList()
+                    });
+                    
+                    htmlElement.AddClass(className);
                 }
             }
 
@@ -137,6 +156,27 @@ static class HtmlTextGenerator
             
             if (hasInnerContent)
             {
+                if (htmlElement is body)
+                {
+                    sb.AppendLine("<style>");
+                    reactContext.TryGetValue(Styles).CalculateCssClassList().Foreach((cssSelector, cssBody) =>
+                    {
+                        sb.Append(cssSelector);
+                        sb.AppendLine("{");
+                        sb.Append("    ");
+                        sb.Append(cssBody);
+                        if (cssSelector.IndexOf("@media ",StringComparison.OrdinalIgnoreCase) == 0)
+                        {
+                            sb.AppendLine();
+                            sb.AppendLine("}");
+                        }
+                        sb.AppendLine();
+                        sb.AppendLine("}");
+                    });
+                    sb.AppendLine("</style>");
+                }
+
+
                 sb.Append(padding);
                 sb.Append("</");
                 sb.Append(tag);
@@ -146,6 +186,8 @@ static class HtmlTextGenerator
             {
                 sb.Append(" />");
             }
+
+            
         }
         else if (element is ReactStatefulComponent reactComponent)
         {
@@ -162,6 +204,11 @@ static class HtmlTextGenerator
             if (dotnetPropertyName == "httpEquiv")
             {
                 return "http-equiv";
+            }
+
+            if (dotnetPropertyName == "className")
+            {
+                return "class";
             }
 
             return dotnetPropertyName;
