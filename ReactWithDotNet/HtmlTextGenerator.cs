@@ -5,21 +5,28 @@ namespace ReactWithDotNet;
 
 static class HtmlTextGenerator
 {
-    public static string ToHtml(Element element)
+    public static string ToHtml(Element element, ReactContext reactContext = null)
     {
         var sb = new StringBuilder();
 
-        Append(sb, 0, element);
+        Append(sb, 0, element, reactContext ?? new ReactContext());
 
         return sb.ToString();
     }
 
-    static void Append(StringBuilder sb, int indent, Element element)
+    static void Append(StringBuilder sb, int indent, Element element, ReactContext reactContext)
     {
         if (element is HtmlElement htmlElement)
         {
             var tag = htmlElement.Type;
 
+            if (element is HtmlTextNode textNode)
+            {
+                sb.Append(textNode.innerText);
+                
+                return;
+            }
+            
             var padding = "".PadLeft(indent, ' ');
 
             sb.Append(padding);
@@ -52,38 +59,89 @@ static class HtmlTextGenerator
                     }
                 });
 
-            sb.Append(">");
-
-            if (!string.IsNullOrWhiteSpace(htmlElement.innerText))
+            if (htmlElement._children?.Count == 1 && htmlElement._children[0] is HtmlTextNode htmlTextNode)
             {
-                sb.Append(htmlElement.innerText);
+                sb.Append(">");
+
+                sb.Append(htmlTextNode.innerText);
+
+                sb.Append("</");
+                sb.Append(tag);
+                sb.Append(">");
+
+                return;
             }
 
             if (!string.IsNullOrWhiteSpace(htmlElement.dangerouslySetInnerHTML?.__html))
             {
+                sb.Append(">");
+
                 sb.Append(htmlElement.dangerouslySetInnerHTML?.__html);
+
+                sb.Append("</");
+                sb.Append(tag);
+                sb.Append(">");
+
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(htmlElement.innerText) && (htmlElement._children == null || htmlElement._children.Count == 0))
+            {
+                sb.Append(">");
+
+                sb.Append(htmlElement.innerText);
+
+                sb.Append("</");
+                sb.Append(tag);
+                sb.Append(">");
+
+                return;
+            }
+
+            var hasInnerContent = false;
+
+            if (!string.IsNullOrWhiteSpace(htmlElement.innerText))
+            {
+                sb.Append(">");
+                hasInnerContent = true;
+
+                sb.Append(htmlElement.innerText);
             }
 
             if (htmlElement._children?.Count > 0)
             {
+                sb.Append(">");
+                hasInnerContent = true;
+
                 foreach (var child in htmlElement.children)
                 {
                     sb.AppendLine();
-                    Append(sb, indent + 2, child);
+                    Append(sb, indent + 2, child, reactContext);
                 }
 
                 sb.AppendLine();
             }
 
-            sb.Append(padding);
-            sb.Append("</");
-            sb.Append(tag);
-            sb.Append(">");
+            if (hasInnerContent)
+            {
+                sb.Append(padding);
+                sb.Append("</");
+                sb.Append(tag);
+                sb.Append(">");
+            }
+            else
+            {
+                sb.Append(" />");
+            }
         }
         else if (element is ReactStatefulComponent reactComponent)
         {
+            reactComponent.Context = reactContext;
+
+            reactComponent.InvokeConstructor();
+
             var root = reactComponent.InvokeRender();
-            Append(sb, indent + 2, root);
+            Append(sb, indent + 2, root, reactContext);
         }
     }
 }

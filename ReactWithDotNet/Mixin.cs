@@ -6,6 +6,24 @@ namespace ReactWithDotNet;
 
 public static partial class Mixin
 {
+    /// <summary>
+    ///     initialize dir attribute of html element
+    /// </summary>
+    public static HtmlElementModifier Dir(string direction) => new(element => element.dir = direction);
+
+    /// <summary>
+    ///     element.dir = 'rtl'
+    /// </summary>
+    public static HtmlElementModifier DirRtl => Dir("rtl");
+
+
+    /// <summary>
+    ///     element.dir = 'ltr'
+    /// </summary>
+    public static HtmlElementModifier DirLtr => Dir("ltr");
+
+
+
     public static StyleModifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
 
     /// <summary>

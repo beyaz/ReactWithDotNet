@@ -1,5 +1,60 @@
 ﻿namespace ReactWithDotNet;
 
+
+public class html : HtmlElement
+{
+    [React]
+    public string xmlns { get; set; } = "http://www.w3.org/1999/xhtml";
+
+
+    public html() { }
+
+    public html(params IModifier[] modifiers) : base(modifiers) { }
+
+}
+
+public class head : HtmlElement
+{
+
+}
+public class title : HtmlElement
+{
+
+}
+public class script : HtmlElement
+{
+    [React]
+    public string src { get; set; }
+    [React]
+    public string type { get; set; }
+}
+
+
+public class body : HtmlElement
+{
+
+}
+public class meta : HtmlElement
+{
+    [React]
+    public string charset { get; set; }
+
+    [React]
+    public string name { get; set; }
+
+    [React]
+    public string content { get; set; }
+
+    [React]
+    public string httpEquiv { get; set; }
+
+    public static HtmlElementModifier Content(string content) => new(element => ((meta)element).content = content);
+    public static HtmlElementModifier HttpEquiv(string httpEquiv) => new(element => ((meta)element).httpEquiv = httpEquiv);
+    public static HtmlElementModifier Name(string name) => new(element => ((meta)element).name = name);
+    public static HtmlElementModifier Charset(string charset) => new(element => ((meta)element).charset = charset);
+}
+
+
 public class button : HtmlElement
 {
     [React]
@@ -205,6 +260,9 @@ public class link : HtmlElement
 
     [React]
     public string rel { get; set; }
+    
+    [React]
+    public string media { get; set; }
 }
 
 public class textarea : HtmlElement

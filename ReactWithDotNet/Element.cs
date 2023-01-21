@@ -94,7 +94,22 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     /// </summary>
     public override string ToString()
     {
-        return HtmlTextGenerator.ToHtml(this);
+        ReactContext reactContext = null;
+        
+        if (this is ReactStatefulComponent reactStatefulComponent)
+        {
+            reactContext = reactStatefulComponent.Context;
+
+        }
+        return this.ToString( reactContext ?? ReactContext.Create(null,700,800));
+    }
+
+    /// <summary>
+    ///     Represents element as html text as possible.
+    /// </summary>
+    public  string ToString(ReactContext reactContext)
+    {
+        return HtmlTextGenerator.ToHtml(this, reactContext);
     }
 
     /// <summary>

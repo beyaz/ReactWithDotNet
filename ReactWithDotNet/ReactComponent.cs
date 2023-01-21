@@ -8,11 +8,23 @@ namespace ReactWithDotNet;
 
 public sealed class ReactContext
 {
+    public static ReactContext Create(string url, double clientWidth, double clientHeight)
+    {
+        url= url.Split('?').Last();
+        var context = new ReactContext
+        {
+            Query        = string.IsNullOrWhiteSpace(url) ? new NameValueCollection() : HttpUtility.ParseQueryString(url),
+            ClientWidth  = clientWidth,
+            ClientHeight = clientHeight
+        };
+
+        return context;
+    }
     readonly Dictionary<string, object> map = new();
     public double ClientHeight { get; internal set; }
 
     public double ClientWidth { get; internal set; }
-    public NameValueCollection Query { get; internal set; }
+    public NameValueCollection Query { get; internal set; } = new ();
     public string QueryAsString => string.Join("&", Query.AllKeys.Select(key => $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(Query[key])}"));
 
     public bool Contains<TValue>(ReactContextKey<TValue> key)

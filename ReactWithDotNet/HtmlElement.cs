@@ -6,7 +6,7 @@ namespace ReactWithDotNet;
 public abstract class HtmlElement : Element
 {
     internal Dictionary<string, string> _data;
-    
+
     internal Style _style;
 
     protected HtmlElement()
@@ -74,6 +74,12 @@ public abstract class HtmlElement : Element
             return _data;
         }
     }
+
+    /// <summary>
+    ///     Specifies the text direction for the content in an element
+    /// </summary>
+    [React]
+    public string dir { get; set; }
 
     [React]
     public virtual string id { get; set; }
