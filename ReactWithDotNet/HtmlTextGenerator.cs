@@ -6,6 +6,7 @@ namespace ReactWithDotNet;
 static class HtmlTextGenerator
 {
     static readonly ReactContextKey<DynamicStyleContentForEmbeddInClient> Styles = new(nameof(Styles));
+    static readonly ReactContextKey<int?> HeadTagFinishIndex = new(nameof(HeadTagFinishIndex));
 
     public static string ToHtml(Element element, ReactContext reactContext = null)
     {
@@ -89,7 +90,12 @@ static class HtmlTextGenerator
 
                 sb.Append(htmlTextNode.innerText);
 
-                sb.Append("</");
+                sb.Append("<");
+                if (!SelfClosingTags.Contains(tag))
+                {
+                    sb.Append("/");
+                }
+                
                 sb.Append(tag);
                 sb.Append(">");
 
@@ -102,7 +108,11 @@ static class HtmlTextGenerator
 
                 sb.Append(htmlElement.dangerouslySetInnerHTML?.__html);
 
-                sb.Append("</");
+                sb.Append("<");
+                if (!SelfClosingTags.Contains(tag))
+                {
+                    sb.Append("/");
+                }
                 sb.Append(tag);
                 sb.Append(">");
 
@@ -115,7 +125,11 @@ static class HtmlTextGenerator
 
                 sb.Append(htmlElement.innerText);
 
-                sb.Append("</");
+                sb.Append("<");
+                if (!SelfClosingTags.Contains(tag))
+                {
+                    sb.Append("/");
+                }
                 sb.Append(tag);
                 sb.Append(">");
 
@@ -153,38 +167,62 @@ static class HtmlTextGenerator
                 sb.Append(">");
                 return;
             }
-            
+
+            if (tag == "head")
+            {
+                reactContext.Set(HeadTagFinishIndex, sb.Length);
+            }
+
             if (hasInnerContent)
             {
-                if (htmlElement is body)
+
+                if (tag == "html")
                 {
-                    sb.AppendLine("<style>");
+                    var sb2 = new StringBuilder();
+
+                    sb2.AppendLine("<style>");
                     reactContext.TryGetValue(Styles).CalculateCssClassList().Foreach((cssSelector, cssBody) =>
                     {
-                        sb.Append(cssSelector);
-                        sb.AppendLine("{");
-                        sb.Append("    ");
-                        sb.Append(cssBody);
+                        sb2.Append(cssSelector);
+                        sb2.AppendLine("{");
+                        sb2.Append("    ");
+                        sb2.Append(cssBody);
                         if (cssSelector.IndexOf("@media ",StringComparison.OrdinalIgnoreCase) == 0)
                         {
-                            sb.AppendLine();
-                            sb.AppendLine("}");
+                            sb2.AppendLine();
+                            sb2.AppendLine("}");
                         }
-                        sb.AppendLine();
-                        sb.AppendLine("}");
+                        sb2.AppendLine();
+                        sb2.AppendLine("}");
                     });
-                    sb.AppendLine("</style>");
+                    sb2.AppendLine("</style>");
+
+                    sb.Insert(reactContext.TryGetValue(HeadTagFinishIndex).Value, sb2);
                 }
 
 
                 sb.Append(padding);
-                sb.Append("</");
+                sb.Append("<");
+                if (!SelfClosingTags.Contains(tag))
+                {
+                    sb.Append("/");
+                }
                 sb.Append(tag);
                 sb.Append(">");
             }
             else
             {
-                sb.Append(" />");
+                if (SelfClosingTags.Contains(tag))
+                {
+                    sb.Append(">");
+                }
+                else
+                {
+                    sb.Append("></");
+                    sb.Append(tag);
+                    sb.Append(">");
+                }
+                
             }
 
             
@@ -215,6 +253,8 @@ static class HtmlTextGenerator
         }
         
     }
-    
-    
+
+    static readonly IReadOnlyList<string> SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
+
+
 }
