@@ -48,12 +48,12 @@ partial class Mixin
             throw new ArgumentNullException(nameof(calculateHtmlTextInput));
         }
 
-        if (calculateHtmlTextInput.Element is null)
+        if (calculateHtmlTextInput.ReactComponent is null)
         {
-            throw new ArgumentNullException(string.Join('.', nameof(calculateHtmlTextInput), nameof(calculateHtmlTextInput.Element)));
+            throw new ArgumentNullException(string.Join('.', nameof(calculateHtmlTextInput), nameof(calculateHtmlTextInput.ReactComponent)));
         }
 
-        var element = calculateHtmlTextInput.Element;
+        var element = calculateHtmlTextInput.ReactComponent;
 
         var input = new ProcessReactWithDotNetRequestInput
         {
@@ -106,7 +106,7 @@ partial class Mixin
 
 public sealed class CalculateHtmlTextInput
 {
-    public Element Element  { get; init; }
+    public ReactComponent ReactComponent  { get; init; }
     
     public string QueryString { get; init; }
 

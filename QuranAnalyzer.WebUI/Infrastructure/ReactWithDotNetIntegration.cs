@@ -64,7 +64,7 @@ static class ReactWithDotNetIntegration
 
         var html = CalculateHtmlText(new CalculateHtmlTextInput
         {
-            Element     = element,
+            ReactComponent     = element,
             QueryString = httpContext.Request.QueryString.ToString()
         });
 

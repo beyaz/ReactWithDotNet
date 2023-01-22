@@ -106,7 +106,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return CalculateHtmlText(new CalculateHtmlTextInput
         {
-            Element     = new ToStringHandlerComponent{element = this},
+            ReactComponent     = new ToStringHandlerComponent{element = this},
             QueryString = string.Empty
         });
     }
