@@ -101,4 +101,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return Enumerable.Empty<IModifier>().GetEnumerator();
     }
+
+    public override string ToString()
+    {
+
+        return "todo";
+
+    }
 }
