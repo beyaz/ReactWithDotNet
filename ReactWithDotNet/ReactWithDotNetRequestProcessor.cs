@@ -14,6 +14,7 @@ public sealed class ProcessReactWithDotNetRequestInput
     public HttpContext HttpContext { get; set; }
 
     public Action<ReactContext> OnReactContextCreated { get; set; }
+    public Element Instance { get; set; }
 }
 
 public static class ReactWithDotNetRequestProcessor

@@ -107,7 +107,7 @@ static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            var instance = (ReactStatefulComponent)Activator.CreateInstance(type);
+            var instance = (ReactStatefulComponent)(input.Instance ?? Activator.CreateInstance(type));
             if (instance == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
@@ -173,7 +173,8 @@ static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            var instance = (ReactStatefulComponent)Activator.CreateInstance(type);
+            
+            var instance = (ReactStatefulComponent) Activator.CreateInstance(type);
             if (instance == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };

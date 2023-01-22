@@ -3,13 +3,31 @@ using static ReactWithDotNet.ElementSerializer;
 
 namespace ReactWithDotNet;
 
-static class HtmlTextGenerator
+public static class HtmlTextGenerator
 {
 
+    public static string ToHtml(ComponentResponse componentResponse)
+    {
+        return CalculateHtml((JsonMap)componentResponse.ElementAsJson, (JsonMap)componentResponse.DynamicStyles);
+    }
 
+
+    static string CalculateHtml(JsonMap element, JsonMap dynamicStyles)
+    {
+        var sb = new StringBuilder();
+
+        Append(sb,0,element,dynamicStyles);
+        
+        return sb.ToString();
+    }
     
-    
-    
+    static void Append(StringBuilder sb, int indent, JsonMap element, JsonMap dynamicStyles)
+    {
+       
+    }
+
+
+
     static readonly ReactContextKey<DynamicStyleContentForEmbeddInClient> DynamicStyles = new(nameof(DynamicStyles));
     static readonly ReactContextKey<int?> HeadTagFinishIndex = new(nameof(HeadTagFinishIndex));
 

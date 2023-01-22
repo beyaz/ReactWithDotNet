@@ -66,6 +66,7 @@ static class ReactWithDotNetIntegration
 
         var input = new ProcessReactWithDotNetRequestInput
         {
+            Instance =mainLayout,
             HttpContext = httpContext,
             componentRequest = new ComponentRequest
             {
@@ -77,6 +78,9 @@ static class ReactWithDotNetIntegration
         };
 
         var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+
+        var htmlText = HtmlTextGenerator.ToHtml(componentResponse);
+
 
         var reactContext = ReactContext.Create(httpContext.Request.QueryString.ToString(), 500, 500);
 
