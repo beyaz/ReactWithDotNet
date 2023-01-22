@@ -179,12 +179,15 @@ static class HtmlTextGenerator
 
             if (hasInnerContent)
             {
-                if (tag == "html")
+                // try to insert dynamically created styles when reached to end of html
                 {
-                    var headTagFinishIndex = reactContext.TryGetValue(HeadTagFinishIndex);
-                    if (headTagFinishIndex.HasValue)
+                    if (tag == "html")
                     {
-                        sb.Insert(headTagFinishIndex.Value, CalculateDynamicStylesAsHtmlStyleNode(reactContext));
+                        var headTagFinishIndex = reactContext.TryGetValue(HeadTagFinishIndex);
+                        if (headTagFinishIndex.HasValue)
+                        {
+                            sb.Insert(headTagFinishIndex.Value, CalculateDynamicStylesAsHtmlStyleNode(reactContext));
+                        }
                     }
                 }
 
@@ -241,23 +244,25 @@ static class HtmlTextGenerator
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("<style>");
+            var padding = "".PadLeft(4,' ');
+            
+            sb.AppendLine(padding+"<style>");
             reactContext.TryGetValue(DynamicStyles).CalculateCssClassList().Foreach((cssSelector, cssBody) =>
             {
-                sb.Append(cssSelector);
-                sb.AppendLine("{");
-                sb.Append("    ");
+                sb.Append(padding + cssSelector);
+                sb.AppendLine(padding + "{");
+                sb.Append(padding + "    ");
                 sb.Append(cssBody);
                 if (cssSelector.IndexOf("@media ", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     sb.AppendLine();
-                    sb.AppendLine("}");
+                    sb.AppendLine(padding + "}");
                 }
 
                 sb.AppendLine();
-                sb.AppendLine("}");
+                sb.AppendLine(padding + "}");
             });
-            sb.AppendLine("</style>");
+            sb.AppendLine(padding + "</style>");
 
             return sb.ToString();
         }
