@@ -54,7 +54,7 @@ static class ReactWithDotNetIntegration
         });
     }
 
-    static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout mainLayout)
+    static async Task WriteHtmlResponse(HttpContext httpContext, Element element)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -64,7 +64,7 @@ static class ReactWithDotNetIntegration
 
         var html = await CalculateHtmlText(new CalculateHtmlTextInput
         {
-            Element     = mainLayout,
+            Element     = element,
             QueryString = httpContext.Request.QueryString.ToString()
         });
 
