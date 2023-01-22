@@ -20,7 +20,8 @@ public class ToHtmlTests
                 "Abc1",
                 new a{ href = "w"},
                 "Abc2",
-                (span)"uuO"
+                (span)"uuO",
+                new div{dangerouslySetInnerHTML = "De1"}
             }
         };
 
@@ -30,6 +31,7 @@ public class ToHtmlTests
   <div>Abc1
     <a href=""w""></a>Abc2
     <span>uuO</span>
+    <div>De1</div>
   </div>
 </div>
 

@@ -203,6 +203,14 @@ static class HtmlTextGenerator
             return;
         }
 
+        if (name == nameof(HtmlElement.dangerouslySetInnerHTML))
+        {
+            sb.Append(">");
+            hasInnerContent = true;
+            sb.Append(((dangerouslySetInnerHTML)value).__html);
+            return;
+        }
+        
         if (name[0] != '$')
         {
             if (value is string or int or double or bool)
