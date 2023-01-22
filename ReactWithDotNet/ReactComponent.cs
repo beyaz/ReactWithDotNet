@@ -10,7 +10,7 @@ public sealed class ReactContext
 {
     public static ReactContext Create(string url, double clientWidth, double clientHeight)
     {
-        url= url.Split('?').Last();
+        url= (url??string.Empty).Split('?').Last();
         var context = new ReactContext
         {
             Query        = string.IsNullOrWhiteSpace(url) ? new NameValueCollection() : HttpUtility.ParseQueryString(url),

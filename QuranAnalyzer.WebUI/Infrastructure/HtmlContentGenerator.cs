@@ -25,12 +25,8 @@ sealed class HtmlContentGenerator
             
             new head
             {
-                //new meta{charset   = "utf-8"},
-                //new meta{name      = "viewport", content      = "width=device-width, initial-scale=1"},
-                //new meta{httpEquiv = "Cache-Control", content = "no-cache, no-store, must-revalidate"},
-                //new meta{httpEquiv = "Pragma", content        = "no-cache"},
-                //new meta{httpEquiv = "Expires", content       = "0"},
-                
+                new meta{charset   = "utf-8"},
+                new meta{name      = "viewport", content      = "width=device-width, initial-scale=1"},
                 new title{ "Quran Analyzer" },
 
                 new style
@@ -68,16 +64,15 @@ sealed class HtmlContentGenerator
 
                 new script{src =$"{root}/index.js"},
 
-//                new script
-//                {
-//                    type ="text/javascript",
-//                    text = $@"
-//ReactWithDotNet.RenderComponentIn({{
-//  fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',
-//  containerHtmlElementId: 'app'
-//}});
-//"
-//                }
+                new script
+                {
+                    $@"
+ReactWithDotNet.RenderComponentIn({{
+  fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',
+  containerHtmlElementId: 'app'
+}});
+"
+                }
 
 
             }

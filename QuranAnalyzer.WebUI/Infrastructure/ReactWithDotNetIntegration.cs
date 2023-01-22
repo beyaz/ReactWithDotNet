@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Net.Http.Headers;
 using QuranAnalyzer.WebUI.Pages.MainPage;
 using ReactWithDotNet.UIDesigner;
 
@@ -55,6 +56,10 @@ static class ReactWithDotNetIntegration
     static async Task WriteHtmlResponse(this HttpContext context, HtmlContentGenerator htmlContentGenerator)
     {
         context.Response.ContentType = "text/html; charset=UTF-8";
+
+        context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+        context.Response.Headers[HeaderNames.Expires]      = "0";
+        context.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
         var htmlContent = htmlContentGenerator.GetHtmlContent();
 
