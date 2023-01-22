@@ -39,7 +39,7 @@ static class ReactWithDotNetIntegration
     {
         await context.WriteHtmlResponse(new MainLayout
         {
-            Page        = new ReactWithDotNetDesigner()
+            Page = new ReactWithDotNetDesigner()
         });
     }
 
@@ -47,7 +47,7 @@ static class ReactWithDotNetIntegration
     {
         await context.WriteHtmlResponse(new MainLayout
         {
-            Page        = new ReactWithDotNetDesignerComponentPreview()
+            Page = new ReactWithDotNetDesignerComponentPreview()
         });
     }
 
@@ -59,10 +59,9 @@ static class ReactWithDotNetIntegration
         context.Response.Headers[HeaderNames.Expires]      = "0";
         context.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-
         var reactContext = ReactContext.Create(context.Request.QueryString.ToString(), 500, 500);
-        
-        var htmlContent  = mainLayout.ToString(reactContext);
+
+        var htmlContent = mainLayout.ToString(reactContext);
 
         await context.Response.WriteAsync(htmlContent);
     }
