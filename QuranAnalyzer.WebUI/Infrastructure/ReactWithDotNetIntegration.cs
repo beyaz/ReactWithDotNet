@@ -33,7 +33,7 @@ static class ReactWithDotNetIntegration
 
     static async Task HomePage(HttpContext httpContext)
     {
-        await httpContext.WriteHtmlResponse(new MainLayout
+        await WriteHtmlResponse(httpContext, new MainLayout
         {
             Page = new View()
         });
@@ -41,7 +41,7 @@ static class ReactWithDotNetIntegration
 
     static async Task ReactWithDotNetDesigner(HttpContext httpContext)
     {
-        await httpContext.WriteHtmlResponse(new MainLayout
+        await WriteHtmlResponse(httpContext, new MainLayout
         {
             Page = new ReactWithDotNetDesigner()
         });
@@ -49,13 +49,13 @@ static class ReactWithDotNetIntegration
 
     static async Task ReactWithDotNetDesignerComponentPreview(HttpContext httpContext)
     {
-        await httpContext.WriteHtmlResponse(new MainLayout
+        await WriteHtmlResponse(httpContext, new MainLayout
         {
             Page = new ReactWithDotNetDesignerComponentPreview()
         });
     }
 
-    static async Task WriteHtmlResponse(this HttpContext httpContext, MainLayout mainLayout)
+    static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout mainLayout)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -63,22 +63,12 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires]      = "0";
         httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-        var input = new ProcessReactWithDotNetRequestInput
+        var html = await CalculateHtmlText(new CalculateHtmlTextInput
         {
-            Instance    = mainLayout,
-            HttpContext = httpContext,
-            ComponentRequest = new ComponentRequest
-            {
-                MethodName                        = "FetchComponent",
-                FullName                          = mainLayout.GetType().GetFullName(),
-                LastUsedComponentUniqueIdentifier = 1,
-                ComponentUniqueIdentifier         = 1,
-                SearchPartOfUrl                   = httpContext.Request.QueryString.ToString()
-            }
-        };
+            Element     = mainLayout,
+            QueryString = httpContext.Request.QueryString.ToString()
+        });
 
-        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
-
-        await httpContext.Response.WriteAsync(componentResponse.ToHtml());
+        await httpContext.Response.WriteAsync(html);
     }
 }

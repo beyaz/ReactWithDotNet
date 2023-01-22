@@ -41,24 +41,41 @@ public static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static async Task<string> CalculateHtmlText(Element element, HttpContext httpContext)
+    public static async Task<string> CalculateHtmlText(CalculateHtmlTextInput calculateHtmlTextInput)
     {
+        if (calculateHtmlTextInput is null)
+        {
+            throw new ArgumentNullException(nameof(calculateHtmlTextInput));
+        }
+
+        if (calculateHtmlTextInput.Element is null)
+        {
+            throw new ArgumentNullException(string.Join('.', nameof(calculateHtmlTextInput), nameof(calculateHtmlTextInput.Element)));
+        }
+
+        var element = calculateHtmlTextInput.Element;
+
         var input = new ProcessReactWithDotNetRequestInput
         {
             Instance    = element,
-            HttpContext = httpContext,
             ComponentRequest = new ComponentRequest
             {
                 MethodName                        = "FetchComponent",
                 FullName                          = element.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
-                SearchPartOfUrl                   = httpContext.Request.QueryString.ToString()
+                SearchPartOfUrl                   = calculateHtmlTextInput.QueryString
             }
         };
-
+        
         var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
 
         return componentResponse.ToHtml();
     }
+}
+
+public sealed class CalculateHtmlTextInput
+{
+    public Element Element  { get; init; }
+    public string QueryString { get; init; }
 }
