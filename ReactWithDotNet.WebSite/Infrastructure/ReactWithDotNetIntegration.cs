@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.UIDesigner;
 using ReactWithDotNet.WebSite;
 
@@ -19,47 +20,54 @@ static class ReactWithDotNetIntegration
 
     static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
     {
-        var input = new ProcessReactWithDotNetRequestInput
-        {
-            HttpContext = httpContext
-        };
-        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
-
         httpContext.Response.ContentType = "application/json; charset=utf-8";
 
-        await httpContext.Response.WriteAsync(componentResponse.ToJson());
+        var jsonText = await CalculateJsonText(new CalculateJsonTextInput
+        {
+            HttpContext = httpContext
+        });
+
+        await httpContext.Response.WriteAsync(jsonText);
     }
 
-    static async Task HomePage(HttpContext context)
+    static async Task HomePage(HttpContext httpContext)
     {
-        await context.WriteHtmlResponse(new HtmlContentGenerator
+        await WriteHtmlResponse(httpContext, new MainLayout
         {
-            TargetReactComponent = typeof(MainWindow)
+            Page = new MainWindow()
         });
     }
 
     static async Task ReactWithDotNetDesigner(HttpContext httpContext)
     {
-        await httpContext.WriteHtmlResponse(new HtmlContentGenerator
+        await WriteHtmlResponse(httpContext, new MainLayout
         {
-            TargetReactComponent = typeof(ReactWithDotNetDesigner)
+            Page = new ReactWithDotNetDesigner()
         });
     }
 
     static async Task ReactWithDotNetDesignerComponentPreview(HttpContext httpContext)
     {
-        await httpContext.WriteHtmlResponse(new HtmlContentGenerator
+        await WriteHtmlResponse(httpContext, new MainLayout
         {
-            TargetReactComponent = typeof(ReactWithDotNetDesignerComponentPreview)
+            Page = new ReactWithDotNetDesignerComponentPreview()
         });
     }
 
-    static async Task WriteHtmlResponse(this HttpContext httpContext, HtmlContentGenerator htmlContentGenerator)
+    static async Task WriteHtmlResponse(HttpContext httpContext, ReactComponent reactComponent)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
-        var htmlContent = htmlContentGenerator.GetHtmlContent();
+        httpContext.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+        httpContext.Response.Headers[HeaderNames.Expires] = "0";
+        httpContext.Response.Headers[HeaderNames.Pragma] = "no-cache";
 
-        await httpContext.Response.WriteAsync(htmlContent);
+        var html = CalculateHtmlText(new CalculateHtmlTextInput
+        {
+            ReactComponent = reactComponent,
+            QueryString = httpContext.Request.QueryString.ToString()
+        });
+
+        await httpContext.Response.WriteAsync(html);
     }
 }
