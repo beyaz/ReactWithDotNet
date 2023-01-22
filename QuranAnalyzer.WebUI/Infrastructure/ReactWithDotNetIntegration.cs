@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -73,7 +72,8 @@ static class ReactWithDotNetIntegration
                 MethodName                        = "FetchComponent",
                 FullName                          = mainLayout.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
-                ComponentUniqueIdentifier         = 1
+                ComponentUniqueIdentifier         = 1,
+                SearchPartOfUrl = httpContext.Request.QueryString.ToString()
             }
         };
 
@@ -81,11 +81,6 @@ static class ReactWithDotNetIntegration
 
         var htmlText = HtmlTextGenerator.ToHtml(componentResponse);
 
-
-        var reactContext = ReactContext.Create(httpContext.Request.QueryString.ToString(), 500, 500);
-
-        var htmlContent = mainLayout.ToString(reactContext);
-
-        await httpContext.Response.WriteAsync(htmlContent);
+        await httpContext.Response.WriteAsync(htmlText);
     }
 }
