@@ -151,9 +151,9 @@ abstract class InitialLetterGroup : ReactComponent
         new th { innerText = "Sayım Sonuçları" }
     };
 
-    protected tr RowSpace => new tr { style = { height = "10px" } };
+    protected tr RowSpace => new() { Height(10), new td(), new td(), new td() };
 
-    protected tr HeaderSpace => new tr { style = { height = "15px" } };
+    protected tr HeaderSpace => new() { Height(15), new td(), new td(), new td() };
 
   
 

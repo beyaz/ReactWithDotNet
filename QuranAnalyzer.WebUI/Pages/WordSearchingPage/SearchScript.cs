@@ -38,7 +38,7 @@ class SearchScript
 
         static Response<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> parseLine(string line)
         {
-            var arr = line.Split('|', StringSplitOptions.RemoveEmptyEntries);
+            var arr = line.Split(new[] { '|', '~' }, StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
             {
                 return "Arama komutunda yanlışlık var. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
@@ -73,6 +73,6 @@ class SearchScript
 
     public string AsString()
     {
-        return string.Join(";", Lines.Select(line => line.ChapterFilter + "|" + string.Join("", line.Letters)));
+        return string.Join(";", Lines.Select(line => line.ChapterFilter + "~" + string.Join("", line.Letters)));
     }
 }

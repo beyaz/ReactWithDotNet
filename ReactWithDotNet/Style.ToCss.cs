@@ -693,7 +693,7 @@ partial class Style
 
         if (cssFloat != null)
         {
-            sb.Append("css-float");
+            sb.Append("float");
             sb.Append(": ");
             sb.Append(cssFloat);
             sb.Append(seperator);
@@ -701,7 +701,7 @@ partial class Style
 
         if (cssText != null)
         {
-            sb.Append("css-text");
+            sb.Append("text");
             sb.Append(": ");
             sb.Append(cssText);
             sb.Append(seperator);

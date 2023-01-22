@@ -32,9 +32,9 @@ static class Extensions
         return null;
     }
 
-    public static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*|ايام;*|يومين;*|الايام;*|اياما;*|واياما;*|بايىم";
+    public static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*~ايام;*~يومين;*~الايام;*~اياما;*~واياما;*~بايىم";
 
-    public static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*|يوم;*|ويوم;*|اليوم;*|واليوم;*|يوما;*|ليوم;*|فاليوم;*|بيوم;*|باليوم;*|وباليوم";
+    public static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*~يوم;*~ويوم;*~اليوم;*~واليوم;*~يوما;*~ليوم;*~فاليوم;*~بيوم;*~باليوم;*~وباليوم";
 
     public static void ArabicKeyboardPressed(this Client client, string arabicLetter)
     {
@@ -48,7 +48,7 @@ static class Extensions
 
     public static string GetLetterCountingScript(string chapterFilter, params string[] arabicLetters)
     {
-        return chapterFilter + "|" + string.Join(string.Empty, arabicLetters);
+        return chapterFilter + "~" + string.Join(string.Empty, arabicLetters);
     }
 
     public static string GetPageLink(string pageId) =>  $"/?{QueryKey.Page}=" + pageId;

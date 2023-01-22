@@ -26,7 +26,7 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
             (h5)"İlk Yıllar ve Kariyer",
             new p
             {
-                new img {Src(Img("rh.png")), Width(200), HeightAuto, FloatLeft, MarginRight(20) },
+                new img {Src(Img("rh.png")), Alt("Reşad Halife"), Width(200), HeightAuto, FloatLeft, MarginRight(20) },
 
                 "1935 yılında Mısırda doğmuş. Babası tarikat şeyhi olan biridir. " +
                 "Bunu özellikle belirttim. Ehli sünnet bir tarikat ortamında, dindar bir ailede doğup büyümüş birinden bahsediyoruz. " +

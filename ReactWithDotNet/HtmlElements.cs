@@ -1,5 +1,10 @@
 ﻿namespace ReactWithDotNet;
 
+partial class Mixin
+{
+    public static readonly Func<string, HtmlElementModifier> Alt = img.Alt;
+
+}
 
 public class html : HtmlElement
 {
@@ -174,6 +179,8 @@ public class a : HtmlElement
 
 public class img : HtmlElement
 {
+    public static HtmlElementModifier Alt(string alt) => new(el => ((img)el).alt=alt);
+    
     public img()
     {
     }
