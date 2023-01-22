@@ -20,15 +20,14 @@ static class ReactWithDotNetIntegration
 
     static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
     {
-        var input = new ProcessReactWithDotNetRequestInput
-        {
-            HttpContext = httpContext
-        };
-        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
-
         httpContext.Response.ContentType = "application/json; charset=utf-8";
 
-        await httpContext.Response.WriteAsync(componentResponse.ToJson());
+        var jsonText = await CalculateJsonText(new CalculateJsonTextInput
+        {
+            HttpContext = httpContext
+        });
+
+        await httpContext.Response.WriteAsync(jsonText);
     }
 
     static async Task HomePage(HttpContext httpContext)

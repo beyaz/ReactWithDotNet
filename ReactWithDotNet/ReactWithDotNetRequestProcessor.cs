@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 
 namespace ReactWithDotNet;
@@ -76,6 +77,31 @@ partial class Mixin
 
         return componentResponse.ToHtml();
     }
+
+    public static async Task<string> CalculateJsonText(CalculateJsonTextInput calculateJsonTextInput)
+    {
+        if (calculateJsonTextInput is null)
+        {
+            throw new ArgumentNullException(nameof(calculateJsonTextInput));
+        }
+
+        if (calculateJsonTextInput.HttpContext is null)
+        {
+            throw new ArgumentNullException(string.Join('.', nameof(calculateJsonTextInput), nameof(calculateJsonTextInput.HttpContext)));
+        }
+
+        var input = new ProcessReactWithDotNetRequestInput
+        {
+            HttpContext                    = calculateJsonTextInput.HttpContext,
+            OnReactContextCreated          = calculateJsonTextInput.OnReactContextCreated,
+            BeforeSerializeElementToClient = calculateJsonTextInput.BeforeSerializeElementToClient,
+        };
+        
+        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+
+
+        return componentResponse.ToJson();
+    }
 }
 
 public sealed class CalculateHtmlTextInput
@@ -83,6 +109,15 @@ public sealed class CalculateHtmlTextInput
     public Element Element  { get; init; }
     
     public string QueryString { get; init; }
+
+    public Action<ReactContext> OnReactContextCreated { get; init; }
+
+    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+}
+
+public sealed class CalculateJsonTextInput
+{
+    public HttpContext HttpContext  { get; init; }
 
     public Action<ReactContext> OnReactContextCreated { get; init; }
 
