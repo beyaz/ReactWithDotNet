@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReactWithDotNet;
 
-public static class HtmlTextGenerator
+static class HtmlTextGenerator
 {
     static readonly IReadOnlyList<string> SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
 

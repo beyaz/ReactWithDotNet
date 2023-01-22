@@ -79,8 +79,6 @@ static class ReactWithDotNetIntegration
 
         var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
 
-        var htmlText = HtmlTextGenerator.ToHtml(componentResponse);
-
-        await httpContext.Response.WriteAsync(htmlText);
+        await httpContext.Response.WriteAsync(componentResponse.ToHtml());
     }
 }
