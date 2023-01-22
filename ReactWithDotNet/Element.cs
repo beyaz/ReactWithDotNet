@@ -8,10 +8,6 @@ sealed class FakeChild : Element
     public int Index { get; set; }
 }
 
-
-
-
-
 /// <summary>
 ///     The element
 /// </summary>
