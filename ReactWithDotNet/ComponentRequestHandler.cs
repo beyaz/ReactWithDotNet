@@ -9,8 +9,7 @@ namespace ReactWithDotNet;
 
 using static Array;
 
-[Serializable]
-public sealed class ClientStateInfo
+sealed class ClientStateInfo
 {
     public int? ComponentUniqueIdentifier { get; set; }
     public IReadOnlyDictionary<string, object> DotNetProperties { get; set; }
@@ -19,8 +18,7 @@ public sealed class ClientStateInfo
     public string StateAsJson { get; set; }
 }
 
-[Serializable]
-public class ComponentRequest
+sealed class ComponentRequest
 {
     public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
 
@@ -384,7 +382,7 @@ partial class Mixin
     }
 }
 
-public class StateTree
+sealed class StateTree
 {
     public string BreadCrumpPath { get; set; }
 
