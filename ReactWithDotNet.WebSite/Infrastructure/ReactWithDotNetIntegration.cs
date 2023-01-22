@@ -17,13 +17,17 @@ static class ReactWithDotNetIntegration
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), ReactWithDotNetDesignerComponentPreview);
     }
 
-    static async Task HandleReactWithDotNetRequest(HttpContext context)
+    static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
     {
         var input = new ProcessReactWithDotNetRequestInput
         {
-            HttpContext = context
+            HttpContext = httpContext
         };
-        await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+
+        httpContext.Response.ContentType = "application/json; charset=utf-8";
+
+        await httpContext.Response.WriteAsync(componentResponse.ToJson());
     }
 
     static async Task HomePage(HttpContext context)
@@ -34,28 +38,28 @@ static class ReactWithDotNetIntegration
         });
     }
 
-    static async Task ReactWithDotNetDesigner(HttpContext context)
+    static async Task ReactWithDotNetDesigner(HttpContext httpContext)
     {
-        await context.WriteHtmlResponse(new HtmlContentGenerator
+        await httpContext.WriteHtmlResponse(new HtmlContentGenerator
         {
             TargetReactComponent = typeof(ReactWithDotNetDesigner)
         });
     }
 
-    static async Task ReactWithDotNetDesignerComponentPreview(HttpContext context)
+    static async Task ReactWithDotNetDesignerComponentPreview(HttpContext httpContext)
     {
-        await context.WriteHtmlResponse(new HtmlContentGenerator
+        await httpContext.WriteHtmlResponse(new HtmlContentGenerator
         {
             TargetReactComponent = typeof(ReactWithDotNetDesignerComponentPreview)
         });
     }
 
-    static async Task WriteHtmlResponse(this HttpContext context, HtmlContentGenerator htmlContentGenerator)
+    static async Task WriteHtmlResponse(this HttpContext httpContext, HtmlContentGenerator htmlContentGenerator)
     {
-        context.Response.ContentType = "text/html; charset=UTF-8";
+        httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
         var htmlContent = htmlContentGenerator.GetHtmlContent();
 
-        await context.Response.WriteAsync(htmlContent);
+        await httpContext.Response.WriteAsync(htmlContent);
     }
 }

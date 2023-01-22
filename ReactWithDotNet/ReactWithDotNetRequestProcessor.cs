@@ -18,7 +18,7 @@ public sealed class ProcessReactWithDotNetRequestInput
 
 public static class ReactWithDotNetRequestProcessor
 {
-    public static async Task ProcessReactWithDotNetRequest(ProcessReactWithDotNetRequestInput input)
+    public static async Task<ComponentResponse> ProcessReactWithDotNetRequest(ProcessReactWithDotNetRequestInput input)
     {
         var httpContext = input.HttpContext;
 
@@ -26,11 +26,7 @@ public static class ReactWithDotNetRequestProcessor
 
         input.findType = Type.GetType;
 
-        var response = ComponentRequestHandler.HandleRequest(input);
-
-        httpContext.Response.ContentType = "application/json; charset=utf-8";
-
-        await httpContext.Response.WriteAsync(response.ToJson());
+        return ComponentRequestHandler.HandleRequest(input);
 
         async Task<ComponentRequest> readJson()
         {

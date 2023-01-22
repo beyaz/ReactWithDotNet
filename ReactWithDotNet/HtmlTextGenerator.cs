@@ -267,7 +267,7 @@ static class HtmlTextGenerator
             var padding = "".PadLeft(4,' ');
             
             sb.AppendLine(padding+"<style>");
-            reactContext.TryGetValue(DynamicStyles).CalculateCssClassList().Foreach((cssSelector, cssBody) =>
+            reactContext.TryGetValue(DynamicStyles).CalculateCssClassList()?.Foreach((cssSelector, cssBody) =>
             {
                 sb.Append(padding + cssSelector);
                 sb.AppendLine(padding + "{");

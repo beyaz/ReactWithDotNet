@@ -18,51 +18,55 @@ static class ReactWithDotNetIntegration
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), ReactWithDotNetDesignerComponentPreview);
     }
 
-    static async Task HandleReactWithDotNetRequest(HttpContext context)
+    static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
     {
         var input = new ProcessReactWithDotNetRequestInput
         {
-            HttpContext = context
+            HttpContext = httpContext
         };
-        await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+
+        httpContext.Response.ContentType = "application/json; charset=utf-8";
+
+        await httpContext.Response.WriteAsync(componentResponse.ToJson());
     }
 
-    static async Task HomePage(HttpContext context)
+    static async Task HomePage(HttpContext httpContext)
     {
-        await context.WriteHtmlResponse(new MainLayout
+        await httpContext.WriteHtmlResponse(new MainLayout
         {
             Page = new View()
         });
     }
 
-    static async Task ReactWithDotNetDesigner(HttpContext context)
+    static async Task ReactWithDotNetDesigner(HttpContext httpContext)
     {
-        await context.WriteHtmlResponse(new MainLayout
+        await httpContext.WriteHtmlResponse(new MainLayout
         {
             Page = new ReactWithDotNetDesigner()
         });
     }
 
-    static async Task ReactWithDotNetDesignerComponentPreview(HttpContext context)
+    static async Task ReactWithDotNetDesignerComponentPreview(HttpContext httpContext)
     {
-        await context.WriteHtmlResponse(new MainLayout
+        await httpContext.WriteHtmlResponse(new MainLayout
         {
             Page = new ReactWithDotNetDesignerComponentPreview()
         });
     }
 
-    static async Task WriteHtmlResponse(this HttpContext context, MainLayout mainLayout)
+    static async Task WriteHtmlResponse(this HttpContext httpContext, MainLayout mainLayout)
     {
-        context.Response.ContentType = "text/html; charset=UTF-8";
+        httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
-        context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
-        context.Response.Headers[HeaderNames.Expires]      = "0";
-        context.Response.Headers[HeaderNames.Pragma]       = "no-cache";
+        httpContext.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+        httpContext.Response.Headers[HeaderNames.Expires]      = "0";
+        httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-        var reactContext = ReactContext.Create(context.Request.QueryString.ToString(), 500, 500);
+        var reactContext = ReactContext.Create(httpContext.Request.QueryString.ToString(), 500, 500);
 
         var htmlContent = mainLayout.ToString(reactContext);
 
-        await context.Response.WriteAsync(htmlContent);
+        await httpContext.Response.WriteAsync(htmlContent);
     }
 }
