@@ -771,10 +771,7 @@ public static partial class Mixin
         return JsonSerializer.Serialize(value, options);
     }
 
-    public static string ToHtml(this ComponentResponse componentResponse)
-    {
-        return HtmlTextGenerator.ToHtml(componentResponse);
-    }
+    
 
     public static StyleModifier Top(double top) => Top(top.AsPixel());
     public static StyleModifier Top(string top) => new(style => style.top = top);

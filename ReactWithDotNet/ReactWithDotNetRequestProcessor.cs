@@ -57,11 +57,11 @@ partial class Mixin
 
         var input = new ProcessReactWithDotNetRequestInput
         {
-            findType = Type.GetType,
-        Instance    = element,
-            OnReactContextCreated = calculateHtmlTextInput.OnReactContextCreated,
+            findType                       = Type.GetType,
+            Instance                       = element,
+            OnReactContextCreated          = calculateHtmlTextInput.OnReactContextCreated,
             BeforeSerializeElementToClient = calculateHtmlTextInput.BeforeSerializeElementToClient,
-            
+
             ComponentRequest = new ComponentRequest
             {
                 MethodName                        = "FetchComponent",
@@ -69,13 +69,13 @@ partial class Mixin
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
                 SearchPartOfUrl                   = calculateHtmlTextInput.QueryString,
-                
+
             }
         };
 
         var componentResponse = ComponentRequestHandler.HandleRequest(input);
 
-        return componentResponse.ToHtml();
+        return HtmlTextGenerator.ToHtml(componentResponse);
     }
 
     public static async Task<string> CalculateJsonText(CalculateJsonTextInput calculateJsonTextInput)
