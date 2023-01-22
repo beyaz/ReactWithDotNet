@@ -30,11 +30,6 @@ class MainLayout : ReactComponent
                        color: rgb(51, 51, 51);
                    }
                    
-                   #app {
-                       width: 100%;
-                       height: 100vh;
-                   }
-                   
                    input:focus, textarea:focus, select:focus {
                        outline: none;
                    }
@@ -52,6 +47,9 @@ class MainLayout : ReactComponent
                     Page
                 },
 
+                // After page first rendered in client then connect with react system in background.
+                // So user first iteraction time will be minimize.
+                
                 new script{src =$"{root}/index.js"},
 
                 new script

@@ -65,7 +65,7 @@ static class ReactWithDotNetIntegration
 
         var input = new ProcessReactWithDotNetRequestInput
         {
-            Instance =mainLayout,
+            Instance    = mainLayout,
             HttpContext = httpContext,
             componentRequest = new ComponentRequest
             {
@@ -73,7 +73,7 @@ static class ReactWithDotNetIntegration
                 FullName                          = mainLayout.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
-                SearchPartOfUrl = httpContext.Request.QueryString.ToString()
+                SearchPartOfUrl                   = httpContext.Request.QueryString.ToString()
             }
         };
 
