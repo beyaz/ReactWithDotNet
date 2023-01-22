@@ -104,8 +104,21 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
     public override string ToString()
     {
+        return CalculateHtmlText(new CalculateHtmlTextInput
+        {
+            Element     = new ToStringHandlerComponent{element = this},
+            QueryString = string.Empty
+        });
+    }
 
-        return "todo";
+    class ToStringHandlerComponent:ReactComponent
+    {
+        public Element element;
+        
+        protected override Element render()
+        {
+            return element;
 
+        }
     }
 }

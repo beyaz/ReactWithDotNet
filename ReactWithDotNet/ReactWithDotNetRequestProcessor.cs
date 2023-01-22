@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Text;
+﻿using System.Text;
 using Microsoft.AspNetCore.Http;
 
 namespace ReactWithDotNet;
@@ -42,7 +41,7 @@ public static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static async Task<string> CalculateHtmlText(CalculateHtmlTextInput calculateHtmlTextInput)
+    public static string CalculateHtmlText(CalculateHtmlTextInput calculateHtmlTextInput)
     {
         if (calculateHtmlTextInput is null)
         {
@@ -58,7 +57,8 @@ partial class Mixin
 
         var input = new ProcessReactWithDotNetRequestInput
         {
-            Instance    = element,
+            findType = Type.GetType,
+        Instance    = element,
             OnReactContextCreated = calculateHtmlTextInput.OnReactContextCreated,
             BeforeSerializeElementToClient = calculateHtmlTextInput.BeforeSerializeElementToClient,
             
@@ -72,8 +72,8 @@ partial class Mixin
                 
             }
         };
-        
-        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+
+        var componentResponse = ComponentRequestHandler.HandleRequest(input);
 
         return componentResponse.ToHtml();
     }
