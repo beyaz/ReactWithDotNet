@@ -17,11 +17,11 @@ public class View : ReactComponent
             new div
             {
                 TextAlignCenter,
-                new div { innerHTML = "1056227229<b>6<b>", },
+                new div {  "1056227229",(b)"6" },
 
-                new div { innerHTML = "2569375209<b>8<b>" },
+                new div {  "2569375209",(b)"8" },
 
-                new div { innerHTML = "7547453160<b>2<b>" }
+                new div {  "7547453160" ,(b)"2" }
             },
 
             (p)@"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkda oluşmuş. 
@@ -44,7 +44,7 @@ Böylelikle herhangi 11 haneden oluşan bir sayının TC kimlik numarası olup o
             new LargeTitle("IBAN"),
 
             new p { "Bankanızın size vermiş oluğu IBAN bilgisinde buna benzer bir şey olabilir mi?" },
-            new img { src = Img("IBAN.jpg"), style = { width = "100%", maxWidth = "600px", height = "auto", display = "block", marginLeftRight = "auto" } },
+            new img { src = Img("IBAN.jpg"), alt ="iban" ,style = { width = "100%", maxWidth = "600px", height = "auto", display = "block", marginLeftRight = "auto" } },
 
             new p
             {
@@ -80,7 +80,7 @@ Her bir paketin içinde de binlerce byte ismini verdikleri 8 haneli rakamlar var
 İşte bu paketlerin doğru olup olmaması da yine benzer bir yöntem ile yapılmaktadır."
             },
 
-            new img { src = Img("ParityBit.PNG"), style = { width = "100%", height = "auto", maxWidth = "400px", display = "block", marginLeftRight = "auto" } },
+            new img { src = Img("ParityBit.PNG"),alt = "Parity bit", style = { width = "100%", height = "auto", maxWidth = "400px", display = "block", marginLeftRight = "auto" } },
 
             new p
             {
