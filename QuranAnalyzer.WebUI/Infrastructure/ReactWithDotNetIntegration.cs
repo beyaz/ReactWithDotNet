@@ -67,7 +67,7 @@ static class ReactWithDotNetIntegration
         {
             Instance    = mainLayout,
             HttpContext = httpContext,
-            componentRequest = new ComponentRequest
+            ComponentRequest = new ComponentRequest
             {
                 MethodName                        = "FetchComponent",
                 FullName                          = mainLayout.GetType().GetFullName(),

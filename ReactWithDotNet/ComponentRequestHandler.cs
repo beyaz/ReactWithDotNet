@@ -64,7 +64,7 @@ static class ComponentRequestHandler
 {
     public static ComponentResponse HandleRequest(ProcessReactWithDotNetRequestInput input)
     {
-        var request  = input.componentRequest;
+        var request  = input.ComponentRequest;
         
         var findType = input.findType;
 
