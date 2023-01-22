@@ -58,13 +58,17 @@ partial class Mixin
         var input = new ProcessReactWithDotNetRequestInput
         {
             Instance    = element,
+            OnReactContextCreated = calculateHtmlTextInput.OnReactContextCreated,
+            BeforeSerializeElementToClient = calculateHtmlTextInput.BeforeSerializeElementToClient,
+            
             ComponentRequest = new ComponentRequest
             {
                 MethodName                        = "FetchComponent",
                 FullName                          = element.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
-                SearchPartOfUrl                   = calculateHtmlTextInput.QueryString
+                SearchPartOfUrl                   = calculateHtmlTextInput.QueryString,
+                
             }
         };
         
@@ -77,5 +81,10 @@ partial class Mixin
 public sealed class CalculateHtmlTextInput
 {
     public Element Element  { get; init; }
+    
     public string QueryString { get; init; }
+
+    public Action<ReactContext> OnReactContextCreated { get; init; }
+
+    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 }
