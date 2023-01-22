@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -62,6 +63,20 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
         httpContext.Response.Headers[HeaderNames.Expires]      = "0";
         httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
+
+        var input = new ProcessReactWithDotNetRequestInput
+        {
+            HttpContext = httpContext,
+            componentRequest = new ComponentRequest
+            {
+                MethodName                        = "FetchComponent",
+                FullName                          = mainLayout.GetType().GetFullName(),
+                LastUsedComponentUniqueIdentifier = 1,
+                ComponentUniqueIdentifier         = 1
+            }
+        };
+
+        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
 
         var reactContext = ReactContext.Create(httpContext.Request.QueryString.ToString(), 500, 500);
 

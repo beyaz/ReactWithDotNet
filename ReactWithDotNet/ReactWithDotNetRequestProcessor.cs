@@ -5,7 +5,7 @@ namespace ReactWithDotNet;
 
 public sealed class ProcessReactWithDotNetRequestInput
 {
-    internal ComponentRequest componentRequest;
+    public ComponentRequest componentRequest { get; set; }
 
     internal Func<string, Type> findType;
 
@@ -22,7 +22,7 @@ public static class ReactWithDotNetRequestProcessor
     {
         var httpContext = input.HttpContext;
 
-        input.componentRequest = await readJson();
+        input.componentRequest ??= await readJson();
 
         input.findType = Type.GetType;
 

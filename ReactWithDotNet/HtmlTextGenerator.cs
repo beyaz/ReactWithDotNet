@@ -5,6 +5,11 @@ namespace ReactWithDotNet;
 
 static class HtmlTextGenerator
 {
+
+
+    
+    
+    
     static readonly ReactContextKey<DynamicStyleContentForEmbeddInClient> DynamicStyles = new(nameof(DynamicStyles));
     static readonly ReactContextKey<int?> HeadTagFinishIndex = new(nameof(HeadTagFinishIndex));
 
