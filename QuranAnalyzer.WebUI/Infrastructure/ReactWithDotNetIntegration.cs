@@ -29,31 +29,29 @@ static class ReactWithDotNetIntegration
 
     static async Task HomePage(HttpContext context)
     {
-        await context.WriteHtmlResponse(new HtmlContentGenerator
+        await context.WriteHtmlResponse(new MainLayout
         {
-            TargetReactComponent = typeof(View),
-            Page = new View(),
-            HttpContext = context
+            Page = new View()
         });
     }
 
     static async Task ReactWithDotNetDesigner(HttpContext context)
     {
-        await context.WriteHtmlResponse(new HtmlContentGenerator
+        await context.WriteHtmlResponse(new MainLayout
         {
-            TargetReactComponent = typeof(ReactWithDotNetDesigner)
+            Page        = new ReactWithDotNetDesigner()
         });
     }
 
     static async Task ReactWithDotNetDesignerComponentPreview(HttpContext context)
     {
-        await context.WriteHtmlResponse(new HtmlContentGenerator
+        await context.WriteHtmlResponse(new MainLayout
         {
-            TargetReactComponent = typeof(ReactWithDotNetDesignerComponentPreview)
+            Page        = new ReactWithDotNetDesignerComponentPreview()
         });
     }
 
-    static async Task WriteHtmlResponse(this HttpContext context, HtmlContentGenerator htmlContentGenerator)
+    static async Task WriteHtmlResponse(this HttpContext context, MainLayout mainLayout)
     {
         context.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -61,7 +59,10 @@ static class ReactWithDotNetIntegration
         context.Response.Headers[HeaderNames.Expires]      = "0";
         context.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-        var htmlContent = htmlContentGenerator.GetHtmlContent();
+
+        var reactContext = ReactContext.Create(context.Request.QueryString.ToString(), 500, 500);
+        
+        var htmlContent  = mainLayout.ToString(reactContext);
 
         await context.Response.WriteAsync(htmlContent);
     }

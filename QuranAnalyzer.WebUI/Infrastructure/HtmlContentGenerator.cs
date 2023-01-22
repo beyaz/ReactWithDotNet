@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Microsoft.AspNetCore.Http;
 using QuranAnalyzer.WebUI.Pages.MainPage;
 
 namespace QuranAnalyzer.WebUI;
@@ -8,77 +7,6 @@ sealed class HtmlContentGenerator
 {
     public Type TargetReactComponent { get; set; } = typeof(View);
 
-
-    public Element Page { get; set; }
-    public HttpContext HttpContext { get; set; }
-
-    public string GetHtmlContent()
-    {
-        const string root = "wwwroot";
-
-        var reactContext = ReactContext.Create(HttpContext.Request.QueryString.ToString(),500,500);
-        
-        return new html
-        {
-            Lang("tr"),
-            DirLtr, 
-            
-            new head
-            {
-                new meta{charset   = "utf-8"},
-                new meta{name      = "viewport", content      = "width=device-width, initial-scale=1"},
-                new title{ "Quran Analyzer" },
-
-                new style
-                {
-                    @"
-                   html, body {
-                       height: 100vh;
-                       margin: 0;
-                       font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                       font-size: 16px;
-                       color: rgb(51, 51, 51);
-                   }
-                   
-                   #app {
-                       width: 100%;
-                       height: 100vh;
-                   }
-                   
-                   input:focus, textarea:focus, select:focus {
-                       outline: none;
-                   }
-"
-                },
-                
-                new link{rel ="stylesheet" , href = "https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,800,900&amp;display=swap", media ="all"},
-
-                
-            },
-            new body
-            {
-                new div(Id("app"), WidthMaximized,Height100vh)
-                {
-                    Page
-                },
-
-                new script{src =$"{root}/index.js"},
-
-                new script
-                {
-                    $@"
-ReactWithDotNet.RenderComponentIn({{
-  fullTypeNameOfReactComponent: '{TargetReactComponent.GetFullName()}',
-  containerHtmlElementId: 'app'
-}});
-"
-                }
-
-
-            }
-        }.ToString(reactContext);
-    }
-    
     public string GetHtmlContent_old()
     {
         const string root = "wwwroot";
