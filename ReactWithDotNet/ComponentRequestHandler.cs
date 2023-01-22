@@ -45,8 +45,7 @@ public class ComponentRequest
     public string QueryString { get; set; }
 }
 
-[Serializable]
-public class ComponentResponse
+class ComponentResponse
 {
     public object DynamicStyles { get; set; }
 

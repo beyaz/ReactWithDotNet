@@ -762,7 +762,7 @@ public static partial class Mixin
     /// </summary>
     public static HtmlElementModifier Title(string title) => new(element => element.title = title);
 
-    public static string ToJson(this ComponentResponse value)
+    internal static string ToJson(this ComponentResponse value)
     {
         var options = new JsonSerializerOptions();
 

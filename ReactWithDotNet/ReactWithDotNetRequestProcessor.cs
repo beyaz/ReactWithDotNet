@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ReactWithDotNet;
 
-public sealed class ProcessReactWithDotNetRequestInput
+sealed class ProcessReactWithDotNetRequestInput
 {
     public ComponentRequest ComponentRequest { get; set; }
 
@@ -18,7 +18,7 @@ public sealed class ProcessReactWithDotNetRequestInput
     public Element Instance { get; set; }
 }
 
-public static class ReactWithDotNetRequestProcessor
+static class ReactWithDotNetRequestProcessor
 {
     public static async Task<ComponentResponse> ProcessReactWithDotNetRequest(ProcessReactWithDotNetRequestInput input)
     {
