@@ -92,7 +92,6 @@ class Article : ReactComponent
     {
         return new article
         {
-            MarginLeftRight(8), PaddingLeftRight(16),
             Aria("label","article"),
             Children(children)
         };

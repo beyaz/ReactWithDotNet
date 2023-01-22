@@ -10,7 +10,6 @@ class MainContentContainer : ReactComponent
             
             Children(children),
 
-            PaddingLeftRight(5),
             WidthMaximized,
             Height("100%"),
 
