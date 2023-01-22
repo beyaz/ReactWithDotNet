@@ -1,8 +1,8 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ReactWithDotNet.Test
-{
+namespace ReactWithDotNet.Test;
+
     [TestClass]
     public class StyleTests
     {
@@ -20,4 +20,3 @@ namespace ReactWithDotNet.Test
 
         }
     }
-}
