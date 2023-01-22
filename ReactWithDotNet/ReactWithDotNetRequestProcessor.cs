@@ -38,3 +38,27 @@ public static class ReactWithDotNetRequestProcessor
         }
     }
 }
+
+partial class Mixin
+{
+    public static async Task<string> CalculateHtmlText(Element element, HttpContext httpContext)
+    {
+        var input = new ProcessReactWithDotNetRequestInput
+        {
+            Instance    = element,
+            HttpContext = httpContext,
+            ComponentRequest = new ComponentRequest
+            {
+                MethodName                        = "FetchComponent",
+                FullName                          = element.GetType().GetFullName(),
+                LastUsedComponentUniqueIdentifier = 1,
+                ComponentUniqueIdentifier         = 1,
+                SearchPartOfUrl                   = httpContext.Request.QueryString.ToString()
+            }
+        };
+
+        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+
+        return componentResponse.ToHtml();
+    }
+}
