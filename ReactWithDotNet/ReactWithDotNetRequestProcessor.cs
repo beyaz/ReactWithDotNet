@@ -68,7 +68,7 @@ partial class Mixin
                 FullName                          = element.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
-                SearchPartOfUrl                   = calculateHtmlTextInput.QueryString,
+                QueryString                   = calculateHtmlTextInput.QueryString,
 
             }
         };

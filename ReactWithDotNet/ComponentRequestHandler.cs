@@ -42,7 +42,7 @@ public class ComponentRequest
 
     public string MethodName { get; set; }
 
-    public string SearchPartOfUrl { get; set; }
+    public string QueryString { get; set; }
 }
 
 [Serializable]
@@ -347,7 +347,7 @@ static class ComponentRequestHandler
     {
         var context = new ReactContext
         {
-            Query        = string.IsNullOrWhiteSpace(request.SearchPartOfUrl) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.SearchPartOfUrl),
+            Query        = string.IsNullOrWhiteSpace(request.QueryString) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.QueryString),
             ClientWidth  = request.ClientWidth,
             ClientHeight = request.ClientHeight
         };

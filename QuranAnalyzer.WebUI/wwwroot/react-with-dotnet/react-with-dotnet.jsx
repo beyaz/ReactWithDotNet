@@ -1334,7 +1334,7 @@ function SendRequest(request, onSuccess)
 
     request.ClientWidth  = document.documentElement.clientWidth;
     request.ClientHeight = document.documentElement.clientHeight;
-    request.SearchPartOfUrl = window.location.search;
+    request.QueryString = window.location.search;
 
     const url = ReactWithDotNet.RequestHandlerUrl;
 
