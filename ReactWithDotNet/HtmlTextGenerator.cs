@@ -5,8 +5,10 @@ namespace ReactWithDotNet;
 
 static class HtmlTextGenerator
 {
-    static readonly ReactContextKey<DynamicStyleContentForEmbeddInClient> Styles = new(nameof(Styles));
+    static readonly ReactContextKey<DynamicStyleContentForEmbeddInClient> DynamicStyles = new(nameof(DynamicStyles));
     static readonly ReactContextKey<int?> HeadTagFinishIndex = new(nameof(HeadTagFinishIndex));
+
+    static readonly IReadOnlyList<string> SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
 
     public static string ToHtml(Element element, ReactContext reactContext = null)
     {
@@ -14,7 +16,7 @@ static class HtmlTextGenerator
 
         reactContext ??= new ReactContext();
 
-        reactContext.Set(Styles,new DynamicStyleContentForEmbeddInClient());
+        reactContext.Set(DynamicStyles, new DynamicStyleContentForEmbeddInClient());
 
         Append(sb, 0, element, reactContext);
 
@@ -26,21 +28,21 @@ static class HtmlTextGenerator
         if (element is HtmlElement htmlElement)
         {
             var tag = htmlElement.Type;
-            
+
             if (element is HtmlTextNode textNode)
             {
                 sb.Append(textNode.innerText);
-                
+
                 return;
             }
-            
+
             var padding = "".PadLeft(indent, ' ');
 
             if (htmlElement is html)
             {
                 sb.AppendLine("<!DOCTYPE html>");
             }
-            
+
             sb.Append(padding);
             sb.Append("<");
             sb.Append(tag);
@@ -56,15 +58,15 @@ static class HtmlTextGenerator
                 }
 
                 var pseudos = CalculatePseudos(htmlElement._style);
-                if (pseudos?.Count > 0|| htmlElement._style._mediaQueries?.Count > 0)
+                if (pseudos?.Count > 0 || htmlElement._style._mediaQueries?.Count > 0)
                 {
-                    var className = reactContext.TryGetValue(Styles).GetClassName(new CssClassInfo
+                    var className = reactContext.TryGetValue(DynamicStyles).GetClassName(new CssClassInfo
                     {
                         Name         = "rwd",
                         Pseudos      = pseudos,
                         MediaQueries = htmlElement._style._mediaQueries?.Select(pair => (pair.query, pair.style.ToCssWithImportant())).ToList()
                     });
-                    
+
                     htmlElement.AddClass(className);
                 }
             }
@@ -95,7 +97,7 @@ static class HtmlTextGenerator
                 {
                     sb.Append("/");
                 }
-                
+
                 sb.Append(tag);
                 sb.Append(">");
 
@@ -113,6 +115,7 @@ static class HtmlTextGenerator
                 {
                     sb.Append("/");
                 }
+
                 sb.Append(tag);
                 sb.Append(">");
 
@@ -130,6 +133,7 @@ static class HtmlTextGenerator
                 {
                     sb.Append("/");
                 }
+
                 sb.Append(tag);
                 sb.Append(">");
 
@@ -175,31 +179,14 @@ static class HtmlTextGenerator
 
             if (hasInnerContent)
             {
-
                 if (tag == "html")
                 {
-                    var sb2 = new StringBuilder();
-
-                    sb2.AppendLine("<style>");
-                    reactContext.TryGetValue(Styles).CalculateCssClassList().Foreach((cssSelector, cssBody) =>
+                    var headTagFinishIndex = reactContext.TryGetValue(HeadTagFinishIndex);
+                    if (headTagFinishIndex.HasValue)
                     {
-                        sb2.Append(cssSelector);
-                        sb2.AppendLine("{");
-                        sb2.Append("    ");
-                        sb2.Append(cssBody);
-                        if (cssSelector.IndexOf("@media ",StringComparison.OrdinalIgnoreCase) == 0)
-                        {
-                            sb2.AppendLine();
-                            sb2.AppendLine("}");
-                        }
-                        sb2.AppendLine();
-                        sb2.AppendLine("}");
-                    });
-                    sb2.AppendLine("</style>");
-
-                    sb.Insert(reactContext.TryGetValue(HeadTagFinishIndex).Value, sb2);
+                        sb.Insert(headTagFinishIndex.Value, CalculateDynamicStylesAsHtmlStyleNode(reactContext));
+                    }
                 }
-
 
                 sb.Append(padding);
                 sb.Append("<");
@@ -207,6 +194,7 @@ static class HtmlTextGenerator
                 {
                     sb.Append("/");
                 }
+
                 sb.Append(tag);
                 sb.Append(">");
             }
@@ -222,10 +210,7 @@ static class HtmlTextGenerator
                     sb.Append(tag);
                     sb.Append(">");
                 }
-                
             }
-
-            
         }
         else if (element is ReactStatefulComponent reactComponent)
         {
@@ -251,10 +236,30 @@ static class HtmlTextGenerator
 
             return dotnetPropertyName;
         }
-        
+
+        static string CalculateDynamicStylesAsHtmlStyleNode(ReactContext reactContext)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("<style>");
+            reactContext.TryGetValue(DynamicStyles).CalculateCssClassList().Foreach((cssSelector, cssBody) =>
+            {
+                sb.Append(cssSelector);
+                sb.AppendLine("{");
+                sb.Append("    ");
+                sb.Append(cssBody);
+                if (cssSelector.IndexOf("@media ", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("}");
+                }
+
+                sb.AppendLine();
+                sb.AppendLine("}");
+            });
+            sb.AppendLine("</style>");
+
+            return sb.ToString();
+        }
     }
-
-    static readonly IReadOnlyList<string> SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
-
-
 }
