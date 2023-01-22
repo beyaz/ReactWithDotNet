@@ -86,6 +86,26 @@ static class HtmlTextGenerator
                     }
                 });
 
+            if (htmlElement._aria is not null)
+            {
+                foreach (var (name, value) in htmlElement._aria)
+                {
+                    sb.Append($" aria-{name}=\"");
+                    sb.Append(value);
+                    sb.Append("\"");
+                }
+            }
+
+            if (htmlElement._data is not null)
+            {
+                foreach (var (name, value) in htmlElement._data)
+                {
+                    sb.Append($" data-{name}=\"");
+                    sb.Append(value);
+                    sb.Append("\"");
+                }
+            }
+
             if (htmlElement._children?.Count == 1 && htmlElement._children[0] is HtmlTextNode htmlTextNode)
             {
                 sb.Append(">");

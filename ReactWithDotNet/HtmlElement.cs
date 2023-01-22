@@ -3,9 +3,15 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
+partial class Mixin
+{
+    public static HtmlElementModifier Aria(string ariaName, string ariaValue) => new(el => el.aria.Add(ariaName, ariaValue));
+    public static HtmlElementModifier Data(string dataName, string dataValue) => new(el => el.data.Add(dataName, dataValue));
+}
 public abstract class HtmlElement : Element
 {
     internal Dictionary<string, string> _data;
+    internal Dictionary<string, string> _aria;
 
     internal Style _style;
 
@@ -72,6 +78,19 @@ public abstract class HtmlElement : Element
             _data ??= new Dictionary<string, string>();
 
             return _data;
+        }
+    }
+
+    
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    public Dictionary<string, string> aria
+    {
+        get
+        {
+            _aria ??= new Dictionary<string, string>();
+
+            return _aria;
         }
     }
 

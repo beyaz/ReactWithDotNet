@@ -687,11 +687,19 @@ partial class ElementSerializer
             map.Add("$text", htmlElement.innerText);
         }
 
+        if (htmlElement._aria is not null)
+        {
+            foreach (var (key, value) in htmlElement._aria)
+            {
+                map.Add($"aria-{key}", value);
+            }
+        }
+        
         if (htmlElement._data is not null)
         {
             foreach (var (key, value) in htmlElement._data)
             {
-                map.Add(key, value);
+                map.Add($"data-{key}", value);
             }
         }
 
