@@ -31,9 +31,8 @@ public class Switch : ReactComponent
     
     protected override Element render()
     {
-        Style style = new()
+        Style divStyle = new()
         {
-            //ComponentBorder,
             Background("#ced4da"),
             BorderRadius(30),
             CursorPointer,
@@ -62,8 +61,8 @@ public class Switch : ReactComponent
 
         if (IsChecked)
         {
-            style.background       = "#6366F1";
-            style.hover.background = "#4f46e5";
+            divStyle.background       = "#6366F1";
+            divStyle.hover.background = "#4f46e5";
             before.transform       = "translateX(1.25rem)";
         }
         else
@@ -71,9 +70,9 @@ public class Switch : ReactComponent
             before.transform = "translateX(0rem)";
         }
         
-        style.before.Import(before);
+        divStyle.before.Import(before);
 
-        return new div(style)
+        return new div(divStyle)
         {
             When(!IsDisabled,OnClick(OnClickHandler))
         };
