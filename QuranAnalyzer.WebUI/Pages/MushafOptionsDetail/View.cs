@@ -20,7 +20,7 @@ public class View : ReactComponent
             new VSpace(15),
 
             @"Kuran günümüze farklı mushaflar üzerinden gelmiştir. 
-En bilindik mushaflara örnek vercek olur isek Medine mushafı ve Osman mushafı'nı örnek verebiliriz.",
+En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushafı'nı örnek verebiliriz.",
             new br(),
             new br(),
             "Peki farklı mushaf ne demek? " ,
@@ -44,7 +44,8 @@ En bilindik mushaflara örnek vercek olur isek Medine mushafı ve Osman mushafı
             new p
             {
                 "Eski mushafları dijital ortama aktarmayı amaçlayan bir çalışma var. " ,
-                "Hangi kelimenin hangi mushafta nasıl yazıldığına detaylı olarak bu siteden de inceleyebilirsiniz.",
+                "Hangi kelimenin hangi mushafta nasıl yazıldığına ait detaylı olarak bu siteden de inceleyebilirsiniz. " ,
+                "Eğer mushaftaki yapraklar oldukça hasarlı ise maalesef o kısımlar elektronik ortama aktarılamamış oluyor.",
                 new br(),
                 new FlexRowCentered
                 {
@@ -114,6 +115,7 @@ En bilindik mushaflara örnek vercek olur isek Medine mushafı ve Osman mushafı
                     },
 
                     "Bu bahsi geçen iki kelime farklı mushaflarda farklı yazılmış. Kimisinde sin harfi kullanılmış kimisinde sin harfi olan yerde sad harfi kullanılmış.",
+                    "Eğer bu seçeneği seçerseniz bu iki yerdeki iki harf farklılığında Sad harfini tercih etmiş olursunuz."
                 },
 
                 new FlexColumn(Gap(10))
@@ -125,7 +127,8 @@ En bilindik mushaflara örnek vercek olur isek Medine mushafı ve Osman mushafı
                         IsDisabled    = true
                     },
 
-                    "68:1 in ilk harfi nun-vav-nun olarak saymak istemiyorsanız bu seçeneği işaretleyebilirsiniz. Detaylı açıklama soru cevap kısmında verilmiştir",
+                    "68:1 in ilk harfi nun-vav-nun olarak saymak istemiyorsanız bu seçeneği işaretleyebilirsiniz. " ,
+                    "Buradaki NN mi N mi olduğu ile ilgili detaylı açıklama soru cevap kısmında verilmiştir."
                 },
 
                 new FlexColumn(Gap(10))
@@ -141,7 +144,13 @@ En bilindik mushaflara örnek vercek olur isek Medine mushafı ve Osman mushafı
                 }
             },
             
-            new VSpace(15)
+            new p
+            {
+                "Özetlersek genel durum şöyle; Elif sayımlarını hariç tutarsak, Tanzil.net'in sayımları ile Reşad Halife'nin sayımları arasında tüm mushaf boyunca toplamda 5 tane harf farklılığı vardır. ",
+                "Bir tanesi Nun harfinde iki tanesi Lam harfinde ve 2 tanesi de Sin harfi olmak üzere toplamda 5 tane farklılık var denilebilir. ",
+                "Elif harfini tamamen farklı ele almak lazım. Çünkü  nerdeyse bir çok mushafta Elif harfleri birbirlerinden tamamen farklıdır. ",
+                "Mushafdaki Elif harfini bilgisayara aktaran kişilerin Arapça bilgisi de işin içine giriyor. "
+            }
         };
 
         static Element seperation() => new FlexRowCentered(MarginTopBottom(10)) { "* * *" };

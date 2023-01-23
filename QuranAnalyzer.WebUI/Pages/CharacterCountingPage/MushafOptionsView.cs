@@ -53,7 +53,7 @@ class MushafOptionsView : ReactComponent
 
             new SwitchWithLabel
             {
-                label         = "11:70 ve 30:21 surelerdeki Lam harf farklılığında Tanzil.neti tercih et (henüz çalışmıyor ayarlayacağım)",
+                label         = "11:70 ve 30:21 surelerdeki Lam harf farklılığında Tanzil.neti tercih et",
                 LabelMaxWidth = 250,
                 value         = Model.Use_Laam_SpecifiedByTanzil,
                 valueChange = x =>
