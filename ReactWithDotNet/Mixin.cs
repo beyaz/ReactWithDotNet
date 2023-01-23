@@ -26,16 +26,9 @@ public static partial class Mixin
 
 
 
-    public static StyleModifier AlignItemsBaseline => new(style => style.alignItems = "baseline");
 
-    /// <summary>
-    ///     <para>style.alignItems = "center"</para>
-    /// </summary>
-    public static StyleModifier AlignItemsCenter => new(style => style.alignItems = "center");
 
-    public static StyleModifier AlignItemsFlexEnd => new(style => style.alignItems = "flex-end");
-    public static StyleModifier AlignItemsFlexStart => new(style => style.alignItems = "flex-start");
-    public static StyleModifier AlignItemsStretch => new(style => style.alignItems = "stretch");
+    
 
     public static StyleModifier BoxSizingBorderBox => new(style => style.boxSizing = "border-box");
 

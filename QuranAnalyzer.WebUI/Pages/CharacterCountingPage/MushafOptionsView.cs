@@ -12,7 +12,7 @@ class MushafOptionsView : ReactComponent
     
     protected override Element render()
     {
-        return new FlexColumn(JustifyContentCenter, Gap(10))
+        return new FlexColumn(JustifyContentCenter, Gap(20))
         {
             new SwitchWithLabel
             {
