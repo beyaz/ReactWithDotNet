@@ -71,6 +71,9 @@ public class button : HtmlElement
 
 public class input : HtmlElement
 {
+    [React]
+    public bool? disabled { get; set; }
+    
     public input() { }
 
     public input(params IModifier[] modifiers) : base(modifiers) { }
