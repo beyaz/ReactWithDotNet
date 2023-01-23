@@ -12,7 +12,6 @@
 
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
-        <ServerGarbageCollection>true</ServerGarbageCollection>
     </PropertyGroup>
 
 </Project>
