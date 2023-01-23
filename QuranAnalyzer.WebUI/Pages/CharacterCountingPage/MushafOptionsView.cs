@@ -41,7 +41,7 @@ class MushafOptionsView : ReactComponent
 
             new SwitchWithLabel
             {
-                label         = "68:1 tek nun olarak say-(henüz çalışmıyor ayarlayacağım)",
+                label         = "68:1 tek nun olarak say",
                 LabelMaxWidth = 250,
                 value         = Model.Chapter_68_Should_Single_Nun,
                 valueChange = x =>

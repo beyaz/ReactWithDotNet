@@ -375,6 +375,13 @@ public static class QuranAnalyzerMixin
                     return totalCount;
                 }
             }
+            else
+            {
+                if (MushafTotalCountPerVerseDifference[Nun].TryGetValue(GetDifferencesKeyForTanzil(verse.Id), out var totalCount))
+                {
+                    return totalCount;
+                }
+            }
         }
 
         if (arabicLetterIndex == Waaw)
@@ -382,6 +389,14 @@ public static class QuranAnalyzerMixin
             if (option.Chapter_68_Should_Single_Nun == false)
             {
                 if (MushafTotalCountPerVerseDifference[Waaw].TryGetValue(GetDifferencesKeyForRK(verse.Id), out var totalCount))
+                {
+                    return totalCount;
+                }
+            }
+
+            else
+            {
+                if (MushafTotalCountPerVerseDifference[Waaw].TryGetValue(GetDifferencesKeyForTanzil(verse.Id), out var totalCount))
                 {
                     return totalCount;
                 }
