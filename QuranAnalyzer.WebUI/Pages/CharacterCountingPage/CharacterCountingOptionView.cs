@@ -47,7 +47,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
 
         var headerColor = "#1976d2";
 
-        return new div
+        return new div(Role(nameof(CharacterCountingOptionView)))
         {
             style = { display = "flex", flexDirection = "column" },
             children =

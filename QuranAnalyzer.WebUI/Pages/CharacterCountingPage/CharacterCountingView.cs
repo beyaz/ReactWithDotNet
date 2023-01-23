@@ -75,7 +75,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
                 Space(3),
 
-                new FlexRow
+                new FlexRow(AlignItemsCenter)
                 {
                     new CharacterCountingOptionView { MushafOption = state.MushafOption, MushafOptionChanged = MushafOptionChanged },
                     Space(30),

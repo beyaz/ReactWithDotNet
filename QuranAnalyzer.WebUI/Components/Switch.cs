@@ -11,7 +11,7 @@ class SwitchWithLabel: ReactComponent
 
     protected override Element render()
     {
-        return new FlexRow(AlignItemsCenter, Gap(5),FlexWrap, AlignItemsFlexStart)
+        return new FlexRow(AlignItemsCenter, Gap(5),FlexWrap, AlignContentFlexStart)
         {
             new Switch
             {
