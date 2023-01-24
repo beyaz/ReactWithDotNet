@@ -764,7 +764,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                 props[targetProp] = transformFunction(GetValueInPath(GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier).state[accessToSource], sourcePath));
                 props[eventName] = function(e)
                 {
-                     const targetComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
+                    const targetComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
                     const modifiedDotNetState = Clone(targetComponent.state[accessToSource]);
 
