@@ -1,20 +1,20 @@
-﻿
-using QuranAnalyzer.WebUI.Pages.MainPage;
+﻿using QuranAnalyzer.WebUI.Pages.MainPage;
 
 namespace QuranAnalyzer.WebUI.Components;
 
 class FixedTopPanelContainerModel
 {
-    public double MainDivScrollY { get; set; }
-
     public bool IsMenuVisible { get; set; }
+    public double MainDivScrollY { get; set; }
 }
+
 class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 {
-
-    protected override void componentDidMount()
+    protected override void constructor()
     {
-        Client.OnMainContentDivScrollChangedOverZero( mainDivScrollY => state.MainDivScrollY = mainDivScrollY);
+        state = new FixedTopPanelContainerModel();
+
+        Client.OnMainContentDivScrollChangedOverZero(mainDivScrollY => state.MainDivScrollY = mainDivScrollY);
     }
 
     protected override Element render()
@@ -39,27 +39,27 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
 
                     new div(PositionRelative)
                     {
-                        DisplayNone, MediaQueryOnMobile(new Style{DisplayBlock}),
+                        DisplayNone, MediaQueryOnMobile(new Style { DisplayBlock }),
                         MarginRight(30),
-                        OnClick(_=>state.IsMenuVisible = !state.IsMenuVisible),
-                        new SvgHamburgerIcon()  + new Style
+                        OnClick(_ => state.IsMenuVisible = !state.IsMenuVisible),
+                        new SvgHamburgerIcon() + new Style
                         {
                             When(state.IsMenuVisible, DisplayNone),
                         },
 
-                        new MenuCloseIcon()  + new Style
+                        new MenuCloseIcon() + new Style
                         {
                             DisplayNone, When(state.IsMenuVisible, DisplayBlock)
                         },
-                        
+
                         new div(PositionAbsolute)
                         {
                             DisplayNone, When(state.IsMenuVisible, DisplayBlock),
-                            
+
                             Background("white"),
                             MarginLeft(-200), MarginTop(-10),
                             Zindex(3),
-                            BoxShadow( "0px 0px 8px rgb(0 0 0 / 20%)"),
+                            BoxShadow("0px 0px 8px rgb(0 0 0 / 20%)"),
                             Padding(30),
                             BorderRadius(5),
                             new LeftMenu
@@ -68,20 +68,16 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                             }
                         }
                     }
-                  
-                    
                 }
-
-
             }
         };
 
         if (state.MainDivScrollY > 0)
         {
             top.style.borderBottom = "";
-            top.style.boxShadow  = "0px 0px 8px rgb(0 0 0 / 20%)";
+            top.style.boxShadow    = "0px 0px 8px rgb(0 0 0 / 20%)";
         }
-        
+
         return top;
     }
 }
