@@ -2,8 +2,8 @@
     "name": "quran-analyzer-web-ui",
     "version": "1.0.0",
     "scripts": {
-        "build-development": "esbuild index-development.jsx --bundle --outfile=index.js --define:global=window",
-        "build-production":  "esbuild index.jsx             --bundle --outfile=index.js --define:global=window --analyze --minify --target=es2016"
+        "dev": "esbuild index-development.jsx --bundle --outfile=index.js --define:global=window",
+        "build":  "esbuild index.jsx             --bundle --outfile=index.js --define:global=window --analyze --minify --target=es2016"
     },
     "dependencies": {
         "esbuild": "^0.14.48",
