@@ -41,10 +41,14 @@ sealed class ComponentRequest
     public string MethodName { get; set; }
 
     public string QueryString { get; set; }
+
+    public int CallFunctionId { get; set; }
 }
 
 class ComponentResponse
 {
+    public int CallFunctionId { get; set; }
+    
     public object DynamicStyles { get; set; }
 
     public object ElementAsJson { get; set; }
@@ -151,6 +155,7 @@ static class ComponentRequestHandler
 
             return new ComponentResponse
             {
+                CallFunctionId = request.CallFunctionId,
                 ElementAsJson                     = map,
                 Trace                             = tracer.traceMessages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
@@ -299,6 +304,7 @@ static class ComponentRequestHandler
 
             return new ComponentResponse
             {
+                CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
                 Trace                             = tracer.traceMessages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),

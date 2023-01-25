@@ -65,7 +65,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 new InputText
                 {
                     valueBind                = () => state.ClassFilter,
-                    valueBindDebounceTimeout = 700,
+                    valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnFilterChanged,
                     style                    = { FontSize12 }
                 }
@@ -77,7 +77,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 new InputText
                 {
                     valueBind                = () => state.MethodFilter,
-                    valueBindDebounceTimeout = 700,
+                    valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnFilterChanged,
                     style                    = { FontSize12 }
                 }

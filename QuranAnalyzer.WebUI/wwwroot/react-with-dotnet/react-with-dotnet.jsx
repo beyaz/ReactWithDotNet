@@ -111,22 +111,36 @@ function EmitNextFunctionInFunctionExecutionQueue()
     
     if (FunctionExecutionQueue.length > 0)
     {
-        const fn = FunctionExecutionQueue.shift();
+        const item = FunctionExecutionQueue.shift();
+
+        if (item.isValid === false)
+        {
+            EmitNextFunctionInFunctionExecutionQueue();
+            return;
+        }
 
         FunctionExecutionQueueStateIsExecuting = true;
+        FunctionExecutionQueueCurrentEntry = item;
         
-        fn();
+        item.fn(item);
     }
 }
 
+var FunctionExecutionQueueEntryUniqueIdentifier = 1;
+var FunctionExecutionQueueCurrentEntry = null;
+
 function PushToFunctionExecutionQueue(fn)
 {
-    FunctionExecutionQueue.push(fn);
+    const entry = { fn: fn, isValid: true, id: FunctionExecutionQueueEntryUniqueIdentifier++ };
+
+    FunctionExecutionQueue.push(entry);
 
     if (!FunctionExecutionQueueStateIsExecuting)
     {
         EmitNextFunctionInFunctionExecutionQueue();
     }
+
+    return entry;
 }
 
 function GetValueInPath(obj, steps)
@@ -775,11 +789,21 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
 
                     if (debounceTimeout > 0)
                     {
+                        const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
+
+                        if (FunctionExecutionQueueCurrentEntry &&
+                            FunctionExecutionQueueCurrentEntry.name === executionQueueItemName)
+                        {
+                            FunctionExecutionQueueCurrentEntry.isValid = false;
+                        }
+
                         clearTimeout(targetComponent.state[eventName + '-debounceTimeoutId']);
 
                         newState[eventName + '-debounceTimeoutId'] = setTimeout(() =>
                         {
-                            StartAction(debounceHandler, targetComponent, /*eventArguments*/[]);
+                            const executionEntry = StartAction(debounceHandler, targetComponent, /*eventArguments*/[]);
+                            executionEntry.name = executionQueueItemName;
+
                         }, debounceTimeout);                        
                     }
 
@@ -1004,10 +1028,14 @@ function ProcessClientTasks(clientTasks, component)
 
 function StartAction(remoteMethodName, component, eventArguments)
 {
-    PushToFunctionExecutionQueue(() => HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: eventArguments }));
+    function execute(executionQueueEntry)
+    {
+        HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: eventArguments }, executionQueueEntry);
+    }
+    return PushToFunctionExecutionQueue(execute);
 }
 
-function HandleAction(data)
+function HandleAction(data, executionQueueEntry)
 {
     const remoteMethodName = data.remoteMethodName;
     const component = NotNull(data.component);
@@ -1021,14 +1049,30 @@ function HandleAction(data)
         CapturedStateTree: CaptureStateTreeFromFiberNode(component._reactInternals),
         ComponentKey: NotNull(component.props.$jsonNode.key),
         LastUsedComponentUniqueIdentifier: LastUsedComponentUniqueIdentifier,
-        ComponentUniqueIdentifier: NotNull(component.state[DotNetComponentUniqueIdentifier])
+        ComponentUniqueIdentifier: NotNull(component.state[DotNetComponentUniqueIdentifier]),
+
+        CallFunctionId: executionQueueEntry.id
     };
     
     request.eventArgumentsAsJsonArray = data.eventArguments.map(JSON.stringify);
 
     function onSuccess(response)
     {
+        
+
         IsWaitingRemoteResponse = false;
+
+        if (response.CallFunctionId > 0 &&
+            FunctionExecutionQueueCurrentEntry && 
+            FunctionExecutionQueueCurrentEntry.id === response.CallFunctionId &&
+            FunctionExecutionQueueCurrentEntry.isValid === false)
+        {
+            // this function is not valid.
+            // maybe expired by debounce mechanism.
+
+            OnReactStateReady();
+            return;
+        }
 
         if (response.ErrorMessage != null)
         {
