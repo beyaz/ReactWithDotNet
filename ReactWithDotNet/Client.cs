@@ -25,16 +25,6 @@ static partial class Mixin
     }
 }
 
-public abstract class ReactComponent<TState> : ReactStatefulComponent where TState : new()
-{
-    [JsonProperty]
-    public TState state { get; protected internal set; }
-    
-    protected override void constructor()
-    {
-        state = new TState();
-    }
-}
 
 [Serializable]
 public sealed class EmptyState

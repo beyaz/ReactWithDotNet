@@ -166,11 +166,20 @@ partial class ElementSerializer
                 {
                     reactStatefulComponent.InvokeConstructor();
 
-                    // maybe developer forget init state
-                    if (reactStatefulComponent is ReactComponent<EmptyState> reactComponent && reactComponent.state == null)
+                    if (reactStatefulComponent.IsStateNull)
                     {
-                        reactComponent.state = new EmptyState();
+                        // maybe developer forget init state
+                        if (reactStatefulComponent is ReactComponent<EmptyState> reactComponent)
+                        {
+                            reactComponent.state = new EmptyState();
+                        }
+                        else
+                        {
+                            throw DeveloperException($"'state' property must be initialized in constructor. @component: {reactStatefulComponent.GetType().FullName}");
+                        }
                     }
+                    
+                    
                 }
 
                 if (node.DotNetComponentRenderMethodInvoked is false)

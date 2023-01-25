@@ -75,6 +75,11 @@ partial class Mixin
 
         var componentResponse = ComponentRequestHandler.HandleRequest(input);
 
+        if (componentResponse.ErrorMessage is not null)
+        {
+            throw DeveloperException(componentResponse.ErrorMessage);
+        }
+
         return HtmlTextGenerator.ToHtml(componentResponse);
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -127,7 +128,23 @@ public abstract class ReactStatefulComponent : Element
 
         return propertyNameOfCustomReactEvent;
     }
+    
+    internal abstract bool IsStateNull { get; }
 }
+
+public abstract class ReactComponent<TState> : ReactStatefulComponent where TState : new()
+{
+    [Newtonsoft.Json.JsonProperty]
+    public TState state { get; protected internal set; }
+
+    protected override void constructor()
+    {
+        state = new TState();
+    }
+
+    internal override bool IsStateNull => state == null;
+}
+
 
 public abstract class ReactComponent : ReactComponent<EmptyState>
 {
