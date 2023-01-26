@@ -457,11 +457,29 @@ class ComponentCache
     {
         NotNull(component);
 
-        var existingComponent = this.linkedList.first(x => x === component);
-        if (existingComponent)
+        // skip reference equal components
         {
-            return;
+            const isReferenceEquals = (x) => x === component;
+
+            const existingComponent = this.linkedList.first(isReferenceEquals);
+            if (existingComponent)
+            {
+                return;
+            }
         }
+
+        // remove twice rendered components
+        // occurs when lazy components scenarios
+        {
+            const isTwiceRendered = (x) => x[DotNetComponentUniqueIdentifiers][0] === component[DotNetComponentUniqueIdentifiers][0];
+
+            const existingComponent = this.linkedList.first(isTwiceRendered);
+            if (existingComponent)
+            {
+                this.linkedList.removeFirst(isTwiceRendered);
+            }    
+        }
+           
 
         this.linkedList.add(component);
     }
@@ -808,6 +826,7 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
                     }
 
                     targetComponent.setState(newState);
+
                 }
 
                 continue;
@@ -1204,9 +1223,9 @@ function DefineComponent(componentDeclaration)
 
             this[CUSTOM_EVENT_LISTENER_MAP] = {};
 
-            COMPONENT_CACHE.Register(this);
-
             this[DotNetComponentUniqueIdentifiers] = [NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier])];
+
+            COMPONENT_CACHE.Register(this);
         }
         
         render()
