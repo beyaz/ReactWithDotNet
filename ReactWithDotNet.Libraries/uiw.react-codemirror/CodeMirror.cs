@@ -37,7 +37,7 @@ public class CodeMirror : ThirdPartyReactComponent
     public int? valueBindDebounceTimeout { get; set; }
 
     [React]
-    [ReactTransformValueInClient(Prefix + nameof(CodeMirror) + "::ConvertToExtension")]
+    //[ReactTransformValueInClient(Prefix + nameof(CodeMirror) + "::ConvertToExtension")]
     public List<string> extensions { get; } = new List<string>();
 }
 

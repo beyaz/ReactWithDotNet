@@ -1,4 +1,7 @@
-import ReactWithDotNet from "../react-with-dotnet";
+
+import React from 'react';
+
+import ReactWithDotNet from "../../react-with-dotnet";
 
 // https://uiwjs.github.io/react-codemirror/#/theme/data/github/light
 import CodeMirror from '@uiw/react-codemirror';
@@ -13,13 +16,12 @@ function register(name, value)
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.uiw.react_codemirror." + name, value);
 }
 
-register("CodeMirror", CodeMirror);
 register("CodeMirror::OnChange", function (args)
 {
     return [/*newText*/args[0]];
 });
 
-register("CodeMirror::ConvertToExtension", function (/*string[]*/stringArray)
+function calculateExtensions(/*string[]*/stringArray)
 {
     return stringArray.map(name =>
     {
@@ -46,8 +48,19 @@ register("CodeMirror::ConvertToExtension", function (/*string[]*/stringArray)
         if (name == "githubLight")
         {
             return githubLight;
-        }        
+        }
 
         throw 'Implement here: ' + name;
     });
-});
+}
+
+
+const Editor = React.forwardRef((props, ref) => (
+
+    <CodeMirror ref={ref} value={props.value} basicSetup={props.basicSetup} onChange={props.onChange} extensions={calculateExtensions(props.extensions)} >
+       {props.children}
+    </CodeMirror>
+
+));
+
+export default Editor

@@ -1,0 +1,1 @@
+export { TabView as default } from 'primereact/tabview';

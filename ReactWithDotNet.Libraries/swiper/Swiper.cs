@@ -20,7 +20,6 @@ public class Swiper : ThirdPartyReactComponent
             this.children.Clear();
             this.children.AddRange(children);
         }
-        
     }
 
     [React]
@@ -42,7 +41,6 @@ public class Swiper : ThirdPartyReactComponent
     public int? loopAdditionalSlides { get; set; }
 
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet.Libraries.Swiper::ConvertToSwiperModules")]
     public IReadOnlyList<string> modules { get; set; }
 
     [React]

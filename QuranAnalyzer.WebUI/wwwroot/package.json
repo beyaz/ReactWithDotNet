@@ -2,8 +2,10 @@
     "name": "quran-analyzer-web-ui",
     "version": "1.0.0",
     "scripts": {
-        "dev": "esbuild index-development.jsx --bundle --outfile=index.js --define:global=window",
-        "build":  "esbuild index.jsx             --bundle --outfile=index.js --define:global=window --analyze --minify --target=es2016"
+
+        "dev":   "esbuild index.jsx --bundle --splitting --format=esm --outdir=dist --define:global=window",
+        "build": "esbuild index.jsx --bundle --splitting --format=esm --outdir=dist --define:global=window --analyze --minify --target=es2016"
+        
     },
     "dependencies": {
         "esbuild": "^0.14.48",
@@ -21,9 +23,7 @@
 
         "react-xarrows": "^2.0.2",
 
-        "prismjs": "^1.28.0",
 
-        "react-simple-code-editor": "^0.11.2",
 
         "swiper": "^8.4.2",
 

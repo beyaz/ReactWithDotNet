@@ -35,7 +35,6 @@ jobs:
         Remove-Item 'react-with-dotnet' -Recurse
         Remove-Item 'package.json'
         Remove-Item 'package-lock.json'
-        Remove-Item 'index-development.jsx'
         Remove-Item 'index.jsx'
       shell: pwsh
 

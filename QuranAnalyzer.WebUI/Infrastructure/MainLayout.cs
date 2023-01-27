@@ -50,10 +50,12 @@ class MainLayout : ReactComponent
                 // After page first rendered in client then connect with react system in background.
                 // So user first iteraction time will be minimize.
                 
-                new script{src =$"{root}/index.js"},
+                new script{type ="module", src =$"{root}/dist/index.js"},
 
                 new script
                 {
+                    type ="module",
+                    text = 
                     $@"
 ReactWithDotNet.RenderComponentIn({{
   fullTypeNameOfReactComponent: '{Page.GetType().GetFullName()}',
