@@ -47,3 +47,6 @@ document.addEventListener('scroll', () =>
         currentScrollY = scrollY;
     }
 });
+
+
+export { ReactWithDotNet };

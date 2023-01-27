@@ -57,6 +57,8 @@ class MainLayout : ReactComponent
                     type ="module",
                     text = 
                     $@"
+import {{ReactWithDotNet}} from './{root}/dist/index.js';
+
 ReactWithDotNet.RenderComponentIn({{
   fullTypeNameOfReactComponent: '{Page.GetType().GetFullName()}',
   containerHtmlElementId: 'app'
