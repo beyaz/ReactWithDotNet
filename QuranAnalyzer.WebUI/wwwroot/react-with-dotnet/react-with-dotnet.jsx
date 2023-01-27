@@ -1422,6 +1422,45 @@ function SendRequest(request, onSuccess)
 
 var LastUsedComponentUniqueIdentifier = 1;
 
+function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, response)
+{
+    if (response.NavigateToUrl)
+    {
+        window.location.replace(location.origin + response.NavigateToUrl);
+        return;
+    }
+
+    if (response.ErrorMessage != null)
+    {
+        throw response.ErrorMessage;
+    }
+
+    ProcessDynamicCssClasses(response.DynamicStyles);
+
+    const element = response.ElementAsJson;
+
+    const component = DefineComponent(element);
+
+    LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
+            
+
+    function renderCallback(component)
+    {
+        if (component)
+        {
+            OnReactStateReady();
+        }
+    }
+
+    const props = { key: '0', $jsonNode: element, ref: renderCallback };
+
+    props[SyncId] = GetNextSequence();
+
+    const reactElement = React.createElement(component, props);
+            
+    createRoot(document.getElementById(containerHtmlElementId)).render(reactElement);
+}
+
 function RenderComponentIn(obj)
 {
     var fullTypeNameOfReactComponent = obj.fullTypeNameOfReactComponent;
@@ -1441,41 +1480,7 @@ function RenderComponentIn(obj)
         {
             IsWaitingRemoteResponse = false;
 
-            if (response.NavigateToUrl)
-            {
-                window.location.replace(location.origin + response.NavigateToUrl);
-                return;
-            }
-
-            if (response.ErrorMessage != null)
-            {
-                throw response.ErrorMessage;
-            }
-
-            ProcessDynamicCssClasses(response.DynamicStyles);
-
-            const element = response.ElementAsJson;
-
-            const component = DefineComponent(element);
-
-            LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
-            
-
-            function renderCallback(component)
-            {
-                if (component)
-                {
-                    OnReactStateReady();
-                }
-            }
-
-            const props = { key: '0', $jsonNode: element, ref: renderCallback };
-
-            props[SyncId] = GetNextSequence();
-
-            const reactElement = React.createElement(component, props);
-            
-            createRoot(document.getElementById(containerHtmlElementId)).render(reactElement);
+            ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, response);
         }
         
         SendRequest(request, onSuccess);
