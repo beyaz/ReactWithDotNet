@@ -3,6 +3,6 @@ import React from 'react';
 
 import ReactWithDotNet from "../../react-with-dotnet";
 
-const FreeScrollBar = React.lazy(() => import('./FreeScrollBar'));
+const FreeScrollbar = React.lazy(() => import('./FreeScrollbar'));
 
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.react_free_scrollbar.FreeScrollBar", FreeScrollBar);
+ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.react_free_scrollbar.FreeScrollBar", FreeScrollbar);
