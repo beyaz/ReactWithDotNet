@@ -1938,15 +1938,4 @@ var ReactWithDotNet =
     IsMediaDesktop: IsDesktop
 };
 
-
-
-window.ReactWithDotNet = ReactWithDotNet;
-
 export default ReactWithDotNet;
-
-function RegisterReactWithDotnetExternalComponent(libraryName, componentName, componentRef)
-{
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries." + libraryName + '.' + componentName, componentRef);
-}
-
-export { RegisterReactWithDotnetExternalComponent };
