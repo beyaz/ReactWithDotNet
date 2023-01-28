@@ -53,6 +53,11 @@ public class Dialog: ElementBase
     /// </summary>
     [React]
     public Action onHide { get; set; }
+
+    protected override Element SuspenseFallback()
+    {
+        return new div { DisplayNone };
+    }
 }
 
 

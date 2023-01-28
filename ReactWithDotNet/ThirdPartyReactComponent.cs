@@ -58,8 +58,6 @@ public abstract class ThirdPartyReactComponent : Element
         }
     }
 
-
-
     public static Element operator +(ThirdPartyReactComponent thirdPartyReactComponent, StyleModifier modifier)
     {
         modifier.modifyStyle(thirdPartyReactComponent.style);
@@ -71,5 +69,10 @@ public abstract class ThirdPartyReactComponent : Element
     public void Add(Style style)
     {
         this.style.Import(style);
+    }
+
+    protected virtual Element SuspenseFallback()
+    {
+        return new div { aria = { { "component", GetType().FullName } }, Style = style};
     }
 }
