@@ -107,6 +107,43 @@ partial class Mixin
 
         return componentResponse.ToJson();
     }
+
+    public static string CalculateJsonText(Element component, string queryString, 
+                                           Action<ReactContext> onReactContextCreated = null,
+                                           Action<Element, ReactContext> beforeSerializeElementToClient = null)
+    {
+        if (component is null)
+        {
+            throw new ArgumentNullException(nameof(component));
+        }
+
+        var input = new ProcessReactWithDotNetRequestInput
+        {
+            findType                       = Type.GetType,
+            Instance                       = component,
+            OnReactContextCreated          = onReactContextCreated,
+            BeforeSerializeElementToClient = beforeSerializeElementToClient,
+
+            ComponentRequest = new ComponentRequest
+            {
+                MethodName                        = "FetchComponent",
+                FullName                          = component.GetType().GetFullName(),
+                LastUsedComponentUniqueIdentifier = 1,
+                ComponentUniqueIdentifier         = 1,
+                QueryString                       = queryString
+
+            }
+        };
+
+        var componentResponse = ComponentRequestHandler.HandleRequest(input);
+
+        if (componentResponse.ErrorMessage is not null)
+        {
+            throw DeveloperException(componentResponse.ErrorMessage);
+        }
+
+        return componentResponse.ToJson();
+    }
 }
 
 public sealed class CalculateHtmlTextInput

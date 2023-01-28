@@ -4,6 +4,8 @@ class MainLayout : ReactComponent
 {
     public Element Page { get; set; }
 
+    public string QueryString { get; set; }
+
     protected override Element render()
     {
         const string root = "wwwroot";
@@ -59,10 +61,7 @@ class MainLayout : ReactComponent
                     $@"
 import {{ReactWithDotNet}} from './{root}/dist/index.js';
 
-ReactWithDotNet.RenderComponentIn({{
-  fullTypeNameOfReactComponent: '{Page.GetType().GetFullName()}',
-  containerHtmlElementId: 'app'
-}});
+setTimeout(()=>ReactWithDotNet.ConnectComponentFirstResponseToReactSystem('app', {CalculateJsonText(Page,QueryString)}), 10);
 "
                 }
 

@@ -1940,7 +1940,8 @@ var ReactWithDotNet =
 
     IsMediaMobile: IsMobile,
     IsMediaTablet: IsTablet,
-    IsMediaDesktop: IsDesktop
+    IsMediaDesktop: IsDesktop,
+    ConnectComponentFirstResponseToReactSystem: ConnectComponentFirstResponseToReactSystem
 };
 
 export default ReactWithDotNet;
