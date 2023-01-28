@@ -74,7 +74,7 @@ partial class ElementSerializer
                 node.IsCompleted = true;
                 continue;
             }
-            
+
             if (node.ElementIsHtmlElement || node.ElementIsThirdPartyReactComponent || node.ElementIsFragment)
             {
                 if (node.IsChildrenOpened is false)
@@ -178,8 +178,6 @@ partial class ElementSerializer
                             throw DeveloperException($"'state' property must be initialized in constructor. @component: {reactStatefulComponent.GetType().FullName}");
                         }
                     }
-                    
-                    
                 }
 
                 if (node.DotNetComponentRenderMethodInvoked is false)
@@ -703,7 +701,7 @@ partial class ElementSerializer
                 map.Add($"aria-{key}", value);
             }
         }
-        
+
         if (htmlElement._data is not null)
         {
             foreach (var (key, value) in htmlElement._data)
@@ -718,10 +716,10 @@ partial class ElementSerializer
     static JsonMap LeafToMap(Fragment fragment)
     {
         var map = new JsonMap();
-        
+
         map.Add("$tag", "React.Fragment");
         map.Add("key", fragment.key);
-        
+
         return map;
     }
 
@@ -816,6 +814,14 @@ partial class ElementSerializer
         };
     }
 
+    internal class PropertyAccessInfo
+    {
+        public object DefaultValue { get; init; }
+        public Func<object, object> GetValueFunc { get; init; }
+        public bool HasReactAttribute { get; init; }
+        public PropertyInfo PropertyInfo { get; init; }
+    }
+
     class Node
     {
         public string BreadCrumpPath { get; set; }
@@ -867,13 +873,5 @@ partial class ElementSerializer
         public Node Parent { get; set; }
 
         public ElementSerializerContext SerializerContext { get; set; }
-    }
-
-    internal class PropertyAccessInfo
-    {
-        public object DefaultValue { get; init; }
-        public Func<object, object> GetValueFunc { get; init; }
-        public bool HasReactAttribute { get; init; }
-        public PropertyInfo PropertyInfo { get; init; }
     }
 }
