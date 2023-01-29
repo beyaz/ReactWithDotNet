@@ -100,84 +100,39 @@ static class Extensions
 
     public static string GetTurkishPronunciationOfArabicLetter(string arabicLetter)
     {
-        if (arabicLetter == ArabicLetter.Alif)
+        switch (arabicLetter)
         {
-            return ArabicLetterTurkishPronunciation.Alif;
+            case ArabicLetter.Alif: return ArabicLetterTurkishPronunciation.Alif;
+            case ArabicLetter.Baa: return ArabicLetterTurkishPronunciation.Baa;
+            case ArabicLetter.Taa: return ArabicLetterTurkishPronunciation.Taa;
+            case ArabicLetter.Thaa: return ArabicLetterTurkishPronunciation.Thaa;
+            case ArabicLetter.Jiim: return ArabicLetterTurkishPronunciation.Jiim;
+            case ArabicLetter.Haa: return ArabicLetterTurkishPronunciation.Haa;
+            case ArabicLetter.Khaa: return ArabicLetterTurkishPronunciation.Khaa;
+            case ArabicLetter.Daal: return ArabicLetterTurkishPronunciation.Daal;
+            case ArabicLetter.Dhaal: return ArabicLetterTurkishPronunciation.Dhaal;
+            case ArabicLetter.Raa: return ArabicLetterTurkishPronunciation.Raa;
+            case ArabicLetter.Zay: return ArabicLetterTurkishPronunciation.Zay;
+            case ArabicLetter.Siin: return ArabicLetterTurkishPronunciation.Siin;
+            case ArabicLetter.Shiin: return ArabicLetterTurkishPronunciation.Shiin;
+            case ArabicLetter.Saad: return ArabicLetterTurkishPronunciation.Saad;
+            case ArabicLetter.Daad: return ArabicLetterTurkishPronunciation.Daad;
+            case ArabicLetter.Taa_: return ArabicLetterTurkishPronunciation.Taa_;
+            case ArabicLetter.Zaa: return ArabicLetterTurkishPronunciation.Zaa;
+            case ArabicLetter.Ayn: return ArabicLetterTurkishPronunciation.Ayn;
+            case ArabicLetter.Ghayn: return ArabicLetterTurkishPronunciation.Ghayn;
+            case ArabicLetter.Faa: return ArabicLetterTurkishPronunciation.Faa;
+            case ArabicLetter.Qaaf: return ArabicLetterTurkishPronunciation.Qaaf;
+            case ArabicLetter.Kaaf: return ArabicLetterTurkishPronunciation.Kaaf;
+            case ArabicLetter.Laam: return ArabicLetterTurkishPronunciation.Laam;
+            case ArabicLetter.Miim: return ArabicLetterTurkishPronunciation.Miim;
+            case ArabicLetter.Nun: return ArabicLetterTurkishPronunciation.Nun;
+            case ArabicLetter.Haa_: return ArabicLetterTurkishPronunciation.Haa_;
+            case ArabicLetter.Waaw: return ArabicLetterTurkishPronunciation.Waaw;
+            case ArabicLetter.Yaa: return ArabicLetterTurkishPronunciation.Yaa;
         }
-
-        if (arabicLetter == ArabicLetter.Baa)
-        {
-            return ArabicLetterTurkishPronunciation.Baa;
-        }
-
-        if (arabicLetter == ArabicLetter.Yaa)
-        {
-            return "Ye";
-        }
-
-        if (arabicLetter == ArabicLetter.Siin)
-        {
-            return "Sin";
-        }
-
-        if (arabicLetter == ArabicLetter.Qaaf)
-        {
-            return "Kaf";
-        }
-
-        if (arabicLetter == ArabicLetter.Ayn)
-        {
-            return "Ayn";
-        }
-
-        if (arabicLetter == ArabicLetter.Kaaf)
-        {
-            return "Kef";
-        }
-
-        if (arabicLetter == ArabicLetter.Haa)
-        {
-            return "Ha";
-        }
-
-        if (arabicLetter == ArabicLetter.Saad)
-        {
-            return "Sad";
-        }
-
-        if (arabicLetter == ArabicLetter.Haa_)
-        {
-            return "Ha";
-        }
-
-       
-
-        if (arabicLetter == ArabicLetter.Laam)
-        {
-            return "Lam";
-        }
-
-        if (arabicLetter == ArabicLetter.Miim)
-        {
-            return "Mim";
-        }
-
-        if (arabicLetter == ArabicLetter.Raa)
-        {
-            return "Ra";
-        }
-
-        if (arabicLetter == ArabicLetter.Taa_)
-        {
-            return "Ta";
-        }
-
-        if (arabicLetter == ArabicLetter.Nun)
-        {
-            return "Nun";
-        }
-
-        return null;
+        
+        return arabicLetter;
     }
 
     public static HtmlElementModifier SrcArrowDown =>
