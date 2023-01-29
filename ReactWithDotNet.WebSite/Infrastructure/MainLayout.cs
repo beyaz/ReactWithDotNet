@@ -4,6 +4,8 @@ class MainLayout : ReactComponent
 {
     public Element Page { get; set; }
 
+    public string QueryString { get; set; }
+
     protected override Element render()
     {
         const string root = "wwwroot";
@@ -50,15 +52,22 @@ class MainLayout : ReactComponent
                 // After page first rendered in client then connect with react system in background.
                 // So user first iteraction time will be minimize.
                 
-                new script{src =$"{root}/index.js"},
+               
+                new script { type = "module", src = $"{root}/dist/index.js" },
 
                 new script
                 {
+                    type = "module",
+                    text = 
                     $@"
+
+import {{ReactWithDotNet}} from './{root}/dist/index.js';
+
 ReactWithDotNet.RenderComponentIn({{
-  fullTypeNameOfReactComponent: '{Page.GetType().GetFullName()}',
-  containerHtmlElementId: 'app'
+  idOfContainerHtmlElement: 'app',
+  renderInfo: {CalculateJsonText(Page, QueryString)}
 }});
+
 "
                 }
 

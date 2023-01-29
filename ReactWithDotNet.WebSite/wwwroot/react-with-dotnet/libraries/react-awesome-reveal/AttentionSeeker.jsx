@@ -1,0 +1,1 @@
+export { AttentionSeeker as default } from 'react-awesome-reveal';

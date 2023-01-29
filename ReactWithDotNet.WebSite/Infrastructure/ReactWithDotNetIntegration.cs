@@ -34,7 +34,8 @@ static class ReactWithDotNetIntegration
     {
         await WriteHtmlResponse(httpContext, new MainLayout
         {
-            Page = new MainWindow()
+            Page        = new MainWindow(),
+            QueryString = httpContext.Request.QueryString.ToString()
         });
     }
 

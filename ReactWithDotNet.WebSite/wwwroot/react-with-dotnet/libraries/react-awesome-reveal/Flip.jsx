@@ -1,0 +1,1 @@
+export { Flip as default } from 'react-awesome-reveal';

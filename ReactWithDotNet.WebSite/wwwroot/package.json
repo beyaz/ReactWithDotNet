@@ -1,9 +1,11 @@
 {
-    "name": "quran-analyzer-web-ui",
+    "name": "react-with-dotnet",
     "version": "1.0.0",
     "scripts": {
-        "build-development": "esbuild index-development.jsx --bundle --outfile=index.js --define:global=window",
-        "build-production":  "esbuild index.jsx             --bundle --outfile=index.js --define:global=window --analyze --minify --target=es2016"
+
+        "dev": "esbuild index.jsx --bundle --splitting --format=esm --outdir=dist",
+        "build": "esbuild index.jsx --bundle --splitting --format=esm --outdir=dist --analyze --minify --target=es2016"
+
     },
     "dependencies": {
         "esbuild": "^0.14.48",
@@ -21,9 +23,7 @@
 
         "react-xarrows": "^2.0.2",
 
-        "prismjs": "^1.28.0",
 
-        "react-simple-code-editor": "^0.11.2",
 
         "swiper": "^8.4.2",
 
@@ -36,6 +36,9 @@
 
         "google-map-react": "^2.2.0",
 
-        "react-free-scrollbar": "^0.3.4"
+        "react-free-scrollbar": "^0.3.4",
+
+        "react-awesome-reveal": "^4.1.0",
+        "@emotion/react": "^11.10.5"
     }
 }
