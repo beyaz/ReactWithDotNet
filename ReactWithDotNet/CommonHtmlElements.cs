@@ -718,3 +718,25 @@ public sealed class footer : HtmlElement
     public footer(Style style) : base(style) { }
 }
 
+public sealed class figure : HtmlElement
+{
+    public figure() { }
+
+    public figure(params IModifier[] modifiers) : base(modifiers) { }
+
+    public figure(Style style) : base(style) { }
+}
+
+public sealed class figcaption : HtmlElement
+{
+    public figcaption() { }
+
+    public figcaption(params IModifier[] modifiers) : base(modifiers) { }
+
+    public figcaption(string innerText) : base(innerText) {  }
+
+    public static implicit operator figcaption(string text) => new() { text = text };
+
+    public figcaption(Style style) : base(style) { }
+}
+
