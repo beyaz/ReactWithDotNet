@@ -20,6 +20,23 @@ partial class Style : IEnumerable<StyleModifier>
         }
     }
 
+    /// <summary>
+    ///     Add given <paramref name="styleModifier"/> to <paramref name="style"/>
+    ///     <br/>
+    ///     if <paramref name="style"/> is null then returns null.
+    /// </summary>
+    public static Style operator +(Style style, StyleModifier styleModifier)
+    {
+        if (style == null|| styleModifier == null)
+        {
+            return null;
+        }
+        
+        styleModifier.modifyStyle(style);
+
+        return style;
+    }
+
     #region IEnumerable<Modifier>
     public IEnumerator<StyleModifier> GetEnumerator()
     {
