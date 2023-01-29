@@ -2,7 +2,10 @@
 
 static class LetterColorPalette
 {
-    static readonly string[] Colors = { "blue", "red", "#E0B4E8", "#D4D925", "#159E09" };
+    static readonly string[] Colors =
+    {
+        "blue", "red", "#9900CC", "#00FF00", "#33CC00"
+    };
 
     public static string GetColor(int index)
     {

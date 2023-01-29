@@ -95,8 +95,8 @@ Bu sayede A cihazı B cihazından gelen verileri kontrol eder ve duruma göre bo
 doğru iletilip iletilmediği bu saydığımız yöntemler ile olmaktadır. 
 Çok daha karmaşık doğrulama-şifreleme yöntemleri olmakla beraber elbette bu yazıda basit olanlardan sadece bir kaçı ele alındı.
 Para transferleri, bitcoin, QR ile yapılan işlemlerden tutun okuduğunuz şu yazının sizin cihazınıza kadar iletilmesinde bile bu yöntemler kullanılıyor.
-Doğrulama bilgisi veri içinde beraber gönderiliyor.
-"
+",
+                (strong)"Doğrulama bilgisi veri içinde beraber gönderiliyor."
             },
 
             new p(FontWeight600)
