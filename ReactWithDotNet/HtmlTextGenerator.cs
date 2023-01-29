@@ -15,6 +15,11 @@ static class HtmlTextGenerator
 
     static void Append(OutputContext context, int indent, JsonMap element)
     {
+        if (element == null)
+        {
+            return;
+        }
+        
         var sb = context.sb;
 
         var padding = "".PadLeft(indent, ' ');
