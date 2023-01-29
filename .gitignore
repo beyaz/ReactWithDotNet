@@ -370,3 +370,4 @@ MigrationBackup/
 *.js
 /QuranAnalyzer.WebUI/wwwroot/package-lock.json
 /QuranAnalyzer.WebUI/wwwroot/dist
+/ReactWithDotNet.WebSite/wwwroot/dist
