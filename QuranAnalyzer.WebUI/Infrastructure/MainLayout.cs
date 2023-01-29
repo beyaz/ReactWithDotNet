@@ -17,9 +17,9 @@ class MainLayout : ReactComponent
 
             new head
             {
-                new meta{charset = "utf-8"},
-                new meta{name    = "viewport", content = "width=device-width, initial-scale=1"},
-                new title{ "Quran Analyzer" },
+                new meta { charset = "utf-8" },
+                new meta { name    = "viewport", content = "width=device-width, initial-scale=1" },
+                new title { "Quran Analyzer" },
 
                 new style
                 {
@@ -38,34 +38,34 @@ class MainLayout : ReactComponent
 "
                 },
 
-                new link{rel ="stylesheet" , href = "https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,800,900&amp;display=swap", media ="all"},
-
-
+                new link { rel = "stylesheet", href = "https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,800,900&amp;display=swap", media = "all" },
             },
             new body
             {
-                new div(Id("app"), WidthMaximized,Height100vh)
+                new div(Id("app"), WidthMaximized, Height100vh)
                 {
                     Page
                 },
 
                 // After page first rendered in client then connect with react system in background.
                 // So user first iteraction time will be minimize.
-                
-                new script{type ="module", src =$"{root}/dist/index.js"},
+
+                new script { type = "module", src = $"{root}/dist/index.js" },
 
                 new script
                 {
-                    type ="module",
-                    text = 
-                    $@"
+                    type = "module",
+                    text =
+                        $@"
+
 import {{ReactWithDotNet}} from './{root}/dist/index.js';
 
-setTimeout(()=>ReactWithDotNet.ConnectComponentFirstResponseToReactSystem('app', {CalculateJsonText(Page,QueryString)}), 10);
+setTimeout(() =>
+   ReactWithDotNet.ConnectComponentFirstResponseToReactSystem('app',
+   {CalculateJsonText(Page, QueryString)}), 
+10);
 "
                 }
-
-
             }
         };
     }
