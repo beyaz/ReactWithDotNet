@@ -60,10 +60,11 @@ class MainLayout : ReactComponent
 
 import {{ReactWithDotNet}} from './{root}/dist/index.js';
 
-setTimeout(() =>
-   ReactWithDotNet.ConnectComponentFirstResponseToReactSystem('app',
-   {CalculateJsonText(Page, QueryString)}), 
-10);
+ReactWithDotNet.RenderComponentIn({{
+  idOfContainerHtmlElement: 'app',
+  renderInfo: {CalculateJsonText(Page, QueryString)}
+}});
+
 "
                 }
             }

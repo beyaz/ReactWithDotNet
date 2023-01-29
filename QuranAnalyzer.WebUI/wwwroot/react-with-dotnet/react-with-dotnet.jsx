@@ -1461,10 +1461,22 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
     createRoot(document.getElementById(containerHtmlElementId)).render(reactElement);
 }
 
-function RenderComponentIn(obj)
+function RenderComponentIn(input)
 {
-    var fullTypeNameOfReactComponent = obj.fullTypeNameOfReactComponent;
-    var containerHtmlElementId       = obj.containerHtmlElementId;
+    if (input.renderInfo)
+    {
+        if (input.idOfContainerHtmlElement == null)
+        {
+            throw CreateNewDeveloperError('idOfContainerHtmlElement cannot be null.');
+        }
+
+        setTimeout(() => ConnectComponentFirstResponseToReactSystem(input.idOfContainerHtmlElement , input.renderInfo), 10);
+
+        return;
+    }
+
+    var fullTypeNameOfReactComponent = input.fullTypeNameOfReactComponent;
+    var containerHtmlElementId       = input.containerHtmlElementId;
 
     OnDocumentReady(function()
     {
@@ -1940,8 +1952,7 @@ var ReactWithDotNet =
 
     IsMediaMobile: IsMobile,
     IsMediaTablet: IsTablet,
-    IsMediaDesktop: IsDesktop,
-    ConnectComponentFirstResponseToReactSystem: ConnectComponentFirstResponseToReactSystem
+    IsMediaDesktop: IsDesktop
 };
 
 export default ReactWithDotNet;
