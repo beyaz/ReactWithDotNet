@@ -98,7 +98,7 @@ public class DefinitionView : ReactComponent
             new p
             {
                 " İddia kısaca bu şekildedir. Gelin bu iddiayı beraber inceleyelim. Yalnız başımıza karar verelim.",
-                (strong)" Bu sitedeki anlatılan kısım 19 sisteminin en temel verisi olup sadece başlangıç harleri ile ilgili kısımdır.",
+                (strong)" Bu sitedeki anlatılan kısım 19 sisteminin en temel verisi olup sadece başlangıç harfleri ile ilgili kısımdır.",
                 " Bunun dışında 19 sisteminin alt başlıkları diyebileceğimiz  büyük sayılar ile ilgili veyahut harflerin sayısal değerleri ile ilgili başka bir çok ilginç verisi var."
             }
         };

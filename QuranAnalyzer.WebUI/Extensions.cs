@@ -98,6 +98,11 @@ static class Extensions
 
     public static string GetTurkishPronunciationOfArabicLetter(string arabicLetter)
     {
+        if (arabicLetter == ArabicLetter.Alif)
+        {
+            return "Elif";
+        }
+        
         if (arabicLetter == ArabicLetter.Yaa)
         {
             return "Ye";
@@ -138,10 +143,7 @@ static class Extensions
             return "Ha";
         }
 
-        if (arabicLetter == ArabicLetter.Alif)
-        {
-            return "Elif";
-        }
+       
 
         if (arabicLetter == ArabicLetter.Laam)
         {
