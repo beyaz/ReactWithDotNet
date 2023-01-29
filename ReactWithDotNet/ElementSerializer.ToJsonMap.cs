@@ -75,6 +75,8 @@ partial class ElementSerializer
                 continue;
             }
 
+           
+            
             if (node.ElementIsHtmlElement || node.ElementIsThirdPartyReactComponent || node.ElementIsFragment)
             {
                 if (node.IsChildrenOpened is false)
@@ -90,6 +92,31 @@ partial class ElementSerializer
 
                 if (node.HasFirstChild)
                 {
+                    continue;
+                }
+
+                if (context.CalculateSuspenseFallbackForThirdPartyReactComponents &&
+                    node.ElementIsThirdPartyReactComponent && 
+                    !node.IsSuspenseFallbackElementCalculated)
+                {
+                    node.IsSuspenseFallbackElementCalculated = true;
+                    
+                    node.ElementAsThirdPartyReactComponent.Context = context.ReactContext;
+                    
+                    node.SuspenseFallbackElement = node.ElementAsThirdPartyReactComponent.InvokeSuspenseFallback();
+                    if (node.SuspenseFallbackElement is not null)
+                    {
+                        node.SuspenseFallbackElement.key = "0";
+                    }
+                    
+                    node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement, context);
+
+                    node.SuspenseFallbackNode.Parent = node;
+
+                    node.FirstChild = node.SuspenseFallbackNode;
+                    
+                    node = node.SuspenseFallbackNode;
+                    
                     continue;
                 }
 
@@ -723,7 +750,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsonMap LeafToMap(ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
+    static JsonMap LeafToMap(Node node,ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
         var map = new JsonMap();
         map.Add("$tag", thirdPartyReactComponent.Type);
@@ -738,6 +765,11 @@ partial class ElementSerializer
         }
 
         AddReactAttributes(map.Add, thirdPartyReactComponent, context);
+        
+        if (context.CalculateSuspenseFallbackForThirdPartyReactComponents)
+        {
+            map.Add("SuspenseFallback", node.FirstChild.ElementAsJsonMap);
+        }
 
         return map;
     }
@@ -751,7 +783,7 @@ partial class ElementSerializer
 
         if (node.ElementIsThirdPartyReactComponent)
         {
-            return LeafToMap(node.ElementAsThirdPartyReactComponent, context);
+            return LeafToMap(node,node.ElementAsThirdPartyReactComponent, context);
         }
 
         if (node.ElementIsFragment)
@@ -824,6 +856,9 @@ partial class ElementSerializer
 
     class Node
     {
+        public bool IsSuspenseFallbackElementCalculated;
+        public Element SuspenseFallbackElement;
+        public Node SuspenseFallbackNode;
         public string BreadCrumpPath { get; set; }
         public int? CurrentOrder { get; set; }
         public bool DotNetComponentRenderMethodInvoked { get; set; }

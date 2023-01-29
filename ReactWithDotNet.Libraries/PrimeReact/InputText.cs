@@ -1,6 +1,4 @@
-﻿using ReactWithDotNet.Libraries.ReactWithDotNetSkeleton;
-
-namespace ReactWithDotNet.Libraries.PrimeReact;
+﻿namespace ReactWithDotNet.Libraries.PrimeReact;
 
 public class InputText : ElementBase
 {
@@ -46,8 +44,9 @@ public class InputText : ElementBase
     [React]
     public bool? autoFocus { get; set; }
 
-    protected override Element SuspenseFallback()
+    protected  override Element GetSuspenseFallbackElement()
     {
-        return base.SuspenseFallback() + MinHeight(30) + MinWidth(150);
+        return base.GetSuspenseFallbackElement() + MinHeight(30) + MinWidth(150);
     }
 }
+

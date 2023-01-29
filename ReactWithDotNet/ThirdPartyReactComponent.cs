@@ -2,11 +2,13 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 
+
 namespace ReactWithDotNet;
 
 public abstract class ThirdPartyReactComponent : Element
 {
     internal Style _style;
+    protected internal  ReactContext Context { get; set; }
 
     protected ThirdPartyReactComponent()
     {
@@ -34,7 +36,7 @@ public abstract class ThirdPartyReactComponent : Element
     /// <summary>
     ///     Gets the style.
     /// </summary>
-    [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public Style style
     {
         get
@@ -71,8 +73,26 @@ public abstract class ThirdPartyReactComponent : Element
         this.style.Import(style);
     }
 
-    protected virtual Element SuspenseFallback()
+    /// <summary>
+    /// This is designed for Suspense part of react. When page first rendered as pure html.
+    /// <br/>
+    /// When react component fully loaded then this element will be replace by original component.
+    /// <br/>
+    /// Default value is sipmle empty div element
+    /// </summary>
+    [System.Text.Json.Serialization.JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    public HtmlElement SuspenseFallback { get; set; }
+    
+    protected virtual Element GetSuspenseFallbackElement()
     {
-        return new div { aria = { { "component", GetType().FullName } }, Style = style};
+        if (SuspenseFallback == null)
+        {
+            return new div { aria = { { "component", GetType().FullName } }, Style = style };
+        }
+
+        return SuspenseFallback + style;
     }
+
+    internal Element InvokeSuspenseFallback() => GetSuspenseFallbackElement();
 }

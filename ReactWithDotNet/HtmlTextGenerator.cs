@@ -23,7 +23,16 @@ static class HtmlTextGenerator
 
         var hasInnerContent = false;
 
-        element.Foreach((a, b) => ProcessEntry(a, b, context, indent, ref tag, ref hasInnerContent));
+        var isThirdPartyReactComponent = false;
+
+        element.Foreach((a, b) =>
+        {
+            if (isThirdPartyReactComponent && a != "SuspenseFallback")
+            {
+                return;
+            }
+            ProcessEntry(a, b, context, indent, ref tag, ref hasInnerContent, ref isThirdPartyReactComponent);
+        });
 
         if (tag == null)
         {
@@ -116,6 +125,12 @@ static class HtmlTextGenerator
 
     static string PascalToKebabCase(string dotnetPropertyName)
     {
+        if (dotnetPropertyName.StartsWith("aria-",StringComparison.OrdinalIgnoreCase) ||
+            dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
+        {
+            return dotnetPropertyName;
+        }
+        
         if (dotnetPropertyName == "className")
         {
             return "class";
@@ -145,7 +160,7 @@ static class HtmlTextGenerator
         return string.Concat(dotnetPropertyName.SelectMany(convertChar));
     }
 
-    static void ProcessEntry(string name, object value, OutputContext context, int indent, ref string tag, ref bool hasInnerContent)
+    static void ProcessEntry(string name, object value, OutputContext context, int indent, ref string tag, ref bool hasInnerContent, ref bool isThirdPartyReactComponent)
     {
         if (name == "key" || name == "DotNetProperties" || name == "onClick" || name == "$DotNetComponentUniqueIdentifier" ||
             name == "$State" ||
@@ -168,6 +183,12 @@ static class HtmlTextGenerator
                     sb.AppendLine("<!DOCTYPE html>");
                 }
 
+                if (valueAsString.IndexOf('.',StringComparison.Ordinal) > 0)
+                {
+                    isThirdPartyReactComponent = true;
+                    return;
+                }
+                
                 tag = valueAsString;
                 sb.Append(padding);
                 sb.Append("<");
@@ -276,6 +297,11 @@ static class HtmlTextGenerator
         if (name == RootNode)
         {
             Append(context, sb.Length == 0 ? indent : indent + 2, (JsonMap)value);
+        }
+
+        if (name == "SuspenseFallback")
+        {
+            Append(context, indent, (JsonMap)value);
         }
     }
 

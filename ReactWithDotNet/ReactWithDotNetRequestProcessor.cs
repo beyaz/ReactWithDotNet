@@ -16,6 +16,8 @@ sealed class ProcessReactWithDotNetRequestInput
     public Action<ReactContext> OnReactContextCreated { get; set; }
     
     public Element Instance { get; set; }
+
+    public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 }
 
 static class ReactWithDotNetRequestProcessor
@@ -61,6 +63,7 @@ partial class Mixin
             Instance                       = element,
             OnReactContextCreated          = calculateHtmlTextInput.OnReactContextCreated,
             BeforeSerializeElementToClient = calculateHtmlTextInput.BeforeSerializeElementToClient,
+            CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
             ComponentRequest = new ComponentRequest
             {

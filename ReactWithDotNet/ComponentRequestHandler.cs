@@ -136,7 +136,8 @@ static class ComponentRequestHandler
                 ComponentUniqueIdentifierNextValue = request.ComponentUniqueIdentifier,
                 StateTree                          = stateTree,
                 BeforeSerializeElementToClient     = beforeSerializeElementToClient,
-                ReactContext                       = context
+                ReactContext                       = context,
+                CalculateSuspenseFallbackForThirdPartyReactComponents = input.CalculateSuspenseFallbackForThirdPartyReactComponents
             };
 
             var tracer = serializerContext.Tracer;

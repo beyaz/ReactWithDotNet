@@ -54,7 +54,7 @@ public class Dialog: ElementBase
     [React]
     public Action onHide { get; set; }
 
-    protected override Element SuspenseFallback()
+    protected  override Element GetSuspenseFallbackElement()
     {
         return new div { DisplayNone };
     }

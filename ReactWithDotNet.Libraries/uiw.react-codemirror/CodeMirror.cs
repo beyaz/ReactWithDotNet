@@ -39,6 +39,12 @@ public class CodeMirror : ThirdPartyReactComponent
     [React]
     //[ReactTransformValueInClient(Prefix + nameof(CodeMirror) + "::ConvertToExtension")]
     public List<string> extensions { get; } = new List<string>();
+
+
+    protected  override Element GetSuspenseFallbackElement()
+    {
+        return base.GetSuspenseFallbackElement() + MinHeight(30) + MinWidth(150);
+    }
 }
 
 

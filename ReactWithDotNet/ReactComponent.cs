@@ -13,7 +13,7 @@ public abstract class ReactStatefulComponent : Element
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
-    public Client Client { get; internal set; } = new();
+    protected internal Client Client { get; internal set; } = new();
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]

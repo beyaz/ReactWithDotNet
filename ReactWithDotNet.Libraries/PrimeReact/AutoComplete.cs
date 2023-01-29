@@ -77,9 +77,9 @@ public class AutoComplete : ElementBase
     //    }
 
 
-    protected override Element SuspenseFallback()
+    protected  override Element GetSuspenseFallbackElement()
     {
-        return base.SuspenseFallback() + MinHeight(30) + MinWidth(150);
+        return base.GetSuspenseFallbackElement() + MinHeight(30) + MinWidth(150);
     }
 
 }
@@ -158,7 +158,10 @@ public class AutoComplete<TSuggestion> : ElementBase
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
     public Style inputStyle { get; } = new();
 
-
+    protected  override Element GetSuspenseFallbackElement()
+    {
+        return base.GetSuspenseFallbackElement() + MinHeight(30) + MinWidth(150);
+    }
 }
 
 

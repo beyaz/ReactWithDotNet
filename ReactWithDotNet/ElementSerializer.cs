@@ -41,6 +41,8 @@ sealed class ElementSerializerContext
     public bool SkipHandleCachableMethods { get; set; }
 
     public StateTree StateTree { get; init; }
+
+    public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 }
 
 static partial class ElementSerializer
