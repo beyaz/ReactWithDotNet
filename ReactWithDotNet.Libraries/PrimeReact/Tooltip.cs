@@ -42,5 +42,10 @@ public class Tooltip : ElementBase
     /// </summary>
     [React]
     public double hideDelay { get; set; }
+
+    protected override Element GetSuspenseFallbackElement()
+    {
+        return new div { DisplayNone };
+    }
 }
 

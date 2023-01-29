@@ -43,7 +43,7 @@ public class CodeMirror : ThirdPartyReactComponent
 
     protected  override Element GetSuspenseFallbackElement()
     {
-        return base.GetSuspenseFallbackElement() + MinHeight(30) + MinWidth(150);
+        return base.GetSuspenseFallbackElement() + MinHeight(300) + MinWidth(400);
     }
 }
 
