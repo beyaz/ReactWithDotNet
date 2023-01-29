@@ -1,4 +1,6 @@
-﻿namespace QuranAnalyzer.WebUI;
+﻿using QuranAnalyzer.WebUI.Components;
+
+namespace QuranAnalyzer.WebUI;
 
 static class Extensions
 {
@@ -100,9 +102,14 @@ static class Extensions
     {
         if (arabicLetter == ArabicLetter.Alif)
         {
-            return "Elif";
+            return ArabicLetterTurkishPronunciation.Alif;
         }
-        
+
+        if (arabicLetter == ArabicLetter.Baa)
+        {
+            return ArabicLetterTurkishPronunciation.Baa;
+        }
+
         if (arabicLetter == ArabicLetter.Yaa)
         {
             return "Ye";
