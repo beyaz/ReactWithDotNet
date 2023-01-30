@@ -21,6 +21,9 @@ public class Swiper : ThirdPartyReactComponent
             this.children.AddRange(children);
         }
     }
+    [React]
+    public string direction { get; set; }
+    
 
     [React]
     public SwiperAutoplay autoplay { get; } = new();
