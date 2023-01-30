@@ -370,7 +370,6 @@ partial class Mixin
         }
         catch (Exception exception)
         {
-            // ReSharper disable once PossibleIntendedRethrow
             throw exception;
         }
     }

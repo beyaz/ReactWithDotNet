@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 sealed class EventSenderInfo
 {
