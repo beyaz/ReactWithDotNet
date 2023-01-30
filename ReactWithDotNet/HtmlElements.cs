@@ -274,6 +274,10 @@ public class link : HtmlElement
     
     [React]
     public string media { get; set; }
+
+    [React]
+    public string crossOrigin { get; set; }
+    
 }
 
 public class textarea : HtmlElement

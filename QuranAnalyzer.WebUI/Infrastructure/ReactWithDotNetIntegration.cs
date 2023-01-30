@@ -55,7 +55,7 @@ static class ReactWithDotNetIntegration
         });
     }
 
-    static async Task WriteHtmlResponse(HttpContext httpContext, ReactComponent reactComponent)
+    static async Task WriteHtmlResponse(HttpContext httpContext, ReactStatefulComponent reactComponent)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 

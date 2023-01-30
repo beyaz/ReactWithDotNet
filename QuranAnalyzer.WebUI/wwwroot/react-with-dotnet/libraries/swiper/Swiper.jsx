@@ -44,10 +44,14 @@ function ToSwiperModule(moduleName)
 
 function ConvertToSwiperModules(moduleNames)
 {
-    for (var i = 0; i < moduleNames.length; i++)
+    if (moduleNames)
     {
-        moduleNames[i] = ToSwiperModule(moduleNames[i]);
+        for (var i = 0; i < moduleNames.length; i++)
+        {
+            moduleNames[i] = ToSwiperModule(moduleNames[i]);
+        }
     }
+   
     return moduleNames;
 }
 
