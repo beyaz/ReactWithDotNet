@@ -8,6 +8,7 @@
         
     },
     "dependencies": {
+
         "esbuild": "^0.14.48",
         "install": "^0.13.0",
         "npm": "^8.15.0",
@@ -22,8 +23,6 @@
         "rsuite": "^5.19.1",
 
         "react-xarrows": "^2.0.2",
-
-
 
         "swiper": "^8.4.2",
 
