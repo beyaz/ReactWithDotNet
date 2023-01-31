@@ -54,7 +54,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             return new small(Text(text), Color("rgb(73 86 193)"), FontWeight600);
         }
 
-        var propertyPanel = new FlexColumn(PaddingLeftRight(5), Height("100%"), Width("100%"), FontSize15, PrimaryBackground)
+        var propertyPanel = new FlexColumn(PaddingLeftRight(5), Height("100%"), Width("100%"), FontSize15)
         {
             new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
 
@@ -159,14 +159,13 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             }
         };
 
-        var outputPanel = new div
+        var outputPanel = new div(Background("white"))
         {
             createElement(),
 
             Border("0.3px dashed #e0e0e0"),
             Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
-            HeightMaximized,
-            Background("unset")
+            HeightMaximized
         };
 
         Element createElement()
@@ -174,7 +173,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { Border("none"), WidthMaximized, HeightMaximized } };
         }
 
-        return new FlexRow(WidthHeightMaximized)
+        return new FlexRow(WidthHeightMaximized,PrimaryBackground)
         {
             new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css" },
             new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
