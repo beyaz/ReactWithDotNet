@@ -23,8 +23,11 @@ public class Swiper : ThirdPartyReactComponent
     }
     [React]
     public string direction { get; set; }
-    
 
+    [React]
+    public bool? lazy { get; set; }
+    
+    
     [React]
     public SwiperAutoplay autoplay { get; } = new();
 
