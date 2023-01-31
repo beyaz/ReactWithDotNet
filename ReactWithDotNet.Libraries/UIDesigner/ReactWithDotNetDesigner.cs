@@ -161,16 +161,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         var outputPanel = new div
         {
-            children =
-            {
-                createElement()
-            },
-            style =
-            {
-                Border("0.3px dashed #e0e0e0"),
-                Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
-                HeightMaximized
-            }
+            createElement(),
+
+            Border("0.3px dashed #e0e0e0"),
+            Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
+            HeightMaximized,
+            Background("unset")
         };
 
         Element createElement()
