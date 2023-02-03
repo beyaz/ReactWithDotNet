@@ -458,16 +458,13 @@ static partial class ElementSerializer
             return;
         }
         
-        var orderOfChild = 0;
-
-        foreach (var sibling in children)
+        for (var index = 0; index < children.Count; index++)
         {
+            var sibling = children[index];
             if (sibling is not null)
             {
-                sibling.key ??= orderOfChild.ToString();
+                sibling.key ??= index.ToString();
             }
-
-            orderOfChild++;
         }
     }
 
