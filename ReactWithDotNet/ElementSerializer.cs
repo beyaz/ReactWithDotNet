@@ -452,9 +452,15 @@ static partial class ElementSerializer
             throw new DeveloperException("key of react component cannot be null");
         }
 
+        var children = element._children;
+        if (children == null)
+        {
+            return;
+        }
+        
         var orderOfChild = 0;
 
-        foreach (var sibling in element.children)
+        foreach (var sibling in children)
         {
             if (sibling is not null)
             {
