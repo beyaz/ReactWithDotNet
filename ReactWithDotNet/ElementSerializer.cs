@@ -457,8 +457,10 @@ static partial class ElementSerializer
         {
             return;
         }
+
+        var childrenCount = children.Count;
         
-        for (var index = 0; index < children.Count; index++)
+        for (var index = 0; index < childrenCount; index++)
         {
             var sibling = children[index];
             if (sibling is not null)
