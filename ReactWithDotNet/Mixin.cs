@@ -451,16 +451,12 @@ public static partial class Mixin
     ///     style.content = <paramref name="content" />
     /// </summary>
     public static StyleModifier Content(string content) => new(style => style.content = content);
-
-    /// <summary>
-    ///     style.flexGrow = <paramref name="growValue" />
-    /// </summary>
-    public static StyleModifier FlexGrow(string growValue) => new(style => style.flexGrow = growValue);
+  
     
     /// <summary>
     ///     style.flexGrow = <paramref name="growValue" />
     /// </summary>
-    public static StyleModifier FlexGrow(double growValue) => FlexGrow(growValue + "");
+    public static StyleModifier FlexGrow(double growValue) => new(style => style.flexGrow = growValue + "");
 
     public static StyleModifier Focus(params StyleModifier[] modifiers)
     {
