@@ -445,7 +445,7 @@ static partial class ElementSerializer
         return false;
     }
 
-    static void InitializeKeyIfNotExists(Element element)
+    internal static void InitializeKeyIfNotExists(Element element)
     {
         if (element.key == null)
         {
@@ -458,14 +458,45 @@ static partial class ElementSerializer
             return;
         }
 
+        // TODO: Future plan => key property will be manage automatically.
         var childrenCount = children.Count;
+
+        bool isOk(int current)
+        {
+            var currentAsString = current.ToString();
+            
+            for (var i = 0; i < childrenCount; i++)
+            {
+                if (children[i]?.key == currentAsString)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        var nextKey = 0;
+
+        string getNextKey()
+        {
+            while (!isOk(nextKey))
+            {
+                nextKey++;
+            }
+
+            return nextKey.ToString();
+        }
+        
         
         for (var index = 0; index < childrenCount; index++)
         {
+            var key = getNextKey();
+            
             var sibling = children[index];
             if (sibling is not null)
             {
-                sibling.key ??= index.ToString();
+                sibling.key ??= key;
             }
         }
     }
