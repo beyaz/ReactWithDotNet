@@ -1303,7 +1303,9 @@ function DefineComponent(componentDeclaration)
         }
 
         componentWillUnmount()
-        {            
+        {
+            this.ComponentWillUnmountIsCalled = true;
+
             const length = this[ON_COMPONENT_DESTROY].length;
             for (var i = 0; i < length; i++)
             {
@@ -1739,10 +1741,14 @@ RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodNam
     EventBus.On(eventName, onEventFired);
 });
 
-
 RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSenderInfo, remoteMethodName, handlerComponentUniqueIdentifier)
 {
     const component = this;
+
+    if (component.ComponentWillUnmountIsCalled)
+    {
+        return;
+    }
 
     const senderPropertyFullName = eventSenderInfo.SenderPropertyFullName;
     const senderComponentUniqueIdentifier = GetFirstAssignedUniqueIdentifierValueOfComponent(eventSenderInfo.SenderComponentUniqueIdentifier);
