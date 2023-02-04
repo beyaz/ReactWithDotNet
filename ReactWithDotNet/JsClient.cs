@@ -48,7 +48,12 @@ partial class Mixin
     {
         if (action.Target is ReactStatefulComponent target)
         {
-            client.CallJsFunction(core + nameof(OnOutsideClicked), idOfElement, action.Method.Name, target.ComponentUniqueIdentifier);
+            if (target.ComponentUniqueIdentifier is null)
+            {
+                throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
+            }
+            
+            client.CallJsFunction(core + nameof(OnOutsideClicked), idOfElement, action.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.Value);
         }
         else
         {
