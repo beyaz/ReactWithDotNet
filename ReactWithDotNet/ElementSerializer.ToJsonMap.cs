@@ -704,6 +704,7 @@ partial class ElementSerializer
     {
         var map = new JsonMap();
         map.Add("$tag", htmlElement.Type);
+        map.Add("key", htmlElement.key);
 
         if (htmlElement._style is not null)
         {
@@ -754,6 +755,7 @@ partial class ElementSerializer
     {
         var map = new JsonMap();
         map.Add("$tag", thirdPartyReactComponent.Type);
+        map.Add("key", thirdPartyReactComponent.key);
 
         if (thirdPartyReactComponent._style is not null)
         {

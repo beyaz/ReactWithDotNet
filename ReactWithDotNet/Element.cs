@@ -37,8 +37,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     /// <summary>
     ///     Gets or sets the key.
     /// </summary>
-    [React]
-    public string key { get; set; }
+    internal string key { get; set; }
 
     public static Element operator +(Element element, StyleModifier styleModifier)
     {
