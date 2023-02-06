@@ -1,4 +1,5 @@
-﻿using QuranAnalyzer.WebUI.Components;
+﻿using System.Threading.Tasks;
+using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using QuranAnalyzer.WebUI.Pages.Shared;
 
@@ -17,9 +18,11 @@ class WordSearchingViewModel
 
 class WordSearchingView : ReactComponent<WordSearchingViewModel>
 {
-    protected override void componentDidMount()
+    protected override Task componentDidMount()
     {
         Client.OnArabicKeyboardPressed(ArabicKeyboardPressed);
+
+        return Task.CompletedTask;
     }
 
     protected override void constructor()

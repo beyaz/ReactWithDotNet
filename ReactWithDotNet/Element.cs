@@ -103,11 +103,12 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
     public override string ToString()
     {
+        
         return CalculateHtmlText(new CalculateHtmlTextInput
         {
             ReactComponent     = new ToStringHandlerComponent{element = this},
             QueryString = string.Empty
-        });
+        }).GetAwaiter().GetResult();
     }
 
     class ToStringHandlerComponent:ReactComponent

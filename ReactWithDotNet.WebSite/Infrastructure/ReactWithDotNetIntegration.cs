@@ -63,7 +63,7 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires] = "0";
         httpContext.Response.Headers[HeaderNames.Pragma] = "no-cache";
 
-        var html = CalculateHtmlText(new CalculateHtmlTextInput
+        var html = await CalculateHtmlText(new CalculateHtmlTextInput
         {
             ReactComponent = reactComponent,
             QueryString = httpContext.Request.QueryString.ToString()

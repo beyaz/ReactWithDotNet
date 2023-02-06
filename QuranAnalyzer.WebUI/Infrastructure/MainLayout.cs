@@ -62,7 +62,7 @@ import {{ReactWithDotNet}} from './{root}/dist/index.js';
 
 ReactWithDotNet.RenderComponentIn({{
   idOfContainerHtmlElement: 'app',
-  renderInfo: {CalculateJsonText(Page, QueryString)}
+  renderInfo: {CalculateJsonText(Page, QueryString).GetAwaiter().GetResult()}
 }});
 
 "

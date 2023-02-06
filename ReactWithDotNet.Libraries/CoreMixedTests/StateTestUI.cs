@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.StateTests;
+﻿using System.Threading.Tasks;
+
+namespace ReactWithDotNet.StateTests;
 
 class ModelA
 {
@@ -38,9 +40,11 @@ class ComponentA : ReactComponent<ModelA>
         };
     }
 
-    protected override void componentDidMount()
+    protected override Task componentDidMount()
     {
         state.PropA += "-DidMountA-";
+
+        return Task.CompletedTask;
     }
 }
 
@@ -69,9 +73,11 @@ class ComponentB : ReactComponent<ModelB>
         };
     }
 
-    protected override void componentDidMount()
+    protected override Task componentDidMount()
     {
         state.PropB += "-DidMountB-";
+
+        return Task.CompletedTask;
     }
 }
 

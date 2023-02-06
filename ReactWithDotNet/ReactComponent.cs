@@ -57,8 +57,9 @@ public abstract class ReactStatefulComponent : Element
 
     internal Element InvokeRender() => render();
 
-    protected virtual void componentDidMount()
+    protected virtual  Task componentDidMount()
     {
+        return Task.CompletedTask;
     }
 
     protected abstract void constructor();

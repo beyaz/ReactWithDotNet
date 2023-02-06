@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using QuranAnalyzer.WebUI.Components;
 using QuranAnalyzer.WebUI.Pages.Shared;
 
@@ -22,9 +23,11 @@ public class CharacterCountingViewModel
 
 class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 {
-    protected override void componentDidMount()
+    protected override Task componentDidMount()
     {
         Client.OnArabicKeyboardPressed(ArabicKeyboardPressed);
+
+        return Task.CompletedTask;
     }
 
     protected override void constructor()

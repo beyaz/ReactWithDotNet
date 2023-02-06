@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -13,9 +14,11 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
         Client.GotoMethod(700, Refresh);
     }
 
-    protected override void componentDidMount()
+    protected override Task componentDidMount()
     {
         Client.GotoMethod(700, Refresh);
+
+        return Task.CompletedTask;
     }
 
     protected override void constructor()

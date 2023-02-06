@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.CallParentHandlerTest;
+﻿using System.Threading.Tasks;
+
+namespace ReactWithDotNet.CallParentHandlerTest;
 
 
 class ModelA
@@ -85,9 +87,11 @@ class ComponentB : ReactComponent<ModelB>
         
     }
 
-    protected override void componentDidMount()
+    protected override Task componentDidMount()
     {
         Client.OnMode3(OnMode3);
+
+        return Task.CompletedTask;
     }
 
     void OnMode3(int valueInA)

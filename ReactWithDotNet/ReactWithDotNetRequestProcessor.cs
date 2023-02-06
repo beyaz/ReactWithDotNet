@@ -13,7 +13,7 @@ sealed class ProcessReactWithDotNetRequestInput
 
     public HttpContext HttpContext { get; set; }
 
-    public Action<ReactContext> OnReactContextCreated { get; set; }
+    public Func<ReactContext,Task> OnReactContextCreated { get; set; }
     
     public Element Instance { get; set; }
 
@@ -30,7 +30,7 @@ static class ReactWithDotNetRequestProcessor
 
         input.findType = Type.GetType;
 
-        return ComponentRequestHandler.HandleRequest(input);
+        return await ComponentRequestHandler.HandleRequest(input);
 
         async Task<ComponentRequest> readJson()
         {
@@ -43,7 +43,7 @@ static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static string CalculateHtmlText(CalculateHtmlTextInput calculateHtmlTextInput)
+    public static async Task<string> CalculateHtmlText(CalculateHtmlTextInput calculateHtmlTextInput)
     {
         if (calculateHtmlTextInput is null)
         {
@@ -76,7 +76,7 @@ partial class Mixin
             }
         };
 
-        var componentResponse = ComponentRequestHandler.HandleRequest(input);
+        var componentResponse = await ComponentRequestHandler.HandleRequest(input);
 
         if (componentResponse.ErrorMessage is not null)
         {
@@ -111,9 +111,9 @@ partial class Mixin
         return componentResponse.ToJson();
     }
 
-    public static string CalculateJsonText(Element component, string queryString, 
-                                           Action<ReactContext> onReactContextCreated = null,
-                                           Action<Element, ReactContext> beforeSerializeElementToClient = null)
+    public static async Task<string> CalculateJsonText(Element component, string queryString,
+                                                       Func<ReactContext, Task> onReactContextCreated = null,
+                                                       Action<Element, ReactContext> beforeSerializeElementToClient = null)
     {
         if (component is null)
         {
@@ -138,7 +138,7 @@ partial class Mixin
             }
         };
 
-        var componentResponse = ComponentRequestHandler.HandleRequest(input);
+        var componentResponse = await ComponentRequestHandler.HandleRequest(input);
 
         if (componentResponse.ErrorMessage is not null)
         {
@@ -155,7 +155,7 @@ public sealed class CalculateHtmlTextInput
     
     public string QueryString { get; init; }
 
-    public Action<ReactContext> OnReactContextCreated { get; init; }
+    public Func<ReactContext, Task> OnReactContextCreated { get; init; }
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 }
@@ -164,7 +164,7 @@ public sealed class CalculateJsonTextInput
 {
     public HttpContext HttpContext  { get; init; }
 
-    public Action<ReactContext> OnReactContextCreated { get; init; }
+    public Func<ReactContext, Task> OnReactContextCreated { get; init; }
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 }

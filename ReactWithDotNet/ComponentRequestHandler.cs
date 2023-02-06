@@ -20,6 +20,7 @@ sealed class ClientStateInfo
 
 sealed class ComponentRequest
 {
+    public int CallFunctionId { get; set; }
     public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
 
     public double ClientHeight { get; set; }
@@ -41,14 +42,12 @@ sealed class ComponentRequest
     public string MethodName { get; set; }
 
     public string QueryString { get; set; }
-
-    public int CallFunctionId { get; set; }
 }
 
 class ComponentResponse
 {
     public int CallFunctionId { get; set; }
-    
+
     public object DynamicStyles { get; set; }
 
     public object ElementAsJson { get; set; }
@@ -60,24 +59,28 @@ class ComponentResponse
     public LinkedList<string> Trace { get; set; }
 }
 
-
 static class ComponentRequestHandler
 {
-    public static ComponentResponse HandleRequest(ProcessReactWithDotNetRequestInput input)
+    public static async Task<ComponentResponse> HandleRequest(ProcessReactWithDotNetRequestInput input)
     {
-        var request  = input.ComponentRequest;
-        
+        var request = input.ComponentRequest;
+
         var findType = input.findType;
 
         var beforeSerializeElementToClient = input.BeforeSerializeElementToClient;
 
         ReactContext context = null;
-            
+
         try
         {
             context = CreateContext(request);
 
-            input.OnReactContextCreated?.Invoke(context);
+            var task = input.OnReactContextCreated?.Invoke(context);
+            if (task is not null)
+            {
+                await task;
+            }
+            
 
             if (request.MethodName == "FetchComponent")
             {
@@ -86,7 +89,7 @@ static class ComponentRequestHandler
 
             if (request.MethodName == "HandleComponentEvent")
             {
-                return handleComponentEvent();
+                return await handleComponentEvent();
             }
 
             return new ComponentResponse { ErrorMessage = $"Not implemented method. {request.MethodName}" };
@@ -133,10 +136,10 @@ static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
-                ComponentUniqueIdentifierNextValue = request.ComponentUniqueIdentifier,
-                StateTree                          = stateTree,
-                BeforeSerializeElementToClient     = beforeSerializeElementToClient,
-                ReactContext                       = context,
+                ComponentUniqueIdentifierNextValue                    = request.ComponentUniqueIdentifier,
+                StateTree                                             = stateTree,
+                BeforeSerializeElementToClient                        = beforeSerializeElementToClient,
+                ReactContext                                          = context,
                 CalculateSuspenseFallbackForThirdPartyReactComponents = input.CalculateSuspenseFallbackForThirdPartyReactComponents
             };
 
@@ -156,15 +159,15 @@ static class ComponentRequestHandler
 
             return new ComponentResponse
             {
-                CallFunctionId = request.CallFunctionId,
+                CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
                 Trace                             = tracer.traceMessages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
-                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue-1
+                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1
             };
         }
 
-        ComponentResponse handleComponentEvent()
+        async Task<ComponentResponse> handleComponentEvent()
         {
             var stopwatch = new Stopwatch();
 
@@ -176,8 +179,7 @@ static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            
-            var instance = (ReactStatefulComponent) Activator.CreateInstance(type);
+            var instance = (ReactStatefulComponent)Activator.CreateInstance(type);
             if (instance == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
@@ -266,7 +268,11 @@ static class ComponentRequestHandler
 
             try
             {
-                methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
+                var response = methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
+                if (response is Task task)
+                {
+                    await task;
+                }
             }
             catch (Exception exception)
             {
@@ -309,7 +315,7 @@ static class ComponentRequestHandler
                 ElementAsJson                     = map,
                 Trace                             = tracer.traceMessages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
-                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue-1
+                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1
             };
         }
 
@@ -362,6 +368,7 @@ static class ComponentRequestHandler
 
 partial class Mixin
 {
+    #pragma warning disable CA2200
     public static object DeserializeJson(string json, Type returnType)
     {
         try
@@ -370,10 +377,13 @@ partial class Mixin
         }
         catch (Exception exception)
         {
+            // ReSharper disable once PossibleIntendedRethrow
             throw exception;
         }
     }
+    #pragma warning restore CA2200
 
+    #pragma warning disable CA2200
     public static T DeserializeJson<T>(string json)
     {
         try
@@ -383,9 +393,11 @@ partial class Mixin
         catch (Exception exception)
         {
             // ReSharper disable once PossibleIntendedRethrow
+
             throw exception;
         }
     }
+    #pragma warning restore CA2200
 }
 
 sealed class StateTree
