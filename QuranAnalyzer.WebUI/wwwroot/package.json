@@ -16,7 +16,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-transition-group": "^4.4.2",
-        
+
         "@mui/material": "^5.11.7",
 
         "primeicons": "^5.0.0",
@@ -40,6 +40,7 @@
         "react-free-scrollbar": "^0.3.4",
 
         "react-awesome-reveal": "^4.1.0",
-        "@emotion/react": "^11.10.5"
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5"
     }
 }
