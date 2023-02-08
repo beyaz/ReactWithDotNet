@@ -5,6 +5,13 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
+public abstract class ReactPureComponent
+{
+    protected abstract Element render();
+
+    internal Element InvokeRender()=>render();
+}
+
 public abstract class ReactStatefulComponent : Element
 {
     internal Style _styleForRootElement;
