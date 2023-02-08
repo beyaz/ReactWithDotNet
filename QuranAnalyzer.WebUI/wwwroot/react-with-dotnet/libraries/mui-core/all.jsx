@@ -8,7 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 function register(name, value)
 {
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.MUICore." + name, value);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.mui.material." + name, value);
 }
 
 // Connect components as Lazy
