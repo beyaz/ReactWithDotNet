@@ -112,7 +112,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                         Color(headerColor),
                                         Hover(Color("rgb(40 15 229)"))
                                     }
-                                },
+                                }
                             },
                             style = { opacity = state.ShowMushafOptions == true ? "0.2" : null }
                         }
