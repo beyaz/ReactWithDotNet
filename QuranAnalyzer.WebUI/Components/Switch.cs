@@ -21,6 +21,9 @@ class SwitchWithLabel: ReactComponent
         };
     }
 }
+
+
+
 public class Switch : ReactComponent
 {
     public bool IsChecked { get; set; }
