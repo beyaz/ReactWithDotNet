@@ -95,7 +95,7 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                 {
                     new SwitchWithLabel
                     {
-                        label         = "Elif sayımları için Tanzil.net'i referans al",
+                        Label         = "Elif sayımları için Tanzil.net'i referans al",
                         LabelMaxWidth = 250,
                         IsDisabled    = true
                     },
@@ -109,7 +109,7 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                 {
                     new SwitchWithLabel
                     {
-                        label         = "7:69 ve 2:245 daki bestaten ve yebsutu kelimelerindeki sad-sin yazım farklılığında Sad harfini tercih et",
+                        Label         = "7:69 ve 2:245 daki bestaten ve yebsutu kelimelerindeki sad-sin yazım farklılığında Sad harfini tercih et",
                         LabelMaxWidth = 250,
                         IsDisabled    = true
                     },
@@ -122,7 +122,7 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                 {
                     new SwitchWithLabel
                     {
-                        label         = "68:1 tek nun olarak say",
+                        Label         = "68:1 tek nun olarak say",
                         LabelMaxWidth = 250,
                         IsDisabled    = true
                     },
@@ -135,7 +135,7 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                 {
                     new SwitchWithLabel
                     {
-                        label         = "11:70 ve 30:21 surelerdeki Lam harf farklılığında Tanzil.neti tercih et",
+                        Label         = "11:70 ve 30:21 surelerdeki Lam harf farklılığında Tanzil.neti tercih et",
                         LabelMaxWidth = 250,
                         IsDisabled    = true
                     },
@@ -149,7 +149,7 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                 "Özetlersek genel durum şöyle; Elif sayımlarını hariç tutarsak, Tanzil.net'in sayımları ile Reşad Halife'nin sayımları arasında tüm mushaf boyunca toplamda 5 tane harf farklılığı vardır. ",
                 "Bir tanesi Nun harfinde iki tanesi Lam harfinde ve 2 tanesi de Sin harfi olmak üzere toplamda 5 tane farklılık var denilebilir. ",
                 "Elif harfini tamamen farklı ele almak lazım. Çünkü  nerdeyse bir çok mushafta Elif harfleri birbirlerinden tamamen farklıdır. ",
-                "Mushafdaki Elif harfini bilgisayara aktaran kişilerin Arapça bilgisi de işin içine giriyor. "
+                "Unutmayalım ki mushafdaki Elif harfini bilgisayara aktaran kişilerin Arapça bilgisi de işin içine giriyor. "
             }
         };
 

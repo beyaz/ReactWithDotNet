@@ -84,9 +84,9 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                     Space(30),
                     new SwitchWithLabel
                     {
-                        label       = "Besmele'yi dahil et",
-                        value       = state.IncludeBismillah,
-                        valueChange = OnIncludeBismillahChanged
+                        Label       = "Besmele'yi dahil et",
+                        Value       = state.IncludeBismillah,
+                        ValueChange = OnIncludeBismillahChanged
                     }
                 },
 
@@ -290,10 +290,10 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         state.IsBlocked = false;
     }
 
-    void OnIncludeBismillahChanged(bool isChecked)
+    void OnIncludeBismillahChanged(ChangeEvent changeEvent)
     {
         state.ClickCount = 0;
 
-        state.IncludeBismillah = isChecked;
+        state.IncludeBismillah = Convert.ToBoolean(changeEvent.target.value);
     }
 }

@@ -43,7 +43,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
 
     protected override Element render()
     {
-        var iconSize = 18;
+        var iconSize = 23;
 
         var headerColor = "#1976d2";
 

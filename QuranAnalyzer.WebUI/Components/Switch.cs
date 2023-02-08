@@ -1,99 +1,45 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-class SwitchWithLabel: ReactComponent
+class SwitchWithLabel : ReactPureComponent
 {
-    public string label;
-    public bool value;
-    public Action<bool> valueChange;
-    public bool IsDisabled;
+    public bool IsDisabled { get; set; }
+    public string Label { get; set; }
 
-    public double? LabelMaxWidth;
+    public double? LabelMaxWidth { get; set; }
+
+    public bool Value { get; set; }
+
+    public Action<ChangeEvent> ValueChange { get; set; }
 
     protected override Element render()
     {
-        return new FlexRow(AlignItemsCenter, Gap(5),FlexWrap, AlignContentFlexStart)
+        return new FlexRow(AlignItemsCenter, Gap(5), FlexWrap, AlignContentFlexStart)
         {
             new Switch
             {
-                IsChecked = value, ValueChange = valueChange, IsDisabled = IsDisabled
+                IsChecked = Value, ValueChange = ValueChange, IsDisabled = IsDisabled
             },
-            new label{Text(label), When(LabelMaxWidth.HasValue,MaxWidth(LabelMaxWidth.GetValueOrDefault())) }
+            new label { Text(Label), When(LabelMaxWidth.HasValue, MaxWidth(LabelMaxWidth.GetValueOrDefault())) }
         };
     }
 }
 
-
-
-public class Switch : ReactComponent
+public class Switch : ReactPureComponent
 {
     public bool IsChecked { get; set; }
+
     public bool IsDisabled { get; set; }
 
-    [ReactCustomEvent]
-    public Action<bool> ValueChange { get; set; }
-
-    void OnChange(ChangeEvent e)
-    {
-        IsChecked = !IsChecked;
-        DispatchEvent(() => ValueChange, IsChecked);
-    }
+    public Action<ChangeEvent> ValueChange { get; set; }
 
     protected override Element render()
     {
-        return new ReactWithDotNet.Libraries.mui.material.Switch { @checked = IsChecked, onChange = OnChange, disabled = IsDisabled };
-            
-        //Style divStyle = new()
-        //{
-        //    Background("#ced4da"),
-        //    BorderRadius(30),
-        //    CursorPointer,
-        //    Transition("background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s"),
-
-        //    Hover(Background("#b6bfc8")),
-
-        //    Width("3rem"),
-        //    Height("1.75rem"),
-        //    PositionRelative,
-        //};
-
-        //var before = new Style
-        //{
-        //    content            = "",
-        //    background         = "white",
-        //    width              = "1.25rem",
-        //    height             = "1.25rem",
-        //    left               = "0.25rem",
-        //    marginTop          = "-0.625rem",
-        //    borderRadius       = "50%",
-        //    transitionDuration = "0.2s",
-        //    position           = "absolute",
-        //    top                = "50%"
-        //};
-
-        //if (IsChecked)
-        //{
-        //    divStyle.background       = "#6366F1";
-        //    divStyle.hover.background = "#4f46e5";
-        //    before.transform       = "translateX(1.25rem)";
-        //}
-        //else
-        //{
-        //    before.transform = "translateX(0rem)";
-        //}
-        
-        //divStyle.before.Import(before);
-
-        //return new div(divStyle)
-        //{
-        //    When(!IsDisabled,OnClick(OnClickHandler))
-        //};
-    }
-
-   
-
-    void OnClickHandler(MouseEvent _)
-    {
-        IsChecked = !IsChecked;
-        DispatchEvent(()=>ValueChange,IsChecked);
+        return new ReactWithDotNet.Libraries.mui.material.Switch
+        {
+            @checked = IsChecked,
+            onChange = ValueChange,
+            disabled = IsDisabled,
+            value    = (!IsChecked).ToString()
+        };
     }
 }

@@ -157,9 +157,9 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         {
                             new FlexRow(AlignItemsCenter, Gap(5))
                             {
-                                new Switch { IsChecked = ShowCounts, ValueChange = x =>
+                                new Switch { IsChecked = ShowCounts, ValueChange = changeEvent =>
                                     {
-                                        var showNumbers = x ? 1 : 0;
+                                        var showNumbers = Convert.ToBoolean(changeEvent.target.value) ? 1 : 0;
                                         if (Context.Query[QueryKey.ShowNumbers] == null)
                                         {
                                             Client.NavigateToUrl("?"+Context.QueryAsString + $"&{QueryKey.ShowNumbers}={showNumbers}");
