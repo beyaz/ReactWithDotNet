@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-public class Tooltip : ReactComponent
+public class Tooltip2 : ReactComponent
 {
     public string Text { get; set; }
 

@@ -910,7 +910,12 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
     if (children)
     {
         const childrenLength = children.length;
-        
+
+        if (childrenLength === 1)
+        {
+            return createElement(constructorFunction, props, ConvertToReactElement(buildContext, children[0], component));
+        }
+
         const newChildren = [];
 
         for (let childIndex = 0; childIndex < childrenLength; childIndex++)

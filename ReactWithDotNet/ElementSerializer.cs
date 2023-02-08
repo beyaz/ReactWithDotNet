@@ -232,6 +232,11 @@ static partial class ElementSerializer
             return (bindInfo, false);
         }
 
+        if (propertyValue is HtmlTextNode htmlTextNode)
+        {
+            return (htmlTextNode.innerText, false);
+        }
+        
         if (propertyValue is Element element)
         {
             element.key ??= "0";
