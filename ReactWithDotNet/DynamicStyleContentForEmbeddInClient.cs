@@ -25,22 +25,30 @@ class DynamicStyleContentForEmbeddInClient
     {
         // change name until is unique
         {
+            var firstName = cssClassInfo.Name;
+
             var suffix = 0;
+
             while (true)
             {
-                var newName = cssClassInfo.Name + suffix++;
+                cssClassInfo = new CssClassInfo
+                {
+                    Name                      = firstName + suffix++,
+                    Pseudos                   = cssClassInfo.Pseudos,
+                    MediaQueries              = cssClassInfo.MediaQueries,
+                    ComponentUniqueIdentifier = cssClassInfo.ComponentUniqueIdentifier
+                };
 
-                if (listOfClasses.Any(x => x.Name == newName))
+                // if everything is equal then no need to reExport
+                if (listOfClasses.Any(x => CssClassInfo.IsEquals(cssClassInfo, x)))
+                {
+                    return cssClassInfo.Name;
+                }
+
+                if (listOfClasses.Any(x => x.Name == cssClassInfo.Name))
                 {
                     continue;
                 }
-
-                cssClassInfo = new CssClassInfo
-                {
-                    Name         = newName,
-                    Pseudos      = cssClassInfo.Pseudos,
-                    MediaQueries = cssClassInfo.MediaQueries
-                };
 
                 break;
             }
