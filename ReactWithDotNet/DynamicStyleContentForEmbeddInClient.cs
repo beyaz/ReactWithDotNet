@@ -4,36 +4,6 @@ class DynamicStyleContentForEmbeddInClient
 {
     internal readonly List<CssClassInfo> listOfClasses = new();
 
-    public string GetClassName(CssClassInfo cssClassInfo)
-    {
-        // change name until is unique
-        { 
-            var suffix = 0;
-            while (true)
-            {
-                var newName = cssClassInfo.Name + suffix++;
-                
-                if (listOfClasses.Any(x => x.Name == newName))
-                {
-                    continue;
-                }
-
-                cssClassInfo = new CssClassInfo
-                {
-                    Name         = newName,
-                    Pseudos      = cssClassInfo.Pseudos,
-                    MediaQueries = cssClassInfo.MediaQueries
-                };
-                
-                break;
-            }
-        }
-        
-        listOfClasses.Add(cssClassInfo);
-
-        return cssClassInfo.Name;
-    }
-
     public JsonMap CalculateCssClassList()
     {
         if (!listOfClasses.Any())
@@ -50,41 +20,133 @@ class DynamicStyleContentForEmbeddInClient
 
         return jsonMap;
     }
+
+    public string GetClassName(CssClassInfo cssClassInfo)
+    {
+        // change name until is unique
+        {
+            var suffix = 0;
+            while (true)
+            {
+                var newName = cssClassInfo.Name + suffix++;
+
+                if (listOfClasses.Any(x => x.Name == newName))
+                {
+                    continue;
+                }
+
+                cssClassInfo = new CssClassInfo
+                {
+                    Name         = newName,
+                    Pseudos      = cssClassInfo.Pseudos,
+                    MediaQueries = cssClassInfo.MediaQueries
+                };
+
+                break;
+            }
+        }
+
+        listOfClasses.Add(cssClassInfo);
+
+        return cssClassInfo.Name;
+    }
 }
 
 class CssPseudoCodeInfo
 {
-
-    public string Name { get; init; }
     public string BodyOfCss { get; init; }
-
-    public override bool Equals(object other)
-    {
-        if (other is CssPseudoCodeInfo info)
-        {
-            return info.Name == Name && info.BodyOfCss == BodyOfCss;
-        }
-
-        return false;
-    }
-
-    protected bool Equals(CssPseudoCodeInfo other)
-    {
-        return Name == other.Name && BodyOfCss == other.BodyOfCss;
-    }
-
-    public override int GetHashCode()
-    {
-        return (Name + ":" + BodyOfCss).GetHashCode();
-    }
+    public string Name { get; init; }
 }
 
 class CssClassInfo
 {
+    public int? ComponentUniqueIdentifier { get; init; }
+    public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries { get; set; }
     public string Name { get; init; }
     public IReadOnlyList<CssPseudoCodeInfo> Pseudos { get; init; }
-    public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries { get; set; }
-    public int? ComponentUniqueIdentifier { get; init; }
+
+    public static bool IsEquals(CssClassInfo a, CssClassInfo b)
+    {
+        if (a.Name != b.Name)
+        {
+            return false;
+        }
+
+        if (a.ComponentUniqueIdentifier != b.ComponentUniqueIdentifier)
+        {
+            return false;
+        }
+
+        // compare Pseudos
+        {
+            if (a.Pseudos is not null && b.Pseudos is null)
+            {
+                return false;
+            }
+
+            if (a.Pseudos is null && b.Pseudos is not null)
+            {
+                return false;
+            }
+
+            if (a.Pseudos is not null && b.Pseudos is not null)
+            {
+                if (a.Pseudos.Count != b.Pseudos.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < a.Pseudos.Count; i++)
+                {
+                    if (a.Pseudos[i].Name != b.Pseudos[i].Name)
+                    {
+                        return false;
+                    }
+
+                    if (a.Pseudos[i].BodyOfCss != b.Pseudos[i].BodyOfCss)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // compare MediaQueries
+        {
+            if (a.MediaQueries is not null && b.MediaQueries is null)
+            {
+                return false;
+            }
+
+            if (a.MediaQueries is null && b.MediaQueries is not null)
+            {
+                return false;
+            }
+
+            if (a.MediaQueries is not null && b.MediaQueries is not null)
+            {
+                if (a.MediaQueries.Count != b.MediaQueries.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < a.MediaQueries.Count; i++)
+                {
+                    if (a.MediaQueries[i].mediaRule != b.MediaQueries[i].mediaRule)
+                    {
+                        return false;
+                    }
+
+                    if (a.MediaQueries[i].cssBody != b.MediaQueries[i].cssBody)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 
     public void WriteTo(JsonMap jsonMap)
     {
