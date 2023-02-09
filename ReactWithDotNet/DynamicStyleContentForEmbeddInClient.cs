@@ -11,17 +11,20 @@ class DynamicStyleContentForEmbeddInClient
             var suffix = 0;
             while (true)
             {
-                if (listOfClasses.Any(x => x.Name == cssClassInfo.Name))
+                var newName = cssClassInfo.Name + suffix++;
+                
+                if (listOfClasses.Any(x => x.Name == newName))
                 {
-                    cssClassInfo = new CssClassInfo
-                    {
-                        Name         = cssClassInfo.Name + suffix++,
-                        Pseudos      = cssClassInfo.Pseudos,
-                        MediaQueries = cssClassInfo.MediaQueries
-                    };
-
                     continue;
                 }
+
+                cssClassInfo = new CssClassInfo
+                {
+                    Name         = newName,
+                    Pseudos      = cssClassInfo.Pseudos,
+                    MediaQueries = cssClassInfo.MediaQueries
+                };
+                
                 break;
             }
         }
