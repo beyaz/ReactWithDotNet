@@ -392,7 +392,7 @@ static partial class ElementSerializer
             var cssClassName = context.DynamicStyles.GetClassName(new CssClassInfo
             {
                 ComponentUniqueIdentifier= cmp.ComponentUniqueIdentifier,
-                Name    = "_"+cmp.ComponentUniqueIdentifier + "_" + cmp.GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
+                Name    = "_rwd_" + cmp.ComponentUniqueIdentifier + "_" + cmp.GetType().FullName?.Replace(".", "_").Replace("+", "_").Replace("/", "_"),
                 Pseudos = pseudos,
                 MediaQueries = style._mediaQueries?.Select(pair => (pair.query, pair.style.ToCssWithImportant())).ToList()
             });

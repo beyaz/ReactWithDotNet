@@ -1891,10 +1891,10 @@ function ProcessDynamicCssClasses(dynamicStyles)
             {
                 hasChange = true;
 
-                let startIndex = cssSelector.indexOf('._');
-                let endIndex = cssSelector.indexOf('_', startIndex + 2);
+                let startIndex = cssSelector.indexOf('._rwd_');
+                let endIndex = cssSelector.indexOf('_', startIndex + 6);
 
-                const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 2, endIndex));
+                const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 6, endIndex));
                 if (isNaN(componentUniqueIdentifier))
                 {
                     throw CreateNewDeveloperError('componentUniqueIdentifier cannot calculated from ' + cssSelector);
