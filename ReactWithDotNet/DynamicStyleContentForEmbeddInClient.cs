@@ -81,7 +81,7 @@ class CssClassInfo
     public string Name { get; init; }
     public IReadOnlyList<CssPseudoCodeInfo> Pseudos { get; init; }
     public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries { get; set; }
-    public int? ComponentUniqueIdentifier { get; set; }
+    public int? ComponentUniqueIdentifier { get; init; }
 
     public void WriteTo(JsonMap jsonMap)
     {
