@@ -2,6 +2,13 @@
 
 public class svg : HtmlElement
 {
+    public svg()
+    {
+        
+    }
+    
+    public svg(params IModifier[] modifiers) : base(modifiers) { }
+
     [React]
     public string xmlns { get; set; } = "http://www.w3.org/2000/svg";
 
