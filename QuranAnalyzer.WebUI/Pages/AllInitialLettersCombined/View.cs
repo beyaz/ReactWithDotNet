@@ -80,7 +80,8 @@ class View : ReactComponent
                 " Arapça Vahid ( Türkçe tek anlamına gelir ) kelimesinin sayısal değeri ise 19 dur. Besmele 19 harftir. Daha bir çok açıklama yapılabilir. " ,
                 " Mühim olan buradaki örüntüyü görebilmektir. " ,
                 " Böylelikle Allah var mı? yok mu? Kuran Allah kelamı mı değil mi ? gibi şüpheler giderilmiş olacak.",
-                " Kuran'ın Allah'dan geldiğine olan inancımızı sağlam bir zemine oturmuş olacağız."
+                " Kuran'ın Allah'dan geldiğine olan inancımızı sağlam bir zemine oturmuş olacağız. " ,
+                " Artık bir sonraki aşamaya yani Kuranı anlama ve hayatımıza uygulama aşamasına geçebiliriz."
             }
 
         };

@@ -14,7 +14,7 @@ class TotalCountsWithDetail : ReactComponent
 
     public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = Extensions.AllInitialLetterTotalCounts;
 
-    StyleModifier InputBorder => Border($"0.1px solid {BorderColor}");
+    static StyleModifier InputBorder => Border($"0.1px solid {BorderColor}");
 
     protected override Element render()
     {
@@ -74,10 +74,7 @@ class TotalCountsWithDetail : ReactComponent
         };
     }
 
-    static List<T> ListOf<T>(IEnumerable<T> enumerable, T lastItem)
-    {
-        return new List<T>(enumerable) { lastItem };
-    }
+    
 
     List<Element> AnimateRecords(Func<int> nextDelay)
     {
