@@ -32,6 +32,36 @@ public abstract class ReactPureComponent
 
         return reactPureComponent;
     }
+
+    public void Add(ReactPureComponentModifier modifier)
+    {
+        modifier?.Modify(this);
+    }
+}
+
+public abstract class ReactPureComponentModifier
+{
+    internal abstract void Modify(ReactPureComponent pureComponent);
+}
+
+public sealed class ReactPureComponentModifier<TPureComponent> where  TPureComponent : ReactPureComponent
+{
+    internal readonly Action<TPureComponent> modify;
+
+    public ReactPureComponentModifier(Action<TPureComponent> modifyPureComponent)
+    {
+        modify = modifyPureComponent ?? throw new ArgumentNullException(nameof(modifyPureComponent));
+    }
+
+    internal void Modify(ReactPureComponent pureComponent)
+    {
+        if (pureComponent == null)
+        {
+            return;
+        }
+        
+        modify((TPureComponent)pureComponent);
+    }
 }
 
 public abstract class ReactStatefulComponent : Element
