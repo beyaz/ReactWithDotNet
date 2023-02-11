@@ -100,6 +100,30 @@ static partial class ElementSerializer
             return (null, true);
         }
 
+        if (property.TransformValueInServerSide != null)
+        {
+            string convertStyleToCssClass(Style style)
+            {
+                var (needToExport, cssClassName) = ConvertStyleToCssClass(style, true, context.componentStack.Peek()?.ComponentUniqueIdentifier, context.DynamicStyles.GetClassName);
+                if (needToExport)
+                {
+                    return cssClassName;
+                }
+
+                return string.Empty;
+            }
+
+            {
+                var (needToExport, newValue) = property.TransformValueInServerSide(propertyValue, new TransformValueInServerSideContext(convertStyleToCssClass));
+                if (needToExport == false)
+                {
+                    return (null, true);
+                }
+
+                return (newValue, false);
+            }
+        }
+
         // check inline
         {
             if (propertyValue is Style style)
@@ -320,6 +344,11 @@ static partial class ElementSerializer
 
     public static IReadOnlyList<CssPseudoCodeInfo> CalculatePseudos(Style style)
     {
+        if (style is null)
+        {
+            return null;
+        }
+        
         List<CssPseudoCodeInfo> pseudos = null;
 
         if (style._hover is not null)
@@ -381,21 +410,63 @@ static partial class ElementSerializer
         return pseudos;
     }
 
+    static (bool needToExport, string cssClassName) ConvertStyleToCssClass(Style style, 
+                                                                           bool fullExport,
+                                                                           int? componentUniqueIdentifier,
+                                                                           Func<CssClassInfo,string> getCssClassName)
+    {
+        if (style is null)
+        {
+            return (false, null);
+        }
+        
+        var pseudos = CalculatePseudos(style);
+
+        if (fullExport)
+        {
+            if (style.IsEmpty && pseudos is null && style._mediaQueries is null)
+            {
+                return (false, null);
+            }
+        }
+        else
+        {
+            if (pseudos is null && style._mediaQueries is null)
+            {
+                return (false, null);
+            }
+        }
+
+        var cssClassInfo = new CssClassInfo
+        {
+            ComponentUniqueIdentifier = componentUniqueIdentifier,
+            Name                      = "_rwd_" + componentUniqueIdentifier + "_",
+            Pseudos                   = pseudos,
+            MediaQueries              = style._mediaQueries?.Select(pair => (pair.query, pair.style.ToCssWithImportant())).ToList(),
+            Body                      = fullExport ? style.ToCssWithImportant() : null
+        };
+
+        return (true, getCssClassName(cssClassInfo));
+    }
+
     static (Style style, bool noNeedToExport) GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
     {
+
+        var response = ConvertStyleToCssClass(style, false, context.componentStack.Peek()?.ComponentUniqueIdentifier, context.DynamicStyles.GetClassName);
+        if (response.needToExport  is false)
+        {
+            if (style.IsEmpty == false)
+            {
+                return (style, false);
+            }
+            return (null, true);
+        }
+        
         var pseudos = CalculatePseudos(style);
 
         if (pseudos is not null || style._mediaQueries is not null)
         {
-            var cmp = context.componentStack.Peek();
-            
-            var cssClassName = context.DynamicStyles.GetClassName(new CssClassInfo
-            {
-                ComponentUniqueIdentifier= cmp.ComponentUniqueIdentifier,
-                Name    = "_rwd_" + cmp.ComponentUniqueIdentifier + "_",
-                Pseudos = pseudos,
-                MediaQueries = style._mediaQueries?.Select(pair => (pair.query, pair.style.ToCssWithImportant())).ToList()
-            });
+            var cssClassName = response.cssClassName;
 
             if (instance is HtmlElement htmlElement)
             {
@@ -411,7 +482,7 @@ static partial class ElementSerializer
             }
         }
 
-        if (IsEmptyStyle(style))
+        if (style.IsEmpty)
         {
             return (null, true);
         }
@@ -475,15 +546,7 @@ static partial class ElementSerializer
         }
     }
 
-    static bool IsEmptyStyle(object value)
-    {
-        if (value is Style style)
-        {
-            return style.IsEmpty;
-        }
-
-        return false;
-    }
+   
 
     static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element)
     {
