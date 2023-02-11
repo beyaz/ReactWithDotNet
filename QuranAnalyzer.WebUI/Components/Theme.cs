@@ -1,18 +1,15 @@
-﻿
-namespace QuranAnalyzer.WebUI.Components;
+﻿namespace QuranAnalyzer.WebUI.Components;
 
 static class Theme
 {
     public static string TextColor = "rgb(51, 51, 51)";
 }
 
-class divWithBorder: HtmlElement
+class divWithBorder : HtmlElement
 {
-    public override string Type => nameof(div);
-    
     public divWithBorder()
     {
-        this.Apply(BorderRadius(5),ComponentBorder);
+        this.Apply(BorderRadius(5), ComponentBorder);
     }
 
     public divWithBorder(params IModifier[] modifiers)
@@ -20,6 +17,8 @@ class divWithBorder: HtmlElement
         this.Apply(BorderRadius(5), ComponentBorder);
         this.Apply(modifiers);
     }
+
+    public override string Type => nameof(div);
 }
 
 class LargeTitle : ReactPureComponent
@@ -35,12 +34,11 @@ class LargeTitle : ReactPureComponent
     {
         return new div
         {
-            style    = { FontSize18, TextAlignCenter},
-            text = text
+            style = { FontSize18, TextAlignCenter },
+            text  = text
         };
     }
 }
-
 
 class Important : ReactPureComponent
 {
@@ -61,28 +59,41 @@ class Important : ReactPureComponent
     }
 }
 
-
-class Title : HtmlElement
+class Title : ReactPureComponent
 {
-    public override string Type => nameof(div);
-    public Title(string innerText)
-    {
-        this.innerText = innerText;
+    readonly string text;
 
-        style.fontSize  = "18px";
-        style.textAlign = "center";
+    public Title(string text)
+    {
+        this.text = text;
+    }
+
+    protected override Element render()
+    {
+        return new div
+        {
+            style = { FontSize18, TextAlignCenter },
+            text  = text
+        };
     }
 }
 
-class SubTitle : HtmlElement
+class SubTitle : ReactPureComponent
 {
-    public override string Type => nameof(div);
-    public SubTitle(string innerText)
-    {
-        this.innerText = innerText;
+    readonly string text;
 
-        style.fontSize  = "16px";
-        style.textAlign = "center";
+    public SubTitle(string text)
+    {
+        this.text = text;
+    }
+
+    protected override Element render()
+    {
+        return new div
+        {
+            style = { FontSize16, TextAlignCenter },
+            text  = text
+        };
     }
 }
 
@@ -92,7 +103,7 @@ class Article : ReactComponent
     {
         return new article
         {
-            Aria("label","article"),
+            Aria("label", "article"),
             Children(children)
         };
     }
