@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
 
-class QuestionLink : ReactComponent
+class QuestionLink : ReactPureComponent
 {
     public string Question { get; set; }
 
