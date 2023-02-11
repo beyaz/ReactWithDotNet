@@ -2,20 +2,21 @@
 
 public class ActionButton : ReactComponent
 {
+    public bool IsProcessing { get; set; }
+    
     public string Label { get; set; }
 
-    public bool IsProcessing { get; set; }
+    [ReactCustomEvent]
+    public Action OnClick { get; set; }
 
-        
-        
     protected override Element render()
     {
         return new FlexRowCentered
         {
             children =
             {
-                When(IsProcessing,new LoadingIcon{ wh(17)}),
-                When(!IsProcessing,new div(Label))
+                When(IsProcessing, new LoadingIcon { wh(17) }),
+                When(!IsProcessing, new div(Label))
             },
             onClick = ActionButtonOnClick,
             style =
@@ -30,14 +31,10 @@ public class ActionButton : ReactComponent
         };
     }
 
-    [ReactCustomEvent]
-    public Action OnClick { get; set; }
-        
-        
     void ActionButtonOnClick(MouseEvent _)
     {
         IsProcessing = true;
-        
-        DispatchEvent(()=>OnClick);
+
+        DispatchEvent(() => OnClick);
     }
 }
