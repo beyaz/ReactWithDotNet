@@ -5,7 +5,7 @@ using static QuranAnalyzer.QuranAnalyzerMixin;
 
 namespace QuranAnalyzer;
 
-public class LetterColorizer : ReactComponent
+public class LetterColorizer : ReactComponent // TODO:check can be pure
 {
     public string ChapterNumber { get; set; }
     public string LettersForColorize { get; set; }
