@@ -88,7 +88,31 @@ static partial class ElementSerializer
         return propertyName;
     }
 
-    static (object value, bool noNeedToExport) getPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
+    sealed class ValueExportInfo<TValue> where TValue : class
+    {
+        public readonly TValue value;
+        public readonly bool needToExport;
+
+        ValueExportInfo(TValue value)
+        {
+            this.value   = value;
+            needToExport = true;
+        }
+
+        ValueExportInfo()
+        {
+            value        = default;
+            needToExport = false;
+        }
+
+        public static implicit operator ValueExportInfo<TValue>(TValue value) => new(value);
+
+        public static readonly ValueExportInfo<TValue> NotExportable = new();
+    }
+
+    static readonly ValueExportInfo<object> NotExportableObject = ValueExportInfo<object>.NotExportable;
+    
+    static ValueExportInfo<object> getPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
     {
         var propertyInfo = property.PropertyInfo;
             
@@ -97,7 +121,7 @@ static partial class ElementSerializer
         var isDefaultValue = propertyValue == property.DefaultValue;
         if (isDefaultValue)
         {
-            return (null, true);
+            return NotExportableObject;
         }
 
         if (property.TransformValueInServerSide != null)
@@ -117,10 +141,10 @@ static partial class ElementSerializer
                 var (needToExport, newValue) = property.TransformValueInServerSide(propertyValue, new TransformValueInServerSideContext(convertStyleToCssClass));
                 if (needToExport == false)
                 {
-                    return (null, true);
+                    return NotExportableObject;
                 }
 
-                return (newValue, false);
+                return newValue;
             }
         }
 
@@ -234,7 +258,7 @@ static partial class ElementSerializer
             var bindInfo = GetExpressionAsBindingInfo(propertyInfo,  calculateSourcePathFunc);
             if (bindInfo == null)
             {
-                return (null, true);
+                return NotExportableObject;
             }
 
             if (getTargetValueFromExpression(propertyInfo, propertyValue as LambdaExpression) is ReactStatefulComponent target)
@@ -252,13 +276,13 @@ static partial class ElementSerializer
                     bindInfo.DebounceHandler = debounceHandler.Method.GetNameWithToken();
                 }
             }
-    
-            return (bindInfo, false);
+
+            return bindInfo;
         }
 
         if (propertyValue is HtmlTextNode htmlTextNode)
         {
-            return (htmlTextNode.innerText, false);
+            return htmlTextNode.innerText;
         }
         
         if (propertyValue is Element element)
@@ -278,7 +302,7 @@ static partial class ElementSerializer
             var func = (Delegate)propertyInfo.GetValue(instance);
             if (func == null)
             {
-                return (null, true);
+                return NotExportableObject;
             }
 
             var method = instance.GetType().GetMethod(templateAttribute.MethodNameForGettingItemsSource, BindingFlags.Instance | BindingFlags.NonPublic);
@@ -320,7 +344,7 @@ static partial class ElementSerializer
                 template.___TemplateForNull___ = convertToReactNode(null);
             }
 
-            return (template, false);
+            return template;
         }
 
         var reactTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
@@ -331,10 +355,10 @@ static partial class ElementSerializer
             jsonMap.Add("$transformValueFunction", reactTransformValueInClient.TransformFunction);
             jsonMap.Add("RawValue", propertyValue);
 
-            return (jsonMap, false);
+            return jsonMap;
         }
 
-        return (propertyValue, false);
+        return propertyValue;
     }
 
     static string GetReactComponentTypeInfo(object reactStatefulComponent)
@@ -449,17 +473,16 @@ static partial class ElementSerializer
         return (true, getCssClassName(cssClassInfo));
     }
 
-    static (Style style, bool noNeedToExport) GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
+    static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
     {
-
         var response = ConvertStyleToCssClass(style, false, context.componentStack.Peek()?.ComponentUniqueIdentifier, context.DynamicStyles.GetClassName);
         if (response.needToExport  is false)
         {
             if (style.IsEmpty == false)
             {
-                return (style, false);
+                return style;
             }
-            return (null, true);
+            return NotExportableObject;
         }
         
         var pseudos = CalculatePseudos(style);
@@ -484,10 +507,10 @@ static partial class ElementSerializer
 
         if (style.IsEmpty)
         {
-            return (null, true);
+            return NotExportableObject;
         }
 
-        return (style, false);
+        return style;
     }
 
     static string GetTypeFullNameOfState(object reactStatefulComponent)

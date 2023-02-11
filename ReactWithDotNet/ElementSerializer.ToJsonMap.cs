@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet;
 
@@ -538,13 +537,11 @@ partial class ElementSerializer
         {
             var propertyInfo = item.PropertyInfo;
 
-            var (propertyValue, noNeedToExport) = getPropertyValue(element, item, context);
-            if (noNeedToExport)
+            var valueExportInfo = getPropertyValue(element, item, context);
+            if (valueExportInfo.needToExport)
             {
-                continue;
+                add(GetPropertyName(propertyInfo), valueExportInfo.value);
             }
-
-            add(GetPropertyName(propertyInfo), propertyValue);
         }
     }
 
@@ -709,10 +706,10 @@ partial class ElementSerializer
 
         if (htmlElement._style is not null)
         {
-            var (style, noNeedToExport) = GetStylePropertyValueOfHtmlElementForSerialize(htmlElement, htmlElement._style, context);
-            if (noNeedToExport is false)
+            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(htmlElement, htmlElement._style, context);
+            if (valueExportInfo.needToExport)
             {
-                map.Add("style", style);
+                map.Add("style", valueExportInfo.value);
             }
         }
 
@@ -760,10 +757,10 @@ partial class ElementSerializer
 
         if (thirdPartyReactComponent._style is not null)
         {
-            var (style, noNeedToExport) = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent._style, context);
-            if (noNeedToExport is false)
+            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent._style, context);
+            if (valueExportInfo.needToExport)
             {
-                map.Add("style", style);
+                map.Add("style", valueExportInfo.value);
             }
         }
 
