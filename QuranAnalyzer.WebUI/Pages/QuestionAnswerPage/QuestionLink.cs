@@ -13,20 +13,17 @@ class QuestionLink : ReactComponent
 
         return new FlexRow(AlignItemsCenter)
         {
-            new div(wh(24))
+            new svg(wh(24))
             {
-                new svg
+                new path
                 {
-                    new path
-                    {
-                        d    = d,
-                        fill = "#6c93d0"
-                    },
-                    new path
-                    {
-                        d    = "M0 0h24v24H0z",
-                        fill = "none"
-                    }
+                    d    = d,
+                    fill = "#6c93d0"
+                },
+                new path
+                {
+                    d    = "M0 0h24v24H0z",
+                    fill = "none"
                 }
             },
             new a
