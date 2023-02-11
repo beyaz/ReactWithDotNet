@@ -2,7 +2,7 @@
 
 class LeftMenu : ReactComponent
 {
-    static List<(string text, IReadOnlyList<string> pageIdList)> MenuItems = new()
+    static readonly List<(string text, IReadOnlyList<string> pageIdList)> MenuItems = new()
     {
         ("Anasayfa", new[] { PageId.MainPage }),
         ("Teknolojide Veri İletimi", new[] { PageId.SecuringDataWithCurrentTechnology }),

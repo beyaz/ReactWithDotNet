@@ -5,7 +5,7 @@ namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 
 class SearchScript
 {
-    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> Lines { get; private set; }
+    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> Lines { get; private init; }
 
     public static Response<SearchScript> ParseScript(string value)
     {

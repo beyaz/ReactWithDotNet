@@ -1,23 +1,22 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.Shared;
 
-class Helpcomponent : ReactComponent
+class Helpcomponent : ReactPureComponent
 {
     public bool IsHelpVisible { get; set; }
 
     public bool ShowHelpMessageForLetterSearch { get; set; }
-    
-    protected override Element render()
-    {
-        if (IsHelpVisible)
-        {
-            return new FlexColumn(Gap(20))
-            {
-                Title() + MarginTop(11),
-                HelpDetail
-            };
-        }
 
-        return Title();
+    string DescriptionPart
+    {
+        get
+        {
+            if (ShowHelpMessageForLetterSearch)
+            {
+                return "harflerini";
+            }
+
+            return "kelimesini";
+        }
     }
 
     string SearchItem
@@ -33,19 +32,20 @@ class Helpcomponent : ReactComponent
         }
     }
 
-    string DescriptionPart
+    protected override Element render()
     {
-        get
+        if (IsHelpVisible)
         {
-            if (ShowHelpMessageForLetterSearch)
+            return new FlexColumn(Gap(20))
             {
-                return "harflerini";
-            }
-
-            return "kelimesini";
+                Title() + MarginTop(11),
+                HelpDetail
+            };
         }
+
+        return Title();
     }
-    
+
     Element HelpDetail()
     {
         return new div(TextAlignCenter)
