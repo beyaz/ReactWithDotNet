@@ -52,12 +52,12 @@ static class Extensions
 
     public static string GetPageLink(string pageId) =>  $"/?{QueryKey.Page}=" + pageId;
 
-    public static void HamburgerMenuClosed(this Client client)
+    static void HamburgerMenuClosed(this Client client)
     {
         client.DispatchEvent(nameof(HamburgerMenuClosed));
     }
 
-    public static void HamburgerMenuOpened(this Client client)
+    static void HamburgerMenuOpened(this Client client)
     {
         client.DispatchEvent(nameof(HamburgerMenuOpened));
     }
