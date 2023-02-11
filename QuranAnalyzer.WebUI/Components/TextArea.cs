@@ -21,15 +21,17 @@ public class TextArea : ReactComponent
     }
 }
 
-public class TextInput: ReactComponent
+public class TextInput : ReactComponent
 {
     public Expression<Func<string>> ValueBind;
+
+    public static ComponentModifier Bind(Expression<Func<string>> expression) => new(x => ((TextInput)x).ValueBind = expression);
 
     protected override Element render()
     {
         return new input
         {
-            type = "text",
+            type      = "text",
             valueBind = ValueBind,
             style =
             {
@@ -40,10 +42,7 @@ public class TextInput: ReactComponent
             }
         };
     }
-
-    public static ComponentModifier Bind(Expression<Func<string>> expression) => new(x => ((TextInput)x).ValueBind = expression);
 }
-
 
 public class Label : ReactComponent
 {
@@ -53,7 +52,7 @@ public class Label : ReactComponent
     {
         return new label
         {
-            text = Text, style = { FontSize14,FontWeight600 }
+            text = Text, style = { FontSize14, FontWeight600 }
         };
     }
 }
