@@ -7,9 +7,31 @@ namespace ReactWithDotNet;
 
 public abstract class ReactPureComponent
 {
+    List<StyleModifier> styleModifiers;
+
     protected abstract Element render();
 
-    internal Element InvokeRender()=>render();
+    internal Element InvokeRender()
+    {
+        var root = render();
+
+        if (styleModifiers is not null)
+        {
+            foreach (var styleModifier in styleModifiers)
+            {
+                ModifyHelper.ProcessModifier(root, styleModifier);
+            }
+        }
+
+        return root;
+    }
+
+    public static ReactPureComponent operator +(ReactPureComponent reactPureComponent, StyleModifier styleModifier)
+    {
+        (reactPureComponent.styleModifiers ??= new List<StyleModifier>()).Add(styleModifier);
+
+        return reactPureComponent;
+    }
 }
 
 public abstract class ReactStatefulComponent : Element

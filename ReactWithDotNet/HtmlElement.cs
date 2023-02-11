@@ -277,11 +277,6 @@ public abstract class HtmlElement : Element
         htmlElementModifier?.modifyHtmlElement(this);
     }
 
-    public void Add(ReactPureComponent reactPureComponent)
-    {
-        Add(reactPureComponent?.InvokeRender());
-    }
-
     [SuppressMessage("ReSharper", "ParameterHidesMember")]
     public void Add(Style style)
     {

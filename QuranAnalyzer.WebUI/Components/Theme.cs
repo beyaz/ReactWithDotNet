@@ -22,7 +22,7 @@ class divWithBorder: HtmlElement
     }
 }
 
-class LargeTitle : ReactComponent
+class LargeTitle : ReactPureComponent
 {
     readonly string text;
 
@@ -42,7 +42,7 @@ class LargeTitle : ReactComponent
 }
 
 
-class Important : ReactComponent
+class Important : ReactPureComponent
 {
     readonly string text;
 
