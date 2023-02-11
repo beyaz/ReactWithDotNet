@@ -11,7 +11,7 @@ public class SummaryInfo
 }
 
 [Serializable]
-class CountsSummaryView : ReactComponent
+class CountsSummaryView : ReactComponent // TODO: Check pure
 {
     #region Public Properties
     public IReadOnlyList<SummaryInfo> Counts { get; set; } = new List<SummaryInfo>();
