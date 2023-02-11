@@ -36,7 +36,8 @@ class DynamicStyleContentForEmbeddInClient
                     Name                      = firstName + suffix++,
                     Pseudos                   = cssClassInfo.Pseudos,
                     MediaQueries              = cssClassInfo.MediaQueries,
-                    ComponentUniqueIdentifier = cssClassInfo.ComponentUniqueIdentifier
+                    ComponentUniqueIdentifier = cssClassInfo.ComponentUniqueIdentifier,
+                    Body = cssClassInfo.Body
                 };
 
                 // if everything is equal then no need to reExport
@@ -71,6 +72,7 @@ class CssClassInfo
     public int? ComponentUniqueIdentifier { get; init; }
     public IReadOnlyList<(string mediaRule, string cssBody)> MediaQueries { get; set; }
     public string Name { get; init; }
+    public string Body { get; init; }
     public IReadOnlyList<CssPseudoCodeInfo> Pseudos { get; init; }
 
     public static bool IsEquals(CssClassInfo a, CssClassInfo b)
@@ -153,11 +155,23 @@ class CssClassInfo
             }
         }
 
+        if (a.Body !=  b.Body)
+        {
+            return false;
+        }
+
         return true;
     }
 
     public void WriteTo(JsonMap jsonMap)
     {
+        if (Body is not null)
+        {
+            var cssSelector = $".{Name}";
+
+            jsonMap.Add(cssSelector, Body);
+        }
+        
         if (Pseudos is not null)
         {
             foreach (var pseudoCodeInfo in Pseudos)
