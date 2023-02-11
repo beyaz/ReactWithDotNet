@@ -69,7 +69,7 @@ class LeftMenu : ReactComponent
                 new div
                 {
                     PositionAbsolute,
-                    MarginTop(-42),
+                    MarginTop(-55),
                     Height(60),
                     Left(3.5),
                     When(index > 0, BorderLeft("1px solid rgb(238, 238, 238)"))
