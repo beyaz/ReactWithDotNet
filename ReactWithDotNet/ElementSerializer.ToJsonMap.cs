@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet;
 
@@ -841,11 +842,29 @@ partial class ElementSerializer
     {
         return new PropertyAccessInfo
         {
-            GetValueFunc      = ReflectionHelper.CreateGetFunction(propertyInfo),
-            PropertyInfo      = propertyInfo,
-            DefaultValue      = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
-            HasReactAttribute = propertyInfo.GetCustomAttribute<ReactAttribute>() is not null
+            GetValueFunc                                   = ReflectionHelper.CreateGetFunction(propertyInfo),
+            PropertyInfo                                   = propertyInfo,
+            DefaultValue                                   = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
+            HasReactAttribute                              = propertyInfo.GetCustomAttribute<ReactAttribute>() is not null,
+            TransformValueInServerSide = GetTransformValueInServerSideTransformFunction()
         };
+
+        Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> GetTransformValueInServerSideTransformFunction()
+        {
+            var attribute = propertyInfo.GetCustomAttribute<ReactTransformValueInServerSideAttribute>();
+            if (attribute == null)
+            {
+                return null;
+            }
+
+            var methodInfo = attribute.TransformMethodDeclaringType.GetMethod("Transform", BindingFlags.Public| BindingFlags.NonPublic| BindingFlags.Static);
+            if (methodInfo == null)
+            {
+                throw DeveloperException($"Type should have a static method named 'Transform'. @type:{attribute.TransformMethodDeclaringType}");
+            }
+
+            return (Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>)methodInfo.CreateDelegate(typeof(Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>));
+        }
     }
 
     internal class PropertyAccessInfo
@@ -854,6 +873,7 @@ partial class ElementSerializer
         public Func<object, object> GetValueFunc { get; init; }
         public bool HasReactAttribute { get; init; }
         public PropertyInfo PropertyInfo { get; init; }
+        public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
     }
 
     class Node
@@ -912,3 +932,7 @@ partial class ElementSerializer
         public ElementSerializerContext SerializerContext { get; set; }
     }
 }
+
+internal record TransformValueInServerSideContext(Func<Style, string> ConvertStyleToCssClass);
+
+internal record TransformValueInServerSideResponse(bool needToExport, object newValue = null);
