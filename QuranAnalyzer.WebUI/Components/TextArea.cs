@@ -44,7 +44,7 @@ public class TextInput : ReactComponent
     }
 }
 
-public class Label : ReactComponent
+public class Label : ReactPureComponent
 {
     public string Text;
 
