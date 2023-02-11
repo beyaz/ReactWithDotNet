@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.Shared;
 
-class Helpcomponent : ReactPureComponent
+class Helpcomponent : ReactComponent
 {
     public bool IsHelpVisible { get; set; }
 

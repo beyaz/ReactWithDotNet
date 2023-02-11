@@ -169,7 +169,7 @@ static partial class ElementSerializer
             }
             else
             {
-                throw HandlerMethodShouldBelongToReactComponent(propertyInfo);
+                throw HandlerMethodShouldBelongToReactComponent(propertyInfo, action.Target);
             }
         }
 
@@ -194,7 +194,7 @@ static partial class ElementSerializer
                     }
                     else
                     {
-                        throw HandlerMethodShouldBelongToReactComponent(propertyInfo);
+                        throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
                     }
                 }
             }
@@ -518,9 +518,13 @@ static partial class ElementSerializer
         return reactStatefulComponent.GetType().GetProperty("state")!.PropertyType.GetFullName();
     }
 
-    static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo)
+    static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo, object handlerTarget)
     {
-        throw new InvalidOperationException("Delegate method should belong to ReactComponent. Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name);
+        
+        throw DeveloperException(string.Join(Environment.NewLine,
+                                             "Delegate method should belong to ReactComponent. " ,
+                                             "Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name,
+                                             $"How to fix: inherit {handlerTarget?.GetType().FullName} class from ReactComponent."));
     }
 
     static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo, string bindingPath)
