@@ -122,3 +122,16 @@ class ArabicKeyboardLetterView : ReactComponent
         Client.ArabicKeyboardPressed(ArabicLetter);
     }
 }
+
+static class ArabicKeyboardEvents
+{
+    public static void ArabicKeyboardPressed(this Client client, string arabicLetter)
+    {
+        client.DispatchEvent(nameof(ArabicKeyboardPressed), arabicLetter);
+    }
+
+    public static void OnArabicKeyboardPressed(this Client client, Action<string> handlerAction)
+    {
+        client.ListenEvent(ArabicKeyboardPressed, handlerAction);
+    }
+}

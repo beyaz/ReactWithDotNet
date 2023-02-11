@@ -24,8 +24,32 @@ public class MainViewModel
     public CharacterCountingViewModel CharacterCountingViewModel { get; set; }
 }
 
+static class HamburgerMenuEvents
+{
+    static void HamburgerMenuClosed(this Client client)
+    {
+        client.DispatchEvent(nameof(HamburgerMenuClosed));
+    }
+
+    static void HamburgerMenuOpened(this Client client)
+    {
+        client.DispatchEvent(nameof(HamburgerMenuOpened));
+    }
+    public static void OnHamburgerMenuClosed(this Client client, Action handler)
+    {
+        client.ListenEvent(HamburgerMenuClosed, handler);
+    }
+
+    public static void OnHandleHamburgerMenuOpened(this Client client, Action handler)
+    {
+        client.ListenEvent(HamburgerMenuOpened, handler);
+    }
+}
+
 class View : ReactComponent<MainViewModel>
 {
+    
+  
     protected override void constructor()
     {
         state = new MainViewModel

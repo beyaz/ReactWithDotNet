@@ -35,10 +35,7 @@ static class Extensions
     }
 
     
-    public static void ArabicKeyboardPressed(this Client client, string arabicLetter)
-    {
-        client.DispatchEvent(nameof(ArabicKeyboardPressed), arabicLetter);
-    }
+   
 
     public static string AsText(this IReadOnlyList<LetterInfo> letters)
     {
@@ -52,24 +49,7 @@ static class Extensions
 
     public static string GetPageLink(string pageId) =>  $"/?{QueryKey.Page}=" + pageId;
 
-    static void HamburgerMenuClosed(this Client client)
-    {
-        client.DispatchEvent(nameof(HamburgerMenuClosed));
-    }
-
-    static void HamburgerMenuOpened(this Client client)
-    {
-        client.DispatchEvent(nameof(HamburgerMenuOpened));
-    }
-    public static void OnHamburgerMenuClosed(this Client client, Action handler)
-    {
-        client.ListenEvent(HamburgerMenuClosed, handler);
-    }
-
-    public static void OnHandleHamburgerMenuOpened(this Client client, Action handler)
-    {
-        client.ListenEvent(HamburgerMenuOpened, handler);
-    }
+   
     
     
     public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
@@ -83,10 +63,7 @@ static class Extensions
 
    
 
-    public static void OnArabicKeyboardPressed(this Client client, Action<string> handlerAction)
-    {
-        client.ListenEvent(ArabicKeyboardPressed, handlerAction);
-    }
+   
 
    
 
