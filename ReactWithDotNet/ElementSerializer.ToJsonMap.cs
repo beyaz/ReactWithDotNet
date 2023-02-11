@@ -648,6 +648,20 @@ partial class ElementSerializer
             return node;
         }
 
+        if (element is HtmlTextNode htmlTextNode)
+        {
+            node.ElementIsHtmlTextElement = true;
+            node.ElementasHtmlTextElement = htmlTextNode;
+            return node;
+        }
+
+        if (element is HtmlElement htmlElement)
+        {
+            node.ElementIsHtmlElement = true;
+            node.ElementAsHtmlElement = htmlElement;
+            return node;
+        }
+
         if (element is FakeChild fakeChild)
         {
             node.ElementIsFakeChild = true;
@@ -669,24 +683,10 @@ partial class ElementSerializer
             return node;
         }
 
-        if (element is HtmlTextNode htmlTextNode)
-        {
-            node.ElementIsHtmlTextElement = true;
-            node.ElementasHtmlTextElement = htmlTextNode;
-            return node;
-        }
-
         if (element is Fragment fragment)
         {
             node.ElementIsFragment = true;
             node.ElementAsFragment = fragment;
-            return node;
-        }
-
-        if (element is HtmlElement htmlElement)
-        {
-            node.ElementIsHtmlElement = true;
-            node.ElementAsHtmlElement = htmlElement;
             return node;
         }
 
