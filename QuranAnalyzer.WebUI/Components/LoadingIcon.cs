@@ -1,7 +1,7 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
 // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
-public class LoadingIcon : ReactComponent
+public class LoadingIcon : ReactComponent // TODO: Check can be pure component
 {
     protected override Element render()
     {
