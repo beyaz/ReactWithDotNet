@@ -12,7 +12,9 @@ public sealed class Tooltip : ElementBase
     public string placement { get; set; }
 
     [React]
-    public Dictionary<string, Style> classes { get; set; }
-    
+    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
+    public Dictionary<string, Style> classes { get; private set; } = new();
+
+
 
 }

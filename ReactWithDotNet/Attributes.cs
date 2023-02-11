@@ -92,3 +92,14 @@ public class CacheThisMethodByTheseParametersAttribute : Attribute
 public class CacheThisMethodAttribute : Attribute
 {
 }
+
+[AttributeUsage(AttributeTargets.Property)]
+public class ReactTransformValueInServerSideAttribute : Attribute
+{
+    public Type TransformMethodDeclaringType { get; }
+
+    public ReactTransformValueInServerSideAttribute(Type transformMethodDeclaringType)
+    {
+        this.TransformMethodDeclaringType = transformMethodDeclaringType ?? throw new ArgumentNullException(nameof(transformMethodDeclaringType));
+    }
+}
