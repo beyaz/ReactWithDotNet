@@ -15,23 +15,22 @@ public sealed class Fragment : Element
             return;
         }
 
-        this.modifiers ??= new List<IModifier>();
-
-        this.modifiers.AddRange(modifiers);
+        (this.modifiers ??= new List<IModifier>()).AddRange(modifiers);
     }
 
     internal void ArrangeChildren()
     {
-        if (modifiers is not null)
+        if (modifiers is null)
         {
-            foreach (var modifier in modifiers)
+            return;
+        }
+
+        foreach (var modifier in modifiers)
+        {
+            foreach (var child in children)
             {
-                foreach (var child in children)
-                {
-                    ModifyHelper.ProcessModifier(child,modifier);
-                }
+                ModifyHelper.ProcessModifier(child, modifier);
             }
         }
     }
-    
 }
