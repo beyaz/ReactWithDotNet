@@ -5,22 +5,6 @@ static class Theme
     public static string TextColor = "rgb(51, 51, 51)";
 }
 
-class divWithBorder : HtmlElement
-{
-    public divWithBorder()
-    {
-        this.Apply(BorderRadius(5), ComponentBorder);
-    }
-
-    public divWithBorder(params IModifier[] modifiers)
-    {
-        this.Apply(BorderRadius(5), ComponentBorder);
-        this.Apply(modifiers);
-    }
-
-    public override string Type => nameof(div);
-}
-
 class LargeTitle : ReactPureComponent
 {
     readonly string text;
