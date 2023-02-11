@@ -47,16 +47,15 @@ public class WhereIsTheProblemPage : ReactComponent
                 "Buna rağmen 2:81 de biri 8 elif saymış diğeri 7 elif saymış.",
                 "Eğer kandırma yoluna gidecek biri kısa ayetler yerine uzun cümlelerde bu şekilde bir oynamaya giderdi. ",
                 "Tam 81 farklı ayette Reşad ve Tanzil.net Elif harfini farklı saymışlar." ,
-                "Tabii bu fark maksimum 1-2 olacak şekilde bir fark. Mesela Bakara suresinin 282.inci ayetinde biri 108 öteki 107 saymış.",
+                "Tabii bu fark maksimum 1-2 olacak şekilde bir fark. Mesela Bakara suresinin 282.inci ayetinde biri 108 öteki 107 elif harfi saymış.",
                 new br(),
                 new br(),
-                "- İşte bu Elif harfinin sayımları konusunda başka veriler Reşad'ın doğru saydığını gösteriyor. " ,
+                "- İşte bu Elif harfinin sayımları konusunda başka veriler Reşad'ın doğru saydığını gösteriyor diye düşünüyorum. " ,
                 " Aşağıda iki ayrı incelemeyi paylaşıyorum. Aşağıdaki iki ayrı veri de Reşad'dan çok sonra ortaya çıkmıştır. ",
                 new br(),
                 new br(),
                 new a
                 {
-
                     href = GetPageLink(PageId.PageVerseListContainsAllInitialLetters),
                     text = "Bütün Başlangıç Harflerini İçeren Ayetler"
                 },
@@ -64,13 +63,12 @@ public class WhereIsTheProblemPage : ReactComponent
                 new br(),
                 new a
                 {
-
                     href = GetPageLink(PageId.AllInitialLettersCombined),
                     text = "Başlangıç harflerinin yan yana yazılması ile oluşan büyük sayılar"
                 },
                 
                 new br(),
-                
+                new br(),
                 "Burada kendi yorumumu paylaşmak istiyorum.",
                 " Zaman içerisinde 19 ile ilgili veriler daha netlik kazanacak. " ,
                 " Mesela Sad harfi 3 ayrı sureye dağılmış diye garip gelebilir. " ,
