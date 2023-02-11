@@ -71,7 +71,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                 {
                     new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
 
-                    new TextArea { ValueBind = () => state.SearchScript },
+                    new TextArea { TextArea.Bind(() => state.SearchScript) },
 
                     new ErrorText { Text = state.SearchScriptErrorMessage }
                 },

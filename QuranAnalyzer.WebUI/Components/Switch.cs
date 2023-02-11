@@ -3,6 +3,7 @@
 class SwitchWithLabel : ReactPureComponent
 {
     public bool IsDisabled { get; set; }
+
     public string Label { get; set; }
 
     public double? LabelMaxWidth { get; set; }

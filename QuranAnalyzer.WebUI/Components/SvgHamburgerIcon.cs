@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-class SvgHamburgerIcon : ReactComponent
+class SvgHamburgerIcon : ReactPureComponent
 {
     protected override Element render()
     {
@@ -20,9 +20,7 @@ class SvgHamburgerIcon : ReactComponent
     }
 }
 
-
-
-class MenuCloseIcon : ReactComponent
+class MenuCloseIcon : ReactPureComponent
 {
     protected override Element render()
     {

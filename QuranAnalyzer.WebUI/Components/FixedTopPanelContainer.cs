@@ -42,15 +42,9 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                         DisplayNone, MediaQueryOnMobile(new Style { DisplayBlock }),
                         MarginRight(30),
                         OnClick(_ => state.IsMenuVisible = !state.IsMenuVisible),
-                        new SvgHamburgerIcon() + new Style
-                        {
-                            When(state.IsMenuVisible, DisplayNone),
-                        },
+                        new SvgHamburgerIcon() + When(state.IsMenuVisible, DisplayNone),
 
-                        new MenuCloseIcon() + new Style
-                        {
-                            DisplayNone, When(state.IsMenuVisible, DisplayBlock)
-                        },
+                        new MenuCloseIcon() + DisplayNone + When(state.IsMenuVisible, DisplayBlock),
 
                         new div(PositionAbsolute)
                         {
