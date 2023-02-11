@@ -1,68 +1,8 @@
-﻿
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
-
-public abstract class ReactPureComponent
-{
-    List<StyleModifier> styleModifiers;
-
-    protected abstract Element render();
-
-    internal Element InvokeRender()
-    {
-        var root = render();
-
-        if (styleModifiers is not null)
-        {
-            foreach (var styleModifier in styleModifiers)
-            {
-                ModifyHelper.ProcessModifier(root, styleModifier);
-            }
-        }
-
-        return root;
-    }
-
-    public static ReactPureComponent operator +(ReactPureComponent reactPureComponent, StyleModifier styleModifier)
-    {
-        (reactPureComponent.styleModifiers ??= new List<StyleModifier>()).Add(styleModifier);
-
-        return reactPureComponent;
-    }
-
-    public void Add(ReactPureComponentModifier modifier)
-    {
-        modifier?.Modify(this);
-    }
-}
-
-public abstract class ReactPureComponentModifier
-{
-    internal abstract void Modify(ReactPureComponent pureComponent);
-}
-
-public sealed class ReactPureComponentModifier<TPureComponent> where  TPureComponent : ReactPureComponent
-{
-    internal readonly Action<TPureComponent> modify;
-
-    public ReactPureComponentModifier(Action<TPureComponent> modifyPureComponent)
-    {
-        modify = modifyPureComponent ?? throw new ArgumentNullException(nameof(modifyPureComponent));
-    }
-
-    internal void Modify(ReactPureComponent pureComponent)
-    {
-        if (pureComponent == null)
-        {
-            return;
-        }
-        
-        modify((TPureComponent)pureComponent);
-    }
-}
 
 public abstract class ReactStatefulComponent : Element
 {
