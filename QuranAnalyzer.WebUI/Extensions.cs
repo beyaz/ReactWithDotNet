@@ -34,10 +34,7 @@ static class Extensions
         return null;
     }
 
-    public static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*~ايام;*~يومين;*~الايام;*~اياما;*~واياما;*~بايىم";
-
-    public static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*~يوم;*~ويوم;*~اليوم;*~واليوم;*~يوما;*~ليوم;*~فاليوم;*~بيوم;*~باليوم;*~وباليوم";
-
+    
     public static void ArabicKeyboardPressed(this Client client, string arabicLetter)
     {
         client.DispatchEvent(nameof(ArabicKeyboardPressed), arabicLetter);
@@ -64,7 +61,17 @@ static class Extensions
     {
         client.DispatchEvent(nameof(HamburgerMenuOpened));
     }
+    public static void OnHamburgerMenuClosed(this Client client, Action handler)
+    {
+        client.ListenEvent(HamburgerMenuClosed, handler);
+    }
 
+    public static void OnHandleHamburgerMenuOpened(this Client client, Action handler)
+    {
+        client.ListenEvent(HamburgerMenuOpened, handler);
+    }
+    
+    
     public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
 
     public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
@@ -81,15 +88,7 @@ static class Extensions
         client.ListenEvent(ArabicKeyboardPressed, handlerAction);
     }
 
-    public static void OnHamburgerMenuClosed(this Client client, Action handler)
-    {
-        client.ListenEvent(HamburgerMenuClosed, handler);
-    }
-
-    public static void OnHandleHamburgerMenuOpened(this Client client, Action handler)
-    {
-        client.ListenEvent(HamburgerMenuOpened, handler);
-    }
+   
 
     public static void OnMainContentDivScrollChangedOverZero(this Client client, Action<double> handlerAction)
     {

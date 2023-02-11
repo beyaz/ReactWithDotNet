@@ -4,15 +4,17 @@ namespace QuranAnalyzer.WebUI.Pages.PreInformation;
 
 public class PreInformationView : ReactComponent
 {
+    static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*~ايام;*~يومين;*~الايام;*~اياما;*~واياما;*~بايىم";
+
+    static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*~يوم;*~ويوم;*~اليوم;*~واليوم;*~يوما;*~ليوم;*~فاليوم;*~بيوم;*~باليوم;*~وباليوم";
+
     protected override Element render()
     {
         return new Article
         {
             new LargeTitle("Kuran Hakkında Bazı Bilgiler"),
-           
-            
+
             (p)@"Bu bölümde Kuran hakkında dikkat çeken bazı bilgiler verilecektir.",
-            
 
             new ul
             {
