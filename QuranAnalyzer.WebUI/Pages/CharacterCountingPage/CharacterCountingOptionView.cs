@@ -73,7 +73,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                 new HSpace(20),
                                 new img
                                 {
-                                    src    = "wwwroot/img/Keyboard.svg",
+                                    src    = ResourceAccess.Img("Keyboard.svg"),
                                     width  = iconSize,
                                     height = iconSize
                                 },
@@ -100,8 +100,8 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                 new HSpace(10),
                                 new img
                                 {
-                                    src    = "wwwroot/img/Options.svg",
-                                    width  = iconSize,
+                                    src = ResourceAccess.Img("Options.svg"), 
+                                    width = iconSize,
                                     height = iconSize
                                 },
                                 new div(Text("Mushaf Ayarları"))

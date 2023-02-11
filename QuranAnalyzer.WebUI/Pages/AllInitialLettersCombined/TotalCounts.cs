@@ -158,7 +158,7 @@ class TotalCounts : ReactComponent
                 {
                     new img(MarginTopBottom(10))
                     {
-                        src    = "wwwroot/img/arrow-down-double.svg",
+                        src    = ResourceAccess.Img("arrow-down-double.svg"),
                         width  = 40,
                         height = 40,
                     }

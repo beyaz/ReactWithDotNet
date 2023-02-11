@@ -54,13 +54,6 @@ static class ContextKey
     public static ReactContextKey<bool> HamburgerMenuIsOpen = new(nameof(HamburgerMenuIsOpen));
 }
 
-class SettingsFile
-{
-    public string RootLocation { get; set; }
-    public string LogFilePath { get; set; }
-    public bool IsLogEnabled { get; set; }
-}
-
 static class App
 {
     public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
