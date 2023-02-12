@@ -8,7 +8,7 @@ public sealed class StyleModifier : IModifier
 {
     internal readonly Action<Style> modifyStyle;
 
-    public StyleModifier(Action<Style> modifyStyle)
+    internal StyleModifier(Action<Style> modifyStyle)
     {
         this.modifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
     }
