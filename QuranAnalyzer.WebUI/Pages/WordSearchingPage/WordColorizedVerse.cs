@@ -3,7 +3,7 @@ using static QuranAnalyzer.WebUI.LetterColorPalette;
 
 namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 
-class WordColorizedVerse : ReactComponent // TODO: check pure
+class WordColorizedVerse : ReactPureComponent
 {
     public  Verse Verse { get; set; }
 
