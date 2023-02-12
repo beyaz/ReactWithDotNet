@@ -44,16 +44,7 @@ static class QueryKey
 }
 
 
-static class App
-{
-    public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
 
-    public static StyleModifier ComponentBorder => Border($"1px solid {BorderColor}");
-
-    public static string BluePrimary => "#1976d2";
-
-    public static string BorderColor = "#dee2e6";
-}
 
 public abstract class ReactComponent : ReactWithDotNet.ReactComponent
 {
