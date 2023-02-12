@@ -65,7 +65,6 @@ class View : ReactComponent<MainViewModel>
     void OnHamburgerMenuClosed()
     {
         state.HamburgerMenuIsOpen = false;
-        Context.Set(ContextKey.HamburgerMenuIsOpen,state.HamburgerMenuIsOpen);
     }
 
     void OnHamburgerMenuOpened()

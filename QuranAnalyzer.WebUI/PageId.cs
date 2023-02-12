@@ -48,11 +48,6 @@ static class ResourceAccess
     public static string Img(string fileName) => "wwwroot/img/" + fileName;
 }
 
-static class ContextKey
-{
-    public static ReactContextKey<bool> HamburgerMenuIsOpen = new(nameof(HamburgerMenuIsOpen));
-}
-
 static class App
 {
     public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
