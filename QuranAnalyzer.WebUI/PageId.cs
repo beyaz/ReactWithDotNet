@@ -84,6 +84,27 @@ public abstract class ReactComponent : ReactWithDotNet.ReactComponent
     }
 }
 
+
+public abstract class ReactPureComponent : ReactWithDotNet.ReactPureComponent
+{
+    protected string GetPronunciationOfArabicLetter(string arabicLetter)
+    {
+        return GetTurkishPronunciationOfArabicLetter(arabicLetter);
+    }
+
+    protected (string reading, string trMean)? GetPronunciationOfArabicWord(string arabicWord)
+    {
+        return GetTurkishPronunciationOfArabicWord(arabicWord);
+    }
+
+    protected IEnumerable<Element> AsLetter(string arabicLetter)
+    {
+        string pronunciation = GetPronunciationOfArabicLetter(arabicLetter);
+
+        return new Element[] { (strong)pronunciation, "(", (strong)arabicLetter, ")" };
+    }
+}
+
 public abstract class ReactComponent<TState> : ReactWithDotNet.ReactComponent<TState> where TState : new()
 {
     protected string GetPronunciationOfArabicLetter(string arabicLetter)
