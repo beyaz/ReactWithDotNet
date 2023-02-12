@@ -1,10 +1,10 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-public class TextArea : ReactPureComponent
+public class TextArea : ReactComponent
 {
     Expression<Func<string>> ValueBind;
 
-    public static IModifier Bind(Expression<Func<string>> expression) => CreatePureComponentModifier<TextArea>(x => x.ValueBind = expression);
+    public static IModifier Bind(Expression<Func<string>> expression) => CreateComponentModifier<TextArea>(x => x.ValueBind = expression);
 
     protected override Element render()
     {
@@ -23,11 +23,11 @@ public class TextArea : ReactPureComponent
     }
 }
 
-public class TextInput : ReactPureComponent
+public class TextInput : ReactComponent
 {
     Expression<Func<string>> ValueBind;
 
-    public static IModifier Bind(Expression<Func<string>> expression) => CreatePureComponentModifier<TextInput>(x => x.ValueBind = expression);
+    public static IModifier Bind(Expression<Func<string>> expression) => CreateComponentModifier<TextInput>(x => x.ValueBind = expression);
 
     protected override Element render()
     {
