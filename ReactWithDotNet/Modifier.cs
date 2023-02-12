@@ -61,20 +61,32 @@ public sealed class HtmlElementModifier : IModifier
     }
 }
 
-public sealed class ComponentModifier : IModifier
+abstract class ReactComponentModifier : IModifier
 {
-    internal readonly Action<ReactComponentBase> modify;
+    internal abstract void Modify(ReactComponentBase reactComponent);
+}
 
-    ComponentModifier(Action<ReactComponentBase> modifyComponent)
+sealed class ReactComponentModifier<TComponent> : ReactComponentModifier where TComponent : ReactComponent
+{
+    internal readonly Action<TComponent> modify;
+
+    public ReactComponentModifier(Action<TComponent> modifyComponent)
     {
         modify = modifyComponent ?? throw new ArgumentNullException(nameof(modifyComponent));
     }
 
-    internal static ComponentModifier Create(Action<ReactComponentBase> modifyComponent)
+    internal override void Modify(ReactComponentBase pureComponent)
     {
-        return new ComponentModifier(modifyComponent);
+        if (pureComponent == null)
+        {
+            return;
+        }
+
+        modify((TComponent)pureComponent);
     }
 }
+
+
 
 abstract class ReactPureComponentModifier : IModifier
 {
@@ -118,9 +130,9 @@ partial class Mixin
         return HtmlElementModifier.Create(modifyAction);
     }
 
-    public static ComponentModifier CreateModifier(Action<ReactComponentBase> modifyAction)
+    public static IModifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : ReactComponent
     {
-        return ComponentModifier.Create(modifyAction);
+        return new ReactComponentModifier<TComponent>(modifyAction);
     }
 }
 
@@ -190,9 +202,9 @@ static class ModifyHelper
 
         if (element is ReactComponentBase reactStatefulComponent)
         {
-            if (modifier is ComponentModifier componentModifier)
+            if (modifier is ReactComponentModifier componentModifier)
             {
-                componentModifier.modify(reactStatefulComponent);
+                componentModifier.Modify(reactStatefulComponent);
                 return;
             }
 

@@ -283,9 +283,9 @@ partial class ElementSerializer
                     {
                         foreach (var modifier in reactStatefulComponent.modifiers)
                         {
-                            if (modifier is ComponentModifier componentModifier)
+                            if (modifier is ReactComponentModifier componentModifier)
                             {
-                                componentModifier.modify(node.ElementAsDotNetReactComponent);
+                                componentModifier.Modify(node.ElementAsDotNetReactComponent);
                             }
                         }
                     }
@@ -305,7 +305,7 @@ partial class ElementSerializer
                         {
                             foreach (var modifier in reactStatefulComponent.modifiers)
                             {
-                                if (modifier is ComponentModifier)
+                                if (modifier is ReactComponentModifier)
                                 {
                                     continue;
                                 }
