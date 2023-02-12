@@ -29,7 +29,7 @@ public sealed class ElementModifier : IModifier
 {
     internal readonly Action<Element> modifyElement;
 
-    public ElementModifier(Action<Element> modifyElement)
+    internal ElementModifier(Action<Element> modifyElement)
     {
         this.modifyElement = modifyElement ?? throw new ArgumentNullException(nameof(modifyElement));
     }
