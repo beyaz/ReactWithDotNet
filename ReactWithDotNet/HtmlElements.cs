@@ -1,10 +1,6 @@
 ﻿namespace ReactWithDotNet;
 
-partial class Mixin
-{
-    public static readonly Func<string, HtmlElementModifier> Alt = img.Alt;
 
-}
 
 public class html : HtmlElement
 {
@@ -180,33 +176,7 @@ public class a : HtmlElement
     
 }
 
-public class img : HtmlElement
-{
-    public static HtmlElementModifier Alt(string alt) => HtmlElementModifier.Create(el => ((img)el).alt=alt);
-    
-    public img()
-    {
-    }
 
-    public img(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-
-    [React]
-    public string alt { get; set; }
-
-    [React]
-    public int height { get; set; }
-
-    [React]
-    public string loading { get; set; }
-
-    [React]
-    public string src { get; set; }
-
-    [React]
-    public int width { get; set; }
-}
 
 public class HtmlTextNode : HtmlElement
 {

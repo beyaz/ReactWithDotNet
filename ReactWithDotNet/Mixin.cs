@@ -735,10 +735,7 @@ public static partial class Mixin
     /// </summary>
     public static HtmlElement Space(double valueInPx) => new Space(valueInPx);
 
-    /// <summary>
-    ///     img.src = <paramref name="src" />
-    /// </summary>
-    public static HtmlElementModifier Src(string src) => HtmlElementModifier.Create(element => ((img)element).src = src);
+
 
     public static HtmlElementModifier Text(string innerText) => HtmlElementModifier.Create(element => element.text = innerText);
 
