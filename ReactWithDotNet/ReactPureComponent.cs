@@ -26,14 +26,14 @@ partial class Mixin
         return new StyleModifier(modifyAction);
     }
 
-    public static HtmlElementModifier CreateModifier(Action<HtmlElement> modifyAction)
+    internal static HtmlElementModifier CreateModifier(Action<HtmlElement> modifyAction)
     {
-        return new HtmlElementModifier(modifyAction);
+        return HtmlElementModifier.Create(modifyAction);
     }
 
     public static ComponentModifier CreateModifier(Action<ReactStatefulComponent> modifyAction)
     {
-        return new ComponentModifier(modifyAction);
+        return ComponentModifier.Create(modifyAction);
     }
 }
 

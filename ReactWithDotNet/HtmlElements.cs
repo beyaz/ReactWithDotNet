@@ -54,10 +54,10 @@ public class meta : HtmlElement
     [React]
     public string httpEquiv { get; set; }
 
-    public static HtmlElementModifier Content(string content) => new(element => ((meta)element).content = content);
-    public static HtmlElementModifier HttpEquiv(string httpEquiv) => new(element => ((meta)element).httpEquiv = httpEquiv);
-    public static HtmlElementModifier Name(string name) => new(element => ((meta)element).name = name);
-    public static HtmlElementModifier Charset(string charset) => new(element => ((meta)element).charset = charset);
+    public static HtmlElementModifier Content(string content) => HtmlElementModifier.Create(element => ((meta)element).content = content);
+    public static HtmlElementModifier HttpEquiv(string httpEquiv) => HtmlElementModifier.Create(element => ((meta)element).httpEquiv = httpEquiv);
+    public static HtmlElementModifier Name(string name) => HtmlElementModifier.Create(element => ((meta)element).name = name);
+    public static HtmlElementModifier Charset(string charset) => HtmlElementModifier.Create(element => ((meta)element).charset = charset);
 }
 
 
@@ -182,7 +182,7 @@ public class a : HtmlElement
 
 public class img : HtmlElement
 {
-    public static HtmlElementModifier Alt(string alt) => new(el => ((img)el).alt=alt);
+    public static HtmlElementModifier Alt(string alt) => HtmlElementModifier.Create(el => ((img)el).alt=alt);
     
     public img()
     {

@@ -50,20 +50,29 @@ public sealed class HtmlElementModifier : IModifier
 {
     internal readonly Action<HtmlElement> modifyHtmlElement;
 
-    public HtmlElementModifier(Action<HtmlElement> modifyHtmlElement)
+    HtmlElementModifier(Action<HtmlElement> modifyHtmlElement)
     {
         this.modifyHtmlElement = modifyHtmlElement ?? throw new ArgumentNullException(nameof(modifyHtmlElement));
     }
-    
+
+    internal static HtmlElementModifier Create(Action<HtmlElement> modifyAction)
+    {
+        return new HtmlElementModifier(modifyAction);
+    }
 }
 
 public sealed class ComponentModifier : IModifier
 {
     internal readonly Action<ReactStatefulComponent> modify;
 
-    public ComponentModifier(Action<ReactStatefulComponent> modifyComponent)
+    ComponentModifier(Action<ReactStatefulComponent> modifyComponent)
     {
         modify = modifyComponent ?? throw new ArgumentNullException(nameof(modifyComponent));
+    }
+
+    internal static ComponentModifier Create(Action<ReactStatefulComponent> modifyComponent)
+    {
+        return new ComponentModifier(modifyComponent);
     }
 }
 
