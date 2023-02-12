@@ -115,17 +115,17 @@ sealed class ReactPureComponentModifier<TPureComponent> : ReactPureComponentModi
 
 partial class Mixin
 {
-    public static IModifier CreateModifier<TPureComponent>(Action<TPureComponent> modifyAction) where TPureComponent : ReactPureComponent
+    public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) where TPureComponent : ReactPureComponent
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
     }
 
-    public static StyleModifier CreateModifier(Action<Style> modifyAction)
+    public static StyleModifier CreateStyleModifier(Action<Style> modifyAction)
     {
         return new StyleModifier(modifyAction);
     }
 
-    internal static HtmlElementModifier CreateModifier(Action<HtmlElement> modifyAction)
+    internal static HtmlElementModifier CreateHtmlElementModifier(Action<HtmlElement> modifyAction)
     {
         return HtmlElementModifier.Create(modifyAction);
     }
