@@ -1,52 +1,15 @@
-﻿using System.Collections;
+﻿namespace ReactWithDotNet;
 
-namespace ReactWithDotNet;
-
-public abstract class ReactPureComponent : IEnumerable
+public abstract class ReactPureComponent : Element
 {
-    List<StyleModifier> styleModifiers;
+    internal List<IModifier> modifiers;
 
-    public static ReactPureComponent operator +(ReactPureComponent reactPureComponent, StyleModifier styleModifier)
-    {
-        (reactPureComponent.styleModifiers ??= new List<StyleModifier>()).Add(styleModifier);
-
-        return reactPureComponent;
-    }
-
-    public void Add(ReactPureComponentModifier modifier)
-    {
-        modifier?.Modify(this);
-    }
-
-    public void Add(StyleModifier styleModifier)
-    {
-        (styleModifiers ??= new List<StyleModifier>()).Add(styleModifier);
-    }
-
-    public IEnumerator GetEnumerator()
-    {
-        throw new NotImplementedException("You should not enumerate react pure component.");
-    }
-
-    internal Element InvokeRender()
-    {
-        var root = render();
-
-        if (styleModifiers is not null)
-        {
-            foreach (var styleModifier in styleModifiers)
-            {
-                ModifyHelper.ProcessModifier(root, styleModifier);
-            }
-        }
-
-        return root;
-    }
+    internal Element InvokeRender() => render();
 
     protected abstract Element render();
 }
 
-public abstract class ReactPureComponentModifier
+public abstract class ReactPureComponentModifier : IModifier
 {
     internal abstract void Modify(ReactPureComponent pureComponent);
 }

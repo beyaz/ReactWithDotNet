@@ -39,7 +39,7 @@ partial class ElementSerializer
                 break;
             }
 
-            if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false)
+            if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false && node.ElementIsDotNetReactPureComponent is false)
             {
                 CompleteWithChildren(node, context);
 
@@ -134,6 +134,67 @@ partial class ElementSerializer
                 continue;
             }
 
+            if (node.ElementIsDotNetReactPureComponent)
+            {
+                var reactPureComponent = node.ElementAsDotNetReactPureComponent;
+                
+                if (node.DotNetComponentRenderMethodInvoked is false)
+                {
+                    node.DotNetComponentRenderMethodInvoked = true;
+
+                    if (reactPureComponent.modifiers is not null)
+                    {
+                        foreach (var modifier in reactPureComponent.modifiers)
+                        {
+                            if (modifier is ReactPureComponentModifier pureComponentModifier)
+                            {
+                                pureComponentModifier.Modify(reactPureComponent);
+                            }
+                        }
+                    }
+
+                    node.DotNetComponentRootElement = reactPureComponent.InvokeRender();
+
+                    if (node.DotNetComponentRootElement is not null)
+                    {
+                        node.DotNetComponentRootElement.key = "0";
+                        
+                        if (reactPureComponent.modifiers is not null)
+                        {
+                            foreach (var modifier in reactPureComponent.modifiers)
+                            {
+                                if (modifier is ReactPureComponentModifier)
+                                {
+                                    continue;
+                                }
+
+                                ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, modifier);
+                            }
+                        }
+                    }
+                    
+                    node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement, context);
+
+                    node.DotNetComponentRootNode.Parent = node;
+
+                    node = node.DotNetComponentRootNode;
+
+                    continue;
+                }
+
+                var map = new JsonMap();
+                map.Add("$isPureComponent", 1);
+                map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
+                map.Add(___Type___, GetReactComponentTypeInfo(reactPureComponent));
+                map.Add(nameof(Element.key), reactPureComponent.key);
+
+                node.ElementAsJsonMap = map;
+
+                node.IsCompleted = true;
+                
+                continue;
+            }
+            
             if (node.ElementIsDotNetReactComponent is false)
             {
                 throw FatalError("traverse problem");
@@ -690,6 +751,13 @@ partial class ElementSerializer
             return node;
         }
 
+        if (element is ReactPureComponent pureComponent)
+        {
+            node.ElementIsDotNetReactPureComponent = true;
+            node.ElementAsDotNetReactPureComponent = pureComponent;
+            return node;
+        }
+        
         throw FatalError("Node type not recognized");
     }
 
@@ -878,6 +946,8 @@ partial class ElementSerializer
         public bool IsSuspenseFallbackElementCalculated;
         public Element SuspenseFallbackElement;
         public Node SuspenseFallbackNode;
+        public bool ElementIsDotNetReactPureComponent;
+        public ReactPureComponent ElementAsDotNetReactPureComponent;
         public string BreadCrumpPath { get; set; }
         public int? CurrentOrder { get; set; }
         public bool DotNetComponentRenderMethodInvoked { get; set; }

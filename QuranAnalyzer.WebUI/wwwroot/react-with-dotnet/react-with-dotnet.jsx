@@ -689,7 +689,22 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
     {
         jsonNode = component.props.$jsonNode[RootNode].$children[jsonNode.$FakeChild];
     }
-    
+
+    if (jsonNode.$isPureComponent === 1)
+    {
+        const cmp = DefinePureComponent(jsonNode);
+
+        const cmpKey = NotNull(jsonNode.key);
+
+        const cmpProps =
+        {
+            key: cmpKey,
+            $jsonNode: jsonNode
+        };
+
+        return createElement(cmp, cmpProps);
+    }
+
     // is ReactWithDotNet component
     if (jsonNode[DotNetTypeOfReactComponent])
     {
@@ -1394,6 +1409,31 @@ function DefineComponent(componentDeclaration)
     NewComponent.displayName = dotNetTypeOfReactComponent.split(',')[0].split('.').pop();
 
     return NewComponent;
+}
+
+function DefinePureComponent(componentDeclaration)
+{
+    const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
+
+    const component = ComponentDefinitions[dotNetTypeOfReactComponent];
+    if (component)
+    {
+        return component;
+    }
+    
+    class NewPureComponent extends React.PureComponent
+    {        
+        render()
+        {
+            return ConvertToReactElement(CreateNewBuildContext(), this.props.$jsonNode[RootNode], this, /*isConvertingRootNode*/true);
+        }
+    }
+
+    ComponentDefinitions[dotNetTypeOfReactComponent] = NewPureComponent;
+
+    NewPureComponent.displayName = dotNetTypeOfReactComponent.split(',')[0].split('.').pop();
+
+    return NewPureComponent;
 }
 
 var IsWaitingRemoteResponse = false;

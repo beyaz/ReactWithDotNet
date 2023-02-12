@@ -59,11 +59,6 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         children.Add(element);
     }
 
-    public void Add(ReactPureComponent reactPureComponent)
-    {
-        Add(reactPureComponent?.InvokeRender());
-    }
-
     public void Add(IEnumerable<Element> elements)
     {
         if (elements is not null)

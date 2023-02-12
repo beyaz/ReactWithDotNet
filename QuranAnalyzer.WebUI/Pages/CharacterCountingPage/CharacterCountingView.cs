@@ -253,7 +253,6 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         state.ClickCount   = 0;
         state.MushafOption = mushafOption;
-        Context.Set(ContextKey.MushafOptionKey, state.MushafOption);
     }
 
     void OnCaclculateClicked()

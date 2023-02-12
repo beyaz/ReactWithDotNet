@@ -112,6 +112,12 @@ static class ModifyHelper
             }
         }
 
+        if (element is ReactPureComponent reactPureComponent)
+        {
+            (reactPureComponent.modifiers ??= new List<IModifier>()).Add(modifier);
+            return;
+        }
+        
         if (element is Fragment fragment)
         {
             fragment.modifiers ??= new List<IModifier>();
