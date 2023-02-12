@@ -32,7 +32,7 @@ public abstract class ReactStatefulComponent : Element
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
-    protected internal ReactContext Context { get; set; }
+    protected internal ReactContext Context { get; internal set; }
 
     public static ReactStatefulComponent operator +(ReactStatefulComponent component, Style style)
     {

@@ -140,6 +140,8 @@ partial class ElementSerializer
                 
                 if (node.DotNetComponentRenderMethodInvoked is false)
                 {
+                    reactPureComponent.Context = context.ReactContext;
+                    
                     node.DotNetComponentRenderMethodInvoked = true;
 
                     if (reactPureComponent.modifiers is not null)
