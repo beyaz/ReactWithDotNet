@@ -29,7 +29,7 @@ public class Switch : ReactPureComponent
 {
     public bool IsChecked { get; set; }
 
-    public bool IsDisabled { get; set; }
+    public bool? IsDisabled { get; set; }
 
     public Action<ChangeEvent> ValueChange { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using static QuranAnalyzer.ArabicLetter;
+﻿using System.Web;
+using static QuranAnalyzer.ArabicLetter;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
@@ -156,22 +157,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                         {
                             new FlexRow(AlignItemsCenter, Gap(5))
                             {
-                                new Switch { IsChecked = ShowCounts, ValueChange = changeEvent =>
-                                    {
-                                        var showNumbers = Convert.ToBoolean(changeEvent.target.value) ? 1 : 0;
-                                        if (Context.Query[QueryKey.ShowNumbers] == null)
-                                        {
-                                            Client.NavigateToUrl("?"+Context.QueryAsString + $"&{QueryKey.ShowNumbers}={showNumbers}");
-                                        }
-                                        else
-                                        {
-                                            Context.Query[QueryKey.ShowNumbers] = showNumbers.ToString();
-
-                                            Client.NavigateToUrl("?"+Context.Query);
-                                        }
-
-                                    }
-                                }, 
+                                CreateSeperationSwitch, 
                                 "Geçiş adetlerini göster"
                             }
                         },
@@ -352,4 +338,23 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
     }
 
     static string Id(int chapterNumber, string letter) => $"HaMimSeparated-{chapterNumber}-{letter}";
+
+    Element CreateSeperationSwitch()
+    {
+        var query = HttpUtility.ParseQueryString(Context.QueryAsString);
+        
+        var isChecked = query[QueryKey.ShowNumbers] == "1";
+
+        query[QueryKey.ShowNumbers] = isChecked ? "0" : "1";
+
+        return new a(Href($"?{query}"))
+        {
+            new Switch
+            {
+                IsChecked = isChecked,
+                IsDisabled = true
+            }
+        };
+
+    }
 }

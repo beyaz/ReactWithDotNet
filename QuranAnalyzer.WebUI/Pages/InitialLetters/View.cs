@@ -143,7 +143,7 @@ class Arrow: ReactPureComponent
 
 
 
-abstract class InitialLetterGroup : ReactComponent
+abstract class InitialLetterGroup : ReactPureComponent
 {
     protected tr HeaderTr => new tr
     {
