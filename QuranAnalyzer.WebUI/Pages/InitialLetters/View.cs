@@ -36,7 +36,7 @@ class InitialLetter : ReactComponent
     }
 }
 
-class CountingResult: ReactComponent
+class CountingResult: ReactPureComponent
 {
     public string id { get; set; }
 
@@ -76,6 +76,7 @@ class InitialLetterLineGroup : ReactComponent
         return new FlexRow
         {
             Margin(1),
+            
             JustifyContentSpaceEvenly,
             
             Children(children)
@@ -83,7 +84,7 @@ class InitialLetterLineGroup : ReactComponent
     }
 }
 
-class Chapter : ReactComponent
+class Chapter : ReactPureComponent
 {
     public int ChapterNumber { get; set; }
     
@@ -106,7 +107,7 @@ class Chapter : ReactComponent
 
 
 
-class Arrow: ReactComponent
+class Arrow: ReactPureComponent
 {
    public  string start;
    public  string end;
@@ -247,7 +248,7 @@ class InitialLetterGroup_Saad: InitialLetterGroup
                                 new InitialLetterLineGroup
                                 {
                                    
-                                        new InitialLetter { Id = Id(38,Saad), Letter = Saad, IsSelected = true ,style = { ml(100) }}
+                                        new InitialLetter { Id = Id(38,Saad), Letter = Saad, IsSelected = true, style = { ml(100) }}
                                     
                                 }
                             }
