@@ -16,7 +16,7 @@ abstract class ReactPureComponentModifier : IModifier
 
 partial class Mixin
 {
-    public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) where TPureComponent : ReactPureComponent
+    public static IModifier CreateModifier<TPureComponent>(Action<TPureComponent> modifyAction) where TPureComponent : ReactPureComponent
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
     }

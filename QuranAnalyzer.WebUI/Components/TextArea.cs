@@ -5,7 +5,7 @@ public class TextArea : ReactPureComponent
     Expression<Func<string>> ValueBind;
 
     public static IModifier Bind(Expression<Func<string>> expression) =>
-        CreatePureComponentModifier<TextArea>(x => x.ValueBind = expression);
+        CreateModifier<TextArea>(x => x.ValueBind = expression);
 
     protected override Element render()
     {
@@ -26,10 +26,10 @@ public class TextArea : ReactPureComponent
 
 public class TextInput : ReactPureComponent
 {
-    public Expression<Func<string>> ValueBind;
+    Expression<Func<string>> ValueBind;
 
     public static IModifier Bind(Expression<Func<string>> expression) =>
-        CreatePureComponentModifier<TextInput>(x => x.ValueBind = expression);
+        CreateModifier<TextInput>(x => x.ValueBind = expression);
 
     protected override Element render()
     {
