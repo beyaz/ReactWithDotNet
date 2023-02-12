@@ -4,7 +4,7 @@ using static QuranAnalyzer.ArabicLetter;
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 
 
-class InitialLetter : ReactComponent
+class InitialLetter : ReactPureComponent
 {
     public string Letter { get; set; }
 
