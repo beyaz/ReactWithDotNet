@@ -160,7 +160,12 @@ partial class ElementSerializer
                     if (node.DotNetComponentRootElement is not null)
                     {
                         node.DotNetComponentRootElement.key = "0";
-                        
+
+                        if (reactPureComponent._styleForRootElement is not null)
+                        {
+                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, new StyleModifier(style => style.Import(reactPureComponent._styleForRootElement)));
+                        }
+
                         if (reactPureComponent.modifiers is not null)
                         {
                             foreach (var modifier in reactPureComponent.modifiers)
