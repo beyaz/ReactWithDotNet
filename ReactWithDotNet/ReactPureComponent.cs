@@ -20,6 +20,21 @@ partial class Mixin
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
     }
+
+    public static StyleModifier CreateModifier(Action<Style> modifyAction)
+    {
+        return new StyleModifier(modifyAction);
+    }
+
+    public static HtmlElementModifier CreateModifier(Action<HtmlElement> modifyAction)
+    {
+        return new HtmlElementModifier(modifyAction);
+    }
+
+    public static ComponentModifier CreateModifier(Action<ReactStatefulComponent> modifyAction)
+    {
+        return new ComponentModifier(modifyAction);
+    }
 }
 
 sealed class ReactPureComponentModifier<TPureComponent> : ReactPureComponentModifier where TPureComponent : ReactPureComponent
