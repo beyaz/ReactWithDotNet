@@ -43,10 +43,6 @@ static class QueryKey
     public static string IncludeBizmillah = "b";
 }
 
-static class ResourceAccess
-{
-    public static string Img(string fileName) => "wwwroot/img/" + fileName;
-}
 
 static class App
 {

@@ -4,6 +4,9 @@ namespace QuranAnalyzer.WebUI;
 
 static class Extensions
 {
+
+    public static string FileAtImgFolder(string fileName) => "wwwroot/img/" + fileName;
+
     public static (string reading, string trMean)? GetTurkishPronunciationOfArabicWord(string arabicWord)
     {
         if (arabicWord == "ايام")

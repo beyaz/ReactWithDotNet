@@ -73,7 +73,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                 new HSpace(20),
                                 new img
                                 {
-                                    src    = ResourceAccess.Img("Keyboard.svg"),
+                                    src    = FileAtImgFolder("Keyboard.svg"),
                                     width  = iconSize,
                                     height = iconSize
                                 },
@@ -100,7 +100,7 @@ class CharacterCountingOptionView : ReactComponent<CharacterCountingOptionState>
                                 new HSpace(10),
                                 new img
                                 {
-                                    src = ResourceAccess.Img("Options.svg"), 
+                                    src = FileAtImgFolder("Options.svg"), 
                                     width = iconSize,
                                     height = iconSize
                                 },

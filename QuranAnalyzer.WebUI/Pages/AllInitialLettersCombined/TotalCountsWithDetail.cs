@@ -284,7 +284,7 @@ class TotalCountsWithDetail : ReactComponent
                 {
                     new img(MarginTopBottom(10))
                     {
-                        src    = ResourceAccess.Img("arrow-down-double.svg"),
+                        src    = FileAtImgFolder("arrow-down-double.svg"),
                         width  = 40,
                         height = 40,
                     }

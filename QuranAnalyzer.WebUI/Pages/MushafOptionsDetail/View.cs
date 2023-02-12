@@ -30,7 +30,7 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
             new br(),
             new img
             {
-                src   = Img("MushafDifferences.jpg"),
+                src   = FileAtImgFolder("MushafDifferences.jpg"),
                 style = { width = "100%", height = "auto", display = "block", marginLeftRight = "auto" }
             },
 
@@ -56,7 +56,7 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                 " Böyle yazılmış çünkü bazı mushaflarda sin harfi var bazılarında sin harfinin olduğu yerde sad harfi var. ",
                 new img
                 {
-                    src   = Img("7_69_sin_sad.png"),
+                    src   = FileAtImgFolder("7_69_sin_sad.png"),
                     style = { width = "91px", height = "auto", display = "block", marginLeftRight = "auto" }
                 },
                 "Oradaki harfin hangisi olduğu üzerine tartışma var. Kimisi sin diye yazılır Sad diye okunur demiş. Elbette başka yorumlar da var.",
