@@ -151,7 +151,7 @@ partial class Mixin
 
 public sealed class CalculateHtmlTextInput
 {
-    public ReactStatefulComponent ReactComponent  { get; init; }
+    public ReactComponentBase ReactComponent  { get; init; }
     
     public string QueryString { get; init; }
 

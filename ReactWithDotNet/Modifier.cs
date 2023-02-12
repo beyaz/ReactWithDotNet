@@ -63,14 +63,14 @@ public sealed class HtmlElementModifier : IModifier
 
 public sealed class ComponentModifier : IModifier
 {
-    internal readonly Action<ReactStatefulComponent> modify;
+    internal readonly Action<ReactComponentBase> modify;
 
-    ComponentModifier(Action<ReactStatefulComponent> modifyComponent)
+    ComponentModifier(Action<ReactComponentBase> modifyComponent)
     {
         modify = modifyComponent ?? throw new ArgumentNullException(nameof(modifyComponent));
     }
 
-    internal static ComponentModifier Create(Action<ReactStatefulComponent> modifyComponent)
+    internal static ComponentModifier Create(Action<ReactComponentBase> modifyComponent)
     {
         return new ComponentModifier(modifyComponent);
     }
@@ -118,7 +118,7 @@ partial class Mixin
         return HtmlElementModifier.Create(modifyAction);
     }
 
-    public static ComponentModifier CreateModifier(Action<ReactStatefulComponent> modifyAction)
+    public static ComponentModifier CreateModifier(Action<ReactComponentBase> modifyAction)
     {
         return ComponentModifier.Create(modifyAction);
     }
@@ -188,7 +188,7 @@ static class ModifyHelper
             throw new DeveloperException("Fake child cannot modify. Because fake child is in client.");
         }
 
-        if (element is ReactStatefulComponent reactStatefulComponent)
+        if (element is ReactComponentBase reactStatefulComponent)
         {
             if (modifier is ComponentModifier componentModifier)
             {

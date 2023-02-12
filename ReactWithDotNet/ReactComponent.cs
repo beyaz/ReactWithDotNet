@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-public abstract class ReactStatefulComponent : Element
+public abstract class ReactComponentBase : Element
 {
     internal Style _styleForRootElement;
 
@@ -34,7 +34,7 @@ public abstract class ReactStatefulComponent : Element
     [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; internal set; }
 
-    public static ReactStatefulComponent operator +(ReactStatefulComponent component, Style style)
+    public static ReactComponentBase operator +(ReactComponentBase component, Style style)
     {
         component.style.Import(style);
 
@@ -132,7 +132,7 @@ public abstract class ReactStatefulComponent : Element
     internal abstract bool IsStateNull { get; }
 }
 
-public abstract class ReactComponent<TState> : ReactStatefulComponent where TState : new()
+public abstract class ReactComponent<TState> : ReactComponentBase where TState : new()
 {
     [Newtonsoft.Json.JsonProperty]
     public TState state { get; protected internal set; }

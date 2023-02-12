@@ -467,9 +467,9 @@ partial class ElementSerializer
                         cachedMethods.Add(cachableMethodInfo);
                     }
 
-                    ReactStatefulComponent cloneComponent()
+                    ReactComponentBase cloneComponent()
                     {
-                        var component = (ReactStatefulComponent)reactStatefulComponent.Clone();
+                        var component = (ReactComponentBase)reactStatefulComponent.Clone();
 
                         dotNetProperties.Foreach(copyPropertyValueDeeply);
 
@@ -644,7 +644,7 @@ partial class ElementSerializer
         node.IsCompleted = true;
     }
 
-    static void ConvertReactEventsToTaskForEventBus(this ReactStatefulComponent reactComponent)
+    static void ConvertReactEventsToTaskForEventBus(this ReactComponentBase reactComponent)
     {
         var type = reactComponent.GetType();
 
@@ -682,7 +682,7 @@ partial class ElementSerializer
                 return;
             }
 
-            if (@delegate.Target is ReactStatefulComponent target)
+            if (@delegate.Target is ReactComponentBase target)
             {
                 if (target.ComponentUniqueIdentifier is null)
                 {
@@ -744,7 +744,7 @@ partial class ElementSerializer
             return node;
         }
 
-        if (element is ReactStatefulComponent dotNetComponent)
+        if (element is ReactComponentBase dotNetComponent)
         {
             node.ElementIsDotNetReactComponent = true;
             node.ElementAsDotNetReactComponent = dotNetComponent;
@@ -963,7 +963,7 @@ partial class ElementSerializer
 
         public Element Element { get; init; }
 
-        public ReactStatefulComponent ElementAsDotNetReactComponent { get; set; }
+        public ReactComponentBase ElementAsDotNetReactComponent { get; set; }
 
         public FakeChild ElementAsFakeChild { get; set; }
         public Fragment ElementAsFragment { get; set; }

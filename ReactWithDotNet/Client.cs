@@ -8,7 +8,7 @@ sealed class EventSenderInfo
 }
 static partial class Mixin
 {
-    internal static EventSenderInfo GetEventSenderInfo(ReactStatefulComponent reactComponent, string propertyName)
+    internal static EventSenderInfo GetEventSenderInfo(ReactComponentBase reactComponent, string propertyName)
     {
         if (reactComponent.ComponentUniqueIdentifier is null)
         {

@@ -46,7 +46,7 @@ partial class Mixin
 
     public static void OnOutsideClicked(this Client client, string idOfElement, Action action)
     {
-        if (action.Target is ReactStatefulComponent target)
+        if (action.Target is ReactComponentBase target)
         {
             if (target.ComponentUniqueIdentifier is null)
             {

@@ -28,7 +28,7 @@ sealed class ElementSerializerContext
 {
     public readonly Tracer Tracer = new();
 
-    internal readonly Stack<ReactStatefulComponent> componentStack = new();
+    internal readonly Stack<ReactComponentBase> componentStack = new();
 
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
@@ -158,7 +158,7 @@ static partial class ElementSerializer
 
         if (propertyValue is Action action)
         {
-            if (action.Target is ReactStatefulComponent target)
+            if (action.Target is ReactComponentBase target)
             {
                 propertyValue = new RemoteMethodInfo {
                     IsRemoteMethod = true, 
@@ -181,7 +181,7 @@ static partial class ElementSerializer
                 var @delegate = (Delegate)propertyValue;
                 if (@delegate is not null)
                 {
-                    if (@delegate.Target is ReactStatefulComponent target)
+                    if (@delegate.Target is ReactComponentBase target)
                     {
                         propertyValue = new RemoteMethodInfo
                         {
@@ -261,7 +261,7 @@ static partial class ElementSerializer
                 return NotExportableObject;
             }
 
-            if (getTargetValueFromExpression(propertyInfo, propertyValue as LambdaExpression) is ReactStatefulComponent target)
+            if (getTargetValueFromExpression(propertyInfo, propertyValue as LambdaExpression) is ReactComponentBase target)
             {
                 bindInfo.HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier;
             }
@@ -539,7 +539,7 @@ static partial class ElementSerializer
         var didMountMethodInfo = componentType.FindMethod("componentDidMount", BindingFlags.NonPublic | BindingFlags.Instance);
         if (didMountMethodInfo != null)
         {
-            if (didMountMethodInfo.DeclaringType != typeof(ReactStatefulComponent))
+            if (didMountMethodInfo.DeclaringType != typeof(ReactComponentBase))
             {
                 return true;
             }

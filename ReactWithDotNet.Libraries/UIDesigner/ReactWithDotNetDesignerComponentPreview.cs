@@ -96,7 +96,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
 
                             var instance = (Element)DeserializeJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", declaringType);
 
-                            if (instance is ReactStatefulComponent component)
+                            if (instance is ReactComponentBase component)
                             {
                                 component.ComponentUniqueIdentifier = 1000;
                                 component.key                       = "0";
@@ -119,7 +119,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
 
                     var instance = (Element)DeserializeJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", type);
 
-                    if (instance is ReactStatefulComponent component)
+                    if (instance is ReactComponentBase component)
                     {
                         component.key     = "0";
                         component.Context = Context;
