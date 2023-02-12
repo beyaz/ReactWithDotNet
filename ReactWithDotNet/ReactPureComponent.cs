@@ -9,14 +9,14 @@ public abstract class ReactPureComponent : Element
     protected abstract Element render();
 }
 
-public abstract class ReactPureComponentModifier : IModifier
+abstract class ReactPureComponentModifier : IModifier
 {
     internal abstract void Modify(ReactPureComponent pureComponent);
 }
 
 partial class Mixin
 {
-    public static ReactPureComponentModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) where TPureComponent : ReactPureComponent
+    public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) where TPureComponent : ReactPureComponent
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
     }
