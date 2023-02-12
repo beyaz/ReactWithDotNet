@@ -1,5 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-using static QuranAnalyzer.ArabicLetter;
+﻿using static QuranAnalyzer.ArabicLetter;
 
 namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
 

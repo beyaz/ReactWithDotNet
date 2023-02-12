@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 
 namespace QuranAnalyzer.WebUI.Pages.CountOfAllahPage;

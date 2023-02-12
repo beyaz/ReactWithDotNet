@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-
-namespace QuranAnalyzer.WebUI.Pages;
+﻿namespace QuranAnalyzer.WebUI.Pages;
 
 public class AboutEdipYukselPage : ReactComponent
 {

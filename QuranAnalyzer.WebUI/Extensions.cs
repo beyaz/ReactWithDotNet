@@ -1,8 +1,6 @@
-﻿using QuranAnalyzer.WebUI.Components;
+﻿namespace QuranAnalyzer.WebUI;
 
-namespace QuranAnalyzer.WebUI;
-
-static class App
+static class Extensions
 {
     public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
 
@@ -11,11 +9,7 @@ static class App
     public static string BluePrimary => "#1976d2";
 
     public static string BorderColor = "#dee2e6";
-}
-
-static class Extensions
-{
-
+    
     public static string FileAtImgFolder(string fileName) => "wwwroot/img/" + fileName;
 
     public static (string reading, string trMean)? GetTurkishPronunciationOfArabicWord(string arabicWord)

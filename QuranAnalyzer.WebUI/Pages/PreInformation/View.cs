@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-
-namespace QuranAnalyzer.WebUI.Pages.PreInformation;
+﻿namespace QuranAnalyzer.WebUI.Pages.PreInformation;
 
 public class PreInformationView : ReactComponent
 {

@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 using ReactWithDotNet.react_xarrows;
 

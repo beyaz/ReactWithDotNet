@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using QuranAnalyzer.WebUI.Components;
 using ReactWithDotNet.Libraries.react_free_scrollbar;
 
 namespace QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;

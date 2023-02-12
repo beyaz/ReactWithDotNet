@@ -1,7 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-using static QuranAnalyzer.WebUI.ResourceAccess;
-
-namespace QuranAnalyzer.WebUI.Pages.SecuringDataWithCurrentTechnology;
+﻿namespace QuranAnalyzer.WebUI.Pages.SecuringDataWithCurrentTechnology;
 
 public class View : ReactComponent
 {

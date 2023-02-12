@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-
-namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
+﻿namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
 class View : ReactComponent
 {

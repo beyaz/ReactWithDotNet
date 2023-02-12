@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-
-namespace QuranAnalyzer.WebUI.Pages.DefinitionPage;
+﻿namespace QuranAnalyzer.WebUI.Pages.DefinitionPage;
 
 public class DefinitionView : ReactComponent
 {

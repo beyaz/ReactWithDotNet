@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-
-namespace QuranAnalyzer.WebUI.Pages.AlternativeSystems;
+﻿namespace QuranAnalyzer.WebUI.Pages.AlternativeSystems;
 
 public class AlternativeSystemsView : ReactComponent
 {

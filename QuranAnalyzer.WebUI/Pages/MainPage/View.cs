@@ -1,5 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+﻿using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using QuranAnalyzer.WebUI.Pages.InitialLetters;
 using QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
 

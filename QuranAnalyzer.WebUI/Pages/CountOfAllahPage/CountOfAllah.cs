@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-
-namespace QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
+﻿namespace QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
 
 class CountOfAllah : ReactComponent
 {

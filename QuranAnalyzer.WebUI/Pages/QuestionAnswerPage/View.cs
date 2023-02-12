@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-
-namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
+﻿namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
 
 public class View : ReactComponent
 {

@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-
-namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+﻿namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
 class CharacterCountingOptionState
 {

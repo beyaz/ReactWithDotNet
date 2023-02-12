@@ -1,6 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Components;
-using ReactWithDotNet;
-using static QuranAnalyzer.WebUI.PageId;
+﻿using static QuranAnalyzer.WebUI.PageId;
 
 namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 
