@@ -23,12 +23,6 @@ static partial class Mixin
     }
 }
 
-
-[Serializable]
-public sealed class EmptyState
-{
-}
-
 public sealed class Client
 {
     internal readonly List<ClientTask> taskList = new();
