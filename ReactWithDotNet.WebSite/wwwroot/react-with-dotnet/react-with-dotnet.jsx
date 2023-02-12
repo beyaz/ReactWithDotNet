@@ -689,7 +689,22 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
     {
         jsonNode = component.props.$jsonNode[RootNode].$children[jsonNode.$FakeChild];
     }
-    
+
+    if (jsonNode.$isPureComponent === 1)
+    {
+        const cmp = DefinePureComponent(jsonNode);
+
+        const cmpKey = NotNull(jsonNode.key);
+
+        const cmpProps =
+        {
+            key: cmpKey,
+            $jsonNode: jsonNode
+        };
+
+        return createElement(cmp, cmpProps);
+    }
+
     // is ReactWithDotNet component
     if (jsonNode[DotNetTypeOfReactComponent])
     {
@@ -910,7 +925,12 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
     if (children)
     {
         const childrenLength = children.length;
-        
+
+        if (childrenLength === 1)
+        {
+            return createElement(constructorFunction, props, ConvertToReactElement(buildContext, children[0], component));
+        }
+
         const newChildren = [];
 
         for (let childIndex = 0; childIndex < childrenLength; childIndex++)
@@ -1389,6 +1409,31 @@ function DefineComponent(componentDeclaration)
     NewComponent.displayName = dotNetTypeOfReactComponent.split(',')[0].split('.').pop();
 
     return NewComponent;
+}
+
+function DefinePureComponent(componentDeclaration)
+{
+    const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
+
+    const component = ComponentDefinitions[dotNetTypeOfReactComponent];
+    if (component)
+    {
+        return component;
+    }
+    
+    class NewPureComponent extends React.PureComponent
+    {        
+        render()
+        {
+            return ConvertToReactElement(CreateNewBuildContext(), this.props.$jsonNode[RootNode], this, /*isConvertingRootNode*/true);
+        }
+    }
+
+    ComponentDefinitions[dotNetTypeOfReactComponent] = NewPureComponent;
+
+    NewPureComponent.displayName = dotNetTypeOfReactComponent.split(',')[0].split('.').pop();
+
+    return NewPureComponent;
 }
 
 var IsWaitingRemoteResponse = false;
@@ -1886,10 +1931,10 @@ function ProcessDynamicCssClasses(dynamicStyles)
             {
                 hasChange = true;
 
-                let startIndex = cssSelector.indexOf('._');
-                let endIndex = cssSelector.indexOf('_', startIndex + 2);
+                let startIndex = cssSelector.indexOf('._rwd_');
+                let endIndex = cssSelector.indexOf('_', startIndex + 6);
 
-                const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 2, endIndex));
+                const componentUniqueIdentifier = parseInt(cssSelector.substring(startIndex + 6, endIndex));
                 if (isNaN(componentUniqueIdentifier))
                 {
                     throw CreateNewDeveloperError('componentUniqueIdentifier cannot calculated from ' + cssSelector);
