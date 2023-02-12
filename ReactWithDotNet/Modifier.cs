@@ -86,8 +86,6 @@ sealed class ReactComponentModifier<TComponent> : ReactComponentModifier where T
     }
 }
 
-
-
 abstract class ReactPureComponentModifier : IModifier
 {
     internal abstract void Modify(ReactPureComponent pureComponent);
@@ -115,6 +113,11 @@ sealed class ReactPureComponentModifier<TPureComponent> : ReactPureComponentModi
 
 partial class Mixin
 {
+    public static IModifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : ReactComponent
+    {
+        return new ReactComponentModifier<TComponent>(modifyAction);
+    }
+
     public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) where TPureComponent : ReactPureComponent
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
@@ -128,11 +131,6 @@ partial class Mixin
     internal static HtmlElementModifier CreateHtmlElementModifier(Action<HtmlElement> modifyAction)
     {
         return HtmlElementModifier.Create(modifyAction);
-    }
-
-    public static IModifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : ReactComponent
-    {
-        return new ReactComponentModifier<TComponent>(modifyAction);
     }
 }
 
@@ -173,7 +171,7 @@ static class ModifyHelper
                 htmlElementModifier.modifyHtmlElement(htmlElement);
                 return;
             }
-            
+
             if (modifier is ElementModifier elementModifier)
             {
                 elementModifier.modifyElement(htmlElement);
@@ -186,7 +184,7 @@ static class ModifyHelper
             (reactPureComponent.modifiers ??= new List<IModifier>()).Add(modifier);
             return;
         }
-        
+
         if (element is Fragment fragment)
         {
             fragment.modifiers ??= new List<IModifier>();
