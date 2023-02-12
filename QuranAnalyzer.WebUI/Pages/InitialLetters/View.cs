@@ -69,7 +69,7 @@ class CountingResult: ReactPureComponent
     }
 }
 
-class InitialLetterLineGroup : ReactComponent
+class InitialLetterLineGroup : ReactPureComponent
 {
     protected override Element render()
     {
