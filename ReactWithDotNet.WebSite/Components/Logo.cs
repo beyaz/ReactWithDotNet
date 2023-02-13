@@ -4,9 +4,15 @@ public class Logo : ReactPureComponent
 {
     protected override Element render()
     {
-        return new FlexRow
+        return new FlexColumn(Width(140), AlignItemsCenter)
         {
-            new img { Src(Asset("react.svg")) }
+            new FlexRow(Gap(25))
+            {
+                new img { Src(Asset("react.svg")), WidthHeight(40) },
+                new img { Src(Asset("net_core_logo.svg")), WidthHeight(40) }
+            },
+            
+            new small{"React with DotNet"}
         };
     }
 }
