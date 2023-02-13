@@ -14,6 +14,7 @@ import "./react-with-dotnet/libraries/react-xarrows/all";
 import "./react-with-dotnet/libraries/rsuite/all";
 import "./react-with-dotnet/libraries/swiper/all";
 import "./react-with-dotnet/libraries/uiw-react-codemirror/all";
+import "./react-with-dotnet/libraries/framer-motion/all";
 
 
 var currentScrollY = 0;
