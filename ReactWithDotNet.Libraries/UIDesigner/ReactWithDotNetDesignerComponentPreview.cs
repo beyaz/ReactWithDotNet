@@ -132,6 +132,14 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                         return component;
                     }
 
+                    if (instance is ReactPureComponent reactPureComponent)
+                    {
+                        reactPureComponent.key     = "0";
+                        reactPureComponent.Context = Context;
+
+                        return reactPureComponent;
+                    }
+
                     return instance.ToString();
                 }
             }

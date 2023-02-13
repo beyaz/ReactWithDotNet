@@ -329,7 +329,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 }
 
                 if (propertyInfo.DeclaringType == typeof(Element) ||
-                    propertyInfo.DeclaringType == typeof(ReactComponentBase))
+                    propertyInfo.DeclaringType == typeof(ReactComponentBase)||
+                    propertyInfo.DeclaringType == typeof(ReactPureComponent))
                 {
                     continue;
                 }

@@ -1,4 +1,5 @@
-﻿namespace QuranAnalyzer.WebUI;
+﻿
+namespace ReactWithDotNet.WebSite;
 
 class MainLayout : ReactComponent
 {
@@ -65,7 +66,7 @@ import {{ReactWithDotNet}} from './{root}/dist/index.js';
 
 ReactWithDotNet.RenderComponentIn({{
   idOfContainerHtmlElement: 'app',
-  renderInfo: {CalculateJsonText(Page, QueryString)}
+  renderInfo: {CalculateJsonText(Page, QueryString).GetAwaiter().GetResult()}
 }});
 
 "
