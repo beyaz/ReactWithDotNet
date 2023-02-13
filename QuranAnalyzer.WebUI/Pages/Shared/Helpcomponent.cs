@@ -42,8 +42,19 @@ class Helpcomponent : ReactComponent
         {
             return new FlexColumn(Gap(20))
             {
-                Title() + MarginTop(11),
-                HelpDetail
+                Space(11),
+                Title(),
+
+                new motion_div
+                {
+                    initial    = { opacity  = 0 },
+                    animate    = { opacity  = 1 },
+                    transition = { duration = 0.3 },
+                    children =
+                    {
+                        HelpDetail()
+                    }
+                }
             };
         }
 
