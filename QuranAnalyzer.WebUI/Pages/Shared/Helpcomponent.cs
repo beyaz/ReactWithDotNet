@@ -121,8 +121,10 @@ class Helpcomponent : ReactComponent
         {
             new img
             {
-                wh(20),
-                IsHelpVisible ? SrcArrowUp : SrcArrowDown
+                wh(20), 
+                SrcArrowUp,
+                Transition("all 1500ms ease"),
+                IsHelpVisible ?Transform("rotate(180deg)") :Transform("rotate(40deg)")
             },
             "Örnek arama komutları"
         };
