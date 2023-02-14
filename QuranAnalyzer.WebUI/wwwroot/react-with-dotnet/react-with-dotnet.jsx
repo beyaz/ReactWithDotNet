@@ -1510,14 +1510,14 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
 
 function RenderComponentIn(input)
 {
-    if (input.renderInfoInJson)
+    if (input.renderInfo)
     {
         if (input.idOfContainerHtmlElement == null)
         {
             throw CreateNewDeveloperError('idOfContainerHtmlElement cannot be null.');
         }
 
-        setTimeout(() => ConnectComponentFirstResponseToReactSystem(input.idOfContainerHtmlElement , input.renderInfoInJson), 10);
+        setTimeout(() => ConnectComponentFirstResponseToReactSystem(input.idOfContainerHtmlElement , input.renderInfo), 10);
 
         return;
     }

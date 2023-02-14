@@ -22,7 +22,7 @@ static class ReactWithDotNetIntegration
     {
         httpContext.Response.ContentType = "application/json; charset=utf-8";
 
-        var jsonText = await CalculateJsonText(new CalculateJsonTextInput
+        var jsonText = await CalculateRenderInfo(new CalculateRenderInfoInput
         {
             HttpContext = httpContext
         });
@@ -55,7 +55,7 @@ static class ReactWithDotNetIntegration
         });
     }
 
-    static async Task WriteHtmlResponse(HttpContext httpContext, ReactComponent reactComponent)
+    static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout mainLayout)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -63,10 +63,12 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires] = "0";
         httpContext.Response.Headers[HeaderNames.Pragma] = "no-cache";
 
+        mainLayout.RenderInfo = await CalculateRenderInfo(mainLayout.Page, mainLayout.QueryString);
+        
         var html = await CalculateHtmlText(new CalculateHtmlTextInput
         {
-            ReactComponent = reactComponent,
-            QueryString = httpContext.Request.QueryString.ToString()
+            ReactComponent = mainLayout,
+            QueryString    = httpContext.Request.QueryString.ToString()
         });
 
         await httpContext.Response.WriteAsync(html);

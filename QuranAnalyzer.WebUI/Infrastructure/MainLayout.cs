@@ -6,7 +6,7 @@ class MainLayout : ReactComponent
 
     public string QueryString { get; set; }
     
-    public string RenderInfoInJson { get; set; }
+    public string RenderInfo { get; set; }
 
     protected override Element render()
     {
@@ -64,7 +64,7 @@ import {{ReactWithDotNet}} from './{root}/dist/index.js';
 
 ReactWithDotNet.RenderComponentIn({{
   idOfContainerHtmlElement: 'app',
-  renderInfo: {RenderInfoInJson}
+  renderInfo: {RenderInfo}
 }});
 
 "

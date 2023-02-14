@@ -86,23 +86,23 @@ partial class Mixin
         return HtmlTextGenerator.ToHtml(componentResponse);
     }
 
-    public static async Task<string> CalculateJsonText(CalculateJsonTextInput calculateJsonTextInput)
+    public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
     {
-        if (calculateJsonTextInput is null)
+        if (calculateRenderInfoInput is null)
         {
-            throw new ArgumentNullException(nameof(calculateJsonTextInput));
+            throw new ArgumentNullException(nameof(calculateRenderInfoInput));
         }
 
-        if (calculateJsonTextInput.HttpContext is null)
+        if (calculateRenderInfoInput.HttpContext is null)
         {
-            throw new ArgumentNullException(string.Join('.', nameof(calculateJsonTextInput), nameof(calculateJsonTextInput.HttpContext)));
+            throw new ArgumentNullException(string.Join('.', nameof(calculateRenderInfoInput), nameof(calculateRenderInfoInput.HttpContext)));
         }
 
         var input = new ProcessReactWithDotNetRequestInput
         {
-            HttpContext                    = calculateJsonTextInput.HttpContext,
-            OnReactContextCreated          = calculateJsonTextInput.OnReactContextCreated,
-            BeforeSerializeElementToClient = calculateJsonTextInput.BeforeSerializeElementToClient,
+            HttpContext                    = calculateRenderInfoInput.HttpContext,
+            OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
+            BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient,
         };
         
         var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
@@ -111,7 +111,7 @@ partial class Mixin
         return componentResponse.ToJson();
     }
 
-    public static async Task<string> CalculateJsonText(Element component, string queryString,
+    public static async Task<string> CalculateRenderInfo(Element component, string queryString,
                                                        Func<ReactContext, Task> onReactContextCreated = null,
                                                        Action<Element, ReactContext> beforeSerializeElementToClient = null)
     {
@@ -160,7 +160,7 @@ public sealed class CalculateHtmlTextInput
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 }
 
-public sealed class CalculateJsonTextInput
+public sealed class CalculateRenderInfoInput
 {
     public HttpContext HttpContext  { get; init; }
 
