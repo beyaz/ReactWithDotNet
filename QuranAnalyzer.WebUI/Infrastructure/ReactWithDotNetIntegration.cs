@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
 using QuranAnalyzer.WebUI.Pages.MainPage;
@@ -55,7 +56,7 @@ static class ReactWithDotNetIntegration
         });
     }
 
-    static async Task WriteHtmlResponse(HttpContext httpContext, ReactComponentBase reactComponent)
+    static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout mainLayout)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -63,9 +64,12 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires]      = "0";
         httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
+        mainLayout.RenderInfoInJson = await CalculateJsonText(mainLayout.Page, mainLayout.QueryString);
+
+
         var html =  await CalculateHtmlText(new CalculateHtmlTextInput
         {
-            ReactComponent = reactComponent,
+            ReactComponent = mainLayout,
             QueryString    = httpContext.Request.QueryString.ToString()
         });
 
