@@ -128,7 +128,7 @@ partial class Mixin
         return new StyleModifier(modifyAction);
     }
 
-    internal static HtmlElementModifier CreateHtmlElementModifier(Action<HtmlElement> modifyAction)
+    public static HtmlElementModifier CreateHtmlElementModifier(Action<HtmlElement> modifyAction)
     {
         return HtmlElementModifier.Create(modifyAction);
     }
