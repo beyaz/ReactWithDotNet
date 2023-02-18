@@ -23,7 +23,7 @@ class TotalCounts : ReactComponent
             {
                 new FlexRow(Gap(5), FlexWrap, JustifyContentFlexEnd)
                 {
-                    Records.Select((_, i) => CreateWithCount(i,animationDelayList[i]-100))
+                    Records.Select((_, i) => CreateWithCount(i, animationDelayList[i] - 100))
                 }
             },
 
@@ -127,7 +127,6 @@ class TotalCounts : ReactComponent
 
     Element CreateInput(Expression<Func<string>> bindingExpression, HtmlElementModifier htmlElementModifier, int delay)
     {
-        
         var element = new input(Width(40), TextAlignCenter, Border($"0.1px solid {BorderColor}"))
         {
             type                     = "text",
@@ -140,8 +139,8 @@ class TotalCounts : ReactComponent
         {
             return new AttentionSeeker
             {
-                effect = "flash",
-                delay = delay,
+                effect      = "flash",
+                delay       = delay,
                 triggerOnce = true,
                 children =
                 {
@@ -160,7 +159,7 @@ class TotalCounts : ReactComponent
             new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
             new FlexRowCentered
             {
-                CreateInput(() => Records[recordIndex].Count,Id(GetIdOf(isBegin: true, recordIndex: recordIndex)),delay)
+                CreateInput(() => Records[recordIndex].Count, Id(GetIdOf(isBegin: true, recordIndex: recordIndex)), delay)
             }
         };
     }
