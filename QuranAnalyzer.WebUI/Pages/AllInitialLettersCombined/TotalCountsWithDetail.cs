@@ -12,7 +12,7 @@ class TotalCountsWithDetail : ReactComponent
 
     public bool IncludeChapterNumbers { get; set; }
 
-    public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = Extensions.AllInitialLetterTotalCounts;
+    public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = AllInitialLetterTotalCounts;
 
     static StyleModifier InputBorder => Border($"0.1px solid {BorderColor}");
 
