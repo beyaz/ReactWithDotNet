@@ -15,7 +15,7 @@ class TotalCounts : ReactComponent
     {
         var nextDelay = CreateDelayAccessMethod();
 
-        var animationDelayList = Enumerable.Range(0, Records.Count).Select(_ => nextDelay()).ToImmutableList();
+        var animationDelayList = Enumerable.Range(0, Records.Count+2).Select(_ => nextDelay()).ToImmutableList();
 
         return new FlexColumn(Gap(10))
         {
