@@ -2,6 +2,7 @@
 using System.Text;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 using ReactWithDotNet.react_xarrows;
+using static QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
@@ -18,6 +19,8 @@ class TotalCountsWithDetail : ReactComponent
     protected override Element render()
     {
         var nextDelay = CreateDelayAccessMethod();
+
+        var animationDelays = CreateAnimationDelays(50);
 
         return new FlexColumn(Gap(10))
         {
