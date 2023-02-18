@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -98,10 +97,26 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
 
                             if (instance is ReactComponentBase component)
                             {
-                                component.ComponentUniqueIdentifier = 1000;
-                                component.key                       = "0";
-                                component.Context                   = Context;
-                                component.InvokeConstructor();
+                                component.key     = "0";
+                                component.Context = Context;
+
+                                if (component.IsStateNull)
+                                {
+                                    component.InvokeConstructor();
+                                }
+                                component._designerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
+                                
+                                return component;
+                            }
+
+                            if (instance is ReactPureComponent reactPureComponent)
+                            {
+                                reactPureComponent.key     = "0";
+                                reactPureComponent.Context = Context;
+
+                                reactPureComponent._designerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
+                                
+                                return reactPureComponent;
                             }
 
                             return (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
@@ -123,8 +138,8 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                     {
                         component.key     = "0";
                         component.Context = Context;
-
-                        if (type.GetProperty("state", BindingFlags.Instance | BindingFlags.Public)?.GetValue(instance) is null)
+                        
+                        if (component.IsStateNull)
                         {
                             component.InvokeConstructor();
                         }

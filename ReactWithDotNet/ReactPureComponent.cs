@@ -19,8 +19,10 @@ public abstract class ReactPureComponent : Element
     }
     
     internal List<IModifier> modifiers;
+    
+    internal Func<Element> _designerCustomizedRender;
 
-    internal Element InvokeRender() => render();
+    internal Element InvokeRender() => _designerCustomizedRender == null ? render() : _designerCustomizedRender();
 
     protected abstract Element render();
 

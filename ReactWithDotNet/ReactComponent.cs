@@ -9,6 +9,8 @@ public abstract class ReactComponentBase : Element
     internal Style _styleForRootElement;
 
     internal List<IModifier> modifiers;
+    
+    internal Func<Element> _designerCustomizedRender;
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
@@ -54,7 +56,7 @@ public abstract class ReactComponentBase : Element
 
     internal void InvokeConstructor() => constructor();
 
-    internal Element InvokeRender() => render();
+    internal Element InvokeRender() => _designerCustomizedRender == null ? render() : _designerCustomizedRender();
 
     protected virtual  Task componentDidMount()
     {
