@@ -85,7 +85,7 @@ class TotalCountsWithDetail : ReactComponent
         {
             var record = Records[recordIndex];
 
-            (bool canDrawArrow, Func<Arrow, Arrow> modifyArrow) needArrow(int? detailIndex) => NeedArrow(recordIndex, detailIndex);
+            bool needArrow(int? detailIndex) => NeedArrow(recordIndex, detailIndex);
 
             if (record.Details is not null)
             {
@@ -93,7 +93,7 @@ class TotalCountsWithDetail : ReactComponent
                 {
                     var x = record.Details[i];
 
-                    var (drawArrow, modifyArrow) = needArrow(i);
+                    var drawArrow = needArrow(i);
 
                     if (drawArrow)
                     {
@@ -102,11 +102,11 @@ class TotalCountsWithDetail : ReactComponent
 
                     returnList.Add(InFadeAnimation(new div
                     {
-                        When(drawArrow, modifyArrow(new Arrow
+                        When(drawArrow, new Arrow
                         {
                             start = GetIdOf(isBegin: true, recordIndex, i),
                             end   = GetIdOf(isBegin: false, recordIndex, i)
-                        })),
+                        }),
 
                         new Fade
                         {
@@ -125,7 +125,7 @@ class TotalCountsWithDetail : ReactComponent
                 }
 
                 {
-                    var (drawArrow, modifyArrow) = needArrow(null);
+                    var drawArrow = needArrow(null);
 
                     if (drawArrow)
                     {
@@ -135,12 +135,11 @@ class TotalCountsWithDetail : ReactComponent
                     // add total count of letter
                     returnList.Add(InFadeAnimation(new div
                     {
-                        When(drawArrow, modifyArrow(new Arrow
+                        When(drawArrow, new Arrow
                         {
                             start       = GetIdOf(isBegin: true, recordIndex, null),
-                            end         = GetIdOf(isBegin: false, recordIndex, null),
-                            startAnchor = "bottom"
-                        })),
+                            end         = GetIdOf(isBegin: false, recordIndex, null)
+                        }),
 
                         new Fade
                         {
@@ -163,7 +162,7 @@ class TotalCountsWithDetail : ReactComponent
             // add total count
             returnList.Add(InFadeAnimation(new div
             {
-                When(needArrow(null).canDrawArrow, needArrow(null).modifyArrow(new Arrow { start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) })),
+                When(needArrow(null), new Arrow { start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) }),
 
                 new Fade
                 {
@@ -288,50 +287,29 @@ class TotalCountsWithDetail : ReactComponent
                            detailIndex);
     }
 
-    (bool canDrawArrow, Func<Arrow, Arrow> modifyArrow) NeedArrow(int recordIndex, int? detailIndex)
+    bool NeedArrow(int recordIndex, int? detailIndex)
     {
         if (recordIndex == 0 && detailIndex < 3)
         {
-            if (detailIndex == 1)
-            {
-                return (true, ModifyArrow(x => x.startAnchor = "left"));
-            }
-
-            if (detailIndex == 2)
-            {
-                return (true, ModifyArrow(x => x.startAnchor = "left"));
-            }
-
-            return (true, ModifyArrow(x => x.startAnchor = "left"));
+            return true;
         }
 
         if (recordIndex == Records.Count - 1)
         {
-            return (true, ModifyArrow(x => x.startAnchor = "bottom"));
+            return true;
         }
 
         if (recordIndex == Records.Count - 2)
         {
             if (detailIndex == null)
             {
-                return (true, ModifyArrow(x => x.startAnchor = "down"));
+                return true;
             }
 
-            return (true, ModifyArrow(x => x.startAnchor = "left"));
+            return true;
         }
 
-        return (false, ModifyArrow(x => x.startAnchor = "left"));
-
-        static Func<Arrow, Arrow> ModifyArrow(Action<Arrow> modify)
-        {
-            Arrow returnFunc(Arrow arrow)
-            {
-                modify(arrow);
-                return arrow;
-            }
-
-            return returnFunc;
-        }
+        return false;
     }
 
     void RecalculateTotalCounts()
@@ -362,7 +340,7 @@ class TotalCountsWithDetail : ReactComponent
                 path        = "smooth",
                 color       = color,
                 strokeWidth = 1,
-                startAnchor = startAnchor,
+                startAnchor = "left",
                 dashness    = true,
                 endAnchor   = "top",
                 lineColor   = color,
