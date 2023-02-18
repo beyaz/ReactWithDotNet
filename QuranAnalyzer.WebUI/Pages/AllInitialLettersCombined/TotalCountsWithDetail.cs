@@ -7,7 +7,7 @@ namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
 class TotalCountsWithDetail : ReactComponent
 {
-    public bool EnterJoInMode { get; set; }
+    public bool IsDisplayingResults { get; set; }
 
     public bool IncludeChapterNumbers { get; set; }
 
@@ -31,10 +31,10 @@ class TotalCountsWithDetail : ReactComponent
 
             new FlexRow(JustifyContentFlexEnd)
             {
-                new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(EnterJoInMode, DisplayNone)
+                new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(IsDisplayingResults, DisplayNone)
             },
             Space(20),
-            When(EnterJoInMode, () => new FlexColumn
+            When(IsDisplayingResults, () => new FlexColumn
             {
                 new FlexRowCentered(FlexWrap)
                 {
@@ -199,7 +199,7 @@ class TotalCountsWithDetail : ReactComponent
 
     void Calculate()
     {
-        EnterJoInMode = true;
+        IsDisplayingResults = true;
     }
 
     Element CalculateResult()
