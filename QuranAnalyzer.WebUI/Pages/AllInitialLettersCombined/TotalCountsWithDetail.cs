@@ -344,7 +344,7 @@ class TotalCountsWithDetail : ReactComponent
         Records.SkipLast(1).Sum(x => ParseInt(x.Count)).Then(total => Records[^1].Count = total.ToString());
     }
 
-    class Arrow : ReactComponent
+    class Arrow : ReactPureComponent
     {
         public string end;
         public string start;
