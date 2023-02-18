@@ -52,7 +52,7 @@ class TotalCounts : ReactComponent
     {
         var delay = 200;
 
-        int nextDelay() => delay += 300;
+        int nextDelay() => delay += 700;
 
         return nextDelay;
     }

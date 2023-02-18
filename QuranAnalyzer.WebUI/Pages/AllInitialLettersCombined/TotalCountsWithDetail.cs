@@ -53,9 +53,9 @@ class TotalCountsWithDetail : ReactComponent
 
     static Func<int> CreateDelayAccessMethod()
     {
-        var delay = 200;
+        var delay = 500;
 
-        int nextDelay() => delay += 300;
+        int nextDelay() => delay += 600;
 
         return nextDelay;
     }
