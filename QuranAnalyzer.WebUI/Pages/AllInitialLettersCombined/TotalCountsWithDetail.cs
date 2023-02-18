@@ -8,9 +8,8 @@ namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
 class TotalCountsWithDetail : ReactComponent
 {
-    public bool IsDisplayingResults { get; set; }
-
     public bool IncludeChapterNumbers { get; set; }
+    public bool IsDisplayingResults { get; set; }
 
     public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = AllInitialLetterTotalCounts;
 
@@ -76,12 +75,8 @@ class TotalCountsWithDetail : ReactComponent
         };
     }
 
-    
-
     List<Element> AnimateRecords(Func<int> nextDelay)
     {
-       
-
         var returnList = new List<Element>();
 
         var lastDelay = 0;
@@ -90,7 +85,7 @@ class TotalCountsWithDetail : ReactComponent
         {
             var record = Records[recordIndex];
 
-            (bool canDrawArrow, string startAnchor) needArrow(int? detailIndex) => NeedArrow(recordIndex, detailIndex);
+            (bool canDrawArrow, Func<Arrow, Arrow> modifyArrow) needArrow(int? detailIndex) => NeedArrow(recordIndex, detailIndex);
 
             if (record.Details is not null)
             {
@@ -98,7 +93,7 @@ class TotalCountsWithDetail : ReactComponent
                 {
                     var x = record.Details[i];
 
-                    var (drawArrow, startAnchor) = needArrow(i);
+                    var (drawArrow, modifyArrow) = needArrow(i);
 
                     if (drawArrow)
                     {
@@ -107,12 +102,11 @@ class TotalCountsWithDetail : ReactComponent
 
                     returnList.Add(InFadeAnimation(new div
                     {
-                        When(drawArrow, new Arrow
+                        When(drawArrow, modifyArrow(new Arrow
                         {
-                            startAnchor = startAnchor,
-                            start = GetIdOf(isBegin: true, recordIndex, i), 
-                            end = GetIdOf(isBegin: false, recordIndex, i)
-                        }),
+                            start = GetIdOf(isBegin: true, recordIndex, i),
+                            end   = GetIdOf(isBegin: false, recordIndex, i)
+                        })),
 
                         new Fade
                         {
@@ -131,7 +125,7 @@ class TotalCountsWithDetail : ReactComponent
                 }
 
                 {
-                    var (drawArrow, startAnchor) = needArrow(null);
+                    var (drawArrow, modifyArrow) = needArrow(null);
 
                     if (drawArrow)
                     {
@@ -141,12 +135,12 @@ class TotalCountsWithDetail : ReactComponent
                     // add total count of letter
                     returnList.Add(InFadeAnimation(new div
                     {
-                        When(drawArrow, new Arrow
+                        When(drawArrow, modifyArrow(new Arrow
                         {
                             start       = GetIdOf(isBegin: true, recordIndex, null),
                             end         = GetIdOf(isBegin: false, recordIndex, null),
                             startAnchor = "bottom"
-                        }),
+                        })),
 
                         new Fade
                         {
@@ -169,7 +163,7 @@ class TotalCountsWithDetail : ReactComponent
             // add total count
             returnList.Add(InFadeAnimation(new div
             {
-                When(needArrow(null).canDrawArrow, new Arrow { startAnchor =needArrow(null).startAnchor  ,start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) }),
+                When(needArrow(null).canDrawArrow, needArrow(null).modifyArrow(new Arrow { start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) })),
 
                 new Fade
                 {
@@ -184,34 +178,6 @@ class TotalCountsWithDetail : ReactComponent
             }, lastDelay));
         }
 
-        (bool canDrawArrow, string startAnchor) NeedArrow(int recordIndex, int? detailIndex)
-        {
-            if (recordIndex == 0 && detailIndex < 3)
-            {
-                if (detailIndex == 1)
-                {
-                    return (true, "left");
-                }
-                if (detailIndex == 2)
-                {
-                    return (true, "bottom");
-                }
-                return (true,"left");
-            }
-
-            if (recordIndex == Records.Count - 1)
-            {
-                return (true, "left");
-            }
-
-            if (recordIndex == Records.Count - 2)
-            {
-                return (true, "left");
-            }
-
-            return (false, null);
-        }
-        
         return returnList;
     }
 
@@ -320,6 +286,52 @@ class TotalCountsWithDetail : ReactComponent
                            recordIndex,
                            nameof(detailIndex),
                            detailIndex);
+    }
+
+    (bool canDrawArrow, Func<Arrow, Arrow> modifyArrow) NeedArrow(int recordIndex, int? detailIndex)
+    {
+        if (recordIndex == 0 && detailIndex < 3)
+        {
+            if (detailIndex == 1)
+            {
+                return (true, ModifyArrow(x => x.startAnchor = "left"));
+            }
+
+            if (detailIndex == 2)
+            {
+                return (true, ModifyArrow(x => x.startAnchor = "left"));
+            }
+
+            return (true, ModifyArrow(x => x.startAnchor = "left"));
+        }
+
+        if (recordIndex == Records.Count - 1)
+        {
+            return (true, ModifyArrow(x => x.startAnchor = "bottom"));
+        }
+
+        if (recordIndex == Records.Count - 2)
+        {
+            if (detailIndex == null)
+            {
+                return (true, ModifyArrow(x => x.startAnchor = "down"));
+            }
+
+            return (true, ModifyArrow(x => x.startAnchor = "left"));
+        }
+
+        return (false, ModifyArrow(x => x.startAnchor = "left"));
+
+        static Func<Arrow, Arrow> ModifyArrow(Action<Arrow> modify)
+        {
+            Arrow returnFunc(Arrow arrow)
+            {
+                modify(arrow);
+                return arrow;
+            }
+
+            return returnFunc;
+        }
     }
 
     void RecalculateTotalCounts()
