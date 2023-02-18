@@ -1,7 +1,7 @@
-﻿using System.Collections.Immutable;
-using System.Numerics;
+﻿using System.Numerics;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 using ReactWithDotNet.react_xarrows;
+using static QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined.Extensions;
 
 namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
 
@@ -9,25 +9,23 @@ class TotalCounts : ReactComponent
 {
     public bool EnterJoInMode { get; set; }
 
-    public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = Extensions.AllInitialLetterTotalCounts;
+    public IReadOnlyList<InitialLetterCountInfo> Records { get; set; } = AllInitialLetterTotalCounts;
 
     protected override Element render()
     {
-        var nextDelay = CreateDelayAccessMethod();
+        var animationDelays = CreateAnimationDelays(50);
 
-        var animationDelayList = Enumerable.Range(0, Records.Count+2).Select(_ => nextDelay()).ToImmutableList();
-
-        return new FlexColumn(Gap(10))
+        return new FlexColumn(Gap(10), AlignItemsCenter)
         {
-            new FlexColumn
+            new FlexColumn(AlignItemsCenter)
             {
-                new FlexRow(Gap(5), FlexWrap, JustifyContentFlexEnd)
+                new FlexRow(Gap(5), FlexWrap, JustifyContentCenter)
                 {
-                    Records.Select((_, i) => CreateWithCount(i, animationDelayList[i] - 100))
+                    Records.Select((_, i) => CreateWithCount(i, animationDelays[i] - 100))
                 }
             },
 
-            new FlexRow(JustifyContentFlexEnd)
+            new FlexRow
             {
                 new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(EnterJoInMode, DisplayNone)
             },
@@ -38,26 +36,17 @@ class TotalCounts : ReactComponent
             {
                 new FlexRowCentered(FlexWrap)
                 {
-                    Records.Select((_, i) => AnimateRecord(i, animationDelayList[i]))
+                    Records.Select((_, i) => AnimateRecord(i, animationDelays[i]))
                 },
 
-                EqualsTo(nextDelay()),
+                EqualsTo(animationDelays[Records.Count]),
 
                 new FlexRowCentered
                 {
-                    InFadeAnimation(new FlexRow { CalculateResult() }, nextDelay())
+                    InFadeAnimation(new FlexRow { CalculateResult() }, animationDelays[Records.Count + 1])
                 }
             })
         };
-    }
-
-    static Func<int> CreateDelayAccessMethod()
-    {
-        var delay = 200;
-
-        int nextDelay() => delay += 700;
-
-        return nextDelay;
     }
 
     static string GetIdOf(bool isBegin, int recordIndex)
