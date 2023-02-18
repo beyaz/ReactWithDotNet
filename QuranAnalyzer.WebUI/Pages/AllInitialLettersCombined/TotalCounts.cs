@@ -107,7 +107,7 @@ class TotalCounts : ReactComponent
         {
             return new FlexRow(AlignItemsFlexStart, Gap(3))
             {
-                (strong)"19", (small)"x", (small)(bigNumber / 19).ToString() + OverflowWrapAnywhere
+                (strong)"19" + MarginTop(-2), (small)"x", (small)(bigNumber / 19).ToString() + OverflowWrapAnywhere
             };
         }
 
