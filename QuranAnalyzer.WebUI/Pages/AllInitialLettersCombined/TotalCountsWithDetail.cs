@@ -323,7 +323,7 @@ class TotalCountsWithDetail : ReactComponent
 
         protected override Element render()
         {
-            const string color = "#a9acaa";
+            const string color = "#e02020";
 
             return new Xarrow
             {
@@ -334,7 +334,9 @@ class TotalCountsWithDetail : ReactComponent
                 strokeWidth = 1,
                 startAnchor = startAnchor,
                 dashness    = true,
-                endAnchor   = "top"
+                endAnchor   = "top",
+                lineColor   = color,
+                headColor   = color
             };
         }
     }
