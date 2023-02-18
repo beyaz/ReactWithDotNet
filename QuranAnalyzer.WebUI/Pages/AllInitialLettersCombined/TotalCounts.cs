@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections.Immutable;
+using System.Numerics;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 using ReactWithDotNet.react_xarrows;
 
@@ -14,13 +15,15 @@ class TotalCounts : ReactComponent
     {
         var nextDelay = CreateDelayAccessMethod();
 
+        var animationDelayList = Enumerable.Range(0, Records.Count).Select(_ => nextDelay()).ToImmutableList();
+
         return new FlexColumn(Gap(10))
         {
             new FlexColumn
             {
                 new FlexRow(Gap(5), FlexWrap, JustifyContentFlexEnd)
                 {
-                    Records.Select((_, i) => CreateWithCount(i))
+                    Records.Select((_, i) => CreateWithCount(i,animationDelayList[i]-100))
                 }
             },
 
@@ -35,7 +38,7 @@ class TotalCounts : ReactComponent
             {
                 new FlexRowCentered(FlexWrap)
                 {
-                    Records.Select((_, i) => AnimateRecord(i, nextDelay()))
+                    Records.Select((_, i) => AnimateRecord(i, animationDelayList[i]))
                 },
 
                 EqualsTo(nextDelay()),
@@ -122,25 +125,42 @@ class TotalCounts : ReactComponent
         return new div { bigNumber.ToString() } + OverflowWrapAnywhere;
     }
 
-    input CreateInput(Expression<Func<string>> bindingExpression)
+    Element CreateInput(Expression<Func<string>> bindingExpression, HtmlElementModifier htmlElementModifier, int delay)
     {
-        return new input(Width(40), TextAlignCenter, Border($"0.1px solid {BorderColor}"))
+        
+        var element = new input(Width(40), TextAlignCenter, Border($"0.1px solid {BorderColor}"))
         {
             type                     = "text",
             valueBind                = bindingExpression,
             valueBindDebounceTimeout = 200,
             valueBindDebounceHandler = RecalculateTotalCounts
-        };
+        } + htmlElementModifier;
+
+        if (EnterJoInMode)
+        {
+            return new AttentionSeeker
+            {
+                effect = "flash",
+                delay = delay,
+                triggerOnce = true,
+                children =
+                {
+                    element
+                }
+            };
+        }
+
+        return element;
     }
 
-    Element CreateWithCount(int recordIndex)
+    Element CreateWithCount(int recordIndex, int delay)
     {
         return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
             new FlexRowCentered
             {
-                CreateInput(() => Records[recordIndex].Count) + Id(GetIdOf(isBegin: true, recordIndex: recordIndex))
+                CreateInput(() => Records[recordIndex].Count,Id(GetIdOf(isBegin: true, recordIndex: recordIndex)),delay)
             }
         };
     }
@@ -178,7 +198,7 @@ class TotalCounts : ReactComponent
 
         protected override Element render()
         {
-            const string color = "#a9acaa";
+            const string color = "#e02020";
 
             return new Xarrow
             {
@@ -189,7 +209,9 @@ class TotalCounts : ReactComponent
                 strokeWidth = 1,
                 startAnchor = "bottom",
                 dashness    = true,
-                endAnchor   = "top"
+                endAnchor   = "top",
+                lineColor   = color,
+                headColor   = color
             };
         }
     }
