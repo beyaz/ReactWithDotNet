@@ -19,8 +19,6 @@ class TotalCountsWithDetail : ReactComponent
     {
         var nextDelay = CreateDelayAccessMethod();
 
-        var animationDelays = CreateAnimationDelays(50);
-
         return new FlexColumn(Gap(10))
         {
             new FlexColumn
