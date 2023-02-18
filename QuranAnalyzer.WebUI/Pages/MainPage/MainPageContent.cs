@@ -15,7 +15,7 @@ class MainPageContent : ReactComponent
 
                 @"Elimden geldiğince aklımın yettiği ölçüde nedir ne değildir inceledim.
 Bu konu etrafında doğru yanlış bir çok şey duydum ve okudum.
-Konuyu kendim bizzat incelemek ve konu etrafında dönen doğru yanlış şeylere kendimce verdiğim cevapları paylaşmak istedim.
+Konuyu bizzat incelemek ve konu etrafında dönen doğru yanlış şeylere kendimce verdiğim cevapları ve yazdığım programları paylaşmak istedim.
 Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyetindeyim.
 "
             },
@@ -30,8 +30,9 @@ Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyet
                     {
                         "Özellikle Kuran'dan bir ayetin Türkçe mealini paylaşmadım. ",
                         "Çünkü insanlar genelde önce kendi fikirlerini peşinen doğru kabul ediyorlar ardından Kuran ayetlerine de o bakış açısı ile mana veriyorlar. ",
-                        "Farkında olmadan Kuranı kendi fikirlerine uyduruyorlar."
-                    },
+                        "Farkında olmadan Kuranı kendi fikirlerine uyduruyorlar.",
+                        " Yahut çevirilerde moderniteye uymak için kelimelerin ikinci üçüncü anlamları tercih edilebiliyor."
+                    }
                 },
 
                 new li
@@ -40,7 +41,8 @@ Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyet
                     {
                         "Her ne kadar düşünen insan sayısı az olsa da düşünebilen her insanın bir beyni olduğuna inanıyorum. ",
                         "Bu sebeple doğru şudur veya şu yanlıştır gibi ifadelerden uzak durmaya çalıştım. ",
-                        "Konu etrafında dönen zıt fikirleri elimden geldiğince tarafsız bir biçimde aktarıp karar verme yorum yapma işini ise elimden geldiğince okuyucuya bırakmaya çalıştım.",
+                        "Konu etrafında dönen zıt fikirleri elimden geldiğince tarafsız bir biçimde aktarmaya çalıştım. " ,
+                        "Karar verme yorum yapma işini ise elimden geldiğince okuyucuya bırakmaya çalıştım.",
                     }
                 },
 
@@ -48,7 +50,7 @@ Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyet
                 {
                     new p
                     {
-                        "Bu sitede bazı matematiksel veriler bulunmaktadır. ",
+                        "Bu sitede bazı matematiksel veriler bulunmaktadır. Hesaplama araçları bulunmaktadır. ",
                         "Bu veriler gerçek zamanlı olarak çalışmaktadır. Giriş değerlerini değiştirdiğinizde sonuçlar da otomatik olarak değişecektir."
                     }
                 }

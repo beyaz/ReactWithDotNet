@@ -67,16 +67,23 @@ class View : ReactComponent
                 "Kimine göre Necip Fazıl daha iyi şairdir kimine göre de Nazım Hikmet. ",
                 "Ama matematik yoruma daha kapalıdır. 2 + 2 Bağcılarda da 4 eder Berlinde de 4 eder. ",
                 "Tüm denizlerdeki kum tanelerinin adetini kesin olarak bilen bir yaratıcı Kuranın içine de böyle bir örüntüyü eklemiş. ",
-                "Böylelikle Kuranın korunacağı ve Kuranın bir benzerinin getirilemeyeceği iddalarını 19 sistemi ile daha anlamlı hale gelmiş oluyor. ",
+                "Böylelikle Kuranın korunacağı ve Kuranın bir benzerinin getirilemeyeceği iddaları 19 sistemi ile daha anlamlı hale gelmiş oluyor. ",
             },
 
             new p
             {
-                "Neden 19?",
+                new div{ "Neden 19?"} + TextAlignCenter,
                 new br(),
                 "Elbette herşeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi. Eğer bu örüntü 29 üzerine olsaydı neden 29 diye sorulacaktı. " ,
-                " Arapça Vahid ( Türkçe tek anlamına gelir ) kelimesinin sayısal değeri ise 19 dur. Besmele 19 harftir. Daha bir çok açıklama yapılabilir. " ,
-                " Mühim olan buradaki örüntüyü görebilmektir. " ,
+                new br(),
+                new ul
+                {
+                    (li)"Kuranın kapağını açtığınızda karşınıza çıkan ilk çümle yani Besmele 19 harftir.",
+                    (li)"Kuranda 'Kanıt' kelimesi (Arapça: beyyine) tam 19 defa geçmektedir.",
+                    (li)"Kuranda bahsi geçen tüm rakamların toplamı 19'un katıdır. Mesela Nuh'un yaşı ifade edilirken 1000 yıldan 50 eksik gibi bir ifade kullanılmış."
+                },
+                " Buna benzer daha bir çok örnek verilebilir. " ,
+                " Mühim olan buradaki tasarımı görebilmektir. " ,
                 " Böylelikle Allah var mı? yok mu? Kuran Allah kelamı mı değil mi ? gibi şüpheler giderilmiş olacak.",
                 " Kuran'ın Allah'dan geldiğine olan inancımızı sağlam bir zemine oturmuş olacağız. " ,
                 " Artık bir sonraki aşamaya yani Kuranı anlama ve hayatımıza uygulama aşamasına geçebiliriz."
