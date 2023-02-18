@@ -26,13 +26,13 @@ class TotalCountsWithDetail : ReactComponent
         {
             new FlexColumn
             {
-                new FlexRow(Gap(5), FlexWrap, JustifyContentFlexEnd)
+                new FlexRow(Gap(5), FlexWrap, JustifyContentCenter)
                 {
                     Records.Select((_, i) => CreateWithCount(i))
                 }
             },
 
-            new FlexRow(JustifyContentFlexEnd)
+            new FlexRow(JustifyContentCenter)
             {
                 new ActionButton { Label = "Hesapla", OnClick = Calculate } + When(IsDisplayingResults, DisplayNone)
             },
@@ -80,25 +80,7 @@ class TotalCountsWithDetail : ReactComponent
 
     List<Element> AnimateRecords(Func<int> nextDelay)
     {
-        bool NeedArrow(int recordIndex, int? detailIndex)
-        {
-            if (recordIndex == 0 && detailIndex < 3)
-            {
-                return true;
-            }
-
-            if (recordIndex == Records.Count - 1)
-            {
-                return true;
-            }
-
-            if (recordIndex == Records.Count - 2)
-            {
-                return true;
-            }
-
-            return false;
-        }
+       
 
         var returnList = new List<Element>();
 
@@ -108,7 +90,7 @@ class TotalCountsWithDetail : ReactComponent
         {
             var record = Records[recordIndex];
 
-            bool needArrow(int? detailIndex) => NeedArrow(recordIndex, detailIndex);
+            (bool canDrawArrow, string startAnchor) needArrow(int? detailIndex) => NeedArrow(recordIndex, detailIndex);
 
             if (record.Details is not null)
             {
@@ -116,7 +98,7 @@ class TotalCountsWithDetail : ReactComponent
                 {
                     var x = record.Details[i];
 
-                    var drawArrow = needArrow(i);
+                    var (drawArrow, startAnchor) = needArrow(i);
 
                     if (drawArrow)
                     {
@@ -125,7 +107,12 @@ class TotalCountsWithDetail : ReactComponent
 
                     returnList.Add(InFadeAnimation(new div
                     {
-                        When(drawArrow, new Arrow { start = GetIdOf(isBegin: true, recordIndex, i), end = GetIdOf(isBegin: false, recordIndex, i) }),
+                        When(drawArrow, new Arrow
+                        {
+                            startAnchor = startAnchor,
+                            start = GetIdOf(isBegin: true, recordIndex, i), 
+                            end = GetIdOf(isBegin: false, recordIndex, i)
+                        }),
 
                         new Fade
                         {
@@ -144,7 +131,7 @@ class TotalCountsWithDetail : ReactComponent
                 }
 
                 {
-                    var drawArrow = needArrow(null);
+                    var (drawArrow, startAnchor) = needArrow(null);
 
                     if (drawArrow)
                     {
@@ -182,7 +169,7 @@ class TotalCountsWithDetail : ReactComponent
             // add total count
             returnList.Add(InFadeAnimation(new div
             {
-                When(needArrow(null), new Arrow { start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) }),
+                When(needArrow(null).canDrawArrow, new Arrow { startAnchor =needArrow(null).startAnchor  ,start = GetIdOf(isBegin: true, recordIndex, null), end = GetIdOf(isBegin: false, recordIndex, null) }),
 
                 new Fade
                 {
@@ -197,6 +184,34 @@ class TotalCountsWithDetail : ReactComponent
             }, lastDelay));
         }
 
+        (bool canDrawArrow, string startAnchor) NeedArrow(int recordIndex, int? detailIndex)
+        {
+            if (recordIndex == 0 && detailIndex < 3)
+            {
+                if (detailIndex == 1)
+                {
+                    return (true, "left");
+                }
+                if (detailIndex == 2)
+                {
+                    return (true, "bottom");
+                }
+                return (true,"left");
+            }
+
+            if (recordIndex == Records.Count - 1)
+            {
+                return (true, "left");
+            }
+
+            if (recordIndex == Records.Count - 2)
+            {
+                return (true, "left");
+            }
+
+            return (false, null);
+        }
+        
         return returnList;
     }
 
@@ -256,7 +271,7 @@ class TotalCountsWithDetail : ReactComponent
         return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4), Id("begin-" + Records[recordIndex].Text))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
-            new FlexRow(Gap(5), FontWeight600, FontSize("0.8rem"), TextAlignCenter) { (small)"Sure No" + Width(50), (small)"Adet" + Width(40) },
+            new FlexRow(Gap(5), FontWeight600, FontSize("0.8rem"), JustifyContentCenter, TextAlignCenter) { (small)"Sure No" + Width(50), (small)"Adet" + Width(40) },
             new FlexColumn(AlignItemsCenter)
             {
                 Records[recordIndex].Details?.Select((_, i) => new FlexRow(AlignItemsStretch)
@@ -266,7 +281,7 @@ class TotalCountsWithDetail : ReactComponent
                     CreateInput(() => Records[recordIndex].Details[i].Count) + Id(GetIdOf(isBegin: true, recordIndex, i))
                 })
             },
-            new FlexRow(AlignItemsStretch)
+            new FlexRow(AlignItemsStretch, JustifyContentCenter)
             {
                 new small { "Toplam" } + Width(50) + TextAlignCenter + FontSize("0.7rem") + InputBorder + DisplayFlex + JustifyContentCenter + AlignItemsCenter,
                 CreateInput(() => Records[recordIndex].Count) + Id(GetIdOf(isBegin: true, recordIndex, null))
