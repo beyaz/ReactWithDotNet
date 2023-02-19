@@ -33,16 +33,24 @@ public class MainWindow : ReactComponent
                 }
                
             },
-            new main
+            new main(PaddingTopBottom(80))
             {
-                Background("WhiteSmoke"),
-                Height(400)
+                new MainContentContainer(JustifyContentCenter, WidthMaximized)
+                {
+                   new FlexRow(Gap(50))
+                   {
+                       new MainPageContentDescription(),
+                       new MainPageContentSample()
+                   }
+                }
+
             },
 
             new footer
             {
-                Background("WhiteSmoke"),
-                Height(200)
+                BoxShadow($"{Theme[Context].grey_100} -1px -1px 1px"),
+                Height(200),
+                new div("Copyright")
             }
         };
 

@@ -43,8 +43,17 @@ class MainLayout : ReactComponent
 "
                 },
 
-               
-              
+
+                new link { rel  = "preconnect", href = "https://fonts.googleapis.com" },
+                
+                new link { rel  = "preconnect", href = "https://fonts.gstatic.com", crossOrigin =  "true"},
+                
+                new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
+
+
+
+
+
                 new link { href = "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&amp;display=swap", rel = "stylesheet" }
 
 

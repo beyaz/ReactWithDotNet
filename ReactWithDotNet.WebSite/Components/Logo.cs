@@ -59,12 +59,27 @@ class HeaderMenuItem : ReactPureComponent
     {
         return new Tooltip
         {
-            classes = { { "tooltip",new Style{Background("transparent"), Width(500) } } },
-            title = new FlexColumn(Width(200), BorderRadius(5),Border("1px solid #E0E3E7"), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
+            classes = { { "tooltip",new Style{Background("transparent"),  } } },
+            title = new FlexColumn(BorderRadius(5),Border("1px solid #E0E3E7"), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
             {
-                new div(wh(100),Border("1px solid yellow"),BorderRadius(5)),
-                new div(wh(100),Border("1px solid green")),
-                new div(wh(100),Border("1px solid blue"),Hover(Background("black")))
+                new HeaderMenuItemTooltipRow
+                {
+                    SvgFileName = "doc.svg",
+                    Title = "MUI X", 
+                    Description = "class HeaderMenuItem : ReactPureComponent"
+                },
+                new HeaderMenuItemTooltipRow
+                {
+                    SvgFileName = "doc.svg",
+                    Title       = "MUI X",
+                    Description = "class HeaderMenuItem : ReactPureComponent"
+                },
+                new HeaderMenuItemTooltipRow
+                {
+                    SvgFileName = "doc.svg",
+                    Title       = "MUI X",
+                    Description = "class HeaderMenuItem : ReactPureComponent"
+                }
             },
             children=
             {
@@ -84,6 +99,31 @@ class HeaderMenuItem : ReactPureComponent
     }
 }
 
+public class HeaderMenuItemTooltipRow : ReactPureComponent
+{
+    public string SvgFileName { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    
+    protected override Element render()
+    {
+        return new a(PaddingTopBottom(20), PaddingLeft(20), PaddingRight(30),TextDecorationNone,Hover(Background("#D5E5F5")),CursorDefault)
+        {
+            Href("/doc"),
+            Background("white"),
+            new FlexRow(AlignItemsCenter, Gap(20))
+            {
+                new img { Src(Asset("react.svg")), WidthHeight(36) },
+                new FlexColumn
+                {
+                    new div(FontWeight700, FontSize14,Color(Theme[Context].text_primary)){Title},
+                    new div(FontWeight400,FontSize13,Color(Theme[Context].text_primary)){Description}
+                }
+            }
+        };
+    }
+}
+
 class HeaderMenuBar: ReactPureComponent
 {
     protected override Element render()
@@ -98,6 +138,49 @@ class HeaderMenuBar: ReactPureComponent
                 new HeaderMenuItem{Text = "Showcase"}
             }
             
+        };
+    }
+}
+
+class MainPageContentDescription : ReactPureComponent
+{
+    protected override Element render()
+    {
+        return new FlexColumn(Width(400))
+        {
+            
+            
+           new div(FontSize(50), FontWeight700)
+           {
+               "Write ",
+               new span(Background($"linear-gradient(to right, {Theme[Context].primary_main}, {Theme[Context].primary_700})"))
+               {
+                   Text("react.js"),
+                   new Style{backgroundClip = "text", text}
+               },
+               " application in ",
+               new span(Background($"linear-gradient(to right, {Theme[Context].primary_main}, {Theme[Context].primary_700})"))
+               {
+                   Text("c#")
+               },
+               "language"
+           },
+           
+           
+           Space(10),
+           new div{LineHeight25, Text("MUI offers a comprehensive suite of UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components.") }
+
+        };
+    }
+}
+
+class MainPageContentSample: ReactPureComponent
+{
+    protected override Element render()
+    {
+        return new div(wh(400),Border("2px solid red"))
+        {
+
         };
     }
 }
