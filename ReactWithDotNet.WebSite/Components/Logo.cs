@@ -146,30 +146,34 @@ class MainPageContentDescription : ReactPureComponent
 {
     protected override Element render()
     {
-        return new FlexColumn(Width(400))
+        return new FlexColumn(MaxWidth(400),AlignItemsCenter)
         {
-            
-            
-           new div(FontSize(50), FontWeight700)
+            new div(FontSize(50), FontWeight700)
            {
-               "Write ",
-               new span()
-               {
-                   Text("react.js"),
-                   new Style{webkitBackgroundClip = "text", webkitTextFillColor ="transparent"} + Background($"linear-gradient(to right, {Theme[Context].primary_main}, {Theme[Context].primary_700})")
-               },
-               " application in ",
-               new span(Background($"linear-gradient(to right, {Theme[Context].primary_main}, {Theme[Context].primary_700})"))
-               {
-                   Text("c#")
-               },
-               "language"
+               "Write ",CreateAttractiveText("react.js"), " application in ",CreateAttractiveText("c#"),
+               " language"
            },
            
            
            Space(10),
            new div{LineHeight25, Text("MUI offers a comprehensive suite of UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components.") }
 
+        };
+    }
+
+    span CreateAttractiveText(string text)
+    {
+        return new span
+        {
+            text = text,
+            style =
+            {
+                webkitBackgroundClip = "text",
+
+                webkitTextFillColor = "transparent",
+
+                background = $"linear-gradient(to right, {Theme[Context].primary_main}, {Theme[Context].primary_700})"
+            }
         };
     }
 }
@@ -181,6 +185,21 @@ class MainPageContentSample: ReactPureComponent
         return new div(wh(400),Border("2px solid red"))
         {
 
+        };
+    }
+}
+
+
+
+class MainPageFooter: ReactPureComponent
+{
+    protected override Element render()
+    {
+        return new footer
+        {
+            BoxShadow($"{Theme[Context].grey_100} -1px -1px 1px"),
+            Height(50),
+            new div("Copyright")
         };
     }
 }

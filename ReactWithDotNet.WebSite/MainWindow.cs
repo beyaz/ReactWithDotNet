@@ -13,17 +13,6 @@ public class MainWindow : ReactComponent
 
     protected override Element render()
     {
-        //return new span(Text("react.js"))
-        //{
-        //    style =
-        //    {
-        //        webkitBackgroundClip = "text",
-        //        webkitTextFillColor  = "transparent",
-        //        background           = $"linear-gradient(to right, yellow, {Theme[Context].primary_700})"
-
-        //    }
-        //};
-        
         if (PageId == nameof(FigmaCss2ReactInlineStyleConverterView))
         {
             return new FigmaCss2ReactInlineStyleConverterView();
@@ -57,12 +46,7 @@ public class MainWindow : ReactComponent
 
             },
 
-            new footer
-            {
-                BoxShadow($"{Theme[Context].grey_100} -1px -1px 1px"),
-                Height(200),
-                new div("Copyright")
-            }
+            new MainPageFooter()
         };
 
         return new divVerticalCentered
@@ -79,3 +63,4 @@ static class QueryKey
 {
     public static string Page = "p";
 }
+
