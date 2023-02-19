@@ -151,7 +151,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             }
 
             var array = line.Split(new[] { ':', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-            if (array.Length == 2)
+            if (array.Length >= 2)
             {
                 return $"{keyToPropertyName(array[0])} = \"{array[1]}\"";
             }
