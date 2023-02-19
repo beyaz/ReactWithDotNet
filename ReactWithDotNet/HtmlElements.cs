@@ -50,10 +50,10 @@ public class meta : HtmlElement
     [React]
     public string httpEquiv { get; set; }
 
-    public static HtmlElementModifier Content(string content) => HtmlElementModifier.Create(element => ((meta)element).content = content);
-    public static HtmlElementModifier HttpEquiv(string httpEquiv) => HtmlElementModifier.Create(element => ((meta)element).httpEquiv = httpEquiv);
-    public static HtmlElementModifier Name(string name) => HtmlElementModifier.Create(element => ((meta)element).name = name);
-    public static HtmlElementModifier Charset(string charset) => HtmlElementModifier.Create(element => ((meta)element).charset = charset);
+    public static HtmlElementModifier Content(string content) => CreateHtmlElementModifier<meta>(element => element.content = content);
+    public static HtmlElementModifier HttpEquiv(string httpEquiv) => CreateHtmlElementModifier<meta>(element => element.httpEquiv = httpEquiv);
+    public static HtmlElementModifier Name(string name) => CreateHtmlElementModifier<meta>(element => element.name = name);
+    public static HtmlElementModifier Charset(string charset) => CreateHtmlElementModifier<meta>(element => element.charset = charset);
 }
 
 

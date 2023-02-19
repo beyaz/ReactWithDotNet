@@ -25,9 +25,10 @@ public class img : HtmlElement
     [React]
     public int width { get; set; }
 
-    public static HtmlElementModifier Alt(string alt) => HtmlElementModifier.Create(el => ((img)el).alt = alt);
 
-    public static HtmlElementModifier Src(string src) => HtmlElementModifier.Create(el => ((img)el).src = src);
+    public static HtmlElementModifier Alt(string alt) => CreateHtmlElementModifier<img>(element => element.alt = alt);
+
+    public static HtmlElementModifier Src(string src) => CreateHtmlElementModifier<img>(element => element.src = src);
 }
 
 partial class Mixin

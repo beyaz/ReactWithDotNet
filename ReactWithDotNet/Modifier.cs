@@ -60,7 +60,7 @@ public class HtmlElementModifier : IModifier
         return new HtmlElementModifier{ modifyHtmlElement = modifyAction};
     }
 
-    internal void Process(HtmlElement htmlElement)
+    internal virtual void Process(HtmlElement htmlElement)
     {
         if (htmlElement is null)
         {
@@ -68,6 +68,21 @@ public class HtmlElementModifier : IModifier
         }
 
         modifyHtmlElement(htmlElement);
+    }
+}
+
+class HtmlElementModifier<THtmlelement> : HtmlElementModifier  where THtmlelement : HtmlElement
+{
+    internal Action<THtmlelement> modifyHtmlElement;
+
+    internal override void Process(HtmlElement htmlElement)
+    {
+        if (htmlElement is null)
+        {
+            return;
+        }
+
+        modifyHtmlElement((THtmlelement)htmlElement);
     }
 }
 
@@ -139,9 +154,9 @@ partial class Mixin
         return new StyleModifier(modifyAction);
     }
 
-    public static HtmlElementModifier CreateHtmlElementModifier(Action<HtmlElement> modifyAction)
+    public static HtmlElementModifier CreateHtmlElementModifier<THtmlElement>(Action<THtmlElement> modifyAction) where THtmlElement : HtmlElement
     {
-        return HtmlElementModifier.Create(modifyAction);
+        return new HtmlElementModifier<THtmlElement> { modifyHtmlElement = modifyAction };
     }
 }
 
