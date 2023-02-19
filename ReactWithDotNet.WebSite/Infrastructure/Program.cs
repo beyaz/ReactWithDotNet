@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace QuranAnalyzer.WebUI;
+namespace ReactWithDotNet.WebSite;
 
 public class Program
 {

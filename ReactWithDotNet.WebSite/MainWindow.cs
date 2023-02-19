@@ -23,6 +23,29 @@ public class MainWindow : ReactComponent
             return new HtmlToCSharpView();
         }
 
+        return new div
+        {
+            new header(PositionSticky,DisplayFlex, JustifyContentCenter, BoxShadow($"inset 0px -1px 1px {Theme[Context].grey_100}"))
+            {
+                new MainContentContainer(JustifyContentFlexStart, WidthMaximized)
+                {
+                    new HeaderMenuBar()
+                }
+               
+            },
+            new main
+            {
+                Background("WhiteSmoke"),
+                Height(400)
+            },
+
+            new footer
+            {
+                Background("WhiteSmoke"),
+                Height(200)
+            }
+        };
+
         return new divVerticalCentered
         {
             new a { text = "Figma css to React inline style", href = $"?{QueryKey.Page}={nameof(FigmaCss2ReactInlineStyleConverterView)}" },

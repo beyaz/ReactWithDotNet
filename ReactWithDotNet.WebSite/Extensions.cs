@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite;
+﻿using ReactWithDotNet.Libraries.mui.material;
+
+namespace ReactWithDotNet.WebSite;
 
 class Extensions
 {
@@ -11,4 +13,6 @@ class Extensions
     };
 
     public static string Asset(string fileName) => $"wwwroot/assets/{fileName}";
+
+    public static ReactContextKey<ColorPaletteLight> Theme = new(nameof(Theme));
 }

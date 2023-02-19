@@ -1,6 +1,8 @@
 ﻿
 namespace ReactWithDotNet.WebSite;
 
+
+
 class MainLayout : ReactComponent
 {
     public Element Page { get; set; }
@@ -30,9 +32,9 @@ class MainLayout : ReactComponent
                    html, body {
                        height: 100vh;
                        margin: 0;
-                       font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                       font-family: 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';
                        font-size: 16px;
-                       color: rgb(51, 51, 51);
+                       color: #1a2027;
                    }
                    
                    input:focus, textarea:focus, select:focus {
@@ -41,7 +43,9 @@ class MainLayout : ReactComponent
 "
                 },
 
-                new link{rel ="stylesheet" , href = "https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,800,900&amp;display=swap", media ="all"},
+               
+              
+                new link { href = "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&amp;display=swap", rel = "stylesheet" }
 
 
             },

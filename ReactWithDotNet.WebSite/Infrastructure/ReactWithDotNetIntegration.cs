@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
+using ReactWithDotNet.Libraries.mui.material;
 using ReactWithDotNet.UIDesigner;
-using ReactWithDotNet.WebSite;
 
-namespace QuranAnalyzer.WebUI;
+
+namespace ReactWithDotNet.WebSite;
 
 static class ReactWithDotNetIntegration
 {
@@ -24,7 +25,8 @@ static class ReactWithDotNetIntegration
 
         var jsonText = await CalculateRenderInfo(new CalculateRenderInfoInput
         {
-            HttpContext = httpContext
+            HttpContext = httpContext,
+            OnReactContextCreated = InitializeTheme
         });
 
         await httpContext.Response.WriteAsync(jsonText);
@@ -63,14 +65,23 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires] = "0";
         httpContext.Response.Headers[HeaderNames.Pragma] = "no-cache";
 
-        mainLayout.RenderInfo = await CalculateRenderInfo(mainLayout.Page, mainLayout.QueryString);
+        mainLayout.RenderInfo = await CalculateRenderInfo(mainLayout.Page, mainLayout.QueryString, InitializeTheme);
+
+       
         
         var html = await CalculateHtmlText(new CalculateHtmlTextInput
         {
             ReactComponent = mainLayout,
-            QueryString    = httpContext.Request.QueryString.ToString()
+            QueryString    = httpContext.Request.QueryString.ToString(),
+            OnReactContextCreated = InitializeTheme
         });
 
         await httpContext.Response.WriteAsync(html);
+    }
+
+    static Task InitializeTheme(ReactContext context)
+    {
+        context.Set(Theme, new ColorPaletteLight());
+        return Task.CompletedTask;
     }
 }
