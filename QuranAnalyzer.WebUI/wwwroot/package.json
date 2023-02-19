@@ -39,9 +39,12 @@
 
         "react-free-scrollbar": "^0.3.4",
 
+        "react-syntax-highlighter": "^15.5.0",
+
         "react-awesome-reveal": "^4.1.0",
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
+
 
         "framer-motion": "^9.0.2"
     }
