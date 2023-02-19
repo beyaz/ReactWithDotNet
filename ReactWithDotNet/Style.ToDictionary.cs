@@ -1208,6 +1208,16 @@ partial class Style
         {
             action(nameof(borderInlineStyle), borderInlineStyle);
         }
+
+        if (webkitBackgroundClip != null)
+        {
+            action("WebkitBackgroundClip", webkitBackgroundClip);
+        }
+        
+        if (webkitTextFillColor != null)
+        {
+            action("WebkitTextFillColor", webkitTextFillColor);
+        }
     }
     public IReadOnlyDictionary<string, string> ToDictionary()
     {

@@ -3908,6 +3908,16 @@ partial class Style
             borderInlineStyle = newStyle.borderInlineStyle;
         }
 
+        if (newStyle.webkitBackgroundClip != null)
+        {
+            webkitBackgroundClip = newStyle.webkitBackgroundClip;
+        }
+
+        if (newStyle.webkitTextFillColor != null)
+        {
+            webkitTextFillColor = newStyle.webkitTextFillColor;
+        }
+
         if (newStyle._hover is not null)
         {
             hover.Import(newStyle._hover);
@@ -5141,6 +5151,16 @@ partial class Style
             }
 
             if (borderInlineStyle != null)
+            {
+                return false;
+            }
+
+            if (webkitTextFillColor != null)
+            {
+                return false;
+            }
+
+            if (webkitBackgroundClip != null)
             {
                 return false;
             }

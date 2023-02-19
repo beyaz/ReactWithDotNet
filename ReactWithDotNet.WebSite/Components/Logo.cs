@@ -153,10 +153,10 @@ class MainPageContentDescription : ReactPureComponent
            new div(FontSize(50), FontWeight700)
            {
                "Write ",
-               new span(Background($"linear-gradient(to right, {Theme[Context].primary_main}, {Theme[Context].primary_700})"))
+               new span()
                {
                    Text("react.js"),
-                   new Style{backgroundClip = "text", text}
+                   new Style{webkitBackgroundClip = "text", webkitTextFillColor ="transparent"} + Background($"linear-gradient(to right, {Theme[Context].primary_main}, {Theme[Context].primary_700})")
                },
                " application in ",
                new span(Background($"linear-gradient(to right, {Theme[Context].primary_main}, {Theme[Context].primary_700})"))

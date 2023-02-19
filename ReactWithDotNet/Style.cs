@@ -488,4 +488,9 @@ public sealed partial class Style
     public string writingMode { get; set; }
 
     public string zIndex { get; set; }
+
+    public string webkitBackgroundClip { get; set; }
+    
+    public string webkitTextFillColor { get; set; }
+    
 }

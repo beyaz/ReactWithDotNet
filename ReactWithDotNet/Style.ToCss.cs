@@ -1947,6 +1947,22 @@ partial class Style
             sb.Append(seperator);
         }
 
+        if (webkitBackgroundClip != null)
+        {
+            sb.Append("-webkit-background-clip");
+            sb.Append(": ");
+            sb.Append(webkitBackgroundClip);
+            sb.Append(seperator);
+        }
+        
+        if (webkitTextFillColor != null)
+        {
+            sb.Append("-webkit-text-fill-color");
+            sb.Append(": ");
+            sb.Append(webkitTextFillColor);
+            sb.Append(seperator);
+        }
+
         if (sb.Length == 0)
         {
             return null;

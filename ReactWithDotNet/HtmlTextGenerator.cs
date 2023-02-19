@@ -210,17 +210,7 @@ static class HtmlTextGenerator
             if (value is Style valueAsStyle)
             {
                 sb.Append(" style=\"");
-
-                valueAsStyle.VisitNotNullValues(add);
-
-                void add(string propertyName, string propertyValue)
-                {
-                    sb.Append(PascalToKebabCase(propertyName));
-                    sb.Append(":");
-                    sb.Append(propertyValue);
-                    sb.Append(';');
-                }
-
+                sb.Append(valueAsStyle.ToCss());
                 sb.Append('"');
 
                 return;

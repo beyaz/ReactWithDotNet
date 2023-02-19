@@ -13,6 +13,17 @@ public class MainWindow : ReactComponent
 
     protected override Element render()
     {
+        //return new span(Text("react.js"))
+        //{
+        //    style =
+        //    {
+        //        webkitBackgroundClip = "text",
+        //        webkitTextFillColor  = "transparent",
+        //        background           = $"linear-gradient(to right, yellow, {Theme[Context].primary_700})"
+
+        //    }
+        //};
+        
         if (PageId == nameof(FigmaCss2ReactInlineStyleConverterView))
         {
             return new FigmaCss2ReactInlineStyleConverterView();
