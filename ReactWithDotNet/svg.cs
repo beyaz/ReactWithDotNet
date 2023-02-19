@@ -26,7 +26,13 @@ public class svg : HtmlElement
 
     [React]
     public string preserveAspectRatio { get; set; }
-    
+
+
+    /// <summary>
+    /// svg.fill = <paramref name="color"/>
+    /// </summary>
+    public static HtmlElementModifier Fill(string color) => CreateHtmlElementModifier<svg>(el => el.fill = color);
+
 }
 
 public class path : HtmlElement
