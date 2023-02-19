@@ -50,7 +50,7 @@ public class HtmlElementModifier : IModifier
 {
     Action<HtmlElement> modifyHtmlElement;
     
-    internal static HtmlElementModifier Create(Action<HtmlElement> modifyAction)
+    internal static HtmlElementModifier Create(Action<HtmlElement> modifyAction)//TODO: remove
     {
         if (modifyAction == null)
         {
