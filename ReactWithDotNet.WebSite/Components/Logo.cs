@@ -130,7 +130,7 @@ class HeaderMenuBar: ReactPureComponent
     {
         return new FlexRow
         {
-            new a{ Href("/"), new Logo(), PaddingTopBottom(5), TextDecorationNone},
+            new a{ Href("/"), new Logo(), PaddingTopBottom(10), TextDecorationNone},
             new nav(DisplayFlex,AlignItemsCenter)
             {
                 new HeaderMenuItem{Text = "What is ReactWithDotNet"},
@@ -146,18 +146,30 @@ class MainPageContentDescription : ReactPureComponent
 {
     protected override Element render()
     {
-        return new FlexColumn(MaxWidth(400),AlignItemsCenter)
+        return new FlexColumn(MaxWidth(400), AlignItemsCenter)
         {
             new div(FontSize(50), FontWeight700)
-           {
-               "Write ",CreateAttractiveText("react.js"), " application in ",CreateAttractiveText("c#"),
-               " language"
-           },
-           
-           
-           Space(10),
-           new div{LineHeight25, Text("MUI offers a comprehensive suite of UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components.") }
+            {
+                "Write ", CreateAttractiveText("react.js"), " application in ", CreateAttractiveText("c#"),
+                " language"
+            },
 
+
+            Space(20),
+            new div
+            {
+                LineHeight40, 
+                FontSize18, 
+                Color(Theme[Context].grey_700), 
+                FontWeight400, 
+                Text("MUI offers a comprehensive suite of UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components.")
+            },
+            Space(40),
+            
+            new FlexRow(AlignItemsFlexStart, WidthMaximized)
+            {
+                new GetStartedButton()
+            }
         };
     }
 
@@ -185,6 +197,38 @@ class MainPageContentSample: ReactPureComponent
         return new div(wh(400),Border("2px solid red"))
         {
 
+        };
+    }
+}
+
+class GetStartedButton : ReactPureComponent
+{
+    protected override Element render()
+    {
+        return new div(CursorDefault)
+        {
+            text = "Get Started",
+            style =
+            {
+                backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
+                margin          = "10px",
+                padding         = "15px 45px",
+                textAlign       = "center",
+                textTransform   = "uppercase",
+                transition      = "0.5s",
+                backgroundSize  = "200% auto",
+                color           = "white",
+                boxShadow       = "0 0 20px #eee",
+                borderRadius    = "10px",
+                display         = "block",
+                
+                hover =
+                {
+                    backgroundPosition = "right center",
+                    color = "#fff",
+                    textDecoration = "none"
+                }
+            }
         };
     }
 }

@@ -25,19 +25,13 @@ public class MainWindow : ReactComponent
 
         return new div
         {
-            new header(PositionSticky,DisplayFlex, JustifyContentCenter, BoxShadow($"inset 0px -1px 1px {Theme[Context].grey_100}"))
-            {
-                new MainContentContainer(JustifyContentFlexStart, WidthMaximized)
-                {
-                    new HeaderMenuBar()
-                }
-               
-            },
+            new MainPageHeader(),
+            
             new main(PaddingTopBottom(80))
             {
                 new MainContentContainer(JustifyContentCenter, WidthMaximized)
                 {
-                   new FlexRow(Gap(50))
+                   new FlexRow(Gap(150))
                    {
                        new MainPageContentDescription(),
                        new MainPageContentSample()

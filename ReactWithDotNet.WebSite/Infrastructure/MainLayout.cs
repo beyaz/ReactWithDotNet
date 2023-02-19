@@ -48,7 +48,7 @@ class MainLayout : ReactComponent
                 
                 new link { rel  = "preconnect", href = "https://fonts.gstatic.com", crossOrigin =  "true"},
                 
-                new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
+                new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap", rel = "stylesheet" },
 
 
 
