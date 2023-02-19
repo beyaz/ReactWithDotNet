@@ -46,29 +46,9 @@ public sealed class ElementModifier : IModifier
     }
 }
 
-public class HtmlElementModifier : IModifier
+public abstract class HtmlElementModifier : IModifier
 {
-    Action<HtmlElement> modifyHtmlElement;
-    
-    internal static HtmlElementModifier Create(Action<HtmlElement> modifyAction)//TODO: remove
-    {
-        if (modifyAction == null)
-        {
-            throw new ArgumentNullException(nameof(modifyAction));
-        }
-
-        return new HtmlElementModifier{ modifyHtmlElement = modifyAction};
-    }
-
-    internal virtual void Process(HtmlElement htmlElement)
-    {
-        if (htmlElement is null)
-        {
-            return;
-        }
-
-        modifyHtmlElement(htmlElement);
-    }
+    internal abstract void Process(HtmlElement htmlElement);
 }
 
 class HtmlElementModifier<THtmlelement> : HtmlElementModifier  where THtmlelement : HtmlElement

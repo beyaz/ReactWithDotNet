@@ -9,7 +9,7 @@ public static partial class Mixin
     /// <summary>
     ///     initialize dir attribute of html element
     /// </summary>
-    public static HtmlElementModifier Dir(string direction) => HtmlElementModifier.Create(element => element.dir = direction);
+    public static HtmlElementModifier Dir(string direction) => CreateHtmlElementModifier<HtmlElement>(element => element.dir = direction);
 
     /// <summary>
     ///     element.dir = 'rtl'
@@ -22,7 +22,7 @@ public static partial class Mixin
     /// </summary>
     public static HtmlElementModifier DirLtr => Dir("ltr");
 
-    public static HtmlElementModifier Lang(string lang) => HtmlElementModifier.Create(element => element.lang = lang);
+    public static HtmlElementModifier Lang(string lang) => CreateHtmlElementModifier<HtmlElement>(element => element.lang = lang);
 
 
 
@@ -448,7 +448,7 @@ public static partial class Mixin
         return new(modifyHtmlElement);
     }
 
-    public static HtmlElementModifier ClassName(string className) => HtmlElementModifier.Create(element => element.className = className);
+    public static HtmlElementModifier ClassName(string className) => CreateHtmlElementModifier<HtmlElement>(element => element.className = className);
 
     public static StyleModifier Color(string color) => new(style => style.color = color);
 
@@ -669,13 +669,13 @@ public static partial class Mixin
     }
 
     public static HtmlElementModifier OnClick(Action<MouseEvent> onClickHandler)
-        => HtmlElementModifier.Create(element => element.onClick = onClickHandler);
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onClick = onClickHandler);
 
     public static HtmlElementModifier OnMouseEnter(Action<MouseEvent> onMouseEnterHandler)
-        => HtmlElementModifier.Create(element => element.onMouseEnter = onMouseEnterHandler);
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseEnter = onMouseEnterHandler);
 
     public static HtmlElementModifier OnMouseLeave(Action<MouseEvent> onMouseLeaveHandler)
-        => HtmlElementModifier.Create(element => element.onMouseLeave = onMouseLeaveHandler);
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseLeave = onMouseLeaveHandler);
 
     /// <summary>
     ///     Handler <paramref name="jsMethodName" /> should be in client js codes.<br />
@@ -687,7 +687,7 @@ public static partial class Mixin
     ///     ...<br />
     ///     });
     /// </summary>
-    public static HtmlElementModifier OnScroll(string jsMethodName) => HtmlElementModifier.Create(element => element.onScroll = jsMethodName);
+    public static HtmlElementModifier OnScroll(string jsMethodName) => CreateHtmlElementModifier<HtmlElement>(element => element.onScroll = jsMethodName);
 
     /// <summary>
     ///     style.opacity = <paramref name="opacity" />
@@ -709,7 +709,7 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier Right(double right) => new(style => style.right = right.AsPixel());
 
-    public static HtmlElementModifier RowSpan(int? rowSpan) => HtmlElementModifier.Create(element => ((td)element).rowSpan = rowSpan);
+    public static HtmlElementModifier RowSpan(int? rowSpan) => CreateHtmlElementModifier<td>(element => element.rowSpan = rowSpan);
 
     /// <summary>
     ///     Returns a string value like "1px solid <paramref name="color" />"
@@ -739,7 +739,7 @@ public static partial class Mixin
 
 
 
-    public static HtmlElementModifier Text(string innerText) => HtmlElementModifier.Create(element => element.text = innerText);
+    public static HtmlElementModifier Text(string innerText) => CreateHtmlElementModifier<HtmlElement>(element => element.text = innerText);
 
     public static StyleModifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
 
@@ -753,7 +753,7 @@ public static partial class Mixin
     /// <summary>
     ///     element.title = title
     /// </summary>
-    public static HtmlElementModifier Title(string title) => HtmlElementModifier.Create(element => element.title = title);
+    public static HtmlElementModifier Title(string title) => CreateHtmlElementModifier<HtmlElement>(element => element.title = title);
 
     internal static string ToJson(this ComponentResponse value)
     {

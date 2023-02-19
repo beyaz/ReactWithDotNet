@@ -5,8 +5,8 @@ namespace ReactWithDotNet;
 
 partial class Mixin
 {
-    public static HtmlElementModifier Aria(string ariaName, string ariaValue) => HtmlElementModifier.Create(el => el.aria.Add(ariaName, ariaValue));
-    public static HtmlElementModifier Data(string dataName, string dataValue) => HtmlElementModifier.Create(el => el.data.Add(dataName, dataValue));
+    public static HtmlElementModifier Aria(string ariaName, string ariaValue) => CreateHtmlElementModifier<HtmlElement>(el => el.aria.Add(ariaName, ariaValue));
+    public static HtmlElementModifier Data(string dataName, string dataValue) => CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
 }
 public abstract class HtmlElement : Element
 {
