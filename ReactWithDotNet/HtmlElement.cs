@@ -255,7 +255,7 @@ public abstract class HtmlElement : Element
 
     public static HtmlElement operator +(HtmlElement htmlElement, HtmlElementModifier htmlElementModifier)
     {
-        htmlElementModifier?.modifyHtmlElement(htmlElement);
+        htmlElementModifier?.Process(htmlElement);
 
         return htmlElement;
     }
@@ -274,7 +274,7 @@ public abstract class HtmlElement : Element
 
     public void Add(HtmlElementModifier htmlElementModifier)
     {
-        htmlElementModifier?.modifyHtmlElement(this);
+        htmlElementModifier?.Process(this);
     }
 
     [SuppressMessage("ReSharper", "ParameterHidesMember")]

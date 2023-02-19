@@ -46,20 +46,31 @@ public sealed class ElementModifier : IModifier
     }
 }
 
-public sealed class HtmlElementModifier : IModifier
+public class HtmlElementModifier : IModifier
 {
-    internal readonly Action<HtmlElement> modifyHtmlElement;
-
-    HtmlElementModifier(Action<HtmlElement> modifyHtmlElement)
-    {
-        this.modifyHtmlElement = modifyHtmlElement ?? throw new ArgumentNullException(nameof(modifyHtmlElement));
-    }
-
+    Action<HtmlElement> modifyHtmlElement;
+    
     internal static HtmlElementModifier Create(Action<HtmlElement> modifyAction)
     {
-        return new HtmlElementModifier(modifyAction);
+        if (modifyAction == null)
+        {
+            throw new ArgumentNullException(nameof(modifyAction));
+        }
+
+        return new HtmlElementModifier{ modifyHtmlElement = modifyAction};
+    }
+
+    internal void Process(HtmlElement htmlElement)
+    {
+        if (htmlElement is null)
+        {
+            return;
+        }
+
+        modifyHtmlElement(htmlElement);
     }
 }
+
 
 abstract class ReactComponentModifier : IModifier
 {
@@ -168,7 +179,7 @@ static class ModifyHelper
 
             if (modifier is HtmlElementModifier htmlElementModifier)
             {
-                htmlElementModifier.modifyHtmlElement(htmlElement);
+                htmlElementModifier.Process(htmlElement);
                 return;
             }
 
