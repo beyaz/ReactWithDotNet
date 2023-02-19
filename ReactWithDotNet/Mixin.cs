@@ -508,30 +508,27 @@ public static partial class Mixin
         return Pseudo(x => x.hover, modifiers);
     }
 
-    /// <summary>
-    ///     a.href = <paramref name="href" />
-    /// </summary>
-    public static HtmlElementModifier Href(string href) => HtmlElementModifier.Create(element => ((a)element).href = href);
+   
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier Id(string id) => HtmlElementModifier.Create(element => element.id = id);
+    public static HtmlElementModifier Id(string id) => CreateHtmlElementModifier<HtmlElement>(element => element.id = id);
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier Id(int id) => HtmlElementModifier.Create(element => element.id = id.ToString());
+    public static HtmlElementModifier Id(int id) => CreateHtmlElementModifier<HtmlElement>(element => element.id = id.ToString());
 
     /// <summary>
     /// Roles define the semantic meaning of content, allowing screen readers and other tools to present and support interaction with an object in a way that is consistent with user expectations of that type of object.
     /// </summary>
-    public static HtmlElementModifier Role(string role) => HtmlElementModifier.Create(element => element.role = role);
+    public static HtmlElementModifier Role(string role) => CreateHtmlElementModifier<HtmlElement>(element => element.role = role);
 
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier Id(long id) => HtmlElementModifier.Create(element => element.id = id.ToString());
+    public static HtmlElementModifier Id(long id) => CreateHtmlElementModifier<HtmlElement>(element => element.id = id.ToString());
 
     public static StyleModifier Left(double left) => Left(left.AsPixel());
     public static StyleModifier Left(string left) => new(style => style.left = left);
