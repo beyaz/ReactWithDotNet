@@ -76,7 +76,7 @@ class HeaderMenuItem : ReactPureComponent
                     BorderRadius(10),
                     FontSize14,
                     FontWeight700,
-                    CursorPointer
+                   CursorDefault
                 }
             }
         };

@@ -39,7 +39,12 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier ColorWhite => Color("white");
 
-    public static StyleModifier CursorPointer => new(style => style.cursor = "pointer");
+    /// <summary>
+    /// style.cursor = <paramref name="value"/>
+    /// </summary>
+    public static StyleModifier Cursor(string value)=> new(style => style.cursor = value);
+    public static StyleModifier CursorPointer => Cursor("pointer");
+    public static StyleModifier CursorDefault=> Cursor("default");
 
     /// <summary>
     ///     style.direction = "ltr"
