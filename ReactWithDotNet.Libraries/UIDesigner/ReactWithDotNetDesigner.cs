@@ -92,7 +92,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
 .token.property{{ {new Style { Color("#189af6") }.ToCssWithImportant()} }}
 
-.cm-editor{{ {new Style { Height("calc(100% - 2px)"), Color("#DE3163") }.ToCssWithImportant()} }}
+.cm-editor{{ {new Style { Height("calc(100% - 10px)"), Color("#DE3163") }.ToCssWithImportant()} }}
+
+.cm-theme-light{{ {new Style { Height("calc(100% - 2px)") }.ToCssWithImportant()} }}
 
 .ͼ16 {{ {new Style { FontWeight600, FontFamily("'IBM Plex Mono', monospace") }.ToCssWithImportant()} }}
 
