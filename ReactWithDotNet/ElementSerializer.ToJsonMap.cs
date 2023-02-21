@@ -41,6 +41,32 @@ partial class ElementSerializer
 
             if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false && node.ElementIsDotNetReactPureComponent is false)
             {
+                // Try Calculate ThirdParty Component Suspense Fallback
+                if (context.CalculateSuspenseFallbackForThirdPartyReactComponents &&
+                    node.ElementIsThirdPartyReactComponent &&
+                    !node.IsSuspenseFallbackElementCalculated)
+                {
+                    node.IsSuspenseFallbackElementCalculated = true;
+
+                    node.ElementAsThirdPartyReactComponent.Context = context.ReactContext;
+
+                    node.SuspenseFallbackElement = node.ElementAsThirdPartyReactComponent.InvokeSuspenseFallback();
+                    if (node.SuspenseFallbackElement is not null)
+                    {
+                        node.SuspenseFallbackElement.key = "0";
+                    }
+
+                    node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement, context);
+
+                    node.SuspenseFallbackNode.Parent = node;
+
+                    node.FirstChild = node.SuspenseFallbackNode;
+
+                    node = node.SuspenseFallbackNode;
+
+                    continue;
+                }
+
                 CompleteWithChildren(node, context);
 
                 continue;
@@ -75,8 +101,6 @@ partial class ElementSerializer
                 continue;
             }
 
-           
-            
             if (node.ElementIsHtmlElement || node.ElementIsThirdPartyReactComponent || node.ElementIsFragment)
             {
                 if (node.IsChildrenOpened is false)
@@ -95,6 +119,7 @@ partial class ElementSerializer
                     continue;
                 }
 
+                // Try Calculate ThirdParty Component Suspense Fallback
                 if (context.CalculateSuspenseFallbackForThirdPartyReactComponents &&
                     node.ElementIsThirdPartyReactComponent && 
                     !node.IsSuspenseFallbackElementCalculated)
