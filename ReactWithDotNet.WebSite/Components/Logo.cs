@@ -1,4 +1,5 @@
 ﻿using ReactWithDotNet.Libraries.mui.material;
+using ReactWithDotNet.Libraries.react_syntax_highlighter;
 
 namespace ReactWithDotNet.WebSite.Components;
 
@@ -194,9 +195,45 @@ class MainPageContentSample: ReactPureComponent
 {
     protected override Element render()
     {
-        return new div(wh(400),Border("2px solid red"))
+        return new div(Width(600))
         {
+            new CSharpCodePanel
+            {
+               Code =  @"class MainPageContentSample: ReactPureComponent
+{
+    protected override Element render()
+    {
+        return new div(wh(400),Border(""2px solid red""))
+        {
+            new CSharpCodePanel
+            {
+                @""""
+            }
+        };
+    }
+}"
+            }
+        };
+    }
+}
 
+class CSharpCodePanel : ReactPureComponent
+{
+    public string Code { get; set; }
+    
+    protected override Element render()
+    {
+        return new div(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadius(5), MarginTopBottom(10))
+        {
+            new SyntaxHighlighter
+            {
+                language = "csharp",
+                style    = SyntaxHighlighterStyle.vs,
+                children =
+                {
+                    Code
+                }
+            }
         };
     }
 }
