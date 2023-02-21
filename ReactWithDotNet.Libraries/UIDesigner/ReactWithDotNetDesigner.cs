@@ -44,7 +44,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     BorderRadius(3),
                     Border("1px solid #d9d9d9"),
                     FontSize11,
-                    MaxWidth(width)
+                    MaxWidth(width),
+                    HeightMaximized
                 }
             };
         }
@@ -155,7 +156,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 },
 
                 // c o n t e n t
-                createJsonEditor() + HeightMaximized
+                createJsonEditor()
             }
         };
 
@@ -342,6 +343,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 }
 
                 if (propertyType.BaseType == typeof(MulticastDelegate))
+                {
+                    continue;
+                }
+
+                if (propertyType.IsAbstract)
                 {
                     continue;
                 }

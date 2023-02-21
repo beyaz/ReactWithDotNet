@@ -10,17 +10,10 @@ class DemoPanel : ReactPureComponent
 
     protected override Element render()
     {
-        return new div(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadius(5), MarginTopBottom(10))
+        return new FlexRow
         {
-            new SyntaxHighlighter
-            {
-                language = "csharp",
-                style    = SyntaxHighlighterStyle.vs,
-                children =
-                {
-                    Code
-                }
-            }
+            new CSharpCodePanel{ Code = CSharpCode},
+            new FlexRowCentered{Element}
         };
     }
 }
