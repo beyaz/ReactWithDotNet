@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 
-namespace ReactWithDotNet.WebSite.Components;
+namespace ReactWithDotNet.WebSite.HelperApps;
 
 class HtmlToCSharpViewModel
 {
@@ -21,8 +21,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         var htmlEditor = new CodeMirror
         {
             extensions = { "html", "githubLight" },
-            onChange   = OnHtmlValueChanged,
-            value      = state.HtmlText,
+            onChange = OnHtmlValueChanged,
+            value = state.HtmlText,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -42,7 +42,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         var csharpEditor = new CodeMirror
         {
             extensions = { "java", "githubLight" },
-            value  =  state.CSharpCode,
+            value = state.CSharpCode,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -62,8 +62,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         var statusMessageEditor = new Message
         {
             severity = "success",
-            text     = state.StatusMessage,
-            style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
+            text = state.StatusMessage,
+            style = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
 
         return new FlexColumn

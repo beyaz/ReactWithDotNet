@@ -2,7 +2,7 @@
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 
-namespace ReactWithDotNet.WebSite.Components;
+namespace ReactWithDotNet.WebSite.HelperApps;
 
 class FigmaCss2ReactInlineStyleConverterModel
 {
@@ -18,8 +18,8 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         var cssEditor = new CodeMirror
         {
             extensions = { "css", "githubLight" },
-            onChange   = OnCssValueChanged,
-            value      = state.FigmaCss,
+            onChange = OnCssValueChanged,
+            value = state.FigmaCss,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -39,7 +39,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         var csharpEditor = new CodeMirror
         {
             extensions = { "java", "githubLight" },
-            value      = state.ReactInlineStyle,
+            value = state.ReactInlineStyle,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -59,8 +59,8 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         var statusMessageEditor = new Message
         {
             severity = "success",
-            text     = state.StatusMessage,
-            style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
+            text = state.StatusMessage,
+            style = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
 
         return new FlexColumn
