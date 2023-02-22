@@ -14,5 +14,6 @@ function register(name, value)
 // Connect components as Lazy
 register("Switch", React.lazy(() => import('./Switch')));
 register("Tooltip", React.lazy(() => import('./Tooltip')));
+register("Button", React.lazy(() => import('./Button')));
 register("FormGroup", FormGroup);
 register("FormControlLabel", FormControlLabel);

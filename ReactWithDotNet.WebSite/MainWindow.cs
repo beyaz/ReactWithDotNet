@@ -14,14 +14,9 @@ public class MainWindow : ReactComponent
 
     protected override Element render()
     {
-        if (PageId == nameof(FigmaCss2ReactInlineStyleConverterView))
+        if (PageId == nameof(HelperApps))
         {
-            return new FigmaCss2ReactInlineStyleConverterView();
-        }
-
-        if (PageId == nameof(HtmlToCSharpView))
-        {
-            return new HtmlToCSharpView();
+            return new HelperApps.View();
         }
 
         return new div
@@ -42,13 +37,6 @@ public class MainWindow : ReactComponent
             },
 
             new MainPageFooter()
-        };
-
-        return new divVerticalCentered
-        {
-            new a { text = "Figma css to React inline style", href = $"?{QueryKey.Page}={nameof(FigmaCss2ReactInlineStyleConverterView)}" },
-
-            new a { text = "Html to ReactWithDotNet", href = $"?{QueryKey.Page}={nameof(HtmlToCSharpView)}" }
         };
 
     }

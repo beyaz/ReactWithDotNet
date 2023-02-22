@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite.HelperApps;
+﻿using ReactWithDotNet.Libraries.mui.material;
+
+namespace ReactWithDotNet.WebSite.HelperApps;
 
 class View : ReactComponent
 {
@@ -8,8 +10,17 @@ class View : ReactComponent
         {
             new FlexRow
             {
-                //new Butt
+                new Button{ variant = "outlined", onClick = OnClick, children = { "Html to CSharp" }},
+                new Button{ variant = "outlined", children = { "Figma css to React Inline style" }}
+
             }
         };
+    }
+
+    public bool IsHtmlToCSharpSelected { get; set; }
+    
+    void OnClick(MouseEvent e)
+    {
+        IsHtmlToCSharpSelected = true;
     }
 }

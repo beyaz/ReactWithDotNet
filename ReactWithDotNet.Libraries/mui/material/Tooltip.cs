@@ -14,7 +14,4 @@ public sealed class Tooltip : ElementBase
     [React]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; private set; } = new();
-
-
-
 }
