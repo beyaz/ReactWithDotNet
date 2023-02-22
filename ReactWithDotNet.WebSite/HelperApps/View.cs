@@ -6,7 +6,10 @@ class View : ReactComponent
     {
         return new FlexColumn
         {
-
+            new FlexRow
+            {
+                //new Butt
+            }
         };
     }
 }
