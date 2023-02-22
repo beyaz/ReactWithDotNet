@@ -1,22 +1,23 @@
 ﻿using ReactWithDotNet.Libraries.mui.material;
+using ReactWithDotNet.WebSite.Components;
 
-namespace ReactWithDotNet.WebSite.Components;
+namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 class HeaderMenuItem : ReactPureComponent
 {
     public string Text { get; set; }
-    
+
     protected override Element render()
     {
         return new Tooltip
         {
-            classes = { { "tooltip",new Style{Background("transparent"),  } } },
-            title = new FlexColumn(BorderRadius(5),Border("1px solid #E0E3E7"), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
+            classes = { { "tooltip", new Style { Background("transparent"), } } },
+            title = new FlexColumn(BorderRadius(5), Border("1px solid #E0E3E7"), Width(400), BoxShadow("rgba(170, 180, 190, 0.3) 0px 4px 20px"))
             {
                 new HeaderMenuItemTooltipRow
                 {
                     SvgFileName = "doc.svg",
-                    Title       = "MUI X", 
+                    Title       = "MUI X",
                     Description = "class HeaderMenuItem : ReactPureComponent"
                 },
                 new HeaderMenuItemTooltipRow

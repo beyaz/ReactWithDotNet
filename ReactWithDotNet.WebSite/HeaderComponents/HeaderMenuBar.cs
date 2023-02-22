@@ -1,6 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite.Components;
+﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
-class HeaderMenuBar: ReactPureComponent
+class HeaderMenuBar : ReactPureComponent
 {
     protected override Element render()
     {
@@ -13,7 +13,7 @@ class HeaderMenuBar: ReactPureComponent
                 new HeaderMenuItem{Text = "Tutorial"},
                 new HeaderMenuItem{Text = "Showcase"}
             }
-            
+
         };
     }
 }

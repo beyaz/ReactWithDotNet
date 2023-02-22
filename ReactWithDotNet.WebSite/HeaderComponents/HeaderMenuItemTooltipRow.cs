@@ -1,14 +1,14 @@
-﻿namespace ReactWithDotNet.WebSite.Components;
+﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 public class HeaderMenuItemTooltipRow : ReactPureComponent
 {
     public string SvgFileName { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-    
+
     protected override Element render()
     {
-        return new a(PaddingTopBottom(20), PaddingLeft(20), PaddingRight(30),TextDecorationNone,Hover(Background("#D5E5F5")),CursorDefault)
+        return new a(PaddingTopBottom(20), PaddingLeft(20), PaddingRight(30), TextDecorationNone, Hover(Background("#D5E5F5")), CursorDefault)
         {
             Href("/?p=HelperApps"),
             Background("white"),

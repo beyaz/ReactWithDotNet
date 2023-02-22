@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.WebSite.Components;
+﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 public class Logo : ReactPureComponent
 {
@@ -11,7 +11,7 @@ public class Logo : ReactPureComponent
                 new img { Src(Asset("react.svg")), WidthHeight(30) },
                 new img { Src(Asset("net_core_logo.svg")), WidthHeight(30) }
             },
-            
+
             new small{"React with DotNet"}
         };
     }
