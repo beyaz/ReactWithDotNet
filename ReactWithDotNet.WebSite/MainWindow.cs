@@ -15,7 +15,7 @@ public class MainWindow : ReactComponent
 
     protected override Element render()
     {
-        return new div
+        return new div(WidthMaximized, HeightMaximized)
         {
             new MainPageHeader(),
             
@@ -26,9 +26,7 @@ public class MainWindow : ReactComponent
                     createContent
                 }
 
-            },
-
-            new MainPageFooter()
+            }
         };
 
         Element createContent()
@@ -38,7 +36,7 @@ public class MainWindow : ReactComponent
                 return new HelperApps.View();
             }
 
-            return new FlexRow(Gap(150))
+            return new FlexRow(Gap(150),WidthMaximized, JustifyContentSpaceAround)
             {
                 new MainPageContentDescription(),
                 new MainPageContentSample()

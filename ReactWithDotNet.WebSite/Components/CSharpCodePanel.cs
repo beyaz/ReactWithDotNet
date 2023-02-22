@@ -12,7 +12,7 @@ class CSharpCodePanel : ReactPureComponent
         return new FreeScrollBar
         {
             WidthMaximized,
-            Height(400),
+            Height(300),
             new SyntaxHighlighter
             {
                 language = "csharp",

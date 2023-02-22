@@ -33,6 +33,11 @@ public class svg : HtmlElement
     /// </summary>
     public static HtmlElementModifier Fill(string color) => CreateHtmlElementModifier<svg>(el => el.fill = color);
 
+    /// <summary>
+    /// svg.viewBox = <paramref name="viewBox"/>
+    /// </summary>
+    public static HtmlElementModifier ViewBox(string viewBox) => CreateHtmlElementModifier<svg>(el => el.viewBox = viewBox);
+
 }
 
 public class path : HtmlElement
