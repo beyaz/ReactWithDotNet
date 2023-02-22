@@ -1,4 +1,5 @@
 ﻿using ReactWithDotNet.Libraries.mui.material;
+using ReactWithDotNet.Libraries.react_free_scrollbar;
 using ReactWithDotNet.Libraries.react_syntax_highlighter;
 
 namespace ReactWithDotNet.WebSite.Components;
@@ -199,8 +200,10 @@ class CSharpCodePanel : ReactPureComponent
     
     protected override Element render()
     {
-        return new div
+        return new FreeScrollBar
         {
+            WidthMaximized,
+            Height(400),
             new SyntaxHighlighter
             {
                 language = "csharp",

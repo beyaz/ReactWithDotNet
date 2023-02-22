@@ -9,16 +9,20 @@ class DemoPanel : ReactPureComponent
 
     protected override Element render()
     {
-        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadius(5), MarginTopBottom(10), FlexWrap)
+        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(10), BorderRadius(5), MarginTopBottom(1), FlexWrap)
         {
-            new FlexColumn(AlignItemsFlexStart)
+            new fieldset(Border("1px solid #dee2e6"),WidthMaximized)
             {
-                new img{Src(Asset("csharp.svg")), Width(25), Height(20), MarginTop(5)}, 
-                new CSharpCodePanel{ Code = CSharpCode}
+                new legend{new img{Src(Asset("csharp.svg")), Width(25), Height(20)}},
+                new FlexColumn(AlignItemsFlexStart,WidthMaximized)
+                {
+                    new CSharpCodePanel{ Code = CSharpCode}
+                }
             },
             
-            new FlexRowCentered
+            new fieldset(Border("1px solid #dee2e6"), WidthMaximized)
             {
+                new legend{"Output"},
                 Element ?? "Element is empty"
             }
         };
@@ -113,8 +117,7 @@ class HomePageDemoComponent : ReactComponent<HomePageDemoComponentState>
             style =
             {
                 display = "flex",
-                flexDirection = "column",
-                border  = "1px solid #dee2e6",
+                flexDirection = "column"
             },
             
             children =
@@ -134,6 +137,7 @@ class HomePageDemoComponent : ReactComponent<HomePageDemoComponentState>
                         lineHeight      = "1.5",
                         borderRadius    = ".25rem",
                         color           = "#fff",
+                        width = "200px",
                         backgroundColor = "#007bff",
                         hover           = {color = "#f1ba72"}
                     }
