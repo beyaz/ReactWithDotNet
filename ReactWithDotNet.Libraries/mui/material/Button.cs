@@ -6,6 +6,10 @@ public sealed class Button : ElementBase
     public string variant { get; set; }
 
     [React]
+    public bool disabled { get; set; }
+    
+
+        [React]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onClick { get; set; }
 }

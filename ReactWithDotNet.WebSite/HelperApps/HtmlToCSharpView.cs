@@ -16,6 +16,15 @@ class HtmlToCSharpViewModel
 
 class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 {
+    protected override void constructor()
+    {
+        state = new HtmlToCSharpViewModel
+        {
+            HtmlText = "<button class='xyz' id='4t'>abc</button>",
+        };
+        state.CSharpCode = HtmlToCSharp(state.HtmlText);
+    }
+
     protected override Element render()
     {
         var htmlEditor = new CodeMirror
@@ -35,7 +44,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 BorderRadius(3),
                 Border("1px solid #d9d9d9"),
                 FontSize11,
-                FontFamily("Consolas")
+                FontFamily("Consolas"),
+                MaxWidth(500)
             }
         };
 
@@ -74,13 +84,18 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             PrimeReactCssLibs,
 
 
-            new div(Text("Html to ReactWithDotNet")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
+            new div(FontSize23, Padding(10), TextAlignCenter)
+            {
+                "Html to ReactWithDotNet",
+                (small)" ( paste any html text to left panel )"
+            },
             new Splitter
             {
                 layout = SplitterLayoutType.horizontal,
                 style =
                 {
                     width  = "100%",
+                    maxWidth = "600px",
                     height = "100%"
                 },
                 children =

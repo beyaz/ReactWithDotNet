@@ -14,30 +14,35 @@ public class MainWindow : ReactComponent
 
     protected override Element render()
     {
-        if (PageId == nameof(HelperApps))
-        {
-            return new HelperApps.View();
-        }
-
         return new div
         {
             new MainPageHeader(),
             
-            new main(PaddingTopBottom(80))
+            new main(PaddingTopBottom(80), DisplayFlex, JustifyContentCenter)
             {
                 new MainContentContainer(JustifyContentCenter, WidthMaximized)
                 {
-                   new FlexRow(Gap(150))
-                   {
-                       new MainPageContentDescription(),
-                       new MainPageContentSample()
-                   }
+                    createContent
                 }
 
             },
 
             new MainPageFooter()
         };
+
+        Element createContent()
+        {
+            if (PageId == nameof(HelperApps))
+            {
+                return new HelperApps.View();
+            }
+
+            return new FlexRow(Gap(150))
+            {
+                new MainPageContentDescription(),
+                new MainPageContentSample()
+            };
+        }
 
     }
 }
