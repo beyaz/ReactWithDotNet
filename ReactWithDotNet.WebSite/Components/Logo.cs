@@ -111,7 +111,7 @@ public class HeaderMenuItemTooltipRow : ReactPureComponent
     {
         return new a(PaddingTopBottom(20), PaddingLeft(20), PaddingRight(30),TextDecorationNone,Hover(Background("#D5E5F5")),CursorDefault)
         {
-            Href("/doc"),
+            Href("/?p=HelperApps"),
             Background("white"),
             new FlexRow(AlignItemsCenter, Gap(20))
             {
