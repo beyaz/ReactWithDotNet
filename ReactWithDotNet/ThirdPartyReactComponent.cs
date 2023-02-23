@@ -82,7 +82,7 @@ public abstract class ThirdPartyReactComponent : Element
     /// </summary>
     [System.Text.Json.Serialization.JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
-    public HtmlElement SuspenseFallback { get; set; }
+    public Element SuspenseFallback { get; set; }
     
     protected virtual Element GetSuspenseFallbackElement()
     {

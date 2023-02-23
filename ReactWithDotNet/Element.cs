@@ -46,6 +46,13 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return element;
     }
 
+    public static Element operator +(Element element, Style style)
+    {
+        ModifyHelper.ProcessModifier(element, CreateStyleModifier(s => s?.Import(style)));
+
+        return element;
+    }
+
     public static implicit operator Element(string text)
     {
         return new HtmlTextNode { text = text };
