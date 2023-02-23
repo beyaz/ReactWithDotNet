@@ -78,18 +78,20 @@ public class ToHtmlTests
     [TestMethod]
     public void _2_()
     {
+        Element cmp = new SamplePureComponent();
+        
         var el = new div(Width(21))
         {
             new div(Width(22))
             {
-                new SamplePureComponent()
+                cmp + Width(43)
             }
         };
 
         var expectedHtml = @"
 <div style=""width: 21px;"">
   <div style=""width: 22px;"">
-      <div style=""height: 33px;width: 30px;""></div>
+      <div style=""height: 33px;width: 43px;""></div>
   </div>
 </div>
 
