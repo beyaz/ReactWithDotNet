@@ -1,6 +1,4 @@
-﻿using ReactWithDotNet.WebSite.Components;
-
-namespace ReactWithDotNet.WebSite.HeaderComponents;
+﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 class MainPageHeader : ReactPureComponent
 {

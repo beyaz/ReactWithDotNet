@@ -7,12 +7,13 @@ public class HeaderMenuItemTooltipRow : ReactPureComponent
     public string SvgFileName { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
+    public string PageName { get; set; }
 
     protected override Element render()
     {
         return new a(PaddingTopBottom(20), PaddingLeft(20), PaddingRight(30), TextDecorationNone, Hover(Background("#D5E5F5")), CursorDefault)
         {
-            Href($"/?p={nameof(PageHelperApps)}"),
+            Href($"/?p={PageName}"),
             Background("white"),
             new FlexRow(AlignItemsCenter, Gap(20))
             {

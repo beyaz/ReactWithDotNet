@@ -15,5 +15,22 @@ function register(name, value)
 register("Switch", React.lazy(() => import('./Switch')));
 register("Tooltip", React.lazy(() => import('./Tooltip')));
 register("Button", React.lazy(() => import('./Button')));
+register("Input", React.lazy(() => import('./Input')));
+register("InputBase", React.lazy(() => import('./InputBase')));
+register("Paper", React.lazy(() => import('./Paper')));
+register("Divider", React.lazy(() => import('./Divider')));
+register("IconButton", React.lazy(() => import('./IconButton')));
+register("TextField", React.lazy(() => import('./TextField')));
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
 register("FormGroup", FormGroup);
 register("FormControlLabel", FormControlLabel);

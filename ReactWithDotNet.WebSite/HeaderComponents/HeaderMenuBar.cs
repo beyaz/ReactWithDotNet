@@ -1,4 +1,6 @@
 ﻿
+using ReactWithDotNet.WebSite.Pages;
+
 namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 class HeaderMenuBar : ReactPureComponent
@@ -67,6 +69,20 @@ class HeaderMenuBar : ReactPureComponent
                         Text = "Showcase",
                         TooltipRows = new[]
                         {
+                            new HeaderMenuItemTooltipRow
+                            {
+                                PageName    =nameof(PageShowcase),
+                                SvgFileName = "doc.svg",
+                                Title       = "Showcase",
+                                Description = "Sample demonstration of html and 3rd party react libs"
+                            },
+                            new HeaderMenuItemTooltipRow
+                            {
+                                PageName    =nameof(PageHelperApps),
+                                SvgFileName = "doc.svg",
+                                Title       = "Helper Apps",
+                                Description = "Utility tools for import existing html or style"
+                            },
                             new HeaderMenuItemTooltipRow
                             {
                                 SvgFileName = "doc.svg",
