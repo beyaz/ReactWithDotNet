@@ -1,6 +1,4 @@
-﻿using ReactWithDotNet.Libraries.ReactWithDotNetSkeleton;
-
-namespace ReactWithDotNet.Libraries.react_syntax_highlighter;
+﻿namespace ReactWithDotNet.Libraries.react_syntax_highlighter;
 
 public sealed class SyntaxHighlighter : ThirdPartyReactComponent
 {
@@ -9,11 +7,6 @@ public sealed class SyntaxHighlighter : ThirdPartyReactComponent
 
     [React]
     public new SyntaxHighlighterStyle style { get; set; }
-
-    protected override Element GetSuspenseFallbackElement()
-    {
-        return new Skeleton { WidthMaximized, Height(300) };
-    }
 }
 
 
