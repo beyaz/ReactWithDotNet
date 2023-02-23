@@ -67,7 +67,7 @@ public class ToHtmlTests
     }
 
 
-    class SamplePureComponent: ReactPureComponent
+    class SamplePureComponent: ReactComponent
     {
         protected override Element render()
         {
