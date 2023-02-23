@@ -111,16 +111,29 @@ static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
             }
 
-            var instance = (ReactComponentBase)(input.Instance ?? Activator.CreateInstance(type));
+            var instance = (Element)(input.Instance ?? Activator.CreateInstance(type));
             if (instance == null)
             {
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
-            instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier++;
-            instance.key                       = "0";
-            instance.Context                   = context;
-            instance.InvokeConstructor();
+            
+            if (instance is ReactComponentBase reactComponentBase)
+            {
+                reactComponentBase.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier++;
+                reactComponentBase.key                       = "0";
+                reactComponentBase.Context                   = context;
+                reactComponentBase.InvokeConstructor();
+            }
+            else if (instance is ReactPureComponent reactPureComponent)
+            {
+                reactPureComponent.key     = "0";
+                reactPureComponent.Context = context;
+            }
+            else
+            {
+                throw DeveloperException($"{instance.GetType().FullName} should be inherit from {nameof(ReactPureComponent)} or {nameof(ReactComponent)}");
+            }
 
             // maybe developer forget init state
             if (instance is ReactComponent<EmptyState> reactComponent && reactComponent.state == null)

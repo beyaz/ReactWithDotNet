@@ -1486,7 +1486,7 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
 
     const element = response.ElementAsJson;
 
-    const component = DefineComponent(element);
+    const component = element.$isPureComponent === 1 ? DefinePureComponent(element) : DefineComponent(element);
 
     LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
             
