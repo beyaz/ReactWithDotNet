@@ -12,7 +12,7 @@ public sealed class SyntaxHighlighter : ThirdPartyReactComponent
 
     protected override Element GetSuspenseFallbackElement()
     {
-        return new Skeleton { WidthMaximized, Height(200) };
+        return new Skeleton { WidthMaximized, Height(300) };
     }
 }
 

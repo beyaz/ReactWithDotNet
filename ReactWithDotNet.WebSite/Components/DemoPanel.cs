@@ -14,7 +14,7 @@ class DemoPanel : ReactPureComponent
             new fieldset(Border("1px solid #dee2e6"),WidthMaximized)
             {
                 new legend{new img{Src(Asset("csharp.svg")), Width(25), Height(20)}},
-                new FlexColumn(AlignItemsFlexStart,WidthMaximized)
+                new FlexColumn(AlignItemsFlexStart,WidthMaximized, HeightMaximized)
                 {
                     new CSharpCodePanel{ Code = CSharpCode}
                 }

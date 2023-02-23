@@ -9,7 +9,9 @@ public class Skeleton : ReactComponent
             className = "skeleton",
             style =
             {
-                BorderRadius(5)
+                BorderRadius(5),
+                WidthMaximized,
+                HeightMaximized
             },
             children =
             {

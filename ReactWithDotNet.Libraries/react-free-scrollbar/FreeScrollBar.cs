@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.Libraries.react_free_scrollbar;
+﻿using ReactWithDotNet.Libraries.ReactWithDotNetSkeleton;
+
+namespace ReactWithDotNet.Libraries.react_free_scrollbar;
 
 /// <summary>
 /// https://www.npmjs.com/package/react-free-scrollbar
@@ -48,4 +50,9 @@ public sealed class FreeScrollBar : ThirdPartyReactComponent
     /// </summary>
     [React]
     public int? onScrollbarScrollTimeout { get; set; }
+
+    protected override Element GetSuspenseFallbackElement()
+    {
+        return new Skeleton() + WidthMaximized + HeightMaximized;
+    }
 }
