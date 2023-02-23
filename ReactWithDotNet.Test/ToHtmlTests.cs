@@ -1,16 +1,12 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReactWithDotNet.Libraries.PrimeReact;
-using ReactWithDotNet.Libraries.react_free_scrollbar;
 
 namespace ReactWithDotNet.Test;
 
 [TestClass]
 public class ToHtmlTests
 {
-
-
-    
     [TestMethod]
     public void _0_()
     {
@@ -26,10 +22,8 @@ public class ToHtmlTests
 ";
 
         el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
-
     }
-    
-    
+
     [TestMethod]
     public void _1_()
     {
@@ -42,15 +36,15 @@ public class ToHtmlTests
             new div
             {
                 "Abc1",
-                new a{ href = "w"},
+                new a { href = "w" },
                 "Abc2",
                 (span)"uuO",
                 new div
                 {
-                    Aria("A","B"), Aria("c","D"),
+                    Aria("A", "B"), Aria("c", "D"),
                     new InputText()
                 },
-                new div{dangerouslySetInnerHTML = "De1"}
+                new div { dangerouslySetInnerHTML = "De1" }
             }
         };
 
@@ -68,8 +62,39 @@ public class ToHtmlTests
 </div>
 
 ";
-        
-        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
 
+        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
+    }
+
+
+    class SamplePureComponent: ReactPureComponent
+    {
+        protected override Element render()
+        {
+            return new div { Width(30), Height(33) };
+        }
+    }
+    
+    [TestMethod]
+    public void _2_()
+    {
+        var el = new div(Width(21))
+        {
+            new div(Width(22))
+            {
+                new SamplePureComponent()
+            }
+        };
+
+        var expectedHtml = @"
+<div style=""width: 21px;"">
+  <div style=""width: 22px;"">
+      <div style=""height: 33px;width: 30px;""></div>
+  </div>
+</div>
+
+";
+
+        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
     }
 }
