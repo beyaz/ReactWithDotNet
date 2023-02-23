@@ -1,17 +1,12 @@
-﻿using ReactWithDotNet.WebSite.Components;
-using ReactWithDotNet.WebSite.HeaderComponents;
-using ReactWithDotNet.WebSite.HelperApps;
+﻿using ReactWithDotNet.WebSite.HeaderComponents;
+using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
 
-public class MainWindow : ReactComponent
+public class MainWindow : ReactPureComponent
 {
-    public string PageId { get; set; }
-
-    protected override void constructor()
-    {
-        PageId = Context.Query[QueryKey.Page];
-    }
+    string PageName => Context.Query[QueryKey.Page];
+    
 
     protected override Element render()
     {
@@ -31,16 +26,9 @@ public class MainWindow : ReactComponent
 
         Element createContent()
         {
-            if (PageId == nameof(HelperApps))
-            {
-                return new HelperApps.View();
-            }
+            var typeOfPage = Type.GetType($"ReactWithDotNet.WebSite.Pages.{PageName}") ?? typeof(PageMain);
 
-            return new FlexRow(Gap(150),WidthMaximized, JustifyContentSpaceAround)
-            {
-                new MainPageContentDescription(),
-                new MainPageContentSample()
-            };
+            return (Element)Activator.CreateInstance(typeOfPage);
         }
 
     }

@@ -1,5 +1,4 @@
-﻿using ReactWithDotNet.WebSite.Components;
-
+﻿
 namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 class HeaderMenuBar : ReactPureComponent

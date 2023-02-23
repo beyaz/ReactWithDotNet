@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
+﻿using ReactWithDotNet.WebSite.Pages;
+
+namespace ReactWithDotNet.WebSite.HeaderComponents;
 
 public class HeaderMenuItemTooltipRow : ReactPureComponent
 {
@@ -10,7 +12,7 @@ public class HeaderMenuItemTooltipRow : ReactPureComponent
     {
         return new a(PaddingTopBottom(20), PaddingLeft(20), PaddingRight(30), TextDecorationNone, Hover(Background("#D5E5F5")), CursorDefault)
         {
-            Href("/?p=HelperApps"),
+            Href($"/?p={nameof(PageHelperApps)}"),
             Background("white"),
             new FlexRow(AlignItemsCenter, Gap(20))
             {

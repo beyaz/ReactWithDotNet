@@ -1,8 +1,9 @@
 ﻿using ReactWithDotNet.Libraries.mui.material;
+using ReactWithDotNet.WebSite.HelperApps;
 
-namespace ReactWithDotNet.WebSite.HelperApps;
+namespace ReactWithDotNet.WebSite.Pages;
 
-class View : ReactComponent
+class PageHelperApps : ReactComponent
 {
     public string SelectedAppName { get; set; } = nameof(HtmlToCSharpView);
 
