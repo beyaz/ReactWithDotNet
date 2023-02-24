@@ -10,8 +10,6 @@ class PageShowcase : ReactComponent
     {
         return new div
         {
-            new link { href = "https://fonts.googleapis.com/icon?family=Material+Icons", rel = "stylesheet" },
-
             new Paper
             {
                 component = "form", sx = { p = "2px 4px", display = "flex", alignItems = "center", width = 400 },
@@ -28,7 +26,6 @@ class PageShowcase : ReactComponent
                             new span { className = "material-icons", text = "search" }
                         }
                     }
-                    
                 }
             },
             
