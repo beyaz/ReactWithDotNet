@@ -21,6 +21,9 @@ register("Paper", React.lazy(() => import('./Paper')));
 register("Divider", React.lazy(() => import('./Divider')));
 register("IconButton", React.lazy(() => import('./IconButton')));
 register("TextField", React.lazy(() => import('./TextField')));
+register("CardMedia", React.lazy(() => import('./CardMedia')));
+register("Card", React.lazy(() => import('./Card')));
+
 
 
 

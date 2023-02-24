@@ -1,4 +1,5 @@
-﻿using System.Runtime.Intrinsics.X86;
+﻿using System;
+using System.Runtime.Intrinsics.X86;
 
 namespace ReactWithDotNet.Libraries.mui.material;
 
@@ -91,6 +92,44 @@ public sealed class Paper : ElementBase
     [React]
     public string variant { get; set; }
 }
+
+public sealed class Card : ElementBase
+{
+    /// <summary>
+    /// The component used for the root node. Either a string to use a HTML element or a component.
+    /// </summary>
+    [React]
+    public string component { get; set; }
+    
+    /// <summary>
+    /// 	If true, the card will use raised styling.
+    /// </summary>
+    [React]
+    public bool? raised { get; set; }
+
+    /// <summary>
+    /// 	The variant to use.
+    /// <br/>
+    /// 'elevation'
+    /// <br/>
+    /// 'outlined'
+    /// </summary>
+    [React]
+    public string variant { get; set; }
+}
+public sealed class CardMedia : ElementBase
+{
+    [React]
+    public string image { get; set; }
+
+    /// <summary>
+    /// 	If true, the card will use raised styling.
+    /// </summary>
+    [React]
+    public string title { get; set; }
+}
+
+
 public sealed class Divider : ElementBase
 {
     [React]

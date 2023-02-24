@@ -1,4 +1,5 @@
 ﻿using ReactWithDotNet.Libraries.mui.material;
+using ReactWithDotNet.WebSite.Showcases;
 
 namespace ReactWithDotNet.WebSite.Pages;
 
@@ -25,11 +26,13 @@ class PageShowcase : ReactComponent
                 }
             },
             
-            new FlexRow
-            {
-                Enumerable.Range(0, SearchValue?.Length ?? 5).Select(i => new div{i.ToString(), Padding(5)})
-            }
+            //new FlexRow
+            //{
+            //    Enumerable.Range(0, SearchValue?.Length ?? 5).Select(i => new div{i.ToString(), Padding(5)})
+            //}
             
+            new MuiCardDemo()
+
 
         };
     }
