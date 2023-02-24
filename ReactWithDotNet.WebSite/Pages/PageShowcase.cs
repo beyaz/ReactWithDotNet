@@ -8,28 +8,28 @@ class PageShowcase : ReactComponent
     
     protected override Element render()
     {
-        return new div
+        return new FlexColumn
         {
-            new Paper
+            new FlexRow(Gap(5),AlignItemsCenter)
             {
-                component = "form", sx = { p = "2px 4px", display = "flex", alignItems = "center", width = 400 },
-                children =
+                new span(FontSize(40))
                 {
-                    // new InputBase { sx  = { ml = 1, flex = 1 }, placeholder = "Search in samples" },
-                    new TextField { sx = { ml = 1, flex = 1 },valueBind = ()=>SearchValue, valueBindDebounceTimeout = 500, valueBindDebounceHandler = OnSearchFinished},
-                    new IconButton
-                    {
-                        type="button",
-                        sx = { p= "10px" },
-                        children =
-                        {
-                            new span { className = "material-icons", text = "search" }
-                        }
-                    }
+                    className = "material-icons",
+                    text      = "filter_list"
+                },
+                new TextField
+                {
+                    valueBind                = ()=>SearchValue,
+                    valueBindDebounceTimeout = 500,
+                    valueBindDebounceHandler = OnSearchFinished
                 }
             },
             
-            Enumerable.Range(0, SearchValue?.Length ?? 5).Select(i => new div{i.ToString(), Padding(5)})
+            new FlexRow
+            {
+                Enumerable.Range(0, SearchValue?.Length ?? 5).Select(i => new div{i.ToString(), Padding(5)})
+            }
+            
 
         };
     }
