@@ -98,7 +98,7 @@ static class HtmlTextGenerator
 
         var padding = "".PadLeft(4, ' ');
 
-        sb.AppendLine(padding + "<style>");
+        sb.AppendLine(padding + "<style id='ReactWithDotNetDynamicCss'>");
         dynamicStylesMap?.Foreach((cssSelector, cssBody) =>
         {
             sb.Append(padding + cssSelector);

@@ -1949,9 +1949,16 @@ function ProcessDynamicCssClasses(dynamicStyles)
     {
         if (ReactWithDotNetDynamicCssElement === null)
         {
-            ReactWithDotNetDynamicCssElement = document.createElement('style');
-            ReactWithDotNetDynamicCssElement.id = "ReactWithDotNetDynamicCss";
-            document.head.appendChild(ReactWithDotNetDynamicCssElement);
+            const idOfStyleElement = "ReactWithDotNetDynamicCss";
+
+            ReactWithDotNetDynamicCssElement = document.getElementById(idOfStyleElement);
+
+            if (ReactWithDotNetDynamicCssElement == null)
+            {
+                ReactWithDotNetDynamicCssElement = document.createElement('style');
+                ReactWithDotNetDynamicCssElement.id = idOfStyleElement;
+                document.head.appendChild(ReactWithDotNetDynamicCssElement);
+            }         
         }
 
         const arr = [];
