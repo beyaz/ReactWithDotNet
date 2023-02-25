@@ -15,8 +15,6 @@ register("InputText", React.lazy(() => import('./InputText')));
 register("InputTextarea", React.lazy(() => import('./InputTextarea')));
 register("BlockUI", React.lazy(() => import('./BlockUI')));
 register("Card", React.lazy(() => import('./Card')));
-register("TabView", TabView);
-register("TabPanel", TabPanel);
 register("SplitterPanel", React.lazy(() => import('./SplitterPanel')));
 register("Splitter", React.lazy(() => import('./Splitter')));
 register("Slider", React.lazy(() => import('./Slider')));
@@ -35,6 +33,8 @@ register("Message", React.lazy(() => import('./Message')));
 register("ScrollPanel", React.lazy(() => import('./ScrollPanel')));
 register("Dialog", React.lazy(() => import('./Dialog')));
 
+register("TabView", TabView);
+register("TabPanel", TabPanel);
 
 // U T I L I T Y   F U N C T I O N S
 register("Panel::GetHeaderTemplate", (key) => ReactWithDotNet.GetExternalJsObject(key));
