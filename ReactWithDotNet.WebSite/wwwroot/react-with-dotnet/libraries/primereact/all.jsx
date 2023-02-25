@@ -10,31 +10,31 @@ function register(name, value)
 }
 
 // Connect components as Lazy
-register("Button", React.lazy(() => import('./Button')));
-register("InputText", React.lazy(() => import('./InputText')));
+register("Button",        React.lazy(() => import('./Button')));
+register("InputText",     React.lazy(() => import('./InputText')));
 register("InputTextarea", React.lazy(() => import('./InputTextarea')));
-register("BlockUI", React.lazy(() => import('./BlockUI')));
-register("Card", React.lazy(() => import('./Card')));
-register("TabView", TabView);
-register("TabPanel", TabPanel);
+register("BlockUI",       React.lazy(() => import('./BlockUI')));
+register("Card",          React.lazy(() => import('./Card')));
 register("SplitterPanel", React.lazy(() => import('./SplitterPanel')));
-register("Splitter", React.lazy(() => import('./Splitter')));
-register("Slider", React.lazy(() => import('./Slider')));
-register("ListBox", React.lazy(() => import('./ListBox')));
-register("Dropdown", React.lazy(() => import('./Dropdown')));
-register("Column", React.lazy(() => import('./Column')));
-register("DataTable", React.lazy(() => import('./DataTable')));
-register("Checkbox", React.lazy(() => import('./Checkbox')));
-register("InputMask", React.lazy(() => import('./InputMask')));
-register("AutoComplete", React.lazy(() => import('./AutoComplete')));
-register("Tree", React.lazy(() => import('./Tree')));
-register("InputSwitch", React.lazy(() => import('./InputSwitch')));
-register("Panel", React.lazy(() => import('./Panel')));
-register("Tooltip", React.lazy(() => import('./Tooltip')));
-register("Message", React.lazy(() => import('./Message')));
-register("ScrollPanel", React.lazy(() => import('./ScrollPanel')));
-register("Dialog", React.lazy(() => import('./Dialog')));
+register("Splitter",      React.lazy(() => import('./Splitter')));
+register("Slider",        React.lazy(() => import('./Slider')));
+register("ListBox",       React.lazy(() => import('./ListBox')));
+register("Dropdown",      React.lazy(() => import('./Dropdown')));
+register("Column",        React.lazy(() => import('./Column')));
+register("DataTable",     React.lazy(() => import('./DataTable')));
+register("Checkbox",      React.lazy(() => import('./Checkbox')));
+register("InputMask",     React.lazy(() => import('./InputMask')));
+register("AutoComplete",  React.lazy(() => import('./AutoComplete')));
+register("Tree",          React.lazy(() => import('./Tree')));
+register("InputSwitch",   React.lazy(() => import('./InputSwitch')));
+register("Panel",         React.lazy(() => import('./Panel')));
+register("Tooltip",       React.lazy(() => import('./Tooltip')));
+register("Message",       React.lazy(() => import('./Message')));
+register("ScrollPanel",   React.lazy(() => import('./ScrollPanel')));
+register("Dialog",        React.lazy(() => import('./Dialog')));
 
+register("TabView",  TabView);
+register("TabPanel", TabPanel);
 
 // U T I L I T Y   F U N C T I O N S
 register("Panel::GetHeaderTemplate", (key) => ReactWithDotNet.GetExternalJsObject(key));
