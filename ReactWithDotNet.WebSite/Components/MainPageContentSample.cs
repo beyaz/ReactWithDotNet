@@ -6,6 +6,7 @@ class MainPageContentSample : ReactPureComponent
     {
         return new DemoPanel
         {
+            IsSourceCodeVisible = true,
             CSharpCode = @"class HomePageDemoComponentState
 {
     public bool ShowMessage { get; set; }
@@ -59,7 +60,7 @@ class HomePageDemoComponent : ReactComponent<HomePageDemoComponentState>
         };
     }
 }",
-            Element = new HomePageDemoComponent()
-        }+MinWidth(500) + FontSize10;
+            FullNameOfElement = typeof(HomePageDemoComponent).FullName
+        };
     }
 }

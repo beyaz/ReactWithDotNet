@@ -6,6 +6,9 @@ namespace ReactWithDotNet.Libraries.mui.material;
 public sealed class Switch : ElementBase
 {
     [React]
+    public string size { get; set; }
+    
+    [React]
     public bool? defaultChecked { get; set; }
 
     [React]

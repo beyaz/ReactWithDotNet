@@ -1,51 +1,76 @@
 ﻿
+using ReactWithDotNet.Libraries.mui.material;
+
 namespace ReactWithDotNet.WebSite.Components;
 
-class DemoPanel : ReactPureComponent
+class DemoPanel : ReactComponent
 {
     public string CSharpCode { get; set; }
 
-    public Element Element { get; set; }
+    public string FullNameOfElement { get; set; }
+
+    public bool IsSourceCodeVisible { get; set; }
+
+    public bool HideSourceCodeVisibilityButton{ get; set; }
 
     protected override Element render()
     {
-        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(10), BorderRadius(5), MarginTopBottom(1), FlexWrap)
+        Element creatElement()
         {
-            new fieldset(Border("1px solid #dee2e6"),WidthMaximized)
+            if (FullNameOfElement is not null)
+            {
+                var elementType = Type.GetType(FullNameOfElement);
+                if (elementType is not null)
+                {
+                    return (Element)Activator.CreateInstance(elementType);
+                }
+            }
+
+            return "Element is empty";
+        }
+
+        Element ShowHideButton()
+        {
+            return new FormControlLabel
+            {
+                label = IsSourceCodeVisible ? "Hide Source Code" : "Show Source Code",
+                control = new Switch
+                {
+                    size     = "small",
+                    value    = (!IsSourceCodeVisible).ToString(),
+                    @checked = IsSourceCodeVisible,
+                    onChange = _ => IsSourceCodeVisible = !IsSourceCodeVisible
+
+                }
+            };
+        }
+
+        Element createSourceCode()
+        {
+            return new fieldset(Border("1px solid #dee2e6"), WidthMaximized)
             {
                 new legend{new img{Src(Asset("csharp.svg")), Width(25), Height(20)}},
                 new FlexColumn(AlignItemsFlexStart,WidthMaximized, HeightMaximized)
                 {
                     new CSharpCodePanel{ Code = CSharpCode}
                 }
-            },
-            
-            new fieldset(Border("1px solid #dee2e6"), WidthMaximized)
-            {
-                new legend{"Output"},
-                Element ?? "Element is empty"
-            }
-        };
-    }
-}
-
-
-class DemoContainer : ReactPureComponent
-{
-    public bool ShowSourceCode { get; set; }
-
-    protected override Element render()
-    {
-        return new FlexRowCentered(BackgroundColor(Theme[Context].grey_100), Padding(40), WidthMaximized, BorderRadius(10), PositionRelative)
+            };
+        }
+        
+        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(10), BorderRadius(5), MarginTopBottom(1), FlexWrap,
+                           MinWidth(500) , FontSize10)
         {
-            children,
-            new Button{size ="small",onClick = OnSourceCodeClicked, children = { "Show c# source code" }, style = { PositionAbsolute, Right(1), Bottom(1) }},
+            new FlexRowCentered(BackgroundColor(Theme[Context].grey_100), Padding(40), WidthMaximized, BorderRadius(10), PositionRelative)
+            {
+                creatElement,
+
+                When(!HideSourceCodeVisibilityButton, new FlexRow(PositionAbsolute, Right(1), Bottom(1) )
+                {
+                    ShowHideButton
+                })
+                
+            },
+            When(IsSourceCodeVisible, createSourceCode)
         };
-    }
-
-    void OnSourceCodeClicked(MouseEvent obj)
-    {
-
-
     }
 }
