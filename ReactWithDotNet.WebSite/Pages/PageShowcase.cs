@@ -90,7 +90,8 @@ class PageShowcase : ReactComponent
     {
         typeof(MuiCardDemo),
         typeof(MuiTextFieldDemo),
-        typeof(PrimeReactTabViewDemo)
+        typeof(PrimeReactTabViewDemo),
+        typeof(RSuiteAutoCompleteDemo)
     };
 
     void OnSearchFinished()

@@ -23,7 +23,7 @@ class HeaderMenuBar : ReactPureComponent
                             {
                                 PageName = nameof(PageTechnicalDetail),
                                 SvgFileName = "doc.svg",
-                                Title       = "Technical Details",
+                                Title       = "Technical Explanation",
                                 Description = "Working mechanism of ReactWithDotNet"
                             },
                             new HeaderMenuItemTooltipRow

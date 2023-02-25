@@ -14,4 +14,7 @@ public sealed class AutoComplete : ElementBase
 
     [React]
     public string value { get; set; }
+
+    [React]
+    public string placeholder { get; set; }
 }
