@@ -1,1 +1,3 @@
-export { TabView as default } from 'primereact/tabview';
+import { TabView  } from 'primereact/tabview';
+
+export default TabView;

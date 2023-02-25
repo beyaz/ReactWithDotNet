@@ -1,1 +1,3 @@
-export { TabPanel as default } from 'primereact/tabview';
+import { TabPanel  } from 'primereact/tabview';
+
+export default TabPanel;

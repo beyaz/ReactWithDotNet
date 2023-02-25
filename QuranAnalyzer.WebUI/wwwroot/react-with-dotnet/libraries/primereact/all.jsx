@@ -2,6 +2,8 @@ import React from 'react';
 
 import ReactWithDotNet from "../../react-with-dotnet";
 
+import { TabView, TabPanel } from 'primereact/tabview';
+
 function register(name, value)
 {
     ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact." + name, value);
@@ -13,8 +15,8 @@ register("InputText", React.lazy(() => import('./InputText')));
 register("InputTextarea", React.lazy(() => import('./InputTextarea')));
 register("BlockUI", React.lazy(() => import('./BlockUI')));
 register("Card", React.lazy(() => import('./Card')));
-register("TabView", React.lazy(() => import('./TabView')));
-register("TabPanel", React.lazy(() => import('./TabPanel')));
+register("TabView", TabView);
+register("TabPanel", TabPanel);
 register("SplitterPanel", React.lazy(() => import('./SplitterPanel')));
 register("Splitter", React.lazy(() => import('./Splitter')));
 register("Slider", React.lazy(() => import('./Slider')));
