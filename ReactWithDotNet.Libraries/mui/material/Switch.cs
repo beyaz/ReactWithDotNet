@@ -117,6 +117,30 @@ public sealed class Card : ElementBase
     [React]
     public string variant { get; set; }
 }
+public sealed class CardContent : ElementBase
+{
+   
+}
+public sealed class CardActions : ElementBase
+{
+
+}
+public sealed class Typography : ElementBase
+{
+    /// <summary>
+    /// 	The variant to use.
+    /// <br/>
+    /// 'elevation'
+    /// <br/>
+    /// 'outlined'
+    /// </summary>
+    [React]
+    public string variant { get; set; }
+
+    [React]
+    public string color { get; set; }
+}
+
 public sealed class CardMedia : ElementBase
 {
     [React]

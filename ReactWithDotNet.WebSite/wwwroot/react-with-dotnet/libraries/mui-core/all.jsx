@@ -23,6 +23,9 @@ register("IconButton", React.lazy(() => import('./IconButton')));
 register("TextField", React.lazy(() => import('./TextField')));
 register("CardMedia", React.lazy(() => import('./CardMedia')));
 register("Card", React.lazy(() => import('./Card')));
+register("CardContent", React.lazy(() => import('./CardContent')));
+register("CardActions", React.lazy(() => import('./CardActions')));
+register("Typography", React.lazy(() => import('./Typography')));
 
 
 
