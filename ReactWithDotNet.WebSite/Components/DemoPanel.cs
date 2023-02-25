@@ -29,122 +29,23 @@ class DemoPanel : ReactPureComponent
     }
 }
 
-class MainPageContentSample : ReactPureComponent
-{
-    protected override Element render()
-    {
-        return new DemoPanel
-        {
-            CSharpCode = @"class HomePageDemoComponentState
-{
-    public bool ShowMessage { get; set; }
-}
-class HomePageDemoComponent : ReactComponent<HomePageDemoComponentState>
-{
-    protected override void constructor()
-    {
-        state = new HomePageDemoComponentState();
-    }
 
-    void OnButtonClicked(MouseEvent e)
-    {
-        state.ShowMessage = true;
-    }
+class DemoContainer : ReactPureComponent
+{
+    public bool ShowSourceCode { get; set; }
 
     protected override Element render()
     {
-        return new div
+        return new FlexRowCentered(BackgroundColor(Theme[Context].grey_100), Padding(40), WidthMaximized, BorderRadius(10), PositionRelative)
         {
-            style =
-            {
-                display = ""flex"",
-                flexDirection = ""column"",
-                border  = ""1px solid #dee2e6"",
-            },
-            
-            children =
-            {
-                new button
-                {
-                    text    = ""Show Message"",
-                    onClick = OnButtonClicked,
-                    style =
-                    {
-                        display         = ""inline-block"",
-                        fontWeight      = ""400"",
-                        textAlign       = ""center"",
-                        border          = ""1px solid transparent"",
-                        padding         = "".375rem .75rem"",
-                        fontSize        = ""1rem"",
-                        lineHeight      = ""1.5"",
-                        borderRadius    = "".25rem"",
-                        color           = ""#fff"",
-                        backgroundColor = ""#007bff""
-                    }
-                },
-                
-                state.ShowMessage ? ""Hello world."" : null
-            }
+            children,
+            new Button{size ="small",onClick = OnSourceCodeClicked, children = { "Show c# source code" }, style = { PositionAbsolute, Right(1), Bottom(1) }},
         };
     }
-}",
-            Element = new HomePageDemoComponent()
-        }+MinWidth(500) + FontSize10;
-    }
-}
 
-
-class HomePageDemoComponentState
-{
-    public bool ShowMessage { get; set; }
-}
-class HomePageDemoComponent : ReactComponent<HomePageDemoComponentState>
-{
-    protected override void constructor()
+    void OnSourceCodeClicked(MouseEvent obj)
     {
-        state = new HomePageDemoComponentState();
-    }
 
-    void OnButtonClicked(MouseEvent e)
-    {
-        state.ShowMessage = true;
-    }
 
-    protected override Element render()
-    {
-        return new div
-        {
-            style =
-            {
-                display = "flex",
-                flexDirection = "column"
-            },
-            
-            children =
-            {
-                new button
-                {
-                    text    = "Show Message",
-                    onClick = OnButtonClicked,
-                    style =
-                    {
-                        display    = "inline-block",
-                        fontWeight = "400",
-                        border     = "1px solid transparent",
-                        textAlign       = "center",
-                        padding         = ".375rem .75rem",
-                        fontSize        = "1rem",
-                        lineHeight      = "1.5",
-                        borderRadius    = ".25rem",
-                        color           = "#fff",
-                        width = "200px",
-                        backgroundColor = "#007bff",
-                        hover           = {color = "#f1ba72"}
-                    }
-                },
-                
-                state.ShowMessage ? "Hello world." : null
-            }
-        };
     }
 }

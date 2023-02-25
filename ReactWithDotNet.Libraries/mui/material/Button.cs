@@ -3,6 +3,9 @@
 public sealed class Button : ElementBase
 {
     [React]
+    public string size { get; set; }
+
+    [React]
     public string variant { get; set; }
 
     [React]
