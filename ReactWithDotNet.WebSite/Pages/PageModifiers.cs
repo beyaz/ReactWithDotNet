@@ -11,3 +11,14 @@ class PageModifiers : ReactPureComponent
         };
     }
 }
+
+class PageTechnicalDetail : ReactPureComponent
+{
+    protected override Element render()
+    {
+        return new FlexRow(Gap(150), WidthMaximized, JustifyContentSpaceAround)
+        {
+            "PageTechnicalDetail"
+        };
+    }
+}

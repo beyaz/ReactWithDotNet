@@ -45,6 +45,9 @@ public sealed class TextField : ElementBase
     public string value { get; set; }
 
     [React]
+    public string size { get; set; }
+
+    [React]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 
