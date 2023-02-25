@@ -9,7 +9,7 @@ class PageHelperApps : ReactComponent
 
     protected override Element render()
     {
-        return new FlexColumn(WidthMaximized)
+        return new FlexColumn(WidthMaximized,AlignItemsCenter)
         {
             new FlexRow
             {
@@ -29,7 +29,7 @@ class PageHelperApps : ReactComponent
                 }
             },
 
-            creatElement() + HeightMaximized
+            creatElement() + HeightMaximized + WidthMaximized
         };
 
         Element creatElement()

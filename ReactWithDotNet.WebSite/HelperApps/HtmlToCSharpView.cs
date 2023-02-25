@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using ReactWithDotNet.Libraries.PrimeReact;
+using ReactWithDotNet.Libraries.react_free_scrollbar;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
@@ -89,33 +90,27 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 "Html to ReactWithDotNet",
                 (small)" ( paste any html text to left panel )"
             },
-            new Splitter
+            new FlexRow(WidthHeightMaximized,Height(500),Border("1px solid red"))
             {
-                layout = SplitterLayoutType.horizontal,
-                style =
+                new FreeScrollBar
                 {
-                    width  = "100%",
-                    maxWidth = "600px",
-                    height = "100%"
-                },
-                children =
-                {
-                    new SplitterPanel
+                    style =
                     {
-                        size = 30,
-                        children =
-                        {
-                            htmlEditor
-                        }
+                        Height(500),
+                       WidthMaximized
                     },
-                    new SplitterPanel
+                    children = { htmlEditor }
+                },
+                new FreeScrollBar
+                {
+                    style =
                     {
-                        size = 70,
-                        children =
-                        {
-                            csharpEditor
-                        }
-                    }
+                        Height(500),
+                        WidthMaximized
+                    },
+                    children = { csharpEditor }
+                        
+                    
                 }
             },
 
@@ -132,7 +127,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         var document = new HtmlDocument();
 
-        document.LoadHtml(htmlRootNode);
+        document.LoadHtml(htmlRootNode.Trim());
 
         return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild));
     }
@@ -141,7 +136,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
     {
         var lines = new List<string>();
 
-        var attributeName = htmlAttribute.Name;
+        var attributeName = htmlAttribute.OriginalName;
         if (attributeName == "class")
         {
             attributeName = "className";
@@ -241,7 +236,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
     static IReadOnlyList<string> ToCSharpCode(HtmlNode htmlNode)
     {
-        var htmlNodeName = htmlNode.Name;
+        var htmlNodeName = htmlNode.OriginalName;
         if (htmlNodeName == "clippath")
         {
             htmlNodeName = "clipPath";
@@ -261,7 +256,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             var attributeLines = ToCSharpCode(htmlNode.Attributes);
 
-            attributeLines.Insert(0, $"text = \"{htmlNode.ChildNodes[0].InnerText}\"");
+            attributeLines.Insert(0, $"text = @\"{htmlNode.ChildNodes[0].InnerText}\"");
 
             // one line
             if (attributeLines.Count < 3)
