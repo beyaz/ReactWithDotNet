@@ -21,18 +21,21 @@ class HeaderMenuBar : ReactPureComponent
                         {
                             new HeaderMenuItemTooltipRow
                             {
+                                PageName = nameof(PageTechnicalDetail),
                                 SvgFileName = "doc.svg",
                                 Title       = "Technical Details",
-                                Description = "Working alghorithm of ReactWithDotNet"
+                                Description = "Working mechanism of ReactWithDotNet"
                             },
                             new HeaderMenuItemTooltipRow
                             {
+                                PageName    = nameof(PageModifiers),
                                 SvgFileName = "doc.svg",
                                 Title       = "Instalition",
                                 Description = "Setup environment and other information"
                             },
                             new HeaderMenuItemTooltipRow
                             {
+                                PageName    = nameof(PageModifiers),
                                 SvgFileName = "doc.svg",
                                 Title       = "Documents",
                                 Description = "Documentation of api"

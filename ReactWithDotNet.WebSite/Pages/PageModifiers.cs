@@ -7,8 +7,7 @@ class PageModifiers : ReactPureComponent
     {
         return new FlexRow(Gap(150), WidthMaximized, JustifyContentSpaceAround)
         {
-            new MainPageContentDescription(),
-            new MainPageContentSample()
+           "Page modifiers"
         };
     }
 }

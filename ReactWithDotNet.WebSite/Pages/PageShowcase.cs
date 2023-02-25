@@ -31,10 +31,11 @@ class PageShowcase : ReactComponent
             //    Enumerable.Range(0, SearchValue?.Length ?? 5).Select(i => new div{i.ToString(), Padding(5)})
             //}
             
-            new MuiCardDemo()
-
-
-
+            new DemoPanel
+            {
+                FullNameOfElement = typeof(MuiCardDemo).FullName,
+                CSharpCode = "new MuiCardDemo()"
+            }
         };
     }
 
