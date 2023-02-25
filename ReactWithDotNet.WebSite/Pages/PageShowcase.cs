@@ -6,23 +6,31 @@ namespace ReactWithDotNet.WebSite.Pages;
 class PageShowcase : ReactComponent
 {
     public string SearchValue { get; set; }
+
+    public string FullTypeNameOfSelectedSample { get; set; } = TypeListOfShowcaseElement[0].FullName;
     
     protected override Element render()
     {
-        return new FlexRow(WidthMaximized)
+        var boxShadowOfWindow = BoxShadow("0 2px 10px 2px rgb(0 0 0 / 10%)");
+        
+        return new FlexColumn(WidthMaximized, boxShadowOfWindow, BorderRadius(5))
         {
-            LeftMenu,
-            
-            new div(Padding(10),WidthMaximized)
+            new FlexRow{(h4)"Showcases"+ MarginLeft(30)+FontWeight500 + FontSize19, BorderBottom("1px solid rgba(5, 5, 5, 0.1)"), AlignItemsCenter },
+            new FlexRow(WidthMaximized, Padding(10))
             {
-                new DemoPanel
+                LeftMenu,
+
+                new div(Padding(10),WidthMaximized)
                 {
-                    FullNameOfElement = typeof(MuiCardDemo).FullName,
-                    CSharpCode        = "new MuiCardDemo()"
+                    new DemoPanel
+                    {
+                        FullNameOfElement = FullTypeNameOfSelectedSample,
+                        CSharpCode        = "new MuiCardDemo()"
+                    }
                 }
+
+
             }
-            
-            
         };
     }
 
@@ -35,7 +43,7 @@ class PageShowcase : ReactComponent
             menuItems = menuItems.Where(t => t.Name.Contains(SearchValue, StringComparison.OrdinalIgnoreCase)).ToList();
         }
         
-        return new FlexColumn(Padding(5))
+        return new FlexColumn(Padding(5), Gap(5))
         {
             new FlexRow(Gap(5),AlignItemsCenter)
             {
@@ -60,15 +68,20 @@ class PageShowcase : ReactComponent
 
         Element asMenuItem(Type t)
         {
+            var isSelected = FullTypeNameOfSelectedSample == t.FullName;
+            
             return new FlexRowCentered
             {
+                Id(t.FullName),
                 Text(t.Name), 
                 BorderRadius(6), 
                 PaddingTopBottom(5), 
                 PaddingLeftRight(15), 
-                Border("1px solid red"),
+                Border($"1px solid {Theme[Context].grey_100}"),
                 CursorDefault,
-                Hover(Background(Theme[Context].grey_900))
+                When(isSelected,Background(Theme[Context].grey_100)),
+                When(!isSelected, Hover(Background(Theme[Context].grey_100))),
+                OnClick(e=>FullTypeNameOfSelectedSample = e.target.id)
             };
         }
     }
@@ -76,7 +89,8 @@ class PageShowcase : ReactComponent
     static IReadOnlyList<Type> TypeListOfShowcaseElement = new[]
     {
         typeof(MuiCardDemo),
-        typeof(MuiTextFieldDemo)
+        typeof(MuiTextFieldDemo),
+        typeof(PrimeReactTabViewDemo)
     };
 
     void OnSearchFinished()
