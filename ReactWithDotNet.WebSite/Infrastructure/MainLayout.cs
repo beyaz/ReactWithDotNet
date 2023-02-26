@@ -55,10 +55,6 @@ class MainLayout : ReactComponent
 
 
                 new link { href = "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&amp;display=swap", rel = "stylesheet" },
-                
-                new link{href = "https://cdnjs.cloudflare.com/ajax/libs/rsuite/5.28.0/rsuite.min.css",rel = "stylesheet"}
-
-
             },
             new body
             {

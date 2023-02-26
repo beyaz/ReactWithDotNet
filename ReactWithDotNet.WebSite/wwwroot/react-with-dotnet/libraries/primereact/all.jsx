@@ -71,3 +71,30 @@ register("GrabWithoutOriginalEvent", function (argumentsAsArray)
 
     return [newInstance];
 });
+
+
+var requiredStylesLoaded = false;
+
+/**
+ * @param {string} dotNetFullClassNameOf3rdPartyComponent
+ */
+function BeforeAny3rdPartyComponentAccess(dotNetFullClassNameOf3rdPartyComponent)
+{
+    if (requiredStylesLoaded)
+    {
+        return;
+    }
+
+    if (dotNetFullClassNameOf3rdPartyComponent.indexOf('.PrimeReact.') > 0 )
+    {
+        requiredStylesLoaded = true;
+
+        ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primeicons@5.0.0/primeicons.css");
+        ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css");
+        ReactWithDotNet.TryLoadCssByHref("https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css");
+    }  
+}
+
+ReactWithDotNet.BeforeAny3rdPartyComponentAccess(BeforeAny3rdPartyComponentAccess);
+
+
