@@ -52,7 +52,7 @@ public class TsParserTests
 
         var cursor = 0;
         
-        var properties = TsParser.TryReadProperties(input, cursor);
+        var properties = ReactWithDotNet.TsLexer.ParseTokens(input, cursor);
 
         
     }
