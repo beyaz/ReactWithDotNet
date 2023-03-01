@@ -45,6 +45,74 @@ record Token(int startIndex, int endIndex, TokenType tokenType, string value);
 
 static class TsLexer
 {
+    public static (bool isFound, int indexOfPair) FindPair(IReadOnlyList<Token> tokens, int startIndex, Func<Token,bool> isPair)
+    {
+        var i = startIndex;
+
+        var stack = new Stack<Token>();
+
+        stack.Push(tokens[i]);
+        
+        i++;
+        while (tokens.Count > i)
+        {
+            if (tokens[i].tokenType == tokens[startIndex].tokenType)
+            {
+                stack.Push(tokens[i]);
+            }
+
+            if (isPair(tokens[i]))
+            {
+                stack.Pop();
+                if (stack.Count == 0)
+                {
+                    return (true, i);
+                }
+            }
+
+            i++;
+            
+        }
+
+        return (false, -1);
+    }
+
+    static bool Equals(Token a, Token b) => a.tokenType == b.tokenType && a.value == b.value;
+    
+    public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, Token[] searchTokens)
+    {
+        var i = startIndex;
+
+
+        while (tokens.Count > i)
+        {
+            var isFound = true;
+            
+            foreach (var searchToken in searchTokens)
+            {
+                while (tokens[i].tokenType == TokenType.Space)
+                {
+                    i++;
+                }
+                
+                if (!Equals(tokens[i], searchToken))
+                {
+                    isFound = false;
+                    break;
+                }
+            }
+
+            if (isFound)
+            {
+                return (isFound: true, i);
+            }
+
+            i++;
+        }
+
+        return (false, -1);
+    }
+
     public static (Exception exception, bool hasRead, int endIndex, IReadOnlyList<Token> tokens) ParseTokens(string content, int startIndex)
     {
         var tokens = new List<Token>();
