@@ -106,7 +106,7 @@ static class TsLexer
             }
             if (hasRead)
             {
-                return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.QuotedString, value));
+                return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.Comment, value));
             }
         }
 
@@ -203,13 +203,25 @@ static class TsLexer
     static (Exception exception, bool hasRead, int cursor, string comment) TryReadComment(string content, int cursor)
     {
 
-        if (content.Length <= cursor + 3)
+        if (content.Length <= cursor + 2)
         {
             return (exception: null, hasRead: false,-1,null);
         }
-        if (content.Substring(cursor, 3) == "/**")
+        
+        if (content.Substring(cursor, 2) == "/*")
         {
-            var endIndex = content.IndexOf("*/", cursor + 3, StringComparison.OrdinalIgnoreCase);
+            var endIndex = content.IndexOf("*/", cursor + 2, StringComparison.OrdinalIgnoreCase);
+            if (endIndex > 0)
+            {
+                endIndex += 2;
+
+                return (exception: null, hasRead: true, endIndex, content.Substring(cursor, endIndex - cursor));
+            }
+        }
+
+        if (content.Substring(cursor, 2) == "//")
+        {
+            var endIndex = content.IndexOf('\n', cursor + 2);
             if (endIndex > 0)
             {
                 endIndex += 2;
