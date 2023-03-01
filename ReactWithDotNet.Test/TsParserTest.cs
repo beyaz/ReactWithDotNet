@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ReactWithDotNet.Test;
@@ -311,6 +312,30 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
         
     }
 
-    
+
+    [TestMethod]
+    public void B()
+    {
+
+        //var (isFound, indexOfLastMatchedToken) = TsLexer.FindMatch(TsLexer.ParseTokens(" props:     {", 0).tokens, 0, TsLexer.ParseTokens("props :     {", 0).tokens);
+        //if (isFound)
+        //{
+
+        //}
+
+
+        var content = File.ReadAllText("d:\\Paper.d.ts");
+
+        var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(content, 0);
+        if (hasRead)
+        {
+            var (isFound, indexOfLastMatchedToken) = TsLexer.FindMatch(tokens, 0, TsLexer.ParseTokens("props: P & {", 0).tokens);
+            if (isFound)
+            {
+                var (b, indexOfPair) = TsLexer.FindPair(tokens,indexOfLastMatchedToken,t=>t.tokenType==TokenType.RightBrace);
+            }
+        }
+
+    }
     
 }

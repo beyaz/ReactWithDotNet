@@ -39,7 +39,8 @@ enum TokenType
     RightParenthesis,
     LeftBracket,
     RightBracket,
-    Lambda
+    Lambda,
+    Assign
 }
 record Token(int startIndex, int endIndex, TokenType tokenType, string value);
 
@@ -79,32 +80,47 @@ static class TsLexer
 
     static bool Equals(Token a, Token b) => a.tokenType == b.tokenType && a.value == b.value;
     
-    public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, Token[] searchTokens)
+    public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, IReadOnlyList<Token> searchTokens)
     {
         var i = startIndex;
-
 
         while (tokens.Count > i)
         {
             var isFound = true;
+
+            var j = i;
             
             foreach (var searchToken in searchTokens)
             {
-                while (tokens[i].tokenType == TokenType.Space)
+                if (searchToken.tokenType == TokenType.Space)
                 {
-                    i++;
+                    continue;
+                }
+
+               
+                
+                while (tokens.Count > j && tokens[j].tokenType == TokenType.Space)
+                {
+                    j++;
+                }
+
+                if (tokens.Count == j)
+                {
+                    break;
                 }
                 
-                if (!Equals(tokens[i], searchToken))
+                if (!Equals(tokens[j], searchToken))
                 {
                     isFound = false;
                     break;
                 }
+
+                j++;
             }
 
             if (isFound)
             {
-                return (isFound: true, i);
+                return (isFound: true, j-1);
             }
 
             i++;
@@ -189,7 +205,7 @@ static class TsLexer
 
         // | < > , ? :
         {
-            var specialCharachters = "|<>,?:;{}.*&()[]";
+            var specialCharachters = "|<>,?:;{}.*&()[]=";
             
             var (hasRead, endIndex, value) = TryRead(content, startIndex, specialCharachters.Contains);
             if (hasRead)
@@ -212,6 +228,7 @@ static class TsLexer
                     '&' => TokenType.Ampersand,
                     '(' => TokenType.LeftParenthesis,
                     ')' => TokenType.RightParenthesis,
+                    '=' => TokenType.Assign,
                     _ => null
                 };
                 
