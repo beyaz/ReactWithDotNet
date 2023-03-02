@@ -48,7 +48,8 @@ public class MuiExporter
                                   .RemoveFromStart("/*")
                                   .RemoveFromEnd("*/")
                                   .Trim()
-                                  .Trim(Environment.NewLine.ToCharArray());
+                                  .RemoveFromStart("* ")
+                                  .Trim();
             if (string.IsNullOrWhiteSpace(line))
             {
                 continue;
