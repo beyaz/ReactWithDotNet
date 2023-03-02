@@ -363,6 +363,14 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
         hasRead.Should().BeTrue();
         memberInfo.Name.Should().Be("role");
         newIndex.Should().Be(44);
+
+
+        tokens = TsLexer.ParseTokens("{"+code+"}", 0).tokens;
+        
+        (hasRead, var members, newIndex) = TsLexer.TryReadMembers(tokens,0);
+
+        hasRead.Should().BeTrue();
+        members.Count.Should().Be(3);
     }
 
     [TestMethod]

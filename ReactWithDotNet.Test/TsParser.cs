@@ -1,9 +1,4 @@
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
-using System.Runtime.InteropServices;
-using System.Xml;
-using System.Reflection;
 
 namespace ReactWithDotNet;
 
@@ -12,12 +7,6 @@ record TsProperty(string comment, string propertyName, string propertyType);
 class TsTypeReference
 {
     public string Name { get; set; }
-    public bool HasUnionValues { get; set; }
-    public List<string> OptionalValues { get; set; }
-    public bool IsAlfaNumeric { get; set; }
-    public bool IsQuotedString { get; set; }
-    public IReadOnlyList<TsTypeReference> GenericArguments_old { get; set; }
-
     public IReadOnlyList<Token> GenericArgumentsAsTokenList { get; set; }
 }
 
@@ -80,28 +69,53 @@ static class TsLexer
         return (hasRead, i, readValues);
     }
     
-    public static (bool hasRead, int newIndex, IReadOnlyList<TsMemberInfo> members) TryReadMembers(IReadOnlyList<Token> tokens, int startIndex)
+    public static (bool hasRead, IReadOnlyList<TsMemberInfo> members, int newIndex) TryReadMembers(IReadOnlyList<Token> tokens, int startIndex)
     {
         var i = startIndex;
         
         var members = new List<TsMemberInfo>();
 
-        
-        while (true)
+        if (tokens[i].tokenType == TokenType.LeftBrace)
         {
-            var (hasRead, memberInfo, newIndex) = TryReadMemberInfo(tokens, i);
-            if (hasRead)
+            var (isFound, indexOfPair) = FindPair(tokens,i,x=>x.tokenType == TokenType.RightBrace);
+            if (isFound)
             {
-                members.Add(memberInfo);
+                i++;
 
-                i = newIndex;
-                
-                continue;
+                skipSpaces();
+
+                while (true)
+                {
+                    var (hasRead, memberInfo, newIndex) = TryReadMemberInfo(tokens, i);
+                    if (hasRead)
+                    {
+                        members.Add(memberInfo);
+
+                        i = newIndex;
+
+                        continue;
+                    }
+                    break;
+                }
+
+                if (i == indexOfPair)
+                {
+                    i++;
+
+                    return (members.Count > 0, members, i);
+                }
             }
-            break;
         }
 
-        return (members.Count > 0, i, members);
+        return /*None*/(hasRead: false, null ,- 1);
+
+        void skipSpaces()
+        {
+            if (tokens[i].tokenType == TokenType.Space)
+            {
+                i++;
+            }
+        }
     }
 
     public static (bool hasRead, TsMemberInfo memberInfo, int newIndex) TryReadMemberInfo(IReadOnlyList<Token> tokens, int startIndex)
@@ -227,32 +241,19 @@ static class TsLexer
         }
     }
 
+    static string ToString(this IReadOnlyList<Token> tokens)
+    {
+        return string.Join(string.Empty, tokens.Select(t => t.value));
+    }
+    
     public static (bool hasRead, string value, int newIndex) TryReadAlfaNumericOrDotSeparetedAlfanumeric(IReadOnlyList<Token> tokens, int startIndex)
     {
-        var hasRead = false;
         
-        var i = startIndex;
-
-        var value = string.Empty;
-
-        while (tokens.Count>i)
-        {
-            if (tokens[i].tokenType == TokenType.AlfaNumeric ||
-                tokens[i].tokenType == TokenType.Dot)
-            {
-                hasRead = true;
-
-                value += tokens[i].value;
-
-                i++;
-                
-                continue;
-            }
-            
-            break;
-        }
-
-        return (hasRead, value, i);
+        var (hasRead, newIndex, readValues) = TryReadWhile(tokens, startIndex,x=>x.tokenType == TokenType.AlfaNumeric || x.tokenType == TokenType.Dot);
+        
+        return (hasRead, ToString(readValues), newIndex);
+        
+        
     }
 
     public static (bool isFound, int indexOfPair) FindPair(IReadOnlyList<Token> tokens, int startIndex, Func<Token,bool> isPair)
