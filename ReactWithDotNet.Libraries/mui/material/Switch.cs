@@ -80,23 +80,13 @@ public sealed class InputBase : ElementBase
     public string placeholder { get; set; }
     
 }
-public sealed class Paper : ElementBase
+public sealed partial class Paper : ElementBase
 {
     /// <summary>
     /// The component used for the root node. Either a string to use a HTML element or a component.
     /// </summary>
     [React]
     public string component { get; set; }
-
-    /// <summary>
-    /// 	The variant to use.
-    /// <br/>
-    /// 'elevation'
-    /// <br/>
-    /// 'outlined'
-    /// </summary>
-    [React]
-    public string variant { get; set; }
 }
 
 public sealed class Card : ElementBase
