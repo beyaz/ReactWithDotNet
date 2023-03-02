@@ -2,7 +2,7 @@ using System.IO;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ReactWithDotNet.Test;
+namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
 [TestClass]
 public class TsParserTests
@@ -307,10 +307,10 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
 
 
         var cursor = 0;
-        
-        var properties = ReactWithDotNet.TsLexer.ParseTokens(input, cursor);
 
-        
+        var properties = TsLexer.ParseTokens(input, cursor);
+
+
     }
 
     [TestMethod]
@@ -347,17 +347,17 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
 
 ";
         var tokens = TsLexer.ParseTokens(code, 0).tokens;
-        
+
         var (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, 0);
         hasRead.Should().BeTrue();
         memberInfo.Name.Should().Be("variant");
         newIndex.Should().Be(23);
 
-        (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, newIndex+1);
+        (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, newIndex + 1);
         hasRead.Should().BeTrue();
         memberInfo.Name.Should().Be("icon");
         newIndex.Should().Be(35);
-        
+
 
         (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, newIndex + 1);
         hasRead.Should().BeTrue();
@@ -365,9 +365,9 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
         newIndex.Should().Be(44);
 
 
-        tokens = TsLexer.ParseTokens("{"+code+"}", 0).tokens;
-        
-        (hasRead, var members, newIndex) = TsParser.TryReadMembers(tokens,0);
+        tokens = TsLexer.ParseTokens("{" + code + "}", 0).tokens;
+
+        (hasRead, var members, newIndex) = TsParser.TryReadMembers(tokens, 0);
 
         hasRead.Should().BeTrue();
         members.Count.Should().Be(3);
@@ -377,7 +377,7 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
     public void B()
     {
 
-        
+
 
 
         var content = File.ReadAllText("d:\\Paper.d.ts");
@@ -388,11 +388,11 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
             var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens("props: P & {", 0).tokens);
             if (isFound)
             {
-                var (b, indexOfPair) = TsParser.FindPair(tokens,indexOfLastMatchedToken,t=>t.tokenType==TokenType.RightBrace);
-                
+                var (b, indexOfPair) = TsParser.FindPair(tokens, indexOfLastMatchedToken, t => t.tokenType == TokenType.RightBrace);
+
             }
         }
 
     }
-    
+
 }

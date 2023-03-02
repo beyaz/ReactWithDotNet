@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace ReactWithDotNet;
+namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
 record TsProperty(string comment, string propertyName, string propertyType);
 
@@ -343,7 +343,7 @@ static class TsParser
 
 static class TsLexer
 {
-    
+
     public static (Exception exception, bool hasRead, int endIndex, IReadOnlyList<Token> tokens) ParseTokens(string content, int startIndex)
     {
         var tokens = new List<Token>();
@@ -354,18 +354,18 @@ static class TsLexer
 
         while (totalLength > i)
         {
-            var (exception, hasRead, endIndex, token) = ReadNextToken(content,i);
+            var (exception, hasRead, endIndex, token) = ReadNextToken(content, i);
             if (exception is not null)
             {
                 return (exception, hasRead: false, startIndex, Enumerable.Empty<Token>().ToList());
             }
-            
+
             if (hasRead)
             {
                 i = endIndex;
-                
+
                 tokens.Add(token);
-                
+
                 continue;
             }
 
@@ -385,8 +385,8 @@ static class TsLexer
                 return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.Space, value));
             }
         }
-        
-            
+
+
         // Quoted String
         {
             var (hasRead, endIndex, value) = ReadQuotedString(content, startIndex);
@@ -398,7 +398,7 @@ static class TsLexer
 
         // comment
         {
-            var (exception,hasRead, endIndex, value) = TryReadComment(content, startIndex);
+            var (exception, hasRead, endIndex, value) = TryReadComment(content, startIndex);
             if (exception is not null)
             {
                 return (exception, hasRead: false, -1, null);
@@ -421,7 +421,7 @@ static class TsLexer
         // | < > , ? :
         {
             var specialCharachters = "|<>,?:;{}.*&()[]=";
-            
+
             var (hasRead, endIndex, value) = TryRead(content, startIndex, specialCharachters.Contains);
             if (hasRead)
             {
@@ -446,12 +446,12 @@ static class TsLexer
                     '=' => TokenType.Assign,
                     _ => null
                 };
-                
+
                 if (tokenType == null)
                 {
                     return (exception: new Exception($"Token not recognized. @value:{value}"), hasRead: false, -1, null);
                 }
-                
+
                 return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, tokenType.Value, value.ToString()));
             }
         }
@@ -463,15 +463,15 @@ static class TsLexer
                 return (exception: null, hasRead: true, endIndex, new Token(startIndex, endIndex, TokenType.AlfaNumeric, value));
             }
         }
-        
+
         return (exception: new Exception("Token not recognized"), hasRead: false, -1, null);
     }
-    
+
     static (bool hasRead, int newIndex, string value) ReadQuotedString(string content, int startIndex)
     {
         var i = startIndex;
 
-        
+
         if (isStringStartOrEnd(content[i]))
         {
             i++;
@@ -491,7 +491,7 @@ static class TsLexer
 
             if (hasFinishFound)
             {
-                return (true, i+1, content.Substring(startIndex+1, i-startIndex-1));
+                return (true, i + 1, content.Substring(startIndex + 1, i - startIndex - 1));
             }
         }
 
@@ -505,9 +505,9 @@ static class TsLexer
 
         if (content.Length <= cursor + 2)
         {
-            return (exception: null, hasRead: false,-1,null);
+            return (exception: null, hasRead: false, -1, null);
         }
-        
+
         if (content.Substring(cursor, 2) == "/*")
         {
             var endIndex = content.IndexOf("*/", cursor + 2, StringComparison.OrdinalIgnoreCase);
@@ -539,7 +539,7 @@ static class TsLexer
 
         if (content.Length > startIndex + length)
         {
-            var substring = content.Substring(startIndex,length);
+            var substring = content.Substring(startIndex, length);
             if (substring == value)
             {
                 return (hasRead: true, startIndex + length, value);
