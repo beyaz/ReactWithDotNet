@@ -9,17 +9,7 @@ namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 [TestClass]
 public class MuiExporter
 {
-    [TestMethod]
-    public void PaperClasses()
-    {
-        var lines = CalculatePaperClasses();
-
-        var sb = new StringBuilder();
-
-        lines.WriteLines(x => sb.AppendLine(x));
-
-        WriteAllText(@"D:\work\git\ReactDotNet\ReactWithDotNet.Libraries\mui\material\Paper\PaperClasses.cs", sb.ToString());
-    }
+   
     [TestMethod]
     public void Paper()
     {
@@ -29,7 +19,7 @@ public class MuiExporter
 
         lines.WriteLines(x => sb.AppendLine(x));
 
-        WriteAllText(@"D:\work\git\ReactDotNet\ReactWithDotNet.Libraries\mui\material\Paper\Paper.cs", sb.ToString());
+        WriteAllText(@"D:\work\git\ReactDotNet\ReactWithDotNet.Libraries\mui\material\Paper.cs", sb.ToString());
     }
     static List<string> CalculatePaper()
     {
@@ -83,52 +73,7 @@ public class MuiExporter
         return null;
     }
     
-    static List<string> CalculatePaperClasses()
-    {
-
-        var content = new HttpClient().GetStringAsync("https://raw.githubusercontent.com/mui/material-ui/master/packages/mui-material/src/Paper/paperClasses.ts").GetAwaiter().GetResult();
-
-        var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(content, 0);
-        if (hasRead)
-        {
-            var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens("export interface PaperClasses {", 0).tokens);
-            if (isFound)
-            {
-                (hasRead, var members, var newIndex) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
-                if (hasRead)
-                {
-                    var lines = new List<string>();
-                    
-                    lines.Add("namespace ReactWithDotNet.Libraries.mui.material;");
-                    lines.Add(string.Empty);
-                    
-                    lines.Add("public sealed class PaperClasses");
-                    lines.Add("{");
-
-                    var isFirstMember = true;
-                    
-                    foreach (var tsMemberInfo in members)
-                    {
-                        if (!isFirstMember)
-                        {
-                            lines.Add(string.Empty);
-                        }
-
-                        isFirstMember = false;
-                        
-                        lines.AddRange(AsCSharpMember(tsMemberInfo));
-                    }
-
-                    lines.Add("}");
-
-                    return lines;
-                }
-
-            }
-        }
-
-        return null;
-    }
+ 
 
     static IReadOnlyList<string> AsCSharpMember( TsMemberInfo memberInfo)
     {
