@@ -16,4 +16,16 @@ public class MuiExporterTest
             SkipMembers    = new[] { "children" }
         });
     }
+
+    [TestMethod]
+    public void Card()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            rawUrlInGithub = "https://raw.githubusercontent.com/mui/material-ui/master/packages/mui-material/src/Card/Card.d.ts",
+            StartFrom      = "DistributiveOmit<PaperProps, 'classes'> & {",
+            ClassName      = "Card",
+            SkipMembers    = new[] { "children" }
+        });
+    }
 }

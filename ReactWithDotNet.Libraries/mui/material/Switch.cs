@@ -89,7 +89,7 @@ public sealed partial class Paper : ElementBase
     public string component { get; set; }
 }
 
-public sealed class Card : ElementBase
+public sealed partial class Card : ElementBase
 {
     /// <summary>
     /// The component used for the root node. Either a string to use a HTML element or a component.
