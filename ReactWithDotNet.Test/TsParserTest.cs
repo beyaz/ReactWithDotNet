@@ -316,7 +316,7 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
     [TestMethod]
     public void ParseTypeReference()
     {
-        var (hasRead, tsTypeReference, newIndex) = TsLexer.TryReadTypeReference(TsLexer.ParseTokens("Partial<AlertClasses>;", 0).tokens, 0);
+        var (hasRead, tsTypeReference, newIndex) = TsParser.TryReadTypeReference(TsLexer.ParseTokens("Partial<AlertClasses>;", 0).tokens, 0);
 
         hasRead.Should().BeTrue();
         tsTypeReference.Name.Should().Be("Partial");
@@ -348,18 +348,18 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
 ";
         var tokens = TsLexer.ParseTokens(code, 0).tokens;
         
-        var (hasRead, memberInfo, newIndex) = TsLexer.TryReadMemberInfo(tokens, 0);
+        var (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, 0);
         hasRead.Should().BeTrue();
         memberInfo.Name.Should().Be("variant");
         newIndex.Should().Be(23);
 
-        (hasRead, memberInfo, newIndex) = TsLexer.TryReadMemberInfo(tokens, newIndex+1);
+        (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, newIndex+1);
         hasRead.Should().BeTrue();
         memberInfo.Name.Should().Be("icon");
         newIndex.Should().Be(35);
         
 
-        (hasRead, memberInfo, newIndex) = TsLexer.TryReadMemberInfo(tokens, newIndex + 1);
+        (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, newIndex + 1);
         hasRead.Should().BeTrue();
         memberInfo.Name.Should().Be("role");
         newIndex.Should().Be(44);
@@ -367,7 +367,7 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
 
         tokens = TsLexer.ParseTokens("{"+code+"}", 0).tokens;
         
-        (hasRead, var members, newIndex) = TsLexer.TryReadMembers(tokens,0);
+        (hasRead, var members, newIndex) = TsParser.TryReadMembers(tokens,0);
 
         hasRead.Should().BeTrue();
         members.Count.Should().Be(3);
@@ -385,10 +385,10 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
         var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(content, 0);
         if (hasRead)
         {
-            var (isFound, indexOfLastMatchedToken) = TsLexer.FindMatch(tokens, 0, TsLexer.ParseTokens("props: P & {", 0).tokens);
+            var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens("props: P & {", 0).tokens);
             if (isFound)
             {
-                var (b, indexOfPair) = TsLexer.FindPair(tokens,indexOfLastMatchedToken,t=>t.tokenType==TokenType.RightBrace);
+                var (b, indexOfPair) = TsParser.FindPair(tokens,indexOfLastMatchedToken,t=>t.tokenType==TokenType.RightBrace);
                 
             }
         }

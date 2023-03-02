@@ -47,9 +47,10 @@ enum TokenType
 [DebuggerDisplay("{value}")]
 record Token(int startIndex, int endIndex, TokenType tokenType, string value);
 
-static class TsLexer
+
+static class TsParser
 {
-    static (bool hasRead, int newIndex, IReadOnlyList<Token> readValues) TryReadWhile(IReadOnlyList<Token> tokens, int startIndex, Func<Token, bool> isOk)
+    static (bool hasRead, IReadOnlyList<Token> readValues, int newIndex) TryReadWhile(IReadOnlyList<Token> tokens, int startIndex, Func<Token, bool> isOk)
     {
         var readValues = new List<Token>();
 
@@ -66,18 +67,18 @@ static class TsLexer
             i++;
         }
 
-        return (hasRead, i, readValues);
+        return (hasRead, readValues, i);
     }
-    
+
     public static (bool hasRead, IReadOnlyList<TsMemberInfo> members, int newIndex) TryReadMembers(IReadOnlyList<Token> tokens, int startIndex)
     {
         var i = startIndex;
-        
+
         var members = new List<TsMemberInfo>();
 
         if (tokens[i].tokenType == TokenType.LeftBrace)
         {
-            var (isFound, indexOfPair) = FindPair(tokens,i,x=>x.tokenType == TokenType.RightBrace);
+            var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
             if (isFound)
             {
                 i++;
@@ -107,7 +108,7 @@ static class TsLexer
             }
         }
 
-        return /*None*/(hasRead: false, null ,- 1);
+        return /*None*/(hasRead: false, null, -1);
 
         void skipSpaces()
         {
@@ -125,7 +126,7 @@ static class TsLexer
 
         var i = startIndex;
 
-       skipSpaces();
+        skipSpaces();
 
         if (tokens[i].tokenType == TokenType.Comment)
         {
@@ -157,7 +158,7 @@ static class TsLexer
 
                 skipSpaces();
 
-                var (hasRead, tsTypeReference, newIndex) = TryReadTypeReference(tokens,i);
+                var (hasRead, tsTypeReference, newIndex) = TryReadTypeReference(tokens, i);
                 if (hasRead)
                 {
                     memberInfo.PropertyType = tsTypeReference;
@@ -191,8 +192,8 @@ static class TsLexer
     public static (bool hasRead, TsTypeReference tsTypeReference, int newIndex) TryReadTypeReference(IReadOnlyList<Token> tokens, int startIndex)
     {
         var i = startIndex;
-        
-       
+
+
 
         var (hasRead, value, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
         if (hasRead)
@@ -200,7 +201,7 @@ static class TsLexer
             i = newIndex;
 
             skipSpaces();
-            
+
             // Partial<....>;
             if (tokens[i].tokenType == TokenType.LessThan)
             {
@@ -227,10 +228,10 @@ static class TsLexer
 
                 return (true, tsTypeReference, i + 1);
             }
-            
+
         }
-        
-        return (false, null,-1);
+
+        return (false, null, -1);
 
         void skipSpaces()
         {
@@ -245,25 +246,25 @@ static class TsLexer
     {
         return string.Join(string.Empty, tokens.Select(t => t.value));
     }
-    
+
     public static (bool hasRead, string value, int newIndex) TryReadAlfaNumericOrDotSeparetedAlfanumeric(IReadOnlyList<Token> tokens, int startIndex)
     {
-        
-        var (hasRead, newIndex, readValues) = TryReadWhile(tokens, startIndex,x=>x.tokenType == TokenType.AlfaNumeric || x.tokenType == TokenType.Dot);
-        
+
+        var (hasRead, readValues, newIndex) = TryReadWhile(tokens, startIndex, x => x.tokenType == TokenType.AlfaNumeric || x.tokenType == TokenType.Dot);
+
         return (hasRead, ToString(readValues), newIndex);
-        
-        
+
+
     }
 
-    public static (bool isFound, int indexOfPair) FindPair(IReadOnlyList<Token> tokens, int startIndex, Func<Token,bool> isPair)
+    public static (bool isFound, int indexOfPair) FindPair(IReadOnlyList<Token> tokens, int startIndex, Func<Token, bool> isPair)
     {
         var i = startIndex;
 
         var stack = new Stack<Token>();
 
         stack.Push(tokens[i]);
-        
+
         i++;
         while (tokens.Count > i)
         {
@@ -282,14 +283,14 @@ static class TsLexer
             }
 
             i++;
-            
+
         }
 
         return (false, -1);
     }
 
     static bool Equals(Token a, Token b) => a.tokenType == b.tokenType && a.value == b.value;
-    
+
     public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, IReadOnlyList<Token> searchTokens)
     {
         var i = startIndex;
@@ -299,7 +300,7 @@ static class TsLexer
             var isFound = true;
 
             var j = i;
-            
+
             foreach (var searchToken in searchTokens)
             {
                 if (searchToken.tokenType == TokenType.Space)
@@ -307,8 +308,8 @@ static class TsLexer
                     continue;
                 }
 
-               
-                
+
+
                 while (tokens.Count > j && tokens[j].tokenType == TokenType.Space)
                 {
                     j++;
@@ -318,7 +319,7 @@ static class TsLexer
                 {
                     break;
                 }
-                
+
                 if (!Equals(tokens[j], searchToken))
                 {
                     isFound = false;
@@ -330,7 +331,7 @@ static class TsLexer
 
             if (isFound)
             {
-                return (isFound: true, j-1);
+                return (isFound: true, j - 1);
             }
 
             i++;
@@ -338,7 +339,11 @@ static class TsLexer
 
         return (false, -1);
     }
+}
 
+static class TsLexer
+{
+    
     public static (Exception exception, bool hasRead, int endIndex, IReadOnlyList<Token> tokens) ParseTokens(string content, int startIndex)
     {
         var tokens = new List<Token>();
