@@ -3,25 +3,25 @@ namespace ReactWithDotNet.Libraries.mui.material;
 public sealed class PaperClasses
 {
     /// <summary>
-    ///     Styles applied to the root element. 
+    ///    Styles applied to the root element.
     /// </summary>
     [React]
     public string root {get; set; }
     
     /// <summary>
-    ///     Styles applied to the root element unless `square={true}`. 
+    ///    Styles applied to the root element unless `square={true}`.
     /// </summary>
     [React]
     public string rounded {get; set; }
     
     /// <summary>
-    ///     Styles applied to the root element if `variant="outlined"`. 
+    ///    Styles applied to the root element if `variant="outlined"`.
     /// </summary>
     [React]
     public string outlined {get; set; }
     
     /// <summary>
-    ///     Styles applied to the root element if `variant="elevation"`. 
+    ///    Styles applied to the root element if `variant="elevation"`.
     /// </summary>
     [React]
     public string elevation {get; set; }

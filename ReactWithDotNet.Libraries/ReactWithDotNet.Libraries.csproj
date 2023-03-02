@@ -35,5 +35,8 @@
       <EmbeddedResource Include="UIDesigner\Resources\Method.svg" />
       <EmbeddedResource Include="UIDesigner\Resources\Namespace.svg" />
     </ItemGroup>
+
+
+	
 	
 </Project>
