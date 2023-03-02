@@ -1,4 +1,5 @@
 using System.IO;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ReactWithDotNet.Test;
@@ -312,16 +313,63 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
         
     }
 
+    [TestMethod]
+    public void ParseTypeReference()
+    {
+        var (hasRead, tsTypeReference, newIndex) = TsLexer.TryReadTypeReference(TsLexer.ParseTokens("Partial<AlertClasses>;", 0).tokens, 0);
+
+        hasRead.Should().BeTrue();
+        tsTypeReference.Name.Should().Be("Partial");
+        newIndex.Should().Be(4);
+    }
+
+    [TestMethod]
+    public void ParseMemberExpression()
+    {
+        var code = @"
+  /**
+   * The variant to use.
+   * @default 'standard'
+   */
+  variant?: OverridableStringUnion<'standard' | 'filled' | 'outlined', AlertPropsVariantOverrides>;
+
+ /**
+   * Override the icon displayed before the children.
+   * Unless provided, the icon is mapped to the value of the `severity` prop.
+   * Set to `false` to remove the `icon`.
+   */
+  icon?: React.ReactNode;
+  /**
+   * The ARIA role attribute of the element.
+   * @default 'alert'
+   */
+  role?: string;
+
+";
+        var tokens = TsLexer.ParseTokens(code, 0).tokens;
+        
+        var (hasRead, memberInfo, newIndex) = TsLexer.TryReadMemberInfo(tokens, 0);
+        hasRead.Should().BeTrue();
+        memberInfo.Name.Should().Be("variant");
+        newIndex.Should().Be(23);
+
+        (hasRead, memberInfo, newIndex) = TsLexer.TryReadMemberInfo(tokens, newIndex+1);
+        hasRead.Should().BeTrue();
+        memberInfo.Name.Should().Be("icon");
+        newIndex.Should().Be(35);
+        
+
+        (hasRead, memberInfo, newIndex) = TsLexer.TryReadMemberInfo(tokens, newIndex + 1);
+        hasRead.Should().BeTrue();
+        memberInfo.Name.Should().Be("role");
+        newIndex.Should().Be(44);
+    }
 
     [TestMethod]
     public void B()
     {
 
-        //var (isFound, indexOfLastMatchedToken) = TsLexer.FindMatch(TsLexer.ParseTokens(" props:     {", 0).tokens, 0, TsLexer.ParseTokens("props :     {", 0).tokens);
-        //if (isFound)
-        //{
-
-        //}
+        
 
 
         var content = File.ReadAllText("d:\\Paper.d.ts");
@@ -333,6 +381,7 @@ export default function InputBase(props: InputBaseProps): JSX.Element;
             if (isFound)
             {
                 var (b, indexOfPair) = TsLexer.FindPair(tokens,indexOfLastMatchedToken,t=>t.tokenType==TokenType.RightBrace);
+                
             }
         }
 

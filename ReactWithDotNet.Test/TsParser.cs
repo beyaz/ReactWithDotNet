@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
@@ -14,7 +15,17 @@ class TsTypeReference
     public List<string> OptionalValues { get; set; }
     public bool IsAlfaNumeric { get; set; }
     public bool IsQuotedString { get; set; }
-    public IReadOnlyList<TsTypeReference> GenericArguments { get; set; }
+    public IReadOnlyList<TsTypeReference> GenericArguments_old { get; set; }
+
+    public IReadOnlyList<Token> GenericArgumentsAsTokenList { get; set; }
+}
+
+class TsMemberInfo
+{
+    public string Comment { get; set; }
+    public string Name { get; set; }
+    public TsTypeReference PropertyType { get; set; }
+    public bool IsNullable { get; set; }
 }
 
 enum TokenType
@@ -42,10 +53,163 @@ enum TokenType
     Lambda,
     Assign
 }
+
+[DebuggerDisplay("{value}")]
 record Token(int startIndex, int endIndex, TokenType tokenType, string value);
 
 static class TsLexer
 {
+    public static (bool hasRead, TsMemberInfo memberInfo, int newIndex) TryReadMemberInfo(IReadOnlyList<Token> tokens, int startIndex)
+    {
+        TsMemberInfo memberInfo = new TsMemberInfo();
+
+
+        var i = startIndex;
+
+       skipSpaces();
+
+        if (tokens[i].tokenType == TokenType.Comment)
+        {
+            memberInfo.Comment = tokens[i].value;
+
+            i++;
+        }
+
+        skipSpaces();
+
+        if (tokens[i].tokenType == TokenType.AlfaNumeric)
+        {
+            memberInfo.Name = tokens[i].value;
+
+            i++;
+
+            if (tokens[i].tokenType == TokenType.QuestionMark)
+            {
+                memberInfo.IsNullable = true;
+
+                i++;
+            }
+
+            skipSpaces();
+
+            if (tokens[i].tokenType == TokenType.Colon)
+            {
+                i++;
+
+                skipSpaces();
+
+                var (hasRead, tsTypeReference, newIndex) = TryReadTypeReference(tokens,i);
+                if (hasRead)
+                {
+                    memberInfo.PropertyType = tsTypeReference;
+
+                    i = newIndex;
+
+                    skipSpaces();
+
+                    if (tokens.Count > i && tokens[i].tokenType == TokenType.SemiColon)
+                    {
+                        i++;
+                    }
+
+                    return (hasRead: true, memberInfo, i);
+                }
+            }
+        }
+
+
+        return (false, null, -1);
+
+        void skipSpaces()
+        {
+            if (tokens[i].tokenType == TokenType.Space)
+            {
+                i++;
+            }
+        }
+    }
+
+    public static (bool hasRead, TsTypeReference tsTypeReference, int newIndex) TryReadTypeReference(IReadOnlyList<Token> tokens, int startIndex)
+    {
+        var i = startIndex;
+        
+       
+
+        var (hasRead, value, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
+        if (hasRead)
+        {
+            i = newIndex;
+
+            skipSpaces();
+            
+            // Partial<....>;
+            if (tokens[i].tokenType == TokenType.LessThan)
+            {
+                var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.GreaterThan);
+                if (isFound)
+                {
+                    var tsTypeReference = new TsTypeReference
+                    {
+                        Name = value,
+
+                        GenericArgumentsAsTokenList = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
+                    };
+
+                    return (true, tsTypeReference, indexOfPair + 1);
+                }
+            }
+
+            if (tokens[i].tokenType == TokenType.SemiColon)
+            {
+                var tsTypeReference = new TsTypeReference
+                {
+                    Name = value
+                };
+
+                return (true, tsTypeReference, i + 1);
+            }
+            
+        }
+        
+        return (false, null,-1);
+
+        void skipSpaces()
+        {
+            if (tokens[i].tokenType == TokenType.Space)
+            {
+                i++;
+            }
+        }
+    }
+
+    public static (bool hasRead, string value, int newIndex) TryReadAlfaNumericOrDotSeparetedAlfanumeric(IReadOnlyList<Token> tokens, int startIndex)
+    {
+        var hasRead = false;
+        
+        var i = startIndex;
+
+        var value = string.Empty;
+
+        while (tokens.Count>i)
+        {
+            if (tokens[i].tokenType == TokenType.AlfaNumeric ||
+                tokens[i].tokenType == TokenType.Dot)
+            {
+                hasRead = true;
+
+                value += tokens[i].value;
+
+                i++;
+                
+                continue;
+            }
+            
+            break;
+        }
+
+        return (hasRead, value, i);
+    }
+
     public static (bool isFound, int indexOfPair) FindPair(IReadOnlyList<Token> tokens, int startIndex, Func<Token,bool> isPair)
     {
         var i = startIndex;
@@ -463,7 +627,7 @@ static  class TsParser
                 {
                      i = tryReadGenericTypeReferenceArgumentsOutput.newCursor;
 
-                     typeReference.GenericArguments = tryReadGenericTypeReferenceArgumentsOutput.tsTypeReferences;
+                     typeReference.GenericArguments_old = tryReadGenericTypeReferenceArgumentsOutput.tsTypeReferences;
                 }
             }
 
