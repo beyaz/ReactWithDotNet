@@ -1,84 +1,80 @@
-using System.IO;
 using System.Net.Http;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
-[TestClass]
+public class MuiExportInput
+{
+    public string ClassName { get; set; }
+    public string rawUrlInGithub { get; set; }
+    public IReadOnlyList<string> SkipMembers { get; set; }
+    public string StartFrom { get; set; }
+}
+
 public class MuiExporter
 {
-   
-    [TestMethod]
-    public void Paper()
+    public static void ExportToCSharpFile(MuiExportInput input)
     {
-        var lines = CalculatePaper();
+        var lines = CalculateCSharpFileContentLines(input);
 
         var sb = new StringBuilder();
 
         lines.WriteLines(x => sb.AppendLine(x));
 
-        WriteAllText(@"D:\work\git\ReactDotNet\ReactWithDotNet.Libraries\mui\material\Paper.cs", sb.ToString());
+        WriteAllText($@"D:\work\git\ReactDotNet\ReactWithDotNet.Libraries\mui\material\{input.ClassName}.cs", sb.ToString());
     }
-    static List<string> CalculatePaper()
+
+    static IEnumerable<string> AsCSharpComment(string tsComment)
     {
-
-        var content = new HttpClient().GetStringAsync("https://raw.githubusercontent.com/mui/material-ui/master/packages/mui-material/src/Paper/Paper.d.ts").GetAwaiter().GetResult();
-
-        var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(content, 0);
-        if (hasRead)
+        if (tsComment is null)
         {
-            var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens("props: P & {", 0).tokens);
-            if (isFound)
-            {
-                (hasRead, var members, var newIndex) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
-                if (hasRead)
-                {
-                    var lines = new List<string>();
-
-                    lines.Add("namespace ReactWithDotNet.Libraries.mui.material;");
-                    lines.Add(string.Empty);
-
-                    lines.Add("partial class Paper");
-                    lines.Add("{");
-
-                    var isFirstMember = true;
-
-                    foreach (var tsMemberInfo in members)
-                    {
-                        if (tsMemberInfo.Name == "children")
-                        {
-                            continue;
-                        }
-                        
-                        if (!isFirstMember)
-                        {
-                            lines.Add(string.Empty);
-                        }
-
-                        isFirstMember = false;
-
-                        lines.AddRange(AsCSharpMember(tsMemberInfo));
-                    }
-
-                    lines.Add("}");
-
-                    return lines;
-                }
-
-            }
+            return Enumerable.Empty<string>();
         }
 
-        return null;
-    }
-    
- 
+        var lines = new List<string>();
 
-    static IReadOnlyList<string> AsCSharpMember( TsMemberInfo memberInfo)
+        var commentLines = tsComment.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+        lines.Add("/// <summary>");
+
+        var isFirst = true;
+
+        foreach (var commentLine in commentLines)
+        {
+            var line = commentLine.Trim()
+                                  .Trim(Environment.NewLine.ToCharArray())
+                                  .RemoveFromStart("/**")
+                                  .RemoveFromStart("/*")
+                                  .RemoveFromEnd("*/")
+                                  .Trim()
+                                  .Trim(Environment.NewLine.ToCharArray());
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                continue;
+            }
+
+            if (isFirst)
+            {
+                isFirst = false;
+            }
+            else
+            {
+                lines.Add("/// <br/>");
+            }
+
+            lines.Add("///    " + line);
+        }
+
+        lines.Add("/// </summary>");
+
+        return lines;
+    }
+
+    static IReadOnlyList<string> AsCSharpMember(TsMemberInfo memberInfo)
     {
         var lines = new List<string>();
-        
+
         if (memberInfo.Comment is not null)
         {
             lines.AddRange(AsCSharpComment(memberInfo.Comment));
@@ -86,8 +82,7 @@ public class MuiExporter
 
         lines.Add("[React]");
 
-        lines.Add("public "+ AsCSharpType(memberInfo.PropertyType) +" " + memberInfo.Name + " {get; set; }");
-        
+        lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberInfo.Name + " {get; set; }");
 
         return lines;
     }
@@ -98,6 +93,7 @@ public class MuiExporter
         {
             return "string";
         }
+
         if (tsTypeReference.Name.Equals("OverridableStringUnion", StringComparison.OrdinalIgnoreCase))
         {
             return "string";
@@ -123,59 +119,61 @@ public class MuiExporter
             return "dynamic";
         }
 
-
         if (tsTypeReference.Name.Equals("React.ReactNode", StringComparison.OrdinalIgnoreCase))
         {
             return "Element";
         }
 
-
         return tsTypeReference.Name;
     }
 
-    static IEnumerable<string> AsCSharpComment(string tsComment)
+    static IReadOnlyList<string> CalculateCSharpFileContentLines(MuiExportInput input)
     {
-        if (tsComment is null)
+        var content = new HttpClient().GetStringAsync(input.rawUrlInGithub).GetAwaiter().GetResult();
+
+        var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(content, 0);
+        if (hasRead)
         {
-            return Enumerable.Empty<string>();
+            var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens(input.StartFrom, 0).tokens);
+            if (isFound)
+            {
+                (hasRead, var members, var newIndex) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
+                if (hasRead)
+                {
+                    var lines = new List<string>();
+
+                    lines.Add("namespace ReactWithDotNet.Libraries.mui.material;");
+                    lines.Add(string.Empty);
+
+                    lines.Add($"partial class {input.ClassName}");
+                    lines.Add("{");
+
+                    var isFirstMember = true;
+
+                    foreach (var tsMemberInfo in members)
+                    {
+                        if (input.SkipMembers.Contains(tsMemberInfo.Name))
+                        {
+                            continue;
+                        }
+
+                        if (!isFirstMember)
+                        {
+                            lines.Add(string.Empty);
+                        }
+
+                        isFirstMember = false;
+
+                        lines.AddRange(AsCSharpMember(tsMemberInfo));
+                    }
+
+                    lines.Add("}");
+
+                    return lines;
+                }
+            }
         }
 
-        var lines = new List<string>();
-
-        var commentLines = tsComment.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-        
-        lines.Add("/// <summary>");
-
-        var isFirst = true;
-        
-        foreach (var commentLine in commentLines)
-        {
-            var line = commentLine.Trim()
-                                  .Trim(Environment.NewLine.ToCharArray())
-                                  .RemoveFromStart("/**")
-                                  .RemoveFromStart("/*")
-                                  .RemoveFromEnd("*/")
-                                  .Trim()
-                                  .Trim(Environment.NewLine.ToCharArray());
-            if (string.IsNullOrWhiteSpace(line))
-            {
-                continue;
-            }
-            
-            if (isFirst)
-            {
-                isFirst = false;
-            }
-            else
-            {
-                lines.Add("/// <br/>");
-            }
-            lines.Add("///    "+ line);
-        }
-        lines.Add("/// </summary>");
-
-
-        return lines;
-
+        return null;
     }
 }
