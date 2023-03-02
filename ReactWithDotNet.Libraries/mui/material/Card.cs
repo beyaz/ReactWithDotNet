@@ -1,6 +1,6 @@
 namespace ReactWithDotNet.Libraries.mui.material;
 
-partial class Paper
+partial class Card
 {
     /// <summary>
     ///    Override or extend the styles applied to the component.
@@ -9,22 +9,12 @@ partial class Paper
     public string classes {get; set; }
     
     /// <summary>
-    ///    Shadow depth, corresponds to `dp` in the spec.
-    /// <br/>
-    ///    It accepts values between 0 and 24 inclusive.
-    /// <br/>
-    ///    @default 1
-    /// </summary>
-    [React]
-    public double elevation {get; set; }
-    
-    /// <summary>
-    ///    If `true`, rounded corners are disabled.
+    ///    If `true`, the card will use raised styling.
     /// <br/>
     ///    @default false
     /// </summary>
     [React]
-    public bool square {get; set; }
+    public bool raised {get; set; }
     
     /// <summary>
     ///    The system prop that allows defining system overrides as well as additional CSS styles.
@@ -32,12 +22,4 @@ partial class Paper
     [React]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
     public dynamic sx { get; } = new ExpandoObject();
-    
-    /// <summary>
-    ///    The variant to use.
-    /// <br/>
-    ///    @default 'elevation'
-    /// </summary>
-    [React]
-    public string variant {get; set; }
 }

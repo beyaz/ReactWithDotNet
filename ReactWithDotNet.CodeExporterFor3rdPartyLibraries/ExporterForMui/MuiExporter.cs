@@ -81,6 +81,15 @@ public class MuiExporter
             lines.AddRange(AsCSharpComment(memberInfo.Comment));
         }
 
+        if (memberInfo.Name =="sx")
+        {
+            lines.Add("[React]");
+            lines.Add("[ReactTransformValueInClient(\"ReactWithDotNet::Core::ReplaceNullWhenEmpty\")]");
+            lines.Add("public dynamic sx { get; } = new ExpandoObject();");
+
+            return lines;
+        }
+
         lines.Add("[React]");
 
         lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberInfo.Name + " {get; set; }");
