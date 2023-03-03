@@ -9,7 +9,12 @@ public class MuiExporterTest
     static string GetTsCode(string className)
     {
         var rawUrlInGithub = $"https://raw.githubusercontent.com/mui/material-ui/master/packages/mui-material/src/{className}/{className}.d.ts";
-            
+
+        if (className == "SwitchBase")
+        {
+            rawUrlInGithub = $"https://raw.githubusercontent.com/mui/material-ui/master/packages/mui-material/src/internal/{className}.d.ts";
+        }
+
         return new HttpClient().GetStringAsync(rawUrlInGithub).GetAwaiter().GetResult();
     }
     [TestMethod]
@@ -142,7 +147,21 @@ public class MuiExporterTest
             
         });
     }
-    
+
+    [TestMethod]
+    public void SwitchBase()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(SwitchBase)),
+            StartFrom        = "> {",
+            ClassName        = "SwitchBase",
+            SkipMembers      = new[] { "-"},
+            ClassModifier    = string.Empty
+
+        });
+    }
+
     //[TestMethod]
     //public void Switch()
     //{
@@ -155,5 +174,5 @@ public class MuiExporterTest
     //        ExportAsPartialClass = true
     //    });
     //}
-    
+
 }
