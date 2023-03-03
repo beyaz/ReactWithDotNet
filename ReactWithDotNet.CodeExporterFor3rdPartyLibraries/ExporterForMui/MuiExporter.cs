@@ -7,7 +7,7 @@ namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 public class MuiExportInput
 {
     public string ClassName { get; set; }
-    public string rawUrlInGithub { get; set; }
+    public string DefinitionTsCode { get; set; }
     public IReadOnlyList<string> SkipMembers { get; set; }
     public string StartFrom { get; set; }
 }
@@ -139,9 +139,9 @@ public class MuiExporter
 
     static IReadOnlyList<string> CalculateCSharpFileContentLines(MuiExportInput input)
     {
-        var content = new HttpClient().GetStringAsync(input.rawUrlInGithub).GetAwaiter().GetResult();
+        
 
-        var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(content, 0);
+        var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
         if (hasRead)
         {
             var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens(input.StartFrom, 0).tokens);
