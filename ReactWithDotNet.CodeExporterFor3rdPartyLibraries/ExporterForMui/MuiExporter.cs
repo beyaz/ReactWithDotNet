@@ -116,11 +116,9 @@ static class MuiExporter
             
             lines.Add("[React]");
 
-            
-            
             if (exportAsDynamicObjectMap)
             {
-                lines.Add("[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]");
+                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
                 lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
                 return lines;
             }

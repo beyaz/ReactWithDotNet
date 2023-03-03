@@ -30,3 +30,18 @@ static class convert_mui_style_map_to_class_map
         return new(true, map);
     }
 }
+
+static class DoNotSendToClientWhenEmpty
+{
+    public static TransformValueInServerSideResponse Transform(object value, TransformValueInServerSideContext transformContext)
+    {
+        var expandoObject = value as IDictionary<String, object>;
+
+        if (expandoObject == null || expandoObject.Count == 0)
+        {
+            return new(false);
+        }
+
+        return new(needToExport: true, value);
+    }
+}
