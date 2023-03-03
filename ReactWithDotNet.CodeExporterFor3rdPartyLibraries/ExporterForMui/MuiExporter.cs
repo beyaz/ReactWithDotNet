@@ -217,13 +217,21 @@ static class MuiExporter
                     lines.Add(string.Empty);
 
                     var inheritPart = " : ElementBase";
+
+                    var classModifier = input.ClassModifier;
                     
-                    if (input.ClassModifier == "partial")
+                    if (classModifier == "partial")
                     {
                         inheritPart = string.Empty;
                     }
 
-                    lines.Add($"public {input.ClassModifier} class {input.ClassName}{inheritPart}");
+                    
+                    if (!string.IsNullOrWhiteSpace(classModifier))
+                    {
+                        classModifier += " ";
+                    }
+
+                    lines.Add($"public {classModifier}class {input.ClassName}{inheritPart}");
 
                     lines.Add("{");
 
