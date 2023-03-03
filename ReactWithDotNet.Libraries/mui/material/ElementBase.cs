@@ -4,6 +4,9 @@ namespace ReactWithDotNet.Libraries.mui.material;
 
 public class ElementBase : ThirdPartyReactComponent
 {
+    /// <summary>
+    ///     The system prop that allows defining system overrides as well as additional CSS styles.
+    /// </summary>
     [React]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();

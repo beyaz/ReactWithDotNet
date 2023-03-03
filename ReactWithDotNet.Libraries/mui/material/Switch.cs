@@ -93,10 +93,7 @@ public sealed partial class Card : Paper
 {
 
 }
-public sealed class CardContent : ElementBase
-{
-   
-}
+
 public sealed class CardActions : ElementBase
 {
 

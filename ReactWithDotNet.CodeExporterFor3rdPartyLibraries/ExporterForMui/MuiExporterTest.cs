@@ -89,5 +89,16 @@ public class MuiExporterTest
             ExtraProps       = new[] { "string color", "string component" }
         });
     }
-    
+
+    [TestMethod]
+    public void CardContent()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(CardContent)),
+            StartFrom        = "props: P & {",
+            ClassName        = "CardContent",
+            SkipMembers      = new[] { "children" }
+        });
+    }
 }
