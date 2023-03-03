@@ -33,7 +33,7 @@ public sealed class Tooltip : ElementBase
     ///     @default {}
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic components { get; } = new ExpandoObject();
     
     /// <summary>
@@ -52,7 +52,7 @@ public sealed class Tooltip : ElementBase
     ///     @default {}
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic componentsProps { get; } = new ExpandoObject();
     
     /// <summary>
@@ -195,7 +195,7 @@ public sealed class Tooltip : ElementBase
     ///     @default {}
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic PopperProps { get; } = new ExpandoObject();
     
     /// <summary>
@@ -212,7 +212,7 @@ public sealed class Tooltip : ElementBase
     ///     @default {}
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic slotProps { get; } = new ExpandoObject();
     
     /// <summary>
@@ -227,7 +227,7 @@ public sealed class Tooltip : ElementBase
     ///     @default {}
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic slots { get; } = new ExpandoObject();
     
     /// <summary>

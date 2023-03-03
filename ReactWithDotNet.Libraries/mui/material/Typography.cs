@@ -100,7 +100,7 @@ public sealed class Typography : ElementBase
     ///     }
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic variantMapping { get; } = new ExpandoObject();
     
     [React]
