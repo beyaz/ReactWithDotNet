@@ -251,7 +251,7 @@ static class MuiExporter
 
                     foreach (var tsMemberInfo in members)
                     {
-                        if (input.SkipMembers.Contains(tsMemberInfo.Name))
+                        if (input.SkipMembers?.Contains(tsMemberInfo.Name)==true)
                         {
                             continue;
                         }
