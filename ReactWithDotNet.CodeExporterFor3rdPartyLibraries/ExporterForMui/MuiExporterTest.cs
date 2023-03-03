@@ -17,11 +17,12 @@ public class MuiExporterTest
     {
         MuiExporter.ExportToCSharpFile(new MuiExportInput
         {
-            DefinitionTsCode = GetTsCode(nameof(Paper)),
-            StartFrom      = "props: P & {",
-            ClassName      = "Paper",
+            DefinitionTsCode     = GetTsCode(nameof(Paper)),
+            StartFrom            = "props: P & {",
+            ClassName            = "Paper",
             ExportAsPartialClass = true,
-            SkipMembers    = new[] { "children" }
+            SkipMembers          = new[] { "children" },
+            ExtraProps           = new[] { "string component" }
         });
     }
 
@@ -98,6 +99,18 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(CardContent)),
             StartFrom        = "props: P & {",
             ClassName        = "CardContent",
+            SkipMembers      = new[] { "children" }
+        });
+    }
+
+    [TestMethod]
+    public void CardActions()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(CardActions)),
+            StartFrom        = "<HTMLDivElement>> {",
+            ClassName        = "CardActions",
             SkipMembers      = new[] { "children" }
         });
     }
