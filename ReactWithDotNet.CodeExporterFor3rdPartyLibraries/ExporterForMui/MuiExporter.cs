@@ -61,10 +61,15 @@ static class MuiExporter
             }
             else
             {
-                lines.Add("/// <br/>");
+                lines.Add("///     <br/>");
             }
 
-            lines.Add("///    " + line);
+            if (line.Trim() == "*")
+            {
+                line = "<br/>";
+            }
+            
+            lines.Add("///     " + line);
         }
 
         lines.Add("/// </summary>");
