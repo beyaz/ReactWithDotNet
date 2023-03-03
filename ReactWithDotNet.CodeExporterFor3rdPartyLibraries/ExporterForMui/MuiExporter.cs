@@ -11,16 +11,18 @@ public class MuiExportInput
     public string DefinitionTsCode { get; set; }
     public IReadOnlyList<string> SkipMembers { get; set; }
     public string StartFrom { get; set; }
-    public bool ExportAsPartialClass { get; set; }
+    
     public IReadOnlyList<string> ExtraProps { get; set; }
     public bool IsContainer { get; set; }
+    
+    public string ClassModifier { get; set; } = "sealed";
 }
 
 static class MuiExporter
 {
     public static void ExportToCSharpFile(MuiExportInput input)
     {
-        var lines = CalculateCSharpFileContentLines(input);
+        var  lines = CalculateCSharpFileContentLines(input);
 
         var sb = new StringBuilder();
 
@@ -214,15 +216,15 @@ static class MuiExporter
                     lines.Add("namespace ReactWithDotNet.Libraries.mui.material;");
                     lines.Add(string.Empty);
 
-                    if (input.ExportAsPartialClass)
-                    {
-                        lines.Add($"partial class {input.ClassName}");
-                    }
-                    else
-                    {
-                        lines.Add($"public sealed class {input.ClassName} : ElementBase");
-                    }
+                    var inheritPart = " : ElementBase";
                     
+                    if (input.ClassModifier == "partial")
+                    {
+                        inheritPart = string.Empty;
+                    }
+
+                    lines.Add($"public {input.ClassModifier} class {input.ClassName}{inheritPart}");
+
                     lines.Add("{");
 
                     var isFirstMember = true;

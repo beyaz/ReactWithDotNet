@@ -20,7 +20,7 @@ public class MuiExporterTest
             DefinitionTsCode     = GetTsCode(nameof(Paper)),
             StartFrom            = "props: P & {",
             ClassName            = "Paper",
-            ExportAsPartialClass = true,
+            ClassModifier = "partial",
             SkipMembers          = new[] { "children" },
             ExtraProps           = new[] { "string component" }
         });
@@ -31,11 +31,11 @@ public class MuiExporterTest
     {
         MuiExporter.ExportToCSharpFile(new MuiExportInput
         {
-            DefinitionTsCode     = GetTsCode(nameof(Card)),
-            StartFrom            = "DistributiveOmit<PaperProps, 'classes'> & {",
-            ClassName            = "Card",
-            ExportAsPartialClass = true,
-            SkipMembers          = new[] { "children" }
+            DefinitionTsCode = GetTsCode(nameof(Card)),
+            StartFrom        = "DistributiveOmit<PaperProps, 'classes'> & {",
+            ClassName        = "Card",
+            ClassModifier    = "partial",
+            SkipMembers      = new[] { "children" }
         });
     }
 
@@ -125,7 +125,7 @@ public class MuiExporterTest
             StartFrom        = "> {",
             ClassName        = "TextField",
             SkipMembers      = new[] { "children", "inputRef" },
-            ExportAsPartialClass = true
+            ClassModifier    = "partial"
         });
     }
 
@@ -137,8 +137,9 @@ public class MuiExporterTest
             DefinitionTsCode     = GetTsCode(nameof(ButtonBase)),
             StartFrom            = "props: P & {",
             ClassName            = "ButtonBase",
-            SkipMembers          = new[] { "children", "action", "touchRippleRef" },
-            ExportAsPartialClass = true
+            SkipMembers          = new[] { "children", "action", "touchRippleRef", "LinkComponent", "onFocusVisible", "tabIndex" },
+            ClassModifier = string.Empty
+            
         });
     }
     
