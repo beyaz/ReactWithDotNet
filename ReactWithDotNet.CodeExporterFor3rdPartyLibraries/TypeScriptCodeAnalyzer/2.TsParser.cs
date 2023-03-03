@@ -262,6 +262,22 @@ static class TsParser
             }
         }
 
+        if (tokens[i].tokenType == TokenType.LeftBrace)
+        {
+            var (isFound, indexOfPair) = FindPair(tokens,i,x=>x.tokenType == TokenType.RightBrace);
+            if (isFound)
+            {
+                var tsTypeReference = new TsTypeReference
+                {
+                    Name = value,
+
+                    GenericArgumentsAsTokenList = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
+                };
+
+                return (true, tsTypeReference, indexOfPair + 1);
+            }
+        }
+
         return (false, null, -1);
 
         void skipSpaces()
