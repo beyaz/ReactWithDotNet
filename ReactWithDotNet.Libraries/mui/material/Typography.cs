@@ -16,8 +16,8 @@ public sealed class Typography : ElementBase
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
-    public dynamic classes { get; } = new ExpandoObject();
+    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
+    public Dictionary<string, Style> classes { get; } = new ();
     
     /// <summary>
     ///     If `true`, the text will have a bottom margin.

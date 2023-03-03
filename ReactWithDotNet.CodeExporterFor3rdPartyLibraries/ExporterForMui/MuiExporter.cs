@@ -248,7 +248,7 @@ static class MuiExporter
                         lines.Add(string.Empty);
                         lines.Add("protected override Element GetSuspenseFallbackElement()");
                         lines.Add("{");
-                        lines.Add("return _children?.FirstOrDefault() ?? new Skeleton();");
+                        lines.Add("return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();");
                         lines.Add("}");
                     }
 

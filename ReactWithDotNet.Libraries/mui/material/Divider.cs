@@ -16,8 +16,8 @@ public sealed class Divider : ElementBase
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
-    public dynamic classes { get; } = new ExpandoObject();
+    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
+    public Dictionary<string, Style> classes { get; } = new ();
     
     /// <summary>
     ///     If `true`, a vertical divider will have the correct height when used in flex container.

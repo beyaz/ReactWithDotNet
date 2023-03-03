@@ -16,8 +16,8 @@ public sealed class Tooltip : ElementBase
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
-    public dynamic classes { get; } = new ExpandoObject();
+    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
+    public Dictionary<string, Style> classes { get; } = new ();
     
     /// <summary>
     ///     The components used for each slot inside.
@@ -242,4 +242,9 @@ public sealed class Tooltip : ElementBase
     /// </summary>
     [React]
     public Element title { get; set; }
+    
+    protected override Element GetSuspenseFallbackElement()
+    {
+        return _children?.FirstOrDefault() ?? new ReactWithDotNet.Libraries.ReactWithDotNetSkeleton.Skeleton();
+    }
 }

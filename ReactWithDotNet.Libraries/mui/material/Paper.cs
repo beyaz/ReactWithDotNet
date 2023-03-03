@@ -8,8 +8,8 @@ partial class Paper
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
-    public dynamic classes { get; } = new ExpandoObject();
+    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
+    public Dictionary<string, Style> classes { get; } = new ();
     
     /// <summary>
     ///     Shadow depth, corresponds to `dp` in the spec.
