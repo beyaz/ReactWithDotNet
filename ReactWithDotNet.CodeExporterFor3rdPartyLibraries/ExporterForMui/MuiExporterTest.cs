@@ -128,4 +128,31 @@ public class MuiExporterTest
             ExportAsPartialClass = true
         });
     }
+
+    [TestMethod]
+    public void ButtonBase()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode     = GetTsCode(nameof(ButtonBase)),
+            StartFrom            = "props: P & {",
+            ClassName            = "ButtonBase",
+            SkipMembers          = new[] { "children", "action", "touchRippleRef" },
+            ExportAsPartialClass = true
+        });
+    }
+    
+    //[TestMethod]
+    //public void Switch()
+    //{
+    //    MuiExporter.ExportToCSharpFile(new MuiExportInput
+    //    {
+    //        DefinitionTsCode     = GetTsCode(nameof(Switch)),
+    //        StartFrom            = "> {",
+    //        ClassName            = "Switch",
+    //        SkipMembers          = new[] { "children", "inputRef" },
+    //        ExportAsPartialClass = true
+    //    });
+    //}
+    
 }
