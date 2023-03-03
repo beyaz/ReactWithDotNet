@@ -16,6 +16,8 @@ public class MuiExportInput
     public bool IsContainer { get; set; }
     
     public string ClassModifier { get; set; } = "sealed";
+
+    public string BaseClassName { get; set; } = "ElementBase";
 }
 
 static class MuiExporter
@@ -216,7 +218,7 @@ static class MuiExporter
                     lines.Add("namespace ReactWithDotNet.Libraries.mui.material;");
                     lines.Add(string.Empty);
 
-                    var inheritPart = " : ElementBase";
+                    var inheritPart = " : " + input.BaseClassName;
 
                     var classModifier = input.ClassModifier;
                     
