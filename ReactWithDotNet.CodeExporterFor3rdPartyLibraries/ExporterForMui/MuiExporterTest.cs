@@ -124,7 +124,8 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(TextField)),
             StartFrom        = "> {",
             ClassName        = "TextField",
-            SkipMembers      = new[] { "children" }
+            SkipMembers      = new[] { "children", "inputRef" },
+            ExportAsPartialClass = true
         });
     }
 }

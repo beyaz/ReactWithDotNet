@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.Libraries.mui.material;
 
-public sealed class TextField2 : ElementBase
+partial class TextField
 {
     /// <summary>
     ///     This prop helps users to fill forms faster, especially on mobile devices.
@@ -41,7 +41,12 @@ public sealed class TextField2 : ElementBase
     [React]
     public string color { get; set; }
     
- 
+    /// <summary>
+    ///     The default value. Use when the component is not controlled.
+    /// </summary>
+    [React]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
+    public dynamic defaultValue { get; } = new ExpandoObject();
     
     /// <summary>
     ///     If `true`, the component is disabled.
@@ -102,8 +107,6 @@ public sealed class TextField2 : ElementBase
     /// </summary>
     [React]
     public string inputProps { get; set; }
-    
-    
     
     /// <summary>
     ///     The label content.
@@ -193,7 +196,12 @@ public sealed class TextField2 : ElementBase
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
-   
-    
-    
+    /// <summary>
+    ///     Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
+    /// </summary>
+    [React]
+    public string type { get; set; }
+
+    [React]
+    public string value { get; set; }
 }

@@ -131,12 +131,25 @@ static class MuiExporter
                     return "string";
                 }
 
+                
+
                 if (tsTypeReference.TokenListAsObjectMap?.Count > 0)
                 {
                     return "dynamic";
                 }
 
                 if (tsTypeReference.Name.Equals("string", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "string";
+                }
+                if (tsTypeReference.Name.Equals("React.InputHTMLAttributes", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "string";
+                }
+                
+
+
+                if (tsTypeReference.Name.Equals("unknown", StringComparison.OrdinalIgnoreCase))
                 {
                     return "string";
                 }
