@@ -10,13 +10,14 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [React]
-    public bool arrow { get; set; }
+    public bool? arrow { get; set; }
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
-    public dynamic classes { get; set; }
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public dynamic classes { get; } = new ExpandoObject();
     
     /// <summary>
     ///     The components used for each slot inside.
@@ -62,7 +63,7 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [React]
-    public bool describeChild { get; set; }
+    public bool? describeChild { get; set; }
     
     /// <summary>
     ///     Do not respond to focus-visible events.
@@ -70,7 +71,7 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [React]
-    public bool disableFocusListener { get; set; }
+    public bool? disableFocusListener { get; set; }
     
     /// <summary>
     ///     Do not respond to hover events.
@@ -78,7 +79,7 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [React]
-    public bool disableHoverListener { get; set; }
+    public bool? disableHoverListener { get; set; }
     
     /// <summary>
     ///     Makes a tooltip not interactive, i.e. it will close when the user
@@ -88,7 +89,7 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [React]
-    public bool disableInteractive { get; set; }
+    public bool? disableInteractive { get; set; }
     
     /// <summary>
     ///     Do not respond to long press touch events.
@@ -96,7 +97,7 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [React]
-    public bool disableTouchListener { get; set; }
+    public bool? disableTouchListener { get; set; }
     
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip.
@@ -106,7 +107,7 @@ public sealed class Tooltip : ElementBase
     ///     @default 100
     /// </summary>
     [React]
-    public double enterDelay { get; set; }
+    public double? enterDelay { get; set; }
     
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip when one was already recently opened.
@@ -114,7 +115,7 @@ public sealed class Tooltip : ElementBase
     ///     @default 0
     /// </summary>
     [React]
-    public double enterNextDelay { get; set; }
+    public double? enterNextDelay { get; set; }
     
     /// <summary>
     ///     The number of milliseconds a user must touch the element before showing the tooltip.
@@ -122,7 +123,7 @@ public sealed class Tooltip : ElementBase
     ///     @default 700
     /// </summary>
     [React]
-    public double enterTouchDelay { get; set; }
+    public double? enterTouchDelay { get; set; }
     
     /// <summary>
     ///     If `true`, the tooltip follow the cursor over the wrapped element.
@@ -130,7 +131,7 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [React]
-    public bool followCursor { get; set; }
+    public bool? followCursor { get; set; }
     
     /// <summary>
     ///     This prop is used to help implement the accessibility logic.
@@ -148,7 +149,7 @@ public sealed class Tooltip : ElementBase
     ///     @default 0
     /// </summary>
     [React]
-    public double leaveDelay { get; set; }
+    public double? leaveDelay { get; set; }
     
     /// <summary>
     ///     The number of milliseconds after the user stops touching an element before hiding the tooltip.
@@ -156,7 +157,7 @@ public sealed class Tooltip : ElementBase
     ///     @default 1500
     /// </summary>
     [React]
-    public double leaveTouchDelay { get; set; }
+    public double? leaveTouchDelay { get; set; }
     
     /// <summary>
     ///     Callback fired when the component requests to be closed.
@@ -178,7 +179,7 @@ public sealed class Tooltip : ElementBase
     ///     If `true`, the component is shown.
     /// </summary>
     [React]
-    public bool open { get; set; }
+    public bool? open { get; set; }
     
     /// <summary>
     ///     Tooltip placement.
@@ -194,7 +195,8 @@ public sealed class Tooltip : ElementBase
     ///     @default {}
     /// </summary>
     [React]
-    public string PopperProps { get; set; }
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public dynamic PopperProps { get; } = new ExpandoObject();
     
     /// <summary>
     ///     The extra props for the slot components.

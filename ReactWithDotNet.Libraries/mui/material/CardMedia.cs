@@ -8,7 +8,8 @@ public sealed class CardMedia : ElementBase
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
-    public string classes { get; set; }
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public dynamic classes { get; } = new ExpandoObject();
     
     /// <summary>
     ///     Image to be displayed as a background image.

@@ -16,7 +16,8 @@ public sealed class Typography : ElementBase
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
-    public string classes { get; set; }
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public dynamic classes { get; } = new ExpandoObject();
     
     /// <summary>
     ///     If `true`, the text will have a bottom margin.
@@ -99,12 +100,12 @@ public sealed class Typography : ElementBase
     ///     }
     /// </summary>
     [React]
-    public string variantMapping { get; set; }
-
-    [React]
-    public string component { get; set; }
-
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public dynamic variantMapping { get; } = new ExpandoObject();
+    
     [React]
     public string color { get; set; }
+    
+    [React]
+    public string component { get; set; }
 }
-
