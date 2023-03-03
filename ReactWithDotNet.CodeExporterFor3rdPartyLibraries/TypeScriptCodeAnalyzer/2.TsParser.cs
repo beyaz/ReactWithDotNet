@@ -271,6 +271,15 @@ static class TsParser
                     var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.GreaterThan);
                     if (isFound)
                     {
+                        if (tokens[indexOfPair +1].tokenType == TokenType.LeftBracket)// [..]
+                        {
+                            var (isFound2, indexOfPair2) = FindPair(tokens, indexOfPair + 1, x => x.tokenType == TokenType.RightBracket);
+                            if (isFound2)
+                            {
+                                indexOfPair = indexOfPair2;
+                            }
+                        }
+                        
                         var tsTypeReference = new TsTypeReference
                         {
                             Name = name,
@@ -314,6 +323,7 @@ static class TsParser
 
         // union string sample |'left' | 'right'
         if (tokens[i].tokenType == TokenType.Union ||
+            tokens[i].tokenType == TokenType.LeftBracket ||
             tokens[i].tokenType == TokenType.QuotedString)
         {
             var (hasRead, readValues, newIndex) = TryReadWhile(tokens, i, x => x.tokenType != TokenType.SemiColon);
