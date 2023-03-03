@@ -163,17 +163,18 @@ public class MuiExporterTest
         });
     }
 
-    //[TestMethod]
-    //public void Switch()
-    //{
-    //    MuiExporter.ExportToCSharpFile(new MuiExportInput
-    //    {
-    //        DefinitionTsCode     = GetTsCode(nameof(Switch)),
-    //        StartFrom            = "> {",
-    //        ClassName            = "Switch",
-    //        SkipMembers          = new[] { "children", "inputRef" },
-    //        ExportAsPartialClass = true
-    //    });
-    //}
+    [TestMethod]
+    public void Switch()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(Switch)),
+            StartFrom = "> {",
+            ClassName = "Switch",
+            // SkipMembers = new[] { "children", "inputRef" },
+            BaseClassName = "SwitchBase",
+            ClassModifier = "partial"
+        });
+    }
 
 }

@@ -114,7 +114,10 @@ static class MuiExporter
         // export as property
         if (memberInfo.PropertyType is not null)
         {
-            
+            if (memberInfo.PropertyType.Name== "React.Ref")
+            {
+                return lines;
+            }
             
             var exportAsDynamicObjectMap = AsCSharpType(memberInfo.PropertyType) == "dynamic";
             
@@ -126,7 +129,14 @@ static class MuiExporter
                 lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
                 return lines;
             }
-            lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberInfo.Name + " { get; set; }");
+
+            var memberName = memberInfo.Name;
+            if (memberName == "checked")
+            {
+                memberName = "@" + memberName;
+            }
+            
+            lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberName + " { get; set; }");
 
             static string AsCSharpType(TsTypeReference tsTypeReference)
             {
