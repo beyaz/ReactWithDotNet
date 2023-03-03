@@ -14,6 +14,7 @@ class TsMemberInfo
     public bool IsNullable { get; set; }
     public string Name { get; set; }
     public TsTypeReference PropertyType { get; set; }
+    public IReadOnlyList<Token> MethodSignature { get; set; }
 }
 
 static class TsParser
@@ -141,22 +142,46 @@ static class TsParser
 
                 skipSpaces();
 
-                var (hasRead, tsTypeReference, newIndex) = TryReadTypeReference(tokens, i);
-                if (hasRead)
+                // r e a d    m e t h o d
+                // onOpen?: (event: React.SyntheticEvent) => void;
+                if (tokens[i].tokenType == TokenType.LeftParenthesis)
                 {
-                    memberInfo.PropertyType = tsTypeReference;
-
-                    i = newIndex;
-
-                    skipSpaces();
-
-                    if (tokens.Count > i && tokens[i].tokenType == TokenType.SemiColon)
+                    var (hasRead, readValues, newIndex) = TryReadWhile(tokens,i,t=>t.tokenType != TokenType.SemiColon);
+                    if (hasRead)
                     {
-                        i++;
+                        memberInfo.MethodSignature = readValues;
+
+                        return (hasRead: true, memberInfo, newIndex + 1);
                     }
 
-                    return (hasRead: true, memberInfo, i);
+                    return (false, null, -1);
                 }
+
+                // r e a d    p r o p e r t y
+                {
+
+                    // t y p e   r e f e r e n c e
+                    {
+                        var (hasRead, tsTypeReference, newIndex) = TryReadTypeReference(tokens, i);
+                        if (hasRead)
+                        {
+                            memberInfo.PropertyType = tsTypeReference;
+
+                            i = newIndex;
+
+                            skipSpaces();
+
+                            if (tokens.Count > i && tokens[i].tokenType == TokenType.SemiColon)
+                            {
+                                i++;
+                            }
+
+                            return (hasRead: true, memberInfo, i);
+                        }
+                    }
+                }
+                
+                
             }
         }
 
@@ -227,41 +252,48 @@ static class TsParser
     {
         var i = startIndex;
 
-        var (hasRead, value, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
-        if (hasRead)
+        string name = null;
+        
+        // named type
         {
-            i = newIndex;
-
-            skipSpaces();
-
-            // Partial<....>;
-            if (tokens[i].tokenType == TokenType.LessThan)
+             (var hasRead, name, var newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
+            if (hasRead)
             {
-                var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.GreaterThan);
-                if (isFound)
+                i = newIndex;
+
+                skipSpaces();
+
+                // Partial<....>;
+                if (tokens[i].tokenType == TokenType.LessThan)
+                {
+                    var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.GreaterThan);
+                    if (isFound)
+                    {
+                        var tsTypeReference = new TsTypeReference
+                        {
+                            Name = name,
+
+                            GenericArgumentsAsTokenList = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
+                        };
+
+                        return (true, tsTypeReference, indexOfPair + 1);
+                    }
+                }
+
+                if (tokens[i].tokenType == TokenType.SemiColon)
                 {
                     var tsTypeReference = new TsTypeReference
                     {
-                        Name = value,
-
-                        GenericArgumentsAsTokenList = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
+                        Name = name
                     };
 
-                    return (true, tsTypeReference, indexOfPair + 1);
+                    return (true, tsTypeReference, i + 1);
                 }
             }
 
-            if (tokens[i].tokenType == TokenType.SemiColon)
-            {
-                var tsTypeReference = new TsTypeReference
-                {
-                    Name = value
-                };
-
-                return (true, tsTypeReference, i + 1);
-            }
         }
 
+        // o b j e c t
         if (tokens[i].tokenType == TokenType.LeftBrace)
         {
             var (isFound, indexOfPair) = FindPair(tokens,i,x=>x.tokenType == TokenType.RightBrace);
@@ -269,12 +301,27 @@ static class TsParser
             {
                 var tsTypeReference = new TsTypeReference
                 {
-                    Name = value,
+                    Name = name,
 
                     GenericArgumentsAsTokenList = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
                 };
 
                 return (true, tsTypeReference, indexOfPair + 1);
+            }
+        }
+
+        // union string sample |'left' | 'right'
+        if (tokens[i].tokenType == TokenType.Union)
+        {
+            var (hasRead, readValues, newIndex) = TryReadWhile(tokens, i, x => x.tokenType != TokenType.SemiColon);
+            if (hasRead)
+            {
+                var tsTypeReference = new TsTypeReference
+                {
+                    GenericArgumentsAsTokenList = readValues
+                };
+
+                return (true, tsTypeReference, newIndex + 1);
             }
         }
 

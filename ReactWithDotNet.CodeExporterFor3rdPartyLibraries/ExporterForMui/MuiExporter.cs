@@ -12,7 +12,7 @@ public class MuiExportInput
     public string StartFrom { get; set; }
 }
 
-public class MuiExporter
+static class MuiExporter
 {
     public static void ExportToCSharpFile(MuiExportInput input)
     {
@@ -97,8 +97,14 @@ public class MuiExporter
         return lines;
     }
 
-    static string AsCSharpType(TsTypeReference tsTypeReference)
+    static string AsCSharpType(this TsTypeReference tsTypeReference)
     {
+        if (tsTypeReference == null)
+        {
+            return "int";
+        }
+        
+        
         if (tsTypeReference.Name.Equals("string", StringComparison.OrdinalIgnoreCase))
         {
             return "string";
