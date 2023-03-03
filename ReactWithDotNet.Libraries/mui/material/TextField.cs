@@ -45,8 +45,7 @@ partial class TextField
     ///     The default value. Use when the component is not controlled.
     /// </summary>
     [React]
-    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
-    public dynamic defaultValue { get; } = new ExpandoObject();
+    public string defaultValue { get; set; }
     
     /// <summary>
     ///     If `true`, the component is disabled.
@@ -201,7 +200,10 @@ partial class TextField
     /// </summary>
     [React]
     public string type { get; set; }
-
+    
+    /// <summary>
+    ///     The value of the `input` element, required for a controlled component.
+    /// </summary>
     [React]
     public string value { get; set; }
 }
