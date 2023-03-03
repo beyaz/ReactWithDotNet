@@ -13,6 +13,7 @@ public class MuiExportInput
     public string StartFrom { get; set; }
     public bool ExportAsPartialClass { get; set; }
     public IReadOnlyList<string> ExtraProps { get; set; }
+    public bool IsContainer { get; set; }
 }
 
 static class MuiExporter
@@ -98,13 +99,25 @@ static class MuiExporter
             return lines;
         }
 
+        if (memberInfo.Name == "classes" && memberInfo.PropertyType?.Name == "Partial")
+        {
+            lines.Add("[React]");
+            lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
+            lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
+            return lines;
+        }
+
         // export as property
         if (memberInfo.PropertyType is not null)
         {
+            
+            
             var exportAsDynamicObjectMap = AsCSharpType(memberInfo.PropertyType) == "dynamic";
             
             lines.Add("[React]");
 
+            
+            
             if (exportAsDynamicObjectMap)
             {
                 lines.Add("[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]");
@@ -228,6 +241,15 @@ static class MuiExporter
                             lines.Add("[React]");
                             lines.Add($"public {extraProp} {{ get; set; }}");
                         }
+                    }
+
+                    if (input.IsContainer)
+                    {
+                        lines.Add(string.Empty);
+                        lines.Add("protected override Element GetSuspenseFallbackElement()");
+                        lines.Add("{");
+                        lines.Add("return _children?.FirstOrDefault() ?? new Skeleton();");
+                        lines.Add("}");
                     }
 
                     lines.Add("}");
