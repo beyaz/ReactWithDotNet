@@ -125,24 +125,10 @@ public sealed class Typography : ElementBase
     public string color { get; set; }
 }
 
-public sealed class CardMedia : ElementBase
-{
-    [React]
-    public string image { get; set; }
-
-    /// <summary>
-    /// 	If true, the card will use raised styling.
-    /// </summary>
-    [React]
-    public string title { get; set; }
-}
 
 
-public sealed class Divider : ElementBase
-{
-    [React]
-    public string orientation { get; set; }
-}
+
+
 public sealed class IconButton : ElementBase
 {
     [React]

@@ -313,7 +313,8 @@ static class TsParser
         }
 
         // union string sample |'left' | 'right'
-        if (tokens[i].tokenType == TokenType.Union)
+        if (tokens[i].tokenType == TokenType.Union ||
+            tokens[i].tokenType == TokenType.QuotedString)
         {
             var (hasRead, readValues, newIndex) = TryReadWhile(tokens, i, x => x.tokenType != TokenType.SemiColon);
             if (hasRead)

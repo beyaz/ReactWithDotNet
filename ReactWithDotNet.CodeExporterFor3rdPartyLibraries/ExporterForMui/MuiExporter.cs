@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
@@ -11,6 +12,7 @@ public class MuiExportInput
     public IReadOnlyList<string> SkipMembers { get; set; }
     public string StartFrom { get; set; }
     public bool ExportAsPartialClass { get; set; }
+    public IReadOnlyList<string> ExtraProps { get; set; }
 }
 
 static class MuiExporter
@@ -140,12 +142,12 @@ static class MuiExporter
 
                 if (tsTypeReference.Name.Equals("number", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "double";
+                    return "double?";
                 }
 
                 if (tsTypeReference.Name.Equals("boolean", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "bool";
+                    return "bool?";
                 }
 
                 if (tsTypeReference.Name.Equals("SxProps", StringComparison.OrdinalIgnoreCase))
@@ -216,6 +218,16 @@ static class MuiExporter
                         isFirstMember = false;
 
                         lines.AddRange(AsCSharpMember(tsMemberInfo));
+                    }
+
+                    if (input.ExtraProps is not null)
+                    {
+                        foreach (var extraProp in input.ExtraProps)
+                        {
+                            lines.Add(string.Empty);
+                            lines.Add("[React]");
+                            lines.Add($"public {extraProp} {{ get; set; }}");
+                        }
                     }
 
                     lines.Add("}");

@@ -58,6 +58,20 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(CardMedia)),
             StartFrom        = "props: P & {",
             ClassName        = "CardMedia",
+            SkipMembers      = new[] { "children" },
+            ExtraProps = new[]{ "string title" }
+        });
+    }
+
+
+    [TestMethod]
+    public void Divider()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(Divider)),
+            StartFrom        = "props: P & {",
+            ClassName        = "Divider",
             SkipMembers      = new[] { "children" }
         });
     }
