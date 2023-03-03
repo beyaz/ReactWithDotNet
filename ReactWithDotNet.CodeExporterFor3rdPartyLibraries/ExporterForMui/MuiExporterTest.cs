@@ -49,4 +49,16 @@ public class MuiExporterTest
             SkipMembers      = new[] { "children", "TransitionComponent", "TransitionProps", "PopperComponent" }
         });
     }
+
+    [TestMethod]
+    public void CardMedia()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(CardMedia)),
+            StartFrom        = "props: P & {",
+            ClassName        = "CardMedia",
+            SkipMembers      = new[] { "children" }
+        });
+    }
 }

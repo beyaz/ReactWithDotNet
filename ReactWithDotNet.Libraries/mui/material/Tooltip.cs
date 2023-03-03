@@ -1,6 +1,8 @@
+// auto generated code (do not edit manually)
+
 namespace ReactWithDotNet.Libraries.mui.material;
 
-partial class Tooltip : ElementBase
+public sealed class Tooltip : ElementBase
 {
     /// <summary>
     ///     If `true`, adds an arrow to the tooltip.
@@ -9,13 +11,13 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public bool arrow { get; set; }
-
+    
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
     public string classes { get; set; }
-
+    
     /// <summary>
     ///     The components used for each slot inside.
     ///     <br/>
@@ -25,17 +27,19 @@ partial class Tooltip : ElementBase
     ///     <br/>
     ///     It's recommended to use the `slots` prop instead.
     ///     <br/>
+    ///     <br/>
+    ///     <br/>
     ///     @default {}
     /// </summary>
     [React]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic components { get; } = new ExpandoObject();
-
+    
     /// <summary>
     ///     The extra props for the slot components.
-    /// <br/>
+    ///     <br/>
     ///     You can override the existing props or add new ones.
-    /// <br/>
+    ///     <br/>
     ///     <br/>
     ///     <br/>
     ///     This prop is an alias for the `slotProps` prop.
@@ -49,7 +53,7 @@ partial class Tooltip : ElementBase
     [React]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic componentsProps { get; } = new ExpandoObject();
-
+    
     /// <summary>
     ///     Set to `true` if the `title` acts as an accessible description.
     ///     <br/>
@@ -59,7 +63,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public bool describeChild { get; set; }
-
+    
     /// <summary>
     ///     Do not respond to focus-visible events.
     ///     <br/>
@@ -67,7 +71,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public bool disableFocusListener { get; set; }
-
+    
     /// <summary>
     ///     Do not respond to hover events.
     ///     <br/>
@@ -75,7 +79,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public bool disableHoverListener { get; set; }
-
+    
     /// <summary>
     ///     Makes a tooltip not interactive, i.e. it will close when the user
     ///     <br/>
@@ -85,7 +89,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public bool disableInteractive { get; set; }
-
+    
     /// <summary>
     ///     Do not respond to long press touch events.
     ///     <br/>
@@ -93,7 +97,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public bool disableTouchListener { get; set; }
-
+    
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip.
     ///     <br/>
@@ -103,7 +107,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public double enterDelay { get; set; }
-
+    
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip when one was already recently opened.
     ///     <br/>
@@ -111,7 +115,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public double enterNextDelay { get; set; }
-
+    
     /// <summary>
     ///     The number of milliseconds a user must touch the element before showing the tooltip.
     ///     <br/>
@@ -119,7 +123,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public double enterTouchDelay { get; set; }
-
+    
     /// <summary>
     ///     If `true`, the tooltip follow the cursor over the wrapped element.
     ///     <br/>
@@ -127,7 +131,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public bool followCursor { get; set; }
-
+    
     /// <summary>
     ///     This prop is used to help implement the accessibility logic.
     ///     <br/>
@@ -135,7 +139,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public string id { get; set; }
-
+    
     /// <summary>
     ///     The number of milliseconds to wait before hiding the tooltip.
     ///     <br/>
@@ -145,7 +149,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public double leaveDelay { get; set; }
-
+    
     /// <summary>
     ///     The number of milliseconds after the user stops touching an element before hiding the tooltip.
     ///     <br/>
@@ -153,7 +157,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public double leaveTouchDelay { get; set; }
-
+    
     /// <summary>
     ///     Callback fired when the component requests to be closed.
     ///     <br/>
@@ -161,7 +165,7 @@ partial class Tooltip : ElementBase
     ///     <br/>
     ///     @param {React.SyntheticEvent} event The event source of the callback.
     /// </summary>
-
+    
     /// <summary>
     ///     Callback fired when the component requests to be open.
     ///     <br/>
@@ -169,13 +173,13 @@ partial class Tooltip : ElementBase
     ///     <br/>
     ///     @param {React.SyntheticEvent} event The event source of the callback.
     /// </summary>
-
+    
     /// <summary>
     ///     If `true`, the component is shown.
     /// </summary>
     [React]
     public bool open { get; set; }
-
+    
     /// <summary>
     ///     Tooltip placement.
     ///     <br/>
@@ -183,7 +187,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public string placement { get; set; }
-
+    
     /// <summary>
     ///     Props applied to the [`Popper`](/material-ui/api/popper/) element.
     ///     <br/>
@@ -191,7 +195,7 @@ partial class Tooltip : ElementBase
     /// </summary>
     [React]
     public string PopperProps { get; set; }
-
+    
     /// <summary>
     ///     The extra props for the slot components.
     ///     <br/>
@@ -208,7 +212,7 @@ partial class Tooltip : ElementBase
     [React]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic slotProps { get; } = new ExpandoObject();
-
+    
     /// <summary>
     ///     The components used for each slot inside.
     ///     <br/>
@@ -223,14 +227,14 @@ partial class Tooltip : ElementBase
     [React]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic slots { get; } = new ExpandoObject();
-
+    
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
     [React]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
-
+    
     /// <summary>
     ///     Tooltip title. Zero-length titles string, undefined, null and false are never displayed.
     /// </summary>
