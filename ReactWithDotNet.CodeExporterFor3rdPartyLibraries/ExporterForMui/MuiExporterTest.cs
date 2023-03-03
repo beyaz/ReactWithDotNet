@@ -41,9 +41,9 @@ public class MuiExporterTest
     {
         MuiExporter.ExportToCSharpFile(new MuiExportInput
         {
-            DefinitionTsCode = GetTsCode(nameof(Card)),
-            StartFrom        = "extends StandardProps<React.HTMLAttributes<HTMLDivElement>, 'title'> {",
-            ClassName        = "Card",
+            DefinitionTsCode = GetTsCode(nameof(Tooltip)),
+            StartFrom        = "'title'> {",
+            ClassName        = "Tooltip",
             SkipMembers      = new[] { "children" }
         });
     }
