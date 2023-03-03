@@ -245,6 +245,6 @@ public sealed class Tooltip : ElementBase
     
     protected override Element GetSuspenseFallbackElement()
     {
-        return _children?.FirstOrDefault() ?? new ReactWithDotNet.Libraries.ReactWithDotNetSkeleton.Skeleton();
+        return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
     }
 }
