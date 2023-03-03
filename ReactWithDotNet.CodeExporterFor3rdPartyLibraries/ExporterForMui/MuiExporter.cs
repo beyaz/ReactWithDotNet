@@ -89,7 +89,7 @@ static class MuiExporter
         if (memberInfo.Name =="sx")
         {
             lines.Add("[React]");
-            lines.Add("[ReactTransformValueInClient(\"ReactWithDotNet::Core::ReplaceNullWhenEmpty\")]");
+            lines.Add("[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]");
             lines.Add("public dynamic sx { get; } = new ExpandoObject();");
 
             return lines;
@@ -104,7 +104,7 @@ static class MuiExporter
 
             if (exportAsDynamicObjectMap)
             {
-                lines.Add("[ReactTransformValueInClient(\"ReactWithDotNet::Core::ReplaceNullWhenEmpty\")]");
+                lines.Add("[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]");
                 lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
                 return lines;
             }
