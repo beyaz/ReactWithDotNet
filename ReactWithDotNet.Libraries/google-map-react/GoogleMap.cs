@@ -3,11 +3,11 @@
 public sealed class GoogleMap : ThirdPartyReactComponent
 {
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public BootstrapURLKeys bootstrapURLKeys { get; } = new();
 
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public DefaultCenter defaultCenter { get; } = new();
 
     [React]

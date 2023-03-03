@@ -44,7 +44,7 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(Tooltip)),
             StartFrom        = "'title'> {",
             ClassName        = "Tooltip",
-            SkipMembers      = new[] { "children" }
+            SkipMembers      = new[] { "children", "TransitionComponent", "TransitionProps", "PopperComponent" }
         });
     }
 }

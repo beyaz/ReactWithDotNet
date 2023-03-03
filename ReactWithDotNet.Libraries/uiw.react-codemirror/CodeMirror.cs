@@ -8,7 +8,7 @@ public class CodeMirror : ThirdPartyReactComponent
     public string? value { get; set; }
     
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public CodeMirrorBasicSetup basicSetup { get; } = new();
 
     [React]

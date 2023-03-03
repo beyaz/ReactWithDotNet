@@ -1,11 +1,11 @@
-﻿using System.Dynamic;
+﻿
 
 namespace ReactWithDotNet.Libraries.mui.material;
 
 public class ElementBase : ThirdPartyReactComponent
 {
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
 }
 

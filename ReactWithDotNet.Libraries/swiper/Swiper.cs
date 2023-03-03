@@ -63,11 +63,11 @@ public class Swiper : ThirdPartyReactComponent
     
 
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public SwiperPagination pagination { get; } = new();
 
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public SwiperScrollbar scrollbar { get; } = new();
 
     [React]
@@ -90,7 +90,7 @@ public class Swiper : ThirdPartyReactComponent
     
 
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public SwiperNavigationOption navigation { get; } = new();
 }
 

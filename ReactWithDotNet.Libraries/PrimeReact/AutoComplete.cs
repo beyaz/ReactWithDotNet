@@ -155,7 +155,7 @@ public class AutoComplete<TSuggestion> : ElementBase
     }
 
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public Style inputStyle { get; } = new();
 
     protected  override Element GetSuspenseFallbackElement()

@@ -20,6 +20,6 @@ partial class Card
     ///    The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
     [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceNullWhenEmpty")]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
 }

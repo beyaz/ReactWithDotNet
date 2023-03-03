@@ -98,7 +98,16 @@ static class MuiExporter
         // export as property
         if (memberInfo.PropertyType is not null)
         {
+            var exportAsDynamicObjectMap = AsCSharpType(memberInfo.PropertyType) == "dynamic";
+            
             lines.Add("[React]");
+
+            if (exportAsDynamicObjectMap)
+            {
+                lines.Add("[ReactTransformValueInClient(\"ReactWithDotNet::Core::ReplaceNullWhenEmpty\")]");
+                lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
+                return lines;
+            }
             lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberInfo.Name + " {get; set; }");
 
             static string AsCSharpType(TsTypeReference tsTypeReference)
