@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.Libraries.mui.material;
 
-public  class ButtonBase : ElementBase
+public class ButtonBase : ElementBase
 {
     /// <summary>
     ///     If `true`, the ripples are centered.

@@ -157,7 +157,8 @@ public class MuiExporterTest
             StartFrom        = "> {",
             ClassName        = "SwitchBase",
             SkipMembers      = new[] { "-"},
-            ClassModifier    = string.Empty
+            ClassModifier    = string.Empty,
+            BaseClassName = "ButtonBase"
 
         });
     }
