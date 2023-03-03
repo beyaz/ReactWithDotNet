@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.Libraries.mui.material;
 
-partial class Paper
+public  class Paper : ElementBase
 {
     /// <summary>
     ///     Override or extend the styles applied to the component.

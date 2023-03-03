@@ -25,7 +25,7 @@ public class MuiExporterTest
             DefinitionTsCode     = GetTsCode(nameof(Paper)),
             StartFrom            = "props: P & {",
             ClassName            = "Paper",
-            ClassModifier = "partial",
+            ClassModifier = " ",
             SkipMembers          = new[] { "children" },
             ExtraProps           = new[] { "string component" }
         });
@@ -39,8 +39,8 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(Card)),
             StartFrom        = "DistributiveOmit<PaperProps, 'classes'> & {",
             ClassName        = "Card",
-            ClassModifier    = "partial",
-            SkipMembers      = new[] { "children" }
+            SkipMembers      = new[] { "children" },
+            BaseClassName = "Paper"
         });
     }
 
@@ -147,6 +147,22 @@ public class MuiExporterTest
             
         });
     }
+
+    [TestMethod]
+    public void IconButton()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(IconButton)),
+            StartFrom        = "props: P & {",
+            ClassName        = "IconButton",
+            SkipMembers      = new[] { "children" },
+            BaseClassName = nameof(ButtonBase),
+            ExtraProps = new []{ "string type" }
+
+        });
+    }
+
 
     [TestMethod]
     public void SwitchBase()

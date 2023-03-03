@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.Libraries.mui.material;
 
-partial class Card
+public sealed class Card : Paper
 {
     /// <summary>
     ///     Override or extend the styles applied to the component.
