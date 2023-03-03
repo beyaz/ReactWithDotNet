@@ -20,6 +20,7 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(Paper)),
             StartFrom      = "props: P & {",
             ClassName      = "Paper",
+            ExportAsPartialClass = true,
             SkipMembers    = new[] { "children" }
         });
     }
@@ -29,10 +30,11 @@ public class MuiExporterTest
     {
         MuiExporter.ExportToCSharpFile(new MuiExportInput
         {
-            DefinitionTsCode = GetTsCode(nameof(Card)),
-            StartFrom      = "DistributiveOmit<PaperProps, 'classes'> & {",
-            ClassName      = "Card",
-            SkipMembers    = new[] { "children" }
+            DefinitionTsCode     = GetTsCode(nameof(Card)),
+            StartFrom            = "DistributiveOmit<PaperProps, 'classes'> & {",
+            ClassName            = "Card",
+            ExportAsPartialClass = true,
+            SkipMembers          = new[] { "children" }
         });
     }
 

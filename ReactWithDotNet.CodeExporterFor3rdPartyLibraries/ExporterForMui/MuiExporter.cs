@@ -10,6 +10,7 @@ public class MuiExportInput
     public string DefinitionTsCode { get; set; }
     public IReadOnlyList<string> SkipMembers { get; set; }
     public string StartFrom { get; set; }
+    public bool ExportAsPartialClass { get; set; }
 }
 
 static class MuiExporter
@@ -108,7 +109,7 @@ static class MuiExporter
                 lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
                 return lines;
             }
-            lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberInfo.Name + " {get; set; }");
+            lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberInfo.Name + " { get; set; }");
 
             static string AsCSharpType(TsTypeReference tsTypeReference)
             {
@@ -171,8 +172,6 @@ static class MuiExporter
 
     static IReadOnlyList<string> CalculateCSharpFileContentLines(MuiExportInput input)
     {
-        
-
         var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
         if (hasRead)
         {
@@ -184,10 +183,20 @@ static class MuiExporter
                 {
                     var lines = new List<string>();
 
+                    lines.Add("// auto generated code (do not edit manually)");
+                    lines.Add(string.Empty);
                     lines.Add("namespace ReactWithDotNet.Libraries.mui.material;");
                     lines.Add(string.Empty);
 
-                    lines.Add($"partial class {input.ClassName}");
+                    if (input.ExportAsPartialClass)
+                    {
+                        lines.Add($"partial class {input.ClassName}");
+                    }
+                    else
+                    {
+                        lines.Add($"public sealed class {input.ClassName} : ElementBase");
+                    }
+                    
                     lines.Add("{");
 
                     var isFirstMember = true;
