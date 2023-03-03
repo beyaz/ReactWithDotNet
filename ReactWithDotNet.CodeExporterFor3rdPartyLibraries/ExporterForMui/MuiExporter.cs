@@ -137,7 +137,7 @@ static class MuiExporter
 
                 if (tsTypeReference.Name.Equals("Partial", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "string";
+                    return "dynamic";
                 }
 
                 if (tsTypeReference.Name.Equals("number", StringComparison.OrdinalIgnoreCase))

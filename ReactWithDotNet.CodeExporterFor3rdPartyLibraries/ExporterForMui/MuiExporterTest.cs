@@ -75,4 +75,18 @@ public class MuiExporterTest
             SkipMembers      = new[] { "children" }
         });
     }
+
+    [TestMethod]
+    public void Typography()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(Typography)),
+            StartFrom        = "SystemProps<Theme> & {",
+            ClassName        = "Typography",
+            SkipMembers      = new[] { "children" },
+            ExtraProps       = new[] { "string color", "string component" }
+        });
+    }
+    
 }

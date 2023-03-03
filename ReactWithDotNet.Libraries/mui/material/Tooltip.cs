@@ -16,7 +16,7 @@ public sealed class Tooltip : ElementBase
     ///     Override or extend the styles applied to the component.
     /// </summary>
     [React]
-    public string classes { get; set; }
+    public dynamic classes { get; set; }
     
     /// <summary>
     ///     The components used for each slot inside.

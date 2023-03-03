@@ -101,29 +101,7 @@ public sealed class CardActions : ElementBase
 {
 
 }
-public sealed class Typography : ElementBase
-{
-    
-    [React]
-    public bool? gutterBottom { get; set; }
 
-    [React]
-    public string component { get; set; }
-    
-
-        /// <summary>
-        /// 	The variant to use.
-        /// <br/>
-        /// 'elevation'
-        /// <br/>
-        /// 'outlined'
-        /// </summary>
-        [React]
-    public string variant { get; set; }
-
-    [React]
-    public string color { get; set; }
-}
 
 
 
