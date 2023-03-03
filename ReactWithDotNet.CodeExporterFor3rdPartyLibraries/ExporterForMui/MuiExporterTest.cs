@@ -114,4 +114,17 @@ public class MuiExporterTest
             SkipMembers      = new[] { "children" }
         });
     }
+
+
+    [TestMethod]
+    public void TextField()
+    {
+        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(TextField)),
+            StartFrom        = "> {",
+            ClassName        = "TextField",
+            SkipMembers      = new[] { "children" }
+        });
+    }
 }
