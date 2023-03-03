@@ -99,7 +99,7 @@ static class MuiExporter
 
     static string AsCSharpType(this TsTypeReference tsTypeReference)
     {
-        if (tsTypeReference == null)
+        if (tsTypeReference == null || tsTypeReference.Name is null)
         {
             return "int";
         }
