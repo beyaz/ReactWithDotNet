@@ -4,8 +4,10 @@ record TsProperty(string comment, string propertyName, string propertyType);
 
 class TsTypeReference
 {
-    public IReadOnlyList<Token> GenericArgumentsAsTokenList { get; set; }
+    public IReadOnlyList<Token> TokenListAsGenericArguments { get; set; }
     public string Name { get; set; }
+    public IReadOnlyList<Token> TokenListAsUnionValues { get; set; }
+    public IReadOnlyList<Token> TokenListAsObjectMap { get; set; }
 }
 
 class TsMemberInfo
@@ -273,7 +275,7 @@ static class TsParser
                         {
                             Name = name,
 
-                            GenericArgumentsAsTokenList = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
+                            TokenListAsGenericArguments = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
                         };
 
                         return (true, tsTypeReference, indexOfPair + 1);
@@ -303,7 +305,7 @@ static class TsParser
                 {
                     Name = name,
 
-                    GenericArgumentsAsTokenList = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
+                    TokenListAsObjectMap = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
                 };
 
                 return (true, tsTypeReference, indexOfPair + 1);
@@ -318,7 +320,7 @@ static class TsParser
             {
                 var tsTypeReference = new TsTypeReference
                 {
-                    GenericArgumentsAsTokenList = readValues
+                    TokenListAsUnionValues = readValues
                 };
 
                 return (true, tsTypeReference, newIndex + 1);

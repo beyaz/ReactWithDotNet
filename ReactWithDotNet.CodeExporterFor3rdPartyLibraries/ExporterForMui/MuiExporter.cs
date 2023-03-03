@@ -95,58 +95,65 @@ static class MuiExporter
             return lines;
         }
 
-        lines.Add("[React]");
+        // export as property
+        if (memberInfo.PropertyType is not null)
+        {
+            lines.Add("[React]");
+            lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberInfo.Name + " {get; set; }");
 
-        lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberInfo.Name + " {get; set; }");
+            static string AsCSharpType(TsTypeReference tsTypeReference)
+            {
+                if (tsTypeReference.TokenListAsUnionValues?.Count > 0)
+                {
+                    return "string";
+                }
+                
+                if (tsTypeReference.Name.Equals("string", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "string";
+                }
+
+                if (tsTypeReference.Name.Equals("OverridableStringUnion", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "string";
+                }
+
+                if (tsTypeReference.Name.Equals("Partial", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "string";
+                }
+
+                if (tsTypeReference.Name.Equals("number", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "double";
+                }
+
+                if (tsTypeReference.Name.Equals("boolean", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "bool";
+                }
+
+                if (tsTypeReference.Name.Equals("SxProps", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "dynamic";
+                }
+
+                if (tsTypeReference.Name.Equals("React.ReactNode", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Element";
+                }
+
+                return tsTypeReference.Name;
+            }
+        }
+       
 
         return lines;
+
+       
     }
 
-    static string AsCSharpType(this TsTypeReference tsTypeReference)
-    {
-        if (tsTypeReference == null || tsTypeReference.Name is null)
-        {
-            return "int";
-        }
-        
-        
-        if (tsTypeReference.Name.Equals("string", StringComparison.OrdinalIgnoreCase))
-        {
-            return "string";
-        }
-
-        if (tsTypeReference.Name.Equals("OverridableStringUnion", StringComparison.OrdinalIgnoreCase))
-        {
-            return "string";
-        }
-
-        if (tsTypeReference.Name.Equals("Partial", StringComparison.OrdinalIgnoreCase))
-        {
-            return "string";
-        }
-
-        if (tsTypeReference.Name.Equals("number", StringComparison.OrdinalIgnoreCase))
-        {
-            return "double";
-        }
-
-        if (tsTypeReference.Name.Equals("boolean", StringComparison.OrdinalIgnoreCase))
-        {
-            return "bool";
-        }
-
-        if (tsTypeReference.Name.Equals("SxProps", StringComparison.OrdinalIgnoreCase))
-        {
-            return "dynamic";
-        }
-
-        if (tsTypeReference.Name.Equals("React.ReactNode", StringComparison.OrdinalIgnoreCase))
-        {
-            return "Element";
-        }
-
-        return tsTypeReference.Name;
-    }
+   
 
     static IReadOnlyList<string> CalculateCSharpFileContentLines(MuiExportInput input)
     {
