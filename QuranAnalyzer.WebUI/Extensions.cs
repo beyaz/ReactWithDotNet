@@ -1,4 +1,6 @@
-﻿namespace QuranAnalyzer.WebUI;
+﻿using System.Globalization;
+
+namespace QuranAnalyzer.WebUI;
 
 static class Extensions
 {
@@ -80,7 +82,13 @@ static class Extensions
         client.ListenEvent(MainContentDivScrollChangedOverZero, handlerAction);
     }
 
-   
+
+    static readonly CultureInfo CultureInfoArabic = new("ar-SA");
+    
+    public static bool EqualsArabicIgnoreCase(this string a, string b)
+    {
+        return string.Compare(a, b, ignoreCase: true, CultureInfoArabic) == 0;
+    }
 
     public static string GetTurkishPronunciationOfArabicLetter(string arabicLetter)
     {
