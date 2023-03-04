@@ -15,7 +15,7 @@ public class TextArea : ReactComponent
             style =
             {
                 ComponentBorder,
-                BorderRadius(5),
+                BorderRadiusForPanels,
 
                 Focus(Border($"1px solid {BluePrimary}"))
             }
@@ -38,7 +38,7 @@ public class TextInput : ReactComponent
             style =
             {
                 ComponentBorder,
-                BorderRadius(5),
+                BorderRadiusForPanels,
                 Padding(5),
                 Focus(Border($"1px solid {BluePrimary}"))
             }

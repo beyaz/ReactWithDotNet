@@ -101,7 +101,7 @@ class Calculator : ReactComponent<CalculatorModel>
 
                 new FreeScrollBar
                 {
-                    Height(300), WidthMaximized, ComponentBorder, BorderRadius(5),
+                    Height(300), WidthMaximized, ComponentBorder, BorderRadiusForPanels,
                     Children(verseList.Select(verse => new LetterColorizer
                     {
                         VerseTextNodes          = verse.TextWithBismillahAnalyzed,

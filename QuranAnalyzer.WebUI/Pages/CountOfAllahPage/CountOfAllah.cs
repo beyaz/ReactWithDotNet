@@ -81,7 +81,7 @@ class CountOfAllah : ReactComponent
 
         static Element raisePanel(Element element) => new div
         {
-            BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadius(5), MarginTopBottom(10),
+            BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(15), BorderRadiusForPanels, MarginTopBottom(10),
             element
         };
     }

@@ -13,6 +13,8 @@ static class Extensions
     public static StyleModifier ComponentBorder => Border($"1px solid {BorderColor}");
     public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
 
+    public static StyleModifier BorderRadiusForPanels => BorderRadius(5);
+
     public static int AsNumber(this bool value) =>
         value ? 1 : 0;
 

@@ -57,11 +57,14 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
     {
         IEnumerable<Element> searchPanel() => new[]
         {
-            When(state.IsBlocked, () => new div { PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3) }),
+            When(state.IsBlocked, () => new div
+            {
+                PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3),BorderRadiusForPanels
+            }),
             When(state.IsBlocked, () => new FlexRowCentered
             {
                 PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
-                Children(new LoadingIcon { wh(17), mr(5) }, "Lütfen bekleyiniz...")
+                Children(new LoadingIcon { wh(17), mr(5) }, new span(Color("white")){"Lütfen bekleyiniz..."})
             }),
             new h4 { text = "Harf Arama", style = { TextAlignCenter } },
             new FlexColumn
@@ -228,7 +231,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     static Element Panel(IEnumerable<Element> rows)
     {
-        return new FlexColumn(BorderRadius(5), ComponentBorder, PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
+        return new FlexColumn(BorderRadiusForPanels, ComponentBorder, PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
         {
             Children(rows)
         };

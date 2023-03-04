@@ -143,7 +143,7 @@ class TotalCounts : ReactComponent
 
     Element CreateWithCount(int recordIndex, int delay)
     {
-        return new FlexColumn(ComponentBorder, BorderRadius(5), Padding(3), Gap(4))
+        return new FlexColumn(ComponentBorder, BorderRadiusForPanels, Padding(3), Gap(4))
         {
             new FlexRow(JustifyContentCenter) { AsLetter(Records[recordIndex].Text) },
             new FlexRowCentered

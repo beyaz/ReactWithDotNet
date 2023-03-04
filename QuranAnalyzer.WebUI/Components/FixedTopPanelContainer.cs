@@ -55,7 +55,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
                             Zindex(3),
                             BoxShadow("0px 0px 8px rgb(0 0 0 / 20%)"),
                             Padding(30),
-                            BorderRadius(5),
+                            BorderRadiusForPanels,
                             new LeftMenu
                             {
                                 SelectedPageId = Context.Query[QueryKey.Page]

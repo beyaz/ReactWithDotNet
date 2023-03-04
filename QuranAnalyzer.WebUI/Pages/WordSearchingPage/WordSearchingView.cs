@@ -187,7 +187,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
     static Element Panel(IEnumerable<Element> rows)
     {
-        return new FlexColumn(BorderRadius(5), ComponentBorder, PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
+        return new FlexColumn(BorderRadiusForPanels, ComponentBorder, PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
         {
             Children(rows)
         };

@@ -24,7 +24,7 @@ public class ActionButton : ReactComponent
                 Color(BluePrimary),
                 Border($"1px solid {BluePrimary}"),
                 Background("transparent"),
-                BorderRadius(5),
+                BorderRadiusForPanels,
                 Padding(10, 30),
                 CursorPointer
             }

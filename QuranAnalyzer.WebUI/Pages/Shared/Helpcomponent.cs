@@ -115,7 +115,7 @@ class Helpcomponent : ReactComponent
 
         static Element commandText(string text)
         {
-            return new td { (b)text } + Width(200) + ComponentBorder + BorderRadius(5);
+            return new td { (b)text } + Width(200) + ComponentBorder + BorderRadiusForPanels;
         }
 
         static Element description(params Element[] children)

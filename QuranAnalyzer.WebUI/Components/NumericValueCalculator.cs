@@ -108,7 +108,7 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
                 AlignItemsCenter,
                 Margin(5),
                 Border($"1px solid {BorderColor}"),
-                BorderRadius(5),
+                BorderRadiusForPanels,
 
                 new div(PaddingLeftRight(5), FontSize(15), FontFamily_Lateef)
                 {
