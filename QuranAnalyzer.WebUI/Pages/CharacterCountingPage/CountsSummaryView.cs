@@ -13,6 +13,26 @@ public class SummaryInfo
 [Serializable]
 class CountsSummaryView : ReactPureComponent
 {
+    static readonly int[] SpecialNumbers = { 19, 1230, 505, 667, 109 };
+    
+static int? TryFindSpecialNumber(int value)
+    {
+        if (value == 0)
+        {
+            return null;
+        }
+
+        foreach (var specialNumber in SpecialNumbers)
+        {
+            if (value % specialNumber == 0)
+            {
+                return specialNumber;
+            }
+        }
+
+        return null;
+    }
+    
     #region Public Properties
     public IReadOnlyList<SummaryInfo> Counts { get; set; } = new List<SummaryInfo>();
     #endregion
@@ -38,9 +58,10 @@ class CountsSummaryView : ReactPureComponent
 
         var total = counts.Select(x => x.Count).Sum();
 
-        if (total > 0 && total % 19 == 0)
+        var specialNumber = TryFindSpecialNumber(total);
+        if (specialNumber.HasValue)
         {
-            returnDiv.appendChild(MultipleOf(total));
+            returnDiv.appendChild(MultipleOf(total, specialNumber.Value));
         }
         else
         {
@@ -127,8 +148,9 @@ class CountsSummaryView : ReactPureComponent
     }
     #endregion
 
-    static Element MultipleOf(int total)
+    static Element MultipleOf(int total, int specialNumber)
     {
+        
         return new legend
         {
             children =
@@ -136,7 +158,7 @@ class CountsSummaryView : ReactPureComponent
                 new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
                 new FlexRow(MarginLeftRight(5), AlignItemsCenter,Color("red"))
                 {
-                    new div("19"), (small)$"x {total / 19}"+MarginLeftRight(3)
+                    new div(specialNumber.ToString()), (small)$"x {total / specialNumber}"+MarginLeftRight(3)
                 },
                 new div { innerText = ")" }
             },
