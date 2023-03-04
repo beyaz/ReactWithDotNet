@@ -35,16 +35,27 @@ public static class DataAccess
         }
     }
 
-    static IReadOnlyList<Chapter> ReadAllChaptersFromJsonfile(string xmlFilePath)
+    static IReadOnlyList<Sura> ReadChaptersFromXmlFile(string xmlFilePath)
     {
-        XmlSerializer ser = new XmlSerializer(typeof(Quran));
-        Quran         quran;
+
+        Quran quran = null;
+        
         using (XmlReader reader = XmlReader.Create(xmlFilePath))
         {
-            quran = (Quran)ser.Deserialize(reader);
+            quran = (Quran)new XmlSerializer(typeof(Quran)).Deserialize(reader);
         }
 
-        var chapters = quran.Sura;
+        if (quran is null)
+        {
+            throw new ArgumentException($"Xml file not read. @xmlFilePath: {xmlFilePath}");
+        }
+
+        return quran.Sura;
+    }
+
+    static IReadOnlyList<Chapter> ReadAllChaptersFromJsonfile(string xmlFilePath)
+    {
+        var chapters = ReadChaptersFromXmlFile(xmlFilePath);
 
         return chapters.AsListOf(chapter => new Chapter
         {
