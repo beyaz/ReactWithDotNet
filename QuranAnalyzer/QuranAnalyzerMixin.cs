@@ -393,12 +393,25 @@ public static class QuranAnalyzerMixin
                     return totalCount;
                 }
             }
-
             else
             {
                 if (MushafTotalCountPerVerseDifference[Waaw].TryGetValue(GetDifferencesKeyForTanzil(verse.Id), out var totalCount))
                 {
                     return totalCount;
+                }
+            }
+
+            if (!option.Enba_u_Should_Contains_one_waw)
+            {
+                // [enba'u] Tanzil.net counts extra waw char in these verses
+                if (verse.Id == "6:5")
+                {
+                    return 4;
+                }
+
+                if (verse.Id == "26:6")
+                {
+                    return 3;
                 }
             }
         }

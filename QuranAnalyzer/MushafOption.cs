@@ -13,5 +13,7 @@ public sealed class MushafOption
 
     public bool Chapter_68_Should_Single_Nun { get; set; }
 
+    public bool Enba_u_Should_Contains_one_waw { get; set; }
+
     #endregion
 }

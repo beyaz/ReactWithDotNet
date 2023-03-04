@@ -268,6 +268,20 @@ public class LetterColorizer : ReactPureComponent
                     }
                 }
             }
+
+            if (!MushafOption.Enba_u_Should_Contains_one_waw)
+            {
+                // [enba'u] Tanzil.net counts extra waw char in these verses
+                if (Verse.Id == "6:5")
+                {
+                    return new div { text = "-1" };
+                }
+
+                if (Verse.Id == "26:6")
+                {
+                    return new div { text = "-1" };
+                }
+            }
         }
 
         return null;

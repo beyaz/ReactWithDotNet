@@ -62,6 +62,18 @@ class MushafOptionsView : ReactComponent
                 }
             },
 
+            new SwitchWithLabel
+            {
+                Label         = "6:5 ve 26:6 surelerdeki [enba'u] kelimesindeki Vav harf farklılığında Tanzil.neti tercih et",
+                LabelMaxWidth = 250,
+                Value         = Model.Enba_u_Should_Contains_one_waw,
+                ValueChange = changeEvent =>
+                {
+                    Model.Enba_u_Should_Contains_one_waw = Convert.ToBoolean(changeEvent.target.value);
+                    FireMushafOptionChanged();
+                }
+            },
+
             new a { Text("Mushaf ayarları hakkında detaylı bilgi"), Href(GetPageLink(PageIdOfMushafOptionsDetail)), MarginTop(10) }
         };
     }
