@@ -1,5 +1,8 @@
 ﻿using System.IO;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Serialization;
+using ReactWithDotNet;
 using static QuranAnalyzer.Analyzer;
 
 namespace QuranAnalyzer;
@@ -16,7 +19,7 @@ public static class DataAccess
         {
             var path = Path.GetDirectoryName(typeof(DataAccess).Assembly.Location) + Path.DirectorySeparatorChar;
 
-            var filePath = @"Data.json";
+            var filePath = @"quran-uthmani.xml";
 
             if (File.Exists(path + filePath))
             {
@@ -32,35 +35,42 @@ public static class DataAccess
         }
     }
 
-    static IReadOnlyList<Chapter> ReadAllChaptersFromJsonfile(string jsonFilePath)
+    static IReadOnlyList<Chapter> ReadAllChaptersFromJsonfile(string xmlFilePath)
     {
-        var chapters = JsonSerializer.Deserialize<Surah_[]>(File.ReadAllText(jsonFilePath));
+        XmlSerializer ser = new XmlSerializer(typeof(Quran));
+        Quran         quran;
+        using (XmlReader reader = XmlReader.Create(xmlFilePath))
+        {
+            quran = (Quran)ser.Deserialize(reader);
+        }
+
+        var chapters = quran.Sura;
 
         return chapters.AsListOf(chapter => new Chapter
         {
-            Name   = chapter._name,
-            Index  = int.Parse(chapter._index),
-            Verses = chapter.aya.AsListOf(v => toVerse(chapter, v))
+            Name   = chapter.Name,
+            Index  = int.Parse(chapter.Index),
+            Verses = chapter.Aya.AsListOf(v => toVerse(chapter, v))
         });
 
-        static Verse toVerse(Surah_ chapter, Verse_ v)
+        static Verse toVerse(Sura chapter, Aya v)
         {
-            var textWithBismillah = v._bismillah + " " + v._text;
+            var textWithBismillah = v.Bismillah + " " + v.Text;
 
             var analyzedFullText = AnalyzeText(textWithBismillah);
 
-            var analyzedText = AnalyzeText(v._text);
+            var analyzedText = AnalyzeText(v.Text);
 
             return new Verse
             {
-                Index                     = v._index,
-                IndexAsNumber             = int.Parse(v._index),
-                Bismillah                 = v._bismillah,
-                Text                      = v._text,
+                Index                     = v.Index,
+                IndexAsNumber             = int.Parse(v.Index),
+                Bismillah                 = v.Bismillah,
+                Text                      = v.Text,
                 TextAnalyzed              = analyzedText,
                 TextWordList              = analyzedText.GetWords(),
-                ChapterNumber             = int.Parse(chapter._index),
-                Id                        = $"{chapter._index}:{v._index}",
+                ChapterNumber             = int.Parse(chapter.Index),
+                Id                        = $"{chapter.Index}:{v.Index}",
                 TextWithBismillahWordList = analyzedFullText.GetWords(),
                 TextWithBismillahAnalyzed = analyzedFullText,
                 TextWithBismillah         = textWithBismillah
@@ -68,19 +78,39 @@ public static class DataAccess
         }
     }
 
-    class Surah_
+
+
+
+
+    [XmlRoot(ElementName = "aya")]
+    public class Aya
     {
-        public string _index { get; set; }
-        public string _name { get; set; }
-        public Verse_[] aya { get; set; }
+        [XmlAttribute(AttributeName = "index")]
+        public string Index { get; set; }
+        [XmlAttribute(AttributeName = "text")]
+        public string Text { get; set; }
+        [XmlAttribute(AttributeName = "bismillah")]
+        public string Bismillah { get; set; }
     }
 
-    class Verse_
+    [XmlRoot(ElementName = "sura")]
+    public class Sura
     {
-        public string _bismillah { get; set; }
-        public string _index { get; set; }
-        public string _text { get; set; }
+        [XmlElement(ElementName = "aya")]
+        public List<Aya> Aya { get; set; }
+        [XmlAttribute(AttributeName = "index")]
+        public string Index { get; set; }
+        [XmlAttribute(AttributeName = "name")]
+        public string Name { get; set; }
     }
+
+    [XmlRoot(ElementName = "quran")]
+    public class Quran
+    {
+        [XmlElement(ElementName = "sura")]
+        public List<Sura> Sura { get; set; }
+    }
+
 }
 
 [Serializable]
