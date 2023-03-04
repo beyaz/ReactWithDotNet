@@ -4,91 +4,36 @@ namespace QuranAnalyzer.WebUI;
 
 static class Extensions
 {
-    public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
+    public static string BorderColor = "#dee2e6";
 
-    public static StyleModifier ComponentBorder => Border($"1px solid {BorderColor}");
+    static readonly CultureInfo CultureInfoArabic = new("ar-SA");
 
     public static string BluePrimary => "#1976d2";
 
-    public static string BorderColor = "#dee2e6";
-    
-    public static string FileAtImgFolder(string fileName) => "wwwroot/img/" + fileName;
+    public static StyleModifier ComponentBorder => Border($"1px solid {BorderColor}");
+    public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
 
-    public static (string reading, string trMean)? GetTurkishPronunciationOfArabicWord(string arabicWord)
-    {
-        if (arabicWord == "ايام")
-        {
-            return ("eyyam", "günler");
-        }
-        if (arabicWord == "يومين")
-        {
-            return ("yevmeyn", "2 gün");
-        }
-        if (arabicWord == "الايام")
-        {
-            return ("el-eyyam", "günler");
-        }
-        if (arabicWord == "اياما")
-        {
-            return ("eyyamen", "günler");
-        }
-        if (arabicWord == "واياما")
-        {
-            return ("ve eyyamen", "günler");
-        }
-        if (arabicWord == "بايىم")
-        {
-            return ("bi-eyyam", "günler");
-        }
-        
-        return null;
-    }
-
-    
-   
+    public static int AsNumber(this bool value) =>
+        value ? 1 : 0;
 
     public static string AsText(this IReadOnlyList<LetterInfo> letters)
     {
         return string.Join(string.Empty, letters);
     }
 
+    public static bool EqualsArabicIgnoreCase(this string a, string b)
+    {
+        return string.Compare(a, b, ignoreCase: true, CultureInfoArabic) == 0;
+    }
+
+    public static string FileAtImgFolder(string fileName) => "wwwroot/img/" + fileName;
+
     public static string GetLetterCountingScript(string chapterFilter, params string[] arabicLetters)
     {
         return chapterFilter + "~" + string.Join(string.Empty, arabicLetters);
     }
 
-    public static string GetPageLink(string pageId) =>  $"/?{QueryKey.Page}=" + pageId;
-
-   
-    
-    
-    public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
-
-    public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
-
-    public static void MainContentDivScrollChangedOverZero(this Client client, double mainDivScrollY)
-    {
-        client.DispatchEvent(nameof(MainContentDivScrollChangedOverZero));
-    }
-
-   
-
-   
-
-   
-
-    public static void OnMainContentDivScrollChangedOverZero(this Client client, Action<double> handlerAction)
-    {
-        client.ListenEvent(MainContentDivScrollChangedOverZero, handlerAction);
-    }
-
-
-    static readonly CultureInfo CultureInfoArabic = new("ar-SA");
-    
-    public static bool EqualsArabicIgnoreCase(this string a, string b)
-    {
-        return string.Compare(a, b, ignoreCase: true, CultureInfoArabic) == 0;
-    }
+    public static string GetPageLink(string pageId) => $"/?{QueryKey.Page}=" + pageId;
 
     public static string GetTurkishPronunciationOfArabicLetter(string arabicLetter)
     {
@@ -124,8 +69,52 @@ static class Extensions
         return arabicLetter;
     }
 
-   
-    public static int AsNumber(this bool value) =>
-        value ? 1 : 0;
-}
+    public static (string reading, string trMean)? GetTurkishPronunciationOfArabicWord(string arabicWord)
+    {
+        if (arabicWord == "ايام")
+        {
+            return ("eyyam", "günler");
+        }
 
+        if (arabicWord == "يومين")
+        {
+            return ("yevmeyn", "2 gün");
+        }
+
+        if (arabicWord == "الايام")
+        {
+            return ("el-eyyam", "günler");
+        }
+
+        if (arabicWord == "اياما")
+        {
+            return ("eyyamen", "günler");
+        }
+
+        if (arabicWord == "واياما")
+        {
+            return ("ve eyyamen", "günler");
+        }
+
+        if (arabicWord == "بايىم")
+        {
+            return ("bi-eyyam", "günler");
+        }
+
+        return null;
+    }
+
+    public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
+
+    public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
+
+    public static void MainContentDivScrollChangedOverZero(this Client client, double mainDivScrollY)
+    {
+        client.DispatchEvent(nameof(MainContentDivScrollChangedOverZero));
+    }
+
+    public static void OnMainContentDivScrollChangedOverZero(this Client client, Action<double> handlerAction)
+    {
+        client.ListenEvent(MainContentDivScrollChangedOverZero, handlerAction);
+    }
+}
