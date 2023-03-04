@@ -33,24 +33,6 @@ public static class DataAccess
         }
     }
 
-    static IReadOnlyList<Sura> ReadChaptersFromXmlFile(string xmlFilePath)
-    {
-
-        Quran quran = null;
-        
-        using (XmlReader reader = XmlReader.Create(xmlFilePath))
-        {
-            quran = (Quran)new XmlSerializer(typeof(Quran)).Deserialize(reader);
-        }
-
-        if (quran is null)
-        {
-            throw new ArgumentException($"Xml file not read. @xmlFilePath: {xmlFilePath}");
-        }
-
-        return quran.SuraList;
-    }
-
     static IReadOnlyList<Chapter> ReadAllChaptersFromJsonfile(string xmlFilePath)
     {
         var chapters = ReadChaptersFromXmlFile(xmlFilePath);
@@ -87,30 +69,34 @@ public static class DataAccess
         }
     }
 
+    static IReadOnlyList<Sura> ReadChaptersFromXmlFile(string xmlFilePath)
+    {
+        Quran quran = null;
 
+        using (var reader = XmlReader.Create(xmlFilePath))
+        {
+            quran = (Quran)new XmlSerializer(typeof(Quran)).Deserialize(reader);
+        }
 
+        if (quran is null)
+        {
+            throw new ArgumentException($"Xml file not read. @xmlFilePath: {xmlFilePath}");
+        }
 
+        return quran.SuraList;
+    }
 
     [XmlRoot(ElementName = "aya")]
     public class Aya
     {
-        [XmlAttribute(AttributeName = "index")]
-        public string Index { get; set; }
-        [XmlAttribute(AttributeName = "text")]
-        public string Text { get; set; }
         [XmlAttribute(AttributeName = "bismillah")]
         public string Bismillah { get; set; }
-    }
 
-    [XmlRoot(ElementName = "sura")]
-    public class Sura
-    {
-        [XmlElement(ElementName = "aya")]
-        public List<Aya> AyaList { get; set; }
         [XmlAttribute(AttributeName = "index")]
         public string Index { get; set; }
-        [XmlAttribute(AttributeName = "name")]
-        public string Name { get; set; }
+
+        [XmlAttribute(AttributeName = "text")]
+        public string Text { get; set; }
     }
 
     [XmlRoot(ElementName = "quran")]
@@ -120,6 +106,18 @@ public static class DataAccess
         public List<Sura> SuraList { get; set; }
     }
 
+    [XmlRoot(ElementName = "sura")]
+    public class Sura
+    {
+        [XmlElement(ElementName = "aya")]
+        public List<Aya> AyaList { get; set; }
+
+        [XmlAttribute(AttributeName = "index")]
+        public string Index { get; set; }
+
+        [XmlAttribute(AttributeName = "name")]
+        public string Name { get; set; }
+    }
 }
 
 [Serializable]
