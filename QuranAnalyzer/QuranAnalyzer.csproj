@@ -15,9 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Data.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="quran-uthmani.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
