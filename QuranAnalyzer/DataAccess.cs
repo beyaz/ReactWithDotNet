@@ -1,8 +1,6 @@
 ﻿using System.IO;
-using System.Text.Json;
 using System.Xml;
 using System.Xml.Serialization;
-using ReactWithDotNet;
 using static QuranAnalyzer.Analyzer;
 
 namespace QuranAnalyzer;
@@ -50,7 +48,7 @@ public static class DataAccess
             throw new ArgumentException($"Xml file not read. @xmlFilePath: {xmlFilePath}");
         }
 
-        return quran.Sura;
+        return quran.SuraList;
     }
 
     static IReadOnlyList<Chapter> ReadAllChaptersFromJsonfile(string xmlFilePath)
@@ -61,7 +59,7 @@ public static class DataAccess
         {
             Name   = chapter.Name,
             Index  = int.Parse(chapter.Index),
-            Verses = chapter.Aya.AsListOf(v => toVerse(chapter, v))
+            Verses = chapter.AyaList.AsListOf(v => toVerse(chapter, v))
         });
 
         static Verse toVerse(Sura chapter, Aya v)
@@ -108,7 +106,7 @@ public static class DataAccess
     public class Sura
     {
         [XmlElement(ElementName = "aya")]
-        public List<Aya> Aya { get; set; }
+        public List<Aya> AyaList { get; set; }
         [XmlAttribute(AttributeName = "index")]
         public string Index { get; set; }
         [XmlAttribute(AttributeName = "name")]
@@ -119,7 +117,7 @@ public static class DataAccess
     public class Quran
     {
         [XmlElement(ElementName = "sura")]
-        public List<Sura> Sura { get; set; }
+        public List<Sura> SuraList { get; set; }
     }
 
 }
