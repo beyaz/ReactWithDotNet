@@ -92,38 +92,35 @@ static class Extensions
 
     public static string GetTurkishPronunciationOfArabicLetter(string arabicLetter)
     {
-        switch (arabicLetter)
-        {
-            case ArabicLetter.Alif: return ArabicLetterTurkishPronunciation.Alif;
-            case ArabicLetter.Baa: return ArabicLetterTurkishPronunciation.Baa;
-            case ArabicLetter.Taa: return ArabicLetterTurkishPronunciation.Taa;
-            case ArabicLetter.Thaa: return ArabicLetterTurkishPronunciation.Thaa;
-            case ArabicLetter.Jiim: return ArabicLetterTurkishPronunciation.Jiim;
-            case ArabicLetter.Haa: return ArabicLetterTurkishPronunciation.Haa;
-            case ArabicLetter.Khaa: return ArabicLetterTurkishPronunciation.Khaa;
-            case ArabicLetter.Daal: return ArabicLetterTurkishPronunciation.Daal;
-            case ArabicLetter.Dhaal: return ArabicLetterTurkishPronunciation.Dhaal;
-            case ArabicLetter.Raa: return ArabicLetterTurkishPronunciation.Raa;
-            case ArabicLetter.Zay: return ArabicLetterTurkishPronunciation.Zay;
-            case ArabicLetter.Siin: return ArabicLetterTurkishPronunciation.Siin;
-            case ArabicLetter.Shiin: return ArabicLetterTurkishPronunciation.Shiin;
-            case ArabicLetter.Saad: return ArabicLetterTurkishPronunciation.Saad;
-            case ArabicLetter.Daad: return ArabicLetterTurkishPronunciation.Daad;
-            case ArabicLetter.Taa_: return ArabicLetterTurkishPronunciation.Taa_;
-            case ArabicLetter.Zaa: return ArabicLetterTurkishPronunciation.Zaa;
-            case ArabicLetter.Ayn: return ArabicLetterTurkishPronunciation.Ayn;
-            case ArabicLetter.Ghayn: return ArabicLetterTurkishPronunciation.Ghayn;
-            case ArabicLetter.Faa: return ArabicLetterTurkishPronunciation.Faa;
-            case ArabicLetter.Qaaf: return ArabicLetterTurkishPronunciation.Qaaf;
-            case ArabicLetter.Kaaf: return ArabicLetterTurkishPronunciation.Kaaf;
-            case ArabicLetter.Laam: return ArabicLetterTurkishPronunciation.Laam;
-            case ArabicLetter.Miim: return ArabicLetterTurkishPronunciation.Miim;
-            case ArabicLetter.Nun: return ArabicLetterTurkishPronunciation.Nun;
-            case ArabicLetter.Haa_: return ArabicLetterTurkishPronunciation.Haa_;
-            case ArabicLetter.Waaw: return ArabicLetterTurkishPronunciation.Waaw;
-            case ArabicLetter.Yaa: return ArabicLetterTurkishPronunciation.Yaa;
-        }
-        
+        if (ArabicLetter.Alif.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Alif;
+        if (ArabicLetter.Baa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Baa;
+        if (ArabicLetter.Taa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Taa;
+        if (ArabicLetter.Thaa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Thaa;
+        if (ArabicLetter.Jiim.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Jiim;
+        if (ArabicLetter.Haa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Haa;
+        if (ArabicLetter.Khaa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Khaa;
+        if (ArabicLetter.Daal.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Daal;
+        if (ArabicLetter.Dhaal.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Dhaal;
+        if (ArabicLetter.Raa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Raa;
+        if (ArabicLetter.Zay.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Zay;
+        if (ArabicLetter.Siin.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Siin;
+        if (ArabicLetter.Shiin.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Shiin;
+        if (ArabicLetter.Saad.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Saad;
+        if (ArabicLetter.Daad.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Daad;
+        if (ArabicLetter.Taa_.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Taa_;
+        if (ArabicLetter.Zaa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Zaa;
+        if (ArabicLetter.Ayn.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Ayn;
+        if (ArabicLetter.Ghayn.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Ghayn;
+        if (ArabicLetter.Faa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Faa;
+        if (ArabicLetter.Qaaf.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Qaaf;
+        if (ArabicLetter.Kaaf.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Kaaf;
+        if (ArabicLetter.Laam.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Laam;
+        if (ArabicLetter.Miim.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Miim;
+        if (ArabicLetter.Nun.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Nun;
+        if (ArabicLetter.Haa_.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Haa_;
+        if (ArabicLetter.Waaw.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Waaw;
+        if (ArabicLetter.Yaa.EqualsArabicIgnoreCase(arabicLetter)) return ArabicLetterTurkishPronunciation.Yaa;
+
         return arabicLetter;
     }
 
