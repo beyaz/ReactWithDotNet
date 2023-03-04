@@ -132,6 +132,20 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                     },
 
                     "11:70 ve 30:21 surelerdeki Lam harf farklılığı şu demek bu ayetlerde tanzil.net Lam harfini bir fazla saymış.",
+                },
+
+                new FlexColumn(Gap(10))
+                {
+                    new SwitchWithLabel
+                    {
+                        Label         = "6:5 ve 26:6 surelerdeki [enba'u] kelimesindeki Vav harf farklılığında Tanzil.neti tercih et",
+                        LabelMaxWidth = 250,
+                        IsDisabled    = true
+                    },
+
+                    "6:5 ve 26:6 numaralı ayetlerdeki [enba'u] kelimesi bazı mushaflarda vav'lı yazılmış bazılarında ise vav hardi olmadan yazılmış. " ,
+                    "Bu vav harfinin başlangıç harfleri ile ilgisi yoktur. ",
+                    "Kuran üzerindeki başka verileri incelerken böyle bir ayara ihtiyacım olduğu için ekledim."
                 }
             },
 
