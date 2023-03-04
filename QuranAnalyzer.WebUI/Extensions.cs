@@ -6,7 +6,7 @@ static class Extensions
 {
     public static string BorderColor = "#dee2e6";
 
-    static readonly CultureInfo CultureInfoArabic = new("ar-SA");
+  
 
     public static string BluePrimary => "#1976d2";
 
@@ -21,11 +21,6 @@ static class Extensions
     public static string AsText(this IReadOnlyList<LetterInfo> letters)
     {
         return string.Join(string.Empty, letters);
-    }
-
-    public static bool EqualsArabicIgnoreCase(this string a, string b)
-    {
-        return string.Compare(a, b, ignoreCase: true, CultureInfoArabic) == 0;
     }
 
     public static string FileAtImgFolder(string fileName) => "wwwroot/img/" + fileName;

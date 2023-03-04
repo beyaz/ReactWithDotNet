@@ -1,4 +1,5 @@
-﻿using static QuranAnalyzer.ArabicLetterIndex;
+﻿using System.Globalization;
+using static QuranAnalyzer.ArabicLetterIndex;
 
 namespace QuranAnalyzer;
 
@@ -10,6 +11,14 @@ public enum MushafId
 
 public static class QuranAnalyzerMixin
 {
+    static readonly CultureInfo CultureInfoArabic = new("ar-SA");
+    
+    public static bool EqualsArabicIgnoreCase(this string a, string b)
+    {
+        return string.Compare(a, b, ignoreCase: true, CultureInfoArabic) == 0;
+    }
+    
+
     public static string GetDifferencesKeyForTanzil(string verseId)
     {
         return verseId + "|" + (int)MushafId.Tanzil;
