@@ -11,16 +11,14 @@ public static class DataAccess
     static DataAccess()
     {
         AllChapters = ReadAllChaptersFromJsonfile(GetFilePath());
-        
-        
 
         static string GetFilePath()
         {
             var path = Path.GetDirectoryName(typeof(DataAccess).Assembly.Location) + Path.DirectorySeparatorChar;
-            
+
             var filePath = @"Data.json";
 
-            if (File.Exists(path+filePath))
+            if (File.Exists(path + filePath))
             {
                 return path + filePath;
             }
@@ -112,6 +110,6 @@ public sealed class Verse
     public IReadOnlyList<LetterInfo> TextWithBismillahAnalyzed { get; init; }
 
     public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWithBismillahWordList { get; init; }
-    
+
     public IReadOnlyList<IReadOnlyList<LetterInfo>> TextWordList { get; set; }
 }
