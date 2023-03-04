@@ -15,5 +15,7 @@ public sealed class MushafOption
 
     public bool Enba_u_Should_Contains_one_waw { get; set; }
 
+    public bool Ya_sahibeyi_Should_Contains_2_ya { get; set; }
+
     #endregion
 }

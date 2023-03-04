@@ -425,6 +425,25 @@ public static class QuranAnalyzerMixin
             }
         }
 
+        if (arabicLetterIndex == Yaa)
+        {
+            // Tanzil.net has a bug here. There mush be extra ye here according to utmaine mushaf
+            if (!option.Ya_sahibeyi_Should_Contains_2_ya)
+            {
+                // [ ya sahibeyi ] - [يَا صَاحِبَيِ]
+                if (verse.Id == "12:39")
+                {
+                    return 4;
+                }
+
+                if (verse.Id == "12:41")
+                {
+                    return 11;
+                }
+            }
+            
+        }
+
         
 
 

@@ -73,7 +73,7 @@ class MushafOptionsView : ReactComponent
                     FireMushafOptionChanged();
                 }
             },
-
+            
             new a { Text("Mushaf ayarları hakkında detaylı bilgi"), Href(GetPageLink(PageIdOfMushafOptionsDetail)), MarginTop(10) }
         };
     }

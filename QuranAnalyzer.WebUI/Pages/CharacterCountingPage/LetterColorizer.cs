@@ -284,6 +284,26 @@ public class LetterColorizer : ReactPureComponent
             }
         }
 
+
+        if (arabicLetterIndex == Yaa)
+        {
+            // Tanzil.net has a bug here. There mush be extra ye here according to utmaine mushaf
+            if (!MushafOption.Ya_sahibeyi_Should_Contains_2_ya)
+            {
+                // [ ya sahibeyi ] - [يَا صَاحِبَيِ]
+                if (Verse.Id == "12:39")
+                {
+                    return new div { text = "+1" };
+                }
+
+                if (Verse.Id == "12:41")
+                {
+                    return new div { text = "+1" };
+                }
+            }
+
+        }
+
         return null;
     }
 }
