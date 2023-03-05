@@ -43,8 +43,17 @@ Bu saydığım isimler sadece Türkiye'de olan resim. Elbette başka ülkelerde 
 
             new p
             {
-                (b)"Not: ", "Bu sitede sadece Reşad Halife tarafından keşfedilen 19 sisteminin ", (b)"en majör noktası", @" olan başlangıç harfleri üzerindeki veriler incelenmiştir. 
-      Dilerseniz bu sitede kullanılan sayım programlarını kullanabilir ve alternatif iddiaları inceleyebilirsiniz."
+                (b)"Not: ", "Bu sitede sadece Reşad Halife tarafından keşfedilen 19 sisteminin ", (b)"en majör noktası", @" olan başlangıç harfleri üzerindeki veriler incelenmiştir.",
+                " Dilerseniz bu sitede kullanılan sayım programlarını kullanabilir ve alternatif iddiaları inceleyebilirsiniz.",
+                " Hatta başka verileri de incelenebilsin diye sonuç kısmı 1230, 505, 7 gibi  rakamların katları olan bir rakam olur ise onu özellikle belirtmeye çalıştım. "
+            },
+
+            new p
+            {
+                (b)"Sonuç olarak: ",
+                "Elbette ileriki yıllarda Kuranda daha başka matematiksel veriler - örüntüler bulunabilir.",
+                " Burada dikkat edilmesi gereken mesele şu olmalı; yeni bulunan örüntünün başlangıç harflerindeki 19 rakamı ile çelişmiyor olmasıdır.",
+                " Ortaya konulan yeni iddia 19 ile ya örtüşüyor dolayısı ile destekleyici olacaktır veya çelişiyor olacaktır."
             }
         };
     }

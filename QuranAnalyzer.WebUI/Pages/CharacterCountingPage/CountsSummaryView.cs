@@ -13,7 +13,7 @@ public class SummaryInfo
 [Serializable]
 class CountsSummaryView : ReactPureComponent
 {
-    static readonly int[] SpecialNumbers = { 19, 1230, 505, 667, 109 };
+    static readonly int[] SpecialNumbers = { 19, 1230, 505, 667, 109, 7 };
     
 static int? TryFindSpecialNumber(int value)
     {
