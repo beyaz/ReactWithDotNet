@@ -8,6 +8,7 @@ public class IsHeMessangerPage : ReactComponent
         {
             new LargeTitle("Reşad Halife peygamberliğini ilan etmiş doğru mu?"),
 
+            // https://onlinehtmleditor.dev/collaboration/
             new div
             {
              innerHTML   = @"
