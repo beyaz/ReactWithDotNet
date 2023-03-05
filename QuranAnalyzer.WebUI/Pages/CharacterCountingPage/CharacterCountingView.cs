@@ -207,8 +207,12 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
                                         new VSpace(30),
                                         new div
                                         {
-                                            dangerouslySetInnerHTML = string.Join(Environment.NewLine, resultVerseList.Select(x => x.ToString()))
+                                            dangerouslySetInnerHTML =new div
+                                            {
+                                                resultVerseList
+                                            }.ToString()
                                         }
+                                        
                                     };
 
                                     return Container(Panel(searchPanel()), Panel(results));
