@@ -47,10 +47,12 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                     Url = GetPageLink(PageId.AdditionalVersesPage)
                 },
 
-                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?" },
+                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?",Url = GetPageLink(PageId.IsHeMessangerPage) },
 
-               
+
                 
+
+
                 new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?" },
 
              

@@ -27,6 +27,7 @@ static class PageId
     public const string CountOfAllahPage = "18";
     public const string AllInitialLettersCombined = "19";
 
+    public const string IsHeMessangerPage = "20";
 
 
 

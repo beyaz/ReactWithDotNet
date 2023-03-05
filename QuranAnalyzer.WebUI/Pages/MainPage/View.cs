@@ -192,7 +192,11 @@ class View : ReactComponent<MainViewModel>
             {
                 return new WhereIsTheProblemPage();
             }
-            
+
+            if (state.PageId == PageId.IsHeMessangerPage)
+            {
+                return new IsHeMessangerPage();
+            }
 
 
             return new MainPageContent();
