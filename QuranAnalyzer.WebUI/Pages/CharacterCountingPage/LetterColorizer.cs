@@ -282,6 +282,14 @@ public class LetterColorizer : ReactPureComponent
                     return new div { text = "-1" };
                 }
             }
+
+            if (!MushafOption._75_13_yunebbeu_Should_Contains_1_waw)
+            {
+                if (Verse.Id == "75:13")
+                {
+                    return new div { text = "-1" };
+                }
+            }
         }
 
 

@@ -73,7 +73,19 @@ class MushafOptionsView : ReactComponent
                     FireMushafOptionChanged();
                 }
             },
-            
+
+              new SwitchWithLabel
+              {
+                  Label         = "75:13 nolu ayetteki [yunebbeu](يُنَبَّؤُ) kelimesindeki 'vav' harf farklılığında vav harfi olan versiyonu seç.",
+                  LabelMaxWidth = 250,
+                  Value         = Model._75_13_yunebbeu_Should_Contains_1_waw,
+                  ValueChange = changeEvent =>
+                  {
+                      Model._75_13_yunebbeu_Should_Contains_1_waw = Convert.ToBoolean(changeEvent.target.value);
+                      FireMushafOptionChanged();
+                  }
+              },
+
             new a { Text("Mushaf ayarları hakkında detaylı bilgi"), Href(GetPageLink(PageIdOfMushafOptionsDetail)), MarginTop(10) }
         };
     }

@@ -423,6 +423,14 @@ public static class QuranAnalyzerMixin
                     return 3;
                 }
             }
+
+            if (!option._75_13_yunebbeu_Should_Contains_1_waw)
+            {
+                if (verse.Id == "75:13")
+                {
+                    return 2;
+                }
+            }
         }
 
         if (arabicLetterIndex == Yaa)
