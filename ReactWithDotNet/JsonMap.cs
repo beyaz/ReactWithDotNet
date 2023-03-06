@@ -10,8 +10,8 @@ sealed class JsonMap : IReadOnlyJsonMap
 {
     int count;
 
-    Node head;
-    Node tail;
+    internal Node head;
+    internal Node tail;
 
     public int Count => count;
 
@@ -49,7 +49,7 @@ sealed class JsonMap : IReadOnlyJsonMap
         }
     }
 
-    class Node
+    internal class Node
     {
         public string key;
         public Node next;

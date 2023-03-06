@@ -6,16 +6,17 @@ partial class label
     public string htmlFor { get; set; }
 }
 
-public sealed class nbsp : HtmlElement
+public sealed class Nbsp : HtmlElement
 {
-    internal nbsp()
+    internal Nbsp()
     {
         
     }
     
     [React]
-    public int length { get; set; }
+    public int? length { get; set; }
 }
+
 partial class Mixin
 {
     /// <summary>
@@ -23,9 +24,9 @@ partial class Mixin
     /// <br/>
     /// &amp;nbsp;
     /// </summary>
-    public static nbsp nbsp()
+    public static Nbsp nbsp()
     {
-        return new nbsp();
+        return new Nbsp();
     }
 
     /// <summary>
@@ -33,8 +34,8 @@ partial class Mixin
     /// <br/>
     /// &amp;nbsp;
     /// </summary>
-    public static nbsp nbsp(int length)
+    public static Nbsp nbsp(int length)
     {
-        return new nbsp { length = length };
+        return new Nbsp { length = length };
     }
 }

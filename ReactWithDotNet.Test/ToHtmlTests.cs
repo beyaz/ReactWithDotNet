@@ -25,6 +25,21 @@ public class ToHtmlTests
     }
 
     [TestMethod]
+    public void _0_0_()
+    {
+        var el = new div
+        {
+            "Aa",nbsp(),nbsp,nbsp(2),"bC"
+        };
+
+        var expectedHtml = @"
+<div>Aa&nbsp;&nbsp;&nbsp;&nbsp;bC</div>
+";
+
+        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
+    }
+
+    [TestMethod]
     public void _1_()
     {
         var el = new div

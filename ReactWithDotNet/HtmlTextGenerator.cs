@@ -266,6 +266,17 @@ static class HtmlTextGenerator
 
                 if (child is JsonMap childAsJsonMap)
                 {
+                    if (childAsJsonMap.head is { key: "$tag", value: "nbsp" })
+                    {
+                        if (childAsJsonMap.tail is { key: nameof(Nbsp.length) })
+                        {
+                            sb.Append(string.Join(string.Empty, Enumerable.Range(0, (int)childAsJsonMap.tail.value).Select(_ => "&nbsp;")));
+                            continue;
+                        }
+                        sb.Append("&nbsp;");
+                        continue;
+                    }
+                    
                     needNewLine = true;
                     sb.AppendLine();
                     Append(context, indent + 2, childAsJsonMap);
