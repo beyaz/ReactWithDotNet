@@ -781,13 +781,23 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
     if (!constructorFunction)
     {
         throw CreateNewDeveloperError('ReactNode is not recognized');
-    }
+    }    
     
     if (/* is component */constructorFunction.indexOf('.') > 0)
     {
         Before3rdPartyComponentAccess(constructorFunction);
 
         constructorFunction = GetExternalJsObject(constructorFunction);
+    }
+
+    if (constructorFunction === 'nbsp')
+    {
+        if (jsonNode && jsonNode.length)
+        {
+            return Array(jsonNode.length).fill('\xA0').join('');
+        }
+
+        return '\xA0';
     }
 
     // calculate props
