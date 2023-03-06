@@ -1,6 +1,6 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using HtmlAgilityPack;
-using Newtonsoft.Json;
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.react_free_scrollbar;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
@@ -175,10 +175,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             }
         }
 
-        if (attributeName == "style")
+        if (attributeName == "style" && !string.IsNullOrWhiteSpace(htmlAttribute.Value))
         {
-            var map = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(Style.ParseCss(htmlAttribute.Value), new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
-            if (map?.Count > 0)
+
+            var map = Style.ParseCss(htmlAttribute.Value).ToDictionary();
+            if (map.Count > 0)
             {
                 // as one line
                 if (map.Count <= 3)
@@ -234,6 +235,22 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         return attributeLines;
     }
 
+    static string ConvertToCSharpString(string value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        if (value.IndexOf('"')>=0)
+        {
+            value = value.Replace('"'.ToString(), ('"'.ToString() + '"'.ToString()).ToString());
+        }
+
+        value = value.Replace("&nbsp;", "&#32;");
+
+        return '"' + value + '"';
+    }
     static IReadOnlyList<string> ToCSharpCode(HtmlNode htmlNode)
     {
         var htmlNodeName = htmlNode.OriginalName;
@@ -249,11 +266,25 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 return Enumerable.Empty<string>().ToList();
             }
 
-            return new List<string> { '"' + htmlNode.InnerText + '"' };
+            if (htmlNode.InnerText == "&nbsp;")
+            {
+                return new List<string> { "nbsp" };
+            }
+            return new List<string> { ConvertToCSharpString(htmlNode.InnerText) };
+        }
+
+        if (htmlNodeName == "br")
+        {
+            return new List<string> { "br" };
         }
 
         if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
         {
+            if (htmlNode.Attributes.Count == 0)
+            {
+                return new List<string> { $"({htmlNodeName})"+ ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText)};
+            }
+            
             var attributeLines = ToCSharpCode(htmlNode.Attributes);
 
             attributeLines.Insert(0, $"text = @\"{htmlNode.ChildNodes[0].InnerText}\"");
@@ -339,20 +370,42 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
             if (children.Count > 0)
             {
-                lines.Add("children =");
-                lines.Add("{");
-
-                foreach (var child in children)
+                var openChildren = attributes.Count > 0;
+                
+                if (openChildren)
                 {
-                    lines.AddRange(child);
-
-                    lines[^1] += ",";
+                    lines.Add("children =");
+                    lines.Add("{");
                 }
 
-                // remove ,
-                lines[^1] = lines[^1].Remove(lines[^1].Length - 1);
+                if (htmlNode.InnerText.Contains('\n'))
+                {
+                    foreach (var child in children)
+                    {
+                        lines.AddRange(child);
 
-                lines.Add("}");
+                        lines[^1] += ",";
+                    }
+
+                    // remove ,
+                    lines[^1] = lines[^1].Remove(lines[^1].Length - 1);
+                }
+                else
+                {
+                    lines.Add(children.Aggregate(new List<string>(), (list, child) => { list.Add(string.Join(", ", child));
+                                                     return list;
+                                                 },list=> string.Join(", ", list)));
+                    
+                }
+                
+
+               
+
+                if (openChildren)
+                {
+                    lines.Add("}");
+                }
+                
             }
 
             if (lines[^1].EndsWith(",", StringComparison.OrdinalIgnoreCase))
