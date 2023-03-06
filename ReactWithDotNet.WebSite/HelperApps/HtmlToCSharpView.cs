@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using HtmlAgilityPack;
 using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.react_free_scrollbar;
@@ -13,7 +12,6 @@ class HtmlToCSharpViewModel
     public string HtmlText { get; set; }
     public string StatusMessage { get; set; }
 }
-
 
 class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 {
@@ -31,8 +29,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         var htmlEditor = new CodeMirror
         {
             extensions = { "html", "githubLight" },
-            onChange = OnHtmlValueChanged,
-            value = state.HtmlText,
+            onChange   = OnHtmlValueChanged,
+            value      = state.HtmlText,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -53,7 +51,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         var csharpEditor = new CodeMirror
         {
             extensions = { "java", "githubLight" },
-            value = state.CSharpCode,
+            value      = state.CSharpCode,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -73,8 +71,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         var statusMessageEditor = new Message
         {
             severity = "success",
-            text = state.StatusMessage,
-            style = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
+            text     = state.StatusMessage,
+            style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
 
         return new FlexColumn
@@ -84,20 +82,19 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
             PrimeReactCssLibs,
 
-
             new div(FontSize23, Padding(10), TextAlignCenter)
             {
                 "Html to ReactWithDotNet",
                 (small)" ( paste any html text to left panel )"
             },
-            new FlexRow(WidthHeightMaximized,Height(500),Border("1px solid red"))
+            new FlexRow(WidthHeightMaximized, Height(500), Border("1px solid red"))
             {
                 new FreeScrollBar
                 {
                     style =
                     {
                         Height(500),
-                       WidthMaximized
+                        WidthMaximized
                     },
                     children = { htmlEditor }
                 },
@@ -109,13 +106,35 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                         WidthMaximized
                     },
                     children = { csharpEditor }
-                        
-                    
                 }
             },
 
             statusMessageEditor
         };
+    }
+
+    static string ConvertToCSharpString(string value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        if (value.IndexOf('"') >= 0)
+        {
+            value = value.Replace('"'.ToString(), '"' + string.Empty + '"');
+        }
+
+        value = value.Replace("&nbsp;", "&#32;");
+
+        value = '"' + value + '"';
+
+        if (value.Contains('\n'))
+        {
+            value = '@' + value;
+        }
+
+        return value;
     }
 
     static string HtmlToCSharp(string htmlRootNode)
@@ -177,7 +196,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         if (attributeName == "style" && !string.IsNullOrWhiteSpace(htmlAttribute.Value))
         {
-
             var map = Style.ParseCss(htmlAttribute.Value).ToDictionary();
             if (map.Count > 0)
             {
@@ -235,22 +253,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         return attributeLines;
     }
 
-    static string ConvertToCSharpString(string value)
-    {
-        if (value == null)
-        {
-            return null;
-        }
-
-        if (value.IndexOf('"')>=0)
-        {
-            value = value.Replace('"'.ToString(), ('"'.ToString() + '"'.ToString()).ToString());
-        }
-
-        value = value.Replace("&nbsp;", "&#32;");
-
-        return '"' + value + '"';
-    }
     static IReadOnlyList<string> ToCSharpCode(HtmlNode htmlNode)
     {
         var htmlNodeName = htmlNode.OriginalName;
@@ -270,6 +272,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 return new List<string> { "nbsp" };
             }
+
             return new List<string> { ConvertToCSharpString(htmlNode.InnerText) };
         }
 
@@ -282,9 +285,9 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             if (htmlNode.Attributes.Count == 0)
             {
-                return new List<string> { $"({htmlNodeName})"+ ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText)};
+                return new List<string> { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
             }
-            
+
             var attributeLines = ToCSharpCode(htmlNode.Attributes);
 
             attributeLines.Insert(0, $"text = @\"{htmlNode.ChildNodes[0].InnerText}\"");
@@ -371,7 +374,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             if (children.Count > 0)
             {
                 var openChildren = attributes.Count > 0;
-                
+
                 if (openChildren)
                 {
                     lines.Add("children =");
@@ -392,20 +395,17 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 }
                 else
                 {
-                    lines.Add(children.Aggregate(new List<string>(), (list, child) => { list.Add(string.Join(", ", child));
-                                                     return list;
-                                                 },list=> string.Join(", ", list)));
-                    
+                    lines.Add(children.Aggregate(new List<string>(), (list, child) =>
+                    {
+                        list.Add(string.Join(", ", child));
+                        return list;
+                    }, list => string.Join(", ", list)));
                 }
-                
-
-               
 
                 if (openChildren)
                 {
                     lines.Add("}");
                 }
-                
             }
 
             if (lines[^1].EndsWith(",", StringComparison.OrdinalIgnoreCase))
