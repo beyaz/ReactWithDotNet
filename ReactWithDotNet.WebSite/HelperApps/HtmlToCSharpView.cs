@@ -125,7 +125,10 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             value = value.Replace('"'.ToString(), '"' + string.Empty + '"');
         }
 
-        value = value.Replace("&nbsp;", "&#32;");
+        if (value.Contains("&nbsp;"))
+        {
+            return string.Join(", nbsp, ", value.Split(new[] { "&nbsp;" }, StringSplitOptions.RemoveEmptyEntries).Select(ConvertToCSharpString));
+        }
 
         value = '"' + value + '"';
 
