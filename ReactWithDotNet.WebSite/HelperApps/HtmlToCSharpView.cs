@@ -290,7 +290,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
             var attributeLines = ToCSharpCode(htmlNode.Attributes);
 
-            attributeLines.Insert(0, $"text = @\"{htmlNode.ChildNodes[0].InnerText}\"");
+            attributeLines.Insert(0, $"text = {ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText)}");
 
             // one line
             if (attributeLines.Count < 3)
