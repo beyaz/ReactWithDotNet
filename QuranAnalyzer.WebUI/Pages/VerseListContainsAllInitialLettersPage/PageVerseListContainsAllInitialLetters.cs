@@ -42,7 +42,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
             }),
             new VSpace(10),
             "Eğer 693 sayısını görüyor iseniz hesaplamalarımız doğru gidiyor demektir. ",
-            "İlk bakışta bu rakam pek bir şey ifade etmiyor gibi gelebilir ama şimdlik aklınızın bir köşesinde tutun.",
+            "İlk bakışta bu rakam pek bir şey ifade etmiyor gibi gelebilir ama şimdilik aklınızın bir köşesinde tutun.",
 
             seperation,
 
@@ -58,7 +58,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
 
             "Eğer 114 adet buldu iseniz işte burada ilginçlik başlıyor. ",
             "114 Kuran'daki toplam sure sayısıdır. ",
-            "Bulunan ilk ayet ise 2. sureinin 19. ayeti olması gibi  başka detaylar da var ama detayda boğulmamak için derine girmiyorum.",
+            "Bulunan ilk ayet ise 2. surenin 19. ayeti olması gibi  başka detaylar da var ama detayda boğulmamak için derine girmiyorum.",
 
             seperation,
 
@@ -80,19 +80,19 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
 
             new VSpace(40),
             (b)"Sonuç: ",
-            "Açıkçası herhangi bir kitapda buna benzer bir hesaplama ile önümüze böyle rakamlar koyulsa haklı olarak pek dikkate almayabilirdik. ",
-            "Sırf işine gelen rakamı bulmak için zorlamışsın diyebilirdirdik.",
+            "Açıkçası herhangi bir kitapta buna benzer bir hesaplama ile önümüze böyle rakamlar koyulsa haklı olarak pek dikkate almayabilirdik. ",
+            "Sırf işine gelen rakamı bulmak için zorlamışsın diyebilirdik.",
             new br(),
-            "Elbetteki eleştirmek isteyen her türlü bir yol bulabilir. Mesela niye rakamları çarpmak yerine topladın? ",
+            "Elbette ki eleştirmek isteyen her türlü bir yol bulabilir. Mesela niye rakamları çarpmak yerine topladın? ",
             "Neden harfin sayısal karşılığını aldın da sırasını almadın? ",
             "Benimde önüme bir kitap ver bende bazı şeyleri çarpar böler sana istediğin rakamı veriririm. Buna benzer şeyler söyleyebilirdik. ",
             "Yahut tam tersi", new br(),
             "Evet burada bir gariplik var  toplamda 114 sure olması ve bu başlangıç harflerini içeren toplamda 114 tane ayet olması vesaire vesaire...",
             new br(),
             new br(),
-            "Burada önemli olan olay şu: Eğer bir kitapda buna benzer 1-2 tane değil, ",
+            "Burada önemli olan olay şu: Eğer bir kitapta buna benzer 1-2 tane değil, ",
             "düzinelerce ilginç ve hep aynı rakama yani 19 rakamına işaret eden verilerin olmasıdır. ",
-            "Kaldıki bu başlangıç harflerinden hemen sonraki cümlelerin şöyle başladığını hatırlayın.",
+            "Üstelik bu başlangıç harflerinden hemen sonraki cümlelerin şöyle başladığını hatırlayın.",
             (b)"'Bu harfler kitabın kanıtlarıdır...'",
             new br(),
             new br(),

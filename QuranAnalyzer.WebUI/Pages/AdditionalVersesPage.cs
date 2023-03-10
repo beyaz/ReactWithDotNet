@@ -13,13 +13,13 @@ public class AdditionalVersesPage : ReactComponent
                 "19 sisteminin olması için Kurandan iki ayet atılması gerekiyormuş. Yoksa sistem çöküyormuş. ",
                 new br(),
                 "Konuyu pek araştırmayan insanlar üzerinde etki bırakan bir söz. " ,
-                "Çünki insanlar bu sözü duyunca otomatikmen şöyle düşünürler, ",
-                (b)" isterse dünyanın en süper bilgisi olsun bana ayeti dolayısıyla Kuranı reddettirecek bir şey ise benim için mesele başlamadan bitmiş demektir. Peşinen red ederim.",
+                "Çünkü insanlar bu sözü duyunca otomatikman şöyle düşünürler, ",
+                (b)" isterse dünyanın en süper bilgisi olsun bana ayeti dolayısıyla Kuranı reddettirecek bir şey ise benim için mesele başlamadan bitmiş demektir. Peşinen reddederim.",
                 new br(),
                 "Peki nedir bu meselenin aslı?"
             },
             new p{
-                "Önce net bir şekilde cvabı verelim.",
+                "Önce net bir şekilde cevabı verelim.",
                 (b)"19 sisteminin en majör bileşeni başlangıç harfleri üzerine olan sistemdir. " ,
                 "Bu en majör bileşen olan başlangıç harflerinin, Tevbe suresinin toplamda 127 ayet mi yoksa 129 ayet mi olması ile hiç bir ilgisi yoktur.",
                 new br(),
@@ -29,19 +29,19 @@ public class AdditionalVersesPage : ReactComponent
             new p
             {
                 "Önce meselenin tarihi yönünü ele alalım. ",
-                "Rivayetlerde şöyle nakledilir, Ebubekir zamanında Kuran mushaf haline getirilmesi için 5 kişilik bir ekip kurulur.",
-                "İnsanlar elinde ne kadar deriye-kağıda yazılmış kuran var ise ortaya koyarlar. Her bir ayet için en az 3 kişinin şahitliği şart koşulur.",
-                "Süveybe adında bir sahabe de, tevbe suresinin 128. ve 129. ayetlerini söyler. " ,
-                "Fakat onun dışında hiç kimse bu iki sözün ayet olduğuna şahit olmaz. " ,
-                "Süveybe ise taa mekke döneminde bir kişinin peygamberin deve satın alması konusunda problem yaşadığını görür ve peygamber ile ticaret yapan kişinin ilk anlaşması esnasında olmadığı halde  peygamberin doğru söylediğine şahitlik eder." ,
-                "Hatta olaydan sonra peygamberimize gelerek şunu söyler ben senin Allah'ın resulu olduğuna şahitlik ediyorum buradaki şu ufak ticaretine nedne şahit olmayayım der." +
-                "Bunun üzerine de peygamberimiz 'Süveybenin şahitliği iki kişinin şahitliği gibidir' der",
-                "Hasılı bu sözü de delil getirerek Süveybenin şahitliği iki kişi gibi sayılır ve bu iki söz Kurana eklenir.",
-                "Üstelik Tevbe suresindeki tüm ayetler Medine dönemine aitken sadece bu sonraki iki ayet mekke dönemine aittir.",
+                " Rivayetlerde şöyle nakledilir, Ebubekir zamanında Kuran mushaf haline getirilmesi için 5 kişilik bir ekip kurulur.",
+                " İnsanlar elinde ne kadar deriye-kağıda yazılmış kuran var ise ortaya koyarlar. Her bir ayet için en az 3 kişinin şahitliği şart koşulur.",
+                " Süveybe adında bir sahabe de, tevbe suresinin 128. ve 129. ayetlerini söyler." ,
+                " Fakat onun dışında hiç kimse bu iki sözün ayet olduğuna şahit olmaz." ,
+                " Süveybe ise taa mekke döneminde bir kişinin peygamberin deve satın alması konusunda problem yaşadığını görür ve peygamber ile ticaret yapan kişinin ilk anlaşması esnasında olmadığı halde  peygamberin doğru söylediğine şahitlik eder." ,
+                " Hatta olaydan sonra peygamberimize gelerek şunu söyler ben senin Allah'ın resulü olduğuna şahitlik ediyorum buradaki şu ufak ticaretine neden şahit olmayayım der." ,
+                " Bunun üzerine de peygamberimiz 'Süveybenin şahitliği iki kişinin şahitliği gibidir' der",
+                " Hasılı bu sözü de delil getirerek Süveybenin şahitliği iki kişi gibi sayılır ve bu iki söz Kurana eklenir.",
+                " Üstelik Tevbe suresindeki tüm ayetler Medine dönemine aitken sadece bu sonraki iki ayet Mekke dönemine aittir.",
                 
                 new br(),
                 new br(),
-                "Tarihi rivayet olarak durum böyle. Elbetteki bu sözü şöyle yorumlayanlar da var. " ,
+                "Tarihi rivayet olarak durum böyle. Elbette ki bu sözü şöyle yorumlayanlar da var. " ,
                 "Aslında oradaki herkes bu iki sözün Kurandan olduğunu biliyordu fakat yazılı olarak ellerinde yoktu.",
                 "Burada rivayet tenkidi-yorumlaması yapmayacağım ben sadece böyle bir rivayeti aktardım.",
                 

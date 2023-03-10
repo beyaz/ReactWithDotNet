@@ -47,7 +47,7 @@ class View : ReactComponent
             new SubTitle("Sonuç"),
             new p
             {
-                "Elbetteki herhangi bir sayının 19'a bölünme ihtimali 19 da 1 dir. " ,
+                "Elbette ki herhangi bir sayının 19'a bölünme ihtimali 19 da 1 dir. " ,
                 "Sayının ne kadar büyük olduğununun bir önemi yoktur.",
                 new br(),
                 "Burada insanı hayrete düşüren olayı bir örnek ile açıklayalım." ,

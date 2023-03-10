@@ -164,8 +164,8 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
             },
             new p
             {
-                "Tanzil.net'den aldığım mushafta 12:39 ve 12:41 nolu ayetlerde bulunan [ya sahibeyi](يَا صَاحِبَيِ) ifadesi orjinal Osman mushafından aktarım yapılırken eksik aktarılmış." ,
-                " Bu sitede Osman mushafındaki orjinal hali baz alınmıştır. Sanırım burada tanzil.net'in bir aktarım hatası var. "
+                "Tanzil.net'den aldığım mushafta 12:39 ve 12:41 nolu ayetlerde bulunan [ya sahibeyi](يَا صَاحِبَيِ) ifadesi orijinal Osman mushafından aktarım yapılırken eksik aktarılmış." ,
+                " Bu sitede Osman mushafındaki orijinal hali baz alınmıştır. Sanırım burada tanzil.net'in bir aktarım hatası var. "
             },
             new p
             {
