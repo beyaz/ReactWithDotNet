@@ -3,7 +3,7 @@ using static QuranAnalyzer.ArabicLetterIndex;
 using static QuranAnalyzer.WebUI.LetterColorPalette;
 using static QuranAnalyzer.QuranAnalyzerMixin;
 
-namespace QuranAnalyzer;
+namespace QuranAnalyzer.WebUI;
 
 public class LetterColorizer : ReactPureComponent
 {
@@ -44,10 +44,10 @@ public class LetterColorizer : ReactPureComponent
                         innerText = letterInfo.MatchedLetter,
                         style =
                         {
-                           FontWeightBold,
-                           BorderRadius(4),
-                           Border("1px dashed rgb(218, 220, 224)"),
-                           Color(GetColor(j))
+                            FontWeightBold,
+                            BorderRadius(4),
+                            Border("1px dashed rgb(218, 220, 224)"),
+                            Color(GetColor(j))
                         }
                     };
 
@@ -137,7 +137,7 @@ public class LetterColorizer : ReactPureComponent
                 DisplayFlex,
                 FlexDirectionColumn,
                 AlignItemsFlexEnd,
-                
+
                 Border("1px dashed rgb(218, 220, 224)"),
                 BorderRadius(4)
             }
@@ -292,7 +292,6 @@ public class LetterColorizer : ReactPureComponent
             }
         }
 
-
         if (arabicLetterIndex == Yaa)
         {
             // Tanzil.net has a bug here. There mush be extra ye here according to utmaine mushaf
@@ -309,7 +308,6 @@ public class LetterColorizer : ReactPureComponent
                     return new div { text = "+1" };
                 }
             }
-
         }
 
         return null;
