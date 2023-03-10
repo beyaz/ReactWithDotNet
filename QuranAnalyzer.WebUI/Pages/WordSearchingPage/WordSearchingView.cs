@@ -108,7 +108,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
             var summaries = new List<SummaryInfo>();
 
-            foreach (var (chapterFilter, searchWord) in searchScript.Lines)
+            foreach (var (searchOption,chapterFilter, searchWord) in searchScript.Lines)
             {
                 var filteredVersesResponse = VerseFilter.GetVerseList(chapterFilter);
                 if (filteredVersesResponse.IsFail)
@@ -120,15 +120,23 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
                 foreach (var verse in filteredVerses)
                 {
-                    var startAndEndPointsOfSameWords = verse.GetStartAndEndPointsOfSameWords(searchWord);
-                    if (startAndEndPointsOfSameWords.Count > 0)
+                    IReadOnlyList<(LetterInfo start, LetterInfo end)> startAndEndPoints = null;
+                    if (searchOption == SearchOptions.Same)
+                    {
+                        startAndEndPoints = verse.GetStartAndEndPointsOfSameWords(searchWord);
+                    }
+                    else if (searchOption == SearchOptions.Contains)
+                    {
+                        startAndEndPoints = verse.GetStartAndEndPointsOfContainsWords(searchWord);
+                    }
+                    if (startAndEndPoints?.Count > 0)
                     {
                         if (!matchMap.ContainsKey(verse.Id))
                         {
                             matchMap.Add(verse.Id, new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startPoints)>());
                         }
 
-                        matchMap[verse.Id].Add((searchWord, startAndEndPointsOfSameWords));
+                        matchMap[verse.Id].Add((searchWord, startAndEndPoints));
 
                         // update summary
                         {
@@ -137,7 +145,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                                 summaries.Add(new SummaryInfo { Name = searchWord.AsText() });
                             }
 
-                            summaries.First(x => x.Name == searchWord.AsText()).Count += startAndEndPointsOfSameWords.Count;
+                            summaries.First(x => x.Name == searchWord.AsText()).Count += startAndEndPoints.Count;
                         }
                     }
                 }
