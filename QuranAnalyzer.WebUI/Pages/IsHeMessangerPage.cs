@@ -10,19 +10,19 @@ public class IsHeMessangerPage : ReactComponent
 
             new p
             {
-                "Bu yazıda farklı farklı konuların sadece satırbaşlarını ele alabildim.", br, 
-                "Lütfen bu yazıdaki hiçbir bilgiyi peşinen doğru kabul etmeyin. ", 
+                "Bu yazıda farklı farklı konuların sadece satırbaşlarını ele alabildim.", br,
+                "Lütfen bu yazıdaki hiçbir bilgiyi peşinen doğru kabul etmeyin. ",
                 "Bu konuları araştırmak ve üzerine derin derin düşünmeniz sizin sorumluluğunuzdadır."
             },
             new p
             {
-                "Öncelikle lafı hiç dolandırmadan cevabını verelim.", br, 
+                "Öncelikle lafı hiç dolandırmadan cevabını verelim.", br,
                 "Reşad Halife hiçbir zaman ", (strong)"peygamberim", " dememiştir.", br,
-                "Net bir şekilde ", (strong)"elçiyim"," demiştir."
+                "Net bir şekilde ", (strong)"elçiyim", " demiştir."
             },
             new p
             {
-                "Arapçada nebi(peygamber) ve resul(elçi) diye iki kelime var. ", br, 
+                "Arapçada nebi(peygamber) ve resul(elçi) diye iki kelime var. ", br,
                 "Bir çok konuda olduğu gibi bu iki kelime üzerinde de tartışmalar yaşanmaktadır.", br,
                 "Burada karşıt fikirler şunlardır. Bir taraf diyor ki son peygamber de son elçi de Muhammed peygamberdir.", br,
                 "Buna delil olarak bazı rivayetleri veriyorlar veya kelimenin köklerine inip biri kitap verilendir öteki haber veren demektir gibi, Nebi kavramı resul kavramını kapsar gibi uzun süren tartışmalar var."
@@ -43,22 +43,22 @@ public class IsHeMessangerPage : ReactComponent
             new p
             {
                 "2. Görüş: Kuranda Muhammed için resul ve peygamber kelimeleri ayrı kullanıldığına göre ve aynı zamanda son nebii dediğine göre demek ki başka resuller(elçiler) de gelebilir.", br,
-                "Gelen elçiler de Kuran son kitap olduğu için yine Kuran üzerine amel edip dinin şirk bulaşan kısımları konusunda yahut onlara atanan görevler konusunda insanlara doğruyu göstermek aldıkları bilgileri aktarmak durumundalar. " ,br,
+                "Gelen elçiler de Kuran son kitap olduğu için yine Kuran üzerine amel edip dinin şirk bulaşan kısımları konusunda yahut onlara atanan görevler konusunda insanlara doğruyu göstermek aldıkları bilgileri aktarmak durumundalar. ", br,
                 "Yahudilere bir çok resul gönderilmiş. Hepsine kitap verilmedi.", br,
-                
+
                 "Hatta Kuranda net bir şekilde şu bilgi yer alır. İnsanlar Yusuf peygamberden sonra başka birinin gönderilmeyeceğini düşünmüşler. ",
-                
-                "Yusuf suresini okursanız bu bilgiyi görebilirsiniz.", br, 
+
+                "Yusuf suresini okursanız bu bilgiyi görebilirsiniz.", br,
                 "Halbuki Yusuf’ dan sonra Musa gibi, İsa gibi peygamberler gönderildi. Hatta Kurana bakarsanız 3:81 numaralı ayette tüm kutsal yazıları doğrulayan bir elçiden bahsediliyor."
             },
             new p
             {
-                "Peki bu iki görüşten hangisi doğru?", br, 
+                "Peki bu iki görüşten hangisi doğru?", br,
                 "Bu soru din ile ilgili bir soru.", br,
                 "Otomatikman şu soruyu sormanız lazım.", br,
                 "Peki ", (strong)"dinin kaynağı nedir?", " Dini sorulara verilen cevapların doğru olup olmadığını neye göre bileceğim?", br,
                 "İşte bu sorunun cevabı da ikiye ayrılıyor.", br,
-                "1- Yalnız Kuran", br, 
+                "1- Yalnız Kuran", br,
                 "2- Kuran + hadis + alimler + bizden önceki nesillerin yorumu"
             },
             new p
@@ -73,11 +73,11 @@ public class IsHeMessangerPage : ReactComponent
             },
             new p
             {
-                "- Reşad Halife'nin doğum tarihi ve öldürülme tarihi net olarak bilinmektedir.",br,
-                "Toplamda bu dünyada 19.798 gün yaşamıştır. 19. Surede 798 adet başlangıç harfi vardır. Sizce de çok ilginç değil mi?",br,
+                "- Reşad Halife'nin doğum tarihi ve öldürülme tarihi net olarak bilinmektedir.", br,
+                "Toplamda bu dünyada 19.798 gün yaşamıştır. 19. Surede 798 adet başlangıç harfi vardır. Sizce de çok ilginç değil mi?", br,
                 "Bunun gibi başka daha bir çok bilgiyi internette kolayca bulabilirsiniz. Ben olayın mantığını anlatmaya çalışacağım.",
             },
-            
+
             new p
             {
                 "Olayları bütüncül anlayabilmek için şimdi sizleri ufak bir zaman yolculuğuna çıkarmak istiyorum."
@@ -86,32 +86,32 @@ public class IsHeMessangerPage : ReactComponent
             new p
             {
                 "Milattan önceki yıllara gidelim. Musa adında biri var. ", br,
-                "Allah ile bizzat sesli konuştuğunu iddia ediyor. Bir an için kendinizi o zamanın toplumunda yaşayan biri olarak düşünün ", 
+                "Allah ile bizzat sesli konuştuğunu iddia ediyor. Bir an için kendinizi o zamanın toplumunda yaşayan biri olarak düşünün ",
                 "ve elinizi vicdanınıza koyun ve cevap verin.",
                 br,
                 "Karşınızda duran herhangi biri Allah ile aracısız bir biçimde konuştuğunu söylese hangimiz ciddiye alırdık?"
             },
             new p
             {
-                "Öyle bir toplum ki neredeyse her şey firavun ve etrafındakiler tarafından yönetiliyor." ,
+                "Öyle bir toplum ki neredeyse her şey firavun ve etrafındakiler tarafından yönetiliyor.",
                 " Haliyle verilen rızıkları sanki firavun sağlıyormuş gibi bir fikre kapılmış olan bir toplumdasınız.",
                 " Ortalık sihirbaz dolu.", br,
-                
-                "Musa adındaki bu adam size kupkuru çöle gidelim diyor." ,
-                " Derken asa yılanları yutuveriyor ortalık karışıyor Musa ile beraber Kızıldeniz’in ortasından geçiyorsunuz." ,
-                " Firavunun ve askerlerinin boğulduğunu bizzat görüyorsunuz." ,
+
+                "Musa adındaki bu adam size kupkuru çöle gidelim diyor.",
+                " Derken asa yılanları yutuveriyor ortalık karışıyor Musa ile beraber Kızıldeniz’in ortasından geçiyorsunuz.",
+                " Firavunun ve askerlerinin boğulduğunu bizzat görüyorsunuz.",
                 " Ardından çölün ortasında bıldırcın eti ile nimetleniyorsunuz."
             },
             new p
             {
-                "Tabii imtihan bitmiyor Musa diyor ki emir geldi şu şehre girin." ,
+                "Tabii imtihan bitmiyor Musa diyor ki emir geldi şu şehre girin.",
                 " Ama ölüm korkusu ağır basıyor ve Tevratda yazılana göre Musa’nın bu emrine sadece ", (strong)"iki kişi", " gönülden uyuyor."
             },
             new p
             {
-                "Aradan yüzyıllar geçiyor. Yahudiler Mesih bekleyişi içindeler." ,
+                "Aradan yüzyıllar geçiyor. Yahudiler Mesih bekleyişi içindeler.",
                 " İlerde ufak insan kalabalığı var. O sırada oradan geçen biri olduğunuzu hayal edin. Çarmıha gerilmiş üç kişi var.",
-                br, 
+                br,
                 "Etraftaki birine yanaşıp soruyorsunuz kim bunlar? suçları ne? cevap şöyle: İkisi hırsız, biri de meczubun biri garibim kendini mesih sanıyor, peygamber sanıyor bak işte şuradaki 10 fakir kişi de onun talebeleri."
             },
             (p)"İşte o kişi İsa peygamberdi.",
@@ -134,9 +134,9 @@ public class IsHeMessangerPage : ReactComponent
             new p
             {
                 "2 bin yıl sonrasına kendi zamanımıza geri geliyoruz.", br,
-                (strong)"Paket bir din", "' i önceki nesillerden devralıyoruz.", br, 
-                "Bu paketin içinde Kuran var, peygambere ait olduğu ileri sürülen sözler – emirler var, kendi milletinize ait bazı adet gelenek görenekler var. " ,
-                "Eski alimlerin yahut mevcut siyasi otoritelerin bakış açılarına göre yorumlanmış bir karışım var. " ,
+                (strong)"Paket bir din", "' i önceki nesillerden devralıyoruz.", br,
+                "Bu paketin içinde Kuran var, peygambere ait olduğu ileri sürülen sözler – emirler var, kendi milletinize ait bazı adet gelenek görenekler var. ",
+                "Eski alimlerin yahut mevcut siyasi otoritelerin bakış açılarına göre yorumlanmış bir karışım var. ",
                 "Mesela Türkiye’deki İslami anlayış ile İran’daki İslami anlayış birbirinden farklıdır."
             },
             "İçinde yaşadığımız zamana iyice odaklanıyoruz.",
@@ -173,7 +173,7 @@ public class IsHeMessangerPage : ReactComponent
             },
             new p
             {
-                "Eğer bir kişi ben elçiyim diyor ise;", br, 
+                "Eğer bir kişi ben elçiyim diyor ise;", br,
                 "1- Ya bu kişi yalancıdır menfaat için bilerek Allah adına yalan söylüyor.", br,
                 "2- Özünde çok iyi biridir ve akli olarak karışmıştır, mental rahatsızlığı vardır, şeytan bir şeyler fısıldamıştır ve kendisinin elçi olduğuna inanmıştır veya etrafındakiler inandırmıştır.", br,
                 "3- Bu kişi gerçekten elçidir."
@@ -185,13 +185,13 @@ public class IsHeMessangerPage : ReactComponent
             },
             new p
             {
-                "Şimdi gelelim Reşad’ın iddiasına;", br, 
+                "Şimdi gelelim Reşad’ın iddiasına;", br,
                 "Zaten 1980 den itibaren elçi olduğunu kendisi de biliyor.", br,
                 "Ama önemli olan insanları bu içinde bulundukları şirklerinden arındırmaktır diye düşünüyor.", br,
                 "Kendisinin de önceki elçiler gibi bir elçi olduğunu söylese insanlar kabul etmekte zorlanabilirler diye düşünüyor. O yüzden elçi olduğunu kimseye söyemiyor.", br,
-                "Elinden geldiğince aldığı mesajları aktarıyor.", br, 
+                "Elinden geldiğince aldığı mesajları aktarıyor.", br,
                 "Kamera karşısına geçiyor doğru namazın nasıl kılınacağı ile ilgili, evrim ile ilgili, video çekiyor, radyo programlarına katılıyor, seminerlere gidiyor.", br,
-                "Kuranın Allah kelamı olduğunu dünyaya ispatlamak için elinden geleni yapıyor.", br, 
+                "Kuranın Allah kelamı olduğunu dünyaya ispatlamak için elinden geleni yapıyor.", br,
                 "1970’li yıllarda Kuranı bilgisayara aktarmak kimin aklına gelir ki!", br,
                 "Üstelik o yıllardaki bilgisayar teknolojisinde Arap alfabesi bile yok. Kim böyle bir iş için 3-4 yılını harcar.", br,
                 "Yıl 1988 olunca artık bunu söylemesi gerektiği ona dikte ediliyor. O da insanlara söylüyor.", br,
@@ -199,7 +199,7 @@ public class IsHeMessangerPage : ReactComponent
             },
             new p
             {
-                br, "Gelelim kanıt kısmına;", br, 
+                br, "Gelelim kanıt kısmına;", br,
                 (strong)"İbn-i Sina", " gibi, ", (strong)"İbn-i Arabi", " gibi, ", (strong)"Gazali ", "gibi, ", (strong)"Bediüzzaman Said Nursi", " gibi bulunduğu zamanların dâhileri olan insanlar gelmiş geçmişler.", br,
                 "19 gibi çok basit bir örüntüyü Kuranda nasıl göremediler?", br,
                 "50. Sure Kaf(ق) harfi ile başlar ve toplamda 45 ayettir.", br,
@@ -219,9 +219,9 @@ public class IsHeMessangerPage : ReactComponent
             new p
             {
                 "Günümüz teknolojisi ile yapılan illüzyon gösterilerinden bahsetmeme gerek yok sanırım.", br,
-                "Önümüze hangi mucize konur ise konsun illüzyon deyip geçebilirdik. " ,
+                "Önümüze hangi mucize konur ise konsun illüzyon deyip geçebilirdik. ",
                 "Suda yürüyenden tutun havada uçana kadar her türlü illüzyon var.", br,
-                "Haliyle Reşad’a verilen bu matematiksel mucize biraz daha anlam kazanıyor. " ,
+                "Haliyle Reşad’a verilen bu matematiksel mucize biraz daha anlam kazanıyor. ",
                 "Tamda matematiğin – bilimin- bilgisayarın patlama yaptığı bir çağda bu tarz bir mucizenin ortaya çıkması oldukça mantıklı.", br,
                 "Kuranda ", (strong)"kanıt(beyyine) kelimesinin 19 kez", " geçtiğini söylememe gerek yok sanırım."
             },
@@ -229,22 +229,22 @@ public class IsHeMessangerPage : ReactComponent
             {
                 "Maalesef günümüzde elinizi sallasanız ben peygamberim, ben elçiyim, ben mehdiyim, ben seçilmiş kişiyim diyene rastlarsınız. Herbirine vakit ayırsanız vaktiniz yetmez.", br,
                 "Tahminim o ki eski devirde de bu böyleydi. Anladığım kadarı ile ", (strong)"En Bilge Olan", "'ın elçilerine - peygamberlerine o zamana uygun mucizeler vermesinin bir hikmeti de bu olabilir.", br,
-                "Sahte elçilerden ayırt etmek için onlara mucizeler-kanıtlar veriyor olabilir.", br, 
+                "Sahte elçilerden ayırt etmek için onlara mucizeler-kanıtlar veriyor olabilir.", br,
                 "Eğer önceki elçilere verilenler gibi görsel bir mucize olsaydı bizler bugün canlı canlı göremezdik.", br,
-                "1400 yıldır o başlangıç harfleri Kuranda vardırlar. Kıyamete kadar da orada olmaya devam edecekler.", br, 
-                "İnsanoğlu ahirette şöyle bir savunma yapamayacak.", br, 
-                "Ey rabbim ben nerden bileyim hangi din doğru?", br, 
+                "1400 yıldır o başlangıç harfleri Kuranda vardırlar. Kıyamete kadar da orada olmaya devam edecekler.", br,
+                "İnsanoğlu ahirette şöyle bir savunma yapamayacak.", br,
+                "Ey rabbim ben nerden bileyim hangi din doğru?", br,
                 "Herkes inanış kendi mahallesinde çok mutlu ve kendi inanıcının en doğru olduğunu savunuyordu. Her din kendi içinde mitolojileri vardı. Musa denizi yardığında ben orda değildim ben nerden bileyim gerçek mi? Uydurma mı?", br,
                 "İşte bu bahane insanların elinden alınmış oldu.", br,
                 "19 Mucizesi Kuranın Allah kelamı olduğunu doğruladı.", br,
                 "Kuran doğrulandığına göre Musa’nın İsa’nın birer peygamber olduğu doğrulanmış oldu.", br,
-                "Sonradan bazı bozulmalara uğramış olan Tevrat ve İncil’in Allah’tan geldiği doğrulanmış oldu.", br, 
+                "Sonradan bazı bozulmalara uğramış olan Tevrat ve İncil’in Allah’tan geldiği doğrulanmış oldu.", br,
                 "İsa’nın ölüyü dirilttiği, Musa’nın Kızıldeniz’i yarmış olduğu ispatlanmış oldu."
             },
             new p
             {
-                (strong)"Eğer Reşad elçilerden biri ise neden bu bilgi Kuran’da açık bir şekilde yazılmadı?", br, 
-                "Sanırım Allah’ın sünneti bu şekilde işliyor.", br, 
+                (strong)"Eğer Reşad elçilerden biri ise neden bu bilgi Kuran’da açık bir şekilde yazılmadı?", br,
+                "Sanırım Allah’ın sünneti bu şekilde işliyor.", br,
                 "Tevrat’a açık bir şekilde İsa’nın adını yazabilirdi ama yazmadı.", br,
                 "İncil’e açık bir şekilde Muhammed adını yazabilirdi ama yazmadı.", br,
                 "Elbette İncil’in ve Tevrat’ın içinde Muhammed peygambere işaretler olabilir. Bu biraz da nasıl yorumladığınıza bağlı. Sonuçta bugünün Hristiyanları İncilde Muhammed için bir işaret görmüyor. Görse zaten Müslüman olurlardı."
@@ -254,29 +254,29 @@ public class IsHeMessangerPage : ReactComponent
             {
                 (strong)"Putlaştırma Hastalığımız.", br,
                 "Sanırım biz insanoğlu olarak problemimiz şu;", br,
-                "Önce peygamberleri – elçileri öldürürüz yahut destek vermeyiz aradan zaman geçinde onları putlaştırırız. " ,
+                "Önce peygamberleri – elçileri öldürürüz yahut destek vermeyiz aradan zaman geçinde onları putlaştırırız. ",
                 "İsa peygamber örneğinde olduğu gibi."
             },
             new p
             {
                 "Muhammed peygamber zamanında insanlar ona destek vermedi. 13 yıl geçmesine rağmen etrafına 300 adam toplayabildi.", br,
-                "Ama bugün ise Muhammed peygamberi öyle yüceltiyoruz ki sanki hep miraçta dolaşan biri olarak görüyoruz. ", 
-                (strong)"Trilyonlarca Galaksiyi Avucunda Tutan", "’ın isminin yanına yazıyoruz.", br, 
-                "Hatta bu sadece din adamları ile sınırlı da değil. ", 
-                (strong)"Siyasi liderleri, tarikat-cemaat liderlerini, aşiretimizi, vatanımızı, bazen kendimizi bazen de evladımızı putlaştırıyoruz." ,
+                "Ama bugün ise Muhammed peygamberi öyle yüceltiyoruz ki sanki hep miraçta dolaşan biri olarak görüyoruz. ",
+                (strong)"Trilyonlarca Galaksiyi Avucunda Tutan", "’ın isminin yanına yazıyoruz.", br,
+                "Hatta bu sadece din adamları ile sınırlı da değil. ",
+                (strong)"Siyasi liderleri, tarikat-cemaat liderlerini, aşiretimizi, vatanımızı, bazen kendimizi bazen de evladımızı putlaştırıyoruz.",
                 " Maalesef böyle."
             },
             new p
             {
-                 (strong)"Peki Reşad sadece 19 dan mı bahsetti?", br,
-                 "Önce bugün yaşanan sorunu ele alalım.", br,
-                 "Yalnız kuran deseniz dahi bu sefer ", (strong)"yorum farkı", " ortaya çıkıyor.", br,
-                 "Hadis temelli yapılan Kuran çevirileri ile, tarikat mensubu insanların yazdıkları çeviriler birbirinden çok farklı.", br,
-                 "Son 30-40 yılda Türkiye’de kaç tane meal yazıldı sayısını tahmin bile edemiyorum.", br, 
-                 "Üstelik şu da bir gerçek hangi dil olur ise olsun bir metni bir dilden başka bir dile çeviriyorsanız orijinal dildeki tadı/ahengi tam aktaramazsınız.", br,
-                 "Üstelik bugünün Arapçası ile 1400 yıl önceki Arapça arasında bile farklar var.", br, 
-                 "Özetle bugün tüm din meselesini Kuran ile sınırlandırsanız bile iş bitmiyor. Hangi kuran?",
-                 "Konu tefsir olunca sorun ortadan kalkmıyor. Aynı sorun orda da var."
+                (strong)"Peki Reşad sadece 19 dan mı bahsetti?", br,
+                "Önce bugün yaşanan sorunu ele alalım.", br,
+                "Yalnız kuran deseniz dahi bu sefer ", (strong)"yorum farkı", " ortaya çıkıyor.", br,
+                "Hadis temelli yapılan Kuran çevirileri ile, tarikat mensubu insanların yazdıkları çeviriler birbirinden çok farklı.", br,
+                "Son 30-40 yılda Türkiye’de kaç tane meal yazıldı sayısını tahmin bile edemiyorum.", br,
+                "Üstelik şu da bir gerçek hangi dil olur ise olsun bir metni bir dilden başka bir dile çeviriyorsanız orijinal dildeki tadı/ahengi tam aktaramazsınız.", br,
+                "Üstelik bugünün Arapçası ile 1400 yıl önceki Arapça arasında bile farklar var.", br,
+                "Özetle bugün tüm din meselesini Kuran ile sınırlandırsanız bile iş bitmiyor. Hangi kuran?",
+                "Konu tefsir olunca sorun ortadan kalkmıyor. Aynı sorun orda da var."
             },
             new p
             {
@@ -288,25 +288,25 @@ public class IsHeMessangerPage : ReactComponent
             {
                 "Hatta Kuranda şöyle ifadeler var.", br,
                 "Eğer bu Kuran’ı başka bir dilde indirseydik onun anlaşılmayacağını ifade eden sözler var.", br,
-                "Bu durumda ben de Türkiye’de yaşayan biri olarak Arapçayı anlamıyorum.", br, 
+                "Bu durumda ben de Türkiye’de yaşayan biri olarak Arapçayı anlamıyorum.", br,
                 "Herkesten Arapça öğrenmesini de bekleyemezsiniz.", br,
                 (strong)"Dolayısı ile Kuranın başka dillere çevirisi mecburi bir durumdur."
             },
             new p
             {
-                 "İşin içine çeviri girince bu sefer de yorum farkı giriyor. ", br, 
-                 "Hatta bu din meselesinin içine hadisleri de katarsak bu yelpazenin daha büyüğünü hayal edin.", br,
-                 "Allah’ın muradını öğrenmek için bir sürü hadis-meal-tefsir-fıkıh kitapları okumanız gerekiyor demektir. " ,
-                 "Sanırım problemi anlatabilmişimdir."
+                "İşin içine çeviri girince bu sefer de yorum farkı giriyor. ", br,
+                "Hatta bu din meselesinin içine hadisleri de katarsak bu yelpazenin daha büyüğünü hayal edin.", br,
+                "Allah’ın muradını öğrenmek için bir sürü hadis-meal-tefsir-fıkıh kitapları okumanız gerekiyor demektir. ",
+                "Sanırım problemi anlatabilmişimdir."
             },
             new p
             {
-                 "Daha önce söylemiştim.", br,
-                 "Reşad, Kuran'ı Arapçasından İngilizce diline çeviriyor. Arapça zaten anadili olduğu halde çeviri işi yaklaşık 20 yıl sürüyor.", br, 
-                 "Ve bu çevirinin adına ", (strong)"Yetkilendirilmiş Çeviri", " diye bir isim veriyor.", br, 
-                 "Şunu iddia ediyor. Bu çeviri ", (strong)"Tahtın Sahibi tarafından yetkilendirilmiş bir çeviridir", " diyor.", br,
-                 "Bunu kenarda köşede kısık sesle söylemiyor.", br, 
-                 "Katıldığı konferanslarda Cuma hutbelerinde üzerine basa basa tekrarlıyor."
+                "Daha önce söylemiştim.", br,
+                "Reşad, Kuran'ı Arapçasından İngilizce diline çeviriyor. Arapça zaten anadili olduğu halde çeviri işi yaklaşık 20 yıl sürüyor.", br,
+                "Ve bu çevirinin adına ", (strong)"Yetkilendirilmiş Çeviri", " diye bir isim veriyor.", br,
+                "Şunu iddia ediyor. Bu çeviri ", (strong)"Tahtın Sahibi tarafından yetkilendirilmiş bir çeviridir", " diyor.", br,
+                "Bunu kenarda köşede kısık sesle söylemiyor.", br,
+                "Katıldığı konferanslarda Cuma hutbelerinde üzerine basa basa tekrarlıyor."
             },
             new p
             {
@@ -317,9 +317,9 @@ public class IsHeMessangerPage : ReactComponent
             },
             new p
             {
-                 "Yaptığı çevride gücü-otoriteyi tümüyle Allaha atfeden tevhid merkezli bir anlayış içinde yapıyor.", br,
-                 "Reşad’ı elçi olarak kabul etmeseniz bile Kuran çevrilerinde takıldığınızda bir yer olur ise onun çevirisine bakarak karşılaştırma yapmanızı öneririm.", br,
-                 "Bin yılın tartışmalı konularını bir de onun Kuran merkezli izahları ile dinlemenizi öneririm."
+                "Yaptığı çevride gücü-otoriteyi tümüyle Allaha atfeden tevhid merkezli bir anlayış içinde yapıyor.", br,
+                "Reşad’ı elçi olarak kabul etmeseniz bile Kuran çevrilerinde takıldığınızda bir yer olur ise onun çevirisine bakarak karşılaştırma yapmanızı öneririm.", br,
+                "Bin yılın tartışmalı konularını bir de onun Kuran merkezli izahları ile dinlemenizi öneririm."
             },
             new p
             {
@@ -335,23 +335,23 @@ public class IsHeMessangerPage : ReactComponent
             },
             new p
             {
-                 "Kuranda peygamberler kıssalarından çokça bahsedilir. Hatta aynı kıssayı farklı farklı tonlarda farklı yönleriyle bahseder. Hep bir uyarı alan toplumlar ve ardından üzerlerine azap gelen toplumlar."
+                "Kuranda peygamberler kıssalarından çokça bahsedilir. Hatta aynı kıssayı farklı farklı tonlarda farklı yönleriyle bahseder. Hep bir uyarı alan toplumlar ve ardından üzerlerine azap gelen toplumlar."
             },
             (p)"Elbette Kuranda bir şeyin bahsi geçiyor ise mutlaka bir hikmeti vardır. Bizler Müslüman olduğumuza göre bu azapla vurulan kavimlerin başına gelenler bizim başımıza gelmeyecek diye düşünebiliriz. Hatta bu kafa yapısı ile yani ben zaten inanan bir insanım dolayısı ile inanmayanlara hitap eden şu ayetler bana hitap etmiyor kafası ile okuyabilirsiniz. Dolayısı ile kuranın yarısından fazlasını kenara koymanız lazım. Çünkü inanmayanları muhatap alan ayetleri birinci dereceden muhatap gibi algılayamazsınız çünkü inanan bir insansınız. Bunu isteseniz de yapamazsınız.",
             new p
             {
-                 "Gelin görün ki Kuranda klasik nerdeyse bir çok peygamber kıssasında yaşanan durumun tam da ortasındayız. Önce uyarıcılar gönderiyor ardından uymadıkları için azap geliyor."
+                "Gelin görün ki Kuranda klasik nerdeyse bir çok peygamber kıssasında yaşanan durumun tam da ortasındayız. Önce uyarıcılar gönderiyor ardından uymadıkları için azap geliyor."
             },
             new p
             {
-                "Reşad bizzat Cebrail’den bu bilgiyi aldığını ", (strong)"Arapları vuracak bir azabın haberini", " de veriyor ardından Kuranda bahsi geçen ", (strong)"duman azabının ", "yaşanacağını haber veriyor." ,
-                                                                                                                                                                                         
+                "Reşad bizzat Cebrail’den bu bilgiyi aldığını ", (strong)"Arapları vuracak bir azabın haberini", " de veriyor ardından Kuranda bahsi geçen ", (strong)"duman azabının ", "yaşanacağını haber veriyor.",
+
                 "Asıl dine dönüşün bu duman olayından sonra olacağını haber veriyor."
             },
             new p
             {
-                "Yeni bir elçi fikrinin kulağa çok çılgınca geldiğinin farkındayım. " ,
-                "Ama elinizi vicdanınıza koyarak ortadoğudaki müslümanların haline bakın. " ,
+                "Yeni bir elçi fikrinin kulağa çok çılgınca geldiğinin farkındayım. ",
+                "Ama elinizi vicdanınıza koyarak ortadoğudaki müslümanların haline bakın. ",
                 "İsayı tanrılaştıran batının haline bakın.",
                 "Merhametlilerin En Merhametlisi' sırf merhametinden dolayı bizlere yol göstermek için bir elçi göndermesi sizce de uygun değil mi?"
             },
@@ -359,16 +359,14 @@ public class IsHeMessangerPage : ReactComponent
             {
                 (strong)"Özetlersek;", br,
                 "Kurana baktığımızda anlıyoruz ki aslında gönderilen bütün peygamberler-elçiler hep aynı mesajı seslendirmişler.", (strong)" Allah’tan başka Allah yoktur", ". Dini ritüellerde farklılıklar var. Ama mesajın özü hep aynı.", br,
-                (strong)"Bir doğru üzerindeki noktalar", " gibi düşünebilirsiniz. Yol tevhid yolu.", br, 
+                (strong)"Bir doğru üzerindeki noktalar", " gibi düşünebilirsiniz. Yol tevhid yolu.", br,
                 "Peygamberler, elçiler kocaman bir dağın yamacında bulunan çeşmenin başındaki musluklar gibilerdir.", br,
                 "Akan suyu da vahiy – hikmet - tevhid olarak kabul edersek, evet su musluktan damlıyor ama şunu kesin kez bilmeliyiz ki su musluğun kendisinden değil o kocaman dağdan akıp geliyor."
             },
             new p
             {
-                 "Peygamberlerin – elçilerin kesinlikle hiç bir güçleri yoktur. Ne Nuh oğluna yardım edebildi, ne de İbrahim babasına yardım edebildi, tüm güç sadece Allah’a aittir."
+                "Peygamberlerin – elçilerin kesinlikle hiç bir güçleri yoktur. Ne Nuh oğluna yardım edebildi, ne de İbrahim babasına yardım edebildi, tüm güç sadece Allah’a aittir."
             }
-
-
         };
     }
 }
