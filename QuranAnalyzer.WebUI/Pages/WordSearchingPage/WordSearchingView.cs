@@ -13,6 +13,16 @@ class WordSearchingViewModel
     public string SearchScript { get; set; }
 
     public string SearchScriptErrorMessage { get; set; }
+
+    public string SearchOption { get; set; }
+}
+
+static class SearchOption
+{
+    public const string StartsWith = "1";
+    public const string EndsWith = "2";
+    public const string Contains = "3";
+    public const string Same = "4";
 }
 
 class WordSearchingView : ReactComponent<WordSearchingViewModel>
@@ -67,6 +77,20 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                     new ErrorText { Text = state.SearchScriptErrorMessage }
                 },
 
+                Space(15),
+                new FlexRow(BorderRadiusForPanels, ComponentBorder,JustifyContentSpaceEvenly, AlignContentCenter)
+                {
+                    new SwitchWithLabel
+                    {
+                        Label = "başlar",
+                        Value = state.SearchOption == SearchOption.StartsWith,
+                        ValueChange = changeEvent => state.SearchOption = changeEvent.target.value
+                    },
+                    new SwitchWithLabel{Label = "biter"},
+                    new SwitchWithLabel{Label = "içerir"},
+                    new SwitchWithLabel{Label = "aynısı"}
+                },
+                
                 Space(15),
 
                 new FlexRow(JustifyContentSpaceBetween)
