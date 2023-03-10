@@ -9,59 +9,9 @@ using QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
-[Serializable]
-public class MainViewModel
+class View : ReactPureComponent
 {
-    public CharacterCountingViewModel CharacterCountingViewModel { get; set; }
-
-    public bool HamburgerMenuIsOpen { get; set; }
-    public bool IsBlocked { get; set; }
-
-    public string LastClickedMenuId { get; set; }
-
-    public double MainDivScrollY { get; set; }
-
-    public string OperationName { get; set; }
-    public string PageId { get; set; }
-    public string SelectedFact { get; set; }
-    public string SummaryText { get; set; }
-}
-
-static class HamburgerMenuEvents
-{
-    public static void OnHamburgerMenuClosed(this Client client, Action handler)
-    {
-        client.ListenEvent(HamburgerMenuClosed, handler);
-    }
-
-    public static void OnHandleHamburgerMenuOpened(this Client client, Action handler)
-    {
-        client.ListenEvent(HamburgerMenuOpened, handler);
-    }
-
-    static void HamburgerMenuClosed(this Client client)
-    {
-        client.DispatchEvent(nameof(HamburgerMenuClosed));
-    }
-
-    static void HamburgerMenuOpened(this Client client)
-    {
-        client.DispatchEvent(nameof(HamburgerMenuOpened));
-    }
-}
-
-class View : ReactComponent<MainViewModel>
-{
-    protected override void constructor()
-    {
-        state = new MainViewModel
-        {
-            PageId = Context.Query[QueryKey.Page]
-        };
-
-        Client.OnHandleHamburgerMenuOpened(OnHamburgerMenuOpened);
-        Client.OnHamburgerMenuClosed(OnHamburgerMenuClosed);
-    }
+    string SelectedPageId => Context.Query[QueryKey.Page] ?? PageId.MainPage;
 
     protected override Element render()
     {
@@ -77,7 +27,7 @@ class View : ReactComponent<MainViewModel>
 
                     new LeftMenu
                     {
-                        SelectedPageId = state.PageId,
+                        SelectedPageId = SelectedPageId,
                         style =
                         {
                             MinWidth(230),
@@ -93,7 +43,7 @@ class View : ReactComponent<MainViewModel>
 
         Element buildMainContent()
         {
-            return state.PageId switch
+            return SelectedPageId switch
             {
                 PageId.MainPage => new MainPageContent(),
                 PageId.SecuringDataWithCurrentTechnology => new SecuringDataWithCurrentTechnology.View(),
@@ -118,15 +68,5 @@ class View : ReactComponent<MainViewModel>
                 _ => new MainPageContent()
             };
         }
-    }
-
-    void OnHamburgerMenuClosed()
-    {
-        state.HamburgerMenuIsOpen = false;
-    }
-
-    void OnHamburgerMenuOpened()
-    {
-        state.HamburgerMenuIsOpen = true;
     }
 }
