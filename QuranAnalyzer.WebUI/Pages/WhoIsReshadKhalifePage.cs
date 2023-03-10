@@ -11,11 +11,11 @@ public class WhoIsReshadKhalifePage : ReactComponent
             new p
             {
                 @"
-Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi ilk bulan kişi Reşad Halife ismi.
+Bu 19 meselesini incelerken fark ettim ki meselenin odağındaki isim bu sistemi ilk bulan kişi Reşad Halife ismi.
  Daha doğrusu onun fikirleri. Zaten fikirleri yüzünden de öldürüldü.
  Kısaca bu kişi kimdir? Derdi neymiş?
  Özetle ne söylemiş? İşte bu bilgileri kısa kısa olacak şekilde özetlemeye çalıştım. 
- Tekrarlamakda fayda görüyorum. Bu fikirler doğrudur yanlıştır gibi bir iddiam yok. 
+ Tekrarlamakta fayda görüyorum. Bu fikirler doğrudur yanlıştır gibi bir iddiam yok. 
  Daha doğrusu benim doğru veya yanlış demem herhangi bir şey ifade etmez. Ben sadece bu adamın ne demeye çalıştığını özetlemeye çalıştım. 
  Umarım faydalı olur."
             },
@@ -28,7 +28,7 @@ Bu 19 meselesini incelerken farkettim ki meselenin odağındaki isim bu sistemi 
                 "1935 yılında Mısırda doğmuş. Babası tarikat şeyhi olan biridir. " +
                 "Bunu özellikle belirttim. Ehli sünnet bir tarikat ortamında, dindar bir ailede doğup büyümüş birinden bahsediyoruz. " +
                 "Mısırda üniversite kimya bölümünde okuyor. Onur derecesi alıyor. 25 li yaşlarda Amerikaya doktora için gidiyor ve biyokimya alanında yüksek lisans " +
-                "ve doktorasını tamamlıyor. Kendi alanında konferanslar felan veriyor. Birleşmiş milletler kalkınma örgütünde kimyager olarak çalışıyor." +
+                "ve doktorasını tamamlıyor. Kendi alanında konferanslar falan veriyor. Birleşmiş milletler kalkınma örgütünde kimyager olarak çalışıyor." +
                 "Kısaca kariyer olarak oldukça iyi giden bir hayatı olmuş diyebiliriz."
             },
             new p
