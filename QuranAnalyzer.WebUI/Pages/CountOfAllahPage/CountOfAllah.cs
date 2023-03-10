@@ -57,14 +57,14 @@ class CountOfAllah : ReactComponent
 
             "Sanırım çok fazla söze gerek yok. Burada dikkat edilmesi gereken nokta şu;",
             new br(),
-            "Herhangi bir surenin herhangi bir cümlesini  çıkarsanız veya herhangi bir sureye fazladan bir 'Allah' kelimesi ekleseniz bu tablo bozulurdu. ",
-            "İşte 19 sisteminin Kuranı koruması böyle oluyor.",
-            "Herhangi iki ayet değil özellikle bu bahsi geçen üzerinde bazı şüphelerin tartışmaların olduğu iki cümle çıkarılınca bu tablonun oluşması çok ilginç.",
-            "Özetle Kurandaki her bir 'Allah' kelimesinin geçiş yerleri dahi bir öneme sahiptir.",
+            "Herhangi bir surenin herhangi bir cümlesini  çıkarsanız veya herhangi bir sureye fazladan bir 'Allah' kelimesi ekleseniz bu tablo bozulurdu.",
+            " İşte 19 sisteminin Kuranı koruması böyle oluyor.",
+            " Herhangi iki ayet değil özellikle bu bahsi geçen üzerinde bazı şüphelerin tartışmaların olduğu iki cümle çıkarılınca bu tablonun oluşması çok ilginç.",
+            " Özetle Kurandaki her bir 'Allah' kelimesinin geçiş yerleri dahi bir öneme sahiptir.",
 
             new br(),
             new br(),
-            "İşte 'sırf 19 rakamına uymuyor diye Kurandan ayet atılıyor' iddasının aslı budur.",
+            "İşte 'sırf 19 rakamına uymuyor diye Kurandan ayet atılıyor' iddiasının aslı budur.",
             " Tabii şunu da belirtmem gerekiyor. Reşad bunun gibi 70 den fazla matematiksel veri de sunuyor.",
 
             new p

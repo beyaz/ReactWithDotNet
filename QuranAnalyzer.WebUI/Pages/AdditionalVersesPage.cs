@@ -125,7 +125,7 @@ public class AdditionalVersesPage : ReactComponent
                 "Bunun sebebini araştırdığınızda ise çünkü bu surede inanmayanlara ültimatom veriliyor ondan dolayı başında besmele yok.",
                 "Yahut neden bir tek bu surenin başında besmele yok diye sorduğunuzda cevap olarak 'çünkü yok' deniliyor.",
                 "Bu veilen cevaplar sizi ne kadar tatmin eder orasını size kalmış. 19 sistemi işte burada şu açıklamayı yapar ",
-                " Çünkü 'Herşeyde Tam Kontrol Durumunda Olan' bu surenin içine fazladan iki söz eklenmesine müsade etmiştir. Müsada etmiş ki ",
+                " Çünkü 'Her Şeyde Tam Kontrol Durumunda Olan' bu surenin içine fazladan iki söz eklenmesine müsade etmiştir. Müsada etmiş ki ",
                 "bu Kuranın bizzat kendisi tarafından korunduğunu insanlara göstermek istemiş. ",
                 "Bu sebeple bu sureye dikkat çekmek için ve Allah kelamı olmayan iki söz olduğu için başına besmele koymamıştır."
             },

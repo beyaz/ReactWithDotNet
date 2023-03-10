@@ -227,7 +227,7 @@ public class IsHeMessangerPage : ReactComponent
             },
             new p
             {
-                "Maalesef günümüzde elinizi sallasanız ben peygamberim, ben elçiyim, ben mehdiyim, ben seçilmiş kişiyim diyene rastlarsınız. Herbirine vakit ayırsanız vaktiniz yetmez.", br,
+                "Maalesef günümüzde elinizi sallasanız ben peygamberim, ben elçiyim, ben mehdiyim, ben seçilmiş kişiyim diyene rastlarsınız. Her birine vakit ayırsanız vaktiniz yetmez.", br,
                 "Tahminim o ki eski devirde de bu böyleydi. Anladığım kadarı ile ", (strong)"En Bilge Olan", "'ın elçilerine - peygamberlerine o zamana uygun mucizeler vermesinin bir hikmeti de bu olabilir.", br,
                 "Sahte elçilerden ayırt etmek için onlara mucizeler-kanıtlar veriyor olabilir.", br,
                 "Eğer önceki elçilere verilenler gibi görsel bir mucize olsaydı bizler bugün canlı canlı göremezdik.", br,
@@ -275,7 +275,7 @@ public class IsHeMessangerPage : ReactComponent
                 "Son 30-40 yılda Türkiye’de kaç tane meal yazıldı sayısını tahmin bile edemiyorum.", br,
                 "Üstelik şu da bir gerçek hangi dil olur ise olsun bir metni bir dilden başka bir dile çeviriyorsanız orijinal dildeki tadı/ahengi tam aktaramazsınız.", br,
                 "Üstelik bugünün Arapçası ile 1400 yıl önceki Arapça arasında bile farklar var.", br,
-                "Özetle bugün tüm din meselesini Kuran ile sınırlandırsanız bile iş bitmiyor. Hangi kuran?",
+                "Özetle bugün tüm din meselesini Kuran ile sınırlandırsanız bile iş bitmiyor. Hangi kuran? ",
                 "Konu tefsir olunca sorun ortadan kalkmıyor. Aynı sorun orda da var."
             },
             new p
@@ -344,15 +344,15 @@ public class IsHeMessangerPage : ReactComponent
             },
             new p
             {
-                "Reşad bizzat Cebrail’den bu bilgiyi aldığını ", (strong)"Arapları vuracak bir azabın haberini", " de veriyor ardından Kuranda bahsi geçen ", (strong)"duman azabının ", "yaşanacağını haber veriyor.",
+                "Reşad bizzat Cebrail’den bu bilgiyi aldığını ", (strong)"Arapları vuracak bir azabın haberini", " de veriyor ardından Kuranda bahsi geçen ", (strong)"duman azabının ", "yaşanacağını haber veriyor. ",
 
                 "Asıl dine dönüşün bu duman olayından sonra olacağını haber veriyor."
             },
             new p
             {
                 "Yeni bir elçi fikrinin kulağa çok çılgınca geldiğinin farkındayım. ",
-                "Ama elinizi vicdanınıza koyarak ortadoğudaki müslümanların haline bakın. ",
-                "İsayı tanrılaştıran batının haline bakın.",
+                "Ama elinizi vicdanınıza koyarak Ortadoğu'daki Müslümanların haline bakın. ",
+                "İsa'yı tanrılaştıran batının haline bakın. ",
                 "Merhametlilerin En Merhametlisi' sırf merhametinden dolayı bizlere yol göstermek için bir elçi göndermesi sizce de uygun değil mi?"
             },
             new p
