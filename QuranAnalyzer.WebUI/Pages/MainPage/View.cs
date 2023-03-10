@@ -93,107 +93,30 @@ class View : ReactComponent<MainViewModel>
 
         Element buildMainContent()
         {
-            if (state.PageId == PageId.MainPage)
+            return state.PageId switch
             {
-                return new MainPageContent();
-            }
-
-            if (state.PageId == PageId.SecuringDataWithCurrentTechnology)
-            {
-                return new SecuringDataWithCurrentTechnology.View();
-            }
-
-            if (state.PageId == PageId.PreInformation)
-            {
-                return new PreInformationView();
-            }
-
-            if (state.PageId == PageId.InitialLetters)
-            {
-                return new AllInitialLetters();
-            }
-
-            if (state.PageId == PageId.QuestionAnswerPage)
-            {
-                return new QuestionAnswerPage.View();
-            }
-
-            if (state.PageId == PageId.ContactPage)
-            {
-                return new ContactPage.View();
-            }
-
-            if (state.PageId == PageId.CharacterCounting)
-            {
-                return new CharacterCountingView();
-            }
-
-            if (state.PageId == PageId.WordSearchingPage)
-            {
-                return new WordSearchingView();
-            }
-
-            if (state.PageId == PageId.AlternativeSystems)
-            {
-                return new AlternativeSystemsView();
-            }
-
-            if (state.PageId == PageId.Definition)
-            {
-                return new DefinitionView();
-            }
-
-            if (state.PageId == PageId.PageIdOfMushafOptionsDetail)
-            {
-                return new MushafOptionsDetail.View();
-            }
-
-            if (state.PageId == PageId.WhoIsReshadKhalifePage)
-            {
-                return new WhoIsReshadKhalifePage();
-            }
-
-            if (state.PageId == PageId.WhyFamousPeopleAreSilentPage)
-            {
-                return new WhyFamousPeopleAreSilentPage();
-            }
-
-            if (state.PageId == PageId.AboutEdipYukselPage)
-            {
-                return new AboutEdipYukselPage();
-            }
-
-            if (state.PageId == PageId.PageVerseListContainsAllInitialLetters)
-            {
-                return new PageVerseListContainsAllInitialLetters();
-            }
-
-            if (state.PageId == PageId.AdditionalVersesPage)
-            {
-                return new AdditionalVersesPage();
-            }
-
-            if (state.PageId == PageId.CountOfAllahPage)
-            {
-                return new CountOfAllah();
-            }
-
-            if (state.PageId == PageId.AllInitialLettersCombined)
-            {
-                return new AllInitialLettersCombined.View();
-            }
-
-            if (state.PageId == PageId.WhereIsTheProblemPage)
-            {
-                return new WhereIsTheProblemPage();
-            }
-
-            if (state.PageId == PageId.IsHeMessangerPage)
-            {
-                return new IsHeMessangerPage();
-            }
-
-            return new MainPageContent();
+                PageId.MainPage => new MainPageContent(),
+                PageId.SecuringDataWithCurrentTechnology => new SecuringDataWithCurrentTechnology.View(),
+                PageId.PreInformation => new PreInformationView(),
+                PageId.InitialLetters => new AllInitialLetters(),
+                PageId.QuestionAnswerPage => new QuestionAnswerPage.View(),
+                PageId.ContactPage => new ContactPage.View(),
+                PageId.CharacterCounting => new CharacterCountingView(),
+                PageId.WordSearchingPage => new WordSearchingView(),
+                PageId.AlternativeSystems => new AlternativeSystemsView(),
+                PageId.Definition => new DefinitionView(),
+                PageId.PageIdOfMushafOptionsDetail => new MushafOptionsDetail.View(),
+                PageId.WhoIsReshadKhalifePage => new WhoIsReshadKhalifePage(),
+                PageId.WhyFamousPeopleAreSilentPage => new WhyFamousPeopleAreSilentPage(),
+                PageId.AboutEdipYukselPage => new AboutEdipYukselPage(),
+                PageId.PageVerseListContainsAllInitialLetters => new PageVerseListContainsAllInitialLetters(),
+                PageId.AdditionalVersesPage => new AdditionalVersesPage(),
+                PageId.CountOfAllahPage => new CountOfAllah(),
+                PageId.AllInitialLettersCombined => new AllInitialLettersCombined.View(),
+                PageId.WhereIsTheProblemPage => new WhereIsTheProblemPage(),
+                PageId.IsHeMessangerPage => new IsHeMessangerPage(),
+                _ => new MainPageContent()
+            };
         }
     }
 
