@@ -9,7 +9,7 @@ public class WordSearchingTests
     {
         var search = AnalyzeText(searchWord);
 
-        VerseFilter.GetVerseList("*").Value.Sum(v => v.TextWithBismillahWordList.Count(w => w.HasValueAndSame(search))).Value.Should().Be(expected);
+        VerseFilter.GetVerseList("*").Value.Sum(v => v.TextWithBismillahWordList.Count(w => w.Same(search))).Value.Should().Be(expected);
     }
 
     [TestMethod]
@@ -82,6 +82,11 @@ public class WordSearchingTests
         var beyyine = AnalyzeText("بينة");
 
         source.Contains(beyyine).Should().Be(1);
-        
+
+
+        source  = AnalyzeText(" الْبَيِّنَةُۜ-- الْبَيِّنَةُۜ");
+
+        source.Contains(beyyine).Should().Be(2);
+
     }
 }

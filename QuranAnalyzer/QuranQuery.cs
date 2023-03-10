@@ -54,7 +54,7 @@ public static class QuranQuery
 
         foreach (var word in verse.TextWordList)
         {
-            if (word.HasValueAndSame(searchWord))
+            if (word.Same(searchWord))
             {
                 returnList.Add((word.First(), word.Last()));
             }
@@ -63,7 +63,7 @@ public static class QuranQuery
         return returnList;
     }
 
-    public static bool HasValueAndSame(this IReadOnlyList<LetterInfo> a, IReadOnlyList<LetterInfo> b)
+    public static bool Same(this IReadOnlyList<LetterInfo> a, IReadOnlyList<LetterInfo> b)
     {
         if (a == null || b == null)
         {
