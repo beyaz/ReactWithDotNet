@@ -3,7 +3,6 @@
 namespace QuranAnalyzer;
 
 [TestClass]
-[Ignore]
 public class WordSearchingTests
 {
     static void CountShouldBe(string searchWord, int expected)
@@ -74,5 +73,15 @@ public class WordSearchingTests
         var nunVavNun = AnalyzeText("نون");
 
         VerseFilter.GetVerseList("*").Value.Count(v => v.TextWithBismillahWordList.Last().EndsWith(nunVavNun)).Should().Be(133);
+    }
+
+    [TestMethod]
+    public void Beyyine()
+    {
+        var source  = AnalyzeText("الْبَيِّنَةُۜ");
+        var beyyine = AnalyzeText("بينة");
+
+        source.Contains(beyyine).Should().Be(1);
+        
     }
 }

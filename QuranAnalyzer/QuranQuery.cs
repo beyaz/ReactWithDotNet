@@ -115,7 +115,7 @@ public static class QuranQuery
 
         for (var i = 0; i < search.Count; i++)
         {
-            if (source[sourceIndex + i].ArabicLetterIndex != search[i].ArabicLetterIndex)
+            if (!source[sourceIndex + i].HasValueAndSameAs(search[i]))
             {
                 return false;
             }
@@ -147,7 +147,7 @@ public static class QuranQuery
         var count = 0;
         for (var i = 0; i < source.Count; i++)
         {
-            if (i + search.Count >= source.Count)
+            if (i + search.Count > source.Count)
             {
                 return count;
             }
@@ -157,7 +157,7 @@ public static class QuranQuery
             var isMatch = true;
             for (var j = 0; j < search.Count; j++)
             {
-                if (source[difference + j].ArabicLetterIndex != search[j].ArabicLetterIndex)
+                if (!source[difference + j].HasValueAndSameAs(search[j]))
                 {
                     isMatch = false;
                     break;
