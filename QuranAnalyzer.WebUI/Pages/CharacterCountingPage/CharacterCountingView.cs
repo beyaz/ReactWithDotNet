@@ -53,14 +53,18 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
         }
     }
 
+    static Element Backdrop()
+    {
+        return new div
+        {
+            PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3), BorderRadiusForPanels
+        };
+    }
     protected override Element render()
     {
         IEnumerable<Element> searchPanel() => new[]
         {
-            When(state.IsBlocked, () => new div
-            {
-                PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3),BorderRadiusForPanels
-            }),
+            When(state.IsBlocked, Backdrop),
             When(state.IsBlocked, () => new FlexRowCentered
             {
                 PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
