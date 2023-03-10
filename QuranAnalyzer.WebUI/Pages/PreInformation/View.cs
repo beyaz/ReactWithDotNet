@@ -31,7 +31,7 @@ public class PreInformationView : ReactComponent
                 new li
                 {
                     (p)@"Genel kabule göre Kuranın kitaplaşması halife Ebubekir, çoğaltılması ise halife Osman zamanında yapılıyor. 
-Rivayetlere göre halife Osman zamanında, o zamanki insanların kendi kuran notları, sakladıkları kuran parçaları başka karmaşaya sebep olmasın diye Ebubekir zamanındaki orjinal mushaf dahil yakılmıştır."
+Rivayetlere göre halife Osman zamanında, o zamanki insanların kendi kuran notları, sakladıkları kuran parçaları başka karmaşaya sebep olmasın diye Ebubekir zamanındaki orijinal mushaf dahil yakılmıştır."
                 },
 
                 new li
@@ -56,14 +56,14 @@ Bazı bölümlerin başında bir tane harf olurken mesela 50. surenin başındak
 Mesela 40. ve 46. arası 7 tane surenin başlarında sadece Ha(ح) ve Mim(م) olmak üzere iki harf vardır. 
 En çok ise 19. surede beş tane başlangıç harfi vardır. Kaf(ق) - Ha(ه) - Ya(ي) - Ayn(ع) - Sad(ص). 
 Toplamda 29 surenin başında böyle harfler vardır. Başlangıç harfleri-Kesik harfler-hurufu mukatta gibi isimlerle anılmaktadır.
-Tarih boyu bu başlangıç harleri ile ilgili bir çok farklı yorum yapılmıştır.
-Yine bu harflerin geçtiği surelerin bir kısmında ilk çümleler şöyledir. Bunlar kitabın ayetleridir-kanıtlarıdır-işaretleridir."
+Tarih boyu bu başlangıç harfleri ile ilgili bir çok farklı yorum yapılmıştır.
+Yine bu harflerin geçtiği surelerin bir kısmında ilk cümleler şöyledir. Bunlar kitabın ayetleridir-kanıtlarıdır-işaretleridir."
                 },
 
                 new li
                 {
                     (p)@"Kurandaki bazı kelimelerin geçişleri anlamları/olayları ile ilgili olarak çok ilginç sayıda geçmektedir. 
-Mesela gün gelimesinin 365 defa geçmesi buna bir örnek olarak verilebilir.
+Mesela gün kelimesinin 365 defa geçmesi buna bir örnek olarak verilebilir.
 Adem ve İsanın durumu aynıdır denmesi ve Adem / İsa kelimeleri 25'er defa geçmesi bunlara örnek olarak verilebilir. 
 Dilerseniz aşağıdaki linklerden bu sayımları kendiniz yapabilirsiniz.",
                     new a { href = PageUrlOfDays365, text = "Gün Sayısının 365 kez geçmesi" },

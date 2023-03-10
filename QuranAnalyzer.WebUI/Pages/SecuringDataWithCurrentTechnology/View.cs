@@ -10,7 +10,7 @@ public class View : ReactComponent
 
             (p)@"TC kimlik numaranızda bulunan rakamlar sizce rastgele rakamlar mı? Yoksa belli bir düzeni / mantığı mı var?",
 
-            new p { "Mesela aşağıdaki TC Kimlik noları inceleyelim." },
+            new p { "Mesela aşağıdaki TC Kimlik numaralarını inceleyelim." },
             new div
             {
                 TextAlignCenter,
@@ -21,7 +21,7 @@ public class View : ReactComponent
                 new div {  "7547453160" ,(b)"2" }
             },
 
-            (p)@"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkda oluşmuş. 
+            (p)@"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkta oluşmuş. 
 11 hane olan TC kimlik numaranızın ilk 10 hanesinin rakamlarının toplamının 10'a bölümünden kalan sayı 11. hanedeki sayı ile hep aynıdır.
 Özetle şunu söyleyebiliriz",
 
