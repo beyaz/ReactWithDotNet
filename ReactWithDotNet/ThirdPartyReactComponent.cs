@@ -88,7 +88,7 @@ public abstract class ThirdPartyReactComponent : Element
     {
         if (SuspenseFallback == null)
         {
-            return new div { aria = { { "component", GetType().FullName } }, Style = style };
+            return new div { Style = style };
         }
 
         return SuspenseFallback + style;
