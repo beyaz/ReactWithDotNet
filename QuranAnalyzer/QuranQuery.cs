@@ -2,7 +2,7 @@
 
 public static class QuranQuery
 {
-    public static int Contains(this IReadOnlyList<LetterInfo> source, IReadOnlyList<LetterInfo> search)
+    public static IReadOnlyList<(LetterInfo start, LetterInfo end)> Contains(this IReadOnlyList<LetterInfo> source, IReadOnlyList<LetterInfo> search)
     {
         if (source is null)
         {
@@ -14,28 +14,30 @@ public static class QuranQuery
             throw new ArgumentNullException(nameof(search));
         }
 
+        var returnList = new List<(LetterInfo start, LetterInfo end)>();
+
         source = source.Where(IsValidForWordSearch).ToList();
         search = search.Where(IsValidForWordSearch).ToList();
 
         if (search.Count > source.Count)
         {
-            return 0;
+            return returnList;
         }
 
-        var count = 0;
-        for (var i = 0; i < source.Count; i++)
+        var i = 0;
+        var j = 0;
+
+        for (i = 0; i < source.Count; i++)
         {
             if (i + search.Count > source.Count)
             {
-                return count;
+                return returnList;
             }
 
-            var difference = i;
-
             var isMatch = true;
-            for (var j = 0; j < search.Count; j++)
+            for (j = 0; j < search.Count; j++)
             {
-                if (!source[difference + j].HasValueAndSameAs(search[j]))
+                if (!source[i + j].HasValueAndSameAs(search[j]))
                 {
                     isMatch = false;
                     break;
@@ -44,11 +46,11 @@ public static class QuranQuery
 
             if (isMatch)
             {
-                count++;
+                returnList.Add((start: source[i], end: source[j]));
             }
         }
 
-        return count;
+        return returnList;
     }
 
     public static bool EndsWith(this IReadOnlyList<LetterInfo> source, IReadOnlyList<LetterInfo> search)
@@ -94,6 +96,18 @@ public static class QuranQuery
             {
                 returnList.Add((word[0], word[^1]));
             }
+        }
+
+        return returnList;
+    }
+
+    public static IReadOnlyList<(LetterInfo start, LetterInfo end)> GetStartAndEndPointsOfContainsWords(this Verse verse, IReadOnlyList<LetterInfo> searchWord)
+    {
+        var returnList = new List<(LetterInfo start, LetterInfo end)>();
+
+        foreach (var word in verse.TextWordList)
+        {
+            returnList.AddRange(word.Contains(searchWord));
         }
 
         return returnList;

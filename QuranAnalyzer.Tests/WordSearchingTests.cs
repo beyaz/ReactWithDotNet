@@ -81,12 +81,12 @@ public class WordSearchingTests
         var source  = AnalyzeText("الْبَيِّنَةُۜ");
         var beyyine = AnalyzeText("بينة");
 
-        source.Contains(beyyine).Should().Be(1);
+        source.Contains(beyyine).Count.Should().Be(1);
 
 
         source  = AnalyzeText(" الْبَيِّنَةُۜ-- الْبَيِّنَةُۜ");
 
-        source.Contains(beyyine).Should().Be(2);
+        source.Contains(beyyine).Count.Should().Be(2);
 
     }
 }
