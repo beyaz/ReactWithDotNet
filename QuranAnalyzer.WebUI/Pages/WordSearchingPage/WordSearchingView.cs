@@ -14,10 +14,10 @@ class WordSearchingViewModel
 
     public string SearchScriptErrorMessage { get; set; }
 
-    public string SearchOption { get; set; }
+    public string SearchOption { get; set; } = SearchOptions.Same;
 }
 
-static class SearchOption
+static class SearchOptions
 {
     public const string StartsWith = "1";
     public const string EndsWith = "2";
@@ -53,6 +53,22 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         }
     }
 
+    Element PartOption()
+    {
+        return new FlexRow(BorderRadiusForPanels, ComponentBorder, JustifyContentSpaceEvenly, AlignContentCenter)
+        {
+            new FlexRowCentered(Gap(0)){ new ReactWithDotNet.Libraries.mui.material.Switch{@checked = state.SearchOption == SearchOptions.StartsWith , onChange = ValueChange, value = state.SearchOption }, "başlar" },
+            //new SwitchWithLabel
+            //{
+            //    Label       = "başlar",
+            //    Value       = state.SearchOption == SearchOptions.StartsWith,
+            //    ValueChange = ValueChange
+            //},
+            //new SwitchWithLabel { Label = "biter" },
+            //new SwitchWithLabel { Label = "içerir" },
+            //new SwitchWithLabel { Label = "aynısı" }
+        };
+    }
     protected override Element render()
     {
         IEnumerable<Element> searchPanel() => new[]
@@ -78,19 +94,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 },
 
                 Space(15),
-                new FlexRow(BorderRadiusForPanels, ComponentBorder,JustifyContentSpaceEvenly, AlignContentCenter)
-                {
-                    new SwitchWithLabel
-                    {
-                        Label = "başlar",
-                        Value = state.SearchOption == SearchOption.StartsWith,
-                        ValueChange = changeEvent => state.SearchOption = changeEvent.target.value
-                    },
-                    new SwitchWithLabel{Label = "biter"},
-                    new SwitchWithLabel{Label = "içerir"},
-                    new SwitchWithLabel{Label = "aynısı"}
-                },
-                
+                PartOption,
                 Space(15),
 
                 new FlexRow(JustifyContentSpaceBetween)
@@ -199,6 +203,11 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
                                     return Container(Panel(searchPanel()));
                                 });
+    }
+
+    void ValueChange(ChangeEvent changeEvent)
+    {
+        state.SearchOption = changeEvent.target.value;
     }
 
     static Element Container(params Element[] panels)
