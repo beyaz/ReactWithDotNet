@@ -71,25 +71,23 @@ class View : ReactComponent
             },
 
             new div{ "Neden 19?", TextAlignCenter},
+            new br(),
+            "Elbette herşeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi. Eğer bu örüntü 29 üzerine olsaydı neden 29 diye sorulacaktı. " ,
+            new br(),
+            new ul
+            {
+                (li)"Kuranın kapağını açtığınızda karşınıza çıkan ilk çümle yani Besmele 19 harftir.",
+                (li)"Kuranda 'Kanıt' kelimesi (Arapça: beyyine) tam 19 defa geçmektedir.",
+                (li)"Kuranda bahsi geçen tüm rakamların toplamı 19'un katıdır. Mesela Nuh'un yaşı ifade edilirken 1000 yıldan 50 eksik gibi bir ifade kullanılmış."
+            },
             new p
             {
-                
-                new br(),
-                "Elbette herşeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi. Eğer bu örüntü 29 üzerine olsaydı neden 29 diye sorulacaktı. " ,
-                new br(),
-                new ul
-                {
-                    (li)"Kuranın kapağını açtığınızda karşınıza çıkan ilk çümle yani Besmele 19 harftir.",
-                    (li)"Kuranda 'Kanıt' kelimesi (Arapça: beyyine) tam 19 defa geçmektedir.",
-                    (li)"Kuranda bahsi geçen tüm rakamların toplamı 19'un katıdır. Mesela Nuh'un yaşı ifade edilirken 1000 yıldan 50 eksik gibi bir ifade kullanılmış."
-                },
                 " Buna benzer daha bir çok örnek verilebilir. " ,
                 " Mühim olan buradaki tasarımı görebilmektir. " ,
                 " Böylelikle Allah var mı? yok mu? Kuran Allah kelamı mı değil mi ? gibi şüpheler giderilmiş olacak.",
                 " Kuran'ın Allah'dan geldiğine olan inancımızı sağlam bir zemine oturmuş olacağız. " ,
                 " Artık bir sonraki aşamaya yani Kuranı anlama ve hayatımıza uygulama aşamasına geçebiliriz."
             }
-
         };
 
         static Element seperation() => new FlexRowCentered(MarginTopBottom(10)) { "* * *" };
