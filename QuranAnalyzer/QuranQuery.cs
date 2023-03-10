@@ -46,7 +46,7 @@ public static class QuranQuery
 
             if (isMatch)
             {
-                returnList.Add((start: source[i], end: source[j]));
+                returnList.Add((start: source[i], end: source[i + j - 1]));
             }
         }
 
