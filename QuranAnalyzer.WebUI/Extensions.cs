@@ -1,19 +1,15 @@
-﻿using System.Globalization;
-
-namespace QuranAnalyzer.WebUI;
+﻿namespace QuranAnalyzer.WebUI;
 
 static class Extensions
 {
     public static string BorderColor = "#dee2e6";
 
-  
-
     public static string BluePrimary => "#1976d2";
+
+    public static StyleModifier BorderRadiusForPanels => BorderRadius(5);
 
     public static StyleModifier ComponentBorder => Border($"1px solid {BorderColor}");
     public static StyleModifier FontFamily_Lateef => FontFamily("Lateef, cursive");
-
-    public static StyleModifier BorderRadiusForPanels => BorderRadius(5);
 
     public static int AsNumber(this bool value) =>
         value ? 1 : 0;
