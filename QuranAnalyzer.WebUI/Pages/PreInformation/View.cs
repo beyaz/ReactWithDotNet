@@ -2,9 +2,13 @@
 
 public class PreInformationView : ReactComponent
 {
-    static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*~ايام;*~يومين;*~الايام;*~اياما;*~واياما;*~بايىم";
+    static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) +
+                                     "&" + QueryKey.SearchQuery + "=" + "*~ايام;*~يومين;*~الايام;*~اياما;*~واياما;*~بايىم"+
+                                     "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
 
-    static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) + "&" + QueryKey.SearchQuery + "=" + "*~يوم;*~ويوم;*~اليوم;*~واليوم;*~يوما;*~ليوم;*~فاليوم;*~بيوم;*~باليوم;*~وباليوم";
+    static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) +
+                                      "&" + QueryKey.SearchQuery + "=" + "*~يوم;*~ويوم;*~اليوم;*~واليوم;*~يوما;*~ليوم;*~فاليوم;*~بيوم;*~باليوم;*~وباليوم"+
+                                      "&" + QueryKey.SearchOption + "=" +WordSearchOption.Same;
 
     protected override Element render()
     {

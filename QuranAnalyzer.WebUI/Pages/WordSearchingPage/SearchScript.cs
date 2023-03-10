@@ -5,7 +5,7 @@ namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 
 class SearchScript
 {
-    public IReadOnlyList<(string searchOption, string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> Lines { get; private init; }
+    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> Lines { get; private init; }
 
     public static Response<SearchScript> ParseScript(string value)
     {
@@ -13,7 +13,7 @@ class SearchScript
         {
             return new SearchScript
             {
-                Lines = new List<(string searchOption, string ChapterFilter, IReadOnlyList<LetterInfo> SearchLetters)>()
+                Lines = new List<(string ChapterFilter, IReadOnlyList<LetterInfo> SearchLetters)>()
             };
         }
 
@@ -36,15 +36,15 @@ class SearchScript
             return value.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
         }
 
-        static Response<(string searchOption, string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> parseLine(string line)
+        static Response<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> parseLine(string line)
         {
             var arr = line.Split(new[] { '|', '~' }, StringSplitOptions.RemoveEmptyEntries);
-            if (arr.Length != 3)
+            if (arr.Length != 2)
             {
                 return "Arama komutunda yanlışlık var. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
             }
 
-            var letterInfoList = Analyzer.AnalyzeText(clearText(arr[2]));
+            var letterInfoList = Analyzer.AnalyzeText(clearText(arr[1]));
            
 
             var letters = letterInfoList.Where(Analyzer.IsArabicLetter).ToList();
@@ -53,7 +53,7 @@ class SearchScript
                 return "Arama komutunda yanlışlık var. En az bir harf girmelisiniz. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
             }
 
-            return (arr[0].Trim(), arr[1].Trim(), letters);
+            return (arr[0].Trim(), letters);
         }
 
         static string clearText(string str) => Regex.Replace(str, @"\s+", string.Empty);

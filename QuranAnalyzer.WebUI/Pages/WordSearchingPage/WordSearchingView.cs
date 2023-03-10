@@ -11,19 +11,11 @@ class WordSearchingViewModel
 
     public bool IsBlocked { get; set; }
 
-    public string SearchOption { get; set; } = SearchOptions.Same;
+    public string SearchOption { get; set; } = WordSearchOption.Same;
 
     public string SearchScript { get; set; }
 
     public string SearchScriptErrorMessage { get; set; }
-}
-
-static class SearchOptions
-{
-    public const string Contains = "3";
-    public const string EndsWith = "2";
-    public const string Same = "4";
-    public const string StartsWith = "1";
 }
 
 class WordSearchingView : ReactComponent<WordSearchingViewModel>
@@ -52,6 +44,8 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
             state.SearchScript = parseResponse.Value.AsReadibleString();
         }
+        
+        state.SearchOption = Context.Query[QueryKey.SearchOption] ?? WordSearchOption.Same;
     }
 
     protected override Element render()
@@ -108,7 +102,9 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
             var summaries = new List<SummaryInfo>();
 
-            foreach (var (searchOption,chapterFilter, searchWord) in searchScript.Lines)
+            var searchOption = state.SearchOption;
+
+            foreach (var (chapterFilter, searchWord) in searchScript.Lines)
             {
                 var filteredVersesResponse = VerseFilter.GetVerseList(chapterFilter);
                 if (filteredVersesResponse.IsFail)
@@ -121,19 +117,23 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 foreach (var verse in filteredVerses)
                 {
                     IReadOnlyList<(LetterInfo start, LetterInfo end)> startAndEndPoints = null;
-                    if (searchOption == SearchOptions.Same)
+                    if (searchOption == WordSearchOption.Same)
                     {
                         startAndEndPoints = verse.GetStartAndEndPointsOfSameWords(searchWord);
                     }
-                    else if (searchOption == SearchOptions.Contains)
+                    else if (searchOption == WordSearchOption.Contains)
                     {
                         startAndEndPoints = verse.GetStartAndEndPointsOfContainsWords(searchWord);
                     }
-                    else if (searchOption == SearchOptions.EndsWith)
+                    else if (searchOption == WordSearchOption.EndsWith)
                     {
                         startAndEndPoints = verse.GetStartAndEndPointsOfEndsWithWords(searchWord);
                     }
-                    
+                    else if (searchOption == WordSearchOption.StartsWith)
+                    {
+                        startAndEndPoints = verse.GetStartAndEndPointsOfStartsWithWords(searchWord);
+                    }
+
                     if (startAndEndPoints?.Count > 0)
                     {
                         if (!matchMap.ContainsKey(verse.Id))
@@ -268,10 +268,10 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
     {
         return new FlexRow(BorderRadiusForPanels, ComponentBorder, JustifyContentSpaceEvenly, AlignContentCenter)
         {
-            new FlexRowCentered { new Switch { @checked = state.SearchOption == SearchOptions.StartsWith, onChange = ValueChange, value = SearchOptions.StartsWith }, "başlar" },
-            new FlexRowCentered { new Switch { @checked = state.SearchOption == SearchOptions.EndsWith, onChange   = ValueChange, value = SearchOptions.EndsWith }, "biter" },
-            new FlexRowCentered { new Switch { @checked = state.SearchOption == SearchOptions.Contains, onChange   = ValueChange, value = SearchOptions.Contains }, "içerir" },
-            new FlexRowCentered { new Switch { @checked = state.SearchOption == SearchOptions.Same, onChange       = ValueChange, value = SearchOptions.Same }, "aynısı" }
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.StartsWith, onChange = ValueChange, value = WordSearchOption.StartsWith }, "başlar" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.EndsWith, onChange   = ValueChange, value = WordSearchOption.EndsWith }, "biter" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.Contains, onChange   = ValueChange, value = WordSearchOption.Contains }, "içerir" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.Same, onChange       = ValueChange, value = WordSearchOption.Same }, "aynısı" }
         };
     }
 
