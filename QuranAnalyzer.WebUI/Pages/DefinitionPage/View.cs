@@ -15,8 +15,8 @@ public class DefinitionView : ReactComponent
                 " Yüzyıllar boyu Kuranda bu başlangıç harfleri için farklı farklı bir çok fikir ortaya atılmıştır.",
                 " Kimi alim bu harfler sureleri birbirinden ayırt etmek içindir demiş. ",
                 " Bazı alimler bu harfler Allahın isimlerinin bazılarının anahtarlarıdır demiş. ",
-                " Bazı alimler bu harflerin sayısal değerleri ilerde olacak olan olayların tarihlerini verir demiş.",
-                "Özetle bu başlangıç harleri konusunda bir çok yorum var.",
+                " Bazı alimler bu harflerin sayısal değerleri ilerde olacak olan olayların tarihlerini verir demiş. ",
+                "Özetle bu başlangıç harfleri konusunda bir çok yorum var.",
             },
 
             new p
@@ -45,8 +45,8 @@ public class DefinitionView : ReactComponent
             new p
             {
                 " Evet soru gayet haklı bir soru. Eğer bu kitapların içinde akla mantığa ters bir tek cümle var ise kitabın tamamına şüphe ile yaklaşmak zorundayız.",
-                " Önceki nesillerin bu soruyu çokca dillendirmemesi bizim neslimizi bağlamaz. ",
-                " Kaldıki bu bundan 100 yıl öncesinde bu soruyu müslüman bir coğrafyada zaten dillendiremezdiniz.",
+                " Önceki nesillerin bu soruyu çokça dillendirmemesi bizim neslimizi bağlamaz. ",
+                " Kaldı ki bu bundan 100 yıl öncesinde bu soruyu Müslüman bir coğrafyada zaten dillendiremezdiniz.",
             },
             new p
             {
@@ -73,9 +73,9 @@ public class DefinitionView : ReactComponent
             new p
             {
                 "Hatta bir an olsun batı insanının zihin dünyasına girelim. ",
-                "İç savaşlar, kan ve gözyaşı çoğunlukla müslüman coğrafyada oluyor, ",
+                "İç savaşlar, kan ve gözyaşı çoğunlukla Müslüman coğrafyada oluyor, ",
                 "bu insanların dinleri doğru olsaydı en başta kendilerine faydası olurdu. " +
-                "Ne malum müslümanların iddia ettikleri gibi Muhammed adında bir Arabın peygamber olduğu?"
+                "Ne malum Müslümanların iddia ettikleri gibi Muhammed adında bir Arabın peygamber olduğu?"
             },
 
             (p)" Özetle ateist sayısının sürekli arttığını da göz önüne alırsak şu soru oldukça yüksek sesle sorulmaya başlandı. ",
@@ -85,7 +85,7 @@ public class DefinitionView : ReactComponent
             {
                 "İşte bu sorunun cevabı yine Kuranın kendisinden çıkmış durumda.",
                 " Bilgeler Bilgesi olan  Kuranın üzerine biz insanların anlayabileceği kolaylıkta fakat taklit edemeyeceği zorlukta bir sayısal harmoni-örüntü-imza-desen eklemiş. ",
-                " Eklemiş ki bu kitabın kendisinden gelen bir kitap olduğuna emin olunsun ve içerisindeki dehşetli uyarılara kulak asılsın, verilen müjdeler için çaba sarfedilsin.",
+                " Eklemiş ki bu kitabın kendisinden gelen bir kitap olduğuna emin olunsun ve içerisindeki dehşetli uyarılara kulak asılsın, verilen müjdeler için çaba sarf edilsin.",
                 " Bilim ve teknolojinin patlama yaptığı bu çağda 'Bilgeler Bilgesi' biz insanoğluna yine çağın diline uygun olarak teknoloji üzerinden bilgisayar ile bir mesaj veriyor.",
                 " Tanrı'nın bu matematiksel imzası 19 sayısı üzerine kuruludur.",
                 " Kurandaki bir çok matematiksel verinin 19 rakamı ile ilişkili olmasıdır.",

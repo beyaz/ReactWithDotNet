@@ -46,7 +46,7 @@ Böylelikle herhangi 11 haneden oluşan bir sayının TC kimlik numarası olup o
             new p
             {
                 @"Yukarıdaki resimde gördüğünüz 'Kontrol Basamakları' diye işaret edilen 56 rakamı 
-rastgele olşturulmuş bir sayı değildir.
+rastgele oluşturulmuş bir sayı değildir.
 "
             },
 
