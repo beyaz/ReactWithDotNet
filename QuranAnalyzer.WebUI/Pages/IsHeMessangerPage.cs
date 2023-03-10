@@ -143,7 +143,7 @@ public class IsHeMessangerPage : ReactComponent
             new ul
             {
                 (li)"Kuranda mescitlerde Allah’ın adı tek anılsın diye açık emir varken camilerde Allah lafzının yanına Muhammed lafzı yazılmayan camii yok gibi.",
-                (li)"İnsanlar ", nbsp, "ölmüş olan Muhammed peygamberin şefaat etmesi için camilerde toplu şekilde dua içinde ona sesleniyorlar.",
+                (li)"İnsanlar ölmüş olan Muhammed peygamberin şefaat etmesi için camilerde toplu şekilde dua içinde ona sesleniyorlar.",
                 (li)"Kuranda zinanın suçu net olarak belirlenmişken Afganistan gibi bölgelerde kadınları toprağa gömüp taşlayarak öldürüyorlar."
             },
             "İşte böyle bir zamanda Reşad adında biri çıkıp diyor ki ey Müslümanlar Kurana uyun. ",
