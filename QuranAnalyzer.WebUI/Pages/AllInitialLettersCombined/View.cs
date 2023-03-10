@@ -70,9 +70,10 @@ class View : ReactComponent
                 "Böylelikle Kuranın korunacağı ve Kuranın bir benzerinin getirilemeyeceği iddaları 19 sistemi ile daha anlamlı hale gelmiş oluyor. ",
             },
 
+            new div{ "Neden 19?", TextAlignCenter},
             new p
             {
-                new div{ "Neden 19?"} + TextAlignCenter,
+                
                 new br(),
                 "Elbette herşeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi. Eğer bu örüntü 29 üzerine olsaydı neden 29 diye sorulacaktı. " ,
                 new br(),
