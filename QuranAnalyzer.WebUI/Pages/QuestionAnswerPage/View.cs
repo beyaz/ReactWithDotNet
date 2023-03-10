@@ -18,7 +18,7 @@ Elimden geldiğince tartışılan konuları en kısa ve tarafsız bir şekilde �
                 new br(),
                 new br(),
                 @"Aşağıdaki soruların cevaplarının doğru olup olmadığı siz okuyucuya bırakılmıştır. 
-İmana dair bir meselenin üzerinde düşünlüp içselleştirilmedikten sonra bir faydasının olmayacağına inanıyorum.
+İmana dair bir meselenin üzerinde düşünülüp içselleştirilmedikten sonra bir faydasının olmayacağına inanıyorum.
 Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söylediğini aktarayım sonrasında üzerine düşünmek-araştırmak ve bir karara varmak size kalsın.",
 
             },
@@ -53,7 +53,7 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                 
 
 
-                new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk felan mı var ?" },
+                new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk falan mı var ?" },
 
              
 
