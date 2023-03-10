@@ -50,7 +50,7 @@ public class WhyFamousPeopleAreSilentPage : ReactComponent
               {
                   @"Peki medyatik olmayan Youtube vesaire bir çok ortamdaki araştıran insanlar ne durumdalar?",
                   new br(),
-                  "Açıkcası burada biraz yelpaze geniş. Kimi insanlar evet Kuranda 19 vardır ama Reşad elçi değildir derler.",
+                  "Açıkçası burada biraz yelpaze geniş. Kimi insanlar evet Kuranda 19 vardır ama Reşad elçi değildir derler.",
                   "Kimisi bir yerde yapılan yanlış bir sayımı tüm sisteme mal edip her şeyi çöpe atıyor.",
                   "Kimisi gerçek 19 sistemi o değil benim bulduğumdur.",
                   "Özetle maalesef burada her türlü açılım var. Zaten bu siteyi kurma amacım da buydu."

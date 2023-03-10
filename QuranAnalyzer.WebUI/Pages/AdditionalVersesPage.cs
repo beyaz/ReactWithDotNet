@@ -34,7 +34,7 @@ public class AdditionalVersesPage : ReactComponent
                 "Süveybe adında bir sahabe de, tevbe suresinin 128. ve 129. ayetlerini söyler. " ,
                 "Fakat onun dışında hiç kimse bu iki sözün ayet olduğuna şahit olmaz. " ,
                 "Süveybe ise taa mekke döneminde bir kişinin peygamberin deve satın alması konusunda problem yaşadığını görür ve peygamber ile ticaret yapan kişinin ilk anlaşması esnasında olmadığı halde  peygamberin doğru söylediğine şahitlik eder." ,
-                "Hatta olaydan sonra peygamberimize gelerek şunu söyler ben senin Allahın resulu olduğuna şahitlik ediyorum buradaki şu ufak ticaretine nedne şahit olmayayım der." +
+                "Hatta olaydan sonra peygamberimize gelerek şunu söyler ben senin Allah'ın resulu olduğuna şahitlik ediyorum buradaki şu ufak ticaretine nedne şahit olmayayım der." +
                 "Bunun üzerine de peygamberimiz 'Süveybenin şahitliği iki kişinin şahitliği gibidir' der",
                 "Hasılı bu sözü de delil getirerek Süveybenin şahitliği iki kişi gibi sayılır ve bu iki söz Kurana eklenir.",
                 "Üstelik Tevbe suresindeki tüm ayetler Medine dönemine aitken sadece bu sonraki iki ayet mekke dönemine aittir.",
@@ -79,7 +79,7 @@ public class AdditionalVersesPage : ReactComponent
                 
                 "Özetlemek gerekir ise ",(b)" Bu bilgi Cebrail aracılığı ile geliyor. Ardından matematikle destekleniyor.",
                 new br(),
-                "Dünyada hiç bir kimse kendi kutsal saydığı kitapdan matematiğe uymuyor diye ayet atmaz. Reşad o kadar da aptal biri değil. " ,
+                "Dünyada hiç bir kimse kendi kutsal saydığı kitaptan matematiğe uymuyor diye ayet atmaz. Reşad o kadar da aptal biri değil. " ,
                 "Burasını maalesef karıştırıyorlar."
             },
 
@@ -95,7 +95,7 @@ public class AdditionalVersesPage : ReactComponent
             {
                 "Kuranda bu kitabın Allah tarfından korunduğuna dair net ifadeler var. Bu durumda haklı olarak şu soruyu sormalıyız.",
                 "Hani Allah Kuranı korumuştu? Eğer Tevbe 128-129 Kurandan değil ise nasıl oldu da Kuran mushafları arasına girebildi? " +
-                "Demekki mantık olarak çöküyor.",
+                "Demek ki mantık olarak çöküyor.",
                 
                 new br(),
                 new br(),
@@ -135,7 +135,7 @@ public class AdditionalVersesPage : ReactComponent
                 "Mesele etrafında dönen tartışmayı aktarmaya çalıştım. Umarım faydalı olmuştur.",
                 new br(),
                 "Ufak da olsa kendi anlayışımı ifade istiyorum. " ,
-                "Açıkcası hayatında Kuran olmayan birinin Tevbe 128-129 Kuran'dandır veya değildir demesinin bence bir anlamı yok. " ,
+                "Açıkçası hayatında Kuran olmayan birinin Tevbe 128-129 Kuran'dandır veya değildir demesinin bence bir anlamı yok. " ,
                 "Yılan adamı yarı beline kadar yutmuş fakat adam az önce ensesinden ısıran sivri sineğin derdine düşmüş. ",
                 new br(),
                 "Örnek biraz saçma gelebilir ama malesef durum böyle.  "

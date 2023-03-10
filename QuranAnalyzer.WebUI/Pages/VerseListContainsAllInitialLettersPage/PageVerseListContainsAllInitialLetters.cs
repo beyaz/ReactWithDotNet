@@ -80,7 +80,7 @@ class PageVerseListContainsAllInitialLetters : ReactComponent
 
             new VSpace(40),
             (b)"Sonuç: ",
-            "Açıkcası herhangi bir kitapda buna benzer bir hesaplama ile önümüze böyle rakamlar koyulsa haklı olarak pek dikkate almayabilirdik. ",
+            "Açıkçası herhangi bir kitapda buna benzer bir hesaplama ile önümüze böyle rakamlar koyulsa haklı olarak pek dikkate almayabilirdik. ",
             "Sırf işine gelen rakamı bulmak için zorlamışsın diyebilirdirdik.",
             new br(),
             "Elbetteki eleştirmek isteyen her türlü bir yol bulabilir. Mesela niye rakamları çarpmak yerine topladın? ",

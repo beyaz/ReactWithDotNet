@@ -16,17 +16,17 @@ public class WhereIsTheProblemPage : ReactComponent
             {
                 @"Gayet haklı bir soru.",
                 new br(),
-                "Elinize sıradan bir Kuran alın bu sitede başlangıç haflerinde gösterilen her bir maddeyi bizzat kendiniz teyid edebilirsiniz.",
+                "Elinize sıradan bir Kuran alın bu sitede başlangıç haflerinde gösterilen her bir maddeyi bizzat kendiniz teyit edebilirsiniz.",
 
                 new br(),
                 new br(),
-                "Sadece iki maddeyi teyid edemezsiniz.",
+                "Sadece iki maddeyi teyit edemezsiniz.",
                 new br(),
                 new br(),
 
                 "1 - Elinizdeki mushafta 68. sureyi açtığınızda surenin en başında sadece bir tane ", AsLetter(ArabicLetter.Nun), " harfi görürsünüz.",
                 " 19 sistemini ilk keşfeden kişi burada tek nun değil çift nun harfi olduğunu söylüyor. ",
-                " Hatta bu 19 sistemini ilk bu nun ile başlayan surede farkediyor. Orjinal mushafta bunun iki nun ile yazıldığını gördüm diyor.",
+                " Hatta bu 19 sistemini ilk bu nun ile başlayan surede fark ediyor. Orjinal mushafta bunun iki nun ile yazıldığını gördüm diyor.",
 
                 new br(),
                 new br(),
@@ -74,7 +74,7 @@ public class WhereIsTheProblemPage : ReactComponent
                 " Dilerseniz daha detaylı araştırabilirsiniz.",
                 new br(),
                 "Özetle 68. suredeki NuN olayı ve Elif sayımları üzerinde tartışılan noktalardır. " ,
-                " Belki de burası ilerde daha netlik kazanacak şimdilik bunun imtahan kısmıdır. " ,
+                " Belki de burası ilerde daha netlik kazanacak şimdilik bunun imtihan kısmıdır. " ,
                 " Yalnız Kuran fikrini kabullenemeyenler bu açık kapılardan çıkıp gidiyorlar. " ,
                 " 19 üzerinde muhteşem veriler varken Elif harfine takılıyor tüm sistemi çöpe atıyor. ",
                 " Umarım üzerinde tartışma yaşanan kısmını anlatabilmişimdir. Tercih sizin. "

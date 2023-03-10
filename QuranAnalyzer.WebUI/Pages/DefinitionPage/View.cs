@@ -14,7 +14,7 @@ public class DefinitionView : ReactComponent
             {
                 " Yüzyıllar boyu Kuranda bu başlangıç harfleri için farklı farklı bir çok fikir ortaya atılmıştır.",
                 " Kimi alim bu harfler sureleri birbirinden ayırt etmek içindir demiş. ",
-                " Bazı alimler bu harfler Allahın isimlerinin bazılarının anahtarlarıdır demiş. ",
+                " Bazı alimler bu harfler Allah'ın isimlerinin bazılarının anahtarlarıdır demiş. ",
                 " Bazı alimler bu harflerin sayısal değerleri ilerde olacak olan olayların tarihlerini verir demiş. ",
                 "Özetle bu başlangıç harfleri konusunda bir çok yorum var.",
             },
