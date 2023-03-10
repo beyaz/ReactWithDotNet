@@ -1,4 +1,6 @@
-﻿namespace QuranAnalyzer;
+﻿using ReactWithDotNet;
+
+namespace QuranAnalyzer;
 
 public static class QuranQuery
 {
@@ -53,7 +55,7 @@ public static class QuranQuery
         return returnList;
     }
 
-    public static bool EndsWith(this IReadOnlyList<LetterInfo> source, IReadOnlyList<LetterInfo> search)
+    public static IReadOnlyList<(LetterInfo start, LetterInfo end)> EndsWith(this IReadOnlyList<LetterInfo> source, IReadOnlyList<LetterInfo> search)
     {
         if (source is null)
         {
@@ -65,12 +67,14 @@ public static class QuranQuery
             throw new ArgumentNullException(nameof(search));
         }
 
+        var returnList = new List<(LetterInfo start, LetterInfo end)>();
+
         source = source.Where(IsValidForWordSearch).ToList();
         search = search.Where(IsValidForWordSearch).ToList();
 
         if (search.Count > source.Count)
         {
-            return false;
+            return returnList;
         }
 
         var sourceIndex = source.Count - search.Count;
@@ -79,11 +83,13 @@ public static class QuranQuery
         {
             if (!source[sourceIndex + i].HasValueAndSameAs(search[i]))
             {
-                return false;
+                return returnList;
             }
         }
 
-        return true;
+        returnList.Add((source[sourceIndex], source[sourceIndex+ search.Count-1]));
+
+        return returnList;
     }
 
     public static IReadOnlyList<(LetterInfo start, LetterInfo end)> GetStartAndEndPointsOfSameWords(this Verse verse, IReadOnlyList<LetterInfo> searchWord)
@@ -108,6 +114,18 @@ public static class QuranQuery
         foreach (var word in verse.TextWordList)
         {
             returnList.AddRange(word.Contains(searchWord));
+        }
+
+        return returnList;
+    }
+
+    public static IReadOnlyList<(LetterInfo start, LetterInfo end)> GetStartAndEndPointsOfEndsWithWords(this Verse verse, IReadOnlyList<LetterInfo> searchWord)
+    {
+        var returnList = new List<(LetterInfo start, LetterInfo end)>();
+
+        foreach (var word in verse.TextWordList)
+        {
+            returnList.AddRange(word.EndsWith(searchWord));
         }
 
         return returnList;

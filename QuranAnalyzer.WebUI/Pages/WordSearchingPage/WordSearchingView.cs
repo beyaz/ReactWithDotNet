@@ -129,6 +129,11 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                     {
                         startAndEndPoints = verse.GetStartAndEndPointsOfContainsWords(searchWord);
                     }
+                    else if (searchOption == SearchOptions.EndsWith)
+                    {
+                        startAndEndPoints = verse.GetStartAndEndPointsOfEndsWithWords(searchWord);
+                    }
+                    
                     if (startAndEndPoints?.Count > 0)
                     {
                         if (!matchMap.ContainsKey(verse.Id))
