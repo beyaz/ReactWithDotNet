@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using QuranAnalyzer.WebUI.Pages.Shared;
+using Switch = ReactWithDotNet.Libraries.mui.material.Switch;
 
 namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 
@@ -10,19 +11,19 @@ class WordSearchingViewModel
 
     public bool IsBlocked { get; set; }
 
+    public string SearchOption { get; set; } = SearchOptions.Same;
+
     public string SearchScript { get; set; }
 
     public string SearchScriptErrorMessage { get; set; }
-
-    public string SearchOption { get; set; } = SearchOptions.Same;
 }
 
 static class SearchOptions
 {
-    public const string StartsWith = "1";
-    public const string EndsWith = "2";
     public const string Contains = "3";
+    public const string EndsWith = "2";
     public const string Same = "4";
+    public const string StartsWith = "1";
 }
 
 class WordSearchingView : ReactComponent<WordSearchingViewModel>
@@ -53,22 +54,6 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         }
     }
 
-    Element PartOption()
-    {
-        return new FlexRow(BorderRadiusForPanels, ComponentBorder, JustifyContentSpaceEvenly, AlignContentCenter)
-        {
-            new FlexRowCentered(Gap(0)){ new ReactWithDotNet.Libraries.mui.material.Switch{@checked = state.SearchOption == SearchOptions.StartsWith , onChange = ValueChange, value = state.SearchOption }, "başlar" },
-            //new SwitchWithLabel
-            //{
-            //    Label       = "başlar",
-            //    Value       = state.SearchOption == SearchOptions.StartsWith,
-            //    ValueChange = ValueChange
-            //},
-            //new SwitchWithLabel { Label = "biter" },
-            //new SwitchWithLabel { Label = "içerir" },
-            //new SwitchWithLabel { Label = "aynısı" }
-        };
-    }
     protected override Element render()
     {
         IEnumerable<Element> searchPanel() => new[]
@@ -88,7 +73,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 {
                     new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
 
-                    new TextArea { TextArea.Bind(() => state.SearchScript) , FontFamily_Lateef  }, // rows = 2, autoResize = true,
+                    new TextArea { TextArea.Bind(() => state.SearchScript), FontFamily_Lateef }, // rows = 2, autoResize = true,
 
                     new ErrorText { Text = state.SearchScriptErrorMessage }
                 },
@@ -205,11 +190,6 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                                 });
     }
 
-    void ValueChange(ChangeEvent changeEvent)
-    {
-        state.SearchOption = changeEvent.target.value;
-    }
-
     static Element Container(params Element[] panels)
     {
         return new FlexColumn(Gap(10), AlignItemsStretch, WidthMaximized, MaxWidth(800))
@@ -269,5 +249,21 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         }
 
         state.IsBlocked = false;
+    }
+
+    Element PartOption()
+    {
+        return new FlexRow(BorderRadiusForPanels, ComponentBorder, JustifyContentSpaceEvenly, AlignContentCenter)
+        {
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == SearchOptions.StartsWith, onChange = ValueChange, value = SearchOptions.StartsWith }, "başlar" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == SearchOptions.EndsWith, onChange   = ValueChange, value = SearchOptions.EndsWith }, "biter" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == SearchOptions.Contains, onChange   = ValueChange, value = SearchOptions.Contains }, "içerir" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == SearchOptions.Same, onChange       = ValueChange, value = SearchOptions.Same }, "aynısı" }
+        };
+    }
+
+    void ValueChange(ChangeEvent changeEvent)
+    {
+        state.SearchOption = changeEvent.target.value;
     }
 }
