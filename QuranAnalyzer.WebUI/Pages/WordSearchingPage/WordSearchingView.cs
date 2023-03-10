@@ -67,7 +67,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 {
                     new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
 
-                    new TextArea { TextArea.Bind(() => state.SearchScript), FontFamily_Lateef }, // rows = 2, autoResize = true,
+                    new TextArea { TextArea.Bind(() => state.SearchScript), FontFamily_Lateef, FontSize19 }, // rows = 2, autoResize = true,
 
                     new ErrorText { Text = state.SearchScriptErrorMessage }
                 },
@@ -256,7 +256,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         if (state.IsBlocked == false)
         {
             state.IsBlocked = true;
-            Client.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={script.AsString()}");
+            Client.PushHistory("", $"/?{QueryKey.Page}={PageId.WordSearchingPage}&{QueryKey.SearchQuery}={script.AsString()}&{QueryKey.SearchOption}={state.SearchOption}");
             Client.GotoMethod(OnCaclculateClicked);
             return;
         }
@@ -268,15 +268,19 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
     {
         return new FlexRow(BorderRadiusForPanels, ComponentBorder, JustifyContentSpaceEvenly, AlignContentCenter)
         {
-            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.StartsWith, onChange = ValueChange, value = WordSearchOption.StartsWith }, "başlar" },
-            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.EndsWith, onChange   = ValueChange, value = WordSearchOption.EndsWith }, "biter" },
-            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.Contains, onChange   = ValueChange, value = WordSearchOption.Contains }, "içerir" },
-            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.Same, onChange       = ValueChange, value = WordSearchOption.Same }, "aynısı" }
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.StartsWith, onChange = SearchOptionChanged, value = WordSearchOption.StartsWith }, "başlar" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.EndsWith, onChange   = SearchOptionChanged, value = WordSearchOption.EndsWith }, "biter" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.Contains, onChange   = SearchOptionChanged, value = WordSearchOption.Contains }, "içerir" },
+            new FlexRowCentered { new Switch { @checked = state.SearchOption == WordSearchOption.Same, onChange       = SearchOptionChanged, value = WordSearchOption.Same }, "aynısı" }
         };
     }
 
-    void ValueChange(ChangeEvent changeEvent)
+    void SearchOptionChanged(ChangeEvent changeEvent)
     {
         state.SearchOption = changeEvent.target.value;
+
+        state.SearchScriptErrorMessage = null;
+        
+        state.ClickCount               = 0;
     }
 }

@@ -47,7 +47,7 @@ class WordColorizedVerse : ReactPureComponent
                         
                         var span = new span
                         {
-                            innerText = verseLetters.GetRange(cursor, endIndex - cursor).AsText(),
+                            innerText = verseLetters.GetRange(cursor, endIndex - cursor+1).AsText(),
                             style =
                             {
                                 color        = GetColor(searchWordIndex),
@@ -117,12 +117,12 @@ class WordColorizedVerse : ReactPureComponent
                 searchWordIndex++;
             }
         }
-        var textView = new div(FontFamily_Lateef)
+        var textView = new div(FontFamily_Lateef, FontSize19)
         {
             innerHTML = html.ToString(),
             style =
             {
-                fontSize    = "1.4rem",
+                
                 padding     = "5px",
                 
                 direction   = "rtl",
