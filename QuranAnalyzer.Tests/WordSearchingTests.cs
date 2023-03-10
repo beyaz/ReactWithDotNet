@@ -88,5 +88,9 @@ public class WordSearchingTests
 
         source.Contains(beyyine).Count.Should().Be(2);
 
+        VerseFilter.GetVerseList("2:211").Value[0].TextAnalyzed.Contains(beyyine).Count.Should().Be(1);
+
+        //VerseFilter.GetVerseList("*").Value.Sum(v => v.TextAnalyzed.Contains(beyyine).Count).Unwrap().Should().Be(19);
+
     }
 }
