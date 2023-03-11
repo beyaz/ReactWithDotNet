@@ -34,7 +34,7 @@ static class ReactWithDotNetIntegration
     {
         await WriteHtmlResponse(httpContext, new MainLayout
         {
-            Page = new PageMainWindowView(),
+            Page        = new PageMainWindowView(),
             QueryString = httpContext.Request.QueryString.ToString()
         });
     }
@@ -65,7 +65,7 @@ static class ReactWithDotNetIntegration
 
         mainLayout.RenderInfo = await CalculateRenderInfo(mainLayout.Page, mainLayout.QueryString);
 
-        var html =  await CalculateHtmlText(new CalculateHtmlTextInput
+        var html = await CalculateHtmlText(new CalculateHtmlTextInput
         {
             ReactComponent = mainLayout,
             QueryString    = httpContext.Request.QueryString.ToString()

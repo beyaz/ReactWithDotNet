@@ -26,7 +26,7 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
             new Label { Text = "Harfler" },
             new FlexRow(Gap(3))
             {
-                MediaQuery("(max-width:350px)",FlexDirectionColumn,AlignItemsStretch),
+                MediaQuery("(max-width:350px)", FlexDirectionColumn, AlignItemsStretch),
                 new TextInput
                 {
                     TextInput.Bind(() => state.Letters),
@@ -90,7 +90,6 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
         }
 
         var letters = Analyzer.AnalyzeText(state.Letters.Replace(" ", ""));
-       
 
         state.LetterInfoList = letters;
     }
@@ -122,6 +121,3 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
         }
     }
 }
-
-
-

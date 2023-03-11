@@ -7,7 +7,7 @@ class MainContentContainer : ReactPureComponent
         return new FlexRow
         {
             JustifyContentCenter,
-            
+
             Children(children),
 
             WidthMaximized,

@@ -3,7 +3,7 @@
 public class ActionButton : ReactComponent
 {
     public bool IsProcessing { get; set; }
-    
+
     public string Label { get; set; }
 
     [ReactCustomEvent]
