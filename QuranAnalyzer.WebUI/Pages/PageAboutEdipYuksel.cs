@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class AboutEdipYukselPage : ReactComponent
+public class PageAboutEdipYuksel : ReactPureComponent
 {
     protected override Element render()
     {

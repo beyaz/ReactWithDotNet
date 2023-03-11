@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class WhoIsReshadKhalifePage : ReactComponent
+public class PageWhoIsReshadKhalife : ReactPureComponent
 {
     protected override Element render()
     {

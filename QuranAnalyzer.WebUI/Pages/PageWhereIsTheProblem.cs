@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class WhereIsTheProblemPage : ReactComponent
+public class PageWhereIsTheProblem : ReactPureComponent
 {
     protected override Element render()
     {

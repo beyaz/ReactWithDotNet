@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class AdditionalVersesPage : ReactComponent
+public class PageAdditionalVerses : ReactPureComponent
 {
     protected override Element render()
     {

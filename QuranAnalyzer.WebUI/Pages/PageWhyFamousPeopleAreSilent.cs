@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class WhyFamousPeopleAreSilentPage : ReactComponent
+public class PageWhyFamousPeopleAreSilent : ReactPureComponent
 {
     protected override Element render()
     {
