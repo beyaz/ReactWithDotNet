@@ -1,9 +1,9 @@
 ﻿using System.Numerics;
 using ReactWithDotNet.Libraries.react_awesome_reveal;
 using ReactWithDotNet.react_xarrows;
-using static QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined.Extensions;
+using static QuranAnalyzer.WebUI.Pages.PageAllInitialLettersCombined.Extensions;
 
-namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
+namespace QuranAnalyzer.WebUI.Pages.PageAllInitialLettersCombined;
 
 class TotalCounts : ReactComponent
 {

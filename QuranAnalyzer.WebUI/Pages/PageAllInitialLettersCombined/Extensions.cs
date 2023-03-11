@@ -1,4 +1,4 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
+﻿namespace QuranAnalyzer.WebUI.Pages.PageAllInitialLettersCombined;
 
 static class Extensions
 {

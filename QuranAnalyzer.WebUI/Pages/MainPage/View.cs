@@ -59,7 +59,7 @@ class View : ReactPureComponent
                 PageId.PageVerseListContainsAllInitialLetters => new PageVerseListContainsAllInitialLettersView(),
                 PageId.AdditionalVersesPage                   => new PageAdditionalVerses(),
                 PageId.CountOfAllahPage                       => new CountOfAllah(),
-                PageId.AllInitialLettersCombined              => new AllInitialLettersCombined.View(),
+                PageId.AllInitialLettersCombined              => new PageAllInitialLettersCombined.PageAllInitialLettersCombinedView(),
                 PageId.WhereIsTheProblemPage                  => new PageWhereIsTheProblem(),
                 PageId.IsHeMessangerPage                      => new PageIsHeMessanger(),
                 _                                             => new MainPageContent()

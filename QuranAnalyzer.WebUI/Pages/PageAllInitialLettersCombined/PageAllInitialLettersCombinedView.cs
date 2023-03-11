@@ -1,6 +1,6 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.AllInitialLettersCombined;
+﻿namespace QuranAnalyzer.WebUI.Pages.PageAllInitialLettersCombined;
 
-class View : ReactComponent
+class PageAllInitialLettersCombinedView : ReactComponent
 {
     protected override Element render()
     {
