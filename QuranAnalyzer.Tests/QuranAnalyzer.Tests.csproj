@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuranAnalyzer\QuranAnalyzer.csproj" />
-    <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
   </ItemGroup>
 
     <PropertyGroup>
