@@ -1,6 +1,6 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.ContactPage;
+﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class PageContact : ReactComponent
+public class PageContact : ReactPureComponent
 {
     protected override Element render()
     {
