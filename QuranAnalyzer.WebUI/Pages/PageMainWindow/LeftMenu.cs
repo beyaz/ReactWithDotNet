@@ -1,28 +1,28 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.MainPage;
+﻿namespace QuranAnalyzer.WebUI.Pages.PageMainWindow;
 
 class LeftMenu : ReactComponent
 {
     static readonly List<(string text, IReadOnlyList<string> pageIdList)> MenuItems = new()
     {
-        ("Anasayfa", new[] { PageId.MainPage }),
+        ("Anasayfa", new[] { PageId.MainWindow }),
         ("Teknolojide Veri İletimi", new[] { PageId.SecuringDataWithCurrentTechnology }),
         ("Ön Bilgiler", new[] { PageId.PreInformation }),
-        ("Tanım", new[] { PageId.Definition }),
+        ("Tanım", new[] { PageId.SimpleDefinition }),
         ("Başlangıç Harfleri", new[] { PageId.InitialLetters }),
         ("Soru - Cevap", new[] 
         {
-            PageId.QuestionAnswerPage,
+            PageId.QuestionAnswer,
             PageId.AlternativeSystems,
             PageId.WhoIsReshadKhalifePage,
-            PageId.AboutEdipYukselPage,
-            PageId.WhyFamousPeopleAreSilentPage,
-            PageId.AdditionalVersesPage,
-            PageId.WhereIsTheProblemPage,
-            PageId.CountOfAllahPage
+            PageId.AboutEdipYuksel,
+            PageId.WhyFamousPeopleAreSilent,
+            PageId.AdditionalVerses,
+            PageId.WhereIsTheProblem,
+            PageId.CountOfAllah
         }),
-        ("İletişim", new[] { PageId.ContactPage }),
+        ("İletişim", new[] { PageId.Contact }),
         ("Harf Sayım Programı", new[] { PageId.CharacterCounting }),
-        ("Kelime Sayım Programı", new[] { PageId.WordSearchingPage }),
+        ("Kelime Sayım Programı", new[] { PageId.WordSearching }),
     };
 
     public string SelectedPageId { get; set; }

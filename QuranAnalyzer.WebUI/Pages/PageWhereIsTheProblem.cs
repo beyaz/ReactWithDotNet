@@ -54,7 +54,7 @@ public class PageWhereIsTheProblem : ReactPureComponent
                 new br(),
                 new a
                 {
-                    href = GetPageLink(PageId.PageVerseListContainsAllInitialLetters),
+                    href = GetPageLink(PageId.VerseListContainsAllInitialLetters),
                     text = "Bütün Başlangıç Harflerini İçeren Ayetler"
                 },
                 new br(),

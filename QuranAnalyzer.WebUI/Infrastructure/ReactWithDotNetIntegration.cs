@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
-using QuranAnalyzer.WebUI.Pages.MainPage;
+using QuranAnalyzer.WebUI.Pages.PageMainWindow;
 using ReactWithDotNet.UIDesigner;
 
 namespace QuranAnalyzer.WebUI;
@@ -34,7 +34,7 @@ static class ReactWithDotNetIntegration
     {
         await WriteHtmlResponse(httpContext, new MainLayout
         {
-            Page = new View(),
+            Page = new PageMainWindowView(),
             QueryString = httpContext.Request.QueryString.ToString()
         });
     }

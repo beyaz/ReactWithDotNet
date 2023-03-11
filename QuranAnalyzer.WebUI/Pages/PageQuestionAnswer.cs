@@ -33,21 +33,21 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                 new QuestionLink
                 {
                     Question = "Peki bu 19 sistemi hiç mi eleştiri almıyor? Kabul etmeyenler nereleri eleştiriyor?",
-                    Url      = GetPageLink(PageId.WhereIsTheProblemPage)
+                    Url      = GetPageLink(PageId.WhereIsTheProblem)
                 },
                 new QuestionLink
                 {
                     Question = @"Madem bu 19 sayısı bu kadar ilginç veriler içeriyor, neden medyadaki hiç bir alimden/hocadan duymuyoruz?",
-                    Url      = GetPageLink(PageId.WhyFamousPeopleAreSilentPage)
+                    Url      = GetPageLink(PageId.WhyFamousPeopleAreSilent)
                 },
                 new QuestionLink
                 {
                     Question = "19 sistemi nin olması için Kurandan iki ayet atılması gerekiyor mu ? Yoksa sistem çöküyormuş doğru mu ?",
 
-                    Url = GetPageLink(PageId.AdditionalVersesPage)
+                    Url = GetPageLink(PageId.AdditionalVerses)
                 },
 
-                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?",Url = GetPageLink(PageId.IsHeMessangerPage) },
+                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?",Url = GetPageLink(PageId.IsHeMessanger) },
 
 
                 
@@ -59,7 +59,7 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
 
                 new QuestionLink { Question = "Paralel 19 sistemleri", Url = GetPageLink(PageId.AlternativeSystems) },
 
-                new QuestionLink { Question = "Edip Yüksel", Url = GetPageLink(PageId.AboutEdipYukselPage) },
+                new QuestionLink { Question = "Edip Yüksel", Url = GetPageLink(PageId.AboutEdipYuksel) },
 
                 //new QuestionLink { Question = "Allah mı? Tanrı mı ?" }
             }

@@ -72,7 +72,7 @@ public class PageAdditionalVerses : ReactPureComponent
             },
             new FlexRowCentered
             {
-                new a{href = GetPageLink(PageId.CountOfAllahPage), text = "9. 128-129 üzerine ufak bir inceleme"}
+                new a{href = GetPageLink(PageId.CountOfAllah), text = "9. 128-129 üzerine ufak bir inceleme"}
             },
             new p
             {

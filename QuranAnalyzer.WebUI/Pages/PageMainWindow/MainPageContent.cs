@@ -1,4 +1,4 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.MainPage;
+﻿namespace QuranAnalyzer.WebUI.Pages.PageMainWindow;
 
 class MainPageContent : ReactComponent
 {

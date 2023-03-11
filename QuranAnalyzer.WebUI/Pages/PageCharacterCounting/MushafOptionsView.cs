@@ -86,7 +86,7 @@ class MushafOptionsView : ReactComponent
                   }
               },
 
-            new a { Text("Mushaf ayarları hakkında detaylı bilgi"), Href(GetPageLink(PageIdOfMushafOptionsDetail)), MarginTop(10) }
+            new a { Text("Mushaf ayarları hakkında detaylı bilgi"), Href(GetPageLink(MushafOptionsDetail)), MarginTop(10) }
         };
     }
 

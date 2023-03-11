@@ -2,11 +2,11 @@
 
 public class PagePreInformation : ReactPureComponent
 {
-    static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) +
+    static string PageUrlOfDays30 => GetPageLink(PageId.WordSearching) +
                                      "&" + QueryKey.SearchQuery + "=" + "*~ايام;*~يومين;*~الايام;*~اياما;*~واياما;*~بايىم" +
                                      "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
 
-    static string PageUrlOfDays365 => GetPageLink(PageId.WordSearchingPage) +
+    static string PageUrlOfDays365 => GetPageLink(PageId.WordSearching) +
                                       "&" + QueryKey.SearchQuery + "=" + "*~يوم;*~ويوم;*~اليوم;*~واليوم;*~يوما;*~ليوم;*~فاليوم;*~بيوم;*~باليوم;*~وباليوم" +
                                       "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
 

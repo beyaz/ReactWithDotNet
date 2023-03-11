@@ -4,11 +4,11 @@ using QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 using QuranAnalyzer.WebUI.Pages.PageVerseListContainsAllInitialLetters;
 using QuranAnalyzer.WebUI.Pages.PageWordSearching;
 
-namespace QuranAnalyzer.WebUI.Pages.MainPage;
+namespace QuranAnalyzer.WebUI.Pages.PageMainWindow;
 
-class View : ReactPureComponent
+class PageMainWindowView : ReactPureComponent
 {
-    string SelectedPageId => Context.Query[QueryKey.Page] ?? PageId.MainPage;
+    string SelectedPageId => Context.Query[QueryKey.Page] ?? PageId.MainWindow;
 
     protected override Element render()
     {
@@ -42,26 +42,26 @@ class View : ReactPureComponent
         {
             return SelectedPageId switch
             {
-                PageId.MainPage                               => new MainPageContent(),
+                PageId.MainWindow                               => new MainPageContent(),
                 PageId.SecuringDataWithCurrentTechnology      => new PageSecuringDataWithCurrentTechnology(),
                 PageId.PreInformation                         => new PagePreInformation(),
                 PageId.InitialLetters                         => new PageInitialLettersView(),
-                PageId.QuestionAnswerPage                     => new PageQuestionAnswer(),
-                PageId.ContactPage                            => new PageContact(),
+                PageId.QuestionAnswer                     => new PageQuestionAnswer(),
+                PageId.Contact                            => new PageContact(),
                 PageId.CharacterCounting                      => new PageCharacterCountingView(),
-                PageId.WordSearchingPage                      => new WordSearchingView(),
+                PageId.WordSearching                      => new WordSearchingView(),
                 PageId.AlternativeSystems                     => new PageAlternativeSystems(),
-                PageId.Definition                             => new PageSimpleDefinition(),
-                PageId.PageIdOfMushafOptionsDetail            => new PageMushafOptionsDetail(),
+                PageId.SimpleDefinition                             => new PageSimpleDefinition(),
+                PageId.MushafOptionsDetail            => new PageMushafOptionsDetail(),
                 PageId.WhoIsReshadKhalifePage                 => new PageWhoIsReshadKhalife(),
-                PageId.WhyFamousPeopleAreSilentPage           => new PageWhyFamousPeopleAreSilent(),
-                PageId.AboutEdipYukselPage                    => new PageAboutEdipYuksel(),
-                PageId.PageVerseListContainsAllInitialLetters => new PageVerseListContainsAllInitialLettersView(),
-                PageId.AdditionalVersesPage                   => new PageAdditionalVerses(),
-                PageId.CountOfAllahPage                       => new PageCountOfAllahView(),
+                PageId.WhyFamousPeopleAreSilent           => new PageWhyFamousPeopleAreSilent(),
+                PageId.AboutEdipYuksel                    => new PageAboutEdipYuksel(),
+                PageId.VerseListContainsAllInitialLetters => new PageVerseListContainsAllInitialLettersView(),
+                PageId.AdditionalVerses                   => new PageAdditionalVerses(),
+                PageId.CountOfAllah                       => new PageCountOfAllahView(),
                 PageId.AllInitialLettersCombined              => new PageAllInitialLettersCombined.PageAllInitialLettersCombinedView(),
-                PageId.WhereIsTheProblemPage                  => new PageWhereIsTheProblem(),
-                PageId.IsHeMessangerPage                      => new PageIsHeMessanger(),
+                PageId.WhereIsTheProblem                  => new PageWhereIsTheProblem(),
+                PageId.IsHeMessanger                      => new PageIsHeMessanger(),
                 _                                             => new MainPageContent()
             };
         }
