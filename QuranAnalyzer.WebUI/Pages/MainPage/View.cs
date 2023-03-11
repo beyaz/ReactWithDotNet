@@ -52,7 +52,7 @@ class View : ReactPureComponent
                 PageId.WordSearchingPage                      => new WordSearchingView(),
                 PageId.AlternativeSystems                     => new PageAlternativeSystems(),
                 PageId.Definition                             => new PageSimpleDefinition(),
-                PageId.PageIdOfMushafOptionsDetail            => new MushafOptionsDetail.PageMushafOptionsDetail(),
+                PageId.PageIdOfMushafOptionsDetail            => new PageMushafOptionsDetail(),
                 PageId.WhoIsReshadKhalifePage                 => new PageWhoIsReshadKhalife(),
                 PageId.WhyFamousPeopleAreSilentPage           => new PageWhyFamousPeopleAreSilent(),
                 PageId.AboutEdipYukselPage                    => new PageAboutEdipYuksel(),
