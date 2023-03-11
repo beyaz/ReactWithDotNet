@@ -222,8 +222,7 @@ public class IsHeMessangerPage : ReactComponent
                 "Önümüze hangi mucize konur ise konsun illüzyon deyip geçebilirdik. ",
                 "Suda yürüyenden tutun havada uçana kadar her türlü illüzyon var.", br,
                 "Haliyle Reşad’a verilen bu matematiksel mucize biraz daha anlam kazanıyor. ",
-                "Tamda matematiğin – bilimin- bilgisayarın patlama yaptığı bir çağda bu tarz bir mucizenin ortaya çıkması oldukça mantıklı.", br,
-                "Kuranda ", (strong)"kanıt(beyyine) kelimesinin 19 kez", " geçtiğini söylememe gerek yok sanırım."
+                "Tamda matematiğin – bilimin- bilgisayarın patlama yaptığı bir çağda bu tarz bir mucizenin ortaya çıkması oldukça mantıklı."
             },
             new p
             {

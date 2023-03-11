@@ -77,7 +77,6 @@ class View : ReactComponent
             new ul
             {
                 (li)"Kuranın kapağını açtığınızda karşınıza çıkan ilk çümle yani Besmele 19 harftir.",
-                (li)"Kuranda 'Kanıt' kelimesi (Arapça: beyyine) tam 19 defa geçmektedir.",
                 (li)"Kuranda bahsi geçen tüm rakamların toplamı 19'un katıdır. Mesela Nuh'un yaşı ifade edilirken 1000 yıldan 50 eksik gibi bir ifade kullanılmış."
             },
             new p

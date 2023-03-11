@@ -13,11 +13,10 @@ class MainPageContent : ReactComponent
                 @"Bir kaç yıl önce Kuran hakkında 19 Sistemi - 19 Mucizesi benzeri isimlerle duyduğum bir konu üzerine vakit buldukça araştırma yapma fırsatım oldu.",
                 new br(),
 
-                @"Elimden geldiğince aklımın yettiği ölçüde nedir ne değildir inceledim.
-Bu konu etrafında doğru yanlış bir çok şey duydum ve okudum.
-Konuyu bizzat incelemek ve konu etrafında dönen doğru yanlış şeylere kendimce verdiğim cevapları ve yazdığım programları paylaşmak istedim.
-Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyetindeyim.
-"
+                "Elimden geldiğince aklımın yettiği ölçüde nedir ne değildir inceledim.",
+                " Bu konu etrafında doğru yanlış bir çok şey duydum ve okudum.",
+                " Konuyu incelemek ve konu etrafında dönen doğru yanlış şeylere kendimce verdiğim cevapları ve yazdığım programları paylaşmak istedim.",
+                " Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyetindeyim.",
             },
 
             (p)"Bu siteyi hazırlarken aşağıdaki konulara dikkat ettim;",
@@ -41,7 +40,7 @@ Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyet
                     {
                         "Her ne kadar düşünen insan sayısı az olsa da düşünebilen her insanın bir beyni olduğuna inanıyorum. ",
                         "Bu sebeple doğru şudur veya şu yanlıştır gibi ifadelerden uzak durmaya çalıştım. ",
-                        "Konu etrafında dönen zıt fikirleri elimden geldiğince tarafsız bir biçimde aktarmaya çalıştım. " ,
+                        "Konu etrafında dönen zıt fikirleri elimden geldiğince tarafsız bir biçimde aktarmaya çalıştım. ",
                         "Karar verme yorum yapma işini ise elimden geldiğince okuyucuya bırakmaya çalıştım.",
                     }
                 },
@@ -52,6 +51,14 @@ Böylelikle konuyu araştıran kişiler için tarafsız bir gözlem sunmak niyet
                     {
                         "Bu sitede bazı matematiksel veriler bulunmaktadır. Hesaplama araçları bulunmaktadır. ",
                         "Bu veriler gerçek zamanlı olarak çalışmaktadır. Giriş değerlerini değiştirdiğinizde sonuçlar da otomatik olarak değişecektir."
+                    }
+                },
+
+                new li
+                {
+                    new p
+                    {
+                        "Hesaplamasını yapmadığım herhangi bir veriyi paylaşmadım."
                     }
                 }
             },

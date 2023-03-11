@@ -5,41 +5,6 @@ namespace QuranAnalyzer;
 [TestClass]
 public class WordSearchingTests
 {
-    static void CountShouldBe(string searchWord, int expected)
-    {
-        var search = AnalyzeText(searchWord);
-
-        VerseFilter.GetVerseList("*").Value.Sum(v => v.TextWithBismillahWordList.Count(w => w.Same(search))).Value.Should().Be(expected);
-    }
-
-    [TestMethod]
-    public void Day_365()
-    {
-        const string yevm       = "يوم";
-        const string ve_yevm    = "ويوم";
-        const string el_yevm    = "اليوم";
-        const string vel_yevm   = "واليوم";
-        const string yevmen     = "يوما";
-        const string li_yevm    = "ليوم";
-        const string fel_yevm   = "فاليوم";
-        const string bi_yevm    = "بيوم";
-        const string bil_yevm   = "باليوم";
-        const string vebil_yevm = "وباليوم";
-
-
-        CountShouldBe(yevm,217);
-        CountShouldBe(ve_yevm,44);
-        CountShouldBe(el_yevm,41);
-        CountShouldBe(vel_yevm,23);
-        CountShouldBe(yevmen,16);
-        CountShouldBe(li_yevm,8);
-        CountShouldBe(fel_yevm,8);
-        CountShouldBe(bi_yevm,5);
-        CountShouldBe(bil_yevm,2);
-        CountShouldBe(vebil_yevm,1);
-    }
-
-
     [TestMethod]
     public void Adem_Isa()
     {
@@ -65,15 +30,6 @@ public class WordSearchingTests
         CountShouldBe(ya_isa, 4);
         CountShouldBe(bi_isa, 2);
     }
-        
-
-    [TestMethod]
-    public void EndsWithNunVavNun()
-    {
-        var nunVavNun = AnalyzeText("نون");
-
-        VerseFilter.GetVerseList("*").Value.Sum(v => v.TextWithBismillahWordList.Last().EndsWith(nunVavNun).Count).Unwrap().Should().Be(133);
-    }
 
     [TestMethod]
     public void Beyyine()
@@ -83,14 +39,49 @@ public class WordSearchingTests
 
         source.Contains(beyyine).Count.Should().Be(1);
 
-
-        source  = AnalyzeText(" الْبَيِّنَةُۜ-- الْبَيِّنَةُۜ");
+        source = AnalyzeText(" الْبَيِّنَةُۜ-- الْبَيِّنَةُۜ");
 
         source.Contains(beyyine).Count.Should().Be(2);
+    }
 
-        VerseFilter.GetVerseList("2:211").Value[0].TextAnalyzed.Contains(beyyine).Count.Should().Be(1);
+    [TestMethod]
+    public void Day_365()
+    {
+        const string yevm       = "يوم";
+        const string ve_yevm    = "ويوم";
+        const string el_yevm    = "اليوم";
+        const string vel_yevm   = "واليوم";
+        const string yevmen     = "يوما";
+        const string li_yevm    = "ليوم";
+        const string fel_yevm   = "فاليوم";
+        const string bi_yevm    = "بيوم";
+        const string bil_yevm   = "باليوم";
+        const string vebil_yevm = "وباليوم";
 
-        //VerseFilter.GetVerseList("*").Value.Sum(v => v.TextAnalyzed.Contains(beyyine).Count).Unwrap().Should().Be(19);
+        CountShouldBe(yevm, 217);
+        CountShouldBe(ve_yevm, 44);
+        CountShouldBe(el_yevm, 41);
+        CountShouldBe(vel_yevm, 23);
+        CountShouldBe(yevmen, 16);
+        CountShouldBe(li_yevm, 8);
+        CountShouldBe(fel_yevm, 8);
+        CountShouldBe(bi_yevm, 5);
+        CountShouldBe(bil_yevm, 2);
+        CountShouldBe(vebil_yevm, 1);
+    }
 
+    [TestMethod]
+    public void EndsWithNunVavNun()
+    {
+        var nunVavNun = AnalyzeText("نون");
+
+        VerseFilter.GetVerseList("*").Value.Sum(v => v.TextWithBismillahWordList.Last().EndsWith(nunVavNun).Count).Unwrap().Should().Be(133);
+    }
+
+    static void CountShouldBe(string searchWord, int expected)
+    {
+        var search = AnalyzeText(searchWord);
+
+        VerseFilter.GetVerseList("*").Value.Sum(v => v.TextWithBismillahWordList.Count(w => w.Same(search))).Value.Should().Be(expected);
     }
 }
