@@ -94,6 +94,23 @@ static class Extensions
             return ("bi-eyyam", "günler");
         }
 
+
+        // i s a
+        const string isa    = "عيسي";
+        const string ve_isa = "وعيسي";
+        const string ya_isa = "يعيسي";
+        const string bi_isa = "بعيسي";
+
+        return arabicWord switch
+        {
+            isa => ("isa", "isa"),
+            ve_isa => ("ve isa", "ve isa"),
+            ya_isa => ("ya isa", "ya isa"),
+            bi_isa => ("bi isa", "bi isa"),
+            
+            _ =>null
+        };
+
         return null;
     }
 
