@@ -2,7 +2,7 @@
 
 namespace QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 
-class Note : ReactComponent
+class Note : ReactPureComponent
 {
     public string Text { get; set; }
     
