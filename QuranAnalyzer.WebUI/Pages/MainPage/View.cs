@@ -45,10 +45,10 @@ class View : ReactPureComponent
             return SelectedPageId switch
             {
                 PageId.MainPage                               => new MainPageContent(),
-                PageId.SecuringDataWithCurrentTechnology      => new SecuringDataWithCurrentTechnology.View(),
+                PageId.SecuringDataWithCurrentTechnology      => new SecuringDataWithCurrentTechnology.PageSecuringDataWithCurrentTechnology(),
                 PageId.PreInformation                         => new PagePreInformation(),
                 PageId.InitialLetters                         => new AllInitialLetters(),
-                PageId.QuestionAnswerPage                     => new QuestionAnswerPage.PageQuestionAnswer(),
+                PageId.QuestionAnswerPage                     => new PageQuestionAnswer(),
                 PageId.ContactPage                            => new ContactPage.View(),
                 PageId.CharacterCounting                      => new CharacterCountingView(),
                 PageId.WordSearchingPage                      => new WordSearchingView(),

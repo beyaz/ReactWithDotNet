@@ -1,6 +1,6 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.SecuringDataWithCurrentTechnology;
+﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class View : ReactComponent
+public class PageSecuringDataWithCurrentTechnology : ReactComponent
 {
     protected override Element render()
     {

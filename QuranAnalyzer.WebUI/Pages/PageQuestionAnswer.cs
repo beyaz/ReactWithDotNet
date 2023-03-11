@@ -1,4 +1,4 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.QuestionAnswerPage;
+﻿namespace QuranAnalyzer.WebUI.Pages;
 
 public class PageQuestionAnswer : ReactComponent
 {
@@ -7,7 +7,7 @@ public class PageQuestionAnswer : ReactComponent
         return new Article
         {
             new LargeTitle("Soru - Cevap"),
-            
+
             new p
             {
                 @"Bu bölümde 19 meselesi etrafında dönen tartışmalı konuları ele aldım. 
@@ -27,7 +27,7 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
             {
                 new QuestionLink
                 {
-                    Question = "19 sistemini ilk keşfeden kişi (Reşad Halife) kimdir? Ne söylüyor?", 
+                    Question = "19 sistemini ilk keşfeden kişi (Reşad Halife) kimdir? Ne söylüyor?",
                     Url = GetPageLink(PageId.WhoIsReshadKhalifePage)
                 },
                 new QuestionLink
