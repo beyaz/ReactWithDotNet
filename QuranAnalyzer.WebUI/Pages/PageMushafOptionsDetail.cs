@@ -1,6 +1,6 @@
 ﻿using static QuranAnalyzer.ArabicLetter;
 
-namespace QuranAnalyzer.WebUI.Pages.MushafOptionsDetail;
+namespace QuranAnalyzer.WebUI.Pages;
 
 public class PageMushafOptionsDetail : ReactComponent
 {
