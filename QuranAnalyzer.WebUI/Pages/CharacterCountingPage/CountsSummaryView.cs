@@ -117,7 +117,7 @@ static int? TryFindSpecialNumber(int value)
     string GetPronunciation(string name)
     {
         var pronunciation = GetPronunciationOfArabicLetter(name);
-        if (pronunciation is not null)
+        if (pronunciation is not null && pronunciation != name)
         {
             pronunciation = "(" + pronunciation + ")";
         }
