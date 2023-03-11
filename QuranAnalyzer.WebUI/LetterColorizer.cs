@@ -67,31 +67,19 @@ public class LetterColorizer : ReactPureComponent
             html.Append(VerseText.Substring(cursor));
         }
 
-        var countsView = new HPanel
-        {
-            style =
-            {
-                padding        = "5px",
-                justifyContent = "center",
-                flexWrap       = "wrap"
-            }
-        };
+        var countsView = new FlexRow(FlexWrap,JustifyContentCenter,Padding(5), Gap(13));
 
         for (var j = 0; j < lettersForColorize.Count; j++)
         {
-            var countView = new HPanel
+            var countView = new FlexRow(AlignItemsCenter)
             {
-                children =
-                {
-                    new div { text = lettersForColorize[j].MatchedLetter, style = { color = GetColor(j), fontWeight = "bold" } },
+                new div { lettersForColorize[j].MatchedLetter, FontWeightBold,Color(GetColor(j)) },
 
-                    new div { text = ":", style = { marginLeftRight = "4px" } },
+                new div {  ":", MarginLeftRight(4)},
 
-                    new div { text = counts[j].ToString(), style = { fontSize = "0.78rem" } },
+                new div { counts[j].ToString(), FontSize12 },
 
-                    GetExtra(lettersForColorize[j].ArabicLetterIndex)
-                },
-                style = { marginLeft = "10px" }
+                GetExtra(lettersForColorize[j].ArabicLetterIndex)
             };
 
             countsView.appendChild(countView);
@@ -113,7 +101,7 @@ public class LetterColorizer : ReactPureComponent
             $"{ChapterNumber}:{VerseNumber}"
         };
 
-        var topLegend = new legend(DisplayFlex, FlexDirectionRow, AlignItemsCenter)
+        var topLegend = new legend(DisplayFlex, FlexDirectionRow, AlignItemsCenter,Gap(5))
         {
             verseId,
             countsView

@@ -84,32 +84,20 @@ class WordColorizedVerse : ReactPureComponent
             cursor++;
         }
 
-        var countsView = new HPanel
-        {
-            style =
-            {
-                padding        = "5px",
-                justifyContent = "center",
-                flexWrap       = "wrap"
-            },
-        };
+        var countsView = new FlexRow(FlexWrap, JustifyContentCenter, Padding(5), Gap(13));
 
         {
             var searchWordIndex = 0;
 
             foreach (var (searchWord, startEndPoints) in MatchList)
             {
-                var countView = new HPanel
+                var countView = new FlexRow(AlignItemsCenter)
                 {
-                    children =
-                    {
-                        new div { text = string.Join(string.Empty,searchWord), style = { color = GetColor(searchWordIndex), fontWeight = "bold" } },
+                    new div { string.Join(string.Empty,searchWord), FontWeightBold, Color(GetColor(searchWordIndex)) },
 
-                        new div { text = ":", style = { marginLeftRight = "4px" } },
+                    new div {  ":", MarginLeftRight(4)},
 
-                        new div { text = startEndPoints.Count.ToString(), style = { fontSize = "0.78rem" } }
-                    },
-                    style = { marginLeft = "10px" }
+                    new div { startEndPoints.Count.ToString(), FontSize12 }
                 };
 
                 countsView.appendChild(countView);
@@ -132,8 +120,8 @@ class WordColorizedVerse : ReactPureComponent
         {
             $"{Verse.Id}"
         };
-        
-        var topLegend = new legend(DisplayFlex, FlexDirectionRow, AlignItemsCenter)
+
+        var topLegend = new legend(DisplayFlex, FlexDirectionRow, AlignItemsCenter, Gap(5))
         {
             verseId,
             countsView
