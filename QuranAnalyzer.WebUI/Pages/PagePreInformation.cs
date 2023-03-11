@@ -14,7 +14,7 @@ public class PagePreInformation : ReactPureComponent
                                       "&" + QueryKey.SearchQuery + "=" + "*~عيسي;*~وعيسي;*~يعيسي;*~بعيسي" +
                                       "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
     static string PageUrlOfAdem => GetPageLink(PageId.WordSearching) +
-                                  "&" + QueryKey.SearchQuery + "=" + "*~ءادم;*~يءادم;*~لءادم;*~ويءادم" +
+                                  "&" + QueryKey.SearchQuery + "=" + "*~اادم;*~يادم;*~لٔادم;*~ويادم" +
                                   "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
 
     protected override Element render()

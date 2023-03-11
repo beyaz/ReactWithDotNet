@@ -95,6 +95,12 @@ static class Extensions
         }
 
 
+        // a d e m
+        const string adem      = "اادم";
+        const string ya_adem   = "يادم";
+        const string li_adem   = "لٔادم";
+        const string veya_adem = "ويادم";
+        
         // i s a
         const string isa    = "عيسي";
         const string ve_isa = "وعيسي";
@@ -103,12 +109,19 @@ static class Extensions
 
         return arabicWord switch
         {
+            // a d e m
+            adem => ("âdem", "âdem"),
+            ya_adem => ("ya-âdem", "ya-âdem"),
+            li_adem => ("li-âdem", "li-âdem"),
+            veya_adem => ("veya-âdem", "veya-âdem"),
+
+            // i s a
             isa => ("isa", "isa"),
             ve_isa => ("ve isa", "ve isa"),
             ya_isa => ("ya isa", "ya isa"),
             bi_isa => ("bi isa", "bi isa"),
-            
-            _ =>null
+
+            _ => null
         };
 
         return null;
