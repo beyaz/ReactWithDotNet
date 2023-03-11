@@ -1,11 +1,11 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.DefinitionPage;
+﻿namespace QuranAnalyzer.WebUI.Pages;
 
 public class PageSimpleDefinition : ReactComponent
 {
     protected override Element render()
     {
-        var ul_style = DisplayFlex+ FlexDirectionColumn+ Gap(8);
-        
+        var ul_style = DisplayFlex + FlexDirectionColumn + Gap(8);
+
         return new Article
         {
             new LargeTitle("Tanım"),
