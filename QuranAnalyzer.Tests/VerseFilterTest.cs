@@ -1,9 +1,24 @@
-﻿
-namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer;
 
 [TestClass]
 public class VerseFilterTest
 {
+    [TestMethod]
+    public void _4()
+    {
+        VerseFilter.GetVerseList("1:*, -1:3, -1:4").IsFail.Should().BeFalse();
+    }
+
+    [TestMethod]
+    public void _5()
+    {
+        VerseFilter.GetVerseList("1:3 --> 1:7").Unwrap().Count.Should().Be(5);
+
+        VerseFilter.GetVerseList("1:3 --> 2:4").Unwrap().Count.Should().Be(9);
+
+        VerseFilter.GetVerseList("1:3 --> 4:7").IsFail.Should().BeFalse();
+    }
+
     [TestMethod]
     public void FilterWithStar()
     {
@@ -44,6 +59,12 @@ public class VerseFilterTest
     }
 
     [TestMethod]
+    public void FilterWithStarWithManyWithSpecificAyahNumber_with_Error()
+    {
+        VerseFilter.GetVerseList(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
+    }
+
+    [TestMethod]
     public void SpecifiedWithRange()
     {
         var records = VerseFilter.GetVerseList(" 20  : 4- 7").Value;
@@ -58,27 +79,5 @@ public class VerseFilterTest
         records[1].Index.Should().Be("5");
         records[2].Index.Should().Be("6");
         records[3].Index.Should().Be("7");
-    }
-
-    [TestMethod]
-    public void FilterWithStarWithManyWithSpecificAyahNumber_with_Error()
-    {
-        VerseFilter.GetVerseList(" 42  : * , 114 : *, 77:50, 115:*").IsFail.Should().BeTrue();
-    }
-
-    [TestMethod]
-    public void _4()
-    {
-        VerseFilter.GetVerseList("1:*, -1:3, -1:4").IsFail.Should().BeFalse();
-    }
-
-    [TestMethod]
-    public void _5()
-    {
-        VerseFilter.GetVerseList("1:3 --> 1:7").Unwrap().Count.Should().Be(5);
-
-        VerseFilter.GetVerseList("1:3 --> 2:4").Unwrap().Count.Should().Be(9);
-
-        VerseFilter.GetVerseList("1:3 --> 4:7").IsFail.Should().BeFalse();
     }
 }

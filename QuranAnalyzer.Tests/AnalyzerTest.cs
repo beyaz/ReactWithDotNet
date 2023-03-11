@@ -9,11 +9,9 @@ public class AnalyzerTest
     [TestMethod]
     public void _1_()
     {
-
         Analyzer.AnalyzeText("يَٰصَىٰحِبَىِ")
                 .Count(x => x.ArabicLetterIndex == ArabicLetterIndex.Yaa)
                 .Should().Be(3);
-
 
         Analyzer.AnalyzeText("يَٰصَىٰحِبَىِ ٱلسِّجْنِ أَمَّآ أَحَدُكُمَا فَيَسْقِى رَبَّهُۥ خَمْرًا وَأَمَّا ٱلْءَاخَرُ فَيُصْلَبُ فَتَأْكُلُ ٱلطَّيْرُ مِن رَّأْسِهِۦ قُضِىَ ٱلْأَمْرُ ٱلَّذِى فِيهِ تَسْتَفْتِيَانِ")
                 .Count(x => x.ArabicLetterIndex == ArabicLetterIndex.Yaa)
@@ -30,7 +28,7 @@ public class AnalyzerTest
     //        var (chapterNumber, verseNumber, verseText) = ParseLine(line);
 
     //        var tanzil = VerseFilter.GetVerseList(chapterNumber + ":" + verseNumber).Value[0];
-            
+
     //        var analyzedText = Analyzer.AnalyzeText(verseText);
 
     //        var a = JsonConvert.SerializeObject(tanzil.TextAnalyzed.Where(l => l.ArabicLetterIndex >= 0).Select(l=>l.ArabicLetterIndex));
@@ -39,8 +37,6 @@ public class AnalyzerTest
     //        {
     //            differentList.Add(tanzil.Id);
     //        }
-
-           
 
     //    }
 
@@ -53,6 +49,6 @@ public class AnalyzerTest
     //    var arr = line.Split('|');
 
     //    return (int.Parse(arr[1]), int.Parse(arr[2]), arr[3]);
-        
+
     //}
 }

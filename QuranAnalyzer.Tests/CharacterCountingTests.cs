@@ -7,13 +7,13 @@ namespace QuranAnalyzer;
 [TestClass]
 public class CharacterCountingTests
 {
+    static readonly MushafOption AlifAccordingToTanzil = new() { UseElifReferencesFromTanzil = true };
+
     [TestMethod]
     public void AnalyzeVerseTest()
     {
         CountShouldBe("*", Daad, 1686);
     }
-
-    static readonly MushafOption AlifAccordingToTanzil = new() { UseElifReferencesFromTanzil = true };
 
     [TestMethod]
     public void Chapter_10()
@@ -139,16 +139,16 @@ public class CharacterCountingTests
     }
 
     [TestMethod]
+    public void Chapter_50()
+    {
+        CountShouldBe("50:*", Qaaf, 57);
+    }
+
+    [TestMethod]
     public void Chapter_68()
     {
         CountShouldBe("68:*", Nun, new MushafOption { Chapter_68_Should_Single_Nun = false }, 133);
         CountShouldBe("68:*", Nun, new MushafOption { Chapter_68_Should_Single_Nun = true }, 132);
-    }
-
-    [TestMethod]
-    public void Chapter_50()
-    {
-        CountShouldBe("50:*", Qaaf, 57);
     }
 
     [TestMethod]
@@ -192,6 +192,7 @@ public class CharacterCountingTests
         CountShouldBe("42:*", Siin, 54);
         CountShouldBe("42:*", Qaaf, 57);
     }
+
     static void CountShouldBe(string searchScript, int arabicLetterIndex, int expectedCount)
     {
         GetVerseList(searchScript).Then(verses => GetCountOfLetter(verses, arabicLetterIndex)).ShouldBe(expectedCount);

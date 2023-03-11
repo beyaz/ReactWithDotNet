@@ -48,12 +48,12 @@ public class Response
     /// <summary>
     ///     The success
     /// </summary>
-    public static readonly Response Success = new Response();
+    public static readonly Response Success = new();
 
     /// <summary>
     ///     The errors
     /// </summary>
-    protected readonly List<Error> errors = new List<Error>();
+    protected readonly List<Error> errors = new();
 
     /// <summary>
     ///     Gets the results.
