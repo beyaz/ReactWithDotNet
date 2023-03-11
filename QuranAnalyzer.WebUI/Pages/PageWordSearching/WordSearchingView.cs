@@ -198,7 +198,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                                         new h4("Sonuçlar") + TextAlignCenter,
 
                                         new CountsSummaryView { Counts = summaryInfoList },
-                                        new VSpace(30),
+                                        Space(30),
                                         new div
                                         {
                                             Children(resultVerseList)

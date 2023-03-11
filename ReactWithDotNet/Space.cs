@@ -20,20 +20,6 @@ public class VSpace : HtmlElement
 }
 
 
-public class HSpace : HtmlElement
-{
-    public override string Type => nameof(div);
-    public HSpace(double width)
-    {
-        style.width = $"{width}px";
-    }
-
-    public HSpace(string width)
-    {
-        style.width = width;
-    }
-}
-
 
 
 class Space : HtmlElement

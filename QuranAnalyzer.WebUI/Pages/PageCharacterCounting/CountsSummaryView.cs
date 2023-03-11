@@ -42,15 +42,11 @@ class CountsSummaryView : ReactPureComponent
         }
         else
         {
-            returnDiv.appendChild(new legend
+            returnDiv.appendChild(new legend(DisplayFlex,FlexDirectionRow, Gap(4))
             {
-                style = { display = "flex", flexDirection = "row" },
-                children =
-                {
-                    new div { text = "Toplam:" },
-                    new HSpace(4),
-                    new strong { text = total.ToString(), id = "GrandTotal" }
-                }
+                new div { text = "Toplam:" },
+                
+                new strong { text = total.ToString(), id = "GrandTotal" }
             });
         }
 
