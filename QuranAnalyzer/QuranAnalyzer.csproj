@@ -10,11 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ReactWithDotNet.Libraries\ReactWithDotNet.Libraries.csproj" />
-      <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="quran-uthmani.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
