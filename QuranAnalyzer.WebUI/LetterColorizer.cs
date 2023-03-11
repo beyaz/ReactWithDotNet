@@ -108,30 +108,20 @@ public class LetterColorizer : ReactPureComponent
             }
         };
 
-        var verseId = new div
+        var verseId = new div(FontWeightBold, MarginLeft(2), FontSize13)
         {
-            text = $"{ChapterNumber}:{VerseNumber}",
-            style =
-            {
-                fontSize   = "0.8rem",
-                fontWeight = "bold",
-                marginLeft = "2px"
-            }
+            $"{ChapterNumber}:{VerseNumber}"
         };
 
-        var topLegend = new legend
+        var topLegend = new legend(DisplayFlex, FlexDirectionRow, AlignItemsCenter)
         {
-            style = { display = "flex", flexDirection = "row", alignItems = "center" },
-            children =
-            {
-                verseId,
-                countsView
-            }
+            verseId,
+            countsView
         };
 
         return new fieldset
         {
-            children = { topLegend, new VSpace(5), textView },
+            children = { topLegend, textView },
             style =
             {
                 DisplayFlex,
@@ -139,7 +129,7 @@ public class LetterColorizer : ReactPureComponent
                 AlignItemsFlexEnd,
 
                 Border("1px dashed rgb(218, 220, 224)"),
-                BorderRadius(4)
+                BorderRadiusForPanels
             }
         };
     }

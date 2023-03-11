@@ -117,53 +117,39 @@ class WordColorizedVerse : ReactPureComponent
                 searchWordIndex++;
             }
         }
-        var textView = new div(FontFamily_Lateef, FontSize19)
+        var textView = new div(FontFamily_Lateef)
         {
             innerHTML = html.ToString(),
             style =
             {
-                
-                padding     = "5px",
-                
-                direction   = "rtl",
-                marginRight = "auto"
+                FontSize(38),
+                Padding(5),
+                DirectionRtl
             }
         };
 
-
-        var verseId = new div
+        var verseId = new div(FontWeightBold, MarginLeft(2), FontSize13)
         {
-            text = $"{Verse.Id}",
-            style =
-            {
-                fontSize   = "0.8rem",
-                fontWeight = "bold",
-                marginLeft = "2px"
-            }
+            $"{Verse.Id}"
         };
-
-        var topLegend = new legend
+        
+        var topLegend = new legend(DisplayFlex, FlexDirectionRow, AlignItemsCenter)
         {
-            style = { display = "flex", flexDirection = "row", alignItems = "center" },
-            children =
-            {
-                verseId,
-                countsView
-            }
+            verseId,
+            countsView
         };
 
         return new fieldset
         {
-            children = { topLegend, new VSpace(5), textView },
+            children = { topLegend, textView },
             style =
             {
-                marginTop    = "5px",
-                border       = "1px dashed rgb(218, 220, 224)",
-                borderRadius = "4px",
+                DisplayFlex,
+                FlexDirectionColumn,
+                AlignItemsFlexEnd,
 
-                display       = "flex",
-                flexDirection = "column",
-                alignItems    = "flex-start"
+                Border("1px dashed rgb(218, 220, 224)"),
+                BorderRadiusForPanels
             }
         };
         
