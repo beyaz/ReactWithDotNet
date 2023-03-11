@@ -7,7 +7,6 @@ namespace QuranAnalyzer;
 [TestClass]
 public class CharacterCountingTests
 {
-    #region Public Methods
     [TestMethod]
     public void AnalyzeVerseTest()
     {
@@ -193,9 +192,6 @@ public class CharacterCountingTests
         CountShouldBe("42:*", Siin, 54);
         CountShouldBe("42:*", Qaaf, 57);
     }
-    #endregion
-
-    #region Methods
     static void CountShouldBe(string searchScript, int arabicLetterIndex, int expectedCount)
     {
         GetVerseList(searchScript).Then(verses => GetCountOfLetter(verses, arabicLetterIndex)).ShouldBe(expectedCount);
@@ -205,5 +201,4 @@ public class CharacterCountingTests
     {
         GetVerseList(searchScript).Then(verses => GetCountOfLetter(verses, arabicLetterIndex, option)).ShouldBe(expectedCount);
     }
-    #endregion
 }

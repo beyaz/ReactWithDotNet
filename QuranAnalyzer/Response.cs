@@ -6,14 +6,10 @@
 [Serializable]
 public sealed class Error
 {
-    #region Public Properties
     /// <summary>
     ///     Gets or sets the message.
     /// </summary>
     public string Message { get; set; }
-    #endregion
-
-    #region Public Methods
     /// <summary>
     ///     Performs an implicit conversion from <see cref="Exception" /> to <see cref="Error" />.
     /// </summary>
@@ -40,7 +36,6 @@ public sealed class Error
     {
         return Message;
     }
-    #endregion
 }
 
 /// <summary>
@@ -49,21 +44,14 @@ public sealed class Error
 [Serializable]
 public class Response
 {
-    #region Static Fields
     /// <summary>
     ///     The success
     /// </summary>
     public static readonly Response Success = new Response();
-    #endregion
-
-    #region Fields
     /// <summary>
     ///     The errors
     /// </summary>
     protected readonly List<Error> errors = new List<Error>();
-    #endregion
-
-    #region Public Properties
     /// <summary>
     ///     Gets the results.
     /// </summary>
@@ -88,9 +76,6 @@ public class Response
     ///     Gets a value indicating whether this instance is success.
     /// </summary>
     public bool IsSuccess => errors.Count == 0;
-    #endregion
-
-    #region Public Methods
     /// <summary>
     ///     Fails the specified error message.
     /// </summary>
@@ -135,7 +120,6 @@ public class Response
 
         return response;
     }
-    #endregion
 }
 
 /// <summary>
@@ -144,13 +128,10 @@ public class Response
 [Serializable]
 public sealed class Response<TValue> : Response
 {
-    #region Public Properties
     /// <summary>
     ///     Gets or sets the value.
     /// </summary>
     public TValue Value { get; set; }
-    #endregion
-
     public static Response<TValue> Fail(Response response)
     {
         var newResponse = new Response<TValue>();
@@ -226,8 +207,6 @@ public sealed class Response<TValue> : Response
 
 public static class FpExtensions
 {
-    #region Public Methods
-
     public static Response<int> GetIndex<T>(this T[] array, T value)
     {
         var index = Array.IndexOf(array, value);
@@ -382,5 +361,4 @@ public static class FpExtensions
             return exception;
         }
     }
-    #endregion
 }

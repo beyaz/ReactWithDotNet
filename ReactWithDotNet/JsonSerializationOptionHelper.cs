@@ -6,7 +6,6 @@ namespace ReactWithDotNet;
 
 static partial class JsonSerializationOptionHelper
 {
-    #region Public Methods
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
     {
         options.WriteIndented    = true;
@@ -26,11 +25,8 @@ static partial class JsonSerializationOptionHelper
 
         return options;
     }
-    #endregion
-
     public class JsonConverterForEnum : JsonConverterFactory
     {
-        #region Public Methods
         public override bool CanConvert(Type typeToConvert)
         {
             if (typeToConvert.Assembly == typeof(JsonConverterForEnum).Assembly)
@@ -52,12 +48,10 @@ static partial class JsonSerializationOptionHelper
 
             return converter;
         }
-        #endregion
     }
 
     class EnumToStringConverter<T> : JsonConverter<T>
     {
-        #region Public Methods
         public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
@@ -67,7 +61,6 @@ static partial class JsonSerializationOptionHelper
         {
             writer.WriteStringValue(value.ToString()?.ToLower());
         }
-        #endregion
     }
 
     class IReadOnlyJsonMapConverter : JsonConverter<IReadOnlyJsonMap>
@@ -146,7 +139,6 @@ static partial class JsonSerializationOptionHelper
 [Serializable]
 sealed class RemoteMethodInfo
 {
-    #region Public Properties
     [JsonPropertyName("$isRemoteMethod")]
     public bool IsRemoteMethod { get; set; }
 
@@ -157,7 +149,6 @@ sealed class RemoteMethodInfo
     public string FunctionNameOfGrabEventArguments { get; set; }
 
     public bool? StopPropagation { get; set; }
-    #endregion
 }
 
 [Serializable]

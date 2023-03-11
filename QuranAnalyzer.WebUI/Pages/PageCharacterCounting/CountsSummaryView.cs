@@ -4,10 +4,10 @@ namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 
 public class SummaryInfo
 {
-    #region Public Properties
+    
     public int Count { get; set; }
     public string Name { get; set; }
-    #endregion
+    
 }
 
 [Serializable]
@@ -15,9 +15,9 @@ class CountsSummaryView : ReactPureComponent
 {
     static readonly int[] SpecialNumbers = { 19, 1230, 505, 667, 109, 7, 238 };
 
-    #region Public Properties
+    
     public IReadOnlyList<SummaryInfo> Counts { get; set; } = new List<SummaryInfo>();
-    #endregion
+  
 
     static Element MultipleOf(int total, int specialNumber)
     {
@@ -55,7 +55,7 @@ class CountsSummaryView : ReactPureComponent
         return null;
     }
 
-    #region Public Methods
+    
     protected override Element render()
     {
         var counts = Counts ?? new List<SummaryInfo>();
@@ -148,18 +148,17 @@ class CountsSummaryView : ReactPureComponent
 
     static Element CountAsElement(string text, string color, string pronunciation, int count, string id)
     {
-        return new FlexRow
+        return new FlexRow(AlignItemsCenter)
         {
             new FlexColumn(AlignItemsCenter)
             {
-                new div { text = text, style = { color = color } },
-                new div { Text(pronunciation), FontSize("0.6rem"), FontWeight700 }
+                new div { text, Color(color), FontSize30},
+                new div { Text(pronunciation), FontSize12, FontWeight700 }
             },
 
-            new div { text = ":", style = { marginLeftRight = "4px" } },
+            new div { ":", MarginLeftRight(4) },
 
             new div { text = count.ToString(), id = id },
         };
     }
-    #endregion
 }

@@ -5,7 +5,7 @@ namespace QuranAnalyzer;
 
 public static class VerseFilter
 {
-    #region Public Methods
+
     public static Response<IReadOnlyList<Verse>> GetVerseList(string searchScript)
     {
         if (string.IsNullOrWhiteSpace(searchScript))
@@ -221,7 +221,7 @@ public static class VerseFilter
             }
         }
     }
-    #endregion
+  
 
     public static Verse GetVerseById(string verseId)
     {
