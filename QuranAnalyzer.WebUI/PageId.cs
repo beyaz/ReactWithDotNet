@@ -2,6 +2,7 @@
 
 static class PageId
 {
+    // @formatter:off
     public const string MainWindow                         = "1";
     public const string SecuringDataWithCurrentTechnology  = "2";
     public const string PreInformation                     = "3";
@@ -23,5 +24,5 @@ static class PageId
     public const string AllInitialLettersCombined          = "19";
     public const string IsHeMessanger                      = "20";
     public const string IsThereAnyCommunity                = "21";
-    
+    // @formatter:on
 }
