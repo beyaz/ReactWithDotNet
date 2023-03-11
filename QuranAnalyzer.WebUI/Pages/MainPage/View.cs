@@ -47,7 +47,7 @@ class View : ReactPureComponent
                 PageId.PreInformation                         => new PagePreInformation(),
                 PageId.InitialLetters                         => new AllInitialLetters(),
                 PageId.QuestionAnswerPage                     => new PageQuestionAnswer(),
-                PageId.ContactPage                            => new ContactPage.View(),
+                PageId.ContactPage                            => new ContactPage.PageContact(),
                 PageId.CharacterCounting                      => new CharacterCountingView(),
                 PageId.WordSearchingPage                      => new WordSearchingView(),
                 PageId.AlternativeSystems                     => new PageAlternativeSystems(),
