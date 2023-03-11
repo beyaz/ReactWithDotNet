@@ -67,15 +67,15 @@ public class LetterColorizer : ReactPureComponent
             html.Append(VerseText.Substring(cursor));
         }
 
-        var countsView = new FlexRow(FlexWrap,JustifyContentCenter,Padding(5), Gap(13));
+        var countsView = new FlexRow(FlexWrap, JustifyContentCenter, Padding(5), Gap(13));
 
         for (var j = 0; j < lettersForColorize.Count; j++)
         {
             var countView = new FlexRow(AlignItemsCenter)
             {
-                new div { lettersForColorize[j].MatchedLetter, FontWeightBold,Color(GetColor(j)) },
+                new div { lettersForColorize[j].MatchedLetter, FontWeightBold, Color(GetColor(j)) },
 
-                new div {  ":", MarginLeftRight(4)},
+                new div { ":", MarginLeftRight(4) },
 
                 new div { counts[j].ToString(), FontSize12 },
 
@@ -101,7 +101,7 @@ public class LetterColorizer : ReactPureComponent
             $"{ChapterNumber}:{VerseNumber}"
         };
 
-        var topLegend = new legend(DisplayFlex, FlexDirectionRow, AlignItemsCenter,Gap(5))
+        var topLegend = new legend(DisplayFlex, FlexDirectionRow, AlignItemsCenter, Gap(5))
         {
             verseId,
             countsView

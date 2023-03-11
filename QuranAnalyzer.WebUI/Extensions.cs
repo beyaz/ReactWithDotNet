@@ -94,13 +94,12 @@ static class Extensions
             return ("bi-eyyam", "günler");
         }
 
-
         // a d e m
         const string adem      = "اادم";
         const string ya_adem   = "يادم";
         const string li_adem   = "لٔادم";
         const string veya_adem = "ويادم";
-        
+
         // i s a
         const string isa    = "عيسي";
         const string ve_isa = "وعيسي";
@@ -123,7 +122,6 @@ static class Extensions
 
             _ => null
         };
-
     }
 
     public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
