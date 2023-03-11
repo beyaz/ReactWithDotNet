@@ -1,25 +1,8 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 
-class AllInitialLettersModel
+class PageInitialLettersView : ReactPureComponent
 {
-    public int SelectedTabIndex { get; set; }
-}
-
-class PageInitialLettersView : ReactComponent<AllInitialLettersModel>
-{
-    protected override void constructor()
-    {
-        state = new AllInitialLettersModel();
-
-        var value = Context.Query[QueryKey.FactIndex];
-        if (value is not null && int.TryParse(value, out int index) && index >0 && index<Tabs.Count)
-        {
-            state.SelectedTabIndex = index;
-        }
-
-    }
-
-    static List<(string TabHeader, Type contenType)> Tabs =new()
+    static List<(string TabHeader, Type contenType)> Tabs = new()
     {
         ("Kaf 1", typeof(InitialLetterGroup_Qaaf_50)),
         ("Kaf 2", typeof(InitialLetterGroup_Qaaf_42)),
@@ -38,34 +21,54 @@ class PageInitialLettersView : ReactComponent<AllInitialLettersModel>
 
         ("Nun", typeof(InitialLetterGroup_NunWawNun)),
     };
+
+    int SelectedTabIndex
+    {
+        get
+        {
+            var value = Context.Query[QueryKey.FactIndex];
+            if (value is not null && int.TryParse(value, out var index) && index > 0 && index < Tabs.Count)
+            {
+                return index;
+            }
+
+            return 0;
+        }
+    }
+
     protected override Element render()
     {
-        var contentContainer = new FlexColumn(JustifyContentFlexStart,WidthHeightMaximized, MarginTop(30))
+        var contentContainer = new FlexColumn(JustifyContentFlexStart, WidthHeightMaximized, MarginTop(30))
         {
             CreateTabContent()
         };
 
         var headers = new FlexColumn(TextAlignCenter, CursorPointer, JustifyContentFlexStart)
         {
-            Children(Tabs.Select((x,i) => CreateTabHeader(x.TabHeader, i)))
+            Children(Tabs.Select((x, i) => CreateTabHeader(x.TabHeader, i)))
         };
 
         return new FlexRow(WidthMaximized, Border($"1px solid {BorderColor}"), PositionRelative)
         {
             headers,
             contentContainer,
-            new div{PositionAbsolute, Top(0),Bottom(0),Width(1),MarginLeft(100+10+10+1),BackgroundColor(BorderColor) }
+            new div { PositionAbsolute, Top(0), Bottom(0), Width(1), MarginLeft(100 + 10 + 10 + 1), BackgroundColor(BorderColor) }
         };
+    }
+
+    static string GetTabUrl(int index)
+    {
+        return $"/?{QueryKey.Page}={PageId.InitialLetters}&{QueryKey.FactIndex}={index}";
     }
 
     Element CreateTabContent()
     {
-        return (Element)Activator.CreateInstance(Tabs[state.SelectedTabIndex].contenType);
+        return (Element)Activator.CreateInstance(Tabs[SelectedTabIndex].contenType);
     }
 
     Element CreateTabHeader(string text, int index)
     {
-        var isSelected = state.SelectedTabIndex == index;
+        var isSelected = SelectedTabIndex == index;
 
         return new a(Href(GetTabUrl(index)))
         {
@@ -77,14 +80,9 @@ class PageInitialLettersView : ReactComponent<AllInitialLettersModel>
                 Color("rgba(0, 0, 0, 0.6)"),
                 Padding(10),
                 TextDecorationNone,
-                When(isSelected,BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}")),
+                When(isSelected, BorderRight($"1px solid {(isSelected ? BluePrimary : BorderColor)}")),
                 When(isSelected, Background("#deecf9"), Color(BluePrimary))
             }
         };
-    }
-    
-    static string GetTabUrl(int index)
-    {
-        return $"/?{QueryKey.Page}={PageId.InitialLetters}&{QueryKey.FactIndex}={index}";
     }
 }
