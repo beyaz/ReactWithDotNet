@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class PageSimpleDefinition : ReactComponent
+public class PageSimpleDefinition : ReactPureComponent
 {
     protected override Element render()
     {

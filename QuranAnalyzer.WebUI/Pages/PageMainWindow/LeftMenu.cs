@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.PageMainWindow;
 
-class LeftMenu : ReactComponent
+class LeftMenu : ReactPureComponent
 {
     static readonly List<(string text, IReadOnlyList<string> pageIdList)> MenuItems = new()
     {

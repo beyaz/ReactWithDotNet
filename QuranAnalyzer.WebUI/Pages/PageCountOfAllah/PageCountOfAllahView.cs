@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
 
-class PageCountOfAllahView : ReactComponent
+class PageCountOfAllahView : ReactPureComponent
 {
     protected override Element render()
     {

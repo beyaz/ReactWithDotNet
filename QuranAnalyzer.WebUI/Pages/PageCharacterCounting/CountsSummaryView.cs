@@ -4,10 +4,8 @@ namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 
 public class SummaryInfo
 {
-    
     public int Count { get; set; }
     public string Name { get; set; }
-    
 }
 
 [Serializable]
@@ -15,47 +13,8 @@ class CountsSummaryView : ReactPureComponent
 {
     static readonly int[] SpecialNumbers = { 19, 1230, 505, 667, 109, 7, 238 };
 
-    
     public IReadOnlyList<SummaryInfo> Counts { get; set; } = new List<SummaryInfo>();
-  
 
-    static Element MultipleOf(int total, int specialNumber)
-    {
-        return new legend
-        {
-            children =
-            {
-                new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
-                new FlexRow(MarginLeftRight(5), AlignItemsCenter, Color("red"))
-                {
-                    new div(specialNumber.ToString()), (small)$"x {total / specialNumber}" + MarginLeftRight(3)
-                },
-                new div { innerText = ")" }
-            },
-            style = { display = "flex", flexDirection = "row" },
-            id    = "GrandTotal"
-        };
-    }
-
-    static int? TryFindSpecialNumber(int value)
-    {
-        if (value == 0)
-        {
-            return null;
-        }
-
-        foreach (var specialNumber in SpecialNumbers)
-        {
-            if (value % specialNumber == 0)
-            {
-                return specialNumber;
-            }
-        }
-
-        return null;
-    }
-
-    
     protected override Element render()
     {
         var counts = Counts ?? new List<SummaryInfo>();
@@ -131,6 +90,58 @@ class CountsSummaryView : ReactPureComponent
         return returnDiv;
     }
 
+    static Element CountAsElement(string text, string color, string pronunciation, int count, string id)
+    {
+        return new FlexRow(AlignItemsCenter)
+        {
+            new FlexColumn(AlignItemsCenter)
+            {
+                new div { text, Color(color), FontSize30 },
+                new div { Text(pronunciation), FontSize12, FontWeight700 }
+            },
+
+            new div { ":", MarginLeftRight(4) },
+
+            new div { text = count.ToString(), id = id },
+        };
+    }
+
+    static Element MultipleOf(int total, int specialNumber)
+    {
+        return new legend
+        {
+            children =
+            {
+                new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
+                new FlexRow(MarginLeftRight(5), AlignItemsCenter, Color("red"))
+                {
+                    new div(specialNumber.ToString()), (small)$"x {total / specialNumber}" + MarginLeftRight(3)
+                },
+                new div { innerText = ")" }
+            },
+            style = { display = "flex", flexDirection = "row" },
+            id    = "GrandTotal"
+        };
+    }
+
+    static int? TryFindSpecialNumber(int value)
+    {
+        if (value == 0)
+        {
+            return null;
+        }
+
+        foreach (var specialNumber in SpecialNumbers)
+        {
+            if (value % specialNumber == 0)
+            {
+                return specialNumber;
+            }
+        }
+
+        return null;
+    }
+
     string GetPronunciation(string name)
     {
         var pronunciation = GetPronunciationOfArabicLetter(name);
@@ -144,21 +155,5 @@ class CountsSummaryView : ReactPureComponent
         }
 
         return pronunciation;
-    }
-
-    static Element CountAsElement(string text, string color, string pronunciation, int count, string id)
-    {
-        return new FlexRow(AlignItemsCenter)
-        {
-            new FlexColumn(AlignItemsCenter)
-            {
-                new div { text, Color(color), FontSize30},
-                new div { Text(pronunciation), FontSize12, FontWeight700 }
-            },
-
-            new div { ":", MarginLeftRight(4) },
-
-            new div { text = count.ToString(), id = id },
-        };
     }
 }

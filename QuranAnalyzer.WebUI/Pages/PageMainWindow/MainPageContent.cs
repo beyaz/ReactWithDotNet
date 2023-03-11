@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.PageMainWindow;
 
-class MainPageContent : ReactComponent
+class MainPageContent : ReactPureComponent
 {
     protected override Element render()
     {

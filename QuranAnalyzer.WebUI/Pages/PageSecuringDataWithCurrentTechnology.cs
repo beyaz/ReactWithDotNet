@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class PageSecuringDataWithCurrentTechnology : ReactComponent
+public class PageSecuringDataWithCurrentTechnology : ReactPureComponent
 {
     protected override Element render()
     {

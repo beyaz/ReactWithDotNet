@@ -43,7 +43,7 @@ class SubTitle : ReactPureComponent
     }
 }
 
-class Article : ReactComponent
+class Article : ReactPureComponent
 {
     protected override Element render()
     {
