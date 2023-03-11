@@ -24,44 +24,6 @@ class LargeTitle : ReactPureComponent
     }
 }
 
-class Important : ReactPureComponent
-{
-    readonly string text;
-
-    public Important(string text)
-    {
-        this.text = text;
-    }
-
-    protected override Element render()
-    {
-        return new div
-        {
-            style = { FontWeight500 },
-            text  = text
-        };
-    }
-}
-
-class Title : ReactPureComponent
-{
-    readonly string text;
-
-    public Title(string text)
-    {
-        this.text = text;
-    }
-
-    protected override Element render()
-    {
-        return new div
-        {
-            style = { FontSize18, TextAlignCenter },
-            text  = text
-        };
-    }
-}
-
 class SubTitle : ReactPureComponent
 {
     readonly string text;

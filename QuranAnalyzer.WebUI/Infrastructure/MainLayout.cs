@@ -21,7 +21,7 @@ class MainLayout : ReactComponent
             {
                 new meta { charset = "UTF-8" },
                 new meta { name    = "viewport", content = "width=device-width, initial-scale=1" },
-                new title { "Quran Analyzer" },
+                new title { "19 Sistemi Nedir" },
 
                 new style
                 {

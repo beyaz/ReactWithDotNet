@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-class MainContentContainer : ReactComponent
+class MainContentContainer : ReactPureComponent
 {
     protected override Element render()
     {
