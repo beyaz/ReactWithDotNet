@@ -60,22 +60,28 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
             PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3), BorderRadiusForPanels
         };
     }
+    static Element ProcessingText()
+    {
+        return new FlexRowCentered
+        {
+            PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
+            Children(new LoadingIcon { wh(17), mr(5) }, new span(Color("white")){"Lütfen bekleyiniz..."})
+        };
+    }
+    
     protected override Element render()
     {
         IEnumerable<Element> searchPanel() => new[]
         {
             When(state.IsBlocked, Backdrop),
-            When(state.IsBlocked, () => new FlexRowCentered
-            {
-                PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
-                Children(new LoadingIcon { wh(17), mr(5) }, new span(Color("white")){"Lütfen bekleyiniz..."})
-            }),
+            When(state.IsBlocked, ProcessingText),
+            
             new h4 { text = "Harf Arama", style = { TextAlignCenter } },
             new FlexColumn
             {
                 new FlexColumn
                 {
-                    new div { text = "Arama Komutu", style = { fontWeight = "500", fontSize = "0.9rem", marginBottom = "2px" } },
+                    new div { text = "Arama Komutu", style = { FontWeight500, FontSize14, MarginBottom(2)  } },
 
                     new TextArea { TextArea.Bind(() => state.SearchScript) },
 
