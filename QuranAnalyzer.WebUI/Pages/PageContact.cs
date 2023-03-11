@@ -34,7 +34,7 @@ public class PageContact : ReactPureComponent
                 new br(),
                 new FlexRowCentered
                 {
-                    new a { href = "#", text = "TODO: Buraya güncelleyeceğim şimdilik dummy" } // TODO:
+                    new a { href = "https://github.com/beyaz/QuranAnalyzer", text = "github" } // TODO:
                 }
             },
             new FlexRowCentered
@@ -43,11 +43,9 @@ public class PageContact : ReactPureComponent
             },
             new p
             {
-                "Herhangi bir fikri empoze etmek niyeti ile bu siteyi kurmadım. ",
-                "Ara ara vakit buldukça bu konulara bakma fırsatım oldu. ",
-                "Elimden geldiğince tarafsız bir şekilde meseleyi ele incelemeye çalıştım. ",
+               
                 "Gördüğüm resmi mümkün olduğunca kendi düşüncelerim minimum olacak şekilde aktarmaya çalıştım. ",
-                "Bu konular üzerine düşünen araştıran insanlara bir faydam oldu ise ne mutlu bana."
+                "Umarım bu konular üzerine düşünen araştıran insanlara bir nebze de olsa faydalı bir çalışma olmuştur."
             }
         };
     }
