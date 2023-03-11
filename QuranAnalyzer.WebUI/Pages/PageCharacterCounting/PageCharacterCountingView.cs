@@ -5,7 +5,7 @@ using QuranAnalyzer.WebUI.Pages.Shared;
 namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 
 [Serializable]
-public class CharacterCountingViewModel
+public class PageCharacterCountingViewModel
 {
     public int ClickCount { get; set; }
 
@@ -20,7 +20,7 @@ public class CharacterCountingViewModel
     public string SearchScriptErrorMessage { get; set; }
 }
 
-class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
+class PageCharacterCountingView : ReactComponent<PageCharacterCountingViewModel>
 {
     protected override Task componentDidMount()
     {
@@ -31,7 +31,7 @@ class CharacterCountingView : ReactComponent<CharacterCountingViewModel>
 
     protected override void constructor()
     {
-        state = new CharacterCountingViewModel();
+        state = new PageCharacterCountingViewModel();
 
         var value = Context.Query[QueryKey.SearchQuery];
         if (value is not null)
