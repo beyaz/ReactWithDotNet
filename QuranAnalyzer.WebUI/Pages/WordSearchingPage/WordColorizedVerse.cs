@@ -13,6 +13,7 @@ class WordColorizedVerse : ReactPureComponent
 
     protected override Element render()
     {
+        // T e s t
         if (Verse == null)
         {
             Verse = VerseFilter.GetVerseById("2:286");
@@ -50,14 +51,14 @@ class WordColorizedVerse : ReactPureComponent
                             innerText = verseLetters.GetRange(cursor, endIndex - cursor+1).AsText(),
                             style =
                             {
-                                color        = GetColor(searchWordIndex),
-                                border       = "1px dashed rgb(218, 220, 224)",
-                                borderRadius = "4px",
-                                fontWeight   = "bold"
+                                FontWeightBold,
+                                BorderRadiusForPanels,
+                                Border("1px dashed rgb(218, 220, 224)"),
+                                Color(GetColor(searchWordIndex))
                             }
                         };
 
-                        html.Append($"<span style=\"{span.style.ToCss()}\">{span.innerText}</span>");
+                        html.Append(span);
 
                         cursor = endIndex + 1;
 

@@ -45,7 +45,7 @@ public class LetterColorizer : ReactPureComponent
                         style =
                         {
                             FontWeightBold,
-                            BorderRadius(4),
+                            BorderRadiusForPanels,
                             Border("1px dashed rgb(218, 220, 224)"),
                             Color(GetColor(j))
                         }
