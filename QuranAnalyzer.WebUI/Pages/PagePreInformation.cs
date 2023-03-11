@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class PagePreInformation : ReactComponent
+public class PagePreInformation : ReactPureComponent
 {
     static string PageUrlOfDays30 => GetPageLink(PageId.WordSearchingPage) +
                                      "&" + QueryKey.SearchQuery + "=" + "*~ايام;*~يومين;*~الايام;*~اياما;*~واياما;*~بايىم" +

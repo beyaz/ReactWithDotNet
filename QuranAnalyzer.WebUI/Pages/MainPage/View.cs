@@ -63,7 +63,7 @@ class View : ReactPureComponent
                 PageId.CountOfAllahPage                       => new CountOfAllah(),
                 PageId.AllInitialLettersCombined              => new AllInitialLettersCombined.View(),
                 PageId.WhereIsTheProblemPage                  => new WhereIsTheProblemPage(),
-                PageId.IsHeMessangerPage                      => new IsHeMessangerPage(),
+                PageId.IsHeMessangerPage                      => new PageIsHeMessanger(),
                 _                                             => new MainPageContent()
             };
         }
