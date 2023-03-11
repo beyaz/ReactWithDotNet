@@ -1,8 +1,8 @@
 ﻿using QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
 using QuranAnalyzer.WebUI.Pages.InitialLetters;
 using QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
+using QuranAnalyzer.WebUI.Pages.PageVerseListContainsAllInitialLetters;
 using QuranAnalyzer.WebUI.Pages.PageWordSearching;
-using QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
 
 namespace QuranAnalyzer.WebUI.Pages.MainPage;
 
@@ -52,7 +52,7 @@ class View : ReactPureComponent
                 PageId.WordSearchingPage                      => new WordSearchingView(),
                 PageId.AlternativeSystems                     => new PageAlternativeSystems(),
                 PageId.Definition                             => new PageSimpleDefinition(),
-                PageId.PageIdOfMushafOptionsDetail            => new MushafOptionsDetail.View(),
+                PageId.PageIdOfMushafOptionsDetail            => new MushafOptionsDetail.PageMushafOptionsDetail(),
                 PageId.WhoIsReshadKhalifePage                 => new PageWhoIsReshadKhalife(),
                 PageId.WhyFamousPeopleAreSilentPage           => new PageWhyFamousPeopleAreSilent(),
                 PageId.AboutEdipYukselPage                    => new PageAboutEdipYuksel(),

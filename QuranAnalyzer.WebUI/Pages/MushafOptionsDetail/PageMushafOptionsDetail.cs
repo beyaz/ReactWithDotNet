@@ -2,7 +2,7 @@
 
 namespace QuranAnalyzer.WebUI.Pages.MushafOptionsDetail;
 
-public class View : ReactComponent
+public class PageMushafOptionsDetail : ReactComponent
 {
     protected override Element render()
     {

@@ -1,6 +1,6 @@
 ﻿using static QuranAnalyzer.ArabicLetter;
 
-namespace QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
+namespace QuranAnalyzer.WebUI.Pages.PageVerseListContainsAllInitialLetters;
 
 class PageVerseListContainsAllInitialLettersView : ReactComponent
 {
