@@ -34,7 +34,7 @@ public class PageContact : ReactPureComponent
                 new br(),
                 new FlexRowCentered
                 {
-                    new a { href = "https://github.com/beyaz/QuranAnalyzer", text = "github" } // TODO:
+                    new a { href = "https://github.com/beyaz/QuranAnalyzer", text = "github" }
                 }
             },
             new FlexRowCentered
