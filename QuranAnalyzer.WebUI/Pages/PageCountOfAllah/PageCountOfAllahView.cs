@@ -29,7 +29,7 @@ class PageCountOfAllahView : ReactPureComponent
                 SearchScript = "2:60 --> 2:62",
                 ShowDetails  = true
             }),
-            new VSpace(10),
+            VSpace(10),
             "Böylece programın neyi hesapladığını kısa bir veri üzerinde görmüş olduk. ",
 
             new p

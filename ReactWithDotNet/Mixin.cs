@@ -737,7 +737,18 @@ public static partial class Mixin
     /// </summary>
     public static HtmlElement Space(double valueInPx) => new Space(valueInPx);
 
-
+    /// <summary>
+    ///         Creates a new div with given height
+    ///     <br/>
+    ///    new div{ style = {height = <paramref name="valueInPx"/>}}
+    /// </summary>
+    public static HtmlElement VSpace(double valueInPx) => new div(Height(valueInPx));
+    /// <summary>
+    ///         Creates a new div with given width
+    ///     <br/>
+    ///    new div{ style = {width = <paramref name="valueInPx"/>}}
+    /// </summary>
+    public static HtmlElement HSpace(double valueInPx) => new div(Width(valueInPx));
 
     public static HtmlElementModifier Text(string innerText) => CreateHtmlElementModifier<HtmlElement>(element => element.text = innerText);
 

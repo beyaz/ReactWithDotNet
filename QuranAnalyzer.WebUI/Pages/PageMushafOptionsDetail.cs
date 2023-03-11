@@ -8,9 +8,7 @@ public class PageMushafOptionsDetail : ReactComponent
     {
         return new Article
         {
-            new VSpace(10),
-            new LargeTitle("Bu Sitede Kullanılan Mushaf Hakkında"),
-            new VSpace(15),
+            new LargeTitle("Bu Sitede Kullanılan Mushaf Hakkında") + MarginTopBottom(10),
 
             @"Kuran günümüze farklı mushaflar üzerinden gelmiştir. 
 En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushafı'nı örnek verebiliriz.",
