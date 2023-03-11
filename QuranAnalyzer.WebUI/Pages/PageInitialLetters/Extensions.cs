@@ -1,4 +1,4 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
+﻿namespace QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 
 static class Extensions
 {

@@ -1,11 +1,11 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
+﻿namespace QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 
 class AllInitialLettersModel
 {
     public int SelectedTabIndex { get; set; }
 }
 
-class AllInitialLetters : ReactComponent<AllInitialLettersModel>
+class PageInitialLettersView : ReactComponent<AllInitialLettersModel>
 {
     protected override void constructor()
     {

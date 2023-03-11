@@ -1,6 +1,6 @@
 ﻿using QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
-using QuranAnalyzer.WebUI.Pages.InitialLetters;
 using QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
+using QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 using QuranAnalyzer.WebUI.Pages.PageVerseListContainsAllInitialLetters;
 using QuranAnalyzer.WebUI.Pages.PageWordSearching;
 
@@ -45,7 +45,7 @@ class View : ReactPureComponent
                 PageId.MainPage                               => new MainPageContent(),
                 PageId.SecuringDataWithCurrentTechnology      => new PageSecuringDataWithCurrentTechnology(),
                 PageId.PreInformation                         => new PagePreInformation(),
-                PageId.InitialLetters                         => new AllInitialLetters(),
+                PageId.InitialLetters                         => new PageInitialLettersView(),
                 PageId.QuestionAnswerPage                     => new PageQuestionAnswer(),
                 PageId.ContactPage                            => new PageContact(),
                 PageId.CharacterCounting                      => new PageCharacterCountingView(),

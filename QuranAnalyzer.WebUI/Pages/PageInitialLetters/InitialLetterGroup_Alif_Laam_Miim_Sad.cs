@@ -1,6 +1,6 @@
 ﻿using static QuranAnalyzer.ArabicLetter;
 
-namespace QuranAnalyzer.WebUI.Pages.InitialLetters;
+namespace QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 
 class InitialLetterGroup_Alif_Laam_Miim_Sad : InitialLetterGroup
 {
