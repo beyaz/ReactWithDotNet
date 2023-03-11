@@ -1,6 +1,6 @@
 ﻿using ReactWithDotNet.react_xarrows;
 
-namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 
 public class SummaryInfo
 {

@@ -1,6 +1,6 @@
 ﻿using static QuranAnalyzer.WebUI.PageId;
 
-namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 
 class MushafOptionsView : ReactComponent
 {

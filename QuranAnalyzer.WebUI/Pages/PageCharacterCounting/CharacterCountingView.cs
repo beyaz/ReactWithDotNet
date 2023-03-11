@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using QuranAnalyzer.WebUI.Pages.Shared;
 
-namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 
 [Serializable]
 public class CharacterCountingViewModel

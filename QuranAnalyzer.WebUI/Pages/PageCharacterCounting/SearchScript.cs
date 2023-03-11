@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 
 class SearchScript
 {

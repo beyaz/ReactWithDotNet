@@ -1,6 +1,6 @@
-﻿using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
-using QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
+﻿using QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
 using QuranAnalyzer.WebUI.Pages.InitialLetters;
+using QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 using QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
 using QuranAnalyzer.WebUI.Pages.WordSearchingPage;
 

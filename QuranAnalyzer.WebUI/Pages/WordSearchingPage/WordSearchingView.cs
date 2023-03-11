@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+using QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 using QuranAnalyzer.WebUI.Pages.Shared;
 using Switch = ReactWithDotNet.Libraries.mui.material.Switch;
 
