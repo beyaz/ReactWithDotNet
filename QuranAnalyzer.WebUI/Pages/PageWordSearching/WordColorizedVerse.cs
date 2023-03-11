@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using static QuranAnalyzer.WebUI.LetterColorPalette;
 
-namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
+namespace QuranAnalyzer.WebUI.Pages.PageWordSearching;
 
 class WordColorizedVerse : ReactPureComponent
 {

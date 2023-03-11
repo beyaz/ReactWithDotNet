@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
+namespace QuranAnalyzer.WebUI.Pages.PageWordSearching;
 
 class SearchScript
 {

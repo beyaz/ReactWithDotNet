@@ -3,7 +3,7 @@ using QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 using QuranAnalyzer.WebUI.Pages.Shared;
 using Switch = ReactWithDotNet.Libraries.mui.material.Switch;
 
-namespace QuranAnalyzer.WebUI.Pages.WordSearchingPage;
+namespace QuranAnalyzer.WebUI.Pages.PageWordSearching;
 
 class WordSearchingViewModel
 {

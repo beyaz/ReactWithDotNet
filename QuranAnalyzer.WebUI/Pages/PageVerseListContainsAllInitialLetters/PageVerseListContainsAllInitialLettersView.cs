@@ -2,7 +2,7 @@
 
 namespace QuranAnalyzer.WebUI.Pages.VerseListContainsAllInitialLettersPage;
 
-class PageVerseListContainsAllInitialLetters : ReactComponent
+class PageVerseListContainsAllInitialLettersView : ReactComponent
 {
     public int? SelectedIndex { get; set; }
 
