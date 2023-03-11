@@ -19,7 +19,8 @@ class LeftMenu : ReactComponent
             PageId.AdditionalVerses,
             PageId.WhereIsTheProblem,
             PageId.CountOfAllah,
-            PageId.IsHeMessanger
+            PageId.IsHeMessanger,
+            PageId.IsThereAnyCommunity
         }),
         ("İletişim", new[] { PageId.Contact }),
         ("Harf Sayım Programı", new[] { PageId.CharacterCounting }),

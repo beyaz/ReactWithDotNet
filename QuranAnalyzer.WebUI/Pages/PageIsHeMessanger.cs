@@ -356,6 +356,13 @@ public class PageIsHeMessanger : ReactPureComponent
             },
             new p
             {
+                "Eğer Reşad'ın elçilik iddiası olmasaydı, söylediği bir çok fikri 'bu senin yorumun' deyip kenara koyabilirdik.",
+                " Ama ortada bin yıldır kitapda gizli olan başlangıç harfleri var.",
+                " Ortada aklı başında olan iyi eğitimli biri var.",
+                " Ya bu adam zır deli-bilerek Allah adına yalan söylüyor. Yahut bunda bir iş var deyip bir şekilde bir konuma koymanız gerekiyor."
+            },
+            new p
+            {
                 (strong)"Özetlersek;", br,
                 "Kurana baktığımızda anlıyoruz ki aslında gönderilen bütün peygamberler-elçiler hep aynı mesajı seslendirmişler.", (strong)" Allah’tan başka Allah yoktur", ". Dini ritüellerde farklılıklar var. Ama mesajın özü hep aynı.", br,
                 (strong)"Bir doğru üzerindeki noktalar", " gibi düşünebilirsiniz. Yol tevhid yolu.", br,

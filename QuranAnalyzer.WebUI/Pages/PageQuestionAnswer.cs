@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages;
 
-public class PageQuestionAnswer : ReactComponent
+public class PageQuestionAnswer : ReactPureComponent
 {
     protected override Element render()
     {
@@ -20,7 +20,6 @@ Elimden geldiğince tartışılan konuları en kısa ve tarafsız bir şekilde �
                 @"Aşağıdaki soruların cevaplarının doğru olup olmadığı siz okuyucuya bırakılmıştır. 
 İmana dair bir meselenin üzerinde düşünülüp içselleştirilmedikten sonra bir faydasının olmayacağına inanıyorum.
 Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söylediğini aktarayım sonrasında üzerine düşünmek-araştırmak ve bir karara varmak size kalsın.",
-
             },
             new br(),
             new FlexColumn
@@ -28,7 +27,7 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                 new QuestionLink
                 {
                     Question = "19 sistemini ilk keşfeden kişi (Reşad Halife) kimdir? Ne söylüyor?",
-                    Url = GetPageLink(PageId.WhoIsReshadKhalifePage)
+                    Url      = GetPageLink(PageId.WhoIsReshadKhalifePage)
                 },
                 new QuestionLink
                 {
@@ -47,25 +46,25 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                     Url = GetPageLink(PageId.AdditionalVerses)
                 },
 
-                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?",Url = GetPageLink(PageId.IsHeMessanger) },
+                new QuestionLink { Question = "Reşad Halife kendini peygamber ilan etmiş doğru mu ?", Url = GetPageLink(PageId.IsHeMessanger) },
 
+                new QuestionLink
+                {
+                    Question = "19'cular diye bir cemaat / tarikat / topluluk mu var?", Url = GetPageLink(PageId.IsThereAnyCommunity)
+                },
 
-                
+                new QuestionLink
+                {
+                    Question = "Paralel 19 sistemleri", Url = GetPageLink(PageId.AlternativeSystems)
+                },
 
-
-                //new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk falan mı var ?" },
-
-             
-
-                new QuestionLink { Question = "Paralel 19 sistemleri", Url = GetPageLink(PageId.AlternativeSystems) },
-
-                new QuestionLink { Question = "Edip Yüksel", Url = GetPageLink(PageId.AboutEdipYuksel) },
-
-                //new QuestionLink { Question = "Allah mı? Tanrı mı ?" }
+                new QuestionLink
+                {
+                    Question = "Edip Yüksel", Url = GetPageLink(PageId.AboutEdipYuksel)
+                }
             }
         };
     }
-
 
     class QuestionLink : ReactPureComponent
     {
@@ -105,7 +104,6 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                         Hover(Color("rgb(165 107 107)"), TextDecorationUnderline),
                         CursorPointer,
                         TextDecorationNone,
-
                     }
                 }
             };
