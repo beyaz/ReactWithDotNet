@@ -5,6 +5,15 @@ namespace QuranAnalyzer;
 
 public static class VerseFilter
 {
+    public static Verse GetVerseById(string verseId)
+    {
+        var arr = verseId.Split(':');
+
+        var chapterNumber = int.Parse(arr[0]);
+        var verseNumber   = int.Parse(arr[1]);
+
+        return AllChapters[chapterNumber - 1].Verses[verseNumber - 1];
+    }
 
     public static Response<IReadOnlyList<Verse>> GetVerseList(string searchScript)
     {
@@ -17,16 +26,16 @@ public static class VerseFilter
         {
             return AllChapters.SelectMany(x => x.Verses).ToList();
         }
-        
+
         var returnList = new List<Verse>();
 
-        var items = searchScript.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
+        var items = searchScript.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
 
         foreach (var item in items)
         {
-            var shouldExtract = item[0]=='-';
-            
-            var response   = process(item.RemoveFromStart("-"));
+            var shouldExtract = item[0] == '-';
+
+            var response = process(item.RemoveFromStart("-"));
             if (response.IsFail)
             {
                 return response;
@@ -34,7 +43,7 @@ public static class VerseFilter
 
             if (shouldExtract)
             {
-                returnList.RemoveAll(x=>response.Value.Any(y=>y.Id==x.Id));
+                returnList.RemoveAll(x => response.Value.Any(y => y.Id == x.Id));
             }
             else
             {
@@ -47,7 +56,7 @@ public static class VerseFilter
         static Response<IReadOnlyList<Verse>> byRange(string begin, string end)
         {
             var verseBegin = getVerseById(begin);
-            var verseEnd = getVerseById(end);
+            var verseEnd   = getVerseById(end);
 
             if (verseBegin.IsFail)
             {
@@ -75,7 +84,7 @@ public static class VerseFilter
 
                 foreach (var verse in chapter.Verses)
                 {
-                    if (chapter.Index == verseBegin.Value.ChapterNumber && verse.IndexAsNumber < verseBegin.Value.IndexAsNumber )
+                    if (chapter.Index == verseBegin.Value.ChapterNumber && verse.IndexAsNumber < verseBegin.Value.IndexAsNumber)
                     {
                         continue;
                     }
@@ -84,7 +93,7 @@ public static class VerseFilter
                     {
                         continue;
                     }
-                    
+
                     returnList.Add(verse);
                 }
             }
@@ -94,7 +103,7 @@ public static class VerseFilter
 
         static Response<Verse> getVerseById(string verseId)
         {
-            var arr = verseId.Split(":".ToCharArray(),StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+            var arr = verseId.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
             if (arr.Length != 2)
             {
                 return (Error)$"arama kriterlerinde hata var.{verseId}";
@@ -105,7 +114,7 @@ public static class VerseFilter
             {
                 return chapter.FailMessage;
             }
-            
+
             var verseNumber = ParseInt(arr[1]);
             if (verseNumber.IsFail)
             {
@@ -117,9 +126,9 @@ public static class VerseFilter
                 return (Error)$"Sure seçiminde yanlışlık var.{verseId}";
             }
 
-            return  chapter.Value.Verses[--verseNumber.Value];
+            return chapter.Value.Verses[--verseNumber.Value];
         }
-        
+
         static Response<Chapter> findChapterByNumber(int surahNumber)
         {
             if (surahNumber <= 0 || surahNumber > AllChapters.Count)
@@ -152,7 +161,7 @@ public static class VerseFilter
             var arr = searchItem.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
             {
-                return (Error) $"arama kriterlerinde hata var.{searchItem}";
+                return (Error)$"arama kriterlerinde hata var.{searchItem}";
             }
 
             return parseChapterNumber()
@@ -164,12 +173,9 @@ public static class VerseFilter
                 return ParseInt(arr[0]);
             }
 
-            
-
             Response<IReadOnlyList<Verse>> collectVerseList(Chapter sura, string verseFilter)
             {
-                var filters = verseFilter.Split("-".ToCharArray()).Where(x=>!string.IsNullOrWhiteSpace(x)).Select(x=>x.Trim()).ToArray();
-
+                var filters = verseFilter.Split("-".ToCharArray()).Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
 
                 if (filters.Length == 1)
                 {
@@ -185,18 +191,17 @@ public static class VerseFilter
                 {
                     return Apply(selectMultipe, ParseInt(filters[0]), ParseInt(filters[1]));
                 }
-                
-                return (Error)$"Sure seçiminde yanlışlık var.{searchItem}";
 
+                return (Error)$"Sure seçiminde yanlışlık var.{searchItem}";
 
                 Response<IReadOnlyList<Verse>> selectOne(int verseIndex)
                 {
                     if (verseIndex <= 0 || verseIndex > sura.Verses.Count)
                     {
-                        return (Error) $"Sure seçiminde yanlışlık var.{searchItem}";
+                        return (Error)$"Sure seçiminde yanlışlık var.{searchItem}";
                     }
 
-                    return new[] {sura.Verses[--verseIndex]};
+                    return new[] { sura.Verses[--verseIndex] };
                 }
 
                 Response<IReadOnlyList<Verse>> selectMultipe(int verseStartIndex, int verseEndIndex)
@@ -221,18 +226,6 @@ public static class VerseFilter
             }
         }
     }
-  
-
-    public static Verse GetVerseById(string verseId)
-    {
-        var arr = verseId.Split(':');
-
-        var chapterNumber = int.Parse(arr[0]);
-        var verseNumber = int.Parse(arr[1]);
-
-        return AllChapters[chapterNumber - 1].Verses[verseNumber - 1];
-    }
-    
 }
 
 public class VerseNumberComparer : IComparer<string>
@@ -253,7 +246,7 @@ public class VerseNumberComparer : IComparer<string>
         {
             return 0;
         }
-        
+
         var a = verseIdA.Split(':');
         var b = verseIdB.Split(':');
 

@@ -10,6 +10,7 @@ public sealed class Error
     ///     Gets or sets the message.
     /// </summary>
     public string Message { get; set; }
+
     /// <summary>
     ///     Performs an implicit conversion from <see cref="Exception" /> to <see cref="Error" />.
     /// </summary>
@@ -48,17 +49,19 @@ public class Response
     ///     The success
     /// </summary>
     public static readonly Response Success = new Response();
+
     /// <summary>
     ///     The errors
     /// </summary>
     protected readonly List<Error> errors = new List<Error>();
+
     /// <summary>
     ///     Gets the results.
     /// </summary>
     public IReadOnlyList<Error> Errors => errors;
 
     /// <summary>
-    /// Returns as array of errors
+    ///     Returns as array of errors
     /// </summary>
     public Error[] ErrorsAsArray => errors.ToArray();
 
@@ -76,6 +79,7 @@ public class Response
     ///     Gets a value indicating whether this instance is success.
     /// </summary>
     public bool IsSuccess => errors.Count == 0;
+
     /// <summary>
     ///     Fails the specified error message.
     /// </summary>
@@ -83,7 +87,7 @@ public class Response
     {
         return new Response
         {
-            errors = {errorMessage}
+            errors = { errorMessage }
         };
     }
 
@@ -132,6 +136,7 @@ public sealed class Response<TValue> : Response
     ///     Gets or sets the value.
     /// </summary>
     public TValue Value { get; set; }
+
     public static Response<TValue> Fail(Response response)
     {
         var newResponse = new Response<TValue>();
@@ -191,7 +196,7 @@ public sealed class Response<TValue> : Response
     /// </summary>
     public static implicit operator Response<TValue>(TValue value)
     {
-        return new Response<TValue> {Value = value};
+        return new Response<TValue> { Value = value };
     }
 
     public TValue Unwrap()
@@ -207,6 +212,54 @@ public sealed class Response<TValue> : Response
 
 public static class FpExtensions
 {
+    public static Response<B> Apply<A, B>(Func<A, Response<B>> functionAToB, A a)
+    {
+        return functionAToB(a);
+    }
+
+    public static Response<C> Apply<A, B, C>(Func<A, B, Response<C>> fn, Response<A> responseA, Response<B> responseB)
+    {
+        if (responseA.IsFail)
+        {
+            return responseA.Errors.ToArray();
+        }
+
+        if (responseB.IsFail)
+        {
+            return responseB.Errors.ToArray();
+        }
+
+        return fn(responseA.Value, responseB.Value);
+    }
+
+    public static Response<IReadOnlyList<TTarget>> AsListOf<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, Response<TTarget>> convertFunc)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (convertFunc == null)
+        {
+            throw new ArgumentNullException(nameof(convertFunc));
+        }
+
+        var result = new List<TTarget>();
+
+        foreach (var item in source)
+        {
+            var response = convertFunc(item);
+            if (response.IsFail)
+            {
+                return response.Errors.ToArray();
+            }
+
+            result.Add(response.Value);
+        }
+
+        return result;
+    }
+
     public static Response<int> GetIndex<T>(this T[] array, T value)
     {
         var index = Array.IndexOf(array, value);
@@ -232,7 +285,6 @@ public static class FpExtensions
 
         return new IndexOutOfRangeException("index:" + index);
     }
-
 
     public static Response<int> ParseInt(string value)
     {
@@ -279,17 +331,17 @@ public static class FpExtensions
         return successFunc(response.Value);
     }
 
-    public static C Then<A, B, C>(this Response<(A,B)> response, Func<A,B, C> successFunc, Func<string, C> failFunc)
+    public static C Then<A, B, C>(this Response<(A, B)> response, Func<A, B, C> successFunc, Func<string, C> failFunc)
     {
         if (response.IsFail)
         {
             return failFunc(response.FailMessage);
         }
 
-        return successFunc(response.Value.Item1,response.Value.Item2);
+        return successFunc(response.Value.Item1, response.Value.Item2);
     }
 
-    public static D Then<A, B, C, D>(this Response<(A, B,C)> response, Func<A, B, C,D> successFunc, Func<string, D> failFunc)
+    public static D Then<A, B, C, D>(this Response<(A, B, C)> response, Func<A, B, C, D> successFunc, Func<string, D> failFunc)
     {
         if (response.IsFail)
         {
@@ -297,57 +349,6 @@ public static class FpExtensions
         }
 
         return successFunc(response.Value.Item1, response.Value.Item2, response.Value.Item3);
-    }
-
-
-
-    public static Response<B> Apply<A,B>(Func<A,Response<B>> functionAToB, A a)
-    {
-        return functionAToB(a);
-    }
-
-    public static Response<C> Apply<A, B,C>(Func<A, B, Response<C>> fn, Response<A> responseA, Response<B> responseB)
-    {
-        if (responseA.IsFail)
-        {
-            return responseA.Errors.ToArray();
-        }
-
-        if (responseB.IsFail)
-        {
-            return responseB.Errors.ToArray();
-        }
-
-        return fn(responseA.Value, responseB.Value);
-    }
-
-
-    public static Response<IReadOnlyList<TTarget>> AsListOf<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, Response<TTarget>> convertFunc)
-    {
-        if (source == null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
-
-        if (convertFunc == null)
-        {
-            throw new ArgumentNullException(nameof(convertFunc));
-        }
-
-        var result = new List<TTarget>();
-
-        foreach (var item in source)
-        {
-            var response = convertFunc(item);
-            if (response.IsFail)
-            {
-                return response.Errors.ToArray();
-            }
-            
-            result.Add(response.Value);
-        }
-
-        return result;
     }
 
     static Response<T> Try<T>(Func<T> func)

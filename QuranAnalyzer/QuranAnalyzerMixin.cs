@@ -12,22 +12,6 @@ public enum MushafId
 public static class QuranAnalyzerMixin
 {
     static readonly CultureInfo CultureInfoArabic = new("ar-SA");
-    
-    public static bool EqualsArabicIgnoreCase(this string a, string b)
-    {
-        return string.Compare(a, b, ignoreCase: true, CultureInfoArabic) == 0;
-    }
-    
-
-    public static string GetDifferencesKeyForTanzil(string verseId)
-    {
-        return verseId + "|" + (int)MushafId.Tanzil;
-    }
-
-    public static string GetDifferencesKeyForRK(string verseId)
-    {
-        return verseId + "|" + (int)MushafId.RK;
-    }
 
     public static readonly IReadOnlyDictionary<int, Dictionary<string, int>> MushafTotalCountPerVerseDifference = new Dictionary<int, Dictionary<string, int>>
     {
@@ -40,21 +24,21 @@ public static class QuranAnalyzerMixin
             }
         },
 
-         {
-             Waaw, new()
-             {
-                 // Chapter 68
-                 { GetDifferencesKeyForTanzil("68:1"), 3 },
-                 { GetDifferencesKeyForRK("68:1"), 4 }
-             }
-         },
+        {
+            Waaw, new()
+            {
+                // Chapter 68
+                { GetDifferencesKeyForTanzil("68:1"), 3 },
+                { GetDifferencesKeyForRK("68:1"), 4 }
+            }
+        },
 
         {
             Saad, new()
             {
                 { GetDifferencesKeyForTanzil("7:69"), 1 }, // bestaten: *بَسْطَةً*
                 { GetDifferencesKeyForRK("7:69"), 0 }, // bestaten: *بَصْۜطَةً*
-                
+
                 { GetDifferencesKeyForTanzil("2:245"), 1 }, // yebsut: *رِضُ ٱللَّ*
                 { GetDifferencesKeyForRK("2:245"), 0 } // yebsut: *رِضُ ٱللَّ*
             }
@@ -65,7 +49,7 @@ public static class QuranAnalyzerMixin
             {
                 { GetDifferencesKeyForTanzil("7:69"), 0 }, // bestaten: *بَسْطَةً*
                 { GetDifferencesKeyForRK("7:69"), 1 }, // bestaten: *بَصْۜطَةً*
-                
+
                 { GetDifferencesKeyForTanzil("2:245"), 1 }, // yebsut: *رِضُ ٱللَّ*
                 { GetDifferencesKeyForRK("2:245"), 2 } // yebsut: *رِضُ ٱللَّ*
             }
@@ -77,8 +61,7 @@ public static class QuranAnalyzerMixin
                 // Chapter 11
                 { GetDifferencesKeyForTanzil("11:70"), 9 },
                 { GetDifferencesKeyForRK("11:70"), 8 },
-                
-                
+
                 // Chapter 30
                 { GetDifferencesKeyForTanzil("30:21"), 8 },
                 { GetDifferencesKeyForRK("30:21"), 7 },
@@ -252,33 +235,27 @@ public static class QuranAnalyzerMixin
                 // Chapter 15
                 { GetDifferencesKeyForRK("15:68"), 6 },
                 { GetDifferencesKeyForRK("15:19"), 9 },
-                
-                
-                
-                
-                
+
                 // Chapter 29
                 { GetDifferencesKeyForTanzil("29:10"), 24 },
                 { GetDifferencesKeyForTanzil("29:20"), 16 },
                 { GetDifferencesKeyForTanzil("29:23"), 11 },
                 { GetDifferencesKeyForTanzil("29:61"), 8 },
                 { GetDifferencesKeyForTanzil("29:63"), 15 },
-                
+
                 { GetDifferencesKeyForRK("29:10"), 25 },
                 { GetDifferencesKeyForRK("29:20"), 15 },
                 { GetDifferencesKeyForRK("29:23"), 12 },
                 { GetDifferencesKeyForRK("29:61"), 9 },
                 { GetDifferencesKeyForRK("29:63"), 16 },
-                
-                
+
                 // Chapter 30
                 { GetDifferencesKeyForTanzil("30:53"), 9 },
                 { GetDifferencesKeyForTanzil("30:58"), 14 },
 
                 { GetDifferencesKeyForRK("30:53"), 10 },
                 { GetDifferencesKeyForRK("30:58"), 15 },
-                
-                
+
                 // Chapter 31
                 { GetDifferencesKeyForTanzil("31:12"), 10 },
                 { GetDifferencesKeyForTanzil("31:21"), 22 },
@@ -291,7 +268,7 @@ public static class QuranAnalyzerMixin
                 { GetDifferencesKeyForRK("31:31"), 9 },
                 { GetDifferencesKeyForRK("31:32"), 15 },
                 { GetDifferencesKeyForRK("31:33"), 24 },
-                
+
                 // Chapter 32
                 { GetDifferencesKeyForTanzil("32:7"), 6 },
                 { GetDifferencesKeyForTanzil("32:9"), 8 },
@@ -306,12 +283,15 @@ public static class QuranAnalyzerMixin
                 { GetDifferencesKeyForRK("32:13"), 11 },
                 { GetDifferencesKeyForRK("32:15"), 13 },
                 { GetDifferencesKeyForRK("32:22"), 7 },
-
             }
         }
     };
 
-    
+    public static bool EqualsArabicIgnoreCase(this string a, string b)
+    {
+        return string.Compare(a, b, ignoreCase: true, CultureInfoArabic) == 0;
+    }
+
     public static int GetCountOfLetter(IReadOnlyList<Verse> verseList, int arabicLetterIndex, MushafOption option = null, bool includeBismillah = true)
     {
         option ??= new MushafOption();
@@ -449,17 +429,18 @@ public static class QuranAnalyzerMixin
                     return 11;
                 }
             }
-            
         }
-
-        
-
 
         return (includeBismillah ? verse.TextWithBismillahAnalyzed : verse.TextAnalyzed).Count(x => x.ArabicLetterIndex == arabicLetterIndex);
     }
-    
 
+    public static string GetDifferencesKeyForRK(string verseId)
+    {
+        return verseId + "|" + (int)MushafId.RK;
+    }
 
-
-    
+    public static string GetDifferencesKeyForTanzil(string verseId)
+    {
+        return verseId + "|" + (int)MushafId.Tanzil;
+    }
 }

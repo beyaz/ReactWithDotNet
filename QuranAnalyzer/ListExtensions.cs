@@ -1,60 +1,8 @@
-﻿
-namespace QuranAnalyzer;
+﻿namespace QuranAnalyzer;
 
 public static class ListExtensions
 {
-    static Response<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TSource, Response<TAccumulate>> func, Func<TAccumulate, TAccumulate, TAccumulate> acumulate)
-    {
-        if (source == null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
-
-        if (func == null)
-        {
-            throw new ArgumentNullException(nameof(func));
-        }
-
-        var result = seed;
-        foreach (var element in source)
-        {
-            var response = func(element);
-            if (response.IsFail)
-            {
-                return response.Errors.ToArray();
-            }
-
-            result = acumulate(result, response.Value);
-        }
-
-        return result;
-    }
-
-
-
-    public static TValue Unwrap<TValue>(this (TValue value, string exception) tuple)
-    {
-        if (tuple.exception is not null)
-        {
-            throw new Exception(tuple.exception);
-        }
-
-        return tuple.value;
-    }
-
-    
-
-    public static Response<int> Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, Response<int>> selector)
-    {
-        if (source == null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
-
-        return source.Aggregate(0, selector, (total, value) => total + value);
-    }
-
-    public static IReadOnlyList<TTarget> AsListOf<TSource,TTarget>(this IEnumerable<TSource> source, Func<TSource, TTarget> convertFunc)
+    public static IReadOnlyList<TTarget> AsListOf<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, TTarget> convertFunc)
     {
         if (source == null)
         {
@@ -69,7 +17,7 @@ public static class ListExtensions
         return source.Select(convertFunc).ToList();
     }
 
-    public static IReadOnlyList<TTarget> AsListOf<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource,int, TTarget> convertFunc)
+    public static IReadOnlyList<TTarget> AsListOf<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, int, TTarget> convertFunc)
     {
         if (source == null)
         {
@@ -108,5 +56,52 @@ public static class ListExtensions
         }
 
         return data;
+    }
+
+    public static Response<int> Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, Response<int>> selector)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        return source.Aggregate(0, selector, (total, value) => total + value);
+    }
+
+    public static TValue Unwrap<TValue>(this (TValue value, string exception) tuple)
+    {
+        if (tuple.exception is not null)
+        {
+            throw new Exception(tuple.exception);
+        }
+
+        return tuple.value;
+    }
+
+    static Response<TAccumulate> Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TSource, Response<TAccumulate>> func, Func<TAccumulate, TAccumulate, TAccumulate> acumulate)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
+
+        if (func == null)
+        {
+            throw new ArgumentNullException(nameof(func));
+        }
+
+        var result = seed;
+        foreach (var element in source)
+        {
+            var response = func(element);
+            if (response.IsFail)
+            {
+                return response.Errors.ToArray();
+            }
+
+            result = acumulate(result, response.Value);
+        }
+
+        return result;
     }
 }

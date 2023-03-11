@@ -3,17 +3,14 @@
 [Serializable]
 public class LetterInfoInVerse
 {
-   
     public int ArabicLetterIndex { get; init; }
-    
+
     public string MatchedLetter { get; init; }
 
     public int StartIndexInVerseText { get; init; }
 
     public Verse Verse { get; init; }
-   
 
-   
     public override string ToString()
     {
         if (MatchedLetter is not null)
@@ -33,5 +30,4 @@ public class LetterInfoInVerse
 
         return string.Empty;
     }
-    
 }
