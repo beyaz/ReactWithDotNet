@@ -45,7 +45,8 @@ Bu saydığım isimler sadece Türkiye'de olan resim. Elbette başka ülkelerde 
             {
                 (b)"Not: ", "Bu sitede sadece Reşad Halife tarafından keşfedilen 19 sisteminin ", (b)"en majör noktası", @" olan başlangıç harfleri üzerindeki veriler incelenmiştir.",
                 " Dilerseniz bu sitede kullanılan sayım programlarını kullanabilir ve alternatif iddiaları inceleyebilirsiniz.",
-                " Hatta başka verileri de incelenebilsin diye sonuç kısmı 1230, 505, 7 gibi  rakamların katları olan bir rakam olur ise onu özellikle belirtmeye çalıştım. "
+                " Açıkçası Kuran ile ilgili hangi rakamı duydu isem ekledim.",
+                " Hatta başka verileri de incelenebilsin diye sonuç kısmı 1230, 505, 7, 238 gibi  rakamların katları olan bir rakam olur ise onu özellikle belirtmeye çalıştım. "
             },
 
             new p

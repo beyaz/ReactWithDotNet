@@ -13,9 +13,31 @@ public class SummaryInfo
 [Serializable]
 class CountsSummaryView : ReactPureComponent
 {
-    static readonly int[] SpecialNumbers = { 19, 1230, 505, 667, 109, 7 };
-    
-static int? TryFindSpecialNumber(int value)
+    static readonly int[] SpecialNumbers = { 19, 1230, 505, 667, 109, 7, 238 };
+
+    #region Public Properties
+    public IReadOnlyList<SummaryInfo> Counts { get; set; } = new List<SummaryInfo>();
+    #endregion
+
+    static Element MultipleOf(int total, int specialNumber)
+    {
+        return new legend
+        {
+            children =
+            {
+                new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
+                new FlexRow(MarginLeftRight(5), AlignItemsCenter, Color("red"))
+                {
+                    new div(specialNumber.ToString()), (small)$"x {total / specialNumber}" + MarginLeftRight(3)
+                },
+                new div { innerText = ")" }
+            },
+            style = { display = "flex", flexDirection = "row" },
+            id    = "GrandTotal"
+        };
+    }
+
+    static int? TryFindSpecialNumber(int value)
     {
         if (value == 0)
         {
@@ -32,10 +54,6 @@ static int? TryFindSpecialNumber(int value)
 
         return null;
     }
-    
-    #region Public Properties
-    public IReadOnlyList<SummaryInfo> Counts { get; set; } = new List<SummaryInfo>();
-    #endregion
 
     #region Public Methods
     protected override Element render()
@@ -89,7 +107,6 @@ static int? TryFindSpecialNumber(int value)
             }
         };
 
-        
         for (var j = 0; j < counts.Count; j++)
         {
             var name = counts[j].Name;
@@ -135,35 +152,14 @@ static int? TryFindSpecialNumber(int value)
         {
             new FlexColumn(AlignItemsCenter)
             {
-                new div { text = text, style = { color = color} },
-                new div{ Text(pronunciation), FontSize("0.6rem"), FontWeight700}
+                new div { text = text, style = { color = color } },
+                new div { Text(pronunciation), FontSize("0.6rem"), FontWeight700 }
             },
-                       
+
             new div { text = ":", style = { marginLeftRight = "4px" } },
 
-            new div { text = count.ToString(), id = id},
-                       
-                      
+            new div { text = count.ToString(), id = id },
         };
     }
     #endregion
-
-    static Element MultipleOf(int total, int specialNumber)
-    {
-        
-        return new legend
-        {
-            children =
-            {
-                new div { innerHTML = $"Toplam: <strong>{total}</strong> (" },
-                new FlexRow(MarginLeftRight(5), AlignItemsCenter,Color("red"))
-                {
-                    new div(specialNumber.ToString()), (small)$"x {total / specialNumber}"+MarginLeftRight(3)
-                },
-                new div { innerText = ")" }
-            },
-            style = { display = "flex", flexDirection = "row" },
-            id    = "GrandTotal"
-        };
-    }
 }
