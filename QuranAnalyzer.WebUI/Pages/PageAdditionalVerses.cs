@@ -12,18 +12,19 @@ public class PageAdditionalVerses : ReactPureComponent
             {
                 "19 sisteminin olması için Kurandan iki ayet atılması gerekiyormuş. Yoksa sistem çöküyormuş. ",
                 new br(),
-                "Konuyu pek araştırmayan insanlar üzerinde etki bırakan bir söz. " ,
+                "Konuyu pek araştırmayan insanlar üzerinde etki bırakan bir söz. ",
                 "Çünkü insanlar bu sözü duyunca otomatikman şöyle düşünürler, ",
                 (b)" isterse dünyanın en süper bilgisi olsun bana ayeti dolayısıyla Kuranı reddettirecek bir şey ise benim için mesele başlamadan bitmiş demektir. Peşinen reddederim.",
                 new br(),
                 "Peki nedir bu meselenin aslı?"
             },
-            new p{
+            new p
+            {
                 "Önce net bir şekilde cevabı verelim.",
-                (b)"19 sisteminin en majör bileşeni başlangıç harfleri üzerine olan sistemdir. " ,
+                (b)"19 sisteminin en majör bileşeni başlangıç harfleri üzerine olan sistemdir. ",
                 "Bu en majör bileşen olan başlangıç harflerinin, Tevbe suresinin toplamda 127 ayet mi yoksa 129 ayet mi olması ile hiç bir ilgisi yoktur.",
                 new br(),
-                "Hatta böyle bir kafa karışıklığına mahal vermemesi için ben bu sitede yaptığım tüm sayımları  " ,
+                "Hatta böyle bir kafa karışıklığına mahal vermemesi için ben bu sitede yaptığım tüm sayımları  ",
                 "klasik elinize aldığınız bir kuran mushafı ile aynı olan Tanzil.net den aldığım mushaf ile yaptım."
             },
             new p
@@ -31,20 +32,20 @@ public class PageAdditionalVerses : ReactPureComponent
                 "Önce meselenin tarihi yönünü ele alalım. ",
                 " Rivayetlerde şöyle nakledilir, Ebubekir zamanında Kuran mushaf haline getirilmesi için 5 kişilik bir ekip kurulur.",
                 " İnsanlar elinde ne kadar deriye-kağıda yazılmış kuran var ise ortaya koyarlar. Her bir ayet için en az 3 kişinin şahitliği şart koşulur.",
-                " Süveybe adında bir sahabe de, tevbe suresinin 128. ve 129. ayetlerini söyler." ,
-                " Fakat onun dışında hiç kimse bu iki sözün ayet olduğuna şahit olmaz." ,
-                " Süveybe ise taa mekke döneminde bir kişinin peygamberin deve satın alması konusunda problem yaşadığını görür ve peygamber ile ticaret yapan kişinin ilk anlaşması esnasında olmadığı halde  peygamberin doğru söylediğine şahitlik eder." ,
-                " Hatta olaydan sonra peygamberimize gelerek şunu söyler ben senin Allah'ın resulü olduğuna şahitlik ediyorum buradaki şu ufak ticaretine neden şahit olmayayım der." ,
+                " Süveybe adında bir sahabe de, tevbe suresinin 128. ve 129. ayetlerini söyler.",
+                " Fakat onun dışında hiç kimse bu iki sözün ayet olduğuna şahit olmaz.",
+                " Süveybe ise taa mekke döneminde bir kişinin peygamberin deve satın alması konusunda problem yaşadığını görür ve peygamber ile ticaret yapan kişinin ilk anlaşması esnasında olmadığı halde  peygamberin doğru söylediğine şahitlik eder.",
+                " Hatta olaydan sonra peygamberimize gelerek şunu söyler ben senin Allah'ın resulü olduğuna şahitlik ediyorum buradaki şu ufak ticaretine neden şahit olmayayım der.",
                 " Bunun üzerine de peygamberimiz 'Süveybenin şahitliği iki kişinin şahitliği gibidir' der",
                 " Hasılı bu sözü de delil getirerek Süveybenin şahitliği iki kişi gibi sayılır ve bu iki söz Kurana eklenir.",
                 " Üstelik Tevbe suresindeki tüm ayetler Medine dönemine aitken sadece bu sonraki iki ayet Mekke dönemine aittir.",
-                
+
                 new br(),
                 new br(),
-                "Tarihi rivayet olarak durum böyle. Elbette ki bu sözü şöyle yorumlayanlar da var. " ,
+                "Tarihi rivayet olarak durum böyle. Elbette ki bu sözü şöyle yorumlayanlar da var. ",
                 "Aslında oradaki herkes bu iki sözün Kurandan olduğunu biliyordu fakat yazılı olarak ellerinde yoktu.",
                 "Burada rivayet tenkidi-yorumlaması yapmayacağım ben sadece böyle bir rivayeti aktardım.",
-                
+
                 "Hatta başka bir rivayette Ali'nin evinden belli bir süre çıkmadığı bunun sebebini soranlara da Kurana söz eklendi diye durumu boykot ettiğine dair rivayetler var.",
                 "İşine gelince rivayetlere sarılıyorsun gibi haklı bir eleştiri yapabilirsiniz ama benim burada aktarmak istediğim şey şu. Burada bir duman tütüyor.",
                 "İlk toplanan muashafın yakılması vesaire ister istemez konu üzerinde soru işaretleri bırakmış olabilir.",
@@ -55,9 +56,9 @@ public class PageAdditionalVerses : ReactPureComponent
                 new br(),
                 "Hasılı iki kapak arasına girdikten sonra mesele kapanıyor."
             },
-            
+
             seperation,
-            
+
             "Peki konunun 19 sistemi ile ne ilgisi var?",
             new p
             {
@@ -68,18 +69,16 @@ public class PageAdditionalVerses : ReactPureComponent
                 "Aynı zamanda sayımları tekrar gözden geçiriyor ve normalde bir fazla vermesi gereken Allah kelimesi bilgisayar tarafından bir eksik verildiğini görüyor. Kendisi de şaşırıyor.",
                 "Bunun üzerine Bu iki sözün Kurandan olmadığına dair matemaiksel olarak da gösteriyor.",
                 "Ben sadece bu örneklerden bir tanesini aşağıdaki link üzerinde gösterdim. Dileyen var ise inceleyebilir. aşağıdaki örnek gibi 50 den fazla örnek var.",
-                
             },
             new FlexRowCentered
             {
-                new a{href = GetPageLink(PageId.CountOfAllah), text = "9. 128-129 üzerine ufak bir inceleme"}
+                new a { href = GetPageLink(PageId.CountOfAllah), text = "9. 128-129 üzerine ufak bir inceleme" }
             },
             new p
             {
-                
-                "Özetlemek gerekir ise ",(b)" Bu bilgi Cebrail aracılığı ile geliyor. Ardından matematikle destekleniyor.",
+                "Özetlemek gerekir ise ", (b)" Bu bilgi Cebrail aracılığı ile geliyor. Ardından matematikle destekleniyor.",
                 new br(),
-                "Dünyada hiç bir kimse kendi kutsal saydığı kitaptan matematiğe uymuyor diye ayet atmaz. Reşad o kadar da aptal biri değil. " ,
+                "Dünyada hiç bir kimse kendi kutsal saydığı kitaptan matematiğe uymuyor diye ayet atmaz. Reşad o kadar da aptal biri değil. ",
                 "Burasını maalesef karıştırıyorlar."
             },
 
@@ -90,13 +89,13 @@ public class PageAdditionalVerses : ReactPureComponent
                 "Ben burada meseleyi özetlemeye çalıştım. Karar vermek size kalan bir mesele."
             },
             seperation,
-            
+
             new p
             {
                 "Kuranda bu kitabın Allah tarfından korunduğuna dair net ifadeler var. Bu durumda haklı olarak şu soruyu sormalıyız.",
                 "Hani Allah Kuranı korumuştu? Eğer Tevbe 128-129 Kurandan değil ise nasıl oldu da Kuran mushafları arasına girebildi? " +
                 "Demek ki mantık olarak çöküyor.",
-                
+
                 new br(),
                 new br(),
                 "İşte bu fikre karşı arguman olarak da şu söyleniyor. Aslında halihazırda ayet gerçekleşmiş durumda.",
@@ -114,14 +113,14 @@ public class PageAdditionalVerses : ReactPureComponent
             seperation,
             new p
             {
-                "Ben gene de Kurandan iki ayeti red etmeyeyim diye düşünebilirsiniz. " ,
+                "Ben gene de Kurandan iki ayeti red etmeyeyim diye düşünebilirsiniz. ",
                 "Ama meseleyi tersden ele alır iseniz Kuranda olmayan iki cümleye Allah sözü muamelesi yapmış da olabilirsiniz."
             },
             seperation,
             new p
             {
-                "Kuranda bütün surelerin başında besmele vardır. Sadece bir tek surenin başında besmele yoktur." ,
-                "Sanki kitabın yazarı özellikle buraya dikkat çekiyor. " ,
+                "Kuranda bütün surelerin başında besmele vardır. Sadece bir tek surenin başında besmele yoktur.",
+                "Sanki kitabın yazarı özellikle buraya dikkat çekiyor. ",
                 "Bunun sebebini araştırdığınızda ise çünkü bu surede inanmayanlara ültimatom veriliyor ondan dolayı başında besmele yok.",
                 "Yahut neden bir tek bu surenin başında besmele yok diye sorduğunuzda cevap olarak 'çünkü yok' deniliyor.",
                 "Bu veilen cevaplar sizi ne kadar tatmin eder orasını size kalmış. 19 sistemi işte burada şu açıklamayı yapar ",
@@ -134,8 +133,8 @@ public class PageAdditionalVerses : ReactPureComponent
             {
                 "Mesele etrafında dönen tartışmayı aktarmaya çalıştım. Umarım faydalı olmuştur.",
                 new br(),
-                "Ufak da olsa kendi anlayışımı ifade istiyorum. " ,
-                "Açıkçası hayatında Kuran olmayan birinin Tevbe 128-129 Kuran'dandır veya değildir demesinin bence bir anlamı yok. " ,
+                "Ufak da olsa kendi anlayışımı ifade istiyorum. ",
+                "Açıkçası hayatında Kuran olmayan birinin Tevbe 128-129 Kuran'dandır veya değildir demesinin bence bir anlamı yok. ",
                 "Yılan adamı yarı beline kadar yutmuş fakat adam az önce ensesinden ısıran sivri sineğin derdine düşmüş. ",
                 new br(),
                 "Örnek biraz saçma gelebilir ama malesef durum böyle.  "

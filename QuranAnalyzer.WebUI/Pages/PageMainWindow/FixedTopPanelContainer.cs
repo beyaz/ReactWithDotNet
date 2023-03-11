@@ -67,7 +67,7 @@ class FixedTopPanelContainer : ReactComponent<FixedTopPanelContainerModel>
         if (state.MainDivScrollY > 0)
         {
             top.style.borderBottom = "";
-            top.style.boxShadow = "0px 0px 8px rgb(0 0 0 / 20%)";
+            top.style.boxShadow    = "0px 0px 8px rgb(0 0 0 / 20%)";
         }
 
         return top;

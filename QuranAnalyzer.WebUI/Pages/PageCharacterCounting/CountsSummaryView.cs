@@ -42,10 +42,10 @@ class CountsSummaryView : ReactPureComponent
         }
         else
         {
-            returnDiv.appendChild(new legend(DisplayFlex,FlexDirectionRow, Gap(4))
+            returnDiv.appendChild(new legend(DisplayFlex, FlexDirectionRow, Gap(4))
             {
                 new div { text = "Toplam:" },
-                
+
                 new strong { text = total.ToString(), id = "GrandTotal" }
             });
         }

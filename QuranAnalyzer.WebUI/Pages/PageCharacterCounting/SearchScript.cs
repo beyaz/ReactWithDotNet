@@ -5,7 +5,7 @@ namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 
 class SearchScript
 {
-    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> Lines { get; private set; }
+    public IReadOnlyList<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> Lines { get; private init; }
 
     public static Response<SearchScript> ParseScript(string value)
     {
@@ -33,19 +33,18 @@ class SearchScript
         {
             value = value.Replace(Environment.NewLine, ";");
 
-            return value.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
+            return value.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
         }
 
         static Response<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> parseLine(string line)
         {
-            var arr = line.Split(new []{ '|', '~' }, StringSplitOptions.RemoveEmptyEntries);
+            var arr = line.Split(new[] { '|', '~' }, StringSplitOptions.RemoveEmptyEntries);
             if (arr.Length != 2)
             {
                 return "Arama komutunda yanlışlık var. Örnek: 3. suredeki Mim(م) harfini aratmak için şöyle yazabilirsiniz. 3:*|م";
             }
 
             var letterInfoList = Analyzer.AnalyzeText(clearText(arr[1]));
-          
 
             var letters = letterInfoList.Where(Analyzer.IsArabicLetter).GroupBy(x => x.ArabicLetterIndex).Select(grp => grp.FirstOrDefault()).Distinct().ToList();
             if (letters.Count == 0)

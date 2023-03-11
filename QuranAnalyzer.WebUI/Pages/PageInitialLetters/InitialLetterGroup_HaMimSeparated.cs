@@ -5,10 +5,9 @@ namespace QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 
 class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
 {
-    bool ShowCounts => Context.Query[QueryKey.ShowNumbers] == "1";
-
     static string IdOfCountingResult_1 => $"HaMimSeparated-{nameof(IdOfCountingResult_1)}";
     static string IdOfCountingResult_2 => $"HaMimSeparated-{nameof(IdOfCountingResult_2)}";
+    bool ShowCounts => Context.Query[QueryKey.ShowNumbers] == "1";
 
     protected override Element render()
     {
@@ -66,10 +65,10 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 {
                                     new CountingResult
                                     {
-                                        id = IdOfCountingResult_1, 
-                                        MultipleOf = 59, 
+                                        id              = IdOfCountingResult_1,
+                                        MultipleOf      = 59,
                                         MultipleOfColor = ShowCounts ? firstColor : null,
-                                        SearchScript = GetLetterCountingScript("40:*,41:*,42:*", Haa, Miim)
+                                        SearchScript    = GetLetterCountingScript("40:*,41:*,42:*", Haa, Miim)
                                     }
                                 }
                             }
@@ -133,12 +132,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                     new tr
                     {
                         new td(),
-                        
+
                         new td(DisplayFlex, JustifyContentCenter, When(ShowCounts is false, DisplayNone))
                         {
-                            new div(TextAlignCenter,MaxWidth(300))
+                            new div(TextAlignCenter, MaxWidth(300))
                             {
-                                "Yukarıdaki geçiş adetlerinin rakamları toplamı ",(span)"59"+Color(firstColor),"'dur",
+                                "Yukarıdaki geçiş adetlerinin rakamları toplamı ", (span)"59" + Color(firstColor), "'dur",
                                 new br(),
                                 (small)"59 = (6+4 + 3+8+0 + 4+8 + 2+7+6 + 5+3 + 3+0+0)"
                             }
@@ -152,12 +151,12 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                     new tr
                     {
                         new td(),
-                        
+
                         new td(DisplayFlex, JustifyContentCenter)
                         {
                             new FlexRow(AlignItemsCenter, Gap(5))
                             {
-                                CreateSeperationSwitch, 
+                                CreateSeperationSwitch,
                                 "Geçiş adetlerini göster"
                             }
                         },
@@ -168,19 +167,19 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                     new tr
                     {
                         new td(),
-                        
-                        new td(DisplayFlex, JustifyContentCenter,When(ShowCounts is false, DisplayNone))
+
+                        new td(DisplayFlex, JustifyContentCenter, When(ShowCounts is false, DisplayNone))
                         {
-                            new div(TextAlignCenter,MaxWidth(300))
+                            new div(TextAlignCenter, MaxWidth(300))
                             {
-                                "Aşağıdaki geçiş adetlerinin rakamları toplamı ",(span)"54"+Color(firstColor),"'dür",
+                                "Aşağıdaki geçiş adetlerinin rakamları toplamı ", (span)"54" + Color(firstColor), "'dür",
                                 new br(),
                                 (small)"54 = (4+4 + 3+2+4 + 1+6 + 1+5+0 + 3+1 + 2+0+0 + 3+6 + 2+2+5)"
                             }
                         },
                         new td(),
                     },
-                    
+
                     new tr
                     {
                         new td
@@ -241,10 +240,10 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                                 {
                                     new CountingResult
                                     {
-                                        id = IdOfCountingResult_2,
-                                        MultipleOf = 54, 
-                                        MultipleOfColor =  ShowCounts ? secondColor : null,
-                                        SearchScript = GetLetterCountingScript("43:*,44:*,45:*,46:*", Haa, Miim)
+                                        id              = IdOfCountingResult_2,
+                                        MultipleOf      = 54,
+                                        MultipleOfColor = ShowCounts ? secondColor : null,
+                                        SearchScript    = GetLetterCountingScript("43:*,44:*,45:*,46:*", Haa, Miim)
                                     }
                                 }
                             }
@@ -317,7 +316,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
                 "Hatta bu iki şemadaki sayımların rakamları toplamı dahi kendi çarpanı vermektedir."
             },
 
-            new Arrow { start = Id(40, Haa), end  = IdOfCountingResult_1, StartAnchorFromRight = true},
+            new Arrow { start = Id(40, Haa), end  = IdOfCountingResult_1, StartAnchorFromRight = true },
             new Arrow { start = Id(40, Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true },
             new Arrow { start = Id(41, Haa), end  = IdOfCountingResult_1, StartAnchorFromRight = true },
             new Arrow { start = Id(41, Miim), end = IdOfCountingResult_1, StartAnchorFromRight = true },
@@ -342,7 +341,7 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
     Element CreateSeperationSwitch()
     {
         var query = HttpUtility.ParseQueryString(Context.QueryAsString);
-        
+
         var isChecked = query[QueryKey.ShowNumbers] == "1";
 
         query[QueryKey.ShowNumbers] = isChecked ? "0" : "1";
@@ -351,10 +350,9 @@ class InitialLetterGroup_HaMimSeparated : InitialLetterGroup
         {
             new Switch
             {
-                IsChecked = isChecked,
+                IsChecked  = isChecked,
                 IsDisabled = true
             }
         };
-
     }
 }

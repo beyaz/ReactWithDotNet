@@ -2,6 +2,10 @@
 
 public class PagePreInformation : ReactPureComponent
 {
+    static string PageUrlOfAdem => GetPageLink(PageId.WordSearching) +
+                                   "&" + QueryKey.SearchQuery + "=" + "*~اادم;*~يادم;*~لٔادم;*~ويادم" +
+                                   "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
+
     static string PageUrlOfDays30 => GetPageLink(PageId.WordSearching) +
                                      "&" + QueryKey.SearchQuery + "=" + "*~ايام;*~يومين;*~الايام;*~اياما;*~واياما;*~بايىم" +
                                      "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
@@ -11,10 +15,7 @@ public class PagePreInformation : ReactPureComponent
                                       "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
 
     static string PageUrlOfIsa => GetPageLink(PageId.WordSearching) +
-                                      "&" + QueryKey.SearchQuery + "=" + "*~عيسي;*~وعيسي;*~يعيسي;*~بعيسي" +
-                                      "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
-    static string PageUrlOfAdem => GetPageLink(PageId.WordSearching) +
-                                  "&" + QueryKey.SearchQuery + "=" + "*~اادم;*~يادم;*~لٔادم;*~ويادم" +
+                                  "&" + QueryKey.SearchQuery + "=" + "*~عيسي;*~وعيسي;*~يعيسي;*~بعيسي" +
                                   "&" + QueryKey.SearchOption + "=" + WordSearchOption.Same;
 
     protected override Element render()
@@ -77,16 +78,15 @@ Yine bu harflerin geçtiği surelerin bir kısmında ilk cümleler şöyledir. B
 Mesela gün kelimesinin 365 defa geçmesi buna bir örnek olarak verilebilir.
 Adem ve İsanın durumu aynıdır denmesi ve Adem / İsa kelimeleri 25'er defa geçmesi bunlara örnek olarak verilebilir. 
 Dilerseniz aşağıdaki linklerden bu sayımları kendiniz yapabilirsiniz.",
-                    new p{ new a { href = PageUrlOfDays365, text = "Gün Sayısının 365 kez geçmesi" } },
-                    
-                    new p{ new a { href = PageUrlOfDays30, text = "Günler kelimesinin 30 defa geçmesi" } },
-                    
+                    new p { new a { href = PageUrlOfDays365, text = "Gün Sayısının 365 kez geçmesi" } },
+
+                    new p { new a { href = PageUrlOfDays30, text = "Günler kelimesinin 30 defa geçmesi" } },
+
                     new p
                     {
                         new a { href = PageUrlOfAdem, text = "Adem" }, " ve ",
-                        new a { href = PageUrlOfIsa, text = "İsa" }, "'nın yaratılması aynıdır ifadesinin kullanılması ve ikisinin de 25'er defa geçmesi"
+                        new a { href = PageUrlOfIsa, text  = "İsa" }, "'nın yaratılması aynıdır ifadesinin kullanılması ve ikisinin de 25'er defa geçmesi"
                     }
-                    
                 }
             }
         };

@@ -96,9 +96,9 @@ class NumericValueCalculator : ReactComponent<NumericValueCalculatorModel>
 
     class ArabicLetterWithNumericValue
     {
-        public string ArabicLetter { get; set; }
-        public int NumericValueOfArabicLetter { get; set; }
-        public string Pronunciation { get; set; }
+        public string ArabicLetter { get; init; }
+        public int NumericValueOfArabicLetter { get; init; }
+        public string Pronunciation { get; init; }
 
         public Element BuildUi()
         {

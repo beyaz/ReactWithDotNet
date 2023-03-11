@@ -5,23 +5,21 @@ namespace QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 class Note : ReactPureComponent
 {
     public string Text { get; set; }
-    
+
     protected override Element render()
     {
         return new FlexRow(PaddingLeftRight("5%"), PaddingTop(50))
         {
-            new strong{Text("Not:"), MarginRight(5)}, new div{ Children(children) }
+            new strong { Text("Not:"), MarginRight(5) }, new div { Children(children) }
         };
     }
 }
 
 class InitialLetterGroup_Chapter19 : InitialLetterGroup
 {
-    static string Id(int chapterNumber, string letter) => $"Chapter19-{chapterNumber}-{letter}";
+    static Element countingResult => new CountingResult { id = IdOfCountingResult, MultipleOf = 42, SearchScript = GetLetterCountingScript("19:*", Kaaf, Haa_, Yaa, Ayn, Saad) };
 
     static string IdOfCountingResult => $"Chapter19-{nameof(IdOfCountingResult)}";
-
-    static Element countingResult => new CountingResult { id = IdOfCountingResult, MultipleOf = 42, SearchScript = GetLetterCountingScript("19:*", Kaaf, Haa_, Yaa, Ayn, Saad) };
 
     protected override Element render()
     {
@@ -55,33 +53,31 @@ class InitialLetterGroup_Chapter19 : InitialLetterGroup
                             rowSpan = 99,
                             children =
                             {
-                                new FlexRow(JustifyContentCenter,MarginTop(70))
+                                new FlexRow(JustifyContentCenter, MarginTop(70))
                                 {
                                     countingResult
                                 }
                             }
                         }
                     },
-
                 }
-
             },
 
-
-            new Arrow { start = Id(19, Kaaf), end = IdOfCountingResult},
-            new Arrow { start = Id(19, Haa_), end = IdOfCountingResult},
-            new Arrow { start = Id(19, Yaa), end  = IdOfCountingResult},
-            new Arrow { start = Id(19, Ayn), end  = IdOfCountingResult},
-            new Arrow { start = Id(19, Saad), end = IdOfCountingResult},
-
+            new Arrow { start = Id(19, Kaaf), end = IdOfCountingResult },
+            new Arrow { start = Id(19, Haa_), end = IdOfCountingResult },
+            new Arrow { start = Id(19, Yaa), end  = IdOfCountingResult },
+            new Arrow { start = Id(19, Ayn), end  = IdOfCountingResult },
+            new Arrow { start = Id(19, Saad), end = IdOfCountingResult },
 
             new Note
             {
-                @"Meryem suresi Kuran'da en baştan ",  (strong)"19." ," sıradadır. ",
+                @"Meryem suresi Kuran'da en baştan ", (strong)"19.", " sıradadır. ",
                 @"Aynı zamanda", (strong)" en çok başlangıç harfi olan", " suredir. ",
                 " 5 tane başlangıç harfi vardır.",
-                " Bu beş tane başlangıç harfinin toplam geçiş adeti ise yine 19 un bir katı olan ", 798.AsMultipleOf19() ,"'dir."
+                " Bu beş tane başlangıç harfinin toplam geçiş adeti ise yine 19 un bir katı olan ", 798.AsMultipleOf19(), "'dir."
             }
         };
     }
+
+    static string Id(int chapterNumber, string letter) => $"Chapter19-{chapterNumber}-{letter}";
 }

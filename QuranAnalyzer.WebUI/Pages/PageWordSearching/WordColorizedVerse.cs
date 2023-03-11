@@ -5,11 +5,10 @@ namespace QuranAnalyzer.WebUI.Pages.PageWordSearching;
 
 class WordColorizedVerse : ReactPureComponent
 {
-    public  Verse Verse { get; set; }
+    public IReadOnlyList<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startEndPoints)> MatchList { get; set; }
+    public Verse Verse { get; set; }
 
     public IReadOnlyList<LetterInfo> VerseLetters => Verse.TextAnalyzed;
-
-    public IReadOnlyList<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo start, LetterInfo end)> startEndPoints)> MatchList { get; set; }
 
     protected override Element render()
     {
@@ -19,9 +18,9 @@ class WordColorizedVerse : ReactPureComponent
             Verse = VerseFilter.GetVerseById("2:286");
             MatchList = new List<(IReadOnlyList<LetterInfo> searchWord, IReadOnlyList<(LetterInfo first, LetterInfo last)> startPoints)>
             {
-                (Analyzer.AnalyzeText("واليوم"), new [] { (VerseLetters[6], VerseLetters[9]), (VerseLetters[28], VerseLetters[33]),(VerseLetters[258], VerseLetters[268]) }),
-                (Analyzer.AnalyzeText("يوم"), new [] { (VerseLetters[45], VerseLetters[50]), (VerseLetters[68], VerseLetters[78]) }),
-                (Analyzer.AnalyzeText("باليوم"), new [] { (VerseLetters[96], VerseLetters[100]), (VerseLetters[178], VerseLetters[184]), (VerseLetters[228], VerseLetters[235]) })
+                (Analyzer.AnalyzeText("واليوم"), new[] { (VerseLetters[6], VerseLetters[9]), (VerseLetters[28], VerseLetters[33]), (VerseLetters[258], VerseLetters[268]) }),
+                (Analyzer.AnalyzeText("يوم"), new[] { (VerseLetters[45], VerseLetters[50]), (VerseLetters[68], VerseLetters[78]) }),
+                (Analyzer.AnalyzeText("باليوم"), new[] { (VerseLetters[96], VerseLetters[100]), (VerseLetters[178], VerseLetters[184]), (VerseLetters[228], VerseLetters[235]) })
             };
         }
 
@@ -30,25 +29,25 @@ class WordColorizedVerse : ReactPureComponent
         var cursor = 0;
 
         var html = new StringBuilder();
-        
+
         while (cursor < verseLetters.Count)
         {
             var letterInfo = verseLetters[cursor];
 
             var hasAnyMatch = false;
-            
+
             var searchWordIndex = 0;
             foreach (var (_, startEndPoints) in MatchList)
             {
                 foreach (var startEndPoint in startEndPoints)
                 {
-                    if(startEndPoint.start == letterInfo)
+                    if (startEndPoint.start == letterInfo)
                     {
-                        var endIndex = verseLetters.IndexOf(startEndPoint.end,cursor);
-                        
+                        var endIndex = verseLetters.IndexOf(startEndPoint.end, cursor);
+
                         var span = new span
                         {
-                            innerText = verseLetters.GetRange(cursor, endIndex - cursor+1).AsText(),
+                            innerText = verseLetters.GetRange(cursor, endIndex - cursor + 1).AsText(),
                             style =
                             {
                                 FontWeightBold,
@@ -94,9 +93,9 @@ class WordColorizedVerse : ReactPureComponent
             {
                 var countView = new FlexRow(AlignItemsCenter)
                 {
-                    new div { string.Join(string.Empty,searchWord), FontWeightBold, Color(GetColor(searchWordIndex)) },
+                    new div { string.Join(string.Empty, searchWord), FontWeightBold, Color(GetColor(searchWordIndex)) },
 
-                    new div {  ":", MarginLeftRight(4)},
+                    new div { ":", MarginLeftRight(4) },
 
                     new div { startEndPoints.Count.ToString(), FontSize12 }
                 };
@@ -141,6 +140,5 @@ class WordColorizedVerse : ReactPureComponent
                 BorderRadiusForPanels
             }
         };
-        
     }
 }

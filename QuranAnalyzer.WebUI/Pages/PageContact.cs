@@ -43,7 +43,6 @@ public class PageContact : ReactPureComponent
             },
             new p
             {
-               
                 "Gördüğüm resmi mümkün olduğunca kendi düşüncelerim minimum olacak şekilde aktarmaya çalıştım. ",
                 "Umarım bu konular üzerine düşünen araştıran insanlara bir nebze de olsa faydalı bir çalışma olmuştur."
             }

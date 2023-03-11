@@ -141,7 +141,7 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                         IsDisabled    = true
                     },
 
-                    "6:5 ve 26:6 numaralı ayetlerdeki [enba'u] kelimesi bazı mushaflarda vav'lı yazılmış bazılarında ise vav hardi olmadan yazılmış. " ,
+                    "6:5 ve 26:6 numaralı ayetlerdeki [enba'u] kelimesi bazı mushaflarda vav'lı yazılmış bazılarında ise vav hardi olmadan yazılmış. ",
                     "Bu vav harfinin başlangıç harfleri ile ilgisi yoktur. ",
                     "Kuran üzerindeki verileri incelerken böyle bir ayara ihtiyacım olduğu için ekledim."
                 },
@@ -155,14 +155,14 @@ En bilindik mushaflara örnek verecek olur isek Medine mushafı ve Osman mushaf�
                         IsDisabled    = true
                     },
 
-                    "75:13 nolu ayetide bulunan  [yunebbeu](يُنَبَّؤُ) kelimesi bazı mushaflarda vav'lı bazılarında vav'sız yazılıyor." ,
+                    "75:13 nolu ayetide bulunan  [yunebbeu](يُنَبَّؤُ) kelimesi bazı mushaflarda vav'lı bazılarında vav'sız yazılıyor.",
                     "Bu vav harfinin başlangıç harfleri ile ilgisi yoktur. ",
                     "Kuran üzerindeki verileri incelerken böyle bir ayara ihtiyacım olduğu için ekledim."
                 }
             },
             new p
             {
-                "Tanzil.net'den aldığım mushafta 12:39 ve 12:41 nolu ayetlerde bulunan [ya sahibeyi](يَا صَاحِبَيِ) ifadesi orijinal Osman mushafından aktarım yapılırken eksik aktarılmış." ,
+                "Tanzil.net'den aldığım mushafta 12:39 ve 12:41 nolu ayetlerde bulunan [ya sahibeyi](يَا صَاحِبَيِ) ifadesi orijinal Osman mushafından aktarım yapılırken eksik aktarılmış.",
                 " Bu sitede Osman mushafındaki orijinal hali baz alınmıştır. Sanırım burada tanzil.net'in bir aktarım hatası var. "
             },
             new p

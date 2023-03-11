@@ -53,35 +53,19 @@ class PageCharacterCountingView : ReactComponent<PageCharacterCountingViewModel>
         }
     }
 
-    static Element Backdrop()
-    {
-        return new div
-        {
-            PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3), BorderRadiusForPanels
-        };
-    }
-    static Element ProcessingText()
-    {
-        return new FlexRowCentered
-        {
-            PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
-            Children(new LoadingIcon { wh(17), mr(5) }, new span(Color("white")){"Lütfen bekleyiniz..."})
-        };
-    }
-    
     protected override Element render()
     {
         IEnumerable<Element> searchPanel() => new[]
         {
             When(state.IsBlocked, Backdrop),
             When(state.IsBlocked, ProcessingText),
-            
+
             new h4 { text = "Harf Arama", style = { TextAlignCenter } },
             new FlexColumn
             {
                 new FlexColumn
                 {
-                    new div { text = "Arama Komutu", style = { FontWeight500, FontSize14, MarginBottom(2)  } },
+                    new div { text = "Arama Komutu", style = { FontWeight500, FontSize14, MarginBottom(2) } },
 
                     new TextArea { TextArea.Bind(() => state.SearchScript), FontSize17 },
 
@@ -90,10 +74,10 @@ class PageCharacterCountingView : ReactComponent<PageCharacterCountingViewModel>
 
                 Space(3),
 
-                new FlexRow(AlignItemsCenter,Gap(30))
+                new FlexRow(AlignItemsCenter, Gap(30))
                 {
                     new CharacterCountingOptionView { MushafOption = state.MushafOption, MushafOptionChanged = MushafOptionChanged },
-                    
+
                     new SwitchWithLabel
                     {
                         Label       = "Besmele'yi dahil et",
@@ -217,12 +201,11 @@ class PageCharacterCountingView : ReactComponent<PageCharacterCountingViewModel>
                                         VSpace(30),
                                         new div
                                         {
-                                            dangerouslySetInnerHTML =new div
+                                            dangerouslySetInnerHTML = new div
                                             {
                                                 resultVerseList
                                             }.ToString()
                                         }
-                                        
                                     };
 
                                     return Container(Panel(searchPanel()), Panel(results));
@@ -233,6 +216,14 @@ class PageCharacterCountingView : ReactComponent<PageCharacterCountingViewModel>
 
                                     return Container(Panel(searchPanel()));
                                 });
+    }
+
+    static Element Backdrop()
+    {
+        return new div
+        {
+            PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3), BorderRadiusForPanels
+        };
     }
 
     static Element Container(params Element[] panels)
@@ -251,12 +242,21 @@ class PageCharacterCountingView : ReactComponent<PageCharacterCountingViewModel>
         };
     }
 
+    static Element ProcessingText()
+    {
+        return new FlexRowCentered
+        {
+            PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
+            Children(new LoadingIcon { wh(17), mr(5) }, new span(Color("white")) { "Lütfen bekleyiniz..." })
+        };
+    }
+
     void ArabicKeyboardPressed(string letter)
     {
         state.ClickCount = 0;
-        
+
         state.SearchScriptErrorMessage = null;
-        
+
         state.SearchScript = state.SearchScript?.Trim() + " " + letter;
     }
 

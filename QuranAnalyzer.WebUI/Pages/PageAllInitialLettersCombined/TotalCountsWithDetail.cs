@@ -135,8 +135,8 @@ class TotalCountsWithDetail : ReactComponent
                     {
                         When(drawArrow, new Arrow
                         {
-                            start       = GetIdOf(isBegin: true, recordIndex, null),
-                            end         = GetIdOf(isBegin: false, recordIndex, null)
+                            start = GetIdOf(isBegin: true, recordIndex, null),
+                            end   = GetIdOf(isBegin: false, recordIndex, null)
                         }),
 
                         new Fade

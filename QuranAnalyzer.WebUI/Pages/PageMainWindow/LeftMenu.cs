@@ -9,7 +9,7 @@ class LeftMenu : ReactPureComponent
         ("Ön Bilgiler", new[] { PageId.PreInformation }),
         ("Tanım", new[] { PageId.SimpleDefinition }),
         ("Başlangıç Harfleri", new[] { PageId.InitialLetters }),
-        ("Soru - Cevap", new[] 
+        ("Soru - Cevap", new[]
         {
             PageId.QuestionAnswer,
             PageId.AlternativeSystems,

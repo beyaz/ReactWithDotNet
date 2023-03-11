@@ -44,26 +44,10 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
 
             state.SearchScript = parseResponse.Value.AsReadibleString();
         }
-        
+
         state.SearchOption = Context.Query[QueryKey.SearchOption] ?? WordSearchOption.Same;
     }
 
-    static Element Backdrop()
-    {
-        return new div
-        {
-            PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3), BorderRadiusForPanels
-        };
-    }
-    static Element ProcessingText()
-    {
-        return new FlexRowCentered
-        {
-            PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
-            Children(new LoadingIcon { wh(17), mr(5) }, new span(Color("white")){"Lütfen bekleyiniz..."})
-        };
-    }
-    
     protected override Element render()
     {
         IEnumerable<Element> searchPanel() => new[]
@@ -79,7 +63,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                 {
                     new div { text = "Arama Komutu", style = { FontWeight500, FontSize14, MarginBottom(2) } },
 
-                    new TextArea { TextArea.Bind(() => state.SearchScript),  FontSize22 },
+                    new TextArea { TextArea.Bind(() => state.SearchScript), FontSize22 },
 
                     new ErrorText { Text = state.SearchScriptErrorMessage }
                 },
@@ -215,6 +199,14 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
                                 });
     }
 
+    static Element Backdrop()
+    {
+        return new div
+        {
+            PositionAbsolute, LeftRight(0), TopBottom(0), BackgroundColor("rgba(0, 0, 0, 0.3)"), Zindex(3), BorderRadiusForPanels
+        };
+    }
+
     static Element Container(params Element[] panels)
     {
         return new FlexColumn(Gap(10), AlignItemsStretch, WidthMaximized, MaxWidth(800))
@@ -228,6 +220,15 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         return new FlexColumn(BorderRadiusForPanels, ComponentBorder, PaddingLeftRight(15), PaddingBottom(15), PositionRelative)
         {
             Children(rows)
+        };
+    }
+
+    static Element ProcessingText()
+    {
+        return new FlexRowCentered
+        {
+            PositionAbsolute, FontWeight700, LeftRight(0), TopBottom(0), Zindex(4),
+            Children(new LoadingIcon { wh(17), mr(5) }, new span(Color("white")) { "Lütfen bekleyiniz..." })
         };
     }
 
@@ -292,7 +293,7 @@ class WordSearchingView : ReactComponent<WordSearchingViewModel>
         state.SearchOption = changeEvent.target.value;
 
         state.SearchScriptErrorMessage = null;
-        
-        state.ClickCount               = 0;
+
+        state.ClickCount = 0;
     }
 }

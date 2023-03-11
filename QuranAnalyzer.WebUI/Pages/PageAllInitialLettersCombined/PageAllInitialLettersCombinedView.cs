@@ -47,22 +47,22 @@ class PageAllInitialLettersCombinedView : ReactPureComponent
             new SubTitle("Sonuç"),
             new p
             {
-                "Elbette ki herhangi bir sayının 19'a bölünme ihtimali 19 da 1 dir. " ,
+                "Elbette ki herhangi bir sayının 19'a bölünme ihtimali 19 da 1 dir. ",
                 "Sayının ne kadar büyük olduğunun bir önemi yoktur.",
                 new br(),
-                "Burada insanı hayrete düşüren olayı bir örnek ile açıklayalım." ,
+                "Burada insanı hayrete düşüren olayı bir örnek ile açıklayalım.",
                 new br(),
-                "Sadece ",AsLetter(ArabicLetter.Miim)," harfini ele alalım. Bu başlangıç harfi ile başlayan 17 surelerde toplamda 8659 adet geçer. " ,
+                "Sadece ", AsLetter(ArabicLetter.Miim), " harfini ele alalım. Bu başlangıç harfi ile başlayan 17 surelerde toplamda 8659 adet geçer. ",
 
-                "Eğer 46. suredeki ",AsLetter(ArabicLetter.Miim)," harfi bir fazla veya eksik olsaydı  hem bu yukarıda hesaplanan  büyük rakamlar 19'un katı olmazdı. ",
+                "Eğer 46. suredeki ", AsLetter(ArabicLetter.Miim), " harfi bir fazla veya eksik olsaydı  hem bu yukarıda hesaplanan  büyük rakamlar 19'un katı olmazdı. ",
                 "Hem 'Başlangıç Harfleri' kısmında gözlemlediğimiz Ha-Mim ile ilgili veriler olmazdı.",
                 " Sadece bir yerden değil bir çok yerden kitlenen iç içe geçmeli bir yapı gibi düşünülebilir."
             },
 
             new p
             {
-                "Kuranda özellikle ",(strong)"bu kitabın bir benzerinin oluşturulamayacağı"," vurgulanır. ",
-                "19 sistemi keşfedilinceye kadar olay sadece edebi açıdan ele alınıyordu. Edebi mucize olarak ele alınıyordu. " ,
+                "Kuranda özellikle ", (strong)"bu kitabın bir benzerinin oluşturulamayacağı", " vurgulanır. ",
+                "19 sistemi keşfedilinceye kadar olay sadece edebi açıdan ele alınıyordu. Edebi mucize olarak ele alınıyordu. ",
                 "Bu edebi açıdan mucize olduğu yorumu ise bazı insanları tam tatmin etmiyordu. Çünkü edebiyat görecelidir. ",
                 "Kimine göre Necip Fazıl daha iyi şairdir kimine göre de Nazım Hikmet. ",
                 "Ama matematik yoruma daha kapalıdır. 2 + 2 Bağcılarda da 4 eder Berlin'de de 4 eder. ",
@@ -70,9 +70,9 @@ class PageAllInitialLettersCombinedView : ReactPureComponent
                 "Böylelikle Kuranın korunacağı ve Kuranın bir benzerinin getirilemeyeceği iddiaları 19 sistemi ile daha anlamlı hale gelmiş oluyor. ",
             },
 
-            new div{ "Neden 19?", TextAlignCenter},
+            new div { "Neden 19?", TextAlignCenter },
             new br(),
-            "Elbette her şeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi. Eğer bu örüntü 29 üzerine olsaydı neden 29 diye sorulacaktı. " ,
+            "Elbette her şeyin sayısını bilen Allah istese bunu 19 değil 29 rakamı ile de yapabilirdi. Eğer bu örüntü 29 üzerine olsaydı neden 29 diye sorulacaktı. ",
             new br(),
             new ul
             {
@@ -81,10 +81,10 @@ class PageAllInitialLettersCombinedView : ReactPureComponent
             },
             new p
             {
-                " Buna benzer daha bir çok örnek verilebilir. " ,
-                " Mühim olan buradaki tasarımı görebilmektir. " ,
+                " Buna benzer daha bir çok örnek verilebilir. ",
+                " Mühim olan buradaki tasarımı görebilmektir. ",
                 " Böylelikle Allah var mı? yok mu? Kuran Allah kelamı mı değil mi ? gibi şüpheler giderilmiş olacak.",
-                " Kuran'ın Allah'tan geldiğine olan inancımızı sağlam bir zemine oturmuş olacağız. " ,
+                " Kuran'ın Allah'tan geldiğine olan inancımızı sağlam bir zemine oturmuş olacağız. ",
                 " Artık bir sonraki aşamaya yani Kuranı anlama ve hayatımıza uygulama aşamasına geçebiliriz."
             }
         };

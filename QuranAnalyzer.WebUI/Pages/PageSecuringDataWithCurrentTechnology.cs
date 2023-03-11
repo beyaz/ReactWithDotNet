@@ -14,11 +14,11 @@ public class PageSecuringDataWithCurrentTechnology : ReactPureComponent
             new div
             {
                 TextAlignCenter,
-                new div {  "1056227229",(b)"6" },
+                new div { "1056227229", (b)"6" },
 
-                new div {  "2569375209",(b)"8" },
+                new div { "2569375209", (b)"8" },
 
-                new div {  "7547453160" ,(b)"2" }
+                new div { "7547453160", (b)"2" }
             },
 
             (p)@"Dikkat ettiyseniz en sondaki rakamlar hep şu mantıkta oluşmuş. 
@@ -41,7 +41,7 @@ Böylelikle herhangi 11 haneden oluşan bir sayının TC kimlik numarası olup o
             new LargeTitle("IBAN"),
 
             new p { "Bankanızın size vermiş oluğu IBAN bilgisinde buna benzer bir şey olabilir mi?" },
-            new img { src = FileAtImgFolder("IBAN.jpg"), alt ="iban" ,style = { width = "100%", maxWidth = "600px", height = "auto", display = "block", marginLeftRight = "auto" } },
+            new img { src = FileAtImgFolder("IBAN.jpg"), alt = "iban", style = { width = "100%", maxWidth = "600px", height = "auto", display = "block", marginLeftRight = "auto" } },
 
             new p
             {
@@ -77,7 +77,7 @@ Her bir paketin içinde de binlerce byte ismini verdikleri 8 haneli rakamlar var
 İşte bu paketlerin doğru olup olmaması da yine benzer bir yöntem ile yapılmaktadır."
             },
 
-            new img { src = FileAtImgFolder("ParityBit.PNG"),alt = "Parity bit", style = { width = "100%", height = "auto", maxWidth = "400px", display = "block", marginLeftRight = "auto" } },
+            new img { src = FileAtImgFolder("ParityBit.PNG"), alt = "Parity bit", style = { width = "100%", height = "auto", maxWidth = "400px", display = "block", marginLeftRight = "auto" } },
 
             new p
             {

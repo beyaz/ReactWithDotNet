@@ -5,19 +5,19 @@ namespace QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 class MushafOptionsView : ReactComponent
 {
     public MushafOption Model { get; set; } = new();
-    
+
     [ReactCustomEvent]
     public Action<MushafOption> MushafOptionChanged { get; set; }
-    
+
     protected override Element render()
     {
         return new FlexColumn(JustifyContentCenter, Gap(20))
         {
             new SwitchWithLabel
             {
-                Label = "Elif sayımları için Tanzil.net'i referans al",
+                Label         = "Elif sayımları için Tanzil.net'i referans al",
                 LabelMaxWidth = 250,
-                Value = Model.UseElifReferencesFromTanzil,
+                Value         = Model.UseElifReferencesFromTanzil,
                 ValueChange = changeEvent =>
                 {
                     Model.UseElifReferencesFromTanzil = Convert.ToBoolean(changeEvent.target.value);
@@ -36,7 +36,6 @@ class MushafOptionsView : ReactComponent
                     FireMushafOptionChanged();
                 }
             },
-
 
             new SwitchWithLabel
             {
@@ -74,17 +73,17 @@ class MushafOptionsView : ReactComponent
                 }
             },
 
-              new SwitchWithLabel
-              {
-                  Label         = "75:13 nolu ayetteki [yunebbeu](يُنَبَّؤُ) kelimesindeki 'vav' harf farklılığında vav harfi olan versiyonu seç.",
-                  LabelMaxWidth = 250,
-                  Value         = Model._75_13_yunebbeu_Should_Contains_1_waw,
-                  ValueChange = changeEvent =>
-                  {
-                      Model._75_13_yunebbeu_Should_Contains_1_waw = Convert.ToBoolean(changeEvent.target.value);
-                      FireMushafOptionChanged();
-                  }
-              },
+            new SwitchWithLabel
+            {
+                Label         = "75:13 nolu ayetteki [yunebbeu](يُنَبَّؤُ) kelimesindeki 'vav' harf farklılığında vav harfi olan versiyonu seç.",
+                LabelMaxWidth = 250,
+                Value         = Model._75_13_yunebbeu_Should_Contains_1_waw,
+                ValueChange = changeEvent =>
+                {
+                    Model._75_13_yunebbeu_Should_Contains_1_waw = Convert.ToBoolean(changeEvent.target.value);
+                    FireMushafOptionChanged();
+                }
+            },
 
             new a { Text("Mushaf ayarları hakkında detaylı bilgi"), Href(GetPageLink(MushafOptionsDetail)), MarginTop(10) }
         };
@@ -92,6 +91,6 @@ class MushafOptionsView : ReactComponent
 
     void FireMushafOptionChanged()
     {
-        DispatchEvent(()=>MushafOptionChanged, Model);
+        DispatchEvent(() => MushafOptionChanged, Model);
     }
 }

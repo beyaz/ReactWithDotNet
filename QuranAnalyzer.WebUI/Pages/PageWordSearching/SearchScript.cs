@@ -33,7 +33,7 @@ class SearchScript
         {
             value = value.Replace('\n', ';');
 
-            return value.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
+            return value.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
         }
 
         static Response<(string ChapterFilter, IReadOnlyList<LetterInfo> Letters)> parseLine(string line)
@@ -45,7 +45,6 @@ class SearchScript
             }
 
             var letterInfoList = Analyzer.AnalyzeText(clearText(arr[1]));
-           
 
             var letters = letterInfoList.Where(Analyzer.IsArabicLetter).ToList();
             if (letters.Count == 0)

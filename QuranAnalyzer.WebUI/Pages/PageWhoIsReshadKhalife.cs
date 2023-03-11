@@ -23,21 +23,21 @@ Bu 19 meselesini incelerken fark ettim ki meselenin odağındaki isim bu sistemi
             (h5)"İlk Yıllar ve Kariyer",
             new p
             {
-                new img {Src(FileAtImgFolder("rh.png")), Alt("Reşad Halife"), Width(200), HeightAuto, FloatLeft, MarginRight(20) },
+                new img { Src(FileAtImgFolder("rh.png")), Alt("Reşad Halife"), Width(200), HeightAuto, FloatLeft, MarginRight(20) },
 
                 "1935 yılında Mısırda doğmuş. Babası tarikat şeyhi olan biridir. " +
                 "Bunu özellikle belirttim. Ehli sünnet bir tarikat ortamında, dindar bir ailede doğup büyümüş birinden bahsediyoruz. " +
                 "Mısırda üniversite kimya bölümünde okuyor. Onur derecesi alıyor. 25'li yaşlarda Amerika'ya doktora için gidiyor ve biyokimya alanında yüksek lisans " +
-                "ve doktorasını tamamlıyor. Kendi alanında konferanslar falan veriyor. Birleşmiş milletler kalkınma örgütünde kimyager olarak çalışıyor. " ,
+                "ve doktorasını tamamlıyor. Kendi alanında konferanslar falan veriyor. Birleşmiş milletler kalkınma örgütünde kimyager olarak çalışıyor. ",
                 "Kısaca kariyer olarak oldukça iyi giden bir hayatı olmuş diyebiliriz."
             },
             new p
             {
-                "30'lu yaşlarda Amerika'ya gelince bir yandan doktorasını tamamlarken bir yandan da İngilizce yazılmış kuran meallerinin çoğunu okuyor. " ,
-                "Eski tefsirleri zaten Mısırdayken inceleyen biri. Anadili zaten Arapça. " ,
-                "Yazılan İngilizce Kuran çevirilerini inceledikten sonra fark ediyor ki bu çevirilerdeki eksik gördüğü veya tevhide uymayan fikirler olduğunu görüyor. " ,
-                "En azından kendi evlatlarımın okuyabileceği Tevhidi merkez alan bir çeviri yapma niyeti ile çeviriye başladığını kendisi söylüyor. " ,
-                "Bir ayetin manasını tam anlamadan ötekine  geçmeyeceğine dair kendine de şart koşuyor. " ,
+                "30'lu yaşlarda Amerika'ya gelince bir yandan doktorasını tamamlarken bir yandan da İngilizce yazılmış kuran meallerinin çoğunu okuyor. ",
+                "Eski tefsirleri zaten Mısırdayken inceleyen biri. Anadili zaten Arapça. ",
+                "Yazılan İngilizce Kuran çevirilerini inceledikten sonra fark ediyor ki bu çevirilerdeki eksik gördüğü veya tevhide uymayan fikirler olduğunu görüyor. ",
+                "En azından kendi evlatlarımın okuyabileceği Tevhidi merkez alan bir çeviri yapma niyeti ile çeviriye başladığını kendisi söylüyor. ",
+                "Bir ayetin manasını tam anlamadan ötekine  geçmeyeceğine dair kendine de şart koşuyor. ",
                 "1. sureyi çevirdikten sonra 2. sureye geliyor ve sure başındaki elif-lam-mim harflerine gelince takılıyor. ",
                 "Çalıştığı şirket çalışanlarını yazılım kursuna gönderiyor kendisi de bu sayede yazılım öğrenmiş. ",
                 "Acaba Kuranda bu başlangıç harfleri ile ilgili verileri bilgisayar yazılımı ile incelemek istiyor. ",
@@ -135,7 +135,7 @@ Bu 19 meselesini incelerken fark ettim ki meselenin odağındaki isim bu sistemi
                     " Sürekli biz insanoğlunu iyilik için yarıştırıyor.",
                     new br(),
                     new br(),
-                    "- Türkiye'de doğan Mehmet Müslüman olduğu için eninde sonunda cennete gidecek fakat Almanya'da doğup büyüyen Hans, Müslüman olmadığı için cehenneme gidecek? " ,
+                    "- Türkiye'de doğan Mehmet Müslüman olduğu için eninde sonunda cennete gidecek fakat Almanya'da doğup büyüyen Hans, Müslüman olmadığı için cehenneme gidecek? ",
                     "Hans Ortadoğu’da bir yerde doğsaydı o da muhtemelen Müslüman olacaktı. ",
                     "Burada bir adaletsizlik yok mu?",
                     new br(),
@@ -176,7 +176,6 @@ Bu 19 meselesini incelerken fark ettim ki meselenin odağındaki isim bu sistemi
                     " Aşağıda Reşad Halife tarafından yapılan çevirinin linkini ekliyorum dileyen kitabın başında detaylı olarak anlatılan bu konuyu inceleyebilir.",
                     new br(),
                     new a { href = "http://teslimolan.org/pdf/kuran-son-ahit---birinci-baski.pdf", text = "Yetkilendirilmiş Çeviri" }
-
                 }
             },
 
@@ -217,16 +216,16 @@ Bu 19 meselesini incelerken fark ettim ki meselenin odağındaki isim bu sistemi
                     new br(),
                     "Klasik cevap ise şöyleydi. Allah'ın ihtiyacı yok senin ihtiyacın var.",
                     new br(),
-                    "İşte Reşad buradaki mekanizmayı şöyle açıklıyor; Bizler bu dünyaya ruhlarımızı kurtarmak-büyütmek için gönderildik. " ,
+                    "İşte Reşad buradaki mekanizmayı şöyle açıklıyor; Bizler bu dünyaya ruhlarımızı kurtarmak-büyütmek için gönderildik. ",
                     " Baskın zihin durumumuz Allah ile ilişkili olur ise ve doğru(şirk içermeyen) namaz -oruç gibi ibadetler ile ruhlarımız beslenir ve büyür.",
-                    " Böylelikle ahirette Allah bizlere tekrar secde etmemizi söyleyecek eğer ruhlarımızı Allah'ın yakınlığına -enerjisine alıştıramaz iseniz o gün geldiğinde" ,
+                    " Böylelikle ahirette Allah bizlere tekrar secde etmemizi söyleyecek eğer ruhlarımızı Allah'ın yakınlığına -enerjisine alıştıramaz iseniz o gün geldiğinde",
                     " o secdeyi yapamazsınız ve Allah'ın varlığına dayanamayıp geriye(cehenneme) doğru kaçmaya çalışacaksınız.",
                     " Baskın zihin durumunu bir örnek ile açıklayalım.",
                     new br(),
                     "Bir elmayı ısırdığınızda zihninizi o elmaya verin.",
                     " 'En Merhametli Olan', milyon kilometre öteye adına güneş dediğimiz bir gezegen koymuş.",
-                    " Bu elma için milyon km öteden ısı göndermiş ışık göndermiş." ,
-                    " Toprağın altında milyarlarca bakteri topraktaki besinleri ayrıştırmış" ,
+                    " Bu elma için milyon km öteden ısı göndermiş ışık göndermiş.",
+                    " Toprağın altında milyarlarca bakteri topraktaki besinleri ayrıştırmış",
                     " Ağaç ise bu vitaminleri gözle görülmeyecek kadar küçük borular ile  milim milim, damla damla bu meyveye doldurmuş.",
                     " Elmanın suyu ağzınızda akarken verdiği o lezzeti fark edebilmemiz için dilimizde bir sürü farklı hücre yerleştirmiş.",
                     " İşte bütün bu şartları sağlayan 'En Lutufkar Olan'a şükürler olsun.",
@@ -236,22 +235,20 @@ Bu 19 meselesini incelerken fark ettim ki meselenin odağındaki isim bu sistemi
                     " Yaratıcı ile bağlantılı zihin durumu  ve ibadetler ile ancak kendimize fayda sağlamış oluruz.",
                     " Elbette bu zihin durumuna geçmek zaman alacak bir süreç. Ama madalyonun diğer yüzünde şu var.",
                     " Bizler Allaha inanınca cennete gideceğimizi sanıyoruz. Fakat kuran bunu garanti etmiyor.",
-                    " Çünkü Kuranda kesin olarak belirtiliyor ki her ne iyilik yaparsan yap, her ne kadar ibadet edersen et eğer şirk içinde bir ömür yaşadı isen " ,
+                    " Çünkü Kuranda kesin olarak belirtiliyor ki her ne iyilik yaparsan yap, her ne kadar ibadet edersen et eğer şirk içinde bir ömür yaşadı isen ",
                     " 'Azabı En Şiddetli Olan' şirki asla affetmeyeceğini belirtiyor.",
                     " Ayrıca iman edenlerin çoğunun da bunu puta tapma suçunu işlemeden yapmayacağını belirtiyor."
-
                 }
             },
-
 
             new p
             {
                 (b)"Sonuç olarak;",
                 new br(),
-                "Bu yukarıdaki belirtilen fikirler size doğru veya yanlış gelebilir." ,
+                "Bu yukarıdaki belirtilen fikirler size doğru veya yanlış gelebilir.",
                 " Reşad Halife daha başka şeyler de söylüyor ama burada hepsine yer vermem mümkün değil.",
                 " Reşad Halife ısrarla şunu da söylüyor 'Eğer benden Kuranda referansı olmayan bir söz duyarsanız onu çöpe atabilirsiniz'.",
-                " Reşad 80'li yıllarda sanki bu zamandaki youtube-sosyal medya olaylarını tahmin etmiş gibi:)" ,
+                " Reşad 80'li yıllarda sanki bu zamandaki youtube-sosyal medya olaylarını tahmin etmiş gibi:)",
                 " bu fikirlerin bir kısmını cuma hutbelerinde bir kısmını kamera karşısına geçerek tek tek anlatmış.",
                 " Doğru namazın nasıl kılınacağı için video çekmiş.",
                 " Bilim adamı kimliği ile evrim hakkında video çekmiş. (Biyokimya doktorası olduğunu hatırlayın.)",
@@ -259,24 +256,23 @@ Bu 19 meselesini incelerken fark ettim ki meselenin odağındaki isim bu sistemi
                 " Bu yazıdan ancak bir kısmını bahsettiğim fikirleri onun ağzından dinleyebilirsiniz.",
                 " Açıkçası bu fikirler kadar olmasa da beni etkileyen şu kısma da değinerek yazıyı tamamlamış olayım.",
                 " Reşad Halife de gördüğüm durumlar şunlar.",
-                
-                " Bu adamın çok baskın bir tevhid anlayışı var. Allah'ı çok farklı ve güzel ve Kurandan referanslar ile anlatıyor." ,
-                " Bende sıradan bir yurdum insanıyım. Allah hakkında bir sürü hikaye dinledim. Kuran okudukça fark ediyorum ki bu hikayelerin çoğu kurandan değilmiş." ,
-                " Yani zihninizdeki Allah ile gerçekteki Allah farklı olabilir. Dolayısı ile Allah'ı Kuran üzerinden tanımak mecburiyetindeyiz. " ,
-                " Bu konuda Reşad oldukça iyi bir eğitmen. Tevhid mesajını en yüksek tonda seslendirmeye çalışan biri." ,
-                
-                " Dinden kazanç sağlamıyor olması benim için önemli. Kazanç sadece para ile olmaz. Bazen şöhret ile de olur. " ,
+
+                " Bu adamın çok baskın bir tevhid anlayışı var. Allah'ı çok farklı ve güzel ve Kurandan referanslar ile anlatıyor.",
+                " Bende sıradan bir yurdum insanıyım. Allah hakkında bir sürü hikaye dinledim. Kuran okudukça fark ediyorum ki bu hikayelerin çoğu kurandan değilmiş.",
+                " Yani zihninizdeki Allah ile gerçekteki Allah farklı olabilir. Dolayısı ile Allah'ı Kuran üzerinden tanımak mecburiyetindeyiz. ",
+                " Bu konuda Reşad oldukça iyi bir eğitmen. Tevhid mesajını en yüksek tonda seslendirmeye çalışan biri.",
+
+                " Dinden kazanç sağlamıyor olması benim için önemli. Kazanç sadece para ile olmaz. Bazen şöhret ile de olur. ",
                 " 19 sistemini ilk bulduğunda popülaritesi varken istese bu fikirlerini pek duyurmayıp o popülaritenin kaymağını yiyebilirdir.",
-                " Fakat o tam tersini yapıyor. Emeklilik parası ile gidip mescit kuruyor. " ,
+                " Fakat o tam tersini yapıyor. Emeklilik parası ile gidip mescit kuruyor. ",
                 " Hadisleri dinin kaynağı olarak görmediğini ve dinin tek kaynağının kuran olduğunu üzerine basa basa tekrarlıyor.",
                 " Bu uğurda şöhreti elden gidiyor. Ölüm tehditleri aldığı halde geri adım atmıyor. Hatta bir videoda kamera yanlışlıkla kayıyor arkasında toplamda 10 kişilik bir saf bile yok.",
                 " Zaten bu fikirleri yüzünden de 55 yaşında sabah namazında öldürülüyor.",
-                
+
                 new br(),
                 new br(),
                 "Elimden geldiğince bu adamın ne söylediğini anlatmaya çalıştım. Belki benim bakışımda hata vardır, Belki yanlış anlamışımdır. " +
                 " Fırsatınız var ise bu bilgileri lütfen kendiniz teyit ediniz."
-                
             }
         };
     }

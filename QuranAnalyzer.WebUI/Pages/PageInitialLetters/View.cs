@@ -138,7 +138,7 @@ abstract class InitialLetterGroup : ReactPureComponent
 {
     protected tr HeaderSpace => new() { Height(15), new td(), new td(), new td() };
 
-    protected tr HeaderTr => new tr
+    protected tr HeaderTr => new()
     {
         new th { innerText = "Sure" },
         new th { innerText = "Başlangıç Harfleri" },

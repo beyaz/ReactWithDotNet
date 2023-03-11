@@ -1,4 +1,5 @@
 ﻿using QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
+using QuranAnalyzer.WebUI.Pages.PageAllInitialLettersCombined;
 using QuranAnalyzer.WebUI.Pages.PageCharacterCounting;
 using QuranAnalyzer.WebUI.Pages.PageInitialLetters;
 using QuranAnalyzer.WebUI.Pages.PageVerseListContainsAllInitialLetters;
@@ -42,28 +43,28 @@ class PageMainWindowView : ReactPureComponent
         {
             return SelectedPageId switch
             {
-                PageId.MainWindow                         => new MainPageContent(),
-                PageId.SecuringDataWithCurrentTechnology  => new PageSecuringDataWithCurrentTechnology(),
-                PageId.PreInformation                     => new PagePreInformation(),
-                PageId.InitialLetters                     => new PageInitialLettersView(),
-                PageId.QuestionAnswer                     => new PageQuestionAnswer(),
-                PageId.Contact                            => new PageContact(),
-                PageId.CharacterCounting                  => new PageCharacterCountingView(),
-                PageId.WordSearching                      => new WordSearchingView(),
-                PageId.AlternativeSystems                 => new PageAlternativeSystems(),
-                PageId.SimpleDefinition                   => new PageSimpleDefinition(),
-                PageId.MushafOptionsDetail                => new PageMushafOptionsDetail(),
-                PageId.WhoIsReshadKhalifePage             => new PageWhoIsReshadKhalife(),
-                PageId.WhyFamousPeopleAreSilent           => new PageWhyFamousPeopleAreSilent(),
-                PageId.AboutEdipYuksel                    => new PageAboutEdipYuksel(),
+                PageId.MainWindow => new MainPageContent(),
+                PageId.SecuringDataWithCurrentTechnology => new PageSecuringDataWithCurrentTechnology(),
+                PageId.PreInformation => new PagePreInformation(),
+                PageId.InitialLetters => new PageInitialLettersView(),
+                PageId.QuestionAnswer => new PageQuestionAnswer(),
+                PageId.Contact => new PageContact(),
+                PageId.CharacterCounting => new PageCharacterCountingView(),
+                PageId.WordSearching => new WordSearchingView(),
+                PageId.AlternativeSystems => new PageAlternativeSystems(),
+                PageId.SimpleDefinition => new PageSimpleDefinition(),
+                PageId.MushafOptionsDetail => new PageMushafOptionsDetail(),
+                PageId.WhoIsReshadKhalifePage => new PageWhoIsReshadKhalife(),
+                PageId.WhyFamousPeopleAreSilent => new PageWhyFamousPeopleAreSilent(),
+                PageId.AboutEdipYuksel => new PageAboutEdipYuksel(),
                 PageId.VerseListContainsAllInitialLetters => new PageVerseListContainsAllInitialLettersView(),
-                PageId.AdditionalVerses                   => new PageAdditionalVerses(),
-                PageId.CountOfAllah                       => new PageCountOfAllahView(),
-                PageId.AllInitialLettersCombined          => new PageAllInitialLettersCombined.PageAllInitialLettersCombinedView(),
-                PageId.WhereIsTheProblem                  => new PageWhereIsTheProblem(),
-                PageId.IsHeMessanger                      => new PageIsHeMessanger(),
-                PageId.IsThereAnyCommunity                => new PageIsThereAnyCommunity(),
-                _                                         => new MainPageContent()
+                PageId.AdditionalVerses => new PageAdditionalVerses(),
+                PageId.CountOfAllah => new PageCountOfAllahView(),
+                PageId.AllInitialLettersCombined => new PageAllInitialLettersCombinedView(),
+                PageId.WhereIsTheProblem => new PageWhereIsTheProblem(),
+                PageId.IsHeMessanger => new PageIsHeMessanger(),
+                PageId.IsThereAnyCommunity => new PageIsThereAnyCommunity(),
+                _ => new MainPageContent()
             };
         }
     }
