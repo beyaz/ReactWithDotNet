@@ -47,7 +47,7 @@ class PageCountOfAllahView : ReactPureComponent
             seperation,
 
             "Şimdi ise üzerinde tartışmanın döndüğü konu olan 9. surenin 128 ve 129 nolu cümleleri çıkarıp sayalım.",
-            new VSpace(10),
+            VSpace(10),
 
             raisePanel(new Calculator
             {

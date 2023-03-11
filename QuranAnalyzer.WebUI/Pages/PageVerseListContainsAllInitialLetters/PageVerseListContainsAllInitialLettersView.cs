@@ -40,14 +40,14 @@ class PageVerseListContainsAllInitialLettersView : ReactComponent
             {
                 Letters = string.Join(" ", Alif, Laam, Miim, Saad, Raa, Kaaf, Haa, Yaa, Ayn, Taa_, Siin, Haa_, Qaaf, Nun)
             }),
-            new VSpace(10),
+            VSpace(10),
             "Eğer 693 sayısını görüyor iseniz hesaplamalarımız doğru gidiyor demektir. ",
             "İlk bakışta bu rakam pek bir şey ifade etmiyor gibi gelebilir ama şimdilik aklınızın bir köşesinde tutun.",
 
             seperation,
 
             "Peki bu 14 başlangıç harfinin tamamını içeren ayet sayısı acaba kaçtır? Aşağıdaki program yardımı ile hesaplayalım.",
-            new VSpace(10),
+            VSpace(10),
 
             raisePanel(new Calculator
             {
@@ -78,7 +78,7 @@ class PageVerseListContainsAllInitialLettersView : ReactComponent
             "Toplam 14 tane başlangıç harfi vardır ve bu 14 harfin sayısal toplamının 693 olduğunu yazının ilk başında zaten hesaplamıştık. ",
             "Bu harflerin tamamını barındıran ayetlerin sure ve ayet numaraları toplamının da bu iki rakamın çarpımını(9702) vermesi oldukça ilginç.",
 
-            new VSpace(40),
+            VSpace(40),
             (b)"Sonuç: ",
             "Açıkçası herhangi bir kitapta buna benzer bir hesaplama ile önümüze böyle rakamlar koyulsa haklı olarak pek dikkate almayabilirdik. ",
             "Sırf işine gelen rakamı bulmak için zorlamışsın diyebilirdik.",

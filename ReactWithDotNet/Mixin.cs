@@ -723,7 +723,7 @@ public static partial class Mixin
     ///         value
     ///     </br>
     /// </summary>
-    public static HtmlElement Space(string value) => new Space(value);
+    public static Element Space(string value) => new Space(value);
 
     /// <summary>
     ///     <br>
@@ -735,7 +735,7 @@ public static partial class Mixin
     ///         value + 'px'
     ///     </br>
     /// </summary>
-    public static HtmlElement Space(double valueInPx) => new Space(valueInPx);
+    public static Element Space(double valueInPx) => new Space(valueInPx);
 
     /// <summary>
     ///         Creates a new div with given height

@@ -90,10 +90,10 @@ class PageCharacterCountingView : ReactComponent<PageCharacterCountingViewModel>
 
                 Space(3),
 
-                new FlexRow(AlignItemsCenter)
+                new FlexRow(AlignItemsCenter,Gap(30))
                 {
                     new CharacterCountingOptionView { MushafOption = state.MushafOption, MushafOptionChanged = MushafOptionChanged },
-                    Space(30),
+                    
                     new SwitchWithLabel
                     {
                         Label       = "Besmele'yi dahil et",
@@ -214,7 +214,7 @@ class PageCharacterCountingView : ReactComponent<PageCharacterCountingViewModel>
                                     {
                                         new h4("Sonuçlar") + TextAlignCenter,
                                         new CountsSummaryView { Counts = summaryInfoList },
-                                        new VSpace(30),
+                                        VSpace(30),
                                         new div
                                         {
                                             dangerouslySetInnerHTML =new div
