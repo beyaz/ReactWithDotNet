@@ -1,4 +1,4 @@
-﻿namespace QuranAnalyzer.WebUI.Pages.AlternativeSystems;
+﻿namespace QuranAnalyzer.WebUI.Pages;
 
 public class PageAlternativeSystems : ReactPureComponent
 {

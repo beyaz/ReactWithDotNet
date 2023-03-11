@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.DefinitionPage;
 
-public class DefinitionView : ReactComponent
+public class PageSimpleDefinition : ReactComponent
 {
     protected override Element render()
     {

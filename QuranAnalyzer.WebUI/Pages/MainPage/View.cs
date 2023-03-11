@@ -1,5 +1,4 @@
-﻿using QuranAnalyzer.WebUI.Pages.AlternativeSystems;
-using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
+﻿using QuranAnalyzer.WebUI.Pages.CharacterCountingPage;
 using QuranAnalyzer.WebUI.Pages.CountOfAllahPage;
 using QuranAnalyzer.WebUI.Pages.DefinitionPage;
 using QuranAnalyzer.WebUI.Pages.InitialLetters;
@@ -53,7 +52,7 @@ class View : ReactPureComponent
                 PageId.CharacterCounting                      => new CharacterCountingView(),
                 PageId.WordSearchingPage                      => new WordSearchingView(),
                 PageId.AlternativeSystems                     => new PageAlternativeSystems(),
-                PageId.Definition                             => new DefinitionView(),
+                PageId.Definition                             => new PageSimpleDefinition(),
                 PageId.PageIdOfMushafOptionsDetail            => new MushafOptionsDetail.View(),
                 PageId.WhoIsReshadKhalifePage                 => new PageWhoIsReshadKhalife(),
                 PageId.WhyFamousPeopleAreSilentPage           => new PageWhyFamousPeopleAreSilent(),
