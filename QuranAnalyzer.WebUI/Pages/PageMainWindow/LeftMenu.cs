@@ -18,7 +18,8 @@ class LeftMenu : ReactComponent
             PageId.WhyFamousPeopleAreSilent,
             PageId.AdditionalVerses,
             PageId.WhereIsTheProblem,
-            PageId.CountOfAllah
+            PageId.CountOfAllah,
+            PageId.IsHeMessanger
         }),
         ("İletişim", new[] { PageId.Contact }),
         ("Harf Sayım Programı", new[] { PageId.CharacterCounting }),
