@@ -47,7 +47,7 @@ class View : ReactPureComponent
             {
                 PageId.MainPage                               => new MainPageContent(),
                 PageId.SecuringDataWithCurrentTechnology      => new SecuringDataWithCurrentTechnology.View(),
-                PageId.PreInformation                         => new PreInformationView(),
+                PageId.PreInformation                         => new PagePreInformation(),
                 PageId.InitialLetters                         => new AllInitialLetters(),
                 PageId.QuestionAnswerPage                     => new QuestionAnswerPage.View(),
                 PageId.ContactPage                            => new ContactPage.View(),
