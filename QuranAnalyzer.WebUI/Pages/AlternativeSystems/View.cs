@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Pages.AlternativeSystems;
 
-public class AlternativeSystemsView : ReactPureComponent
+public class PageAlternativeSystems : ReactPureComponent
 {
     protected override Element render()
     {
