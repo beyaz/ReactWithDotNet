@@ -45,7 +45,7 @@ class View : ReactPureComponent
             return SelectedPageId switch
             {
                 PageId.MainPage                               => new MainPageContent(),
-                PageId.SecuringDataWithCurrentTechnology      => new SecuringDataWithCurrentTechnology.PageSecuringDataWithCurrentTechnology(),
+                PageId.SecuringDataWithCurrentTechnology      => new PageSecuringDataWithCurrentTechnology(),
                 PageId.PreInformation                         => new PagePreInformation(),
                 PageId.InitialLetters                         => new AllInitialLetters(),
                 PageId.QuestionAnswerPage                     => new PageQuestionAnswer(),
