@@ -1,6 +1,6 @@
 ﻿namespace QuranAnalyzer.WebUI.Components;
 
-class ArabicKeyboard : ReactComponent
+class ArabicKeyboard : ReactPureComponent
 {
     public static Element Content => new div(DisplayFlex, FlexWrap, JustifyContentCenter, DirectionRtl)
     {
