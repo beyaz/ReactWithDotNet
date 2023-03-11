@@ -124,7 +124,6 @@ static class Extensions
             _ => null
         };
 
-        return null;
     }
 
     public static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
