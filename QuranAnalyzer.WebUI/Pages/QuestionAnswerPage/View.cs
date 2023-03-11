@@ -53,7 +53,7 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
                 
 
 
-                new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk falan mı var ?" },
+                //new QuestionLink { Question = "19 cular diye bir cemaat / tarikat / topluluk falan mı var ?" },
 
              
 
@@ -61,7 +61,7 @@ Bu sebeple ben burada tartışmayı aktarayım, tarafların özetle ne söyledi�
 
                 new QuestionLink { Question = "Edip Yüksel", Url = GetPageLink(PageId.AboutEdipYukselPage) },
 
-                new QuestionLink { Question = "Allah mı? Tanrı mı ?" }
+                //new QuestionLink { Question = "Allah mı? Tanrı mı ?" }
             }
         };
     }
