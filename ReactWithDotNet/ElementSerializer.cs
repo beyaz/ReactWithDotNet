@@ -29,7 +29,7 @@ sealed class ElementSerializerContext
     public readonly Tracer Tracer = new();
 
     internal readonly Stack<ReactComponentBase> componentStack = new();
-
+    
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
@@ -128,7 +128,7 @@ static partial class ElementSerializer
         {
             string convertStyleToCssClass(Style style)
             {
-                var (needToExport, cssClassName) = ConvertStyleToCssClass(style, true, context.componentStack.Peek()?.ComponentUniqueIdentifier, context.DynamicStyles.GetClassName);
+                var (needToExport, cssClassName) = ConvertStyleToCssClass(style, true, context.componentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
                 if (needToExport)
                 {
                     return cssClassName;
@@ -475,13 +475,7 @@ static partial class ElementSerializer
 
     static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
     {
-        var componentUniqueIdentifier = 0;
-        
-        if (context.componentStack.Count > 0)
-        {
-            componentUniqueIdentifier = context.componentStack.Peek()?.ComponentUniqueIdentifier ?? 0;
-        }
-        var response = ConvertStyleToCssClass(style, false, componentUniqueIdentifier, context.DynamicStyles.GetClassName);
+        var response = ConvertStyleToCssClass(style, false, context.componentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
         if (response.needToExport  is false)
         {
             if (style.IsEmpty == false)

@@ -187,6 +187,17 @@ static class Extensions
 
         return data;
     }
+
+    public static int? PeekForComponentUniqueIdentifier(this Stack<ReactComponentBase> stack)
+    {
+        if (stack.Count == 0)
+        {
+            return null;
+        }
+
+
+        return stack.Peek().ComponentUniqueIdentifier;
+    }
 }
 
 [Serializable]
