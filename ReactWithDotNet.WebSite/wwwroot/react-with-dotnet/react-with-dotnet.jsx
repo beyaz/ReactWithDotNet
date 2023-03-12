@@ -2106,8 +2106,8 @@ function IsTwoStringHasValueAndSame(a, b)
         return false;
     }
 
-    a = a.replace(' ', '');
-    b = b.replace(' ', '');
+    a = a.replaceAll(' ', '').replaceAll('\n', '').replaceAll('\r', '');
+    b = b.replaceAll(' ', '').replaceAll('\n', '').replaceAll('\r', '');
 
     return a === b;
 }
