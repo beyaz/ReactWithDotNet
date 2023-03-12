@@ -1,5 +1,5 @@
 ﻿using ReactWithDotNet.Libraries.react_free_scrollbar;
-using ReactWithDotNet.Libraries.react_syntax_highlighter;
+using ReactWithDotNet.Libraries.uiw.react_codemirror;
 
 namespace ReactWithDotNet.WebSite.Components;
 
@@ -13,13 +13,16 @@ class CSharpCodePanel : ReactPureComponent
         {
             WidthMaximized,
             Height(300),
-            new SyntaxHighlighter
+            FontSize12,
+            new CodeMirror
             {
-                language = "csharp",
-                style    = SyntaxHighlighterStyle.vs,
-                children =
+                extensions = { "java", "githubLight" },
+                value = Code,
+                
+                basicSetup =
                 {
-                    Code
+                    highlightActiveLine       = false,
+                    highlightActiveLineGutter = false,
                 }
             }
         };
