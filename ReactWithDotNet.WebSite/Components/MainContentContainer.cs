@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.Components;
 
-class MainContentContainer : ReactComponent
+class MainContentContainer : ReactPureComponent
 {
     readonly IModifier[] modifiers;
     public MainContentContainer()

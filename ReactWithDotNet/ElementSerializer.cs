@@ -461,6 +461,8 @@ static partial class ElementSerializer
             }
         }
 
+        componentUniqueIdentifier ??= 1;
+        
         var cssClassInfo = new CssClassInfo
         {
             ComponentUniqueIdentifier = componentUniqueIdentifier,
