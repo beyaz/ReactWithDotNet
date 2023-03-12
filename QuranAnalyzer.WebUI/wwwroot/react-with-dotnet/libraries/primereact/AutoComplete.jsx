@@ -1,1 +1,0 @@
-export { AutoComplete as default } from 'primereact/autocomplete';

@@ -1,1 +1,0 @@
-export { Bounce as default } from 'react-awesome-reveal';
