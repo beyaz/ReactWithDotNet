@@ -106,6 +106,37 @@ public sealed class pre : HtmlElement
 }
 
 /// <summary>
+///     Define some text as computer code in a document
+/// </summary>
+public sealed class code : HtmlElement
+{
+    /// <summary>
+    ///     Define some text as computer code in a document
+    /// </summary>
+    public code() { }
+
+    /// <summary>
+    ///     Define some text as computer code in a document
+    /// </summary>
+    public code(params IModifier[] modifiers) : base(modifiers) { }
+
+    /// <summary>
+    ///     Define some text as computer code in a document
+    /// </summary>
+    public code(string innerText) : base(innerText) {  }
+
+    /// <summary>
+    ///     Define some text as computer code in a document
+    /// </summary>
+    public static implicit operator code(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Define some text as computer code in a document
+    /// </summary>
+    public code(Style style) : base(style) { }
+}
+
+/// <summary>
 ///     Ordered list
 /// </summary>
 public sealed class ol : HtmlElement

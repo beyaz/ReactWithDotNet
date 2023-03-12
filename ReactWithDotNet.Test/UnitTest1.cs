@@ -28,6 +28,7 @@ public class UnitTest1
             new() { Tag = "p", Comment = "Defines a paragraph" },
 
             new() { Tag = "pre", Comment = "Preformatted text" },
+            new() { Tag = "code", Comment = "Define some text as computer code in a document" },
 
 
             new() { Tag = "ol", Comment = "Ordered list" },

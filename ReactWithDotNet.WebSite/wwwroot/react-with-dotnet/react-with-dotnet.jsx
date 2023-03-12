@@ -55,6 +55,49 @@ function AttachToBefore3rdPartyComponentAccess(fn)
     Before3rdPartyComponentAccessListeners.push(fn);
 }
 
+const ThirdPartyComponentPropsCalculatedListeners = {};
+
+function OnThirdPartyComponentPropsCalculated(dotNetFullNameOfThirdPartyComponent, fn)
+{
+    if (dotNetFullNameOfThirdPartyComponent == null)
+    {
+        throw CreateNewDeveloperError("Missing argument. @dotNetFullNameOfThirdPartyComponent cannot be null.");
+    }
+
+    if (fn == null)
+    {
+        throw CreateNewDeveloperError("Missing argument. @fn cannot be null.");
+    }
+
+    var arr = ThirdPartyComponentPropsCalculatedListeners[dotNetFullNameOfThirdPartyComponent];
+    if (!arr)
+    {
+        arr = ThirdPartyComponentPropsCalculatedListeners[dotNetFullNameOfThirdPartyComponent] = [];
+    }
+
+    arr.push(fn);
+}
+
+function OnThirdPartyComponentPropsCalculatedTryFire(dotNetFullNameOfThirdPartyComponent, props)
+{
+    if (dotNetFullNameOfThirdPartyComponent == null)
+    {
+        throw CreateNewDeveloperError("Missing argument. @dotNetFullNameOfThirdPartyComponent cannot be null.");
+    }
+
+    var arr = ThirdPartyComponentPropsCalculatedListeners[dotNetFullNameOfThirdPartyComponent];
+    if (arr)
+    {
+        for (var i = 0; i < arr.length; i++)
+        {
+            props = arr[i](props);
+        }
+    }
+
+    return props;
+}
+
+
 function TryLoadCssByHref(href)
 {
     const headElement = document.querySelector(`head`);
@@ -783,11 +826,15 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
         throw CreateNewDeveloperError('ReactNode is not recognized');
     }
 
+    var isThirdPartyComponent = false;
+
     if (/* is component */constructorFunction.indexOf('.') > 0)
     {
         Before3rdPartyComponentAccess(constructorFunction);
 
         constructorFunction = GetExternalJsObject(constructorFunction);
+
+        isThirdPartyComponent = true;
     }
 
     if (constructorFunction === 'nbsp')
@@ -968,6 +1015,11 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
         }
 
         props[propName] = jsonNode[propName];
+    }
+
+    if (isThirdPartyComponent === true)
+    {
+        props = OnThirdPartyComponentPropsCalculatedTryFire(jsonNode.$tag, props);
     }
 
     if (jsonNode.$text != null)
@@ -2087,6 +2139,7 @@ var ReactWithDotNet =
     GetExternalJsObject: GetExternalJsObject,
     BeforeAny3rdPartyComponentAccess: AttachToBefore3rdPartyComponentAccess,
     TryLoadCssByHref: TryLoadCssByHref,
+    OnThirdPartyComponentPropsCalculated: OnThirdPartyComponentPropsCalculated,
 
     IsMediaMobile: IsMobile,
     IsMediaTablet: IsTablet,
