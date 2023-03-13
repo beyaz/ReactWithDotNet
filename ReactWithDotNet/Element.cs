@@ -118,7 +118,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         }).GetAwaiter().GetResult();
     }
 
-    class ToStringHandlerComponent:ReactComponent
+    class ToStringHandlerComponent:ReactPureComponent
     {
         public Element element;
         

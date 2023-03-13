@@ -3,7 +3,7 @@ namespace ReactWithDotNet.WebSite;
 
 
 
-class MainLayout : ReactComponent
+class MainLayout : ReactPureComponent
 {
     public Element Page { get; set; }
 
