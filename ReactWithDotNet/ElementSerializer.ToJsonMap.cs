@@ -758,7 +758,7 @@ partial class ElementSerializer
                 foreach (var propertyInfo in type.GetSerializableProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
                 {
                     var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
-                    var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
+                    var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1Or2Or3();
 
                     if (isAction || isGenericAction)
                     {

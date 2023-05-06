@@ -106,7 +106,7 @@ static class ReflectionHelper
         return type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
     }
 
-    public static bool IsGenericAction1or2or3(this Type type)
+    public static bool IsGenericAction1Or2Or3(this Type type)
     {
         var typeDefinition = type.GetGenericTypeDefinition();
 
