@@ -15,7 +15,7 @@ static class HtmlTextGenerator
 
     static void AddAttribute(HtmlNode htmlNode, HtmlAttribute htmlAttribute)
     {
-        (htmlNode.attributes ??= new List<HtmlAttribute>()).Add(htmlAttribute);
+        (htmlNode.Attributes ??= new List<HtmlAttribute>()).Add(htmlAttribute);
     }
 
     static void AddChild(HtmlNode parent, HtmlNode child)
@@ -38,7 +38,7 @@ static class HtmlTextGenerator
 
         if (jsonMap.head is { key: "$tag", value: "nbsp" })
         {
-            htmlNode.isTextNode = true;
+            htmlNode.IsTextNode = true;
 
             if (jsonMap.tail is { key: nameof(Nbsp.length) })
             {
@@ -58,7 +58,7 @@ static class HtmlTextGenerator
 
     static HtmlNode AsHtmlTextNode(string text)
     {
-        return new HtmlNode { isTextNode = true, text = text };
+        return new HtmlNode { IsTextNode = true, text = text };
     }
 
     static HtmlNode CalculateDynamicStylesAsHtmlStyleNode(JsonMap dynamicStylesMap)
@@ -85,9 +85,9 @@ static class HtmlTextGenerator
 
         return new HtmlNode
         {
-            tag = "style",
+            Tag = "style",
 
-            attributes = new List<HtmlAttribute> { new() { name = "id", value = "ReactWithDotNetDynamicCss" } },
+            Attributes = new List<HtmlAttribute> { new() { Name = "id", Value = "ReactWithDotNetDynamicCss" } },
 
             text = sb.ToString()
         };
@@ -109,11 +109,11 @@ static class HtmlTextGenerator
         {
             var htmlNode = wrapperNode.children?[0];
 
-            if (htmlNode?.tag == "html")
+            if (htmlNode?.Tag == "html")
             {
                 var firstChild = htmlNode.children?[0];
 
-                if (firstChild?.tag == "head")
+                if (firstChild?.Tag == "head")
                 {
                     AddChild(firstChild, CalculateDynamicStylesAsHtmlStyleNode(dynamicStyles));
                 }
@@ -174,14 +174,14 @@ static class HtmlTextGenerator
             return;
         }
 
-        if (htmlNode.isThirdPartyComponent && name != "SuspenseFallback")
+        if (htmlNode.IsThirdPartyComponent && name != "SuspenseFallback")
         {
             return;
         }
 
         if (name == "$isPureComponent")
         {
-            htmlNode.isVirtualNode = true;
+            htmlNode.IsVirtualNode = true;
             return;
         }
 
@@ -191,17 +191,17 @@ static class HtmlTextGenerator
             {
                 if (valueAsString == "React.Fragment")
                 {
-                    htmlNode.isReactFragment = true;
+                    htmlNode.IsReactFragment = true;
                     return;
                 }
 
                 if (valueAsString.IndexOf('.', StringComparison.Ordinal) > 0)
                 {
-                    htmlNode.isThirdPartyComponent = true;
+                    htmlNode.IsThirdPartyComponent = true;
                     return;
                 }
 
-                htmlNode.tag = valueAsString;
+                htmlNode.Tag = valueAsString;
                 return;
             }
         }
@@ -210,7 +210,7 @@ static class HtmlTextGenerator
         {
             if (value is Style valueAsStyle)
             {
-                AddAttribute(htmlNode, new HtmlAttribute { name = "style", value = valueAsStyle.ToCss() });
+                AddAttribute(htmlNode, new HtmlAttribute { Name = "style", Value = valueAsStyle.ToCss() });
                 return;
             }
 
@@ -234,7 +234,7 @@ static class HtmlTextGenerator
         {
             if (value is string or int or double or bool)
             {
-                AddAttribute(htmlNode, new HtmlAttribute { name = PascalToKebabCase(name), value = value.ToString() });
+                AddAttribute(htmlNode, new HtmlAttribute { Name = PascalToKebabCase(name), Value = value.ToString() });
                 return;
             }
         }
@@ -268,7 +268,7 @@ static class HtmlTextGenerator
 
         if (name == "$RootNode")
         {
-            htmlNode.isVirtualNode = true;
+            htmlNode.IsVirtualNode = true;
         }
 
         if ((name == "$RootNode" || name == "SuspenseFallback") && value is not null)
@@ -281,7 +281,7 @@ static class HtmlTextGenerator
     {
         int? tagIndex;
 
-        if (htmlNode.isTextNode)
+        if (htmlNode.IsTextNode)
         {
             sb.Append(htmlNode.text);
             return;
@@ -289,11 +289,11 @@ static class HtmlTextGenerator
 
         var children = htmlNode.children;
 
-        if ((htmlNode.isThirdPartyComponent || htmlNode.isReactFragment || htmlNode.isVirtualNode) && children?.Count > 0)
+        if ((htmlNode.IsThirdPartyComponent || htmlNode.IsReactFragment || htmlNode.IsVirtualNode) && children?.Count > 0)
         {
             foreach (var child in children)
             {
-                var canPushNewLine = !child.isTextNode;
+                var canPushNewLine = !child.IsTextNode;
 
                 if (canPushNewLine)
                 {
@@ -336,7 +336,7 @@ static class HtmlTextGenerator
             sb.Append(htmlNode.text);
         }
 
-        if (children.Count == 1 && children[0].isTextNode)
+        if (children.Count == 1 && children[0].IsTextNode)
         {
             ToString(sb, depth, children[0]);
             finishTag();
@@ -350,7 +350,7 @@ static class HtmlTextGenerator
 
             var childDepth = depth;
 
-            var canPushNewLine = !(child.isTextNode || (i > 0 && children[i - 1].isTextNode));
+            var canPushNewLine = !(child.IsTextNode || (i > 0 && children[i - 1].IsTextNode));
 
             if (canPushNewLine)
             {
@@ -389,16 +389,16 @@ static class HtmlTextGenerator
 
         void finishTag()
         {
-            if (SelfClosingTags.Contains(htmlNode.tag))
+            if (SelfClosingTags.Contains(htmlNode.Tag))
             {
                 sb.Append("<");
-                sb.Append(htmlNode.tag);
+                sb.Append(htmlNode.Tag);
                 sb.Append(">");
                 return;
             }
 
             sb.Append("</");
-            sb.Append(htmlNode.tag);
+            sb.Append(htmlNode.Tag);
             sb.Append(">");
         }
 
@@ -414,7 +414,7 @@ static class HtmlTextGenerator
         {
             pushIndent();
 
-            if (htmlNode.tag == "html")
+            if (htmlNode.Tag == "html")
             {
                 sb.AppendLine("<!DOCTYPE html>");
                 pushIndent();
@@ -423,12 +423,12 @@ static class HtmlTextGenerator
             tagIndex = sb.Length;
 
             sb.Append("<");
-            sb.Append(htmlNode.tag);
+            sb.Append(htmlNode.Tag);
         }
 
         void closeTag()
         {
-            if (SelfClosingTags.Contains(htmlNode.tag))
+            if (SelfClosingTags.Contains(htmlNode.Tag))
             {
                 sb.Append(">");
                 return;
@@ -436,24 +436,24 @@ static class HtmlTextGenerator
 
             sb.Append(">");
             sb.Append("</");
-            sb.Append(htmlNode.tag);
+            sb.Append(htmlNode.Tag);
             sb.Append(">");
         }
 
         void appendAttributes()
         {
-            if (htmlNode.attributes is null)
+            if (htmlNode.Attributes is null)
             {
                 return;
             }
 
-            foreach (var htmlAttribute in htmlNode.attributes)
+            foreach (var htmlAttribute in htmlNode.Attributes)
             {
                 sb.Append(" ");
-                sb.Append(htmlAttribute.name);
+                sb.Append(htmlAttribute.Name);
                 sb.Append('=');
                 sb.Append('"');
-                sb.Append(htmlAttribute.value);
+                sb.Append(htmlAttribute.Value);
                 sb.Append('"');
             }
         }
@@ -471,19 +471,19 @@ static class HtmlTextGenerator
 
     sealed class HtmlAttribute
     {
-        public string name, value;
+        public string Name, Value;
     }
 
     sealed class HtmlNode
     {
-        public List<HtmlAttribute> attributes;
+        public List<HtmlAttribute> Attributes;
         public List<HtmlNode> children;
-        public bool isReactFragment;
-        public bool isTextNode;
-        public bool isThirdPartyComponent;
-        public bool isVirtualNode;
+        public bool IsReactFragment;
+        public bool IsTextNode;
+        public bool IsThirdPartyComponent;
+        public bool IsVirtualNode;
 
-        public string tag;
+        public string Tag;
         public string text;
     }
 }
