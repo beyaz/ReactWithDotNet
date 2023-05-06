@@ -69,7 +69,7 @@ static class ComponentRequestHandler
 
         var beforeSerializeElementToClient = input.BeforeSerializeElementToClient;
 
-        ReactContext context = null;
+        ReactContext context;
 
         try
         {
