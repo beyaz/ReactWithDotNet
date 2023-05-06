@@ -8,50 +8,49 @@ interface IReadOnlyJsonMap
 
 sealed class JsonMap : IReadOnlyJsonMap
 {
-    internal Node head;
-    internal Node tail;
-    int count;
+    internal Node Head;
+    internal Node Tail;
 
-    public int Count => count;
+    public int Count { get; private set; }
 
     public void Add(string key, object value)
     {
-        count++;
+        Count++;
 
-        var node = new Node { key = key, value = value };
+        var node = new Node { key = key, Value = value };
 
-        if (head == null)
+        if (Head == null)
         {
-            tail = head = node;
+            Tail = Head = node;
             return;
         }
 
-        tail.next = node;
+        Tail.Next = node;
 
-        tail = node;
+        Tail = node;
     }
 
     public void Foreach(Action<string, object> action)
     {
-        if (head == null)
+        if (Head == null)
         {
             return;
         }
 
-        var node = head;
+        var node = Head;
 
         while (node is not null)
         {
-            action(node.key, node.value);
+            action(node.key, node.Value);
 
-            node = node.next;
+            node = node.Next;
         }
     }
 
     internal class Node
     {
         public string key;
-        public Node next;
-        public object value;
+        public Node Next;
+        public object Value;
     }
 }
