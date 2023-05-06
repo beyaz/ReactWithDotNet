@@ -415,7 +415,7 @@ partial class ElementSerializer
 
                 node.IsCompleted = true;
 
-                if (context.SkipHandleCachableMethods is false)
+                if (context.SkipHandleCacheableMethods is false)
                 {
                     var stopwatch = new Stopwatch();
 
@@ -428,7 +428,7 @@ partial class ElementSerializer
                             BeforeSerializeElementToClient     = context.BeforeSerializeElementToClient,
                             ComponentUniqueIdentifierNextValue = context.ComponentUniqueIdentifierNextValue + 1,
                             ReactContext                       = context.ReactContext,
-                            SkipHandleCachableMethods          = true,
+                            SkipHandleCacheableMethods          = true,
                             StateTree = new StateTree
                             {
                                 BreadCrumbPath = context.StateTree.BreadCrumbPath,
@@ -444,13 +444,13 @@ partial class ElementSerializer
 
                     List<CacheableMethodInfo> cachedMethods = null;
 
-                    foreach (var cachableMethod in typeInfo.CachableMethodInfoList)
+                    foreach (var cacheableMethod in typeInfo.CacheableMethodInfoList)
                     {
                         CacheableMethodInfo cacheableMethodInfo;
                         {
                             var component = cloneComponent();
 
-                            cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
+                            cacheableMethod.Invoke(component, new object[cacheableMethod.GetParameters().Length]);
 
                             var newElementSerializerContext = createNewElementSerializerContext();
 
@@ -464,7 +464,7 @@ partial class ElementSerializer
 
                             cacheableMethodInfo = new CacheableMethodInfo
                             {
-                                MethodName       = cachableMethod.GetNameWithToken(),
+                                MethodName       = cacheableMethod.GetNameWithToken(),
                                 IgnoreParameters = true,
                                 ElementAsJson    = cachedVersion
                             };
@@ -510,11 +510,11 @@ partial class ElementSerializer
                         return component;
                     }
 
-                    foreach (var cachableMethod in typeInfo.ParameterizedCachableMethodInfoList)
+                    foreach (var cacheableMethod in typeInfo.ParameterizedCacheableMethodInfoList)
                     {
                         IEnumerable parameters;
                         {
-                            var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
+                            var nameofMethodForGettingParameters = cacheableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
 
                             var methodInfoForGettingParameters = dotNetTypeOfReactComponent.FindMethodOrGetProperty(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                             if (methodInfoForGettingParameters is null)
@@ -525,7 +525,7 @@ partial class ElementSerializer
                             parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
                             if (parameters == null)
                             {
-                                throw new InvalidOperationException($"Method should return IEnumerable<{cachableMethod.GetParameters().FirstOrDefault()}>");
+                                throw new InvalidOperationException($"Method should return IEnumerable<{cacheableMethod.GetParameters().FirstOrDefault()}>");
                             }
                         }
 
@@ -539,7 +539,7 @@ partial class ElementSerializer
                                 {
                                     try
                                     {
-                                        cachableMethod.Invoke(component, new[] { parameter });
+                                        cacheableMethod.Invoke(component, new[] { parameter });
                                     }
                                     catch (Exception exception)
                                     {
@@ -557,7 +557,7 @@ partial class ElementSerializer
 
                                 cacheableMethodInfo = new CacheableMethodInfo
                                 {
-                                    MethodName    = cachableMethod.GetNameWithToken(),
+                                    MethodName    = cacheableMethod.GetNameWithToken(),
                                     Parameter     = parameter,
                                     ElementAsJson = cachedVersion
                                 };
@@ -683,8 +683,7 @@ partial class ElementSerializer
     {
         var node = new Node
         {
-            Element           = element,
-            SerializerContext = elementSerializerContext
+            Element = element
         };
 
         if (element is null)
@@ -816,8 +815,8 @@ partial class ElementSerializer
                 DotNetPropertiesOfType              = propertyAccessors,
                 ReactAttributedPropertiesOfType     = reactProperties,
                 IsReactHigherOrderComponent         = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
-                CachableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
-                ParameterizedCachableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray()
+                CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
+                ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray()
             };
 
             TypeInfoMap.TryAdd(type, typeInfo);
@@ -1055,17 +1054,15 @@ partial class ElementSerializer
         public Node NextSibling { get; set; }
 
         public Node Parent { get; set; }
-
-        public ElementSerializerContext SerializerContext { get; set; }
     }
 
     sealed class TypeInfo
     {
-        public IReadOnlyList<MethodInfo> CachableMethodInfoList { get; init; }
+        public IReadOnlyList<MethodInfo> CacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> CustomEventPropertiesOfType { get; init; }
         public IReadOnlyList<PropertyAccessInfo> DotNetPropertiesOfType { get; init; }
         public bool IsReactHigherOrderComponent { get; init; }
-        public IReadOnlyList<MethodInfo> ParameterizedCachableMethodInfoList { get; init; }
+        public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
     }
 }

@@ -40,7 +40,7 @@ sealed class ElementSerializerContext
 
     public ReactContext ReactContext { get; init; }
 
-    public bool SkipHandleCachableMethods { get; set; }
+    public bool SkipHandleCacheableMethods { get; set; }
 
     public StateTree StateTree { get; init; }
 }
