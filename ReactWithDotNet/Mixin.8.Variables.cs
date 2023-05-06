@@ -72,18 +72,18 @@ public sealed class CssUnit
     /// </summary>
     public static readonly CssUnit em = new("em", "");
     
-    readonly string finalValue;
-    readonly string type;
+    readonly string _finalValue;
+    readonly string _type;
 
     internal CssUnit(string type, string finalValue)
     {
-        this.type       = type;
-        this.finalValue = finalValue;
+        _type       = type;
+        _finalValue = finalValue;
     }
 
     public static CssUnit operator |(double value, CssUnit cssUnit)
     {
-        return new CssUnit(cssUnit.type, value + cssUnit.type);
+        return new CssUnit(cssUnit._type, value + cssUnit._type);
     }
 
     public static implicit operator CssUnit(double valueInPx)
@@ -98,6 +98,6 @@ public sealed class CssUnit
 
     public override string ToString()
     {
-        return finalValue;
+        return _finalValue;
     }
 }
