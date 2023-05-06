@@ -36,11 +36,11 @@ static class HtmlTextGenerator
     {
         var htmlNode = new HtmlNode();
 
-        if (jsonMap.Head is { key: "$tag", Value: "nbsp" })
+        if (jsonMap.Head is { Key: "$tag", Value: "nbsp" })
         {
             htmlNode.IsTextNode = true;
 
-            if (jsonMap.Tail is { key: nameof(Nbsp.length) })
+            if (jsonMap.Tail is { Key: nameof(Nbsp.length) })
             {
                 htmlNode.Text = string.Join(string.Empty, Enumerable.Range(0, (int)jsonMap.Tail.Value).Select(_ => "&nbsp;"));
                 return htmlNode;
