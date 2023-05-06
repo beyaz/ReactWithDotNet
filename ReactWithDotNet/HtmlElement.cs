@@ -265,14 +265,14 @@ public abstract class HtmlElement : Element
 
     public static HtmlElement operator +(HtmlElement htmlElement, StyleModifier styleModifier)
     {
-        styleModifier?.modifyStyle(htmlElement.style);
+        styleModifier?.ModifyStyle(htmlElement.style);
 
         return htmlElement;
     }
 
     public void Add(StyleModifier styleModifier)
     {
-        styleModifier?.modifyStyle(style);
+        styleModifier?.ModifyStyle(style);
     }
 
     public void Add(HtmlElementModifier htmlElementModifier)

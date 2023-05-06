@@ -6,19 +6,19 @@ public interface IModifier
 
 public sealed class StyleModifier : IModifier
 {
-    internal readonly Action<Style> modifyStyle;
+    internal readonly Action<Style> ModifyStyle;
 
     internal StyleModifier(Action<Style> modifyStyle)
     {
-        this.modifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
+        this.ModifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
     }
 
     public static StyleModifier operator +(StyleModifier a, StyleModifier b)
     {
         void modify(Style style)
         {
-            a.modifyStyle(style);
-            b.modifyStyle(style);
+            a.ModifyStyle(style);
+            b.ModifyStyle(style);
         }
 
         return new StyleModifier(modify);
@@ -27,9 +27,9 @@ public sealed class StyleModifier : IModifier
 
 public sealed class ElementModifier : IModifier
 {
-    internal readonly bool isModifyReactKey;
+    internal readonly bool IsModifyReactKey;
     
-    internal readonly Action<Element> modifyElement;
+    internal readonly Action<Element> ModifyElement;
 
     internal ElementModifier(Action<Element> modifyElement):this(modifyElement, isModifyReactKey: false)
     {
@@ -37,8 +37,8 @@ public sealed class ElementModifier : IModifier
 
     internal ElementModifier(Action<Element> modifyElement, bool isModifyReactKey)
     {
-        this.modifyElement    = modifyElement ?? throw new ArgumentNullException(nameof(modifyElement));
-        this.isModifyReactKey = isModifyReactKey;
+        ModifyElement    = modifyElement ?? throw new ArgumentNullException(nameof(modifyElement));
+        IsModifyReactKey = isModifyReactKey;
     }
 
     public static ElementModifier operator +(ElementModifier a, ElementModifier b)
@@ -160,13 +160,13 @@ static class ModifyHelper
         {
             if (modifier is StyleModifier styleModifier)
             {
-                styleModifier.modifyStyle(thirdPartyReactComponent.style);
+                styleModifier.ModifyStyle(thirdPartyReactComponent.style);
                 return;
             }
 
             if (modifier is ElementModifier elementModifier)
             {
-                elementModifier.modifyElement(thirdPartyReactComponent);
+                elementModifier.ModifyElement(thirdPartyReactComponent);
                 return;
             }
         }
@@ -175,7 +175,7 @@ static class ModifyHelper
         {
             if (modifier is StyleModifier styleModifier)
             {
-                styleModifier.modifyStyle(htmlElement.style);
+                styleModifier.ModifyStyle(htmlElement.style);
                 return;
             }
 
@@ -187,7 +187,7 @@ static class ModifyHelper
 
             if (modifier is ElementModifier elementModifier)
             {
-                elementModifier.modifyElement(htmlElement);
+                elementModifier.ModifyElement(htmlElement);
                 return;
             }
         }

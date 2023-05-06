@@ -62,7 +62,7 @@ public abstract class ThirdPartyReactComponent : Element
 
     public static Element operator +(ThirdPartyReactComponent thirdPartyReactComponent, StyleModifier modifier)
     {
-        modifier.modifyStyle(thirdPartyReactComponent.style);
+        modifier.ModifyStyle(thirdPartyReactComponent.style);
 
         return thirdPartyReactComponent;
     }

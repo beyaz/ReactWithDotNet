@@ -29,9 +29,9 @@ public sealed class Fragment : Element
         
         foreach (var modifier in Modifiers)
         {
-            if (modifier is ElementModifier { isModifyReactKey: true } elementModifier)
+            if (modifier is ElementModifier { IsModifyReactKey: true } elementModifier)
             {
-                elementModifier.modifyElement(this);
+                elementModifier.ModifyElement(this);
                 continue;
             }
 

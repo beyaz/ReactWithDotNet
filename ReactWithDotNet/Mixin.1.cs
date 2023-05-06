@@ -277,7 +277,7 @@ public static partial class Mixin
                 continue;
             }
 
-            styleModifier.modifyStyle(style);
+            styleModifier.ModifyStyle(style);
         }
     }
 
@@ -745,7 +745,7 @@ public static partial class Mixin
                     continue;
                 }
 
-                styleModifier.modifyStyle(accessToPseudo(instance));
+                styleModifier.ModifyStyle(accessToPseudo(instance));
             }
         }
 

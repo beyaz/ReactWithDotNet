@@ -17,7 +17,7 @@ partial class Style : IEnumerable<StyleModifier>
         {
             foreach (var styleModifier in styleModifiers)
             {
-                styleModifier?.modifyStyle(this);
+                styleModifier?.ModifyStyle(this);
             }
         }
     }
@@ -75,7 +75,7 @@ partial class Style : IEnumerable<StyleModifier>
             return null;
         }
 
-        styleModifier.modifyStyle(style);
+        styleModifier.ModifyStyle(style);
 
         return style;
     }
@@ -93,7 +93,7 @@ partial class Style : IEnumerable<StyleModifier>
 
     public void Add(StyleModifier modifier)
     {
-        modifier?.modifyStyle(this);
+        modifier?.ModifyStyle(this);
     }
     #endregion
 
