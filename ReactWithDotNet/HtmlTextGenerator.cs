@@ -279,7 +279,7 @@ static class HtmlTextGenerator
 
     static void ToString(StringBuilder sb, int depth, HtmlNode htmlNode)
     {
-        int? tagIndex = null;
+        int? tagIndex;
 
         if (htmlNode.isTextNode)
         {
