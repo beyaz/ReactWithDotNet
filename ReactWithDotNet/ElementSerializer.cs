@@ -198,8 +198,8 @@ static partial class ElementSerializer
 
             foreach (var mediaQuery in mediaQueries)
             {
-                var mediaRule = mediaQuery.query;
-                var cssBody   = mediaQuery.style.ToCssWithImportant();
+                var mediaRule = mediaQuery.Query;
+                var cssBody   = mediaQuery.Style.ToCssWithImportant();
 
                 if (!uniqueList.Any(x => x.mediaRule == mediaRule && x.cssBody == cssBody))
                 {

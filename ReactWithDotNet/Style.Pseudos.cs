@@ -59,8 +59,8 @@ partial class Style
 /// </summary>
 public sealed class MediaQuery
 {
-    internal readonly string query;
-    internal readonly Style style;
+    internal readonly string Query;
+    internal readonly Style Style;
 
     /// <summary>
     ///     Example:
@@ -69,7 +69,7 @@ public sealed class MediaQuery
     /// </summary>
     public MediaQuery(string query, Style style)
     {
-        this.query = query;
-        this.style = style;
+        this.Query = query;
+        this.Style = style;
     }
 }
