@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.ReactSuite;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.ReactSuite;
 
 public sealed class AutoComplete : ElementBase
 {

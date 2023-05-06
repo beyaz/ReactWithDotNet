@@ -5,7 +5,7 @@ import ReactWithDotNet from "../../react-with-dotnet";
 
 var isFirstAccess = true;
 
-const Prefix = "ReactWithDotNet.Libraries.ReactSuite.";
+const Prefix = "ReactWithDotNet.ThirdPartyLibraries.ReactSuite.";
 
 ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete", React.lazy(() => import('./AutoComplete')));
 ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete::OnChange", args => [args[0]]);
