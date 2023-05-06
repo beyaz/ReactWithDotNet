@@ -2,7 +2,7 @@
 
 public sealed class Fragment : Element
 {
-    internal List<IModifier> modifiers;
+    internal List<IModifier> Modifiers;
 
     public Fragment()
     {
@@ -15,19 +15,19 @@ public sealed class Fragment : Element
             return;
         }
 
-        (this.modifiers ??= new List<IModifier>()).AddRange(modifiers);
+        (this.Modifiers ??= new List<IModifier>()).AddRange(modifiers);
     }
 
     internal void ArrangeChildren()
     {
-        if (modifiers is null)
+        if (Modifiers is null)
         {
             return;
         }
 
         
         
-        foreach (var modifier in modifiers)
+        foreach (var modifier in Modifiers)
         {
             if (modifier is ElementModifier { isModifyReactKey: true } elementModifier)
             {

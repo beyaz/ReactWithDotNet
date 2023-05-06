@@ -200,9 +200,9 @@ static class ModifyHelper
 
         if (element is Fragment fragment)
         {
-            fragment.modifiers ??= new List<IModifier>();
+            fragment.Modifiers ??= new List<IModifier>();
 
-            fragment.modifiers.Add(modifier);
+            fragment.Modifiers.Add(modifier);
             return;
         }
 
