@@ -28,7 +28,7 @@ sealed class ElementSerializerContext
 {
     public readonly Tracer Tracer = new();
 
-    internal readonly Stack<ReactComponentBase> componentStack = new();
+    internal readonly Stack<ReactComponentBase> ComponentStack = new();
 
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
@@ -181,13 +181,13 @@ static partial class ElementSerializer
             ComponentUniqueIdentifier = componentUniqueIdentifier,
             Name                      = "_rwd_" + componentUniqueIdentifier + "_",
             Pseudos                   = pseudos,
-            MediaQueries              = CalculateMediaQueries(style._mediaQueries),
+            MediaQueries              = calculateMediaQueries(style._mediaQueries),
             Body                      = fullExport ? style.ToCssWithImportant() : null
         };
 
         return (true, getCssClassName(cssClassInfo));
 
-        static IReadOnlyList<(string mediaRule, string cssBody)> CalculateMediaQueries(List<MediaQuery> mediaQueries)
+        static IReadOnlyList<(string mediaRule, string cssBody)> calculateMediaQueries(List<MediaQuery> mediaQueries)
         {
             if (mediaQueries == null || mediaQueries.Count == 0)
             {
@@ -247,7 +247,7 @@ static partial class ElementSerializer
         return propertyName;
     }
 
-    static ValueExportInfo<object> getPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
+    static ValueExportInfo<object> GetPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
     {
         var propertyInfo = property.PropertyInfo;
 
@@ -263,7 +263,7 @@ static partial class ElementSerializer
         {
             string convertStyleToCssClass(Style style)
             {
-                var (needToExport, cssClassName) = ConvertStyleToCssClass(style, true, context.componentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+                var (needToExport, cssClassName) = ConvertStyleToCssClass(style, true, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
                 if (needToExport)
                 {
                     return cssClassName;
@@ -501,7 +501,7 @@ static partial class ElementSerializer
 
     static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
     {
-        var response = ConvertStyleToCssClass(style, false, context.componentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+        var response = ConvertStyleToCssClass(style, false, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
         if (response.needToExport is false)
         {
             if (style.IsEmpty == false)
@@ -584,7 +584,7 @@ static partial class ElementSerializer
         context.BeforeSerializeElementToClient(element, context.ReactContext);
     }
 
-    class CachableMethodInfo
+    class CacheableMethodInfo
     {
         public object ElementAsJson { get; set; }
         public bool IgnoreParameters { get; set; }

@@ -234,7 +234,7 @@ partial class ElementSerializer
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
 
-                context.componentStack.Push(reactStatefulComponent);
+                context.ComponentStack.Push(reactStatefulComponent);
 
                 var stateTree = context.StateTree;
 
@@ -351,7 +351,7 @@ partial class ElementSerializer
 
                 state = statePropertyInfo.GetValue(reactStatefulComponent);
 
-                const string DotNetState = "$State";
+                const string dotNetState = "$State";
 
                 var dotNetProperties = new JsonMap();
 
@@ -382,7 +382,7 @@ partial class ElementSerializer
                 var map = new JsonMap();
                 map.Add("$DotNetComponentUniqueIdentifier", reactStatefulComponent.ComponentUniqueIdentifier);
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
-                map.Add(DotNetState, state);
+                map.Add(dotNetState, state);
                 map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
                 map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
                 map.Add(nameof(Element.key), reactStatefulComponent.key);
@@ -436,17 +436,17 @@ partial class ElementSerializer
                                 ChildStates    = context.StateTree.ChildStates
                             }
                         };
-                        elementSerializerContext.componentStack.Push(context.componentStack.Peek());
+                        elementSerializerContext.ComponentStack.Push(context.ComponentStack.Peek());
                         elementSerializerContext.DynamicStyles.listOfClasses.AddRange(context.DynamicStyles.listOfClasses);
 
                         return elementSerializerContext;
                     }
 
-                    List<CachableMethodInfo> cachedMethods = null;
+                    List<CacheableMethodInfo> cachedMethods = null;
 
                     foreach (var cachableMethod in typeInfo.CachableMethodInfoList)
                     {
-                        CachableMethodInfo cachableMethodInfo = null;
+                        CacheableMethodInfo cacheableMethodInfo;
                         {
                             var component = cloneComponent();
 
@@ -462,7 +462,7 @@ partial class ElementSerializer
                             context.DynamicStyles.listOfClasses.Clear();
                             context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
 
-                            cachableMethodInfo = new CachableMethodInfo
+                            cacheableMethodInfo = new CacheableMethodInfo
                             {
                                 MethodName       = cachableMethod.GetNameWithToken(),
                                 IgnoreParameters = true,
@@ -470,9 +470,9 @@ partial class ElementSerializer
                             };
                         }
 
-                        cachedMethods ??= new List<CachableMethodInfo>();
+                        cachedMethods ??= new List<CacheableMethodInfo>();
 
-                        cachedMethods.Add(cachableMethodInfo);
+                        cachedMethods.Add(cacheableMethodInfo);
                     }
 
                     ReactComponentBase cloneComponent()
@@ -512,7 +512,7 @@ partial class ElementSerializer
 
                     foreach (var cachableMethod in typeInfo.ParameterizedCachableMethodInfoList)
                     {
-                        IEnumerable parameters = null;
+                        IEnumerable parameters;
                         {
                             var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
 
@@ -531,7 +531,7 @@ partial class ElementSerializer
 
                         foreach (var parameter in parameters)
                         {
-                            CachableMethodInfo cachableMethodInfo = null;
+                            CacheableMethodInfo cacheableMethodInfo;
                             {
                                 var component = cloneComponent();
 
@@ -555,7 +555,7 @@ partial class ElementSerializer
                                 context.DynamicStyles.listOfClasses.Clear();
                                 context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
 
-                                cachableMethodInfo = new CachableMethodInfo
+                                cacheableMethodInfo = new CacheableMethodInfo
                                 {
                                     MethodName    = cachableMethod.GetNameWithToken(),
                                     Parameter     = parameter,
@@ -563,9 +563,9 @@ partial class ElementSerializer
                                 };
                             }
 
-                            cachedMethods ??= new List<CachableMethodInfo>();
+                            cachedMethods ??= new List<CacheableMethodInfo>();
 
-                            cachedMethods.Add(cachableMethodInfo);
+                            cachedMethods.Add(cacheableMethodInfo);
                         }
                     }
 
@@ -582,7 +582,7 @@ partial class ElementSerializer
                     }
                 }
 
-                var popudComponent = context.componentStack.Pop();
+                var popudComponent = context.ComponentStack.Pop();
                 if (!ReferenceEquals(popudComponent, reactStatefulComponent))
                 {
                     throw FatalError("component stack problem");
@@ -601,7 +601,7 @@ partial class ElementSerializer
         {
             var propertyInfo = item.PropertyInfo;
 
-            var valueExportInfo = getPropertyValue(element, item, context);
+            var valueExportInfo = GetPropertyValue(element, item, context);
             if (valueExportInfo.needToExport)
             {
                 add(GetPropertyName(propertyInfo), valueExportInfo.value);
@@ -971,10 +971,10 @@ partial class ElementSerializer
             PropertyInfo               = propertyInfo,
             DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
             HasReactAttribute          = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
-            TransformValueInServerSide = GetTransformValueInServerSideTransformFunction()
+            TransformValueInServerSide = getTransformValueInServerSideTransformFunction()
         };
 
-        Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> GetTransformValueInServerSideTransformFunction()
+        Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction()
         {
             var attribute = propertyInfo.GetCustomAttribute<ReactTransformValueInServerSideAttribute>();
             if (attribute == null)
