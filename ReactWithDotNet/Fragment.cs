@@ -29,13 +29,10 @@ public sealed class Fragment : Element
         
         foreach (var modifier in modifiers)
         {
-            if (modifier is ElementModifier elementModifier)
+            if (modifier is ElementModifier { isModifyReactKey: true } elementModifier)
             {
-                if (elementModifier.isModifyReactKey)
-                {
-                    elementModifier.modifyElement(this);
-                    continue;
-                }
+                elementModifier.modifyElement(this);
+                continue;
             }
 
             foreach (var child in children)
