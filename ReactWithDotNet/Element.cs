@@ -20,10 +20,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         get
         {
-            if (_children == null)
-            {
-                _children = new List<Element>();
-            }
+            _children ??= new List<Element>();
 
             return _children;
         }
