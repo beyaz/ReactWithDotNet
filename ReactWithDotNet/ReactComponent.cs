@@ -67,7 +67,7 @@ public abstract class ReactComponentBase : Element
     protected abstract void constructor();
 
     /// <summary>
-    ///     Sample event decleration <br />
+    ///     Sample event declaration <br />
     ///     [ReactCustomEvent] public Action OnUserChanged { get; set; }
     ///     <br />
     ///     <br />

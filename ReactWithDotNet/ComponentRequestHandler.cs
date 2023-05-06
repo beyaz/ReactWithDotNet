@@ -65,7 +65,7 @@ static class ComponentRequestHandler
     {
         var request = input.ComponentRequest;
 
-        var findType = input.findType;
+        var findType = input.FindType;
 
         var beforeSerializeElementToClient = input.BeforeSerializeElementToClient;
 

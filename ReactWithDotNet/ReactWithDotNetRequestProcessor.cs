@@ -5,7 +5,7 @@ namespace ReactWithDotNet;
 
 sealed class ProcessReactWithDotNetRequestInput
 {
-    internal Func<string, Type> findType;
+    internal Func<string, Type> FindType;
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; set; }
 
@@ -27,7 +27,7 @@ static class ReactWithDotNetRequestProcessor
 
         input.ComponentRequest ??= await readJson();
 
-        input.findType = Type.GetType;
+        input.FindType = Type.GetType;
 
         return await ComponentRequestHandler.HandleRequest(input);
 
@@ -58,7 +58,7 @@ partial class Mixin
 
         var input = new ProcessReactWithDotNetRequestInput
         {
-            findType                                              = Type.GetType,
+            FindType                                              = Type.GetType,
             Instance                                              = element,
             OnReactContextCreated                                 = calculateHtmlTextInput.OnReactContextCreated,
             BeforeSerializeElementToClient                        = calculateHtmlTextInput.BeforeSerializeElementToClient,
@@ -120,7 +120,7 @@ partial class Mixin
 
         var input = new ProcessReactWithDotNetRequestInput
         {
-            findType                       = Type.GetType,
+            FindType                       = Type.GetType,
             Instance                       = component,
             OnReactContextCreated          = onReactContextCreated,
             BeforeSerializeElementToClient = beforeSerializeElementToClient,
