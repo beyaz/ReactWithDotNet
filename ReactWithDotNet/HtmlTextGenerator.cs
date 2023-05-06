@@ -20,7 +20,7 @@ static class HtmlTextGenerator
 
     static void AddChild(HtmlNode parent, HtmlNode child)
     {
-        var children = parent.children ??= new List<HtmlNode>();
+        var children = parent.Children ??= new List<HtmlNode>();
 
         children.Add(child);
     }
@@ -107,11 +107,11 @@ static class HtmlTextGenerator
 
         void tryAddDynamicStylesToHeadNode()
         {
-            var htmlNode = wrapperNode.children?[0];
+            var htmlNode = wrapperNode.Children?[0];
 
             if (htmlNode?.Tag == "html")
             {
-                var firstChild = htmlNode.children?[0];
+                var firstChild = htmlNode.Children?[0];
 
                 if (firstChild?.Tag == "head")
                 {
@@ -287,7 +287,7 @@ static class HtmlTextGenerator
             return;
         }
 
-        var children = htmlNode.children;
+        var children = htmlNode.Children;
 
         if ((htmlNode.IsThirdPartyComponent || htmlNode.IsReactFragment || htmlNode.IsVirtualNode) && children?.Count > 0)
         {
@@ -477,7 +477,7 @@ static class HtmlTextGenerator
     sealed class HtmlNode
     {
         public List<HtmlAttribute> Attributes;
-        public List<HtmlNode> children;
+        public List<HtmlNode> Children;
         public bool IsReactFragment;
         public bool IsTextNode;
         public bool IsThirdPartyComponent;
