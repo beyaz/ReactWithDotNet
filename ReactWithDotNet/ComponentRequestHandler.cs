@@ -56,7 +56,7 @@ class ComponentResponse
 
     public int LastUsedComponentUniqueIdentifier { get; set; }
 
-    public LinkedList<string> Trace { get; set; }
+    public IReadOnlyCollection<string> Trace { get; set; }
 }
 
 static class ComponentRequestHandler
@@ -158,11 +158,11 @@ static class ComponentRequestHandler
 
             tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            tracer.traceIndentLevel++;
+            tracer.TraceIndentLevel++;
 
             var map = instance.ToJsonMap(serializerContext);
 
-            tracer.traceIndentLevel--;
+            tracer.TraceIndentLevel--;
 
             tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -310,11 +310,11 @@ static class ComponentRequestHandler
 
             tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            tracer.traceIndentLevel++;
+            tracer.TraceIndentLevel++;
 
             var map = instance.ToJsonMap(serializerContext);
 
-            tracer.traceIndentLevel--;
+            tracer.TraceIndentLevel--;
 
             tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
