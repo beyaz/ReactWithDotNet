@@ -20,7 +20,7 @@ static partial class JsonSerializationOptionHelper
 
         options.Converters.Add(new JsMapConverter());
 
-        options.Converters.Add(new IReadOnlyJsonMapConverter());
+        options.Converters.Add(new ReadOnlyJsonMapConverter());
 
         options.Converters.Add(new ValueTupleFactory());
 
@@ -65,7 +65,7 @@ static partial class JsonSerializationOptionHelper
         }
     }
 
-    class IReadOnlyJsonMapConverter : JsonConverter<IReadOnlyJsonMap>
+    class ReadOnlyJsonMapConverter : JsonConverter<IReadOnlyJsonMap>
     {
         public override IReadOnlyJsonMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

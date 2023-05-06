@@ -2,36 +2,36 @@
 
 partial class Mixin
 {
-    const string core = "ReactWithDotNet::Core::";
+    const string Core = "ReactWithDotNet::Core::";
 
     public static void CopyToClipboard(this Client client, string text)
     {
-        client.CallJsFunction(core + nameof(CopyToClipboard), text);
+        client.CallJsFunction(Core + nameof(CopyToClipboard), text);
     }
 
     public static void DispatchEvent(this Client client, string eventName, params object[] eventArguments)
     {
-        client.CallJsFunction(core + nameof(DispatchEvent), eventName, eventArguments);
+        client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments);
     }
 
     public static void HistoryBack(this Client client)
     {
-        client.CallJsFunction(core + nameof(HistoryBack));
+        client.CallJsFunction(Core + nameof(HistoryBack));
     }
 
     public static void HistoryForward(this Client client)
     {
-        client.CallJsFunction(core + nameof(HistoryForward));
+        client.CallJsFunction(Core + nameof(HistoryForward));
     }
 
     public static void HistoryGo(this Client client, int delta)
     {
-        client.CallJsFunction(core + nameof(HistoryGo), delta);
+        client.CallJsFunction(Core + nameof(HistoryGo), delta);
     }
 
     public static void HistoryReplaceState(this Client client, object stateObj, string title, string url)
     {
-        client.CallJsFunction(core + nameof(HistoryReplaceState), stateObj, title, url);
+        client.CallJsFunction(Core + nameof(HistoryReplaceState), stateObj, title, url);
     }
 
     public static void ListenEvent(this Client client, Action<Client> triggerMethod, Action handler)
@@ -39,7 +39,7 @@ partial class Mixin
         ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
     }
 
-    public static void ListenEvent<EventArgument1>(this Client client, Action<Client, EventArgument1> triggerMethod, Action<EventArgument1> handler)
+    public static void ListenEvent<TEventArgument1>(this Client client, Action<Client, TEventArgument1> triggerMethod, Action<TEventArgument1> handler)
     {
         ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
     }
@@ -51,12 +51,12 @@ partial class Mixin
 
     public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
     {
-        client.CallJsFunction(core + nameof(ListenWindowResizeEvent), resizeTimeout);
+        client.CallJsFunction(Core + nameof(ListenWindowResizeEvent), resizeTimeout);
     }
 
     public static void NavigateToUrl(this Client client, string url)
     {
-        client.CallJsFunction(core + nameof(NavigateToUrl), url);
+        client.CallJsFunction(Core + nameof(NavigateToUrl), url);
     }
 
     public static void OnOutsideClicked(this Client client, string idOfElement, Action action)
@@ -68,7 +68,7 @@ partial class Mixin
                 throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
             }
 
-            client.CallJsFunction(core + nameof(OnOutsideClicked), idOfElement, action.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.Value);
+            client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, action.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.Value);
         }
         else
         {
@@ -78,32 +78,32 @@ partial class Mixin
 
     public static void OnWindowResize(this Client client, Action handlerAction)
     {
-        client.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
+        client.ListenEvent(Core + nameof(OnWindowResize), handlerAction.Method.Name);
     }
 
     public static void SetCookie(this Client client, string cookieName, string cookieValue, int expiredays)
     {
-        client.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
+        client.CallJsFunction(Core + nameof(SetCookie), cookieName, cookieValue, expiredays);
     }
 
     internal static void DispatchDotNetCustomEvent(this Client client, EventSenderInfo eventName, params object[] eventArguments)
     {
-        client.CallJsFunction(core + nameof(DispatchDotNetCustomEvent), eventName, eventArguments);
+        client.CallJsFunction(Core + nameof(DispatchDotNetCustomEvent), eventName, eventArguments);
     }
 
     internal static void InitializeDotnetComponentEventListener(this Client client, EventSenderInfo eventName, string handlerMethodName, int handlerComponentUniqueIdentifier)
     {
-        client.CallJsFunction(core + nameof(InitializeDotnetComponentEventListener), eventName, handlerMethodName, handlerComponentUniqueIdentifier);
+        client.CallJsFunction(Core + nameof(InitializeDotnetComponentEventListener), eventName, handlerMethodName, handlerComponentUniqueIdentifier);
     }
 
     static void ListenEvent(this Client client, string eventName, string routeToMethod)
     {
-        client.CallJsFunction(core + nameof(ListenEvent), eventName, routeToMethod);
+        client.CallJsFunction(Core + nameof(ListenEvent), eventName, routeToMethod);
     }
 
     static void ListenEventOnlyOnce(Client client, string eventName, string handlerMethodName)
     {
-        client.CallJsFunction(core + nameof(ListenEventOnlyOnce), eventName, handlerMethodName);
+        client.CallJsFunction(Core + nameof(ListenEventOnlyOnce), eventName, handlerMethodName);
     }
 
     #region GotoMethod
@@ -139,7 +139,7 @@ partial class Mixin
 
     static void GotoMethod(Client client, int timeout, string methodName, params object[] methodArguments)
     {
-        client.CallJsFunction(core + nameof(GotoMethod), timeout, methodName, methodArguments);
+        client.CallJsFunction(Core + nameof(GotoMethod), timeout, methodName, methodArguments);
     }
     #endregion
 }
