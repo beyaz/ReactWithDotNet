@@ -582,8 +582,8 @@ partial class ElementSerializer
                     }
                 }
 
-                var popudComponent = context.ComponentStack.Pop();
-                if (!ReferenceEquals(popudComponent, reactStatefulComponent))
+                var componentAtTopOfStack = context.ComponentStack.Pop();
+                if (!ReferenceEquals(componentAtTopOfStack, reactStatefulComponent))
                 {
                     throw FatalError("component stack problem");
                 }
