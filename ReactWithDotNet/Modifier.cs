@@ -58,9 +58,9 @@ public abstract class HtmlElementModifier : IModifier
     internal abstract void Process(HtmlElement htmlElement);
 }
 
-class HtmlElementModifier<THtmlelement> : HtmlElementModifier where THtmlelement : HtmlElement
+class HtmlElementModifier<THtmlElement> : HtmlElementModifier where THtmlElement : HtmlElement
 {
-    internal Action<THtmlelement> modifyHtmlElement;
+    internal Action<THtmlElement> ModifyHtmlElement;
 
     internal override void Process(HtmlElement htmlElement)
     {
@@ -69,7 +69,7 @@ class HtmlElementModifier<THtmlelement> : HtmlElementModifier where THtmlelement
             return;
         }
 
-        modifyHtmlElement((THtmlelement)htmlElement);
+        ModifyHtmlElement((THtmlElement)htmlElement);
     }
 }
 
@@ -132,7 +132,7 @@ partial class Mixin
 
     public static HtmlElementModifier CreateHtmlElementModifier<THtmlElement>(Action<THtmlElement> modifyAction) where THtmlElement : HtmlElement
     {
-        return new HtmlElementModifier<THtmlElement> { modifyHtmlElement = modifyAction };
+        return new HtmlElementModifier<THtmlElement> { ModifyHtmlElement = modifyAction };
     }
 
     public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) 

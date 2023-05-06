@@ -1,19 +1,19 @@
 namespace ReactWithDotNet;
 
-class DynamicStyleContentForEmbeddInClient
+class DynamicStyleContentForEmbedInClient
 {
-    internal readonly List<CssClassInfo> listOfClasses = new();
+    internal readonly List<CssClassInfo> ListOfClasses = new();
 
     public JsonMap CalculateCssClassList()
     {
-        if (!listOfClasses.Any())
+        if (!ListOfClasses.Any())
         {
             return null;
         }
 
         var jsonMap = new JsonMap();
 
-        foreach (var cssClassInfo in listOfClasses)
+        foreach (var cssClassInfo in ListOfClasses)
         {
             cssClassInfo.WriteTo(jsonMap);
         }
@@ -41,12 +41,12 @@ class DynamicStyleContentForEmbeddInClient
                 };
 
                 // if everything is equal then no need to reExport
-                if (listOfClasses.Any(x => CssClassInfo.IsEquals(cssClassInfo, x)))
+                if (ListOfClasses.Any(x => CssClassInfo.IsEquals(cssClassInfo, x)))
                 {
                     return cssClassInfo.Name;
                 }
 
-                if (listOfClasses.Any(x => x.Name == cssClassInfo.Name))
+                if (ListOfClasses.Any(x => x.Name == cssClassInfo.Name))
                 {
                     continue;
                 }
@@ -55,7 +55,7 @@ class DynamicStyleContentForEmbeddInClient
             }
         }
 
-        listOfClasses.Add(cssClassInfo);
+        ListOfClasses.Add(cssClassInfo);
 
         return cssClassInfo.Name;
     }

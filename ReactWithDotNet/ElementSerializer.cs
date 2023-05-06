@@ -30,7 +30,7 @@ sealed class ElementSerializerContext
 
     internal readonly Stack<ReactComponentBase> ComponentStack = new();
 
-    internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
+    internal readonly DynamicStyleContentForEmbedInClient DynamicStyles = new();
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
