@@ -25,11 +25,11 @@ static partial class Mixin
 
 public sealed class Client
 {
-    internal readonly List<ClientTask> taskList = new();
+    internal readonly List<ClientTask> TaskList = new();
 
     public void CallJsFunction(string jsFunctionPath, params object[] jsFunctionArguments)
     {
-        taskList.Add(new ClientTask { JsFunctionPath = jsFunctionPath, JsFunctionArguments = jsFunctionArguments });
+        TaskList.Add(new ClientTask { JsFunctionPath = jsFunctionPath, JsFunctionArguments = jsFunctionArguments });
     }
 
     internal sealed class ClientTask

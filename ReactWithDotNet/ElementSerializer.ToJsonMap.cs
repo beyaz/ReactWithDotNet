@@ -398,9 +398,9 @@ partial class ElementSerializer
                     map.Add(___HasComponentDidMountMethod___, true);
                 }
 
-                if (reactStatefulComponent.Client.taskList.Count > 0)
+                if (reactStatefulComponent.Client.TaskList.Count > 0)
                 {
-                    map.Add("$ClientTasks", reactStatefulComponent.Client.taskList);
+                    map.Add("$ClientTasks", reactStatefulComponent.Client.TaskList);
                 }
 
                 if (typeInfo.IsReactHigherOrderComponent)
