@@ -456,7 +456,7 @@ partial class ElementSerializer
 
                             var cachedVersion = ToJsonMap(component, newElementSerializerContext);
 
-                            context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
+                            context.Tracer.Trace(newElementSerializerContext.Tracer.Messages);
 
                             // take back dynamic styles
                             context.DynamicStyles.listOfClasses.Clear();

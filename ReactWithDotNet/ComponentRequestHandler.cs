@@ -158,11 +158,11 @@ static class ComponentRequestHandler
 
             tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            tracer.TraceIndentLevel++;
+            tracer.IndentLevel++;
 
             var map = instance.ToJsonMap(serializerContext);
 
-            tracer.TraceIndentLevel--;
+            tracer.IndentLevel--;
 
             tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -172,7 +172,7 @@ static class ComponentRequestHandler
             {
                 CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
-                Trace                             = tracer.traceMessages,
+                Trace                             = tracer.Messages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
                 LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1
             };
@@ -310,11 +310,11 @@ static class ComponentRequestHandler
 
             tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
 
-            tracer.TraceIndentLevel++;
+            tracer.IndentLevel++;
 
             var map = instance.ToJsonMap(serializerContext);
 
-            tracer.TraceIndentLevel--;
+            tracer.IndentLevel--;
 
             tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
@@ -324,7 +324,7 @@ static class ComponentRequestHandler
             {
                 CallFunctionId                    = request.CallFunctionId,
                 ElementAsJson                     = map,
-                Trace                             = tracer.traceMessages,
+                Trace                             = tracer.Messages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
                 LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1
             };

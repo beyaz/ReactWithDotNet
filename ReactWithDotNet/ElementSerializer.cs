@@ -6,13 +6,13 @@ namespace ReactWithDotNet;
 
 class Tracer
 {
-    public int TraceIndentLevel { get; set; }
+    public int IndentLevel { get; set; }
 
-    internal readonly LinkedList<string> traceMessages = new();
+    internal readonly LinkedList<string> Messages = new();
 
     public void Trace(string message)
     {
-        traceMessages.AddLast("".PadRight(TraceIndentLevel) + message);
+        Messages.AddLast("".PadRight(IndentLevel) + message);
     }
 
     public void Trace(LinkedList<string> messageList)
