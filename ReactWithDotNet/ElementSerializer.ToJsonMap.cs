@@ -12,7 +12,7 @@ partial class ElementSerializer
 
     public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
     {
-        var node = ConvertToNode(element, context);
+        var node = ConvertToNode(element);
 
         while (true)
         {
@@ -54,7 +54,7 @@ partial class ElementSerializer
                         node.SuspenseFallbackElement.key = "0";
                     }
 
-                    node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement, context);
+                    node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement);
 
                     node.SuspenseFallbackNode.Parent = node;
 
@@ -103,7 +103,7 @@ partial class ElementSerializer
             {
                 if (node.IsChildrenOpened is false)
                 {
-                    OpenChildren(node, context);
+                    OpenChildren(node);
                 }
 
                 if (node.ElementIsFragment)
@@ -132,7 +132,7 @@ partial class ElementSerializer
                         node.SuspenseFallbackElement.key = "0";
                     }
 
-                    node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement, context);
+                    node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement);
 
                     node.SuspenseFallbackNode.Parent = node;
 
@@ -203,7 +203,7 @@ partial class ElementSerializer
                         }
                     }
 
-                    node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement, context);
+                    node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement);
 
                     node.DotNetComponentRootNode.Parent = node;
 
@@ -340,7 +340,7 @@ partial class ElementSerializer
 
                     reactStatefulComponent.ConvertReactEventsToTaskForEventBus();
 
-                    node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement, context);
+                    node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement);
 
                     node.DotNetComponentRootNode.Parent = node;
 
@@ -543,7 +543,7 @@ partial class ElementSerializer
                                     }
                                     catch (Exception exception)
                                     {
-                                        throw new InvalidOperationException("Error occured when calculating cache method", exception);
+                                        throw new InvalidOperationException("Error occurred when calculating cache method", exception);
                                     }
                                 }
 
@@ -621,7 +621,7 @@ partial class ElementSerializer
             {
                 context.TryCallBeforeSerializeElementToClient(child.Element);
 
-                childElements.Add(child.ElementasHtmlTextElement.innerText);
+                childElements.Add(child.ElementAsHtmlTextElement.innerText);
             }
             else
             {
@@ -679,7 +679,7 @@ partial class ElementSerializer
         }
     }
 
-    static Node ConvertToNode(Element element, ElementSerializerContext elementSerializerContext)
+    static Node ConvertToNode(Element element)
     {
         var node = new Node
         {
@@ -695,7 +695,7 @@ partial class ElementSerializer
         if (element is HtmlTextNode htmlTextNode)
         {
             node.ElementIsHtmlTextElement = true;
-            node.ElementasHtmlTextElement = htmlTextNode;
+            node.ElementAsHtmlTextElement = htmlTextNode;
             return node;
         }
 
@@ -921,7 +921,7 @@ partial class ElementSerializer
         throw FatalError("Wrong Leaf");
     }
 
-    static void OpenChildren(Node node, ElementSerializerContext context)
+    static void OpenChildren(Node node)
     {
         node.IsChildrenOpened = true;
 
@@ -943,7 +943,7 @@ partial class ElementSerializer
 
         foreach (var item in children)
         {
-            var childNode = ConvertToNode(item, context);
+            var childNode = ConvertToNode(item);
 
             childNode.Parent = node;
 
@@ -1021,7 +1021,7 @@ partial class ElementSerializer
         public Fragment ElementAsFragment { get; set; }
 
         public HtmlElement ElementAsHtmlElement { get; set; }
-        public HtmlTextNode ElementasHtmlTextElement { get; set; }
+        public HtmlTextNode ElementAsHtmlTextElement { get; set; }
 
         public IReadOnlyJsonMap ElementAsJsonMap { get; set; }
 
