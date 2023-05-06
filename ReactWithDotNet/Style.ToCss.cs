@@ -1888,6 +1888,7 @@ partial class Style
 
         if (unicodeBidi != null)
         {
+            // ReSharper disable once StringLiteralTypo
             sb.Append("unicode-bidi");
             sb.Append(":");
             sb.Append(unicodeBidi);

@@ -193,7 +193,7 @@ static class ComponentRequestHandler
             var instance = (ReactComponentBase)Activator.CreateInstance(type);
             if (instance == null)
             {
-                return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
+                return new ComponentResponse { ErrorMessage = $"Instance not created.{request.FullName}" };
             }
 
             instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier;

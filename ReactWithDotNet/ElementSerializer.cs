@@ -528,7 +528,7 @@ static partial class ElementSerializer
             }
             else
             {
-                throw new NotImplementedException("Style attribute problem occured.");
+                throw new NotImplementedException("Style attribute problem occurred.");
             }
         }
 
