@@ -194,7 +194,7 @@ static class ModifyHelper
 
         if (element is ReactPureComponent reactPureComponent)
         {
-            (reactPureComponent.modifiers ??= new List<IModifier>()).Add(modifier);
+            (reactPureComponent.Modifiers ??= new List<IModifier>()).Add(modifier);
             return;
         }
 

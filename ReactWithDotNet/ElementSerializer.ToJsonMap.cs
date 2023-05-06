@@ -167,9 +167,9 @@ partial class ElementSerializer
 
                     node.DotNetComponentRenderMethodInvoked = true;
 
-                    if (reactPureComponent.modifiers is not null)
+                    if (reactPureComponent.Modifiers is not null)
                     {
-                        foreach (var modifier in reactPureComponent.modifiers)
+                        foreach (var modifier in reactPureComponent.Modifiers)
                         {
                             if (modifier is ReactPureComponentModifier pureComponentModifier)
                             {
@@ -184,14 +184,14 @@ partial class ElementSerializer
                     {
                         node.DotNetComponentRootElement.key = "0";
 
-                        if (reactPureComponent._styleForRootElement is not null)
+                        if (reactPureComponent.StyleForRootElement is not null)
                         {
-                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, new StyleModifier(style => style.Import(reactPureComponent._styleForRootElement)));
+                            ModifyHelper.ProcessModifier(node.DotNetComponentRootElement, new StyleModifier(style => style.Import(reactPureComponent.StyleForRootElement)));
                         }
 
-                        if (reactPureComponent.modifiers is not null)
+                        if (reactPureComponent.Modifiers is not null)
                         {
-                            foreach (var modifier in reactPureComponent.modifiers)
+                            foreach (var modifier in reactPureComponent.Modifiers)
                             {
                                 if (modifier is ReactPureComponentModifier)
                                 {

@@ -130,7 +130,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                                 reactPureComponent.key     = "0";
                                 reactPureComponent.Context = Context;
 
-                                reactPureComponent._designerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
+                                reactPureComponent.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
                                 
                                 return reactPureComponent;
                             }
