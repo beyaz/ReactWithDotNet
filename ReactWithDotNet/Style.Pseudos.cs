@@ -18,85 +18,37 @@ partial class Style
     [JsonIgnore]
     public Style active
     {
-        get
-        {
-            if (_active == null)
-            {
-                _active = new Style();
-            }
-
-            return _active;
-        }
+        get { return _active ??= new Style(); }
     }
 
     [JsonIgnore]
     public Style after
     {
-        get
-        {
-            if (_after == null)
-            {
-                _after = new Style();
-            }
-
-            return _after;
-        }
+        get { return _after ??= new Style(); }
     }
 
     [JsonIgnore]
     public Style before
     {
-        get
-        {
-            if (_before == null)
-            {
-                _before = new Style();
-            }
-
-            return _before;
-        }
+        get { return _before ??= new Style(); }
     }
 
     [JsonIgnore]
     public Style focus
     {
-        get
-        {
-            if (_focus == null)
-            {
-                _focus = new Style();
-            }
-
-            return _focus;
-        }
+        get { return _focus ??= new Style(); }
     }
 
     [JsonIgnore]
     public Style hover
     {
-        get
-        {
-            if (_hover == null)
-            {
-                _hover = new Style();
-            }
-
-            return _hover;
-        }
+        get { return _hover ??= new Style(); }
     }
 
     [JsonIgnore]
     public List<MediaQuery> MediaQueries
     {
-        get
-        {
-            if (_mediaQueries == null)
-            {
-                _mediaQueries = new List<MediaQuery>();
-            }
-
-            return _mediaQueries;
-        }
+        get { return _mediaQueries ??= new List<MediaQuery>(); }
     }
 }
 
