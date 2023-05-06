@@ -248,15 +248,15 @@ partial class ElementSerializer
 
                 if (node.CurrentOrder is null)
                 {
-                    node.BreadCrumpPath = stateTree.BreadCrumpPath;
+                    node.BreadCrumbPath = stateTree.BreadCrumbPath;
                     node.CurrentOrder   = stateTree.CurrentOrder;
 
                     if (statePropertyInfo.GetValue(reactStatefulComponent) is null)
                     {
-                        stateTree.BreadCrumpPath = node.BreadCrumpPath + "," + stateTree.CurrentOrder;
+                        stateTree.BreadCrumbPath = node.BreadCrumbPath + "," + stateTree.CurrentOrder;
                         stateTree.CurrentOrder   = 0;
 
-                        if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumpPath, out var clientStateInfo))
+                        if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumbPath, out var clientStateInfo))
                         {
                             if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
                             {
@@ -268,7 +268,7 @@ partial class ElementSerializer
                             }
                         }
 
-                        if (stateTree.BreadCrumpPath != "0")
+                        if (stateTree.BreadCrumbPath != "0")
                         {
                             node.CurrentOrder++;
                         }
@@ -408,7 +408,7 @@ partial class ElementSerializer
                     map.Add("$LogicalChildrenCount", reactStatefulComponent._children?.Count ?? 0);
                 }
 
-                stateTree.BreadCrumpPath = node.BreadCrumpPath;
+                stateTree.BreadCrumbPath = node.BreadCrumbPath;
                 stateTree.CurrentOrder   = node.CurrentOrder.Value;
 
                 node.ElementAsJsonMap = map;
@@ -431,7 +431,7 @@ partial class ElementSerializer
                             SkipHandleCachableMethods          = true,
                             StateTree = new StateTree
                             {
-                                BreadCrumpPath = context.StateTree.BreadCrumpPath,
+                                BreadCrumbPath = context.StateTree.BreadCrumbPath,
                                 CurrentOrder   = context.StateTree.CurrentOrder,
                                 ChildStates    = context.StateTree.ChildStates
                             }
@@ -1008,7 +1008,7 @@ partial class ElementSerializer
         public bool IsSuspenseFallbackElementCalculated;
         public Element SuspenseFallbackElement;
         public Node SuspenseFallbackNode;
-        public string BreadCrumpPath { get; set; }
+        public string BreadCrumbPath { get; set; }
         public int? CurrentOrder { get; set; }
         public bool DotNetComponentRenderMethodInvoked { get; set; }
         public Element DotNetComponentRootElement { get; set; }

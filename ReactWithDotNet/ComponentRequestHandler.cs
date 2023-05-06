@@ -142,7 +142,7 @@ static class ComponentRequestHandler
             var stateTree = new StateTree
             {
                 ChildStates    = request.CapturedStateTree,
-                BreadCrumpPath = "0"
+                BreadCrumbPath = "0"
             };
 
             var serializerContext = new ElementSerializerContext
@@ -293,7 +293,7 @@ static class ComponentRequestHandler
             var stateTree = new StateTree
             {
                 ChildStates    = request.CapturedStateTree,
-                BreadCrumpPath = "0",
+                BreadCrumbPath = "0",
             };
 
             var serializerContext = new ElementSerializerContext
@@ -413,7 +413,7 @@ partial class Mixin
 
 sealed class StateTree
 {
-    public string BreadCrumpPath { get; set; }
+    public string BreadCrumbPath { get; set; }
 
     public IReadOnlyDictionary<string, ClientStateInfo> ChildStates { get; init; }
 
