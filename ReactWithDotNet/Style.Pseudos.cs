@@ -69,7 +69,7 @@ public sealed class MediaQuery
     /// </summary>
     public MediaQuery(string query, Style style)
     {
-        this.Query = query;
-        this.Style = style;
+        Query = query;
+        Style = style;
     }
 }
