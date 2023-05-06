@@ -91,7 +91,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return CalculateHtmlText(new CalculateHtmlTextInput
         {
-            ReactComponent = new ToStringHandlerComponent { element = this },
+            ReactComponent = new ToStringHandlerComponent(this),
             QueryString    = string.Empty
         }).GetAwaiter().GetResult();
     }
@@ -111,11 +111,17 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
     class ToStringHandlerComponent : ReactPureComponent
     {
-        public Element element;
+        Element _element;
+        
+        public ToStringHandlerComponent(Element element)
+        {
+            _element = element;
+        }
+        
 
         protected override Element render()
         {
-            return element;
+            return _element;
         }
     }
 }
