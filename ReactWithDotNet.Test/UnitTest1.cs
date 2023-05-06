@@ -146,7 +146,7 @@ public class UnitTest1
             sb.AppendLine(item);
         }
 
-        File.WriteAllText(@"D:\work\git\ReactDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
+        File.WriteAllText(@"C:\github\ReactDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
     }
 
     class TagInfo
