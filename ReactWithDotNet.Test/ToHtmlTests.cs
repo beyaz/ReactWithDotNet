@@ -8,39 +8,233 @@ namespace ReactWithDotNet.Test;
 public class ToHtmlTests
 {
     [TestMethod]
-    public void _0_()
+    public void __1__1()
+    {
+        const string expectedHtml = """
+
+<div>ABC</div>
+
+""";
+
+        Assert(new div { "AbC" }, expectedHtml);
+    }
+
+    [TestMethod]
+    public void __1__2()
+    {
+        var el = new div { "AbC", (span)"xY" };
+
+        const string expectedHtml = """
+
+<div>ABC<span>xY</span></div>
+
+""";
+
+        Assert(el, expectedHtml);
+    }
+
+    [TestMethod]
+    public void __1__3()
+    {
+        Assert(new div { dangerouslySetInnerHTML = "jU" },
+               """
+<div>jU</div>
+
+""");
+    }
+
+    [TestMethod]
+    public void __1__4()
+    {
+        var el = new a
+        {
+            style = { width = "4px" }, href = "j"
+        };
+
+        const string expectedHtml = """
+
+<a style="width:4px;" href="j"></a>
+
+""";
+
+        Assert(el, expectedHtml);
+    }
+
+    [TestMethod]
+    public void __10()
+    {
+        var el = new div
+        {
+            "Aa", (strong)"Bb", " -", (small)"Cc"
+        };
+
+        const string expectedHtml = """
+<div>Aa<strong>Bb</strong> -<small>Cc</small></div>
+
+""";
+        Assert(el, expectedHtml);
+    }
+
+    [TestMethod]
+    public void __2__()
+    {
+        var el = new div
+        {
+            style = { width = "4px" }
+        };
+
+        const string expectedHtml = """
+
+<div style="width:4px;"></div>
+
+""";
+
+        Assert(el, expectedHtml);
+    }
+
+    [TestMethod]
+    public void __3()
+    {
+        var el = new div
+        {
+            "Aa", nbsp(), nbsp, nbsp(2), "bC"
+        };
+
+        const string expectedHtml = """
+
+<div>Aa&nbsp;&nbsp;&nbsp;&nbsp;bC</div>
+
+""";
+
+        Assert(el, expectedHtml);
+    }
+
+    [TestMethod]
+    public void __4()
+    {
+        var el = new div
+        {
+            style = { width = "4px" },
+            children =
+            {
+                new div
+                {
+                    style = { width = "5px" },
+                    children =
+                    {
+                        new div
+                        {
+                            style = { width = "6px" },
+                            children =
+                            {
+                                new div
+                                {
+                                    style = { width = "7px" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const string expectedHtml = """
+
+<div style="width:4px;">
+  <div style="width:5px;">
+    <div style="width:6px;">
+      <div style="width:7px;"></div>
+    </div>
+  </div>
+</div>
+
+""";
+
+        el.ToString().Trim().Should().Be(expectedHtml.Trim());
+    }
+
+    [TestMethod]
+    public void __5()
+    {
+        Element cmp = new SamplePureComponent2();
+
+        var el = new div(Width(21))
+        {
+            cmp
+        };
+
+        var expectedHtml = """
+
+<div style="width:21px;">
+  <div style="height:43px;width:32px;"></div>
+  <div style="height:44px;width:33px;"></div>
+  <div style="height:45px;width:34px;"></div>
+</div>
+
+""";
+
+        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
+    }
+
+    [TestMethod]
+    public void __6()
     {
         var el = new div
         {
             new InputText()
         };
 
-        var expectedHtml = @"
+        var expectedHtml = """
 <div>
-  <div style=""min-height:30px;min-width:150px;"" aria-component=""ReactWithDotNet.Libraries.PrimeReact.InputText""></div>
+  <div style="min-height:30px;min-width:150px;"></div>
 </div>
-";
 
-        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
+""";
+
+        Assert(el, expectedHtml);
     }
 
     [TestMethod]
-    public void _0_0_()
+    public void __7()
     {
-        var el = new div
+        Element cmp = new SamplePureComponent();
+
+        var el = new div(Width(21))
         {
-            "Aa",nbsp(),nbsp,nbsp(2),"bC"
+            new div(Width(22))
+            {
+                cmp + Width(43)
+            }
         };
 
-        var expectedHtml = @"
-<div>Aa&nbsp;&nbsp;&nbsp;&nbsp;bC</div>
-";
+        const string expectedHtml = """
+<div style="width:21px;">
+  <div style="width:22px;">
+    <div style="height:33px;width:43px;"></div>
+  </div>
+</div>
 
-        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
+""";
+
+        Assert(el, expectedHtml);
     }
 
     [TestMethod]
-    public void _1_()
+    public void __7__1()
+    {
+        Element el = new SamplePureComponent();
+
+        const string expectedHtml = """
+
+<div style="height:33px;width:30px;"></div>
+
+""";
+
+        Assert(el, expectedHtml);
+    }
+
+    [TestMethod]
+    public void __8()
     {
         var el = new div
         {
@@ -63,55 +257,76 @@ public class ToHtmlTests
             }
         };
 
-        var expectedHtml = @"
+        const string expectedHtml = """
 <div>
   <div>Abc0</div>
-  <div>Abc1
-    <a href=""w""></a>Abc2
-    <span>uuO</span>
-    <div aria-A=""B"" aria-c=""D"">
-      <div style=""min-height:30px;min-width:150px;"" aria-component=""ReactWithDotNet.Libraries.PrimeReact.InputText""></div>
+  <div>Abc1<a href="w"></a>Abc2<span>uuO</span>
+    <div aria-A="B" aria-c="D">
+      <div style="min-height:30px;min-width:150px;"></div>
     </div>
     <div>De1</div>
   </div>
 </div>
 
-";
+""";
 
-        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
+        Assert(el, expectedHtml);
     }
 
+    [TestMethod]
+    public void __9()
+    {
+        var el = new FlexColumn(Width(140), AlignItemsCenter)
+        {
+            new FlexRow(Gap(25))
+            {
+                new img { Src("A.svg"), WidthHeight(30) },
+                new img { Src("B.svg"), WidthHeight(30) }
+            },
 
-    class SamplePureComponent: ReactComponent
+            new small { "React with DotNet" }
+        };
+
+        const string expectedHtml = """
+
+<div style="align-items:center;display:flex;flex-direction:column;width:140px;">
+  <div style="gap:25px;display:flex;flex-direction:row;">
+    <img style="height:30px;width:30px;" height="0" src="A.svg" width="0">
+    <img style="height:30px;width:30px;" height="0" src="B.svg" width="0">
+  </div>
+  <small>React with DotNet</small>
+</div>
+
+""";
+
+        Assert(el, expectedHtml);
+    }
+
+    static void Assert(Element element, string expectedHtml)
+    {
+        var actualHtml = element.ToString();
+
+        actualHtml.Should().BeEquivalentTo(expectedHtml.Trim());
+    }
+
+    class SamplePureComponent : ReactComponent
     {
         protected override Element render()
         {
             return new div { Width(30), Height(33) };
         }
     }
-    
-    [TestMethod]
-    public void _2_()
+
+    class SamplePureComponent2 : ReactComponent
     {
-        Element cmp = new SamplePureComponent();
-        
-        var el = new div(Width(21))
+        protected override Element render()
         {
-            new div(Width(22))
+            return new Fragment
             {
-                cmp + Width(43)
-            }
-        };
-
-        var expectedHtml = @"
-<div style=""width: 21px;"">
-  <div style=""width: 22px;"">
-      <div style=""height: 33px;width: 43px;""></div>
-  </div>
-</div>
-
-";
-
-        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
+                new div { Width(32), Height(43) },
+                new div { Width(33), Height(44) },
+                new div { Width(34), Height(45) }
+            };
+        }
     }
 }

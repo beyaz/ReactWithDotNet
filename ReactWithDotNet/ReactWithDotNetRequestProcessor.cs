@@ -5,19 +5,18 @@ namespace ReactWithDotNet;
 
 sealed class ProcessReactWithDotNetRequestInput
 {
-    public ComponentRequest ComponentRequest { get; set; }
-
     internal Func<string, Type> findType;
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; set; }
 
+    public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
+    public ComponentRequest ComponentRequest { get; set; }
+
     public HttpContext HttpContext { get; set; }
 
-    public Func<ReactContext,Task> OnReactContextCreated { get; set; }
-    
     public Element Instance { get; set; }
 
-    public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
+    public Func<ReactContext, Task> OnReactContextCreated { get; set; }
 }
 
 static class ReactWithDotNetRequestProcessor
@@ -59,10 +58,10 @@ partial class Mixin
 
         var input = new ProcessReactWithDotNetRequestInput
         {
-            findType                       = Type.GetType,
-            Instance                       = element,
-            OnReactContextCreated          = calculateHtmlTextInput.OnReactContextCreated,
-            BeforeSerializeElementToClient = calculateHtmlTextInput.BeforeSerializeElementToClient,
+            findType                                              = Type.GetType,
+            Instance                                              = element,
+            OnReactContextCreated                                 = calculateHtmlTextInput.OnReactContextCreated,
+            BeforeSerializeElementToClient                        = calculateHtmlTextInput.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
             ComponentRequest = new ComponentRequest
@@ -71,8 +70,7 @@ partial class Mixin
                 FullName                          = element.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
-                QueryString                   = calculateHtmlTextInput.QueryString
-
+                QueryString                       = calculateHtmlTextInput.QueryString
             }
         };
 
@@ -104,16 +102,16 @@ partial class Mixin
             OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
             BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient,
         };
-        
-        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
 
+        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
 
         return componentResponse.ToJson();
     }
 
-    public static async Task<string> CalculateRenderInfo(Element component, string queryString,
-                                                       Func<ReactContext, Task> onReactContextCreated = null,
-                                                       Action<Element, ReactContext> beforeSerializeElementToClient = null)
+    public static async Task<string> CalculateRenderInfo(Element component,
+                                                         string queryString,
+                                                         Func<ReactContext, Task> onReactContextCreated = null,
+                                                         Action<Element, ReactContext> beforeSerializeElementToClient = null)
     {
         if (component is null)
         {
@@ -134,7 +132,6 @@ partial class Mixin
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
                 QueryString                       = queryString
-
             }
         };
 
@@ -151,20 +148,18 @@ partial class Mixin
 
 public sealed class CalculateHtmlTextInput
 {
-    public Element ReactComponent  { get; init; }
-    
-    public string QueryString { get; init; }
+    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
     public Func<ReactContext, Task> OnReactContextCreated { get; init; }
 
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    public string QueryString { get; init; }
+    public Element ReactComponent { get; init; }
 }
 
 public sealed class CalculateRenderInfoInput
 {
-    public HttpContext HttpContext  { get; init; }
+    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    public HttpContext HttpContext { get; init; }
 
     public Func<ReactContext, Task> OnReactContextCreated { get; init; }
-
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 }

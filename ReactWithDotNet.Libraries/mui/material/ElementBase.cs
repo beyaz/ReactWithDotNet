@@ -7,7 +7,7 @@ public class ElementBase : ThirdPartyReactComponent
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
 }
@@ -38,7 +38,7 @@ static class DoNotSendToClientWhenEmpty
 {
     public static TransformValueInServerSideResponse Transform(object value, TransformValueInServerSideContext transformContext)
     {
-        var expandoObject = value as IDictionary<String, object>;
+        var expandoObject = value as IDictionary<string, object>;
 
         if (expandoObject == null || expandoObject.Count == 0)
         {

@@ -1,40 +1,28 @@
 
 import React from 'react';
-
 import ReactWithDotNet from "../../react-with-dotnet";
 
-function register(name, cmp)
+
+var isFirstAccess = true;
+
+const Prefix = "ReactWithDotNet.Libraries.ReactSuite.";
+
+ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete", React.lazy(() => import('./AutoComplete')));
+ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete::OnChange", args => [args[0]]);
+
+
+ReactWithDotNet.OnFindExternalObject(name =>
 {
-    const fullName = "ReactWithDotNet.Libraries.ReactSuite." + name;
-
-    ReactWithDotNet.RegisterExternalJsObject(fullName, cmp);
-}
-
-var isFirstLoad = false;
-
-/**
- * @param {string} dotNetFullClassNameOf3rdPartyComponent
- */
-function BeforeAny3rdPartyComponentAccess(dotNetFullClassNameOf3rdPartyComponent)
-{
-    if (isFirstLoad)
+    if (name.indexOf('.ReactSuite.') < 0)
     {
-        return;
+        return null;
     }
 
-    if (dotNetFullClassNameOf3rdPartyComponent.indexOf('.ReactSuite.') > 0 )
+    if (isFirstAccess)
     {
-        isFirstLoad = true;
-
+        isFirstAccess = false;
         ReactWithDotNet.TryLoadCssByHref("https://cdnjs.cloudflare.com/ajax/libs/rsuite/5.28.0/rsuite.min.css");
-
-        register("AutoComplete", React.lazy(() => import('./AutoComplete')));
-
-        register("AutoComplete::OnChange", function (args)
-        {
-            return [args[0]];
-        });
     }
-}
 
-ReactWithDotNet.BeforeAny3rdPartyComponentAccess(BeforeAny3rdPartyComponentAccess);
+    return null;
+});

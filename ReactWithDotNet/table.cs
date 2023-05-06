@@ -1,74 +1,84 @@
 ﻿namespace ReactWithDotNet;
 
-public class table : HtmlElement
+public sealed class table : HtmlElement
 {
-    public table(params IModifier[] modifiers) : base(modifiers) { }
+    public table(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 }
-public class thead : HtmlElement
+
+public sealed class thead : HtmlElement
 {
     public thead()
     {
-
     }
 
-    public thead(params IModifier[] modifiers) : base(modifiers) { }
+    public thead(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 }
 
-public class tbody : HtmlElement
+public sealed class tbody : HtmlElement
 {
     public tbody()
     {
-        
     }
 
-    public tbody(params IModifier[] modifiers) : base(modifiers) { }
+    public tbody(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 }
 
-public class tfoot : HtmlElement
+public sealed class tfoot : HtmlElement
 {
     public tfoot()
     {
-
     }
 
-    public tfoot(params IModifier[] modifiers) : base(modifiers) { }
+    public tfoot(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 }
 
-
-
-public class tr : HtmlElement
+public sealed class tr : HtmlElement
 {
-    [React]
-    public int? rowSpan { get; set; }
+    public tr(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 
-    [React]
+    [ReactProp]
     public int? colSpan { get; set; }
 
-    public tr(params IModifier[] modifiers) : base(modifiers) { }
+    [ReactProp]
+    public int? rowSpan { get; set; }
 }
 
-public class th : HtmlElement
+public sealed class th : HtmlElement
 {
-    [React]
-    public int? rowSpan { get; set; }
+    public th(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 
-    [React]
+    [ReactProp]
     public int? colSpan { get; set; }
 
-    public th(params IModifier[] modifiers) : base(modifiers) { }
+    [ReactProp]
+    public int? rowSpan { get; set; }
 }
 
-public class td : HtmlElement
+public sealed class td : HtmlElement
 {
-    [React]
-    public int? rowSpan { get; set; }
-
-    [React]
-    public int? colSpan { get; set; }
-
     public td()
     {
-        
     }
-    public td(params IModifier[] modifiers) : base(modifiers) { }
+
+    public td(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
+
+    [ReactProp]
+    public int? colSpan { get; set; }
+
+    [ReactProp]
+    public int? rowSpan { get; set; }
 }

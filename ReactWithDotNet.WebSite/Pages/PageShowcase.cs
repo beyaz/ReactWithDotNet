@@ -77,10 +77,10 @@ class PageShowcase : ReactComponent
                 BorderRadius(6), 
                 PaddingTopBottom(5), 
                 PaddingLeftRight(15), 
-                Border($"1px solid {Theme[Context].grey_100}"),
+                Border($"1px solid {Theme.grey_100}"),
                 CursorDefault,
-                When(isSelected,Background(Theme[Context].grey_100)),
-                When(!isSelected, Hover(Background(Theme[Context].grey_100))),
+                When(isSelected,Background(Theme.grey_100)),
+                When(!isSelected, Hover(Background(Theme.grey_100))),
                 OnClick(e=>FullTypeNameOfSelectedSample = e.target.id)
             };
         }

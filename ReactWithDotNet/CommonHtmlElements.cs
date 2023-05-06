@@ -758,6 +758,15 @@ public sealed class figure : HtmlElement
     public figure(Style style) : base(style) { }
 }
 
+public sealed class hr : HtmlElement
+{
+    public hr() { }
+
+    public hr(params IModifier[] modifiers) : base(modifiers) { }
+
+    public hr(Style style) : base(style) { }
+}
+
 public sealed class figcaption : HtmlElement
 {
     public figcaption() { }

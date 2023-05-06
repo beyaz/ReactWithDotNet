@@ -4,18 +4,18 @@ public class CodeMirror : ThirdPartyReactComponent
 {
     protected const string Prefix = "ReactWithDotNet.Libraries.uiw.react_codemirror.";
     
-    [React]
+    [ReactProp]
     public string? value { get; set; }
     
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public CodeMirrorBasicSetup basicSetup { get; } = new();
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + nameof(CodeMirror) + "::OnChange")]
     public Action<string> onChange { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e", eventName = nameof(onChange))]
     public Expression<Func<string>> valueBind { get; set; }
 
@@ -36,7 +36,7 @@ public class CodeMirror : ThirdPartyReactComponent
     /// </summary>
     public int? valueBindDebounceTimeout { get; set; }
 
-    [React]
+    [ReactProp]
     //[ReactTransformValueInClient(Prefix + nameof(CodeMirror) + "::ConvertToExtension")]
     public List<string> extensions { get; } = new List<string>();
 

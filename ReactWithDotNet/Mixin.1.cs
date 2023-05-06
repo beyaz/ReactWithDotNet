@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Globalization;
 using System.Text.Json;
 
 namespace ReactWithDotNet;
@@ -7,44 +6,45 @@ namespace ReactWithDotNet;
 public static partial class Mixin
 {
     /// <summary>
-    ///     initialize dir attribute of html element
+    ///     style.backgroundColor = 'transparent'
     /// </summary>
-    public static HtmlElementModifier Dir(string direction) => CreateHtmlElementModifier<HtmlElement>(element => element.dir = direction);
+    public static StyleModifier BackgroundColorTransparent =>
+        BackgroundColor("transparent");
 
     /// <summary>
-    ///     element.dir = 'rtl'
+    ///     style.background = 'transparent'
     /// </summary>
-    public static HtmlElementModifier DirRtl => Dir("rtl");
+    public static StyleModifier BackgroundTransparent =>
+        Background("transparent");
 
-
-    /// <summary>
-    ///     element.dir = 'ltr'
-    /// </summary>
-    public static HtmlElementModifier DirLtr => Dir("ltr");
-
-    public static HtmlElementModifier Lang(string lang) => CreateHtmlElementModifier<HtmlElement>(element => element.lang = lang);
-
-
-
-
-
-    
+  
 
     public static StyleModifier BoxSizingBorderBox => new(style => style.boxSizing = "border-box");
 
     public static StyleModifier BoxSizingContentBox => new(style => style.boxSizing = "content-box");
 
     /// <summary>
+    ///     style.clear = 'both'
+    /// </summary>
+    public static StyleModifier ClearBoth => Clear("both");
+
+    /// <summary>
+    ///     style.clear = 'left'
+    /// </summary>
+    public static StyleModifier ClearLeft => Clear("left");
+
+    /// <summary>
+    ///     style.clear = 'right'
+    /// </summary>
+    public static StyleModifier ClearRight => Clear("right");
+
+    /// <summary>
     ///     style.color = 'white'
     /// </summary>
     public static StyleModifier ColorWhite => Color("white");
 
-    /// <summary>
-    /// style.cursor = <paramref name="value"/>
-    /// </summary>
-    public static StyleModifier Cursor(string value)=> new(style => style.cursor = value);
+    public static StyleModifier CursorDefault => Cursor("default");
     public static StyleModifier CursorPointer => Cursor("pointer");
-    public static StyleModifier CursorDefault=> Cursor("default");
 
     /// <summary>
     ///     style.direction = "ltr"
@@ -55,6 +55,16 @@ public static partial class Mixin
     ///     style.direction = "rtl"
     /// </summary>
     public static StyleModifier DirectionRtl => new(style => style.direction = "rtl");
+
+    /// <summary>
+    ///     element.dir = 'ltr'
+    /// </summary>
+    public static HtmlElementModifier DirLtr => Dir("ltr");
+
+    /// <summary>
+    ///     element.dir = 'rtl'
+    /// </summary>
+    public static HtmlElementModifier DirRtl => Dir("rtl");
 
     /// <summary>
     ///     style.display = 'block'
@@ -95,81 +105,17 @@ public static partial class Mixin
     public static StyleModifier FlexWrap => new(style => style.flexWrap = "wrap");
     public static StyleModifier FlexWrapReverse => new(style => style.flexWrap = "wrap-reverse");
 
-    public static StyleModifier FontSize10 => FontSize(10);
-    public static StyleModifier FontSize11 => FontSize(11);
-    public static StyleModifier FontSize12 => FontSize(12);
-    public static StyleModifier FontSize13 => FontSize(13);
-    public static StyleModifier FontSize14 => FontSize(14);
-    public static StyleModifier FontSize15 => FontSize(15);
-    public static StyleModifier FontSize16 => FontSize(16);
-    public static StyleModifier FontSize17 => FontSize(17);
-    public static StyleModifier FontSize18 => FontSize(18);
-    public static StyleModifier FontSize19 => FontSize(19);
-    public static StyleModifier FontSize20 => FontSize(20);
-    public static StyleModifier FontSize21 => FontSize(21);
-    public static StyleModifier FontSize22 => FontSize(22);
-    public static StyleModifier FontSize23 => FontSize(23);
-    public static StyleModifier FontSize24 => FontSize(24);
-    public static StyleModifier FontSize25 => FontSize(25);
-    public static StyleModifier FontSize26 => FontSize(25);
-    public static StyleModifier FontSize27 => FontSize(25);
-    public static StyleModifier FontSize28 => FontSize(25);
-    public static StyleModifier FontSize29 => FontSize(25);
-    public static StyleModifier FontSize30 => FontSize(25);
-    public static StyleModifier FontSize9 => FontSize(9);
+    /// <summary>
+    ///     style.float = 'left'
+    /// </summary>
+    public static StyleModifier FloatLeft => Float("left");
 
     /// <summary>
-    ///     style.fontSize = 'large'
+    ///     style.float = 'right'
     /// </summary>
-    public static StyleModifier FontSizeLarge => FontSize("large");
+    public static StyleModifier FloatRight => Float("right");
 
-    /// <summary>
-    ///     style.fontSize = 'larger'
-    ///     <br />
-    ///     Sets the font-size to a larger size than the parent element
-    /// </summary>
-    public static StyleModifier FontSizeLarger => FontSize("larger");
-
-    /// <summary>
-    ///     style.fontSize = 'small'
-    /// </summary>
-    public static StyleModifier FontSizeSmall => FontSize("small");
-
-    public static StyleModifier FontStyleItalic => FontStyle("italic");
-
-    public static StyleModifier FontStyleNormal => FontStyle("normal");
-
-    public static StyleModifier FontWeight400 => FontWeight("400");
-    public static StyleModifier FontWeight500 => FontWeight("500");
-    public static StyleModifier FontWeight600 => FontWeight("600");
-    public static StyleModifier FontWeight700 => FontWeight("700");
-    public static StyleModifier FontWeight800 => FontWeight("800");
-    public static StyleModifier FontWeight900 => FontWeight("900");
-
-    public static StyleModifier FontWeightBold => FontWeight700;
-
-    /// <summary>
-    /// style.letterSpacing = <paramref name="letterSpacingAsPixel"/> + 'px'
-    /// </summary>
-    public static StyleModifier LetterSpacing(double letterSpacingAsPixel) => new(style => style.letterSpacing = letterSpacingAsPixel.AsPixel());
-
-
-
-
-    /// <summary>
-    ///     style.fontWeight = '800'
-    /// </summary>
-    public static StyleModifier FontWeightExtraBold => FontWeight800;
-
-    /// <summary>
-    ///     style.fontWeight = '500'
-    /// </summary>
-    public static StyleModifier FontWeightMedium => FontWeight500;
-
-    /// <summary>
-    ///     style.fontWeight = '600'
-    /// </summary>
-    public static StyleModifier FontWeightSemiBold => FontWeight600;
+    
 
     /// <summary>
     ///     style.height = "100vh"
@@ -216,40 +162,7 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier JustifyContentSpaceEvenly => new(style => style.justifyContent = "space-evenly");
 
-    public static StyleModifier LineHeight10 => LineHeight(10);
-    public static StyleModifier LineHeight11 => LineHeight(11);
-    public static StyleModifier LineHeight12 => LineHeight(12);
-    public static StyleModifier LineHeight13 => LineHeight(13);
-    public static StyleModifier LineHeight14 => LineHeight(14);
-    public static StyleModifier LineHeight15 => LineHeight(15);
-    public static StyleModifier LineHeight16 => LineHeight(16);
-    public static StyleModifier LineHeight17 => LineHeight(17);
-    public static StyleModifier LineHeight18 => LineHeight(18);
-    public static StyleModifier LineHeight19 => LineHeight(19);
-    public static StyleModifier LineHeight20 => LineHeight(20);
-    public static StyleModifier LineHeight21 => LineHeight(21);
-    public static StyleModifier LineHeight22 => LineHeight(22);
-    public static StyleModifier LineHeight23 => LineHeight(23);
-    public static StyleModifier LineHeight24 => LineHeight(24);
-    public static StyleModifier LineHeight25 => LineHeight(25);
-
-    public static StyleModifier LineHeight26 => LineHeight(25);
-    public static StyleModifier LineHeight27 => LineHeight(25);
-    public static StyleModifier LineHeight28 => LineHeight(25);
-    public static StyleModifier LineHeight29 => LineHeight(25);
-    public static StyleModifier LineHeight30 => LineHeight(25);
-    public static StyleModifier LineHeight31 => LineHeight(25);
-    public static StyleModifier LineHeight32 => LineHeight(25);
-    public static StyleModifier LineHeight33 => LineHeight(25);
-    public static StyleModifier LineHeight34 => LineHeight(25);
-    public static StyleModifier LineHeight35 => LineHeight(25);
-    public static StyleModifier LineHeight36 => LineHeight(25);
-    public static StyleModifier LineHeight37 => LineHeight(25);
-    public static StyleModifier LineHeight38 => LineHeight(25);
-    public static StyleModifier LineHeight39 => LineHeight(25);
-    public static StyleModifier LineHeight40 => LineHeight(25);
-
-    public static StyleModifier LineHeight9 => LineHeight(9);
+    
 
     /// <summary>
     ///     overflow = "hidden"
@@ -261,18 +174,17 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier OverflowScroll => new(style => style.overflow = "scroll");
 
-    public static StyleModifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
-
     /// <summary>
-    /// style.overflowWrap = 'anywhere'
+    ///     style.overflowWrap = 'anywhere'
     /// </summary>
     public static StyleModifier OverflowWrapAnywhere => new(style => style.overflowWrap = "anywhere");
 
+    public static StyleModifier OverflowWrapBreakWord => new(style => style.overflowWrap = "break-word");
+
     /// <summary>
-    /// style.overflowWrap = 'normal'
+    ///     style.overflowWrap = 'normal'
     /// </summary>
     public static StyleModifier OverflowWrapNormal => new(style => style.overflowWrap = "normal");
-    
 
     /// <summary>
     ///     overflowY: auto
@@ -305,20 +217,7 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier TextDecorationUnderline => TextDecoration("underline");
 
-    /// <summary>
-    ///     style.textTransform = 'capitalize'
-    /// </summary>
-    public static StyleModifier TextTransformCapitalize => TextTransform("capitalize");
 
-    /// <summary>
-    ///     style.textTransform = 'lowercase'
-    /// </summary>
-    public static StyleModifier TextTransformLowerCase => TextTransform("lowercase");
-
-    /// <summary>
-    ///     style.textTransform = 'uppercase'
-    /// </summary>
-    public static StyleModifier TextTransformUpperCase => TextTransform("uppercase");
 
     /// <summary>
     ///     style.width = "100vw"
@@ -382,32 +281,50 @@ public static partial class Mixin
         }
     }
 
-    public static StyleModifier Background(string background) => new(style => style.background = background);
+    /// <summary>
+    ///     style.backdropFilter = value
+    /// </summary>
+    public static StyleModifier BackdropFilter(string value) =>
+        new(style => style.backdropFilter = value);
+
+    /// <summary>
+    ///     style.backdropFilter = blur(px)
+    /// </summary>
+    public static StyleModifier BackdropFilterBlur(double px) =>
+        new(style => style.backdropFilter = $"blur({px}px)");
+
+    public static StyleModifier Background(string background)
+        => new(style => style.background = background);
+
+    public static StyleModifier WebkitTextFillColor(string color)
+        => new(style => style.webkitTextFillColor = color);
+
+
+    public static StyleModifier WebkitBackgroundClip(string value)
+        => new(style => style.webkitBackgroundClip = value);
+
+    public static StyleModifier WebkitBackgroundClipText=>WebkitBackgroundClip("text");
+
+    public static readonly string Transparent = "transparent";
+
+    
+
+    /// <summary>
+    /// style.backgroundImage = <paramref name="backgroundImage"/>
+    /// </summary>
+    public static StyleModifier BackgroundImage(string backgroundImage) 
+        => new(style => style.backgroundImage = backgroundImage);
 
     public static StyleModifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
 
-    public static StyleModifier Border(string border) => new(style => style.border = border);
-
-    public static StyleModifier BorderNone => Border("none");
-
-    public static StyleModifier Border(string top, string right, string bottom, string left) => new(style => style.border = $"{top} {right} {bottom} {left}");
-
-    public static StyleModifier Border(double top, double right, double bottom, double left) => Border(top.AsPixel(), right.AsPixel(), bottom.AsPixel(), left.AsPixel());
-
-    public static StyleModifier BorderBottom(string borderBottom) => new(style => style.borderBottom = borderBottom);
-    public static StyleModifier BorderLeft(string borderLeft) => new(style => style.borderLeft = borderLeft);
-
-    public static StyleModifier BorderRadius(string borderRadius) => new(style => style.borderRadius = borderRadius);
-    public static StyleModifier BorderRadius(double borderRadius) => BorderRadius(borderRadius.AsPixel());
-    public static StyleModifier BorderRight(string borderRight) => new(style => style.borderRight = borderRight);
-    public static StyleModifier BorderTop(string borderTop) => new(style => style.borderTop = borderTop);
+    
     public static StyleModifier Bottom(string bottom) => new(style => style.bottom = bottom);
     public static StyleModifier Bottom(double bottom) => Bottom(bottom.AsPixel());
 
     public static StyleModifier BottomRight(string bottomAndRight) => Bottom(bottomAndRight) + Right(bottomAndRight);
     public static StyleModifier BottomRight(double bottomAndRight) => Bottom(bottomAndRight) + Right(bottomAndRight);
 
-    public static StyleModifier BoxShadow(string boxShadow) => new(style => style.boxShadow = boxShadow);
+   
 
     /// <summary>
     ///     Adds elements to children
@@ -421,13 +338,13 @@ public static partial class Mixin
 
         var array = children.ToArray();
 
-        void modifyHtmlElement(Element element)
+        void modifyElement(Element element)
         {
             element.children.Clear();
             element.children.AddRange(array);
         }
 
-        return new(modifyHtmlElement);
+        return new(modifyElement);
     }
 
     public static ElementModifier Children(params Element[] children)
@@ -439,16 +356,37 @@ public static partial class Mixin
 
         var array = children.ToArray();
 
-        void modifyHtmlElement(Element element)
+        void modifyElement(Element element)
         {
             element.children.Clear();
             element.children.AddRange(array);
         }
 
-        return new(modifyHtmlElement);
+        return new(modifyElement);
+    }
+
+    public static ElementModifier Key(string key)
+    {
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
+
+        void modifyElement(Element element)
+        {
+            element.key = key;
+        }
+
+        return new(modifyElement, isModifyReactKey: true);
     }
 
     public static HtmlElementModifier ClassName(string className) => CreateHtmlElementModifier<HtmlElement>(element => element.className = className);
+
+    /// <summary>
+    ///     style.clear = value
+    /// </summary>
+    public static StyleModifier Clear(string value) =>
+        new(style => style.clear = value);
 
     public static StyleModifier Color(string color) => new(style => style.color = color);
 
@@ -456,30 +394,34 @@ public static partial class Mixin
     ///     style.content = <paramref name="content" />
     /// </summary>
     public static StyleModifier Content(string content) => new(style => style.content = content);
-  
-    
+
+    /// <summary>
+    ///     style.cursor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Cursor(string value) => new(style => style.cursor = value);
+
+    /// <summary>
+    ///     initialize dir attribute of html element
+    /// </summary>
+    public static HtmlElementModifier Dir(string direction) => CreateHtmlElementModifier<HtmlElement>(element => element.dir = direction);
+
     /// <summary>
     ///     style.flexGrow = <paramref name="growValue" />
     /// </summary>
     public static StyleModifier FlexGrow(double growValue) => new(style => style.flexGrow = growValue + "");
+
+    /// <summary>
+    ///     style.float = value
+    /// </summary>
+    public static StyleModifier Float(string value) =>
+        new(style => style.cssFloat = value);
 
     public static StyleModifier Focus(params StyleModifier[] modifiers)
     {
         return Pseudo(x => x.focus, modifiers);
     }
 
-    /// <summary>
-    ///     style.fontFamily = fontFamily
-    /// </summary>
-    public static StyleModifier FontFamily(string fontFamily) => new(style => style.fontFamily = fontFamily);
-
-    public static StyleModifier FontSize(string fontSize) => new(style => style.fontSize = fontSize);
-
-    public static StyleModifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
-
-    public static StyleModifier FontStyle(string fontStyle) => new(style => style.fontStyle = fontStyle);
-
-    public static StyleModifier FontWeight(string fontWeight) => new(style => style.fontWeight = fontWeight);
+  
 
     public static StyleModifier Gap(double gap) => new(style => style.gap = gap.AsPixel());
     public static StyleModifier Gap(string gap) => new(style => style.gap = gap);
@@ -488,7 +430,12 @@ public static partial class Mixin
     {
         return $"{type.FullName},{type.Assembly.GetName().Name}";
     }
-
+    
+    /// <summary>
+    ///     style.height = 0px
+    /// </summary>
+    public static StyleModifier Height0 => Height(0);
+    
     public static StyleModifier Height(double height) => Height(height.AsPixel());
     public static StyleModifier Height(string height) => new(style => style.height = height);
 
@@ -508,7 +455,12 @@ public static partial class Mixin
         return Pseudo(x => x.hover, modifiers);
     }
 
-   
+    /// <summary>
+    ///     Creates a new div with given width
+    ///     <br />
+    ///     new div{ style = {width = <paramref name="valueInPx" />}}
+    /// </summary>
+    public static HtmlElement HSpace(double valueInPx) => new div(Width(valueInPx));
 
     /// <summary>
     ///     initialize id attribute of html element
@@ -521,14 +473,11 @@ public static partial class Mixin
     public static HtmlElementModifier Id(int id) => CreateHtmlElementModifier<HtmlElement>(element => element.id = id.ToString());
 
     /// <summary>
-    /// Roles define the semantic meaning of content, allowing screen readers and other tools to present and support interaction with an object in a way that is consistent with user expectations of that type of object.
-    /// </summary>
-    public static HtmlElementModifier Role(string role) => CreateHtmlElementModifier<HtmlElement>(element => element.role = role);
-
-    /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
     public static HtmlElementModifier Id(long id) => CreateHtmlElementModifier<HtmlElement>(element => element.id = id.ToString());
+
+    public static HtmlElementModifier Lang(string lang) => CreateHtmlElementModifier<HtmlElement>(element => element.lang = lang);
 
     public static StyleModifier Left(double left) => Left(left.AsPixel());
     public static StyleModifier Left(string left) => new(style => style.left = left);
@@ -543,8 +492,7 @@ public static partial class Mixin
 
     public static StyleModifier LeftRightBottom(string valueForLeftAndRightAndBottom) => new(style => style.leftRightBottom = valueForLeftAndRightAndBottom);
 
-    public static StyleModifier LineHeight(string lineHeight) => new(style => style.lineHeight = lineHeight);
-    public static StyleModifier LineHeight(double lineHeightPx) => LineHeight(lineHeightPx.AsPixel());
+
 
     /// <summary>
     ///     style.listStyle = <paramref name="listStyle" />
@@ -586,62 +534,6 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier MaxWidth(double maxWidth) => MaxWidth(maxWidth.AsPixel());
 
-    public static StyleModifier MediaQuery(string query, Style styleForOverride) => new(style => style.MediaQueries.Add(new MediaQuery(query, styleForOverride)));
-
-    public static StyleModifier MediaQuery(string query, params StyleModifier[] styleModifiers) => MediaQuery(query, new Style(styleModifiers));
-
-    /// <summary>
-    ///     min-width: 1024px
-    /// </summary>
-    public static StyleModifier MediaQueryOnDesktop(Style styleForOverride) => MediaQuery("(min-width: 1024px)", styleForOverride);
-
-    /// <summary>
-    ///     min-width: 1024px
-    /// </summary>
-    public static StyleModifier MediaQueryOnDesktop(params StyleModifier[] styleModifiers) => MediaQueryOnDesktop(new Style(styleModifiers));
-
-    /// <summary>
-    ///     max-width: 767px
-    /// </summary>
-    public static StyleModifier MediaQueryOnMobile(Style styleForOverride) => MediaQuery("(max-width: 767px)", styleForOverride);
-
-    /// <summary>
-    ///     max-width: 767px
-    /// </summary>
-    public static StyleModifier MediaQueryOnMobile(params StyleModifier[] styleModifiers) => MediaQueryOnMobile(new Style(styleModifiers));
-
-    /// <summary>
-    ///     max-width: 1023px
-    /// </summary>
-    public static StyleModifier MediaQueryOnMobileOrTablet(Style styleForOverride) => MediaQuery("(max-width: 1023px)", styleForOverride);
-
-
-    /// <summary>
-    ///     min-width: 768px
-    /// </summary>
-    public static StyleModifier MediaQueryOnTabletOrDesktop(Style styleForOverride)
-        => MediaQuery("(min-width: 768px)", styleForOverride);
-
-    /// <summary>
-    ///     min-width: 768px
-    /// </summary>
-    public static StyleModifier MediaQueryOnTabletOrDesktop(params StyleModifier[] styleModifiers)
-        => MediaQueryOnTabletOrDesktop(new Style(styleModifiers));
-
-    /// <summary>
-    ///     max-width: 1023px
-    /// </summary>
-    public static StyleModifier MediaQueryOnMobileOrTablet(params StyleModifier[] styleModifiers) => MediaQueryOnMobileOrTablet(new Style(styleModifiers));
-
-    /// <summary>
-    ///     min-width: 768px and max-width: 1023px
-    /// </summary>
-    public static StyleModifier MediaQueryOnTablet(Style styleForOverride) => MediaQuery("(min-width: 768px) and (max-width: 1023px)", styleForOverride);
-
-    /// <summary>
-    ///     min-width: 768px and max-width: 1023px
-    /// </summary>
-    public static StyleModifier MediaQueryOnTablet(params StyleModifier[] styleModifiers) => MediaQueryOnTablet(new Style(styleModifiers));
 
     /// <summary>
     ///     style.minHeight = <paramref name="minHeight" />
@@ -689,16 +581,7 @@ public static partial class Mixin
     /// </summary>
     public static HtmlElementModifier OnScroll(string jsMethodName) => CreateHtmlElementModifier<HtmlElement>(element => element.onScroll = jsMethodName);
 
-    /// <summary>
-    ///     style.opacity = <paramref name="opacity" />
-    /// </summary>
-    public static StyleModifier Opacity(string opacity) => new(style => style.opacity = opacity);
-
-    /// <summary>
-    ///     style.opacity = <paramref name="opacity" />
-    /// </summary>
-    public static StyleModifier Opacity(double opacity) => new(style => style.opacity = opacity.ToString(CultureInfo.InvariantCulture));
-
+    
     /// <summary>
     ///     style.right = right
     /// </summary>
@@ -709,13 +592,15 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier Right(double right) => new(style => style.right = right.AsPixel());
 
+    /// <summary>
+    ///     Roles define the semantic meaning of content, allowing screen readers and other tools to present and support
+    ///     interaction with an object in a way that is consistent with user expectations of that type of object.
+    /// </summary>
+    public static HtmlElementModifier Role(string role) => CreateHtmlElementModifier<HtmlElement>(element => element.role = role);
+
     public static HtmlElementModifier RowSpan(int? rowSpan) => CreateHtmlElementModifier<td>(element => element.rowSpan = rowSpan);
 
-    /// <summary>
-    ///     Returns a string value like "1px solid <paramref name="color" />"
-    /// </summary>
-    public static string Solid_1px_(string color) => "1px solid " + (color ?? throw new ArgumentNullException(nameof(color)));
-
+    
     /// <summary>
     ///     <br>if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value</br>
     ///     <br>
@@ -737,45 +622,17 @@ public static partial class Mixin
     /// </summary>
     public static Element Space(double valueInPx) => new Space(valueInPx);
 
-    /// <summary>
-    ///         Creates a new div with given height
-    ///     <br/>
-    ///    new div{ style = {height = <paramref name="valueInPx"/>}}
-    /// </summary>
-    public static HtmlElement VSpace(double valueInPx) => new div(Height(valueInPx));
-    /// <summary>
-    ///         Creates a new div with given width
-    ///     <br/>
-    ///    new div{ style = {width = <paramref name="valueInPx"/>}}
-    /// </summary>
-    public static HtmlElement HSpace(double valueInPx) => new div(Width(valueInPx));
-
     public static HtmlElementModifier Text(string innerText) => CreateHtmlElementModifier<HtmlElement>(element => element.text = innerText);
 
     public static StyleModifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
 
     public static StyleModifier TextDecoration(string textDecoration) => new(style => style.textDecoration = textDecoration);
 
-    /// <summary>
-    ///     style.textTransform = <paramref name="textTransform" />
-    /// </summary>
-    public static StyleModifier TextTransform(string textTransform) => new(style => style.textTransform = textTransform);
-
+    
     /// <summary>
     ///     element.title = title
     /// </summary>
     public static HtmlElementModifier Title(string title) => CreateHtmlElementModifier<HtmlElement>(element => element.title = title);
-
-    internal static string ToJson(this ComponentResponse value)
-    {
-        var options = new JsonSerializerOptions();
-
-        options = options.ModifyForReactWithDotNet();
-
-        return JsonSerializer.Serialize(value, options);
-    }
-
-    
 
     public static StyleModifier Top(double top) => Top(top.AsPixel());
     public static StyleModifier Top(string top) => new(style => style.top = top);
@@ -789,15 +646,14 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier TopBottom(double pixelValue) => new(style => style.topBottom = pixelValue.AsPixel());
 
-    /// <summary>
-    ///     style.transform = <paramref name="transform" />
-    /// </summary>
-    public static StyleModifier Transform(string transform) => new(style => style.transform = transform);
+
 
     /// <summary>
-    ///     style.transition = <paramref name="transition" />
+    ///     Creates a new div with given height
+    ///     <br />
+    ///     new div{ style = {height = <paramref name="valueInPx" />}}
     /// </summary>
-    public static StyleModifier Transition(string transition) => new(style => style.transition = transition);
+    public static HtmlElement VSpace(double valueInPx) => new div(Height(valueInPx));
 
     /// <summary>
     ///     style.width = <paramref name="pixelValue" /> + 'px'
@@ -855,8 +711,7 @@ public static partial class Mixin
         return condition ? elementFunc() : null;
     }
 
-    public static StyleModifier Width(double width) => new(style => style.width = width.AsPixel());
-    public static StyleModifier Width(string width) => new(style => style.width = width);
+   
 
     public static StyleModifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
     public static StyleModifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
@@ -864,6 +719,15 @@ public static partial class Mixin
     public static StyleModifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
 
     internal static string AsPixel(this double value) => value + "px";
+
+    internal static string ToJson(this ComponentResponse value)
+    {
+        var options = new JsonSerializerOptions();
+
+        options = options.ModifyForReactWithDotNet();
+
+        return JsonSerializer.Serialize(value, options);
+    }
 
     static StyleModifier Pseudo(Func<Style, Style> accessToPseudo, StyleModifier[] styleModifiers)
     {
@@ -1110,57 +974,4 @@ public static partial class Mixin
     public static StyleModifier py(string value) => PaddingTopBottom(value);
     #endregion
     #endregion
-
-
-
-    /// <summary>
-    ///     style.backdropFilter = value
-    /// </summary>
-    public static StyleModifier BackdropFilter(string value) => 
-        new(style => style.backdropFilter = value);
-
-    /// <summary>
-    ///     style.backdropFilter = blur(px)
-    /// </summary>
-    public static StyleModifier BackdropFilterBlur(double px) =>
-        new(style => style.backdropFilter = $"blur({px}px)");
-
-    /// <summary>
-    ///     style.float = value
-    /// </summary>
-    public static StyleModifier Float(string value) =>
-        new(style => style.cssFloat = value);
-		
-    /// <summary>
-    ///     style.float = 'left'
-    /// </summary>
-    public static StyleModifier FloatLeft => Float("left");
-	
-    /// <summary>
-    ///     style.float = 'right'
-    /// </summary>
-    public static StyleModifier FloatRight => Float("right");
-
-
-
-    /// <summary>
-    ///     style.clear = value
-    /// </summary>
-    public static StyleModifier Clear(string value) =>
-        new(style => style.clear = value);
-		
-    /// <summary>
-    ///     style.clear = 'right'
-    /// </summary>
-    public static StyleModifier ClearRight => Clear("right");
-	
-    /// <summary>
-    ///     style.clear = 'left'
-    /// </summary>
-    public static StyleModifier ClearLeft => Clear("left");
-	
-    /// <summary>
-    ///     style.clear = 'both'
-    /// </summary>
-    public static StyleModifier ClearBoth => Clear("both");
 }

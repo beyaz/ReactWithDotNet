@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet;
 
-public class img : HtmlElement
+public sealed class img : HtmlElement
 {
     public img()
     {
@@ -10,25 +10,24 @@ public class img : HtmlElement
     {
     }
 
-    [React]
+    [ReactProp]
     public string alt { get; set; }
 
-    [React]
+    [ReactProp]
     public int height { get; set; }
 
-    [React]
+    [ReactProp]
     public string loading { get; set; }
 
-    [React]
+    [ReactProp]
     public string src { get; set; }
 
-    [React]
+    [ReactProp]
     public int width { get; set; }
 
+    public static HtmlElementModifier Alt(string alt) => Modify<img>(element => element.alt = alt);
 
-    public static HtmlElementModifier Alt(string alt) => CreateHtmlElementModifier<img>(element => element.alt = alt);
-
-    public static HtmlElementModifier Src(string src) => CreateHtmlElementModifier<img>(element => element.src = src);
+    public static HtmlElementModifier Src(string src) => Modify<img>(element => element.src = src);
 }
 
 partial class Mixin

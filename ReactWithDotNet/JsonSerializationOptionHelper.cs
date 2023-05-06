@@ -8,8 +8,9 @@ static partial class JsonSerializationOptionHelper
 {
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
     {
-        options.WriteIndented    = true;
-        options.IgnoreNullValues = true;
+        options.WriteIndented = true;
+
+        options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 
         options.PropertyNamingPolicy = null;
 
@@ -25,6 +26,7 @@ static partial class JsonSerializationOptionHelper
 
         return options;
     }
+
     public class JsonConverterForEnum : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -139,14 +141,14 @@ static partial class JsonSerializationOptionHelper
 [Serializable]
 sealed class RemoteMethodInfo
 {
+    public string FunctionNameOfGrabEventArguments { get; set; }
+
+    public int? HandlerComponentUniqueIdentifier { get; set; }
+
     [JsonPropertyName("$isRemoteMethod")]
     public bool IsRemoteMethod { get; set; }
 
     public string remoteMethodName { get; set; }
-
-    public int? HandlerComponentUniqueIdentifier { get; set; }
-
-    public string FunctionNameOfGrabEventArguments { get; set; }
 
     public bool? StopPropagation { get; set; }
 }
@@ -154,6 +156,8 @@ sealed class RemoteMethodInfo
 [Serializable]
 public sealed class BindInfo
 {
+    public string DebounceHandler { get; set; }
+    public int? DebounceTimeout { get; set; }
     public string eventName { get; set; }
     public int? HandlerComponentUniqueIdentifier { get; set; }
 
@@ -167,8 +171,6 @@ public sealed class BindInfo
 
     public string targetProp { get; set; }
     public string transformFunction { get; set; }
-    public int? DebounceTimeout { get; set; }
-    public string DebounceHandler { get; set; }
 }
 
 public class InnerElementInfo

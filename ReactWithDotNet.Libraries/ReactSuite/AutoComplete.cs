@@ -2,19 +2,19 @@
 
 public sealed class AutoComplete : ElementBase
 {
-    [React]
+    [ReactProp]
     public IEnumerable<string> data { get; set; }
 
-    [React]
+    [ReactProp]
     public string id { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + nameof(AutoComplete) + "::OnChange")]
     public Action<string> onChange { get; set; }
 
-    [React]
+    [ReactProp]
     public string value { get; set; }
 
-    [React]
+    [ReactProp]
     public string placeholder { get; set; }
 }

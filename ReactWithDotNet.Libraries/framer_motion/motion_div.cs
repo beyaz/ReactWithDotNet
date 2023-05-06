@@ -1,18 +1,16 @@
-﻿using System.Dynamic;
-
-namespace ReactWithDotNet.Libraries.framer_motion;
+﻿namespace ReactWithDotNet.Libraries.framer_motion;
 
 public sealed class motion_div : ElementBase
 {
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic animate { get; } = new ExpandoObject();
 
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic initial { get; } = new ExpandoObject();
 
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public  dynamic transition { get; } = new ExpandoObject();
 }

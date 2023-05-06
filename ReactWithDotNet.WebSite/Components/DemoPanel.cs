@@ -57,10 +57,16 @@ class DemoPanel : ReactComponent
             };
         }
         
-        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), Padding(10), BorderRadius(5), MarginTopBottom(1), FlexWrap,
-                           MinWidth(500) , FontSize10)
+        return new FlexRow(BoxShadow("rgb(0 0 0 / 34%) 0px 2px 5px 0px"), 
+                           Padding(10), 
+                           BorderRadius(5), 
+                           MarginTopBottom(1), 
+                           FlexWrap,
+                           //MediaQueryOnDesktop(MinWidth(500)), 
+                           WidthMaximized,
+                           FontSize10)
         {
-            new FlexRowCentered(BackgroundColor(Theme[Context].grey_100), Padding(40), WidthMaximized, BorderRadius(10), PositionRelative)
+            new FlexRowCentered(BackgroundColor(Theme.grey_100), Padding(40), WidthMaximized, BorderRadius(10), PositionRelative)
             {
                 creatElement,
 

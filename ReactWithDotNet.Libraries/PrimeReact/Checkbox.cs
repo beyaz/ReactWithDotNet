@@ -7,14 +7,14 @@ public class Checkbox : ElementBase
     /// <summary>
     /// Value of the checkbox.
     /// </summary>
-    [React]
+    [ReactProp]
     public string value { get; set; }
 
     /// <summary>
     ///    Specifies whether a checkbox should be checked or not.
     ///     <para>default: false</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public bool @checked { get; set; }
 
 
@@ -23,16 +23,16 @@ public class Checkbox : ElementBase
     /// <summary>
     /// When present, it specifies that the element value cannot be altered.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool disabled { get; set; }
 
     /// <summary>
     /// Callback to invoke on value change
     /// </summary>
-    [React]
+    [ReactProp]
     public Action<CheckboxChangeParams> onChange { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.checked", eventName = "onChange")]
     public Expression<Func<bool>> checkedBind { get; set; }
 }

@@ -1,23 +1,18 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
 public abstract class ReactComponentBase : Element
 {
+    internal Func<Element> _designerCustomizedRender;
     internal Style _styleForRootElement;
 
     internal List<IModifier> modifiers;
-    
-    internal Func<Element> _designerCustomizedRender;
 
+    [System.Text.Json.Serialization.JsonIgnore]
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
-    protected internal Client Client { get; internal set; } = new();
-
-    [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
     public Style style
     {
         get
@@ -28,12 +23,18 @@ public abstract class ReactComponentBase : Element
         }
     }
 
+    internal abstract bool IsStateNull { get; }
+
+    [System.Text.Json.Serialization.JsonIgnore]
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
+    protected internal Client Client { get; internal set; } = new();
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    [JsonIgnore]
     protected internal int? ComponentUniqueIdentifier { get; set; }
 
+    [System.Text.Json.Serialization.JsonIgnore]
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; internal set; }
 
     public static ReactComponentBase operator +(ReactComponentBase component, Style style)
@@ -58,7 +59,7 @@ public abstract class ReactComponentBase : Element
 
     internal Element InvokeRender() => _designerCustomizedRender == null ? render() : _designerCustomizedRender();
 
-    protected virtual  Task componentDidMount()
+    protected virtual Task componentDidMount()
     {
         return Task.CompletedTask;
     }
@@ -130,26 +131,25 @@ public abstract class ReactComponentBase : Element
 
         return propertyNameOfCustomReactEvent;
     }
-    
-    internal abstract bool IsStateNull { get; }
 }
 
 public abstract class ReactComponent<TState> : ReactComponentBase where TState : new()
 {
-    [Newtonsoft.Json.JsonProperty]
+    [JsonProperty]
     public TState state { get; protected internal set; }
+
+    internal override bool IsStateNull => state == null;
 
     protected override void constructor()
     {
         state = new TState();
     }
-
-    internal override bool IsStateNull => state == null;
 }
-
 
 public abstract class ReactComponent : ReactComponent<EmptyState>
 {
+    protected static IModifier Modify<TComponent>(Action<TComponent> modifyAction)
+        where TComponent : ReactComponent => CreateComponentModifier(modifyAction);
 }
 
 [Serializable]

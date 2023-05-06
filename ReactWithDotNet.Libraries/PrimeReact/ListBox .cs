@@ -10,52 +10,52 @@ public class ListBoxSingleSelection<TOption> : ListBox
     /// <summary>
     ///     When specified, displays a filter input at header.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool filter { get; set; }
 
     /// <summary>
     /// Placeholder text to show when filter input is empty.
     /// </summary>
-    [React]
+    [ReactProp]
     public string filterPlaceholder { get; set; }
     
 
-    [React]
+    [ReactProp]
     [ReactTemplate(nameof(GetItemSourceForCalculatingItemTemplates))]
     public Func<TOption, Element> itemTemplate { get; set; }
 
     /// <summary>
     ///     Inline style of inner list element.
     /// </summary>
-    [React]
+    [ReactProp]
     public Style listStyle { get; } = new();
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<ListBoxChangeParams<TOption>> onChange { get; set; }
 
     /// <summary>
     ///     Name of the label field of an option when an arbitrary objects instead of SelectItems are used as options.
     /// </summary>
-    [React]
+    [ReactProp]
     public string optionLabel { get; set; }
 
     /// <summary>
     ///     An array of objects to display as the available options.
     /// </summary>
-    [React]
+    [ReactProp]
     public IEnumerable<TOption> options { get; set; }
 
     /// <summary>
     ///     Name of the value field of an option when arbitrary objects are used as options instead of SelectItems.
     /// </summary>
-    [React]
+    [ReactProp]
     public string optionValue { get; set; }
 
     /// <summary>
     ///     Selected value to display.
     /// </summary>
-    [React]
+    [ReactProp]
     public TOption value { get; set; }
 
     IEnumerable<TOption> GetItemSourceForCalculatingItemTemplates()

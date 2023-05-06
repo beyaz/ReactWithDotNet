@@ -18,6 +18,8 @@
 
         "@mui/material": "^5.11.7",
 
+        "@nextui-org/react": "^1.0.0-beta.12",
+
         "primeicons": "^5.0.0",
         "primereact": "^8.2.0",
 

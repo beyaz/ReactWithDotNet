@@ -89,63 +89,63 @@ public class AutoComplete : ElementBase
 [ReactRealType(typeof(AutoComplete))]
 public class AutoComplete<TSuggestion> : ElementBase
 {
-    [React]
+    [ReactProp]
     public bool? autoFocus { get; set; }
 
 
     /// <summary>
     /// Delay between keystrokes to wait before sending a query.
     /// </summary>
-    [React]
+    [ReactProp]
     public double? delay { get; set; }
 
-    [React]
+    [ReactProp]
     public TSuggestion value { get; set; }
     
     /// <summary>
     ///     An array of suggestions to display.
     /// </summary>
-    [React]
+    [ReactProp]
     public IEnumerable<TSuggestion> suggestions { get; set; }
 
     /// <summary>
     ///     Callback to invoke when autocomplete value changes.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<AutoCompleteChangeParams<TSuggestion>> onChange { get; set; }
 
     /// <summary>
     ///     Callback to invoke to search for suggestions.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + nameof(GrabWithoutOriginalEvent))]
     public Action<AutoCompleteCompleteMethodParams> completeMethod { get; set; }
 
     /// <summary>
     ///     Field of a suggested object to resolve and display.
     /// </summary>
-    [React]
+    [ReactProp]
     public string field { get; set; }
 
     /// <summary>
     ///     When present, autocomplete clears the manual input if it does not match of the suggestions to force only accepting
     ///     values from the suggestions.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool forceSelection { get; set; }
 
     /// <summary>
     /// Displays a button next to the input field when enabled.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool dropdown { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactTemplate(nameof(GetItemTemplates))]
     public Func<TSuggestion, Element> itemTemplate { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactTemplate(nameof(GetItemTemplates))]
     public Func<TSuggestion, Element> selectedItemTemplate { get; set; }
 
@@ -154,7 +154,7 @@ public class AutoComplete<TSuggestion> : ElementBase
         return suggestions;
     }
 
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public Style inputStyle { get; } = new();
 

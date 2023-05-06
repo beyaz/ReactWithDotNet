@@ -13,92 +13,60 @@ static class HtmlTextGenerator
         return CalculateHtml((JsonMap)componentResponse.ElementAsJson, (JsonMap)componentResponse.DynamicStyles);
     }
 
-    static void Append(OutputContext context, int indent, JsonMap element)
+    static void AddAttribute(HtmlNode htmlNode, HtmlAttribute htmlAttribute)
     {
-        if (element == null)
-        {
-            return;
-        }
-        
-        var sb = context.sb;
-
-        var padding = "".PadLeft(indent, ' ');
-
-        string tag = null;
-
-        var hasInnerContent = false;
-
-        var isThirdPartyReactComponent = false;
-
-        element.Foreach((a, b) =>
-        {
-            if (isThirdPartyReactComponent && a != "SuspenseFallback")
-            {
-                return;
-            }
-            ProcessEntry(a, b, context, indent, ref tag, ref hasInnerContent, ref isThirdPartyReactComponent);
-        });
-
-        if (tag == null)
-        {
-            return;
-        }
-
-        if (tag == "head")
-        {
-            context.HeadTagFinishIndex = sb.Length;
-        }
-
-        if (hasInnerContent)
-        {
-            if (sb[^1] == '\n')
-            {
-                sb.Append(padding);
-            }
-
-            // try to insert dynamically created styles when reached to end of html
-            {
-                if (tag == "html")
-                {
-                    var headTagFinishIndex = context.HeadTagFinishIndex;
-                    if (headTagFinishIndex.HasValue)
-                    {
-                        sb.Insert(headTagFinishIndex.Value, CalculateDynamicStylesAsHtmlStyleNode(context.dynamicStyles));
-                    }
-                }
-            }
-
-            sb.Append("<");
-            if (!SelfClosingTags.Contains(tag))
-            {
-                sb.Append("/");
-            }
-
-            sb.Append(tag);
-            sb.Append(">");
-        }
-        else
-        {
-            if (SelfClosingTags.Contains(tag))
-            {
-                sb.Append(">");
-            }
-            else
-            {
-                sb.Append("></");
-                sb.Append(tag);
-                sb.Append(">");
-            }
-        }
+        (htmlNode.attributes ??= new List<HtmlAttribute>()).Add(htmlAttribute);
     }
 
-    static string CalculateDynamicStylesAsHtmlStyleNode(JsonMap dynamicStylesMap)
+    static void AddChild(HtmlNode parent, HtmlNode child)
+    {
+        var children = parent.children ??= new List<HtmlNode>();
+
+        children.Add(child);
+    }
+
+    static void Append(HtmlNode parentHtmlNode, JsonMap jsonMap)
+    {
+        var htmlNode = AsHtmlNode(jsonMap);
+
+        AddChild(parentHtmlNode, htmlNode);
+    }
+
+    static HtmlNode AsHtmlNode(JsonMap jsonMap)
+    {
+        var htmlNode = new HtmlNode();
+
+        if (jsonMap.head is { key: "$tag", value: "nbsp" })
+        {
+            htmlNode.isTextNode = true;
+
+            if (jsonMap.tail is { key: nameof(Nbsp.length) })
+            {
+                htmlNode.text = string.Join(string.Empty, Enumerable.Range(0, (int)jsonMap.tail.value).Select(_ => "&nbsp;"));
+                return htmlNode;
+            }
+
+            htmlNode.text = "&nbsp;";
+
+            return htmlNode;
+        }
+
+        jsonMap.Foreach((k, v) => ProcessJsonMapNode(htmlNode, k, v));
+
+        return htmlNode;
+    }
+
+    static HtmlNode AsHtmlTextNode(string text)
+    {
+        return new HtmlNode { isTextNode = true, text = text };
+    }
+
+    static HtmlNode CalculateDynamicStylesAsHtmlStyleNode(JsonMap dynamicStylesMap)
     {
         var sb = new StringBuilder();
 
         var padding = "".PadLeft(4, ' ');
 
-        sb.AppendLine(padding + "<style id='ReactWithDotNetDynamicCss'>");
         dynamicStylesMap?.Foreach((cssSelector, cssBody) =>
         {
             sb.Append(padding + cssSelector);
@@ -114,28 +82,60 @@ static class HtmlTextGenerator
             sb.AppendLine();
             sb.AppendLine(padding + "}");
         });
-        sb.AppendLine(padding + "</style>");
 
-        return sb.ToString();
+        return new HtmlNode
+        {
+            tag = "style",
+
+            attributes = new List<HtmlAttribute> { new() { name = "id", value = "ReactWithDotNetDynamicCss" } },
+
+            text = sb.ToString()
+        };
     }
 
     static string CalculateHtml(JsonMap element, JsonMap dynamicStyles)
     {
         var sb = new StringBuilder();
 
-        Append(new OutputContext { sb = sb, dynamicStyles = dynamicStyles }, 0, element);
+        var wrapperNode = AsHtmlNode(element);
 
-        return sb.ToString();
+        tryAddDynamicStylesToHeadNode();
+
+        ToString(sb, 0, wrapperNode);
+
+        return sb.ToString().Trim();
+
+        void tryAddDynamicStylesToHeadNode()
+        {
+            var htmlNode = wrapperNode.children?[0];
+
+            if (htmlNode?.tag == "html")
+            {
+                var firstChild = htmlNode.children?[0];
+
+                if (firstChild?.tag == "head")
+                {
+                    AddChild(firstChild, CalculateDynamicStylesAsHtmlStyleNode(dynamicStyles));
+                }
+            }
+        }
+    }
+
+    static bool IsEndsWithNewLine(this StringBuilder sb)
+    {
+        var length = sb.Length;
+
+        return length > 2 && sb[length - 2] == '\r' && sb[length - 1] == '\n';
     }
 
     static string PascalToKebabCase(string dotnetPropertyName)
     {
-        if (dotnetPropertyName.StartsWith("aria-",StringComparison.OrdinalIgnoreCase) ||
+        if (dotnetPropertyName.StartsWith("aria-", StringComparison.OrdinalIgnoreCase) ||
             dotnetPropertyName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
         {
             return dotnetPropertyName;
         }
-        
+
         if (dotnetPropertyName == "className")
         {
             return "class";
@@ -165,98 +165,82 @@ static class HtmlTextGenerator
         return string.Concat(dotnetPropertyName.SelectMany(convertChar));
     }
 
-    static void ProcessEntry(string name, object value, OutputContext context, int indent, ref string tag, ref bool hasInnerContent, ref bool isThirdPartyReactComponent)
+    static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
     {
         if (name == "key" || name == "DotNetProperties" || name == "onClick" || name == "$DotNetComponentUniqueIdentifier" ||
-            name == "$State" ||
-            name == "$Type" ||
-            name == "$TypeOfState")
+            name == "$State" || name == "$Type" || name == "$TypeOfState" ||
+            name == "$ClientTasks")
         {
             return;
         }
 
-        var sb = context.sb;
+        if (htmlNode.isThirdPartyComponent && name != "SuspenseFallback")
+        {
+            return;
+        }
 
-        var padding = "".PadLeft(indent, ' ');
+        if (name == "$isPureComponent")
+        {
+            htmlNode.isVirtualNode = true;
+            return;
+        }
 
         if (name == "$tag")
         {
             if (value is string valueAsString)
             {
-                if (valueAsString == "html")
+                if (valueAsString == "React.Fragment")
                 {
-                    sb.AppendLine("<!DOCTYPE html>");
-                }
-
-                if (valueAsString.IndexOf('.',StringComparison.Ordinal) > 0)
-                {
-                    isThirdPartyReactComponent = true;
+                    htmlNode.isReactFragment = true;
                     return;
                 }
-                
-                tag = valueAsString;
-                sb.Append(padding);
-                sb.Append("<");
-                sb.Append(tag);
 
+                if (valueAsString.IndexOf('.', StringComparison.Ordinal) > 0)
+                {
+                    htmlNode.isThirdPartyComponent = true;
+                    return;
+                }
+
+                htmlNode.tag = valueAsString;
                 return;
             }
-
-            return;
         }
 
         if (name == "style")
         {
             if (value is Style valueAsStyle)
             {
-                sb.Append(" style=\"");
-                sb.Append(valueAsStyle.ToCss());
-                sb.Append('"');
-
+                AddAttribute(htmlNode, new HtmlAttribute { name = "style", value = valueAsStyle.ToCss() });
                 return;
             }
 
+            return;
+        }
+
+        if (name == "$text")
+        {
+            htmlNode.text = value.ToString();
             return;
         }
 
         if (name == nameof(HtmlElement.dangerouslySetInnerHTML))
         {
-            sb.Append(">");
-            hasInnerContent = true;
-            sb.Append(((dangerouslySetInnerHTML)value).__html);
+            htmlNode.text = ((dangerouslySetInnerHTML)value).__html;
+
             return;
         }
-        
+
         if (name[0] != '$')
         {
             if (value is string or int or double or bool)
             {
-                sb.Append(" ");
-                sb.Append(PascalToKebabCase(name));
-                sb.Append("=");
-                sb.Append('"');
-                sb.Append(value);
-                sb.Append('"');
-
+                AddAttribute(htmlNode, new HtmlAttribute { name = PascalToKebabCase(name), value = value.ToString() });
                 return;
             }
         }
 
-        if (name == "$text")
-        {
-            sb.Append(">");
-            hasInnerContent = true;
-
-            sb.Append(value);
-        }
-
         if (name == "$children")
         {
-            sb.Append(">");
-            hasInnerContent = true;
-
-            var needNewLine = false;
-
             foreach (var child in (IEnumerable)value)
             {
                 if (child is null)
@@ -266,55 +250,240 @@ static class HtmlTextGenerator
 
                 if (child is JsonMap childAsJsonMap)
                 {
-                    if (childAsJsonMap.head is { key: "$tag", value: "nbsp" })
-                    {
-                        if (childAsJsonMap.tail is { key: nameof(Nbsp.length) })
-                        {
-                            sb.Append(string.Join(string.Empty, Enumerable.Range(0, (int)childAsJsonMap.tail.value).Select(_ => "&nbsp;")));
-                            continue;
-                        }
-                        sb.Append("&nbsp;");
-                        continue;
-                    }
-                    
-                    needNewLine = true;
-                    sb.AppendLine();
-                    Append(context, indent + 2, childAsJsonMap);
+                    AddChild(htmlNode, AsHtmlNode(childAsJsonMap));
                     continue;
                 }
 
                 if (child is string childAsString)
                 {
-                    sb.Append(childAsString);
+                    AddChild(htmlNode, AsHtmlTextNode(childAsString));
                     continue;
                 }
 
                 throw DeveloperException("Invalid child.");
             }
 
-            if (needNewLine)
-            {
-                sb.AppendLine();
-            }
+            return;
         }
 
-        const string RootNode = "$RootNode";
-
-        if (name == RootNode)
+        if (name == "$RootNode")
         {
-            Append(context, sb.Length == 0 ? indent : indent + 2, (JsonMap)value);
+            htmlNode.isVirtualNode = true;
         }
 
-        if (name == "SuspenseFallback")
+        if ((name == "$RootNode" || name == "SuspenseFallback") && value is not null)
         {
-            Append(context, indent, (JsonMap)value);
+            Append(htmlNode, (JsonMap)value);
         }
     }
 
-    sealed class OutputContext
+    static void ToString(StringBuilder sb, int depth, HtmlNode htmlNode)
     {
-        public JsonMap dynamicStyles;
-        public int? HeadTagFinishIndex;
-        public StringBuilder sb;
+        int? tagIndex = null;
+
+        if (htmlNode.isTextNode)
+        {
+            sb.Append(htmlNode.text);
+            return;
+        }
+
+        var children = htmlNode.children;
+
+        if ((htmlNode.isThirdPartyComponent || htmlNode.isReactFragment || htmlNode.isVirtualNode) && children?.Count > 0)
+        {
+            foreach (var child in children)
+            {
+                var canPushNewLine = !child.isTextNode;
+
+                if (canPushNewLine)
+                {
+                    TryAddNewLine(sb);
+                }
+
+                ToString(sb, depth, child);
+            }
+
+            return;
+        }
+
+        if (children is null)
+        {
+            openTag();
+
+            appendAttributes();
+
+            if (htmlNode.text != null)
+            {
+                sb.Append(">");
+                sb.Append(htmlNode.text);
+                finishTag();
+                return;
+            }
+
+            closeTag();
+
+            return;
+        }
+
+        openTag();
+
+        appendAttributes();
+
+        sb.Append(">");
+
+        if (htmlNode.text != null)
+        {
+            sb.Append(htmlNode.text);
+        }
+
+        if (children.Count == 1 && children[0].isTextNode)
+        {
+            ToString(sb, depth, children[0]);
+            finishTag();
+
+            return;
+        }
+
+        for (var i = 0; i < children.Count; i++)
+        {
+            var child = children[i];
+
+            var childDepth = depth;
+
+            var canPushNewLine = !(child.isTextNode || (i > 0 && children[i - 1].isTextNode));
+
+            if (canPushNewLine)
+            {
+                TryAddNewLine(sb);
+                childDepth = depth + 1;
+            }
+
+            ToString(sb, childDepth, child);
+        }
+
+        if (hasNewLineFromTagToEnd())
+        {
+            TryAddNewLine(sb);
+        }
+
+        pushIndent();
+        finishTag();
+
+        bool hasNewLineFromTagToEnd()
+        {
+            if (tagIndex.HasValue)
+            {
+                var length = sb.Length;
+
+                for (var i = tagIndex.Value; i < length; i++)
+                {
+                    if (sb[i] == '\n')
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        void finishTag()
+        {
+            if (SelfClosingTags.Contains(htmlNode.tag))
+            {
+                sb.Append("<");
+                sb.Append(htmlNode.tag);
+                sb.Append(">");
+                return;
+            }
+
+            sb.Append("</");
+            sb.Append(htmlNode.tag);
+            sb.Append(">");
+        }
+
+        void pushIndent()
+        {
+            if (sb.IsEndsWithNewLine())
+            {
+                sb.Append("".PadLeft(depth * 2, ' '));
+            }
+        }
+
+        void openTag()
+        {
+            pushIndent();
+
+            if (htmlNode.tag == "html")
+            {
+                sb.AppendLine("<!DOCTYPE html>");
+                pushIndent();
+            }
+
+            tagIndex = sb.Length;
+
+            sb.Append("<");
+            sb.Append(htmlNode.tag);
+        }
+
+        void closeTag()
+        {
+            if (SelfClosingTags.Contains(htmlNode.tag))
+            {
+                sb.Append(">");
+                return;
+            }
+
+            sb.Append(">");
+            sb.Append("</");
+            sb.Append(htmlNode.tag);
+            sb.Append(">");
+        }
+
+        void appendAttributes()
+        {
+            if (htmlNode.attributes is null)
+            {
+                return;
+            }
+
+            foreach (var htmlAttribute in htmlNode.attributes)
+            {
+                sb.Append(" ");
+                sb.Append(htmlAttribute.name);
+                sb.Append('=');
+                sb.Append('"');
+                sb.Append(htmlAttribute.value);
+                sb.Append('"');
+            }
+        }
+    }
+
+    static void TryAddNewLine(StringBuilder sb)
+    {
+        if (sb.IsEndsWithNewLine())
+        {
+            return;
+        }
+
+        sb.AppendLine();
+    }
+
+    sealed class HtmlAttribute
+    {
+        public string name, value;
+    }
+
+    sealed class HtmlNode
+    {
+        public List<HtmlAttribute> attributes;
+        public List<HtmlNode> children;
+        public bool isReactFragment;
+        public bool isTextNode;
+        public bool isThirdPartyComponent;
+        public bool isVirtualNode;
+
+        public string tag;
+        public string text;
     }
 }

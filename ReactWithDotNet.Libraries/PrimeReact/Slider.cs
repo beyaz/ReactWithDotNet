@@ -8,13 +8,13 @@ public class Slider : ElementBase
     /// <summary>
     ///     Value of the component.
     /// </summary>
-    [React]
+    [ReactProp]
     public int value { get; set; }
 
     /// <summary>
     ///     Value of the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<int>> valueBind { get; set; }
 
@@ -22,41 +22,41 @@ public class Slider : ElementBase
     ///     Mininum boundary value.
     ///     <para>Default: 0</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public int? min { get; set; }
 
     /// <summary>
     ///     Maximum boundary value.
     ///     <para>Default: 100</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public int? max { get; set; }
 
     /// <summary>
     ///     Step factor to increment/decrement the value.
     ///     <para>Default: 1</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public int? step { get; set; }
 
     /// <summary>
     ///     Orientation of the slider, valid values are horizontal and vertical.
     ///     <para>Default: horizontal</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public SliderOrientationType? orientation { get; set; }
 
     /// <summary>
     /// Callback to invoke on value change via slide.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<SliderChangeParams> onChange { get; set; }
 
     /// <summary>
     /// Callback to invoke when slide ends.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<SliderChangeParams> onSlideEnd { get; set; }
 }

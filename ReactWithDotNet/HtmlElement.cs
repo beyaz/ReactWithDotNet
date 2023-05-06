@@ -8,10 +8,14 @@ partial class Mixin
     public static HtmlElementModifier Aria(string ariaName, string ariaValue) => CreateHtmlElementModifier<HtmlElement>(el => el.aria.Add(ariaName, ariaValue));
     public static HtmlElementModifier Data(string dataName, string dataValue) => CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
 }
+
 public abstract class HtmlElement : Element
 {
-    internal Dictionary<string, string> _data;
+    protected static HtmlElementModifier Modify<THtmlElement>(Action<THtmlElement> modifyAction)
+        where THtmlElement : HtmlElement => CreateHtmlElementModifier(modifyAction);
+
     internal Dictionary<string, string> _aria;
+    internal Dictionary<string, string> _data;
 
     internal Style _style;
 
@@ -39,19 +43,31 @@ public abstract class HtmlElement : Element
     ///     space-separated list of characters. The browser should use the first one that exists on the computer keyboard
     ///     layout.
     /// </summary>
-    [React]
+    [ReactProp]
     public string accesskey { get; set; }
 
-    [React]
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    public Dictionary<string, string> aria
+    {
+        get
+        {
+            _aria ??= new Dictionary<string, string>();
+
+            return _aria;
+        }
+    }
+
+    [ReactProp]
     public bool? autofocus { get; set; }
 
     /// <summary>
     ///     Gets or sets the name of the class.
     /// </summary>
-    [React]
+    [ReactProp]
     public string className { get; set; }
 
-    [React]
+    [ReactProp]
     public dangerouslySetInnerHTML dangerouslySetInnerHTML { get; set; }
 
     /// <summary>
@@ -81,26 +97,13 @@ public abstract class HtmlElement : Element
         }
     }
 
-    
-    [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
-    public Dictionary<string, string> aria
-    {
-        get
-        {
-            _aria ??= new Dictionary<string, string>();
-
-            return _aria;
-        }
-    }
-
     /// <summary>
     ///     Specifies the text direction for the content in an element
     /// </summary>
-    [React]
+    [ReactProp]
     public string dir { get; set; }
 
-    [React]
+    [ReactProp]
     public virtual string id { get; set; }
 
     [JsonIgnore]
@@ -120,21 +123,21 @@ public abstract class HtmlElement : Element
     ///     hyphen-separated "language subtags") in the format defined in RFC 5646: Tags for Identifying Languages (also known
     ///     as BCP 47). xml:lang has priority over it.
     /// </summary>
-    [React]
+    [ReactProp]
     public string lang { get; set; }
 
     /// <summary>
     ///     Gets or sets the on click.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onClick { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onMouseEnter { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onMouseLeave { get; set; }
 
@@ -148,7 +151,7 @@ public abstract class HtmlElement : Element
     ///     ...<br />
     ///     });
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient("ReactWithDotNet.GetExternalJsObject")]
     public string onScroll { get; set; }
 
@@ -156,14 +159,14 @@ public abstract class HtmlElement : Element
     ///     A space-separated list of the part names of the element. Part names allows CSS to select and style specific
     ///     elements in a shadow tree via the ::part pseudo-element.
     /// </summary>
-    [React]
+    [ReactProp]
     public string part { get; set; }
 
     /// <summary>
     ///     Roles define the semantic meaning of content, allowing screen readers and other tools to present and support
     ///     interaction with an object in a way that is consistent with user expectations of that type of object.
     /// </summary>
-    [React]
+    [ReactProp]
     public string role { get; set; }
 
     /// <summary>
@@ -172,7 +175,7 @@ public abstract class HtmlElement : Element
     ///     empty string or true, which indicates that the element should be, if possible, checked for spelling errors;<br />
     ///     false, which indicates that the element should not be checked for spelling errors.
     /// </summary>
-    [React]
+    [ReactProp]
     public string spellcheck { get; set; }
 
     /// <summary>
@@ -198,7 +201,7 @@ public abstract class HtmlElement : Element
         set => style.Import(value);
     }
 
-    [React]
+    [ReactProp]
     public string tabIndex { get; set; }
 
     /// <summary>
@@ -209,7 +212,7 @@ public abstract class HtmlElement : Element
         set => innerText = value;
     }
 
-    [React]
+    [ReactProp]
     public string title { get; set; }
 
     /// <summary>
@@ -221,7 +224,7 @@ public abstract class HtmlElement : Element
     ///     <br />
     ///     no, which indicates that the element will not be translated.
     /// </summary>
-    [React]
+    [ReactProp]
     public string translate { get; set; }
 
     [JsonPropertyName("$type")]

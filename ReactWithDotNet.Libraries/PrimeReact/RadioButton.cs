@@ -15,29 +15,29 @@ public class RadioButton : ElementBase
     /// <summary>
     /// Value of the radiobutton.
     /// </summary>
-    [React]
+    [ReactProp]
     public string value { get; set; }
 
     /// <summary>
     ///     Specifies whether a radiobutton should be checked or not.
     ///     <para>default: false</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public bool @checked { get; set; }
 
     /// <summary>
     /// When present, it specifies that the element value cannot be altered.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool disabled { get; set; }
 
     /// <summary>
     /// Callback to invoke on radio button click.
     /// </summary>
-    [React]
+    [ReactProp]
     public Action<RadioButtonChangeParams> onChange { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.checked", eventName = "onChange")]
     public Expression<Func<bool>> checkedBind { get; set; }
 }
@@ -49,20 +49,20 @@ public class Divider : ElementBase
     /// <summary>
     ///     Specifies the orientation, valid values are "horizontal" and "vertical".
     /// </summary>
-    [React]
+    [ReactProp]
     public string layout { get; set; }
 
 
     /// <summary>
     ///     Alignment of the content, options are "left", "center", "right" for horizontal layout and "top", "center", "bottom" for vertical.
     /// </summary>
-    [React]
+    [ReactProp]
     public string align { get; set; }
 
 
     /// <summary>
     /// Border style type, default is "solid" and other options are "dashed" and "dotted".
     /// </summary>
-    [React]
+    [ReactProp]
     public string type { get; set; }
 }

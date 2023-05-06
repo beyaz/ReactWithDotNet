@@ -6,14 +6,14 @@ public class InputMask : ElementBase
     /// <summary>
     ///     Mask pattern.
     /// </summary>
-    [React]
+    [ReactProp]
     public string mask { get; set; }
 
-    [React]
+    [ReactProp]
     public string value { get; set; }
 
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 
@@ -23,15 +23,15 @@ public class InputMask : ElementBase
     /// <summary>
     ///     Advisory information to display on input.
     /// </summary>
-    [React]
+    [ReactProp]
     public string placeholder { get; set; }
 
     /// <summary>
     ///     Maximum number of character allows in the input field.
     /// </summary>
-    [React]
+    [ReactProp]
     public int? maxlength { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? autoFocus { get; set; }
 }

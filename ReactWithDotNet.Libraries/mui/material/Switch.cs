@@ -7,13 +7,13 @@ public partial class Switch
     /// <summary>
     ///     The icon to display when the component is checked.
     /// </summary>
-    [React]
+    [ReactProp]
     public Element checkedIcon { get; set; }
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
@@ -26,19 +26,19 @@ public partial class Switch
     ///     <br/>
     ///     @default 'primary'
     /// </summary>
-    [React]
+    [ReactProp]
     public string color { get; set; }
     
     /// <summary>
     ///     If `true`, the component is disabled.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disabled { get; set; }
     
     /// <summary>
     ///     The icon to display when the component is unchecked.
     /// </summary>
-    [React]
+    [ReactProp]
     public Element icon { get; set; }
     
     /// <summary>
@@ -48,13 +48,13 @@ public partial class Switch
     ///     <br/>
     ///     @default 'medium'
     /// </summary>
-    [React]
+    [ReactProp]
     public string size { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
@@ -63,6 +63,6 @@ public partial class Switch
     ///     <br/>
     ///     The browser uses "on" as the default value.
     /// </summary>
-    [React]
+    [ReactProp]
     public string value { get; set; }
 }

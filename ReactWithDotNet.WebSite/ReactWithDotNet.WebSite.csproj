@@ -5,12 +5,30 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="wwwroot\dist\**" />
+      <Content Remove="wwwroot\dist\**" />
+      <EmbeddedResource Remove="wwwroot\dist\**" />
+      <None Remove="wwwroot\dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="SvgFiles\twitter_30_30.svg" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\ReactWithDotNet.Libraries\ReactWithDotNet.Libraries.csproj" />
         <ProjectReference Include="..\ReactWithDotNet\ReactWithDotNet.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+        <PackageReference Include="YamlDotNet" Version="13.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Content\SiteRawData.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 

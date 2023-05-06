@@ -4,7 +4,10 @@ namespace ReactWithDotNet;
 
 public abstract class ReactPureComponent : Element
 {
+    internal Func<Element> _designerCustomizedRender;
     internal Style _styleForRootElement;
+
+    internal List<IModifier> modifiers;
 
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
@@ -17,16 +20,16 @@ public abstract class ReactPureComponent : Element
             return _styleForRootElement;
         }
     }
-    
-    internal List<IModifier> modifiers;
-    
-    internal Func<Element> _designerCustomizedRender;
+
+    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
+    protected internal ReactContext Context { get; internal set; }
 
     internal Element InvokeRender() => _designerCustomizedRender == null ? render() : _designerCustomizedRender();
 
     protected abstract Element render();
 
-    [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
-    protected internal ReactContext Context { get; internal set; }
+
+    protected static IModifier Modify<TPureComponent>(Action<TPureComponent> modifyAction)
+        where TPureComponent : ReactPureComponent => CreatePureComponentModifier(modifyAction);
 }

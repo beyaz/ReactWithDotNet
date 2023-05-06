@@ -9,6 +9,7 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 class HtmlToCSharpViewModel
 {
     public string CSharpCode { get; set; }
+    public int EditCount { get; set; }
     public string HtmlText { get; set; }
     public string StatusMessage { get; set; }
 }
@@ -19,7 +20,14 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
     {
         state = new HtmlToCSharpViewModel
         {
-            HtmlText = "<button class='xyz' id='4t'>abc</button>",
+            HtmlText = @"
+<div>
+  <button class='xyz' id='4t'>abc</button>
+  <img src = 'abc.jpg' alt='abc' >
+  <a href = '#'>abc</a>
+  <p style='text-align: center;'> abc </p>
+</div>
+"
         };
         state.CSharpCode = HtmlToCSharp(state.HtmlText);
     }
@@ -87,13 +95,13 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 "Html to ReactWithDotNet",
                 (small)" ( paste any html text to left panel )"
             },
-            new FlexRow(WidthHeightMaximized, Height(500), Border("1px solid red"))
+            new FlexRow(WidthHeightMaximized, Height(400), BorderForPaper, BorderRadiusForPaper)
             {
                 new FreeScrollBar
                 {
                     style =
                     {
-                        Height(500),
+                        Height(400),
                         WidthMaximized
                     },
                     children = { htmlEditor }
@@ -102,7 +110,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 {
                     style =
                     {
-                        Height(500),
+                        Height(400),
                         WidthMaximized
                     },
                     children = { csharpEditor }
@@ -465,6 +473,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
     void OnHtmlValueChanged(string htmlText)
     {
+        state.EditCount++;
+
         state.StatusMessage = null;
 
         state.HtmlText = htmlText;
@@ -479,11 +489,14 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             state.CSharpCode = HtmlToCSharp(state.HtmlText);
 
-            Client.CopyToClipboard(state.CSharpCode);
+            if (state.EditCount > 1)
+            {
+                Client.CopyToClipboard(state.CSharpCode);
 
-            state.StatusMessage = "Copied to clipboard.";
-
-            Client.GotoMethod(2000, ClearStatusMessage);
+                state.StatusMessage = "Copied to clipboard.";
+                
+                Client.GotoMethod(700, ClearStatusMessage);
+            }
         }
         catch (Exception exception)
         {

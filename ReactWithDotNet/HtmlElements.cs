@@ -1,172 +1,181 @@
 ﻿namespace ReactWithDotNet;
 
-
-
-public class html : HtmlElement
+public sealed class html : HtmlElement
 {
-    [React]
+    public html()
+    {
+    }
+
+    public html(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
+
+    [ReactProp]
     public string xmlns { get; set; } = "http://www.w3.org/1999/xhtml";
-
-
-    public html() { }
-
-    public html(params IModifier[] modifiers) : base(modifiers) { }
-
 }
 
-public class head : HtmlElement
+public sealed class head : HtmlElement
 {
-
 }
-public class title : HtmlElement
-{
 
-}
-public class script : HtmlElement
+public sealed class title : HtmlElement
 {
-    [React]
+}
+
+public sealed class script : HtmlElement
+{
+    [ReactProp]
     public string src { get; set; }
-    
-    [React]
+
+    [ReactProp]
     public string type { get; set; }
 }
 
-
-public class body : HtmlElement
+public sealed class body : HtmlElement
 {
+    public body()
+    {
+    }
 
+    public body(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 }
-public class meta : HtmlElement
+
+public sealed class meta : HtmlElement
 {
-    [React]
+    [ReactProp]
     public string charset { get; set; }
 
-    [React]
-    public string name { get; set; }
-
-    [React]
+    [ReactProp]
     public string content { get; set; }
 
-    [React]
+    [ReactProp]
     public string httpEquiv { get; set; }
 
-    public static HtmlElementModifier Content(string content) => CreateHtmlElementModifier<meta>(element => element.content = content);
-    public static HtmlElementModifier HttpEquiv(string httpEquiv) => CreateHtmlElementModifier<meta>(element => element.httpEquiv = httpEquiv);
-    public static HtmlElementModifier Name(string name) => CreateHtmlElementModifier<meta>(element => element.name = name);
-    public static HtmlElementModifier Charset(string charset) => CreateHtmlElementModifier<meta>(element => element.charset = charset);
+    [ReactProp]
+    public string name { get; set; }
+
+    public static HtmlElementModifier Charset(string charset) => Modify<meta>(element => element.charset = charset);
+    public static HtmlElementModifier Content(string content) => Modify<meta>(element => element.content = content);
+    public static HtmlElementModifier HttpEquiv(string httpEquiv) => Modify<meta>(element => element.httpEquiv = httpEquiv);
+    public static HtmlElementModifier Name(string name) => Modify<meta>(element => element.name = name);
 }
 
-
-public class button : HtmlElement
+public sealed class button : HtmlElement
 {
-    [React]
+    [ReactProp]
     public string type { get; set; }
+
+    public button()
+    {
+    }
+
+    public button(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 }
 
-
-
-public class input : HtmlElement
+public sealed class input : HtmlElement
 {
-    [React]
-    public bool? disabled { get; set; }
-    
-    public input() { }
+    public input()
+    {
+    }
 
-    public input(params IModifier[] modifiers) : base(modifiers) { }
-    
-    [React]
+    public input(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
+
+    [ReactProp]
     public string autocomplete { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? @checked { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.target.checked", eventName = "onChange")]
     public Expression<Func<bool>> checkedBind { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? defaultChecked { get; set; }
 
-    [React]
+    [ReactProp]
     public string defaultValue { get; set; }
 
-    [React]
+    [ReactProp]
+    public bool? disabled { get; set; }
+
+    [ReactProp]
     public string name { get; set; }
-
-    [React]
-    public string placeholder { get; set; }
-
-    [React]
-    public bool? readOnly { get; set; }
-
-    [React]
-    public string type { get; set; }
-
-    [React]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
-    public string value { get; set; }
-
-    [React]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
-    public Expression<Func<string>> valueBind { get; set; }
-
-
-    /// <summary>
-    /// if you want to handle when user iteraction finished see example below<br/>
-    /// component.valueBind = ()=>state.UserInfo.Name<br/>
-    /// component.valueBindDebounceTimeout = 600 // milliseconds<br/>
-    /// component.valueBindDebounceHandler = OnUserIterationFinished<br/>
-    /// </summary>
-    public Action valueBindDebounceHandler { get; set; }
-
-
-    /// <summary>
-    /// if you want to handle when user iteraction finished see example below<br/>
-    /// component.valueBind = ()=>state.UserInfo.Name<br/>
-    /// component.valueBindDebounceTimeout = 600 // milliseconds<br/>
-    /// component.valueBindDebounceHandler = OnUserIterationFinished<br/>
-    /// </summary>
-    public int? valueBindDebounceTimeout { get; set; }
-    
-    
 
     /// <summary>
     ///     Occurs when an element loses focus.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onBlur { get; set; }
+
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
+    public Action<ChangeEvent> onChange { get; set; }
 
     /// <summary>
     ///     occurs when an element gets focus.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onFocus { get; set; }
 
+    [ReactProp]
+    public string placeholder { get; set; }
 
-    [React]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
-    public Action<ChangeEvent> onChange { get; set; }
-    
+    [ReactProp]
+    public bool? readOnly { get; set; }
+
+    [ReactProp]
+    public string type { get; set; }
+
+    [ReactProp]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
+    public string value { get; set; }
+
+    [ReactProp]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
+    public Expression<Func<string>> valueBind { get; set; }
+
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below<br />
+    ///     component.valueBind = ()=>state.UserInfo.Name<br />
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds<br />
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
+    /// </summary>
+    public Action valueBindDebounceHandler { get; set; }
+
+    /// <summary>
+    ///     if you want to handle when user iteraction finished see example below<br />
+    ///     component.valueBind = ()=>state.UserInfo.Name<br />
+    ///     component.valueBindDebounceTimeout = 600 // milliseconds<br />
+    ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
+    /// </summary>
+    public int? valueBindDebounceTimeout { get; set; }
 }
 
-public class HtmlTextNode : HtmlElement
+public sealed class HtmlTextNode : HtmlElement
 {
 }
 
-public class br : HtmlElement
+sealed class br : HtmlElement
 {
 }
 
-public class iframe : HtmlElement
+public sealed class iframe : HtmlElement
 {
-    [React]
+    [ReactProp]
     public string src { get; set; }
 }
 
-public class select : HtmlElement
+public sealed class select : HtmlElement
 {
     public select()
     {
@@ -176,19 +185,19 @@ public class select : HtmlElement
     {
     }
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
     public Action<ChangeEvent> onChange { get; set; }
 
-    [React]
+    [ReactProp]
     public string value { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = nameof(onChange))]
     public Expression<Func<string>> valueBind { get; set; }
 }
 
-public class option : HtmlElement
+public sealed class option : HtmlElement
 {
     public option()
     {
@@ -198,57 +207,59 @@ public class option : HtmlElement
     {
     }
 
-    [React]
+    [ReactProp]
     public bool? selected { get; set; }
 
-    [React]
+    [ReactProp]
     public string value { get; set; }
 }
 
-public class style : HtmlElement
+public sealed class style : HtmlElement
 {
 }
-public class link : HtmlElement
+
+public sealed class link : HtmlElement
 {
-    [React]
+    [ReactProp]
+    public string crossOrigin { get; set; }
+
+    [ReactProp]
     public string href { get; set; }
 
-    [React]
-    public string rel { get; set; }
-    
-    [React]
+    [ReactProp]
     public string media { get; set; }
 
-    [React]
-    public string crossOrigin { get; set; }
-    
+    [ReactProp]
+    public string rel { get; set; }
+
+    [ReactProp]
+    public string type { get; set; }
+
+    [ReactProp]
+    public string @as { get; set; }
 }
 
-public class textarea : HtmlElement
+public sealed class textarea : HtmlElement
 {
-   
-
-    [React]
+    [ReactProp]
     public int? cols { get; set; }
 
-    [React]
-    public int? rows { get; set; }
-    
-
-    [React]
+    [ReactProp]
     public string name { get; set; }
 
-    [React]
+    [ReactProp]
     public string placeholder { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? readOnly { get; set; }
-    
 
-    [React]
+    [ReactProp]
+    public int? rows { get; set; }
+
+    [ReactProp]
     public string value { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 }

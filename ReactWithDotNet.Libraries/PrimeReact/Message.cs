@@ -6,13 +6,13 @@ public class Message : ElementBase
     /// <summary>
     ///     Text of the message.
     /// </summary>
-    [React]
+    [ReactProp]
     public  string text { get; set; }
 
 
     /// <summary>
     /// Severity level of the message.
     /// </summary>
-    [React]
+    [ReactProp]
     public string severity { get; set; }
 }

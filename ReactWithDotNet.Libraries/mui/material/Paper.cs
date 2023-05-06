@@ -7,7 +7,7 @@ public  class Paper : ElementBase
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
@@ -18,7 +18,7 @@ public  class Paper : ElementBase
     ///     <br/>
     ///     @default 1
     /// </summary>
-    [React]
+    [ReactProp]
     public double? elevation { get; set; }
     
     /// <summary>
@@ -26,13 +26,13 @@ public  class Paper : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? square { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
@@ -41,9 +41,9 @@ public  class Paper : ElementBase
     ///     <br/>
     ///     @default 'elevation'
     /// </summary>
-    [React]
+    [ReactProp]
     public string variant { get; set; }
     
-    [React]
+    [ReactProp]
     public string component { get; set; }
 }

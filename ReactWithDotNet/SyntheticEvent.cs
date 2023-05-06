@@ -12,7 +12,7 @@ public class UIEvent : BaseSyntheticEvent
 {
 }
 
-public class ShadowHtmlElement
+public sealed class ShadowHtmlElement
 {
     public string id { get; set; }
 

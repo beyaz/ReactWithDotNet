@@ -8,10 +8,9 @@ interface IReadOnlyJsonMap
 
 sealed class JsonMap : IReadOnlyJsonMap
 {
-    int count;
-
     internal Node head;
     internal Node tail;
+    int count;
 
     public int Count => count;
 

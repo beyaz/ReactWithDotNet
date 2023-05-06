@@ -25,8 +25,19 @@ public sealed class Fragment : Element
             return;
         }
 
+        
+        
         foreach (var modifier in modifiers)
         {
+            if (modifier is ElementModifier elementModifier)
+            {
+                if (elementModifier.isModifyReactKey)
+                {
+                    elementModifier.modifyElement(this);
+                    continue;
+                }
+            }
+
             foreach (var child in children)
             {
                 ModifyHelper.ProcessModifier(child, modifier);

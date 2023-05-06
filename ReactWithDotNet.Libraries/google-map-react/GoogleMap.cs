@@ -2,15 +2,15 @@
 
 public sealed class GoogleMap : ThirdPartyReactComponent
 {
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public BootstrapURLKeys bootstrapURLKeys { get; } = new();
 
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public DefaultCenter defaultCenter { get; } = new();
 
-    [React]
+    [ReactProp]
     public int? defaultZoom { get; set; }
 }
 

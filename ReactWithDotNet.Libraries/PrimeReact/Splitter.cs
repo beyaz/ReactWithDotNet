@@ -9,24 +9,24 @@ public class Splitter: ElementBase
     /// Orientation of the panels, valid values are "horizontal" and "vertical".
     /// <para>Default: horizontal</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public SplitterLayoutType? layout { get; set; }
 
     /// <summary>
     /// 	Size of the divider in pixels.
     /// <para>Default: 4</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public int? gutterSize { get; set; }
 }
 
 
 public class SplitterPanel : ElementBase
 {
-    [React]
+    [ReactProp]
     public int? size { get; set; }
 
-    [React]
+    [ReactProp]
     public int? minSize { get; set; }
 
     public SplitterPanel()

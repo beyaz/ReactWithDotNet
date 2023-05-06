@@ -5,10 +5,12 @@ namespace ReactWithDotNet;
 
 partial class Style : IEnumerable<StyleModifier>
 {
+    protected static StyleModifier Modify(Action<Style> modifyAction) => CreateStyleModifier(modifyAction);
+
     public Style()
     {
-        
     }
+
     public Style(params StyleModifier[] styleModifiers)
     {
         if (styleModifiers is not null)
@@ -19,40 +21,6 @@ partial class Style : IEnumerable<StyleModifier>
             }
         }
     }
-
-    /// <summary>
-    ///     Add given <paramref name="styleModifier"/> to <paramref name="style"/>
-    ///     <br/>
-    ///     if <paramref name="style"/> is null then returns null.
-    /// </summary>
-    public static Style operator +(Style style, StyleModifier styleModifier)
-    {
-        if (style == null|| styleModifier == null)
-        {
-            return null;
-        }
-        
-        styleModifier.modifyStyle(style);
-
-        return style;
-    }
-
-    #region IEnumerable<Modifier>
-    public IEnumerator<StyleModifier> GetEnumerator()
-    {
-        yield break;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public void Add(StyleModifier modifier)
-    {
-        modifier?.modifyStyle(this);
-    } 
-    #endregion
 
     [JsonIgnore]
     public string leftRight
@@ -94,6 +62,40 @@ partial class Style : IEnumerable<StyleModifier>
             height = value;
         }
     }
+
+    /// <summary>
+    ///     Add given <paramref name="styleModifier" /> to <paramref name="style" />
+    ///     <br />
+    ///     if <paramref name="style" /> is null then returns null.
+    /// </summary>
+    public static Style operator +(Style style, StyleModifier styleModifier)
+    {
+        if (style == null || styleModifier == null)
+        {
+            return null;
+        }
+
+        styleModifier.modifyStyle(style);
+
+        return style;
+    }
+
+    #region IEnumerable<Modifier>
+    public IEnumerator<StyleModifier> GetEnumerator()
+    {
+        yield break;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public void Add(StyleModifier modifier)
+    {
+        modifier?.modifyStyle(this);
+    }
+    #endregion
 
     #region margin
     [JsonIgnore]
@@ -200,6 +202,4 @@ partial class Style : IEnumerable<StyleModifier>
 
     public string borderInlineStyle { get; set; }
     #endregion
-
-    
 }

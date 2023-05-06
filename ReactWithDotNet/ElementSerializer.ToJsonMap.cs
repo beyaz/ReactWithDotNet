@@ -8,9 +8,7 @@ namespace ReactWithDotNet;
 
 partial class ElementSerializer
 {
-    static readonly ConcurrentDictionary<Type, List<PropertyAccessInfo>> CustomEventPropertiesOfType = new();
-    static readonly ConcurrentDictionary<Type, List<PropertyAccessInfo>> DotNetPropertiesOfType = new();
-    static readonly ConcurrentDictionary<Type, List<PropertyAccessInfo>> ReactAttributedPropertiesOfType = new();
+    static readonly ConcurrentDictionary<Type, TypeInfo> TypeInfoMap = new();
 
     public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
     {
@@ -121,27 +119,27 @@ partial class ElementSerializer
 
                 // Try Calculate ThirdParty Component Suspense Fallback
                 if (context.CalculateSuspenseFallbackForThirdPartyReactComponents &&
-                    node.ElementIsThirdPartyReactComponent && 
+                    node.ElementIsThirdPartyReactComponent &&
                     !node.IsSuspenseFallbackElementCalculated)
                 {
                     node.IsSuspenseFallbackElementCalculated = true;
-                    
+
                     node.ElementAsThirdPartyReactComponent.Context = context.ReactContext;
-                    
+
                     node.SuspenseFallbackElement = node.ElementAsThirdPartyReactComponent.InvokeSuspenseFallback();
                     if (node.SuspenseFallbackElement is not null)
                     {
                         node.SuspenseFallbackElement.key = "0";
                     }
-                    
+
                     node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement, context);
 
                     node.SuspenseFallbackNode.Parent = node;
 
                     node.FirstChild = node.SuspenseFallbackNode;
-                    
+
                     node = node.SuspenseFallbackNode;
-                    
+
                     continue;
                 }
 
@@ -162,11 +160,11 @@ partial class ElementSerializer
             if (node.ElementIsDotNetReactPureComponent)
             {
                 var reactPureComponent = node.ElementAsDotNetReactPureComponent;
-                
+
                 if (node.DotNetComponentRenderMethodInvoked is false)
                 {
                     reactPureComponent.Context = context.ReactContext;
-                    
+
                     node.DotNetComponentRenderMethodInvoked = true;
 
                     if (reactPureComponent.modifiers is not null)
@@ -204,7 +202,7 @@ partial class ElementSerializer
                             }
                         }
                     }
-                    
+
                     node.DotNetComponentRootNode = ConvertToNode(node.DotNetComponentRootElement, context);
 
                     node.DotNetComponentRootNode.Parent = node;
@@ -223,10 +221,10 @@ partial class ElementSerializer
                 node.ElementAsJsonMap = map;
 
                 node.IsCompleted = true;
-                
+
                 continue;
             }
-            
+
             if (node.ElementIsDotNetReactComponent is false)
             {
                 throw FatalError("traverse problem");
@@ -357,30 +355,9 @@ partial class ElementSerializer
 
                 var dotNetProperties = new JsonMap();
 
-                if (!DotNetPropertiesOfType.TryGetValue(dotNetTypeOfReactComponent, out var propertyAccessors))
-                {
-                    propertyAccessors = new List<PropertyAccessInfo>();
+                var typeInfo = GetTypeInfo(dotNetTypeOfReactComponent);
 
-                    foreach (var propertyInfo in dotNetTypeOfReactComponent.GetSerializableProperties())
-                    {
-                        if (propertyInfo.Name == nameof(reactStatefulComponent.Context)
-                            || propertyInfo.Name == nameof(Element.children)
-                            || propertyInfo.Name == nameof(reactStatefulComponent.key)
-                            || propertyInfo.Name == nameof(reactStatefulComponent.Client)
-                            || propertyInfo.Name == "state"
-                            || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
-                            || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
-                            || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
-                           )
-                        {
-                            continue;
-                        }
-
-                        propertyAccessors.Add(propertyInfo.ToFastAccess());
-                    }
-
-                    DotNetPropertiesOfType.TryAdd(dotNetTypeOfReactComponent, propertyAccessors);
-                }
+                var propertyAccessors = typeInfo.DotNetPropertiesOfType;
 
                 List<string> reactAttributeNames = null;
 
@@ -426,6 +403,11 @@ partial class ElementSerializer
                     map.Add("$ClientTasks", reactStatefulComponent.Client.taskList);
                 }
 
+                if (typeInfo.IsReactHigherOrderComponent)
+                {
+                    map.Add("$LogicalChildrenCount", reactStatefulComponent._children?.Count ?? 0);
+                }
+
                 stateTree.BreadCrumpPath = node.BreadCrumpPath;
                 stateTree.CurrentOrder   = node.CurrentOrder.Value;
 
@@ -462,30 +444,31 @@ partial class ElementSerializer
 
                     List<CachableMethodInfo> cachedMethods = null;
 
-                    var cachableMethodInfoList = dotNetTypeOfReactComponent.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray();
-
-                    foreach (var cachableMethod in cachableMethodInfoList)
+                    foreach (var cachableMethod in typeInfo.CachableMethodInfoList)
                     {
-                        var component = cloneComponent();
-
-                        cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
-
-                        var newElementSerializerContext = createNewElementSerializerContext();
-
-                        var cachedVersion = ToJsonMap(component, newElementSerializerContext);
-
-                        context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
-
-                        // take back dynamic styles
-                        context.DynamicStyles.listOfClasses.Clear();
-                        context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
-
-                        var cachableMethodInfo = new CachableMethodInfo
+                        CachableMethodInfo cachableMethodInfo = null;
                         {
-                            MethodName       = cachableMethod.GetNameWithToken(),
-                            IgnoreParameters = true,
-                            ElementAsJson    = cachedVersion
-                        };
+                            var component = cloneComponent();
+
+                            cachableMethod.Invoke(component, new object[cachableMethod.GetParameters().Length]);
+
+                            var newElementSerializerContext = createNewElementSerializerContext();
+
+                            var cachedVersion = ToJsonMap(component, newElementSerializerContext);
+
+                            context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
+
+                            // take back dynamic styles
+                            context.DynamicStyles.listOfClasses.Clear();
+                            context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
+
+                            cachableMethodInfo = new CachableMethodInfo
+                            {
+                                MethodName       = cachableMethod.GetNameWithToken(),
+                                IgnoreParameters = true,
+                                ElementAsJson    = cachedVersion
+                            };
+                        }
 
                         cachedMethods ??= new List<CachableMethodInfo>();
 
@@ -527,53 +510,58 @@ partial class ElementSerializer
                         return component;
                     }
 
-                    var parameterizedCachableMethodInfoList = dotNetTypeOfReactComponent.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null);
-
-                    foreach (var cachableMethod in parameterizedCachableMethodInfoList)
+                    foreach (var cachableMethod in typeInfo.ParameterizedCachableMethodInfoList)
                     {
-                        var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
-
-                        var methodInfoForGettingParameters = dotNetTypeOfReactComponent.FindMethodOrGetProperty(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                        if (methodInfoForGettingParameters is null)
+                        IEnumerable parameters = null;
                         {
-                            throw new InvalidOperationException($"Method not found method name is {nameofMethodForGettingParameters}");
-                        }
+                            var nameofMethodForGettingParameters = cachableMethod.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>()?.NameofMethodForGettingParameters;
 
-                        var parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
-                        if (parameters == null)
-                        {
-                            throw new InvalidOperationException($"Method should return IEnumerable<{cachableMethod.GetParameters().FirstOrDefault()}>");
+                            var methodInfoForGettingParameters = dotNetTypeOfReactComponent.FindMethodOrGetProperty(nameofMethodForGettingParameters, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                            if (methodInfoForGettingParameters is null)
+                            {
+                                throw new InvalidOperationException($"Method not found method name is {nameofMethodForGettingParameters}");
+                            }
+
+                            parameters = (IEnumerable)methodInfoForGettingParameters.Invoke(reactStatefulComponent, Array.Empty<object>());
+                            if (parameters == null)
+                            {
+                                throw new InvalidOperationException($"Method should return IEnumerable<{cachableMethod.GetParameters().FirstOrDefault()}>");
+                            }
                         }
 
                         foreach (var parameter in parameters)
                         {
-                            var component = cloneComponent();
-
-                            try
+                            CachableMethodInfo cachableMethodInfo = null;
                             {
-                                cachableMethod.Invoke(component, new[] { parameter });
+                                var component = cloneComponent();
+
+                                // invoke method
+                                {
+                                    try
+                                    {
+                                        cachableMethod.Invoke(component, new[] { parameter });
+                                    }
+                                    catch (Exception exception)
+                                    {
+                                        throw new InvalidOperationException("Error occured when calculating cache method", exception);
+                                    }
+                                }
+
+                                var newElementSerializerContext = createNewElementSerializerContext();
+
+                                var cachedVersion = ToJsonMap(component, newElementSerializerContext);
+
+                                // take back dynamic styles
+                                context.DynamicStyles.listOfClasses.Clear();
+                                context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
+
+                                cachableMethodInfo = new CachableMethodInfo
+                                {
+                                    MethodName    = cachableMethod.GetNameWithToken(),
+                                    Parameter     = parameter,
+                                    ElementAsJson = cachedVersion
+                                };
                             }
-                            catch (Exception exception)
-                            {
-                                throw new InvalidOperationException("Error occured when calculating cache method", exception);
-                            }
-
-                            var newElementSerializerContext = createNewElementSerializerContext();
-
-                            var cachedVersion = ToJsonMap(component, newElementSerializerContext);
-
-                            context.Tracer.Trace(newElementSerializerContext.Tracer.traceMessages);
-
-                            // take back dynamic styles
-                            context.DynamicStyles.listOfClasses.Clear();
-                            context.DynamicStyles.listOfClasses.AddRange(newElementSerializerContext.DynamicStyles.listOfClasses);
-
-                            var cachableMethodInfo = new CachableMethodInfo
-                            {
-                                MethodName    = cachableMethod.GetNameWithToken(),
-                                Parameter     = parameter,
-                                ElementAsJson = cachedVersion
-                            };
 
                             cachedMethods ??= new List<CachableMethodInfo>();
 
@@ -585,7 +573,7 @@ partial class ElementSerializer
                     {
                         map.Add("$CachedMethods", cachedMethods);
                     }
-
+                    
                     stopwatch.Stop();
 
                     if (stopwatch.ElapsedMilliseconds > 10)
@@ -605,26 +593,9 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
-    internal static IReadOnlyList<PropertyAccessInfo> GetReactAttributedPropertiesOfType(Type elementType)
-    {
-        if (!ReactAttributedPropertiesOfType.TryGetValue(elementType, out var reactProperties))
-        {
-            reactProperties = new List<PropertyAccessInfo>();
-
-            foreach (var propertyInfo in elementType.GetSerializableProperties().Where(x => x.GetCustomAttribute<ReactAttribute>() != null))
-            {
-                reactProperties.Add(propertyInfo.ToFastAccess());
-            }
-
-            ReactAttributedPropertiesOfType.TryAdd(elementType, reactProperties);
-        }
-
-        return reactProperties;
-    }
-
     static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
-        var reactProperties = GetReactAttributedPropertiesOfType(element.GetType());
+        var reactProperties = GetTypeInfo(element.GetType()).ReactAttributedPropertiesOfType;
 
         foreach (var item in reactProperties)
         {
@@ -673,26 +644,7 @@ partial class ElementSerializer
     {
         var type = reactComponent.GetType();
 
-        if (!CustomEventPropertiesOfType.TryGetValue(type, out var reactCustomEventProperties))
-        {
-            reactCustomEventProperties = new List<PropertyAccessInfo>();
-
-            foreach (var propertyInfo in reactComponent.GetType().GetSerializableProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
-            {
-                var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
-                var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
-
-                if (isAction || isGenericAction)
-                {
-                    reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
-                    continue;
-                }
-
-                throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
-            }
-
-            CustomEventPropertiesOfType.TryAdd(type, reactCustomEventProperties);
-        }
+        var reactCustomEventProperties = GetTypeInfo(type).CustomEventPropertiesOfType;
 
         foreach (var fastPropertyInfo in reactCustomEventProperties)
         {
@@ -789,13 +741,89 @@ partial class ElementSerializer
             node.ElementAsDotNetReactPureComponent = pureComponent;
             return node;
         }
-        
+
         throw FatalError("Node type not recognized");
     }
 
     static Exception FatalError(string message)
     {
         return new Exception(message);
+    }
+
+    static TypeInfo GetTypeInfo(Type type)
+    {
+        if (!TypeInfoMap.TryGetValue(type, out var typeInfo))
+        {
+            var reactCustomEventProperties = new List<PropertyAccessInfo>();
+            {
+                foreach (var propertyInfo in type.GetSerializableProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
+                {
+                    var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
+                    var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1or2or3();
+
+                    if (isAction || isGenericAction)
+                    {
+                        reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
+                        continue;
+                    }
+
+                    throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
+                }
+            }
+
+            var propertyAccessors = new List<PropertyAccessInfo>();
+            {
+                foreach (var propertyInfo in type.GetSerializableProperties())
+                {
+                    if (propertyInfo.Name == nameof(ReactComponentBase.Context)
+                        || propertyInfo.Name == nameof(Element.children)
+                        || propertyInfo.Name == nameof(ReactComponentBase.key)
+                        || propertyInfo.Name == nameof(ReactComponentBase.Client)
+                        || propertyInfo.Name == "state"
+                        || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
+                        || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
+                        || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
+                       )
+                    {
+                        continue;
+                    }
+
+                    if (propertyInfo.PropertyType == typeof(Element) || propertyInfo.PropertyType.IsSubclassOf(typeof(Element)))
+                    {
+                        continue;
+                    }
+
+                    if (propertyInfo.CanWrite == false && !propertyInfo.DeclaringType?.IsSubclassOf(typeof(ThirdPartyReactComponent)) == true)
+                    {
+                        continue;
+                    }
+
+                    propertyAccessors.Add(propertyInfo.ToFastAccess());
+                }
+            }
+
+            var reactProperties = new List<PropertyAccessInfo>();
+            {
+                foreach (var propertyInfo in type.GetSerializableProperties().Where(x => x.GetCustomAttribute<ReactPropAttribute>() != null))
+                {
+                    reactProperties.Add(propertyInfo.ToFastAccess());
+                }
+            }
+
+            typeInfo = new TypeInfo
+            {
+                CustomEventPropertiesOfType         = reactCustomEventProperties,
+                DotNetPropertiesOfType              = propertyAccessors,
+                ReactAttributedPropertiesOfType     = reactProperties,
+                IsReactHigherOrderComponent         = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
+                CachableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
+                ParameterizedCachableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray()
+            };
+
+            TypeInfoMap.TryAdd(type, typeInfo);
+        }
+
+        return typeInfo;
     }
 
     static JsonMap LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
@@ -849,7 +877,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsonMap LeafToMap(Node node,ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
+    static JsonMap LeafToMap(Node node, ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
         var map = new JsonMap();
         map.Add("$tag", thirdPartyReactComponent.Type);
@@ -865,7 +893,7 @@ partial class ElementSerializer
         }
 
         AddReactAttributes(map.Add, thirdPartyReactComponent, context);
-        
+
         if (context.CalculateSuspenseFallbackForThirdPartyReactComponents)
         {
             map.Add("SuspenseFallback", node.FirstChild.ElementAsJsonMap);
@@ -883,7 +911,7 @@ partial class ElementSerializer
 
         if (node.ElementIsThirdPartyReactComponent)
         {
-            return LeafToMap(node,node.ElementAsThirdPartyReactComponent, context);
+            return LeafToMap(node, node.ElementAsThirdPartyReactComponent, context);
         }
 
         if (node.ElementIsFragment)
@@ -939,10 +967,10 @@ partial class ElementSerializer
     {
         return new PropertyAccessInfo
         {
-            GetValueFunc                                   = ReflectionHelper.CreateGetFunction(propertyInfo),
-            PropertyInfo                                   = propertyInfo,
-            DefaultValue                                   = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
-            HasReactAttribute                              = propertyInfo.GetCustomAttribute<ReactAttribute>() is not null,
+            GetValueFunc               = ReflectionHelper.CreateGetFunction(propertyInfo),
+            PropertyInfo               = propertyInfo,
+            DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
+            HasReactAttribute          = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
             TransformValueInServerSide = GetTransformValueInServerSideTransformFunction()
         };
 
@@ -954,7 +982,7 @@ partial class ElementSerializer
                 return null;
             }
 
-            var methodInfo = attribute.TransformMethodDeclaringType.GetMethod("Transform", BindingFlags.Public| BindingFlags.NonPublic| BindingFlags.Static);
+            var methodInfo = attribute.TransformMethodDeclaringType.GetMethod("Transform", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
             if (methodInfo == null)
             {
                 throw DeveloperException($"Type should have a static method named 'Transform'. @type:{attribute.TransformMethodDeclaringType}");
@@ -975,11 +1003,11 @@ partial class ElementSerializer
 
     class Node
     {
+        public ReactPureComponent ElementAsDotNetReactPureComponent;
+        public bool ElementIsDotNetReactPureComponent;
         public bool IsSuspenseFallbackElementCalculated;
         public Element SuspenseFallbackElement;
         public Node SuspenseFallbackNode;
-        public bool ElementIsDotNetReactPureComponent;
-        public ReactPureComponent ElementAsDotNetReactPureComponent;
         public string BreadCrumpPath { get; set; }
         public int? CurrentOrder { get; set; }
         public bool DotNetComponentRenderMethodInvoked { get; set; }
@@ -1029,6 +1057,16 @@ partial class ElementSerializer
         public Node Parent { get; set; }
 
         public ElementSerializerContext SerializerContext { get; set; }
+    }
+
+    sealed class TypeInfo
+    {
+        public IReadOnlyList<MethodInfo> CachableMethodInfoList { get; init; }
+        public IReadOnlyList<PropertyAccessInfo> CustomEventPropertiesOfType { get; init; }
+        public IReadOnlyList<PropertyAccessInfo> DotNetPropertiesOfType { get; init; }
+        public bool IsReactHigherOrderComponent { get; init; }
+        public IReadOnlyList<MethodInfo> ParameterizedCachableMethodInfoList { get; init; }
+        public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
     }
 }
 

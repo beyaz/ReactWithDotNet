@@ -1,42 +1,27 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 
 namespace ReactWithDotNet;
 
 static class Extensions
 {
-    public static void Foreach<T>(this IReadOnlyList<T> items, Action<T> action)
+    public static IReadOnlyList<B> ToReadOnlyListOf<A, B>(this IEnumerable enumerable, Func<A, B> convertFunc)
     {
-        if (items == null)
+        if (enumerable == null)
         {
-            throw new ArgumentNullException(nameof(items));
+            throw new ArgumentNullException(nameof(enumerable));
         }
 
-        if (items == null)
+        var list = new List<B>();
+
+        foreach (A item in enumerable)
         {
-            throw new ArgumentNullException(nameof(items));
+            list.Add(convertFunc(item));
         }
 
-        for (var i = 0; i < items.Count; i++)
-        {
-            action(items[i]);
-        }
-    }
-    
-    public static string GetNameWithToken(this MethodInfo methodInfo)
-    {
-        return $"{methodInfo.MetadataToken}|{methodInfo.Name}";
+        return list;
     }
 
-    public static int? TryGetMethodInfoMetadataTokenFromName(string nameWithToken)
-    {
-        var index = nameWithToken.IndexOf('|');
-        if (index > 0)
-        {
-            return int.Parse(nameWithToken[..index]);
-        }
-
-        return null;
-    }
 
     public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath<T>(this Expression<Func<T>> propertyAccessor)
     {
@@ -65,7 +50,7 @@ static class Extensions
                 if (binaryExpression.Right is ConstantExpression constantExpression)
                 {
                     path.Add("]");
-                    path.Add(constantExpression.Value.ToString());
+                    path.Add(constantExpression.Value!.ToString());
                     path.Add("[");
 
                     expression = binaryExpression.Left;
@@ -73,34 +58,28 @@ static class Extensions
                 }
             }
 
-            if (expression is MethodCallExpression methodCallExpression)
+            if (expression is MethodCallExpression { Method.Name: "get_Item" } methodCallExpression)
             {
-                if (methodCallExpression.Method.Name == "get_Item")
+                if (methodCallExpression.Arguments[0] is ConstantExpression constantExpression1)
                 {
-                    if (methodCallExpression.Arguments[0] is ConstantExpression constantExpression1)
-                    {
-                        path.Add("]");
-                        path.Add(constantExpression1.Value.ToString());
-                        path.Add("[");
+                    path.Add("]");
+                    path.Add(constantExpression1.Value!.ToString());
+                    path.Add("[");
 
-                        expression = methodCallExpression.Object;
-                        continue;
-                    }
+                    expression = methodCallExpression.Object;
+                    continue;
+                }
 
-                    if (methodCallExpression.Arguments[0] is MemberExpression memberExpression2)
-                    {
-                        if (memberExpression2.Expression is ConstantExpression constantExpression)
-                        {
-                            var index = constantExpression.Value.GetType().GetFields()[0].GetValue(constantExpression.Value);
+                if (methodCallExpression.Arguments[0] is MemberExpression { Expression: ConstantExpression constantExpression })
+                {
+                    var index = constantExpression.Value!.GetType().GetFields()[0].GetValue(constantExpression.Value);
 
-                            path.Add("]");
-                            path.Add(index?.ToString());
-                            path.Add("[");
+                    path.Add("]");
+                    path.Add(index?.ToString());
+                    path.Add("[");
 
-                            expression = methodCallExpression.Object;
-                            continue;
-                        }
-                    }
+                    expression = methodCallExpression.Object;
+                    continue;
                 }
             }
 
@@ -131,14 +110,19 @@ static class Extensions
         return new DeveloperException(message);
     }
 
-    public static object GetDefaultValue(this Type t)
+    public static string GetNameWithToken(this MethodInfo methodInfo)
     {
-        if (t.IsValueType)
+        return $"{methodInfo.MetadataToken}|{methodInfo.Name}";
+    }
+
+    public static int? PeekForComponentUniqueIdentifier(this Stack<ReactComponentBase> stack)
+    {
+        if (stack.Count == 0)
         {
-            return Activator.CreateInstance(t);
+            return null;
         }
 
-        return null;
+        return stack.Peek().ComponentUniqueIdentifier;
     }
 
     /// <summary>
@@ -188,15 +172,15 @@ static class Extensions
         return data;
     }
 
-    public static int? PeekForComponentUniqueIdentifier(this Stack<ReactComponentBase> stack)
+    public static int? TryGetMethodInfoMetadataTokenFromName(string nameWithToken)
     {
-        if (stack.Count == 0)
+        var index = nameWithToken.IndexOf('|');
+        if (index > 0)
         {
-            return null;
+            return int.Parse(nameWithToken[..index]);
         }
 
-
-        return stack.Peek().ComponentUniqueIdentifier;
+        return null;
     }
 }
 

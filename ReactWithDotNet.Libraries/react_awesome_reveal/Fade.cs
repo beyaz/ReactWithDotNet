@@ -6,53 +6,53 @@ public class RevealBase : ThirdPartyReactComponent
     ///     Specifies if the animation should make element(s) disappear.<br />
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? reverse { get; set; }
     
     /// <summary>
     ///     <br />Stagger its children animations.
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? cascade { get; set; }
 
     /// <summary>
     ///     <br /> Class names to add to the child element.
     /// </summary>
-    [React]
+    [ReactProp]
     public string childClassName { get; set; }
 
     /// <summary>
     ///     <br /> Inline styles to add to the child element.
     /// </summary>
-    [React]
+    [ReactProp]
     public Style childStyle { get; set; }
 
     /// <summary>
     ///     <br /> Class names to add to the container element.
     /// </summary>
-    [React]
+    [ReactProp]
     public string className { get; set; }
 
     /// <summary>
     ///     <br /> Factor that affects the delay that each animated element in a cascade animation will be assigned.
     ///     <br />  @default 0.5
     /// </summary>
-    [React]
+    [ReactProp]
     public double? damping { get; set; }
 
     /// <summary>
     ///     <br /> Initial delay, in milliseconds.
     ///     <br /> @default 0
     /// </summary>
-    [React]
+    [ReactProp]
     public double? delay { get; set; }
 
     /// <summary>
     ///     <br /> Animation duration, in milliseconds.
     ///     <br /> @default 1000
     /// </summary>
-    [React]
+    [ReactProp]
     public double? duration { get; set; }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class RevealBase : ThirdPartyReactComponent
     ///     triggered.
     ///     <br /> @default 0
     /// </summary>
-    [React]
+    [ReactProp]
     public double? fraction { get; set; }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class RevealBase : ThirdPartyReactComponent
     ///     viewport.
     ///     <br /> @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? triggerOnce { get; set; }
 }
 
@@ -81,7 +81,7 @@ public class AttentionSeeker : RevealBase
     ///     "shakeY" | "swing" | "tada" | "wobble"
     ///     <br />  @default "bounce"
     /// </summary>
-    [React]
+    [ReactProp]
     public string effect { get; set; }
 }
 
@@ -92,7 +92,7 @@ public class Bounce : RevealBase
     ///     <br />"down" | "left" | "right" | "up"
     ///     <br />  @default undefined
     /// </summary>
-    [React]
+    [ReactProp]
     public string direction { get; set; }
 
     
@@ -105,7 +105,7 @@ public class Fade : RevealBase
     ///     <br /> Causes the animation to start farther. Only works with "down", "left", "right" and "up" directions.
     ///     <br /> @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? big { get; set; }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class Fade : RevealBase
     ///     <br /> @default undefined
     ///     <br /> "bottom-left" | "bottom-right" | "down" | "left" | "right" | "top-left" | "top-right" | "up"
     /// </summary>
-    [React]
+    [ReactProp]
     public string direction { get; set; }
 }
 
@@ -124,7 +124,7 @@ public class Flip : RevealBase
     ///     <br /> @default undefined
     ///     <br /> "horizontal" | "vertical"
     /// </summary>
-    [React]
+    [ReactProp]
     public string direction { get; set; }
     
 }
@@ -144,7 +144,7 @@ public class Rotate : RevealBase
     ///     <br /> @default undefined
     ///     <br />  "bottom-left" | "bottom-right" | "top-left" | "top-right"
     /// </summary>
-    [React]
+    [ReactProp]
     public string direction { get; set; }
     
 }
@@ -156,7 +156,7 @@ public class Slide : RevealBase
     ///     <br /> @default undefined
     ///     <br />  "down" | "left" | "right" | "up"
     /// </summary>
-    [React]
+    [ReactProp]
     public string direction { get; set; }
     
 }
@@ -168,7 +168,7 @@ public class Zoom : RevealBase
     ///     <br /> @default undefined
     ///     <br />  "down" | "left" | "right" | "up"
     /// </summary>
-    [React]
+    [ReactProp]
     public string direction { get; set; }
     
 }

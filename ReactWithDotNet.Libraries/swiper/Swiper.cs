@@ -21,75 +21,75 @@ public class Swiper : ThirdPartyReactComponent
             this.children.AddRange(children);
         }
     }
-    [React]
+    [ReactProp]
     public string direction { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? lazy { get; set; }
     
     
-    [React]
+    [ReactProp]
     public SwiperAutoplay autoplay { get; } = new();
 
-    [React]
+    [ReactProp]
     public string effect { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? grabCursor { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? init { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? loop { get; set; }
 
-    [React]
+    [ReactProp]
     public int? loopAdditionalSlides { get; set; }
 
-    [React]
+    [ReactProp]
     public IReadOnlyList<string> modules { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
     public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
     
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
     public Action<SwiperInstance> onSlideChange { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
     public Action<SwiperInstance> slideChangeTransitionEnd { get; set; }
     
 
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public SwiperPagination pagination { get; } = new();
 
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public SwiperScrollbar scrollbar { get; } = new();
 
-    [React]
+    [ReactProp]
     public double? slidesPerView { get; set; }
 
-    [React]
+    [ReactProp]
     public double? spaceBetween { get; set; }
 
-    [React]
+    [ReactProp]
     public double? speed { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? centeredSlides { get; set; }
     
 
 
-    [React]
+    [ReactProp]
     public SwiperFadeEffect fadeEffect { get; } = new();
 
     
 
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public SwiperNavigationOption navigation { get; } = new();
 }

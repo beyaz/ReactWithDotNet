@@ -4,7 +4,7 @@ public class Logo : ReactPureComponent
 {
     protected override Element render()
     {
-        return new FlexColumn(Width(140), AlignItemsCenter)
+        return new FlexColumn(Width(140), AlignItemsCenter, Padding(5))
         {
             new FlexRow(Gap(25))
             {
@@ -12,7 +12,7 @@ public class Logo : ReactPureComponent
                 new img { Src(Asset("net_core_logo.svg")), WidthHeight(30) }
             },
 
-            new small{"React with DotNet"}
+            new FlexRow(Gap(3)){ (span)"React"+FontWeight500, " with " , (span)"DotNet" + FontWeight500 }
         };
     }
 }

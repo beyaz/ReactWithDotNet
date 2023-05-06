@@ -4,53 +4,16 @@ namespace ReactWithDotNet;
 
 partial class Style
 {
-    internal Style _hover;
-
-    [JsonIgnore]
-    public Style hover
-    {
-        get
-        {
-            if (_hover == null)
-            {
-                _hover = new Style();
-            }
-            return _hover;
-        }
-    }
-
-    internal Style _before;
-
-    [JsonIgnore]
-    public Style before
-    {
-        get
-        {
-            if (_before == null)
-            {
-                _before = new Style();
-            }
-            return _before;
-        }
-    }
-
+    internal Style _active;
 
     internal Style _after;
 
-    [JsonIgnore]
-    public Style after
-    {
-        get
-        {
-            if (_after == null)
-            {
-                _after = new Style();
-            }
-            return _after;
-        }
-    }
+    internal Style _before;
 
-    internal Style _active;
+    internal Style _focus;
+    internal Style _hover;
+
+    internal List<MediaQuery> _mediaQueries;
 
     [JsonIgnore]
     public Style active
@@ -61,11 +24,38 @@ partial class Style
             {
                 _active = new Style();
             }
+
             return _active;
         }
     }
 
-    internal Style _focus;
+    [JsonIgnore]
+    public Style after
+    {
+        get
+        {
+            if (_after == null)
+            {
+                _after = new Style();
+            }
+
+            return _after;
+        }
+    }
+
+    [JsonIgnore]
+    public Style before
+    {
+        get
+        {
+            if (_before == null)
+            {
+                _before = new Style();
+            }
+
+            return _before;
+        }
+    }
 
     [JsonIgnore]
     public Style focus
@@ -76,11 +66,24 @@ partial class Style
             {
                 _focus = new Style();
             }
+
             return _focus;
         }
     }
 
-    internal List<MediaQuery> _mediaQueries;
+    [JsonIgnore]
+    public Style hover
+    {
+        get
+        {
+            if (_hover == null)
+            {
+                _hover = new Style();
+            }
+
+            return _hover;
+        }
+    }
 
     [JsonIgnore]
     public List<MediaQuery> MediaQueries
@@ -91,15 +94,16 @@ partial class Style
             {
                 _mediaQueries = new List<MediaQuery>();
             }
+
             return _mediaQueries;
         }
     }
 }
 
 /// <summary>
-/// Example:
-/// <br/>
-/// new MediaQuery("only screen and (max-width: 600px)", new Style { width:"5px" }
+///     Example:
+///     <br />
+///     new MediaQuery("only screen and (max-width: 600px)", new Style { width:"5px" }
 /// </summary>
 public sealed class MediaQuery
 {
@@ -107,9 +111,9 @@ public sealed class MediaQuery
     internal readonly Style style;
 
     /// <summary>
-    /// Example:
-    /// <br/>
-    /// new MediaQuery("only screen and (max-width: 600px)", new Style { width:"5px" }
+    ///     Example:
+    ///     <br />
+    ///     new MediaQuery("only screen and (max-width: 600px)", new Style { width:"5px" }
     /// </summary>
     public MediaQuery(string query, Style style)
     {

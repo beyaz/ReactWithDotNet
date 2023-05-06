@@ -4,22 +4,22 @@ namespace ReactWithDotNet.Libraries.PrimeReact;
 
 public class Column  : ElementBase
 {
-    [React]
+    [ReactProp]
     public string field { get; set; }
 
-    [React]
+    [ReactProp]
     public string header { get; set; }
 }
 
 public class DataTable : ElementBase
 {
-    [React]
+    [ReactProp]
     public bool? scrollable  { get; set; }
 
-    [React]
+    [ReactProp]
     public string scrollHeight { get; set; }
 
-    [React]
+    [ReactProp]
     public IEnumerable value { get; set; }
     
 }

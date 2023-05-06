@@ -3,10 +3,10 @@
 public class InputText : ElementBase
 {
 
-    [React]
+    [ReactProp]
     public string value { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 
@@ -29,7 +29,7 @@ public class InputText : ElementBase
     public int? valueBindDebounceTimeout { get; set; }
 
 
-    [React]
+    [ReactProp]
     public string placeholder { get; set; }
 
     /// <summary>
@@ -37,11 +37,11 @@ public class InputText : ElementBase
     /// <para>Default: null</para>
     /// <para>Type: string/regex</para>
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient("ReactWithDotNet::Core::RegExp")]
     public string keyfilter { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? autoFocus { get; set; }
 
     protected  override Element GetSuspenseFallbackElement()

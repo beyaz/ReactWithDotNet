@@ -5,19 +5,19 @@
 /// </summary>
 public sealed class DatePicker : ThirdPartyReactComponent
 {
-    [React]
+    [ReactProp]
     public Action<DateTime> onChange { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ConvertDotnetSerializedStringDateToJsDate")]
     public DateTime? selected { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? inline { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? selectsStart { get; set; }
 
-    [React]
+    [ReactProp]
     public bool? selectsEnd { get; set; }
 }

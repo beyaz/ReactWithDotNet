@@ -2,18 +2,18 @@
 
 public sealed partial class Switch : SwitchBase
 {
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.target.value", eventName = nameof(onChange))]
     public Expression<Func<bool>> checkedBind { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Core__CalculateSyntheticChangeEventArguments)]
     public Action<ChangeEvent> onChange { get; set; }
 }
 
 public sealed partial class TextField : ElementBase
 {
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 

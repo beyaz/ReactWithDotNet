@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet;
 
-public class a : HtmlElement
+public sealed class a : HtmlElement
 {
     public a()
     {
@@ -13,13 +13,13 @@ public class a : HtmlElement
     /// <summary>
     ///     Download file when clicking on the link (instead of navigating to the file):
     /// </summary>
-    [React]
+    [ReactProp]
     public string download { get; set; }
 
-    [React]
+    [ReactProp]
     public string href { get; set; }
 
-    [React]
+    [ReactProp]
     public string target { get; set; }
 
     #region Modifiers
@@ -31,12 +31,12 @@ public class a : HtmlElement
     /// <summary>
     ///     a.href = <paramref name="href" />
     /// </summary>
-    public static HtmlElementModifier Href(string href) => CreateHtmlElementModifier<a>(element => element.href = href);
+    public static HtmlElementModifier Href(string href) => Modify<a>(element => element.href = href);
 
     /// <summary>
     ///     a.target = <paramref name="target" />
     /// </summary>
-    public static HtmlElementModifier Target(string target) => CreateHtmlElementModifier<a>(element => element.target = target);
+    public static HtmlElementModifier Target(string target) => Modify<a>(element => element.target = target);
     #endregion
 }
 

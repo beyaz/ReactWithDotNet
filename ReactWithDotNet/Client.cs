@@ -2,10 +2,10 @@
 
 sealed class EventSenderInfo
 {
-    public string SenderPropertyFullName { get; set; }
-    
     public int SenderComponentUniqueIdentifier { get; set; }
+    public string SenderPropertyFullName { get; set; }
 }
+
 static partial class Mixin
 {
     internal static EventSenderInfo GetEventSenderInfo(ReactComponentBase reactComponent, string propertyName)

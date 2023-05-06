@@ -27,11 +27,18 @@ public sealed class StyleModifier : IModifier
 
 public sealed class ElementModifier : IModifier
 {
+    internal readonly bool isModifyReactKey;
+    
     internal readonly Action<Element> modifyElement;
 
-    internal ElementModifier(Action<Element> modifyElement)
+    internal ElementModifier(Action<Element> modifyElement):this(modifyElement, isModifyReactKey: false)
     {
-        this.modifyElement = modifyElement ?? throw new ArgumentNullException(nameof(modifyElement));
+    }
+
+    internal ElementModifier(Action<Element> modifyElement, bool isModifyReactKey)
+    {
+        this.modifyElement    = modifyElement ?? throw new ArgumentNullException(nameof(modifyElement));
+        this.isModifyReactKey = isModifyReactKey;
     }
 
     public static ElementModifier operator +(ElementModifier a, ElementModifier b)
@@ -51,7 +58,7 @@ public abstract class HtmlElementModifier : IModifier
     internal abstract void Process(HtmlElement htmlElement);
 }
 
-class HtmlElementModifier<THtmlelement> : HtmlElementModifier  where THtmlelement : HtmlElement
+class HtmlElementModifier<THtmlelement> : HtmlElementModifier where THtmlelement : HtmlElement
 {
     internal Action<THtmlelement> modifyHtmlElement;
 
@@ -65,7 +72,6 @@ class HtmlElementModifier<THtmlelement> : HtmlElementModifier  where THtmlelemen
         modifyHtmlElement((THtmlelement)htmlElement);
     }
 }
-
 
 abstract class ReactComponentModifier : IModifier
 {
@@ -124,7 +130,13 @@ partial class Mixin
         return new ReactComponentModifier<TComponent>(modifyAction);
     }
 
-    public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) where TPureComponent : ReactPureComponent
+    public static HtmlElementModifier CreateHtmlElementModifier<THtmlElement>(Action<THtmlElement> modifyAction) where THtmlElement : HtmlElement
+    {
+        return new HtmlElementModifier<THtmlElement> { modifyHtmlElement = modifyAction };
+    }
+
+    public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) 
+        where TPureComponent : ReactPureComponent
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
     }
@@ -132,11 +144,6 @@ partial class Mixin
     public static StyleModifier CreateStyleModifier(Action<Style> modifyAction)
     {
         return new StyleModifier(modifyAction);
-    }
-
-    public static HtmlElementModifier CreateHtmlElementModifier<THtmlElement>(Action<THtmlElement> modifyAction) where THtmlElement : HtmlElement
-    {
-        return new HtmlElementModifier<THtmlElement> { modifyHtmlElement = modifyAction };
     }
 }
 

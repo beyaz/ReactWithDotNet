@@ -2,14 +2,18 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-public class RSuiteAutoCompleteDemo : ReactPureComponent
+public class RSuiteAutoCompleteDemo : ReactComponent
 {
+    public string SelectedValue { get; set; }
+    
     protected override Element render()
     {
         return new div(WidthHeightMaximized)
         {
             new AutoComplete
             {
+                onChange = e=>SelectedValue = e,
+                
                 placeholder = "Search in names",
                data=new []{"Eugenia",
                    "Bryan",
@@ -31,7 +35,8 @@ public class RSuiteAutoCompleteDemo : ReactPureComponent
                    "Hilda"},
                
                style = { width = "224px"}
-            }
+            },
+            new div(SelectedValue)
         };
     }
 }

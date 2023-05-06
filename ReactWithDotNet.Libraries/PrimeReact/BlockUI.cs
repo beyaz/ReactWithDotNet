@@ -7,11 +7,11 @@ public class BlockUI : ElementBase
     /// <summary>
     /// Controls the blocked state.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool blocked { get; set; }
 
 
-    [React]
+    [ReactProp]
     public Element template { get; set; }
         
 

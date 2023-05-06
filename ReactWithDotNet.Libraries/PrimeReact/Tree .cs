@@ -36,23 +36,23 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     /// <summary>
     ///     Selected value to display.
     /// </summary>
-    [React]
+    [ReactProp]
     public IEnumerable<TTreeNode> value { get; set; }
 
     /// <summary>
     ///     When specified, displays an input field to filter the items.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool filter { get; set; }
 
     /// <summary>
     ///     When filtering is enabled, the value of input field.
     /// </summary>
-    [React]
+    [ReactProp]
     public string filterValue { get; set; }
 
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(filterValue), jsValueAccess = "e.value", eventName = "onFilterValueChange")]
     public Expression<Func<string>> filterValueBind { get; set; }
 
@@ -62,34 +62,34 @@ public class SingleSelectionTree<TTreeNode> : Tree where TTreeNode: TreeNode, ne
     /// <summary>
     ///     Placeholder text to show when filter input is empty.
     /// </summary>
-    [React]
+    [ReactProp]
     public string filterPlaceholder { get; set; }
 
     /// <summary>
     ///     When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
     ///     <para>Default: label</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public string filterBy { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactTemplate(nameof(GetItemSourceForCalculatingTemplates))]
     public Func<TTreeNode, Element> nodeTemplate { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<SingleSelectionTreeSelectionParams> onSelectionChange { get; set; }
 
-    [React]
+    [ReactProp]
     public string selectionKeys { get; set; }
 
     /// <summary>
     /// An array of keys to represent the state of the tree expansion state in controlled mode.
     /// </summary>
-    [React]
+    [ReactProp]
     public IReadOnlyDictionary<string,bool> expandedKeys { get; set; }
 
-    [React]
+    [ReactProp]
     public string selectionMode { get; set; } = "single";
 
     public static TTreeNode FindNodeByKey(IReadOnlyList<TTreeNode> nodes, string treeNodeKey)

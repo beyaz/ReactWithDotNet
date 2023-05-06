@@ -2,6 +2,15 @@
 
 partial class Style
 {
+    public IReadOnlyDictionary<string, string> ToDictionary()
+    {
+        var map = new Dictionary<string, string>();
+
+        VisitNotNullValues(map.Add);
+
+        return map;
+    }
+
     internal void VisitNotNullValues(Action<string, string> action)
     {
         if (alignContent != null)
@@ -73,7 +82,7 @@ partial class Style
         {
             action(nameof(backdropFilter), backdropFilter);
         }
-		
+
         if (backfaceVisibility != null)
         {
             action(nameof(backfaceVisibility), backfaceVisibility);
@@ -1213,18 +1222,20 @@ partial class Style
         {
             action("WebkitBackgroundClip", webkitBackgroundClip);
         }
-        
+
         if (webkitTextFillColor != null)
         {
             action("WebkitTextFillColor", webkitTextFillColor);
         }
-    }
-    public IReadOnlyDictionary<string, string> ToDictionary()
-    {
-        var map = new Dictionary<string, string>();
 
-        VisitNotNullValues(map.Add);
+        if (webkitFontSmoothing != null)
+        {
+            action("WebkitFontSmoothing", webkitFontSmoothing);
+        }
 
-        return map;
+        if (mozOsxFontSmoothing != null)
+        {
+            action("MozOsxFontSmoothing", mozOsxFontSmoothing);
+        }
     }
 }

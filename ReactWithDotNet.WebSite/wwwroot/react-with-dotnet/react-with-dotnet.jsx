@@ -50,7 +50,7 @@ function Before3rdPartyComponentAccess(dotNetFullClassNameOf3rdPartyComponent)
     }
 }
 
-function AttachToBefore3rdPartyComponentAccess(fn)
+function BeforeAnyThirdPartyComponentAccess(fn)
 {
     Before3rdPartyComponentAccessListeners.push(fn);
 }
@@ -228,7 +228,7 @@ function PushToFunctionExecutionQueue(fn)
     return entry;
 }
 
-function GetValueInPath(obj, steps)
+function TryGetValueInPath(obj, steps)
 {
     steps = typeof steps === "string" ? steps.split(".") : steps;
 
@@ -238,7 +238,7 @@ function GetValueInPath(obj, steps)
     {
         if (obj == null)
         {
-            throw CreateNewDeveloperError("Path is not read. Path:" + steps.join("."));
+            return { success: false, error: CreateNewDeveloperError("Path is not read. Path:" + steps.join(".")) };
         }
 
         let step = steps[i];
@@ -253,7 +253,18 @@ function GetValueInPath(obj, steps)
         obj = obj[step];
     }
 
-    return obj;
+    return { success: true, value: obj };
+}
+
+function GetValueInPath(obj, steps)
+{
+    const response = TryGetValueInPath(obj, steps);
+    if (response.success)
+    {
+        return response.value;
+    }
+
+    throw response.error;
 }
 
 function SetValueInPath(obj, steps, value)
@@ -409,12 +420,12 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
     map['0'][DotNetProperties] = Object.assign({}, NotNull(rootFiberNode.stateNode.state[DotNetProperties]));
 
-    // calculate $childrenCount
+    // calculate $LogicalChildrenCount
     {
-        const rootNode = rootFiberNode.stateNode.state[RootNode];
-        if (rootNode && rootNode.$children && rootNode.$children.length > 0)
+        const logicalChildrenCountCalculation = TryGetValueInPath(rootFiberNode.stateNode, "props.$jsonNode.$LogicalChildrenCount");
+        if (logicalChildrenCountCalculation.success)
         {
-            map['0'][DotNetProperties].$childrenCount = rootNode.$children.length;
+            map['0'][DotNetProperties].$LogicalChildrenCount = logicalChildrenCountCalculation.value;
         }
     }
 
@@ -758,6 +769,32 @@ const CreateNewBuildContext = () =>
     return context;
 };
 
+function FindRealNodeByFakeChild(fakeChildIndex, rootNodeInState, jsonNodeInProps)
+{
+    if (rootNodeInState && rootNodeInState.$FakeChild === fakeChildIndex)
+    {
+        return jsonNodeInProps;
+    }
+    const childrenInState = rootNodeInState.$children;
+    const childrenInProps = jsonNodeInProps.$children;
+
+    if (childrenInState && childrenInProps && childrenInState.length <= childrenInProps.length)
+    {
+        const length = childrenInState.length;
+
+        for (var i = 0; i < length; i++)
+        {
+            var record = FindRealNodeByFakeChild(fakeChildIndex, childrenInState[i], childrenInProps[i]);
+            if (record != null)
+            {
+                return record;
+            }
+        }
+    }
+
+    return null;
+}
+
 function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRootNode)
 {
     if (jsonNode == null)
@@ -772,7 +809,9 @@ function ConvertToReactElement(buildContext, jsonNode, component, isConvertingRo
 
     if (jsonNode.$FakeChild != null)
     {
-        jsonNode = component.props.$jsonNode[RootNode].$children[jsonNode.$FakeChild];
+        // jsonNode = component.props.$jsonNode[RootNode].$children[jsonNode.$FakeChild];
+
+        jsonNode = FindRealNodeByFakeChild(jsonNode.$FakeChild, component.state[RootNode], component.props.$jsonNode[RootNode]);
     }
 
     if (jsonNode.$isPureComponent === 1)
@@ -1666,7 +1705,11 @@ const ExternalJsObjectMap = {
     'React.Fragment': React.Fragment
 };
 
-function RegisterExternalJsObject(key/*string*/, value/* componentFullName | functionName */)
+/**
+ *  @param {string} key
+ *  @param {Function|Object} value
+ */
+function RegisterExternalJsObject(key, value)
 {
     if (ExternalJsObjectMap[key] != null)
     {
@@ -1676,6 +1719,24 @@ function RegisterExternalJsObject(key/*string*/, value/* componentFullName | fun
 }
 function GetExternalJsObject(key)
 {
+    var findResponse = TryFindExternalObject(key);
+    if (findResponse != null)
+    {
+        if (findResponse.isCacheEnabled === true)
+        {
+            if (findResponse.value == null)
+            {
+                throw CreateNewDeveloperError(key + ' ==> isCacheEnabled is true but value property is null.');
+            }
+
+            RegisterExternalJsObject(key, findResponse.value);
+
+            return findResponse.value;
+        }
+
+        return findResponse;
+    }
+
     const value = ExternalJsObjectMap[key];
     if (value == null)
     {
@@ -1684,6 +1745,31 @@ function GetExternalJsObject(key)
 
     return value;
 }
+
+const FindExternalObjectFnList = [];
+function OnFindExternalObject(fn)
+{
+    FindExternalObjectFnList.push(fn);
+}
+
+function TryFindExternalObject(name)
+{
+    var items = FindExternalObjectFnList;
+
+    var length = items.length;
+
+    for (var i = 0; i < length; i++)
+    {
+        var response = items[i](name);
+        if (response == null)
+        {
+            continue;
+        }
+
+        return response;
+    }
+}
+
 
 function RegisterCoreFunction(name, fn)
 {
@@ -1793,9 +1879,25 @@ RegisterCoreFunction("SetCookie", function (cookieName, cookieValue, expiredays)
     document.cookie = cookieName + "=" + escape(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
 });
 
-RegisterCoreFunction("PushHistory", function (title, url)
+RegisterCoreFunction("HistoryBack", function ()
 {
-    window.history.replaceState({}, title, url);
+    window.history.back();
+});
+RegisterCoreFunction("HistoryForward", function ()
+{
+    window.history.forward();
+});
+RegisterCoreFunction("HistoryGo", function (delta)
+{
+    window.history.go(delta);
+});
+RegisterCoreFunction("HistoryReplaceState", function (stateObj, title, url)
+{
+    if (stateObj == null)
+    {
+        stateObj = {};
+    }
+    window.history.replaceState(stateObj, title, url);
 });
 
 RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMethodArguments)
@@ -2106,8 +2208,10 @@ function IsTwoStringHasValueAndSame(a, b)
         return false;
     }
 
-    a = a.replaceAll(' ', '').replaceAll('\n', '').replaceAll('\r', '');
-    b = b.replaceAll(' ', '').replaceAll('\n', '').replaceAll('\r', '');
+    var anyWhiteSpaceRegex = /\s/g;
+
+    a = a.replace(anyWhiteSpaceRegex, '');
+    b = b.replace(anyWhiteSpaceRegex, '');
 
     return a === b;
 }
@@ -2137,9 +2241,10 @@ var ReactWithDotNet =
     BeforeSendRequest: x=>x,
     RegisterExternalJsObject: RegisterExternalJsObject,
     GetExternalJsObject: GetExternalJsObject,
-    BeforeAny3rdPartyComponentAccess: AttachToBefore3rdPartyComponentAccess,
+    BeforeAnyThirdPartyComponentAccess: BeforeAnyThirdPartyComponentAccess,
     TryLoadCssByHref: TryLoadCssByHref,
     OnThirdPartyComponentPropsCalculated: OnThirdPartyComponentPropsCalculated,
+    OnFindExternalObject: OnFindExternalObject,
 
     IsMediaMobile: IsMobile,
     IsMediaTablet: IsTablet,

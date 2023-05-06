@@ -1,11 +1,7 @@
 ﻿namespace ReactWithDotNet;
 
-class Space : HtmlElement
+sealed class Space : HtmlElement
 {
-    public override string Type => nameof(div);
-
-    public string spaceValue { get; set; }
-    
     public Space(double valueInPx)
     {
         spaceValue = $"{valueInPx}px";
@@ -15,6 +11,9 @@ class Space : HtmlElement
     {
         spaceValue = value;
     }
+
+    public string spaceValue { get; set; }
+    public override string Type => nameof(div);
 
     internal override void BeforeSerialize(HtmlElement parent)
     {

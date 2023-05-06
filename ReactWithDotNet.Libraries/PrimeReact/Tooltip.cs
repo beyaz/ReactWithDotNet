@@ -5,24 +5,24 @@ public class Tooltip : ElementBase
     /// <summary>
     /// Position of the tooltip, valid values are right, left, top and bottom.
     /// </summary>
-    [React]
+    [ReactProp]
     public string position { get; set; }
 
     /// <summary>
     /// Target element on global tooltip option.
     /// </summary>
-    [React]
+    [ReactProp]
     public string target { get; set; }
 
 
-    [React]
+    [ReactProp]
     public string content { get; set; }
 
     /// <summary>
     /// Delay to show the tooltip in milliseconds.
     /// <para>Default: 0</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public double showDelay { get; set; }
 
 
@@ -31,7 +31,7 @@ public class Tooltip : ElementBase
     /// 	Delay to update the tooltip in milliseconds.
     /// <para>Default: 0</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public double updateDelay { get; set; }
 
 
@@ -40,7 +40,7 @@ public class Tooltip : ElementBase
     /// Delay to hide the tooltip in milliseconds.
     /// <para>Default: 0</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public double hideDelay { get; set; }
 
     protected override Element GetSuspenseFallbackElement()

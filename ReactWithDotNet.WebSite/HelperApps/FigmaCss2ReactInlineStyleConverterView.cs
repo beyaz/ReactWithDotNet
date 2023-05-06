@@ -1,11 +1,13 @@
 ﻿using System.Globalization;
 using ReactWithDotNet.Libraries.PrimeReact;
+using ReactWithDotNet.Libraries.react_free_scrollbar;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
 class FigmaCss2ReactInlineStyleConverterModel
 {
+    public int EditCount { get; set; }
     public string FigmaCss { get; set; }
     public string ReactInlineStyle { get; set; }
     public string StatusMessage { get; set; }
@@ -13,13 +15,34 @@ class FigmaCss2ReactInlineStyleConverterModel
 
 class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInlineStyleConverterModel>
 {
+    protected override void constructor()
+    {
+        state = new FigmaCss2ReactInlineStyleConverterModel
+        {
+            FigmaCss = @"
+font-family: 'Open Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* or 150% */
+
+
+/* Neutral/N900 */
+
+color: #4A4A49;
+"
+        };
+        state.ReactInlineStyle = FigmaCssToReactInlineCss(state.FigmaCss);
+    }
+
     protected override Element render()
     {
         var cssEditor = new CodeMirror
         {
             extensions = { "css", "githubLight" },
-            onChange = OnCssValueChanged,
-            value = state.FigmaCss,
+            onChange   = OnCssValueChanged,
+            value      = state.FigmaCss,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -39,7 +62,7 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         var csharpEditor = new CodeMirror
         {
             extensions = { "java", "githubLight" },
-            value = state.ReactInlineStyle,
+            value      = state.ReactInlineStyle,
             basicSetup =
             {
                 highlightActiveLine       = false,
@@ -59,8 +82,8 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         var statusMessageEditor = new Message
         {
             severity = "success",
-            text = state.StatusMessage,
-            style = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
+            text     = state.StatusMessage,
+            style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
 
         return new FlexColumn
@@ -69,34 +92,30 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             Padding(10),
 
             PrimeReactCssLibs,
-
-            new div(Text("Figma css to React inline style")) { style = { fontSize = "23px", padding = "20px", textAlign = "center" } },
-            new Splitter
+            new div(FontSize23, Padding(10), TextAlignCenter)
             {
-                layout = SplitterLayoutType.horizontal,
-                style =
+                "Figma css to React inline style",
+                (small)" ( paste any figma css text to left panel )"
+            },
+            new FlexRow(WidthHeightMaximized, Height(400), BorderForPaper, BorderRadiusForPaper)
+            {
+                new FreeScrollBar
                 {
-                    width  = "100%",
-                    height = "100%"
-                },
-                children =
-                {
-                    new SplitterPanel
+                    style =
                     {
-                        size = 50,
-                        children =
-                        {
-                            cssEditor
-                        }
+                        Height(400),
+                        WidthMaximized
                     },
-                    new SplitterPanel
+                    children = { cssEditor }
+                },
+                new FreeScrollBar
+                {
+                    style =
                     {
-                        size = 50,
-                        children =
-                        {
-                            csharpEditor
-                        }
-                    }
+                        Height(400),
+                        WidthMaximized
+                    },
+                    children = { csharpEditor }
                 }
             },
 
@@ -104,37 +123,9 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
         };
     }
 
-    void ClearStatusMessage()
+    static string FigmaCssToReactInlineCss(string figmaCssText)
     {
-        state.StatusMessage = null;
-    }
-
-    void OnCssValueChanged(string figmaCssText)
-    {
-        state.StatusMessage = null;
-
-        state.FigmaCss = figmaCssText;
-
-        if (string.IsNullOrWhiteSpace(figmaCssText))
-        {
-            state.ReactInlineStyle = null;
-            return;
-        }
-
-        try
-        {
-            state.ReactInlineStyle = string.Join("," + Environment.NewLine, splitToLines(figmaCssText).Select(processLine));
-
-            Client.CopyToClipboard(state.ReactInlineStyle);
-
-            state.StatusMessage = "Copied to clipboard.";
-
-            Client.GotoMethod(2000, ClearStatusMessage);
-        }
-        catch (Exception exception)
-        {
-            state.StatusMessage = "Error occured: " + exception;
-        }
+        return string.Join("," + Environment.NewLine, splitToLines(figmaCssText).Select(processLine));
 
         static IEnumerable<string> splitToLines(string figmaCssText)
         {
@@ -168,6 +159,42 @@ class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInli
             }
 
             return key;
+        }
+    }
+
+    void ClearStatusMessage()
+    {
+        state.StatusMessage = null;
+    }
+
+    void OnCssValueChanged(string figmaCssText)
+    {
+        state.EditCount++;
+
+        state.StatusMessage = null;
+
+        state.FigmaCss = figmaCssText;
+
+        if (string.IsNullOrWhiteSpace(figmaCssText))
+        {
+            state.ReactInlineStyle = null;
+            return;
+        }
+
+        try
+        {
+            state.ReactInlineStyle = FigmaCssToReactInlineCss(figmaCssText);
+
+            if (state.EditCount > 1)
+            {
+                Client.CopyToClipboard(state.ReactInlineStyle);
+                state.StatusMessage = "Copied to clipboard.";
+                Client.GotoMethod(700, ClearStatusMessage);
+            }
+        }
+        catch (Exception exception)
+        {
+            state.StatusMessage = "Error occured: " + exception;
         }
     }
 }

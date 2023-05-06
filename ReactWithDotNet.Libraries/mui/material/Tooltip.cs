@@ -9,13 +9,13 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? arrow { get; set; }
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
@@ -32,7 +32,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default {}
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic components { get; } = new ExpandoObject();
     
@@ -51,7 +51,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default {}
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic componentsProps { get; } = new ExpandoObject();
     
@@ -62,7 +62,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? describeChild { get; set; }
     
     /// <summary>
@@ -70,7 +70,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableFocusListener { get; set; }
     
     /// <summary>
@@ -78,7 +78,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableHoverListener { get; set; }
     
     /// <summary>
@@ -88,7 +88,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableInteractive { get; set; }
     
     /// <summary>
@@ -96,7 +96,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableTouchListener { get; set; }
     
     /// <summary>
@@ -106,7 +106,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 100
     /// </summary>
-    [React]
+    [ReactProp]
     public double? enterDelay { get; set; }
     
     /// <summary>
@@ -114,7 +114,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 0
     /// </summary>
-    [React]
+    [ReactProp]
     public double? enterNextDelay { get; set; }
     
     /// <summary>
@@ -122,7 +122,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 700
     /// </summary>
-    [React]
+    [ReactProp]
     public double? enterTouchDelay { get; set; }
     
     /// <summary>
@@ -130,7 +130,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? followCursor { get; set; }
     
     /// <summary>
@@ -138,7 +138,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     If you don't provide this prop. It falls back to a randomly generated id.
     /// </summary>
-    [React]
+    [ReactProp]
     public string id { get; set; }
     
     /// <summary>
@@ -148,7 +148,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 0
     /// </summary>
-    [React]
+    [ReactProp]
     public double? leaveDelay { get; set; }
     
     /// <summary>
@@ -156,7 +156,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 1500
     /// </summary>
-    [React]
+    [ReactProp]
     public double? leaveTouchDelay { get; set; }
     
     /// <summary>
@@ -178,7 +178,7 @@ public sealed class Tooltip : ElementBase
     /// <summary>
     ///     If `true`, the component is shown.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? open { get; set; }
     
     /// <summary>
@@ -186,7 +186,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 'bottom'
     /// </summary>
-    [React]
+    [ReactProp]
     public string placement { get; set; }
     
     /// <summary>
@@ -194,7 +194,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default {}
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic PopperProps { get; } = new ExpandoObject();
     
@@ -211,7 +211,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default {}
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic slotProps { get; } = new ExpandoObject();
     
@@ -226,21 +226,21 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default {}
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic slots { get; } = new ExpandoObject();
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
     /// <summary>
     ///     Tooltip title. Zero-length titles string, undefined, null and false are never displayed.
     /// </summary>
-    [React]
+    [ReactProp]
     public Element title { get; set; }
     
     protected override Element GetSuspenseFallbackElement()

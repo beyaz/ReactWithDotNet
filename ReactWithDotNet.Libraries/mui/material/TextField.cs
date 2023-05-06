@@ -11,7 +11,7 @@ partial class TextField
     ///     <br/>
     ///     You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
     /// </summary>
-    [React]
+    [ReactProp]
     public string autoComplete { get; set; }
     
     /// <summary>
@@ -19,13 +19,13 @@ partial class TextField
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? autoFocus { get; set; }
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
@@ -38,13 +38,13 @@ partial class TextField
     ///     <br/>
     ///     @default 'primary'
     /// </summary>
-    [React]
+    [ReactProp]
     public string color { get; set; }
     
     /// <summary>
     ///     The default value. Use when the component is not controlled.
     /// </summary>
-    [React]
+    [ReactProp]
     public string defaultValue { get; set; }
     
     /// <summary>
@@ -52,7 +52,7 @@ partial class TextField
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disabled { get; set; }
     
     /// <summary>
@@ -60,13 +60,13 @@ partial class TextField
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? error { get; set; }
     
     /// <summary>
     ///     Props applied to the [`FormHelperText`](/material-ui/api/form-helper-text/) element.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic FormHelperTextProps { get; } = new ExpandoObject();
     
@@ -75,13 +75,13 @@ partial class TextField
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? fullWidth { get; set; }
     
     /// <summary>
     ///     The helper text content.
     /// </summary>
-    [React]
+    [ReactProp]
     public Element helperText { get; set; }
     
     /// <summary>
@@ -89,7 +89,7 @@ partial class TextField
     ///     <br/>
     ///     Use this prop to make `label` and `helperText` accessible for screen readers.
     /// </summary>
-    [React]
+    [ReactProp]
     public string id { get; set; }
     
     /// <summary>
@@ -97,20 +97,20 @@ partial class TextField
     ///     <br/>
     ///     Pointer events like `onClick` are enabled if and only if `shrink` is `true`.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic InputLabelProps { get; } = new ExpandoObject();
     
     /// <summary>
     ///     [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
     /// </summary>
-    [React]
+    [ReactProp]
     public string inputProps { get; set; }
     
     /// <summary>
     ///     The label content.
     /// </summary>
-    [React]
+    [ReactProp]
     public Element label { get; set; }
     
     /// <summary>
@@ -118,25 +118,25 @@ partial class TextField
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? multiline { get; set; }
     
     /// <summary>
     ///     Name attribute of the `input` element.
     /// </summary>
-    [React]
+    [ReactProp]
     public string name { get; set; }
     
-    [React]
+    [ReactProp]
     public string onBlur { get; set; }
     
-    [React]
+    [ReactProp]
     public string onFocus { get; set; }
     
     /// <summary>
     ///     The short hint displayed in the `input` before the user enters a value.
     /// </summary>
-    [React]
+    [ReactProp]
     public string placeholder { get; set; }
     
     /// <summary>
@@ -144,25 +144,25 @@ partial class TextField
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? required { get; set; }
     
     /// <summary>
     ///     Number of rows to display when multiline option is set to true.
     /// </summary>
-    [React]
+    [ReactProp]
     public string rows { get; set; }
     
     /// <summary>
     ///     Maximum number of rows to display when multiline option is set to true.
     /// </summary>
-    [React]
+    [ReactProp]
     public string maxRows { get; set; }
     
     /// <summary>
     ///     Minimum number of rows to display when multiline option is set to true.
     /// </summary>
-    [React]
+    [ReactProp]
     public string minRows { get; set; }
     
     /// <summary>
@@ -172,38 +172,38 @@ partial class TextField
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? select { get; set; }
     
     /// <summary>
     ///     Props applied to the [`Select`](/material-ui/api/select/) element.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic SelectProps { get; } = new ExpandoObject();
     
     /// <summary>
     ///     The size of the component.
     /// </summary>
-    [React]
+    [ReactProp]
     public string size { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
     /// <summary>
     ///     Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
     /// </summary>
-    [React]
+    [ReactProp]
     public string type { get; set; }
     
     /// <summary>
     ///     The value of the `input` element, required for a controlled component.
     /// </summary>
-    [React]
+    [ReactProp]
     public string value { get; set; }
 }

@@ -29,10 +29,12 @@ sealed class ElementSerializerContext
     public readonly Tracer Tracer = new();
 
     internal readonly Stack<ReactComponentBase> componentStack = new();
-    
+
     internal readonly DynamicStyleContentForEmbeddInClient DynamicStyles = new();
 
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+
+    public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 
     public int ComponentUniqueIdentifierNextValue { get; set; }
 
@@ -41,8 +43,6 @@ sealed class ElementSerializerContext
     public bool SkipHandleCachableMethods { get; set; }
 
     public StateTree StateTree { get; init; }
-
-    public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 }
 
 static partial class ElementSerializer
@@ -51,6 +51,165 @@ static partial class ElementSerializer
     const string ___RootNode___ = "$RootNode";
     const string ___Type___ = "$Type";
     const string ___TypeOfState___ = "$TypeOfState";
+
+    static readonly ValueExportInfo<object> NotExportableObject = ValueExportInfo<object>.NotExportable;
+
+    public static IReadOnlyList<CssPseudoCodeInfo> CalculatePseudos(Style style)
+    {
+        if (style is null)
+        {
+            return null;
+        }
+
+        List<CssPseudoCodeInfo> pseudos = null;
+
+        if (style._hover is not null)
+        {
+            // ReSharper disable once UseObjectOrCollectionInitializer
+            pseudos = new List<CssPseudoCodeInfo>();
+
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "hover",
+                BodyOfCss = style._hover.ToCssWithImportant()
+            });
+        }
+
+        if (style._before is not null)
+        {
+            pseudos ??= new List<CssPseudoCodeInfo>();
+
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "before",
+                BodyOfCss = style._before.ToCssWithImportant()
+            });
+        }
+
+        if (style._after is not null)
+        {
+            pseudos ??= new List<CssPseudoCodeInfo>();
+
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "after",
+                BodyOfCss = style._after.ToCssWithImportant()
+            });
+        }
+
+        if (style._active is not null)
+        {
+            pseudos ??= new List<CssPseudoCodeInfo>();
+
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "active",
+                BodyOfCss = style._active.ToCssWithImportant()
+            });
+        }
+
+        if (style._focus is not null)
+        {
+            pseudos ??= new List<CssPseudoCodeInfo>();
+
+            pseudos.Add(new CssPseudoCodeInfo
+            {
+                Name      = "focus",
+                BodyOfCss = style._focus.ToCssWithImportant()
+            });
+        }
+
+        return pseudos;
+    }
+
+    internal static void InitializeKeyIfNotExists(Element element)
+    {
+        if (element.key == null)
+        {
+            throw new DeveloperException("key of react component cannot be null");
+        }
+
+        var children = element._children;
+        if (children == null)
+        {
+            return;
+        }
+
+        var childrenCount = children.Count;
+
+        for (var index = 0; index < childrenCount; index++)
+        {
+            var sibling = children[index];
+            if (sibling is not null)
+            {
+                sibling.key = index.ToString();
+            }
+        }
+    }
+
+    static (bool needToExport, string cssClassName) ConvertStyleToCssClass(Style style,
+                                                                           bool fullExport,
+                                                                           int? componentUniqueIdentifier,
+                                                                           Func<CssClassInfo, string> getCssClassName)
+    {
+        if (style is null)
+        {
+            return (false, null);
+        }
+
+        var pseudos = CalculatePseudos(style);
+
+        if (fullExport)
+        {
+            if (style.IsEmpty && pseudos is null && style._mediaQueries is null)
+            {
+                return (false, null);
+            }
+        }
+        else
+        {
+            if (pseudos is null && style._mediaQueries is null)
+            {
+                return (false, null);
+            }
+        }
+
+        componentUniqueIdentifier ??= 1;
+
+        var cssClassInfo = new CssClassInfo
+        {
+            ComponentUniqueIdentifier = componentUniqueIdentifier,
+            Name                      = "_rwd_" + componentUniqueIdentifier + "_",
+            Pseudos                   = pseudos,
+            MediaQueries              = CalculateMediaQueries(style._mediaQueries),
+            Body                      = fullExport ? style.ToCssWithImportant() : null
+        };
+
+        return (true, getCssClassName(cssClassInfo));
+
+        static IReadOnlyList<(string mediaRule, string cssBody)> CalculateMediaQueries(List<MediaQuery> mediaQueries)
+        {
+            if (mediaQueries == null || mediaQueries.Count == 0)
+            {
+                return null;
+            }
+
+            var uniqueList = new List<(string mediaRule, string cssBody)>();
+
+            foreach (var mediaQuery in mediaQueries)
+            {
+                var mediaRule = mediaQuery.query;
+                var cssBody   = mediaQuery.style.ToCssWithImportant();
+
+                if (!uniqueList.Any(x => x.mediaRule == mediaRule && x.cssBody == cssBody))
+                {
+                    uniqueList.Add((mediaRule, cssBody));
+                }
+            }
+
+            return uniqueList;
+        }
+    }
 
     static BindInfo GetExpressionAsBindingInfo(PropertyInfo propertyInfo, Func<(IReadOnlyList<string> path, bool isConnectedToState)> calculateSourcePathFunc)
     {
@@ -88,34 +247,10 @@ static partial class ElementSerializer
         return propertyName;
     }
 
-    sealed class ValueExportInfo<TValue> where TValue : class
-    {
-        public readonly TValue value;
-        public readonly bool needToExport;
-
-        ValueExportInfo(TValue value)
-        {
-            this.value   = value;
-            needToExport = true;
-        }
-
-        ValueExportInfo()
-        {
-            value        = default;
-            needToExport = false;
-        }
-
-        public static implicit operator ValueExportInfo<TValue>(TValue value) => new(value);
-
-        public static readonly ValueExportInfo<TValue> NotExportable = new();
-    }
-
-    static readonly ValueExportInfo<object> NotExportableObject = ValueExportInfo<object>.NotExportable;
-    
     static ValueExportInfo<object> getPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
     {
         var propertyInfo = property.PropertyInfo;
-            
+
         var propertyValue = property.GetValueFunc(instance);
 
         var isDefaultValue = propertyValue == property.DefaultValue;
@@ -160,11 +295,11 @@ static partial class ElementSerializer
         {
             if (action.Target is ReactComponentBase target)
             {
-                propertyValue = new RemoteMethodInfo {
-                    IsRemoteMethod = true, 
-                    remoteMethodName = action.Method.GetNameWithToken(),
+                propertyValue = new RemoteMethodInfo
+                {
+                    IsRemoteMethod                   = true,
+                    remoteMethodName                 = action.Method.GetNameWithToken(),
                     HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
-                    
                 };
             }
             else
@@ -177,7 +312,6 @@ static partial class ElementSerializer
         {
             if (propertyInfo.PropertyType.IsGenericAction1or2or3())
             {
-                
                 var @delegate = (Delegate)propertyValue;
                 if (@delegate is not null)
                 {
@@ -224,7 +358,7 @@ static partial class ElementSerializer
                     {
                         return constantExpression.Value;
                     }
-                    
+
                     if (expression is MethodCallExpression methodCallExpression)
                     {
                         expression = methodCallExpression.Object;
@@ -255,7 +389,7 @@ static partial class ElementSerializer
                 throw new NotImplementedException();
             }
 
-            var bindInfo = GetExpressionAsBindingInfo(propertyInfo,  calculateSourcePathFunc);
+            var bindInfo = GetExpressionAsBindingInfo(propertyInfo, calculateSourcePathFunc);
             if (bindInfo == null)
             {
                 return NotExportableObject;
@@ -269,8 +403,7 @@ static partial class ElementSerializer
             var debounceTimeout = instance.GetType().GetProperty(propertyInfo.Name + "DebounceTimeout")?.GetValue(instance) as int?;
             if (debounceTimeout > 0)
             {
-                var debounceHandler = instance.GetType().GetProperty(propertyInfo.Name + "DebounceHandler")?.GetValue(instance) as Action;
-                if (debounceHandler is not null)
+                if (instance.GetType().GetProperty(propertyInfo.Name + "DebounceHandler")?.GetValue(instance) is Action debounceHandler)
                 {
                     bindInfo.DebounceTimeout = debounceTimeout;
                     bindInfo.DebounceHandler = debounceHandler.Method.GetNameWithToken();
@@ -284,10 +417,10 @@ static partial class ElementSerializer
         {
             return htmlTextNode.innerText;
         }
-        
+
         if (propertyValue is Element element)
         {
-            element.key ??= "0";
+            element.key ??= propertyInfo.Name;
 
             propertyValue = new InnerElementInfo
             {
@@ -316,7 +449,7 @@ static partial class ElementSerializer
                 var reactNode = (Element)func.DynamicInvoke(item);
                 if (reactNode is not null && item is not null)
                 {
-                    reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString()??"0";
+                    reactNode.key ??= item.GetType().GetProperty("key")?.GetValue(item)?.ToString() ?? "0";
                 }
 
                 return reactNode.ToJsonMap(context);
@@ -366,127 +499,19 @@ static partial class ElementSerializer
         return reactStatefulComponent.GetType().GetFullName();
     }
 
-    public static IReadOnlyList<CssPseudoCodeInfo> CalculatePseudos(Style style)
-    {
-        if (style is null)
-        {
-            return null;
-        }
-        
-        List<CssPseudoCodeInfo> pseudos = null;
-
-        if (style._hover is not null)
-        {
-            // ReSharper disable once UseObjectOrCollectionInitializer
-            pseudos = new List<CssPseudoCodeInfo>();
-
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name = "hover",
-                BodyOfCss = style._hover.ToCssWithImportant()
-            });
-        }
-
-        if (style._before is not null)
-        {
-            pseudos ??= new List<CssPseudoCodeInfo>();
-
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name = "before",
-                BodyOfCss = style._before.ToCssWithImportant()
-            });
-        }
-
-        if (style._after is not null)
-        {
-            pseudos ??= new List<CssPseudoCodeInfo>();
-
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name = "after",
-                BodyOfCss = style._after.ToCssWithImportant()
-            });
-        }
-
-        if (style._active is not null)
-        {
-            pseudos ??= new List<CssPseudoCodeInfo>();
-
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name = "active",
-                BodyOfCss = style._active.ToCssWithImportant()
-            });
-        }
-
-        if (style._focus is not null)
-        {
-            pseudos ??= new List<CssPseudoCodeInfo>();
-
-            pseudos.Add(new CssPseudoCodeInfo
-            {
-                Name = "focus",
-                BodyOfCss = style._focus.ToCssWithImportant()
-            });
-        }
-
-        return pseudos;
-    }
-
-    static (bool needToExport, string cssClassName) ConvertStyleToCssClass(Style style, 
-                                                                           bool fullExport,
-                                                                           int? componentUniqueIdentifier,
-                                                                           Func<CssClassInfo,string> getCssClassName)
-    {
-        if (style is null)
-        {
-            return (false, null);
-        }
-        
-        var pseudos = CalculatePseudos(style);
-
-        if (fullExport)
-        {
-            if (style.IsEmpty && pseudos is null && style._mediaQueries is null)
-            {
-                return (false, null);
-            }
-        }
-        else
-        {
-            if (pseudos is null && style._mediaQueries is null)
-            {
-                return (false, null);
-            }
-        }
-
-        componentUniqueIdentifier ??= 1;
-        
-        var cssClassInfo = new CssClassInfo
-        {
-            ComponentUniqueIdentifier = componentUniqueIdentifier,
-            Name                      = "_rwd_" + componentUniqueIdentifier + "_",
-            Pseudos                   = pseudos,
-            MediaQueries              = style._mediaQueries?.Select(pair => (pair.query, pair.style.ToCssWithImportant())).ToList(),
-            Body                      = fullExport ? style.ToCssWithImportant() : null
-        };
-
-        return (true, getCssClassName(cssClassInfo));
-    }
-
     static ValueExportInfo<object> GetStylePropertyValueOfHtmlElementForSerialize(object instance, Style style, ElementSerializerContext context)
     {
         var response = ConvertStyleToCssClass(style, false, context.componentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
-        if (response.needToExport  is false)
+        if (response.needToExport is false)
         {
             if (style.IsEmpty == false)
             {
                 return style;
             }
+
             return NotExportableObject;
         }
-        
+
         var pseudos = CalculatePseudos(style);
 
         if (pseudos is not null || style._mediaQueries is not null)
@@ -522,9 +547,8 @@ static partial class ElementSerializer
 
     static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo, object handlerTarget)
     {
-        
         throw DeveloperException(string.Join(Environment.NewLine,
-                                             "Delegate method should belong to ReactComponent. " ,
+                                             "Delegate method should belong to ReactComponent. ",
                                              "Please give named method to " + propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name,
                                              $"How to fix: inherit {handlerTarget?.GetType().FullName} class from ReactComponent."));
     }
@@ -550,33 +574,6 @@ static partial class ElementSerializer
         return false;
     }
 
-    internal static void InitializeKeyIfNotExists(Element element)
-    {
-        if (element.key == null)
-        {
-            throw new DeveloperException("key of react component cannot be null");
-        }
-
-        var children = element._children;
-        if (children == null)
-        {
-            return;
-        }
-
-        var childrenCount = children.Count;
-
-        for (var index = 0; index < childrenCount; index++)
-        {
-            var sibling = children[index];
-            if (sibling is not null)
-            {
-                sibling.key = index.ToString();
-            }
-        }
-    }
-
-   
-
     static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element)
     {
         if (element is null || context.BeforeSerializeElementToClient is null)
@@ -593,6 +590,27 @@ static partial class ElementSerializer
         public bool IgnoreParameters { get; set; }
         public string MethodName { get; set; }
         public object Parameter { get; set; }
+    }
+    
+    sealed class ValueExportInfo<TValue> where TValue : class
+    {
+        public static readonly ValueExportInfo<TValue> NotExportable = new();
+        public readonly bool needToExport;
+        public readonly TValue value;
+
+        ValueExportInfo(TValue value)
+        {
+            this.value   = value;
+            needToExport = true;
+        }
+
+        ValueExportInfo()
+        {
+            value        = default;
+            needToExport = false;
+        }
+
+        public static implicit operator ValueExportInfo<TValue>(TValue value) => new(value);
     }
 }
 

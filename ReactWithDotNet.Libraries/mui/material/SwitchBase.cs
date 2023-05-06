@@ -4,35 +4,35 @@ namespace ReactWithDotNet.Libraries.mui.material;
 
 public class SwitchBase : ButtonBase
 {
-    [React]
+    [ReactProp]
     public bool? autoFocus { get; set; }
     
     /// <summary>
     ///     If `true`, the component is checked.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? @checked { get; set; }
     
-    [React]
+    [ReactProp]
     public Element checkedIcon { get; set; }
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
     /// <summary>
     ///     The default checked state. Use when the component is not controlled.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? defaultChecked { get; set; }
     
     /// <summary>
     ///     If `true`, the component is disabled.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disabled { get; set; }
     
     /// <summary>
@@ -40,7 +40,7 @@ public class SwitchBase : ButtonBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableRipple { get; set; }
     
     /// <summary>
@@ -48,7 +48,7 @@ public class SwitchBase : ButtonBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableFocusRipple { get; set; }
     
     /// <summary>
@@ -62,22 +62,22 @@ public class SwitchBase : ButtonBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public string edge { get; set; }
     
-    [React]
+    [ReactProp]
     public Element icon { get; set; }
     
     /// <summary>
     ///     The id of the `input` element.
     /// </summary>
-    [React]
+    [ReactProp]
     public string id { get; set; }
     
     /// <summary>
     ///     [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
     /// </summary>
-    [React]
+    [ReactProp]
     public string inputProps { get; set; }
     
     /// <summary>
@@ -87,7 +87,7 @@ public class SwitchBase : ButtonBase
     /// <summary>
     ///     Name attribute of the `input` element.
     /// </summary>
-    [React]
+    [ReactProp]
     public string name { get; set; }
     
     /// <summary>
@@ -102,7 +102,7 @@ public class SwitchBase : ButtonBase
     ///     You can pull out the new checked state by accessing `event.target.checked` (boolean).
     /// </summary>
     
-    [React]
+    [ReactProp]
     public bool? readOnly { get; set; }
     
     /// <summary>
@@ -110,18 +110,18 @@ public class SwitchBase : ButtonBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? required { get; set; }
     
-    [React]
+    [ReactProp]
     public double? tabIndex { get; set; }
     
-    [React]
+    [ReactProp]
     public string type { get; set; }
     
     /// <summary>
     ///     The value of the component. The DOM API casts this to a string.
     /// </summary>
-    [React]
+    [ReactProp]
     public string value { get; set; }
 }

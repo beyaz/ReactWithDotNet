@@ -7,23 +7,23 @@ public class InputSwitch : ElementBase
     ///     Specifies whether a inputswitch should be checked or not.
     ///     <para>default: false</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public bool @checked { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactBind(targetProp = nameof(@checked), jsValueAccess = "e.value", eventName = "onChange")]
     public Expression<Func<bool>> checkedBind { get; set; }
 
     /// <summary>
     ///     When present, it specifies that the component should be disabled.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool disabled { get; set; }
 
     /// <summary>
     ///     Callback to invoke on value change
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + GrabOnlyValueParameterFromCommonPrimeReactEvent)]
     public Action<InputSwitchChangeTargetOptions> onChange { get; set; }
 }

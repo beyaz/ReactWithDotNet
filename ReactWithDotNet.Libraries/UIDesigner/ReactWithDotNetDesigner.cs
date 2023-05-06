@@ -317,6 +317,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 var name         = propertyInfo.Name;
                 var propertyType = propertyInfo.PropertyType;
 
+                if (propertyType.GetInterfaces().Any(x=>x==typeof(IModifier)))
+                {
+                    continue;
+                }
+
                 if (name is "state")
                 {
                     if (propertyType == typeof(EmptyState))

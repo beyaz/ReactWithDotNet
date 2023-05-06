@@ -7,7 +7,7 @@ public sealed class CardMedia : ElementBase
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
@@ -18,7 +18,7 @@ public sealed class CardMedia : ElementBase
     ///     <br/>
     ///     Note that caller must specify height otherwise the image will not be visible.
     /// </summary>
-    [React]
+    [ReactProp]
     public string image { get; set; }
     
     /// <summary>
@@ -28,16 +28,16 @@ public sealed class CardMedia : ElementBase
     ///     <br/>
     ///     Media components: `video`, `audio`, `picture`, `iframe`, `img`.
     /// </summary>
-    [React]
+    [ReactProp]
     public string src { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
-    [React]
+    [ReactProp]
     public string title { get; set; }
 }

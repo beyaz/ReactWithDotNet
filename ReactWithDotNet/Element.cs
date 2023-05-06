@@ -3,11 +3,6 @@ using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
-sealed class FakeChild : Element
-{
-    public int Index { get; set; }
-}
-
 /// <summary>
 ///     The element
 /// </summary>
@@ -95,6 +90,15 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return children.GetEnumerator();
     }
 
+    public override string ToString()
+    {
+        return CalculateHtmlText(new CalculateHtmlTextInput
+        {
+            ReactComponent = new ToStringHandlerComponent { element = this },
+            QueryString    = string.Empty
+        }).GetAwaiter().GetResult();
+    }
+
     /// <summary>
     ///     Gets the enumerator.
     /// </summary>
@@ -108,24 +112,18 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return Enumerable.Empty<IModifier>().GetEnumerator();
     }
 
-    public override string ToString()
-    {
-        
-        return CalculateHtmlText(new CalculateHtmlTextInput
-        {
-            ReactComponent     = new ToStringHandlerComponent{element = this},
-            QueryString = string.Empty
-        }).GetAwaiter().GetResult();
-    }
-
-    class ToStringHandlerComponent:ReactPureComponent
+    class ToStringHandlerComponent : ReactPureComponent
     {
         public Element element;
-        
+
         protected override Element render()
         {
             return element;
-
         }
     }
+}
+
+sealed class FakeChild : Element
+{
+    public int Index { get; set; }
 }

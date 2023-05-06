@@ -7,14 +7,14 @@ public sealed class CardActions : ElementBase
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
@@ -23,6 +23,6 @@ public sealed class CardActions : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableSpacing { get; set; }
 }

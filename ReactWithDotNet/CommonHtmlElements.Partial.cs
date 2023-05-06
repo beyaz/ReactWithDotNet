@@ -2,17 +2,13 @@ namespace ReactWithDotNet;
 
 partial class label
 {
-    [React]
+    [ReactProp]
     public string htmlFor { get; set; }
 }
 
-public sealed class Nbsp : HtmlElement
+sealed class Nbsp : HtmlElement
 {
-    internal Nbsp()
-    {
-    }
-
-    [React]
+    [ReactProp]
     public int? length { get; set; }
 }
 
@@ -28,7 +24,7 @@ partial class Mixin
     ///     <br />
     ///     &amp;nbsp;
     /// </summary>
-    public static Nbsp nbsp()
+    public static HtmlElement nbsp()
     {
         return new Nbsp();
     }
@@ -38,7 +34,7 @@ partial class Mixin
     ///     <br />
     ///     &amp;nbsp;
     /// </summary>
-    public static Nbsp nbsp(int length)
+    public static HtmlElement nbsp(int length)
     {
         return new Nbsp { length = length };
     }

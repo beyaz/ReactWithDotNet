@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,31 +5,7 @@ namespace ReactWithDotNet;
 
 partial class JsonSerializationOptionHelper
 {
-     class ValueTupleFactory : JsonConverterFactory
-    {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            Type iTuple = typeToConvert.GetInterface("System.Runtime.CompilerServices.ITuple");
-            return iTuple != null;
-        }
-
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            Type[] genericArguments = typeToConvert.GetGenericArguments();
-
-            Type converterType = genericArguments.Length switch
-            {
-                1 => typeof(ValueTupleConverter<>).MakeGenericType(genericArguments),
-                2 => typeof(ValueTupleConverter<,>).MakeGenericType(genericArguments),
-                3 => typeof(ValueTupleConverter<,,>).MakeGenericType(genericArguments),
-                // And add other cases as needed
-                _ => throw new NotSupportedException(),
-            };
-            return (JsonConverter)Activator.CreateInstance(converterType);
-        }
-    }
-
-     class ValueTupleConverter<T1> : JsonConverter<ValueTuple<T1>>
+    class ValueTupleConverter<T1> : JsonConverter<ValueTuple<T1>>
     {
         public override ValueTuple<T1> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -52,6 +26,7 @@ partial class JsonSerializationOptionHelper
                 {
                     throw new JsonException();
                 }
+
                 reader.Read();
             }
 
@@ -62,12 +37,12 @@ partial class JsonSerializationOptionHelper
         {
             writer.WriteStartObject();
             writer.WritePropertyName("Item1");
-            JsonSerializer.Serialize<T1>(writer, value.Item1, options);
+            JsonSerializer.Serialize(writer, value.Item1, options);
             writer.WriteEndObject();
         }
     }
 
-     class ValueTupleConverter<T1, T2> : JsonConverter<ValueTuple<T1, T2>>
+    class ValueTupleConverter<T1, T2> : JsonConverter<ValueTuple<T1, T2>>
     {
         public override (T1, T2) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -92,6 +67,7 @@ partial class JsonSerializationOptionHelper
                 {
                     throw new JsonException();
                 }
+
                 reader.Read();
             }
 
@@ -102,14 +78,14 @@ partial class JsonSerializationOptionHelper
         {
             writer.WriteStartObject();
             writer.WritePropertyName("Item1");
-            JsonSerializer.Serialize<T1>(writer, value.Item1, options);
+            JsonSerializer.Serialize(writer, value.Item1, options);
             writer.WritePropertyName("Item2");
-            JsonSerializer.Serialize<T2>(writer, value.Item2, options);
+            JsonSerializer.Serialize(writer, value.Item2, options);
             writer.WriteEndObject();
         }
     }
 
-     class ValueTupleConverter<T1, T2, T3> : JsonConverter<ValueTuple<T1, T2, T3>>
+    class ValueTupleConverter<T1, T2, T3> : JsonConverter<ValueTuple<T1, T2, T3>>
     {
         public override (T1, T2, T3) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -138,6 +114,7 @@ partial class JsonSerializationOptionHelper
                 {
                     throw new JsonException();
                 }
+
                 reader.Read();
             }
 
@@ -148,13 +125,36 @@ partial class JsonSerializationOptionHelper
         {
             writer.WriteStartObject();
             writer.WritePropertyName("Item1");
-            JsonSerializer.Serialize<T1>(writer, value.Item1, options);
+            JsonSerializer.Serialize(writer, value.Item1, options);
             writer.WritePropertyName("Item2");
-            JsonSerializer.Serialize<T2>(writer, value.Item2, options);
+            JsonSerializer.Serialize(writer, value.Item2, options);
             writer.WritePropertyName("Item3");
-            JsonSerializer.Serialize<T3>(writer, value.Item3, options);
+            JsonSerializer.Serialize(writer, value.Item3, options);
             writer.WriteEndObject();
         }
     }
-    
+
+    class ValueTupleFactory : JsonConverterFactory
+    {
+        public override bool CanConvert(Type typeToConvert)
+        {
+            var iTuple = typeToConvert.GetInterface("System.Runtime.CompilerServices.ITuple");
+            return iTuple != null;
+        }
+
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        {
+            var genericArguments = typeToConvert.GetGenericArguments();
+
+            var converterType = genericArguments.Length switch
+            {
+                1 => typeof(ValueTupleConverter<>).MakeGenericType(genericArguments),
+                2 => typeof(ValueTupleConverter<,>).MakeGenericType(genericArguments),
+                3 => typeof(ValueTupleConverter<,,>).MakeGenericType(genericArguments),
+                // And add other cases as needed
+                _ => throw new NotSupportedException(),
+            };
+            return (JsonConverter)Activator.CreateInstance(converterType);
+        }
+    }
 }

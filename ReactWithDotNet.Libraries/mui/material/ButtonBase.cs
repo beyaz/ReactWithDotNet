@@ -11,13 +11,13 @@ public class ButtonBase : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? centerRipple { get; set; }
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
@@ -26,7 +26,7 @@ public class ButtonBase : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disabled { get; set; }
     
     /// <summary>
@@ -40,7 +40,7 @@ public class ButtonBase : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableRipple { get; set; }
     
     /// <summary>
@@ -48,7 +48,7 @@ public class ButtonBase : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? disableTouchRipple { get; set; }
     
     /// <summary>
@@ -56,7 +56,7 @@ public class ButtonBase : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? focusRipple { get; set; }
     
     /// <summary>
@@ -72,20 +72,20 @@ public class ButtonBase : ElementBase
     ///     <br/>
     ///     if needed.
     /// </summary>
-    [React]
+    [ReactProp]
     public string focusVisibleClassName { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
     /// <summary>
     ///     Props applied to the `TouchRipple` element.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic TouchRippleProps { get; } = new ExpandoObject();
 }

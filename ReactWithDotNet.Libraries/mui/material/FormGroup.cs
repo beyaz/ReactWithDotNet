@@ -9,10 +9,10 @@ public sealed class FormGroup : ElementBase
 
 public sealed class FormControlLabel : ElementBase
 {
-    [React]
+    [ReactProp]
     public string? label { get; set; }
 
-    [React]
+    [ReactProp]
     public Element control { get; set; }
 
 }

@@ -7,33 +7,33 @@ public class Panel : ElementBase
     ///     	Defines the initial state of panel content, supports one or two-way binding as well.
     ///     <para>default: false</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public bool collapsed { get; set; }
     
     /// <summary>
     ///     Defines if content of panel can be expanded and collapsed.
     ///     <para>default: false</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public bool toggleable { get; set; }
 
     /// <summary>
     /// Custom header template of the panel.
     /// </summary>
-    [React]
+    [ReactProp]
     public string header { get; set; }
 
     /// <summary>
     ///    Header template of the panel to customize more.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient("ReactWithDotNet.PrimeReact.Panel::GetHeaderTemplate")]
     public string headerTemplate { get; set; }
 
     /// <summary>
     ///     Callback to invoke when a tab gets expanded.
     /// </summary>
-    [React]
+    [ReactProp]
     public Action<PanelToggleParams> onToggle { get; set; }
 }
 

@@ -11,7 +11,7 @@ class PageHelperApps : ReactComponent
     {
         return new FlexColumn(WidthMaximized,AlignItemsCenter)
         {
-            new FlexRow
+            new FlexRow(Gap(10))
             {
                 new Button
                 {

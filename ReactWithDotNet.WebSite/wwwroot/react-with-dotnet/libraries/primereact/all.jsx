@@ -88,7 +88,7 @@ var isFirstLoad = false;
 /**
  * @param {string} dotNetFullClassNameOf3rdPartyComponent
  */
-function BeforeAny3rdPartyComponentAccess(dotNetFullClassNameOf3rdPartyComponent)
+ReactWithDotNet.BeforeAnyThirdPartyComponentAccess(dotNetFullClassNameOf3rdPartyComponent =>
 {
     if (isFirstLoad)
     {
@@ -101,9 +101,7 @@ function BeforeAny3rdPartyComponentAccess(dotNetFullClassNameOf3rdPartyComponent
 
         RegisterGlobalStyles();
         RegisterComponents();
-    }  
-}
-
-ReactWithDotNet.BeforeAny3rdPartyComponentAccess(BeforeAny3rdPartyComponentAccess);
+    }
+});
 
 

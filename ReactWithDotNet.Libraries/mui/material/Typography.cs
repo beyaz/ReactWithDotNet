@@ -9,13 +9,13 @@ public sealed class Typography : ElementBase
     ///     <br/>
     ///     @default 'inherit'
     /// </summary>
-    [React]
+    [ReactProp]
     public string align { get; set; }
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
@@ -24,7 +24,7 @@ public sealed class Typography : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? gutterBottom { get; set; }
     
     /// <summary>
@@ -38,7 +38,7 @@ public sealed class Typography : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? noWrap { get; set; }
     
     /// <summary>
@@ -46,13 +46,13 @@ public sealed class Typography : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? paragraph { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
@@ -61,7 +61,7 @@ public sealed class Typography : ElementBase
     ///     <br/>
     ///     @default 'body1'
     /// </summary>
-    [React]
+    [ReactProp]
     public string variant { get; set; }
     
     /// <summary>
@@ -99,13 +99,13 @@ public sealed class Typography : ElementBase
     ///     <br/>
     ///     }
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic variantMapping { get; } = new ExpandoObject();
     
-    [React]
+    [ReactProp]
     public string color { get; set; }
     
-    [React]
+    [ReactProp]
     public string component { get; set; }
 }

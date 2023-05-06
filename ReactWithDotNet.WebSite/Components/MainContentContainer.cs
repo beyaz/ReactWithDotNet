@@ -19,10 +19,10 @@ class MainContentContainer : ReactPureComponent
 
             Children(children),
 
-            MediaQueryOnMobile(MarginLeftRight("5%")),
-            MediaQueryOnTablet(MarginLeftRight("10%")),
-            MediaQueryOnDesktop(MarginLeftRight("5%")),
-            Role(nameof(MainContentContainer))
+            MediaQueryOnMobile(PaddingLeftRight("5%")),
+            MediaQueryOnTablet(PaddingLeftRight("10%")),
+            MediaQueryOnDesktop(PaddingLeftRight("5%")),
+            Data(".net_component_name", nameof(MainContentContainer))
 
         };
 

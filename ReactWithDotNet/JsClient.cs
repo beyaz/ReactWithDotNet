@@ -14,9 +14,24 @@ partial class Mixin
         client.CallJsFunction(core + nameof(DispatchEvent), eventName, eventArguments);
     }
 
-    internal static void DispatchDotNetCustomEvent(this Client client, EventSenderInfo eventName, params object[] eventArguments)
+    public static void HistoryBack(this Client client)
     {
-        client.CallJsFunction(core + nameof(DispatchDotNetCustomEvent), eventName, eventArguments);
+        client.CallJsFunction(core + nameof(HistoryBack));
+    }
+
+    public static void HistoryForward(this Client client)
+    {
+        client.CallJsFunction(core + nameof(HistoryForward));
+    }
+
+    public static void HistoryGo(this Client client, int delta)
+    {
+        client.CallJsFunction(core + nameof(HistoryGo), delta);
+    }
+
+    public static void HistoryReplaceState(this Client client, object stateObj, string title, string url)
+    {
+        client.CallJsFunction(core + nameof(HistoryReplaceState), stateObj, title, url);
     }
 
     public static void ListenEvent(this Client client, Action<Client> triggerMethod, Action handler)
@@ -52,7 +67,7 @@ partial class Mixin
             {
                 throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
             }
-            
+
             client.CallJsFunction(core + nameof(OnOutsideClicked), idOfElement, action.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.Value);
         }
         else
@@ -66,14 +81,14 @@ partial class Mixin
         client.ListenEvent(core + nameof(OnWindowResize), handlerAction.Method.Name);
     }
 
-    public static void PushHistory(this Client client, string title, string url)
-    {
-        client.CallJsFunction(core + nameof(PushHistory), title, url);
-    }
-
     public static void SetCookie(this Client client, string cookieName, string cookieValue, int expiredays)
     {
         client.CallJsFunction(core + nameof(SetCookie), cookieName, cookieValue, expiredays);
+    }
+
+    internal static void DispatchDotNetCustomEvent(this Client client, EventSenderInfo eventName, params object[] eventArguments)
+    {
+        client.CallJsFunction(core + nameof(DispatchDotNetCustomEvent), eventName, eventArguments);
     }
 
     internal static void InitializeDotnetComponentEventListener(this Client client, EventSenderInfo eventName, string handlerMethodName, int handlerComponentUniqueIdentifier)

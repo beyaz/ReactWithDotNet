@@ -2,17 +2,17 @@
 
 public sealed class Button : ElementBase
 {
-    [React]
+    [ReactProp]
     public string size { get; set; }
 
-    [React]
+    [ReactProp]
     public string variant { get; set; }
 
-    [React]
+    [ReactProp]
     public bool disabled { get; set; }
     
 
-        [React]
+        [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onClick { get; set; }
 }

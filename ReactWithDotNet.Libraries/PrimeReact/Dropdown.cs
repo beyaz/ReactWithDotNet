@@ -4,51 +4,51 @@ namespace ReactWithDotNet.Libraries.PrimeReact;
 
 public abstract class Dropdown : ElementBase
 {
-    [React]
+    [ReactProp]
     public string optionLabel { get; set; }
     
-    [React]
+    [ReactProp]
     public string optionValue { get; set; }
 
-    [React]
+    [ReactProp]
     public string placeholder { get; set; }
     
-    [React]
+    [ReactProp]
     public bool? autoFocus { get; set; }
     
     /// <summary>
     /// When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
     /// <para>Default: label</para>
     /// </summary>
-    [React]
+    [ReactProp]
     public string filterBy { get; set; }
 
     /// <summary>
     /// When enabled, a clear icon is displayed to clear the value.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool showClear { get; set; }
     
     /// <summary>
     /// When specified, displays an input field to filter the items on keyup.
     /// </summary>
-    [React]
+    [ReactProp]
     public bool filter { get; set; }
 }
 
 [ReactRealType(typeof(Dropdown))]
 public class Dropdown<TOption> : Dropdown
 {
-    [React]
+    [ReactProp]
     public  Action<DropdownChangeParams<TOption>> onChange { get; set; }
 
-    [React]
+    [ReactProp]
     public  IEnumerable<TOption> options { get; set; }
     
-    [React]
+    [ReactProp]
     public  TOption value { get; set; }
 
-    [React]
+    [ReactProp]
     [ReactTemplate(nameof(GetItemSourceForCalculatingItemTemplates))]
     public  Func<TOption,Element> itemTemplate { get; set; }
 

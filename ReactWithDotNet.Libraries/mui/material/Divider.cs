@@ -9,13 +9,13 @@ public sealed class Divider : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? absolute { get; set; }
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
     
@@ -26,7 +26,7 @@ public sealed class Divider : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? flexItem { get; set; }
     
     /// <summary>
@@ -34,7 +34,7 @@ public sealed class Divider : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    [React]
+    [ReactProp]
     public bool? light { get; set; }
     
     /// <summary>
@@ -42,13 +42,13 @@ public sealed class Divider : ElementBase
     ///     <br/>
     ///     @default 'horizontal'
     /// </summary>
-    [React]
+    [ReactProp]
     public string orientation { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
-    [React]
+    [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
@@ -57,7 +57,7 @@ public sealed class Divider : ElementBase
     ///     <br/>
     ///     @default 'center'
     /// </summary>
-    [React]
+    [ReactProp]
     public string textAlign { get; set; }
     
     /// <summary>
@@ -65,6 +65,6 @@ public sealed class Divider : ElementBase
     ///     <br/>
     ///     @default 'fullWidth'
     /// </summary>
-    [React]
+    [ReactProp]
     public string variant { get; set; }
 }

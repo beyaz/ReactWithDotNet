@@ -6,7 +6,7 @@ public sealed partial class Style
     public string alignContent { get; set; }
 
     /// <summary>
-    /// |˂-?-˃| center flex-start flex-end stretch baseline
+    ///     |˂-?-˃| center flex-start flex-end stretch baseline
     /// </summary>
     public string alignItems { get; set; }
 
@@ -32,11 +32,11 @@ public sealed partial class Style
 
     public string animationTimingFunction { get; set; }
 
-	public string backdropFilter { get; set; }
+    public string backdropFilter { get; set; }
 
     public string backfaceVisibility { get; set; }
 
-	public string background { get; set; }	
+    public string background { get; set; }
 
     public string backgroundAttachment { get; set; }
 
@@ -129,7 +129,7 @@ public sealed partial class Style
     public string boxShadow { get; set; }
 
     /// <summary>
-    /// Allows us to include the padding and border in an element's total width and height.
+    ///     Allows us to include the padding and border in an element's total width and height.
     /// </summary>
     public string boxSizing { get; set; }
 
@@ -143,17 +143,11 @@ public sealed partial class Style
 
     public string color { get; set; }
 
-    public string columns { get; set; }
-
     public string columnCount { get; set; }
 
     public string columnFill { get; set; }
 
     public string columnGap { get; set; }
-    
-    public string rowGap { get; set; }
-
-    public string gap { get; set; }
 
     public string columnRule { get; set; }
 
@@ -163,14 +157,16 @@ public sealed partial class Style
 
     public string columnRuleWidth { get; set; }
 
+    public string columns { get; set; }
+
     public string columnSpan { get; set; }
 
     public string columnWidth { get; set; }
 
     public string content { get; set; }
-    
+
     public string contentVisibility { get; set; }
-    
+
     public string counterIncrement { get; set; }
 
     public string counterReset { get; set; }
@@ -251,6 +247,8 @@ public sealed partial class Style
 
     public string fontWeight { get; set; }
 
+    public string gap { get; set; }
+
     public string grid { get; set; }
 
     public string gridArea { get; set; }
@@ -265,23 +263,23 @@ public sealed partial class Style
 
     public string gridColumn { get; set; }
 
-    public string gridColumnStart { get; set; }
-
     public string gridColumnEnd { get; set; }
+
+    public string gridColumnStart { get; set; }
 
     public string gridRow { get; set; }
 
-    public string gridRowStart { get; set; }
-
     public string gridRowEnd { get; set; }
+
+    public string gridRowStart { get; set; }
 
     public string gridTemplate { get; set; }
 
     public string gridTemplateAreas { get; set; }
 
-    public string gridTemplateRows { get; set; }
-
     public string gridTemplateColumns { get; set; }
+
+    public string gridTemplateRows { get; set; }
 
     public string height { get; set; }
 
@@ -289,11 +287,11 @@ public sealed partial class Style
 
     public string icon { get; set; }
 
+    public string imageOrientation { get; set; }
+
     public string imageRendering { get; set; }
 
     public string imageResolution { get; set; }
-
-    public string imageOrientation { get; set; }
 
     public string imeMode { get; set; }
 
@@ -373,13 +371,13 @@ public sealed partial class Style
 
     public string overflow { get; set; }
 
+    public string overflowClipBox { get; set; }
+
     public string overflowWrap { get; set; }
 
     public string overflowX { get; set; }
 
     public string overflowY { get; set; }
-
-    public string overflowClipBox { get; set; }
 
     public string padding { get; set; }
 
@@ -410,6 +408,8 @@ public sealed partial class Style
     public string resize { get; set; }
 
     public string right { get; set; }
+
+    public string rowGap { get; set; }
 
     public string tableLayout { get; set; }
 
@@ -471,6 +471,10 @@ public sealed partial class Style
 
     public string visibility { get; set; }
 
+    public string webkitBackgroundClip { get; set; }
+
+    public string webkitTextFillColor { get; set; }
+
     public string whiteSpace { get; set; }
 
     public string widows { get; set; }
@@ -489,8 +493,8 @@ public sealed partial class Style
 
     public string zIndex { get; set; }
 
-    public string webkitBackgroundClip { get; set; }
+    public string webkitFontSmoothing { get; set; }
+    public string mozOsxFontSmoothing { get; set; }
     
-    public string webkitTextFillColor { get; set; }
-    
+
 }

@@ -15,5 +15,24 @@ import "./react-with-dotnet/libraries/rsuite/all";
 import "./react-with-dotnet/libraries/swiper/all";
 import "./react-with-dotnet/libraries/uiw-react-codemirror/all";
 import "./react-with-dotnet/libraries/framer-motion/all";
+import "./react-with-dotnet/libraries/nextui-org/all";
+
 
 export { ReactWithDotNet };
+
+
+    
+
+
+import React, { useState } from 'react';
+
+ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.WebSite.HeaderComponents.CollapseContainer', props =>
+{
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? props.ContentOnOpened : props.ContentOnClosed}
+        </div>
+    );
+});

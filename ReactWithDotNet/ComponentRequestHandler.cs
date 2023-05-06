@@ -80,7 +80,6 @@ static class ComponentRequestHandler
             {
                 await task;
             }
-            
 
             if (request.MethodName == "FetchComponent")
             {
@@ -117,7 +116,6 @@ static class ComponentRequestHandler
                 return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
             }
 
-            
             if (instance is ReactComponentBase reactComponentBase)
             {
                 reactComponentBase.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier++;
@@ -136,7 +134,7 @@ static class ComponentRequestHandler
             }
 
             // maybe developer forget init state
-            if (instance is ReactComponent<EmptyState> reactComponent && reactComponent.state == null)
+            if (instance is ReactComponent<EmptyState> { state: null } reactComponent)
             {
                 reactComponent.state = new EmptyState();
             }
@@ -207,7 +205,7 @@ static class ComponentRequestHandler
                 {
                     foreach (var (key, value) in props)
                     {
-                        if (key == "$childrenCount")
+                        if (key == "$LogicalChildrenCount")
                         {
                             var childrenCount = Convert.ToInt32(value);
                             for (var i = 0; i < childrenCount; i++)

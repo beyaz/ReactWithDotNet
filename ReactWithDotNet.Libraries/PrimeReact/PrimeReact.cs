@@ -8,17 +8,17 @@ public class ElementBase : ThirdPartyReactComponent
     
 
 
-    [React]
+    [ReactProp]
     public string tooltip { get; set; }
 
-    [React]
+    [ReactProp]
     public string id { get; set; }
     
 
-    [React]
+    [ReactProp]
     public TooltipOptions tooltipOptions { get; set; }
 
-    [React]
+    [ReactProp]
     public string className { get; set; }
 
     protected ElementBase()

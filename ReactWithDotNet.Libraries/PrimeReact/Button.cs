@@ -9,53 +9,53 @@
 
     public class Button : ElementBase
     {
-        [React]
+        [ReactProp]
         [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
         public Action<MouseEvent> onClick { get; set; }
         
         /// <summary>
         ///     Text of the button.
         /// </summary>
-        [React]
+        [ReactProp]
         public string label { get; set; }
 
-        [React]
+        [ReactProp]
         public string icon { get; set; }
 
         /// <summary>
         /// Position of the icon, valid values are "left", "right", "top" and "bottom".
         /// </summary>
-        [React]
+        [ReactProp]
         public ButtonPositionType? iconPos { get; set; }
 
         /// <summary>
         ///Display loading icon of the button
         /// </summary>
-        [React]
+        [ReactProp]
         public bool? loading { get; set; }
 
-        [React]
+        [ReactProp]
         public bool? disabled { get; set; }
         
 
         /// <summary>
         /// Name of the loading icon or JSX.Element for loading icon.
         /// </summary>
-        [React]
+        [ReactProp]
         public string loadingIcon { get; set; }
 
-        [React]
+        [ReactProp]
         public string id { get; set; }
 
 
 
-        [React]
+        [ReactProp]
         public string badge { get; set; }
 
-        [React]
+        [ReactProp]
         public string badgeClassName { get; set; }
 
-        [React]
+        [ReactProp]
         public bool? autoFocus { get; set; }
 
     }
