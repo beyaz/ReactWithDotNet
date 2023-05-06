@@ -106,7 +106,7 @@ public abstract class ReactComponentBase : Element
     }
 
     /// <summary>
-    ///     Sample event decleration <br />
+    ///     Sample event declaration <br />
     ///     [ReactCustomEvent] public Action&lt;UserInfo,OrderInfo,CommissionInfo&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />

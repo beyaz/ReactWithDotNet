@@ -107,13 +107,13 @@ static class ComponentRequestHandler
             var type = findType(request.FullName);
             if (type == null)
             {
-                return new ComponentResponse { ErrorMessage = $"Type not found.{request.FullName}" };
+                return new ComponentResponse { ErrorMessage = $"Type not found. {request.FullName}" };
             }
 
             var instance = (Element)(input.Instance ?? Activator.CreateInstance(type));
             if (instance == null)
             {
-                return new ComponentResponse { ErrorMessage = $"Type not instanstied.{request.FullName}" };
+                return new ComponentResponse { ErrorMessage = $"Type instance not created. {request.FullName}" };
             }
 
             if (instance is ReactComponentBase reactComponentBase)
