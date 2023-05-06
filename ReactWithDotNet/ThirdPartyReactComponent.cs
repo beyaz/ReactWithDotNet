@@ -6,7 +6,9 @@ namespace ReactWithDotNet;
 
 public abstract class ThirdPartyReactComponent : Element
 {
-    internal Style _style;
+    Style _style;
+    
+    internal bool HasStyle=> _style != null;
 
     protected ThirdPartyReactComponent()
     {

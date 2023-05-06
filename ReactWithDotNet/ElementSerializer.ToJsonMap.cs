@@ -882,9 +882,9 @@ partial class ElementSerializer
         map.Add("$tag", thirdPartyReactComponent.Type);
         map.Add("key", thirdPartyReactComponent.key);
 
-        if (thirdPartyReactComponent._style is not null)
+        if (thirdPartyReactComponent.HasStyle)
         {
-            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent._style, context);
+            var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent.style, context);
             if (valueExportInfo.NeedToExport)
             {
                 map.Add("style", valueExportInfo.Value);
