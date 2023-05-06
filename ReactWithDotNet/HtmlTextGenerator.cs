@@ -42,11 +42,11 @@ static class HtmlTextGenerator
 
             if (jsonMap.tail is { key: nameof(Nbsp.length) })
             {
-                htmlNode.text = string.Join(string.Empty, Enumerable.Range(0, (int)jsonMap.tail.value).Select(_ => "&nbsp;"));
+                htmlNode.Text = string.Join(string.Empty, Enumerable.Range(0, (int)jsonMap.tail.value).Select(_ => "&nbsp;"));
                 return htmlNode;
             }
 
-            htmlNode.text = "&nbsp;";
+            htmlNode.Text = "&nbsp;";
 
             return htmlNode;
         }
@@ -58,7 +58,7 @@ static class HtmlTextGenerator
 
     static HtmlNode AsHtmlTextNode(string text)
     {
-        return new HtmlNode { IsTextNode = true, text = text };
+        return new HtmlNode { IsTextNode = true, Text = text };
     }
 
     static HtmlNode CalculateDynamicStylesAsHtmlStyleNode(JsonMap dynamicStylesMap)
@@ -89,7 +89,7 @@ static class HtmlTextGenerator
 
             Attributes = new List<HtmlAttribute> { new() { Name = "id", Value = "ReactWithDotNetDynamicCss" } },
 
-            text = sb.ToString()
+            Text = sb.ToString()
         };
     }
 
@@ -219,13 +219,13 @@ static class HtmlTextGenerator
 
         if (name == "$text")
         {
-            htmlNode.text = value.ToString();
+            htmlNode.Text = value.ToString();
             return;
         }
 
         if (name == nameof(HtmlElement.dangerouslySetInnerHTML))
         {
-            htmlNode.text = ((dangerouslySetInnerHTML)value).__html;
+            htmlNode.Text = ((dangerouslySetInnerHTML)value).__html;
 
             return;
         }
@@ -283,7 +283,7 @@ static class HtmlTextGenerator
 
         if (htmlNode.IsTextNode)
         {
-            sb.Append(htmlNode.text);
+            sb.Append(htmlNode.Text);
             return;
         }
 
@@ -312,10 +312,10 @@ static class HtmlTextGenerator
 
             appendAttributes();
 
-            if (htmlNode.text != null)
+            if (htmlNode.Text != null)
             {
                 sb.Append(">");
-                sb.Append(htmlNode.text);
+                sb.Append(htmlNode.Text);
                 finishTag();
                 return;
             }
@@ -331,9 +331,9 @@ static class HtmlTextGenerator
 
         sb.Append(">");
 
-        if (htmlNode.text != null)
+        if (htmlNode.Text != null)
         {
-            sb.Append(htmlNode.text);
+            sb.Append(htmlNode.Text);
         }
 
         if (children.Count == 1 && children[0].IsTextNode)
@@ -484,6 +484,6 @@ static class HtmlTextGenerator
         public bool IsVirtualNode;
 
         public string Tag;
-        public string text;
+        public string Text;
     }
 }
