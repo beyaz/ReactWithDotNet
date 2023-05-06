@@ -39,7 +39,7 @@ public abstract class ThirdPartyReactComponent : Element
     ///     <br />
     ///     When react component fully loaded then this element will be replace by original component.
     ///     <br />
-    ///     Default value is sipmle empty div element
+    ///     Default value is simple empty div element
     /// </summary>
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
