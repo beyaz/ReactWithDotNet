@@ -602,9 +602,9 @@ partial class ElementSerializer
             var propertyInfo = item.PropertyInfo;
 
             var valueExportInfo = GetPropertyValue(element, item, context);
-            if (valueExportInfo.needToExport)
+            if (valueExportInfo.NeedToExport)
             {
-                add(GetPropertyName(propertyInfo), valueExportInfo.value);
+                add(GetPropertyName(propertyInfo), valueExportInfo.Value);
             }
         }
     }
@@ -834,9 +834,9 @@ partial class ElementSerializer
         if (htmlElement._style is not null)
         {
             var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(htmlElement, htmlElement._style, context);
-            if (valueExportInfo.needToExport)
+            if (valueExportInfo.NeedToExport)
             {
-                map.Add("style", valueExportInfo.value);
+                map.Add("style", valueExportInfo.Value);
             }
         }
 
@@ -885,9 +885,9 @@ partial class ElementSerializer
         if (thirdPartyReactComponent._style is not null)
         {
             var valueExportInfo = GetStylePropertyValueOfHtmlElementForSerialize(thirdPartyReactComponent, thirdPartyReactComponent._style, context);
-            if (valueExportInfo.needToExport)
+            if (valueExportInfo.NeedToExport)
             {
-                map.Add("style", valueExportInfo.value);
+                map.Add("style", valueExportInfo.Value);
             }
         }
 

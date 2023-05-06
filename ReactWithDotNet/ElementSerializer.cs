@@ -595,19 +595,19 @@ static partial class ElementSerializer
     sealed class ValueExportInfo<TValue> where TValue : class
     {
         public static readonly ValueExportInfo<TValue> NotExportable = new();
-        public readonly bool needToExport;
-        public readonly TValue value;
+        public readonly bool NeedToExport;
+        public readonly TValue Value;
 
         ValueExportInfo(TValue value)
         {
-            this.value   = value;
-            needToExport = true;
+            Value   = value;
+            NeedToExport = true;
         }
 
         ValueExportInfo()
         {
-            value        = default;
-            needToExport = false;
+            Value        = default;
+            NeedToExport = false;
         }
 
         public static implicit operator ValueExportInfo<TValue>(TValue value) => new(value);
