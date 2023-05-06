@@ -6,10 +6,11 @@ namespace ReactWithDotNet;
 
 public abstract class ReactComponentBase : Element
 {
-    internal Func<Element> _designerCustomizedRender;
-    internal Style _styleForRootElement;
+    internal Func<Element> DesignerCustomizedRender;
+    
+    internal Style StyleForRootElement;
 
-    internal List<IModifier> modifiers;
+    internal List<IModifier> Modifiers;
 
     [System.Text.Json.Serialization.JsonIgnore]
     [JsonIgnore]
@@ -17,9 +18,9 @@ public abstract class ReactComponentBase : Element
     {
         get
         {
-            _styleForRootElement ??= new Style();
+            StyleForRootElement ??= new Style();
 
-            return _styleForRootElement;
+            return StyleForRootElement;
         }
     }
 
@@ -57,7 +58,7 @@ public abstract class ReactComponentBase : Element
 
     internal void InvokeConstructor() => constructor();
 
-    internal Element InvokeRender() => _designerCustomizedRender == null ? render() : _designerCustomizedRender();
+    internal Element InvokeRender() => DesignerCustomizedRender == null ? render() : DesignerCustomizedRender();
 
     protected virtual Task componentDidMount()
     {

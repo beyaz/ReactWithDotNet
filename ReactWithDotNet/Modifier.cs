@@ -219,9 +219,9 @@ static class ModifyHelper
                 return;
             }
 
-            reactStatefulComponent.modifiers ??= new List<IModifier>();
+            reactStatefulComponent.Modifiers ??= new List<IModifier>();
 
-            reactStatefulComponent.modifiers.Add(modifier);
+            reactStatefulComponent.Modifiers.Add(modifier);
 
             return;
         }

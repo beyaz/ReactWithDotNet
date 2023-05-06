@@ -120,7 +120,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                                 {
                                     component.InvokeConstructor();
                                 }
-                                component._designerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
+                                component.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
                                 
                                 return component;
                             }
