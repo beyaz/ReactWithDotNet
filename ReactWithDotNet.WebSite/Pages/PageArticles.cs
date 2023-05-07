@@ -3,8 +3,24 @@ namespace ReactWithDotNet.WebSite.Pages;
 
 class PageArticles : ReactPureComponent
 {
+    string ArticleId => Context.Query[QueryKey.Id];
+    
     protected override Element render()
     {
+
+        if (string.IsNullOrWhiteSpace(ArticleId) == false)
+        {
+            return new FlexRow(DisplayFlex, JustifyContentCenter)
+            {
+                new MainContentContainer(JustifyContentCenter, WidthMaximized, FlexDirectionColumn)
+                {
+                    new Article { FilePathInContentFolder = "tr\\6.html" }
+                }
+            };
+        }
+        
+        
+        
         return new div(Background("#f9f9f9"))
         {
             new FlexRow(DisplayFlex, JustifyContentCenter)

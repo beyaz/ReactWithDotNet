@@ -31,6 +31,7 @@ public abstract class ReactComponent<TState> : ReactWithDotNet.ReactComponent<TS
 static class QueryKey
 {
     public static string Page = "p";
+    public static string Id = "id";
 }
 
 public class LightTheme
