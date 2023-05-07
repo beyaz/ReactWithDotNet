@@ -12,7 +12,7 @@ class PageArticles : ReactPureComponent
         {
             return new FlexRow(DisplayFlex, JustifyContentCenter)
             {
-                new MainContentContainer(JustifyContentCenter, WidthMaximized, FlexDirectionColumn)
+                new MainContentContainer(JustifyContentCenter, WidthMaximized, FlexDirectionColumn, PaddingTopBottom(20))
                 {
                     new Article { FilePathInContentFolder = "tr\\6.html" }
                 }

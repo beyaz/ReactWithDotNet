@@ -8,7 +8,7 @@ class Article : ReactPureComponent
     {
         var htmlContent = GetArticleHtmlContent(FilePathInContentFolder);
 
-        return new article(PaddingLeftRight(50))
+        return new article
         {
             dangerouslySetInnerHTML = htmlContent
         };

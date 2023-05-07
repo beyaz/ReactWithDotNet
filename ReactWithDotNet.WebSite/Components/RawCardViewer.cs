@@ -36,38 +36,47 @@ class RawCardViewer : ReactPureComponent
             MediaQueryOnTablet(Width(50 | percent)),
             MediaQueryOnMobile(Width(100 | percent)),
 
-            new div
+            new a
             {
-                Background("white"),
-                BackdropFilterBlur(10),
-                Padding(20),
-                Margin(15),
-                BorderRadius(15),
-                Border(Solid(1,Theme.grey_200)),
+                Href("?p=PageArticles&id=6"),
+                TextDecorationNone,
                 
-                Hover(BorderColor(Theme.grey_300), BoxShadow(0,2,8,2,Theme.grey_100)),
-
-                MediaQueryOnDesktop(Height(150)),
-                MediaQueryOnTablet(Height(160)),
-                MediaQueryOnMobile(Height(100)),
-
-                new FlexRow(MarginBottom(12), AlignItemsCenter, Gap(5))
+                new div
                 {
-                    new FlexRowCentered(Padding(8),Background(Theme.pink100), BorderRadius("50%"))
+
+
+                    Background("white"),
+                    BackdropFilterBlur(10),
+                    Padding(20),
+                    Margin(15),
+                    BorderRadius(15),
+                    Border(Solid(1,Theme.grey_200)),
+
+                    Hover(BorderColor(Theme.grey_300), BoxShadow(0,2,8,2,Theme.grey_100)),
+
+                    MediaQueryOnDesktop(Height(150)),
+                    MediaQueryOnTablet(Height(160)),
+                    MediaQueryOnMobile(Height(200)),
+
+                    new FlexRow(MarginBottom(12), AlignItemsCenter, Gap(5))
                     {
-                        CreateTitleIcon
+                        new FlexRowCentered(Padding(8),Background(Theme.pink100), BorderRadius("50%"))
+                        {
+                            CreateTitleIcon
+                        },
+
+                        new div(FontWeightBold, FontSize(1.1 | rem))
+                        {
+                            Model.Title
+                        }
                     },
-
-                    new div(FontWeightBold, FontSize(1.1 | rem))
+                    new div(Color(Theme.grey_700), FontSize(0.875|rem))
                     {
-                        Model.Title
+                        Model.Description
                     }
-                },
-                new div(Color(Theme.grey_700), FontSize(0.875|rem))
-                {
-                    Model.Description
                 }
             }
+            
         };
     }
 }
