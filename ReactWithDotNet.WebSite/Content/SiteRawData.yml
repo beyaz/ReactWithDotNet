@@ -8,8 +8,8 @@ menuList:
         description: ---
         pageName: PageVideos
       -
-        title: Sub Menu 2
-        description: Desctiption for sub menü lorem ipsum
+        title: Articles
+        description: Güncel yazılar ..Desctiption for sub menü lorem ipsum
       -
         title: Sub Menu 3
         description: Desctiption for sub menü lorem ipsum
