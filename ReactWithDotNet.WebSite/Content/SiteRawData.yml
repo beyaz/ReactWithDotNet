@@ -1,4 +1,5 @@
-﻿menuList:
+﻿siteName: Your site Name
+menuList:
   -
     title: What is ReactWithDotNet
     children:

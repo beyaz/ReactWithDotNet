@@ -11,9 +11,9 @@ class HeaderMenuBar : ReactPureComponent
     {
         return new FlexRow(WidthMaximized, JustifyContentSpaceBetween, AlignItemsCenter, MinHeight(80))
         {
-            new FlexRow
+            new FlexRow(Gap(40))
             {
-                new a { Href("/"), new Logo(), PaddingTopBottom(10), TextDecorationNone, Color(inherit) },
+                new a { Href("/"), new h3(RawData.SiteName), PaddingTopBottom(10), TextDecorationNone, Color(inherit) },
 
                 new nav(DisplayFlex, AlignItemsCenter, MediaQueryOnMobile(DisplayNone))
                 {

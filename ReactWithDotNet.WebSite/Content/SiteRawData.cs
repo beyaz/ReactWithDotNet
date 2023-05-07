@@ -38,6 +38,7 @@ public class RawCard
 
 public class SiteRawData
 {
+    public string SiteName { get; set; }
     public IReadOnlyList<Menu> MenuList { get; set; }
     public IReadOnlyList<SocialMediaLink> SocialMediaLinks { get; set; }
     public IReadOnlyList<RawCard> Cards { get; set; }
