@@ -10,6 +10,7 @@ menuList:
       -
         title: Articles
         description: Güncel yazılar ..Desctiption for sub menü lorem ipsum
+        pageName: PageArticles
       -
         title: Sub Menu 3
         description: Desctiption for sub menü lorem ipsum

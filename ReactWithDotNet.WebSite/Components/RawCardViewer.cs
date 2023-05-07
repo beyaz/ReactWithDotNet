@@ -38,6 +38,7 @@ class RawCardViewer : ReactPureComponent
 
             new div
             {
+                Background("white"),
                 BackdropFilterBlur(10),
                 Padding(20),
                 Margin(15),

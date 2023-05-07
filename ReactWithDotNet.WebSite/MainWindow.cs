@@ -40,10 +40,10 @@ public class MainWindow : ReactPureComponent
 
                     //new div{BorderBottom(Solid(1,Theme.grey_100)), MarginTopBottom(40)},
                     
-                    new section(DisplayFlexRow, FlexWrap,JustifyContentCenter, Margin(-20))
-                    {
-                        RawData.Cards.Select(x=>new RawCardViewer{ Model = x})
-                    }
+                    //new section(DisplayFlexRow, FlexWrap,JustifyContentCenter, Margin(-20))
+                    //{
+                    //    RawData.Cards.Select(x=>new RawCardViewer{ Model = x})
+                    //}
                 }
 
 
