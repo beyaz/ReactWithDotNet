@@ -27,7 +27,7 @@ class YoutubeCard : ReactPureComponent
                 Alt(Model.Title),
                 Width(200),
                 Height(160),
-                ObjectFi
+                ObjectFitFill
             },
             new FlexColumn(PaddingLeftRight(30))
             {
