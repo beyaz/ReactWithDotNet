@@ -18,7 +18,7 @@ public class MainWindow : ReactPureComponent
 
             new main
             {
-                createContent
+                createContent,
                 //new div(Background("#f9f9f9"))
                 //{
                 //    new FlexRow(DisplayFlex, JustifyContentCenter)
@@ -33,25 +33,18 @@ public class MainWindow : ReactPureComponent
                 //    }
                 //},
 
-                //new MainContentContainer(JustifyContentCenter, WidthMaximized,FlexDirectionColumn)
-                //{
-                //    new section(DisplayFlexRow,Padding(100), FlexWrap,JustifyContentCenter, Margin(-20), Gap(20), CursorDefault, Background("#f9f9f9"))
-                //    {
-                //        RawData.YoutubeLinks.Select(x=>new YoutubeCard{ Model = x})
-                //    }
-                    
-                //    //createContent,
-                    
-                //    //new Article{ FilePathInContentFolder = "tr\\6.html"},
+                new MainContentContainer(JustifyContentCenter, WidthMaximized,FlexDirectionColumn)
+                {
+                    //new Article{ FilePathInContentFolder = "tr\\6.html"},
 
 
-                //    //new div{BorderBottom(Solid(1,Theme.grey_100)), MarginTopBottom(40)},
+                    //new div{BorderBottom(Solid(1,Theme.grey_100)), MarginTopBottom(40)},
                     
-                //    //new section(DisplayFlexRow, FlexWrap,JustifyContentCenter, Margin(-20))
-                //    //{
-                //    //    RawData.Cards.Select(x=>new RawCardViewer{ Model = x})
-                //    //}
-                //}
+                    new section(DisplayFlexRow, FlexWrap,JustifyContentCenter, Margin(-20))
+                    {
+                        RawData.Cards.Select(x=>new RawCardViewer{ Model = x})
+                    }
+                }
 
 
             },

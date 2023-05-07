@@ -44,6 +44,4 @@ public class SiteRawData
     public IReadOnlyList<SocialMediaLink> SocialMediaLinks { get; set; }
     public IReadOnlyList<RawCard> Cards { get; set; }
     public IReadOnlyList<YoutubeLink> YoutubeLinks { get; set; }
-    
-
 }
