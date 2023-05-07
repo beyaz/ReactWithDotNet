@@ -9,7 +9,7 @@ class HeaderMenuBar : ReactPureComponent
 
     protected override Element render()
     {
-        return new FlexRow(WidthMaximized, JustifyContentSpaceBetween, AlignItemsCenter)
+        return new FlexRow(WidthMaximized, JustifyContentSpaceBetween, AlignItemsCenter, MinHeight(80))
         {
             new FlexRow
             {
