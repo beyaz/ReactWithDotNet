@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.uiw.react_codemirror;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 
 public class CodeMirror : ThirdPartyReactComponent
 {

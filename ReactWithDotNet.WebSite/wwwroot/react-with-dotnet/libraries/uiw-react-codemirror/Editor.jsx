@@ -13,7 +13,7 @@ import { githubLight} from '@uiw/codemirror-theme-github';
 
 function register(name, value)
 {
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.uiw.react_codemirror." + name, value);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror." + name, value);
 }
 
 register("CodeMirror::OnChange", function (args)

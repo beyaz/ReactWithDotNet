@@ -1,8 +1,8 @@
 ﻿using System.Text;
 using HtmlAgilityPack;
-using ReactWithDotNet.Libraries.uiw.react_codemirror;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
+using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
