@@ -4,8 +4,9 @@ menuList:
     title: Menü1
     children:
       -
-        title: Sub Menu 1
-        description: Desctiption for sub menü lorem ipsum
+        title: Videos
+        description: ---
+        pageName: PageVideos
       -
         title: Sub Menu 2
         description: Desctiption for sub menü lorem ipsum
