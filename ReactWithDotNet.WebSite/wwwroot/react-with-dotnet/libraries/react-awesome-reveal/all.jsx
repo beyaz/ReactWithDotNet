@@ -4,7 +4,7 @@ import ReactWithDotNet from "../../react-with-dotnet";
 
 function register(name, value)
 {
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.react_awesome_reveal." + name, value);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.ThirdPartyLibraries.ReactAwesomeReveal." + name, value);
 }
 
 register("AttentionSeeker", React.lazy(() => import('./AttentionSeeker')));

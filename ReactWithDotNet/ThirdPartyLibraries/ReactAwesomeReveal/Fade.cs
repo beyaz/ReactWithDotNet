@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.react_awesome_reveal;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.ReactAwesomeReveal;
 
 public class RevealBase : ThirdPartyReactComponent
 {
