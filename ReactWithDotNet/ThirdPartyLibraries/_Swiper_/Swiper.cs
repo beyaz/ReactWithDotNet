@@ -1,6 +1,6 @@
 ﻿
 #pragma warning disable CS1591
-namespace ReactWithDotNet.Libraries.swiper;
+namespace ReactWithDotNet.ThirdPartyLibraries._Swiper_;
 
 public class Swiper : ThirdPartyReactComponent
 {
@@ -50,15 +50,15 @@ public class Swiper : ThirdPartyReactComponent
     public IReadOnlyList<string> modules { get; set; }
 
     [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
     public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
     
     [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
     public Action<SwiperInstance> onSlideChange { get; set; }
 
     [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance")]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
     public Action<SwiperInstance> slideChangeTransitionEnd { get; set; }
     
 

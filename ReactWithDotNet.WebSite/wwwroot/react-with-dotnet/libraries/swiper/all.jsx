@@ -5,10 +5,15 @@ import ReactWithDotNet from "../../react-with-dotnet";
 // NOTE: Swiper has bug when Lazy load, we need to load sync mode
 import { SwiperSlide } from 'swiper/react';
 
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.swiper.Swiper", React.lazy(() => import('./Swiper')));
-ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.swiper.SwiperSlide", SwiperSlide);
+function register(name, value)
+{
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.ThirdPartyLibraries._Swiper_." + name, value);
+}
 
-ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.Libraries.Swiper::GrabSwiperInstance', function (args)
+register("Swiper", React.lazy(() => import('./Swiper')));
+register("SwiperSlide", SwiperSlide);
+
+register('ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance', function (args)
 {
     return [{ realIndex: args[0].realIndex }];
 });
