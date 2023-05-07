@@ -30,7 +30,7 @@ static class MuiExporter
 
         lines.WriteLines(x => sb.AppendLine(x));
 
-        WriteAllText($@"D:\work\git\ReactDotNet\ReactWithDotNet.Libraries\mui\material\{input.ClassName}.cs", sb.ToString());
+        WriteAllText($@"D:\work\git\ReactDotNet\ReactWithDotNet\mui\material\{input.ClassName}.cs", sb.ToString());
     }
 
     static IEnumerable<string> AsCSharpComment(string tsComment)
@@ -225,7 +225,7 @@ static class MuiExporter
 
                     lines.Add("// auto generated code (do not edit manually)");
                     lines.Add(string.Empty);
-                    lines.Add("namespace ReactWithDotNet.Libraries.mui.material;");
+                    lines.Add("namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;");
                     lines.Add(string.Empty);
 
                     var inheritPart = " : " + input.BaseClassName;

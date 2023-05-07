@@ -100,4 +100,4 @@ export default SwiperForwarded
 
 
 
-ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.Libraries.Swiper::ConvertToSwiperModules', );
+ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.ThirdPartyLibraries._Swiper_::ConvertToSwiperModules', );

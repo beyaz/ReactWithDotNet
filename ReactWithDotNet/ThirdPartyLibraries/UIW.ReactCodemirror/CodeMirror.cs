@@ -2,7 +2,7 @@
 
 public class CodeMirror : ThirdPartyReactComponent
 {
-    protected const string Prefix = "ReactWithDotNet.Libraries.uiw.react_codemirror.";
+    protected const string Prefix = "ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror.";
     
     [ReactProp]
     public string? value { get; set; }

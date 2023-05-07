@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -17,6 +17,22 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <WarningLevel>3</WarningLevel>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="UIDesigner\Resources\Class.svg" />
+      <None Remove="UIDesigner\Resources\dll.svg" />
+      <None Remove="UIDesigner\Resources\Folder.svg" />
+      <None Remove="UIDesigner\Resources\Method.svg" />
+      <None Remove="UIDesigner\Resources\Namespace.svg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="UIDesigner\Resources\Class.svg" />
+      <EmbeddedResource Include="UIDesigner\Resources\dll.svg" />
+      <EmbeddedResource Include="UIDesigner\Resources\Folder.svg" />
+      <EmbeddedResource Include="UIDesigner\Resources\Method.svg" />
+      <EmbeddedResource Include="UIDesigner\Resources\Namespace.svg" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />

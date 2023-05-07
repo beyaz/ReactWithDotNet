@@ -9,7 +9,7 @@ static class Extensions
 
     public static string GetSvgUrl(string svgFileName)
     {
-        var resourceFilePathInAssembly = $"ReactWithDotNet.Libraries.UIDesigner.Resources.{svgFileName}.svg";
+        var resourceFilePathInAssembly = $"ReactWithDotNet.UIDesigner.Resources.{svgFileName}.svg";
 
         return getDataUriFromSvgBytes(getEmbeddedFile(resourceFilePathInAssembly));
 
