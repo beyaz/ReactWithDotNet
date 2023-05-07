@@ -16,3 +16,11 @@ public class Logo : ReactPureComponent
         };
     }
 }
+
+public class OnlyTextLogo : ReactPureComponent
+{
+    protected override Element render()
+    {
+        return new h3(RawData.SiteName);
+    }
+}
