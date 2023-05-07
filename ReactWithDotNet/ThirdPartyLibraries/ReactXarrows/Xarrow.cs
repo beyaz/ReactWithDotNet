@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.react_xarrows
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.ReactXarrows
 {
     public class Xarrow : ThirdPartyReactComponent
     {
