@@ -1,8 +1,8 @@
 // auto generated code (do not edit manually)
 
-namespace ReactWithDotNet.Libraries.mui.material;
+namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
-public  class Paper : ElementBase
+public sealed class CardMedia : ElementBase
 {
     /// <summary>
     ///     Override or extend the styles applied to the component.
@@ -12,22 +12,24 @@ public  class Paper : ElementBase
     public Dictionary<string, Style> classes { get; } = new ();
     
     /// <summary>
-    ///     Shadow depth, corresponds to `dp` in the spec.
+    ///     Image to be displayed as a background image.
     ///     <br/>
-    ///     It accepts values between 0 and 24 inclusive.
+    ///     Either `image` or `src` prop must be specified.
     ///     <br/>
-    ///     @default 1
+    ///     Note that caller must specify height otherwise the image will not be visible.
     /// </summary>
     [ReactProp]
-    public double? elevation { get; set; }
+    public string image { get; set; }
     
     /// <summary>
-    ///     If `true`, rounded corners are disabled.
+    ///     An alias for `image` property.
     ///     <br/>
-    ///     @default false
+    ///     Available only with media components.
+    ///     <br/>
+    ///     Media components: `video`, `audio`, `picture`, `iframe`, `img`.
     /// </summary>
     [ReactProp]
-    public bool? square { get; set; }
+    public string src { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
@@ -36,14 +38,6 @@ public  class Paper : ElementBase
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
-    /// <summary>
-    ///     The variant to use.
-    ///     <br/>
-    ///     @default 'elevation'
-    /// </summary>
     [ReactProp]
-    public string variant { get; set; }
-    
-    [ReactProp]
-    public string component { get; set; }
+    public string title { get; set; }
 }

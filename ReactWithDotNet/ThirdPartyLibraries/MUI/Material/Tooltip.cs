@@ -2,7 +2,7 @@
 
 using ReactWithDotNet.ThirdPartyLibraries.ReactWithDotNetSkeleton;
 
-namespace ReactWithDotNet.Libraries.mui.material;
+namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
 public sealed class Tooltip : ElementBase
 {

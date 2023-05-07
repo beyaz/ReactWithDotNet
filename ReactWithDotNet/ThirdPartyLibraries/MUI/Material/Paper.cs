@@ -1,8 +1,8 @@
 // auto generated code (do not edit manually)
 
-namespace ReactWithDotNet.Libraries.mui.material;
+namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
-public sealed class CardMedia : ElementBase
+public  class Paper : ElementBase
 {
     /// <summary>
     ///     Override or extend the styles applied to the component.
@@ -12,24 +12,22 @@ public sealed class CardMedia : ElementBase
     public Dictionary<string, Style> classes { get; } = new ();
     
     /// <summary>
-    ///     Image to be displayed as a background image.
+    ///     Shadow depth, corresponds to `dp` in the spec.
     ///     <br/>
-    ///     Either `image` or `src` prop must be specified.
+    ///     It accepts values between 0 and 24 inclusive.
     ///     <br/>
-    ///     Note that caller must specify height otherwise the image will not be visible.
+    ///     @default 1
     /// </summary>
     [ReactProp]
-    public string image { get; set; }
+    public double? elevation { get; set; }
     
     /// <summary>
-    ///     An alias for `image` property.
+    ///     If `true`, rounded corners are disabled.
     ///     <br/>
-    ///     Available only with media components.
-    ///     <br/>
-    ///     Media components: `video`, `audio`, `picture`, `iframe`, `img`.
+    ///     @default false
     /// </summary>
     [ReactProp]
-    public string src { get; set; }
+    public bool? square { get; set; }
     
     /// <summary>
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
@@ -38,6 +36,14 @@ public sealed class CardMedia : ElementBase
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic sx { get; } = new ExpandoObject();
     
+    /// <summary>
+    ///     The variant to use.
+    ///     <br/>
+    ///     @default 'elevation'
+    /// </summary>
     [ReactProp]
-    public string title { get; set; }
+    public string variant { get; set; }
+    
+    [ReactProp]
+    public string component { get; set; }
 }

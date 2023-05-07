@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Reflection;
-using ReactWithDotNet.Libraries.mui.material;
 using ReactWithDotNet.WebSite.Content;
 
 namespace ReactWithDotNet.WebSite;

@@ -1,4 +1,4 @@
-﻿using ReactWithDotNet.Libraries.mui.material;
+﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 using ReactWithDotNet.WebSite.Showcases;
 
 namespace ReactWithDotNet.WebSite.Pages;

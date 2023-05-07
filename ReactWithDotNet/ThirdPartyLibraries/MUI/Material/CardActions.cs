@@ -1,6 +1,6 @@
 // auto generated code (do not edit manually)
 
-namespace ReactWithDotNet.Libraries.mui.material;
+namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
 public sealed class CardActions : ElementBase
 {

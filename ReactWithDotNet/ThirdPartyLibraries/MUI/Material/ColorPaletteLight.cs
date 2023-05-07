@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.mui.material;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
 public class ColorPaletteLight : IColorPalette
 {
