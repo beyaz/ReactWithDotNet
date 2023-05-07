@@ -1,0 +1,1 @@
+export { Splitter as default } from 'primereact/splitter';

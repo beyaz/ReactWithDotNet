@@ -1,0 +1,1 @@
+export { Avatar as default } from '@nextui-org/react';

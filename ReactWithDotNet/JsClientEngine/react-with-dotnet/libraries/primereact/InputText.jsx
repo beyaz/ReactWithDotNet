@@ -1,0 +1,1 @@
+export { InputText as default } from 'primereact/inputtext';

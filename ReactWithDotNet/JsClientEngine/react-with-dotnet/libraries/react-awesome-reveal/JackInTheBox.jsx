@@ -1,0 +1,1 @@
+export { JackInTheBox as default } from 'react-awesome-reveal';
