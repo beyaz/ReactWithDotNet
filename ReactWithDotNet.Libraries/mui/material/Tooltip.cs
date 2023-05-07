@@ -1,5 +1,7 @@
 // auto generated code (do not edit manually)
 
+using ReactWithDotNet.ThirdPartyLibraries.ReactWithDotNetSkeleton;
+
 namespace ReactWithDotNet.Libraries.mui.material;
 
 public sealed class Tooltip : ElementBase
@@ -245,6 +247,6 @@ public sealed class Tooltip : ElementBase
     
     protected override Element GetSuspenseFallbackElement()
     {
-        return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
+        return _children?.FirstOrDefault() ?? new Skeleton();
     }
 }

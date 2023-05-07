@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.Libraries.ReactSuite;
+﻿
+using ReactWithDotNet.ThirdPartyLibraries.ReactSuite;
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
@@ -12,29 +13,32 @@ public class RSuiteAutoCompleteDemo : ReactComponent
         {
             new AutoComplete
             {
-                onChange = e=>SelectedValue = e,
-                
+                onChange = e => SelectedValue = e,
+
                 placeholder = "Search in names",
-               data=new []{"Eugenia",
-                   "Bryan",
-                   "Linda",
-                   "Nancy",
-                   "Lloyd",
-                   "Alice",
-                   "Julia",
-                   "Albert",
-                   "Louisa",
-                   "Lester",
-                   "Lola",
-                   "Lydia",
-                   "Hal",
-                   "Hannah",
-                   "Harriet",
-                   "Hattie",
-                   "Hazel",
-                   "Hilda"},
-               
-               style = { width = "224px"}
+                data = new[]
+                {
+                    "Eugenia",
+                    "Bryan",
+                    "Linda",
+                    "Nancy",
+                    "Lloyd",
+                    "Alice",
+                    "Julia",
+                    "Albert",
+                    "Louisa",
+                    "Lester",
+                    "Lola",
+                    "Lydia",
+                    "Hal",
+                    "Hannah",
+                    "Harriet",
+                    "Hattie",
+                    "Hazel",
+                    "Hilda"
+                },
+
+                style = { width = "224px" }
             },
             new div(SelectedValue)
         };

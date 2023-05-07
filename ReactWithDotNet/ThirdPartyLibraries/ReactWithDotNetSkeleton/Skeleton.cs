@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.ReactWithDotNetSkeleton;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.ReactWithDotNetSkeleton;
 
 public class Skeleton : ReactPureComponent
 {

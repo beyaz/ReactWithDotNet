@@ -1,6 +1,6 @@
-﻿using ReactWithDotNet.Libraries.ReactWithDotNetSkeleton;
+﻿using ReactWithDotNet.ThirdPartyLibraries.ReactWithDotNetSkeleton;
 
-namespace ReactWithDotNet.Libraries.react_free_scrollbar;
+namespace ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 
 /// <summary>
 /// https://www.npmjs.com/package/react-free-scrollbar

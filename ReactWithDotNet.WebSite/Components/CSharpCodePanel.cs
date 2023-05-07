@@ -1,5 +1,5 @@
-﻿using ReactWithDotNet.Libraries.react_free_scrollbar;
-using ReactWithDotNet.Libraries.uiw.react_codemirror;
+﻿using ReactWithDotNet.Libraries.uiw.react_codemirror;
+using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 
 namespace ReactWithDotNet.WebSite.Components;
 
