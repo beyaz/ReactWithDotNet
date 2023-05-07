@@ -16,7 +16,7 @@ public class MainWindow : ReactPureComponent
             
             new MainPageHeader(),
 
-            new main(PaddingTopBottom(80))
+            new main(PaddingTop(80))
             {
                 new div(Background("#f9f9f9"))
                 {
