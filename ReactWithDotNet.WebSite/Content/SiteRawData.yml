@@ -1,51 +1,51 @@
 ﻿siteName: Your site Name
 menuList:
   -
-    title: What is ReactWithDotNet
+    title: Menü1
     children:
       -
-        title: Technical Explanation
-        description: Working mechanism of ReactWithDotNet
+        title: Sub Menu 1
+        description: Desctiption for sub menü lorem ipsum
       -
-        title: Instalition
-        description: Setup environment and other information
+        title: Sub Menu 2
+        description: Desctiption for sub menü lorem ipsum
       -
-        title: Documents
-        description: Documentation of api
+        title: Sub Menu 3
+        description: Desctiption for sub menü lorem ipsum
   
   -
-    title: Tutorial
+    title: Menü2
     children:
       -
-        title: Technical Explanation
+        title: Sub Menu 1
         pageName: PageTechnicalDetail
-        description: Working mechanism of ReactWithDotNet
+        description: Desctiption for sub menü lorem ipsum
         svgFileName: four_square_light.svg
 
       -
-        title: Instalition
+        title: Sub Menu 2
         pageName: PageModifiers
-        description: Setup environment and other information
+        description: Desctiption for sub menü lorem ipsum
         svgFileName: react.svg
       -
-        title: Documents
+        title: Sub Menu 3
         description: Documentation of api
   
   -
-    title: Showcase
+    title: Menü3
     children:
       -
-        title: Showcase
+        title: Sub Menu 1
         pageName: PageShowcase
-        description: Sample demonstration of html and 3rd party react libs
+        description: Desctiption for sub menü lorem ipsum
       -
-        title: Helper Apps
+        title: Sub Menu 2
         pageName: PageHelperApps
-        description: Utility tools for import existing html or style
+        description: Desctiption for sub menü lorem ipsum
       -
-        title: Integration with third party libraries
+        title: Sub Menu 3
         pageName: PageDocuments
-        description: Integration details mui, swiper, reactsuite
+        description: Desctiption for sub menü lorem ipsum
 
 socialMediaLinks:
   - text: GitHub
@@ -96,3 +96,17 @@ youtubeLinks:
   - youtubeVideoId: 0FqLQfBgbv0
     title: Mutluluğun Sırrı
     description: lorem ipsum sit amet lorem ipsum sit amet lorem ipsum sit ametm sit amet lorem ipsum sit amet lorem ipsum sit amet
+
+  - youtubeVideoId: 0FqLQfBgbv0
+    title: Mutluluğun Sırrı
+    description: lorem ipsum sit amet lorem ipsum sit amet lorem ipsum sit ametm sit amet lorem ipsum sit amet lorem ipsum sit amet
+
+  - youtubeVideoId: 0FqLQfBgbv0
+    title: Mutluluğun Sırrı
+    description: lorem ipsum sit amet lorem ipsum sit amet lorem ipsum sit ametm sit amet lorem ipsum sit amet lorem ipsum sit amet
+
+  - youtubeVideoId: 0FqLQfBgbv0
+    title: Mutluluğun Sırrı
+    description: lorem ipsum sit amet lorem ipsum sit amet lorem ipsum sit ametm sit amet lorem ipsum sit amet lorem ipsum sit amet
+
+footerText: Mutluluk [Allah]'a teslim olmaktır.

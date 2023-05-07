@@ -16,7 +16,7 @@ public class MainWindow : ReactPureComponent
             
             new MainPageHeader(),
 
-            new main(PaddingTop(80))
+            new main
             {
                 new div(Background("#f9f9f9"))
                 {
@@ -30,8 +30,7 @@ public class MainWindow : ReactPureComponent
                             }
                         }
                     }
-                }
-                ,
+                },
 
                 //new MainContentContainer(JustifyContentCenter, WidthMaximized,FlexDirectionColumn)
                 //{
@@ -59,8 +58,7 @@ public class MainWindow : ReactPureComponent
             
             new footer(BorderTop(Solid(1, Theme.grey_100)), Height(50), DisplayFlexRowCentered)
             {
-                new HighlightedText{Text = "Mutluluk [Allah]'a teslim olmaktır."}
-                
+                new HighlightedText{Text = RawData.FooterText}
             }
         };
 
