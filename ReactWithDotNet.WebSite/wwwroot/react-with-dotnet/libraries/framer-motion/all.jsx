@@ -8,7 +8,7 @@ motion.div
 
 function register(name, value)
 {
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.framer_motion." + name, value);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.ThirdPartyLibraries.FramerMotion." + name, value);
 }
 
 // Connect components as Lazy

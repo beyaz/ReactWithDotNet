@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.Libraries.framer_motion;
+﻿using System.Dynamic;
+
+namespace ReactWithDotNet.ThirdPartyLibraries.FramerMotion;
 
 public sealed class motion_div : ElementBase
 {

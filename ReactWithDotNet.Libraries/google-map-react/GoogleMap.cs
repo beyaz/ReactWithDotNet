@@ -14,6 +14,7 @@ public sealed class GoogleMap : ThirdPartyReactComponent
     public int? defaultZoom { get; set; }
 }
 
+
 public sealed class BootstrapURLKeys
 {
     public string key { get; set; }
