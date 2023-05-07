@@ -2,3 +2,4 @@
 global using static ReactWithDotNet.Extensions;
 global using static ReactWithDotNet.Mixin;
 global using static ReactWithDotNet.ThirdPartyLibraries.Mixin;
+global using System.Dynamic;

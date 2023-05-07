@@ -8,7 +8,6 @@ import "./react-with-dotnet/libraries/mui-core/all";
 import "./react-with-dotnet/libraries/google-map-react/all";
 import "./react-with-dotnet/libraries/primereact/all";
 import "./react-with-dotnet/libraries/react-awesome-reveal/all";
-import "./react-with-dotnet/libraries/react-datepicker/all";
 import "./react-with-dotnet/libraries/react-free-scrollbar/all";
 import "./react-with-dotnet/libraries/react-xarrows/all";
 import "./react-with-dotnet/libraries/rsuite/all";

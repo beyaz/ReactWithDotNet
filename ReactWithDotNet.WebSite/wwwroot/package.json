@@ -29,8 +29,6 @@
 
         "swiper": "^8.4.7",
 
-        "react-datepicker": "^4.8.0",
-
         "@uiw/react-codemirror": "^4.13.2",
         "@uiw/codemirror-extensions-langs": "^4.13.2",
         "@uiw/codemirror-theme-github": "^4.13.2",
