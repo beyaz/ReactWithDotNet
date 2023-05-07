@@ -439,8 +439,7 @@ public static partial class Mixin
     public static StyleModifier Height(double height) => Height(height.AsPixel());
     public static StyleModifier Height(string height) => new(style => style.height = height);
 
-    public static StyleModifier ObjectFit(string value) 
-        => new(style => style.objectFit = value);
+
 
     public static string HexToRgb(string hexColor, double opacity = 1)
     {
