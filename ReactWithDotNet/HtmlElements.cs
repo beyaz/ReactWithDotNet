@@ -237,6 +237,15 @@ public sealed class link : HtmlElement
 
     [ReactProp]
     public string @as { get; set; }
+
+    [ReactProp]
+    public string integrity { get; set; }
+
+    [ReactProp]
+    public string crossorigin { get; set; }
+
+    [ReactProp]
+    public string referrerpolicy { get; set; }
 }
 
 public sealed class textarea : HtmlElement

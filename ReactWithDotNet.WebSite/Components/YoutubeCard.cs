@@ -17,9 +17,14 @@ class YoutubeCard : ReactPureComponent
             new img { BorderTopLeftRadius(5), BorderBottomLeftRadius(5), Src($"https://i.ytimg.com/vi_webp/{Model.YoutubeVideoId}/maxresdefault.webp"), Alt(Model.Title), Width(200), Height(160) },
             new FlexColumn(PaddingLeftRight(30))
             {
+                
                 new h3{ Model.Title },
                 new span{ Model.Description, MaxWidth(250) }
-            }
+            },
+
+            // Play icon
+            PositionRelative,
+            new img { Src(Asset("play.svg")), WidthHeight(30), Right(10), Top(10), PositionAbsolute },
         };
     }
 }
