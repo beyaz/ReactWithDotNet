@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.google_map_react;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.GoogleMapReact;
 
 public sealed class GoogleMap : ThirdPartyReactComponent
 {
