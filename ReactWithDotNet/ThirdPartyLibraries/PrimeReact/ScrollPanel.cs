@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.PrimeReact;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 /// <summary>
 ///     ScrollPanel is defined using dimensions for the scrollable viewport.

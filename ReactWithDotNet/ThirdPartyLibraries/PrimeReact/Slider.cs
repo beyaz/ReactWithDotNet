@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.PrimeReact;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 /// <summary>
 ///     Slider is a component to provide input using dragging of a handle.

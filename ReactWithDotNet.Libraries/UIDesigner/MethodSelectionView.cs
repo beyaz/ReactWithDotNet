@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using ReactWithDotNet.Libraries.PrimeReact;
+using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
 namespace ReactWithDotNet.UIDesigner;
 

@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.PrimeReact;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 public class ProgressSpinner : ElementBase
 {

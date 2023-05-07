@@ -1,7 +1,7 @@
 ﻿
 using System.Collections;
 
-namespace ReactWithDotNet.Libraries.PrimeReact;
+namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 
 [Serializable]

@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.Libraries.PrimeReact;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 public abstract class ListBox : ElementBase
 {

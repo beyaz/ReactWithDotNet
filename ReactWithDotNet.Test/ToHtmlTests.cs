@@ -1,6 +1,6 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ReactWithDotNet.Libraries.PrimeReact;
+using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 namespace ReactWithDotNet.Test;
 

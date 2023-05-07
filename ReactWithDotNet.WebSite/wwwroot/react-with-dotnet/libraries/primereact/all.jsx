@@ -6,7 +6,7 @@ import { TabView, TabPanel } from 'primereact/tabview';
 
 function register(name, value)
 {
-    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.Libraries.PrimeReact." + name, value);
+    ReactWithDotNet.RegisterExternalJsObject("ReactWithDotNet.ThirdPartyLibraries.PrimeReact." + name, value);
 }
 
 function RegisterComponents()

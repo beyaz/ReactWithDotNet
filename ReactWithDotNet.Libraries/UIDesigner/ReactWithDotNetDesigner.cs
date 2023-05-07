@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Newtonsoft.Json;
-using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
+using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;

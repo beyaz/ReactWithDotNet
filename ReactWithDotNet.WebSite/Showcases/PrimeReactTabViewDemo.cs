@@ -1,4 +1,4 @@
-﻿using ReactWithDotNet.Libraries.PrimeReact;
+﻿using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 namespace ReactWithDotNet.WebSite.Showcases;
 

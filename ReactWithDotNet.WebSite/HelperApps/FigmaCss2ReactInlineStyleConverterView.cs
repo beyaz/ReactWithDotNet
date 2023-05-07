@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
-using ReactWithDotNet.Libraries.PrimeReact;
 using ReactWithDotNet.Libraries.uiw.react_codemirror;
+using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
