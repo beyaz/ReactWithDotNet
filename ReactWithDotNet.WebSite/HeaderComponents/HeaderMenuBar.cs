@@ -31,7 +31,7 @@ class HeaderMenuBar : ReactPureComponent
                     Border(Solid(1, Theme.grey_50)),
                     BorderRadius,
                     Padding(7),
-                    Transition("background-color", 200, "cubic-bezier(0.4, 0, 0.2, 1)", 0),
+                    Transition("background-color", 200, cubic_bezier(0.4, 0, 0.2, 1), 0), 
                     Hover(Border(Solid(1, Theme.grey_300)), Background(Theme.grey_50)),
 
                     new Tooltip
@@ -77,11 +77,11 @@ class HeaderMenuBar : ReactPureComponent
         };
     }
 
-    Element AsTooltipRow(MenuItem Model)
+    Element AsTooltipRow(MenuItem model)
     {
         return new a(PaddingTopBottom(20), BorderRadius, PaddingLeft(20), PaddingRight(30), TextDecorationNone, CursorDefault)
         {
-            GetPageLink(Model.PageName),
+            GetPageLink(model.PageName),
 
             LetterSpacingNormal,
             BackgroundForPaper,
@@ -89,7 +89,7 @@ class HeaderMenuBar : ReactPureComponent
 
             new FlexRow(AlignItemsCenter, Gap(20), BorderRadius)
             {
-                new img { Src(Asset(Model.SvgFileName)), WidthHeight(36) },
+                new img { Src(Asset(model.SvgFileName)), WidthHeight(36) },
                 new FlexColumn
                 {
                     FontFamily_IBM_Plex_Sans,
@@ -97,8 +97,8 @@ class HeaderMenuBar : ReactPureComponent
                     FontSize14,
                     Color(Theme.text_primary),
 
-                    new div(FontWeight600) { Model.Title },
-                    new div(FontWeight400) { Model.Description }
+                    new div(FontWeight600) { model.Title },
+                    new div(FontWeight400) { model.Description }
                 }
             }
         };

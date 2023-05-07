@@ -58,6 +58,12 @@ partial class Mixin
     public static string rgba(int red, int green, int blue, double alpha)
         => $"rgba({red},{green},{blue},{alpha})";
 
+    /// <summary>
+    ///     cubic-bezier(<paramref name="x1"/>, <paramref name="y1"/>, <paramref name="x2"/>, <paramref name="y2"/>)
+    /// </summary>
+    public static string cubic_bezier(double x1, double y1, double x2, double y2)
+        => $"cubic-bezier({x1}, {y1}, {x2}, {y2})";
+
     public static StyleModifier Width(CssUnit width) => Width(width.ToString());
 
     public static StyleModifier Width(string width) => new(style => style.width = width);
