@@ -68,14 +68,14 @@ jobs:
         Remove-Item 'FinalWebApp/*.xml'
       shell: pwsh
 
-      ############################
-      # 👉 DEPLOY REMOTE FTP 👈 #
-      ############################
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: win5173.site4now.net
-        username: ${{ secrets.FTP_USER_NAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: FinalWebApp/
-        server-dir: submission/
+    #  ############################
+    #  # 👉 DEPLOY REMOTE FTP 👈 #
+    #  ############################
+    #- name: 📂 Sync files
+    #  uses: SamKirkland/FTP-Deploy-Action@4.3.2
+    #  with:
+    #    server: win5173.site4now.net
+    #    username: ${{ secrets.FTP_USER_NAME }}
+    #    password: ${{ secrets.FTP_PASSWORD }}
+    #    local-dir: FinalWebApp/
+    #    server-dir: submission/
