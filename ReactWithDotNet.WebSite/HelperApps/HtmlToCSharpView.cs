@@ -182,15 +182,9 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             attributeName = "viewBox";
         }
 
-        if (attributeName == "xlink:href")
-        {
-            attributeName = "xlinkHref";
-        }
-        if (attributeName == "xmlns:xlink")
-        {
-            attributeName = "xmlnsXlink";
-        }
-    
+       
+
+        
 
         if (attributeName == "tabindex")
         {
@@ -204,7 +198,15 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         if (attributeName.Contains("-"))
         {
-            return lines;
+            var parts = attributeName.Split("-");
+
+            attributeName = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
+        }
+        if (attributeName.Contains(":"))
+        {
+            var parts = attributeName.Split(":");
+
+            attributeName = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
         }
 
         if (attributeName == "color" || attributeName == "width")

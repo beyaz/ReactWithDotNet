@@ -131,6 +131,14 @@ public sealed class stop : HtmlElement
 {
     [ReactProp]
     public string offset { get; set; }
+
+
+    [ReactProp]
+    public string stopColor { get; set; }
+
+
+    [ReactProp]
+    public string stopOpacity { get; set; }
     
 }
 public sealed class radialGradient : HtmlElement
