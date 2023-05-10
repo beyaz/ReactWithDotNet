@@ -28,6 +28,10 @@ public sealed class svg : HtmlElement
 
     [ReactProp]
     public string xmlns { get; set; } = "http://www.w3.org/2000/svg";
+    [ReactProp]
+    public string xlinkHref { get; set; }
+    [ReactProp]
+    public string xmlnsXlink { get; set; }
 
     /// <summary>
     ///     svg.width = <paramref name="width" />
@@ -119,6 +123,28 @@ public sealed class defs : HtmlElement
 
 public sealed class clipPath : HtmlElement
 {
+}
+public sealed class linearGradient : HtmlElement
+{
+}
+public sealed class stop : HtmlElement
+{
+    [ReactProp]
+    public string offset { get; set; }
+    
+}
+public sealed class radialGradient : HtmlElement
+{
+    [ReactProp]
+    public string cx { get; set; }
+    [ReactProp] public string cy { get; set; }
+    [ReactProp] public string r { get; set; }
+
+    [ReactProp] public string fx { get; set; }
+    [ReactProp] public string fy { get; set; }
+    [ReactProp] public string xlinkHref { get; set; }
+    [ReactProp] public string gradientUnits { get; set; }
+    [ReactProp] public string gradientTransform { get; set; }
 }
 
 public sealed class rect : HtmlElement

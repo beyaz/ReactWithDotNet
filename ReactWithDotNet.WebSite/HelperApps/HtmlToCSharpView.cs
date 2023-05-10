@@ -182,6 +182,16 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             attributeName = "viewBox";
         }
 
+        if (attributeName == "xlink:href")
+        {
+            attributeName = "xlinkHref";
+        }
+        if (attributeName == "xmlns:xlink")
+        {
+            attributeName = "xmlnsXlink";
+        }
+    
+
         if (attributeName == "tabindex")
         {
             attributeName = "tabIndex";
