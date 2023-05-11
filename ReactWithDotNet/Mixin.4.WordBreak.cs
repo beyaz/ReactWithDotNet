@@ -61,4 +61,22 @@ partial class Mixin
     ///     style.wordBreak = <paramref name="value" />
     /// </summary>
     public static StyleModifier WordBreak(string value) => new(style => style.wordBreak = value);
+
+
+    /// <summary>
+    ///     style.wordWrap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WordWrap(string value) 
+        => new(style => style.wordWrap = value);
+
+    /// <summary>
+    ///     style.wordWrap = normal
+    /// </summary>
+    public static StyleModifier WordWrapNormal => WordWrap("normal");
+
+    /// <summary>
+    ///     style.wordWrap = break-word
+    /// </summary>
+    public static StyleModifier WordWrapBreakWord => WordWrap("break-word");
+
 }

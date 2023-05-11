@@ -69,7 +69,14 @@ public static partial class Mixin
     /// <summary>
     ///     style.display = 'block'
     /// </summary>
-    public static StyleModifier DisplayBlock => new(style => style.display = "block");
+    public static StyleModifier DisplayBlock 
+        => new(style => style.display = "block");
+
+    /// <summary>
+    ///     style.display = inline-block
+    /// </summary>
+    public static StyleModifier DisplayInlineBlock
+        => new (style => style.display = "inline-block");
 
     /// <summary>
     ///     style.display = 'flex'
