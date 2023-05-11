@@ -408,7 +408,28 @@ public static partial class Mixin
     /// <summary>
     ///     style.flexGrow = <paramref name="growValue" />
     /// </summary>
-    public static StyleModifier FlexGrow(double growValue) => new(style => style.flexGrow = growValue + "");
+    public static StyleModifier FlexGrow(double growValue) 
+        => new(style => style.flexGrow = growValue + "");
+
+    /// <summary>
+    ///     Specifies how the item will shrink relative to the rest of the flexible items inside the same container.
+    ///     <br/>
+    ///     style.flexShrink = <paramref name="value" />
+    ///     <br/>
+    ///     Note: If the element is not a flexible item, the flex-shrink property has no effect.
+    /// </summary>
+    public static StyleModifier FlexShrink(double value)
+        => new(style => style.flexShrink = value + "");
+
+    /// <summary>
+    ///     Specifies the initial length of a flexible item.
+    ///     <br/>
+    ///     style.flexBasis = <paramref name="value" />
+    ///     <br/>
+    ///     Note: If the element is not a flexible item, the flex-shrink property has no effect.
+    /// </summary>
+    public static StyleModifier FlexBasis(double value)
+        => new(style => style.flexBasis = value + "");
 
     /// <summary>
     ///     style.float = value
