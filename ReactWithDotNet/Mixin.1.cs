@@ -428,8 +428,27 @@ public static partial class Mixin
     ///     <br/>
     ///     Note: If the element is not a flexible item, the flex-shrink property has no effect.
     /// </summary>
+    public static StyleModifier FlexBasis(string value)
+        => new(style => style.flexBasis = value);
+
+    /// <summary>
+    ///     Specifies the initial length of a flexible item.
+    ///     <br/>
+    ///     style.flexBasis = <paramref name="value" /> + <b>px</b>
+    ///     <br/>
+    ///     Note: If the element is not a flexible item, the flex-shrink property has no effect.
+    /// </summary>
     public static StyleModifier FlexBasis(double value)
-        => new(style => style.flexBasis = value + "");
+        => new(style => style.flexBasis = value.AsPixel());
+
+    /// <summary>
+    ///     Specifies the initial length of a flexible item.
+    ///     <br/>
+    ///     style.flexBasis = auto
+    ///     <br/>
+    ///     Note: If the element is not a flexible item, the flex-shrink property has no effect.
+    /// </summary>
+    public static StyleModifier FlexBasisAuto => FlexBasis("auto");
 
     /// <summary>
     ///     style.float = value
