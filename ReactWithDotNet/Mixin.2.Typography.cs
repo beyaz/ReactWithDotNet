@@ -18,11 +18,11 @@ partial class Mixin
     public static StyleModifier FontSize23 => FontSize(23);
     public static StyleModifier FontSize24 => FontSize(24);
     public static StyleModifier FontSize25 => FontSize(25);
-    public static StyleModifier FontSize26 => FontSize(25);
-    public static StyleModifier FontSize27 => FontSize(25);
-    public static StyleModifier FontSize28 => FontSize(25);
-    public static StyleModifier FontSize29 => FontSize(25);
-    public static StyleModifier FontSize30 => FontSize(25);
+    public static StyleModifier FontSize26 => FontSize(26);
+    public static StyleModifier FontSize27 => FontSize(27);
+    public static StyleModifier FontSize28 => FontSize(28);
+    public static StyleModifier FontSize29 => FontSize(29);
+    public static StyleModifier FontSize30 => FontSize(30);
     public static StyleModifier FontSize9 => FontSize(9);
 
     /// <summary>
@@ -127,21 +127,21 @@ partial class Mixin
     public static StyleModifier LineHeight24 => LineHeight(24);
     public static StyleModifier LineHeight25 => LineHeight(25);
 
-    public static StyleModifier LineHeight26 => LineHeight(25);
-    public static StyleModifier LineHeight27 => LineHeight(25);
-    public static StyleModifier LineHeight28 => LineHeight(25);
-    public static StyleModifier LineHeight29 => LineHeight(25);
-    public static StyleModifier LineHeight30 => LineHeight(25);
-    public static StyleModifier LineHeight31 => LineHeight(25);
-    public static StyleModifier LineHeight32 => LineHeight(25);
-    public static StyleModifier LineHeight33 => LineHeight(25);
-    public static StyleModifier LineHeight34 => LineHeight(25);
-    public static StyleModifier LineHeight35 => LineHeight(25);
-    public static StyleModifier LineHeight36 => LineHeight(25);
-    public static StyleModifier LineHeight37 => LineHeight(25);
-    public static StyleModifier LineHeight38 => LineHeight(25);
-    public static StyleModifier LineHeight39 => LineHeight(25);
-    public static StyleModifier LineHeight40 => LineHeight(25);
+    public static StyleModifier LineHeight26 => LineHeight(26);
+    public static StyleModifier LineHeight27 => LineHeight(27);
+    public static StyleModifier LineHeight28 => LineHeight(28);
+    public static StyleModifier LineHeight29 => LineHeight(29);
+    public static StyleModifier LineHeight30 => LineHeight(30);
+    public static StyleModifier LineHeight31 => LineHeight(31);
+    public static StyleModifier LineHeight32 => LineHeight(32);
+    public static StyleModifier LineHeight33 => LineHeight(33);
+    public static StyleModifier LineHeight34 => LineHeight(34);
+    public static StyleModifier LineHeight35 => LineHeight(35);
+    public static StyleModifier LineHeight36 => LineHeight(36);
+    public static StyleModifier LineHeight37 => LineHeight(37);
+    public static StyleModifier LineHeight38 => LineHeight(38);
+    public static StyleModifier LineHeight39 => LineHeight(39);
+    public static StyleModifier LineHeight40 => LineHeight(40);
 
     public static StyleModifier LineHeight9 => LineHeight(9);
 
