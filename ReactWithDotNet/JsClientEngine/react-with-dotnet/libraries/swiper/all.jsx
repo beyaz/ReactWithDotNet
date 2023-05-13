@@ -13,7 +13,7 @@ function register(name, value)
 register("Swiper", React.lazy(() => import('./Swiper')));
 register("SwiperSlide", SwiperSlide);
 
-register('ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance', function (args)
+ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance', function (args)
 {
     return [{ realIndex: args[0].realIndex }];
 });
