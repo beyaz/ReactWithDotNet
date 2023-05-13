@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿// ReSharper disable all InconsistentNaming
+
+namespace ReactWithDotNet;
 
 partial class Mixin
 {

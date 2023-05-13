@@ -135,3 +135,20 @@ partial class Mixin
         style.alignItems     = "center";
     });
 }
+
+
+partial class Mixin
+{
+    /// <summary>
+    ///     Shorthand property for assign Flex properties
+    /// </summary>
+    public static StyleModifier Flex(int flexGrow, int flexShrink, CssUnit flexBasis)
+    {
+        return new StyleModifier(style =>
+        {
+            style.flexGrow   = flexGrow.ToString();
+            style.flexShrink = flexShrink.ToString();
+            style.flexBasis  = flexBasis.ToString();
+        });
+    }
+}
