@@ -271,6 +271,9 @@ public sealed class textarea : HtmlElement
     public string value { get; set; }
 
     [ReactProp]
+    public string defaultValue { get; set; }
+
+    [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
 }
