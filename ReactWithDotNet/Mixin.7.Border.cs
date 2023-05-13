@@ -70,7 +70,7 @@ partial class Mixin
 
     public static StyleModifier BoxShadow(double offsetX, double offsetY, double blurRadius, double spreadRadius, string color)
         => BoxShadow($@"{offsetX}px {offsetY}px {blurRadius}px {spreadRadius}px {color}");
-
+    
     /// <summary>
     ///     Returns a string like <paramref name="widthAsPx" /><b> + px dashed + </b> <paramref name="color" />"
     /// </summary>

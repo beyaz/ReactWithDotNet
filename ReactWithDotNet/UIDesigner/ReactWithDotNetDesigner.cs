@@ -166,9 +166,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         {
             createElement(),
 
-            Border("0.3px dashed #e0e0e0"),
             Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
-            HeightMaximized
+            HeightMaximized,
+            BoxShadow(0,4, 12,0,rgba(0, 0, 0, 0.1))
         };
 
         Element createElement()
