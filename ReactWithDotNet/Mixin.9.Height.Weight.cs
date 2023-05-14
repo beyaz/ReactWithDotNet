@@ -39,4 +39,22 @@ partial class Mixin
     {
         return new StyleModifier(style => style.objectFit = value);
     }
+
+
+    /// <summary>
+    ///     style.backgroundSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundSize(string value) 
+        => new(style => style.backgroundSize = value);
+
+
+    /// <summary>
+    ///     style.backgroundSize = cover
+    /// </summary>
+    public static StyleModifier BackgroundSizeCover => BackgroundSize("cover");
+
+    /// <summary>
+    ///     style.backgroundSize = contain
+    /// </summary>
+    public static StyleModifier BackgroundSizeContain => BackgroundSize("contain");
 }
