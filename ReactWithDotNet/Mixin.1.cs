@@ -671,7 +671,14 @@ public static partial class Mixin
     /// </summary>
     public static Element Space(double valueInPx) => new Space(valueInPx);
 
-    public static HtmlElementModifier Text(string innerText) => CreateHtmlElementModifier<HtmlElement>(element => element.text = innerText);
+    public static HtmlElementModifier Text(string innerText) 
+        => CreateHtmlElementModifier<HtmlElement>(element => element.text = innerText);
+
+    /// <summary>
+    ///     Assign dangerouslySetInnerHTML of given element
+    /// </summary>
+    public static HtmlElementModifier DangerouslySetInnerHTML(string html)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.dangerouslySetInnerHTML = html);
 
     public static StyleModifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
 
