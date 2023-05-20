@@ -95,6 +95,17 @@ partial class Style : IEnumerable<StyleModifier>
     {
         modifier?.ModifyStyle(this);
     }
+
+    public void Add(Style styleForImport)
+    {
+        if (styleForImport is null)
+        {
+            return;
+        }
+        
+        Import(styleForImport);
+    }
+    
     #endregion
 
     #region margin
