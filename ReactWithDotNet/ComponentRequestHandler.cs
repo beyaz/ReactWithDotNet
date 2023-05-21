@@ -293,7 +293,7 @@ static class ComponentRequestHandler
             var stateTree = new StateTree
             {
                 ChildStates    = request.CapturedStateTree,
-                BreadCrumbPath = "0",
+                BreadCrumbPath = "0"
             };
 
             var serializerContext = new ElementSerializerContext
