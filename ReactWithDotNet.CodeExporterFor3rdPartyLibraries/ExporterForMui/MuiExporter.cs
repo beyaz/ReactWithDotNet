@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
