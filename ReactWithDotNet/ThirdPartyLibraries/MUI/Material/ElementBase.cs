@@ -4,12 +4,12 @@ namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
 public class ElementBase : ThirdPartyReactComponent
 {
-    /// <summary>
-    ///     The system prop that allows defining system overrides as well as additional CSS styles.
-    /// </summary>
-    [ReactProp]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
-    public dynamic sx { get; } = new ExpandoObject();
+    ///// <summary>
+    /////     The system prop that allows defining system overrides as well as additional CSS styles.
+    ///// </summary>
+    //[ReactProp]
+    //[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    //public dynamic sx { get; } = new ExpandoObject();
 }
 
 static class convert_mui_style_map_to_class_map
