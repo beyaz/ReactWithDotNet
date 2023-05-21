@@ -28,7 +28,7 @@ static class MuiExporter
 
         lines.WriteLines(x => sb.AppendLine(x));
 
-        WriteAllText($@"D:\work\git\ReactDotNet\ReactWithDotNet\mui\material\{input.ClassName}.cs", sb.ToString());
+        WriteAllText($@"C:\github\ReactWithDotNet\ReactWithDotNet\ThirdPartyLibraries\MUI\Material\{input.ClassName}.cs", sb.ToString());
     }
 
     static IEnumerable<string> AsCSharpComment(string tsComment)
