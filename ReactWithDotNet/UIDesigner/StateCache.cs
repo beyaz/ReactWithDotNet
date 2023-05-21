@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -55,7 +56,7 @@ static class StateCache
             var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
             {
                 WriteIndented    = true,
-                IgnoreNullValues = true
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
 
             WriteAllText(StateFilePath, jsonContent);
@@ -66,8 +67,8 @@ static class StateCache
     {
         var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
         {
-            WriteIndented    = true,
-            IgnoreNullValues = true
+            WriteIndented          = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         });
 
         SaveToFile(GetFileName(typeReference), jsonContent);
@@ -77,8 +78,8 @@ static class StateCache
     {
         var jsonContent = JsonSerializer.Serialize(state, new JsonSerializerOptions
         {
-            WriteIndented    = true,
-            IgnoreNullValues = true
+            WriteIndented          = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         });
 
         SaveToFile(GetFileName(methodReference), jsonContent);
