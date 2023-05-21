@@ -63,7 +63,7 @@
         /// <summary>
         ///     Style of the tooltip.
         /// </summary>
-        public readonly Style style = new Style();
+        public readonly Style style = new();
 
         /// <summary>
         ///     Defines which position on the tooltip being positioned to align with the target element.

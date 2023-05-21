@@ -5,7 +5,7 @@ public class CodeMirror : ThirdPartyReactComponent
     protected const string Prefix = "ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror.";
     
     [ReactProp]
-    public string? value { get; set; }
+    public string value { get; set; }
     
     [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
@@ -38,7 +38,7 @@ public class CodeMirror : ThirdPartyReactComponent
 
     [ReactProp]
     //[ReactTransformValueInClient(Prefix + nameof(CodeMirror) + "::ConvertToExtension")]
-    public List<string> extensions { get; } = new List<string>();
+    public List<string> extensions { get; } = new();
 
 
     protected  override Element GetSuspenseFallbackElement()

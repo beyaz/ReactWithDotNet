@@ -1033,28 +1033,28 @@ partial class ElementSerializer
 
         public Element Element { get; init; }
 
-        public ReactComponentBase ElementAsDotNetReactComponent { get; set; }
+        public ReactComponentBase ElementAsDotNetReactComponent { get; init; }
 
-        public FakeChild ElementAsFakeChild { get; set; }
-        public Fragment ElementAsFragment { get; set; }
+        public FakeChild ElementAsFakeChild { get; init; }
+        public Fragment ElementAsFragment { get; init; }
 
-        public HtmlElement ElementAsHtmlElement { get; set; }
-        public HtmlTextNode ElementAsHtmlTextElement { get; set; }
+        public HtmlElement ElementAsHtmlElement { get; init; }
+        public HtmlTextNode ElementAsHtmlTextElement { get; init; }
 
         public IReadOnlyJsonMap ElementAsJsonMap { get; set; }
 
-        public ThirdPartyReactComponent ElementAsThirdPartyReactComponent { get; set; }
+        public ThirdPartyReactComponent ElementAsThirdPartyReactComponent { get; init; }
 
-        public bool ElementIsDotNetReactComponent { get; set; }
+        public bool ElementIsDotNetReactComponent { get; init; }
 
-        public bool ElementIsFakeChild { get; set; }
-        public bool ElementIsFragment { get; set; }
-        public bool ElementIsHtmlElement { get; set; }
-        public bool ElementIsHtmlTextElement { get; set; }
+        public bool ElementIsFakeChild { get; init; }
+        public bool ElementIsFragment { get; init; }
+        public bool ElementIsHtmlElement { get; init; }
+        public bool ElementIsHtmlTextElement { get; init; }
 
-        public bool ElementIsNull { get; set; }
+        public bool ElementIsNull { get; init; }
 
-        public bool ElementIsThirdPartyReactComponent { get; set; }
+        public bool ElementIsThirdPartyReactComponent { get; init; }
 
         public Node FirstChild { get; set; }
 
