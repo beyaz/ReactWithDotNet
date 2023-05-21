@@ -5,13 +5,6 @@ namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 public sealed class Card : Paper
 {
     /// <summary>
-    ///     Override or extend the styles applied to the component.
-    /// </summary>
-    [ReactProp]
-    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
-    public Dictionary<string, Style> classes { get; } = new ();
-    
-    /// <summary>
     ///     If `true`, the card will use raised styling.
     ///     <br/>
     ///     @default false

@@ -39,8 +39,8 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(Card)),
             StartFrom        = "DistributiveOmit<PaperProps, 'classes'> & {",
             ClassName        = "Card",
-            SkipMembers      = new[] { "children" },
-            BaseClassName = "Paper"
+            SkipMembers      = new[] { "children", "classes", "sx" },
+            BaseClassName    = "Paper"
         });
     }
 
