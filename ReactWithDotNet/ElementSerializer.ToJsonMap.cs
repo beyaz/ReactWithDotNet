@@ -681,16 +681,18 @@ partial class ElementSerializer
 
     static Node ConvertToNode(Element element)
     {
+        if (element is null)
+        {
+            return new Node
+            {
+                ElementIsNull = true
+            };
+        }
+        
         var node = new Node
         {
             Element = element
         };
-
-        if (element is null)
-        {
-            node.ElementIsNull = true;
-            return node;
-        }
 
         if (element is HtmlTextNode htmlTextNode)
         {
@@ -1000,7 +1002,7 @@ partial class ElementSerializer
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
     }
 
-    class Node
+    sealed class Node
     {
         public ReactPureComponent ElementAsDotNetReactPureComponent;
         public bool ElementIsDotNetReactPureComponent;
