@@ -187,7 +187,7 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(Switch)),
             StartFrom = "> {",
             ClassName = "Switch",
-            // SkipMembers = new[] { "children", "inputRef" },
+            SkipMembers = new[] { "children", "inputRef","checkedIcon", "disabled", "icon", "sx","value", "classes" },
             BaseClassName = "SwitchBase",
             ClassModifier = "partial"
         });
