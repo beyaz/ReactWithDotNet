@@ -38,6 +38,7 @@ namespace ReactWithDotNet.Test
             public string PropA2 { get; set; }
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Local
         class SampleClassB
         {
             public SampleClassA NestedA { get; set; }

@@ -48,6 +48,7 @@ public class TsParserTests
 
         tokens = TsLexer.ParseTokens("{" + code + "}", 0).tokens;
 
+        // ReSharper disable once RedundantAssignment
         (hasRead, var members, newIndex) = TsParser.TryReadMembers(tokens, 0);
 
         hasRead.Should().BeTrue();

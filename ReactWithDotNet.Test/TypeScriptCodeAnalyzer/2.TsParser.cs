@@ -254,7 +254,7 @@ static class TsParser
     {
         var i = startIndex;
 
-        string name = null;
+        string name;
         
         // named type
         {

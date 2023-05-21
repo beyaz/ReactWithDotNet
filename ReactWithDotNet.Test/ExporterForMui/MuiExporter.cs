@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
@@ -211,6 +212,7 @@ static class MuiExporter
 
    
 
+    [SuppressMessage("ReSharper", "UnusedVariable")]
     static IReadOnlyList<string> CalculateCSharpFileContentLines(MuiExportInput input)
     {
         var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
@@ -222,12 +224,13 @@ static class MuiExporter
                 (hasRead, var members, var newIndex) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
                 if (hasRead)
                 {
-                    var lines = new List<string>();
-
-                    lines.Add("// auto generated code (do not edit manually)");
-                    lines.Add(string.Empty);
-                    lines.Add("namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;");
-                    lines.Add(string.Empty);
+                    var lines = new List<string>
+                    {
+                        "// auto generated code (do not edit manually)",
+                        string.Empty,
+                        "namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;",
+                        string.Empty
+                    };
 
                     var inheritPart = " : " + input.BaseClassName;
 
