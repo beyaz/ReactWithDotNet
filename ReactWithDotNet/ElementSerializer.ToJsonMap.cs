@@ -688,73 +688,65 @@ partial class ElementSerializer
                 ElementIsNull = true
             };
         }
-        
-        
 
         if (element is HtmlTextNode htmlTextNode)
         {
-            var node = new Node
+            return new Node
             {
                 Element                  = element,
                 ElementIsHtmlTextElement = true,
                 ElementAsHtmlTextElement = htmlTextNode
             };
-            return node;
         }
 
         if (element is HtmlElement htmlElement)
         {
-            var node = new Node
+            return new Node
             {
                 Element              = element,
                 ElementIsHtmlElement = true,
                 ElementAsHtmlElement = htmlElement
             };
-            return node;
         }
 
         if (element is FakeChild fakeChild)
         {
-            var node = new Node
+            return new Node
             {
                 Element            = element,
                 ElementIsFakeChild = true,
                 ElementAsFakeChild = fakeChild
             };
-            return node;
         }
 
         if (element is ThirdPartyReactComponent thirdPartyReactComponent)
         {
-            var node = new Node
+            return new Node
             {
                 Element                           = element,
                 ElementIsThirdPartyReactComponent = true,
                 ElementAsThirdPartyReactComponent = thirdPartyReactComponent
             };
-            return node;
         }
 
         if (element is ReactComponentBase dotNetComponent)
         {
-            var node = new Node
+            return new Node
             {
                 Element                       = element,
                 ElementIsDotNetReactComponent = true,
                 ElementAsDotNetReactComponent = dotNetComponent
             };
-            return node;
         }
 
         if (element is Fragment fragment)
         {
-            var node = new Node
+            return new Node
             {
                 Element           = element,
                 ElementIsFragment = true,
                 ElementAsFragment = fragment
             };
-            return node;
         }
 
         if (element is ReactPureComponent pureComponent)
@@ -765,7 +757,6 @@ partial class ElementSerializer
                 ElementIsDotNetReactPureComponent = true,
                 ElementAsDotNetReactPureComponent = pureComponent
             };
-            
         }
 
         throw FatalError("Node type not recognized");
