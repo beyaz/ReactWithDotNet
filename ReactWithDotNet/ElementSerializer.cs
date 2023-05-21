@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
-class Tracer
+sealed class Tracer
 {
     public int IndentLevel { get; set; }
 
