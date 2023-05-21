@@ -689,58 +689,83 @@ partial class ElementSerializer
             };
         }
         
-        var node = new Node
-        {
-            Element = element
-        };
+        
 
         if (element is HtmlTextNode htmlTextNode)
         {
-            node.ElementIsHtmlTextElement = true;
-            node.ElementAsHtmlTextElement = htmlTextNode;
+            var node = new Node
+            {
+                Element                  = element,
+                ElementIsHtmlTextElement = true,
+                ElementAsHtmlTextElement = htmlTextNode
+            };
             return node;
         }
 
         if (element is HtmlElement htmlElement)
         {
-            node.ElementIsHtmlElement = true;
-            node.ElementAsHtmlElement = htmlElement;
+            var node = new Node
+            {
+                Element              = element,
+                ElementIsHtmlElement = true,
+                ElementAsHtmlElement = htmlElement
+            };
             return node;
         }
 
         if (element is FakeChild fakeChild)
         {
-            node.ElementIsFakeChild = true;
-            node.ElementAsFakeChild = fakeChild;
+            var node = new Node
+            {
+                Element            = element,
+                ElementIsFakeChild = true,
+                ElementAsFakeChild = fakeChild
+            };
             return node;
         }
 
         if (element is ThirdPartyReactComponent thirdPartyReactComponent)
         {
-            node.ElementIsThirdPartyReactComponent = true;
-            node.ElementAsThirdPartyReactComponent = thirdPartyReactComponent;
+            var node = new Node
+            {
+                Element                           = element,
+                ElementIsThirdPartyReactComponent = true,
+                ElementAsThirdPartyReactComponent = thirdPartyReactComponent
+            };
             return node;
         }
 
         if (element is ReactComponentBase dotNetComponent)
         {
-            node.ElementIsDotNetReactComponent = true;
-            node.ElementAsDotNetReactComponent = dotNetComponent;
+            var node = new Node
+            {
+                Element                       = element,
+                ElementIsDotNetReactComponent = true,
+                ElementAsDotNetReactComponent = dotNetComponent
+            };
             return node;
         }
 
         if (element is Fragment fragment)
         {
-            node.ElementIsFragment = true;
-            node.ElementAsFragment = fragment;
+            var node = new Node
+            {
+                Element           = element,
+                ElementIsFragment = true,
+                ElementAsFragment = fragment
+            };
             return node;
         }
 
         if (element is ReactPureComponent pureComponent)
         {
-            node.ElementIsDotNetReactPureComponent = true;
-            node.ElementAsDotNetReactPureComponent = pureComponent;
-            return node;
+            return new Node
+            {
+                Element                           = element,
+                ElementIsDotNetReactPureComponent = true,
+                ElementAsDotNetReactPureComponent = pureComponent
+            };
+            
         }
 
         throw FatalError("Node type not recognized");
