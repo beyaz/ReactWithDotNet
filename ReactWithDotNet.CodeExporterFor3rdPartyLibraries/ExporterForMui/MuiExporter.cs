@@ -55,7 +55,10 @@ static class MuiExporter
                                   .RemoveFromEnd("*/")
                                   .Trim()
                                   .RemoveFromStart("* ")
+                                  .Replace("<", "&lt;")
+                                  .Replace(">", "&gt;")
                                   .Trim();
+            
             if (string.IsNullOrWhiteSpace(line))
             {
                 continue;
