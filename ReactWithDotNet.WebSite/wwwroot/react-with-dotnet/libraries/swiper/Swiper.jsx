@@ -63,7 +63,7 @@ const SwiperForwarded = React.forwardRef((props, ref) => (
         grabCursor={props.grabCursor}
         init={props.init}
         loop={props.loop}
-        loopAdditionalSlides={props.loopAdditionalSlides}
+        //loopAdditionalSlides={props.loopAdditionalSlides}
         onSlideChangeTransitionStart={props.onSlideChangeTransitionStart}
         onSlideChange={props.onSlideChange}
         slideChangeTransitionEnd={props.slideChangeTransitionEnd}
