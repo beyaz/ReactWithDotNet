@@ -19,8 +19,8 @@ public abstract class ThirdPartyReactComponent : Element
         style.Apply(modifiers);
     }
 
-    [ReactProp]
-    public string className { get; set; }
+    //[ReactProp]
+    //public string className { get; set; }
 
     /// <summary>
     ///     Gets the style.
@@ -77,13 +77,15 @@ public abstract class ThirdPartyReactComponent : Element
 
     public void AddClass(string cssClassName)
     {
-        if (string.IsNullOrWhiteSpace(className))
-        {
-            className = cssClassName;
-            return;
-        }
+        throw DeveloperException("ThirdPartyClassName");
+        
+        //if (string.IsNullOrWhiteSpace(className))
+        //{
+        //    className = cssClassName;
+        //    return;
+        //}
 
-        className += " " + cssClassName;
+        //className += " " + cssClassName;
     }
 
     internal Element InvokeSuspenseFallback() => GetSuspenseFallbackElement();
