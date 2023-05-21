@@ -1,4 +1,3 @@
-using System.IO;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,22 +6,6 @@ namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 [TestClass]
 public class TsParserTests
 {
-    [TestMethod]
-    public void B()
-    {
-        var content = File.ReadAllText("d:\\Paper.d.ts");
-
-        var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(content, 0);
-        if (hasRead)
-        {
-            var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens("props: P & {", 0).tokens);
-            if (isFound)
-            {
-                var (b, indexOfPair) = TsParser.FindPair(tokens, indexOfLastMatchedToken, t => t.tokenType == TokenType.RightBrace);
-            }
-        }
-    }
-
     [TestMethod]
     public void ParseMembers()
     {
