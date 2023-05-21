@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace ReactWithDotNet.CallParentHandlerTest;
+﻿namespace ReactWithDotNet.CallParentHandlerTest;
 
 
 class ModelA

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace ReactWithDotNet.StateTests;
+﻿namespace ReactWithDotNet.StateTests;
 
 class ModelA
 {
