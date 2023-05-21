@@ -428,7 +428,7 @@ partial class ElementSerializer
                             BeforeSerializeElementToClient     = context.BeforeSerializeElementToClient,
                             ComponentUniqueIdentifierNextValue = context.ComponentUniqueIdentifierNextValue + 1,
                             ReactContext                       = context.ReactContext,
-                            SkipHandleCacheableMethods          = true,
+                            SkipHandleCacheableMethods         = true,
                             StateTree = new StateTree
                             {
                                 BreadCrumbPath = context.StateTree.BreadCrumbPath,
@@ -573,7 +573,7 @@ partial class ElementSerializer
                     {
                         map.Add("$CachedMethods", cachedMethods);
                     }
-                    
+
                     stopwatch.Stop();
 
                     if (stopwatch.ElapsedMilliseconds > 10)
@@ -757,7 +757,7 @@ partial class ElementSerializer
             {
                 foreach (var propertyInfo in type.GetSerializableProperties().Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
                 {
-                    var isAction        = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
+                    var isAction = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
                     var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1Or2Or3();
 
                     if (isAction || isGenericAction)
@@ -811,10 +811,10 @@ partial class ElementSerializer
 
             typeInfo = new TypeInfo
             {
-                CustomEventPropertiesOfType         = reactCustomEventProperties,
-                DotNetPropertiesOfType              = propertyAccessors,
-                ReactAttributedPropertiesOfType     = reactProperties,
-                IsReactHigherOrderComponent         = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
+                CustomEventPropertiesOfType          = reactCustomEventProperties,
+                DotNetPropertiesOfType               = propertyAccessors,
+                ReactAttributedPropertiesOfType      = reactProperties,
+                IsReactHigherOrderComponent          = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
                 CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
                 ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray()
             };
