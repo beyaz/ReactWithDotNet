@@ -152,18 +152,17 @@ static class StateCache
         }
 
         // Uses SHA256 to create the hash
-        using (var sha = new SHA256Managed())
-        {
-            // Convert the string to a byte array first, to be processed
-            var textBytes = Encoding.UTF8.GetBytes(text + salt);
-            var hashBytes = sha.ComputeHash(textBytes);
+        using var sha = new SHA256Managed();
+        
+        // Convert the string to a byte array first, to be processed
+        var textBytes = Encoding.UTF8.GetBytes(text + salt);
+        var hashBytes = sha.ComputeHash(textBytes);
 
-            // Convert back to a string, removing the '-' that BitConverter adds
-            var hash = BitConverter
-                      .ToString(hashBytes)
-                      .Replace("-", string.Empty);
+        // Convert back to a string, removing the '-' that BitConverter adds
+        var hash = BitConverter
+            .ToString(hashBytes)
+            .Replace("-", string.Empty);
 
-            return hash;
-        }
+        return hash;
     }
 }
