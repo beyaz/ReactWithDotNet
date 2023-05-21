@@ -5,6 +5,5 @@
 /// </summary>
 public sealed class ScrollPanel : ElementBase
 {
-    [ReactProp]
-    public string className { get; set; }
+ 
 }

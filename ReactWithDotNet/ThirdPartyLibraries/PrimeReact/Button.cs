@@ -44,8 +44,7 @@
         [ReactProp]
         public string loadingIcon { get; set; }
 
-        [ReactProp]
-        public string id { get; set; }
+       
 
 
 

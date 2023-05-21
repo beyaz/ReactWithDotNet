@@ -28,11 +28,7 @@ public class RevealBase : ThirdPartyReactComponent
     [ReactProp]
     public Style childStyle { get; set; }
 
-    /// <summary>
-    ///     <br /> Class names to add to the container element.
-    /// </summary>
-    [ReactProp]
-    public string className { get; set; }
+   
 
     /// <summary>
     ///     <br /> Factor that affects the delay that each animated element in a cascade animation will be assigned.

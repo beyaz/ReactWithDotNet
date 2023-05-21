@@ -18,8 +18,7 @@ public class ElementBase : ThirdPartyReactComponent
     [ReactProp]
     public TooltipOptions tooltipOptions { get; set; }
 
-    [ReactProp]
-    public string className { get; set; }
+    
 
     protected ElementBase()
     {
