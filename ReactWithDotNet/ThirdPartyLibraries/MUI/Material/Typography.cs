@@ -67,7 +67,7 @@ public sealed class Typography : ElementBase
     /// <summary>
     ///     The component maps the variant prop to a range of different HTML element types.
     ///     <br/>
-    ///     For instance, subtitle1 to `<h6>`.
+    ///     For instance, subtitle1 to `&lt;h6&gt;`.
     ///     <br/>
     ///     If you wish to change that mapping, you can provide your own.
     ///     <br/>

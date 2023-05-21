@@ -74,7 +74,7 @@ public class SwitchBase : ButtonBase
     ///     <br/>
     ///     <br/>
     ///     <br/>
-    ///     @param {React.ChangeEvent<HTMLInputElement>} event The event source of the callback.
+    ///     @param {React.ChangeEvent&lt;HTMLInputElement&gt;} event The event source of the callback.
     ///     <br/>
     ///     You can pull out the new value by accessing `event.target.value` (string).
     ///     <br/>
