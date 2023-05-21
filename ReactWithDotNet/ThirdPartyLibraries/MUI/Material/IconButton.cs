@@ -5,13 +5,6 @@ namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 public sealed class IconButton : ButtonBase
 {
     /// <summary>
-    ///     Override or extend the styles applied to the component.
-    /// </summary>
-    [ReactProp]
-    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
-    public Dictionary<string, Style> classes { get; } = new ();
-    
-    /// <summary>
     ///     The color of the component.
     ///     <br/>
     ///     It supports both default and custom theme colors, which can be added as shown in the
@@ -22,14 +15,6 @@ public sealed class IconButton : ButtonBase
     /// </summary>
     [ReactProp]
     public string color { get; set; }
-    
-    /// <summary>
-    ///     If `true`, the component is disabled.
-    ///     <br/>
-    ///     @default false
-    /// </summary>
-    [ReactProp]
-    public bool? disabled { get; set; }
     
     /// <summary>
     ///     If `true`, the  keyboard focus ripple is disabled.
