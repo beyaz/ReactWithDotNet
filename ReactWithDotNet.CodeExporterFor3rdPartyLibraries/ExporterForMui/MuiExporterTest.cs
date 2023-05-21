@@ -129,7 +129,7 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(TextField)),
             StartFrom        = "> {",
             ClassName        = "TextField",
-            SkipMembers      = new[] { "children", "inputRef" },
+            SkipMembers      = new[] { "children", "inputRef", "onClick" },
             ClassModifier    = "partial"
         });
     }

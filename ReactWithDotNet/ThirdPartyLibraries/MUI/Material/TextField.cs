@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
-partial class TextField
+public partial class TextField
 {
     /// <summary>
     ///     This prop helps users to fill forms faster, especially on mobile devices.
