@@ -135,9 +135,14 @@ static class StateCache
 
     static void WriteAllText(string path, string contents)
     {
-        if (!Directory.Exists(Path.GetDirectoryName(path)))
+        var directoryName = Path.GetDirectoryName(path);
+
+        if (!string.IsNullOrWhiteSpace(directoryName))
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            if (!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
         }
 
         File.WriteAllText(path, contents);
