@@ -94,7 +94,7 @@ static class MuiExporter
 
         if (memberInfo.Name =="sx")
         {
-            lines.Add("[React]");
+            lines.Add("[ReactProp]");
             lines.Add("[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]");
             lines.Add("public dynamic sx { get; } = new ExpandoObject();");
 
@@ -103,7 +103,7 @@ static class MuiExporter
 
         if (memberInfo.Name == "classes" && memberInfo.PropertyType?.Name == "Partial")
         {
-            lines.Add("[React]");
+            lines.Add("[ReactProp]");
             lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
             lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
             return lines;
@@ -119,7 +119,7 @@ static class MuiExporter
             
             var exportAsDynamicObjectMap = AsCSharpType(memberInfo.PropertyType) == "dynamic";
             
-            lines.Add("[React]");
+            lines.Add("[ReactProp]");
 
             if (exportAsDynamicObjectMap)
             {
@@ -269,7 +269,7 @@ static class MuiExporter
                         foreach (var extraProp in input.ExtraProps)
                         {
                             lines.Add(string.Empty);
-                            lines.Add("[React]");
+                            lines.Add("[ReactProp]");
                             lines.Add($"public {extraProp} {{ get; set; }}");
                         }
                     }
