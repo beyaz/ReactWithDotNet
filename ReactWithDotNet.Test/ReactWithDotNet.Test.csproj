@@ -23,6 +23,7 @@
 
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
+        <RootNamespace>ReactWithDotNet</RootNamespace>
     </PropertyGroup>
     
 </Project>
