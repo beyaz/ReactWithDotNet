@@ -295,22 +295,14 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         
         void initializeInstanceJson()
         {
-            var typeOfInstance = state.SelectedType;
-            if (typeOfInstance == null)
-            {
-                typeOfInstance = state.SelectedMethod?.DeclaringType;
-            }
+            var typeOfInstance = state.SelectedType ?? state.SelectedMethod?.DeclaringType;
 
             if (typeOfInstance == null)
             {
                 return;
             }
 
-            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? string.Empty);
-            if (map == null)
-            {
-                map = new Dictionary<string, object>();
-            }
+            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? string.Empty) ?? new Dictionary<string, object>();
 
             foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(typeOfInstance)?.GetProperties(BindingFlags.Instance | BindingFlags.Public) ?? new PropertyInfo[] { })
             {
@@ -374,11 +366,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         void initializeParametersJson()
         {
-            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? string.Empty);
-            if (map == null)
-            {
-                map = new Dictionary<string, object>();
-            }
+            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? string.Empty) ?? new Dictionary<string, object>();
 
             foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
             {
