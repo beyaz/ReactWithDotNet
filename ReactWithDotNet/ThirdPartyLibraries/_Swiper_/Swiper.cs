@@ -43,8 +43,8 @@ public class Swiper : ThirdPartyReactComponent
     [ReactProp]
     public bool? loop { get; set; }
 
-    [ReactProp]
-    public int? loopAdditionalSlides { get; set; }
+    //[ReactProp]
+    //public int? loopAdditionalSlides { get; set; }
 
     [ReactProp]
     public IReadOnlyList<string> modules { get; set; }

@@ -9,9 +9,11 @@ class ModelA
 
 class ComponentA : ReactComponent<ModelA>
 {
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelA { PropA = "A" };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -43,9 +45,11 @@ class ComponentB : ReactComponent<ModelB>
 {
    
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelB { PropB = "B" };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()

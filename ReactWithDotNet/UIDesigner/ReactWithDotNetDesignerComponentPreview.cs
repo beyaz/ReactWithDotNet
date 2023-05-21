@@ -19,9 +19,11 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
         return Task.CompletedTask;
     }
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
+        
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -116,7 +118,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
 
                                 if (component.IsStateNull)
                                 {
-                                    component.InvokeConstructor();
+                                    component.InvokeConstructor().GetAwaiter().GetResult();
                                 }
                                 component.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
                                 
@@ -155,7 +157,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                         
                         if (component.IsStateNull)
                         {
-                            component.InvokeConstructor();
+                            component.InvokeConstructor().GetAwaiter().GetResult();
                         }
 
                         return component;

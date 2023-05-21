@@ -83,7 +83,7 @@ static class ComponentRequestHandler
 
             if (request.MethodName == "FetchComponent")
             {
-                return fetchComponent();
+                return await fetchComponent();
             }
 
             if (request.MethodName == "HandleComponentEvent")
@@ -98,7 +98,7 @@ static class ComponentRequestHandler
             return new ComponentResponse { ErrorMessage = exception.ToString() };
         }
 
-        ComponentResponse fetchComponent()
+        async Task<ComponentResponse> fetchComponent()
         {
             var stopwatch = new Stopwatch();
 
@@ -121,7 +121,7 @@ static class ComponentRequestHandler
                 reactComponentBase.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier++;
                 reactComponentBase.key                       = "0";
                 reactComponentBase.Context                   = context;
-                reactComponentBase.InvokeConstructor();
+                await reactComponentBase.InvokeConstructor();
             }
             else if (instance is ReactPureComponent reactPureComponent)
             {
@@ -160,7 +160,7 @@ static class ComponentRequestHandler
 
             tracer.IndentLevel++;
 
-            var map = instance.ToJsonMap(serializerContext);
+            var map = await instance.ToJsonMap(serializerContext);
 
             tracer.IndentLevel--;
 
@@ -312,7 +312,7 @@ static class ComponentRequestHandler
 
             tracer.IndentLevel++;
 
-            var map = instance.ToJsonMap(serializerContext);
+            var map = await instance.ToJsonMap(serializerContext);
 
             tracer.IndentLevel--;
 

@@ -10,7 +10,7 @@ partial class ElementSerializer
 {
     static readonly ConcurrentDictionary<Type, TypeInfo> TypeInfoMap = new();
 
-    public static IReadOnlyJsonMap ToJsonMap(this Element element, ElementSerializerContext context)
+    public static async Task<IReadOnlyJsonMap> ToJsonMap(this Element element, ElementSerializerContext context)
     {
         var node = ConvertToNode(element);
 
@@ -65,7 +65,7 @@ partial class ElementSerializer
                     continue;
                 }
 
-                CompleteWithChildren(node, context);
+                await CompleteWithChildren(node, context);
 
                 continue;
             }
@@ -150,7 +150,7 @@ partial class ElementSerializer
 
                 context.TryCallBeforeSerializeElementToClient(node.Element);
 
-                node.ElementAsJsonMap = LeafToMap(node, context);
+                node.ElementAsJsonMap = await LeafToMap(node, context);
 
                 node.IsCompleted = true;
 
@@ -282,7 +282,7 @@ partial class ElementSerializer
                 var state = statePropertyInfo.GetValue(reactStatefulComponent);
                 if (state == null)
                 {
-                    reactStatefulComponent.InvokeConstructor();
+                    await reactStatefulComponent.InvokeConstructor();
 
                     if (reactStatefulComponent.IsStateNull)
                     {
@@ -454,7 +454,7 @@ partial class ElementSerializer
 
                             var newElementSerializerContext = createNewElementSerializerContext();
 
-                            var cachedVersion = ToJsonMap(component, newElementSerializerContext);
+                            var cachedVersion = await ToJsonMap(component, newElementSerializerContext);
 
                             context.Tracer.Trace(newElementSerializerContext.Tracer.Messages);
 
@@ -549,7 +549,7 @@ partial class ElementSerializer
 
                                 var newElementSerializerContext = createNewElementSerializerContext();
 
-                                var cachedVersion = ToJsonMap(component, newElementSerializerContext);
+                                var cachedVersion = await ToJsonMap(component, newElementSerializerContext);
 
                                 // take back dynamic styles
                                 context.DynamicStyles.ListOfClasses.Clear();
@@ -593,7 +593,7 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
-    static void AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
+    static async Task AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
         var reactProperties = GetTypeInfo(element.GetType()).ReactAttributedPropertiesOfType;
 
@@ -601,7 +601,7 @@ partial class ElementSerializer
         {
             var propertyInfo = item.PropertyInfo;
 
-            var valueExportInfo = GetPropertyValue(element, item, context);
+            var valueExportInfo = await GetPropertyValue(element, item, context);
             if (valueExportInfo.NeedToExport)
             {
                 add(GetPropertyName(propertyInfo), valueExportInfo.Value);
@@ -609,7 +609,7 @@ partial class ElementSerializer
         }
     }
 
-    static void CompleteWithChildren(Node node, ElementSerializerContext context)
+    static async Task CompleteWithChildren(Node node, ElementSerializerContext context)
     {
         var childElements = new List<object>();
 
@@ -631,7 +631,7 @@ partial class ElementSerializer
             child = child.NextSibling;
         }
 
-        var map = LeafToMap(node, context);
+        var map = await LeafToMap(node, context);
 
         map.Add("$children", childElements);
 
@@ -843,7 +843,7 @@ partial class ElementSerializer
         return typeInfo;
     }
 
-    static JsonMap LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
+    static async Task<JsonMap> LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
     {
         var map = new JsonMap();
         map.Add("$tag", htmlElement.Type);
@@ -858,7 +858,7 @@ partial class ElementSerializer
             }
         }
 
-        AddReactAttributes(map.Add, htmlElement, context);
+        await AddReactAttributes(map.Add, htmlElement, context);
 
         if (htmlElement.innerText is not null)
         {
@@ -894,7 +894,7 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsonMap LeafToMap(Node node, ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
+    static async Task<JsonMap> LeafToMap(Node node, ThirdPartyReactComponent thirdPartyReactComponent, ElementSerializerContext context)
     {
         var map = new JsonMap();
         map.Add("$tag", thirdPartyReactComponent.Type);
@@ -909,7 +909,7 @@ partial class ElementSerializer
             }
         }
 
-        AddReactAttributes(map.Add, thirdPartyReactComponent, context);
+        await AddReactAttributes(map.Add, thirdPartyReactComponent, context);
 
         if (context.CalculateSuspenseFallbackForThirdPartyReactComponents)
         {
@@ -919,16 +919,16 @@ partial class ElementSerializer
         return map;
     }
 
-    static JsonMap LeafToMap(Node node, ElementSerializerContext context)
+    static async Task<JsonMap> LeafToMap(Node node, ElementSerializerContext context)
     {
         if (node.ElementIsHtmlElement)
         {
-            return LeafToMap(node.ElementAsHtmlElement, context);
+            return await LeafToMap(node.ElementAsHtmlElement, context);
         }
 
         if (node.ElementIsThirdPartyReactComponent)
         {
-            return LeafToMap(node, node.ElementAsThirdPartyReactComponent, context);
+            return await LeafToMap(node, node.ElementAsThirdPartyReactComponent, context);
         }
 
         if (node.ElementIsFragment)

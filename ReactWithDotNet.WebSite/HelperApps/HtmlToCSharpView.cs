@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
@@ -16,7 +17,7 @@ class HtmlToCSharpViewModel
 
 class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 {
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new HtmlToCSharpViewModel
         {
@@ -30,6 +31,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 "
         };
         state.CSharpCode = HtmlToCSharp(state.HtmlText);
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()

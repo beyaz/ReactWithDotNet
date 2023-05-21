@@ -56,7 +56,7 @@ public abstract class ReactComponentBase : Element
         return MemberwiseClone();
     }
 
-    internal void InvokeConstructor() => constructor();
+    internal Task InvokeConstructor() => constructor();
 
     internal Element InvokeRender() => DesignerCustomizedRender == null ? render() : DesignerCustomizedRender();
 
@@ -65,7 +65,7 @@ public abstract class ReactComponentBase : Element
         return Task.CompletedTask;
     }
 
-    protected abstract void constructor();
+    protected abstract Task constructor();
 
     /// <summary>
     ///     Sample event declaration <br />
@@ -141,9 +141,11 @@ public abstract class ReactComponent<TState> : ReactComponentBase where TState :
 
     internal override bool IsStateNull => state == null;
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new TState();
+
+        return Task.CompletedTask;
     }
 }
 

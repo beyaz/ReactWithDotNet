@@ -11,9 +11,10 @@ class ModelA
 
 class ComponentA : ReactComponent<ModelA>
 {
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelA { PropA = "A" };
+        return Task.CompletedTask;
     }
 
     protected override Element render()

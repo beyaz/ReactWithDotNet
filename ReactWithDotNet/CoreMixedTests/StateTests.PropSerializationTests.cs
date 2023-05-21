@@ -17,9 +17,11 @@ class ComponentA : ReactComponent<ModelA>
 
     
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelA { StateValueA = "A" };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -52,9 +54,11 @@ class ComponentB : ReactComponent<ModelB>
     public bool ShouldContainsA { get; set; }
    
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelB { StateValueB = "B" };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -97,9 +101,11 @@ class RedBorderModel
 
 class RedBorder:ReactComponent<RedBorderModel>
 {
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new RedBorderModel();
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -119,9 +125,11 @@ class ModelContainer1
 
 class Container1 : ReactComponent<ModelContainer1>
 {
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelContainer1();
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()

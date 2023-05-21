@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet.WebSite.Components;
+﻿using System.Threading.Tasks;
+
+namespace ReactWithDotNet.WebSite.Components;
 
 class HomePageDemoComponentState
 {
@@ -6,9 +8,11 @@ class HomePageDemoComponentState
 }
 class HomePageDemoComponent : ReactComponent<HomePageDemoComponentState>
 {
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new HomePageDemoComponentState();
+
+        return Task.CompletedTask;
     }
 
     void OnButtonClicked(MouseEvent e)

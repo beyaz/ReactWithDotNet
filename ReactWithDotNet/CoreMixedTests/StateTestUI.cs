@@ -13,9 +13,11 @@ class ComponentA : ReactComponent<ModelA>
 {
     
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelA { PropA = "A" };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -56,9 +58,11 @@ class ComponentB : ReactComponent<ModelB>
 {
    
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelB { PropB = "B" };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -89,9 +93,11 @@ class ComponentC : ReactComponent<ModelC>
 {
     
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelC { PropC = "C" };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -115,12 +121,14 @@ class Container1 : ReactComponent<ModelContainer1>
 {
   
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelContainer1
         {
             Container1Text = "Container1Text"
         };
+
+        return Task.CompletedTask;
     }
 
     Element conditionalRender()
@@ -165,12 +173,14 @@ class Container2 : ReactComponent<ModelContainer2>
 {
     
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelContainer2
         {
             Container2Text = "Container2Text"
         };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
@@ -201,12 +211,14 @@ class Container3 : ReactComponent<ModelContainer3>
 {
     
 
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new ModelContainer3
         {
             Container3Text = "Container3_"
         };
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()

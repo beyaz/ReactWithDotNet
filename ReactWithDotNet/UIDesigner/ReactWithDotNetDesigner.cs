@@ -8,11 +8,13 @@ namespace ReactWithDotNet.UIDesigner;
 
 public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
 {
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()

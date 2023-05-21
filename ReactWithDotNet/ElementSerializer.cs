@@ -247,7 +247,7 @@ static partial class ElementSerializer
         return propertyName;
     }
 
-    static ValueExportInfo<object> GetPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
+    static async Task<ValueExportInfo<object>> GetPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
     {
         var propertyInfo = property.PropertyInfo;
 
@@ -425,7 +425,7 @@ static partial class ElementSerializer
             propertyValue = new InnerElementInfo
             {
                 IsElement = true,
-                Element   = element.ToJsonMap(context)
+                Element   = await element.ToJsonMap(context)
             };
         }
 
@@ -444,7 +444,7 @@ static partial class ElementSerializer
                 throw new MissingMethodException(templateAttribute.MethodNameForGettingItemsSource);
             }
 
-            IReadOnlyJsonMap convertToReactNode(object item)
+            Task<IReadOnlyJsonMap> convertToReactNode(object item)
             {
                 var reactNode = (Element)func.DynamicInvoke(item);
                 if (reactNode is not null && item is not null)
@@ -463,7 +463,7 @@ static partial class ElementSerializer
             {
                 foreach (var item in itemTemplates)
                 {
-                    results.Add(new ItemTemplateInfo { Item = item, ElementAsJson = convertToReactNode(item) });
+                    results.Add(new ItemTemplateInfo { Item = item, ElementAsJson = await convertToReactNode(item) });
                 }
             }
 
@@ -474,7 +474,7 @@ static partial class ElementSerializer
 
             if (propertyInfo.GetCustomAttribute<ReactTemplateForNullAttribute>() is not null)
             {
-                template.___TemplateForNull___ = convertToReactNode(null);
+                template.___TemplateForNull___ = await convertToReactNode(null);
             }
 
             return template;
@@ -586,7 +586,7 @@ static partial class ElementSerializer
 
     class CacheableMethodInfo
     {
-        public object ElementAsJson { get; set; }
+        public IReadOnlyJsonMap ElementAsJson { get; set; }
         public bool IgnoreParameters { get; set; }
         public string MethodName { get; set; }
         public object Parameter { get; set; }

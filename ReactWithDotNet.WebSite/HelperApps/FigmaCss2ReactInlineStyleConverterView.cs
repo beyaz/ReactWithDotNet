@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Threading.Tasks;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
@@ -15,7 +16,7 @@ class FigmaCss2ReactInlineStyleConverterModel
 
 class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInlineStyleConverterModel>
 {
-    protected override void constructor()
+    protected override Task constructor()
     {
         state = new FigmaCss2ReactInlineStyleConverterModel
         {
@@ -34,6 +35,8 @@ color: #4A4A49;
 "
         };
         state.ReactInlineStyle = FigmaCssToReactInlineCss(state.FigmaCss);
+
+        return Task.CompletedTask;
     }
 
     protected override Element render()
