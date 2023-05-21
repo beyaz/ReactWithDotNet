@@ -172,9 +172,9 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(SwitchBase)),
             StartFrom        = "> {",
             ClassName        = "SwitchBase",
-            SkipMembers      = new[] { "-"},
+            SkipMembers      = new[] { "-", "classes", "disabled", "disableRipple" },
             ClassModifier    = string.Empty,
-            BaseClassName = "ButtonBase"
+            BaseClassName    = "ButtonBase"
 
         });
     }

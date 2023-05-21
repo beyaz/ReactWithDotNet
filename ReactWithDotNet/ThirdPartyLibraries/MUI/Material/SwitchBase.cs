@@ -17,31 +17,10 @@ public class SwitchBase : ButtonBase
     public Element checkedIcon { get; set; }
     
     /// <summary>
-    ///     Override or extend the styles applied to the component.
-    /// </summary>
-    [ReactProp]
-    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
-    public Dictionary<string, Style> classes { get; } = new ();
-    
-    /// <summary>
     ///     The default checked state. Use when the component is not controlled.
     /// </summary>
     [ReactProp]
     public bool? defaultChecked { get; set; }
-    
-    /// <summary>
-    ///     If `true`, the component is disabled.
-    /// </summary>
-    [ReactProp]
-    public bool? disabled { get; set; }
-    
-    /// <summary>
-    ///     If `true`, the ripple effect is disabled.
-    ///     <br/>
-    ///     @default false
-    /// </summary>
-    [ReactProp]
-    public bool? disableRipple { get; set; }
     
     /// <summary>
     ///     If `true`, the  keyboard focus ripple is disabled.
