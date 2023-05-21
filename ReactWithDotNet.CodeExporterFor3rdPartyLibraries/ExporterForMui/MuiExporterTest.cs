@@ -156,7 +156,7 @@ public class MuiExporterTest
             DefinitionTsCode = GetTsCode(nameof(IconButton)),
             StartFrom        = "props: P & {",
             ClassName        = "IconButton",
-            SkipMembers      = new[] { "children", "classes", "disabled" },
+            SkipMembers      = new[] { "children", "classes", "disabled","sx" },
             BaseClassName = nameof(ButtonBase),
             ExtraProps = new []{ "string type" }
 

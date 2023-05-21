@@ -48,13 +48,6 @@ public sealed class IconButton : ButtonBase
     [ReactProp]
     public string size { get; set; }
     
-    /// <summary>
-    ///     The system prop that allows defining system overrides as well as additional CSS styles.
-    /// </summary>
-    [ReactProp]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
-    public dynamic sx { get; } = new ExpandoObject();
-    
     [ReactProp]
     public string type { get; set; }
 }
