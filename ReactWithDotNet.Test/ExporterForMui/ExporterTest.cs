@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ReactWithDotNet.ExporterForMui;
 
 [TestClass]
-public class MuiExporterTest
+public class ExporterTest
 {
     static string GetTsCode(string className)
     {
@@ -20,7 +20,7 @@ public class MuiExporterTest
     [TestMethod]
     public void Paper()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode     = GetTsCode(nameof(Paper)),
             StartFrom            = "props: P & {",
@@ -34,7 +34,7 @@ public class MuiExporterTest
     [TestMethod]
     public void Card()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Card)),
             StartFrom        = "DistributiveOmit<PaperProps, 'classes'> & {",
@@ -47,7 +47,7 @@ public class MuiExporterTest
     [TestMethod]
     public void Tooltip()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Tooltip)),
             StartFrom        = "'title'> {",
@@ -60,7 +60,7 @@ public class MuiExporterTest
     [TestMethod]
     public void CardMedia()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(CardMedia)),
             StartFrom        = "props: P & {",
@@ -74,7 +74,7 @@ public class MuiExporterTest
     [TestMethod]
     public void Divider()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Divider)),
             StartFrom        = "props: P & {",
@@ -86,7 +86,7 @@ public class MuiExporterTest
     [TestMethod]
     public void Typography()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Typography)),
             StartFrom        = "SystemProps<Theme> & {",
@@ -99,7 +99,7 @@ public class MuiExporterTest
     [TestMethod]
     public void CardContent()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(CardContent)),
             StartFrom        = "props: P & {",
@@ -111,7 +111,7 @@ public class MuiExporterTest
     [TestMethod]
     public void CardActions()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(CardActions)),
             StartFrom        = "<HTMLDivElement>> {",
@@ -124,7 +124,7 @@ public class MuiExporterTest
     [TestMethod]
     public void TextField()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(TextField)),
             StartFrom        = "> {",
@@ -137,7 +137,7 @@ public class MuiExporterTest
     [TestMethod]
     public void ButtonBase()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode     = GetTsCode(nameof(ButtonBase)),
             StartFrom            = "props: P & {",
@@ -151,7 +151,7 @@ public class MuiExporterTest
     [TestMethod]
     public void IconButton()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(IconButton)),
             StartFrom        = "props: P & {",
@@ -167,7 +167,7 @@ public class MuiExporterTest
     [TestMethod]
     public void SwitchBase()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(SwitchBase)),
             StartFrom        = "> {",
@@ -182,7 +182,7 @@ public class MuiExporterTest
     [TestMethod]
     public void Switch()
     {
-        MuiExporter.ExportToCSharpFile(new MuiExportInput
+        Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Switch)),
             StartFrom = "> {",

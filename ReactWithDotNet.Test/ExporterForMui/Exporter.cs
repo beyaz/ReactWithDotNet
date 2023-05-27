@@ -3,9 +3,9 @@ using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
 namespace ReactWithDotNet.ExporterForMui;
 
-static class MuiExporter
+static class Exporter
 {
-    public static void ExportToCSharpFile(MuiExportInput input)
+    public static void ExportToCSharpFile(ExportInput input)
     {
         var code = CalculateCSharpFileContentLines(input).GetValue().ToCSharpCode();
 
@@ -131,7 +131,7 @@ static class MuiExporter
         return lines;
     }
 
-    static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(MuiExportInput input)
+    static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(ExportInput input)
     {
         var (exception, hasRead, _, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
         if (exception is not null)
