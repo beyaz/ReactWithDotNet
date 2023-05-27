@@ -8,6 +8,9 @@ class TsTypeReference
     public string Name { get; set; }
     public IReadOnlyList<Token> TokenListAsUnionValues { get; set; }
     public IReadOnlyList<Token> TokenListAsObjectMap { get; set; }
+
+    public bool IsUnionType { get; set; }
+    public IReadOnlyList<TsTypeReference> UnionTypes { get; set; }
 }
 
 class TsMemberInfo
@@ -17,6 +20,8 @@ class TsMemberInfo
     public string Name { get; set; }
     public TsTypeReference PropertyType { get; set; }
     public IReadOnlyList<Token> MethodSignature { get; set; }
+
+    
 }
 
 static class TsParser
@@ -265,6 +270,43 @@ static class TsParser
         }
     }
 
+
+    public static (bool hasRead, TsTypeReference tsTypeReference, int newIndex) TryReadOnlyOneTypeReference(IReadOnlyList<Token> tokens, int startIndex)
+    {
+        var i = startIndex;
+
+        skipSpaces();
+        
+        var (hasRead, name, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
+        if (hasRead)
+        {
+            i = newIndex;
+
+            skipSpaces();
+
+            if (tokens[i].tokenType == TokenType.Union || tokens[i].tokenType == TokenType.SemiColon)
+            {
+                var tsTypeReference = new TsTypeReference
+                {
+                    Name = name
+                };
+
+                return (true, tsTypeReference, i);
+            }
+        }
+
+        return (false, null, -1);
+
+        void skipSpaces()
+        {
+            if (tokens[i].tokenType == TokenType.Space)
+            {
+                i++;
+            }
+        }
+    }
+
+
     public static (bool hasRead, TsTypeReference tsTypeReference, int newIndex) TryReadTypeReference(IReadOnlyList<Token> tokens, int startIndex)
     {
         var i = startIndex;
@@ -273,7 +315,7 @@ static class TsParser
         
         // named type
         {
-             (var hasRead, name, var newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
+            (var hasRead, name, var newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
             if (hasRead)
             {
                 i = newIndex;
@@ -304,6 +346,40 @@ static class TsParser
 
                         return (true, tsTypeReference, indexOfPair + 1);
                     }
+                }
+
+                // number | undefined;
+                if (tokens[i].tokenType == TokenType.Union)
+                {
+                    var unionTypes = new List<TsTypeReference>
+                    {
+                        new ()
+                        {
+                            Name = name
+                        }
+                    };
+                    
+                    var tsTypeReference = new TsTypeReference
+                    {
+                        IsUnionType = true,
+                        UnionTypes = unionTypes
+                    };
+
+                    while (true)
+                    {
+                        var readResponse = TryReadOnlyOneTypeReference(tokens, i + 1);
+                        if (readResponse.hasRead == false)
+                        {
+                            break;
+                        }
+
+                        unionTypes.Add(readResponse.tsTypeReference);
+
+                        i = readResponse.newIndex;
+                    }
+                    
+                    
+                    return (true, tsTypeReference, i + 1);
                 }
 
                 if (tokens[i].tokenType == TokenType.SemiColon)
