@@ -22,8 +22,8 @@ public class ExporterTest
             DefinitionTsCode     = GetTsCode("splitter"),
             StartFrom            = "'ref'> {",
             ClassName            = "Splitter",
-            ClassModifier = " ",
             SkipMembers          = new[] { "children", "onResizeEnd" },
+            IsContainer = true
         });
     }
 
@@ -35,8 +35,8 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode("splitter"),
             StartFrom        = "interface SplitterPanelProps {",
             ClassName        = "SplitterPanel",
-            ClassModifier    = " ",
             SkipMembers      = new[] { "children", "style" },
+            IsContainer      = true
         });
     }
 
