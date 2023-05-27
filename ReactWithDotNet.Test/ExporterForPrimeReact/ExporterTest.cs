@@ -12,6 +12,8 @@ public class ExporterTest
 
         return new HttpClient().GetStringAsync(rawUrlInGithub).GetAwaiter().GetResult();
     }
+    
+    
     [TestMethod]
     public void Splitter()
     {
@@ -22,6 +24,19 @@ public class ExporterTest
             ClassName            = "Splitter",
             ClassModifier = " ",
             SkipMembers          = new[] { "children", "onResizeEnd" },
+        });
+    }
+
+    [TestMethod]
+    public void SplitterPanel()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode("splitter"),
+            StartFrom        = "interface SplitterPanelProps {",
+            ClassName        = "SplitterPanel",
+            ClassModifier    = " ",
+            SkipMembers      = new[] { "children" },
         });
     }
 
