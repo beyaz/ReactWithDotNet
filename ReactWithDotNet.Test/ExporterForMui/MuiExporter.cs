@@ -33,57 +33,6 @@ static class MuiExporter
         WriteAllText($@"C:\github\ReactWithDotNet\ReactWithDotNet\ThirdPartyLibraries\MUI\Material\{input.ClassName}.cs", sb.ToString());
     }
 
-    static IEnumerable<string> AsCSharpComment(string tsComment)
-    {
-        if (tsComment is null)
-        {
-            return Enumerable.Empty<string>();
-        }
-
-        var lines = new List<string>();
-
-        var commentLines = tsComment.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
-        lines.Add("/// <summary>");
-
-        var isFirst = true;
-
-        foreach (var commentLine in commentLines)
-        {
-            var line = commentLine.Trim()
-                .Trim(Environment.NewLine.ToCharArray()).RemoveFromStart("/**").RemoveFromStart("/*").RemoveFromEnd("*/")
-                .Trim().RemoveFromStart("* ")
-                .Replace("<", "&lt;")
-                .Replace(">", "&gt;")
-                .Trim();
-
-            if (string.IsNullOrWhiteSpace(line))
-            {
-                continue;
-            }
-
-            if (isFirst)
-            {
-                isFirst = false;
-            }
-            else
-            {
-                lines.Add("///     <br/>");
-            }
-
-            if (line.Trim() == "*")
-            {
-                line = "<br/>";
-            }
-
-            lines.Add("///     " + line);
-        }
-
-        lines.Add("/// </summary>");
-
-        return lines;
-    }
-
     static IReadOnlyList<string> AsCSharpMember(TsMemberInfo memberInfo)
     {
         var lines = new List<string>();
