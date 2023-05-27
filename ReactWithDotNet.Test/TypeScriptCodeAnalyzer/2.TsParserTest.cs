@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static ReactWithDotNet.TypeScriptCodeAnalyzer.TsLexer;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
@@ -29,7 +30,7 @@ public class TsParserTests
   role?: string;
 
 ";
-        var tokens = TsLexer.ParseTokens(code, 0).tokens;
+        var tokens = ParseTokens(code, 0).tokens;
 
         var (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, 0);
         hasRead.Should().BeTrue();
@@ -46,7 +47,7 @@ public class TsParserTests
         memberInfo.Name.Should().Be("role");
         newIndex.Should().Be(44);
 
-        tokens = TsLexer.ParseTokens("{" + code + "}", 0).tokens;
+        tokens = ParseTokens("{" + code + "}", 0).tokens;
 
         // ReSharper disable once RedundantAssignment
         (hasRead, var members, newIndex) = TsParser.TryReadMembers(tokens, 0);
@@ -58,10 +59,27 @@ public class TsParserTests
     [TestMethod]
     public void ParseTypeReference()
     {
-        var (hasRead, tsTypeReference, newIndex) = TsParser.TryReadTypeReference(TsLexer.ParseTokens("Partial<AlertClasses>;", 0).tokens, 0);
+        var tokens = ParseTokens("Partial<AlertClasses>;", 0).tokens;
+        
+        var (hasRead, tsTypeReference, newIndex) = TsParser.TryReadTypeReference(tokens, 0);
 
         hasRead.Should().BeTrue();
         tsTypeReference.Name.Should().Be("Partial");
         newIndex.Should().Be(4);
     }
+
+
+    [TestMethod]
+    public void __typeReference__parsing__()
+    {
+        var tokens = ParseTokens(" AlertClasses ", 0).tokens;
+
+        var typeReference = TsParser.TryReadOnlyOneTypeReference(tokens, 0).tsTypeReference;
+
+        typeReference.Name.Should().Be("AlertClasses");
+        typeReference.IsSimpleNamedType.Should().BeTrue();
+        
+    }
+
+
 }

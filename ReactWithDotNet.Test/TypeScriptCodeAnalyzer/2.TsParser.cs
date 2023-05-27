@@ -11,6 +11,7 @@ class TsTypeReference
 
     public bool IsUnionType { get; set; }
     public IReadOnlyList<TsTypeReference> UnionTypes { get; set; }
+    public bool IsSimpleNamedType { get; set; }
 }
 
 class TsMemberInfo
@@ -284,11 +285,12 @@ static class TsParser
 
             skipSpaces();
 
-            if (tokens[i].tokenType == TokenType.Union || tokens[i].tokenType == TokenType.SemiColon)
+            if (i >= tokens.Count || tokens[i].tokenType == TokenType.Union || tokens[i].tokenType == TokenType.SemiColon)
             {
                 var tsTypeReference = new TsTypeReference
                 {
-                    Name = name
+                    Name = name,
+                    IsSimpleNamedType =  true
                 };
 
                 return (true, tsTypeReference, i);
