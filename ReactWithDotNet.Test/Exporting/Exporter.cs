@@ -211,6 +211,9 @@ static class Exporter
                         lines.Add("}");
                     }
 
+                    lines.Add(string.Empty);
+                    lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
+
                     lines.Add("}");
 
                     return (null, lines);
