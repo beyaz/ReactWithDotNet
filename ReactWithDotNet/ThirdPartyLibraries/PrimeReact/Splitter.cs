@@ -1,6 +1,6 @@
 // auto generated code (do not edit manually)
 
-namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 public  class Splitter : ElementBase
 {
