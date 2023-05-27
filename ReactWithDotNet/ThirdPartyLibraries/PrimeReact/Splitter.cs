@@ -1,5 +1,7 @@
 // auto generated code (do not edit manually)
 
+using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
+
 namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 public  class Splitter : ElementBase
@@ -33,4 +35,6 @@ public  class Splitter : ElementBase
     /// </summary>
     [ReactProp]
     public string stateStorage { get; set; }
+
+    public static IModifier Modify(Action<Splitter> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
 }
