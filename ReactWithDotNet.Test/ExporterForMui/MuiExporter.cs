@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
@@ -8,29 +7,33 @@ namespace ReactWithDotNet.ExporterForMui;
 public class MuiExportInput
 {
     public string ClassName { get; set; }
+
     public string DefinitionTsCode { get; set; }
+
     public IReadOnlyList<string> SkipMembers { get; set; }
+
     public string StartFrom { get; set; }
 
     public IReadOnlyList<string> ExtraProps { get; set; }
+
     public bool IsContainer { get; set; }
 
     public string ClassModifier { get; set; } = "sealed";
 
     public string BaseClassName { get; set; } = "ElementBase";
+
+    public string OutputFileLocation { get; set; } = @"\MUI\Material\";
 }
 
 static class MuiExporter
 {
     public static void ExportToCSharpFile(MuiExportInput input)
     {
-        var lines = CalculateCSharpFileContentLines(input);
+        var code = CalculateCSharpFileContentLines(input).GetValue().ToCSharpCode();
 
-        var sb = new StringBuilder();
+        const string projectFolder = @"C:\github\ReactWithDotNet\ReactWithDotNet\ThirdPartyLibraries";
 
-        lines.WriteLines(x => sb.AppendLine(x));
-
-        WriteAllText($@"C:\github\ReactWithDotNet\ReactWithDotNet\ThirdPartyLibraries\MUI\Material\{input.ClassName}.cs", sb.ToString());
+        WriteAllText($@"{projectFolder}{input.OutputFileLocation}{input.ClassName}.cs", code);
     }
 
     static IReadOnlyList<string> AsCSharpMember(TsMemberInfo memberInfo)
@@ -151,15 +154,20 @@ static class MuiExporter
     }
 
     [SuppressMessage("ReSharper", "UnusedVariable")]
-    static IReadOnlyList<string> CalculateCSharpFileContentLines(MuiExportInput input)
+    static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(MuiExportInput input)
     {
-        var (exception, hasRead, endIndex, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
+        var (exception, hasRead, _, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
+        if (exception is not null)
+        {
+            return (exception, null);
+        }
+
         if (hasRead)
         {
             var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens(input.StartFrom, 0).tokens);
             if (isFound)
             {
-                (hasRead, var members, var newIndex) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
+                (hasRead, var members, _) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
                 if (hasRead)
                 {
                     var lines = new List<string>
@@ -228,11 +236,11 @@ static class MuiExporter
 
                     lines.Add("}");
 
-                    return lines;
+                    return (null, lines);
                 }
             }
         }
 
-        return null;
+        return (null, new List<string>());
     }
 }

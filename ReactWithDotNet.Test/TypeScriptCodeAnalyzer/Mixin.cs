@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
@@ -93,5 +94,24 @@ static class Mixin
 
             appendLine(currentPadding + line);
         }
+    }
+
+    public static T GetValue<T>(this (Exception exception, T value) tuple)
+    {
+        if (tuple.exception != null)
+        {
+            throw tuple.exception;
+        }
+
+        return tuple.value;
+    }
+
+    public static string ToCSharpCode(this IReadOnlyList<string> lines)
+    {
+        var sb = new StringBuilder();
+
+        lines.WriteLines(x => sb.AppendLine(x));
+
+        return sb.ToString();
     }
 }
