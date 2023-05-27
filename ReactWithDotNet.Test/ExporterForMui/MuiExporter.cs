@@ -11,10 +11,10 @@ public class MuiExportInput
     public string DefinitionTsCode { get; set; }
     public IReadOnlyList<string> SkipMembers { get; set; }
     public string StartFrom { get; set; }
-    
+
     public IReadOnlyList<string> ExtraProps { get; set; }
     public bool IsContainer { get; set; }
-    
+
     public string ClassModifier { get; set; } = "sealed";
 
     public string BaseClassName { get; set; } = "ElementBase";
@@ -24,7 +24,7 @@ static class MuiExporter
 {
     public static void ExportToCSharpFile(MuiExportInput input)
     {
-        var  lines = CalculateCSharpFileContentLines(input);
+        var lines = CalculateCSharpFileContentLines(input);
 
         var sb = new StringBuilder();
 
@@ -53,10 +53,10 @@ static class MuiExporter
             var line = TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(TypeScriptCodeAnalyzer.Mixin.RemoveFromEnd(TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(commentLine.Trim()
                                                                                                                                                                                                              .Trim(Environment.NewLine.ToCharArray()), "/**"), "/*"), "*/")
                                                                         .Trim(), "* ")
-                                  .Replace("<", "&lt;")
-                                  .Replace(">", "&gt;")
-                                  .Trim();
-            
+                .Replace("<", "&lt;")
+                .Replace(">", "&gt;")
+                .Trim();
+
             if (string.IsNullOrWhiteSpace(line))
             {
                 continue;
@@ -75,7 +75,7 @@ static class MuiExporter
             {
                 line = "<br/>";
             }
-            
+
             lines.Add("///     " + line);
         }
 
@@ -93,7 +93,7 @@ static class MuiExporter
             lines.AddRange(AsCSharpComment(memberInfo.Comment));
         }
 
-        if (memberInfo.Name =="sx")
+        if (memberInfo.Name == "sx")
         {
             lines.Add("[ReactProp]");
             lines.Add("[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]");
@@ -113,13 +113,13 @@ static class MuiExporter
         // export as property
         if (memberInfo.PropertyType is not null)
         {
-            if (memberInfo.PropertyType.Name== "React.Ref")
+            if (memberInfo.PropertyType.Name == "React.Ref")
             {
                 return lines;
             }
-            
+
             var exportAsDynamicObjectMap = AsCSharpType(memberInfo.PropertyType) == "dynamic";
-            
+
             lines.Add("[ReactProp]");
 
             if (exportAsDynamicObjectMap)
@@ -134,7 +134,7 @@ static class MuiExporter
             {
                 memberName = "@" + memberName;
             }
-            
+
             lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberName + " { get; set; }");
 
             static string AsCSharpType(TsTypeReference tsTypeReference)
@@ -143,8 +143,6 @@ static class MuiExporter
                 {
                     return "string";
                 }
-
-                
 
                 if (tsTypeReference.TokenListAsObjectMap?.Count > 0)
                 {
@@ -155,12 +153,11 @@ static class MuiExporter
                 {
                     return "string";
                 }
+
                 if (tsTypeReference.Name.Equals("React.InputHTMLAttributes", StringComparison.OrdinalIgnoreCase))
                 {
                     return "string";
                 }
-                
-
 
                 if (tsTypeReference.Name.Equals("unknown", StringComparison.OrdinalIgnoreCase))
                 {
@@ -200,14 +197,9 @@ static class MuiExporter
                 return tsTypeReference.Name;
             }
         }
-       
 
         return lines;
-
-       
     }
-
-   
 
     [SuppressMessage("ReSharper", "UnusedVariable")]
     static IReadOnlyList<string> CalculateCSharpFileContentLines(MuiExportInput input)
@@ -232,13 +224,12 @@ static class MuiExporter
                     var inheritPart = " : " + input.BaseClassName;
 
                     var classModifier = input.ClassModifier;
-                    
+
                     if (classModifier == "partial")
                     {
                         inheritPart = string.Empty;
                     }
 
-                    
                     if (!string.IsNullOrWhiteSpace(classModifier))
                     {
                         classModifier += " ";
@@ -252,7 +243,7 @@ static class MuiExporter
 
                     foreach (var tsMemberInfo in members)
                     {
-                        if (input.SkipMembers?.Contains(tsMemberInfo.Name)==true)
+                        if (input.SkipMembers?.Contains(tsMemberInfo.Name) == true)
                         {
                             continue;
                         }
