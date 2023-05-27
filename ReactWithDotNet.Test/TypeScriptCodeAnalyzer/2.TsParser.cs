@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using ReactWithDotNet.Exporting;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
@@ -242,6 +243,12 @@ static class TsParser
             var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
             if (isFound)
             {
+
+                var (error, value) = Exporter.ParseToMemberTokens(tokens, i, indexOfPair);
+                if (error is null)
+                {
+                    value.Select(x => Exporter.ParseMemberTokens(x).Item2).ToList();
+                }
                 
                 i++;
 

@@ -139,7 +139,7 @@ static class Exporter
     }
 
     public static (string error, IReadOnlyList<IReadOnlyList<Token>> value)
-        ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex)
+        ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
         var returnValue = new List<IReadOnlyList<Token>>();
 
@@ -148,7 +148,7 @@ static class Exporter
         var i = startIndex;
         var j = startIndex;
 
-        while (j < tokens.Count)
+        while (j < endIndex)
         {
             // o b j e c t
             if (tokens[j].tokenType == TokenType.LeftBrace)
