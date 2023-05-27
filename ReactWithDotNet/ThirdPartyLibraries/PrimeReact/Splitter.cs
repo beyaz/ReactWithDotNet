@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
-public  class Splitter : ElementBase
+public sealed class Splitter : ElementBase
 {
     /// <summary>
     ///     Orientation of the panels, valid values are "horizontal" and "vertical".
@@ -33,4 +33,11 @@ public  class Splitter : ElementBase
     /// </summary>
     [ReactProp]
     public string stateStorage { get; set; }
+    
+    protected override Element GetSuspenseFallbackElement()
+    {
+        return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
+    }
+    
+    public static IModifier Modify(Action<Splitter> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
 }

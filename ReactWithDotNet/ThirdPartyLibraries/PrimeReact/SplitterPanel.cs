@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
-public  class SplitterPanel : ElementBase
+public sealed class SplitterPanel : ElementBase
 {
     /// <summary>
     ///     Size of the element relative to 100%.
@@ -21,4 +21,11 @@ public  class SplitterPanel : ElementBase
     /// </summary>
     [ReactProp]
     public string className { get; set; }
+    
+    protected override Element GetSuspenseFallbackElement()
+    {
+        return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
+    }
+    
+    public static IModifier Modify(Action<SplitterPanel> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
 }
