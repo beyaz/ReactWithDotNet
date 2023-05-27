@@ -70,16 +70,53 @@ public class TsParserTests
 
 
     [TestMethod]
-    public void __typeReference__parsing__()
+    public void __typeReference__parsing__1()
     {
-        var tokens = ParseTokens(" AlertClasses ", 0).tokens;
+        var tokens = ParseTokens(" abc.def", 0).tokens;
 
         var typeReference = TsParser.TryReadOnlyOneTypeReference(tokens, 0).tsTypeReference;
 
-        typeReference.Name.Should().Be("AlertClasses");
+        typeReference.Name.Should().Be("abc.def");
         typeReference.IsSimpleNamedType.Should().BeTrue();
-        
     }
 
+    [TestMethod]
+    public void __typeReference__parsing__2()
+    {
+        var tokens = ParseTokens(" React.ReactNode |  undefined; ", 0).tokens;
+
+        var typeReference = TsParser.TryReadOnlyOneTypeReference(tokens, 0).tsTypeReference;
+
+        typeReference.Name.Should().Be("React.ReactNode");
+        typeReference.IsSimpleNamedType.Should().BeTrue();
+    }
+
+    [TestMethod]
+    public void __typeReference__parsing__3()
+    {
+        var tokens = ParseTokens(" React.ReactNode |  undefined | 'fixed'; ", 0).tokens;
+
+        var typeReference = TsParser.TryReadUnionTypeReference(tokens, 0).tsTypeReference;
+
+        typeReference.UnionTypes[0].Name.Should().Be("React.ReactNode");
+        typeReference.UnionTypes[1].Name.Should().Be("undefined");
+        typeReference.UnionTypes[2].StringValue.Should().Be("fixed");
+        typeReference.IsUnionType.Should().BeTrue();
+    }
+
+    [TestMethod]
+    public void __typeReference__parsing__4()
+    {
+        var tokens = ParseTokens(" YYY<React.ReactNode |  undefined | 'fixed'>; ", 0).tokens;
+
+        var typeReference = TsParser.TryReadTypeReference(tokens, 0).tsTypeReference;
+
+        typeReference.IsGeneric.Should().BeTrue();
+        
+        typeReference.GenericArguments[0].Name.Should().Be("React.ReactNode");
+        typeReference.GenericArguments[1].Name.Should().Be("undefined");
+        typeReference.GenericArguments[2].StringValue.Should().Be("fixed");
+        typeReference.Name.Should().Be("YYY");
+    }
 
 }

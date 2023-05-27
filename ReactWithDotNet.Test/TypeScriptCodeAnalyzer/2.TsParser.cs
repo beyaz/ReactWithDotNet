@@ -1,3 +1,5 @@
+using System.Xml.Linq;
+
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
 record TsProperty(string comment, string propertyName, string propertyType);
@@ -12,6 +14,11 @@ class TsTypeReference
     public bool IsUnionType { get; set; }
     public IReadOnlyList<TsTypeReference> UnionTypes { get; set; }
     public bool IsSimpleNamedType { get; set; }
+    public bool IsStringValue { get; set; }
+    public string StringValue { get; set; }
+
+    public bool IsGeneric { get; set; }
+    public IReadOnlyList<TsTypeReference> GenericArguments { get; set; }
 }
 
 class TsMemberInfo
@@ -277,6 +284,17 @@ static class TsParser
         var i = startIndex;
 
         skipSpaces();
+
+        if (i >= tokens.Count || tokens[i].tokenType == TokenType.QuotedString)
+        {
+            var tsTypeReference = new TsTypeReference
+            {
+                StringValue = tokens[i].value,
+                IsStringValue = true
+            };
+
+            return (true, tsTypeReference, i);
+        }
         
         var (hasRead, name, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
         if (hasRead)
@@ -296,11 +314,16 @@ static class TsParser
                 return (true, tsTypeReference, i);
             }
         }
+        
 
         return (false, null, -1);
 
         void skipSpaces()
         {
+            if (i >= tokens.Count)
+            {
+                return;
+            }
             if (tokens[i].tokenType == TokenType.Space)
             {
                 i++;
@@ -308,111 +331,225 @@ static class TsParser
         }
     }
 
+    public static (bool hasRead, TsTypeReference tsTypeReference, int newIndex) 
+        TryReadUnionTypeReference(IReadOnlyList<Token> tokens, int startIndex)
+    {
+        var i = startIndex;
 
+        skipSpaces();
+
+
+        var unionTypes = new List<TsTypeReference>();
+
+        
+
+        while (true)
+        {
+            
+            var readResponse = TryReadOnlyOneTypeReference(tokens, i);
+            if (readResponse.hasRead == false)
+            {
+                break;
+            }
+
+            unionTypes.Add(readResponse.tsTypeReference);
+
+            i = readResponse.newIndex;
+
+            skipSpaces();
+
+            if (tokens[i].tokenType == TokenType.Union)
+            {
+                i++;
+                skipSpaces();
+                continue;
+            }
+
+            break;
+        }
+
+        if (unionTypes.Count==0)
+        {
+            return (false, null, -1);
+        }
+
+
+        var tsTypeReference = new TsTypeReference
+        {
+            IsUnionType = true,
+            UnionTypes  = unionTypes
+        };
+
+        return (true, tsTypeReference, i);
+
+
+        void skipSpaces()
+        {
+            if (i >= tokens.Count)
+            {
+                return;
+            }
+            if (tokens[i].tokenType == TokenType.Space)
+            {
+                i++;
+            }
+        }
+    }
     public static (bool hasRead, TsTypeReference tsTypeReference, int newIndex) TryReadTypeReference(IReadOnlyList<Token> tokens, int startIndex)
     {
         var i = startIndex;
 
-        string name;
-        
-        // named type
+        skipSpaces();
+
+        // read as union type
         {
-            (var hasRead, name, var newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
+            var (hasRead, tsTypeReference, newIndex) = TryReadUnionTypeReference(tokens, i);
+            if (hasRead)
+            {
+                return (true, tsTypeReference, newIndex);
+            }
+        }
+
+        if (isGenericType())
+        {
+            skipSpaces();
+
+            var (hasRead, name, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
             if (hasRead)
             {
                 i = newIndex;
 
                 skipSpaces();
 
-                // Partial<....>;
                 if (tokens[i].tokenType == TokenType.LessThan)
                 {
                     var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.GreaterThan);
                     if (isFound)
                     {
-                        if (tokens[indexOfPair +1].tokenType == TokenType.LeftBracket)// [..]
+                        var readResponse = TryReadTypeReference(tokens.ToList().GetRange(i+1, indexOfPair-i-1), 0);
+                        if (readResponse.hasRead)
                         {
-                            var (isFound2, indexOfPair2) = FindPair(tokens, indexOfPair + 1, x => x.tokenType == TokenType.RightBracket);
-                            if (isFound2)
+                            var tsTypeReference = new TsTypeReference
                             {
-                                indexOfPair = indexOfPair2;
-                            }
+                                Name = name,
+                                IsGeneric = true,
+                                GenericArguments = readResponse.tsTypeReference.UnionTypes
+                            };
+
+                            return (true, tsTypeReference, indexOfPair + 1);
                         }
                         
-                        var tsTypeReference = new TsTypeReference
-                        {
-                            Name = name,
+                    }
+                }
+            }
+        }
+        
+       
 
-                            TokenListAsGenericArguments = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
+        {
+            string name;
+            // named type
+            {
+
+                (var hasRead, name, var newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
+                if (hasRead)
+                {
+                    i = newIndex;
+
+                    skipSpaces();
+
+                    // Partial<....>;
+                    if (tokens[i].tokenType == TokenType.LessThan)
+                    {
+                        var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.GreaterThan);
+                        if (isFound)
+                        {
+                            if (tokens[indexOfPair + 1].tokenType == TokenType.LeftBracket)// [..]
+                            {
+                                var (isFound2, indexOfPair2) = FindPair(tokens, indexOfPair + 1, x => x.tokenType == TokenType.RightBracket);
+                                if (isFound2)
+                                {
+                                    indexOfPair = indexOfPair2;
+                                }
+                            }
+
+                            var tsTypeReference = new TsTypeReference
+                            {
+                                Name = name,
+
+                                TokenListAsGenericArguments = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
+                            };
+
+                            return (true, tsTypeReference, indexOfPair + 1);
+                        }
+                    }
+
+                    // number | undefined;
+                    if (tokens[i].tokenType == TokenType.Union)
+                    {
+                        var unionTypes = new List<TsTypeReference>
+                        {
+                            new ()
+                            {
+                                Name = name
+                            }
                         };
 
-                        return (true, tsTypeReference, indexOfPair + 1);
-                    }
-                }
+                        var tsTypeReference = new TsTypeReference
+                        {
+                            IsUnionType = true,
+                            UnionTypes = unionTypes
+                        };
 
-                // number | undefined;
-                if (tokens[i].tokenType == TokenType.Union)
-                {
-                    var unionTypes = new List<TsTypeReference>
+                        while (true)
+                        {
+                            var readResponse = TryReadOnlyOneTypeReference(tokens, i + 1);
+                            if (readResponse.hasRead == false)
+                            {
+                                break;
+                            }
+
+                            unionTypes.Add(readResponse.tsTypeReference);
+
+                            i = readResponse.newIndex;
+                        }
+
+
+                        return (true, tsTypeReference, i + 1);
+                    }
+
+                    if (tokens[i].tokenType == TokenType.SemiColon)
                     {
-                        new ()
+                        var tsTypeReference = new TsTypeReference
                         {
                             Name = name
-                        }
-                    };
-                    
-                    var tsTypeReference = new TsTypeReference
-                    {
-                        IsUnionType = true,
-                        UnionTypes = unionTypes
-                    };
+                        };
 
-                    while (true)
-                    {
-                        var readResponse = TryReadOnlyOneTypeReference(tokens, i + 1);
-                        if (readResponse.hasRead == false)
-                        {
-                            break;
-                        }
-
-                        unionTypes.Add(readResponse.tsTypeReference);
-
-                        i = readResponse.newIndex;
+                        return (true, tsTypeReference, i + 1);
                     }
-                    
-                    
-                    return (true, tsTypeReference, i + 1);
                 }
 
-                if (tokens[i].tokenType == TokenType.SemiColon)
+            }
+
+            // o b j e c t
+            if (tokens[i].tokenType == TokenType.LeftBrace)
+            {
+                var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
+                if (isFound)
                 {
                     var tsTypeReference = new TsTypeReference
                     {
-                        Name = name
+                        Name = name,
+
+                        TokenListAsObjectMap = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
                     };
 
-                    return (true, tsTypeReference, i + 1);
+                    return (true, tsTypeReference, indexOfPair + 1);
                 }
             }
-
         }
-
-        // o b j e c t
-        if (tokens[i].tokenType == TokenType.LeftBrace)
-        {
-            var (isFound, indexOfPair) = FindPair(tokens,i,x=>x.tokenType == TokenType.RightBrace);
-            if (isFound)
-            {
-                var tsTypeReference = new TsTypeReference
-                {
-                    Name = name,
-
-                    TokenListAsObjectMap = tokens.Take(new Range(i + 1, indexOfPair)).ToList()
-                };
-
-                return (true, tsTypeReference, indexOfPair + 1);
-            }
-        }
+       
+       
 
         // union string sample |'left' | 'right'
         if (tokens[i].tokenType == TokenType.Union ||
@@ -435,10 +572,39 @@ static class TsParser
 
         void skipSpaces()
         {
+            if (i >= tokens.Count)
+            {
+                return;
+            }
             if (tokens[i].tokenType == TokenType.Space)
             {
                 i++;
             }
+        }
+
+        bool isGenericType()
+        {
+            var current = i;
+
+            skipSpaces();
+
+            var (hasRead, name, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
+            if (hasRead)
+            {
+                i = newIndex;
+
+                skipSpaces();
+
+                if (tokens[i].tokenType == TokenType.LessThan)
+                {
+                    i = current;
+                    return true;
+                }
+            }
+
+            i = current;
+
+            return false;
         }
     }
 
