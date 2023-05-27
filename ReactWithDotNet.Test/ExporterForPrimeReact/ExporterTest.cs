@@ -18,7 +18,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode     = GetTsCode("splitter"),
-            StartFrom            = "export interface SplitterProps extends",
+            StartFrom            = "'ref'> {",
             ClassName            = "Splitter",
             ClassModifier = " ",
             SkipMembers          = new[] { "children", "onResizeEnd" },
