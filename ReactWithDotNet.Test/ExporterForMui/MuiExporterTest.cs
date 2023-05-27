@@ -1,7 +1,7 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
+namespace ReactWithDotNet.ExporterForMui;
 
 [TestClass]
 public class MuiExporterTest

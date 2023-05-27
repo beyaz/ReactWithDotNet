@@ -1,8 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using ReactWithDotNet.TypeScriptCodeAnalyzer;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
-namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
+namespace ReactWithDotNet.ExporterForMui;
 
 public class MuiExportInput
 {
@@ -49,13 +50,9 @@ static class MuiExporter
 
         foreach (var commentLine in commentLines)
         {
-            var line = commentLine.Trim()
-                                  .Trim(Environment.NewLine.ToCharArray())
-                                  .RemoveFromStart("/**")
-                                  .RemoveFromStart("/*")
-                                  .RemoveFromEnd("*/")
-                                  .Trim()
-                                  .RemoveFromStart("* ")
+            var line = TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(TypeScriptCodeAnalyzer.Mixin.RemoveFromEnd(TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(commentLine.Trim()
+                                                                                                                                                                                                             .Trim(Environment.NewLine.ToCharArray()), "/**"), "/*"), "*/")
+                                                                        .Trim(), "* ")
                                   .Replace("<", "&lt;")
                                   .Replace(">", "&gt;")
                                   .Trim();
