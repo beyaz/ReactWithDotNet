@@ -219,6 +219,11 @@ static class TsParser
 
         void skipSpaces()
         {
+            if (i >= tokens.Count)
+            {
+                return;
+            }
+            
             if (tokens[i].tokenType == TokenType.Space)
             {
                 i++;
@@ -271,6 +276,11 @@ static class TsParser
 
         void skipSpaces()
         {
+            if (i >= tokens.Count)
+            {
+                return;
+            }
+            
             if (tokens[i].tokenType == TokenType.Space)
             {
                 i++;
@@ -293,7 +303,7 @@ static class TsParser
                 IsStringValue = true
             };
 
-            return (true, tsTypeReference, i);
+            return (true, tsTypeReference, i+1);
         }
         
         var (hasRead, name, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);

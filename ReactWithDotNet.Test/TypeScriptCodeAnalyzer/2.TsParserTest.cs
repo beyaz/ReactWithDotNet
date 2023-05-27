@@ -119,4 +119,24 @@ public class TsParserTests
         typeReference.Name.Should().Be("YYY");
     }
 
+
+    [TestMethod]
+    public void __1__()
+    {
+        var tokens = ParseTokens(@"
+/**
+     * The component orientation.
+     * @default 'horizontal'
+     */
+    orientation?: 'horizontal' | 'vertical'
+
+", 0).tokens;
+
+        var (hasRead, memberInfo, _) = TsParser.TryReadMemberInfo(tokens, 0);
+        hasRead.Should().BeTrue();
+        memberInfo.Name.Should().Be("orientation");
+        memberInfo.PropertyType.UnionTypes[1].StringValue.Should().Be("vertical");
+        
+    }
+
 }
