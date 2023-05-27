@@ -184,6 +184,8 @@ static class Exporter
         ParseMemberTokens(IReadOnlyList<Token> tokens)
     {
 
+        tokens = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
+
         var i = 0;
         
         string comment = null;
