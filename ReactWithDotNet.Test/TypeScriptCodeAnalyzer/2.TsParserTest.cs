@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReactWithDotNet.Exporting;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.TsLexer;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
@@ -168,6 +169,55 @@ public class TsParserTests
         var (hasRead, memberInfo, _) = TsParser.TryReadMemberInfo(tokens, 0);
         hasRead.Should().BeTrue();
         memberInfo.Name.Should().Be("slotProps");
+
+    }
+
+
+    [TestMethod]
+    public void __3__()
+    {
+        var tokens = ParseTokens(@"
+/**
+   * The components used for each slot inside.
+   *
+   * This prop is an alias for the `components` prop, which will be deprecated in the future.
+   *
+   * @default {}
+   */
+  slots?: {
+    popper?: React.ElementType<PopperProps>;
+    transition?: React.ElementType;
+    tooltip?: React.ElementType;
+    arrow?: React.ElementType;
+  };
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx?: SxProps<Theme>;
+  /**
+   * Tooltip title. Zero-length titles string, undefined, null and false are never displayed.
+   */
+  title: React.ReactNode;
+  /**
+   * The component used for the transition.
+   * [Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
+   * @default Grow
+   */
+  TransitionComponent?: React.JSXElementConstructor<
+    TransitionProps & { children: React.ReactElement<any, any> }
+  >;
+  /**
+   * Props applied to the transition element.
+   * By default, the element is based on this [`Transition`](http://reactcommunity.org/react-transition-group/transition/) component.
+   */
+  TransitionProps?: TransitionProps;
+
+
+", 0).tokens;
+
+        var memberTokens = Exporter.ParseToMemberTokens(tokens, 0).value;
+
+        memberTokens.Count.Should().Be(5);
 
     }
 }
