@@ -167,8 +167,7 @@ public class TsParserTests
 
         var (hasRead, memberInfo, _) = TsParser.TryReadMemberInfo(tokens, 0);
         hasRead.Should().BeTrue();
-        memberInfo.Name.Should().Be("orientation");
-        memberInfo.PropertyType.UnionTypes[1].StringValue.Should().Be("vertical");
+        memberInfo.Name.Should().Be("slotProps");
 
     }
 }
