@@ -65,6 +65,72 @@ partial class Mixin
     public static StyleModifier BorderTop(string borderTop)
         => new(style => style.borderTop = borderTop);
 
+    /// <summary>
+    ///     style.borderTop = <paramref name="borderValue"/>
+    /// <br/>
+    ///     style.borderRight = <paramref name="borderValue"/>
+    /// </summary>
+    public static StyleModifier BorderTopRight(string borderValue) => new(style =>
+    {
+        style.borderTop   = borderValue;
+        style.borderRight = borderValue;
+    });
+
+    /// <summary>
+    ///     style.borderLeft = <paramref name="borderValue"/>
+    /// <br/>
+    ///     style.borderTop = <paramref name="borderValue"/>
+    /// </summary>
+    public static StyleModifier BorderLeftTop(string borderValue) => new(style =>
+    {
+        style.borderLeft   = borderValue;
+        style.borderTop = borderValue;
+    });
+
+    /// <summary>
+    ///     style.borderRight = <paramref name="borderValue"/>
+    /// <br/>
+    ///     style.borderBottom = <paramref name="borderValue"/>
+    /// </summary>
+    public static StyleModifier BorderRightBottom(string borderValue) => new(style =>
+    {
+        style.borderRight = borderValue;
+        style.borderBottom  = borderValue;
+    });
+
+    /// <summary>
+    ///     style.borderLeft = <paramref name="borderValue"/>
+    /// <br/>
+    ///     style.borderBottom = <paramref name="borderValue"/>
+    /// </summary>
+    public static StyleModifier BorderLeftBottom(string borderValue) => new(style =>
+    {
+        style.borderLeft = borderValue;
+        style.borderBottom  = borderValue;
+    });
+
+    /// <summary>
+    ///     style.borderTop = <paramref name="borderValue"/>
+    /// <br/>
+    ///     style.borderBottom = <paramref name="borderValue"/>
+    /// </summary>
+    public static StyleModifier BorderTopBottom(string borderValue) => new(style =>
+    {
+        style.borderTop   = borderValue;
+        style.borderBottom = borderValue;
+    });
+
+    /// <summary>
+    ///     style.borderLeft = <paramref name="borderValue"/>
+    /// <br/>
+    ///     style.borderRight = <paramref name="borderValue"/>
+    /// </summary>
+    public static StyleModifier BorderLeftRight(string borderValue) => new(style =>
+    {
+        style.borderLeft   = borderValue;
+        style.borderRight = borderValue;
+    });
+
     public static StyleModifier BoxShadow(string boxShadow)
         => new(style => style.boxShadow = boxShadow);
 
