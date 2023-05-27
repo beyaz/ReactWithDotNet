@@ -123,6 +123,31 @@ sealed class ReactPureComponentModifier<TPureComponent> : ReactPureComponentModi
     }
 }
 
+abstract class ThirdPartyReactComponentModifier : IModifier
+{
+    internal abstract void Modify(ThirdPartyReactComponent thirdPartyReactComponent);
+}
+
+sealed class ThirdPartyReactComponentModifier<TComponent> : ThirdPartyReactComponentModifier where TComponent : ThirdPartyReactComponent
+{
+    internal readonly Action<TComponent> modify;
+
+    public ThirdPartyReactComponentModifier(Action<TComponent> modifyPureComponent)
+    {
+        modify = modifyPureComponent ?? throw new ArgumentNullException(nameof(modifyPureComponent));
+    }
+
+    internal override void Modify(ThirdPartyReactComponent thirdPartyReactComponent)
+    {
+        if (thirdPartyReactComponent == null)
+        {
+            return;
+        }
+
+        modify((TComponent)thirdPartyReactComponent);
+    }
+}
+
 partial class Mixin
 {
     public static IModifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : ReactComponent
@@ -144,6 +169,12 @@ partial class Mixin
     public static StyleModifier CreateStyleModifier(Action<Style> modifyAction)
     {
         return new StyleModifier(modifyAction);
+    }
+
+    public static IModifier CreateThirdPartyReactComponentModifier<TComponent>(Action<TComponent> modifyAction)
+        where TComponent : ThirdPartyReactComponent
+    {
+        return new ThirdPartyReactComponentModifier<TComponent>(modifyAction);
     }
 }
 
@@ -167,6 +198,12 @@ static class ModifyHelper
             if (modifier is ElementModifier elementModifier)
             {
                 elementModifier.ModifyElement(thirdPartyReactComponent);
+                return;
+            }
+
+            if (modifier is ThirdPartyReactComponentModifier thirdPartyReactComponentModifier)
+            {
+                thirdPartyReactComponentModifier.Modify(thirdPartyReactComponent);
                 return;
             }
         }
