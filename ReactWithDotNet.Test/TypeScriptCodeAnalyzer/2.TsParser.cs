@@ -242,6 +242,7 @@ static class TsParser
             var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
             if (isFound)
             {
+                
                 i++;
 
                 skipSpaces();

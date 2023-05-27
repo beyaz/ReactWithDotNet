@@ -225,88 +225,92 @@ static class Exporter
             return (exception, null);
         }
 
+        if (!hasRead)
+        {
+            return (null, new List<string>());
+        }
+        
+        var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens(input.StartFrom, 0).tokens);
+        if (!isFound)
+        {
+            return (null, new List<string>());
+        }
+        
+        (hasRead, var members, _) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
         if (hasRead)
         {
-            var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens(input.StartFrom, 0).tokens);
-            if (isFound)
+            var lines = new List<string>
             {
-                (hasRead, var members, _) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
-                if (hasRead)
+                "// auto generated code (do not edit manually)",
+                string.Empty,
+                $"namespace ReactWithDotNet.ThirdPartyLibraries.{input.NamespaceName};",
+                string.Empty
+            };
+
+            var inheritPart = " : " + input.BaseClassName;
+
+            var classModifier = input.ClassModifier;
+
+            if (classModifier == "partial")
+            {
+                inheritPart = string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(classModifier))
+            {
+                classModifier += " ";
+            }
+
+            lines.Add($"public {classModifier}class {input.ClassName}{inheritPart}");
+
+            lines.Add("{");
+
+            var isFirstMember = true;
+
+            foreach (var tsMemberInfo in members)
+            {
+                if (input.SkipMembers?.Contains(tsMemberInfo.Name) == true)
                 {
-                    var lines = new List<string>
-                    {
-                        "// auto generated code (do not edit manually)",
-                        string.Empty,
-                        $"namespace ReactWithDotNet.ThirdPartyLibraries.{input.NamespaceName};",
-                        string.Empty
-                    };
+                    continue;
+                }
 
-                    var inheritPart = " : " + input.BaseClassName;
+                if (!isFirstMember)
+                {
+                    lines.Add(string.Empty);
+                }
 
-                    var classModifier = input.ClassModifier;
+                isFirstMember = false;
 
-                    if (classModifier == "partial")
-                    {
-                        inheritPart = string.Empty;
-                    }
+                lines.AddRange(AsCSharpMember(tsMemberInfo));
+            }
 
-                    if (!string.IsNullOrWhiteSpace(classModifier))
-                    {
-                        classModifier += " ";
-                    }
+            if (input.ExtraProps is not null)
+            {
+                foreach (var extraProp in input.ExtraProps)
+                {
+                    lines.Add(string.Empty);
+                    lines.Add("[ReactProp]");
+                    lines.Add($"public {extraProp} {{ get; set; }}");
+                }
+            }
 
-                    lines.Add($"public {classModifier}class {input.ClassName}{inheritPart}");
+            if (input.IsContainer)
+            {
+                lines.Add(string.Empty);
+                lines.Add("protected override Element GetSuspenseFallbackElement()");
+                lines.Add("{");
+                lines.Add("return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();");
+                lines.Add("}");
 
-                    lines.Add("{");
-
-                    var isFirstMember = true;
-
-                    foreach (var tsMemberInfo in members)
-                    {
-                        if (input.SkipMembers?.Contains(tsMemberInfo.Name) == true)
-                        {
-                            continue;
-                        }
-
-                        if (!isFirstMember)
-                        {
-                            lines.Add(string.Empty);
-                        }
-
-                        isFirstMember = false;
-
-                        lines.AddRange(AsCSharpMember(tsMemberInfo));
-                    }
-
-                    if (input.ExtraProps is not null)
-                    {
-                        foreach (var extraProp in input.ExtraProps)
-                        {
-                            lines.Add(string.Empty);
-                            lines.Add("[ReactProp]");
-                            lines.Add($"public {extraProp} {{ get; set; }}");
-                        }
-                    }
-
-                    if (input.IsContainer)
-                    {
-                        lines.Add(string.Empty);
-                        lines.Add("protected override Element GetSuspenseFallbackElement()");
-                        lines.Add("{");
-                        lines.Add("return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();");
-                        lines.Add("}");
-
-                        lines.Add(string.Empty);
-                        lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
-                    }
+                lines.Add(string.Empty);
+                lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
+            }
 
                     
 
-                    lines.Add("}");
+            lines.Add("}");
 
-                    return (null, lines);
-                }
-            }
+            return (null, lines);
         }
 
         return (null, new List<string>());
