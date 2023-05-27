@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
@@ -70,7 +69,7 @@ static class MuiExporter
                 return lines;
             }
 
-            var exportAsDynamicObjectMap = AsCSharpType(memberInfo.PropertyType) == "dynamic";
+            var exportAsDynamicObjectMap = asCSharpType(memberInfo.PropertyType) == "dynamic";
 
             lines.Add("[ReactProp]");
 
@@ -87,9 +86,9 @@ static class MuiExporter
                 memberName = "@" + memberName;
             }
 
-            lines.Add("public " + AsCSharpType(memberInfo.PropertyType) + " " + memberName + " { get; set; }");
+            lines.Add("public " + asCSharpType(memberInfo.PropertyType) + " " + memberName + " { get; set; }");
 
-            static string AsCSharpType(TsTypeReference tsTypeReference)
+            static string asCSharpType(TsTypeReference tsTypeReference)
             {
                 if (tsTypeReference.TokenListAsUnionValues?.Count > 0)
                 {
@@ -153,7 +152,6 @@ static class MuiExporter
         return lines;
     }
 
-    [SuppressMessage("ReSharper", "UnusedVariable")]
     static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(MuiExportInput input)
     {
         var (exception, hasRead, _, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
