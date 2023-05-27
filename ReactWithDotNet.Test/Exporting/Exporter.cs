@@ -79,6 +79,11 @@ static class Exporter
                     return "dynamic";
                 }
 
+                if (tsTypeReference.IsUnionType && tsTypeReference.UnionTypes.All(x=>x.IsStringValue))
+                {
+                    return "string";
+                }
+                
                 if (tsTypeReference.Name.Equals("string", StringComparison.OrdinalIgnoreCase))
                 {
                     return "string";
