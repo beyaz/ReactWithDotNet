@@ -358,7 +358,7 @@ static class TsParser
 
             skipSpaces();
 
-            if (tokens[i].tokenType == TokenType.Union)
+            if (i < tokens.Count && tokens[i].tokenType == TokenType.Union)
             {
                 i++;
                 skipSpaces();
@@ -373,6 +373,10 @@ static class TsParser
             return (false, null, -1);
         }
 
+        if (unionTypes.Count == 1)
+        {
+            return (true, unionTypes[0], i);
+        }
 
         var tsTypeReference = new TsTypeReference
         {
