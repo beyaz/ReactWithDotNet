@@ -151,7 +151,7 @@ static class Exporter
                     {
                         "// auto generated code (do not edit manually)",
                         string.Empty,
-                        "namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;",
+                        $"namespace ReactWithDotNet.ThirdPartyLibraries.{input.NamespaceName};",
                         string.Empty
                     };
 

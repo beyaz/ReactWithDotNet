@@ -19,4 +19,6 @@ public class ExportInput
     public string BaseClassName { get; set; } = "ElementBase";
 
     public string OutputFileLocation { get; set; } = @"\PrimeReact\";
+
+    public string NamespaceName { get; set; } = "PrimeReact";
 }
