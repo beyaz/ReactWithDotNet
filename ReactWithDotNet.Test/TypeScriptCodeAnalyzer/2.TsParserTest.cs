@@ -139,4 +139,36 @@ public class TsParserTests
         
     }
 
+    [TestMethod]
+    public void __2__()
+    {
+        var tokens = ParseTokens(@"
+  /**
+   * The extra props for the slot components.
+   * You can override the existing props or add new ones.
+   *
+   * This prop is an alias for the `componentsProps` prop, which will be deprecated in the future.
+   *
+   * @default {}
+   */
+  slotProps?: {
+    popper?: Partial<PopperProps> & TooltipComponentsPropsOverrides;
+    transition?: TransitionProps & TooltipComponentsPropsOverrides;
+    tooltip?: React.HTMLProps<HTMLDivElement> &
+      MUIStyledCommonProps &
+      TooltipComponentsPropsOverrides;
+    arrow?: React.HTMLProps<HTMLSpanElement> &
+      MUIStyledCommonProps &
+      TooltipComponentsPropsOverrides;
+  }
+
+
+", 0).tokens;
+
+        var (hasRead, memberInfo, _) = TsParser.TryReadMemberInfo(tokens, 0);
+        hasRead.Should().BeTrue();
+        memberInfo.Name.Should().Be("orientation");
+        memberInfo.PropertyType.UnionTypes[1].StringValue.Should().Be("vertical");
+
+    }
 }
