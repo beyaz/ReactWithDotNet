@@ -247,4 +247,6 @@ public sealed class Tooltip : ElementBase
     {
         return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
     }
+    
+    public static IModifier Modify(Action<Tooltip> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
 }

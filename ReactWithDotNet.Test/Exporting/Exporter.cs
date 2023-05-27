@@ -209,10 +209,12 @@ static class Exporter
                         lines.Add("{");
                         lines.Add("return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();");
                         lines.Add("}");
+
+                        lines.Add(string.Empty);
+                        lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
                     }
 
-                    lines.Add(string.Empty);
-                    lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
+                    
 
                     lines.Add("}");
 
