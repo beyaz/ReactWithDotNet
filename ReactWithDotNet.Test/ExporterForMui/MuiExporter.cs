@@ -50,9 +50,9 @@ static class MuiExporter
 
         foreach (var commentLine in commentLines)
         {
-            var line = TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(TypeScriptCodeAnalyzer.Mixin.RemoveFromEnd(TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(TypeScriptCodeAnalyzer.Mixin.RemoveFromStart(commentLine.Trim()
-                                                                                                                                                                                                             .Trim(Environment.NewLine.ToCharArray()), "/**"), "/*"), "*/")
-                                                                        .Trim(), "* ")
+            var line = commentLine.Trim()
+                .Trim(Environment.NewLine.ToCharArray()).RemoveFromStart("/**").RemoveFromStart("/*").RemoveFromEnd("*/")
+                .Trim().RemoveFromStart("* ")
                 .Replace("<", "&lt;")
                 .Replace(">", "&gt;")
                 .Trim();
