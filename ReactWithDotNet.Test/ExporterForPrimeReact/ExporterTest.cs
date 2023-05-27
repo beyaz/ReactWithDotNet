@@ -36,7 +36,7 @@ public class ExporterTest
             StartFrom        = "interface SplitterPanelProps {",
             ClassName        = "SplitterPanel",
             ClassModifier    = " ",
-            SkipMembers      = new[] { "children" },
+            SkipMembers      = new[] { "children", "style" },
         });
     }
 
