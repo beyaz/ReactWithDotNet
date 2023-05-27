@@ -1,4 +1,5 @@
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
+using System.Reflection;
 using System.Xml.Linq;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
@@ -178,7 +179,42 @@ static class Exporter
 
         return (null, returnValue);
     }
-    
+
+    public static (bool success, (string comment, string name, IReadOnlyList<Token> remainingPart))
+        ParseMemberTokens(IReadOnlyList<Token> tokens)
+    {
+
+        var i = 0;
+        
+        string comment = null;
+
+        if (tokens[i].tokenType == TokenType.Comment)
+        {
+            comment = tokens[i].value;
+
+            i++;
+        }
+
+        if (tokens[i].tokenType == TokenType.AlfaNumeric)
+        {
+            var name = tokens[i].value;
+
+            i++;
+
+            if (tokens[i].tokenType == TokenType.QuestionMark)
+            {
+                i++;
+            }
+
+
+            return (true, (comment, name, tokens.ToList().GetRange(i, tokens.Count - i)));
+        }
+
+        return (false, default);
+
+
+    }
+
     static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(ExportInput input)
     {
         var (exception, hasRead, _, tokens) = TsLexer.ParseTokens(input.DefinitionTsCode, 0);
