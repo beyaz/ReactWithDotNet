@@ -1,6 +1,6 @@
-namespace ReactWithDotNet.ExporterForMui;
+namespace ReactWithDotNet.Exporting.ExporterForMui;
 
-public class ExportInput : ReactWithDotNet.ExportInput
+public class ExportInput : Exporting.ExportInput
 {
     public ExportInput()
     {

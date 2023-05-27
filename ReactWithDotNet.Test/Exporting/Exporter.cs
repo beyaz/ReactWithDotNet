@@ -1,7 +1,7 @@
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
-namespace ReactWithDotNet;
+namespace ReactWithDotNet.Exporting;
 
 static class Exporter
 {

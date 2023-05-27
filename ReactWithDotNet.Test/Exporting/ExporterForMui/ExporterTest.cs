@@ -1,7 +1,7 @@
 using System.Net.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ReactWithDotNet.ExporterForMui;
+namespace ReactWithDotNet.Exporting.ExporterForMui;
 
 [TestClass]
 public class ExporterTest

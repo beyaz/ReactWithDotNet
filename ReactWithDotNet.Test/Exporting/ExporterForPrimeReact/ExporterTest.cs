@@ -1,7 +1,7 @@
 using System.Net.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ReactWithDotNet.ExporterForPrimeReact;
+namespace ReactWithDotNet.Exporting.ExporterForPrimeReact;
 
 [TestClass]
 public class ExporterTest

@@ -1,4 +1,4 @@
-namespace ReactWithDotNet;
+namespace ReactWithDotNet.Exporting;
 
 public class ExportInput
 {

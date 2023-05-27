@@ -1,6 +1,6 @@
-namespace ReactWithDotNet.ExporterForPrimeReact;
+namespace ReactWithDotNet.Exporting.ExporterForPrimeReact;
 
-public class ExportInput : ReactWithDotNet.ExportInput
+public class ExportInput : Exporting.ExportInput
 {
     public ExportInput()
     {
