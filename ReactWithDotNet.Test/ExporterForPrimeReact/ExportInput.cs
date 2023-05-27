@@ -18,5 +18,5 @@ public class ExportInput
 
     public string BaseClassName { get; set; } = "ElementBase";
 
-    public string OutputFileLocation { get; set; } = @"\MUI\Material\";
+    public string OutputFileLocation { get; set; } = @"\PrimeReact\";
 }
