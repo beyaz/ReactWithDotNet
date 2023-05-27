@@ -185,6 +185,21 @@ static class TsParser
                 
                 
             }
+
+            // r e a d    m e t h o d
+            // onOpen?: (event: React.SyntheticEvent) => void;
+            else if (tokens[i].tokenType == TokenType.LeftParenthesis)
+            {
+                var (hasRead, readValues, newIndex) = TryReadWhile(tokens, i, t => t.tokenType != TokenType.SemiColon);
+                if (hasRead)
+                {
+                    memberInfo.MethodSignature = readValues;
+
+                    return (hasRead: true, memberInfo, newIndex + 1);
+                }
+
+                return (false, null, -1);
+            }
         }
 
         return (false, null, -1);
