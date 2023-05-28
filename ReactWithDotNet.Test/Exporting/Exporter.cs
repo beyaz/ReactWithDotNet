@@ -124,7 +124,7 @@ static class Exporter
     static bool IsNotSpace(Token t) => t.tokenType != TokenType.Space;
     static bool IsNotColon(Token t) => t.tokenType != TokenType.Colon;
     
-    static IReadOnlyList<string> AsCSharpMember(TsMemberInfo memberInfo)
+    static IReadOnlyList<string> AsCSharpMember(TsMemberInfo memberInfo, IReadOnlyDictionary<string, string> inputPropToDotNetTypeMap)
     {
         var lines = new List<string>();
 
@@ -150,8 +150,11 @@ static class Exporter
             return lines;
         }
 
-
-       
+        if (inputPropToDotNetTypeMap.ContainsKey($"TextField > {memberInfo.Name}"))
+        {
+            var name=inputPropToDotNetTypeMap[$"TextField > {memberInfo.Name}"];
+            
+        }
 
 
 
@@ -384,7 +387,7 @@ static class Exporter
 
                 isFirstMember = false;
 
-                lines.AddRange(AsCSharpMember(tsMemberInfo));
+                lines.AddRange(AsCSharpMember(tsMemberInfo,input.PropToDotNetTypeMap));
             }
 
             if (input.ExtraProps is not null)
