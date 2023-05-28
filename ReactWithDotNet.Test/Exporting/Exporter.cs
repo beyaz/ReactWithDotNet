@@ -18,7 +18,8 @@ static class Exporter
 
     static string FixSourceCode(string tsCode)
     {
-        return tsCode.Replace(" | undefined", string.Empty);
+        return tsCode.Replace(" | undefined", string.Empty)
+            .Replace("Partial<PopperProps>;","dynamic");
     }
 
     static bool IsMuiPartialType(TsMemberInfo memberInfo)
@@ -57,6 +58,11 @@ static class Exporter
                 if (name.Equals("boolean", StringComparison.OrdinalIgnoreCase))
                 {
                     return (true, "bool?");
+                }
+
+                if (name.Equals("dynamic", StringComparison.OrdinalIgnoreCase))
+                {
+                    return (true, "dynamic");
                 }
             }
 

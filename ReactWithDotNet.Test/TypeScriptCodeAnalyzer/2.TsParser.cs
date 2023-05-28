@@ -400,6 +400,11 @@ static class TsParser
 
         skipSpaces();
 
+        if (tokens[i].tokenType == TokenType.Union)
+        {
+            i++;
+            skipSpaces();
+        }
 
         var unionTypes = new List<TsTypeReference>();
 
