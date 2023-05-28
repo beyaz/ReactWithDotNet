@@ -35,7 +35,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode("splitter"),
             StartFrom        = "interface SplitterPanelProps {",
             ClassName        = "SplitterPanel",
-            SkipMembers      = new[] { "children", "style" },
+            SkipMembers      = new[] { "children", "style","pt" },
             IsContainer      = true
         });
     }
