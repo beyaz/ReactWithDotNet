@@ -115,6 +115,13 @@ static class Exporter
         if (hasMatch)
         {
             lines.Add("[ReactProp]");
+
+            if (dotNetType == "dynamic")
+            {
+                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
+                lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
+                return lines;
+            }
             lines.Add($"public {dotNetType} {memberInfo.Name} {{ get; set; }}");
 
             return lines;
