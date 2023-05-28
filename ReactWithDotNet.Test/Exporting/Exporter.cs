@@ -150,6 +150,11 @@ static class Exporter
             return lines;
         }
 
+
+       
+
+
+
         if (memberInfo.Name == "classes")
         {
             if ((memberInfo.PropertyType?.Name == "Partial" || IsMuiPartialType(memberInfo)))
