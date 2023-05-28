@@ -45,6 +45,15 @@ static class Exporter
                     return (true, "bool?");
                 }
             }
+
+            var (hasRead, tsTypeReference, newIndex) = TsParser.TryReadUnionTypeReference(tokens, 0);
+            if (hasRead)
+            {
+                if (tsTypeReference.UnionTypes.All(t=>t.IsStringValue))
+                {
+                    return (true, "string");
+                }
+            }
         }
 
         return default;
