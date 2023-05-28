@@ -15,7 +15,8 @@ public class ExportInput : Exporting.ExportInput
             { $"{NamespaceName} > * > inputProps", "dynamic" },
             { $"{NamespaceName} > TextField > defaultValue", "string" },
             { $"{NamespaceName} > TextField > type", "string" },
-            { $"{NamespaceName} > TextField > value", "string" }
+            { $"{NamespaceName} > TextField > value", "string" },
+            { $"{NamespaceName} > SwitchBase > type", "string" }
         };
     }
 }
