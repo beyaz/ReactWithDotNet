@@ -16,7 +16,8 @@ public class ExportInput : Exporting.ExportInput
             { $"{NamespaceName} > TextField > defaultValue", "string" },
             { $"{NamespaceName} > TextField > type", "string" },
             { $"{NamespaceName} > TextField > value", "string" },
-            { $"{NamespaceName} > SwitchBase > type", "string" }
+            { $"{NamespaceName} > SwitchBase > type", "string" },
+            { $"{NamespaceName} > SwitchBase > value", "string" }
         };
     }
 }
