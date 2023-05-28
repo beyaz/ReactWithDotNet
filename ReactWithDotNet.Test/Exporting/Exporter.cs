@@ -93,10 +93,13 @@ static class Exporter
 
         if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > {input.ClassName} > {memberInfo.Name}", out var dotNetType))
         {
-            var matchResponse = TryMatchDotNetType(memberInfo);
-            if (matchResponse.hasMatch)
+            if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > * > {memberInfo.Name}", out dotNetType))
             {
-                dotNetType = matchResponse.dotNetType;
+                var matchResponse = TryMatchDotNetType(memberInfo);
+                if (matchResponse.hasMatch)
+                {
+                    dotNetType = matchResponse.dotNetType;
+                }
             }
         }
 

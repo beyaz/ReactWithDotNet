@@ -10,7 +10,7 @@ public class ExportInput : Exporting.ExportInput
 
         PropToDotNetTypeMap = new Dictionary<string, string>
         {
-            { "TextField > defaultValue", "string" }
+            { $"{NamespaceName} > * > classes", "init_only_style_map" }
         };
     }
 }
