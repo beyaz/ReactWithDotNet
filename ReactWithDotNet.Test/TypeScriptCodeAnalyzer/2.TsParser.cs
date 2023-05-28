@@ -36,7 +36,7 @@ class TsMemberInfo
 
 static class TsParser
 {
-    public static (string error, IReadOnlyList<IReadOnlyList<Token>> value)
+    public static (bool fail, string failMessage, IReadOnlyList<IReadOnlyList<Token>> value)
         ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
         var returnValue = new List<IReadOnlyList<Token>>();
@@ -54,7 +54,7 @@ static class TsParser
                 var (isFound, indexOfPair) = FindPair(tokens, j, x => x.tokenType == TokenType.RightBrace);
                 if (!isFound)
                 {
-                    return ("Left brace pair nor found.", null);
+                    return (fail: true, "Left brace pair nor found.", default);
                 }
 
                 j = indexOfPair + 1;
@@ -75,7 +75,7 @@ static class TsParser
         }
 
 
-        return (null, returnValue);
+        return (default, default, returnValue);
     }
 
     public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, IReadOnlyList<Token> searchTokens)
