@@ -73,6 +73,11 @@ static class Exporter
             return (true, "int?");
         }
 
+        if (tokens.FullMatch("number | undefined"))
+        {
+            return (true, "double?");
+        }
+
         var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
         if (hasRead)
         {
@@ -80,7 +85,7 @@ static class Exporter
             {
                 return (true, "string");
             }
-            
+
             return (true, "object");
         }
 
