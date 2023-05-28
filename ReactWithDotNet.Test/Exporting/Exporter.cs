@@ -109,6 +109,8 @@ static class Exporter
                 {
                     return (true, "string");
                 }
+
+                return (true, "object");
             }
         }
 
