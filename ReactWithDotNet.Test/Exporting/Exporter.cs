@@ -36,21 +36,27 @@ static class Exporter
         return false;
     }
 
-    static bool IsReactNode(TsMemberInfo memberInfo)
+    static bool StartsWith(this IReadOnlyList<Token> tokens, string value)
     {
-        var reactNode = TsLexer.ParseTokens("React.ReactNode", 0).tokens;
-        
-        var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
+        tokens = tokens?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
         if (tokens.Count > 1)
         {
-            if (TsParser.FindMatch(tokens,0, reactNode).isFound)
+            var reactNode = TsLexer.ParseTokens(value, 0);
+            if (reactNode.hasRead)
             {
-                return true;
+                if (TsParser.FindMatch(tokens, 0, reactNode.tokens).isFound)
+                {
+                    return true;
+                }
             }
         }
 
         return false;
     }
+
+    static bool IsReactNode(TsMemberInfo memberInfo)
+        => memberInfo.RemainingPart.StartsWith("React.ReactNode");
+    
 
     static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
     {
