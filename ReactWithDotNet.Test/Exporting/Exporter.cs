@@ -1,6 +1,4 @@
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
-using System.Reflection;
-using System.Xml.Linq;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
 namespace ReactWithDotNet.Exporting;
