@@ -76,11 +76,11 @@ static class Exporter
         var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
         if (hasRead)
         {
-            if (tsTypeReference.UnionTypes?.All(t => t.IsStringValue) == true)
+            if (tsTypeReference.UnionTypes?.All(t => t.IsStringValue || t.Name == "undefined") == true)
             {
                 return (true, "string");
             }
-
+            
             return (true, "object");
         }
 
