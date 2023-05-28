@@ -91,11 +91,15 @@ static class Exporter
             {
                 return (true, "dynamic");
             }
-
+            if (tokens.StartsWith("Partial<"))
+            {
+                return (true, "dynamic");
+            }
             if (tokens.StartsWith("React.ReactNode"))
             {
                 return (true, "Element");
             }
+           
 
             if (tokens.StartsWith("OverridableStringUnion"))
             {
