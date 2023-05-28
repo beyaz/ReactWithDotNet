@@ -46,7 +46,7 @@ static class Exporter
                 }
             }
 
-            var (hasRead, tsTypeReference, newIndex) = TsParser.TryReadUnionTypeReference(tokens, 0);
+            var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
             if (hasRead)
             {
                 if (tsTypeReference.UnionTypes.All(t=>t.IsStringValue))
