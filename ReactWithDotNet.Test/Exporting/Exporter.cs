@@ -21,6 +21,31 @@ static class Exporter
         return tsCode.Replace(" | undefined", string.Empty);
     }
 
+    static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
+    {
+        var tokens = memberInfo.RemainingPart?.Where(isNotSpace).ToList() ?? new List<Token>();
+        if (tokens.Count > 0)
+        {
+            if (tokens.Count == 1)
+            {
+                var name = tokens[0].value;
+                
+                if (name.Equals("number", StringComparison.OrdinalIgnoreCase))
+                {
+                    return (true, "double?");
+                }
+
+                if (name.Equals("boolean", StringComparison.OrdinalIgnoreCase))
+                {
+                    return (true, "bool?");
+                }
+            }
+        }
+
+        return default;
+
+        static bool isNotSpace(Token t) => t.tokenType != TokenType.Space;
+    }
     static IReadOnlyList<string> AsCSharpMember(TsMemberInfo memberInfo)
     {
         var lines = new List<string>();
@@ -46,6 +71,16 @@ static class Exporter
             lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
             return lines;
         }
+
+        var (hasMatch, dotNetType) = TryMatchDotNetType(memberInfo);
+        if (hasMatch)
+        {
+            lines.Add("[ReactProp]");
+            lines.Add($"public {dotNetType} {memberInfo.Name} {{ get; set; }}");
+
+            return lines;
+        }
+
 
         // export as property
         if (memberInfo.PropertyType is not null)
