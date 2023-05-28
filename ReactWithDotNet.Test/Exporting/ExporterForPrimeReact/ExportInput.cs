@@ -7,5 +7,17 @@ public class ExportInput : Exporting.ExportInput
         OutputFileLocation = @"\PrimeReact\";
 
         NamespaceName = "PrimeReact";
+
+        PropToDotNetTypeMap = new Dictionary<string, string>
+        {
+            //{ $"{NamespaceName} > * > classes", "init_only_style_map" },
+            //{ $"{NamespaceName} > * > sx", "dynamic" },
+            //{ $"{NamespaceName} > * > inputProps", "dynamic" },
+            //{ $"{NamespaceName} > TextField > defaultValue", "string" },
+            //{ $"{NamespaceName} > TextField > type", "string" },
+            //{ $"{NamespaceName} > TextField > value", "string" },
+            //{ $"{NamespaceName} > SwitchBase > type", "string" },
+            //{ $"{NamespaceName} > SwitchBase > value", "string" }
+        };
     }
 }
