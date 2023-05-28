@@ -21,6 +21,24 @@ static class Exporter
         return tsCode.Replace(" | undefined", string.Empty);
     }
 
+    static bool IsMuiPartialType(TsMemberInfo memberInfo)
+    {
+        var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
+        if (tokens.Count > 0)
+        {
+            var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
+            if (hasRead)
+            {
+                if (tsTypeReference.Name == "Partial")
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    
     static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
     {
         var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
@@ -57,8 +75,6 @@ static class Exporter
         }
 
         return default;
-
-        
     }
 
     static bool IsNotSpace(Token t) => t.tokenType != TokenType.Space;
@@ -82,7 +98,7 @@ static class Exporter
             return lines;
         }
 
-        if (memberInfo.Name == "classes" && memberInfo.PropertyType?.Name == "Partial")
+        if (memberInfo.Name == "classes" && (memberInfo.PropertyType?.Name == "Partial" || IsMuiPartialType(memberInfo)))
         {
             lines.Add("[ReactProp]");
             lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
