@@ -7,8 +7,6 @@ static class Exporter
 {
     public static void ExportToCSharpFile(ExportInput input)
     {
-        input.DefinitionTsCode = FixSourceCode(input.DefinitionTsCode);
-        
         var code = CalculateCSharpFileContentLines(input).GetValue().ToCSharpCode();
 
         const string projectFolder = @"C:\github\ReactWithDotNet\ReactWithDotNet\ThirdPartyLibraries";
@@ -16,11 +14,7 @@ static class Exporter
         WriteAllText($@"{projectFolder}{input.OutputFileLocation}{input.ClassName}.cs", code);
     }
 
-    static string FixSourceCode(string tsCode)
-    {
-        return tsCode.Replace(" | undefined", string.Empty)
-            .Replace("Partial<PopperProps>;","dynamic;");
-    }
+    
 
     static bool IsMuiPartialType(TsMemberInfo memberInfo)
     {

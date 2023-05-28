@@ -2,25 +2,25 @@ namespace ReactWithDotNet.Exporting;
 
 public class ExportInput
 {
-    public string ClassName { get; set; }
+    public string ClassName { get; init; }
 
-    public string DefinitionTsCode { get; set; }
+    public string DefinitionTsCode { get; init; }
 
-    public IReadOnlyList<string> SkipMembers { get; set; }
+    public IReadOnlyList<string> SkipMembers { get; init; }
 
-    public string StartFrom { get; set; }
+    public string StartFrom { get; init; }
 
-    public IReadOnlyList<string> ExtraProps { get; set; }
+    public IReadOnlyList<string> ExtraProps { get; init; }
 
-    public bool IsContainer { get; set; }
+    public bool IsContainer { get; init; }
 
-    public string ClassModifier { get; set; } = "sealed";
+    public string ClassModifier { get; init; } = "sealed";
 
-    public string BaseClassName { get; set; } = "ElementBase";
+    public string BaseClassName { get; init; } = "ElementBase";
 
-    public string OutputFileLocation { get; set; } = @"\____?___\";
+    public string OutputFileLocation { get; init; } = @"\____?___\";
 
-    public string NamespaceName { get; set; } = "__?__";
+    public string NamespaceName { get; init; } = "__?__";
 
 
     public readonly IReadOnlyDictionary<string, string> PropToDotNetTypeMap = new Dictionary<string, string>
