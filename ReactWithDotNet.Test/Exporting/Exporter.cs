@@ -25,62 +25,63 @@ static class Exporter
     static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
     {
         var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
-        if (tokens.Count > 0)
+        if (tokens.Count <= 0)
         {
-            if (tokens.Count == 1)
-            {
-                var name = tokens[0].value;
+            return default;
+        }
+        if (tokens.Count == 1)
+        {
+            var name = tokens[0].value;
 
-                if (name.Equals("string", StringComparison.OrdinalIgnoreCase))
-                {
-                    return (true, "string");
-                }
+            if (name.Equals("string", StringComparison.OrdinalIgnoreCase))
+            {
+                return (true, "string");
+            }
                 
-                if (name.Equals("number", StringComparison.OrdinalIgnoreCase))
-                {
-                    return (true, "double?");
-                }
-
-                if (name.Equals("boolean", StringComparison.OrdinalIgnoreCase))
-                {
-                    return (true, "bool?");
-                }
-
-                if (name.Equals("dynamic", StringComparison.OrdinalIgnoreCase))
-                {
-                    return (true, "dynamic");
-                }
+            if (name.Equals("number", StringComparison.OrdinalIgnoreCase))
+            {
+                return (true, "double?");
             }
 
-            if (tokens[0].tokenType == TokenType.LeftBrace && tokens[^1].tokenType == TokenType.RightBrace)
+            if (name.Equals("boolean", StringComparison.OrdinalIgnoreCase))
+            {
+                return (true, "bool?");
+            }
+
+            if (name.Equals("dynamic", StringComparison.OrdinalIgnoreCase))
             {
                 return (true, "dynamic");
             }
-            if (tokens.StartsWith("Partial<"))
-            {
-                return (true, "dynamic");
-            }
-            if (tokens.StartsWith("React.ReactNode"))
-            {
-                return (true, "Element");
-            }
+        }
+
+        if (tokens[0].tokenType == TokenType.LeftBrace && tokens[^1].tokenType == TokenType.RightBrace)
+        {
+            return (true, "dynamic");
+        }
+        if (tokens.StartsWith("Partial<"))
+        {
+            return (true, "dynamic");
+        }
+        if (tokens.StartsWith("React.ReactNode"))
+        {
+            return (true, "Element");
+        }
            
 
-            if (tokens.StartsWith("OverridableStringUnion"))
+        if (tokens.StartsWith("OverridableStringUnion"))
+        {
+            return (true, "string");
+        }
+
+        var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
+        if (hasRead)
+        {
+            if (tsTypeReference.UnionTypes?.All(t=>t.IsStringValue)==true)
             {
                 return (true, "string");
             }
 
-            var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
-            if (hasRead)
-            {
-                if (tsTypeReference.UnionTypes?.All(t=>t.IsStringValue)==true)
-                {
-                    return (true, "string");
-                }
-
-                return (true, "object");
-            }
+            return (true, "object");
         }
 
         return default;
