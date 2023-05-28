@@ -120,6 +120,13 @@ static class Exporter
                 return lines;
             }
 
+            if (dotNetType == "init_only_style_map")
+            {
+                lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
+                lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
+                return lines;
+            }
+
             lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
         }
 
