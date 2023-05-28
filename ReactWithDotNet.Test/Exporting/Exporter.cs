@@ -54,8 +54,7 @@ static class Exporter
         return false;
     }
 
-    static bool IsReactNode(TsMemberInfo memberInfo)
-        => memberInfo.RemainingPart.StartsWith("React.ReactNode");
+    
     
 
     static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
@@ -93,9 +92,14 @@ static class Exporter
                 return (true, "dynamic");
             }
 
-            if (IsReactNode(memberInfo))
+            if (tokens.StartsWith("React.ReactNode"))
             {
                 return (true, "Element");
+            }
+
+            if (tokens.StartsWith("OverridableStringUnion"))
+            {
+                return (true, "string");
             }
 
             var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
