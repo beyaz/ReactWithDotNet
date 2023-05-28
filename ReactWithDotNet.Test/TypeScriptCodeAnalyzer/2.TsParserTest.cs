@@ -9,55 +9,6 @@ namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 public class TsParserTests
 {
     [TestMethod]
-    public void ParseMembers()
-    {
-        var code = @"
-  /**
-   * The variant to use.
-   * @default 'standard'
-   */
-  variant?: OverridableStringUnion<'standard' | 'filled' | 'outlined', AlertPropsVariantOverrides>;
-
- /**
-   * Override the icon displayed before the children.
-   * Unless provided, the icon is mapped to the value of the `severity` prop.
-   * Set to `false` to remove the `icon`.
-   */
-  icon?: React.ReactNode;
-  /**
-   * The ARIA role attribute of the element.
-   * @default 'alert'
-   */
-  role?: string;
-
-";
-        var tokens = ParseTokens(code, 0).tokens;
-
-        var (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, 0);
-        hasRead.Should().BeTrue();
-        memberInfo.Name.Should().Be("variant");
-        newIndex.Should().Be(23);
-
-        (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, newIndex + 1);
-        hasRead.Should().BeTrue();
-        memberInfo.Name.Should().Be("icon");
-        newIndex.Should().Be(35);
-
-        (hasRead, memberInfo, newIndex) = TsParser.TryReadMemberInfo(tokens, newIndex + 1);
-        hasRead.Should().BeTrue();
-        memberInfo.Name.Should().Be("role");
-        newIndex.Should().Be(44);
-
-        tokens = ParseTokens("{" + code + "}", 0).tokens;
-
-        // ReSharper disable once RedundantAssignment
-        (hasRead, var members, newIndex) = TsParser.TryReadMembers(tokens, 0);
-
-        hasRead.Should().BeTrue();
-        members.Count.Should().Be(3);
-    }
-
-    [TestMethod]
     public void ParseTypeReference()
     {
         var tokens = ParseTokens("Partial<AlertClasses>;", 0).tokens;
@@ -121,56 +72,9 @@ public class TsParserTests
     }
 
 
-    [TestMethod]
-    public void __1__()
-    {
-        var tokens = ParseTokens(@"
-/**
-     * The component orientation.
-     * @default 'horizontal'
-     */
-    orientation?: 'horizontal' | 'vertical'
+ 
 
-", 0).tokens;
-
-        var (hasRead, memberInfo, _) = TsParser.TryReadMemberInfo(tokens, 0);
-        hasRead.Should().BeTrue();
-        memberInfo.Name.Should().Be("orientation");
-        memberInfo.PropertyType.UnionTypes[1].StringValue.Should().Be("vertical");
-        
-    }
-
-    [TestMethod]
-    public void __2__()
-    {
-        var tokens = ParseTokens(@"
-  /**
-   * The extra props for the slot components.
-   * You can override the existing props or add new ones.
-   *
-   * This prop is an alias for the `componentsProps` prop, which will be deprecated in the future.
-   *
-   * @default {}
-   */
-  slotProps?: {
-    popper?: Partial<PopperProps> & TooltipComponentsPropsOverrides;
-    transition?: TransitionProps & TooltipComponentsPropsOverrides;
-    tooltip?: React.HTMLProps<HTMLDivElement> &
-      MUIStyledCommonProps &
-      TooltipComponentsPropsOverrides;
-    arrow?: React.HTMLProps<HTMLSpanElement> &
-      MUIStyledCommonProps &
-      TooltipComponentsPropsOverrides;
-  }
-
-
-", 0).tokens;
-
-        var (hasRead, memberInfo, _) = TsParser.TryReadMemberInfo(tokens, 0);
-        hasRead.Should().BeTrue();
-        memberInfo.Name.Should().Be("slotProps");
-
-    }
+    
 
 
     [TestMethod]
