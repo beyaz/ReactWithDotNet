@@ -42,7 +42,7 @@ public class SwitchBase : ButtonBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public string edge { get; set; }
+    public object edge { get; set; }
     
     [ReactProp]
     public Element icon { get; set; }
@@ -57,7 +57,8 @@ public class SwitchBase : ButtonBase
     ///     [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
     /// </summary>
     [ReactProp]
-    public string inputProps { get; set; }
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
+    public dynamic inputProps { get; } = new ExpandoObject();
     
     /// <summary>
     ///     Pass a ref to the `input` element.
