@@ -7,11 +7,10 @@ public class ExportInput : Exporting.ExportInput
         OutputFileLocation = @"\MUI\Material\";
 
         NamespaceName = "MUI.Material";
+
+        PropToDotNetTypeMap = new Dictionary<string, string>
+        {
+            { "TextField > defaultValue", "string" }
+        };
     }
-
-    public new readonly IReadOnlyDictionary<string, string> PropToDotNetTypeMap = new Dictionary<string, string>
-    {
-        { "TextField > defaultValue", "string" }
-    };
 }
-

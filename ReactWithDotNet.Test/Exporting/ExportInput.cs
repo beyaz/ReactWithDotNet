@@ -22,9 +22,5 @@ public class ExportInput
 
     public string NamespaceName { get; init; } = "__?__";
 
-
-    public readonly IReadOnlyDictionary<string, string> PropToDotNetTypeMap = new Dictionary<string, string>
-    {
-        { "TextField > defaultValue", "string" }
-    };
+    public IReadOnlyDictionary<string, string> PropToDotNetTypeMap { get; init; }
 }
