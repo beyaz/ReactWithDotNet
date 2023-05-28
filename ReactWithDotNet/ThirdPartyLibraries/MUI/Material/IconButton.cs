@@ -36,7 +36,7 @@ public sealed class IconButton : ButtonBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public string edge { get; set; }
+    public object edge { get; set; }
     
     /// <summary>
     ///     The size of the component.
