@@ -118,7 +118,7 @@ static class Exporter
     static bool IsNotSpace(Token t) => t.tokenType != TokenType.Space;
     static bool IsNotColon(Token t) => t.tokenType != TokenType.Colon;
     
-    static IReadOnlyList<string> AsCSharpMember(TsMemberInfo memberInfo, IReadOnlyDictionary<string, string> inputPropToDotNetTypeMap)
+    static IReadOnlyList<string> AsCSharpMember(ExportInput input, TsMemberInfo memberInfo)
     {
         var lines = new List<string>();
 
@@ -144,10 +144,12 @@ static class Exporter
             return lines;
         }
 
-        if (inputPropToDotNetTypeMap.ContainsKey($"TextField > {memberInfo.Name}"))
+        if (input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > {input.ClassName} > {memberInfo.Name}", out var dotnetType))
         {
-            var name=inputPropToDotNetTypeMap[$"TextField > {memberInfo.Name}"];
-            
+            exportWithDotNetType(dotnetType);
+
+            return lines;
+
         }
 
 
@@ -168,19 +170,30 @@ static class Exporter
         var (hasMatch, dotNetType) = TryMatchDotNetType(memberInfo);
         if (hasMatch)
         {
-            lines.Add("[ReactProp]");
-
-            if (dotNetType == "dynamic")
-            {
-                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
-                lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
-                return lines;
-            }
-            lines.Add($"public {dotNetType} {memberInfo.Name} {{ get; set; }}");
+            exportWithDotNetType(dotNetType);
 
             return lines;
         }
 
+        void exportWithDotNetType(string _dotNetType_)
+        {
+            var memberName = memberInfo.Name;
+            if (memberName == "checked")
+            {
+                memberName = "@" + memberName;
+            }
+
+            lines.Add("[ReactProp]");
+
+            if (_dotNetType_ == "dynamic")
+            {
+                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
+                lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
+                return;
+            }
+            
+            lines.Add($"public {_dotNetType_} {memberName} {{ get; set; }}");
+        }
 
         // export as property
         if (memberInfo.PropertyType is not null)
@@ -381,7 +394,7 @@ static class Exporter
 
                 isFirstMember = false;
 
-                lines.AddRange(AsCSharpMember(tsMemberInfo,input.PropToDotNetTypeMap));
+                lines.AddRange(AsCSharpMember(input,tsMemberInfo));
             }
 
             if (input.ExtraProps is not null)
