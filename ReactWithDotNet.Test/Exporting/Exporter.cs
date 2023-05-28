@@ -14,14 +14,6 @@ static class Exporter
         WriteAllText($@"{projectFolder}{input.OutputFileLocation}{input.ClassName}.cs", code);
     }
 
-    
-    
-
- 
-
-    
-    
-
     static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
     {
         var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
@@ -29,7 +21,7 @@ static class Exporter
         {
             return default;
         }
-        
+
         if (tokens.Count == 1)
         {
             var name = tokens[0].value;
@@ -38,7 +30,7 @@ static class Exporter
             {
                 return (true, "string");
             }
-                
+
             if (name.Equals("number", StringComparison.OrdinalIgnoreCase))
             {
                 return (true, "double?");
@@ -60,15 +52,16 @@ static class Exporter
         {
             return (true, "dynamic");
         }
+
         if (tokens.StartsWith("Partial<"))
         {
             return (true, "dynamic");
         }
+
         if (tokens.StartsWith("React.ReactNode"))
         {
             return (true, "Element");
         }
-           
 
         if (tokens.StartsWith("OverridableStringUnion"))
         {
@@ -78,7 +71,7 @@ static class Exporter
         var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
         if (hasRead)
         {
-            if (tsTypeReference.UnionTypes?.All(t=>t.IsStringValue)==true)
+            if (tsTypeReference.UnionTypes?.All(t => t.IsStringValue) == true)
             {
                 return (true, "string");
             }
@@ -89,8 +82,6 @@ static class Exporter
         return default;
     }
 
-   
-    
     static IReadOnlyList<string> AsCSharpMember(ExportInput input, TsMemberInfo memberInfo)
     {
         var lines = new List<string>();
@@ -128,21 +119,17 @@ static class Exporter
 
             lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
         }
-        
-       
+
         return lines;
     }
-
-  
 
     public static (bool success, (string comment, string name, IReadOnlyList<Token> remainingPart))
         ParseMemberTokens(IReadOnlyList<Token> tokens)
     {
-
         tokens = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
         var i = 0;
-        
+
         string comment = null;
 
         if (tokens[i].tokenType == TokenType.Comment)
@@ -163,13 +150,10 @@ static class Exporter
                 i++;
             }
 
-
             return (true, (comment, name, tokens.ToList().GetRange(i, tokens.Count - i)));
         }
 
         return (false, default);
-
-
     }
 
     static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(ExportInput input)
@@ -184,13 +168,13 @@ static class Exporter
         {
             return (null, new List<string>());
         }
-        
+
         var (isFound, indexOfLastMatchedToken) = TsParser.FindMatch(tokens, 0, TsLexer.ParseTokens(input.StartFrom, 0).tokens);
         if (!isFound)
         {
             return (null, new List<string>());
         }
-        
+
         (hasRead, var members, _) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
         if (hasRead)
         {
@@ -236,7 +220,7 @@ static class Exporter
 
                 isFirstMember = false;
 
-                lines.AddRange(AsCSharpMember(input,tsMemberInfo));
+                lines.AddRange(AsCSharpMember(input, tsMemberInfo));
             }
 
             if (input.ExtraProps is not null)
@@ -260,8 +244,6 @@ static class Exporter
                 lines.Add(string.Empty);
                 lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
             }
-
-                    
 
             lines.Add("}");
 
