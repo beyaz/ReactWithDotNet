@@ -33,6 +33,34 @@ static class Mixin
         return false;
     }
 
+    public static bool EndsWith(this IReadOnlyList<Token> tokens, string value)
+    {
+        tokens = tokens?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
+        if (tokens.Count > 1)
+        {
+            var reactNode = TsLexer.ParseTokens(value, 0);
+            if (reactNode.hasRead)
+            {
+                var valueAsTokens = reactNode.tokens.Where(IsNotSpace).Where(IsNotColon).ToList();
+
+                if (valueAsTokens.Count <= tokens.Count)
+                {
+                    for (var i = 0; i < valueAsTokens.Count; i++)
+                    {
+                        if (!TsParser.Equals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static IEnumerable<string> AsCSharpComment(string tsComment)
     {
         if (tsComment is null)

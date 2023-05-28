@@ -679,7 +679,7 @@ static class TsParser
         }
     }
 
-    static bool Equals(Token a, Token b) => a.tokenType == b.tokenType && a.value == b.value;
+    public static bool Equals(Token a, Token b) => a.tokenType == b.tokenType && a.value == b.value;
 
     static string ToString(this IReadOnlyList<Token> tokens)
     {
