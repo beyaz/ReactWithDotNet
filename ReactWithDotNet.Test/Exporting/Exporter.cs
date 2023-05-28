@@ -70,7 +70,7 @@ static class Exporter
 
         if (tokens.FullMatch("string | number"))
         {
-            return (true, "int");
+            return (true, "int?");
         }
 
         var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
