@@ -176,80 +176,81 @@ static class Exporter
         }
 
         (hasRead, var members, _) = TsParser.TryReadMembers(tokens, indexOfLastMatchedToken);
-        if (hasRead)
+        if (!hasRead)
         {
-            var lines = new List<string>
-            {
-                "// auto generated code (do not edit manually)",
-                string.Empty,
-                $"namespace ReactWithDotNet.ThirdPartyLibraries.{input.NamespaceName};",
-                string.Empty
-            };
+            return (null, new List<string>());
+        }
+        
+        var lines = new List<string>
+        {
+            "// auto generated code (do not edit manually)",
+            string.Empty,
+            $"namespace ReactWithDotNet.ThirdPartyLibraries.{input.NamespaceName};",
+            string.Empty
+        };
 
-            var inheritPart = " : " + input.BaseClassName;
+        var inheritPart = " : " + input.BaseClassName;
 
-            var classModifier = input.ClassModifier;
+        var classModifier = input.ClassModifier;
 
-            if (classModifier == "partial")
-            {
-                inheritPart = string.Empty;
-            }
-
-            if (!string.IsNullOrWhiteSpace(classModifier))
-            {
-                classModifier += " ";
-            }
-
-            lines.Add($"public {classModifier}class {input.ClassName}{inheritPart}");
-
-            lines.Add("{");
-
-            var isFirstMember = true;
-
-            foreach (var tsMemberInfo in members)
-            {
-                if (input.SkipMembers?.Contains(tsMemberInfo.Name) == true)
-                {
-                    continue;
-                }
-
-                if (!isFirstMember)
-                {
-                    lines.Add(string.Empty);
-                }
-
-                isFirstMember = false;
-
-                lines.AddRange(AsCSharpMember(input, tsMemberInfo));
-            }
-
-            if (input.ExtraProps is not null)
-            {
-                foreach (var extraProp in input.ExtraProps)
-                {
-                    lines.Add(string.Empty);
-                    lines.Add("[ReactProp]");
-                    lines.Add($"public {extraProp} {{ get; set; }}");
-                }
-            }
-
-            if (input.IsContainer)
-            {
-                lines.Add(string.Empty);
-                lines.Add("protected override Element GetSuspenseFallbackElement()");
-                lines.Add("{");
-                lines.Add("return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();");
-                lines.Add("}");
-
-                lines.Add(string.Empty);
-                lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
-            }
-
-            lines.Add("}");
-
-            return (null, lines);
+        if (classModifier == "partial")
+        {
+            inheritPart = string.Empty;
         }
 
-        return (null, new List<string>());
+        if (!string.IsNullOrWhiteSpace(classModifier))
+        {
+            classModifier += " ";
+        }
+
+        lines.Add($"public {classModifier}class {input.ClassName}{inheritPart}");
+
+        lines.Add("{");
+
+        var isFirstMember = true;
+
+        foreach (var tsMemberInfo in members)
+        {
+            if (input.SkipMembers?.Contains(tsMemberInfo.Name) == true)
+            {
+                continue;
+            }
+
+            if (!isFirstMember)
+            {
+                lines.Add(string.Empty);
+            }
+
+            isFirstMember = false;
+
+            lines.AddRange(AsCSharpMember(input, tsMemberInfo));
+        }
+
+        if (input.ExtraProps is not null)
+        {
+            foreach (var extraProp in input.ExtraProps)
+            {
+                lines.Add(string.Empty);
+                lines.Add("[ReactProp]");
+                lines.Add($"public {extraProp} {{ get; set; }}");
+            }
+        }
+
+        if (input.IsContainer)
+        {
+            lines.Add(string.Empty);
+            lines.Add("protected override Element GetSuspenseFallbackElement()");
+            lines.Add("{");
+            lines.Add("return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();");
+            lines.Add("}");
+
+            lines.Add(string.Empty);
+            lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
+        }
+
+        lines.Add("}");
+
+        return (null, lines);
+
     }
 }
