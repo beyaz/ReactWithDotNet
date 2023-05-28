@@ -22,7 +22,7 @@ public class ExporterTest
             DefinitionTsCode     = GetTsCode("splitter"),
             StartFrom            = "'ref'> {",
             ClassName            = "Splitter",
-            SkipMembers          = new[] { "children", "onResizeEnd" },
+            SkipMembers          = new[] { "children", "onResizeEnd","pt" },
             IsContainer = true
         });
     }
