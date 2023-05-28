@@ -286,20 +286,12 @@ static class TsParser
             var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
             if (isFound)
             {
+                TsMemberInfo asTsMemberInfo((string comment, string name, IReadOnlyList<Token> remainingPart) x) => new() { Comment = x.comment, Name = x.name, RemainingPart = x.remainingPart };
 
-                var asTsMemberInfo =
-                    ((string comment, string name, IReadOnlyList<Token> remainingPart) x) =>
-                    new TsMemberInfo
-                    {
-                        Comment       = x.comment,
-                        Name          = x.name,
-                        RemainingPart = x.remainingPart
-                    };
-                
                 var (error, value) = ParseToMemberTokens(tokens, i, indexOfPair);
                 if (error is null)
                 {
-                    Enumerable.Select(value, x => Exporter.ParseMemberTokens(x).Item2).Select(asTsMemberInfo).ToList();
+                    return (true, value.Select(x => Exporter.ParseMemberTokens(x).Item2).Select(asTsMemberInfo).ToList(), indexOfPair + 1);
                 }
                 
                 i++;
