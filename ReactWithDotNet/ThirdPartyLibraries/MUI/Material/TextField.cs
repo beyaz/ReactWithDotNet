@@ -105,7 +105,8 @@ public partial class TextField
     ///     [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
     /// </summary>
     [ReactProp]
-    public string inputProps { get; set; }
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
+    public dynamic inputProps { get; } = new ExpandoObject();
     
     /// <summary>
     ///     The label content.
@@ -127,11 +128,7 @@ public partial class TextField
     [ReactProp]
     public string name { get; set; }
     
-    [ReactProp]
-    public string onBlur { get; set; }
     
-    [ReactProp]
-    public string onFocus { get; set; }
     
     /// <summary>
     ///     The short hint displayed in the `input` before the user enters a value.
@@ -151,19 +148,19 @@ public partial class TextField
     ///     Number of rows to display when multiline option is set to true.
     /// </summary>
     [ReactProp]
-    public string rows { get; set; }
+    public int? rows { get; set; }
     
     /// <summary>
     ///     Maximum number of rows to display when multiline option is set to true.
     /// </summary>
     [ReactProp]
-    public string maxRows { get; set; }
+    public int? maxRows { get; set; }
     
     /// <summary>
     ///     Minimum number of rows to display when multiline option is set to true.
     /// </summary>
     [ReactProp]
-    public string minRows { get; set; }
+    public int? minRows { get; set; }
     
     /// <summary>
     ///     Render a [`Select`](/material-ui/api/select/) element while passing the Input element to `Select` as `input` parameter.
@@ -192,7 +189,7 @@ public partial class TextField
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
     [ReactProp]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic sx { get; } = new ExpandoObject();
     
     /// <summary>
