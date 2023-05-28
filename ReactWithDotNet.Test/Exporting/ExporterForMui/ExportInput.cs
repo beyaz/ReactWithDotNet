@@ -13,7 +13,8 @@ public class ExportInput : Exporting.ExportInput
             { $"{NamespaceName} > * > classes", "init_only_style_map" },
             { $"{NamespaceName} > * > sx", "dynamic" },
             { $"{NamespaceName} > * > inputProps", "dynamic" },
-            { $"{NamespaceName} > TextField > defaultValue", "string" }
+            { $"{NamespaceName} > TextField > defaultValue", "string" },
+            { $"{NamespaceName} > TextField > rows", "int?" }
         };
     }
 }
