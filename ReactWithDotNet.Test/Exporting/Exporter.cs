@@ -35,7 +35,23 @@ static class Exporter
 
         return false;
     }
-    
+
+    static bool IsReactNode(TsMemberInfo memberInfo)
+    {
+        var reactNode = TsLexer.ParseTokens("React.ReactNode", 0).tokens;
+        
+        var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
+        if (tokens.Count > 1)
+        {
+            if (TsParser.FindMatch(tokens,0, reactNode).isFound)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
     {
         var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
@@ -70,7 +86,12 @@ static class Exporter
             {
                 return (true, "dynamic");
             }
-            
+
+            if (IsReactNode(memberInfo))
+            {
+                return (true, "Element");
+            }
+
             var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
             if (hasRead)
             {
@@ -116,6 +137,8 @@ static class Exporter
             }
             
         }
+
+        
         
         var (hasMatch, dotNetType) = TryMatchDotNetType(memberInfo);
         if (hasMatch)
