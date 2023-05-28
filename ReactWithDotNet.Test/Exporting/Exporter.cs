@@ -67,7 +67,7 @@ static class Exporter
             var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
             if (hasRead)
             {
-                if (tsTypeReference.UnionTypes.All(t=>t.IsStringValue))
+                if (tsTypeReference.UnionTypes?.All(t=>t.IsStringValue)==true)
                 {
                     return (true, "string");
                 }
@@ -98,12 +98,16 @@ static class Exporter
             return lines;
         }
 
-        if (memberInfo.Name == "classes" && (memberInfo.PropertyType?.Name == "Partial" || IsMuiPartialType(memberInfo)))
+        if (memberInfo.Name == "classes")
         {
-            lines.Add("[ReactProp]");
-            lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
-            lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
-            return lines;
+            if ((memberInfo.PropertyType?.Name == "Partial" || IsMuiPartialType(memberInfo)))
+            {
+                lines.Add("[ReactProp]");
+                lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
+                lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
+                return lines;
+            }
+            
         }
         
         var (hasMatch, dotNetType) = TryMatchDotNetType(memberInfo);
