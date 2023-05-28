@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using ReactWithDotNet.Exporting;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
@@ -169,7 +168,6 @@ static class TsParser
     {
         var i = startIndex;
 
-        var members = new List<TsMemberInfo>();
 
         if (tokens[i].tokenType == TokenType.LeftBrace)
         {
@@ -178,8 +176,8 @@ static class TsParser
             {
                 TsMemberInfo asTsMemberInfo((string comment, string name, IReadOnlyList<Token> remainingPart) x) => new() { Comment = x.comment, Name = x.name, RemainingPart = x.remainingPart };
 
-                var (error, value) = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
-                if (error is null)
+                var (fail, _, value) = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
+                if (!fail)
                 {
                     return (true, value.Select(x => Exporter.ParseMemberTokens(x).Item2).Select(asTsMemberInfo).ToList(), indexOfPair + 1);
                 }
@@ -509,7 +507,7 @@ static class TsParser
 
             skipSpaces();
 
-            var (hasRead, name, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
+            var (hasRead, _, newIndex) = TryReadAlfaNumericOrDotSeparetedAlfanumeric(tokens, i);
             if (hasRead)
             {
                 i = newIndex;
