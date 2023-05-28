@@ -15,6 +15,6 @@ public sealed class CardContent : ElementBase
     ///     The system prop that allows defining system overrides as well as additional CSS styles.
     /// </summary>
     [ReactProp]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic sx { get; } = new ExpandoObject();
 }
