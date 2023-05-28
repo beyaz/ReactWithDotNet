@@ -15,20 +15,7 @@ static class Exporter
     }
 
     
-
-    static bool IsMuiPartialType(TsMemberInfo memberInfo)
-    {
-        var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
-        if (tokens.Count > 1)
-        {
-            if (tokens[0].value == "Partial")
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    
 
     static bool StartsWith(this IReadOnlyList<Token> tokens, string value)
     {
@@ -127,55 +114,16 @@ static class Exporter
             lines.AddRange(AsCSharpComment(memberInfo.Comment));
         }
 
-        if (memberInfo.Name == "sx")
+        if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > {input.ClassName} > {memberInfo.Name}", out var dotNetType))
         {
-            lines.Add("[ReactProp]");
-            lines.Add("[ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]");
-            lines.Add("public dynamic sx { get; } = new ExpandoObject();");
-
-            return lines;
-        }
-
-        if (memberInfo.Name == "variant")
-        {
-            lines.Add("[ReactProp]");
-            lines.Add("public string variant { get; set; }");
-
-            return lines;
-        }
-
-        if (input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > {input.ClassName} > {memberInfo.Name}", out var dotnetType))
-        {
-            exportWithDotNetType(dotnetType);
-
-            return lines;
-
-        }
-
-
-
-        if (memberInfo.Name == "classes")
-        {
-            if ((memberInfo.PropertyType?.Name == "Partial" || IsMuiPartialType(memberInfo)))
+            var matchResponse = TryMatchDotNetType(memberInfo);
+            if (matchResponse.hasMatch)
             {
-                lines.Add("[ReactProp]");
-                lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
-                lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
-                return lines;
+                dotNetType = matchResponse.dotNetType;
             }
         }
 
-        
-        
-        var (hasMatch, dotNetType) = TryMatchDotNetType(memberInfo);
-        if (hasMatch)
-        {
-            exportWithDotNetType(dotNetType);
-
-            return lines;
-        }
-
-        void exportWithDotNetType(string _dotNetType_)
+        if (dotNetType is not null)
         {
             var memberName = memberInfo.Name;
             if (memberName == "checked")
@@ -185,15 +133,16 @@ static class Exporter
 
             lines.Add("[ReactProp]");
 
-            if (_dotNetType_ == "dynamic")
+            if (dotNetType == "dynamic")
             {
                 lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
                 lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
-                return;
+                return lines;
             }
-            
-            lines.Add($"public {_dotNetType_} {memberName} {{ get; set; }}");
+
+            lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
         }
+        
        
         return lines;
     }
