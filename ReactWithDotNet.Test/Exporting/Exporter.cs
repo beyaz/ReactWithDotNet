@@ -29,6 +29,7 @@ static class Exporter
         {
             return default;
         }
+        
         if (tokens.Count == 1)
         {
             var name = tokens[0].value;
@@ -54,6 +55,7 @@ static class Exporter
             }
         }
 
+        // is object
         if (tokens[0].tokenType == TokenType.LeftBrace && tokens[^1].tokenType == TokenType.RightBrace)
         {
             return (true, "dynamic");
