@@ -5,6 +5,34 @@ namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
 static class Mixin
 {
+    public static bool IsNotSpace(Token t)
+    {
+        return t.tokenType != TokenType.Space;
+    }
+
+    public static bool IsNotColon(Token t)
+    {
+        return t.tokenType != TokenType.Colon;
+    }
+
+    public static bool StartsWith(this IReadOnlyList<Token> tokens, string value)
+    {
+        tokens = tokens?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
+        if (tokens.Count > 1)
+        {
+            var reactNode = TsLexer.ParseTokens(value, 0);
+            if (reactNode.hasRead)
+            {
+                if (TsParser.FindMatch(tokens, 0, reactNode.tokens).isFound)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static IEnumerable<string> AsCSharpComment(string tsComment)
     {
         if (tsComment is null)
