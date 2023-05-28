@@ -215,7 +215,7 @@ public class TsParserTests
 
 ", 0).tokens;
 
-        var memberTokens = Exporter.ParseToMemberTokens(tokens, 0,tokens.Count).value;
+        var memberTokens = TsParser.ParseToMemberTokens(tokens, 0,tokens.Count).value;
 
         memberTokens.Count.Should().Be(5);
 

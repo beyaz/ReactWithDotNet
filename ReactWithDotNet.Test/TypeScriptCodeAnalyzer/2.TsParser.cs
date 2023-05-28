@@ -35,6 +35,48 @@ class TsMemberInfo
 
 static class TsParser
 {
+    public static (string error, IReadOnlyList<IReadOnlyList<Token>> value)
+        ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+    {
+        var returnValue = new List<IReadOnlyList<Token>>();
+
+        var tokenList = tokens.ToList();
+
+        var i = startIndex;
+        var j = startIndex;
+
+        while (j < endIndex)
+        {
+            // o b j e c t
+            if (tokens[j].tokenType == TokenType.LeftBrace)
+            {
+                var (isFound, indexOfPair) = FindPair(tokens, j, x => x.tokenType == TokenType.RightBrace);
+                if (!isFound)
+                {
+                    return ("Left brace pair nor found.", null);
+                }
+
+                j = indexOfPair + 1;
+                continue;
+            }
+
+            if (tokens[j].tokenType == TokenType.SemiColon)
+            {
+                returnValue.Add(tokenList.GetRange(i, j - i));
+
+                j++;
+
+                i = j;
+                continue;
+            }
+
+            j++;
+        }
+
+
+        return (null, returnValue);
+    }
+
     public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, IReadOnlyList<Token> searchTokens)
     {
         var i = startIndex;
@@ -244,10 +286,10 @@ static class TsParser
             if (isFound)
             {
 
-                var (error, value) = Exporter.ParseToMemberTokens(tokens, i, indexOfPair);
+                var (error, value) = ParseToMemberTokens(tokens, i, indexOfPair);
                 if (error is null)
                 {
-                    value.Select(x => Exporter.ParseMemberTokens(x).Item2).ToList();
+                    Enumerable.Select<IReadOnlyList<Token>, (string comment, string name, IReadOnlyList<Token> remainingPart)>(value, x => Exporter.ParseMemberTokens(x).Item2).ToList();
                 }
                 
                 i++;

@@ -138,47 +138,7 @@ static class Exporter
         return lines;
     }
 
-    public static (string error, IReadOnlyList<IReadOnlyList<Token>> value)
-        ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
-    {
-        var returnValue = new List<IReadOnlyList<Token>>();
-
-        var tokenList = tokens.ToList();
-
-        var i = startIndex;
-        var j = startIndex;
-
-        while (j < endIndex)
-        {
-            // o b j e c t
-            if (tokens[j].tokenType == TokenType.LeftBrace)
-            {
-                var (isFound, indexOfPair) = TsParser.FindPair(tokens, j, x => x.tokenType == TokenType.RightBrace);
-                if (!isFound)
-                {
-                    return ("Left brace pair nor found.", null);
-                }
-
-                j = indexOfPair + 1;
-                continue;
-            }
-            
-            if (tokens[j].tokenType == TokenType.SemiColon)
-            {
-                returnValue.Add(tokenList.GetRange(i, j - i));
-
-                j++;
-
-                i = j;
-                continue;
-            }
-
-            j++;
-        }
-        
-
-        return (null, returnValue);
-    }
+  
 
     public static (bool success, (string comment, string name, IReadOnlyList<Token> remainingPart))
         ParseMemberTokens(IReadOnlyList<Token> tokens)
