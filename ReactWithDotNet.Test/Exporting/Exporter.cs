@@ -60,6 +60,11 @@ static class Exporter
                 }
             }
 
+            if (tokens[0].tokenType == TokenType.LeftBrace && tokens[^1].tokenType == TokenType.RightBrace)
+            {
+                return (true, "dynamic");
+            }
+            
             var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
             if (hasRead)
             {
