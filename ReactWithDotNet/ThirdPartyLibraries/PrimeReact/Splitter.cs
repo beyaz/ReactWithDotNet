@@ -18,7 +18,7 @@ public sealed class Splitter : ElementBase
     ///     @defaultValue 4
     /// </summary>
     [ReactProp]
-    public string gutterSize { get; set; }
+    public double? gutterSize { get; set; }
     
     /// <summary>
     ///     Storage identifier of a stateful Splitter.
