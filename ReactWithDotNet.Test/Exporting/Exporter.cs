@@ -86,7 +86,7 @@ static class Exporter
             lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
             return lines;
         }
-
+        
         var (hasMatch, dotNetType) = TryMatchDotNetType(memberInfo);
         if (hasMatch)
         {
