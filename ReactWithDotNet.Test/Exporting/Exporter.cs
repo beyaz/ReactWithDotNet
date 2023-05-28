@@ -23,7 +23,7 @@ static class Exporter
 
     static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
     {
-        var tokens = memberInfo.RemainingPart?.Where(isNotSpace).Where(isNotColon).ToList() ?? new List<Token>();
+        var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
         if (tokens.Count > 0)
         {
             if (tokens.Count == 1)
@@ -58,9 +58,12 @@ static class Exporter
 
         return default;
 
-        static bool isNotSpace(Token t) => t.tokenType != TokenType.Space;
-        static bool isNotColon(Token t) => t.tokenType != TokenType.Colon;
+        
     }
+
+    static bool IsNotSpace(Token t) => t.tokenType != TokenType.Space;
+    static bool IsNotColon(Token t) => t.tokenType != TokenType.Colon;
+    
     static IReadOnlyList<string> AsCSharpMember(TsMemberInfo memberInfo)
     {
         var lines = new List<string>();
