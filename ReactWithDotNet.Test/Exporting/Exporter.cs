@@ -73,6 +73,11 @@ static class Exporter
             return (true, "int?");
         }
 
+        if (tokens.FullMatch("string | undefined"))
+        {
+            return (true, "string");
+        }
+        
         if (tokens.FullMatch("number | undefined"))
         {
             return (true, "double?");
