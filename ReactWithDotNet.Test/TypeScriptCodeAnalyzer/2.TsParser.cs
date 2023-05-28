@@ -163,117 +163,7 @@ static class TsParser
         return (hasRead, ToString(readValues), newIndex);
     }
 
-    public static (bool hasRead, TsMemberInfo memberInfo, int newIndex) TryReadMemberInfo(IReadOnlyList<Token> tokens, int startIndex)
-    {
-        var memberInfo = new TsMemberInfo();
 
-        var i = startIndex;
-
-        skipSpaces();
-
-        if (tokens[i].tokenType == TokenType.Comment)
-        {
-            memberInfo.Comment = tokens[i].value;
-
-            i++;
-        }
-
-        skipSpaces();
-
-        if (tokens[i].tokenType == TokenType.AlfaNumeric)
-        {
-            memberInfo.Name = tokens[i].value;
-
-            i++;
-
-            if (tokens[i].tokenType == TokenType.QuestionMark)
-            {
-                memberInfo.IsNullable = true;
-
-                i++;
-            }
-
-            skipSpaces();
-
-            if (tokens[i].tokenType == TokenType.Colon)
-            {
-                i++;
-
-                skipSpaces();
-
-                // r e a d    m e t h o d
-                // onOpen?: (event: React.SyntheticEvent) => void;
-                if (tokens[i].tokenType == TokenType.LeftParenthesis)
-                {
-                    var (hasRead, readValues, newIndex) = TryReadWhile(tokens,i,t=>t.tokenType != TokenType.SemiColon);
-                    if (hasRead)
-                    {
-                        memberInfo.MethodSignature = readValues;
-
-                        return (hasRead: true, memberInfo, newIndex + 1);
-                    }
-
-                    return (false, null, -1);
-                }
-
-                // r e a d    p r o p e r t y
-                {
-
-                    // t y p e   r e f e r e n c e
-                    {
-                        var (hasRead, tsTypeReference, newIndex) = TryReadTypeReference(tokens, i);
-                        if (hasRead)
-                        {
-                            memberInfo.PropertyType = tsTypeReference;
-
-                            i = newIndex;
-
-                            skipSpaces();
-
-                            if (tokens.Count > i && tokens[i].tokenType == TokenType.SemiColon)
-                            {
-                                i++;
-                            }
-
-                            return (hasRead: true, memberInfo, i);
-                        }
-                    }
-                }
-                
-                
-            }
-
-            // r e a d    m e t h o d
-            // onOpen?: (event: React.SyntheticEvent) => void;
-            else if (tokens[i].tokenType == TokenType.LeftParenthesis)
-            {
-                var (hasRead, readValues, newIndex) = TryReadWhile(tokens, i, t => t.tokenType != TokenType.SemiColon);
-                if (hasRead)
-                {
-                    memberInfo.MethodSignature = readValues;
-
-                    return (hasRead: true, memberInfo, newIndex + 1);
-                }
-
-                return (false, null, -1);
-            }
-        }
-
-        return (false, null, -1);
-
-        void skipSpaces()
-        {
-            if (i >= tokens.Count)
-            {
-                return;
-            }
-            
-            if (tokens[i].tokenType == TokenType.Space)
-            {
-                i++;
-            }
-        }
-    }
 
     public static (bool hasRead, IReadOnlyList<TsMemberInfo> members, int newIndex) TryReadMembers(IReadOnlyList<Token> tokens, int startIndex)
     {
@@ -293,51 +183,11 @@ static class TsParser
                 {
                     return (true, value.Select(x => Exporter.ParseMemberTokens(x).Item2).Select(asTsMemberInfo).ToList(), indexOfPair + 1);
                 }
-                
-                i++;
-
-                skipSpaces();
-
-                while (true)
-                {
-                    var (hasRead, memberInfo, newIndex) = TryReadMemberInfo(tokens, i);
-                    if (hasRead)
-                    {
-                        members.Add(memberInfo);
-
-                        i = newIndex;
-
-                        continue;
-                    }
-
-                    break;
-                }
-
-                skipSpaces();
-
-                if (i == indexOfPair)
-                {
-                    i++;
-
-                    return (members.Count > 0, members, i);
-                }
+              
             }
         }
 
-        return /*None*/(hasRead: false, null, -1);
-
-        void skipSpaces()
-        {
-            if (i >= tokens.Count)
-            {
-                return;
-            }
-            
-            if (tokens[i].tokenType == TokenType.Space)
-            {
-                i++;
-            }
-        }
+        return default;
     }
 
 
