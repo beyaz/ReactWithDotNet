@@ -132,6 +132,14 @@ static class Exporter
             return lines;
         }
 
+        if (memberInfo.Name == "variant")
+        {
+            lines.Add("[ReactProp]");
+            lines.Add("public string variant { get; set; }");
+
+            return lines;
+        }
+
         if (memberInfo.Name == "classes")
         {
             if ((memberInfo.PropertyType?.Name == "Partial" || IsMuiPartialType(memberInfo)))
@@ -141,7 +149,6 @@ static class Exporter
                 lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
                 return lines;
             }
-            
         }
 
         
