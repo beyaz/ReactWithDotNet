@@ -68,6 +68,11 @@ static class Exporter
             return (true, "string");
         }
 
+        if (tokens.FullMatch("string | number"))
+        {
+            return (true, "int");
+        }
+
         var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
         if (hasRead)
         {
