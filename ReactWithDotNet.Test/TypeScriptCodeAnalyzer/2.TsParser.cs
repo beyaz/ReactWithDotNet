@@ -30,6 +30,7 @@ class TsMemberInfo
     public TsTypeReference PropertyType { get; set; }
     public IReadOnlyList<Token> MethodSignature { get; set; }
 
+    public IReadOnlyList<Token> RemainingPart { get; set; }
     
 }
 
@@ -286,10 +287,19 @@ static class TsParser
             if (isFound)
             {
 
+                var asTsMemberInfo =
+                    ((string comment, string name, IReadOnlyList<Token> remainingPart) x) =>
+                    new TsMemberInfo
+                    {
+                        Comment       = x.comment,
+                        Name          = x.name,
+                        RemainingPart = x.remainingPart
+                    };
+                
                 var (error, value) = ParseToMemberTokens(tokens, i, indexOfPair);
                 if (error is null)
                 {
-                    Enumerable.Select<IReadOnlyList<Token>, (string comment, string name, IReadOnlyList<Token> remainingPart)>(value, x => Exporter.ParseMemberTokens(x).Item2).ToList();
+                    Enumerable.Select(value, x => Exporter.ParseMemberTokens(x).Item2).Select(asTsMemberInfo).ToList();
                 }
                 
                 i++;
