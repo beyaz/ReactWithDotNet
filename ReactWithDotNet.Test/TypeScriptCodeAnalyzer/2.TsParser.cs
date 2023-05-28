@@ -288,7 +288,7 @@ static class TsParser
             {
                 TsMemberInfo asTsMemberInfo((string comment, string name, IReadOnlyList<Token> remainingPart) x) => new() { Comment = x.comment, Name = x.name, RemainingPart = x.remainingPart };
 
-                var (error, value) = ParseToMemberTokens(tokens, i, indexOfPair);
+                var (error, value) = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
                 if (error is null)
                 {
                     return (true, value.Select(x => Exporter.ParseMemberTokens(x).Item2).Select(asTsMemberInfo).ToList(), indexOfPair + 1);
