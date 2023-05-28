@@ -24,15 +24,11 @@ static class Exporter
     static bool IsMuiPartialType(TsMemberInfo memberInfo)
     {
         var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
-        if (tokens.Count > 0)
+        if (tokens.Count > 1)
         {
-            var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
-            if (hasRead)
+            if (tokens[0].value == "Partial")
             {
-                if (tsTypeReference.Name == "Partial")
-                {
-                    return true;
-                }
+                return true;
             }
         }
 
