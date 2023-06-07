@@ -40,5 +40,19 @@ public class ExporterTest
         });
     }
 
+    [TestMethod]
+    public void TabPanel()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode("tabview"),
+            StartFrom        = "interface TabPanelProps {",
+            ClassName        = "TabPanel",
+            SkipMembers      = new[] { "children", "style", "pt" },
+            IsContainer      = true
+        });
+    }
+    
+
 
 }
