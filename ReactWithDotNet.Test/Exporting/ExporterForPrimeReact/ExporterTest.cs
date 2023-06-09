@@ -64,7 +64,8 @@ public class ExporterTest
             StartFrom        = "'ref'> {",
             ClassName        = "TabView",
             SkipMembers      = new[] { "children", "pt", "onBeforeTabChange", "onBeforeTabClose" },
-            IsContainer      = true
+            IsContainer      = true,
+            ClassModifier = "partial"
         });
     }
 
