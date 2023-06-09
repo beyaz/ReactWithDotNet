@@ -60,7 +60,26 @@ static class Mixin
 
         return false;
     }
-    
+
+    public static bool FullMatch(this IReadOnlyList<Token> tokens, params Func<Token,bool>[] matchSteps)
+    {
+        tokens ??= new List<Token>();
+        if (tokens.Count == matchSteps.Length)
+        {
+            for (var i = 0; i < matchSteps.Length; i++)
+            {
+                if (!matchSteps[i](tokens[tokens.Count - matchSteps.Length + i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     public static bool EndsWith(this IReadOnlyList<Token> tokens, string value)
     {
         tokens = tokens?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();

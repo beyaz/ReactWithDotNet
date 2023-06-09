@@ -45,12 +45,16 @@ public partial class TabView
     ///     <br/>
     ///     @param {TabViewTabChangeEvent} event -  Custom tab change event.
     /// </summary>
+    [ReactProp]
+    public Action<TabViewTabChangeEvent> onTabChange { get; set; }
     
     /// <summary>
     ///     Callback to invoke when an active tab is closed.
     ///     <br/>
     ///     @param {TabViewTabCloseEvent} event - Custom tab close event.
     /// </summary>
+    [ReactProp]
+    public Action<TabViewTabCloseEvent> onTabClose { get; set; }
     
     protected override Element GetSuspenseFallbackElement()
     {

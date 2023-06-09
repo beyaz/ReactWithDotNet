@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 
@@ -13,6 +14,31 @@ static class Exporter
 
         WriteAllText($@"{projectFolder}{input.OutputFileLocation}{input.ClassName}.cs", code);
     }
+
+    static (bool hasMatch, string dotNetType) TryMatchDotNetOneParameterAction(TsMemberInfo memberInfo)
+    {
+        var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).ToList() ?? new List<Token>();
+
+        string parameterType = null;
+        
+        if (tokens.FullMatch(t => t.value=="(",
+                             t => t.value == "event",
+                             t => t.value == ":",
+                             t =>
+                             {
+                                 parameterType = t.value;
+                                 return true;
+                             },
+                             t => t.value == ")",
+                             t => t.value == ":",
+                             t => t.value == "void"))
+        {
+            return (hasMatch: true, dotNetType: $"Action<{parameterType}>");
+        }
+
+        return default;
+    }
+
 
     static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
     {
@@ -105,6 +131,12 @@ static class Exporter
             return (true, "object");
         }
 
+        var (hasMatch, dotNetType) = TryMatchDotNetOneParameterAction(memberInfo);
+        if (hasMatch)
+        {
+            return (true, dotNetType);
+        }
+        
         return default;
     }
 
