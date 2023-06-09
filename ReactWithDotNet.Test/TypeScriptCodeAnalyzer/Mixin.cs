@@ -221,26 +221,26 @@ static class Mixin
 
 sealed class TokenMatch
 {
-     Func<Token, bool> matchFunc;
+    Func<Token, bool> MatchFunc { get; init; }
     
     public static implicit operator TokenMatch(Func<Token, bool> matchFunc)
     {
-        return new TokenMatch { matchFunc = matchFunc };
+        return new TokenMatch { MatchFunc = matchFunc };
     }
 
     public static implicit operator TokenMatch(string value)
     {
-        return new TokenMatch { matchFunc = t=>t.value == value };
+        return new TokenMatch { MatchFunc = t=>t.value == value };
     }
     
     public bool IsMatch(Token token)
     {
-        return matchFunc(token);
+        return MatchFunc(token);
     }
 
-    public static TokenMatch From(Action<Token> onTrue)
+    public static TokenMatch OnTokenMatched(Action<Token> onTrue)
     {
-        return new TokenMatch { matchFunc = matchFunc };
+        return new TokenMatch { MatchFunc = matchFunc };
 
         bool matchFunc(Token token)
         {

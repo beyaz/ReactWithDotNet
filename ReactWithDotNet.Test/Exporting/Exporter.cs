@@ -1,6 +1,6 @@
-using System.Collections.Immutable;
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
+using static ReactWithDotNet.TypeScriptCodeAnalyzer.TokenMatch;
 
 namespace ReactWithDotNet.Exporting;
 
@@ -20,14 +20,8 @@ static class Exporter
         var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).ToList() ?? new List<Token>();
 
         string parameterType = null;
-
-        var onParameterType = (Token t) =>
-        {
-            parameterType = t.value;
-            return true;
-        };
-
-        if (tokens.FullMatch("(", "event", ":", onParameterType, ")", ":", "void"))
+        
+        if (tokens.FullMatch("(", "event", ":", OnTokenMatched(t=> parameterType = t.value), ")", ":", "void"))
         {
             return (hasMatch: true, dotNetType: $"Action<{parameterType}>");
         }
