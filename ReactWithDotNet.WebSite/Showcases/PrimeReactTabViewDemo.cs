@@ -14,6 +14,7 @@ public class PrimeReactTabViewDemo : ReactPureComponent
                  new TabPanel
                     {
                         header = "Header I",
+                        leftIcon = "pi pi-calendar mr-2",
                         children =
                         {
                             new p
@@ -31,6 +32,7 @@ public class PrimeReactTabViewDemo : ReactPureComponent
                     new TabPanel
                     {
                         header = "Header II",
+                        closable = true,
                         children =
                         {
                             new p
