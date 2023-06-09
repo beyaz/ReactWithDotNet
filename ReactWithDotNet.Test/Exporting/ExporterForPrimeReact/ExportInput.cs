@@ -10,14 +10,11 @@ public class ExportInput : Exporting.ExportInput
 
         PropToDotNetTypeMap = new Dictionary<string, string>
         {
-            
-            //{ $"{NamespaceName} > * > sx", "dynamic" },
-            //{ $"{NamespaceName} > * > inputProps", "dynamic" },
-            //{ $"{NamespaceName} > TextField > defaultValue", "string" },
-            //{ $"{NamespaceName} > TextField > type", "string" },
-            //{ $"{NamespaceName} > TextField > value", "string" },
-            //{ $"{NamespaceName} > SwitchBase > type", "string" },
-            //{ $"{NamespaceName} > SwitchBase > value", "string" }
+            { $"{NamespaceName} > TabPanel > leftIcon", "string" },
+            { $"{NamespaceName} > TabPanel > rightIcon", "string" },
+            { $"{NamespaceName} > TabPanel > prevButton", "string" },
+            { $"{NamespaceName} > TabPanel > nextButton", "string" },
+            { $"{NamespaceName} > TabPanel > closeIcon", "string" }
         };
     }
 }

@@ -8,6 +8,8 @@ public class ExporterTest
 {
     static string GetTsCode(string className)
     {
+        // https://github.com/primefaces/primereact/tree/master/components/lib
+        
         var rawUrlInGithub = $"https://raw.githubusercontent.com/primefaces/primereact/master/components/lib/{className}/{className}.d.ts";
 
         return new HttpClient().GetStringAsync(rawUrlInGithub).GetAwaiter().GetResult();
