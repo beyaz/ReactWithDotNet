@@ -49,6 +49,10 @@ public class PrimeReactTabViewDemo : ReactPureComponent
                     },
                     new TabPanel
                     {
+                        headerTemplate = new div(CursorPointer,ClassName("flex align-items-center px-3"))
+                        {
+                           "Amy Elsner"
+                        },
                         header = "Header III",
                         children =
                         {
