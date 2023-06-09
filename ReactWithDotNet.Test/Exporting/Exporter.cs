@@ -83,6 +83,11 @@ static class Exporter
             return (true, "double?");
         }
 
+        if (tokens.FullMatch("boolean | undefined"))
+        {
+            return (true, "bool?");
+        }
+
         var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
         if (hasRead)
         {
