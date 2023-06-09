@@ -88,6 +88,12 @@ static class Exporter
             return (true, "bool?");
         }
 
+        if (tokens.FullMatch("React.CSSProperties | undefined"))
+        {
+            return (true, "Style");
+        }
+        
+
         var (hasRead, tsTypeReference, _) = TsParser.TryReadUnionTypeReference(tokens, 0);
         if (hasRead)
         {
