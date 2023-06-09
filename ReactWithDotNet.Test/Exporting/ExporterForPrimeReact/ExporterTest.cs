@@ -54,7 +54,20 @@ public class ExporterTest
             IsContainer      = true
         });
     }
-    
+
+    [TestMethod]
+    public void TabView()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode("tabview"),
+            StartFrom        = "'ref'> {",
+            ClassName        = "TabView",
+            SkipMembers      = new[] { "children", "pt", "onBeforeTabChange", "onBeforeTabClose" },
+            IsContainer      = true
+        });
+    }
+
 
 
 }
