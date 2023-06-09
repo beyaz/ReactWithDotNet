@@ -14,7 +14,9 @@ public class ExportInput : Exporting.ExportInput
             { $"{NamespaceName} > TabPanel > rightIcon", "string" },
             { $"{NamespaceName} > TabPanel > prevButton", "string" },
             { $"{NamespaceName} > TabPanel > nextButton", "string" },
-            { $"{NamespaceName} > TabPanel > closeIcon", "string" }
+            { $"{NamespaceName} > TabPanel > closeIcon", "string" },
+            { $"{NamespaceName} > Avatar > icon", "string" },
+            
         };
     }
 }

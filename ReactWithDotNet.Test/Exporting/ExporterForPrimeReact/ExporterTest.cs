@@ -71,4 +71,17 @@ public class ExporterTest
 
 
 
+    [TestMethod]
+    public void Avatar()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode("avatar"),
+            StartFrom        = "'ref'> {",
+            ClassName        = "Avatar",
+            SkipMembers      = new[] { "children", "pt", "onImageError" }
+        });
+    }
+
+
 }
