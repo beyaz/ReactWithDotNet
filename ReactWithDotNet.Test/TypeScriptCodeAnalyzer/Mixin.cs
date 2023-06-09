@@ -61,14 +61,14 @@ static class Mixin
         return false;
     }
 
-    public static bool FullMatch(this IReadOnlyList<Token> tokens, params Func<Token,bool>[] matchSteps)
+    public static bool FullMatch(this IReadOnlyList<Token> tokens, params TokenMatch[] matchSteps)
     {
         tokens ??= new List<Token>();
         if (tokens.Count == matchSteps.Length)
         {
             for (var i = 0; i < matchSteps.Length; i++)
             {
-                if (!matchSteps[i](tokens[tokens.Count - matchSteps.Length + i]))
+                if (!matchSteps[i].IsMatch(tokens[tokens.Count - matchSteps.Length + i]))
                 {
                     return false;
                 }
@@ -216,5 +216,36 @@ static class Mixin
         lines.WriteLines(x => sb.AppendLine(x));
 
         return sb.ToString();
+    }
+}
+
+sealed class TokenMatch
+{
+     Func<Token, bool> matchFunc;
+    
+    public static implicit operator TokenMatch(Func<Token, bool> matchFunc)
+    {
+        return new TokenMatch { matchFunc = matchFunc };
+    }
+
+    public static implicit operator TokenMatch(string value)
+    {
+        return new TokenMatch { matchFunc = t=>t.value == value };
+    }
+    
+    public bool IsMatch(Token token)
+    {
+        return matchFunc(token);
+    }
+
+    public static TokenMatch From(Action<Token> onTrue)
+    {
+        return new TokenMatch { matchFunc = matchFunc };
+
+        bool matchFunc(Token token)
+        {
+            onTrue(token);
+            return true;
+        }
     }
 }

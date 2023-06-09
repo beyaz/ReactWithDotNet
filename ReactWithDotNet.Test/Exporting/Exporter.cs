@@ -20,18 +20,14 @@ static class Exporter
         var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).ToList() ?? new List<Token>();
 
         string parameterType = null;
-        
-        if (tokens.FullMatch(t => t.value=="(",
-                             t => t.value == "event",
-                             t => t.value == ":",
-                             t =>
-                             {
-                                 parameterType = t.value;
-                                 return true;
-                             },
-                             t => t.value == ")",
-                             t => t.value == ":",
-                             t => t.value == "void"))
+
+        var onParameterType = (Token t) =>
+        {
+            parameterType = t.value;
+            return true;
+        };
+
+        if (tokens.FullMatch("(", "event", ":", onParameterType, ")", ":", "void"))
         {
             return (hasMatch: true, dotNetType: $"Action<{parameterType}>");
         }
