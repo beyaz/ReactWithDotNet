@@ -12,6 +12,7 @@ function register(name, value)
 function RegisterComponents()
 {
     // Connect components as Lazy
+    register("Avatar", React.lazy(() => import('./Avatar')));
     register("Button", React.lazy(() => import('./Button')));
     register("InputText", React.lazy(() => import('./InputText')));
     register("InputTextarea", React.lazy(() => import('./InputTextarea')));
