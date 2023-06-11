@@ -54,7 +54,7 @@ public class PrimeReactTabViewDemo : ReactPureComponent
                             new Avatar
                             {
                                 image = "https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png",
-                                shape = "circle", className ="mx-2"
+                                shape = "circle", //className ="mx-2"
                             } + WidthHeight(28),
                            "Amy Elsner"
                         },
