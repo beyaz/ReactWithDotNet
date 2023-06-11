@@ -1088,3 +1088,19 @@ partial class ElementSerializer
 internal record TransformValueInServerSideContext(Func<Style, string> ConvertStyleToCssClass);
 
 internal record TransformValueInServerSideResponse(bool needToExport, object newValue = null);
+
+
+static class DoNotSendToClientWhenStyleEmpty
+{
+    public static TransformValueInServerSideResponse Transform(object value, TransformValueInServerSideContext transformContext)
+    {
+        var style = value as Style;
+
+        if (style == null || style.IsEmpty)
+        {
+            return default;
+        }
+
+        return new(needToExport: true, value);
+    }
+}

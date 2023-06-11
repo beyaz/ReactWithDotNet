@@ -177,7 +177,7 @@ static class Exporter
 
             if (dotNetType == "Style")
             {
-                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
+                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenStyleEmpty))]");
                 lines.Add($"public Style {memberInfo.Name} {{ get; }} = new ();");
                 return lines;
             }
