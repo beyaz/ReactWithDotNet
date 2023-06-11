@@ -5,6 +5,16 @@ public partial class TabView : ElementBase
     [ReactProp]
     [ReactBind(targetProp = nameof(activeIndex), jsValueAccess = "e.index", eventName = "onTabChange")]
     public Expression<Func<int>> activeIndexBind { get; set; }
+
+    public TabView()
+    {
+        
+    }
+
+    public TabView(params StyleModifier[] modifiers) :base(modifiers)
+    {
+        
+    }
 }
 
 [Serializable]
