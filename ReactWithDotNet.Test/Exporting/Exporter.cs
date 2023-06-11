@@ -175,6 +175,13 @@ static class Exporter
                 return lines;
             }
 
+            if (dotNetType == "Style")
+            {
+                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
+                lines.Add($"public Style {memberInfo.Name} {{ get; }} = new ();");
+                return lines;
+            }
+
             lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
         }
 
