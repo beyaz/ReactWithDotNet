@@ -963,9 +963,11 @@ function ConvertToReactElement(jsonNode, component)
                             FunctionExecutionQueueCurrentEntry.isValid = false;
                         }
 
-                        clearTimeout(targetComponent.state[eventName + '-debounceTimeoutId']);
+                        const timeoutKey = eventName + '-debounceTimeoutId';
 
-                        newState[eventName + '-debounceTimeoutId'] = setTimeout(() =>
+                        clearTimeout(targetComponent.state[timeoutKey]);
+
+                        newState[timeoutKey] = setTimeout(() =>
                         {
                             const executionEntry = StartAction(debounceHandler, targetComponent, /*eventArguments*/[]);
                             executionEntry.name = executionQueueItemName;
