@@ -15,9 +15,6 @@ public class ElementBase : ThirdPartyReactComponent
     public string id { get; set; }
 
     [ReactProp]
-    public string className { get; set; }
-
-    [ReactProp]
     public TooltipOptions tooltipOptions { get; set; }
 
     
