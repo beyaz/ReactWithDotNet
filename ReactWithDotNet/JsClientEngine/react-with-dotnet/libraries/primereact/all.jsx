@@ -105,4 +105,21 @@ ReactWithDotNet.BeforeAnyThirdPartyComponentAccess(dotNetFullClassNameOf3rdParty
     }
 });
 
+/**
+ * @param {string} dotNetFullClassNameOf3rdPartyComponent
+ */
+ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdPartyLibraries.PrimeReact.TabPanel', props =>
+{
+    if (props.headerTemplate)
+    {
+        var element = props.headerTemplate;
+
+        props.headerTemplate = (options) =>
+        {
+            return React.cloneElement(element, { onClick: options.onClick });
+        }
+    }
+
+    return props;
+});
 
