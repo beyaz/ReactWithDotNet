@@ -49,12 +49,12 @@ public class PrimeReactTabViewDemo : ReactPureComponent
                     },
                     new TabPanel
                     {
-                        headerTemplate = new FlexRowCentered(CursorPointer,ClassName("p-tabview-nav-link"), Height(50), Gap(5))
+                        headerTemplate = new FlexRowCentered(CursorPointer,ClassName("p-tabview-nav-link"), Height(50), Gap(8))
                         {
                             new Avatar
                             {
                                 image = "https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png",
-                                shape = "circle", //className ="mx-2"
+                                shape = "circle", className ="mx-2"
                             } + WidthHeight(28),
                            "Amy Elsner"
                         },

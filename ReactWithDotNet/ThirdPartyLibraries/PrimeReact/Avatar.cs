@@ -59,4 +59,7 @@ public sealed class Avatar : ElementBase
     /// </summary>
     [ReactProp]
     public Element template { get; set; }
+    
+    [ReactProp]
+    public string className { get; set; }
 }

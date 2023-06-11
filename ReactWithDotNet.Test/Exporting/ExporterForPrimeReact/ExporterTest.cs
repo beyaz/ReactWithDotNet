@@ -79,7 +79,8 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode("avatar"),
             StartFrom        = "'ref'> {",
             ClassName        = "Avatar",
-            SkipMembers      = new[] { "children", "pt", "onImageError", "onClick" }
+            SkipMembers      = new[] { "children", "pt", "onImageError", "onClick" },
+            ExtraProps = new []{"string className"}
         });
     }
 
