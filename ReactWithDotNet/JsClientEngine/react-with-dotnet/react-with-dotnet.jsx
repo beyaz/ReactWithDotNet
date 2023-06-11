@@ -852,24 +852,24 @@ function ConvertToReactElement(jsonNode, component)
 
     let props = null;
 
-    var constructorFunction = jsonNode.$tag;
-    if (!constructorFunction)
+    var elementType = jsonNode.$tag;
+    if (!elementType)
     {
         throw CreateNewDeveloperError('ReactNode is not recognized');
     }
 
     var isThirdPartyComponent = false;
 
-    if (/* is component */constructorFunction.indexOf('.') > 0)
+    if (/* is component */elementType.indexOf('.') > 0)
     {
-        Before3rdPartyComponentAccess(constructorFunction);
+        Before3rdPartyComponentAccess(elementType);
 
-        constructorFunction = GetExternalJsObject(constructorFunction);
+        elementType = GetExternalJsObject(elementType);
 
         isThirdPartyComponent = true;
     }
 
-    if (constructorFunction === 'nbsp')
+    if (elementType === 'nbsp')
     {
         if (jsonNode && jsonNode.length)
         {
@@ -1058,7 +1058,7 @@ function ConvertToReactElement(jsonNode, component)
 
     if (jsonNode.$text != null)
     {
-        return createElement(constructorFunction, props, jsonNode.$text);
+        return createElement(elementType, props, jsonNode.$text);
     }
 
     const children = jsonNode.$children;
@@ -1068,7 +1068,7 @@ function ConvertToReactElement(jsonNode, component)
 
         if (childrenLength === 1)
         {
-            return createElement(constructorFunction, props, ConvertToReactElement(children[0], component));
+            return createElement(elementType, props, ConvertToReactElement(children[0], component));
         }
 
         const newChildren = [];
@@ -1078,10 +1078,10 @@ function ConvertToReactElement(jsonNode, component)
             newChildren.push(ConvertToReactElement(children[childIndex], component));
         }
 
-        return createElement(constructorFunction, props, newChildren);
+        return createElement(elementType, props, newChildren);
     }
 
-    return createElement(constructorFunction, props);
+    return createElement(elementType, props);
 }
 
 /**
