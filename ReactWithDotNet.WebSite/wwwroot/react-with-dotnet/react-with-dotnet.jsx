@@ -788,7 +788,7 @@ function FindRealNodeByFakeChild(fakeChildIndex, rootNodeInState, jsonNodeInProp
     return null;
 }
 
-function ConvertToReactElement(jsonNode, component, isConvertingRootNode)
+function ConvertToReactElement(jsonNode, component)
 {
     if (jsonNode == null)
     {
@@ -1390,7 +1390,7 @@ function DefineComponent(componentDeclaration)
         {
             TraceComponent(this, "render");
 
-            return ConvertToReactElement(this.state[RootNode], this, /*isConvertingRootNode*/true);
+            return ConvertToReactElement(this.state[RootNode], this);
         }
 
         componentDidMount()
@@ -1563,7 +1563,7 @@ function DefinePureComponent(componentDeclaration)
     {
         render()
         {
-            return ConvertToReactElement(this.props.$jsonNode[RootNode], this, /*isConvertingRootNode*/true);
+            return ConvertToReactElement(this.props.$jsonNode[RootNode], this);
         }
     }
 
