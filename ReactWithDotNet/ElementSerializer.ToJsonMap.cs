@@ -1098,7 +1098,7 @@ static class DoNotSendToClientWhenStyleEmpty
 
         if (style == null || style.IsEmpty)
         {
-            return default;
+            return new TransformValueInServerSideResponse(false);
         }
 
         return new(needToExport: true, value);
