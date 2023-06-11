@@ -18,3 +18,8 @@ public class TabViewTabCloseEvent
 {
     public int index { get; set; }
 }
+
+public static class TabPanelHeaderTemplateOptions
+{
+    public static Action<MouseEvent> onClick;
+}
