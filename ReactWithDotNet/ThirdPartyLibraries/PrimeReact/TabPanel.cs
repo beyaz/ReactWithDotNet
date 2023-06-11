@@ -1,7 +1,5 @@
 // auto generated code (do not edit manually)
 
-using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
-
 namespace ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 public sealed class TabPanel : ElementBase
@@ -74,7 +72,7 @@ public sealed class TabPanel : ElementBase
     ///     Inline style of the tab header.
     /// </summary>
     [ReactProp]
-    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenStyleEmpty))]
     public Style headerStyle { get; } = new ();
     
     /// <summary>
@@ -87,7 +85,7 @@ public sealed class TabPanel : ElementBase
     ///     Inline style of the tab content.
     /// </summary>
     [ReactProp]
-    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenStyleEmpty))]
     public Style contentStyle { get; } = new ();
     
     /// <summary>
