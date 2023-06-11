@@ -22,7 +22,8 @@ public partial class TabView
     ///     Inline style of the panels container of the tabview.
     /// </summary>
     [ReactProp]
-    public Style panelContainerStyle { get; set; }
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenStyleEmpty))]
+    public Style panelContainerStyle { get; } = new ();
     
     /// <summary>
     ///     Whether to render the contents of the selected tab or all tabs.
