@@ -133,7 +133,7 @@ partial class JsonSerializationOptionHelper
             writer.WriteEndObject();
         }
     }
-    
+
     class ValueTupleConverter<T1, T2, T3, T4> : JsonConverter<ValueTuple<T1, T2, T3, T4>>
     {
         public override (T1, T2, T3, T4) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -188,10 +188,10 @@ partial class JsonSerializationOptionHelper
             writer.WriteEndObject();
         }
     }
-    
-     class ValueTupleConverter<T1, T2, T3, T4, T5> : JsonConverter<ValueTuple<T1, T2, T3, T4,T5>>
+
+    class ValueTupleConverter<T1, T2, T3, T4, T5> : JsonConverter<ValueTuple<T1, T2, T3, T4, T5>>
     {
-        public override (T1, T2, T3, T4,T5) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override (T1, T2, T3, T4, T5) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             (T1, T2, T3, T4, T5) result = default;
 
@@ -249,13 +249,12 @@ partial class JsonSerializationOptionHelper
             writer.WriteEndObject();
         }
     }
-     
-     
-      class ValueTupleConverter<T1, T2, T3, T4, T5, T6> : JsonConverter<ValueTuple<T1, T2, T3, T4,T5,T6>>
+
+    class ValueTupleConverter<T1, T2, T3, T4, T5, T6> : JsonConverter<ValueTuple<T1, T2, T3, T4, T5, T6>>
     {
-        public override (T1, T2, T3, T4,T5,T6) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override (T1, T2, T3, T4, T5, T6) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            (T1, T2, T3, T4, T5,T6) result = default;
+            (T1, T2, T3, T4, T5, T6) result = default;
 
             if (!reader.Read())
             {
@@ -339,7 +338,7 @@ partial class JsonSerializationOptionHelper
                 5 => typeof(ValueTupleConverter<,,,,>).MakeGenericType(genericArguments),
                 6 => typeof(ValueTupleConverter<,,,,,>).MakeGenericType(genericArguments),
                 // And add other cases as needed
-                _ => throw new NotSupportedException(),
+                _ => throw new NotSupportedException()
             };
             return (JsonConverter)Activator.CreateInstance(converterType);
         }
