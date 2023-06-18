@@ -1237,8 +1237,6 @@ function HandleAction(data, executionQueueEntry)
 
     function onSuccess(response)
     {
-
-
         IsWaitingRemoteResponse = false;
 
         if (response.CallFunctionId > 0 &&
