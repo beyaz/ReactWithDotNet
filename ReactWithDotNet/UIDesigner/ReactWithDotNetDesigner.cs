@@ -86,22 +86,49 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 }
             },
 
+          
             new style
             {
-                Text($@"
+                
+                @"
+
+.cm-editor {
+  height: calc(100% - 10px);
+}
+.cm-theme-light {
+  height: calc(100% - 2px);
+  font-size: 12px;
+}
+
+.ͼ1.cm-editor.cm-focused {
+    outline: none;
+}
+
+/* left-side-key */
+.ͼ18{
+    color: #c0bcc8;
+    font-weight: bold;
+}
 
 
-
-.token.property{{ {new Style { Color("#189af6") }.ToCssWithImportant()} }}
-
-.cm-editor{{ {new Style { Height("calc(100% - 10px)"), Color("#DE3163") }.ToCssWithImportant()} }}
-
-.cm-theme-light{{ {new Style { Height("calc(100% - 2px)") }.ToCssWithImportant()} }}
-
-.ͼ16 {{ {new Style { FontWeight600, FontFamily("'IBM Plex Mono', monospace") }.ToCssWithImportant()} }}
-
-")
+/* string */
+.ͼ1b{
+    color: #f44336;
+    font-weight: bold;
+}
+/* number */
+.ͼ19 {
+    color: #141413;
+    font-weight: bold;
+}
+/* boolean */
+.ͼ1g {
+    color: #2c1aeb;
+    font-weight: bold;
+}
+"
             },
+            
             Space(5),
             new MethodSelectionView
             {
