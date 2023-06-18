@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -177,6 +178,10 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
         }
         catch (Exception exception)
         {
+            if (exception is JsonReaderException)
+            {
+                return new div(exception.Message);
+            }
             return new div(exception.ToString());
         }
 
@@ -185,14 +190,23 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
 
     static (bool successfullyRead, TValue value) ReadPropertyValueInJsonText<TValue>(string json, string propertyNameInJson)
     {
-        var jObject = (JObject)DeserializeJson(json.HasValue() ? json : "{}", typeof(JObject));
+        JObject jObject;
+        
+        try
+        {
+            jObject = (JObject)DeserializeJson(json.HasValue() ? json : "{}", typeof(JObject));
+        }
+        catch (Exception)
+        {
+            return default;
+        }
 
         if (jObject.TryGetValue(propertyNameInJson, out var jToken))
         {
             return (successfullyRead: true, jToken.ToObject<TValue>());
         }
 
-        return (successfullyRead: false, default);
+        return default;
 
     }
 }
