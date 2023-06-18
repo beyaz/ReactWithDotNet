@@ -390,6 +390,86 @@ partial class JsonSerializationOptionHelper
         }
     }
 
+     class ValueTupleConverter<T1, T2, T3, T4, T5, T6, T7,TRest> : JsonConverter<ValueTuple<T1, T2, T3, T4, T5, T6, T7,TRest>> where TRest : struct
+     {
+        public override ValueTuple<T1, T2, T3, T4, T5, T6, T7,TRest> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            ValueTuple<T1, T2, T3, T4, T5, T6, T7,TRest> result = default;
+
+            if (!reader.Read())
+            {
+                throw new JsonException();
+            }
+
+            while (reader.TokenType != JsonTokenType.EndObject)
+            {
+                if (reader.ValueTextEquals("Item1") && reader.Read())
+                {
+                    result.Item1 = JsonSerializer.Deserialize<T1>(ref reader, options);
+                }
+                else if (reader.ValueTextEquals("Item2") && reader.Read())
+                {
+                    result.Item2 = JsonSerializer.Deserialize<T2>(ref reader, options);
+                }
+                else if (reader.ValueTextEquals("Item3") && reader.Read())
+                {
+                    result.Item3 = JsonSerializer.Deserialize<T3>(ref reader, options);
+                }
+                else if (reader.ValueTextEquals("Item4") && reader.Read())
+                {
+                    result.Item4 = JsonSerializer.Deserialize<T4>(ref reader, options);
+                }
+                else if (reader.ValueTextEquals("Item5") && reader.Read())
+                {
+                    result.Item5 = JsonSerializer.Deserialize<T5>(ref reader, options);
+                }
+                else if (reader.ValueTextEquals("Item6") && reader.Read())
+                {
+                    result.Item6 = JsonSerializer.Deserialize<T6>(ref reader, options);
+                }
+                else if (reader.ValueTextEquals("Item7") && reader.Read())
+                {
+                    result.Item7 = JsonSerializer.Deserialize<T7>(ref reader, options);
+                }
+                else if (reader.ValueTextEquals("Rest") && reader.Read())
+                {
+                    result.Rest = JsonSerializer.Deserialize<TRest>(ref reader, options);
+                }
+                else
+                {
+                    throw new JsonException();
+                }
+
+                reader.Read();
+            }
+
+            return result;
+        }
+
+       
+
+        public override void Write(Utf8JsonWriter writer, ValueTuple<T1, T2, T3, T4, T5, T6, T7,TRest> value, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("Item1");
+            JsonSerializer.Serialize(writer, value.Item1, options);
+            writer.WritePropertyName("Item2");
+            JsonSerializer.Serialize(writer, value.Item2, options);
+            writer.WritePropertyName("Item3");
+            JsonSerializer.Serialize(writer, value.Item3, options);
+            writer.WritePropertyName("Item4");
+            JsonSerializer.Serialize(writer, value.Item4, options);
+            writer.WritePropertyName("Item5");
+            JsonSerializer.Serialize(writer, value.Item5, options);
+            writer.WritePropertyName("Item6");
+            JsonSerializer.Serialize(writer, value.Item6, options);
+            writer.WritePropertyName("Item7");
+            JsonSerializer.Serialize(writer, value.Item7, options);
+            writer.WritePropertyName("Rest");
+            JsonSerializer.Serialize(writer, value.Rest, options);
+            writer.WriteEndObject();
+        }
+    }
     class ValueTupleFactory : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -411,6 +491,7 @@ partial class JsonSerializationOptionHelper
                 5 => typeof(ValueTupleConverter<,,,,>).MakeGenericType(genericArguments),
                 6 => typeof(ValueTupleConverter<,,,,,>).MakeGenericType(genericArguments),
                 7 => typeof(ValueTupleConverter<,,,,,,>).MakeGenericType(genericArguments),
+                8 => typeof(ValueTupleConverter<,,,,,,,>).MakeGenericType(genericArguments),
 
                 // And add other cases as needed
                 _ => throw new NotSupportedException()
