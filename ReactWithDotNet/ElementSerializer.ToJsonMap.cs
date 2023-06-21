@@ -340,6 +340,10 @@ partial class ElementSerializer
                         var getDerivedStateFromProps = dotNetTypeOfReactComponent.GetMethod("getDerivedStateFromProps", BindingFlags.NonPublic | BindingFlags.Static);
                         if (getDerivedStateFromProps is not null)
                         {
+                            var stopwatch = new Stopwatch();
+                            stopwatch.Start();
+                            
+                            
                             var newState = getDerivedStateFromProps.Invoke(null, new[] { reactStatefulComponent, stateProperty.GetValueFunc(reactStatefulComponent) });
 
                             if (newState is Task task)
@@ -348,6 +352,12 @@ partial class ElementSerializer
 
                                 var resultProperty = typeof(Task<>).MakeGenericType(stateProperty.PropertyInfo.PropertyType).GetProperty("Result");
                                 newState = resultProperty.GetValue(task);
+                            }
+                            
+                            stopwatch.Stop();
+                            if (stopwatch.ElapsedMilliseconds > 10)
+                            {
+                                context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} :: getDerivedStateFromProps  duration is {stopwatch.ElapsedMilliseconds} milliseconds");
                             }
 
                             if (newState is not null)
@@ -620,8 +630,12 @@ partial class ElementSerializer
                 if (node.Stopwatch is not null)
                 {
                     node.Stopwatch.Stop();
+
+                    if (node.Stopwatch.ElapsedMilliseconds > 10)
+                    {
+                        context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");    
+                    }
                     
-                    context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");
                     context.Tracer.IndentLevel--;
                 }
             }
