@@ -232,7 +232,7 @@ partial class ElementSerializer
             // process React dot net component
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
-                
+
                 if (context.ComponentStack.TryPeek(out var top))
                 {
                     if (!ReferenceEquals(top, reactStatefulComponent))
@@ -240,7 +240,6 @@ partial class ElementSerializer
                         context.ComponentStack.Push(reactStatefulComponent);
                     }
                 }
-                
 
                 var stateTree = context.StateTree;
 
@@ -249,7 +248,7 @@ partial class ElementSerializer
                 var typeInfo = GetTypeInfo(dotNetTypeOfReactComponent);
 
                 var stateProperty = typeInfo.StateProperty;
-                
+
                 if (stateProperty is null)
                 {
                     throw new MissingMemberException(dotNetTypeOfReactComponent.GetFullName(), "state");
@@ -289,12 +288,12 @@ partial class ElementSerializer
                 reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
 
                 var getDerivedStateFromPropsMethodShouldInvoke = true;
-                
+
                 var state = stateProperty.GetValueFunc(reactStatefulComponent);
                 if (state == null)
                 {
                     getDerivedStateFromPropsMethodShouldInvoke = false;
-                    
+
                     await reactStatefulComponent.InvokeConstructor();
 
                     if (reactStatefulComponent.IsStateNull)
@@ -333,14 +332,15 @@ partial class ElementSerializer
                         if (getDerivedStateFromProps is not null)
                         {
                             var newState = getDerivedStateFromProps.Invoke(null, new[] { reactStatefulComponent, stateProperty.GetValueFunc(reactStatefulComponent) });
-                            
+
                             if (newState is Task task)
                             {
                                 await task;
-                                
+
                                 var resultProperty = typeof(Task<>).MakeGenericType(stateProperty.PropertyInfo.PropertyType).GetProperty("Result");
                                 newState = resultProperty.GetValue(task);
                             }
+
                             if (newState is not null)
                             {
                                 stateProperty.SetValueFunc(reactStatefulComponent, newState);
@@ -389,8 +389,6 @@ partial class ElementSerializer
                 const string dotNetState = "$State";
 
                 var dotNetProperties = new JsonMap();
-
-               
 
                 var propertyAccessors = typeInfo.DotNetPropertiesOfType;
 
@@ -452,8 +450,6 @@ partial class ElementSerializer
 
                 if (context.SkipHandleCacheableMethods is false)
                 {
-                    
-
                     ElementSerializerContext createNewElementSerializerContext()
                     {
                         var elementSerializerContext = new ElementSerializerContext
@@ -531,7 +527,6 @@ partial class ElementSerializer
                             dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyInfo.GetValue(component)));
                         }
 
-
                         stateProperty.SetValueFunc(component, ReflectionHelper.DeepCopy(state));
 
                         component.Client = ReflectionHelper.DeepCopy(component.Client);
@@ -602,8 +597,6 @@ partial class ElementSerializer
                     {
                         map.Add("$CachedMethods", cachedMethods);
                     }
-
-                    
                 }
 
                 if (context.ComponentStack.Count > 0)
@@ -614,7 +607,6 @@ partial class ElementSerializer
                         throw FatalError("component stack problem");
                     }
                 }
-                
             }
         }
 
@@ -855,8 +847,6 @@ partial class ElementSerializer
                 }
             }
 
-
-
             typeInfo = new TypeInfo
             {
                 CustomEventPropertiesOfType          = reactCustomEventProperties,
@@ -1047,8 +1037,8 @@ partial class ElementSerializer
         public Func<object, object> GetValueFunc { get; init; }
         public bool HasReactAttribute { get; init; }
         public PropertyInfo PropertyInfo { get; init; }
-        public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
         public Action<object, object> SetValueFunc { get; init; }
+        public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
     }
 
     sealed class Node
@@ -1123,7 +1113,6 @@ internal record TransformValueInServerSideContext(Func<Style, string> ConvertSty
 
 internal record TransformValueInServerSideResponse(bool needToExport, object newValue = null);
 
-
 static class DoNotSendToClientWhenStyleEmpty
 {
     public static TransformValueInServerSideResponse Transform(object value, TransformValueInServerSideContext transformContext)
@@ -1135,6 +1124,6 @@ static class DoNotSendToClientWhenStyleEmpty
             return new TransformValueInServerSideResponse(false);
         }
 
-        return new(needToExport: true, value);
+        return new TransformValueInServerSideResponse(true, value);
     }
 }
