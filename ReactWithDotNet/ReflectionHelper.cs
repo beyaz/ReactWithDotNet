@@ -40,6 +40,35 @@ static class ReflectionHelper
         return (Func<object, object>)dmGet.CreateDelegate(typeof(Func<object, object>));
     }
 
+    public static Action<object, object> CreateSetFunction(PropertyInfo propertyInfo)
+    {
+        var setMethod = propertyInfo.GetSetMethod();
+        if (setMethod == null)
+        {
+            return null;
+        }
+
+        var declaringType = propertyInfo.DeclaringType;
+        if (declaringType == null)
+        {
+            return null;
+        }
+
+        var propertyName = propertyInfo.DeclaringType?.FullName + "::" + propertyInfo.Name;
+
+        var dmGet = new DynamicMethod("Set_" + propertyName, typeof(void), new[] { typeof(object), typeof(object) });
+
+        var ilGenerator = dmGet.GetILGenerator();
+
+        ilGenerator.Emit(OpCodes.Ldarg_0);
+        ilGenerator.Emit(OpCodes.Ldarg_1);
+        ilGenerator.Emit(OpCodes.Castclass, declaringType);
+        ilGenerator.Emit(OpCodes.Callvirt, setMethod);
+        ilGenerator.Emit(OpCodes.Ret);
+
+        return (Action<object, object>)dmGet.CreateDelegate(typeof(Action<object, object>));
+    }
+
     public static T DeepCopy<T>(T value)
     {
         var json = JsonConvert.SerializeObject(value);
