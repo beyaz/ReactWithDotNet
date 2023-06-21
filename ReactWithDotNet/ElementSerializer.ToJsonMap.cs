@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
 
@@ -232,6 +233,14 @@ partial class ElementSerializer
             // process React dot net component
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
+
+                if (node.Stopwatch is null)
+                {
+                    node.Stopwatch = new Stopwatch();
+                    node.Stopwatch.Start();
+                    context.Tracer.IndentLevel++;
+
+                }
 
                 if (context.ComponentStack.TryPeek(out var top))
                 {
@@ -606,6 +615,14 @@ partial class ElementSerializer
                     {
                         throw FatalError("component stack problem");
                     }
+                }
+                
+                if (node.Stopwatch is not null)
+                {
+                    node.Stopwatch.Stop();
+                    
+                    context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");
+                    context.Tracer.IndentLevel--;
                 }
             }
         }
@@ -1095,6 +1112,7 @@ partial class ElementSerializer
         public Node NextSibling { get; set; }
 
         public Node Parent { get; set; }
+        public Stopwatch Stopwatch { get; set; }
     }
 
     sealed class TypeInfo
