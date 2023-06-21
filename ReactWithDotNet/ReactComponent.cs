@@ -156,6 +156,4 @@ public abstract class ReactComponent : ReactComponent<EmptyState>
 }
 
 [Serializable]
-public sealed class EmptyState
-{
-}
+public sealed class EmptyState;
