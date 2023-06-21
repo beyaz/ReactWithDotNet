@@ -331,6 +331,14 @@ partial class ElementSerializer
                         if (getDerivedStateFromProps is not null)
                         {
                             var newState = getDerivedStateFromProps.Invoke(null, new[] { reactStatefulComponent, statePropertyInfo.GetValue(reactStatefulComponent) });
+                            
+                            if (newState is Task task)
+                            {
+                                await task;
+                                
+                                var resultProperty = typeof(Task<>).MakeGenericType(statePropertyInfo.PropertyType).GetProperty("Result");
+                                newState = resultProperty.GetValue(task);
+                            }
                             if (newState is not null)
                             {
                                 statePropertyInfo.SetValue(reactStatefulComponent, newState);
