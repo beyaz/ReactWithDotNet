@@ -589,11 +589,15 @@ partial class ElementSerializer
                     }
                 }
 
-                var componentAtTopOfStack = context.ComponentStack.Pop();
-                if (!ReferenceEquals(componentAtTopOfStack, reactStatefulComponent))
+                if (context.ComponentStack.Count > 0)
                 {
-                    throw FatalError("component stack problem");
+                    var componentAtTopOfStack = context.ComponentStack.Pop();
+                    if (!ReferenceEquals(componentAtTopOfStack, reactStatefulComponent))
+                    {
+                        throw FatalError("component stack problem");
+                    }
                 }
+                
             }
         }
 
