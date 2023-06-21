@@ -233,8 +233,15 @@ partial class ElementSerializer
             // process React dot net component
             {
                 var reactStatefulComponent = node.ElementAsDotNetReactComponent;
-
-                context.ComponentStack.Push(reactStatefulComponent);
+                
+                if (context.ComponentStack.TryPeek(out var top))
+                {
+                    if (!ReferenceEquals(top, reactStatefulComponent))
+                    {
+                        context.ComponentStack.Push(reactStatefulComponent);
+                    }
+                }
+                
 
                 var stateTree = context.StateTree;
 
