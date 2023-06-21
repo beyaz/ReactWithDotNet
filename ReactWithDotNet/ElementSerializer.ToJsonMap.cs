@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
 
@@ -247,8 +246,11 @@ partial class ElementSerializer
 
                 var dotNetTypeOfReactComponent = reactStatefulComponent.GetType();
 
-                var statePropertyInfo = dotNetTypeOfReactComponent.GetProperty("state");
-                if (statePropertyInfo == null)
+                var typeInfo = GetTypeInfo(dotNetTypeOfReactComponent);
+
+                var stateProperty = typeInfo.StateProperty;
+                
+                if (stateProperty is null)
                 {
                     throw new MissingMemberException(dotNetTypeOfReactComponent.GetFullName(), "state");
                 }
@@ -258,19 +260,19 @@ partial class ElementSerializer
                     node.BreadCrumbPath = stateTree.BreadCrumbPath;
                     node.CurrentOrder   = stateTree.CurrentOrder;
 
-                    if (statePropertyInfo.GetValue(reactStatefulComponent) is null)
+                    if (stateProperty.GetValueFunc(reactStatefulComponent) is null)
                     {
                         stateTree.BreadCrumbPath = node.BreadCrumbPath + "," + stateTree.CurrentOrder;
                         stateTree.CurrentOrder   = 0;
 
                         if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumbPath, out var clientStateInfo))
                         {
-                            if (statePropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
+                            if (stateProperty.PropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
                             {
                                 if (reactStatefulComponent.GetType().GetFullName() == clientStateInfo.FullTypeNameOfComponent)
                                 {
-                                    var stateValue = DeserializeJson(clientStateInfo.StateAsJson, statePropertyInfo.PropertyType);
-                                    statePropertyInfo.SetValue(reactStatefulComponent, stateValue);
+                                    var stateValue = DeserializeJson(clientStateInfo.StateAsJson, stateProperty.PropertyInfo.PropertyType);
+                                    stateProperty.SetValueFunc(reactStatefulComponent, stateValue);
                                 }
                             }
                         }
@@ -288,7 +290,7 @@ partial class ElementSerializer
 
                 var getDerivedStateFromPropsMethodShouldInvoke = true;
                 
-                var state = statePropertyInfo.GetValue(reactStatefulComponent);
+                var state = stateProperty.GetValueFunc(reactStatefulComponent);
                 if (state == null)
                 {
                     getDerivedStateFromPropsMethodShouldInvoke = false;
@@ -330,18 +332,18 @@ partial class ElementSerializer
                         var getDerivedStateFromProps = dotNetTypeOfReactComponent.GetMethod("getDerivedStateFromProps", BindingFlags.NonPublic | BindingFlags.Static);
                         if (getDerivedStateFromProps is not null)
                         {
-                            var newState = getDerivedStateFromProps.Invoke(null, new[] { reactStatefulComponent, statePropertyInfo.GetValue(reactStatefulComponent) });
+                            var newState = getDerivedStateFromProps.Invoke(null, new[] { reactStatefulComponent, stateProperty.GetValueFunc(reactStatefulComponent) });
                             
                             if (newState is Task task)
                             {
                                 await task;
                                 
-                                var resultProperty = typeof(Task<>).MakeGenericType(statePropertyInfo.PropertyType).GetProperty("Result");
+                                var resultProperty = typeof(Task<>).MakeGenericType(stateProperty.PropertyInfo.PropertyType).GetProperty("Result");
                                 newState = resultProperty.GetValue(task);
                             }
                             if (newState is not null)
                             {
-                                statePropertyInfo.SetValue(reactStatefulComponent, newState);
+                                stateProperty.SetValueFunc(reactStatefulComponent, newState);
                             }
                         }
                     }
@@ -382,13 +384,13 @@ partial class ElementSerializer
                     continue;
                 }
 
-                state = statePropertyInfo.GetValue(reactStatefulComponent);
+                state = stateProperty.GetValueFunc(reactStatefulComponent);
 
                 const string dotNetState = "$State";
 
                 var dotNetProperties = new JsonMap();
 
-                var typeInfo = GetTypeInfo(dotNetTypeOfReactComponent);
+               
 
                 var propertyAccessors = typeInfo.DotNetPropertiesOfType;
 
@@ -529,12 +531,8 @@ partial class ElementSerializer
                             dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyInfo.GetValue(component)));
                         }
 
-                        if (statePropertyInfo == null)
-                        {
-                            throw new Exception();
-                        }
 
-                        statePropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(state));
+                        stateProperty.SetValueFunc(component, ReflectionHelper.DeepCopy(state));
 
                         component.Client = ReflectionHelper.DeepCopy(component.Client);
 
@@ -857,6 +855,8 @@ partial class ElementSerializer
                 }
             }
 
+
+
             typeInfo = new TypeInfo
             {
                 CustomEventPropertiesOfType          = reactCustomEventProperties,
@@ -864,7 +864,8 @@ partial class ElementSerializer
                 ReactAttributedPropertiesOfType      = reactProperties,
                 IsReactHigherOrderComponent          = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
                 CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
-                ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray()
+                ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
+                StateProperty                        = type.GetProperty("state")?.ToFastAccess()
             };
 
             TypeInfoMap.TryAdd(type, typeInfo);
@@ -1014,6 +1015,7 @@ partial class ElementSerializer
     {
         return new PropertyAccessInfo
         {
+            SetValueFunc               = ReflectionHelper.CreateSetFunction(propertyInfo),
             GetValueFunc               = ReflectionHelper.CreateGetFunction(propertyInfo),
             PropertyInfo               = propertyInfo,
             DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
@@ -1046,6 +1048,7 @@ partial class ElementSerializer
         public bool HasReactAttribute { get; init; }
         public PropertyInfo PropertyInfo { get; init; }
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
+        public Action<object, object> SetValueFunc { get; init; }
     }
 
     sealed class Node
@@ -1112,6 +1115,7 @@ partial class ElementSerializer
         public bool IsReactHigherOrderComponent { get; init; }
         public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
+        public PropertyAccessInfo StateProperty { get; init; }
     }
 }
 
