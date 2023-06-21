@@ -450,9 +450,7 @@ partial class ElementSerializer
 
                 if (context.SkipHandleCacheableMethods is false)
                 {
-                    var stopwatch = new Stopwatch();
-
-                    stopwatch.Start();
+                    
 
                     ElementSerializerContext createNewElementSerializerContext()
                     {
@@ -607,12 +605,7 @@ partial class ElementSerializer
                         map.Add("$CachedMethods", cachedMethods);
                     }
 
-                    stopwatch.Stop();
-
-                    if (stopwatch.ElapsedMilliseconds > 10)
-                    {
-                        context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} cached methods calculation duration is {stopwatch.ElapsedMilliseconds} milliseconds");
-                    }
+                    
                 }
 
                 if (context.ComponentStack.Count > 0)
