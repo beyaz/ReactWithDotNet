@@ -42,7 +42,7 @@ static class ReflectionHelper
 
     public static Action<object, object> CreateSetFunction(PropertyInfo propertyInfo)
     {
-        var setMethod = propertyInfo.GetSetMethod();
+        var setMethod = propertyInfo.SetMethod;
         if (setMethod == null)
         {
             return null;
@@ -61,8 +61,9 @@ static class ReflectionHelper
         var ilGenerator = dmGet.GetILGenerator();
 
         ilGenerator.Emit(OpCodes.Ldarg_0);
-        ilGenerator.Emit(OpCodes.Ldarg_1);
         ilGenerator.Emit(OpCodes.Castclass, declaringType);
+        ilGenerator.Emit(OpCodes.Ldarg_1);
+        ilGenerator.Emit(OpCodes.Castclass, propertyInfo.PropertyType);
         ilGenerator.Emit(OpCodes.Callvirt, setMethod);
         ilGenerator.Emit(OpCodes.Ret);
 
