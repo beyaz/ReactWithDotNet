@@ -286,9 +286,13 @@ partial class ElementSerializer
 
                 reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
 
+                var getDerivedStateFromPropsMethodShouldInvoke = true;
+                
                 var state = statePropertyInfo.GetValue(reactStatefulComponent);
                 if (state == null)
                 {
+                    getDerivedStateFromPropsMethodShouldInvoke = false;
+                    
                     await reactStatefulComponent.InvokeConstructor();
 
                     if (reactStatefulComponent.IsStateNull)
@@ -316,6 +320,20 @@ partial class ElementSerializer
                             if (modifier is ReactComponentModifier componentModifier)
                             {
                                 componentModifier.Modify(node.ElementAsDotNetReactComponent);
+                            }
+                        }
+                    }
+
+                    if (getDerivedStateFromPropsMethodShouldInvoke)
+                    {
+                        // TODO : fast access
+                        var getDerivedStateFromProps = dotNetTypeOfReactComponent.GetMethod("getDerivedStateFromProps", BindingFlags.NonPublic | BindingFlags.Static);
+                        if (getDerivedStateFromProps is not null)
+                        {
+                            var newState = getDerivedStateFromProps.Invoke(null, new[] { reactStatefulComponent, statePropertyInfo.GetValue(reactStatefulComponent) });
+                            if (newState is not null)
+                            {
+                                statePropertyInfo.SetValue(reactStatefulComponent, newState);
                             }
                         }
                     }
