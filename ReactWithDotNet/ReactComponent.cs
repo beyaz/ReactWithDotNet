@@ -66,6 +66,11 @@ public abstract class ReactComponentBase : Element
     }
 
     protected abstract Task constructor();
+    
+    protected internal virtual Task OverrideStateFromPropsBeforeRender()
+    {
+        return Task.CompletedTask;
+    }
 
     /// <summary>
     ///     Sample event declaration <br />
@@ -147,6 +152,8 @@ public abstract class ReactComponent<TState> : ReactComponentBase where TState :
 
         return Task.CompletedTask;
     }
+
+    
 }
 
 public abstract class ReactComponent : ReactComponent<EmptyState>

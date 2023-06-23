@@ -336,34 +336,16 @@ partial class ElementSerializer
 
                     if (getDerivedStateFromPropsMethodShouldInvoke)
                     {
-                        // TODO : fast access
-                        var getDerivedStateFromProps = dotNetTypeOfReactComponent.GetMethod("getDerivedStateFromProps", BindingFlags.NonPublic | BindingFlags.Static);
-                        if (getDerivedStateFromProps is not null)
+                        var stopwatch = new Stopwatch();
+                        
+                        stopwatch.Start();
+
+                        await reactStatefulComponent.OverrideStateFromPropsBeforeRender();
+                            
+                        stopwatch.Stop();
+                        if (stopwatch.ElapsedMilliseconds > 10)
                         {
-                            var stopwatch = new Stopwatch();
-                            stopwatch.Start();
-                            
-                            
-                            var newState = getDerivedStateFromProps.Invoke(null, new[] { reactStatefulComponent, stateProperty.GetValueFunc(reactStatefulComponent) });
-
-                            if (newState is Task task)
-                            {
-                                await task;
-
-                                var resultProperty = typeof(Task<>).MakeGenericType(stateProperty.PropertyInfo.PropertyType).GetProperty("Result");
-                                newState = resultProperty.GetValue(task);
-                            }
-                            
-                            stopwatch.Stop();
-                            if (stopwatch.ElapsedMilliseconds > 10)
-                            {
-                                context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} :: getDerivedStateFromProps  duration is {stopwatch.ElapsedMilliseconds} milliseconds");
-                            }
-
-                            if (newState is not null)
-                            {
-                                stateProperty.SetValueFunc(reactStatefulComponent, newState);
-                            }
+                            context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} :: OverrideStateFromPropsBeforeRender  duration is {stopwatch.ElapsedMilliseconds} milliseconds");
                         }
                     }
 
