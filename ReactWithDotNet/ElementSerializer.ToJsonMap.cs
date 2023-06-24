@@ -466,7 +466,12 @@ partial class ElementSerializer
                                 ChildStates    = context.StateTree.ChildStates
                             }
                         };
-                        elementSerializerContext.ComponentStack.Push(context.ComponentStack.Peek());
+
+                        if (context.ComponentStack.TryPeek(out var top2))
+                        {
+                            elementSerializerContext.ComponentStack.Push(top2);    
+                        }
+                        
                         elementSerializerContext.DynamicStyles.ListOfClasses.AddRange(context.DynamicStyles.ListOfClasses);
 
                         return elementSerializerContext;
