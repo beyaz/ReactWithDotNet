@@ -8,6 +8,8 @@ namespace ReactWithDotNet.UIDesigner;
 
 public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
 {
+    public static readonly ReactContextKey<bool> IsAttached = new(nameof(ReactWithDotNetDesigner) + "." + nameof(IsAttached));
+    
     protected override Task constructor()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
