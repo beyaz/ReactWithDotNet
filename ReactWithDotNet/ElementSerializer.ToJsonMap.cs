@@ -242,7 +242,11 @@ partial class ElementSerializer
 
                 }
 
-                if (context.ComponentStack.TryPeek(out var top))
+                if (context.ComponentStack.Count == 0)
+                {
+                    context.ComponentStack.Push(reactStatefulComponent);
+                }
+                else if (context.ComponentStack.TryPeek(out var top))
                 {
                     if (!ReferenceEquals(top, reactStatefulComponent))
                     {
