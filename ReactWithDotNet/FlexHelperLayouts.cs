@@ -104,7 +104,7 @@ partial class Mixin
     ///     <br/>
     ///     flexDirection  = "column"
     /// </summary>
-    public static readonly StyleModifier DisplayFlexColumn = CreateStyleModifier(style =>
+    public static StyleModifier DisplayFlexColumn => CreateStyleModifier(style =>
     {
         style.display       = "flex";
         style.flexDirection = "column";
@@ -114,7 +114,7 @@ partial class Mixin
     ///     <br>display = "flex"</br>
     ///     <br>flexDirection  = "row"</br>
     /// </summary>
-    public static readonly StyleModifier DisplayFlexRow= CreateStyleModifier(style =>
+    public static StyleModifier DisplayFlexRow=> CreateStyleModifier(style =>
     {
         style.display        = "flex";
         style.flexDirection  = "row";
@@ -127,7 +127,7 @@ partial class Mixin
     ///     <br>justifyContent = "center"</br>
     ///     <br>alignItems     = "center"</br>
     /// </summary>
-    public static readonly StyleModifier DisplayFlexRowCentered = CreateStyleModifier(style =>
+    public static StyleModifier DisplayFlexRowCentered => CreateStyleModifier(style =>
     {
         style.display        = "flex";
         style.flexDirection  = "row";
