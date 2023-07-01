@@ -71,44 +71,10 @@ partial class Mixin
     public static StyleModifier FontWeightSemiBold => FontWeight600;
 
     /// <summary>
-    ///     style.fontFamily = fontFamily
+    ///     style.letterSpacing = normal
     /// </summary>
-    public static StyleModifier FontFamily(string fontFamily) => new(style => style.fontFamily = fontFamily);
-
-    public static StyleModifier FontSize(string fontSize) => new(style => style.fontSize = fontSize);
-
-    public static StyleModifier FontSize(double fontSizePx) => FontSize(fontSizePx.AsPixel());
-
-    public static StyleModifier FontSize(CssUnit cssUnit) => FontSize(cssUnit.ToString());
-
-    public static StyleModifier FontStyle(string fontStyle) => new(style => style.fontStyle = fontStyle);
-
-    public static StyleModifier FontWeight(string fontWeight) => new(style => style.fontWeight = fontWeight);
-
-    /// <summary>
-    /// <b>-webkit-font-smoothing</b> = <paramref name="value"/>
-    /// </summary>
-    public static StyleModifier WebkitFontSmoothing(string value) 
-        => new(style => style.webkitFontSmoothing = value);
-
-
-    /// <summary>
-    /// <b>-webkit-font-smoothing</b> = grayscale
-    /// </summary>
-    public static StyleModifier WebkitFontSmoothingAntialiased => WebkitFontSmoothing("antialiased");
-
-    /// <summary>
-    /// <b>-moz-osx-font-smoothing</b> = <paramref name="value"/>
-    /// </summary>
-    public static StyleModifier MozOsxFontSmoothing(string value)
-        => new(style => style.mozOsxFontSmoothing = value);
-
-
-    /// <summary>
-    /// <b>-moz-osx-font-smoothing</b> = grayscale
-    /// </summary>
-    public static StyleModifier MozOsxFontSmoothingGrayScale => MozOsxFontSmoothing("grayscale");
-
+    public static StyleModifier LetterSpacingNormal
+        => new(style => style.letterSpacing = "normal");
 
     public static StyleModifier LineHeight10 => LineHeight(10);
     public static StyleModifier LineHeight11 => LineHeight(11);
@@ -126,7 +92,6 @@ partial class Mixin
     public static StyleModifier LineHeight23 => LineHeight(23);
     public static StyleModifier LineHeight24 => LineHeight(24);
     public static StyleModifier LineHeight25 => LineHeight(25);
-
     public static StyleModifier LineHeight26 => LineHeight(26);
     public static StyleModifier LineHeight27 => LineHeight(27);
     public static StyleModifier LineHeight28 => LineHeight(28);
@@ -146,21 +111,84 @@ partial class Mixin
     public static StyleModifier LineHeight9 => LineHeight(9);
 
     /// <summary>
-    ///     style.letterSpacing = <paramref name="letterSpacingAsPixel" /> + 'px'
+    ///     <b>-moz-osx-font-smoothing</b> = grayscale
     /// </summary>
-    public static StyleModifier LetterSpacing(double letterSpacingAsPixel) 
-        => new(style => style.letterSpacing = letterSpacingAsPixel.AsPixel());
-
+    public static StyleModifier MozOsxFontSmoothingGrayScale => MozOsxFontSmoothing("grayscale");
 
     /// <summary>
-    ///     style.letterSpacing = normal
+    ///     <b>-webkit-font-smoothing</b> = grayscale
     /// </summary>
-    public static StyleModifier LetterSpacingNormal
-        => new(style => style.letterSpacing = "normal");
+    public static StyleModifier WebkitFontSmoothingAntialiased => WebkitFontSmoothing("antialiased");
 
-    public static StyleModifier LineHeight(string lineHeight) => new(style => style.lineHeight = lineHeight);
-    public static StyleModifier LineHeight(double lineHeightPx) => LineHeight(lineHeightPx.AsPixel());
+    /// <summary>
+    ///     style.fontFamily = fontFamily
+    /// </summary>
+    public static StyleModifier FontFamily(string fontFamily)
+    {
+        return new StyleModifier(style => style.fontFamily = fontFamily);
+    }
 
+    public static StyleModifier FontSize(string fontSize)
+    {
+        return new StyleModifier(style => style.fontSize = fontSize);
+    }
 
-    public static StyleModifier LineHeight(CssUnit cssUnit) => LineHeight(cssUnit.ToString());
+    public static StyleModifier FontSize(double fontSizePx)
+    {
+        return FontSize(fontSizePx.AsPixel());
+    }
+
+    public static StyleModifier FontSize(CssUnit cssUnit)
+    {
+        return FontSize(cssUnit.ToString());
+    }
+
+    public static StyleModifier FontStyle(string fontStyle)
+    {
+        return new StyleModifier(style => style.fontStyle = fontStyle);
+    }
+
+    public static StyleModifier FontWeight(string fontWeight)
+    {
+        return new StyleModifier(style => style.fontWeight = fontWeight);
+    }
+
+    /// <summary>
+    ///     style.letterSpacing = <paramref name="letterSpacingAsPixel" /> + 'px'
+    /// </summary>
+    public static StyleModifier LetterSpacing(double letterSpacingAsPixel)
+    {
+        return new StyleModifier(style => style.letterSpacing = letterSpacingAsPixel.AsPixel());
+    }
+
+    public static StyleModifier LineHeight(string lineHeight)
+    {
+        return new StyleModifier(style => style.lineHeight = lineHeight);
+    }
+
+    public static StyleModifier LineHeight(double lineHeightPx)
+    {
+        return LineHeight(lineHeightPx.AsPixel());
+    }
+
+    public static StyleModifier LineHeight(CssUnit cssUnit)
+    {
+        return LineHeight(cssUnit.ToString());
+    }
+
+    /// <summary>
+    ///     <b>-moz-osx-font-smoothing</b> = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MozOsxFontSmoothing(string value)
+    {
+        return new StyleModifier(style => style.mozOsxFontSmoothing = value);
+    }
+
+    /// <summary>
+    ///     <b>-webkit-font-smoothing</b> = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFontSmoothing(string value)
+    {
+        return new StyleModifier(style => style.webkitFontSmoothing = value);
+    }
 }
