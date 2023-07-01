@@ -314,12 +314,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         if (canShowInstanceEditor())
         {
-            initializeInstanceJson();
+            IgnoreException(initializeInstanceJson);
         }
 
         if (canShowParametersEditor())
         {
-            initializeParametersJson();
+            IgnoreException(initializeParametersJson);
         }
 
         SaveState();

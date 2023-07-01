@@ -38,4 +38,16 @@ static class Extensions
     }
 
     public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
+
+    public static void IgnoreException(Action action)
+    {
+        try
+        {
+            action();
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
+    }
 }
