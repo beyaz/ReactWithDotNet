@@ -120,6 +120,8 @@ partial class Mixin
     public static StyleModifier LineHeight40 => LineHeight(40);
 
     public static StyleModifier LineHeight9 => LineHeight(9);
+    
+    public static StyleModifier LineHeightNormal => LineHeight("normal");
 
     /// <summary>
     ///     <b>-moz-osx-font-smoothing</b> = grayscale
