@@ -23,6 +23,17 @@ partial class Mixin
     public static StyleModifier FontSize28 => FontSize(28);
     public static StyleModifier FontSize29 => FontSize(29);
     public static StyleModifier FontSize30 => FontSize(30);
+    public static StyleModifier FontSize31 => FontSize(30);
+    public static StyleModifier FontSize32 => FontSize(30);
+    public static StyleModifier FontSize33 => FontSize(30);
+    public static StyleModifier FontSize34 => FontSize(30);
+    public static StyleModifier FontSize35 => FontSize(30);
+    public static StyleModifier FontSize36 => FontSize(30);
+    public static StyleModifier FontSize37 => FontSize(30);
+    public static StyleModifier FontSize38 => FontSize(30);
+    public static StyleModifier FontSize39 => FontSize(30);
+    public static StyleModifier FontSize40 => FontSize(30);
+
     public static StyleModifier FontSize9 => FontSize(9);
 
     /// <summary>
