@@ -72,14 +72,29 @@ partial class Mixin
     
     
     /// <summary>
+    ///     max-width: 767px
+    /// </summary>
+    public static StyleModifier WhenMediaSizeIsMobile(Style styleForOverride)
+        => MediaQuery("(max-width: 767px)", styleForOverride);
+
+    /// <summary>
+    ///     max-width: 767px
+    /// </summary>
+    public static StyleModifier WhenMediaSizeIsMobile(params StyleModifier[] styleModifiers)
+        => WhenMediaSizeIsMobile(new Style(styleModifiers));
+    
+    
+    
+    
+    /// <summary>
     ///     min-width: 768px
     /// </summary>
-    public static StyleModifier MediaQueryOnNotMobile(Style styleForOverride)
+    public static StyleModifier WhenMediaSizeIsNotMobile(Style styleForOverride)
         => MediaQuery("(min-width: 768px)", styleForOverride);
     
     /// <summary>
     ///     min-width: 768px
     /// </summary>
-    public static StyleModifier MediaQueryOnNotMobile(params StyleModifier[] styleModifiers)
-        => MediaQueryOnNotMobile(new Style(styleModifiers));
+    public static StyleModifier WhenMediaSizeIsNotMobile(params StyleModifier[] styleModifiers)
+        => WhenMediaSizeIsNotMobile(new Style(styleModifiers));
 }
