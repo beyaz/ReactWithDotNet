@@ -28,7 +28,7 @@ public abstract class ReactComponentBase : Element
 
     [System.Text.Json.Serialization.JsonIgnore]
     [JsonIgnore]
-    protected internal Client Client { get; internal set; } = new();
+    public Client Client { get; internal set; } = new();
 
     [System.Text.Json.Serialization.JsonIgnore]
     [JsonIgnore]
@@ -36,7 +36,7 @@ public abstract class ReactComponentBase : Element
 
     [System.Text.Json.Serialization.JsonIgnore]
     [JsonIgnore]
-    protected internal ReactContext Context { get; internal set; }
+    public ReactContext Context { get; internal set; }
 
     public static ReactComponentBase operator +(ReactComponentBase component, Style style)
     {
