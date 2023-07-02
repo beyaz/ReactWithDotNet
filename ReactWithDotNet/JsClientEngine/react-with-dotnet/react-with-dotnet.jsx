@@ -1695,7 +1695,8 @@ function InvokeJsFunctionInPath(callerReactComponent, jsFunctionPath, jsFunction
 }
 
 const ExternalJsObjectMap = {
-    'React.Fragment': React.Fragment
+    'React.Fragment': React.Fragment,
+    'window.eval': window.eval
 };
 
 /**
