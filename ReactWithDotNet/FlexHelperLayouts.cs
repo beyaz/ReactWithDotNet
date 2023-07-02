@@ -97,6 +97,44 @@ public sealed class FlexRowCentered : HtmlElement
    
 }
 
+/// <summary>
+///     <br>display = "flex"</br>
+///     <br>flexDirection  = "column"</br>
+///     <br>justifyContent = "center"</br>
+///     <br>alignItems     = "center"</br>
+/// </summary>
+public sealed class FlexColumnCentered : HtmlElement
+{
+    /// <summary>
+    ///     <br>display = "flex"</br>
+    ///     <br>flexDirection  = "column"</br>
+    ///     <br>justifyContent = "center"</br>
+    ///     <br>alignItems     = "center"</br>
+    /// </summary>
+    public FlexColumnCentered()
+    {
+        style.display        = "flex";
+        style.flexDirection  = "column";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+    }
+
+    /// <summary>
+    ///     <br>display = "flex"</br>
+    ///     <br>flexDirection  = "column"</br>
+    ///     <br>justifyContent = "center"</br>
+    ///     <br>alignItems     = "center"</br>
+    /// </summary>
+    public FlexColumnCentered(params IModifier[] modifiers) : this()
+    {
+        this.Apply(modifiers);
+    }
+
+    public override string Type => nameof(div);
+
+   
+}
+
 partial class Mixin
 {
     /// <summary>
