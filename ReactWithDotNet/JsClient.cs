@@ -8,6 +8,11 @@ partial class Mixin
     {
         client.CallJsFunction(Core + nameof(CopyToClipboard), text);
     }
+    
+    public static void RunJavascript(this Client client, string javascriptCodeWillBeExecuteInClient)
+    {
+        client.CallJsFunction(Core + nameof(RunJavascript), javascriptCodeWillBeExecuteInClient);
+    }
 
     public static void DispatchEvent(this Client client, string eventName, params object[] eventArguments)
     {

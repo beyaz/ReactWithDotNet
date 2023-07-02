@@ -1695,8 +1695,7 @@ function InvokeJsFunctionInPath(callerReactComponent, jsFunctionPath, jsFunction
 }
 
 const ExternalJsObjectMap = {
-    'React.Fragment': React.Fragment,
-    'window.eval': window.eval
+    'React.Fragment': React.Fragment
 };
 
 /**
@@ -1810,6 +1809,11 @@ RegisterCoreFunction('CopyToClipboard', function (text)
             document.body.removeChild(textarea);
         }
     }
+});
+
+RegisterCoreFunction('RunJavascript', (javascriptCode) => {
+
+    window.eval(javascriptCode)
 });
 
 RegisterCoreFunction('ReplaceNullWhenEmpty', function(value)
