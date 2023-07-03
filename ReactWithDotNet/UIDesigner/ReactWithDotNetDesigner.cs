@@ -130,8 +130,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 MethodFilter              = state.MethodFilter,
                 SelectedMethodTreeNodeKey = state.SelectedMethodTreeNodeKey,
                 SelectionChanged          = OnElementSelected,
-                AssemblyFilePath          = state.SelectedAssemblyFilePath,
-                Width                     = width
+                AssemblyFilePath          = state.SelectedAssemblyFilePath
             },
 
             Space(5),

@@ -19,8 +19,6 @@ class MetadataNode : TreeNode
 
 class MethodSelectionView : ReactComponent
 {
-    public int Width { get; set; }
-    
     public string AssemblyFilePath { get; set; }
 
     public string SelectedMethodTreeNodeKey { get; set; }
