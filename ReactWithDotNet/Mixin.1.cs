@@ -330,6 +330,7 @@ public static partial class Mixin
 
     public static StyleModifier BottomRight(string bottomAndRight) => Bottom(bottomAndRight) + Right(bottomAndRight);
     public static StyleModifier BottomRight(double bottomAndRight) => Bottom(bottomAndRight) + Right(bottomAndRight);
+    public static StyleModifier TopRight(double topAndRight) => Top(topAndRight) + Right(topAndRight);
 
    
 

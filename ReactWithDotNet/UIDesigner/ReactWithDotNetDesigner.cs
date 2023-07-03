@@ -198,8 +198,20 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         
         return new FlexRow(WidthHeightMaximized, PrimaryBackground)
         {
-            new div(BorderRight("1px dotted #d9d9d9"), Width(400))
+            new div(BorderRight("1px dotted #d9d9d9"), Width(400), PositionRelative)
             {
+                new div
+                { 
+                    "←",
+                    PositionAbsolute, 
+                    TopRight(0), 
+                    FontSize14, 
+                    FontWeight500,
+                    Color("#c5d7e8"),
+                    CursorPointer,
+                    Hover(FontSize17, Color("#9090f2"))
+                    
+                },
                 propertyPanel
             },
             new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7))
