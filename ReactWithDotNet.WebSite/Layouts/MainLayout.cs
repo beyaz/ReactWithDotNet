@@ -42,7 +42,7 @@ class MainLayout : ReactPureComponent
 
                 new link { href = "https://fonts.googleapis.com/icon?family=Material+Icons", rel = "stylesheet" },
             },
-            new body(Margin(0))
+            new body(Margin(0),Height100vh)
             {
                 new div(Id("app"), WidthHeightMaximized)
                 {
