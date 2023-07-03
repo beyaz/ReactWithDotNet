@@ -141,7 +141,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 {
                     createLabel("Media Size")
                 },
-                new FlexRow(JustifyContentSpaceAround, FlexWrap)
+                new FlexRow(JustifyContentSpaceAround)
                 {
                     MediaSizeButton(320),
                     MediaSizeButton(480),
