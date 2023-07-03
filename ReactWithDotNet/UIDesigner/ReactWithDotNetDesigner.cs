@@ -42,14 +42,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 {
                     highlightActiveLine       = false,
                     highlightActiveLineGutter = false,
-                },
-                style =
-                {
-                    BorderRadius(3),
-                    Border("1px solid #d9d9d9"),
-                    FontSize11,
-                    MaxWidth(width),
-                    HeightMaximized
                 }
             };
         }
