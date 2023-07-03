@@ -21,8 +21,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
     protected override Element render()
     {
-        const int width = 450;
-
         Element createJsonEditor()
         {
             Expression<Func<string>> valueBind = () => state.JsonTextForDotNetMethodParameters;
@@ -198,9 +196,10 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { Border("none"), WidthMaximized, HeightMaximized } };
         }
 
-        return new FlexRow(WidthHeightMaximized,PrimaryBackground)
+        
+        return new FlexRow(WidthHeightMaximized, PrimaryBackground)
         {
-            new div(BorderRight("1px dotted #d9d9d9"), Width(width))
+            new div(BorderRight("1px dotted #d9d9d9"), Width(400))
             {
                 propertyPanel
             },
