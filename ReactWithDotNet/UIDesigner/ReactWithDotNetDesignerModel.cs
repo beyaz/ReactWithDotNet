@@ -22,5 +22,7 @@ public class ReactWithDotNetDesignerModel
     public string SelectedMethodTreeNodeKey { get; set; }
 
     public TypeReference SelectedType { get; set; }
+    
+    public bool PropertyPanelIsClosed { get; set; }
 }
 

@@ -18,8 +18,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         return Task.CompletedTask;
     }
-
-    public bool PropertyPanelIsClosed { get; set; }
     
     protected override Element render()
     {
@@ -204,8 +202,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             {
                 new div
                 { 
-                    (PropertyPanelIsClosed ? "→" : "←"),
-                    OnClick(PropertyPanelIsClosed ? OpenPropertyPanel: ClosePropertyPanel),
+                    (state.PropertyPanelIsClosed ? "→" : "←"),
+                    OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel: ClosePropertyPanel),
                     PositionAbsolute, 
                     TopRight(0), 
                     FontSize14, 
@@ -215,8 +213,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     Hover(FontSize17, Color("#9090f2"))
                     
                 },
-                When(PropertyPanelIsClosed == false, propertyPanel),
-                When(PropertyPanelIsClosed, Width(15))
+                When(state.PropertyPanelIsClosed == false, propertyPanel),
+                When(state.PropertyPanelIsClosed, Width(15))
             },
             new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7))
             {
@@ -227,11 +225,13 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
     void ClosePropertyPanel(MouseEvent _)
     {
-        PropertyPanelIsClosed = true;
+        state.PropertyPanelIsClosed = true;
+        SaveState();
     }
     void OpenPropertyPanel(MouseEvent _)
     {
-        PropertyPanelIsClosed = false;
+        state.PropertyPanelIsClosed = false;
+        SaveState();
     }
     
     bool canShowInstanceEditor()
