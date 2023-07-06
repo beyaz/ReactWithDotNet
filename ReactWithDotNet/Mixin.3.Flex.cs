@@ -14,6 +14,7 @@ partial class Mixin
     public static StyleModifier AlignItemsStretch => new(style => style.alignItems = "stretch");
 
     #region AlignContent
+
     /// <summary>
     ///     <para>style.alignContent = "center"</para>
     /// </summary>
@@ -43,16 +44,19 @@ partial class Mixin
     ///     <para>style.alignContent = "space-between"</para>
     /// </summary>
     public static StyleModifier AlignContentSpaceBetween => new(style => style.alignContent = "space-between");
+
     #endregion
 
-
     #region AlignSelf
+
     /// <summary>
-    ///     <para>style.alignSelf = <paramref name="value"/></para>
+    ///     <para>style.alignSelf = <paramref name="value" /></para>
     /// </summary>
-    public static StyleModifier AlignSelf(string value) 
-        => new(style => style.alignSelf = value);
-    
+    public static StyleModifier AlignSelf(string value)
+    {
+        return new StyleModifier(style => style.alignSelf = value);
+    }
+
     /// <summary>
     ///     <para>style.alignSelf = "auto"</para>
     /// </summary>
@@ -93,8 +97,5 @@ partial class Mixin
     /// </summary>
     public static StyleModifier AlignSelfInherit => AlignSelf("inherit");
 
-
-    
     #endregion
-    
 }
