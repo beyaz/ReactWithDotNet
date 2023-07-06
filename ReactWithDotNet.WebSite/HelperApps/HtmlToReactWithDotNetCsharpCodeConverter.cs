@@ -182,7 +182,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         
         if (value.EndsWith("px"))
         {
-            if ("LineHeight FontSize".IndexOf(CamelCase(name), StringComparison.OrdinalIgnoreCase) >= 0)
+            if ("LineHeight FontSize".Split(' ').Any(x=> x == CamelCase(name) ))
             {
                 if (int.TryParse(value.RemoveFromEnd("px"), out var valueAsNumber) && valueAsNumber <= 40)
                 {
@@ -194,9 +194,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return $"{CamelCase(name)}({value.RemoveFromEnd("px")})";
         }
         
-        if (value.EndsWith("%") || value.StartsWith("#") || value.Contains(' '))
+        if (value.EndsWith("%") || value.StartsWith("#") || value.Contains(' ') || value.Contains('/'))
         {
-            if ("Width Height".IndexOf(CamelCase(name), StringComparison.OrdinalIgnoreCase) >= 0)
+            if ("Width Height".Split(' ').Any(x=> x == CamelCase(name) ))
             {
                 if (int.TryParse(value.RemoveFromEnd("%"), out var valueAsNumber) && valueAsNumber == 100)
                 {
@@ -211,7 +211,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         
         if (decimal.TryParse(value, out var valueAsNumeric))
         {
-            if ("FontWeight LineHeight".IndexOf(CamelCase(name), StringComparison.OrdinalIgnoreCase) >= 0)
+            if ("FontWeight LineHeight".Split(' ').Any(x=> x == CamelCase(name) ))
             {
                 return $"{CamelCase(name)}{CamelCase(value)}";
             }
@@ -220,6 +220,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
         
         return $"{CamelCase(name)}{CamelCase(value)}";
+        
     }
     
     private static Dictionary<string,string> ToMap(this HtmlAttributeCollection htmlAttributes)
