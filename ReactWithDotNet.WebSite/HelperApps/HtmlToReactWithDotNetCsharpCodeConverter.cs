@@ -342,6 +342,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return $"Flex({string.Join(", ", value.Split(' '))})";
         }
+        
+       
+        
+        
 
         if (value.EndsWith("px"))
         {
@@ -356,7 +360,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return $"{CamelCase(name)}({value.RemoveFromEnd("px")})";
         }
 
-        if (value.EndsWith("%") || value.StartsWith("#") || value.Contains(' ') || value.Contains('/'))
+        if (value.EndsWith("%") || value.StartsWith("#") || value.Contains(' ') || value.Contains('/') || name == "background")
         {
             if ("Width Height".Split(' ').Any(x => x == CamelCase(name)))
             {
