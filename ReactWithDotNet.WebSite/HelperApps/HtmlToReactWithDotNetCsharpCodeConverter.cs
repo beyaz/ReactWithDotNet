@@ -6,6 +6,20 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 
 static class HtmlToReactWithDotNetCsharpCodeConverter
 {
+    public static string HtmlToCSharp(string htmlRootNode)
+    {
+        if (string.IsNullOrWhiteSpace(htmlRootNode))
+        {
+            return null;
+        }
+
+        var document = new HtmlDocument();
+
+        document.LoadHtml(htmlRootNode.Trim());
+
+        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild));
+    }
+
     /// <summary>
     ///     Removes value from end of str
     /// </summary>
@@ -26,19 +40,30 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         return data;
     }
-    
-    public static string HtmlToCSharp(string htmlRootNode)
+
+    static string CamelCase(string str)
     {
-        if (string.IsNullOrWhiteSpace(htmlRootNode))
+        if (str == null)
         {
             return null;
         }
 
-        var document = new HtmlDocument();
+        if (str.IndexOf('-') > 0)
+        {
+            return string.Join(string.Empty, str.Split("-").Select(CamelCase));
+        }
 
-        document.LoadHtml(htmlRootNode.Trim());
+        if (str == "lowercase")
+        {
+            return "LowerCase";
+        }
 
-        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild));
+        if (str == "uppercase")
+        {
+            return "UpperCase";
+        }
+
+        return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
     }
 
     static string ConvertToCSharpString(string value)
@@ -104,28 +129,151 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return sb.ToString();
     }
 
-    static string CamelCase(string str)
+    static List<string> ToCSharpCode(HtmlNode htmlNode)
     {
-        if (str == null)
+        var htmlNodeName = htmlNode.OriginalName;
+        if (htmlNodeName == "clippath")
         {
-            return null;
+            htmlNodeName = "clipPath";
         }
 
-        if (str.IndexOf('-') > 0)
+        if (htmlNodeName == "#text")
         {
-            return string.Join(string.Empty, str.Split("-").Select(CamelCase));
+            if (string.IsNullOrWhiteSpace(htmlNode.InnerText))
+            {
+                return Enumerable.Empty<string>().ToList();
+            }
+
+            if (htmlNode.InnerText == "&nbsp;")
+            {
+                return new List<string> { "nbsp" };
+            }
+
+            return new List<string> { ConvertToCSharpString(htmlNode.InnerText) };
         }
-        
-        return char.ToUpper(str[0],new CultureInfo("en-US")) + str.Substring(1);
+
+        if (htmlNodeName == "br")
+        {
+            return new List<string> { "br" };
+        }
+
+        string constructorPart = null;
+
+        var attributeMap = htmlNode.Attributes.ToMap();
+
+        bool hasAttribute(string expectedAttributeName, string expectedValue)
+        {
+            if (attributeMap.ContainsKey(expectedAttributeName) && attributeMap[expectedAttributeName] == expectedValue)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        if (attributeMap.Count > 0)
+        {
+            if (htmlNodeName == "div")
+            {
+                if (hasAttribute("display", "flex"))
+                {
+                    if (hasAttribute("flexDirection", "column"))
+                    {
+                        htmlNodeName = "FlexColumn";
+                        attributeMap.Remove("display");
+                        attributeMap.Remove("flexDirection");
+
+                        if (hasAttribute("JustifyContent", "center") && hasAttribute("AlignItems", "center"))
+                        {
+                            htmlNodeName = "FlexColumnCenter";
+                            attributeMap.Remove("JustifyContent");
+                            attributeMap.Remove("AlignItems");
+                        }
+                    }
+                    else if (hasAttribute("flexDirection", "row"))
+                    {
+                        htmlNodeName = "FlexRow";
+                        attributeMap.Remove("display");
+                        attributeMap.Remove("flexDirection");
+
+                        if (hasAttribute("JustifyContent", "center") && hasAttribute("AlignItems", "center"))
+                        {
+                            htmlNodeName = "FlexRowCenter";
+                            attributeMap.Remove("JustifyContent");
+                            attributeMap.Remove("AlignItems");
+                        }
+                    }
+                }
+            }
+
+            constructorPart = $"({string.Join(", ", attributeMap.Select(p => ToModifier(p.Key, p.Value)))})";
+        }
+
+        if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
+        {
+            if (htmlNode.Attributes.Count == 0)
+            {
+                return new List<string> { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
+            }
+
+            return new List<string>
+            {
+                // one line
+                $"new {htmlNodeName}{constructorPart}",
+                "{",
+                ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
+                "}"
+            };
+        }
+
+        // check can be written in one line
+        {
+            if (htmlNode.ChildNodes.Count == 0)
+            {
+                return new List<string>
+                {
+                    // one line
+                    $"new {htmlNodeName}{constructorPart ?? "()"}"
+                };
+            }
+        }
+
+        // multi line
+        {
+            var lines = new List<string>
+            {
+                $"new {htmlNodeName}{constructorPart}",
+                "{"
+            };
+
+            foreach (var items in htmlNode.ChildNodes.Select(ToCSharpCode))
+            {
+                if (items.Count > 0)
+                {
+                    items[^1] += ",";
+                }
+
+                lines.AddRange(items);
+            }
+
+            if (lines[^1].EndsWith(",", StringComparison.OrdinalIgnoreCase))
+            {
+                lines[^1] = lines[^1].Remove(lines[^1].Length - 1);
+            }
+
+            lines.Add("}");
+
+            return lines;
+        }
     }
-    
+
     static IReadOnlyDictionary<string, string> ToDictionary(HtmlAttribute htmlAttribute)
     {
         if (htmlAttribute.Name == "style" && !string.IsNullOrWhiteSpace(htmlAttribute.Value))
         {
             return Style.ParseCss(htmlAttribute.Value).ToDictionary();
         }
-        
+
         var lines = new Dictionary<string, string>();
 
         var attributeName = htmlAttribute.OriginalName;
@@ -171,59 +319,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         lines.Add(attributeName, htmlAttribute.Value);
 
         return lines;
-
-        
-
-        
     }
 
-    static string ToModifier(string name, string value)
-    {
-        
-        if (value.EndsWith("px"))
-        {
-            if ("LineHeight FontSize".Split(' ').Any(x=> x == CamelCase(name) ))
-            {
-                if (int.TryParse(value.RemoveFromEnd("px"), out var valueAsNumber) && valueAsNumber <= 40)
-                {
-                    return $"{CamelCase(name)}{valueAsNumber}";
-                }
-                
-            }
-            
-            return $"{CamelCase(name)}({value.RemoveFromEnd("px")})";
-        }
-        
-        if (value.EndsWith("%") || value.StartsWith("#") || value.Contains(' ') || value.Contains('/'))
-        {
-            if ("Width Height".Split(' ').Any(x=> x == CamelCase(name) ))
-            {
-                if (int.TryParse(value.RemoveFromEnd("%"), out var valueAsNumber) && valueAsNumber == 100)
-                {
-                    return $"{CamelCase(name)}Maximized";
-                }
-                
-            }
-            return $"{CamelCase(name)}(\"{value}\")";
-        }
-
-        
-        
-        if (decimal.TryParse(value, out var valueAsNumeric))
-        {
-            if ("FontWeight LineHeight".Split(' ').Any(x=> x == CamelCase(name) ))
-            {
-                return $"{CamelCase(name)}{CamelCase(value)}";
-            }
-            
-            return $"{CamelCase(name)}({valueAsNumeric})";
-        }
-        
-        return $"{CamelCase(name)}{CamelCase(value)}";
-        
-    }
-    
-    private static Dictionary<string,string> ToMap(this HtmlAttributeCollection htmlAttributes)
+    static Dictionary<string, string> ToMap(this HtmlAttributeCollection htmlAttributes)
     {
         var map = new Dictionary<string, string>();
 
@@ -231,156 +329,56 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             foreach (var (key, value) in ToDictionary(htmlAttribute))
             {
-                map.Add(key,value);
+                map.Add(key, value);
             }
         }
 
         return map;
     }
 
-    private static List<string> ToCSharpCode(HtmlNode htmlNode)
+    static string ToModifier(string name, string value)
     {
-        var htmlNodeName = htmlNode.OriginalName;
-        if (htmlNodeName == "clippath")
+        if (name == "flex" && value.Split(' ').Length == 3)
         {
-            htmlNodeName = "clipPath";
+            return $"Flex({string.Join(", ", value.Split(' '))})";
         }
 
-        if (htmlNodeName == "#text")
+        if (value.EndsWith("px"))
         {
-            if (string.IsNullOrWhiteSpace(htmlNode.InnerText))
+            if ("LineHeight FontSize".Split(' ').Any(x => x == CamelCase(name)))
             {
-                return Enumerable.Empty<string>().ToList();
-            }
-
-            if (htmlNode.InnerText == "&nbsp;")
-            {
-                return new List<string> { "nbsp" };
-            }
-
-            return new List<string> { ConvertToCSharpString(htmlNode.InnerText) };
-        }
-
-        if (htmlNodeName == "br")
-        {
-            return new List<string> { "br" };
-        }
-
-        string constructorPart = null;
-            
-        var attributeMap = htmlNode.Attributes.ToMap();
-
-        bool hasAttribute(string expectedAttributeName, string expectedValue)
-        {
-            if (attributeMap.ContainsKey(expectedAttributeName) && attributeMap[expectedAttributeName] == expectedValue)
-            {
-                return true;
-            }
-
-            return false;
-        }
-        
-        if (attributeMap.Count > 0)
-        {
-            if (htmlNodeName=="div")
-            {
-                if (hasAttribute("display","flex"))
+                if (int.TryParse(value.RemoveFromEnd("px"), out var valueAsNumber) && valueAsNumber <= 40)
                 {
-                    if (hasAttribute("flexDirection", "column"))
-                    {
-                        htmlNodeName = "FlexColumn";
-                        attributeMap.Remove("display");
-                        attributeMap.Remove("flexDirection");
-                        
-                        if (hasAttribute("JustifyContent", "center") && hasAttribute("AlignItems", "center"))
-                        {
-                            htmlNodeName = "FlexColumnCenter";
-                            attributeMap.Remove("JustifyContent");
-                            attributeMap.Remove("AlignItems");
-                        }
-                    }
-                    else if (hasAttribute("flexDirection", "row"))
-                    {
-                        htmlNodeName = "FlexRow";
-                        attributeMap.Remove("display");
-                        attributeMap.Remove("flexDirection");
-                        
-                        if (hasAttribute("JustifyContent", "center") && hasAttribute("AlignItems", "center"))
-                        {
-                            htmlNodeName = "FlexRowCenter";
-                            attributeMap.Remove("JustifyContent");
-                            attributeMap.Remove("AlignItems");
-                        }
-                    }
+                    return $"{CamelCase(name)}{valueAsNumber}";
                 }
-
-
-            }
-            
-            constructorPart = $"({string.Join(", ", attributeMap.Select(p => ToModifier(p.Key, p.Value)))})";
-        }
-        
-        if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
-        {
-            if (htmlNode.Attributes.Count == 0)
-            {
-                return new List<string> { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
             }
 
-            return new List<string>
-            {
-                // one line
-                $"new {htmlNodeName}{constructorPart}",
-                "{",
-                ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
-                "}"
-            };
+            return $"{CamelCase(name)}({value.RemoveFromEnd("px")})";
         }
-        
-        
 
-        // check can be written in one line
+        if (value.EndsWith("%") || value.StartsWith("#") || value.Contains(' ') || value.Contains('/'))
         {
-            if (htmlNode.ChildNodes.Count == 0)
+            if ("Width Height".Split(' ').Any(x => x == CamelCase(name)))
             {
-                return new List<string>
+                if (int.TryParse(value.RemoveFromEnd("%"), out var valueAsNumber) && valueAsNumber == 100)
                 {
-                    // one line
-                    $"new {htmlNodeName}{constructorPart??"()"}"
-                };
-            }
-        }
-
-        // multi line
-        {
-            
-            var lines = new List<string>
-            {
-                $"new {htmlNodeName}{constructorPart}",
-                "{"
-            };
-
-            
-            foreach (var items in htmlNode.ChildNodes.Select(ToCSharpCode))
-            {
-                if (items.Count  > 0)
-                {
-                    items[^1] += ",";
+                    return $"{CamelCase(name)}Maximized";
                 }
-                
-                lines.AddRange(items);
             }
-            
-            if (lines[^1].EndsWith(",", StringComparison.OrdinalIgnoreCase))
-            {
-                lines[^1] = lines[^1].Remove(lines[^1].Length - 1);
-            }
-            
-            lines.Add("}");
-            
-            
 
-            return lines;
+            return $"{CamelCase(name)}(\"{value}\")";
         }
+
+        if (decimal.TryParse(value, out var valueAsNumeric))
+        {
+            if ("FontWeight LineHeight".Split(' ').Any(x => x == CamelCase(name)))
+            {
+                return $"{CamelCase(name)}{CamelCase(value)}";
+            }
+
+            return $"{CamelCase(name)}({valueAsNumeric})";
+        }
+
+        return $"{CamelCase(name)}{CamelCase(value)}";
     }
 }
