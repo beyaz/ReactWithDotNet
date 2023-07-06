@@ -44,4 +44,57 @@ partial class Mixin
     /// </summary>
     public static StyleModifier AlignContentSpaceBetween => new(style => style.alignContent = "space-between");
     #endregion
+
+
+    #region AlignSelf
+    /// <summary>
+    ///     <para>style.alignSelf = <paramref name="value"/></para>
+    /// </summary>
+    public static StyleModifier AlignSelf(string value) 
+        => new(style => style.alignSelf = value);
+    
+    /// <summary>
+    ///     <para>style.alignSelf = "auto"</para>
+    /// </summary>
+    public static StyleModifier AlignSelfaAuto => AlignSelf("auto");
+
+    /// <summary>
+    ///     <para>style.alignSelf = "stretch"</para>
+    /// </summary>
+    public static StyleModifier AlignSelfStretch => AlignSelf("stretch");
+
+    /// <summary>
+    ///     <para>style.alignSelf = "center"</para>
+    /// </summary>
+    public static StyleModifier AlignSelfCenter => AlignSelf("center");
+
+    /// <summary>
+    ///     <para>style.alignSelf = "flex-start"</para>
+    /// </summary>
+    public static StyleModifier AlignSelfFlexStart => AlignSelf("flex-start");
+
+    /// <summary>
+    ///     <para>style.alignSelf = "flex-end"</para>
+    /// </summary>
+    public static StyleModifier AlignSelfFlexEnd => AlignSelf("flex-end");
+
+    /// <summary>
+    ///     <para>style.alignSelf = "baseline"</para>
+    /// </summary>
+    public static StyleModifier AlignSelfBaseline => AlignSelf("baseline");
+
+    /// <summary>
+    ///     <para>style.alignSelf = "initial"</para>
+    /// </summary>
+    public static StyleModifier AlignSelfInitial => AlignSelf("initial");
+
+    /// <summary>
+    ///     <para>style.alignSelf = "inherit"</para>
+    /// </summary>
+    public static StyleModifier AlignSelfInherit => AlignSelf("inherit");
+
+
+    
+    #endregion
+    
 }

@@ -82,6 +82,11 @@ public static partial class Mixin
     ///     style.display = 'flex'
     /// </summary>
     public static StyleModifier DisplayFlex => new(style => style.display = "flex");
+    
+    /// <summary>
+    ///     style.display = 'inline-flex'
+    /// </summary>
+    public static StyleModifier DisplayInlineFlex => new(style => style.display = "inline-flex");
 
     /// <summary>
     ///     style.display = "none"
