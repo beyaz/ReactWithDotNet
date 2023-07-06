@@ -112,12 +112,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     class ToStringHandlerComponent : ReactPureComponent
     {
         Element _element;
-        
+
         public ToStringHandlerComponent(Element element)
         {
             _element = element;
         }
-        
 
         protected override Element render()
         {
