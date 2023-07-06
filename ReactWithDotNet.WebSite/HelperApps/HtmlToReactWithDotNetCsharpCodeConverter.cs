@@ -1,10 +1,32 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using HtmlAgilityPack;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
-class HtmlToReactWithDotNetCsharpCodeConverter
+static class HtmlToReactWithDotNetCsharpCodeConverter
 {
+    /// <summary>
+    ///     Removes value from end of str
+    /// </summary>
+    public static string RemoveFromEnd(this string data, string value)
+    {
+        return RemoveFromEnd(data, value, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    ///     Removes from end.
+    /// </summary>
+    public static string RemoveFromEnd(this string data, string value, StringComparison comparison)
+    {
+        if (data.EndsWith(value, comparison))
+        {
+            return data.Substring(0, data.Length - value.Length);
+        }
+
+        return data;
+    }
+    
     public static string HtmlToCSharp(string htmlRootNode)
     {
         if (string.IsNullOrWhiteSpace(htmlRootNode))
@@ -82,9 +104,29 @@ class HtmlToReactWithDotNetCsharpCodeConverter
         return sb.ToString();
     }
 
-    private static List<string> ToCSharpCode(HtmlAttribute htmlAttribute)
+    static string CamelCase(string str)
     {
-        var lines = new List<string>();
+        if (str == null)
+        {
+            return null;
+        }
+
+        if (str.IndexOf('-') > 0)
+        {
+            return string.Join(string.Empty, str.Split("-").Select(CamelCase));
+        }
+        
+        return char.ToUpper(str[0],new CultureInfo("en-US")) + str.Substring(1);
+    }
+    
+    static IReadOnlyDictionary<string, string> ToDictionary(HtmlAttribute htmlAttribute)
+    {
+        if (htmlAttribute.Name == "style" && !string.IsNullOrWhiteSpace(htmlAttribute.Value))
+        {
+            return Style.ParseCss(htmlAttribute.Value).ToDictionary();
+        }
+        
+        var lines = new Dictionary<string, string>();
 
         var attributeName = htmlAttribute.OriginalName;
         if (attributeName == "class")
@@ -126,74 +168,76 @@ class HtmlToReactWithDotNetCsharpCodeConverter
             attributeName = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
         }
 
-        if (attributeName == "color" || attributeName == "width")
-        {
-            if (htmlAttribute.OwnerNode.Name == "div")
-            {
-                return lines;
-            }
-        }
-
-        if (attributeName == "style" && !string.IsNullOrWhiteSpace(htmlAttribute.Value))
-        {
-            var map = Style.ParseCss(htmlAttribute.Value).ToDictionary();
-            if (map.Count > 0)
-            {
-                // as one line
-                if (map.Count <= 3)
-                {
-                    lines.Add($"{attributeName} = {{ {string.Join(", ", map.Select(x => $"{x.Key} = \"{x.Value}\""))} }}");
-                    return lines;
-                }
-
-                // as multi line
-                lines.AddRange(map.Select(x => $"{x.Key} = \"{x.Value}\""));
-
-                for (var i = 0; i < lines.Count - 1; i++)
-                {
-                    lines[i] += ",";
-                }
-
-                lines.Insert(0, $"{attributeName} =");
-                lines.Insert(1, "{");
-                lines.Add("}");
-
-                return lines;
-            }
-
-            return lines;
-        }
-
-        lines.Add($"{attributeName} = \"{htmlAttribute.Value}\"");
+        lines.Add(attributeName, htmlAttribute.Value);
 
         return lines;
+
+        
+
+        
     }
 
-    private static List<string> ToCSharpCode(HtmlAttributeCollection htmlAttributes)
+    static string ToModifier(string name, string value)
     {
-        var attributeLines = new List<string>();
-
-        if (htmlAttributes.Any())
+        
+        if (value.EndsWith("px"))
         {
-            attributeLines.AddRange(htmlAttributes.Select(ToCSharpCode).Aggregate((a, b) =>
+            if ("LineHeight FontSize".IndexOf(CamelCase(name), StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                a.AddRange(b);
-                return a;
-            }));
+                if (int.TryParse(value.RemoveFromEnd("px"), out var valueAsNumber) && valueAsNumber <= 40)
+                {
+                    return $"{CamelCase(name)}{valueAsNumber}";
+                }
+                
+            }
+            
+            return $"{CamelCase(name)}({value.RemoveFromEnd("px")})";
+        }
+        
+        if (value.EndsWith("%") || value.StartsWith("#") || value.Contains(' '))
+        {
+            if ("Width Height".IndexOf(CamelCase(name), StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                if (int.TryParse(value.RemoveFromEnd("%"), out var valueAsNumber) && valueAsNumber == 100)
+                {
+                    return $"{CamelCase(name)}Maximized";
+                }
+                
+            }
+            return $"{CamelCase(name)}(\"{value}\")";
         }
 
-        if (attributeLines.Count > 0 && attributeLines.Count <= 3)
+        
+        
+        if (decimal.TryParse(value, out var valueAsNumeric))
         {
-            return new List<string>
+            if ("FontWeight LineHeight".IndexOf(CamelCase(name), StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                string.Join(", ", attributeLines)
-            };
+                return $"{CamelCase(name)}{CamelCase(value)}";
+            }
+            
+            return $"{CamelCase(name)}({valueAsNumeric})";
+        }
+        
+        return $"{CamelCase(name)}{CamelCase(value)}";
+    }
+    
+    private static Dictionary<string,string> ToMap(this HtmlAttributeCollection htmlAttributes)
+    {
+        var map = new Dictionary<string, string>();
+
+        foreach (var htmlAttribute in htmlAttributes)
+        {
+            foreach (var (key, value) in ToDictionary(htmlAttribute))
+            {
+                map.Add(key,value);
+            }
         }
 
-        return attributeLines;
+        return map;
     }
 
-    private static IReadOnlyList<string> ToCSharpCode(HtmlNode htmlNode)
+    private static List<string> ToCSharpCode(HtmlNode htmlNode)
     {
         var htmlNodeName = htmlNode.OriginalName;
         if (htmlNodeName == "clippath")
@@ -221,6 +265,60 @@ class HtmlToReactWithDotNetCsharpCodeConverter
             return new List<string> { "br" };
         }
 
+        string constructorPart = null;
+            
+        var attributeMap = htmlNode.Attributes.ToMap();
+
+        bool hasAttribute(string expectedAttributeName, string expectedValue)
+        {
+            if (attributeMap.ContainsKey(expectedAttributeName) && attributeMap[expectedAttributeName] == expectedValue)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
+        if (attributeMap.Count > 0)
+        {
+            if (htmlNodeName=="div")
+            {
+                if (hasAttribute("display","flex"))
+                {
+                    if (hasAttribute("flexDirection", "column"))
+                    {
+                        htmlNodeName = "FlexColumn";
+                        attributeMap.Remove("display");
+                        attributeMap.Remove("flexDirection");
+                        
+                        if (hasAttribute("JustifyContent", "center") && hasAttribute("AlignItems", "center"))
+                        {
+                            htmlNodeName = "FlexColumnCenter";
+                            attributeMap.Remove("JustifyContent");
+                            attributeMap.Remove("AlignItems");
+                        }
+                    }
+                    else if (hasAttribute("flexDirection", "row"))
+                    {
+                        htmlNodeName = "FlexRow";
+                        attributeMap.Remove("display");
+                        attributeMap.Remove("flexDirection");
+                        
+                        if (hasAttribute("JustifyContent", "center") && hasAttribute("AlignItems", "center"))
+                        {
+                            htmlNodeName = "FlexRowCenter";
+                            attributeMap.Remove("JustifyContent");
+                            attributeMap.Remove("AlignItems");
+                        }
+                    }
+                }
+
+
+            }
+            
+            constructorPart = $"({string.Join(", ", attributeMap.Select(p => ToModifier(p.Key, p.Value)))})";
+        }
+        
         if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
         {
             if (htmlNode.Attributes.Count == 0)
@@ -228,132 +326,58 @@ class HtmlToReactWithDotNetCsharpCodeConverter
                 return new List<string> { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
             }
 
-            var attributeLines = ToCSharpCode(htmlNode.Attributes);
-
-            attributeLines.Insert(0, $"text = {ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText)}");
-
-            // one line
-            if (attributeLines.Count < 3)
+            return new List<string>
             {
-                return new List<string>
-                {
-                    // one line
-                    $"new {htmlNodeName} {{ {string.Join(", ", attributeLines)} }}"
-                };
-            }
-
-            // multi line
-            {
-                var lines = new List<string>
-                {
-                    $"new {htmlNodeName}",
-                    "{"
-                };
-                lines.AddRange(attributeLines);
-                lines.Add("}");
-
-                return lines;
-            }
+                // one line
+                $"new {htmlNodeName}{constructorPart}",
+                "{",
+                ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
+                "}"
+            };
         }
+        
+        
 
         // check can be written in one line
         {
             if (htmlNode.ChildNodes.Count == 0)
             {
-                var attributeLines = ToCSharpCode(htmlNode.Attributes);
-                if (attributeLines.Count > 0 && attributeLines.Count < 3)
+                return new List<string>
                 {
-                    return new List<string>
-                    {
-                        // one line
-                        $"new {htmlNodeName} {{ {string.Join(", ", attributeLines)} }}"
-                    };
-                }
-
-                if (attributeLines.Count == 0)
-                {
-                    return new List<string>
-                    {
-                        // one line
-                        $"new {htmlNodeName}()"
-                    };
-                }
+                    // one line
+                    $"new {htmlNodeName}{constructorPart??"()"}"
+                };
             }
         }
 
         // multi line
         {
+            
             var lines = new List<string>
             {
-                $"new {htmlNodeName}",
+                $"new {htmlNodeName}{constructorPart}",
                 "{"
             };
 
-            var attributes = ToCSharpCode(htmlNode.Attributes);
-            foreach (var attribute in attributes)
+            
+            foreach (var items in htmlNode.ChildNodes.Select(ToCSharpCode))
             {
-                if (attribute[^1] == '=' || attribute[^1] == '{' || attribute[^1] == ',')
+                if (items.Count  > 0)
                 {
-                    lines.Add(attribute);
-                    continue;
+                    items[^1] += ",";
                 }
-
-                lines.Add(attribute + ",");
+                
+                lines.AddRange(items);
             }
-
-            var children = new List<IReadOnlyList<string>>();
-
-            foreach (var child in htmlNode.ChildNodes)
-            {
-                children.Add(ToCSharpCode(child));
-            }
-
-            // remove empty childs
-            children.RemoveAll(x => x.Count == 0);
-
-            if (children.Count > 0)
-            {
-                var openChildren = attributes.Count > 0;
-
-                if (openChildren)
-                {
-                    lines.Add("children =");
-                    lines.Add("{");
-                }
-
-                if (htmlNode.InnerText.Contains('\n'))
-                {
-                    foreach (var child in children)
-                    {
-                        lines.AddRange(child);
-
-                        lines[^1] += ",";
-                    }
-
-                    // remove ,
-                    lines[^1] = lines[^1].Remove(lines[^1].Length - 1);
-                }
-                else
-                {
-                    lines.Add(children.Aggregate(new List<string>(), (list, child) =>
-                    {
-                        list.Add(string.Join(", ", child));
-                        return list;
-                    }, list => string.Join(", ", list)));
-                }
-
-                if (openChildren)
-                {
-                    lines.Add("}");
-                }
-            }
-
+            
             if (lines[^1].EndsWith(",", StringComparison.OrdinalIgnoreCase))
             {
                 lines[^1] = lines[^1].Remove(lines[^1].Length - 1);
             }
-
+            
             lines.Add("}");
+            
+            
 
             return lines;
         }
