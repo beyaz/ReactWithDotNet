@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text;
+using System.Threading.Tasks;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
@@ -59,7 +60,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         var csharpEditor = new CodeMirror
         {
-            extensions = { "java", "githubLight" },
+            extensions = { "CSharp", "githubLight" },
             value      = state.CSharpCode,
             basicSetup =
             {
@@ -86,6 +87,47 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         return new FlexColumn
         {
+            new style
+            {
+                
+                @"
+
+.cm-editor {
+  height: calc(100% - 10px);
+}
+.cm-theme-light {
+  height: calc(100% - 2px);
+  font-size: 12px;
+}
+
+.ͼ1.cm-editor.cm-focused {
+    outline: none;
+}
+
+/* left-side-key */
+.ͼ18{
+    color: #c0bcc8;
+    font-weight: bold;
+}
+
+
+/* string */
+.ͼ1b{
+    color: #f44336;
+    font-weight: bold;
+}
+/* number */
+.ͼ19 {
+    color: #141413;
+    font-weight: bold;
+}
+/* boolean */
+.ͼ1g {
+    color: #2c1aeb;
+    font-weight: bold;
+}
+"
+            },
             WidthHeightMaximized,
             Padding(10),
 
@@ -98,24 +140,52 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             },
             new FlexRow(WidthHeightMaximized, Height(400), BorderForPaper, BorderRadiusForPaper)
             {
-                new FreeScrollBar
+                new Splitter
                 {
-                    style =
+                    WidthHeightMaximized,
+                    Splitter.Modify(x=>x.gutterSize = 10),
+                    new SplitterPanel
                     {
-                        Height(400),
-                        WidthMaximized
+                        SplitterPanel.Modify(x=>x.size =20),
+                        new FreeScrollBar
+                        {
+                            style =
+                            {
+                                Height(400),
+                                WidthMaximized
+                            },
+                            children = { htmlEditor }
+                        }
+                        
                     },
-                    children = { htmlEditor }
-                },
-                new FreeScrollBar
-                {
-                    style =
+                    new SplitterPanel
                     {
-                        Height(400),
-                        WidthMaximized
+                        SplitterPanel.Modify(x=>x.size =20),
+                        
+                        new FreeScrollBar
+                        {
+                            Height(400),
+                            WidthMaximized,
+                            csharpEditor
+                        }
+                        
                     },
-                    children = { csharpEditor }
+                    
+                    new SplitterPanel
+                    {
+                        SplitterPanel.Modify(x=>x.size =60),
+                        
+                        new FreeScrollBar
+                        {
+                            Height(400),
+                            WidthMaximized,
+                            CreatePreview
+                        }
+                        
+                    }
                 }
+                
+                
             },
 
             statusMessageEditor
@@ -143,20 +213,53 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         try
         {
-            state.CSharpCode = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText);
+            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText);
 
-            if (state.EditCount > 1)
+            var sb = new StringBuilder();
+            sb.AppendLine("using ReactWithDotNet;");
+            sb.AppendLine("using static ReactWithDotNet.Mixin;");
+            sb.AppendLine();
+            sb.AppendLine("namespace Preview;");
+            sb.AppendLine("class SampleComponent: ReactComponent");
+            sb.AppendLine("{");
+            
+            sb.AppendLine("public static Element A(){ return new SampleComponent();}");
+            
+            sb.AppendLine("protected override Element render()");
+            sb.AppendLine("{");
+            sb.AppendLine("return ");
+
+            foreach (var line in renderBody.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
             {
-                Client.CopyToClipboard(state.CSharpCode);
-
-                state.StatusMessage = "Copied to clipboard.";
-                
-                Client.GotoMethod(700, ClearStatusMessage);
+                sb.AppendLine("    "+line);
             }
+            
+
+            sb.AppendLine(";");
+            
+            sb.AppendLine("}");
+            
+            
+            sb.AppendLine("}");
+
+
+            state.CSharpCode = sb.ToString();
+
+            
         }
         catch (Exception exception)
         {
-            state.StatusMessage = "Error occured: " + exception;
+            state.StatusMessage = "Error occured: " + exception.Message;
         }
+    }
+
+    Element CreatePreview()
+    {
+        if (state.CSharpCode?.Length  > 0)
+        {
+            return (ReactWithDotNet.ReactComponent)DynamicCode.Execute(state.CSharpCode, "Preview.SampleComponent", "A", new object[] { }).invocationOutput;
+        }
+
+        return null;
     }
 }
