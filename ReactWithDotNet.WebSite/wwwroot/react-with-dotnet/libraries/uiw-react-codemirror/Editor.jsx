@@ -8,6 +8,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
+import { cpp } from '@codemirror/lang-cpp';
 import { java } from '@codemirror/lang-java';
 import { githubLight} from '@uiw/codemirror-theme-github';
 
@@ -43,6 +44,11 @@ function calculateExtensions(/*string[]*/stringArray)
         if (name == "java")
         {
             return java();
+        }
+
+        if (name == "cpp")
+        {
+            return cpp();
         }
 
         if (name == "githubLight")
