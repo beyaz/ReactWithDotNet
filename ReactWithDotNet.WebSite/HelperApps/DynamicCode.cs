@@ -41,17 +41,6 @@ static class DynamicCode
         return LoadAndExecute(bytesOfAssembly, fullTypeName, staticMethodName, methodParameters);
     }
     
-    public static object Execute2(string sourceCode, string fullTypeName, string staticMethodName, object[] methodParameters)
-    {
-        var (bytesOfAssembly, compileErrors) = Compile(sourceCode);
-        if (compileErrors?.Count > 0)
-        {
-            //return (new Exception(string.Join(Environment.NewLine, compileErrors)), default,default);
-        }
-
-        return LoadAndExecute(bytesOfAssembly, fullTypeName, staticMethodName, methodParameters).invocationOutput;
-    }
-    
     public static (Exception error, object invocationOutput, AssemblyLoadContext assemblyLoadContext) LoadAndExecute(byte[] compiledAssembly, string fullTypeName, string staticMethodName, object[] methodParameters)
     {
         using (var asm = new MemoryStream(compiledAssembly))
