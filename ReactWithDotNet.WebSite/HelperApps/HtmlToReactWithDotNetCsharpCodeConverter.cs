@@ -386,3 +386,5 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return $"{CamelCase(name)}{CamelCase(value)}";
     }
 }
+
+
