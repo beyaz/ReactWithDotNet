@@ -43,5 +43,11 @@ public sealed class Splitter : ElementBase
     
     public Splitter(params Action<Splitter>[] modifiers) => modifiers.ApplyAll(Add);
     
+    public Splitter(StyleModifier styleModifier, params Action<Splitter>[] modifiers)
+    {
+        Add(styleModifier);
+        modifiers.ApplyAll(Add);
+    }
+    
     public void Add(Action<Splitter> modify) => modify?.Invoke(this);
 }

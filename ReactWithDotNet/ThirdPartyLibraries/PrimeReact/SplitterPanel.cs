@@ -31,5 +31,11 @@ public sealed class SplitterPanel : ElementBase
     
     public SplitterPanel(params Action<SplitterPanel>[] modifiers) => modifiers.ApplyAll(Add);
     
+    public SplitterPanel(StyleModifier styleModifier, params Action<SplitterPanel>[] modifiers)
+    {
+        Add(styleModifier);
+        modifiers.ApplyAll(Add);
+    }
+    
     public void Add(Action<SplitterPanel> modify) => modify?.Invoke(this);
 }

@@ -66,5 +66,11 @@ public partial class TabView
     
     public TabView(params Action<TabView>[] modifiers) => modifiers.ApplyAll(Add);
     
+    public TabView(StyleModifier styleModifier, params Action<TabView>[] modifiers)
+    {
+        Add(styleModifier);
+        modifiers.ApplyAll(Add);
+    }
+    
     public void Add(Action<TabView> modify) => modify?.Invoke(this);
 }

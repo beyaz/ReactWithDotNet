@@ -315,6 +315,12 @@ static class Exporter
             lines.Add(string.Empty);
             lines.Add($"public {input.ClassName}(params Action<{input.ClassName}>[] modifiers) => modifiers.ApplyAll(Add);");
             lines.Add(string.Empty);
+            lines.Add($"public {input.ClassName}(StyleModifier styleModifier, params Action<{input.ClassName}>[] modifiers)");
+            lines.Add("{");
+            lines.Add("Add(styleModifier);");
+            lines.Add("modifiers.ApplyAll(Add);");
+            lines.Add("}");
+            lines.Add(string.Empty);
             lines.Add($"public void Add(Action<{input.ClassName}> modify) => modify?.Invoke(this);");
         }
 
