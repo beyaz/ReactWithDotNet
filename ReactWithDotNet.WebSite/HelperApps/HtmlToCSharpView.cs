@@ -147,8 +147,12 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     
                     new SplitterPanel
                     {
-                        new FreeScrollBar(WidthHeightMaximized, BackgroundColor("#F0F3F6"))
+                        new FreeScrollBar(WidthHeightMaximized)
                         {
+                            // paper
+                            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+                            BackgroundSize("10px 10px"),
+                            
                             new FlexRowCentered(WidthHeightMaximized, Padding(15))
                             {
                                 CreatePreview
