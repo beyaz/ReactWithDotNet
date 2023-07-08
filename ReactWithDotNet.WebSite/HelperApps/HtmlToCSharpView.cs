@@ -53,17 +53,23 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         
     }
     
+    void HtmlText_OnEditFinished()
+    {
+        OnHtmlValueChanged(state.HtmlText);
+    }
+    
     protected override Element render()
     {
-        var htmlEditor = new CodeEditor
+        var htmlEditor = new Editor
         {
-            value    = state.HtmlText,
-            onChange = e=>OnHtmlValueChanged(e.target.value),
-            language = "html",
+            valueBind                = ()=>state.HtmlText,
+            valueBindDebounceHandler = HtmlText_OnEditFinished,
+            valueBindDebounceTimeout = 500,
+            highlight                = "html",
             style =
             {
-                OverflowYAuto,
-                HeightMaximized,
+                Background("yellow"),
+                BorderNone,
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
@@ -81,17 +87,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             highlight                = "clike",
             style =
             {
-                //WidthHeightMaximized,
                 BorderNone,
-                
-                
-
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
-                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
-                //OverflowScroll,
-                //WhiteSpacePre,
+                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace")
             }
         };
 
@@ -126,7 +126,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     {
                         new FreeScrollBar(WidthHeightMaximized)
                         {
-                            htmlEditor
+                            //htmlEditor
                         }
                         
                     },
