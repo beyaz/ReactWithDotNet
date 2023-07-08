@@ -7,6 +7,15 @@ namespace ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 /// </summary>
 public sealed class FreeScrollBar : ThirdPartyReactComponent
 {
+    public FreeScrollBar()
+    {
+        
+    }
+
+    public FreeScrollBar(params StyleModifier[] modifiers)
+    {
+        style.Apply(modifiers);
+    }
     /// <summary>
     /// You can pass fixed to decide if handler's position: fixed or static. If fixed equals true, then the handler will overlap the content inside the scroller.
     /// </summary>

@@ -37,35 +37,14 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
     protected override Element render()
     {
-        Element htmlEditor = new CodeMirror
-        {
-            extensions = { "html", "githubLight" },
-            onChange   = OnHtmlValueChanged,
-            value      = state.HtmlText,
-            basicSetup =
-            {
-                highlightActiveLine       = false,
-                highlightActiveLineGutter = false,
-            },
-            style =
-            {
-                HeightMaximized,
-                MinHeight(200),
-                BorderRadius(3),
-                Border("1px solid #d9d9d9"),
-                FontSize11,
-                FontFamily("Consolas"),
-                MaxWidth(500)
-            }
-        };
-        
-        htmlEditor = new CodeEditor
+        var htmlEditor = new CodeEditor
         {
             value    = state.HtmlText,
             onChange = e=>OnHtmlValueChanged(e.target.value),
             language = "html",
             style =
             {
+                HeightMaximized,
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
@@ -73,32 +52,13 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             }
         };
 
-        Element csharpEditor = new CodeMirror
-        {
-            extensions = { "javascript", "githubLight" },
-            value      = state.CSharpCode,
-            basicSetup =
-            {
-                highlightActiveLine       = false,
-                highlightActiveLineGutter = false,
-            },
-            style =
-            {
-                HeightMaximized,
-                MinHeight(200),
-                BorderRadius(3),
-                Border("1px solid #d9d9d9"),
-                FontSize11,
-                FontFamily("Consolas")
-            }
-        };
-
-        csharpEditor = new CodeEditor
+        var csharpEditor = new CodeEditor
         {
             value    = state.CSharpCode,
             language = "csharp",
             style =
             {
+                HeightMaximized,
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
@@ -115,58 +75,15 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         return new FlexColumn
         {
-            new style
-            {
-                
-                @"
-
-.cm-editor {
-  height: calc(100% - 10px);
-}
-.cm-theme-light {
-  height: calc(100% - 2px);
-  font-size: 12px;
-}
-
-.ͼ1.cm-editor.cm-focused {
-    outline: none;
-}
-
-/* left-side-key */
-.ͼ18{
-    color: #c0bcc8;
-    font-weight: bold;
-}
-
-
-/* string */
-.ͼ1b{
-    color: #f44336;
-    font-weight: bold;
-}
-/* number */
-.ͼ19 {
-    color: #141413;
-    font-weight: bold;
-}
-/* boolean */
-.ͼ1g {
-    color: #2c1aeb;
-    font-weight: bold;
-}
-"
-            },
             WidthHeightMaximized,
             Padding(10),
-
-            PrimeReactCssLibs,
 
             new div(FontSize23, Padding(10), TextAlignCenter)
             {
                 "Html to ReactWithDotNet",
                 (small)" ( paste any html text to left panel )"
             },
-            new FlexRow(WidthHeightMaximized, Height(400), BorderForPaper, BorderRadiusForPaper)
+            new FlexRow(WidthHeightMaximized, BorderForPaper, BorderRadiusForPaper)
             {
                 new Splitter
                 {
@@ -175,14 +92,9 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     new SplitterPanel
                     {
                         SplitterPanel.Modify(x=>x.size =20),
-                        new FreeScrollBar
+                        new FreeScrollBar(WidthHeightMaximized)
                         {
-                            style =
-                            {
-                                Height(400),
-                                WidthMaximized
-                            },
-                            children = { htmlEditor }
+                            htmlEditor
                         }
                         
                     },
@@ -192,8 +104,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                         
                         new FreeScrollBar
                         {
-                            Height(400),
-                            WidthMaximized,
+                            
+                            WidthHeightMaximized,
                             csharpEditor
                         }
                         
@@ -205,8 +117,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                         WidthMaximized,
                         new FreeScrollBar
                         {
-                            Height(400),
-                            WidthMaximized,
+                         
+                            WidthHeightMaximized,
                             CreatePreview
                         }
                         

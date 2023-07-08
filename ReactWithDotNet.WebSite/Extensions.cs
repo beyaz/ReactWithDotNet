@@ -16,7 +16,7 @@ static partial class Extensions
     public static StyleModifier DisplayNoneWhenMobile => MediaQueryOnMobile(DisplayNone);
     public static StyleModifier DisplayNoneWhenNotMobile => MediaQueryOnTabletOrDesktop(DisplayNone);
 
-    public static IEnumerable<Element> PrimeReactCssLibs => new[]
+    public static IEnumerable<Element> PrimeReactCssLibs => new[] // TODO: can be remove
     {
         new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/themes/saga-blue/theme.css" },
         new link { rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/primereact@8.2.0/resources/primereact.min.css" },
