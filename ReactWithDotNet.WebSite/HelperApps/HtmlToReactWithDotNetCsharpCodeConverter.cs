@@ -382,6 +382,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             return $"{CamelCase(name)}({valueAsNumeric})";
         }
+        
+        if ("Id ClassName".Split(' ').Any(x => x == CamelCase(name)))
+        {
+            return $"{CamelCase(name)}(\"{CamelCase(value)}\")";
+        }
 
         return $"{CamelCase(name)}{CamelCase(value)}";
     }

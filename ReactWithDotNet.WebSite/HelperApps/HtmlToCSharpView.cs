@@ -60,7 +60,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         var csharpEditor = new CodeMirror
         {
-            extensions = { "cpp", "githubLight" },
+            extensions = { "javascript", "githubLight" },
             value      = state.CSharpCode,
             basicSetup =
             {
@@ -223,7 +223,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             sb.AppendLine("class SampleComponent: ReactComponent");
             sb.AppendLine("{");
             
-            sb.AppendLine("public static Element A(){ return new SampleComponent();}");
+            sb.AppendLine("  public static Element A(){ return new SampleComponent();}");
             
             sb.AppendLine("protected override Element render()");
             sb.AppendLine("{");
