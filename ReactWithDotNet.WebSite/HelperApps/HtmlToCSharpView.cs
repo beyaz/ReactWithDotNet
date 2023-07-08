@@ -92,6 +92,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     
                     new SplitterPanel(_=>_.size = 20)
                     {
+                        x=>x.size = 20,
                         new FreeScrollBar(WidthHeightMaximized)
                         {
                             htmlEditor
