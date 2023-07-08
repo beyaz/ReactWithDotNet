@@ -168,6 +168,23 @@ partial class Mixin
     /// <summary>
     ///     display = "flex"
     ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public static StyleModifier DisplayFlexColumnCentered => CreateStyleModifier(style =>
+    {
+        style.display        = "flex";
+        style.flexDirection  = "column";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+    });
+
+    /// <summary>
+    ///     display = "flex"
+    ///     <br />
     ///     flexDirection  = "row"
     /// </summary>
     public static StyleModifier DisplayFlexRow => CreateStyleModifier(style =>
@@ -188,6 +205,62 @@ partial class Mixin
     public static StyleModifier DisplayFlexRowCentered => CreateStyleModifier(style =>
     {
         style.display        = "flex";
+        style.flexDirection  = "row";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+    });
+
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    /// </summary>
+    public static StyleModifier DisplayInlineFlexColumn => CreateStyleModifier(style =>
+    {
+        style.display       = "inline-flex";
+        style.flexDirection = "column";
+    });
+
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public static StyleModifier DisplayInlineFlexColumnCentered => CreateStyleModifier(style =>
+    {
+        style.display        = "inline-flex";
+        style.flexDirection  = "column";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+    });
+
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    /// </summary>
+    public static StyleModifier DisplayInlineFlexRow => CreateStyleModifier(style =>
+    {
+        style.display       = "inline-flex";
+        style.flexDirection = "row";
+    });
+
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public static StyleModifier DisplayInlineFlexRowCentered => CreateStyleModifier(style =>
+    {
+        style.display        = "inline-flex";
         style.flexDirection  = "row";
         style.justifyContent = "center";
         style.alignItems     = "center";
