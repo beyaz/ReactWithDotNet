@@ -41,9 +41,9 @@ public sealed class Splitter : ElementBase
     
     public static IModifier Modify(Action<Splitter> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
     
-    public Splitter(){}
+    public Splitter(){ }
     
-    public Splitter(params Action<Splitter>[] modifiers){  modifiers.ApplyAll(Add); }
+    public Splitter(params Action<Splitter>[] modifiers) => modifiers.ApplyAll(Add);
     
-    public void Add(Action<Splitter> modify){  modify?.Invoke(this); }
+    public void Add(Action<Splitter> modify) => modify?.Invoke(this);
 }

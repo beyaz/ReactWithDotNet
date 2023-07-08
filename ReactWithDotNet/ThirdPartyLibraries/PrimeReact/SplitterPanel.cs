@@ -29,9 +29,9 @@ public sealed class SplitterPanel : ElementBase
     
     public static IModifier Modify(Action<SplitterPanel> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
     
-    public SplitterPanel(){}
+    public SplitterPanel(){ }
     
-    public SplitterPanel(params Action<SplitterPanel>[] modifiers){  modifiers.ApplyAll(Add); }
+    public SplitterPanel(params Action<SplitterPanel>[] modifiers) => modifiers.ApplyAll(Add);
     
-    public void Add(Action<SplitterPanel> modify){  modify?.Invoke(this); }
+    public void Add(Action<SplitterPanel> modify) => modify?.Invoke(this);
 }
