@@ -44,12 +44,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     static void ApplyShortHands(Dictionary<string, string> attributeMap)
     {
         widthHeightMaxiimized();
-        
-        
+
         paddingLeftRight();
         paddingTopBottom();
         padding();
-        
+
         marginLeftRight();
         marginTopBottom();
         margin();
@@ -61,7 +60,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         displayFlexColumnCentered();
 
         displayFlexRowCentered();
-        
 
         void displayFlexColumnCentered()
         {
@@ -73,10 +71,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     {
                         if (attributeMap.TryGetValue("alignItems", out var alignItems))
                         {
-                            if (display == "flex" && 
+                            if (display == "flex" &&
                                 flexDirection == "column" &&
-                                justifyContent =="center"&&
-                                alignItems =="alignItems")
+                                justifyContent == "center" &&
+                                alignItems == "alignItems")
                             {
                                 attributeMap.Remove("flex");
                                 attributeMap.Remove("flexDirection");
@@ -86,11 +84,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                                 attributeMap.Add("DisplayFlexColumnCentered", null);
                                 return;
                             }
-                            
-                            if (display == "inline-flex" && 
+
+                            if (display == "inline-flex" &&
                                 flexDirection == "column" &&
-                                justifyContent =="center"&&
-                                alignItems =="alignItems")
+                                justifyContent == "center" &&
+                                alignItems == "alignItems")
                             {
                                 attributeMap.Remove("flex");
                                 attributeMap.Remove("flexDirection");
@@ -107,22 +105,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         void displayFlexRowCentered()
         {
-            string flexDirection = null;
-            if (attributeMap.ContainsKey("flexDirection"))
-            {
-                flexDirection = attributeMap["flexDirection"];
-            }
-            
+            var flexDirection = attributeMap.ContainsKey("flexDirection") ? attributeMap["flexDirection"] : null;
+
             if (attributeMap.TryGetValue("display", out var display))
             {
                 if (attributeMap.TryGetValue("justifyContent", out var justifyContent))
                 {
                     if (attributeMap.TryGetValue("alignItems", out var alignItems))
                     {
-                        if (display == "flex" && 
-                            ( flexDirection is null || flexDirection == "row") &&
-                            justifyContent =="center"&&
-                            alignItems =="alignItems")
+                        if (display == "flex" &&
+                            (flexDirection is null || flexDirection == "row") &&
+                            justifyContent == "center" &&
+                            alignItems == "alignItems")
                         {
                             attributeMap.Remove("flex");
                             attributeMap.Remove("flexDirection");
@@ -132,11 +126,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                             attributeMap.Add("DisplayFlexRowCentered", null);
                             return;
                         }
-                            
-                        if (display == "inline-flex" && 
-                            ( flexDirection is null || flexDirection == "row") &&
-                            justifyContent =="center"&&
-                            alignItems =="alignItems")
+
+                        if (display == "inline-flex" &&
+                            (flexDirection is null || flexDirection == "row") &&
+                            justifyContent == "center" &&
+                            alignItems == "alignItems")
                         {
                             attributeMap.Remove("flex");
                             attributeMap.Remove("flexDirection");
@@ -149,7 +143,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-        
+
         void widthHeightMaxiimized()
         {
             if (attributeMap.TryGetValue("width", out var width))
@@ -166,8 +160,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-        
-        
+
         void paddingLeftRight()
         {
             if (attributeMap.TryGetValue("paddingLeft", out var left))
@@ -181,11 +174,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                         attributeMap.Add("paddingLeftRight", left);
                     }
-
                 }
             }
         }
-        
+
         void paddingTopBottom()
         {
             if (attributeMap.TryGetValue("paddingTop", out var top) &&
@@ -200,7 +192,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-        
+
         void padding()
         {
             if (attributeMap.TryGetValue("paddingTopBottom", out var topBottom) &&
@@ -215,9 +207,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-        
-        
-        
+
         void marginLeftRight()
         {
             if (attributeMap.TryGetValue("marginLeft", out var left))
@@ -231,11 +221,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                         attributeMap.Add("marginLeftRight", left);
                     }
-
                 }
             }
         }
-        
+
         void marginTopBottom()
         {
             if (attributeMap.TryGetValue("marginTop", out var top) &&
@@ -250,7 +239,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-        
+
         void margin()
         {
             if (attributeMap.TryGetValue("marginTopBottom", out var topBottom) &&
@@ -265,9 +254,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-        
-        
-        
+
         void borderLeftRight()
         {
             if (attributeMap.TryGetValue("borderLeft", out var left))
@@ -281,11 +268,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                         attributeMap.Add("borderLeftRight", left);
                     }
-
                 }
             }
         }
-        
+
         void borderTopBottom()
         {
             if (attributeMap.TryGetValue("borderTop", out var top) &&
@@ -300,7 +286,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-        
+
         void border()
         {
             if (attributeMap.TryGetValue("borderTopBottom", out var topBottom) &&
