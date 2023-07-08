@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
+using ReactWithDotNet.ThirdPartyLibraries.ReactSimpleCodeEditor;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactTextareaCodeEditor;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
@@ -83,28 +84,31 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 LineHeight16,
                 BackgroundColorTransparent,
                 FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
-                OverflowScroll,
+                OverflowAuto,
                 WhiteSpacePre
             }
         };
 
-        //csharpEditor = new textarea
-        //{
-        //    value    = state.CSharpCode,
-        //    onChange = e=>state.CSharpCode = e.target.value,
-        //    style =
-        //    {
-        //        WidthHeightMaximized,
-        //        BorderNone,
-                
-        //        FontSize11,
-        //        LineHeight16,
-        //        BackgroundColorTransparent,
-        //        FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
-        //        OverflowScroll,
-        //        WhiteSpacePre
-        //    }
-        //};
+        csharpEditor = new Editor
+        {
+            valueBind                = ()=>state.CSharpCode,
+            valueBindDebounceHandler = CSharpCode_OnEditFinished,
+            valueBindDebounceTimeout = 500,
+            highlight                = "clike",
+            //onChange = e => state.CSharpCode = e.target.value,
+            style =
+            {
+                WidthHeightMaximized,
+                BorderNone,
+
+                FontSize11,
+                LineHeight16,
+                BackgroundColorTransparent,
+                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
+                OverflowAuto,
+                WhiteSpacePre
+            }
+        };
 
         var statusMessageEditor = new Message
         {
