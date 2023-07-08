@@ -119,6 +119,11 @@ partial class Mixin
     public static StyleModifier LineHeight39 => LineHeight(39);
     public static StyleModifier LineHeight40 => LineHeight(40);
 
+    
+    public static StyleModifier LineHeight5 => LineHeight(5);
+    public static StyleModifier LineHeight6 => LineHeight(6);
+    public static StyleModifier LineHeight7 => LineHeight(7);
+    public static StyleModifier LineHeight8 => LineHeight(8);
     public static StyleModifier LineHeight9 => LineHeight(9);
     
     public static StyleModifier LineHeightNormal => LineHeight("normal");
