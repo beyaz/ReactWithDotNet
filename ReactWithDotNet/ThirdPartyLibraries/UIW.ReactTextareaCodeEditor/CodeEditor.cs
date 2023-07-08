@@ -6,6 +6,7 @@ public class CodeEditor : ThirdPartyReactComponent
     public string language { get; set; }
 
     [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
     public Action<ChangeEvent> onChange { get; set; }
 
     [ReactProp]

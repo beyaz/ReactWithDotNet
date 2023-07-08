@@ -37,7 +37,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
     protected override Element render()
     {
-        var htmlEditor = new CodeMirror
+        Element htmlEditor = new CodeMirror
         {
             extensions = { "html", "githubLight" },
             onChange   = OnHtmlValueChanged,
@@ -56,6 +56,20 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 FontSize11,
                 FontFamily("Consolas"),
                 MaxWidth(500)
+            }
+        };
+        
+        htmlEditor = new CodeEditor
+        {
+            value    = state.HtmlText,
+            onChange = e=>OnHtmlValueChanged(e.target.value),
+            language = "html",
+            style =
+            {
+                FontSize11,
+                LineHeight16,
+                BackgroundColorTransparent,
+                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace")
             }
         };
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
 using ReactWithDotNet.UIDesigner;
-
+using ReactWithDotNet.WebSite.HelperApps;
 
 namespace ReactWithDotNet.WebSite;
 
@@ -16,6 +16,14 @@ static class ReactWithDotNetIntegration
         endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), ReactWithDotNetDesigner);
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), ReactWithDotNetDesignerComponentPreview);
+        
+        endpoints.MapGet("/LiveEditor", async httpContext =>
+        {
+            await WriteHtmlResponse(httpContext, new MainLayout
+            {
+                Page = new HtmlToCSharpView()
+            });
+        });
     }
 
     static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
