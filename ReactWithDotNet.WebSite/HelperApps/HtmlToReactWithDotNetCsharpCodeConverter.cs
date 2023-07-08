@@ -230,6 +230,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (htmlNode.ChildNodes.Count == 0)
             {
+                if (htmlNode.Name =="link")
+                {
+                    return new List<string>
+                    {
+                        // one line
+                        $"new {htmlNodeName} {{ {string.Join(", ", attributeMap.Select(p => $"{p.Key} = \"{p.Value}\""))} }}"
+                    };
+                }
                 return new List<string>
                 {
                     // one line
