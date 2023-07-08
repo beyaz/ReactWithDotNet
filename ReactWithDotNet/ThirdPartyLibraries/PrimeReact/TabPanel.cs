@@ -100,4 +100,10 @@ public sealed class TabPanel : ElementBase
     }
     
     public static IModifier Modify(Action<TabPanel> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
+    
+    public TabPanel(){}
+    
+    public TabPanel(params Action<TabPanel>[] modifiers){  modifiers.ApplyAll(Add); }
+    
+    public void Add(Action<TabPanel> modify){  modify?.Invoke(this); }
 }

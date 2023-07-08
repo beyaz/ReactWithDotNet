@@ -311,6 +311,13 @@ static class Exporter
 
             lines.Add(string.Empty);
             lines.Add($"public static IModifier Modify(Action<{input.ClassName}> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);");
+            lines.Add(string.Empty);
+            
+            lines.Add($"public {input.ClassName}(){{}}");
+            lines.Add(string.Empty);
+            lines.Add($"public {input.ClassName}(params Action<{input.ClassName}>[] modifiers){{  modifiers.ApplyAll(Add); }}");
+            lines.Add(string.Empty);
+            lines.Add($"public void Add(Action<{input.ClassName}> modify){{  modify?.Invoke(this); }}");
         }
 
         lines.Add("}");

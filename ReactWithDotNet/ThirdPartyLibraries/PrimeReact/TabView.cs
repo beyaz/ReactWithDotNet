@@ -63,4 +63,10 @@ public partial class TabView
     }
     
     public static IModifier Modify(Action<TabView> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
+    
+    public TabView(){}
+    
+    public TabView(params Action<TabView>[] modifiers){  modifiers.ApplyAll(Add); }
+    
+    public void Add(Action<TabView> modify){  modify?.Invoke(this); }
 }
