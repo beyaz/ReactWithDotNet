@@ -99,8 +99,6 @@ public sealed class TabPanel : ElementBase
         return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
     }
     
-    public static IModifier Modify(Action<TabPanel> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
-    
     public TabPanel(){ }
     
     public TabPanel(params Action<TabPanel>[] modifiers) => modifiers.ApplyAll(Add);

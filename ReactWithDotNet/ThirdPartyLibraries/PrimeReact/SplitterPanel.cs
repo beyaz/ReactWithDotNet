@@ -27,8 +27,6 @@ public sealed class SplitterPanel : ElementBase
         return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
     }
     
-    public static IModifier Modify(Action<SplitterPanel> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
-    
     public SplitterPanel(){ }
     
     public SplitterPanel(params Action<SplitterPanel>[] modifiers) => modifiers.ApplyAll(Add);

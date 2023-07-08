@@ -39,8 +39,6 @@ public sealed class Splitter : ElementBase
         return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
     }
     
-    public static IModifier Modify(Action<Splitter> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
-    
     public Splitter(){ }
     
     public Splitter(params Action<Splitter>[] modifiers) => modifiers.ApplyAll(Add);

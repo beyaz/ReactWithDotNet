@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
-using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactTextareaCodeEditor;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
@@ -110,8 +109,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     
                     new SplitterPanel
                     {
-                        SplitterPanel.Modify(x=>x.size =60),
-                        WidthMaximized,
+                        x=>x.size =60, WidthMaximized,
+                        
                         new FreeScrollBar
                         {
                          

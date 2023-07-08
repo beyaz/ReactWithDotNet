@@ -62,8 +62,6 @@ public partial class TabView
         return _children?.FirstOrDefault() ?? new ReactWithDotNetSkeleton.Skeleton();
     }
     
-    public static IModifier Modify(Action<TabView> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
-    
     public TabView(){ }
     
     public TabView(params Action<TabView>[] modifiers) => modifiers.ApplyAll(Add);
