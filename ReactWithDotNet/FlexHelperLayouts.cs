@@ -32,6 +32,37 @@ public sealed class FlexRow : HtmlElement
 }
 
 /// <summary>
+///     display = "inline-flex"
+///     <br />
+///     flexDirection  = "row"
+/// </summary>
+public sealed class InlineFlexRow : HtmlElement
+{
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    /// </summary>
+    public InlineFlexRow(params IModifier[] modifiers) : this()
+    {
+        this.Apply(modifiers);
+    }
+
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    /// </summary>
+    public InlineFlexRow()
+    {
+        style.display       = "flex";
+        style.flexDirection = "row";
+    }
+
+    public override string Type => nameof(div);
+}
+
+/// <summary>
 ///     display = "flex"
 ///     <br />
 ///     flexDirection  = "column"
@@ -56,6 +87,37 @@ public sealed class FlexColumn : HtmlElement
     public FlexColumn()
     {
         style.display       = "flex";
+        style.flexDirection = "column";
+    }
+
+    public override string Type => nameof(div);
+}
+
+/// <summary>
+///     display = "inline-flex"
+///     <br />
+///     flexDirection  = "column"
+/// </summary>
+public sealed class InlineFlexColumn : HtmlElement
+{
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    /// </summary>
+    public InlineFlexColumn(params IModifier[] modifiers) : this()
+    {
+        this.Apply(modifiers);
+    }
+
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "inline-column"
+    /// </summary>
+    public InlineFlexColumn()
+    {
+        style.display       = "inline-flex";
         style.flexDirection = "column";
     }
 
@@ -108,6 +170,51 @@ public sealed class FlexRowCentered : HtmlElement
 }
 
 /// <summary>
+///     display = "inline-flex"
+///     <br />
+///     flexDirection  = "row"
+///     <br />
+///     justifyContent = "center"
+///     <br />
+///     alignItems     = "center"
+/// </summary>
+public sealed class InlineFlexRowCentered : HtmlElement
+{
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public InlineFlexRowCentered()
+    {
+        style.display        = "flex";
+        style.flexDirection  = "row";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+    }
+
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public InlineFlexRowCentered(params IModifier[] modifiers) : this()
+    {
+        this.Apply(modifiers);
+    }
+
+    public override string Type => nameof(div);
+}
+
+/// <summary>
 ///     display = "flex"
 ///     <br />
 ///     flexDirection  = "column"
@@ -145,6 +252,52 @@ public sealed class FlexColumnCentered : HtmlElement
     ///     alignItems     = "center"
     /// </summary>
     public FlexColumnCentered(params IModifier[] modifiers) : this()
+    {
+        this.Apply(modifiers);
+    }
+
+    public override string Type => nameof(div);
+}
+
+
+/// <summary>
+///     display = "inline-flex"
+///     <br />
+///     flexDirection  = "column"
+///     <br />
+///     justifyContent = "center"
+///     <br />
+///     alignItems     = "center"
+/// </summary>
+public sealed class InlineFlexColumnCentered : HtmlElement
+{
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public InlineFlexColumnCentered()
+    {
+        style.display        = "flex";
+        style.flexDirection  = "column";
+        style.justifyContent = "center";
+        style.alignItems     = "center";
+    }
+
+    /// <summary>
+    ///     display = "inline-flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
+    /// </summary>
+    public InlineFlexColumnCentered(params IModifier[] modifiers) : this()
     {
         this.Apply(modifiers);
     }

@@ -61,6 +61,63 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         displayFlexRowCentered();
 
+        displayFlexColumn();
+
+        displayFlexRow();
+        
+        void displayFlexRow()
+        {
+            var flexDirection = attributeMap.ContainsKey("flexDirection") ? attributeMap["flexDirection"] : null;
+            
+            if (attributeMap.TryGetValue("display", out var display))
+            {
+                if (display == "flex" && (flexDirection == "row" || flexDirection is null) )
+                {
+                    attributeMap.Remove("display");
+                    attributeMap.Remove("flexDirection");
+
+                    attributeMap.Add("DisplayFlexRow", null);
+                    return;
+                }
+
+                if (display == "inline-flex" && (flexDirection == "row" || flexDirection is null) )
+                {
+                    attributeMap.Remove("display");
+                    attributeMap.Remove("flexDirection");
+
+                    attributeMap.Add("DisplayInlineFlexRow", null);
+                }
+            }
+        }
+        
+        
+        void displayFlexColumn()
+        {
+            if (attributeMap.TryGetValue("display", out var display))
+            {
+                if (attributeMap.TryGetValue("flexDirection", out var flexDirection))
+                {
+                    if (display == "flex" && flexDirection == "column" )
+                    {
+                        attributeMap.Remove("display");
+                        attributeMap.Remove("flexDirection");
+
+                        attributeMap.Add("DisplayFlexColumn", null);
+                        return;
+                    }
+
+                    if (display == "inline-flex" && flexDirection == "column" )
+                    {
+                        attributeMap.Remove("display");
+                        attributeMap.Remove("flexDirection");
+
+                        attributeMap.Add("DisplayInlineFlexColumn", null);
+                    }
+                }
+            }
+        }
+        
+        
         void displayFlexColumnCentered()
         {
             if (attributeMap.TryGetValue("display", out var display))
@@ -76,7 +133,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                                 justifyContent == "center" &&
                                 alignItems == "alignItems")
                             {
-                                attributeMap.Remove("flex");
+                                attributeMap.Remove("display");
                                 attributeMap.Remove("flexDirection");
                                 attributeMap.Remove("justifyContent");
                                 attributeMap.Remove("alignItems");
@@ -90,7 +147,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                                 justifyContent == "center" &&
                                 alignItems == "alignItems")
                             {
-                                attributeMap.Remove("flex");
+                                attributeMap.Remove("display");
                                 attributeMap.Remove("flexDirection");
                                 attributeMap.Remove("justifyContent");
                                 attributeMap.Remove("alignItems");
@@ -118,7 +175,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                             justifyContent == "center" &&
                             alignItems == "alignItems")
                         {
-                            attributeMap.Remove("flex");
+                            attributeMap.Remove("display");
                             attributeMap.Remove("flexDirection");
                             attributeMap.Remove("justifyContent");
                             attributeMap.Remove("alignItems");
@@ -132,7 +189,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                             justifyContent == "center" &&
                             alignItems == "alignItems")
                         {
-                            attributeMap.Remove("flex");
+                            attributeMap.Remove("display");
                             attributeMap.Remove("flexDirection");
                             attributeMap.Remove("justifyContent");
                             attributeMap.Remove("alignItems");
@@ -439,6 +496,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (htmlNodeName == "div")
             {
+                if (hasAttribute("DisplayInlineFlexRow", null))
+                {
+                    htmlNodeName = "InlineFlexRow";
+                    attributeMap.Remove("DisplayInlineFlexRow");
+                }
+                
                 if (hasAttribute("display", "flex"))
                 {
                     if (hasAttribute("flexDirection", "column"))
