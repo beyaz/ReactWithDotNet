@@ -259,7 +259,6 @@ public sealed class FlexColumnCentered : HtmlElement
     public override string Type => nameof(div);
 }
 
-
 /// <summary>
 ///     display = "inline-flex"
 ///     <br />
