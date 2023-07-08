@@ -84,12 +84,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             },
             new FlexRow(WidthHeightMaximized, BorderForPaper, BorderRadiusForPaper)
             {
-                new Splitter(x=>x.gutterSize = 10)
+                new Splitter(WidthHeightMaximized, x=>x.gutterSize = 10)
                 {
-                    WidthHeightMaximized,
-                    
-                    
-                    
                     new SplitterPanel(x=>x.size = 20)
                     {
                         new FreeScrollBar(WidthHeightMaximized)
@@ -107,21 +103,15 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                         
                     },
                     
-                    new SplitterPanel
+                    new SplitterPanel(x=>x.size =60)
                     {
-                        x=>x.size =60, WidthMaximized,
-                        
-                        new FreeScrollBar
+                        new FreeScrollBar(WidthHeightMaximized)
                         {
-                         
-                            WidthHeightMaximized,
                             CreatePreview
                         }
                         
                     }
                 }
-                
-                
             },
 
             statusMessageEditor
