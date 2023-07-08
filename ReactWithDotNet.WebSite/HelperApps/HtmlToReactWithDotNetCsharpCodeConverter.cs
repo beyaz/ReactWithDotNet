@@ -496,10 +496,40 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (htmlNodeName == "div")
             {
-                if (hasAttribute("DisplayInlineFlexRow", null))
+                if (hasAttribute(nameof(DisplayInlineFlexRowCentered), null))
                 {
-                    htmlNodeName = "InlineFlexRow";
-                    attributeMap.Remove("DisplayInlineFlexRow");
+                    htmlNodeName = nameof(InlineFlexRowCentered);
+                    attributeMap.Remove(nameof(DisplayInlineFlexRowCentered));
+                }
+                
+                if (hasAttribute(nameof(DisplayInlineFlexRow), null))
+                {
+                    htmlNodeName = nameof(InlineFlexRow);
+                    attributeMap.Remove(nameof(DisplayInlineFlexRow));
+                }
+                
+                if (hasAttribute(nameof(DisplayFlexRow), null))
+                {
+                    htmlNodeName = nameof(FlexRow);
+                    attributeMap.Remove(nameof(DisplayFlexRow));
+                }
+                
+                if (hasAttribute(nameof(DisplayInlineFlexColumnCentered), null))
+                {
+                    htmlNodeName = nameof(InlineFlexColumnCentered);
+                    attributeMap.Remove(nameof(DisplayInlineFlexColumnCentered));
+                }
+                
+                if (hasAttribute(nameof(DisplayInlineFlexColumn), null))
+                {
+                    htmlNodeName = nameof(InlineFlexColumn);
+                    attributeMap.Remove(nameof(DisplayInlineFlexColumn));
+                }
+                
+                if (hasAttribute(nameof(DisplayFlexColumn), null))
+                {
+                    htmlNodeName = nameof(FlexColumn);
+                    attributeMap.Remove(nameof(DisplayFlexColumn));
                 }
                 
                 if (hasAttribute("display", "flex"))
