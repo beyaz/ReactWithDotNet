@@ -65,7 +65,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             }
         };
 
-        var csharpEditor = new CodeEditor
+        Element csharpEditor = new CodeEditor
         {
             value    = state.CSharpCode,
             language = "csharp",
@@ -73,6 +73,24 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             style =
             {
                 HeightMaximized,
+                FontSize11,
+                LineHeight16,
+                BackgroundColorTransparent,
+                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
+                OverflowScroll,
+                WhiteSpacePre
+            }
+        };
+
+        csharpEditor = new textarea
+        {
+            value    = state.CSharpCode,
+            onChange = e=>state.CSharpCode = e.target.value,
+            style =
+            {
+                WidthHeightMaximized,
+                BorderNone,
+                
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
