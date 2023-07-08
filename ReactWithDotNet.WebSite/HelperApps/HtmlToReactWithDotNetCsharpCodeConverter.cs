@@ -57,11 +57,99 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         borderLeftRight();
         borderTopBottom();
         border();
-        
+
+        displayFlexColumnCentered();
+
+        displayFlexRowCentered();
         
 
-        
+        void displayFlexColumnCentered()
+        {
+            if (attributeMap.TryGetValue("display", out var display))
+            {
+                if (attributeMap.TryGetValue("flexDirection", out var flexDirection))
+                {
+                    if (attributeMap.TryGetValue("justifyContent", out var justifyContent))
+                    {
+                        if (attributeMap.TryGetValue("alignItems", out var alignItems))
+                        {
+                            if (display == "flex" && 
+                                flexDirection == "column" &&
+                                justifyContent =="center"&&
+                                alignItems =="alignItems")
+                            {
+                                attributeMap.Remove("flex");
+                                attributeMap.Remove("flexDirection");
+                                attributeMap.Remove("justifyContent");
+                                attributeMap.Remove("alignItems");
 
+                                attributeMap.Add("DisplayFlexColumnCentered", null);
+                                return;
+                            }
+                            
+                            if (display == "inline-flex" && 
+                                flexDirection == "column" &&
+                                justifyContent =="center"&&
+                                alignItems =="alignItems")
+                            {
+                                attributeMap.Remove("flex");
+                                attributeMap.Remove("flexDirection");
+                                attributeMap.Remove("justifyContent");
+                                attributeMap.Remove("alignItems");
+
+                                attributeMap.Add("DisplayInlineFlexColumnCentered", null);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        void displayFlexRowCentered()
+        {
+            string flexDirection = null;
+            if (attributeMap.ContainsKey("flexDirection"))
+            {
+                flexDirection = attributeMap["flexDirection"];
+            }
+            
+            if (attributeMap.TryGetValue("display", out var display))
+            {
+                if (attributeMap.TryGetValue("justifyContent", out var justifyContent))
+                {
+                    if (attributeMap.TryGetValue("alignItems", out var alignItems))
+                    {
+                        if (display == "flex" && 
+                            ( flexDirection is null || flexDirection == "row") &&
+                            justifyContent =="center"&&
+                            alignItems =="alignItems")
+                        {
+                            attributeMap.Remove("flex");
+                            attributeMap.Remove("flexDirection");
+                            attributeMap.Remove("justifyContent");
+                            attributeMap.Remove("alignItems");
+
+                            attributeMap.Add("DisplayFlexRowCentered", null);
+                            return;
+                        }
+                            
+                        if (display == "inline-flex" && 
+                            ( flexDirection is null || flexDirection == "row") &&
+                            justifyContent =="center"&&
+                            alignItems =="alignItems")
+                        {
+                            attributeMap.Remove("flex");
+                            attributeMap.Remove("flexDirection");
+                            attributeMap.Remove("justifyContent");
+                            attributeMap.Remove("alignItems");
+
+                            attributeMap.Add("DisplayInlineFlexRowCentered", null);
+                        }
+                    }
+                }
+            }
+        }
+        
         void widthHeightMaxiimized()
         {
             if (attributeMap.TryGetValue("width", out var width))
