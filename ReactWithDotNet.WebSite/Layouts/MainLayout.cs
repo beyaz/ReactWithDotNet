@@ -54,6 +54,13 @@ class MainLayout : ReactPureComponent
                 
                
                 new script { type = "module", src = $"{root}/dist/index.js" },
+                new link
+                {
+                    rel = "stylesheet",
+                    type = "text/css",
+                    href = $"{root}/dist/index.css"
+                },
+                
 
                 new script
                 {

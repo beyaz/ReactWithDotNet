@@ -42,6 +42,8 @@
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
 
-        "framer-motion": "^9.0.2"
+        "framer-motion": "^9.0.2",
+
+        "@uiw/react-textarea-code-editor": "^2.1.7"
     }
 }

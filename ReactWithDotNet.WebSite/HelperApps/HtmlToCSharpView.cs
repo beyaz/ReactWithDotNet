@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
+using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactTextareaCodeEditor;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -58,7 +59,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             }
         };
 
-        var csharpEditor = new CodeMirror
+        Element csharpEditor = new CodeMirror
         {
             extensions = { "javascript", "githubLight" },
             value      = state.CSharpCode,
@@ -76,6 +77,12 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                 FontSize11,
                 FontFamily("Consolas")
             }
+        };
+
+        csharpEditor = new CodeEditor
+        {
+            value    = state.CSharpCode,
+            language = "js"
         };
 
         var statusMessageEditor = new Message
@@ -260,6 +267,8 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         //    text = state.CSharpCode,
         //    style = { BorderNone, WidthHeightMaximized}
         //};
+        
+        
         if (state.CSharpCode?.Length  > 0)
         {
             return (ReactWithDotNet.ReactComponent)DynamicCode.Execute(state.CSharpCode, "Preview.SampleComponent", "A", new object[] { }).invocationOutput;
