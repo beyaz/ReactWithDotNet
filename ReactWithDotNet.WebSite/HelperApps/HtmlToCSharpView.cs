@@ -82,7 +82,14 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         csharpEditor = new CodeEditor
         {
             value    = state.CSharpCode,
-            language = "js"
+            language = "csharp",
+            style =
+            {
+                FontSize11,
+                LineHeight16,
+                BackgroundColorTransparent,
+                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace")
+            }
         };
 
         var statusMessageEditor = new Message
@@ -227,20 +234,23 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             sb.AppendLine("using static ReactWithDotNet.Mixin;");
             sb.AppendLine();
             sb.AppendLine("namespace Preview;");
+            sb.AppendLine();
             sb.AppendLine("class SampleComponent: ReactComponent");
             sb.AppendLine("{");
             
             sb.AppendLine("  public static Element CreateNew(){ return new SampleComponent(); }");
-            
+            sb.AppendLine();
             sb.AppendLine("  protected override Element render()");
             sb.AppendLine("  {");
             sb.AppendLine("    return ");
 
+            sb.AppendLine("      // s t a r t ");
             foreach (var line in renderBody.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
             {
-                sb.AppendLine("    "+line);
+                sb.AppendLine("      "+line);
             }
             
+            sb.AppendLine("      // e n d");
 
             sb.AppendLine("    ;");
             
@@ -271,7 +281,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         
         if (state.CSharpCode?.Length  > 0)
         {
-            return (ReactWithDotNet.ReactComponent)DynamicCode.Execute(state.CSharpCode, "Preview.SampleComponent", "A", new object[] { }).invocationOutput;
+            return (ReactWithDotNet.ReactComponent)DynamicCode.Execute(state.CSharpCode, "Preview.SampleComponent", "CreateNew", new object[] { }).invocationOutput;
         }
 
         return null;
