@@ -100,4 +100,11 @@ partial class Mixin
     ///     style.visibility = <paramref name="visibility" />
     /// </summary>
     public static StyleModifier Visibility(string visibility) => new(style => style.visibility = visibility);
+    
+    
+    /// <summary>
+    ///     style.transformOrigin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransformOrigin(string value) => new(style => style.transformOrigin = value);
+    
 }
