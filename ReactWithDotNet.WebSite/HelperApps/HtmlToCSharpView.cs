@@ -85,13 +85,13 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             },
             new FlexRow(WidthHeightMaximized, BorderForPaper, BorderRadiusForPaper)
             {
-                new Splitter
+                new Splitter 
                 {
                     WidthHeightMaximized,
                     Splitter.Modify(x=>x.gutterSize = 10),
-                    new SplitterPanel
+                    
+                    new SplitterPanel(_=>_.size = 20)
                     {
-                        SplitterPanel.Modify(x=>x.size =20),
                         new FreeScrollBar(WidthHeightMaximized)
                         {
                             htmlEditor

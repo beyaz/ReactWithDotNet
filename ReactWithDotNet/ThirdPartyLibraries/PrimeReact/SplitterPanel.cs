@@ -28,4 +28,14 @@ public sealed class SplitterPanel : ElementBase
     }
     
     public static IModifier Modify(Action<SplitterPanel> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
+
+    public SplitterPanel()
+    {
+        
+    }
+
+    public SplitterPanel(params Action<SplitterPanel>[] modifiers)
+    {
+        
+    }
 }
