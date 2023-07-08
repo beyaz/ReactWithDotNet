@@ -21,15 +21,28 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         state = new HtmlToCSharpViewModel
         {
             HtmlText = @"
-<div>
-  <button class='xyz' id='4t'>abc</button>
-  <img src = 'abc.jpg' alt='abc' >
-  <a href = '#'>abc</a>
-  <p style='text-align: center;'> abc </p>
+<div style='width: 100%; height: 100%; border-left: 0.50px #DBDBDB solid; border-top: 0.50px #DBDBDB solid; border-right: 0.50px #DBDBDB solid; border-bottom: 0.50px #DBDBDB solid; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex'>
+    <div style='flex: 1 1 0; height: 433px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 15px; display: inline-flex'>
+        <img style='width: 405px; height: 186px; background: linear-gradient(0deg, #C4C4C4 0%, #C4C4C4 100%)' src='https://cdn.gezbegen.com/wp-content/uploads/2016/03/maldivler.jpg' />
+        <div style='align-self: stretch; height: 180px; padding-left: 16px; padding-right: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex'>
+            <div style='align-self: stretch; height: 36px; justify-content: space-between; align-items: center; gap: 32px; display: inline-flex'>
+                <div style='padding-left: 10px; padding-right: 10px; padding-top: 4px; padding-bottom: 4px; background: #F6F6F6; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex'>
+                    <div style='color: #4A4A49; font-size: 14px; font-family: Open Sans; font-weight: 600; line-height: 24px; word-wrap: break-word'>Geziler</div>
+                </div>
+                <div style='padding: 10px; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex'>
+                    <div style='color: #79797B; font-size: 12px; font-family: Open Sans; font-weight: 600; line-height: 16px; word-wrap: break-word'>5 dk okuma</div>
+                </div>
+            </div>
+            <div style='align-self: stretch; color: #4A4A49; font-size: 16px; font-family: SF Pro Text; font-weight: 600; line-height: 24px; word-wrap: break-word'>Massa aenean tortor nunc egestas. At amet, risus facilisi sed.</div>
+            <div style='align-self: stretch; height: 84px; color: #4A4A49; font-size: 14px; font-family: Open Sans; font-weight: 400; line-height: 20px; word-wrap: break-word'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempus tristique id leo scelerisque dui a, ultricies. Massa aenean tortor nunc egestas. At amet, risus.</div>
+            <div style='align-self: stretch; color: #79797B; font-size: 12px; font-family: Open Sans; font-weight: 700; text-transform: uppercase; line-height: 16px; word-wrap: break-word'>Bugün</div>
+        </div>
+    </div>
 </div>
 "
         };
-        state.CSharpCode = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText);
+
+        OnHtmlValueChanged(state.HtmlText);
 
         return Task.CompletedTask;
     }
@@ -56,13 +69,16 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         {
             value    = state.CSharpCode,
             language = "csharp",
+            onChange = e=>state.CSharpCode = e.target.value,
             style =
             {
                 HeightMaximized,
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
-                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace")
+                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
+                OverflowScroll,
+                WhiteSpacePre
             }
         };
 
@@ -103,7 +119,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     
                     new SplitterPanel(x=>x.size =50)
                     {
-                        new FreeScrollBar(WidthHeightMaximized)
+                        new FlexRowCentered(Padding(20))
                         {
                             CreatePreview
                         }
@@ -178,7 +194,20 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
     {
         if (state.CSharpCode?.Length  > 0)
         {
-            return (ReactWithDotNet.ReactComponent)DynamicCode.ExecuteStaticMethod(state.CSharpCode, "Preview.SampleComponent", "CreateNew", new object[] { }).invocationOutput;
+            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(state.CSharpCode, "Preview.SampleComponent");
+            if (isTypeFound)
+            {
+                var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
+                
+                return (ReactWithDotNet.ReactComponent)instance;
+            }
+
+            if (sourceCodeHasError)
+            {
+                return sourceCodeError;
+            }
+
+            DynamicCode.TryClear(assemblyLoadContext);
         }
 
         return null;

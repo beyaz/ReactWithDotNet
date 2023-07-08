@@ -9,7 +9,7 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 
 static class DynamicCode
 {
-    public static (byte[] bytesOfAssembly, IReadOnlyList<string> compileErrors) Compile(string sourceCode)
+    public static (bool isCompiledSuccessfully, byte[] bytesOfAssembly, string compileError) Compile(string sourceCode)
     {
         using (var peStream = new MemoryStream())
         {
@@ -21,29 +21,28 @@ static class DynamicCode
                     .Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error)
                     .Select(x => x.GetMessage());
 
-                return (default, compileErrors.ToArray());
+                return (default,default, string.Join(Environment.NewLine, compileErrors));
             }
 
             peStream.Seek(0, SeekOrigin.Begin);
 
-            return (peStream.ToArray(), default);
+            return (isCompiledSuccessfully: true, peStream.ToArray(), default);
         }
-    }
-
-    public static (Exception error, object invocationOutput, AssemblyLoadContext assemblyLoadContext) ExecuteStaticMethod(string sourceCode, string fullTypeName, string staticMethodName, object[] methodParameters)
-    {
-        var (bytesOfAssembly, compileErrors) = Compile(sourceCode);
-        if (compileErrors?.Count > 0)
-        {
-            return (new Exception(string.Join(Environment.NewLine, compileErrors)), default,default);
-        }
-
-        return LoadAndExecute(bytesOfAssembly, fullTypeName, staticMethodName, methodParameters);
     }
     
-    public static (Exception error, object invocationOutput, AssemblyLoadContext assemblyLoadContext) LoadAndExecute(byte[] compiledAssembly, string fullTypeName, string staticMethodName, object[] methodParameters)
+ 
+    
+        
+    public static (bool isTypeFound, Type type, AssemblyLoadContext assemblyLoadContext,bool sourceCodeHasError, string sourceCodeError) LoadAndFindType(string sourceCode, string fullTypeName)
     {
-        using (var asm = new MemoryStream(compiledAssembly))
+        
+        var ( isCompiledSuccessfully,  bytesOfAssembly,  compileError) = Compile(sourceCode);
+        if (!isCompiledSuccessfully)
+        {
+            return (isTypeFound: default, type:default, assemblyLoadContext: default,sourceCodeHasError: true,sourceCodeError:compileError );
+        }
+        
+        using (var asm = new MemoryStream(bytesOfAssembly))
         {
             var assemblyLoadContext = new SimpleUnloadableAssemblyLoadContext();
 
@@ -52,30 +51,15 @@ static class DynamicCode
             var type = assembly.GetType(fullTypeName);
             if (type == null)
             {
-                return (new MissingMemberException(fullTypeName), default, default);
-            }
-
-            var methodInfo = type.GetMethod(staticMethodName);
-            if (methodInfo == null)
-            {
-                return (new MissingMemberException(staticMethodName), default, default);
-            }
-
-            try
-            {
-                var output = methodInfo.Invoke(null, methodParameters);
-
                 TryClear(assemblyLoadContext);
                 
-                return (default, output, assemblyLoadContext);
-                
+                return default;
             }
-            catch (Exception exception)
-            {
-                return (exception, default, assemblyLoadContext);
-            }
+
+            return (isTypeFound: true, type, assemblyLoadContext, default, default);
         }
     }
+
 
     public static bool TryClear(AssemblyLoadContext assemblyLoadContext)
     {

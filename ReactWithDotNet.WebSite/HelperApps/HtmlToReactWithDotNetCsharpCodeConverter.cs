@@ -388,7 +388,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return $"{CamelCase(name)}(\"{CamelCase(value)}\")";
         }
 
-        return $"{CamelCase(name)}{CamelCase(value)}";
+        var modifierFullName = $"{CamelCase(name)}{CamelCase(value)}";
+        
+        if (typeof(Mixin).GetProperty(modifierFullName) is not null)
+        {
+            return modifierFullName;
+        }
+
+        return $"{CamelCase(name)}(\"{CamelCase(value)}\")";
     }
 }
 
