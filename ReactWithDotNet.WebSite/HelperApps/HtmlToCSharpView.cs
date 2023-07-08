@@ -272,13 +272,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
     Element CreatePreview()
     {
-        //return new textarea
-        //{
-        //    text = state.CSharpCode,
-        //    style = { BorderNone, WidthHeightMaximized}
-        //};
-        
-        
         if (state.CSharpCode?.Length  > 0)
         {
             return (ReactWithDotNet.ReactComponent)DynamicCode.Execute(state.CSharpCode, "Preview.SampleComponent", "CreateNew", new object[] { }).invocationOutput;
