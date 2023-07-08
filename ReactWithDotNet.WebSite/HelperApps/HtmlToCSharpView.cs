@@ -174,7 +174,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     new SplitterPanel
                     {
                         SplitterPanel.Modify(x=>x.size =60),
-                        
+                        WidthMaximized,
                         new FreeScrollBar
                         {
                             Height(400),
@@ -223,11 +223,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             sb.AppendLine("class SampleComponent: ReactComponent");
             sb.AppendLine("{");
             
-            sb.AppendLine("  public static Element A(){ return new SampleComponent();}");
+            sb.AppendLine("  public static Element CreateNew(){ return new SampleComponent(); }");
             
-            sb.AppendLine("protected override Element render()");
-            sb.AppendLine("{");
-            sb.AppendLine("return ");
+            sb.AppendLine("  protected override Element render()");
+            sb.AppendLine("  {");
+            sb.AppendLine("    return ");
 
             foreach (var line in renderBody.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -235,9 +235,9 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             }
             
 
-            sb.AppendLine(";");
+            sb.AppendLine("    ;");
             
-            sb.AppendLine("}");
+            sb.AppendLine("  }");
             
             
             sb.AppendLine("}");
@@ -255,6 +255,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
     Element CreatePreview()
     {
+        return new textarea
+        {
+            text = state.CSharpCode,
+            style = { BorderNone, WidthHeightMaximized}
+        };
         if (state.CSharpCode?.Length  > 0)
         {
             return (ReactWithDotNet.ReactComponent)DynamicCode.Execute(state.CSharpCode, "Preview.SampleComponent", "A", new object[] { }).invocationOutput;
