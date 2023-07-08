@@ -16,6 +16,7 @@ import "./react-with-dotnet/libraries/uiw-react-codemirror/all";
 import "./react-with-dotnet/libraries/framer-motion/all";
 import "./react-with-dotnet/libraries/nextui-org/all";
 import "./react-with-dotnet/libraries/uiw-react-textarea-code-editor/all";
+import "./react-with-dotnet/libraries/react-simple-code-editor/all";
 
 
 export { ReactWithDotNet };

@@ -180,6 +180,11 @@ public static partial class Mixin
     ///     overflow = "hidden"
     /// </summary>
     public static StyleModifier OverflowHidden => new(style => style.overflow = "hidden");
+    
+    /// <summary>
+    ///     overflow = "auto"
+    /// </summary>
+    public static StyleModifier OverflowAuto => new(style => style.overflow = "auto");
 
     /// <summary>
     ///     overflow = "scroll"
