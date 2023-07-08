@@ -47,6 +47,11 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
         return Task.CompletedTask;
     }
 
+    void CSharpCode_OnEditFinished()
+    {
+        
+    }
+    
     protected override Element render()
     {
         var htmlEditor = new CodeEditor
@@ -67,9 +72,10 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         Element csharpEditor = new CodeEditor
         {
-            value    = state.CSharpCode,
+            valueBind    = ()=>state.CSharpCode,
+            valueBindDebounceHandler = CSharpCode_OnEditFinished,
+            valueBindDebounceTimeout = 500,
             language = "csharp",
-            onChange = e=>state.CSharpCode = e.target.value,
             style =
             {
                 HeightMaximized,
@@ -82,23 +88,23 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             }
         };
 
-        csharpEditor = new textarea
-        {
-            value    = state.CSharpCode,
-            onChange = e=>state.CSharpCode = e.target.value,
-            style =
-            {
-                WidthHeightMaximized,
-                BorderNone,
+        //csharpEditor = new textarea
+        //{
+        //    value    = state.CSharpCode,
+        //    onChange = e=>state.CSharpCode = e.target.value,
+        //    style =
+        //    {
+        //        WidthHeightMaximized,
+        //        BorderNone,
                 
-                FontSize11,
-                LineHeight16,
-                BackgroundColorTransparent,
-                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
-                OverflowScroll,
-                WhiteSpacePre
-            }
-        };
+        //        FontSize11,
+        //        LineHeight16,
+        //        BackgroundColorTransparent,
+        //        FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
+        //        OverflowScroll,
+        //        WhiteSpacePre
+        //    }
+        //};
 
         var statusMessageEditor = new Message
         {
