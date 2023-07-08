@@ -30,7 +30,7 @@ static class DynamicCode
         }
     }
 
-    public static (Exception error, object invocationOutput, AssemblyLoadContext assemblyLoadContext) Execute(string sourceCode, string fullTypeName, string staticMethodName, object[] methodParameters)
+    public static (Exception error, object invocationOutput, AssemblyLoadContext assemblyLoadContext) ExecuteStaticMethod(string sourceCode, string fullTypeName, string staticMethodName, object[] methodParameters)
     {
         var (bytesOfAssembly, compileErrors) = Compile(sourceCode);
         if (compileErrors?.Count > 0)

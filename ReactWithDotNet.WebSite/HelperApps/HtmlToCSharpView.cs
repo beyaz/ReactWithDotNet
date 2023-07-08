@@ -43,6 +43,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             language = "html",
             style =
             {
+                OverflowYAuto,
                 HeightMaximized,
                 FontSize11,
                 LineHeight16,
@@ -58,7 +59,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             style =
             {
                 HeightMaximized,
-                OverflowYAuto,
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
@@ -115,11 +115,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             statusMessageEditor
         };
     }
-
-    void ClearStatusMessage()
-    {
-        state.StatusMessage = null;
-    }
+   
 
     void OnHtmlValueChanged(string htmlText)
     {
@@ -148,8 +144,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             sb.AppendLine("class SampleComponent: ReactComponent");
             sb.AppendLine("{");
             
-            sb.AppendLine("  public static Element CreateNew(){ return new SampleComponent(); }");
-            sb.AppendLine();
             sb.AppendLine("  protected override Element render()");
             sb.AppendLine("  {");
             sb.AppendLine("    return ");
@@ -184,7 +178,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
     {
         if (state.CSharpCode?.Length  > 0)
         {
-            return (ReactWithDotNet.ReactComponent)DynamicCode.Execute(state.CSharpCode, "Preview.SampleComponent", "CreateNew", new object[] { }).invocationOutput;
+            return (ReactWithDotNet.ReactComponent)DynamicCode.ExecuteStaticMethod(state.CSharpCode, "Preview.SampleComponent", "CreateNew", new object[] { }).invocationOutput;
         }
 
         return null;
