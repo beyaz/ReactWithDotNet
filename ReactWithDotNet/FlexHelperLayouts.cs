@@ -1,14 +1,16 @@
 ﻿namespace ReactWithDotNet;
 
 /// <summary>
-///     <br>display = "flex"</br>
-///     <br>flexDirection  = "row"</br>
+///     display = "flex"
+///     <br />
+///     flexDirection  = "row"
 /// </summary>
 public sealed class FlexRow : HtmlElement
 {
     /// <summary>
-    ///     <br>display = "flex"</br>
-    ///     <br>flexDirection  = "row"</br>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
     /// </summary>
     public FlexRow(params IModifier[] modifiers) : this()
     {
@@ -16,8 +18,9 @@ public sealed class FlexRow : HtmlElement
     }
 
     /// <summary>
-    ///     <br>display = "flex"</br>
-    ///     <br>flexDirection  = "row"</br>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
     /// </summary>
     public FlexRow()
     {
@@ -30,14 +33,14 @@ public sealed class FlexRow : HtmlElement
 
 /// <summary>
 ///     display = "flex"
-///     <br/>
+///     <br />
 ///     flexDirection  = "column"
 /// </summary>
 public sealed class FlexColumn : HtmlElement
 {
     /// <summary>
     ///     display = "flex"
-    ///     <br/>
+    ///     <br />
     ///     flexDirection  = "column"
     /// </summary>
     public FlexColumn(params IModifier[] modifiers) : this()
@@ -47,7 +50,7 @@ public sealed class FlexColumn : HtmlElement
 
     /// <summary>
     ///     display = "flex"
-    ///     <br/>
+    ///     <br />
     ///     flexDirection  = "column"
     /// </summary>
     public FlexColumn()
@@ -60,18 +63,24 @@ public sealed class FlexColumn : HtmlElement
 }
 
 /// <summary>
-///     <br>display = "flex"</br>
-///     <br>flexDirection  = "row"</br>
-///     <br>justifyContent = "center"</br>
-///     <br>alignItems     = "center"</br>
+///     display = "flex"
+///     <br />
+///     flexDirection  = "row"
+///     <br />
+///     justifyContent = "center"
+///     <br />
+///     alignItems     = "center"
 /// </summary>
 public sealed class FlexRowCentered : HtmlElement
 {
     /// <summary>
-    ///     <br>display = "flex"</br>
-    ///     <br>flexDirection  = "row"</br>
-    ///     <br>justifyContent = "center"</br>
-    ///     <br>alignItems     = "center"</br>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
     /// </summary>
     public FlexRowCentered()
     {
@@ -82,10 +91,13 @@ public sealed class FlexRowCentered : HtmlElement
     }
 
     /// <summary>
-    ///     <br>display = "flex"</br>
-    ///     <br>flexDirection  = "row"</br>
-    ///     <br>justifyContent = "center"</br>
-    ///     <br>alignItems     = "center"</br>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
     /// </summary>
     public FlexRowCentered(params IModifier[] modifiers) : this()
     {
@@ -93,23 +105,27 @@ public sealed class FlexRowCentered : HtmlElement
     }
 
     public override string Type => nameof(div);
-
-   
 }
 
 /// <summary>
-///     <br>display = "flex"</br>
-///     <br>flexDirection  = "column"</br>
-///     <br>justifyContent = "center"</br>
-///     <br>alignItems     = "center"</br>
+///     display = "flex"
+///     <br />
+///     flexDirection  = "column"
+///     <br />
+///     justifyContent = "center"
+///     <br />
+///     alignItems     = "center"
 /// </summary>
 public sealed class FlexColumnCentered : HtmlElement
 {
     /// <summary>
-    ///     <br>display = "flex"</br>
-    ///     <br>flexDirection  = "column"</br>
-    ///     <br>justifyContent = "center"</br>
-    ///     <br>alignItems     = "center"</br>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
     /// </summary>
     public FlexColumnCentered()
     {
@@ -120,10 +136,13 @@ public sealed class FlexColumnCentered : HtmlElement
     }
 
     /// <summary>
-    ///     <br>display = "flex"</br>
-    ///     <br>flexDirection  = "column"</br>
-    ///     <br>justifyContent = "center"</br>
-    ///     <br>alignItems     = "center"</br>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "column"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
     /// </summary>
     public FlexColumnCentered(params IModifier[] modifiers) : this()
     {
@@ -131,15 +150,13 @@ public sealed class FlexColumnCentered : HtmlElement
     }
 
     public override string Type => nameof(div);
-
-   
 }
 
 partial class Mixin
 {
     /// <summary>
     ///     display = "flex"
-    ///     <br/>
+    ///     <br />
     ///     flexDirection  = "column"
     /// </summary>
     public static StyleModifier DisplayFlexColumn => CreateStyleModifier(style =>
@@ -147,23 +164,26 @@ partial class Mixin
         style.display       = "flex";
         style.flexDirection = "column";
     });
-    
+
     /// <summary>
-    ///     <br>display = "flex"</br>
-    ///     <br>flexDirection  = "row"</br>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
     /// </summary>
-    public static StyleModifier DisplayFlexRow=> CreateStyleModifier(style =>
+    public static StyleModifier DisplayFlexRow => CreateStyleModifier(style =>
     {
-        style.display        = "flex";
-        style.flexDirection  = "row";
+        style.display       = "flex";
+        style.flexDirection = "row";
     });
-    
-    
+
     /// <summary>
-    ///     <br>display = "flex"</br>
-    ///     <br>flexDirection  = "row"</br>
-    ///     <br>justifyContent = "center"</br>
-    ///     <br>alignItems     = "center"</br>
+    ///     display = "flex"
+    ///     <br />
+    ///     flexDirection  = "row"
+    ///     <br />
+    ///     justifyContent = "center"
+    ///     <br />
+    ///     alignItems     = "center"
     /// </summary>
     public static StyleModifier DisplayFlexRowCentered => CreateStyleModifier(style =>
     {
@@ -173,7 +193,6 @@ partial class Mixin
         style.alignItems     = "center";
     });
 }
-
 
 partial class Mixin
 {
