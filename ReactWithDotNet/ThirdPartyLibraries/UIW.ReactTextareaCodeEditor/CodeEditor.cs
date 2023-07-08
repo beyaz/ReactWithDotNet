@@ -19,6 +19,8 @@ public class CodeEditor : ThirdPartyReactComponent
     public string value { get; set; }
 
     [ReactProp]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
     public Expression<Func<string>> valueBind { get; set; }
 
     /// <summary>
