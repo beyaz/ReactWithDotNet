@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.ReactSimpleCodeEditor;
-using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactTextareaCodeEditor;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -106,11 +105,10 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             new style{ text = @"
 .npm__react-simple-code-editor__textarea:focus{  outline: none; }
 
-
-
 "},
             WidthHeightMaximized,
             Padding(10),
+            
 
             new div(FontSize23, Padding(10), TextAlignCenter)
             {
