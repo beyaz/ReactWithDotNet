@@ -10,7 +10,7 @@ import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { cpp } from '@codemirror/lang-cpp';
 import { java } from '@codemirror/lang-java';
-import { java } from '@codemirror/lang-javascript';
+import { javascript } from '@codemirror/lang-javascript';
 import { githubLight} from '@uiw/codemirror-theme-github';
 
 function register(name, value)
