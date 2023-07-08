@@ -16,6 +16,20 @@ public sealed class FreeScrollBar : ThirdPartyReactComponent
     {
         style.Apply(modifiers);
     }
+    
+  
+    
+    public FreeScrollBar(params Action<FreeScrollBar>[] modifiers) => modifiers.ApplyAll(Add);
+    
+    public FreeScrollBar(StyleModifier styleModifier, params Action<FreeScrollBar>[] modifiers)
+    {
+        Add(styleModifier);
+        modifiers.ApplyAll(Add);
+    }
+    
+    public void Add(Action<FreeScrollBar> modify) => modify?.Invoke(this);
+    
+    
     /// <summary>
     /// You can pass fixed to decide if handler's position: fixed or static. If fixed equals true, then the handler will overlap the content inside the scroller.
     /// </summary>

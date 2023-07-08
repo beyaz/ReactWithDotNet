@@ -58,6 +58,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             style =
             {
                 HeightMaximized,
+                OverflowYAuto,
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
@@ -94,16 +95,13 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                         }
                         
                     },
-                    new SplitterPanel(x=>x.size = 20)
+                    new SplitterPanel(x=>x.size = 30)
                     {
-                        new FreeScrollBar(WidthHeightMaximized)
-                        {
-                            csharpEditor
-                        }
+                        csharpEditor
                         
                     },
                     
-                    new SplitterPanel(x=>x.size =60)
+                    new SplitterPanel(x=>x.size =50)
                     {
                         new FreeScrollBar(WidthHeightMaximized)
                         {
