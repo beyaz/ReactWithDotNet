@@ -41,6 +41,194 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return data;
     }
 
+    static void ApplyShortHands(Dictionary<string, string> attributeMap)
+    {
+        widthHeightMaxiimized();
+        
+        
+        paddingLeftRight();
+        paddingTopBottom();
+        padding();
+        
+        marginLeftRight();
+        marginTopBottom();
+        margin();
+
+        borderLeftRight();
+        borderTopBottom();
+        border();
+        
+        
+
+        
+
+        void widthHeightMaxiimized()
+        {
+            if (attributeMap.TryGetValue("width", out var width))
+            {
+                if (attributeMap.TryGetValue("height", out var height))
+                {
+                    if (width == "100%" && height == "100%")
+                    {
+                        attributeMap.Remove("width");
+                        attributeMap.Remove("height");
+
+                        attributeMap.Add("WidthHeightMaximized", null);
+                    }
+                }
+            }
+        }
+        
+        
+        void paddingLeftRight()
+        {
+            if (attributeMap.TryGetValue("paddingLeft", out var left))
+            {
+                if (attributeMap.TryGetValue("paddingRight", out var right))
+                {
+                    if (left == right)
+                    {
+                        attributeMap.Remove("paddingLeft");
+                        attributeMap.Remove("paddingRight");
+
+                        attributeMap.Add("paddingLeftRight", left);
+                    }
+
+                }
+            }
+        }
+        
+        void paddingTopBottom()
+        {
+            if (attributeMap.TryGetValue("paddingTop", out var top) &&
+                attributeMap.TryGetValue("paddingBottom", out var bottom))
+            {
+                if (top == bottom)
+                {
+                    attributeMap.Remove("paddingTop");
+                    attributeMap.Remove("paddingBottom");
+
+                    attributeMap.Add("paddingTopBottom", top);
+                }
+            }
+        }
+        
+        void padding()
+        {
+            if (attributeMap.TryGetValue("paddingTopBottom", out var topBottom) &&
+                attributeMap.TryGetValue("paddingLeftRight", out var leftRight))
+            {
+                if (topBottom == leftRight)
+                {
+                    attributeMap.Remove("paddingTopBottom");
+                    attributeMap.Remove("paddingLeftRight");
+
+                    attributeMap.Add("padding", topBottom);
+                }
+            }
+        }
+        
+        
+        
+        void marginLeftRight()
+        {
+            if (attributeMap.TryGetValue("marginLeft", out var left))
+            {
+                if (attributeMap.TryGetValue("marginRight", out var right))
+                {
+                    if (left == right)
+                    {
+                        attributeMap.Remove("marginLeft");
+                        attributeMap.Remove("marginRight");
+
+                        attributeMap.Add("marginLeftRight", left);
+                    }
+
+                }
+            }
+        }
+        
+        void marginTopBottom()
+        {
+            if (attributeMap.TryGetValue("marginTop", out var top) &&
+                attributeMap.TryGetValue("marginBottom", out var bottom))
+            {
+                if (top == bottom)
+                {
+                    attributeMap.Remove("marginTop");
+                    attributeMap.Remove("marginBottom");
+
+                    attributeMap.Add("marginTopBottom", top);
+                }
+            }
+        }
+        
+        void margin()
+        {
+            if (attributeMap.TryGetValue("marginTopBottom", out var topBottom) &&
+                attributeMap.TryGetValue("marginLeftRight", out var leftRight))
+            {
+                if (topBottom == leftRight)
+                {
+                    attributeMap.Remove("marginTopBottom");
+                    attributeMap.Remove("marginLeftRight");
+
+                    attributeMap.Add("margin", topBottom);
+                }
+            }
+        }
+        
+        
+        
+        void borderLeftRight()
+        {
+            if (attributeMap.TryGetValue("borderLeft", out var left))
+            {
+                if (attributeMap.TryGetValue("borderRight", out var right))
+                {
+                    if (left == right)
+                    {
+                        attributeMap.Remove("borderLeft");
+                        attributeMap.Remove("borderRight");
+
+                        attributeMap.Add("borderLeftRight", left);
+                    }
+
+                }
+            }
+        }
+        
+        void borderTopBottom()
+        {
+            if (attributeMap.TryGetValue("borderTop", out var top) &&
+                attributeMap.TryGetValue("borderBottom", out var bottom))
+            {
+                if (top == bottom)
+                {
+                    attributeMap.Remove("borderTop");
+                    attributeMap.Remove("borderBottom");
+
+                    attributeMap.Add("borderTopBottom", top);
+                }
+            }
+        }
+        
+        void border()
+        {
+            if (attributeMap.TryGetValue("borderTopBottom", out var topBottom) &&
+                attributeMap.TryGetValue("borderLeftRight", out var leftRight))
+            {
+                if (topBottom == leftRight)
+                {
+                    attributeMap.Remove("borderTopBottom");
+                    attributeMap.Remove("borderLeftRight");
+
+                    attributeMap.Add("border", topBottom);
+                }
+            }
+        }
+    }
+
     static string CamelCase(string str)
     {
         if (str == null)
@@ -173,6 +361,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (attributeMap.Count > 0)
         {
+            ApplyShortHands(attributeMap);
+
             if (htmlNodeName == "div")
             {
                 if (hasAttribute("display", "flex"))
@@ -230,7 +420,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (htmlNode.ChildNodes.Count == 0)
             {
-                if (htmlNode.Name =="link")
+                if (htmlNode.Name == "link")
                 {
                     return new List<string>
                     {
@@ -238,6 +428,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         $"new {htmlNodeName} {{ {string.Join(", ", attributeMap.Select(p => $"{p.Key} = \"{p.Value}\""))} }}"
                     };
                 }
+
                 return new List<string>
                 {
                     // one line
@@ -346,14 +537,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static string ToModifier(string name, string value)
     {
+        if (char.IsUpper(name[0]) && string.IsNullOrEmpty(value))
+        {
+            return name;
+        }
+
         if (name == "flex" && value.Split(' ').Length == 3)
         {
             return $"Flex({string.Join(", ", value.Split(' '))})";
         }
-        
-       
-        
-        
 
         if (value.EndsWith("px"))
         {
@@ -390,14 +582,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             return $"{CamelCase(name)}({valueAsNumeric})";
         }
-        
+
         if ("Id ClassName Alt Src Href".Split(' ').Any(x => x == CamelCase(name)))
         {
             return $"{CamelCase(name)}(\"{CamelCase(value)}\")";
         }
 
         var modifierFullName = $"{CamelCase(name)}{CamelCase(value)}";
-        
+
         if (typeof(Mixin).GetProperty(modifierFullName) is not null)
         {
             return modifierFullName;
@@ -406,5 +598,3 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return $"{CamelCase(name)}(\"{CamelCase(value)}\")";
     }
 }
-
-
