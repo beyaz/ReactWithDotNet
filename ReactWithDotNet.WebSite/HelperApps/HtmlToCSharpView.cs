@@ -68,7 +68,6 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             highlight                = "html",
             style =
             {
-                Background("yellow"),
                 BorderNone,
                 FontSize11,
                 LineHeight16,
@@ -126,7 +125,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     {
                         new FreeScrollBar(WidthHeightMaximized)
                         {
-                            //htmlEditor
+                            htmlEditor
                         }
                         
                     },
