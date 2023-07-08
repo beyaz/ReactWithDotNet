@@ -71,42 +71,27 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             }
         };
 
-        Element csharpEditor = new CodeEditor
-        {
-            valueBind    = ()=>state.CSharpCode,
-            valueBindDebounceHandler = CSharpCode_OnEditFinished,
-            valueBindDebounceTimeout = 500,
-            language = "csharp",
-            style =
-            {
-                HeightMaximized,
-                FontSize11,
-                LineHeight16,
-                BackgroundColorTransparent,
-                FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
-                OverflowAuto,
-                WhiteSpacePre
-            }
-        };
+        
 
-        csharpEditor = new Editor
+        var csharpEditor = new Editor
         {
             valueBind                = ()=>state.CSharpCode,
             valueBindDebounceHandler = CSharpCode_OnEditFinished,
             valueBindDebounceTimeout = 500,
             highlight                = "clike",
-            //onChange = e => state.CSharpCode = e.target.value,
             style =
             {
-                WidthHeightMaximized,
+                //WidthHeightMaximized,
                 BorderNone,
+                
+                
 
                 FontSize11,
                 LineHeight16,
                 BackgroundColorTransparent,
                 FontFamily("ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"),
-                OverflowAuto,
-                WhiteSpacePre
+                //OverflowScroll,
+                //WhiteSpacePre,
             }
         };
 
@@ -119,6 +104,12 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
 
         return new FlexColumn
         {
+            new style{ text = @"
+.npm__react-simple-code-editor__textarea:focus{  outline: none; }
+
+
+
+"},
             WidthHeightMaximized,
             Padding(10),
 
@@ -141,7 +132,10 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
                     },
                     new SplitterPanel(x=>x.size = 30)
                     {
-                        csharpEditor
+                        new FreeScrollBar(WidthHeightMaximized)
+                        {
+                            csharpEditor
+                        }
                         
                     },
                     
