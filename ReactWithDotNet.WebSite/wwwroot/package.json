@@ -44,6 +44,10 @@
 
         "framer-motion": "^9.0.2",
 
-        "@uiw/react-textarea-code-editor": "^2.1.7"
+        "@uiw/react-textarea-code-editor": "^2.1.7",
+
+        
+        "prismjs": "^1.29.0", 
+        "react-simple-code-editor": "^0.13.1"
     }
 }
