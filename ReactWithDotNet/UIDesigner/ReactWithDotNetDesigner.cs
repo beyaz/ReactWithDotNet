@@ -182,11 +182,15 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             }
         };
 
-        var outputPanel = new div(Background("white"))
+        var outputPanel = new div
         {
+            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+            BackgroundSize("10px 10px"),
+            
             createElement(),
 
             Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
+            
             HeightMaximized,
             BoxShadow(0,4, 12,0,rgba(0, 0, 0, 0.1))
         };

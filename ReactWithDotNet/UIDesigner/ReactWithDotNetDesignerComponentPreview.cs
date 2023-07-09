@@ -44,7 +44,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
             
         }
         
-        return createElement();
+        return createElement()+Border("0.5px dotted #f27070");
     }
 
     static Type FindType(string typeReference)
