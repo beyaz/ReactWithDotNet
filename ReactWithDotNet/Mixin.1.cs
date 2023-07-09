@@ -835,6 +835,7 @@ public static partial class Mixin
     #region Margin
     public static StyleModifier Margin(string margin) => new(style => style.margin = margin);
     public static StyleModifier Margin(double margin) => new(style => style.margin = margin.AsPixel());
+    public static StyleModifier Margin(double topBottomPx, double lefRighttPx) => Margin($"{topBottomPx}px {lefRighttPx}px");
     public static StyleModifier MarginRight(string marginRight) => new(style => style.marginRight = marginRight);
     public static StyleModifier MarginLeft(string marginLeft) => new(style => style.marginLeft = marginLeft);
     public static StyleModifier MarginTop(string marginTop) => new(style => style.marginTop = marginTop);

@@ -261,7 +261,27 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     attributeMap.Remove("paddingLeftRight");
 
                     attributeMap.Add("padding", topBottom);
+
+                    return;
                 }
+
+                if (topBottom.EndsWith("px") && 
+                    leftRight.EndsWith("px")&&
+                    double.TryParse(topBottom.RemoveFromEnd("px"), out var topBottomAsNumber) &&
+                    double.TryParse(leftRight.RemoveFromEnd("px"), out var leftRightAsNumber))
+                {
+                    attributeMap.Remove("paddingTopBottom");
+                    attributeMap.Remove("paddingLeftRight");
+                    
+                    attributeMap.Add($"Padding({topBottomAsNumber}, {leftRightAsNumber})", null);
+                    return;
+                }
+                
+                attributeMap.Remove("paddingTopBottom");
+                attributeMap.Remove("paddingLeftRight");
+                    
+                attributeMap.Add($"Padding(\"{topBottom} {leftRight}\")", null);
+                
             }
         }
 
@@ -308,7 +328,25 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     attributeMap.Remove("marginLeftRight");
 
                     attributeMap.Add("margin", topBottom);
+                    return;
                 }
+                
+                if (topBottom.EndsWith("px") && 
+                    leftRight.EndsWith("px")&&
+                    double.TryParse(topBottom.RemoveFromEnd("px"), out var topBottomAsNumber) &&
+                    double.TryParse(leftRight.RemoveFromEnd("px"), out var leftRightAsNumber))
+                {
+                    attributeMap.Remove("marginTopBottom");
+                    attributeMap.Remove("marginLeftRight");
+                    
+                    attributeMap.Add($"Margin({topBottomAsNumber}, {leftRightAsNumber})", null);
+                    return;
+                }
+                
+                attributeMap.Remove("marginTopBottom");
+                attributeMap.Remove("marginLeftRight");
+                    
+                attributeMap.Add($"Margin(\"{topBottom} {leftRight}\")", null);
             }
         }
 
