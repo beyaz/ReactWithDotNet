@@ -82,7 +82,8 @@ public class Swiper : ThirdPartyReactComponent
     [ReactProp]
     public bool? centeredSlides { get; set; }
     
-
+    [ReactProp]
+    public string id { get; set; }
 
     [ReactProp]
     public SwiperFadeEffect fadeEffect { get; } = new();
@@ -129,6 +130,4 @@ public sealed class SwiperAutoplay
     public bool? disableOnInteraction { get; set; }
 }
 
-public class SwiperSlide : ThirdPartyReactComponent
-{
-}
+public class SwiperSlide : ThirdPartyReactComponent;
