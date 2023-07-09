@@ -42,6 +42,11 @@ public static partial class Mixin
     ///     style.color = 'white'
     /// </summary>
     public static StyleModifier ColorWhite => Color("white");
+    
+    /// <summary>
+    ///     style.color = 'inherit'
+    /// </summary>
+    public static StyleModifier ColorInherit=> Color("inherit");
 
     public static StyleModifier CursorDefault => Cursor("default");
     public static StyleModifier CursorPointer => Cursor("pointer");
