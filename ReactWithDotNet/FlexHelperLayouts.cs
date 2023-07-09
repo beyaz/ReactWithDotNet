@@ -55,7 +55,7 @@ public sealed class InlineFlexRow : HtmlElement
     /// </summary>
     public InlineFlexRow()
     {
-        style.display       = "flex";
+        style.display       = "inline-flex";
         style.flexDirection = "row";
     }
 
@@ -191,7 +191,7 @@ public sealed class InlineFlexRowCentered : HtmlElement
     /// </summary>
     public InlineFlexRowCentered()
     {
-        style.display        = "flex";
+        style.display        = "inline-flex";
         style.flexDirection  = "row";
         style.justifyContent = "center";
         style.alignItems     = "center";
@@ -281,7 +281,7 @@ public sealed class InlineFlexColumnCentered : HtmlElement
     /// </summary>
     public InlineFlexColumnCentered()
     {
-        style.display        = "flex";
+        style.display        = "inline-flex";
         style.flexDirection  = "column";
         style.justifyContent = "center";
         style.alignItems     = "center";
