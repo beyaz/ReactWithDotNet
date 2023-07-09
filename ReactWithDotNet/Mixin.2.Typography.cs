@@ -34,7 +34,12 @@ partial class Mixin
     public static StyleModifier FontSize39 => FontSize(30);
     public static StyleModifier FontSize40 => FontSize(30);
 
+	public static StyleModifier FontSize5 => FontSize(5);
+	public static StyleModifier FontSize6 => FontSize(6);
+	public static StyleModifier FontSize7 => FontSize(7);
+	public static StyleModifier FontSize8 => FontSize(8);
     public static StyleModifier FontSize9 => FontSize(9);
+	
 
     /// <summary>
     ///     style.fontSize = 'large'
