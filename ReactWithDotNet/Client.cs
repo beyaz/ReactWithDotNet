@@ -21,6 +21,11 @@ static partial class Mixin
             SenderComponentUniqueIdentifier = reactComponent.ComponentUniqueIdentifier.Value
         };
     }
+    
+    public static void OnThirdPartyComponentPropsCalculatedInClient<T>(this Client client, string javascripCode_fn_takes_props_then_return_props) where T: ThirdPartyReactComponent
+    {
+        client.RunJavascript($"window.ReactWithDotNet.OnThirdPartyComponentPropsCalculated('{typeof(T).FullName}', {javascripCode_fn_takes_props_then_return_props})");
+    }
 }
 
 public sealed class Client

@@ -2249,4 +2249,6 @@ var ReactWithDotNet =
     IsMediaDesktop: IsDesktop
 };
 
+window.ReactWithDotNet = ReactWithDotNet;
+
 export default ReactWithDotNet;
