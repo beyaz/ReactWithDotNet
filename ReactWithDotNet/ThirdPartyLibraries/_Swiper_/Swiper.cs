@@ -93,6 +93,11 @@ public class Swiper : ThirdPartyReactComponent
     [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public SwiperNavigationOption navigation { get; } = new();
+    
+    
+    [ReactProp]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEnumerableIsEmpty))]
+    public Dictionary<int,dynamic> breakpoints { get; } = new();
 }
 
 public sealed class SwiperNavigationOption

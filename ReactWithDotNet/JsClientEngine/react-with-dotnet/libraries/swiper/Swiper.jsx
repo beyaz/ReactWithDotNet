@@ -59,6 +59,7 @@ const SwiperForwarded = React.forwardRef((props, ref) => (
 
     <Swiper ref={ref}
         autoplay={props.autoplay}
+        breakpoints={props.breakpoints}
         effect={props.effect}
         grabCursor={props.grabCursor}
         init={props.init}

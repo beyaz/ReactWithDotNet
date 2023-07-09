@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
+﻿using System.Collections;
+
 
 namespace ReactWithDotNet.ThirdPartyLibraries;
 
@@ -25,5 +26,26 @@ static class Mixin
             action(item);
         }
         
+    }
+}
+
+
+static class DoNotSendToClientWhenEnumerableIsEmpty
+{
+    public static TransformValueInServerSideResponse Transform(object value, TransformValueInServerSideContext transformContext)
+    {
+        var enumerable = value as IEnumerable;
+
+        if (enumerable == null)
+        {
+            return new(false);
+        }
+        
+        foreach (var dummy in enumerable)
+        {
+            return new(needToExport: true, value);
+        }
+        
+        return   new(false);
     }
 }
