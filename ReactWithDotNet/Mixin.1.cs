@@ -16,6 +16,12 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier BackgroundTransparent =>
         Background("transparent");
+    
+    /// <summary>
+    ///     style.background = 'white'
+    /// </summary>
+    public static StyleModifier BackgroundWhite=>
+        Background("white");
 
   
 
