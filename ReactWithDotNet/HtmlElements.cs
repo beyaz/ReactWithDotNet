@@ -85,6 +85,10 @@ public sealed class input : HtmlElement
     public input(params IModifier[] modifiers) : base(modifiers)
     {
     }
+    public input(StyleModifier[] styleModifiers)
+    {
+        style.Apply(styleModifiers);
+    }
 
     [ReactProp]
     public string autocomplete { get; set; }
@@ -252,6 +256,18 @@ public sealed class link : HtmlElement
 
 public sealed class textarea : HtmlElement
 {
+    public textarea()
+    {
+        
+    }
+    public textarea(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
+    public textarea(StyleModifier[] styleModifiers)
+    {
+        style.Apply(styleModifiers);
+    }
+    
     [ReactProp]
     public int? cols { get; set; }
 
