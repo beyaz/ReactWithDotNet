@@ -169,4 +169,17 @@ partial class Mixin
 
         return $"{widthAsPx}px {styleName} {color}";
     }
+    
+    
+    
+    /// <summary>
+    ///     style.outline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Outline(string value)
+        => new(style => style.outline = value);
+    
+    /// <summary>
+    ///     style.outline = none
+    /// </summary>
+    public static StyleModifier OutlineNone => Outline("none");
 }
