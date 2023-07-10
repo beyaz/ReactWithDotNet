@@ -97,4 +97,24 @@ partial class Mixin
     /// </summary>
     public static StyleModifier WhenMediaSizeIsGreaterThanMobile(params StyleModifier[] styleModifiers)
         => WhenMediaSizeIsGreaterThanMobile(new Style(styleModifiers));
+    
+    
+    
+    /// <summary>
+    ///     min-width: <paramref name="widthAsPixel"/> + 'px'
+    /// </summary>
+    public static StyleModifier WhenMediaSizeIsGreaterThan(int widthAsPixel,params StyleModifier[] styleModifiers)
+        => MediaQuery($"(min-width: {widthAsPixel}px)", styleModifiers);
+    
+    /// <summary>
+    ///     max-width: <paramref name="widthAsPixel"/> + 'px'
+    /// </summary>
+    public static StyleModifier WhenMediaSizeIsLessThan(int widthAsPixel,params StyleModifier[] styleModifiers)
+        => MediaQuery($"(max-width: {widthAsPixel}px)", styleModifiers);
+    
+    /// <summary>
+    ///     (min-width: <paramref name="minWidthAsPixel"/> + 'px') and (max-width: <paramref name="maxWidthAsPixel"/> + 'px')
+    /// </summary>
+    public static StyleModifier WhenMediaSizeBetween(int minWidthAsPixel,int maxWidthAsPixel, params StyleModifier[] styleModifiers)
+        => MediaQuery($"(min-width: {minWidthAsPixel}px) and (max-width: {maxWidthAsPixel}px)", styleModifiers);
 }
