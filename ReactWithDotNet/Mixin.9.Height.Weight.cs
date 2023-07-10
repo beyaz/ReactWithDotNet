@@ -122,4 +122,22 @@ partial class Mixin
     {
         return new StyleModifier(style => style.objectFit = value);
     }
+    
+    
+    public static StyleModifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
+    public static StyleModifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
+    public static StyleModifier Zindex(int zIndex) => new(style => style.zIndex = zIndex.ToString());
+
+
+    public static StyleModifier Zindex0 => Zindex(0);
+    public static StyleModifier Zindex1 => Zindex(1);
+    public static StyleModifier Zindex2 => Zindex(2);
+    public static StyleModifier Zindex3 => Zindex(3);
+    public static StyleModifier Zindex4 => Zindex(4);
+    public static StyleModifier Zindex5 => Zindex(5);
+    public static StyleModifier Zindex6 => Zindex(6);
+    public static StyleModifier Zindex7 => Zindex(7);
+    public static StyleModifier Zindex8 => Zindex(8);
+    public static StyleModifier Zindex9 => Zindex(9);
+
 }
