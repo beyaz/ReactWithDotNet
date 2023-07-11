@@ -877,7 +877,7 @@ partial class ElementSerializer
                 IsReactHigherOrderComponent          = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
                 CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
                 ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
-                StateProperty                        = type.GetProperty("state")?.ToFastAccess()
+                StateProperty                        = type.GetProperty("state",BindingFlags.NonPublic|BindingFlags.Instance)?.ToFastAccess()
             };
 
             TypeInfoMap.TryAdd(type, typeInfo);
