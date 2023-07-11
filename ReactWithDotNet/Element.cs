@@ -87,7 +87,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return children.GetEnumerator();
     }
 
-    public override string ToString()
+    public string ToHtml()
     {
         return CalculateHtmlText(new CalculateHtmlTextInput
         {
