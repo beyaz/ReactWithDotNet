@@ -141,7 +141,7 @@ public abstract class ReactComponentBase : Element
 
 public abstract class ReactComponent<TState> : ReactComponentBase where TState : new()
 {
-    public TState state { get; protected set; }
+    protected TState state { get; set; }
 
     internal void InitState(TState value) => state = value;
 
