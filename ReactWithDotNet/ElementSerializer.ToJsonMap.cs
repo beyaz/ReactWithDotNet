@@ -314,7 +314,7 @@ partial class ElementSerializer
                         // maybe developer forget init state
                         if (reactStatefulComponent is ReactComponent<EmptyState> reactComponent)
                         {
-                            reactComponent.state = new EmptyState();
+                            reactComponent.InitState(new EmptyState());
                         }
                         else
                         {

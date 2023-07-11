@@ -136,7 +136,7 @@ static class ComponentRequestHandler
             // maybe developer forget init state
             if (instance is ReactComponent<EmptyState> { state: null } reactComponent)
             {
-                reactComponent.state = new EmptyState();
+                reactComponent.InitState(new EmptyState());
             }
 
             var stateTree = new StateTree

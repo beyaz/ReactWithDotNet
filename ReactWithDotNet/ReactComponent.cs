@@ -141,8 +141,9 @@ public abstract class ReactComponentBase : Element
 
 public abstract class ReactComponent<TState> : ReactComponentBase where TState : new()
 {
-    //[JsonProperty]
-    public TState state { get; protected internal set; }
+    public TState state { get; protected set; }
+
+    internal void InitState(TState value) => state = value;
 
     internal override bool IsStateNull => state == null;
 
