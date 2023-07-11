@@ -223,6 +223,26 @@ public static partial class Mixin
     ///     overflowX: auto
     /// </summary>
     public static StyleModifier OverflowXAuto => new(style => style.overflowX = "auto");
+    
+    /// <summary>
+    ///     overflowX: visible
+    /// </summary>
+    public static StyleModifier OverflowXVisible=> new(style => style.overflowX = "visible");
+    
+    /// <summary>
+    ///     overflowY: visible
+    /// </summary>
+    public static StyleModifier OverflowYVisible=> new(style => style.overflowY = "visible");
+    
+    /// <summary>
+    ///     overflowY: scroll
+    /// </summary>
+    public static StyleModifier OverflowYScroll=> new(style => style.overflowY = "scroll");
+    
+    /// <summary>
+    ///     overflowX: scroll
+    /// </summary>
+    public static StyleModifier OverflowXScroll=> new(style => style.overflowX = "scroll");
 
     /// <summary>
     ///     width = '100%' , height = '100%'
