@@ -218,6 +218,11 @@ public static partial class Mixin
     ///     overflowY: auto
     /// </summary>
     public static StyleModifier OverflowYAuto => new(style => style.overflowY = "auto");
+    
+    /// <summary>
+    ///     overflowX: auto
+    /// </summary>
+    public static StyleModifier OverflowXAuto => new(style => style.overflowX = "auto");
 
     /// <summary>
     ///     width = '100%' , height = '100%'
