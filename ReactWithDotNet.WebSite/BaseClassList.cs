@@ -19,7 +19,7 @@ public abstract class ReactPureComponent : ReactWithDotNet.ReactPureComponent
     public StyleModifier BorderForPaper => Border(Solid(1, Theme.grey_200));
 }
 
-public abstract class ReactComponent<TState> : ReactWithDotNet.ReactComponent<TState> where TState : new()
+public abstract class ReactComponent<TState> : ReactWithDotNet.ReactComponent<TState> where TState :class, new()
 {
     protected LightTheme Theme => ThemeKey[Context];
 

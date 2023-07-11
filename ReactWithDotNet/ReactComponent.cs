@@ -139,7 +139,7 @@ public abstract class ReactComponentBase : Element
     }
 }
 
-public abstract class ReactComponent<TState> : ReactComponentBase where TState : new()
+public abstract class ReactComponent<TState> : ReactComponentBase where TState : class, new()
 {
     protected TState state { get; set; }
 
