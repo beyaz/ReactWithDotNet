@@ -8,7 +8,7 @@ static class ReflectionHelper
 {
     public static Func<object, object> CreateGetFunction(PropertyInfo propertyInfo)
     {
-        var getMethod = propertyInfo.GetGetMethod();
+        var getMethod = propertyInfo.GetMethod;
         if (getMethod == null)
         {
             return null;

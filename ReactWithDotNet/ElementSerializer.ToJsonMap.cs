@@ -422,7 +422,7 @@ partial class ElementSerializer
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
                 map.Add(dotNetState, state);
                 map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
-                map.Add(___TypeOfState___, GetTypeFullNameOfState(reactStatefulComponent));
+                map.Add(___TypeOfState___, typeInfo.StateProperty.PropertyInfo.PropertyType.GetFullName());
                 map.Add(nameof(Element.key), reactStatefulComponent.key);
                 map.Add("DotNetProperties", dotNetProperties);
 

@@ -540,10 +540,7 @@ static partial class ElementSerializer
         return style;
     }
 
-    static string GetTypeFullNameOfState(object reactStatefulComponent)
-    {
-        return reactStatefulComponent.GetType().GetProperty("state")!.PropertyType.GetFullName();
-    }
+    
 
     static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo, object handlerTarget)
     {
