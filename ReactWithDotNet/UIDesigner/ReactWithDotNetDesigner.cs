@@ -10,6 +10,9 @@ namespace ReactWithDotNet.UIDesigner;
 public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
 {
     public static readonly ReactContextKey<bool> IsAttached = new(nameof(ReactWithDotNetDesigner) + "." + nameof(IsAttached));
+
+    public int UpdatingProgress { get; set; }
+    
     
     protected override Task constructor()
     {
@@ -24,6 +27,17 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
     void OnComponentPreviewRefreshed()
     {
+        UpdatingProgress = 25;
+        Client.GotoMethod(UpdateProgress,UpdatingProgress+25);
+    }
+    
+    void UpdateProgress(int newValue)
+    {
+        UpdatingProgress = newValue;
+        if (UpdatingProgress <= 100)
+        {
+            Client.GotoMethod(500,UpdateProgress,UpdatingProgress+25);    
+        }
         
     }
     
@@ -224,15 +238,15 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     CursorPointer,
                     Hover(FontSize17, Color("#9090f2"))
                 },
-                new div(PositionAbsolute,Right(20))
+                When(UpdatingProgress is > 0 and <= 100,()=>new div(PositionAbsolute,Right(20))
                 { 
                     new CircularProgress
                     { 
                         variant = "determinate",
-                        value   = (double)(DateTime.Now.Second%10)/10*100,
+                        value   = UpdatingProgress,
                         size    = 10
                     }
-                },
+                }),
                 
                 When(state.PropertyPanelIsClosed == false, propertyPanel),
                 When(state.PropertyPanelIsClosed, Width(15))
@@ -471,5 +485,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         }
 
         StateCache.Save(state);
+
+        OnComponentPreviewRefreshed();
     }
 }
