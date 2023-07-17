@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
-public sealed class Autocomplete : ElementBase
+partial class Autocomplete 
 {
     /// <summary>
     ///     Props applied to the [`Chip`](/material-ui/api/chip/) element.

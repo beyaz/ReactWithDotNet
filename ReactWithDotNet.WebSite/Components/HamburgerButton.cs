@@ -1,4 +1,7 @@
-﻿namespace ReactWithDotNet.WebSite.Components;
+﻿using Microsoft.Extensions.Options;
+using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+
+namespace ReactWithDotNet.WebSite.Components;
 
 class HamburgerButton : ReactComponent
 {
@@ -8,6 +11,12 @@ class HamburgerButton : ReactComponent
 
     protected override Element render()
     {
+        return new Autocomplete
+        {
+            options =
+        }
+            
+        
         return new button(DisplayFlexRowCentered, OnClick(Click))
         {
             Border(Solid(1,Theme.grey_300)),
