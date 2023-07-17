@@ -199,7 +199,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(CircularProgress)),
-            StartFrom        = "DistributiveOmit<PaperProps, 'classes'> & {",
+            StartFrom        = "<HTMLSpanElement>, 'children'> {",
             ClassName        = "CircularProgress",
             SkipMembers      = new[] { "children", "classes", "sx" }
         });
