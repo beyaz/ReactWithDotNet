@@ -11,6 +11,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         Client.GotoMethod(700, Refresh);
+        Client.RunJavascript("window.parent.ReactWithDotNet.DispatchEvent('ComponentPreviewRefreshed',[])");
     }
 
     protected override Task componentDidMount()

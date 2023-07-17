@@ -39,6 +39,10 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(HistoryReplaceState), stateObj, title, url);
     }
 
+    public static void ListenEvent(this Client client, string eventName, Action handler)
+    {
+        ListenEvent(client, eventName, handler.Method.Name);
+    }
     public static void ListenEvent(this Client client, Action<Client> triggerMethod, Action handler)
     {
         ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);

@@ -17,7 +17,14 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
 
+        Client.ListenEvent("ComponentPreviewRefreshed",OnComponentPreviewRefreshed);
+        
         return Task.CompletedTask;
+    }
+
+    void OnComponentPreviewRefreshed()
+    {
+        
     }
     
     protected override Element render()
@@ -222,8 +229,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     new CircularProgress
                     { 
                         variant = "determinate",
-                        value   = 49,//(DateTime.Now.Second/60)*100,
-                        size = 10
+                        value   = (double)(DateTime.Now.Second%10)/10*100,
+                        size    = 10
                     }
                 },
                 
