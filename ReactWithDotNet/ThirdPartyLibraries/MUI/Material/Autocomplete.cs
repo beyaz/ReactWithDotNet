@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
-partial class Autocomplete 
+public partial class Autocomplete
 {
     /// <summary>
     ///     Props applied to the [`Chip`](/material-ui/api/chip/) element.
@@ -263,4 +263,11 @@ partial class Autocomplete
     [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
     public dynamic slotProps { get; } = new ExpandoObject();
+    
+    /// <summary>
+    ///     The system prop that allows defining system overrides as well as additional CSS styles.
+    /// </summary>
+    [ReactProp]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]
+    public dynamic sx { get; } = new ExpandoObject();
 }

@@ -13,8 +13,15 @@ class HamburgerButton : ReactComponent
     {
         return new Autocomplete
         {
-            options =
-        }
+            options = new []
+            {
+                new{label ="Ab", id ="yy"},
+                new{label ="Abc", id ="yy5"}
+            },
+            sx = { width=300 },
+            renderInput = new TextField()
+            
+        };
             
         
         return new button(DisplayFlexRowCentered, OnClick(Click))
