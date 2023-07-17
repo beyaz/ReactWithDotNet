@@ -213,7 +213,8 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Autocomplete)),
             StartFrom        = " | 'children'> {",
             ClassName        = "Autocomplete",
-            SkipMembers      = new[] { "children", "classes", "sx" }
+            SkipMembers      = new[] { "children", "classes", "sx" },
+            ClassModifier    = "partial"
         });
     }
     
