@@ -28,7 +28,8 @@ enum TokenType
     LeftBracket,
     RightBracket,
     Lambda,
-    Assign
+    Assign,
+    Negative
 }
 
 static class TsLexer
@@ -149,7 +150,8 @@ static class TsLexer
                     '(' => TokenType.LeftParenthesis,
                     ')' => TokenType.RightParenthesis,
                     '=' => TokenType.Assign,
-                    _ => null
+                    '-' => TokenType.Negative,
+                    _   => null
                 };
 
                 if (tokenType == null)
