@@ -211,7 +211,7 @@ public class ExporterTest
         Exporter.ExportToCSharpFile(new ExportInput
         {
             DefinitionTsCode = GetTsCode(nameof(Autocomplete)),
-            StartFrom        = "<HTMLSpanElement>, 'children'> {",
+            StartFrom        = " | 'children'> {",
             ClassName        = "Autocomplete",
             SkipMembers      = new[] { "children", "classes", "sx" }
         });
