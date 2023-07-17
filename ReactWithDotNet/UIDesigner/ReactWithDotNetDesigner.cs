@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Newtonsoft.Json;
+using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 using static ReactWithDotNet.UIDesigner.Extensions;
@@ -215,8 +216,17 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     Color("#c5d7e8"),
                     CursorPointer,
                     Hover(FontSize17, Color("#9090f2"))
-                    
                 },
+                new div(PositionAbsolute,Right(20))
+                { 
+                    new CircularProgress
+                    { 
+                        variant = "determinate",
+                        value   = 49,//(DateTime.Now.Second/60)*100,
+                        size = 10
+                    }
+                },
+                
                 When(state.PropertyPanelIsClosed == false, propertyPanel),
                 When(state.PropertyPanelIsClosed, Width(15))
             },

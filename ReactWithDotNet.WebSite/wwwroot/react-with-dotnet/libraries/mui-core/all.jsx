@@ -26,6 +26,7 @@ register("Card",        React.lazy(() => import('./Card')));
 register("CardContent", React.lazy(() => import('./CardContent')));
 register("CardActions", React.lazy(() => import('./CardActions')));
 register("Typography",  React.lazy(() => import('./Typography')));
+register("CircularProgress", React.lazy(() => import('./CircularProgress'))); 
 
 register("FormGroup",        FormGroup);
 register("FormControlLabel", FormControlLabel);
