@@ -204,5 +204,17 @@ public class ExporterTest
             SkipMembers      = new[] { "children", "classes", "sx" }
         });
     }
-
+    
+    [TestMethod]
+    public void Autocomplete()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(Autocomplete)),
+            StartFrom        = "<HTMLSpanElement>, 'children'> {",
+            ClassName        = "Autocomplete",
+            SkipMembers      = new[] { "children", "classes", "sx" }
+        });
+    }
+    
 }
