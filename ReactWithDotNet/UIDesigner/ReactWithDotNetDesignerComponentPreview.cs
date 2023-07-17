@@ -5,13 +5,25 @@ using Newtonsoft.Json.Linq;
 namespace ReactWithDotNet.UIDesigner;
 
 public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithDotNetDesignerModel>
-{
+{ 
+    public DateTime? LastWriteTime { get; set; }
+    
     public void Refresh()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         Client.GotoMethod(700, Refresh);
-        Client.RunJavascript("window.parent.ReactWithDotNet.DispatchEvent('ComponentPreviewRefreshed',[])");
+        
+        var fullAssemblyPath = state.SelectedAssemblyFilePath;
+        var fileInfo = new FileInfo(fullAssemblyPath);
+        if (fileInfo.Exists)
+        {
+            if (LastWriteTime != fileInfo.LastWriteTime)
+            {
+                Client.RunJavascript("window.parent.ReactWithDotNet.DispatchEvent('ComponentPreviewRefreshed',[])");
+            }
+            LastWriteTime = fileInfo.LastWriteTime;
+        }
     }
 
     protected override Task componentDidMount()
