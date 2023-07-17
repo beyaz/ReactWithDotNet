@@ -192,5 +192,17 @@ public class ExporterTest
             ClassModifier = "partial"
         });
     }
+    
+    [TestMethod]
+    public void CircularProgress()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(CircularProgress)),
+            StartFrom        = "DistributiveOmit<PaperProps, 'classes'> & {",
+            ClassName        = "CircularProgress",
+            SkipMembers      = new[] { "children", "classes", "sx" }
+        });
+    }
 
 }
