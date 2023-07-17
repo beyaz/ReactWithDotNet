@@ -126,7 +126,7 @@ static class TsLexer
 
         // | < > , ? :
         {
-            var specialCharachters = "|<>,?:;{}.*&()[]=";
+            var specialCharachters = "|<>,?:;{}.*&()[]=-";
 
             var (hasRead, endIndex, value) = TryRead(content, startIndex, specialCharachters.Contains);
             if (hasRead)
