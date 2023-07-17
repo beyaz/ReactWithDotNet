@@ -28,15 +28,15 @@ const EventBus =
 {
     On: function(event, callback)
     {
-        document.addEventListener(event, callback);
+        window.addEventListener(event, callback);
     },
     Dispatch: function(event, data)
     {
-        document.dispatchEvent(new CustomEvent(event, { detail: data }));
+        window.dispatchEvent(new CustomEvent(event, { detail: data }));
     },
     Remove: function(event, callback)
     {
-        document.removeEventListener(event, callback);
+        window.removeEventListener(event, callback);
     }
 };
 
