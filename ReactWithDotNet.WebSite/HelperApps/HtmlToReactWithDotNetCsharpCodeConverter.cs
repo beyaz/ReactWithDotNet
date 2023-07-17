@@ -430,9 +430,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return null;
         }
 
-        if (value.IndexOf('"') >= 0)
+        if (value.Contains('\u2028'))
         {
-            value = value.Replace('"'.ToString(), '"' + string.Empty + '"');
+            value = value.Replace('\u2028', '\n');
+        }
+        
+        if (value.Contains('\n'))
+        {
+            value = value.Replace("\"", "\"\"");
+        }
+        else
+        {
+            value = value.Replace("\"", "\\\"");
         }
 
         if (value.Contains("&nbsp;"))
