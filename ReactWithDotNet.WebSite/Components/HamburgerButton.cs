@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
-
-namespace ReactWithDotNet.WebSite.Components;
+﻿namespace ReactWithDotNet.WebSite.Components;
 
 class HamburgerButton : ReactComponent
 {
@@ -11,19 +8,6 @@ class HamburgerButton : ReactComponent
 
     protected override Element render()
     {
-        return new Autocomplete
-        {
-            options = new []
-            {
-                new{label ="Ab", id ="yy"},
-                new{label ="Abc", id ="yy5"}
-            },
-            sx = { width=300 },
-            renderInput = new TextField()
-            
-        };
-            
-        
         return new button(DisplayFlexRowCentered, OnClick(Click))
         {
             Border(Solid(1,Theme.grey_300)),
