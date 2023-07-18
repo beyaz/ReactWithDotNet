@@ -31,6 +31,8 @@ public sealed class ReactContext
     public NameValueCollection Query { get; internal set; } = new();
 
     public string QueryAsString => string.Join("&", Query.AllKeys.Select(key => $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(Query[key])}"));
+    
+    internal IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
 
     public bool Contains<TValue>(ReactContextKey<TValue> key)
     {

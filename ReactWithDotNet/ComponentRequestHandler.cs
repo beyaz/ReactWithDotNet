@@ -21,6 +21,7 @@ sealed class ClientStateInfo
 sealed class ComponentRequest
 {
     public int CallFunctionId { get; set; }
+    
     public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
 
     public double ClientHeight { get; set; }
@@ -370,7 +371,9 @@ static class ComponentRequestHandler
         {
             Query        = string.IsNullOrWhiteSpace(request.QueryString) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.QueryString),
             ClientWidth  = request.ClientWidth,
-            ClientHeight = request.ClientHeight
+            ClientHeight = request.ClientHeight,
+            
+            CapturedStateTree = request.CapturedStateTree
         };
 
         return context;
