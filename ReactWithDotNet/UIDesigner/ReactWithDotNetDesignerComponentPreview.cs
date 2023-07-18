@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Reflection;
+using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -130,6 +131,9 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                                 component.key     = "0";
                                 component.Context = Context;
 
+
+                                tryUpdateStateFromStateTree(component, Context);
+
                                 if (component.IsStateNull)
                                 {
                                     component.InvokeConstructor().GetAwaiter().GetResult();
@@ -169,6 +173,8 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                         component.key     = "0";
                         component.Context = Context;
                         
+                        tryUpdateStateFromStateTree(component,Context);
+                        
                         if (component.IsStateNull)
                         {
                             component.InvokeConstructor().GetAwaiter().GetResult();
@@ -199,6 +205,28 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
         }
 
         return "Element not created. Select type or method from left panel";
+        
+        
+        static void tryUpdateStateFromStateTree(object component, ReactContext reactContext)
+        {
+            if (reactContext.CapturedStateTree?.TryGetValue("0,0", out var stateInfo) == true)
+            {
+                var stateAsJson = stateInfo.StateAsJson;
+                                        
+                if (!string.IsNullOrWhiteSpace(stateAsJson))
+                {
+                    var stateProperty = component.GetType().GetProperty("state", BindingFlags.Instance | BindingFlags.NonPublic);
+                    if (stateProperty is not null)
+                    {
+                        var propertyType = stateProperty.PropertyType;
+                                    
+                        var val = DeserializeJson(stateAsJson, propertyType);
+                                    
+                        stateProperty.SetValue(component,val);
+                    }
+                }    
+            }
+        }
     }
 
     static (bool successfullyRead, TValue value) ReadPropertyValueInJsonText<TValue>(string json, string propertyNameInJson)
