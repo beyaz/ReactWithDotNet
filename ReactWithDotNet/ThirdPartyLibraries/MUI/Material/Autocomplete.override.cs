@@ -28,7 +28,7 @@ public class Autocomplete<TOption> : Autocomplete where TOption : IAutocompleteO
     {
         if (propertyName == nameof(getOptionLabel))
         {
-            return (true, instance.options.Select(instance.getOptionLabel).ToList());
+            return (true, instance.options.Select(x=>new {option=x, label=instance.getOptionLabel(x)}).ToList());
         }
 
         return default;

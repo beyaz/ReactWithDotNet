@@ -20,6 +20,25 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
         }
     }
 
+    if (props.getOptionLabel)
+    {
+        var isTwoObjectEquivent = ReactWithDotNet.GetExternalJsObject('ReactWithDotNet::Core::IsTwoObjectEquivent');
+
+        var array = props.getOptionLabel;
+        props.getOptionLabel = (option) =>
+        {
+            for (var i = 0; i < array.length; i++)
+            {
+                if (isTwoObjectEquivent(array[i].option, option))
+                {
+                    return array[i].label;
+                }
+            }
+
+            throw 'DeveloperError: getOptionLabel not covered.';
+        };
+    }
+
     return props;
 });
 

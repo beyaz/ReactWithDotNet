@@ -259,6 +259,16 @@ static partial class ElementSerializer
             return NotExportableObject;
         }
 
+        var methodInfo = instance.GetType().GetMethod("GetPropertyValueForSerializeToClient", BindingFlags.NonPublic | BindingFlags.Static);
+        if (methodInfo is not null)
+        {
+            var output = ((bool isProcessed, object processedVersionOfPropertyValue))methodInfo?.Invoke(null, new[] { instance, propertyInfo.Name });
+            if (output.isProcessed)
+            {
+                return output.processedVersionOfPropertyValue;
+            }
+        }
+        
         if (property.TransformValueInServerSide != null)
         {
             string convertStyleToCssClass(Style style)

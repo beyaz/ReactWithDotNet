@@ -1772,6 +1772,7 @@ function RegisterCoreFunction(name, fn)
 ExternalJsObjectMap["ReactWithDotNet.GetExternalJsObject"] = GetExternalJsObject;
 
 RegisterCoreFunction('RegExp', (x) => new RegExp(x));
+RegisterCoreFunction('IsTwoObjectEquivent', isEquivent);
 
 RegisterCoreFunction('CopyToClipboard', function (text)
 {
