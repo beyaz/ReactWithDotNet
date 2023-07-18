@@ -239,7 +239,6 @@ partial class ElementSerializer
                     node.Stopwatch = new Stopwatch();
                     node.Stopwatch.Start();
                     context.Tracer.IndentLevel++;
-
                 }
 
                 if (context.ComponentStack.Count == 0)
@@ -341,11 +340,11 @@ partial class ElementSerializer
                     if (getDerivedStateFromPropsMethodShouldInvoke)
                     {
                         var stopwatch = new Stopwatch();
-                        
+
                         stopwatch.Start();
 
                         await reactStatefulComponent.OverrideStateFromPropsBeforeRender();
-                            
+
                         stopwatch.Stop();
                         if (stopwatch.ElapsedMilliseconds > 10)
                         {
@@ -473,9 +472,9 @@ partial class ElementSerializer
 
                         if (context.ComponentStack.TryPeek(out var top2))
                         {
-                            elementSerializerContext.ComponentStack.Push(top2);    
+                            elementSerializerContext.ComponentStack.Push(top2);
                         }
-                        
+
                         elementSerializerContext.DynamicStyles.ListOfClasses.AddRange(context.DynamicStyles.ListOfClasses);
 
                         return elementSerializerContext;
@@ -617,16 +616,16 @@ partial class ElementSerializer
                         throw FatalError("component stack problem");
                     }
                 }
-                
+
                 if (node.Stopwatch is not null)
                 {
                     node.Stopwatch.Stop();
 
                     if (node.Stopwatch.ElapsedMilliseconds > 10)
                     {
-                        context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");    
+                        context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");
                     }
-                    
+
                     context.Tracer.IndentLevel--;
                 }
             }
@@ -638,7 +637,7 @@ partial class ElementSerializer
     static async Task AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
         var typeInfo = GetTypeInfo(element.GetType());
-        
+
         var reactProperties = typeInfo.ReactAttributedPropertiesOfType;
 
         foreach (var item in reactProperties)
@@ -875,8 +874,7 @@ partial class ElementSerializer
                 (Func<object, string, (bool needToExport, object value)>)
                 type.GetMethod("GetPropertyValueForSerializeToClient", BindingFlags.NonPublic | BindingFlags.Static)
                     ?.CreateDelegate(typeof(Func<object, string, (bool needToExport, object value)>));
-            
-            
+
             typeInfo = new TypeInfo
             {
                 CustomEventPropertiesOfType          = reactCustomEventProperties,
@@ -885,8 +883,8 @@ partial class ElementSerializer
                 IsReactHigherOrderComponent          = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
                 CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
                 ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
-                StateProperty                        = type.GetProperty("state",BindingFlags.NonPublic|BindingFlags.Instance)?.ToFastAccess(),
-                
+                StateProperty                        = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance)?.ToFastAccess(),
+
                 GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc
             };
 
@@ -1043,7 +1041,6 @@ partial class ElementSerializer
             DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
             HasReactAttribute          = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
             TransformValueInServerSide = getTransformValueInServerSideTransformFunction()
-            
         };
 
         Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction()
@@ -1062,8 +1059,6 @@ partial class ElementSerializer
 
             return (Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>)methodInfo.CreateDelegate(typeof(Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>));
         }
-        
-      
     }
 
     internal class PropertyAccessInfo
@@ -1138,11 +1133,11 @@ partial class ElementSerializer
         public IReadOnlyList<MethodInfo> CacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> CustomEventPropertiesOfType { get; init; }
         public IReadOnlyList<PropertyAccessInfo> DotNetPropertiesOfType { get; init; }
+        public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient { get; init; }
         public bool IsReactHigherOrderComponent { get; init; }
         public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
         public PropertyAccessInfo StateProperty { get; init; }
-        public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient { get; init; }
     }
 }
 
