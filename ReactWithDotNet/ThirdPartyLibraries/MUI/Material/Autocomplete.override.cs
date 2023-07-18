@@ -2,13 +2,8 @@ namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
 public abstract partial class Autocomplete : ElementBase;
 
-public interface IAutocompleteOption
-{
-    public string label { get; set; }
-}
-
 [ReactRealType(typeof(Autocomplete))]
-public class Autocomplete<TOption> : Autocomplete where TOption : IAutocompleteOption, new()
+public class Autocomplete<TOption> : Autocomplete where TOption : class
 {
     [ReactProp]
     public Func<TOption, string> getOptionLabel { get; set; }
@@ -23,14 +18,14 @@ public class Autocomplete<TOption> : Autocomplete where TOption : IAutocompleteO
     [ReactProp]
     public TOption value { get; set; }
 
-    internal static (bool needToExport, object value) 
+    internal static (bool needToExport, object value)
         GetPropertyValueForSerializeToClient(object component, string propertyName)
     {
         var instance = (Autocomplete<TOption>)component;
-        
+
         if (propertyName == nameof(getOptionLabel))
         {
-            return (true, instance.options.Select(x=>new {option=x, label=instance.getOptionLabel(x)}).ToList());
+            return (true, instance.options.Select(x => new { option = x, label = instance.getOptionLabel(x) }).ToList());
         }
 
         return default;
