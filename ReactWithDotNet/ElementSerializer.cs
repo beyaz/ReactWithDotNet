@@ -247,7 +247,7 @@ static partial class ElementSerializer
         return propertyName;
     }
 
-    static async Task<ValueExportInfo<object>> GetPropertyValue(object instance, PropertyAccessInfo property, ElementSerializerContext context)
+    static async Task<ValueExportInfo<object>> GetPropertyValue(TypeInfo typeInfo,object instance, PropertyAccessInfo property, ElementSerializerContext context)
     {
         var propertyInfo = property.PropertyInfo;
 
@@ -259,13 +259,12 @@ static partial class ElementSerializer
             return NotExportableObject;
         }
 
-        var methodInfo = instance.GetType().GetMethod("GetPropertyValueForSerializeToClient", BindingFlags.NonPublic | BindingFlags.Static);
-        if (methodInfo is not null)
+        if (typeInfo.GetPropertyValueForSerializeToClient is not null)
         {
-            var output = ((bool isProcessed, object processedVersionOfPropertyValue))methodInfo?.Invoke(null, new[] { instance, propertyInfo.Name });
-            if (output.isProcessed)
+            var output = typeInfo.GetPropertyValueForSerializeToClient(instance, propertyInfo.Name);
+            if (output.needToExport)
             {
-                return output.processedVersionOfPropertyValue;
+                return output.value;
             }
         }
         

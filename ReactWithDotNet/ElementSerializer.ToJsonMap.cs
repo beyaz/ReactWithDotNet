@@ -637,13 +637,15 @@ partial class ElementSerializer
 
     static async Task AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
-        var reactProperties = GetTypeInfo(element.GetType()).ReactAttributedPropertiesOfType;
+        var typeInfo = GetTypeInfo(element.GetType());
+        
+        var reactProperties = typeInfo.ReactAttributedPropertiesOfType;
 
         foreach (var item in reactProperties)
         {
             var propertyInfo = item.PropertyInfo;
 
-            var valueExportInfo = await GetPropertyValue(element, item, context);
+            var valueExportInfo = await GetPropertyValue(typeInfo, element, item, context);
             if (valueExportInfo.NeedToExport)
             {
                 add(GetPropertyName(propertyInfo), valueExportInfo.Value);
@@ -869,6 +871,12 @@ partial class ElementSerializer
                 }
             }
 
+            var getPropertyValueForSerializeToClientFunc =
+                (Func<object, string, (bool needToExport, object value)>)
+                type.GetMethod("GetPropertyValueForSerializeToClient", BindingFlags.NonPublic | BindingFlags.Static)
+                    ?.CreateDelegate(typeof(Func<object, string, (bool needToExport, object value)>));
+            
+            
             typeInfo = new TypeInfo
             {
                 CustomEventPropertiesOfType          = reactCustomEventProperties,
@@ -877,7 +885,9 @@ partial class ElementSerializer
                 IsReactHigherOrderComponent          = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
                 CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
                 ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
-                StateProperty                        = type.GetProperty("state",BindingFlags.NonPublic|BindingFlags.Instance)?.ToFastAccess()
+                StateProperty                        = type.GetProperty("state",BindingFlags.NonPublic|BindingFlags.Instance)?.ToFastAccess(),
+                
+                GetPropertyValueForSerializeToClient = getPropertyValueForSerializeToClientFunc
             };
 
             TypeInfoMap.TryAdd(type, typeInfo);
@@ -1033,6 +1043,7 @@ partial class ElementSerializer
             DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
             HasReactAttribute          = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
             TransformValueInServerSide = getTransformValueInServerSideTransformFunction()
+            
         };
 
         Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction()
@@ -1051,6 +1062,8 @@ partial class ElementSerializer
 
             return (Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>)methodInfo.CreateDelegate(typeof(Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>));
         }
+        
+      
     }
 
     internal class PropertyAccessInfo
@@ -1129,6 +1142,7 @@ partial class ElementSerializer
         public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
         public PropertyAccessInfo StateProperty { get; init; }
+        public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient { get; init; }
     }
 }
 

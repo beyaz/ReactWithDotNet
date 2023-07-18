@@ -23,9 +23,11 @@ public class Autocomplete<TOption> : Autocomplete where TOption : IAutocompleteO
     [ReactProp]
     public TOption value { get; set; }
 
-    internal static (bool isProcessed, object processedVersionOfPropertyValue) 
-        GetPropertyValueForSerializeToClient(Autocomplete<TOption> instance, string propertyName)
+    internal static (bool needToExport, object value) 
+        GetPropertyValueForSerializeToClient(object component, string propertyName)
     {
+        var instance = (Autocomplete<TOption>)component;
+        
         if (propertyName == nameof(getOptionLabel))
         {
             return (true, instance.options.Select(x=>new {option=x, label=instance.getOptionLabel(x)}).ToList());
