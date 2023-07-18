@@ -1,20 +1,6 @@
-
-using System.Collections;
 namespace ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
-public abstract partial  class Autocomplete : ElementBase
-{
-    //[ReactProp]
-    //public dynamic options { get; set; }
-    
-    //[ReactProp]
-    //public string value { get; set; }
-    
-    //[ReactProp]
-    //[ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Autocomplete::calculate_onChange_arguments")]
-    //public Action<ChangeEvent,string> onChange { get; set; }
-}
-
+public abstract partial class Autocomplete : ElementBase;
 
 public interface IAutocompleteOption
 {
@@ -25,12 +11,26 @@ public interface IAutocompleteOption
 public class Autocomplete<TOption> : Autocomplete where TOption : IAutocompleteOption, new()
 {
     [ReactProp]
-    public IEnumerable<TOption> options { get; set; }
-    
-    [ReactProp]
-    public TOption value { get; set; }
-    
+    public Func<TOption, string> getOptionLabel { get; set; }
+
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Autocomplete::calculate_onChange_arguments")]
-    public Action<ChangeEvent,TOption> onChange { get; set; }
+    public Action<ChangeEvent, TOption> onChange { get; set; }
+
+    [ReactProp]
+    public IEnumerable<TOption> options { get; set; }
+
+    [ReactProp]
+    public TOption value { get; set; }
+
+    internal static (bool isProcessed, object processedVersionOfPropertyValue) 
+        GetPropertyValueForSerializeToClient(Autocomplete<TOption> instance, string propertyName)
+    {
+        if (propertyName == nameof(getOptionLabel))
+        {
+            return (true, instance.options.Select(instance.getOptionLabel).ToList());
+        }
+
+        return default;
+    }
 }
