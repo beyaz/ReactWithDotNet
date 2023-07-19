@@ -14,8 +14,7 @@ static class ReactWithDotNetIntegration
     {
         endpoints.MapGet("/", HomePage);
         endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
-        endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), ReactWithDotNetDesigner);
-        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), ReactWithDotNetDesignerComponentPreview);
+       
         
         endpoints.MapGet("/LiveEditor", async httpContext =>
         {
@@ -24,6 +23,9 @@ static class ReactWithDotNetIntegration
                 Page = new HtmlToCSharpView()
             });
         });
+        
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), ReactWithDotNetDesigner);
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), ReactWithDotNetDesignerComponentPreview);
     }
 
     static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
@@ -50,6 +52,8 @@ static class ReactWithDotNetIntegration
 
     static async Task ReactWithDotNetDesigner(HttpContext httpContext)
     {
+        UIDesigner.ReactWithDotNetDesigner.IsAttached = true;
+        
         await WriteHtmlResponse(httpContext, new MainLayout
         {
             Page = new ReactWithDotNetDesigner()

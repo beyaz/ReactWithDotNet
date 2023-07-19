@@ -9,7 +9,7 @@ namespace ReactWithDotNet.UIDesigner;
 
 public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
 {
-    public static readonly ReactContextKey<bool> IsAttached = new(nameof(ReactWithDotNetDesigner) + "." + nameof(IsAttached));
+    public static bool IsAttached { get; set; }
 
     public int UpdatingProgress { get; set; }
     
