@@ -80,4 +80,14 @@ static partial class Extensions
 
         return instance;
     }
+
+    public static Style Container => new()
+    {
+        MaxWidth(1200),
+        DisplayFlexRow,
+        JustifyContentCenter,
+
+        PaddingLeftRight("5%"),
+        WhenMediaSizeIsGreaterThanMobile(PaddingLeftRight("10%"))
+    };
 }
