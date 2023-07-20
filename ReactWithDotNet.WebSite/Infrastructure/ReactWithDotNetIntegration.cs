@@ -14,8 +14,7 @@ static class ReactWithDotNetIntegration
     {
         endpoints.MapGet("/", HomePage);
         endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
-       
-        
+
         endpoints.MapGet("/LiveEditor", async httpContext =>
         {
             await WriteHtmlResponse(httpContext, new MainLayout
@@ -23,9 +22,28 @@ static class ReactWithDotNetIntegration
                 Page = new HtmlToCSharpView()
             });
         });
+
+        #if DEBUG // this two endpoint can use only development mode.
         
-        endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), ReactWithDotNetDesigner);
-        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), ReactWithDotNetDesignerComponentPreview);
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), async httpContext =>
+        {
+            //ReactWithDotNetDesigner.IsAttached = true;
+
+            await WriteHtmlResponse(httpContext, new MainLayout
+            {
+                Page = new ReactWithDotNetDesigner()
+            });
+        });
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), async httpContext =>
+        {
+            ReactWithDotNetDesigner.IsAttached = true;
+            
+            await WriteHtmlResponse(httpContext, new MainLayout
+            {
+                Page = new ReactWithDotNetDesignerComponentPreview()
+            });
+        });
+        #endif
     }
 
     static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
@@ -34,7 +52,7 @@ static class ReactWithDotNetIntegration
 
         var jsonText = await CalculateRenderInfo(new CalculateRenderInfoInput
         {
-            HttpContext = httpContext,
+            HttpContext           = httpContext,
             OnReactContextCreated = InitializeTheme
         });
 
@@ -50,22 +68,10 @@ static class ReactWithDotNetIntegration
         });
     }
 
-    static async Task ReactWithDotNetDesigner(HttpContext httpContext)
+    static Task InitializeTheme(ReactContext context)
     {
-        UIDesigner.ReactWithDotNetDesigner.IsAttached = true;
-        
-        await WriteHtmlResponse(httpContext, new MainLayout
-        {
-            Page = new ReactWithDotNetDesigner()
-        });
-    }
-
-    static async Task ReactWithDotNetDesignerComponentPreview(HttpContext httpContext)
-    {
-        await WriteHtmlResponse(httpContext, new MainLayout
-        {
-            Page = new ReactWithDotNetDesignerComponentPreview()
-        });
+        context.Set(ThemeKey, new LightTheme());
+        return Task.CompletedTask;
     }
 
     static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout mainLayout)
@@ -73,26 +79,18 @@ static class ReactWithDotNetIntegration
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
         httpContext.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
-        httpContext.Response.Headers[HeaderNames.Expires] = "0";
-        httpContext.Response.Headers[HeaderNames.Pragma] = "no-cache";
+        httpContext.Response.Headers[HeaderNames.Expires]      = "0";
+        httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
         mainLayout.RenderInfo = await CalculateRenderInfo(mainLayout.Page, mainLayout.QueryString, InitializeTheme);
 
-       
-        
         var html = await CalculateHtmlText(new CalculateHtmlTextInput
         {
-            ReactComponent = mainLayout,
-            QueryString    = httpContext.Request.QueryString.ToString(),
+            ReactComponent        = mainLayout,
+            QueryString           = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated = InitializeTheme
         });
 
         await httpContext.Response.WriteAsync(html);
-    }
-
-    static Task InitializeTheme(ReactContext context)
-    {
-        context.Set(ThemeKey, new LightTheme());
-        return Task.CompletedTask;
     }
 }
