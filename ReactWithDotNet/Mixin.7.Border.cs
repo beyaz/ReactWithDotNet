@@ -77,8 +77,22 @@ partial class Mixin
     public static StyleModifier BorderBottomWidth(string borderBottomWidth)
         => new(style => style.borderBottomWidth = borderBottomWidth);
     
-    public static StyleModifier BorderRightStyle(string borderRightStyle)
-        => new(style => style.borderRightStyle = borderRightStyle);
+    /// <summary>
+    /// specifies the indentation of the first line in a text-block
+    /// <br/>
+    /// style.textIndent = <paramref name="value"/>
+    /// </summary>
+    public static StyleModifier TextIndent(string value)
+        => new(style => style.textIndent = value);
+    
+    /// <summary>
+    /// specifies the indentation of the first line in a text-block
+    /// <br/>
+    /// style.textIndent = <paramref name="valueInPixel"/> + 'px'
+    /// </summary>
+    public static StyleModifier TextIndent(double valueInPixel)
+        => TextIndent(valueInPixel.AsPixel());
+        
 
     /// <summary>
     ///     style.borderTop = <paramref name="borderValue"/>

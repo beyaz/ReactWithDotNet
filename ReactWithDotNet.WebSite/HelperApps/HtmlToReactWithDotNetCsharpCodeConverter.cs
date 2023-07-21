@@ -56,6 +56,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         borderLeftRight();
         borderTopBottom();
         border();
+        borderShortHands();
 
         displayFlexColumnCentered();
 
@@ -395,6 +396,26 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     attributeMap.Add("border", topBottom);
                 }
             }
+        }
+        
+        
+        void borderShortHands()
+        {
+            foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
+            {
+                if (attributeMap.TryGetValue($"{prefix}Style", out var style) &&
+                    attributeMap.TryGetValue($"{prefix}Width", out var width) &&
+                    !attributeMap.ContainsKey($"{prefix}Color") &&
+                    !attributeMap.ContainsKey($"{prefix}"))
+                {
+                    attributeMap.Remove($"{prefix}Style");
+                    attributeMap.Remove($"{prefix}Width");
+
+                    attributeMap.Add($"{prefix}", $"{width} {style}");
+                }
+            }
+            
+            
         }
     }
 
