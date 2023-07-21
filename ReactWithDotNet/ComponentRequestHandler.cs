@@ -228,17 +228,21 @@ static class ComponentRequestHandler
                         {
                             propertyValue = jToken.ToObject(property.PropertyType);
                         }
-
-                        if (property.PropertyType == typeof(int))
+                        else
                         {
-                            propertyValue = Convert.ChangeType(propertyValue, TypeCode.Int32);
+                            if (propertyValue is null && property.PropertyType.IsClass)
+                            {
+                            }
+                            else
+                            {
+                                var typeCode = Type.GetTypeCode(property.PropertyType);
+                                if (typeCode is not TypeCode.Empty)
+                                {
+                                    propertyValue = Convert.ChangeType(propertyValue, typeCode);
+                                }
+                            }
                         }
-
-                        if (property.PropertyType == typeof(int?) && propertyValue is not null)
-                        {
-                            propertyValue = Convert.ChangeType(propertyValue, TypeCode.Int32);
-                        }
-
+                        
                         property.SetValue(instance, propertyValue);
                     }
                 }
