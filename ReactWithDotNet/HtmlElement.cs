@@ -105,6 +105,9 @@ public abstract class HtmlElement : Element
 
     [ReactProp]
     public virtual string id { get; set; }
+    
+    [ReactProp]
+    public  string name { get; set; }
 
     [JsonIgnore]
     public string innerHTML
