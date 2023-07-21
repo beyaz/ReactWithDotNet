@@ -40,6 +40,32 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         return data;
     }
+    
+    /// <summary>
+    ///     Removes value from start of str
+    /// </summary>
+     static string RemoveFromStart(this string data, string value)
+    {
+        return RemoveFromStart(data, value, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    ///     Removes value from start of str
+    /// </summary>
+     static string RemoveFromStart(this string data, string value, StringComparison comparison)
+    {
+        if (data == null)
+        {
+            return null;
+        }
+
+        if (data.StartsWith(value, comparison))
+        {
+            return data.Substring(value.Length, data.Length - value.Length);
+        }
+
+        return data;
+    }
 
     static void ApplyShortHands(Dictionary<string, string> attributeMap)
     {
@@ -66,6 +92,23 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         displayFlexColumn();
 
         displayFlexRow();
+        data();
+        
+        
+        void data()
+        {
+            var dataList = attributeMap.Where(x => x.Key.StartsWith("data-", StringComparison.OrdinalIgnoreCase)).ToList();
+            
+            
+            foreach (var (key, value) in dataList)
+            {
+                attributeMap.Remove(key);
+
+                attributeMap.Add($"Data(\"{key.RemoveFromStart("data-")}\", \"{value}\"", null);
+            }
+        }
+        
+        
         
         void displayFlexRow()
         {
