@@ -46,4 +46,9 @@ partial class Mixin
     ///     a.href = <paramref name="href" />
     /// </summary>
     public static HtmlElementModifier Href(string href) => a.Href(href);
+
+    /// <summary>
+    ///     a.target = '_blank'
+    /// </summary>
+    public static HtmlElementModifier TargetBlank => a.TargetBlank;
 }
