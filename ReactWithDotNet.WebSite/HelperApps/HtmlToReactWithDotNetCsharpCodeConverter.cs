@@ -57,6 +57,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         borderTopBottom();
         border();
         borderShortHands();
+        targetBlank();
 
         displayFlexColumnCentered();
 
@@ -414,8 +415,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     attributeMap.Add($"{prefix}", $"{width} {style}");
                 }
             }
-            
-            
+        }
+        
+        
+        void targetBlank()
+        {
+            if (attributeMap.TryGetValue("target", out var target))
+            {
+                if (target == "_blank")
+                {
+                    attributeMap.Remove("target");
+
+                    attributeMap.Add("TargetBlank", "");
+                }
+            }
         }
     }
 
