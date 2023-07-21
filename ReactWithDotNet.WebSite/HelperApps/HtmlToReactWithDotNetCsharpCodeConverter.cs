@@ -738,6 +738,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             attributeName = "CellSpacing";
         }
+        if (attributeName == "cellpadding")
+        {
+            attributeName = "cellPadding";
+        }
+        
         
 
         if (attributeName == "tabindex")
