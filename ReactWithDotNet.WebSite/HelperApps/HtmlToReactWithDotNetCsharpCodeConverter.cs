@@ -811,7 +811,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             attributeName = "preserveAspectRatio";
         }
 
-        if (attributeName.Contains("-"))
+        if (attributeName.Contains("-") && !attributeName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
         {
             var parts = attributeName.Split("-");
 
