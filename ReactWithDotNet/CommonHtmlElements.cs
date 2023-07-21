@@ -644,6 +644,37 @@ public sealed class i : HtmlElement
 }
 
 /// <summary>
+///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
+/// </summary>
+public sealed class u : HtmlElement
+{
+    /// <summary>
+    ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
+    /// </summary>
+    public u() { }
+
+    /// <summary>
+    ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
+    /// </summary>
+    public u(params IModifier[] modifiers) : base(modifiers) { }
+
+    /// <summary>
+    ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
+    /// </summary>
+    public u(string innerText) : base(innerText) {  }
+
+    /// <summary>
+    ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
+    /// </summary>
+    public static implicit operator u(string text) => new() { text = text };
+
+    /// <summary>
+    ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
+    /// </summary>
+    public u(Style style) : base(style) { }
+}
+
+/// <summary>
 ///     Important text
 /// </summary>
 public sealed class strong : HtmlElement

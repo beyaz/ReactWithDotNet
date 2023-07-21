@@ -6,7 +6,7 @@ using static System.String;
 namespace ReactWithDotNet.Test;
 
 [TestClass]
-[Ignore]
+//[Ignore]
 public class UnitTest1
 {
     [TestMethod]
@@ -60,6 +60,8 @@ public class UnitTest1
             new() { Tag = "b", Comment = "Bold text" },
 
             new() { Tag = "i", Comment = "Italic text" },
+            
+            new() { Tag = "u", Comment = "Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline." },
 
             new() { Tag = "strong", Comment = "Important text" },
 
@@ -146,7 +148,7 @@ public class UnitTest1
             sb.AppendLine(item);
         }
 
-        File.WriteAllText(@"C:\github\ReactDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
+        File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
     }
 
     class TagInfo
