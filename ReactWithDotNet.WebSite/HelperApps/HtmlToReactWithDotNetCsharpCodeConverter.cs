@@ -104,7 +104,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 attributeMap.Remove(key);
 
-                attributeMap.Add($"Data(\"{key.RemoveFromStart("data-")}\", \"{value}\"", null);
+                attributeMap.Add($"Data(\"{key.RemoveFromStart("data-")}\", \"{value}\")", null);
             }
         }
         
