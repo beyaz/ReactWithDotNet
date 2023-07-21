@@ -76,6 +76,9 @@ partial class Mixin
     
     public static StyleModifier BorderBottomWidth(string borderBottomWidth)
         => new(style => style.borderBottomWidth = borderBottomWidth);
+    
+    public static StyleModifier BorderRightStyle(string borderRightStyle)
+        => new(style => style.borderRightStyle = borderRightStyle);
 
     /// <summary>
     ///     style.borderTop = <paramref name="borderValue"/>
