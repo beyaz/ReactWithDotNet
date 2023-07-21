@@ -211,4 +211,24 @@ partial class Mixin
     ///     style.outline = none
     /// </summary>
     public static StyleModifier OutlineNone => Outline("none");
+    
+    
+    
+    /// <summary>
+    /// Sets whether table borders should collapse into a single border or be separated as in standard HTML.
+    /// <br/>
+    /// style.borderCollapse = <paramref name="value"/>
+    /// </summary>
+    public static StyleModifier BorderCollapse(string value)
+        => new(style => style.borderCollapse = value);
+    
+    /// <summary>
+    ///     style.borderCollapse = collapse
+    /// </summary>
+    public static StyleModifier BorderCollapseCollapse => BorderCollapse("collapse");
+    
+    /// <summary>
+    ///     style.borderCollapse = separate
+    /// </summary>
+    public static StyleModifier BorderCollapseSeparate => BorderCollapse("separate");
 }
