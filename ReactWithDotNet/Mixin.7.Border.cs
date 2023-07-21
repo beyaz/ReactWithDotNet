@@ -235,7 +235,7 @@ partial class Mixin
     /// <summary>
     ///     table.cellSpacing = <paramref name="value" />
     /// </summary>
-    public static HtmlElementModifier CellSpacing(string value) => table.CellSpacing(value);
+    public static HtmlElementModifier CellSpacing(double? value) => table.CellSpacing(value);
 
 
     /// <summary>

@@ -3,12 +3,12 @@
 public sealed class table : HtmlElement
 {
     [ReactProp]
-    public string cellSpacing  { get; set; }
+    public double? cellSpacing  { get; set; }
     
     /// <summary>
     ///     table.cellSpacing = <paramref name="value" />
     /// </summary>
-    public static HtmlElementModifier CellSpacing(string value) =>
+    public static HtmlElementModifier CellSpacing(double? value) =>
         CreateHtmlElementModifier<table>(element => element.cellSpacing = value);
     
     public table(params IModifier[] modifiers) : base(modifiers)
