@@ -440,6 +440,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     attributeMap.Add("border", topBottom);
                 }
             }
+            
+            
+            if (attributeMap.TryGetValue("border", out var borderValue) && borderValue == "0")
+            {
+                attributeMap.Remove("border");
+                attributeMap.Add("BorderNone", null);
+            }
         }
         
         
