@@ -231,4 +231,10 @@ partial class Mixin
     ///     style.borderCollapse = separate
     /// </summary>
     public static StyleModifier BorderCollapseSeparate => BorderCollapse("separate");
+
+    /// <summary>
+    ///     table.cellSpacing = <paramref name="value" />
+    /// </summary>
+    public static HtmlElementModifier CellSpacing(string value) => table.CellSpacing(value);
+
 }
