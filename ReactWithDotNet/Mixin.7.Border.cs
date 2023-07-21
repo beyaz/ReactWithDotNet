@@ -237,4 +237,43 @@ partial class Mixin
     /// </summary>
     public static HtmlElementModifier CellSpacing(string value) => table.CellSpacing(value);
 
+
+    /// <summary>
+    ///     (tr-td).colSpan = <paramref name="value" />
+    /// </summary>
+    public static HtmlElementModifier ColSpan(int value) => CreateHtmlElementModifier<HtmlElement>(el =>
+    {
+        if (el is td tdElement)
+        {
+            tdElement.colSpan = value;
+        }
+        else if (el is tr trElement)
+        {
+            trElement.colSpan = value;
+        }
+        else
+        {
+            throw new DeveloperException($"ColSpan modifier is invalid for this element. Element is: {el.GetType().FullName}");
+        }
+    });
+    
+    /// <summary>
+    ///     (tr-td).rowSpan = <paramref name="value" />
+    /// </summary>
+    public static HtmlElementModifier RowSpan(int value) => CreateHtmlElementModifier<HtmlElement>(el =>
+    {
+        if (el is td tdElement)
+        {
+            tdElement.rowSpan = value;
+        }
+        else if (el is tr trElement)
+        {
+            trElement.rowSpan = value;
+        }
+        else
+        {
+            throw new DeveloperException($"RowSpan modifier is invalid for this element. Element is: {el.GetType().FullName}");
+        }
+    });
+
 }

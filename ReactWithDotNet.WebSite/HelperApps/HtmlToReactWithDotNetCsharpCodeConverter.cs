@@ -725,6 +725,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             attributeName = "viewBox";
         }
+        
+        if (attributeName == "rowspan")
+        {
+            attributeName = "rowSpan";
+        }
+        if (attributeName == "colspan")
+        {
+            attributeName = "colSpan";
+        }
+        if (attributeName == "cellspacing")
+        {
+            attributeName = "CellSpacing";
+        }
+        
 
         if (attributeName == "tabindex")
         {
