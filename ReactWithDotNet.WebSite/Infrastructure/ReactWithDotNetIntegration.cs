@@ -23,11 +23,11 @@ static class ReactWithDotNetIntegration
             });
         });
 
-        #if DEBUG // this two endpoint can use only development mode.
+        #if DEBUG // this two endpoints should use only development mode
         
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), async httpContext =>
         {
-            //ReactWithDotNetDesigner.IsAttached = true;
+            ReactWithDotNetDesigner.IsAttached = true;
 
             await WriteHtmlResponse(httpContext, new MainLayout
             {
