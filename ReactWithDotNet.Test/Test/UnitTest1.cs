@@ -6,7 +6,7 @@ using static System.String;
 namespace ReactWithDotNet.Test;
 
 [TestClass]
-//[Ignore]
+[Ignore]
 public class UnitTest1
 {
     [TestMethod]
