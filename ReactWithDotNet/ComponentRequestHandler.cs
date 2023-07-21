@@ -230,17 +230,13 @@ static class ComponentRequestHandler
                         }
                         else
                         {
-                            if (propertyValue is null && property.PropertyType.IsClass)
+                            var changeResponse = ChangeType(propertyValue, property.PropertyType);
+                            if (changeResponse.exception is not null)
                             {
+                                throw DeveloperException(changeResponse.exception.Message);
                             }
-                            else
-                            {
-                                var typeCode = Type.GetTypeCode(property.PropertyType);
-                                if (typeCode is not TypeCode.Empty)
-                                {
-                                    propertyValue = Convert.ChangeType(propertyValue, typeCode);
-                                }
-                            }
+
+                            propertyValue = changeResponse.value;
                         }
                         
                         property.SetValue(instance, propertyValue);

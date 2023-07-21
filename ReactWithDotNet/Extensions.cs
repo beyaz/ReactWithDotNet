@@ -5,24 +5,6 @@ namespace ReactWithDotNet;
 
 static class Extensions
 {
-    public static IReadOnlyList<B> ToReadOnlyListOf<A, B>(this IEnumerable enumerable, Func<A, B> convertFunc)
-    {
-        if (enumerable == null)
-        {
-            throw new ArgumentNullException(nameof(enumerable));
-        }
-
-        var list = new List<B>();
-
-        foreach (A item in enumerable)
-        {
-            list.Add(convertFunc(item));
-        }
-
-        return list;
-    }
-
-
     public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath<T>(this Expression<Func<T>> propertyAccessor)
     {
         var expression = propertyAccessor.Body;
@@ -105,6 +87,32 @@ static class Extensions
         return (path, false);
     }
 
+    public static (object value, Exception exception) ChangeType(object value, Type targetType)
+    {
+        if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+        {
+            if (value == null)
+            {
+                return (null, default);
+            }
+
+            targetType = Nullable.GetUnderlyingType(targetType);
+            if (targetType is null)
+            {
+                return (default, new InvalidCastException($"{value}"));
+            }
+        }
+
+        try
+        {
+            return (Convert.ChangeType(value, targetType), default);
+        }
+        catch (Exception exception)
+        {
+            return (default, exception);
+        }
+    }
+
     public static Exception DeveloperException(string message)
     {
         return new DeveloperException(message);
@@ -170,6 +178,23 @@ static class Extensions
         }
 
         return data;
+    }
+
+    public static IReadOnlyList<B> ToReadOnlyListOf<A, B>(this IEnumerable enumerable, Func<A, B> convertFunc)
+    {
+        if (enumerable == null)
+        {
+            throw new ArgumentNullException(nameof(enumerable));
+        }
+
+        var list = new List<B>();
+
+        foreach (A item in enumerable)
+        {
+            list.Add(convertFunc(item));
+        }
+
+        return list;
     }
 
     public static int? TryGetMethodInfoMetadataTokenFromName(string nameWithToken)
