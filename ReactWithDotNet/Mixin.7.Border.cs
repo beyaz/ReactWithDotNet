@@ -275,5 +275,12 @@ partial class Mixin
             throw new DeveloperException($"RowSpan modifier is invalid for this element. Element is: {el.GetType().FullName}");
         }
     });
+    
+    
+    
+    public static StyleModifier BorderRightStyle(string value) => new(style => style.borderRightStyle = value);
+    public static StyleModifier BorderTopStyle(string value) => new(style => style.borderTopStyle = value);
+    public static StyleModifier BorderBottomStyle(string value) => new(style => style.borderBottomStyle = value);
+    public static StyleModifier BorderLeftStyle(string value) => new(style => style.borderLeftStyle = value);
 
 }
