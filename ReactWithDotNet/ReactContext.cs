@@ -24,9 +24,9 @@ public sealed class ReactContext
     }
     readonly Dictionary<string, object> map = new();
 
-    public double ClientHeight { get; internal set; }
+    public double? ClientHeight { get; internal set; }
 
-    public double ClientWidth { get; internal set; }
+    public double? ClientWidth { get; internal set; }
 
     public NameValueCollection Query { get; internal set; } = new();
 

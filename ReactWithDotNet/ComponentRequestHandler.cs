@@ -24,9 +24,9 @@ sealed class ComponentRequest
     
     public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
 
-    public double ClientHeight { get; set; }
+    public double? ClientHeight { get; set; }
 
-    public double ClientWidth { get; set; }
+    public double? ClientWidth { get; set; }
 
     public int ComponentKey { get; set; }
 
