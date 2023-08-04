@@ -111,6 +111,13 @@ public sealed class path : HtmlElement
 
 public sealed class g : HtmlElement
 {
+    public g()
+    {
+    }
+
+    public g(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
     
     [ReactProp]
     public string opacity { get; set; }

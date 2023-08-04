@@ -276,6 +276,13 @@ public abstract class HtmlElement : Element
 
         return htmlElement;
     }
+    
+    public static HtmlElement operator +(HtmlElement htmlElement, IModifier modifier)
+    {
+        ModifyHelper.ProcessModifier(htmlElement, modifier);
+
+        return htmlElement;
+    }
 
     public static HtmlElement operator +(HtmlElement htmlElement, StyleModifier styleModifier)
     {
