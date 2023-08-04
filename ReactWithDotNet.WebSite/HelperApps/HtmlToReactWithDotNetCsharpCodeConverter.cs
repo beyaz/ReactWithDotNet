@@ -621,6 +621,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return false;
         }
 
+        if (htmlNode.Name == "svg" && attributeMap.ContainsKey("xmlns") && attributeMap["xmlns"] == "http://www.w3.org/2000/svg")
+        {
+            attributeMap.Remove("xmlns");
+        }
+
         if (attributeMap.Count > 0)
         {
             ApplyShortHands(attributeMap);
@@ -718,7 +723,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (htmlNode.ChildNodes.Count == 0)
             {
-                if (htmlNode.Name == "link")
+                if (htmlNode.Name == "link" || htmlNode.Name == "path")
                 {
                     return new List<string>
                     {

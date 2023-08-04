@@ -28,8 +28,10 @@ public sealed class svg : HtmlElement
 
     [ReactProp]
     public string xmlns { get; set; } = "http://www.w3.org/2000/svg";
+    
     [ReactProp]
     public string xlinkHref { get; set; }
+    
     [ReactProp]
     public string xmlnsXlink { get; set; }
 
@@ -297,4 +299,17 @@ public sealed class polyline : HtmlElement
     [ReactProp]  public string points{ get; set; }
   [ReactProp]  public string fill{ get; set; }
     [ReactProp] public string stroke{ get; set; }
+}
+
+partial class Mixin
+{
+    /// <summary>
+    ///     svg.fill = <paramref name="color" />
+    /// </summary>
+    public static HtmlElementModifier Fill(string color) => svg.Fill(color);
+    
+    /// <summary>
+    ///     svg.viewBox = <paramref name="viewBox" />
+    /// </summary>
+    public static HtmlElementModifier ViewBox(string viewBox) => svg.ViewBox(viewBox);
 }
