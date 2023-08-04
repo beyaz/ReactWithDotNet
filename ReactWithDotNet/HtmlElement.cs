@@ -5,15 +5,19 @@ namespace ReactWithDotNet;
 
 partial class Mixin
 {
-    public static HtmlElementModifier Aria(string ariaName, string ariaValue) => CreateHtmlElementModifier<HtmlElement>(el => el.aria.Add(ariaName, ariaValue));
-    public static HtmlElementModifier Data(string dataName, string dataValue) => CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
+    public static HtmlElementModifier Aria(string ariaName, string ariaValue)
+    {
+        return CreateHtmlElementModifier<HtmlElement>(el => el.aria.Add(ariaName, ariaValue));
+    }
+
+    public static HtmlElementModifier Data(string dataName, string dataValue)
+    {
+        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
+    }
 }
 
 public abstract class HtmlElement : Element
 {
-    protected static HtmlElementModifier Modify<THtmlElement>(Action<THtmlElement> modifyAction)
-        where THtmlElement : HtmlElement => CreateHtmlElementModifier(modifyAction);
-
     internal Dictionary<string, string> _aria;
     internal Dictionary<string, string> _data;
 
@@ -105,9 +109,6 @@ public abstract class HtmlElement : Element
 
     [ReactProp]
     public virtual string id { get; set; }
-    
-    [ReactProp]
-    public  string name { get; set; }
 
     [JsonIgnore]
     public string innerHTML
@@ -128,6 +129,9 @@ public abstract class HtmlElement : Element
     /// </summary>
     [ReactProp]
     public string lang { get; set; }
+
+    [ReactProp]
+    public string name { get; set; }
 
     /// <summary>
     ///     Gets or sets the on click.
@@ -251,7 +255,14 @@ public abstract class HtmlElement : Element
     {
     }
 
+    protected static HtmlElementModifier Modify<THtmlElement>(Action<THtmlElement> modifyAction)
+        where THtmlElement : HtmlElement
+    {
+        return CreateHtmlElementModifier(modifyAction);
+    }
+
     #region Operators
+
     public static HtmlElement operator +(HtmlElement element, Style style)
     {
         element.style.Import(style);
@@ -288,6 +299,7 @@ public abstract class HtmlElement : Element
     {
         this.style.Import(style);
     }
+
     #endregion
 }
 
