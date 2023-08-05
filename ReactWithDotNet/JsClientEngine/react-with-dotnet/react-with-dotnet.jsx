@@ -1219,6 +1219,8 @@ function HandleAction(data, executionQueueEntry)
     const remoteMethodName = data.remoteMethodName;
     const component = NotNull(data.component);
 
+    const isComponentPreview = component[DotNetTypeOfReactComponent] === 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet';
+
     const request =
     {
         MethodName: "HandleComponentEvent",
@@ -1270,6 +1272,13 @@ function HandleAction(data, executionQueueEntry)
 
     function onFail(error)
     {
+        // Maybe has network error on hotreload mode is active. We should retry. 
+        if (isComponentPreview)
+        {
+            setTimeout(() => SendRequest(request, onSuccess, onFail), 1000);
+            return;
+        }
+
         console.error(error);
 
         IsWaitingRemoteResponse = false;
