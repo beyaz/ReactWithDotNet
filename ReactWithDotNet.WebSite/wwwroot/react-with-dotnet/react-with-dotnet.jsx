@@ -1268,7 +1268,16 @@ function HandleAction(data, executionQueueEntry)
         data.component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
     }
 
-    SendRequest(request, onSuccess);
+    function onFail(error)
+    {
+        console.error(error);
+
+        IsWaitingRemoteResponse = false;
+
+        OnReactStateReady();
+    }
+
+    SendRequest(request, onSuccess, onFail);
 }
 
 function CaclculateNewStateFromJsonElement(componentState, jsonElement)
@@ -1576,7 +1585,7 @@ function DefinePureComponent(componentDeclaration)
 
 var IsWaitingRemoteResponse = false;
 
-function SendRequest(request, onSuccess)
+function SendRequest(request, onSuccess, onFail)
 {
     IsWaitingRemoteResponse = true;
 
@@ -1602,7 +1611,7 @@ function SendRequest(request, onSuccess)
         options = ReactWithDotNet.BeforeSendRequest(options);
     }
 
-    window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json));
+    window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json)).catch(onFail);
 }
 
 var LastUsedComponentUniqueIdentifier = 1;
@@ -1680,7 +1689,12 @@ function RenderComponentIn(input)
             ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, response);
         }
 
-        SendRequest(request, onSuccess);
+        function onFail(error)
+        {
+            throw error;
+        }
+
+        SendRequest(request, onSuccess, onFail);
     });
 }
 
