@@ -6,15 +6,15 @@ using Newtonsoft.Json.Linq;
 namespace ReactWithDotNet.UIDesigner;
 
 public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithDotNetDesignerModel>
-{ 
+{
     public DateTime? LastWriteTime { get; set; }
-    
+
     public void Refresh()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         Client.GotoMethod(700, Refresh);
-        
+
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
         var fileInfo = new FileInfo(fullAssemblyPath);
         if (fileInfo.Exists)
@@ -23,6 +23,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
             {
                 Client.RunJavascript("window.parent.ReactWithDotNet.DispatchEvent('ComponentPreviewRefreshed',[])");
             }
+
             LastWriteTime = fileInfo.LastWriteTime;
         }
     }
@@ -37,7 +38,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
     protected override Task constructor()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
-        
+
         return Task.CompletedTask;
     }
 
@@ -55,10 +56,9 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
             {
                 Context.Query = HttpUtility.ParseQueryString(queryString);
             }
-            
         }
-        
-        return createElement()+Border("0.5px dotted blue");
+
+        return createElement() + Border("0.5px dotted blue");
     }
 
     static Type FindType(string typeReference)
@@ -69,6 +69,27 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
         }
 
         return null;
+    }
+
+    static (bool successfullyRead, TValue value) ReadPropertyValueInJsonText<TValue>(string json, string propertyNameInJson)
+    {
+        JObject jObject;
+
+        try
+        {
+            jObject = (JObject)DeserializeJson(json.HasValue() ? json : "{}", typeof(JObject));
+        }
+        catch (Exception)
+        {
+            return default;
+        }
+
+        if (jObject.TryGetValue(propertyNameInJson, out var jToken))
+        {
+            return (successfullyRead: true, jToken.ToObject<TValue>());
+        }
+
+        return default;
     }
 
     Element createElement()
@@ -131,15 +152,15 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                                 component.key     = "0";
                                 component.Context = Context;
 
-
                                 tryUpdateStateFromStateTree(component, Context);
 
                                 if (component.IsStateNull)
                                 {
                                     component.InvokeConstructor().GetAwaiter().GetResult();
                                 }
+
                                 component.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
-                                
+
                                 return component;
                             }
 
@@ -149,7 +170,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                                 reactPureComponent.Context = Context;
 
                                 reactPureComponent.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
-                                
+
                                 return reactPureComponent;
                             }
 
@@ -172,9 +193,9 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                     {
                         component.key     = "0";
                         component.Context = Context;
-                        
-                        tryUpdateStateFromStateTree(component,Context);
-                        
+
+                        tryUpdateStateFromStateTree(component, Context);
+
                         if (component.IsStateNull)
                         {
                             component.InvokeConstructor().GetAwaiter().GetResult();
@@ -201,53 +222,31 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
             {
                 return new div(exception.Message);
             }
+
             return new div(exception.ToString());
         }
 
         return "Element not created. Select type or method from left panel";
-        
-        
+
         static void tryUpdateStateFromStateTree(object component, ReactContext reactContext)
         {
             if (reactContext.CapturedStateTree?.TryGetValue("0,0", out var stateInfo) == true)
             {
                 var stateAsJson = stateInfo.StateAsJson;
-                                        
+
                 if (!string.IsNullOrWhiteSpace(stateAsJson))
                 {
                     var stateProperty = component.GetType().GetProperty("state", BindingFlags.Instance | BindingFlags.NonPublic);
                     if (stateProperty is not null)
                     {
                         var propertyType = stateProperty.PropertyType;
-                                    
+
                         var val = DeserializeJson(stateAsJson, propertyType);
-                                    
-                        stateProperty.SetValue(component,val);
+
+                        stateProperty.SetValue(component, val);
                     }
-                }    
+                }
             }
         }
-    }
-
-    static (bool successfullyRead, TValue value) ReadPropertyValueInJsonText<TValue>(string json, string propertyNameInJson)
-    {
-        JObject jObject;
-        
-        try
-        {
-            jObject = (JObject)DeserializeJson(json.HasValue() ? json : "{}", typeof(JObject));
-        }
-        catch (Exception)
-        {
-            return default;
-        }
-
-        if (jObject.TryGetValue(propertyNameInJson, out var jToken))
-        {
-            return (successfullyRead: true, jToken.ToObject<TValue>());
-        }
-
-        return default;
-
     }
 }
