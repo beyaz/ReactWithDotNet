@@ -1,8 +1,6 @@
 ﻿namespace ReactWithDotNet;
 
-public interface IModifier
-{
-}
+public interface IModifier;
 
 public sealed class StyleModifier : IModifier
 {
@@ -206,6 +204,12 @@ static class ModifyHelper
                 thirdPartyReactComponentModifier.Modify(thirdPartyReactComponent);
                 return;
             }
+            
+            if (modifier is Style style)
+            {
+                thirdPartyReactComponent.style.Import(style);
+                return;
+            }
         }
 
         if (element is HtmlElement htmlElement)
@@ -225,6 +229,12 @@ static class ModifyHelper
             if (modifier is ElementModifier elementModifier)
             {
                 elementModifier.ModifyElement(htmlElement);
+                return;
+            }
+
+            if (modifier is Style style)
+            {
+                htmlElement.style.Import(style);
                 return;
             }
         }
