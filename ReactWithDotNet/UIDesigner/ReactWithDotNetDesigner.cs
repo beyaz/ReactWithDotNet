@@ -319,6 +319,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
     void OnElementSelected(string keyOfSelectedTreeNode)
     {
+        var classFilter = state.ClassFilter;
+        var methodFileter = state.MethodFilter;
+        
         state.SelectedType   = null;
         state.SelectedMethod = null;
 
@@ -346,6 +349,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 state = StateCache.TryRead(state.SelectedMethod) ?? state;
             }
         }
+        
+        state.ClassFilter  = classFilter;
+        state.MethodFilter = methodFileter;
 
         if (canShowInstanceEditor() && canShowParametersEditor() == false)
         {
