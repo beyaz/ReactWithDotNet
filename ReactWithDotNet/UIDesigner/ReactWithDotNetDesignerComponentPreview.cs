@@ -2,6 +2,7 @@
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Type = System.Type;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -179,6 +180,32 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                     }
                 }
 
+                static void tryUpdateStatePropertyFromJson(string jsonTextForDotNetInstanceProperties, object instance)
+                {
+                    Type type = instance.GetType();
+                    
+                    if (string.IsNullOrWhiteSpace(jsonTextForDotNetInstanceProperties))
+                    {
+                        return;
+                    }
+                    
+                    var jsonForInstance = (JObject)DeserializeJson(jsonTextForDotNetInstanceProperties, typeof(JObject));
+                    var jsonForInstanceState = jsonForInstance["state"];
+                    if (jsonForInstanceState is null)
+                    {
+                        return;
+                    }
+                    var stateProperty = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance);
+                    if (stateProperty is null)
+                    {
+                        return;
+                    }
+                    
+                    var stateValue = jsonForInstanceState.ToObject(stateProperty.PropertyType);
+                    
+                    stateProperty.SetValue(instance, stateValue);
+                }
+                
                 if (state.SelectedType is not null)
                 {
                     var type = assembly.TryLoadFrom(state.SelectedType);
@@ -189,6 +216,8 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
 
                     var instance = (Element)DeserializeJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", type);
 
+                    tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
+                    
                     if (instance is ReactComponentBase component)
                     {
                         component.key     = "0";
