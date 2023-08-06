@@ -204,12 +204,103 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             }
         };
 
+        Element createVerticleRuler()
+        {
+            var step = 50;
+            var max = 500 / step + 1;
+            
+            
+            return new div(WidthHeightMaximized, PositionRelative)
+            {
+                Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
+                {
+                    Right(3), Top(number * step),
+                    new FlexRow(FontSize8, LineHeight6, FontWeight500, Gap(4))
+                    {
+                        new div(MarginTop(-3))
+                        {
+                            (number * step).ToString()
+                        },
+                        new div
+                        {
+                            Height(0.5),
+                            Width(6),
+
+                            Background("green")
+                        }
+                    }
+
+                })
+            };
+        }
+
+        Element createHorizontalRuler()
+        {
+            var step = 50;
+            var max = state.ScreenWidth / step + 1;
+
+            double calculateMarginForCenterizeLabel(int stepNumber)
+            {
+                var label = stepNumber * step;
+
+                if (label < 10)
+                {
+                    return -2;
+                }
+                
+                if (label < 100)
+                {
+                    return -4.5;
+                }
+                
+                if (label < 1000)
+                {
+                    return -7;
+                }
+
+                return -9;
+            }
+            
+            return new FlexRow(PositionRelative,WidthMaximized,Height(20))
+            {
+                Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
+                {
+                    Bottom(3), Left(number * step),
+                    new FlexColumn(FontSize8, LineHeight6, FontWeight500, Gap(4))
+                    {
+                        new div(MarginLeft(calculateMarginForCenterizeLabel(number)))
+                        {
+                            (number * step).ToString()
+                        },
+                        new div(BorderRadius(3))
+                        {
+                            Width(0.5),
+                            Height(6),
+
+                            Background("green")
+                        }
+                    }
+
+                })
+            };
+        }
+        
         var outputPanel = new div
         {
             BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
             BackgroundSize("10px 10px"),
             
-            createElement(),
+            createHorizontalRuler,
+            new div(PositionRelative)
+            {
+                WidthHeightMaximized,
+                createElement(),
+                
+                new div(PositionAbsolute, Top(0), Left(0))
+                {
+                    createVerticleRuler
+                }
+            },
 
             Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
             
