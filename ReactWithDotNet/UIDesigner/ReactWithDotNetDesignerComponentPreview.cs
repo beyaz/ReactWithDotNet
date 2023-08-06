@@ -147,7 +147,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                             }
 
                             var instance = (Element)DeserializeJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", declaringType);
-
+                            tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
                             if (instance is ReactComponentBase component)
                             {
                                 component.key     = "0";
