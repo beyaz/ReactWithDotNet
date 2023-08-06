@@ -206,9 +206,45 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         Element createVerticleRuler()
         {
-            var step = 50;
-            var max = 500 / step + 1;
+            var maxHeight = 500;
             
+            var step = 50;
+            var max = maxHeight / step + 1;
+            
+            
+            IReadOnlyList<Element> createTenPoints()
+            {
+                var returnList = new List<Element>();
+
+                var miniStep = 10;
+                
+                var cursor = 0;
+                var distance =  miniStep;
+                while (distance <= maxHeight)
+                {
+                    cursor++;
+
+                    distance = cursor * miniStep;
+
+                    if (distance % step == 0 || distance > maxHeight)
+                    {
+                        continue;
+                    }
+                    
+                    returnList.Add(new div(PositionAbsolute)
+                    {
+                        Right(3), 
+                        Top(distance),
+                        
+                        Height(0.5),
+                        Width(4),
+                        Background("green")
+                    });
+                }
+                
+
+                return returnList;
+            }
             
             return new div(WidthHeightMaximized, PositionRelative)
             {
@@ -224,13 +260,15 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                         new div
                         {
                             Height(0.5),
-                            Width(6),
+                            Width(7),
 
                             Background("green")
                         }
                     }
 
-                })
+                }),
+                
+                createTenPoints()
             };
         }
 
@@ -260,6 +298,40 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
                 return -9;
             }
+
+            IReadOnlyList<Element> createTenPoints()
+            {
+                var returnList = new List<Element>();
+
+                var miniStep = 10;
+                
+                var cursor = 0;
+                var distance =  miniStep;
+                while (distance <= state.ScreenWidth)
+                {
+                    cursor++;
+
+                    distance = cursor * miniStep;
+
+                    if (distance % step == 0 || distance > state.ScreenWidth)
+                    {
+                        continue;
+                    }
+                    
+                    returnList.Add(new div(PositionAbsolute)
+                    {
+                        Bottom(3), 
+                        Left(distance),
+                        
+                        Width(0.5),
+                        Height(4),
+                        Background("green")
+                    });
+                }
+                
+
+                return returnList;
+            }
             
             return new FlexRow(PositionRelative,WidthMaximized,Height(20))
             {
@@ -275,13 +347,14 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                         new div(BorderRadius(3))
                         {
                             Width(0.5),
-                            Height(6),
+                            Height(7),
 
                             Background("green")
                         }
                     }
-
-                })
+                }),
+                createTenPoints()
+                
             };
         }
         
