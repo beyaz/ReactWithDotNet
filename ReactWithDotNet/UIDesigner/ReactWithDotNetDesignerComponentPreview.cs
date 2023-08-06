@@ -153,7 +153,10 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                                 component.key     = "0";
                                 component.Context = Context;
 
-                                tryUpdateStateFromStateTree(component, Context);
+                                if (component.IsStateNull)
+                                {
+                                    tryUpdateStateFromStateTree(component, Context);
+                                }
 
                                 if (component.IsStateNull)
                                 {
@@ -223,7 +226,11 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                         component.key     = "0";
                         component.Context = Context;
 
-                        tryUpdateStateFromStateTree(component, Context);
+                        if (component.IsStateNull)
+                        {
+                            tryUpdateStateFromStateTree(component, Context);
+                        }
+                        
 
                         if (component.IsStateNull)
                         {
