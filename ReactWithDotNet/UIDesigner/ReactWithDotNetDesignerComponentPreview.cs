@@ -59,9 +59,11 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
             }
         }
 
-        return createElement() + Border("0.5px dotted blue");
+        return createElement() + ComponentIndicatorStyle;
     }
 
+    static StyleModifier ComponentIndicatorStyle => new(s => { s.border ??= "0.5px dotted blue"; });
+    
     static Type FindType(string typeReference)
     {
         if (!string.IsNullOrWhiteSpace(typeReference))
