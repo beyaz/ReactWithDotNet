@@ -6,6 +6,15 @@ namespace ReactWithDotNet;
 
 public abstract class ThirdPartyReactComponent : Element
 {
+    
+    
+    public static Element operator +(ThirdPartyReactComponent element, IModifier styleModifier)
+    {
+        ModifyHelper.ProcessModifier(element, styleModifier);
+
+        return element;
+    }
+    
     Style _style;
     
     internal bool HasStyle=> _style != null;
