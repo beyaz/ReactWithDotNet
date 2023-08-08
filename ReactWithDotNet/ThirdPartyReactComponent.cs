@@ -6,18 +6,7 @@ namespace ReactWithDotNet;
 
 public abstract class ThirdPartyReactComponent : Element
 {
-    
-    
-    public static Element operator +(ThirdPartyReactComponent element, IModifier styleModifier)
-    {
-        ModifyHelper.ProcessModifier(element, styleModifier);
-
-        return element;
-    }
-    
     Style _style;
-    
-    internal bool HasStyle=> _style != null;
 
     protected ThirdPartyReactComponent()
     {
@@ -69,7 +58,16 @@ public abstract class ThirdPartyReactComponent : Element
         }
     }
 
+    internal bool HasStyle => _style != null;
+
     protected internal ReactContext Context { get; set; }
+
+    public static Element operator +(ThirdPartyReactComponent element, IModifier modifier)
+    {
+        ModifyHelper.ProcessModifier(element, modifier);
+
+        return element;
+    }
 
     public static Element operator +(ThirdPartyReactComponent thirdPartyReactComponent, StyleModifier modifier)
     {
@@ -87,7 +85,7 @@ public abstract class ThirdPartyReactComponent : Element
     public void AddClass(string cssClassName)
     {
         throw DeveloperException("ThirdPartyClassName");
-        
+
         //if (string.IsNullOrWhiteSpace(className))
         //{
         //    className = cssClassName;
@@ -97,7 +95,10 @@ public abstract class ThirdPartyReactComponent : Element
         //className += " " + cssClassName;
     }
 
-    internal Element InvokeSuspenseFallback() => GetSuspenseFallbackElement();
+    internal Element InvokeSuspenseFallback()
+    {
+        return GetSuspenseFallbackElement();
+    }
 
     protected virtual Element GetSuspenseFallbackElement()
     {

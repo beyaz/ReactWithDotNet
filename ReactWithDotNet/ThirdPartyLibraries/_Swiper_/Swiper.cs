@@ -1,15 +1,13 @@
-﻿
-#pragma warning disable CS1591
+﻿#pragma warning disable CS1591
 namespace ReactWithDotNet.ThirdPartyLibraries._Swiper_;
 
 public class Swiper : ThirdPartyReactComponent
 {
     public Swiper()
     {
-        
     }
 
-    public Swiper(params StyleModifier[] modifiers):base(modifiers)
+    public Swiper(params StyleModifier[] modifiers) : base(modifiers)
     {
     }
 
@@ -21,24 +19,51 @@ public class Swiper : ThirdPartyReactComponent
             this.children.AddRange(children);
         }
     }
-    [ReactProp]
-    public string direction { get; set; }
 
-    [ReactProp]
-    public bool? lazy { get; set; }
-    
-    
+    public Swiper(IEnumerable<Element> children, params IModifier[] modifiers)
+    {
+        if (children is not null)
+        {
+            this.children.Clear();
+            this.children.AddRange(children);
+        }
+
+        if (modifiers is not null)
+        {
+            foreach (var modifier in modifiers)
+            {
+                ModifyHelper.ProcessModifier(this, modifier);
+            }
+        }
+    }
+
     [ReactProp]
     public SwiperAutoplay autoplay { get; } = new();
 
     [ReactProp]
+    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEnumerableIsEmpty))]
+    public Dictionary<int, dynamic> breakpoints { get; } = new();
+
+    [ReactProp]
+    public bool? centeredSlides { get; set; }
+
+    [ReactProp]
+    public string direction { get; set; }
+
+    [ReactProp]
     public string effect { get; set; }
+
+    [ReactProp]
+    public SwiperFadeEffect fadeEffect { get; } = new();
 
     [ReactProp]
     public bool? grabCursor { get; set; }
 
     [ReactProp]
     public bool? init { get; set; }
+
+    [ReactProp]
+    public bool? lazy { get; set; }
 
     [ReactProp]
     public bool? loop { get; set; }
@@ -50,17 +75,19 @@ public class Swiper : ThirdPartyReactComponent
     public IReadOnlyList<string> modules { get; set; }
 
     [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
-    public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
-    
+    public string name { get; set; }
+
+    [ReactProp]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public SwiperNavigationOption navigation { get; } = new();
+
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
     public Action<SwiperInstance> onSlideChange { get; set; }
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
-    public Action<SwiperInstance> slideChangeTransitionEnd { get; set; }
-    
+    public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
 
     [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
@@ -71,6 +98,10 @@ public class Swiper : ThirdPartyReactComponent
     public SwiperScrollbar scrollbar { get; } = new();
 
     [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
+    public Action<SwiperInstance> slideChangeTransitionEnd { get; set; }
+
+    [ReactProp]
     public double? slidesPerView { get; set; }
 
     [ReactProp]
@@ -78,35 +109,14 @@ public class Swiper : ThirdPartyReactComponent
 
     [ReactProp]
     public double? speed { get; set; }
-
-    [ReactProp]
-    public bool? centeredSlides { get; set; }
-    
-    [ReactProp]
-    public string name { get; set; }
-
-    [ReactProp]
-    public SwiperFadeEffect fadeEffect { get; } = new();
-
-    
-
-    [ReactProp]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
-    public SwiperNavigationOption navigation { get; } = new();
-    
-    
-    [ReactProp]
-    [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEnumerableIsEmpty))]
-    public Dictionary<int,dynamic> breakpoints { get; } = new();
 }
 
 public sealed class SwiperNavigationOption
 {
-    public string prevEl { get; set; }
-    public string nextEl { get; set; }
     public bool? enabled { get; set; }
+    public string nextEl { get; set; }
+    public string prevEl { get; set; }
 }
-
 
 [Serializable]
 public sealed class SwiperInstance
