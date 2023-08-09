@@ -410,7 +410,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         
         return new FlexRow(WidthHeightMaximized, PrimaryBackground)
         {
-            new div(BorderRight("1px dotted #d9d9d9"), Width(400), PositionRelative)
+            new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
             {
                 new div
                 { 
@@ -437,7 +437,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 When(state.PropertyPanelIsClosed == false, propertyPanel),
                 When(state.PropertyPanelIsClosed, Width(15))
             },
-            new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7))
+            new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7),MarginLeft(40))
             {
                 outputPanel
             }
