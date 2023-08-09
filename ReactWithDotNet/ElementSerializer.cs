@@ -394,6 +394,11 @@ static partial class ElementSerializer
                 {
                     return bindingExpressionAsBoolean.AsBindingPath();
                 }
+                
+                if (propertyValue is Expression<Func<double>> bindingExpressionAsDouble)
+                {
+                    return bindingExpressionAsDouble.AsBindingPath();
+                }
 
                 throw new NotImplementedException();
             }

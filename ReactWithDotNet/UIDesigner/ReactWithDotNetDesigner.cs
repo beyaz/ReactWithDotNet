@@ -179,7 +179,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 {
                     min=300,
                     max = 1400,
-                    value = state.ScreenWidth,
+                    // value = state.ScreenWidth,
+                    valueBind = ()=>state.ScreenWidth,
+                    
                     onChangeCommitted = OnMediaSizeChanged,
                     valueLabelDisplay = "on",
                     classes =
@@ -361,7 +363,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             
             return new FlexRow(PositionRelative,WidthMaximized,Height(20))
             {
-                Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
+                Enumerable.Range(0, (int)max).Select(number => new div(PositionAbsolute)
                 {
                     Bottom(3), Left(number * step),
                     new FlexColumn(FontSize8, LineHeight6, FontWeight500, Gap(4))
