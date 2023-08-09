@@ -18,4 +18,18 @@ public sealed class Slider : ElementBase
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("mui_slider_onChangeCommitted")]
     public Action<double> onChangeCommitted { get; set; }
+    
+    /// <summary>
+    /// Callback function that is fired when the slider's value changed.
+    /// </summary>
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("mui_slider_onChange")]
+    public Action<double> onChange { get; set; }
+    
+    /// <summary>
+    ///     Override or extend the styles applied to the component.
+    /// </summary>
+    [ReactProp]
+    [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
+    public Dictionary<string, Style> classes { get; } = new ();
 }

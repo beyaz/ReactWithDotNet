@@ -4,6 +4,7 @@ using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 using static ReactWithDotNet.UIDesigner.Extensions;
+using Slider = ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Slider;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -172,6 +173,13 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     MediaSizeButton(900),
                     MediaSizeButton(1024),
                     MediaSizeButton(1200)
+                },
+                new Slider
+                {
+                    min=300,
+                    max = 1500,
+                    value = state.ScreenWidth,
+                    onChangeCommitted = OnMediaSizeChanged
                 }
             },
 
@@ -420,6 +428,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 outputPanel
             }
         };
+    }
+
+    void OnMediaSizeChanged(double newSize)
+    {
+        state.ScreenWidth = (int)newSize;
+        SaveState();
     }
 
     void ClosePropertyPanel(MouseEvent _)
