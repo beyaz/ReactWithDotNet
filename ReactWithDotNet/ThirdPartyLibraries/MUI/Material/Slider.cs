@@ -16,6 +16,14 @@ public sealed class Slider : ElementBase
     public string valueLabelDisplay { get; set; }
     
     
+    [ReactProp]
+    public dynamic[] marks { get; set; }
+    
+    [ReactProp]
+    public double? step { get; set; }
+     
+    
+    
     /// <summary>
     /// Callback function that is fired when the mouseup is triggered.
     /// </summary>
@@ -39,6 +47,6 @@ public sealed class Slider : ElementBase
     
     
     [ReactProp]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e", eventName = "onChange")]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<double>> valueBind { get; set; }
 }

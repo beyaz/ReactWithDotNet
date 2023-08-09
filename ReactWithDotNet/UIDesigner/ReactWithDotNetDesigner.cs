@@ -177,6 +177,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 //},
                 new Slider
                 {
+                    step = 10,
                     min=300,
                     max = 1400,
                     // value = state.ScreenWidth,
