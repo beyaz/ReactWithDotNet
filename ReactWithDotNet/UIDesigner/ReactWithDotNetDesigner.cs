@@ -161,6 +161,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 Border("1px solid #d9d9d9"),
                 BorderRadius(4),
                 PaddingTop(15),
+               
                 new legend
                 {
                     createLabel("Media Size")
@@ -376,20 +377,23 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             };
         }
         
-        var outputPanel = new div
+        var outputPanel = new div(PositionRelative)
         {
             BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
             BackgroundSize("10px 10px"),
             
-            createHorizontalRuler,
-            new div(PositionRelative)
+            createHorizontalRuler()+PositionAbsolute,
+            new div(PositionAbsolute, Top(18),WidthMaximized)
             {
-                WidthHeightMaximized,
-                createElement(),
-                
-                new div(PositionAbsolute, Top(0), Left(0))
+                new div(PositionRelative)
                 {
-                    createVerticleRuler
+                    WidthHeightMaximized,
+                    createElement(),
+                
+                    new div(PositionAbsolute, Top(0), Left(0))
+                    {
+                        createVerticleRuler
+                    }
                 }
             },
 
