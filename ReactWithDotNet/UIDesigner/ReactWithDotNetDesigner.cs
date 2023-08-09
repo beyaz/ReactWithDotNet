@@ -383,7 +383,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             BackgroundSize("10px 10px"),
             
             createHorizontalRuler()+PositionAbsolute,
-            new div(PositionAbsolute, Top(18),WidthMaximized)
+            new div(PositionAbsolute, Top(18),WidthMaximized, Height("calc(100% - 20px)"))
             {
                 new div(PositionRelative)
                 {
