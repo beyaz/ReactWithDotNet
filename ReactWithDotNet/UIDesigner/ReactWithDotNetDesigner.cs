@@ -165,22 +165,11 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 {
                     createLabel("Media Size")
                 },
-                //new FlexRow(JustifyContentSpaceAround)
-                //{
-                //    MediaSizeButton(320),
-                //    MediaSizeButton(480),
-                //    MediaSizeButton(600),
-                //    MediaSizeButton(768),
-                //    MediaSizeButton(900),
-                //    MediaSizeButton(1024),
-                //    MediaSizeButton(1200)
-                //},
                 new Slider
                 {
                     step = 10,
                     min=300,
                     max = 1400,
-                    // value = state.ScreenWidth,
                     valueBind = ()=>state.ScreenWidth,
                     
                     onChangeCommitted = OnMediaSizeChanged,
@@ -487,35 +476,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         return false;
     }
-
-    Element MediaSizeButton(int width)
-    {
-        const string BluePrimary = "#1976d2";
-
-        var isSelected = width == state.ScreenWidth;
-
-        return new FlexRowCentered
-        {
-            Id(width),
-            $"{width}px",
-            Color(BluePrimary),
-            Border($"1px solid {BluePrimary}"),
-            Background(isSelected ? "#dbdbe7" : "transparent"),
-            BorderRadius(5),
-            CursorPointer,
-            OnClick(MediaSizeButtonClicked),
-            Height(25),
-            Width(50),
-            FontSize12
-        };
-    }
-
-    void MediaSizeButtonClicked(MouseEvent e)
-    {
-        state.ScreenWidth = int.Parse(e.FirstNotEmptyId);
-        SaveState();
-    }
-
+    
     void OnElementSelected(string keyOfSelectedTreeNode)
     {
         var classFilter = state.ClassFilter;
