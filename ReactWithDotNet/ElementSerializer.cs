@@ -349,6 +349,7 @@ static partial class ElementSerializer
         }
 
         if (propertyValue is Expression<Func<int>> ||
+            propertyValue is Expression<Func<double>> ||
             propertyValue is Expression<Func<string>> ||
             propertyValue is Expression<Func<bool>>)
         {
