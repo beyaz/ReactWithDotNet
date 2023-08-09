@@ -36,4 +36,9 @@ public sealed class Slider : ElementBase
     [ReactProp]
     [ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]
     public Dictionary<string, Style> classes { get; } = new ();
+    
+    
+    [ReactProp]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e", eventName = "onChange")]
+    public Expression<Func<double>> valueBind { get; set; }
 }
