@@ -218,4 +218,17 @@ public class ExporterTest
         });
     }
     
+    [TestMethod]
+    public void Slider()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(Slider)),
+            StartFrom        = " | 'children'> {",
+            ClassName        = "Slider",
+            SkipMembers      = new[] { "children", "classes" },
+            ClassModifier    = "partial"
+        });
+    }
+    
 }
