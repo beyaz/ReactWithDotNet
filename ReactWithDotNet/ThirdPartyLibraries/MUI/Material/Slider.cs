@@ -12,6 +12,10 @@ public sealed class Slider : ElementBase
     [ReactProp]
     public double? min { get; set; }
     
+    [ReactProp]
+    public string valueLabelDisplay { get; set; }
+    
+    
     /// <summary>
     /// Callback function that is fired when the mouseup is triggered.
     /// </summary>

@@ -160,26 +160,44 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             {
                 Border("1px solid #d9d9d9"),
                 BorderRadius(4),
+                PaddingTop(15),
                 new legend
                 {
                     createLabel("Media Size")
                 },
-                new FlexRow(JustifyContentSpaceAround)
-                {
-                    MediaSizeButton(320),
-                    MediaSizeButton(480),
-                    MediaSizeButton(600),
-                    MediaSizeButton(768),
-                    MediaSizeButton(900),
-                    MediaSizeButton(1024),
-                    MediaSizeButton(1200)
-                },
+                //new FlexRow(JustifyContentSpaceAround)
+                //{
+                //    MediaSizeButton(320),
+                //    MediaSizeButton(480),
+                //    MediaSizeButton(600),
+                //    MediaSizeButton(768),
+                //    MediaSizeButton(900),
+                //    MediaSizeButton(1024),
+                //    MediaSizeButton(1200)
+                //},
                 new Slider
                 {
                     min=300,
-                    max = 1500,
+                    max = 1400,
                     value = state.ScreenWidth,
-                    onChangeCommitted = OnMediaSizeChanged
+                    onChangeCommitted = OnMediaSizeChanged,
+                    valueLabelDisplay = "on",
+                    classes =
+                    {
+                        { "thumb", new Style
+                        {
+                           WidthHeight(28),
+                           BackgroundWhite
+                        }},
+                        {"valueLabel",new Style {
+                            
+                            FontSize12,
+                            FontWeightNormal,
+                            Top(-1),
+                            BackgroundColor("unset"),
+                            Color("#1976d2")
+                        }}
+                    }
                 }
             },
 
