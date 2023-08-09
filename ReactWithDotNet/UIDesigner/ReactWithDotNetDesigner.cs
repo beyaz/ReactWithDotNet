@@ -172,8 +172,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     min=300,
                     max = 1400,
                     valueBind = ()=>state.ScreenWidth,
+                    valueBindDebounceTimeout = 500,
+                    valueBindDebounceHandler = OnMediaSizeChanged,
                     
-                    onChangeCommitted = OnMediaSizeChanged,
                     valueLabelDisplay = "on",
                     classes =
                     {
@@ -443,10 +444,9 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             }
         };
     }
-
-    void OnMediaSizeChanged(double newSize)
+    
+    void OnMediaSizeChanged()
     {
-        state.ScreenWidth = (int)newSize;
         SaveState();
     }
 
