@@ -24,6 +24,18 @@ const ON_COMPONENT_DESTROY = '$ON_COMPONENT_DESTROY';
 const CUSTOM_EVENT_LISTENER_MAP = '$CUSTOM_EVENT_LISTENER_MAP';
 const DotNetProperties = 'DotNetProperties';
 
+function SafeExecute(fn)
+{
+    try
+    {
+        return { success: true, fail:false, value: fn() };
+    }
+    catch (exception)
+    {
+        return { success: false, fail: true, exception: exception };
+    }
+}
+
 const EventBus =
 {
     On: function(event, callback)
@@ -1214,6 +1226,7 @@ function StartAction(remoteMethodName, component, eventArguments)
     return PushToFunctionExecutionQueue(execute);
 }
 
+
 function HandleAction(data, executionQueueEntry)
 {
     const remoteMethodName = data.remoteMethodName;
@@ -1221,13 +1234,24 @@ function HandleAction(data, executionQueueEntry)
 
     const isComponentPreview = component[DotNetTypeOfReactComponent] === 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet';
 
+    var capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
+    if (capturedStateTreeResponse.fail)
+    {
+        if (isComponentPreview)
+        {
+            location.reload();
+        }
+
+        throw capturedStateTreeResponse.exception;
+    }
+
     const request =
     {
         MethodName: "HandleComponentEvent",
 
         EventHandlerMethodName: NotNull(remoteMethodName),
-        FullName   : NotNull(component.constructor)[DotNetTypeOfReactComponent],
-        CapturedStateTree: CaptureStateTreeFromFiberNode(component._reactInternals),
+        FullName: NotNull(component.constructor)[DotNetTypeOfReactComponent],
+        CapturedStateTree: capturedStateTreeResponse.value,
         ComponentKey: NotNull(component.props.$jsonNode.key),
         LastUsedComponentUniqueIdentifier: LastUsedComponentUniqueIdentifier,
         ComponentUniqueIdentifier: NotNull(component.state[DotNetComponentUniqueIdentifier]),
