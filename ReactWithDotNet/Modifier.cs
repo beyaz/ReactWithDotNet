@@ -21,6 +21,11 @@ public sealed class StyleModifier : IModifier
 
         return new StyleModifier(modify);
     }
+    
+    public static implicit operator StyleModifier(Style style)
+    {
+        return new StyleModifier(x=>x.Import(style));
+    }
 }
 
 public sealed class ElementModifier : IModifier
