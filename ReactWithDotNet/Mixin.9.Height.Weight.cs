@@ -139,5 +139,16 @@ partial class Mixin
     public static StyleModifier Zindex7 => Zindex(7);
     public static StyleModifier Zindex8 => Zindex(8);
     public static StyleModifier Zindex9 => Zindex(9);
+    
+    /// <summary>
+    ///     style.width = <paramref name="width" /> + 'px'
+    ///     <br/>
+    ///     style.height = <paramref name="height" /> + 'px'
+    /// </summary>
+    public static StyleModifier Size(double width, double height) => new(style =>
+    {
+        style.width  = width.AsPixel();
+        style.height = height.AsPixel();
+    });
 
 }
