@@ -187,7 +187,7 @@ static partial class ElementSerializer
 
         return (true, getCssClassName(cssClassInfo));
 
-        static IReadOnlyList<(string mediaRule, string cssBody)> calculateMediaQueries(List<MediaQuery> mediaQueries)
+        static IReadOnlyList<(string mediaRule, string cssBody)> calculateMediaQueries(IReadOnlyList<MediaQuery> mediaQueries)
         {
             if (mediaQueries == null || mediaQueries.Count == 0)
             {
