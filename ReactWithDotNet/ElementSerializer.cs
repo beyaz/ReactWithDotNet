@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace ReactWithDotNet;
 
@@ -194,20 +195,34 @@ static partial class ElementSerializer
                 return null;
             }
 
-            var uniqueList = new List<(string mediaRule, string cssBody)>();
-
+            var uniqueMediaQueries = new List<MediaQuery>();
+            
             foreach (var mediaQuery in mediaQueries)
             {
-                var mediaRule = mediaQuery.Query;
-                var cssBody   = mediaQuery.Style.ToCssWithImportant();
-
-                if (!uniqueList.Any(x => x.mediaRule == mediaRule && x.cssBody == cssBody))
+                var existingValue = uniqueMediaQueries.FirstOrDefault(x => hasValueAndEqual(x.Query, mediaQuery.Query));
+                if (existingValue is null)
                 {
-                    uniqueList.Add((mediaRule, cssBody));
+                    uniqueMediaQueries.Add(mediaQuery);
+                    continue;
                 }
+                
+                existingValue.Style.Import(mediaQuery.Style);
             }
 
-            return uniqueList;
+            return uniqueMediaQueries.ConvertAll(x => (x.Query, x.Style.ToCssWithImportant()));
+
+            static bool hasValueAndEqual(string a, string b)
+            {
+                if (string.IsNullOrWhiteSpace(a) || string.IsNullOrWhiteSpace(b))
+                {
+                    return false;
+                }
+
+                a = Regex.Replace(a, @"\s", "");
+                b = Regex.Replace(b, @"\s", "");
+                
+                return a.Equals(b,StringComparison.OrdinalIgnoreCase);
+            }
         }
     }
 
