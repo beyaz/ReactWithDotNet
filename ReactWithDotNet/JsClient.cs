@@ -97,6 +97,17 @@ partial class Mixin
 
     internal static void DispatchDotNetCustomEvent(this Client client, EventSenderInfo eventName, params object[] eventArguments)
     {
+        if (eventArguments is not null)
+        {
+            foreach (var argument in eventArguments)
+            {
+                if (argument is Element)
+                {
+                    throw DeveloperException($"Invalid arguments for DispatchEvent . Element type('{argument.GetType().FullName}') cannot serialize to client.");
+                }
+            }
+        }
+        
         client.CallJsFunction(Core + nameof(DispatchDotNetCustomEvent), eventName, eventArguments);
     }
 
