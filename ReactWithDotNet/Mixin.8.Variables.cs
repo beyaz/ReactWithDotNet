@@ -50,14 +50,14 @@ partial class Mixin
     /// <summary>
     ///     Return new string as 'rgb(<paramref name="red" />, <paramref name="green" />, <paramref name="blue" />)'
     /// </summary>
-    public static string rgb(int red, int green, int blue)
+    public static string rgb(double red, double green, double blue)
         => $"rgb({red}, {green}, {blue})";
 
     /// <summary>
     ///     Return new string as 'rgb(<paramref name="red" />, <paramref name="green" />, <paramref name="blue" />,
     ///     <paramref name="alpha" />)'
     /// </summary>
-    public static string rgba(int red, int green, int blue, double alpha)
+    public static string rgba(double red, double green, double blue, double alpha)
         => $"rgba({red},{green},{blue},{alpha})";
 
     /// <summary>
