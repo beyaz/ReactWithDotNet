@@ -44,6 +44,13 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
         return element;
     }
+    
+    public static Element operator +(Element element, IModifier modifier)
+    {
+        ModifyHelper.ProcessModifier(element, modifier);
+
+        return element;
+    }
 
     public static implicit operator Element(string text)
     {
