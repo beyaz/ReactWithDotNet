@@ -5189,7 +5189,10 @@ partial class Style
 
         if (newStyle._mediaQueries is not null && newStyle._mediaQueries.Count > 0)
         {
-            MediaQueries.AddRange(newStyle._mediaQueries);
+            foreach (var mediaQuery in newStyle._mediaQueries)
+            {
+                MediaQueries.Add(new MediaQuery(mediaQuery.Query, mediaQuery.Style.Clone()));    
+            }
         }
     }
 }

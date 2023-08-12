@@ -213,4 +213,13 @@ partial class Style : IEnumerable<StyleModifier>, IModifier
 
     public string borderInlineStyle { get; set; }
     #endregion
+
+    public Style Clone()
+    {
+        var clone = new Style();
+        
+        clone.Import(this);
+
+        return clone;
+    }
 }
