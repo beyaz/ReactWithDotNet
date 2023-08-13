@@ -16,7 +16,7 @@ sealed class ProcessReactWithDotNetRequestInput
 
     public Element Instance { get; set; }
 
-    public Func<ReactContext, Task> OnReactContextCreated { get; set; }
+    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; set; }
 }
 
 static class ReactWithDotNetRequestProcessor
@@ -110,7 +110,7 @@ partial class Mixin
 
     public static async Task<string> CalculateRenderInfo(Element component,
                                                          string queryString,
-                                                         Func<ReactContext, Task> onReactContextCreated = null,
+                                                         Func<HttpContext,ReactContext, Task> onReactContextCreated = null,
                                                          Action<Element, ReactContext> beforeSerializeElementToClient = null)
     {
         if (component is null)
@@ -150,7 +150,7 @@ public sealed class CalculateHtmlTextInput
 {
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
-    public Func<ReactContext, Task> OnReactContextCreated { get; init; }
+    public Func<HttpContext,ReactContext, Task> OnReactContextCreated { get; init; }
 
     public string QueryString { get; init; }
     public Element ReactComponent { get; init; }
@@ -161,5 +161,5 @@ public sealed class CalculateRenderInfoInput
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
     public HttpContext HttpContext { get; init; }
 
-    public Func<ReactContext, Task> OnReactContextCreated { get; init; }
+    public Func<HttpContext,ReactContext, Task> OnReactContextCreated { get; init; }
 }

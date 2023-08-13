@@ -76,7 +76,7 @@ static class ComponentRequestHandler
         {
             context = CreateContext(request);
 
-            var task = input.OnReactContextCreated?.Invoke(context);
+            var task = input.OnReactContextCreated?.Invoke(input.HttpContext,context);
             if (task is not null)
             {
                 await task;
