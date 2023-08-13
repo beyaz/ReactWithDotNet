@@ -23,8 +23,8 @@ static class ReactWithDotNetIntegration
             });
         });
 
-        #if DEBUG // this two endpoints should use only development mode
-        
+#if DEBUG // this two endpoints should use only development mode
+
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), async httpContext =>
         {
             ReactWithDotNetDesigner.IsAttached = true;
@@ -37,13 +37,13 @@ static class ReactWithDotNetIntegration
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), async httpContext =>
         {
             ReactWithDotNetDesigner.IsAttached = true;
-            
+
             await WriteHtmlResponse(httpContext, new MainLayout
             {
                 Page = new ReactWithDotNetDesignerComponentPreview()
             });
         });
-        #endif
+#endif
     }
 
     static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
@@ -82,11 +82,18 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires]      = "0";
         httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-        mainLayout.RenderInfo = await CalculateRenderInfo(mainLayout.Page, mainLayout.QueryString, InitializeTheme);
-
-        var html = await CalculateHtmlText(new CalculateHtmlTextInput
+        mainLayout.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
         {
-            ReactComponent        = mainLayout,
+            Component             = mainLayout.Page,
+            HttpContext           = httpContext,
+            QueryString           = mainLayout.QueryString,
+            OnReactContextCreated = InitializeTheme
+        });
+
+        var html = await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
+        {
+            HttpContext           = httpContext,
+            Component        = mainLayout,
             QueryString           = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated = InitializeTheme
         });

@@ -42,26 +42,67 @@ static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static async Task<string> CalculateHtmlText(CalculateHtmlTextInput calculateHtmlTextInput)
+    public static async Task<string> CalculateComponentRenderInfo(CalculateComponentRenderInfoInput input)
     {
-        if (calculateHtmlTextInput is null)
+        if (input is null)
         {
-            throw new ArgumentNullException(nameof(calculateHtmlTextInput));
+            throw new ArgumentNullException(nameof(input));
         }
 
-        if (calculateHtmlTextInput.ReactComponent is null)
+        if (input.Component is null)
         {
-            throw new ArgumentNullException(string.Join('.', nameof(calculateHtmlTextInput), nameof(calculateHtmlTextInput.ReactComponent)));
+            throw new ArgumentNullException(nameof(input.Component));
         }
 
-        var element = calculateHtmlTextInput.ReactComponent;
+        var request = new ProcessReactWithDotNetRequestInput
+        {
+            HttpContext                    = input.HttpContext,
+            FindType                       = Type.GetType,
+            Instance                       = input.Component,
+            OnReactContextCreated          = input.OnReactContextCreated,
+            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient,
+
+            ComponentRequest = new ComponentRequest
+            {
+                MethodName                        = "FetchComponent",
+                FullName                          = input.Component.GetType().GetFullName(),
+                LastUsedComponentUniqueIdentifier = 1,
+                ComponentUniqueIdentifier         = 1,
+                QueryString                       = input.QueryString
+            }
+        };
+
+        var componentResponse = await ComponentRequestHandler.HandleRequest(request);
+
+        if (componentResponse.ErrorMessage is not null)
+        {
+            throw DeveloperException(componentResponse.ErrorMessage);
+        }
+
+        return componentResponse.ToJson();
+    }
+
+    public static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput calculateComponentHtmlTextInput)
+    {
+        if (calculateComponentHtmlTextInput is null)
+        {
+            throw new ArgumentNullException(nameof(calculateComponentHtmlTextInput));
+        }
+
+        if (calculateComponentHtmlTextInput.Component is null)
+        {
+            throw new ArgumentNullException(string.Join('.', nameof(calculateComponentHtmlTextInput), nameof(calculateComponentHtmlTextInput.Component)));
+        }
+
+        var element = calculateComponentHtmlTextInput.Component;
 
         var input = new ProcessReactWithDotNetRequestInput
         {
+            HttpContext                                           = calculateComponentHtmlTextInput.HttpContext,
             FindType                                              = Type.GetType,
             Instance                                              = element,
-            OnReactContextCreated                                 = calculateHtmlTextInput.OnReactContextCreated,
-            BeforeSerializeElementToClient                        = calculateHtmlTextInput.BeforeSerializeElementToClient,
+            OnReactContextCreated                                 = calculateComponentHtmlTextInput.OnReactContextCreated,
+            BeforeSerializeElementToClient                        = calculateComponentHtmlTextInput.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
             ComponentRequest = new ComponentRequest
@@ -70,7 +111,7 @@ partial class Mixin
                 FullName                          = element.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
-                QueryString                       = calculateHtmlTextInput.QueryString
+                QueryString                       = calculateComponentHtmlTextInput.QueryString
             }
         };
 
@@ -100,66 +141,42 @@ partial class Mixin
         {
             HttpContext                    = calculateRenderInfoInput.HttpContext,
             OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
-            BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient,
+            BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient
         };
 
         var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
 
         return componentResponse.ToJson();
     }
-
-    public static async Task<string> CalculateRenderInfo(Element component,
-                                                         string queryString,
-                                                         Func<HttpContext,ReactContext, Task> onReactContextCreated = null,
-                                                         Action<Element, ReactContext> beforeSerializeElementToClient = null)
-    {
-        if (component is null)
-        {
-            throw new ArgumentNullException(nameof(component));
-        }
-
-        var input = new ProcessReactWithDotNetRequestInput
-        {
-            FindType                       = Type.GetType,
-            Instance                       = component,
-            OnReactContextCreated          = onReactContextCreated,
-            BeforeSerializeElementToClient = beforeSerializeElementToClient,
-
-            ComponentRequest = new ComponentRequest
-            {
-                MethodName                        = "FetchComponent",
-                FullName                          = component.GetType().GetFullName(),
-                LastUsedComponentUniqueIdentifier = 1,
-                ComponentUniqueIdentifier         = 1,
-                QueryString                       = queryString
-            }
-        };
-
-        var componentResponse = await ComponentRequestHandler.HandleRequest(input);
-
-        if (componentResponse.ErrorMessage is not null)
-        {
-            throw DeveloperException(componentResponse.ErrorMessage);
-        }
-
-        return componentResponse.ToJson();
-    }
 }
 
-public sealed class CalculateHtmlTextInput
+public sealed class CalculateComponentHtmlTextInput
 {
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
-    public Func<HttpContext,ReactContext, Task> OnReactContextCreated { get; init; }
+    public HttpContext HttpContext { get; init; }
+
+    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
 
     public string QueryString { get; init; }
-    public Element ReactComponent { get; init; }
+    
+    public Element Component { get; init; }
 }
 
 public sealed class CalculateRenderInfoInput
 {
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+
     public HttpContext HttpContext { get; init; }
 
-    public Func<HttpContext,ReactContext, Task> OnReactContextCreated { get; init; }
+    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
+}
+
+public sealed class CalculateComponentRenderInfoInput
+{
+    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    public Element Component { get; init; }
+    public HttpContext HttpContext { get; init; }
+    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
+    public string QueryString { get; init; }
 }
