@@ -718,6 +718,16 @@ public static partial class Mixin
     /// </summary>
     public static Element Space(double valueInPx) => new Space(valueInPx);
 
+    /// <summary>
+    ///     Creates new div element wihth given width
+    /// </summary>
+    public static Element SpaceX(double widthInPx) => new div { style = { width = widthInPx.AsPixel() } };
+    
+    /// <summary>
+    ///     Creates new div element wihth given height
+    /// </summary>
+    public static Element SpaceY(double heightInPx) => new div { style = { height = heightInPx.AsPixel() } };
+
     public static HtmlElementModifier Text(string innerText) 
         => CreateHtmlElementModifier<HtmlElement>(element => element.text = innerText);
 
