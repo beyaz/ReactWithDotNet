@@ -93,7 +93,7 @@ static class ReactWithDotNetIntegration
         var html = await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
         {
             HttpContext           = httpContext,
-            Component        = mainLayout,
+            Component             = mainLayout,
             QueryString           = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated = InitializeTheme
         });

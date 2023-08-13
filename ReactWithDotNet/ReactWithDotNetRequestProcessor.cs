@@ -42,46 +42,6 @@ static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static async Task<string> CalculateComponentRenderInfo(CalculateComponentRenderInfoInput input)
-    {
-        if (input is null)
-        {
-            throw new ArgumentNullException(nameof(input));
-        }
-
-        if (input.Component is null)
-        {
-            throw new ArgumentNullException(nameof(input.Component));
-        }
-
-        var request = new ProcessReactWithDotNetRequestInput
-        {
-            HttpContext                    = input.HttpContext,
-            FindType                       = Type.GetType,
-            Instance                       = input.Component,
-            OnReactContextCreated          = input.OnReactContextCreated,
-            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient,
-
-            ComponentRequest = new ComponentRequest
-            {
-                MethodName                        = "FetchComponent",
-                FullName                          = input.Component.GetType().GetFullName(),
-                LastUsedComponentUniqueIdentifier = 1,
-                ComponentUniqueIdentifier         = 1,
-                QueryString                       = input.QueryString
-            }
-        };
-
-        var componentResponse = await ComponentRequestHandler.HandleRequest(request);
-
-        if (componentResponse.ErrorMessage is not null)
-        {
-            throw DeveloperException(componentResponse.ErrorMessage);
-        }
-
-        return componentResponse.ToJson();
-    }
-
     public static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput calculateComponentHtmlTextInput)
     {
         if (calculateComponentHtmlTextInput is null)
@@ -125,6 +85,46 @@ partial class Mixin
         return HtmlTextGenerator.ToHtml(componentResponse);
     }
 
+    public static async Task<string> CalculateComponentRenderInfo(CalculateComponentRenderInfoInput input)
+    {
+        if (input is null)
+        {
+            throw new ArgumentNullException(nameof(input));
+        }
+
+        if (input.Component is null)
+        {
+            throw new ArgumentNullException(nameof(input.Component));
+        }
+
+        var request = new ProcessReactWithDotNetRequestInput
+        {
+            HttpContext                    = input.HttpContext,
+            FindType                       = Type.GetType,
+            Instance                       = input.Component,
+            OnReactContextCreated          = input.OnReactContextCreated,
+            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient,
+
+            ComponentRequest = new ComponentRequest
+            {
+                MethodName                        = "FetchComponent",
+                FullName                          = input.Component.GetType().GetFullName(),
+                LastUsedComponentUniqueIdentifier = 1,
+                ComponentUniqueIdentifier         = 1,
+                QueryString                       = input.QueryString
+            }
+        };
+
+        var componentResponse = await ComponentRequestHandler.HandleRequest(request);
+
+        if (componentResponse.ErrorMessage is not null)
+        {
+            throw DeveloperException(componentResponse.ErrorMessage);
+        }
+
+        return componentResponse.ToJson();
+    }
+
     public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
     {
         if (calculateRenderInfoInput is null)
@@ -154,13 +154,13 @@ public sealed class CalculateComponentHtmlTextInput
 {
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
+    public Element Component { get; init; }
+
     public HttpContext HttpContext { get; init; }
 
     public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
 
     public string QueryString { get; init; }
-    
-    public Element Component { get; init; }
 }
 
 public sealed class CalculateRenderInfoInput
