@@ -70,7 +70,7 @@ class MainLayout : ReactPureComponent
 
 import {{ReactWithDotNet}} from './{root}/dist/index.js';
 
-ReactWithDotNet.StrictMode = true;
+ReactWithDotNet.StrictMode = false;
 ReactWithDotNet.RenderComponentIn({{
   idOfContainerHtmlElement: 'app',
   renderInfo: {RenderInfo}

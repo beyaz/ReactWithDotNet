@@ -537,25 +537,6 @@ class LinkedList
 	    return null;
     }
 
-    tryReplaceFirstMatched(isMatch, newData)
-    {
-        var current = this.head;
-
-        // iterate over the list
-        while (current != null)
-        {
-            if (isMatch(current.data) === true)
-            {
-                current.data = newData;
-                return true;
-            }
-            current = current.next;
-        }
-
-        return false;
-    }
-
-
     visitAll(action)
     {
         if (this.head == null)
@@ -573,6 +554,30 @@ class LinkedList
     }
 }
 
+function MergeDotNetComponentUniqueIdentifiers(sourceIdList, targetIdList)
+{
+    for (let i = 0; i < sourceIdList.length; i++)
+    {
+        var value = sourceIdList[i];
+
+        if (targetIdList.indexOf(value) >= 0)
+        {
+            continue;
+        }
+
+        targetIdList.push(value);
+    }
+}
+
+class ComponentCacheItem
+{
+    constructor()
+    {
+        this.component = null;
+        this.freeSpace = {};
+    }
+}
+
 class ComponentCache
 {
     constructor()
@@ -586,10 +591,10 @@ class ComponentCache
 
         // skip reference equal components
         {
-            const isReferenceEquals = (x) => x === component;
+            const isReferenceEquals = item => item.component === component;
 
-            const existingComponent = this.linkedList.first(isReferenceEquals);
-            if (existingComponent)
+            const existingItem = this.linkedList.first(isReferenceEquals);
+            if (existingItem)
             {
                 return;
             }
@@ -598,37 +603,48 @@ class ComponentCache
         // remove twice rendered components
         // occurs when lazy components scenarios
         {
-            const isTwiceRendered = (x) => x[DotNetComponentUniqueIdentifiers][0] === component[DotNetComponentUniqueIdentifiers][0];
+            const isTwiceRendered = item => item.component[DotNetComponentUniqueIdentifiers][0] === component[DotNetComponentUniqueIdentifiers][0];
 
-            const isUpdated = this.linkedList.tryReplaceFirstMatched(isTwiceRendered, component);
-            if (isUpdated)
+            const existingItem = this.linkedList.first(isTwiceRendered);
+            if (existingItem)
             {
+                MergeDotNetComponentUniqueIdentifiers(existingItem.component[DotNetComponentUniqueIdentifiers], component[DotNetComponentUniqueIdentifiers]);
+
+                existingItem.component = component;
                 return;
             }
         }
 
+        const newItem = new ComponentCacheItem();
+        newItem.component = component;
 
-        this.linkedList.add(component);
+        this.linkedList.add(newItem);
     }
 
     FindComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
     {
-        const isMatch = (component) =>
+        const isMatch = item =>
         {
-            if (component && component[DotNetComponentUniqueIdentifiers])
+            if (item.component && item.component[DotNetComponentUniqueIdentifiers])
             {
-                return component[DotNetComponentUniqueIdentifiers].indexOf(dotNetComponentUniqueIdentifier) >= 0;
+                return item.component[DotNetComponentUniqueIdentifiers].indexOf(dotNetComponentUniqueIdentifier) >= 0;
             }
 
             return false;
         };
 
-        return this.linkedList.first(isMatch);
+        const firstItem = this.linkedList.first(isMatch);
+        if (firstItem)
+        {
+            return firstItem.component;
+        }
+
+        return null;
     }
 
     Unregister(component)
     {
-        this.linkedList.removeFirst(x => x === component);
+        this.linkedList.removeFirst(item => item.component === component);
     }
 
     PrintAll()
@@ -1251,6 +1267,11 @@ function HandleAction(data, executionQueueEntry)
     const remoteMethodName = data.remoteMethodName;
     const component = NotNull(data.component);
 
+    if (component._reactInternals == null)
+    {
+        throw CreateNewDeveloperError('Component is not ready to send server.');
+    }
+
     const isComponentPreview = component[DotNetTypeOfReactComponent] === 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet';
 
     var capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
@@ -1310,7 +1331,7 @@ function HandleAction(data, executionQueueEntry)
             OnReactStateReady();
         }
 
-        data.component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
+        component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
     }
 
     function onFail(error)
@@ -1432,7 +1453,7 @@ function DestroyDotNetComponentInstance(instance)
     // remove related dynamic styles
     for (let i = 0; i < DynamicStyles.length; i++)
     {
-        if (instance.$DotNetComponentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
+        if (instance[DotNetComponentUniqueIdentifiers].indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
         {
             DynamicStyles.splice(i, 1);
             i--;
