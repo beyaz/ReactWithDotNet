@@ -1310,7 +1310,7 @@ function HandleAction(data, executionQueueEntry)
             OnReactStateReady();
         }
 
-        data.component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
+        component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
     }
 
     function onFail(error)
