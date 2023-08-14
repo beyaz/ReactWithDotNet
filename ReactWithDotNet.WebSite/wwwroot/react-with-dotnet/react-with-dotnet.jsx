@@ -1359,6 +1359,89 @@ function CaclculateNewStateFromJsonElement(componentState, jsonElement)
 
 const ComponentDefinitions = {};
 
+
+class ComponentDestroyQueue
+{
+    constructor()
+    {
+        this.queue = new LinkedList();
+    }
+
+    add(component)
+    {
+        const me = this;
+
+        var dotNetComponentUniqueIdentifiers = component[DotNetComponentUniqueIdentifiers].concat([]);
+
+        const queuedFunction = function ()
+        {
+            DestroyDotNetComponentInstance(component);
+            me.remove(component);
+        }
+
+        this.queue.add({
+            idArray: dotNetComponentUniqueIdentifiers,
+            queueFunctionAccess: PushToFunctionExecutionQueue(queuedFunction)
+        });
+    }
+
+    remove(component)
+    {
+        var dotNetComponentUniqueIdentifiers = component[DotNetComponentUniqueIdentifiers].concat([]);
+
+        const hasAnyIdMatch = (item) =>
+        {
+            for (let i = 0; i < dotNetComponentUniqueIdentifiers.length; i++)
+            {
+                const id = dotNetComponentUniqueIdentifiers[i];
+
+                if (item.idArray.indexOf(id) >= 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        const item = this.queue.first(hasAnyIdMatch);
+        if (item)
+        {
+            item.queueFunctionAccess.isValid = false;
+
+            this.queue.removeFirst(hasAnyIdMatch);
+
+            return true;
+        }
+
+        return false;
+    }
+}
+
+const ComponentDestroyQueueInstance = new ComponentDestroyQueue();
+
+
+function DestroyDotNetComponentInstance(instance)
+{
+    const length = instance[ON_COMPONENT_DESTROY].length;
+    for (var i = 0; i < length; i++)
+    {
+        instance[ON_COMPONENT_DESTROY][i]();
+    }
+
+    // remove related dynamic styles
+    for (let i = 0; i < DynamicStyles.length; i++)
+    {
+        if (instance.$DotNetComponentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
+        {
+            DynamicStyles.splice(i, 1);
+            i--;
+        }
+    }
+
+    COMPONENT_CACHE.Unregister(instance);
+}
+
 function DefineComponent(componentDeclaration)
 {
     const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
@@ -1485,23 +1568,7 @@ function DefineComponent(componentDeclaration)
 
             this.ComponentWillUnmountIsCalled = true;
 
-            const length = this[ON_COMPONENT_DESTROY].length;
-            for (var i = 0; i < length; i++)
-            {
-                this[ON_COMPONENT_DESTROY][i]();
-            }
-
-            // remove related dynamic styles
-            for (let i = 0; i < DynamicStyles.length; i++)
-            {
-                if (this.$DotNetComponentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
-                {
-                    DynamicStyles.splice(i, 1);
-                    i--;
-                }
-            }
-
-            COMPONENT_CACHE.Unregister(this);
+            DestroyDotNetComponentInstance(this);
         }
 
         static getDerivedStateFromProps(nextProps, prevState)
