@@ -537,6 +537,25 @@ class LinkedList
 	    return null;
     }
 
+    tryReplaceFirstMatched(isMatch, newData)
+    {
+        var current = this.head;
+
+        // iterate over the list
+        while (current != null)
+        {
+            if (isMatch(current.data) === true)
+            {
+                current.data = newData;
+                return true;
+            }
+            current = current.next;
+        }
+
+        return false;
+    }
+
+
     visitAll(action)
     {
         if (this.head == null)
@@ -581,10 +600,10 @@ class ComponentCache
         {
             const isTwiceRendered = (x) => x[DotNetComponentUniqueIdentifiers][0] === component[DotNetComponentUniqueIdentifiers][0];
 
-            const existingComponent = this.linkedList.first(isTwiceRendered);
-            if (existingComponent)
+            const isUpdated = this.linkedList.tryReplaceFirstMatched(isTwiceRendered, component);
+            if (isUpdated)
             {
-                this.linkedList.removeFirst(isTwiceRendered);
+                return;
             }
         }
 
