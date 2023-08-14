@@ -1685,7 +1685,17 @@ function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, resp
 
     const reactElement = React.createElement(component, props);
 
-    createRoot(document.getElementById(containerHtmlElementId)).render(reactElement);
+    const root = createRoot(document.getElementById(containerHtmlElementId));
+
+    if (ReactWithDotNet.StrictMode)
+    {
+        root.render(React.createElement(React.StrictMode, null, reactElement));
+    }
+    else
+    {
+        root.render(reactElement);
+    }
+    
 }
 
 function RenderComponentIn(input)
@@ -2279,6 +2289,7 @@ function IsDesktop()
 
 var ReactWithDotNet =
 {
+    StrictMode: false,
     RequestHandlerUrl: '/HandleReactWithDotNetRequest',
     OnDocumentReady: OnDocumentReady,
     StartAction: StartAction,
