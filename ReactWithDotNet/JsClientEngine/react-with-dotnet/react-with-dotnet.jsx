@@ -623,7 +623,7 @@ class ComponentCache
 
     FindComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
     {
-        const isMatch = item =>
+        const hasMatch = item =>
         {
             if (item.component && item.component[DotNetComponentUniqueIdentifiers])
             {
@@ -633,7 +633,7 @@ class ComponentCache
             return false;
         };
 
-        const firstItem = this.linkedList.first(isMatch);
+        const firstItem = this.linkedList.first(hasMatch);
         if (firstItem)
         {
             return firstItem.component;
