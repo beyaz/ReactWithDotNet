@@ -632,6 +632,17 @@ class ComponentCache
         return null;
     }
 
+    GetFreeSpaceOfComponent(dotNetComponentUniqueIdentifier)
+    {
+        const firstItem = this.FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier);
+        if (firstItem)
+        {
+            return firstItem.freeSpace;
+        }
+
+        throw CreateNewDeveloperError('AccessToFreeSpace -> ComponentNotFound. dotNetComponentUniqueIdentifier:' + dotNetComponentUniqueIdentifier);
+    }
+
     FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
     {
         const hasMatch = item =>
