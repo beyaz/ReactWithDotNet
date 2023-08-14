@@ -1396,7 +1396,7 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
-            const me = this;
+            const component = this;
 
             const clientTasks = this.state[ClientTasks];
             if (clientTasks)
@@ -1405,7 +1405,7 @@ function DefineComponent(componentDeclaration)
 
                 partialState[ClientTasks] = null;
 
-                this.setState(partialState, ()=> ProcessClientTasks(clientTasks, me));
+                this.setState(partialState, () => ProcessClientTasks(clientTasks, component));
             }
 
             const hasComponentDidMountMethod = this.state[HasComponentDidMountMethod];
@@ -1426,7 +1426,7 @@ function DefineComponent(componentDeclaration)
                         {
                             if (incomingClientTasks)
                             {
-                                ProcessClientTasks(incomingClientTasks, me);
+                                ProcessClientTasks(incomingClientTasks, component);
                             }
                         }
 
@@ -1440,7 +1440,7 @@ function DefineComponent(componentDeclaration)
 
                 partialState[HasComponentDidMountMethod] = null;
 
-                this.setState(partialState, ()=>StartAction(/*remoteMethodName*/'componentDidMount', /*component*/me, /*eventArguments*/[]));
+                this.setState(partialState, () => StartAction(/*remoteMethodName*/'componentDidMount', component, /*eventArguments*/[]));
             }
         }
 
