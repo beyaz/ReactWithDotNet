@@ -1251,6 +1251,11 @@ function HandleAction(data, executionQueueEntry)
     const remoteMethodName = data.remoteMethodName;
     const component = NotNull(data.component);
 
+    if (component._reactInternals == null)
+    {
+        throw CreateNewDeveloperError('Component is not ready to send server.');
+    }
+
     const isComponentPreview = component[DotNetTypeOfReactComponent] === 'ReactWithDotNet.UIDesigner.ReactWithDotNetDesignerComponentPreview,ReactWithDotNet';
 
     var capturedStateTreeResponse = SafeExecute(() => CaptureStateTreeFromFiberNode(component._reactInternals));
