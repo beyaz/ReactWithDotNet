@@ -1437,7 +1437,7 @@ function DestroyDotNetComponentInstance(instance)
     // remove related dynamic styles
     for (let i = 0; i < DynamicStyles.length; i++)
     {
-        if (instance.$DotNetComponentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
+        if (instance[DotNetComponentUniqueIdentifiers].indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
         {
             DynamicStyles.splice(i, 1);
             i--;
