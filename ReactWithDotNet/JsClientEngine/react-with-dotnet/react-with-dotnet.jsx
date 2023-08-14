@@ -1359,7 +1359,7 @@ function CaclculateNewStateFromJsonElement(componentState, jsonElement)
 
 const ComponentDefinitions = {};
 
-function DestroyDotNetComponent(instance)
+function DestroyDotNetComponentInstance(instance)
 {
     const length = instance[ON_COMPONENT_DESTROY].length;
     for (var i = 0; i < length; i++)
@@ -1506,7 +1506,7 @@ function DefineComponent(componentDeclaration)
 
             this.ComponentWillUnmountIsCalled = true;
 
-            DestroyDotNetComponent(this);
+            DestroyDotNetComponentInstance(this);
         }
 
         static getDerivedStateFromProps(nextProps, prevState)
