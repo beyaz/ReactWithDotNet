@@ -623,7 +623,29 @@ class ComponentCache
 
     FindComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
     {
-        const isMatch = item =>
+        const firstItem = this.FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier);
+        if (firstItem)
+        {
+            return firstItem.component;
+        }
+
+        return null;
+    }
+
+    GetFreeSpaceOfComponent(dotNetComponentUniqueIdentifier)
+    {
+        const firstItem = this.FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier);
+        if (firstItem)
+        {
+            return firstItem.freeSpace;
+        }
+
+        throw CreateNewDeveloperError('AccessToFreeSpace -> ComponentNotFound. dotNetComponentUniqueIdentifier:' + dotNetComponentUniqueIdentifier);
+    }
+
+    FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
+    {
+        const hasMatch = item =>
         {
             if (item.component && item.component[DotNetComponentUniqueIdentifiers])
             {
@@ -633,13 +655,7 @@ class ComponentCache
             return false;
         };
 
-        const firstItem = this.linkedList.first(isMatch);
-        if (firstItem)
-        {
-            return firstItem.component;
-        }
-
-        return null;
+        return this.linkedList.first(hasMatch);
     }
 
     Unregister(component)
