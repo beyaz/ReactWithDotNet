@@ -1338,43 +1338,6 @@ function CaclculateNewStateFromJsonElement(componentState, jsonElement)
     return newState;
 }
 
-const EnableTraceOfComponent = false;
-function TraceComponent(component, methodName, methodArgument1, methodArgument2)
-{
-    if (!EnableTraceOfComponent)
-    {
-        return;
-    }
-
-    let fullTypeName = null;
-
-    if (typeof (component) === 'string')
-    {
-        fullTypeName = component;
-    }
-    else
-    {
-        fullTypeName = component.constructor[DotNetTypeOfReactComponent];
-    }
-
-    if (fullTypeName !== 'QuranAnalyzer.WebUI.Components.FixedTopPanelContainer,QuranAnalyzer.WebUI')
-    {
-        return;
-    }
-
-    console.log(fullTypeName + '::' + methodName);
-
-    if (methodArgument1 !== undefined)
-    {
-        console.log(methodArgument1);
-    }
-
-    if (methodArgument2 !== undefined)
-    {
-        console.log(methodArgument2);
-    }
-}
-
 const ComponentDefinitions = {};
 
 function DefineComponent(componentDeclaration)
@@ -1392,8 +1355,6 @@ function DefineComponent(componentDeclaration)
         constructor(props)
         {
             super(props||{});
-
-            TraceComponent(this, "constructor", props);
 
             const initialState = {};
 
@@ -1430,15 +1391,11 @@ function DefineComponent(componentDeclaration)
 
         render()
         {
-            TraceComponent(this, "render");
-
             return ConvertToReactElement(this.state[RootNode], this);
         }
 
         componentDidMount()
         {
-            TraceComponent(this, "componentDidMount");
-
             const me = this;
 
             const clientTasks = this.state[ClientTasks];
@@ -1489,8 +1446,6 @@ function DefineComponent(componentDeclaration)
 
         componentDidUpdate(previousProps, previousState)
         {
-            TraceComponent(this, "componentDidUpdate");
-
             const clientTasks = this.state[ClientTasks];
             if (clientTasks)
             {
@@ -1523,14 +1478,10 @@ function DefineComponent(componentDeclaration)
             }
 
             COMPONENT_CACHE.Unregister(this);
-
-            TraceComponent(this, "componentWillUnmount");
         }
 
         static getDerivedStateFromProps(nextProps, prevState)
         {
-            TraceComponent(prevState[DotNetTypeOfReactComponent], "getDerivedStateFromProps", nextProps, prevState);
-
             const syncIdInState = ShouldBeNumber(prevState[SyncId]);
             const syncIdInProp  = ShouldBeNumber(nextProps[SyncId]);
 
