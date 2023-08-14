@@ -2,8 +2,68 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
+class Remove1 : ReactComponent
+{
+    protected override Element render()
+    {
+        return new FlexRowCentered(Border(Solid(1,"red")), Padding(10), OnClick(OnClickHandler))
+        {
+            "FireEvent"
+        };
+    }
+
+    void OnClickHandler(MouseEvent obj)
+    {
+        Client.DispatchEvent("E1");
+    }
+}
+
+class Remove1_Container : ReactComponent
+{
+    public int Count { get; set; }
+    
+    public Remove1_Container()
+    {
+        Client.ListenEvent("E1",OnE1Fired);
+    }
+
+    void OnE1Fired()
+    {
+        Count++;
+    }
+    
+    void OnClickHandler(MouseEvent obj)
+    {
+        Count++;
+    }
+
+    protected override Element render()
+    {
+        return new FlexColumnCentered(Border(Solid(1,"#0f6")), Padding(10))
+        {
+            new FlexRowCentered(Border(Solid(1,"blue")), Padding(10),OnClick(OnClickHandler))
+            {
+                Count.ToString()
+            },
+            When(Count%2 == 0,()=>new FlexColumn
+            {
+                new Remove1(),
+                new Remove1(),
+                new Remove1(),
+                new Remove1()
+            })
+           
+        };
+    }
+
+    
+}
+
+
+
 public class PrimeReactTabViewDemo : ReactPureComponent
 {
+    
     protected override Element render()
     {
         return new div(WidthHeightMaximized)
@@ -17,6 +77,7 @@ public class PrimeReactTabViewDemo : ReactPureComponent
                         leftIcon = "pi pi-calendar mr-2",
                         children =
                         {
+                            new Remove1_Container(),
                             new p
                             {
                                 text = @"
