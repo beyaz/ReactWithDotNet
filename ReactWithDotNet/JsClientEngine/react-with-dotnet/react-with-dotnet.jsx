@@ -1359,6 +1359,27 @@ function CaclculateNewStateFromJsonElement(componentState, jsonElement)
 
 const ComponentDefinitions = {};
 
+function DestroyDotNetComponent(instance)
+{
+    const length = instance[ON_COMPONENT_DESTROY].length;
+    for (var i = 0; i < length; i++)
+    {
+        instance[ON_COMPONENT_DESTROY][i]();
+    }
+
+    // remove related dynamic styles
+    for (let i = 0; i < DynamicStyles.length; i++)
+    {
+        if (instance.$DotNetComponentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
+        {
+            DynamicStyles.splice(i, 1);
+            i--;
+        }
+    }
+
+    COMPONENT_CACHE.Unregister(instance);
+}
+
 function DefineComponent(componentDeclaration)
 {
     const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
@@ -1485,23 +1506,7 @@ function DefineComponent(componentDeclaration)
 
             this.ComponentWillUnmountIsCalled = true;
 
-            const length = this[ON_COMPONENT_DESTROY].length;
-            for (var i = 0; i < length; i++)
-            {
-                this[ON_COMPONENT_DESTROY][i]();
-            }
-
-            // remove related dynamic styles
-            for (let i = 0; i < DynamicStyles.length; i++)
-            {
-                if (this.$DotNetComponentUniqueIdentifiers.indexOf(DynamicStyles[i].componentUniqueIdentifier) >= 0)
-                {
-                    DynamicStyles.splice(i, 1);
-                    i--;
-                }
-            }
-
-            COMPONENT_CACHE.Unregister(this);
+            DestroyDotNetComponent(this);
         }
 
         static getDerivedStateFromProps(nextProps, prevState)
