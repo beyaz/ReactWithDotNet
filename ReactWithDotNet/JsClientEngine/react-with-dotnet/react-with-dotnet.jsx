@@ -623,6 +623,17 @@ class ComponentCache
 
     FindComponentByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
     {
+        const firstItem = this.FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier);
+        if (firstItem)
+        {
+            return firstItem.component;
+        }
+
+        return null;
+    }
+
+    FindFirstCacheItemByDotNetComponentUniqueIdentifier(dotNetComponentUniqueIdentifier)
+    {
         const hasMatch = item =>
         {
             if (item.component && item.component[DotNetComponentUniqueIdentifiers])
@@ -633,13 +644,7 @@ class ComponentCache
             return false;
         };
 
-        const firstItem = this.linkedList.first(hasMatch);
-        if (firstItem)
-        {
-            return firstItem.component;
-        }
-
-        return null;
+        return this.linkedList.first(hasMatch);
     }
 
     Unregister(component)
