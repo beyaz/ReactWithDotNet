@@ -226,7 +226,16 @@ static class ComponentRequestHandler
                         var propertyValue = value;
                         if (value is JToken jToken)
                         {
-                            propertyValue = jToken.ToObject(property.PropertyType);
+                            if (property.PropertyType == typeof(Style))
+                            {
+                                var style = new Style();
+                                style.Import(jToken.ToObject<Dictionary<string,string>>());
+                                propertyValue = style;
+                            }
+                            else
+                            {
+                                propertyValue = jToken.ToObject(property.PropertyType);
+                            }
                         }
                         else
                         {

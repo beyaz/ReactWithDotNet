@@ -43,6 +43,19 @@ partial class Style
             this[cssAttributeName] = array[1];
         }
     }
+    
+    public void Import(IReadOnlyDictionary<string, string> map)
+    {
+        if (map == null)
+        {
+            return;
+        }
+
+        foreach (var (key, value) in map)
+        {
+            this[key] = value;
+        }
+    }
 
     public string ToCss()
     {
