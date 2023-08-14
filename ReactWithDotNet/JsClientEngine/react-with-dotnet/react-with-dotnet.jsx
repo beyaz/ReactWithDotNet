@@ -1340,6 +1340,41 @@ function CaclculateNewStateFromJsonElement(componentState, jsonElement)
 
 const ComponentDefinitions = {};
 
+function OnComponentCreated(instance, props)
+{
+    const initialState = {};
+
+    initialState[DotNetState] = NotNull(props.$jsonNode[DotNetState]);
+    initialState[SyncId] = ShouldBeNumber(props[SyncId]);
+    initialState[RootNode] = props.$jsonNode[RootNode];
+    initialState[DotNetProperties] = NotNull(props.$jsonNode[DotNetProperties]);
+    initialState[DotNetComponentUniqueIdentifier] = NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier]);
+
+    if (props.$jsonNode[HasComponentDidMountMethod])
+    {
+        initialState[HasComponentDidMountMethod] = props.$jsonNode[HasComponentDidMountMethod];
+    }
+
+    if (props.$jsonNode[ClientTasks])
+    {
+        initialState[ClientTasks] = props.$jsonNode[ClientTasks];
+    }
+
+    initialState[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
+
+    instance.state = initialState;
+
+    instance[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
+
+    instance[ON_COMPONENT_DESTROY] = [];
+
+    instance[CUSTOM_EVENT_LISTENER_MAP] = {};
+
+    instance[DotNetComponentUniqueIdentifiers] = [NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier])];
+
+    COMPONENT_CACHE.Register(instance);
+}
+
 function DefineComponent(componentDeclaration)
 {
     const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
@@ -1356,37 +1391,7 @@ function DefineComponent(componentDeclaration)
         {
             super(props||{});
 
-            const initialState = {};
-
-            initialState[DotNetState] = NotNull(props.$jsonNode[DotNetState]);
-            initialState[SyncId] = ShouldBeNumber(props[SyncId]);
-            initialState[RootNode] = props.$jsonNode[RootNode];
-            initialState[DotNetProperties] = NotNull(props.$jsonNode[DotNetProperties]);
-            initialState[DotNetComponentUniqueIdentifier] = NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier]);
-
-            if (props.$jsonNode[HasComponentDidMountMethod])
-            {
-                initialState[HasComponentDidMountMethod] = props.$jsonNode[HasComponentDidMountMethod];
-            }
-
-            if (props.$jsonNode[ClientTasks])
-            {
-                initialState[ClientTasks] = props.$jsonNode[ClientTasks];
-            }
-
-            initialState[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
-
-            this.state = initialState;
-
-            this[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
-
-            this[ON_COMPONENT_DESTROY] = [];
-
-            this[CUSTOM_EVENT_LISTENER_MAP] = {};
-
-            this[DotNetComponentUniqueIdentifiers] = [NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier])];
-
-            COMPONENT_CACHE.Register(this);
+            OnComponentCreated(this, props);
         }
 
         render()
