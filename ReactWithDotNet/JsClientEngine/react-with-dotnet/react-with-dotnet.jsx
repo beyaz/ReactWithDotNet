@@ -1592,13 +1592,26 @@ function DefineComponent(componentDeclaration)
                 return;
             }
 
-            // const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(this[DotNetComponentUniqueIdentifier]);
+            //const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(this[DotNetComponentUniqueIdentifiers][0]);
+            //if (freeSpace.componentDidUpdateStarted === true)
+            //{
+            //    return;
+            //}
+
+            //freeSpace.componentDidUpdateStarted = true;
 
             const partialState = {};
 
             partialState[ClientTasks] = null;
 
-            this.setState(partialState, () => ProcessClientTasks(clientTasks, this));
+            function callback()
+            {
+                ProcessClientTasks(clientTasks, this);
+
+                //freeSpace.componentDidUpdateStarted = false;
+            }
+
+            this.setState(partialState, callback);
         }
 
         componentWillUnmount()

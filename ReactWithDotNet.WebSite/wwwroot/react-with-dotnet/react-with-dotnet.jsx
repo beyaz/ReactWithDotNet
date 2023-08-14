@@ -1586,14 +1586,32 @@ function DefineComponent(componentDeclaration)
         componentDidUpdate(previousProps, previousState)
         {
             const clientTasks = this.state[ClientTasks];
-            if (clientTasks)
+
+            if (clientTasks == null || clientTasks.length === 0)
             {
-                const partialState = {};
-
-                partialState[ClientTasks] = null;
-
-                this.setState(partialState, ()=> ProcessClientTasks(clientTasks, this));
+                return;
             }
+
+            const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(this[DotNetComponentUniqueIdentifiers][0]);
+            if (freeSpace.componentDidUpdateStarted === true)
+            {
+                return;
+            }
+
+            freeSpace.componentDidUpdateStarted = true;
+
+            const partialState = {};
+
+            partialState[ClientTasks] = null;
+
+            function callback()
+            {
+                ProcessClientTasks(clientTasks, this);
+
+                freeSpace.componentDidUpdateStarted = false;
+            }
+
+            this.setState(partialState, callback);
         }
 
         componentWillUnmount()

@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
+﻿using System.Threading.Tasks;
+using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
@@ -21,11 +22,15 @@ class Remove1 : ReactComponent
 class Remove1_Container : ReactComponent
 {
     public int Count { get; set; }
-    
-    public Remove1_Container()
+
+    protected override Task constructor()
     {
         Client.ListenEvent("E1",OnE1Fired);
+        
+        return base.constructor();
     }
+
+   
 
     void OnE1Fired()
     {
