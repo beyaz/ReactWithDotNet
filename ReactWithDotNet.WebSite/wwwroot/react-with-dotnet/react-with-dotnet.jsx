@@ -1396,27 +1396,27 @@ function DefineComponent(componentDeclaration)
 
         componentDidMount()
         {
-            const me = this;
+            const component = this;
 
-            const clientTasks = this.state[ClientTasks];
+            const clientTasks = component.state[ClientTasks];
             if (clientTasks)
             {
                 const partialState = {};
 
                 partialState[ClientTasks] = null;
 
-                this.setState(partialState, ()=> ProcessClientTasks(clientTasks, me));
+                component.setState(partialState, () => ProcessClientTasks(clientTasks, component));
             }
 
-            const hasComponentDidMountMethod = this.state[HasComponentDidMountMethod];
+            const hasComponentDidMountMethod = component.state[HasComponentDidMountMethod];
             if (hasComponentDidMountMethod)
             {
                 // try call from cache
                 {
-                    const cachedMethodInfo = tryToFindCachedMethodInfo(this, 'componentDidMount', []);
+                    const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentDidMount', []);
                     if (cachedMethodInfo)
                     {
-                        const newState = CaclculateNewStateFromJsonElement(this.state, cachedMethodInfo.ElementAsJson);
+                        const newState = CaclculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
 
                         newState[HasComponentDidMountMethod] = null;
 
@@ -1426,11 +1426,11 @@ function DefineComponent(componentDeclaration)
                         {
                             if (incomingClientTasks)
                             {
-                                ProcessClientTasks(incomingClientTasks, me);
+                                ProcessClientTasks(incomingClientTasks, component);
                             }
                         }
 
-                        this.setState(newState, stateCallback);
+                        component.setState(newState, stateCallback);
 
                         return;
                     }
@@ -1440,7 +1440,7 @@ function DefineComponent(componentDeclaration)
 
                 partialState[HasComponentDidMountMethod] = null;
 
-                this.setState(partialState, ()=>StartAction(/*remoteMethodName*/'componentDidMount', /*component*/me, /*eventArguments*/[]));
+                component.setState(partialState, () => StartAction(/*remoteMethodName*/'componentDidMount', component, /*eventArguments*/[]));
             }
         }
 
@@ -1459,6 +1459,11 @@ function DefineComponent(componentDeclaration)
 
         componentWillUnmount()
         {
+            if (this.ComponentWillUnmountIsCalled === true)
+            {
+                throw 'componentWillUnmount -> ComponentWillUnmountIsCalled called twice';
+            }
+
             this.ComponentWillUnmountIsCalled = true;
 
             const length = this[ON_COMPONENT_DESTROY].length;
