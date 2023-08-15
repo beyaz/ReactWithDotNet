@@ -97,11 +97,12 @@ partial class Mixin
 
         var request = new ProcessReactWithDotNetRequestInput
         {
-            HttpContext                    = input.HttpContext,
-            FindType                       = Type.GetType,
-            Instance                       = input.Component,
-            OnReactContextCreated          = input.OnReactContextCreated,
-            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient,
+            HttpContext                                           = input.HttpContext,
+            FindType                                              = Type.GetType,
+            Instance                                              = input.Component,
+            OnReactContextCreated                                 = input.OnReactContextCreated,
+            BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
+            CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
             ComponentRequest = new ComponentRequest
             {
