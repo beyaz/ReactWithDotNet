@@ -1608,6 +1608,11 @@ function DefineComponent(componentDeclaration)
             {
                 ProcessClientTasks(clientTasks, this);
 
+                if (freeSpace.componentDidUpdateStarted !== true)
+                {
+                    throw CreateNewDeveloperError('freeSpace.componentDidUpdateStarted should be true in this point.');
+                }
+
                 freeSpace.componentDidUpdateStarted = false;
             }
 
