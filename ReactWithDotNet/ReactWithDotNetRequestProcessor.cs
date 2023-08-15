@@ -187,3 +187,9 @@ public sealed class ComponentRenderInfo
 
     public string ToJsonString => ComponentResponse.ToJson();
 }
+
+public interface IMainLayout
+{
+    ComponentRenderInfo RenderInfo { get; set; }
+    string ContainerDomElementId { get; }
+}
