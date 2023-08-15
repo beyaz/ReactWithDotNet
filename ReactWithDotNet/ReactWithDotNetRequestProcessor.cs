@@ -53,14 +53,12 @@ partial class Mixin
         {
             throw new ArgumentNullException(string.Join('.', nameof(input), nameof(input.Component)));
         }
-
-        var element = input.Component;
-
+        
         var request = new ProcessReactWithDotNetRequestInput
         {
             HttpContext                                           = input.HttpContext,
             FindType                                              = Type.GetType,
-            Instance                                              = element,
+            Instance                                              = input.Component,
             OnReactContextCreated                                 = input.OnReactContextCreated,
             BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
@@ -68,7 +66,7 @@ partial class Mixin
             ComponentRequest = new ComponentRequest
             {
                 MethodName                        = "FetchComponent",
-                FullName                          = element.GetType().GetFullName(),
+                FullName                          = input.Component.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
                 QueryString                       = input.QueryString
