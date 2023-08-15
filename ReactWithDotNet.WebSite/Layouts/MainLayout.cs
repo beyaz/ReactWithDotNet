@@ -6,8 +6,6 @@ class MainLayout : ReactPureComponent
 {
     public Element Page { get; set; }
 
-    public string QueryString { get; set; }
-    
     public string RenderInfo { get; set; }
 
     protected override Element render()

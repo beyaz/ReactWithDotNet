@@ -63,8 +63,7 @@ static class ReactWithDotNetIntegration
     {
         await WriteHtmlResponse(httpContext, new MainLayout
         {
-            Page        = new MainWindow(),
-            QueryString = httpContext.Request.QueryString.ToString()
+            Page = new MainWindow()
         });
     }
 
@@ -86,7 +85,7 @@ static class ReactWithDotNetIntegration
         {
             Component             = mainLayout.Page,
             HttpContext           = httpContext,
-            QueryString           = mainLayout.QueryString,
+            QueryString           = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated = InitializeTheme
         });
 
