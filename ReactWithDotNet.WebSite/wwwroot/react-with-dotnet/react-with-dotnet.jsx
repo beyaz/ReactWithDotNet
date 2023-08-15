@@ -1599,15 +1599,15 @@ function DefineComponent(componentDeclaration)
         {
             const component = this;
 
-            //const clientTasks = component.state[ClientTasks];
-            //if (clientTasks)
-            //{
-            //    const partialState = {};
+            const clientTasks = component.state[ClientTasks];
+            if (clientTasks)
+            {
+                const partialState = {};
 
-            //    partialState[ClientTasks] = null;
+                partialState[ClientTasks] = null;
 
-            //    component.setState(partialState, () => ProcessClientTasks(clientTasks, component));
-            //}
+                component.setState(partialState, () => ProcessClientTasks(clientTasks, component));
+            }
 
             const hasComponentDidMountMethod = component.state[HasComponentDidMountMethod];
             if (hasComponentDidMountMethod)
@@ -1655,12 +1655,17 @@ function DefineComponent(componentDeclaration)
             }
 
             const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(this[DotNetComponentUniqueIdentifiers][0]);
-            if (freeSpace.componentDidUpdateStarted === true)
+            if (freeSpace.waitingClientTasks === clientTasks)
             {
                 return;
             }
 
-            freeSpace.componentDidUpdateStarted = true;
+            if (freeSpace.waitingClientTasks != null)
+            {
+                throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be null at this point.');
+            }
+
+            freeSpace.waitingClientTasks = clientTasks;
 
             const partialState = {};
 
@@ -1668,14 +1673,19 @@ function DefineComponent(componentDeclaration)
 
             function callback()
             {
-                ProcessClientTasks(clientTasks, this);
-
-                if (freeSpace.componentDidUpdateStarted !== true)
+                if (freeSpace.waitingClientTasks !== clientTasks)
                 {
-                    throw CreateNewDeveloperError('freeSpace.componentDidUpdateStarted should be true in this point.');
+                    throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be reference equals to clientTasks at this point.');
                 }
 
-                freeSpace.componentDidUpdateStarted = false;
+                ProcessClientTasks(clientTasks, this);
+
+                if (freeSpace.waitingClientTasks !== clientTasks)
+                {
+                    throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be reference equals to clientTasks at this point.');
+                }
+
+                freeSpace.waitingClientTasks = null;
 
                 OnReactStateReady();
             }
