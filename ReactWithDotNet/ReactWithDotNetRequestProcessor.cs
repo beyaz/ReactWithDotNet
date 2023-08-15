@@ -42,27 +42,27 @@ static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput calculateComponentHtmlTextInput)
+    public static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput input)
     {
-        if (calculateComponentHtmlTextInput is null)
+        if (input is null)
         {
-            throw new ArgumentNullException(nameof(calculateComponentHtmlTextInput));
+            throw new ArgumentNullException(nameof(input));
         }
 
-        if (calculateComponentHtmlTextInput.Component is null)
+        if (input.Component is null)
         {
-            throw new ArgumentNullException(string.Join('.', nameof(calculateComponentHtmlTextInput), nameof(calculateComponentHtmlTextInput.Component)));
+            throw new ArgumentNullException(string.Join('.', nameof(input), nameof(input.Component)));
         }
 
-        var element = calculateComponentHtmlTextInput.Component;
+        var element = input.Component;
 
-        var input = new ProcessReactWithDotNetRequestInput
+        var request = new ProcessReactWithDotNetRequestInput
         {
-            HttpContext                                           = calculateComponentHtmlTextInput.HttpContext,
+            HttpContext                                           = input.HttpContext,
             FindType                                              = Type.GetType,
             Instance                                              = element,
-            OnReactContextCreated                                 = calculateComponentHtmlTextInput.OnReactContextCreated,
-            BeforeSerializeElementToClient                        = calculateComponentHtmlTextInput.BeforeSerializeElementToClient,
+            OnReactContextCreated                                 = input.OnReactContextCreated,
+            BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
             ComponentRequest = new ComponentRequest
@@ -71,11 +71,11 @@ partial class Mixin
                 FullName                          = element.GetType().GetFullName(),
                 LastUsedComponentUniqueIdentifier = 1,
                 ComponentUniqueIdentifier         = 1,
-                QueryString                       = calculateComponentHtmlTextInput.QueryString
+                QueryString                       = input.QueryString
             }
         };
 
-        var componentResponse = await ComponentRequestHandler.HandleRequest(input);
+        var componentResponse = await ComponentRequestHandler.HandleRequest(request);
 
         if (componentResponse.ErrorMessage is not null)
         {
