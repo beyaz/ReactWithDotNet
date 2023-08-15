@@ -1647,14 +1647,16 @@ function DefineComponent(componentDeclaration)
 
         componentDidUpdate(previousProps, previousState)
         {
-            const clientTasks = this.state[ClientTasks];
+            const component = this;
+
+            const clientTasks = component.state[ClientTasks];
 
             if (clientTasks == null || clientTasks.length === 0)
             {
                 return;
             }
 
-            const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(this[DotNetComponentUniqueIdentifiers][0]);
+            const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(component[DotNetComponentUniqueIdentifiers][0]);
             if (freeSpace.waitingClientTasks === clientTasks)
             {
                 return;
@@ -1678,7 +1680,7 @@ function DefineComponent(componentDeclaration)
                     throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be reference equals to clientTasks at this point.');
                 }
 
-                ProcessClientTasks(clientTasks, this);
+                ProcessClientTasks(clientTasks, component);
 
                 if (freeSpace.waitingClientTasks !== clientTasks)
                 {
@@ -1690,7 +1692,7 @@ function DefineComponent(componentDeclaration)
                 OnReactStateReady();
             }
 
-            this.setState(partialState, callback);
+            component.setState(partialState, callback);
         }
 
         componentWillUnmount()
