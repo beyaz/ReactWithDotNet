@@ -89,7 +89,7 @@ class EventBusImp
 
         for (var i = 0; i < listenerFunctions.length; i++)
         {
-            listenerFunctions[i].apply(null, eventArgumentsAsArray);
+            listenerFunctions[i].apply(null, [eventArgumentsAsArray]);
         }
     }
 }
@@ -1348,7 +1348,9 @@ function StartAction(remoteMethodName, component, eventArguments)
 function HandleAction(data, executionQueueEntry)
 {
     const remoteMethodName = data.remoteMethodName;
-    const component = NotNull(data.component);
+    let component = NotNull(data.component);
+
+    component = GetComponentByDotNetComponentUniqueIdentifier(component[DotNetComponentUniqueIdentifiers][0]);
 
     if (component._reactInternals == null)
     {
@@ -2211,10 +2213,8 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
 {
     const component = this;
 
-    const onEventFired = () =>
+    const onEventFired = (eventArgumentsAsArray) =>
     {
-        const eventArgumentsAsArray = Array.prototype.slice.call(arguments);
-
         StartAction(remoteMethodName, component, eventArgumentsAsArray);
     };
 
@@ -2232,11 +2232,9 @@ RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodNam
 {
     const component = this;
 
-    const onEventFired = () =>
+    const onEventFired = (eventArgumentsAsArray) =>
     {
         EventBus.Remove(eventName, onEventFired);
-
-        const eventArgumentsAsArray = Array.prototype.slice.call(arguments);
 
         StartAction(remoteMethodName, component, eventArgumentsAsArray);
     };
@@ -2283,10 +2281,8 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
 
     const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
 
-    const onEventFired = () =>
+    const onEventFired = (eventArgumentsAsArray) =>
     {
-        const eventArgumentsAsArray = Array.prototype.slice.call(arguments);
-
         const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
         StartAction(remoteMethodName, handlerComponent, eventArgumentsAsArray);
