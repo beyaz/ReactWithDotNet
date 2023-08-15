@@ -4,9 +4,7 @@ namespace ReactWithDotNet.WebSite;
 
 class MainLayout : ReactPureComponent
 {
-    public Element Page { get; set; }
-
-    public string RenderInfo { get; set; }
+    public ComponentRenderInfo RenderInfo { get; set; }
 
     protected override Element render()
     {
@@ -42,10 +40,7 @@ class MainLayout : ReactPureComponent
             },
             new body(Margin(0),Height100vh)
             {
-                new div(Id("app"), WidthHeightMaximized)
-                {
-                    Page
-                },
+                new div(Id("app"), WidthHeightMaximized),
 
                 // After page first rendered in client then connect with react system in background.
                 // So user first iteraction time will be minimize.
@@ -71,7 +66,7 @@ import {{ReactWithDotNet}} from './{root}/dist/index.js';
 ReactWithDotNet.StrictMode = false;
 ReactWithDotNet.RenderComponentIn({{
   idOfContainerHtmlElement: 'app',
-  renderInfo: {RenderInfo}
+  renderInfo: {RenderInfo.ToJsonString}
 }});
 
 "

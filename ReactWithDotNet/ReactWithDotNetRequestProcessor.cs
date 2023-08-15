@@ -83,7 +83,7 @@ partial class Mixin
         return HtmlTextGenerator.ToHtml(componentResponse);
     }
 
-    public static async Task<string> CalculateComponentRenderInfo(CalculateComponentRenderInfoInput input)
+    public static async Task<ComponentRenderInfo> CalculateComponentRenderInfo(CalculateComponentRenderInfoInput input)
     {
         if (input is null)
         {
@@ -121,7 +121,7 @@ partial class Mixin
             throw DeveloperException(componentResponse.ErrorMessage);
         }
 
-        return componentResponse.ToJson();
+        return new ComponentRenderInfo{ComponentResponse = componentResponse};
     }
 
     public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
@@ -178,4 +178,12 @@ public sealed class CalculateComponentRenderInfoInput
     public HttpContext HttpContext { get; init; }
     public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
     public string QueryString { get; init; }
+}
+
+
+public sealed class ComponentRenderInfo
+{
+    internal ComponentResponse ComponentResponse;
+
+    public string ToJsonString => ComponentResponse.ToJson();
 }

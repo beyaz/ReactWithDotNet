@@ -17,10 +17,7 @@ static class ReactWithDotNetIntegration
 
         endpoints.MapGet("/LiveEditor", async httpContext =>
         {
-            await WriteHtmlResponse(httpContext, new MainLayout
-            {
-                Page = new HtmlToCSharpView()
-            });
+            await WriteHtmlResponse(httpContext, new MainLayout(), new HtmlToCSharpView());
         });
 
 #if DEBUG // this two endpoints should use only development mode
@@ -29,19 +26,13 @@ static class ReactWithDotNetIntegration
         {
             ReactWithDotNetDesigner.IsAttached = true;
 
-            await WriteHtmlResponse(httpContext, new MainLayout
-            {
-                Page = new ReactWithDotNetDesigner()
-            });
+            await WriteHtmlResponse(httpContext, new MainLayout(), new ReactWithDotNetDesigner());
         });
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), async httpContext =>
         {
             ReactWithDotNetDesigner.IsAttached = true;
 
-            await WriteHtmlResponse(httpContext, new MainLayout
-            {
-                Page = new ReactWithDotNetDesignerComponentPreview()
-            });
+            await WriteHtmlResponse(httpContext, new MainLayout(),new ReactWithDotNetDesignerComponentPreview());
         });
 #endif
     }
@@ -61,10 +52,7 @@ static class ReactWithDotNetIntegration
 
     static async Task HomePage(HttpContext httpContext)
     {
-        await WriteHtmlResponse(httpContext, new MainLayout
-        {
-            Page = new MainWindow()
-        });
+        await WriteHtmlResponse(httpContext, new MainLayout(),new MainWindow());
     }
 
     static Task InitializeTheme(HttpContext httpContext, ReactContext context)
@@ -73,7 +61,7 @@ static class ReactWithDotNetIntegration
         return Task.CompletedTask;
     }
 
-    static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout mainLayout)
+    static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout mainLayout, Element component)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -83,7 +71,7 @@ static class ReactWithDotNetIntegration
 
         mainLayout.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
         {
-            Component             = mainLayout.Page,
+            Component             = component,
             HttpContext           = httpContext,
             QueryString           = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated = InitializeTheme
