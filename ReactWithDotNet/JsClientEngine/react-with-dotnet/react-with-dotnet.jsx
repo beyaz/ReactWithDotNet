@@ -1599,15 +1599,15 @@ function DefineComponent(componentDeclaration)
         {
             const component = this;
 
-            //const clientTasks = component.state[ClientTasks];
-            //if (clientTasks)
-            //{
-            //    const partialState = {};
+            const clientTasks = component.state[ClientTasks];
+            if (clientTasks)
+            {
+                const partialState = {};
 
-            //    partialState[ClientTasks] = null;
+                partialState[ClientTasks] = null;
 
-            //    component.setState(partialState, () => ProcessClientTasks(clientTasks, component));
-            //}
+                component.setState(partialState, () => ProcessClientTasks(clientTasks, component));
+            }
 
             const hasComponentDidMountMethod = component.state[HasComponentDidMountMethod];
             if (hasComponentDidMountMethod)
