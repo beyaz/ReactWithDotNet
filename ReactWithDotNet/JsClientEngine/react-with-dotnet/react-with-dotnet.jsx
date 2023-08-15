@@ -96,17 +96,25 @@ class EventBusImp
 
 const EventBus =
 {
+    bus: new EventBusImp(),
+
     On: function(event, callback)
     {
-        window.addEventListener(event, callback);
+        // window.addEventListener(event, callback);
+
+        EventBus.bus.subscribe(event, callback);
     },
     Dispatch: function(event, data)
     {
-        window.dispatchEvent(new CustomEvent(event, { detail: data }));
+        // window.dispatchEvent(new CustomEvent(event, { detail: data }));
+
+        EventBus.bus.publish(event, data);
     },
     Remove: function(event, callback)
     {
-        window.removeEventListener(event, callback);
+        // window.removeEventListener(event, callback);
+
+        EventBus.bus.unsubscribe(event, callback);
     }
 };
 
@@ -1318,11 +1326,7 @@ function ProcessClientTasks(clientTasks, component)
         const jsFunctionPath      = clientTasks[i].JsFunctionPath;
         const jsFunctionArguments = clientTasks[i].JsFunctionArguments;
 
-        PushToFunctionExecutionQueue(() =>
-        {
-            InvokeJsFunctionInPath(component, jsFunctionPath, jsFunctionArguments);
-            OnReactStateReady();
-        });
+        InvokeJsFunctionInPath(component, jsFunctionPath, jsFunctionArguments);
     }
 }
 
@@ -1595,15 +1599,15 @@ function DefineComponent(componentDeclaration)
         {
             const component = this;
 
-            const clientTasks = component.state[ClientTasks];
-            if (clientTasks)
-            {
-                const partialState = {};
+            //const clientTasks = component.state[ClientTasks];
+            //if (clientTasks)
+            //{
+            //    const partialState = {};
 
-                partialState[ClientTasks] = null;
+            //    partialState[ClientTasks] = null;
 
-                component.setState(partialState, () => ProcessClientTasks(clientTasks, component));
-            }
+            //    component.setState(partialState, () => ProcessClientTasks(clientTasks, component));
+            //}
 
             const hasComponentDidMountMethod = component.state[HasComponentDidMountMethod];
             if (hasComponentDidMountMethod)
@@ -1672,6 +1676,8 @@ function DefineComponent(componentDeclaration)
                 }
 
                 freeSpace.componentDidUpdateStarted = false;
+
+                OnReactStateReady();
             }
 
             this.setState(partialState, callback);
@@ -2170,9 +2176,9 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
 {
     const component = this;
 
-    const onEventFired = (e) =>
+    const onEventFired = () =>
     {
-        const eventArgumentsAsArray = e.detail;
+        const eventArgumentsAsArray = Array.prototype.slice.call(arguments);
 
         StartAction(remoteMethodName, component, eventArgumentsAsArray);
     };
@@ -2191,11 +2197,11 @@ RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodNam
 {
     const component = this;
 
-    const onEventFired = (e) =>
+    const onEventFired = () =>
     {
         EventBus.Remove(eventName, onEventFired);
 
-        const eventArgumentsAsArray = e.detail;
+        const eventArgumentsAsArray = Array.prototype.slice.call(arguments);
 
         StartAction(remoteMethodName, component, eventArgumentsAsArray);
     };
@@ -2242,9 +2248,9 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
 
     const eventName = GetRealNameOfDotNetEvent(senderPropertyFullName, senderComponentUniqueIdentifier);
 
-    const onEventFired = (e) =>
+    const onEventFired = () =>
     {
-        const eventArgumentsAsArray = e.detail;
+        const eventArgumentsAsArray = Array.prototype.slice.call(arguments);
 
         const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
