@@ -91,7 +91,8 @@ class PageShowcase : ReactComponent
         typeof(MuiCardDemo),
         typeof(MuiTextFieldDemo),
         typeof(PrimeReactTabViewDemo),
-        typeof(RSuiteAutoCompleteDemo)
+        typeof(RSuiteAutoCompleteDemo),
+        typeof(EventBusDemo)
     };
 
     void OnSearchFinished()
