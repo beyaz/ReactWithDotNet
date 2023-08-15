@@ -36,6 +36,64 @@ function SafeExecute(fn)
     }
 }
 
+function TryRemoveItemFromArray(array, item)
+{
+    if (array == null || array.length === 0)
+    {
+        return;
+    }
+
+    const index = array.indexOf(item);
+
+    if (index >= 0)
+    {
+        array.splice(index, 1);
+        return true;
+    }
+
+    return false;
+}
+
+class EventBusImp
+{
+    constructor()
+    {
+        this.map = {};
+    }
+
+    subscribe(eventName, callback)
+    {
+        var listenerFunctions = this.map[eventName];
+
+        if (!listenerFunctions)
+        {
+            this.map[eventName] = listenerFunctions = [];
+        }
+
+        listenerFunctions.push(callback);
+    }
+
+    unsubscribe(eventName, callback)
+    {
+        TryRemoveItemFromArray(this.map[eventName], callback);
+    }
+
+    publish(eventName, eventArgumentsAsArray)
+    {
+        var listenerFunctions = this.map[eventName];
+
+        if (!listenerFunctions)
+        {
+            return;
+        }
+
+        for (var i = 0; i < listenerFunctions.length; i++)
+        {
+            listenerFunctions[i].apply(null, eventArgumentsAsArray);
+        }
+    }
+}
+
 const EventBus =
 {
     On: function(event, callback)

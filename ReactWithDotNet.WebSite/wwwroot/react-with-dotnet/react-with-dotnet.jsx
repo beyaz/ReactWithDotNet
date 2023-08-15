@@ -40,7 +40,7 @@ const EventBus =
 {
     On: function(event, callback)
     {
-        window.addEventListener(event, callback);
+        window.addEventListener(event, callback, false);
     },
     Dispatch: function(event, data)
     {
@@ -1607,6 +1607,11 @@ function DefineComponent(componentDeclaration)
             function callback()
             {
                 ProcessClientTasks(clientTasks, this);
+
+                if (freeSpace.componentDidUpdateStarted !== true)
+                {
+                    throw CreateNewDeveloperError('freeSpace.componentDidUpdateStarted should be true in this point.');
+                }
 
                 freeSpace.componentDidUpdateStarted = false;
             }
