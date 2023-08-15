@@ -1669,9 +1669,10 @@ function DefineComponent(componentDeclaration)
                     {
                         const newState = CaclculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
 
-                        newState[HasComponentDidMountMethod] = null;
-
                         const incomingClientTasks = newState[ClientTasks];
+
+                        newState[HasComponentDidMountMethod] = null;
+                        newState[ClientTasks] = null;
 
                         function stateCallback()
                         {
@@ -1679,6 +1680,8 @@ function DefineComponent(componentDeclaration)
                             {
                                 ProcessClientTasks(incomingClientTasks, component);
                             }
+
+                            OnReactStateReady();
                         }
 
                         component.setState(newState, stateCallback);
