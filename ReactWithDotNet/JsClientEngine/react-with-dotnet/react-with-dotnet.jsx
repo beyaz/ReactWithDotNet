@@ -1541,6 +1541,56 @@ function DestroyDotNetComponentInstance(instance)
     COMPONENT_CACHE.Unregister(instance);
 }
 
+function HandleComponentClientTasks(component)
+{
+    const clientTasks = component.state[ClientTasks];
+
+    if (clientTasks == null || clientTasks.length === 0)
+    {
+        return;
+    }
+
+    const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(component[DotNetComponentUniqueIdentifiers][0]);
+    if (freeSpace.waitingClientTasks === clientTasks)
+    {
+        return;
+    }
+
+    if (freeSpace.waitingClientTasks != null)
+    {
+        throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be null at this point.');
+    }
+
+    freeSpace.waitingClientTasks = clientTasks;
+
+    function shouldBeReferenceEquals()
+    {
+        if (freeSpace.waitingClientTasks !== clientTasks)
+        {
+            throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be reference equals to clientTasks at this point.');
+        }
+    }
+
+    const partialState = {};
+
+    partialState[ClientTasks] = null;
+
+    function callback()
+    {
+        shouldBeReferenceEquals();
+
+        ProcessClientTasks(clientTasks, component);
+
+        shouldBeReferenceEquals();
+
+        freeSpace.waitingClientTasks = null;
+
+        OnReactStateReady();
+    }
+
+    component.setState(partialState, callback);
+}
+
 function DefineComponent(componentDeclaration)
 {
     const dotNetTypeOfReactComponent = componentDeclaration[DotNetTypeOfReactComponent];
@@ -1647,52 +1697,7 @@ function DefineComponent(componentDeclaration)
 
         componentDidUpdate(previousProps, previousState)
         {
-            const component = this;
-
-            const clientTasks = component.state[ClientTasks];
-
-            if (clientTasks == null || clientTasks.length === 0)
-            {
-                return;
-            }
-
-            const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(component[DotNetComponentUniqueIdentifiers][0]);
-            if (freeSpace.waitingClientTasks === clientTasks)
-            {
-                return;
-            }
-
-            if (freeSpace.waitingClientTasks != null)
-            {
-                throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be null at this point.');
-            }
-
-            freeSpace.waitingClientTasks = clientTasks;
-
-            const partialState = {};
-
-            partialState[ClientTasks] = null;
-
-            function callback()
-            {
-                if (freeSpace.waitingClientTasks !== clientTasks)
-                {
-                    throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be reference equals to clientTasks at this point.');
-                }
-
-                ProcessClientTasks(clientTasks, component);
-
-                if (freeSpace.waitingClientTasks !== clientTasks)
-                {
-                    throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be reference equals to clientTasks at this point.');
-                }
-
-                freeSpace.waitingClientTasks = null;
-
-                OnReactStateReady();
-            }
-
-            component.setState(partialState, callback);
+            HandleComponentClientTasks(this);
         }
 
         componentWillUnmount()
