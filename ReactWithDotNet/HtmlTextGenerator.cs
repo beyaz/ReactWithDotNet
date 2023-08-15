@@ -289,18 +289,21 @@ static class HtmlTextGenerator
 
         var children = htmlNode.Children;
 
-        if ((htmlNode.IsThirdPartyComponent || htmlNode.IsReactFragment || htmlNode.IsVirtualNode) && children?.Count > 0)
+        if ((htmlNode.IsThirdPartyComponent || htmlNode.IsReactFragment || htmlNode.IsVirtualNode))
         {
-            foreach (var child in children)
+            if (children?.Count > 0)
             {
-                var canPushNewLine = !child.IsTextNode;
-
-                if (canPushNewLine)
+                foreach (var child in children)
                 {
-                    TryAddNewLine(sb);
-                }
+                    var canPushNewLine = !child.IsTextNode;
 
-                ToString(sb, depth, child);
+                    if (canPushNewLine)
+                    {
+                        TryAddNewLine(sb);
+                    }
+
+                    ToString(sb, depth, child);
+                }    
             }
 
             return;
