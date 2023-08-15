@@ -2215,7 +2215,13 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
 
     const onEventFired = (eventArgumentsAsArray) =>
     {
-        StartAction(remoteMethodName, component, eventArgumentsAsArray);
+        const entry = StartAction(remoteMethodName, component, eventArgumentsAsArray);
+
+        // guard for removed node before send to server
+        component[ON_COMPONENT_DESTROY].push(() =>
+        {
+            entry.isValid = false;
+        });
     };
 
     NotNull(component[ON_COMPONENT_DESTROY]);
@@ -2236,7 +2242,13 @@ RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodNam
     {
         EventBus.Remove(eventName, onEventFired);
 
-        StartAction(remoteMethodName, component, eventArgumentsAsArray);
+        const entry = StartAction(remoteMethodName, component, eventArgumentsAsArray);
+
+        // guard for removed node before send to server
+        component[ON_COMPONENT_DESTROY].push(() =>
+        {
+            entry.isValid = false;
+        });
     };
 
     NotNull(component[ON_COMPONENT_DESTROY]);
@@ -2285,7 +2297,13 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
     {
         const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
-        StartAction(remoteMethodName, handlerComponent, eventArgumentsAsArray);
+        const entry = StartAction(remoteMethodName, handlerComponent, eventArgumentsAsArray);
+
+        // guard for removed node before send to server
+        handlerComponent[ON_COMPONENT_DESTROY].push(() =>
+        {
+            entry.isValid = false;
+        });
     };
 
     component[ON_COMPONENT_DESTROY].push(() =>
