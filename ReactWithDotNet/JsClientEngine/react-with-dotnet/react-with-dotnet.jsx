@@ -292,11 +292,16 @@ function EmitNextFunctionInFunctionExecutionQueue()
 var FunctionExecutionQueueEntryUniqueIdentifier = 1;
 var FunctionExecutionQueueCurrentEntry = null;
 
-function PushToFunctionExecutionQueue(fn)
+function PushToFunctionExecutionQueue(fn, forceWait)
 {
     const entry = { fn: fn, isValid: true, id: FunctionExecutionQueueEntryUniqueIdentifier++ };
 
     FunctionExecutionQueue.push(entry);
+
+    if (forceWait === true)
+    {
+        return entry;
+    }
 
     if (!FunctionExecutionQueueStateIsExecuting)
     {
@@ -1547,13 +1552,13 @@ function HandleComponentClientTasks(component)
 
     if (clientTasks == null || clientTasks.length === 0)
     {
-        return;
+        return false;
     }
 
     const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(component[DotNetComponentUniqueIdentifiers][0]);
     if (freeSpace.waitingClientTasks === clientTasks)
     {
-        return;
+        return false;
     }
 
     if (freeSpace.waitingClientTasks != null)
@@ -1575,7 +1580,7 @@ function HandleComponentClientTasks(component)
 
     partialState[ClientTasks] = null;
 
-    function callback()
+    function stateCallback()
     {
         shouldBeReferenceEquals();
 
@@ -1588,7 +1593,9 @@ function HandleComponentClientTasks(component)
         OnReactStateReady();
     }
 
-    component.setState(partialState, callback);
+    component.setState(partialState, stateCallback);
+
+    return true;
 }
 
 function DefineComponent(componentDeclaration)
@@ -1649,19 +1656,14 @@ function DefineComponent(componentDeclaration)
         {
             const component = this;
 
-            const clientTasks = component.state[ClientTasks];
-            if (clientTasks)
+            function HandleHasComponentDidMount()
             {
-                const partialState = {};
+                const hasComponentDidMountMethod = component.state[HasComponentDidMountMethod];
+                if (hasComponentDidMountMethod !== true)
+                {
+                    return;
+                }
 
-                partialState[ClientTasks] = null;
-
-                component.setState(partialState, () => ProcessClientTasks(clientTasks, component));
-            }
-
-            const hasComponentDidMountMethod = component.state[HasComponentDidMountMethod];
-            if (hasComponentDidMountMethod)
-            {
                 // try call from cache
                 {
                     const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentDidMount', []);
@@ -1669,17 +1671,14 @@ function DefineComponent(componentDeclaration)
                     {
                         const newState = CaclculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
 
-                        const incomingClientTasks = newState[ClientTasks];
+                        const clientTasks = newState[ClientTasks];
 
                         newState[HasComponentDidMountMethod] = null;
                         newState[ClientTasks] = null;
 
                         function stateCallback()
                         {
-                            if (incomingClientTasks)
-                            {
-                                ProcessClientTasks(incomingClientTasks, component);
-                            }
+                            ProcessClientTasks(clientTasks, component);
 
                             OnReactStateReady();
                         }
@@ -1694,7 +1693,23 @@ function DefineComponent(componentDeclaration)
 
                 partialState[HasComponentDidMountMethod] = null;
 
-                component.setState(partialState, () => StartAction(/*remoteMethodName*/'componentDidMount', component, /*eventArguments*/[]));
+                function stateCallBack()
+                {
+                    StartAction(/*remoteMethodName*/'componentDidMount', component, /*eventArguments*/[]);
+                }
+
+                component.setState(partialState, stateCallBack);
+            }
+
+
+            const hasAnyAction = HandleComponentClientTasks(this);
+            if (hasAnyAction)
+            {
+                PushToFunctionExecutionQueue(HandleHasComponentDidMount, /*forceWait*/true);
+            }
+            else
+            {
+                HandleHasComponentDidMount();
             }
         }
 
