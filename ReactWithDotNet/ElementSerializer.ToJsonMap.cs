@@ -964,7 +964,7 @@ partial class ElementSerializer
 
         if (context.CalculateSuspenseFallbackForThirdPartyReactComponents)
         {
-            map.Add("SuspenseFallback", node.FirstChild.ElementAsJsonMap);
+            map.Add("$SuspenseFallback", node.FirstChild.ElementAsJsonMap);
         }
 
         return map;

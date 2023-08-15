@@ -174,7 +174,7 @@ static class HtmlTextGenerator
             return;
         }
 
-        if (htmlNode.IsThirdPartyComponent && name != "SuspenseFallback")
+        if (htmlNode.IsThirdPartyComponent && name != "$SuspenseFallback")
         {
             return;
         }
@@ -271,7 +271,7 @@ static class HtmlTextGenerator
             htmlNode.IsVirtualNode = true;
         }
 
-        if ((name == "$RootNode" || name == "SuspenseFallback") && value is not null)
+        if ((name == "$RootNode" || name == "$SuspenseFallback") && value is not null)
         {
             Append(htmlNode, (JsonMap)value);
         }
