@@ -219,6 +219,54 @@ partial class Mixin
     {
         public bool isUpdated, isCurrent;
     }
+    
+    
+    public static async Task<string> CalculateFirstRenderOfPageLayout(CalculateFirstRenderOfPageLayoutInput input)
+    {
+        if (input is null)
+        {
+            throw new ArgumentNullException(nameof(input));
+        }
+
+        var layoutInstance = (IPageLayout)Activator.CreateInstance(input.layoutType);
+        if (layoutInstance == null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        var component = (Element)Activator.CreateInstance(input.typeOfMainContent);
+
+        layoutInstance.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
+        {
+            Component             = component,
+            HttpContext           = input.HttpContext,
+            QueryString           = input.HttpContext.Request.QueryString.ToString(),
+            OnReactContextCreated = input.OnReactContextCreated,
+            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
+        });
+
+        return await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
+        {
+            HttpContext                    = input.HttpContext,
+            Component                      = (Element)layoutInstance,
+            QueryString                    = input.HttpContext.Request.QueryString.ToString(),
+            OnReactContextCreated          = input.OnReactContextCreated,
+            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
+        });
+    }
+}
+
+public sealed class CalculateFirstRenderOfPageLayoutInput
+{
+    public Type layoutType, typeOfMainContent;
+    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+
+
+    public HttpContext HttpContext { get; init; }
+
+    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
+
+    public string QueryString { get; init; }
 }
 
 public sealed class CalculateComponentHtmlTextInput
