@@ -41,28 +41,34 @@ partial class ElementSerializer
             {
                 // Try Calculate ThirdParty Component Suspense Fallback
                 if (context.CalculateSuspenseFallbackForThirdPartyReactComponents &&
-                    node.ElementIsThirdPartyReactComponent &&
-                    !node.IsSuspenseFallbackElementCalculated)
+                    node.ElementIsThirdPartyReactComponent)
                 {
-                    node.IsSuspenseFallbackElementCalculated = true;
-
-                    node.ElementAsThirdPartyReactComponent.Context = context.ReactContext;
-
-                    node.SuspenseFallbackElement = node.ElementAsThirdPartyReactComponent.InvokeSuspenseFallback();
-                    if (node.SuspenseFallbackElement is not null)
+                    if (!node.IsSuspenseFallbackElementCalculated)
                     {
-                        node.SuspenseFallbackElement.key = "0";
+                        node.IsSuspenseFallbackElementCalculated = true;
+
+                        node.ElementAsThirdPartyReactComponent.Context = context.ReactContext;
+
+                        node.SuspenseFallbackElement = node.ElementAsThirdPartyReactComponent.InvokeSuspenseFallback();
+                        if (node.SuspenseFallbackElement is not null)
+                        {
+                            node.SuspenseFallbackElement.key = "0";
+                        }
+
+                        node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement);
+
+                        node.SuspenseFallbackNode.Parent = node;
+
+                        node.FirstChildTemp = node.FirstChild;
+                    
+                        node.FirstChild = node.SuspenseFallbackNode;
+
+                        node = node.SuspenseFallbackNode;
+
+                        continue;
                     }
 
-                    node.SuspenseFallbackNode = ConvertToNode(node.SuspenseFallbackElement);
-
-                    node.SuspenseFallbackNode.Parent = node;
-
-                    node.FirstChild = node.SuspenseFallbackNode;
-
-                    node = node.SuspenseFallbackNode;
-
-                    continue;
+                    node.FirstChild = node.FirstChildTemp;
                 }
 
                 await CompleteWithChildren(node, context);
@@ -964,7 +970,7 @@ partial class ElementSerializer
 
         if (context.CalculateSuspenseFallbackForThirdPartyReactComponents)
         {
-            map.Add("$SuspenseFallback", node.FirstChild.ElementAsJsonMap);
+            map.Add("$SuspenseFallback", node.SuspenseFallbackNode.ElementAsJsonMap);
         }
 
         return map;
@@ -1110,6 +1116,8 @@ partial class ElementSerializer
         public bool ElementIsThirdPartyReactComponent { get; init; }
 
         public Node FirstChild { get; set; }
+        
+        public Node FirstChildTemp { get; set; }
 
         public bool HasFirstChild => FirstChild is not null;
 

@@ -76,6 +76,11 @@ public sealed class FreeScrollBar : ThirdPartyReactComponent
 
     protected override Element GetSuspenseFallbackElement()
     {
+        if (SuspenseFallback is not null)
+        {
+            return SuspenseFallback;
+        }
+        
         return new Skeleton() + style;
     }
 
