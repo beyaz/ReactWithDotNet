@@ -269,7 +269,7 @@ public sealed class CalculateFirstRenderOfPageLayoutInput
     public string QueryString { get; init; }
 }
 
-public sealed class CalculateComponentHtmlTextInput
+sealed class CalculateComponentHtmlTextInput
 {
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 

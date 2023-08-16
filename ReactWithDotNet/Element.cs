@@ -98,8 +98,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
         {
-            Component = new ToStringHandlerComponent(this),
-            QueryString    = string.Empty
+            Component = new ToStringHandlerComponent(this)
         }).GetAwaiter().GetResult();
     }
 
