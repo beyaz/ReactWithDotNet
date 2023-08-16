@@ -820,6 +820,11 @@ function tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArgum
                 return cachedMethodInfo;
             }
 
+            if (remoteMethodName === 'componentDidMount' && cachedMethodInfo.MethodName.endsWith('|componentDidMount'))
+            {
+                return cachedMethodInfo;
+            }
+
             if (cachedMethodInfo.MethodName === remoteMethodName && eventArguments.length === 1)
             {
                 if (isEquivent(eventArguments[0], cachedMethodInfo.Parameter))
