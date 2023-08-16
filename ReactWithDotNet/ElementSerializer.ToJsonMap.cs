@@ -660,7 +660,7 @@ partial class ElementSerializer
 
     static async Task CompleteWithChildren(Node node, ElementSerializerContext context)
     {
-        var childElements = new List<object>();
+        List<object> childElements = null;
 
         var child = node.FirstChild;
 
@@ -670,11 +670,11 @@ partial class ElementSerializer
             {
                 context.TryCallBeforeSerializeElementToClient(child.Element);
 
-                childElements.Add(child.ElementAsHtmlTextElement.innerText);
+                (childElements ??= new List<object>()).Add(child.ElementAsHtmlTextElement.innerText);
             }
             else
             {
-                childElements.Add(child.ElementAsJsonMap);
+                (childElements ??= new List<object>()).Add(child.ElementAsJsonMap);
             }
 
             child = child.NextSibling;
@@ -682,7 +682,10 @@ partial class ElementSerializer
 
         var map = await LeafToMap(node, context);
 
-        map.Add("$children", childElements);
+        if (childElements is not null)
+        {
+            map.Add("$children", childElements);
+        }
 
         node.ElementAsJsonMap = map;
 
