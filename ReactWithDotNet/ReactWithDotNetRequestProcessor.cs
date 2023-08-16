@@ -54,7 +54,7 @@ partial class Mixin
         {
             throw new ArgumentNullException(string.Join('.', nameof(input), nameof(input.Component)));
         }
-        
+
         var request = new ProcessReactWithDotNetRequestInput
         {
             HttpContext                                           = input.HttpContext,
@@ -84,74 +84,6 @@ partial class Mixin
         Inject(componentResponse, input.Component);
 
         return HtmlTextGenerator.ToHtml(componentResponse);
-    }
-
-    static void Inject(ComponentResponse componentResponse, Element component)
-    {
-        if (component is IMainLayout mainLayout)
-        {
-            var app = mainLayout.RenderInfo.ComponentResponse.ElementAsJson;
-
-            var isUpdated = false;
-
-            var isCurrent = false;
-            
-            void tryUpdate(JsonMap jsonMap)
-            {
-                jsonMap.Foreach(tryReplace);
-                if (isCurrent)
-                {
-                    jsonMap.Add("$children", new[] { app });
-                    componentResponse.DynamicStyles = mainLayout.RenderInfo.ComponentResponse.DynamicStyles;
-
-                    isUpdated = true;
-                }
-            }
-
-         
-
-            void tryReplace(string key, object value)
-            {
-                if (key == "id" && value is string stringValue && stringValue == mainLayout.ContainerDomElementId)
-                {
-                    isCurrent = true;
-                    return;
-                    
-                }
-                if (isUpdated)
-                {
-                    return;
-                }
-                if (value is JsonMap jsonMap)
-                {
-                    tryUpdate(jsonMap);
-                }
-
-                if (value is IList jsonMaps)
-                {
-                    foreach (var item in jsonMaps)
-                    {
-                        if (item is JsonMap map)
-                        {
-                            tryUpdate(map); 
-                            
-                            if (isUpdated)
-                            {
-                                return;
-                            }
-                        }
-                        
-                    }
-                }
-            }
-
-            {
-                if (componentResponse.ElementAsJson is JsonMap jsonMap)
-                {
-                    tryUpdate(jsonMap);
-                }
-            }
-        }
     }
 
     public static async Task<ComponentRenderInfo> CalculateComponentRenderInfo(CalculateComponentRenderInfoInput input)
@@ -192,7 +124,7 @@ partial class Mixin
             throw DeveloperException(componentResponse.ErrorMessage);
         }
 
-        return new ComponentRenderInfo{ComponentResponse = componentResponse};
+        return new ComponentRenderInfo { ComponentResponse = componentResponse };
     }
 
     public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
@@ -217,6 +149,72 @@ partial class Mixin
         var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
 
         return componentResponse.ToJson();
+    }
+
+    static void Inject(ComponentResponse componentResponse, Element component)
+    {
+        if (component is IMainLayout mainLayout)
+        {
+            var app = mainLayout.RenderInfo.ComponentResponse.ElementAsJson;
+
+            var isUpdated = false;
+
+            var isCurrent = false;
+
+            void tryUpdate(JsonMap jsonMap)
+            {
+                jsonMap.Foreach(tryReplace);
+                if (isCurrent)
+                {
+                    jsonMap.Add("$children", new[] { app });
+                    componentResponse.DynamicStyles = mainLayout.RenderInfo.ComponentResponse.DynamicStyles;
+
+                    isUpdated = true;
+                }
+            }
+
+            void tryReplace(string key, object value)
+            {
+                if (key == "id" && value is string stringValue && stringValue == mainLayout.ContainerDomElementId)
+                {
+                    isCurrent = true;
+                    return;
+                }
+
+                if (isUpdated)
+                {
+                    return;
+                }
+
+                if (value is JsonMap jsonMap)
+                {
+                    tryUpdate(jsonMap);
+                }
+
+                if (value is IList jsonMaps)
+                {
+                    foreach (var item in jsonMaps)
+                    {
+                        if (item is JsonMap map)
+                        {
+                            tryUpdate(map);
+
+                            if (isUpdated)
+                            {
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            {
+                if (componentResponse.ElementAsJson is JsonMap jsonMap)
+                {
+                    tryUpdate(jsonMap);
+                }
+            }
+        }
     }
 }
 
@@ -251,7 +249,6 @@ public sealed class CalculateComponentRenderInfoInput
     public string QueryString { get; init; }
 }
 
-
 public sealed class ComponentRenderInfo
 {
     internal ComponentResponse ComponentResponse;
@@ -261,6 +258,6 @@ public sealed class ComponentRenderInfo
 
 public interface IMainLayout
 {
-    ComponentRenderInfo RenderInfo { get; set; }
     string ContainerDomElementId { get; }
+    ComponentRenderInfo RenderInfo { get; set; }
 }
