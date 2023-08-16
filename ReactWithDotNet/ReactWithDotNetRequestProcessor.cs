@@ -43,6 +43,64 @@ static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
+    public static async Task<string> CalculateFirstRender(CalculateFirstRender input)
+    {
+        if (input is null)
+        {
+            throw new ArgumentNullException(nameof(input));
+        }
+
+        var layoutInstance = (IPageLayout)Activator.CreateInstance(input.LayoutType);
+        if (layoutInstance == null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        var component = (Element)Activator.CreateInstance(input.MainContentType);
+
+        layoutInstance.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
+        {
+            Component                      = component,
+            HttpContext                    = input.HttpContext,
+            QueryString                    = input.HttpContext.Request.QueryString.ToString(),
+            OnReactContextCreated          = input.OnReactContextCreated,
+            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
+        });
+
+        return await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
+        {
+            HttpContext                    = input.HttpContext,
+            Component                      = (Element)layoutInstance,
+            QueryString                    = input.HttpContext.Request.QueryString.ToString(),
+            OnReactContextCreated          = input.OnReactContextCreated,
+            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
+        });
+    }
+
+    public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
+    {
+        if (calculateRenderInfoInput is null)
+        {
+            throw new ArgumentNullException(nameof(calculateRenderInfoInput));
+        }
+
+        if (calculateRenderInfoInput.HttpContext is null)
+        {
+            throw new ArgumentNullException(string.Join('.', nameof(calculateRenderInfoInput), nameof(calculateRenderInfoInput.HttpContext)));
+        }
+
+        var input = new ProcessReactWithDotNetRequestInput
+        {
+            HttpContext                    = calculateRenderInfoInput.HttpContext,
+            OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
+            BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient
+        };
+
+        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+
+        return componentResponse.ToJson();
+    }
+
     internal static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput input)
     {
         if (input is null)
@@ -127,30 +185,6 @@ partial class Mixin
         return new ComponentRenderInfo { ComponentResponse = componentResponse };
     }
 
-    public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
-    {
-        if (calculateRenderInfoInput is null)
-        {
-            throw new ArgumentNullException(nameof(calculateRenderInfoInput));
-        }
-
-        if (calculateRenderInfoInput.HttpContext is null)
-        {
-            throw new ArgumentNullException(string.Join('.', nameof(calculateRenderInfoInput), nameof(calculateRenderInfoInput.HttpContext)));
-        }
-
-        var input = new ProcessReactWithDotNetRequestInput
-        {
-            HttpContext                    = calculateRenderInfoInput.HttpContext,
-            OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
-            BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient
-        };
-
-        var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
-
-        return componentResponse.ToJson();
-    }
-
     static void Inject(ComponentResponse componentResponse, Element component)
     {
         if (component is IPageLayout mainLayout)
@@ -168,7 +202,7 @@ partial class Mixin
                     componentResponse.DynamicStyles                     = mainLayout.RenderInfo.ComponentResponse.DynamicStyles;
                     componentResponse.CallFunctionId                    = mainLayout.RenderInfo.ComponentResponse.CallFunctionId;
                     componentResponse.LastUsedComponentUniqueIdentifier = mainLayout.RenderInfo.ComponentResponse.LastUsedComponentUniqueIdentifier;
-                    componentResponse.Trace = mainLayout.RenderInfo.ComponentResponse.Trace;
+                    componentResponse.Trace                             = mainLayout.RenderInfo.ComponentResponse.Trace;
 
                     context.isUpdated = true;
                 }
@@ -222,48 +256,12 @@ partial class Mixin
     {
         public bool isUpdated, isCurrent;
     }
-    
-    
-    public static async Task<string> CalculateFirstRender(CalculateFirstRender input)
-    {
-        if (input is null)
-        {
-            throw new ArgumentNullException(nameof(input));
-        }
-
-        var layoutInstance = (IPageLayout)Activator.CreateInstance(input.LayoutType);
-        if (layoutInstance == null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        var component = (Element)Activator.CreateInstance(input.MainContentType);
-
-        layoutInstance.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
-        {
-            Component             = component,
-            HttpContext           = input.HttpContext,
-            QueryString           = input.HttpContext.Request.QueryString.ToString(),
-            OnReactContextCreated = input.OnReactContextCreated,
-            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
-        });
-
-        return await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
-        {
-            HttpContext                    = input.HttpContext,
-            Component                      = (Element)layoutInstance,
-            QueryString                    = input.HttpContext.Request.QueryString.ToString(),
-            OnReactContextCreated          = input.OnReactContextCreated,
-            BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
-        });
-    }
 }
 
 public sealed class CalculateFirstRender
 {
     public Type LayoutType, MainContentType;
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
-
 
     public HttpContext HttpContext { get; init; }
 
