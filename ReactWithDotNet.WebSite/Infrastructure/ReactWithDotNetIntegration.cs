@@ -61,7 +61,7 @@ static class ReactWithDotNetIntegration
         return Task.CompletedTask;
     }
 
-    static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout fullPageLayout, Element component)
+    static async Task WriteHtmlResponse(HttpContext httpContext, MainLayout layout, Element component)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -69,7 +69,7 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires]      = "0";
         httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-        fullPageLayout.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
+        layout.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
         {
             Component             = component,
             HttpContext           = httpContext,
@@ -80,7 +80,7 @@ static class ReactWithDotNetIntegration
         var html = await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
         {
             HttpContext           = httpContext,
-            Component             = fullPageLayout,
+            Component             = layout,
             QueryString           = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated = InitializeTheme
         });
