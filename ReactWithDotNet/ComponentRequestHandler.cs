@@ -105,6 +105,11 @@ static class ComponentRequestHandler
 
             stopwatch.Start();
 
+            if (string.IsNullOrWhiteSpace(request.FullName))
+            {
+                return new ComponentResponse { ErrorMessage = "request.FullName is empty." };
+            }
+            
             var type = findType(request.FullName);
             if (type == null)
             {

@@ -111,8 +111,8 @@ partial class Mixin
             {
                 MethodName                        = "FetchComponent",
                 FullName                          = input.Component.GetType().GetFullName(),
-                LastUsedComponentUniqueIdentifier = 1,
-                ComponentUniqueIdentifier         = 1,
+                LastUsedComponentUniqueIdentifier = 1000,
+                ComponentUniqueIdentifier         = 1000,
                 QueryString                       = input.QueryString
             }
         };
@@ -165,7 +165,10 @@ partial class Mixin
                     context.isCurrent = false;
 
                     jsonMap.Add("$children", new[] { app });
-                    componentResponse.DynamicStyles = mainLayout.RenderInfo.ComponentResponse.DynamicStyles;
+                    componentResponse.DynamicStyles                     = mainLayout.RenderInfo.ComponentResponse.DynamicStyles;
+                    componentResponse.CallFunctionId                    = mainLayout.RenderInfo.ComponentResponse.CallFunctionId;
+                    componentResponse.LastUsedComponentUniqueIdentifier = mainLayout.RenderInfo.ComponentResponse.LastUsedComponentUniqueIdentifier;
+                    componentResponse.Trace = mainLayout.RenderInfo.ComponentResponse.Trace;
 
                     context.isUpdated = true;
                 }
