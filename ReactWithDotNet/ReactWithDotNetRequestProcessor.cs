@@ -221,7 +221,7 @@ partial class Mixin
     }
     
     
-    public static async Task<string> CalculateFirstRenderOfPageLayout(CalculateFirstRenderOfPageLayoutInput input)
+    public static async Task<string> CalculateFirstRender(CalculateFirstRender input)
     {
         if (input is null)
         {
@@ -256,7 +256,7 @@ partial class Mixin
     }
 }
 
-public sealed class CalculateFirstRenderOfPageLayoutInput
+public sealed class CalculateFirstRender
 {
     public Type LayoutType, MainContentType;
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
