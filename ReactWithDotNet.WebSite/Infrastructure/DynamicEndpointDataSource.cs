@@ -10,13 +10,13 @@ sealed class DynamicEndpointDataSource : EndpointDataSource
 {
     public static DynamicEndpointDataSource Instance;
 
-    private readonly object _lock = new();
+    readonly object _lock = new();
 
-    private CancellationTokenSource _cancellationTokenSource;
+    CancellationTokenSource _cancellationTokenSource;
 
-    private IChangeToken _changeToken;
+    IChangeToken _changeToken;
 
-    private IReadOnlyList<Endpoint> _endpoints;
+    IReadOnlyList<Endpoint> _endpoints;
 
     public DynamicEndpointDataSource()
     {
