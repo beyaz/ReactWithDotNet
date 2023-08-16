@@ -86,7 +86,7 @@ partial class Mixin
         return HtmlTextGenerator.ToHtml(componentResponse);
     }
 
-    public static async Task<ComponentRenderInfo> CalculateComponentRenderInfo(CalculateComponentRenderInfoInput input)
+    static async Task<ComponentRenderInfo> CalculateComponentRenderInfo(CalculateComponentRenderInfoInput input)
     {
         if (input is null)
         {
