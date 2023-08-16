@@ -305,7 +305,10 @@ public sealed class ComponentRenderInfo
 {
     internal ComponentResponse ComponentResponse;
 
-    public string ToJsonString => ComponentResponse.ToJson();
+    public string ToJsonString()
+    {
+        return ComponentResponse.ToJson();
+    }
 }
 
 public interface IPageLayout

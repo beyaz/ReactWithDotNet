@@ -70,7 +70,7 @@ import {{ReactWithDotNet}} from './{root}/dist/index.js';
 ReactWithDotNet.StrictMode = false;
 ReactWithDotNet.RenderComponentIn({{
   idOfContainerHtmlElement: '{ContainerDomElementId}',
-  renderInfo: {RenderInfo.ToJsonString}
+  renderInfo: {RenderInfo.ToJsonString()}
 }});
 
 "
