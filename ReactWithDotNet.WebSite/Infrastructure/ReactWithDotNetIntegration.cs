@@ -58,7 +58,7 @@ static class ReactWithDotNetIntegration
         return Task.CompletedTask;
     }
 
-    static async Task WriteHtmlResponse(HttpContext httpContext, Type layoutType, Type typeOfMainContent)
+    static async Task WriteHtmlResponse(HttpContext httpContext, Type layoutType, Type mainContentType)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -68,8 +68,8 @@ static class ReactWithDotNetIntegration
 
         var html = await CalculateFirstRenderOfPageLayout(new CalculateFirstRenderOfPageLayoutInput
         {
-            layoutType            = layoutType,
-            typeOfMainContent     = typeOfMainContent,
+            LayoutType            = layoutType,
+            MainContentType       = mainContentType,
             HttpContext           = httpContext,
             QueryString           = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated = InitializeTheme

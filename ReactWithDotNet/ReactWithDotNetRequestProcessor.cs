@@ -228,13 +228,13 @@ partial class Mixin
             throw new ArgumentNullException(nameof(input));
         }
 
-        var layoutInstance = (IPageLayout)Activator.CreateInstance(input.layoutType);
+        var layoutInstance = (IPageLayout)Activator.CreateInstance(input.LayoutType);
         if (layoutInstance == null)
         {
             throw new InvalidOperationException();
         }
 
-        var component = (Element)Activator.CreateInstance(input.typeOfMainContent);
+        var component = (Element)Activator.CreateInstance(input.MainContentType);
 
         layoutInstance.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
         {
@@ -258,7 +258,7 @@ partial class Mixin
 
 public sealed class CalculateFirstRenderOfPageLayoutInput
 {
-    public Type layoutType, typeOfMainContent;
+    public Type LayoutType, MainContentType;
     public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
 
 
