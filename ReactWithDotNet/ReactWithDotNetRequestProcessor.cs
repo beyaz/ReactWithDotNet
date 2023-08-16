@@ -43,7 +43,7 @@ static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput input)
+    static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput input)
     {
         if (input is null)
         {
