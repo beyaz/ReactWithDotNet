@@ -153,7 +153,7 @@ partial class Mixin
 
     static void Inject(ComponentResponse componentResponse, Element component)
     {
-        if (component is IMainLayout mainLayout)
+        if (component is IPageLayout mainLayout)
         {
             var app = mainLayout.RenderInfo.ComponentResponse.ElementAsJson;
 
@@ -256,7 +256,7 @@ public sealed class ComponentRenderInfo
     public string ToJsonString => ComponentResponse.ToJson();
 }
 
-public interface IMainLayout
+public interface IPageLayout
 {
     string ContainerDomElementId { get; }
     ComponentRenderInfo RenderInfo { get; set; }
