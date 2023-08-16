@@ -157,38 +157,36 @@ partial class Mixin
         {
             var app = mainLayout.RenderInfo.ComponentResponse.ElementAsJson;
 
-            var isUpdated = false;
-
-            var isCurrent = false;
-
-            void tryUpdate(JsonMap jsonMap)
+            void tryUpdate(InjectContext context, JsonMap jsonMap)
             {
-                jsonMap.Foreach(tryReplace);
-                if (isCurrent)
+                jsonMap.Foreach(context, tryReplace);
+                if (context.isCurrent)
                 {
+                    context.isCurrent = false;
+
                     jsonMap.Add("$children", new[] { app });
                     componentResponse.DynamicStyles = mainLayout.RenderInfo.ComponentResponse.DynamicStyles;
 
-                    isUpdated = true;
+                    context.isUpdated = true;
                 }
             }
 
-            void tryReplace(string key, object value)
+            void tryReplace(InjectContext context, string key, object value)
             {
-                if (key == "id" && value is string stringValue && stringValue == mainLayout.ContainerDomElementId)
+                if (context.isUpdated)
                 {
-                    isCurrent = true;
                     return;
                 }
 
-                if (isUpdated)
+                if (key == "id" && value is string stringValue && stringValue == mainLayout.ContainerDomElementId)
                 {
+                    context.isCurrent = true;
                     return;
                 }
 
                 if (value is JsonMap jsonMap)
                 {
-                    tryUpdate(jsonMap);
+                    tryUpdate(context, jsonMap);
                 }
 
                 if (value is IList jsonMaps)
@@ -197,9 +195,9 @@ partial class Mixin
                     {
                         if (item is JsonMap map)
                         {
-                            tryUpdate(map);
+                            tryUpdate(context, map);
 
-                            if (isUpdated)
+                            if (context.isUpdated)
                             {
                                 return;
                             }
@@ -211,10 +209,15 @@ partial class Mixin
             {
                 if (componentResponse.ElementAsJson is JsonMap jsonMap)
                 {
-                    tryUpdate(jsonMap);
+                    tryUpdate(new InjectContext(), jsonMap);
                 }
             }
         }
+    }
+
+    class InjectContext
+    {
+        public bool isUpdated, isCurrent;
     }
 }
 
