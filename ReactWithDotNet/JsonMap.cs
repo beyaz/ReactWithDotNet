@@ -47,6 +47,23 @@ sealed class JsonMap : IReadOnlyJsonMap
         }
     }
 
+    public void Foreach<TContext>(TContext context, Action<TContext, string, object> action)
+    {
+        if (Head == null)
+        {
+            return;
+        }
+
+        var node = Head;
+
+        while (node is not null)
+        {
+            action(context, node.Key, node.Value);
+
+            node = node.Next;
+        }
+    }
+
     internal class Node
     {
         public string Key;
