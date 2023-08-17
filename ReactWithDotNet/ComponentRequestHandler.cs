@@ -261,7 +261,7 @@ static class ComponentRequestHandler
             }
             catch (Exception exception)
             {
-                return new ComponentResponse { ErrorMessage = $"Method invocation error.{exception}" };
+                return new ComponentResponse { ErrorMessage = $"Error occured when invoking method.Method: {methodInfo.Name}. Exception: {exception}" };
             }
 
             var stateTree = new StateTree
