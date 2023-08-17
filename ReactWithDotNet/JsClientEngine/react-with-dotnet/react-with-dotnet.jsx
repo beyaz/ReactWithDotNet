@@ -463,8 +463,7 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
             StateAsJson: JSON.stringify(fiberNode.stateNode.state[DotNetState]),
             FullTypeNameOfState: NotNull(fiberNode.memoizedProps.$jsonNode[FullTypeNameOfState]),
             FullTypeNameOfComponent: fiberNode.stateNode.state[DotNetTypeOfReactComponent],
-            ComponentUniqueIdentifier: fiberNode.stateNode.state[DotNetComponentUniqueIdentifier],
-            DotNetProperties: fiberNode.stateNode.state[DotNetProperties]
+            ComponentUniqueIdentifier: fiberNode.stateNode.state[DotNetComponentUniqueIdentifier]
         };
 
         map[breadcrumb] = stateInfo;
