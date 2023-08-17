@@ -457,13 +457,17 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
         {
             throw CreateNewDeveloperError('Problem when traversing nodes');
         }
-        map[breadcrumb] =
+
+        const stateInfo =
         {
             StateAsJson: JSON.stringify(fiberNode.stateNode.state[DotNetState]),
             FullTypeNameOfState: NotNull(fiberNode.memoizedProps.$jsonNode[FullTypeNameOfState]),
             FullTypeNameOfComponent: fiberNode.stateNode.state[DotNetTypeOfReactComponent],
-            ComponentUniqueIdentifier: fiberNode.stateNode.state[DotNetComponentUniqueIdentifier]
+            ComponentUniqueIdentifier: fiberNode.stateNode.state[DotNetComponentUniqueIdentifier],
+            DotNetProperties: rootFiberNode.stateNode.state[DotNetProperties]
         };
+
+        map[breadcrumb] = stateInfo;
 
         scope = { map: map, index: 0, breadcrumb: breadcrumb };
     }
