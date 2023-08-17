@@ -1415,7 +1415,10 @@ function HandleAction(data, executionQueueEntry)
             throw CreateNewDeveloperError(response.ErrorMessage);
         }
 
-        LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
+        if (response.LastUsedComponentUniqueIdentifier > LastUsedComponentUniqueIdentifier)
+        {
+            LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
+        }
 
         ProcessDynamicCssClasses(response.DynamicStyles);
 

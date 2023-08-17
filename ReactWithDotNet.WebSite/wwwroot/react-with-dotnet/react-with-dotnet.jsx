@@ -463,8 +463,7 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
             StateAsJson: JSON.stringify(fiberNode.stateNode.state[DotNetState]),
             FullTypeNameOfState: NotNull(fiberNode.memoizedProps.$jsonNode[FullTypeNameOfState]),
             FullTypeNameOfComponent: fiberNode.stateNode.state[DotNetTypeOfReactComponent],
-            ComponentUniqueIdentifier: fiberNode.stateNode.state[DotNetComponentUniqueIdentifier],
-            DotNetProperties: fiberNode.stateNode.state[DotNetProperties]
+            ComponentUniqueIdentifier: fiberNode.stateNode.state[DotNetComponentUniqueIdentifier]
         };
 
         map[breadcrumb] = stateInfo;
@@ -1416,7 +1415,10 @@ function HandleAction(data, executionQueueEntry)
             throw CreateNewDeveloperError(response.ErrorMessage);
         }
 
-        LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
+        if (response.LastUsedComponentUniqueIdentifier > LastUsedComponentUniqueIdentifier)
+        {
+            LastUsedComponentUniqueIdentifier = response.LastUsedComponentUniqueIdentifier;
+        }
 
         ProcessDynamicCssClasses(response.DynamicStyles);
 
@@ -1951,11 +1953,6 @@ function RenderComponentIn(input)
 
         SendRequest(request, onSuccess, onFail);
     });
-}
-
-function CallJsFunctionInPath(clientTask)
-{
-    GetExternalJsObject(clientTask.JsFunctionPath).apply(null, clientTask.JsFunctionArguments);
 }
 
 function InvokeJsFunctionInPath(callerReactComponent, jsFunctionPath, jsFunctionArguments)
