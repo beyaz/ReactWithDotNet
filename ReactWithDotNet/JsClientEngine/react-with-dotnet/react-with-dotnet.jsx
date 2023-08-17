@@ -1953,11 +1953,6 @@ function RenderComponentIn(input)
     });
 }
 
-function CallJsFunctionInPath(clientTask)
-{
-    GetExternalJsObject(clientTask.JsFunctionPath).apply(null, clientTask.JsFunctionArguments);
-}
-
 function InvokeJsFunctionInPath(callerReactComponent, jsFunctionPath, jsFunctionArguments)
 {
     GetExternalJsObject(jsFunctionPath).apply(callerReactComponent, jsFunctionArguments);
