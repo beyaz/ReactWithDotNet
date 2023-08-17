@@ -291,6 +291,8 @@ partial class ElementSerializer
                                 {
                                     var stateValue = DeserializeJson(clientStateInfo.StateAsJson, stateProperty.PropertyInfo.PropertyType);
                                     stateProperty.SetValueFunc(reactStatefulComponent, stateValue);
+
+                                    TransferPropertiesToDotNetComponent(reactStatefulComponent, dotNetTypeOfReactComponent, clientStateInfo.DotNetProperties);
                                 }
                             }
                         }
