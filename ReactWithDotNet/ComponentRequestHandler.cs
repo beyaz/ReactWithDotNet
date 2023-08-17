@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Web;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet;
 
@@ -184,6 +183,8 @@ static class ComponentRequestHandler
             };
         }
 
+        
+        
         async Task<ComponentResponse> handleComponentEvent()
         {
             var stopwatch = new Stopwatch();
@@ -204,57 +205,15 @@ static class ComponentRequestHandler
 
             instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier;
 
+            
+            
             // transfer properties
             {
-                var props = request.CapturedStateTree["0"].DotNetProperties;
-                if (props is not null)
+
+                var errorMessage = ElementSerializer.TransferPropertiesToDotNetComponent(instance, type, request.CapturedStateTree["0"].DotNetProperties);
+                if (errorMessage is not null)
                 {
-                    foreach (var (key, value) in props)
-                    {
-                        if (key == "$LogicalChildrenCount")
-                        {
-                            var childrenCount = Convert.ToInt32(value);
-                            for (var i = 0; i < childrenCount; i++)
-                            {
-                                instance.children.Add(new FakeChild { Index = i });
-                            }
-
-                            continue;
-                        }
-
-                        var property = type.GetProperty(key);
-                        if (property == null)
-                        {
-                            return new ComponentResponse { ErrorMessage = $"Property not found.{request.FullName}::{key}" };
-                        }
-
-                        var propertyValue = value;
-                        if (value is JToken jToken)
-                        {
-                            if (property.PropertyType == typeof(Style))
-                            {
-                                var style = new Style();
-                                style.Import(jToken.ToObject<Dictionary<string,string>>());
-                                propertyValue = style;
-                            }
-                            else
-                            {
-                                propertyValue = jToken.ToObject(property.PropertyType);
-                            }
-                        }
-                        else
-                        {
-                            var changeResponse = ChangeType(propertyValue, property.PropertyType);
-                            if (changeResponse.exception is not null)
-                            {
-                                throw DeveloperException(changeResponse.exception.Message);
-                            }
-
-                            propertyValue = changeResponse.value;
-                        }
-                        
-                        property.SetValue(instance, propertyValue);
-                    }
+                    return new ComponentResponse { ErrorMessage = errorMessage };
                 }
             }
 

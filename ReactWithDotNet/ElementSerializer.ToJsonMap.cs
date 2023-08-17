@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ReactWithDotNet;
 
@@ -1149,6 +1150,64 @@ partial class ElementSerializer
         public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
         public PropertyAccessInfo StateProperty { get; init; }
+    }
+
+
+    internal static string TransferPropertiesToDotNetComponent(ReactComponentBase instance, Type type, IReadOnlyDictionary<string, object> props)
+    {
+        if (props == null)
+        {
+            return null;
+        }
+
+        foreach (var (key, value) in props)
+        {
+            if (key == "$LogicalChildrenCount")
+            {
+                var childrenCount = Convert.ToInt32(value);
+                for (var i = 0; i < childrenCount; i++)
+                {
+                    instance.children.Add(new FakeChild { Index = i });
+                }
+
+                continue;
+            }
+
+            var property = type.GetProperty(key);
+            if (property == null)
+            {
+                return $"Property not found.{type.FullName}::{key}";
+            }
+
+            var propertyValue = value;
+            if (value is JToken jToken)
+            {
+                if (property.PropertyType == typeof(Style))
+                {
+                    var style = new Style();
+                    style.Import(jToken.ToObject<Dictionary<string, string>>());
+                    propertyValue = style;
+                }
+                else
+                {
+                    propertyValue = jToken.ToObject(property.PropertyType);
+                }
+            }
+            else
+            {
+                var changeResponse = ChangeType(propertyValue, property.PropertyType);
+                if (changeResponse.exception is not null)
+                {
+                    throw DeveloperException(changeResponse.exception.Message);
+                }
+
+                propertyValue = changeResponse.value;
+            }
+
+            property.SetValue(instance, propertyValue);
+        }
+
+        return null;
     }
 }
 
