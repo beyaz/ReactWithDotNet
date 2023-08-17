@@ -37,7 +37,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
         return element;
     }
-    
+
     public static Element operator +(Element element, StyleModifier[] styleModifiers)
     {
         if (styleModifiers is not null)
@@ -57,7 +57,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
         return element;
     }
-    
+
     public static Element operator +(Element element, IModifier modifier)
     {
         ModifyHelper.ProcessModifier(element, modifier);
@@ -76,6 +76,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     public void Add(Element element)
     {
         children.Add(element);
+    }
+
+    public void Add(params IModifier[] modifiers)
+    {
+        this.Apply(modifiers);
     }
 
     public void Add(IEnumerable<Element> elements)
