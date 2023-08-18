@@ -170,7 +170,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 {
                     step = 10,
                     min=300,
-                    max = 1400,
+                    max = 1600,
                     valueBind = ()=>state.ScreenWidth,
                     valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnMediaSizeChanged,
@@ -423,7 +423,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     FontWeight500,
                     Color("#c5d7e8"),
                     CursorPointer,
-                    Hover(FontSize17, Color("#9090f2"))
+                    Hover(FontSize17, Color("#9090f2")),
+                    When(state.PropertyPanelIsClosed, PositionSticky)
                 },
                 When(UpdatingProgress is > 0 and <= 100,()=>new div(PositionAbsolute,Right(20))
                 { 
