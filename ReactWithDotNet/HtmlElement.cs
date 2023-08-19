@@ -130,9 +130,6 @@ public abstract class HtmlElement : Element
     [ReactProp]
     public string lang { get; set; }
 
-    [ReactProp]
-    public string name { get; set; }
-
     /// <summary>
     ///     Gets or sets the on click.
     /// </summary>

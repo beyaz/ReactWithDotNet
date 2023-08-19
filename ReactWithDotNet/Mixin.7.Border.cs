@@ -246,12 +246,6 @@ partial class Mixin
     public static HtmlElementModifier CellPadding(double? value) =>
         CreateHtmlElementModifier<table>(element => element.cellPadding = value);
 
-
-    /// <summary>
-    ///     htmlElement.name = <paramref name="value" />
-    /// </summary>
-    public static HtmlElementModifier Name(string value) => CreateHtmlElementModifier<HtmlElement>(el => el.name = value);
-
     /// <summary>
     ///     (tr-td).colSpan = <paramref name="value" />
     /// </summary>

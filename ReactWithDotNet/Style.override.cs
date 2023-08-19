@@ -21,6 +21,17 @@ partial class Style : IEnumerable<StyleModifier>, IModifier
             }
         }
     }
+    
+    public Style(IEnumerable<StyleModifier> styleModifiers)
+    {
+        if (styleModifiers is not null)
+        {
+            foreach (var styleModifier in styleModifiers)
+            {
+                styleModifier?.ModifyStyle(this);
+            }
+        }
+    }
 
     [JsonIgnore]
     public string leftRight

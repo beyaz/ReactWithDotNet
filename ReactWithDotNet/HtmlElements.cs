@@ -14,13 +14,9 @@ public sealed class html : HtmlElement
     public string xmlns { get; set; } = "http://www.w3.org/1999/xhtml";
 }
 
-public sealed class head : HtmlElement
-{
-}
+public sealed class head : HtmlElement;
 
-public sealed class title : HtmlElement
-{
-}
+public sealed class title : HtmlElement;
 
 public sealed class script : HtmlElement
 {
@@ -165,13 +161,9 @@ public sealed class input : HtmlElement
     public int? valueBindDebounceTimeout { get; set; }
 }
 
-public sealed class HtmlTextNode : HtmlElement
-{
-}
+public sealed class HtmlTextNode : HtmlElement;
 
-sealed class br : HtmlElement
-{
-}
+sealed class br : HtmlElement;
 
 public sealed class iframe : HtmlElement
 {
@@ -222,6 +214,38 @@ public sealed class option : HtmlElement
 
 public sealed class style : HtmlElement
 {
+    public void Add(CssClass classInfo)
+    {
+        if (classInfo == null)
+        {
+            throw new ArgumentNullException(nameof(classInfo));
+        }
+        
+        var nameOfClass = classInfo._name?.Trim();
+        if (string.IsNullOrWhiteSpace(nameOfClass))
+        {
+            throw new ArgumentException(classInfo._name);
+        }
+
+        if (nameOfClass[0] != '.')
+        {
+            nameOfClass = "." + nameOfClass;
+        }
+        
+        innerText += Environment.NewLine + nameOfClass +"{"+ new Style(classInfo._styleModifiers).ToCss() + "}";
+    }
+}
+
+public sealed class CssClass
+{
+    internal readonly string _name;
+    internal readonly IReadOnlyList<StyleModifier> _styleModifiers;
+
+    public CssClass(string name, IReadOnlyList<StyleModifier> styleModifiers)
+    {
+        _name                = name;
+        _styleModifiers = styleModifiers;
+    }
 }
 
 public sealed class link : HtmlElement
