@@ -39,22 +39,6 @@ class SwiperThumbsGalleryDemo : ReactPureComponent
         return new div(Width(900), HeightAuto, BoxSizingBorderBox, Padding(10))
         {
             
-            
-            new Swiper(thumbnSlides)
-            {
-                spaceBetween = 10,
-                slidesPerView = 6,
-                freeMode = true,
-                watchSlidesProgress = true,
-                navigation   = { enabled = true},
-                className = thumbsClassName,
-                modules      = new []{"FreeMode","Navigation" ,"Thumbs"},
-                style =
-                {
-                    width = "600px"
-                }
-            },
-            
             new Swiper(mainSlides)
             {
                 spaceBetween = 5,
@@ -62,6 +46,22 @@ class SwiperThumbsGalleryDemo : ReactPureComponent
                 thumbs       = { swiper  = $".{thumbsClassName}" },
                 modules      = new []{"FreeMode","Navigation" ,"Thumbs"}
             },
+            new Swiper(thumbnSlides)
+            {
+                spaceBetween = 10,
+                slidesPerView = 8,
+                freeMode = true,
+                watchSlidesProgress = true,
+                navigation   = { enabled = true},
+                className = thumbsClassName,
+                modules      = new []{"FreeMode","Navigation" ,"Thumbs"},
+                style =
+                {
+                    //width = "600px"
+                }
+            },
+            
+           
         };
     }
 }
