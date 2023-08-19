@@ -6,62 +6,60 @@ class SwiperThumbsGalleryDemo : ReactPureComponent
 {
     protected override Element render()
     {
+        const int mainImageHeight = 350;
+
+        const int thumbnailWidth = 120;
+        const int thumbnailHeight = 78;
 
         var thumbsClassName = $"{nameof(SwiperThumbsGalleryDemo)}-thumbn";
 
-        var mainSlides=Enumerable.Range(1, 10).Select(i => new SwiperSlide
+        var mainSlides = Enumerable.Range(1, 10).Select(i => new SwiperSlide
         {
             new img
             {
                 src = $"https://swiperjs.com/demos/images/nature-{i}.jpg",
                 style =
                 {
-                    width = "100%",
-                    height = "400px"
+                    WidthMaximized,
+                    Height(mainImageHeight)
                 }
             }
         });
-        
-        
-        var thumbnSlides =Enumerable.Range(1, 10).Select(i => new SwiperSlide
+
+        var thumbnSlides = Enumerable.Range(1, 10).Select(i => new SwiperSlide
         {
             new img
             {
                 src = $"https://swiperjs.com/demos/images/nature-{i}.jpg",
                 style =
                 {
-                    width  = "100px",
-                    height = "50px"
+                    Width(thumbnailWidth),
+                    Height(thumbnailHeight)
                 }
             }
         });
-        
-        return new div(WidthMaximized, HeightAuto, BoxSizingBorderBox, Padding(10),Border("1px solid #d4dad4"))
+
+        return new div(WidthMaximized, HeightAuto)
         {
-            
             new Swiper(mainSlides)
             {
-                spaceBetween = 5,
-                navigation   = { enabled = true},
+                navigation   = { enabled = true },
                 thumbs       = { swiper  = $".{thumbsClassName}" },
-                modules      = new []{"FreeMode","Navigation" ,"Thumbs"}
+                modules      = new[] { "FreeMode", "Navigation", "Thumbs" }
             },
             new Swiper(thumbnSlides)
             {
-                spaceBetween = 10,
-                slidesPerView = 8,
-                freeMode = true,
+                spaceBetween        = 10,
+                slidesPerView       = 6,
+                freeMode            = true,
                 watchSlidesProgress = true,
-                navigation   = { enabled = true},
-                className = thumbsClassName,
-                modules      = new []{"FreeMode","Navigation" ,"Thumbs"},
-                style =
-                {
-                    //width = "600px"
-                }
+                navigation          = { enabled = true },
+                className           = thumbsClassName,
+                modules             = new[] { "FreeMode", "Navigation", "Thumbs" }
             },
-            
-           
+
+            SpaceY(20),
+            SpaceY(1) + Background("#C9C9C8")
         };
     }
 }
