@@ -125,6 +125,12 @@ public sealed class path : HtmlElement
 
     [ReactProp]
     public string fill { get; set; }
+    
+    [ReactProp]
+    public string fillRule { get; set; }
+    
+    [ReactProp]
+    public string clipRule { get; set; }
 
     [ReactProp]
     public string stroke { get; set; }
