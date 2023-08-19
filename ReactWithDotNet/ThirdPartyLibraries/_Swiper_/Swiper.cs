@@ -88,6 +88,11 @@ public class Swiper : ThirdPartyReactComponent
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
     public Action<SwiperInstance> onSlideChange { get; set; }
+    
+    [ReactProp]
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
+    public Action<SwiperInstance> onActiveIndexChange { get; set; }
+    
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
@@ -119,6 +124,9 @@ public class Swiper : ThirdPartyReactComponent
     
     [ReactProp]
     public bool? watchSlidesProgress { get; set; }
+
+    [ReactProp]
+    public bool? allowTouchMove { get; set; }
 }
 
 public sealed class SwiperNavigationOption

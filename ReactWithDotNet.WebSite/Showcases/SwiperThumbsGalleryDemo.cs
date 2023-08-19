@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-class SwiperThumbsGalleryDemo : ReactPureComponent
+class SwiperThumbsGalleryDemo : ReactComponent
 {
     protected override Element render()
     {
@@ -28,15 +28,24 @@ class SwiperThumbsGalleryDemo : ReactPureComponent
 
         var thumbnSlides = Enumerable.Range(1, 10).Select(i => new SwiperSlide
         {
-            new img
+            new FlexColumn(Gap(15))
             {
-                src = $"https://swiperjs.com/demos/images/nature-{i}.jpg",
-                style =
+                new img
                 {
-                    Width(thumbnailWidth),
-                    Height(thumbnailHeight)
+                    src = $"https://swiperjs.com/demos/images/nature-{i}.jpg",
+                    style =
+                    {
+                        Width(thumbnailWidth),
+                        Height(thumbnailHeight)
+                    }
+                },
+                new div(When(i-1!=ActiveImageIndex, DisplayNone))
+                {
+                    Background("#A08139"),
+                    Height(4)
                 }
             }
+           
         });
 
         return new div(WidthMaximized, HeightAuto)
@@ -49,17 +58,26 @@ class SwiperThumbsGalleryDemo : ReactPureComponent
             },
             new Swiper(thumbnSlides)
             {
+                allowTouchMove      = true,
                 spaceBetween        = 10,
                 slidesPerView       = 6,
                 freeMode            = true,
                 watchSlidesProgress = true,
                 navigation          = { enabled = true },
                 className           = thumbsClassName,
-                modules             = new[] { "FreeMode", "Navigation", "Thumbs" }
+                modules             = new[] { "FreeMode", "Navigation", "Thumbs" },
+                onActiveIndexChange = OnSlideChanged
             },
 
-            SpaceY(20),
+            //SpaceY(20),
             SpaceY(1) + Background("#C9C9C8")
         };
     }
+    
+    void OnSlideChanged(SwiperInstance instance)
+    {
+        ActiveImageIndex = instance.realIndex;
+    }
+    
+    public int ActiveImageIndex { get; set; }
 }
