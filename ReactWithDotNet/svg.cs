@@ -126,16 +126,10 @@ public sealed class g : HtmlElement
     public string transform { get; set; }
 }
 
-public sealed class defs : HtmlElement
-{
-}
+public sealed class defs : HtmlElement;
 
-public sealed class clipPath : HtmlElement
-{
-}
-public sealed class linearGradient : HtmlElement
-{
-}
+public sealed class clipPath : HtmlElement;
+public sealed class linearGradient : HtmlElement;
 public sealed class stop : HtmlElement
 {
     [ReactProp]
