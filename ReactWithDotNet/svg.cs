@@ -89,6 +89,27 @@ public sealed class svg : HtmlElement
     public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) => ViewBox($"{minX} {minY} {width} {height}");
 }
 
+partial class Mixin
+{
+    /// <summary>
+    ///     svg.fill = <paramref name="color" />
+    /// </summary>
+    public static HtmlElementModifier Fill(string color) => svg.Fill(color);
+    
+    /// <summary>
+    ///     svg.viewBox = <paramref name="viewBox" />
+    /// </summary>
+    public static HtmlElementModifier ViewBox(string viewBox) 
+        => svg.ViewBox(viewBox);
+    
+    /// <summary>
+    ///     svg.viewBox = '<paramref name="minX" /> <paramref name="minY" /> <paramref name="width" /> <paramref name="height" />'
+    /// </summary>
+    public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) 
+        => svg.ViewBox(  minX,  minY,  width,  height);
+}
+
+
 public sealed class path : HtmlElement
 {
     public path()
@@ -302,15 +323,3 @@ public sealed class polyline : HtmlElement
     [ReactProp] public string stroke{ get; set; }
 }
 
-partial class Mixin
-{
-    /// <summary>
-    ///     svg.fill = <paramref name="color" />
-    /// </summary>
-    public static HtmlElementModifier Fill(string color) => svg.Fill(color);
-    
-    /// <summary>
-    ///     svg.viewBox = <paramref name="viewBox" />
-    /// </summary>
-    public static HtmlElementModifier ViewBox(string viewBox) => svg.ViewBox(viewBox);
-}
