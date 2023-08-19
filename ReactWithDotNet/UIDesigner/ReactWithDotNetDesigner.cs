@@ -413,6 +413,18 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         {
             new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
             {
+                When(UpdatingProgress is > 0 and <= 100,()=>new div(PositionAbsolute,Right(0))
+                { 
+                    When(state.PropertyPanelIsClosed, PositionStatic),
+                    
+                    new CircularProgress
+                    { 
+                        variant = "determinate",
+                        value   = UpdatingProgress,
+                        size    = 12
+                    }
+                }),
+                
                 new div
                 { 
                     (state.PropertyPanelIsClosed ? "→" : "←"),
@@ -424,17 +436,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     Color("#c5d7e8"),
                     CursorPointer,
                     Hover(FontSize17, Color("#9090f2")),
-                    When(state.PropertyPanelIsClosed, PositionSticky)
+                    When(state.PropertyPanelIsClosed, PositionSticky),
+                    
+                    Size(12,12),
+                    When(UpdatingProgress is > 0 and <= 100, DisplayNone)
                 },
-                When(UpdatingProgress is > 0 and <= 100,()=>new div(PositionAbsolute,Right(20))
-                { 
-                    new CircularProgress
-                    { 
-                        variant = "determinate",
-                        value   = UpdatingProgress,
-                        size    = 10
-                    }
-                }),
+                
                 
                 When(state.PropertyPanelIsClosed == false, propertyPanel),
                 When(state.PropertyPanelIsClosed, Width(15))
