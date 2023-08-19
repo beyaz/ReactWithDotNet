@@ -39,7 +39,7 @@ function ToSwiperModule(moduleName)
         return A11y;
     }
 
-    throw 'ReactWithDownet: Swiper module not recognized. Please customize here [integration->swiper.jsx]';
+    throw 'ToSwiperModule -> invalidArgument: ' + moduleName;
 }
 
 function ConvertToSwiperModules(moduleNames)
@@ -55,50 +55,17 @@ function ConvertToSwiperModules(moduleNames)
     return moduleNames;
 }
 
-const SwiperForwarded = React.forwardRef((props, ref) => (
+/**
+ * @param {string} dotNetFullClassNameOf3rdPartyComponent
+ */
+ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdPartyLibraries._Swiper_.Swiper', props =>
+{
+    if (props.modules)
+    {
+        ConvertToSwiperModules(props.modules);
+    }
 
-    <Swiper ref={ref}
-        autoplay={props.autoplay}
-        breakpoints={props.breakpoints}
-        effect={props.effect}
-        grabCursor={props.grabCursor}
-        init={props.init}
-        loop={props.loop}
-        //loopAdditionalSlides={props.loopAdditionalSlides}
-        onSlideChangeTransitionStart={props.onSlideChangeTransitionStart}
-        onSlideChange={props.onSlideChange}
-        slideChangeTransitionEnd={props.slideChangeTransitionEnd}
-        pagination={props.pagination}
-        scrollbar={props.scrollbar}
-        slidesPerView={props.slidesPerView}
-        spaceBetween={props.spaceBetween}
-        speed={props.speed}
-        centeredSlides={props.centeredSlides}
-        fadeEffect={props.fadeEffect}
-        navigation={props.navigation}
-        modules={ConvertToSwiperModules(props.modules)} >
-       {props.children}
-    </Swiper>
+    return props;
+});
 
-));
-
-export default SwiperForwarded
-
-
-
-
-
-
-
-
-
-
-// -------------------------------
-
-
-
-
-
-
-
-ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.ThirdPartyLibraries._Swiper_::ConvertToSwiperModules', );
+export default Swiper;
