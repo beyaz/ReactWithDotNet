@@ -113,6 +113,12 @@ public class Swiper : ThirdPartyReactComponent
 
     [ReactProp]
     public double? speed { get; set; }
+
+    [ReactProp]
+    public bool? freeMode { get; set; }
+    
+    [ReactProp]
+    public bool? watchSlidesProgress { get; set; }
 }
 
 public sealed class SwiperNavigationOption

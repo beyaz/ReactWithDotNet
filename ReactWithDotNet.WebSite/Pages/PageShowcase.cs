@@ -92,6 +92,7 @@ class PageShowcase : ReactComponent
         typeof(MuiTextFieldDemo),
         typeof(PrimeReactTabViewDemo),
         typeof(RSuiteAutoCompleteDemo),
+        typeof(SwiperThumbsGalleryDemo),
         typeof(EventBusDemo)
     };
 
