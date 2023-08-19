@@ -107,6 +107,12 @@ partial class Mixin
     /// </summary>
     public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) 
         => svg.ViewBox(  minX,  minY,  width,  height);
+
+
+    /// <summary>
+    ///     g.clipPath = <paramref name="value" />
+    /// </summary>
+    public static HtmlElementModifier ClipPath(string value) => g.ClipPath(value);
 }
 
 
@@ -148,14 +154,32 @@ public sealed class g : HtmlElement
     
     [ReactProp]
     public string opacity { get; set; }
+    
+    [ReactProp]
+    public string clipPath { get; set; }
 
     [ReactProp]
     public string transform { get; set; }
+    
+    
+    /// <summary>
+    ///     g.clipPath = <paramref name="value" />
+    /// </summary>
+    public static HtmlElementModifier ClipPath(string value) => Modify<g>(el => el.clipPath = value);
 }
 
 public sealed class defs : HtmlElement;
 
-public sealed class clipPath : HtmlElement;
+public sealed class clipPath : HtmlElement
+{
+    public clipPath()
+    {
+        
+    }
+    public clipPath(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
+}
 public sealed class linearGradient : HtmlElement;
 public sealed class stop : HtmlElement
 {
