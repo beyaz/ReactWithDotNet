@@ -8,7 +8,7 @@ public sealed class StyleModifier : IModifier
 
     internal StyleModifier(Action<Style> modifyStyle)
     {
-        this.ModifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
+        ModifyStyle = modifyStyle ?? throw new ArgumentNullException(nameof(modifyStyle));
     }
 
     public static StyleModifier operator +(StyleModifier a, StyleModifier b)
@@ -21,20 +21,20 @@ public sealed class StyleModifier : IModifier
 
         return new StyleModifier(modify);
     }
-    
+
     public static implicit operator StyleModifier(Style style)
     {
-        return new StyleModifier(x=>x.Import(style));
+        return new StyleModifier(x => x.Import(style));
     }
 }
 
 public sealed class ElementModifier : IModifier
 {
     internal readonly bool IsModifyReactKey;
-    
+
     internal readonly Action<Element> ModifyElement;
 
-    internal ElementModifier(Action<Element> modifyElement):this(modifyElement, isModifyReactKey: false)
+    internal ElementModifier(Action<Element> modifyElement) : this(modifyElement, false)
     {
     }
 
@@ -153,6 +153,37 @@ sealed class ThirdPartyReactComponentModifier<TComponent> : ThirdPartyReactCompo
 
 partial class Mixin
 {
+    public static void Apply<TElement>(this TElement[] elements, StyleModifier[] styleModifiers) where TElement : Element
+    {
+        if (elements is null)
+        {
+            return;
+        }
+
+        foreach (var element in elements)
+        {
+            if (element is null)
+            {
+                continue;
+            }
+
+            element.Apply(styleModifiers);
+        }
+    }
+
+    public static Element Apply(this Element element, StyleModifier[] styleModifiers)
+    {
+        if (styleModifiers is not null)
+        {
+            foreach (var styleModifier in styleModifiers)
+            {
+                ModifyHelper.ProcessModifier(element, styleModifier);
+            }
+        }
+
+        return element;
+    }
+
     public static IModifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : ReactComponent
     {
         return new ReactComponentModifier<TComponent>(modifyAction);
@@ -163,7 +194,7 @@ partial class Mixin
         return new HtmlElementModifier<THtmlElement> { ModifyHtmlElement = modifyAction };
     }
 
-    public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction) 
+    public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction)
         where TPureComponent : ReactPureComponent
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
@@ -209,7 +240,7 @@ static class ModifyHelper
                 thirdPartyReactComponentModifier.Modify(thirdPartyReactComponent);
                 return;
             }
-            
+
             if (modifier is Style style)
             {
                 thirdPartyReactComponent.style.Import(style);

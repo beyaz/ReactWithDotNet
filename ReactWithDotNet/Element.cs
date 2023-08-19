@@ -40,13 +40,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
     public static Element operator +(Element element, StyleModifier[] styleModifiers)
     {
-        if (styleModifiers is not null)
-        {
-            foreach (var styleModifier in styleModifiers)
-            {
-                ModifyHelper.ProcessModifier(element, styleModifier);
-            }
-        }
+        element.Apply(styleModifiers);
 
         return element;
     }
