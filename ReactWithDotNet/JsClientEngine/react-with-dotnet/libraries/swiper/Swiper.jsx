@@ -1,42 +1,67 @@
 
-import React from 'react';
-
 import ReactWithDotNet from "../../react-with-dotnet";
 
-// import Swiper core and required modules
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper } from 'swiper/react';
-import SwiperCore, { Autoplay, EffectFade } from 'swiper';
+
+// import Swiper core and required modules
+import {
+    Navigation,
+    Pagination,
+    Scrollbar,
+    A11y,
+    Thumbs,
+    FreeMode,
+    Autoplay,
+    EffectFade,
+    EffectCube,
+    EffectFlip,
+    EffectCards,
+    EffectCreative
+} from 'swiper/modules';
+
+
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import 'swiper/css/effect-fade';
+import 'swiper/css/free-mode';
+import 'swiper/css/thumbs';
+import 'swiper/css/effect-cube';
+import 'swiper/css/effect-flip';
+import 'swiper/css/effect-cards';
+import 'swiper/css/effect-creative';
 
-
-SwiperCore.use([Autoplay, EffectFade]);
+const ModuleMap = [
+    ['Navigation', Navigation],
+    ['Pagination', Pagination],
+    ['Scrollbar', Scrollbar],
+    ['A11y', A11y],
+    ['Thumbs', Thumbs],
+    ['FreeMode', FreeMode],    
+    ['Autoplay', Autoplay],
+    ['EffectFade', EffectFade],
+    ['EffectCube', EffectCube],
+    ['EffectFlip', EffectFlip],
+    ['EffectCards', EffectCards],
+    ['EffectCreative', EffectCreative]
+];
 
 function ToSwiperModule(moduleName)
 {
-    if (moduleName === 'Navigation' || moduleName === Navigation)
+    for (var i = 0; i < ModuleMap.length; i++)
     {
-        return Navigation;
-    }
+        const arr = ModuleMap[i];
 
-    if (moduleName === 'Pagination' || moduleName === Pagination)
-    {
-        return Pagination;
-    }
-
-    if (moduleName === 'Scrollbar' || moduleName === Scrollbar)
-    {
-        return Scrollbar;
-    }
-
-    if (moduleName === 'A11y' || moduleName === A11y)
-    {
-        return A11y;
+        for (var j = 0; j < arr.length; j++)
+        {
+            if (moduleName === arr[j])
+            {
+                return arr[1];
+            }
+        }
     }
 
     throw 'ToSwiperModule -> invalidArgument: ' + moduleName;
