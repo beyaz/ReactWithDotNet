@@ -53,6 +53,10 @@ public sealed class FreeScrollBar : ThirdPartyReactComponent
     /// </summary>
     [ReactProp]
     public string tracksize { get; set; }
+    
+    [ReactProp]
+    public string className { get; set; }
+    
 
     /// <summary>
     /// The starting position of the scroll area, can be descriptive string or an object.
