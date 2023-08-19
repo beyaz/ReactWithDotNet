@@ -67,9 +67,13 @@ public class Swiper : ThirdPartyReactComponent
 
     [ReactProp]
     public bool? loop { get; set; }
-
-    //[ReactProp]
-    //public int? loopAdditionalSlides { get; set; }
+    
+    [ReactProp]
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public dynamic thumbs { get; } = new ExpandoObject();
+    
+    [ReactProp]
+    public string className { get; set; }
 
     [ReactProp]
     public IReadOnlyList<string> modules { get; set; }
