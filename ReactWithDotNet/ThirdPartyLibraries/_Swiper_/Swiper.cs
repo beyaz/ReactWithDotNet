@@ -42,7 +42,7 @@ public class Swiper : ThirdPartyReactComponent
 
     [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEnumerableIsEmpty))]
-    public Dictionary<int, dynamic> breakpoints { get; } = new();
+    public Dictionary<int, SwiperBreakpoint> breakpoints { get; } = new();
 
     [ReactProp]
     public bool? centeredSlides { get; set; }
@@ -136,6 +136,7 @@ public sealed class SwiperNavigationOption
     public string prevEl { get; set; }
 }
 
+
 [Serializable]
 public sealed class SwiperInstance
 {
@@ -162,6 +163,13 @@ public sealed class SwiperAutoplay
 {
     public double? delay { get; set; }
     public bool? disableOnInteraction { get; set; }
+}
+
+[Serializable]
+public sealed record SwiperBreakpoint
+{
+    public double slidesPerView { get; init; }
+    public double spaceBetween { get; init; }
 }
 
 public class SwiperSlide : ThirdPartyReactComponent;
