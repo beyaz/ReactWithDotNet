@@ -15,5 +15,8 @@ register("SwiperSlide", SwiperSlide);
 
 ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance', function (args)
 {
-    return [{ realIndex: args[0].realIndex }];
+    return [{
+        realIndex: args[0].realIndex,
+        activeIndex: args[0].activeIndex        
+    }];
 });

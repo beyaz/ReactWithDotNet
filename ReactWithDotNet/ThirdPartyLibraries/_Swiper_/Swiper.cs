@@ -140,6 +140,7 @@ public sealed class SwiperNavigationOption
 public sealed class SwiperInstance
 {
     public int realIndex { get; set; }
+    public int activeIndex { get; set; }
 }
 
 public sealed class SwiperFadeEffect
