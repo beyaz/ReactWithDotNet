@@ -36,7 +36,7 @@ class SwiperThumbsGalleryDemo : ReactPureComponent
             }
         });
         
-        return new div(Width(900), HeightAuto, BoxSizingBorderBox, Padding(10),Border("1px solid #d4dad4"))
+        return new div(WidthMaximized, HeightAuto, BoxSizingBorderBox, Padding(10),Border("1px solid #d4dad4"))
         {
             
             new Swiper(mainSlides)
