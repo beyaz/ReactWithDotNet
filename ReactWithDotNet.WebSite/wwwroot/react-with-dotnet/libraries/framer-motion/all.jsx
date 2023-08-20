@@ -14,3 +14,6 @@ function register(name, value)
 // Connect components as Lazy
 register("motion_div", React.lazy(() => import('./motion.div')));
 register("AnimatePresence", React.lazy(() => import('./AnimatePresence')));
+register("motion+button", React.lazy(() => import('./button')));
+
+
