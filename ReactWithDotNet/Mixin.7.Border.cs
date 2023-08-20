@@ -187,6 +187,11 @@ partial class Mixin
     public static string Solid(double widthAsPx, string color)
         => BorderStyle("solid", widthAsPx, color);
 
+    /// <summary>
+    /// "url(urlValue)
+    /// </summary>
+    public static string url(string urlValue) => $"url({url})";
+    
     static string BorderStyle(string styleName, double widthAsPx, string color)
     {
         if (styleName == null)

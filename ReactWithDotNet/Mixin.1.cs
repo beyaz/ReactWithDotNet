@@ -363,10 +363,27 @@ public static partial class Mixin
     
 
     /// <summary>
+    /// The background-image property sets one or more background images for an element.
+    /// <br/>
+    /// By default, a background-image is placed at the top-left corner of an element, and repeated both vertically and horizontally.
+    /// <br/>
     /// style.backgroundImage = <paramref name="backgroundImage"/>
     /// </summary>
     public static StyleModifier BackgroundImage(string backgroundImage) 
         => new(style => style.backgroundImage = backgroundImage);
+    
+    
+    /// <summary>
+    /// The background-image property sets one or more background images for an element.
+    /// <br/>
+    /// By default, a background-image is placed at the top-left corner of an element, and repeated both vertically and horizontally.
+    /// <br/>
+    /// style.backgroundImage = <paramref name="backgroundImages[0]"/>, <paramref name="backgroundImages[1]"/>, <paramref name="backgroundImages[...]"/>
+    /// </summary>
+    public static StyleModifier BackgroundImage(params string[] backgroundImages) 
+        => new(style => style.backgroundImage = string.Join(", ", backgroundImages));
+
+
 
     public static StyleModifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
 
