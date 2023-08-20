@@ -105,13 +105,15 @@ partial class Mixin
     }
 
     /// <summary>
-    ///     style.backgroundSize = <paramref name="value" />
+    ///     The background-size property specifies the size of the background images.
+    ///     <br />
+    ///    There are four different syntaxes you can use with this property: the keyword syntax ("auto", "cover" and "contain"), the one-value syntax (sets the width of the image (height becomes "auto"), the two-value syntax (first value: width of the image, second value: height), and the multiple background syntax (separated with comma).
     /// </summary>
     public static StyleModifier BackgroundSize(string value)
     {
         return new StyleModifier(style => style.backgroundSize = value);
     }
-
+    
     /// <summary>
     ///     The CSS object-fit property is used to specify how an img or video should be resized to fit its container.
     ///     <br />
@@ -122,7 +124,6 @@ partial class Mixin
     {
         return new StyleModifier(style => style.objectFit = value);
     }
-    
     
     public static StyleModifier WidthHeight(double valuePx) => new(style => style.width_height = valuePx.AsPixel());
     public static StyleModifier WidthHeight(string width_height) => new(style => style.width_height = width_height);
