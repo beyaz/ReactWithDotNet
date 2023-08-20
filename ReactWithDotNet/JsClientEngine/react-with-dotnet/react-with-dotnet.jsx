@@ -156,7 +156,7 @@ function OnThirdPartyComponentPropsCalculated(dotNetFullNameOfThirdPartyComponen
     arr.push(fn);
 }
 
-function OnThirdPartyComponentPropsCalculatedTryFire(dotNetFullNameOfThirdPartyComponent, props)
+function OnThirdPartyComponentPropsCalculatedTryFire(dotNetFullNameOfThirdPartyComponent, props, callerComponent)
 {
     if (dotNetFullNameOfThirdPartyComponent == null)
     {
@@ -168,7 +168,7 @@ function OnThirdPartyComponentPropsCalculatedTryFire(dotNetFullNameOfThirdPartyC
     {
         for (var i = 0; i < arr.length; i++)
         {
-            props = arr[i](props);
+            props = arr[i](props, callerComponent);
         }
     }
 
@@ -1195,7 +1195,7 @@ function ConvertToReactElement(jsonNode, component)
 
     if (isThirdPartyComponent === true)
     {
-        props = OnThirdPartyComponentPropsCalculatedTryFire(jsonNode.$tag, props);
+        props = OnThirdPartyComponentPropsCalculatedTryFire(jsonNode.$tag, props, component);
     }
 
     if (jsonNode.$text != null)
