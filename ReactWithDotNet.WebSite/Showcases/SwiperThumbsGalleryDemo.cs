@@ -53,7 +53,7 @@ class SwiperThumbsGalleryDemo : ReactComponent
             new Swiper(mainSlides)
             {
                 navigation   = { enabled = true },
-                thumbs       = { swiper  = $".{thumbsClassName}" },
+                //thumbs       = { swiper  = $".{thumbsClassName}" },
                 modules      = new[] { "FreeMode", "Navigation", "Thumbs" }
             },
             new Swiper(thumbnSlides)

@@ -83,11 +83,33 @@ function ConvertToSwiperModules(moduleNames)
 /**
  * @param {string} dotNetFullClassNameOf3rdPartyComponent
  */
-ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdPartyLibraries._Swiper_.Swiper', props =>
+ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdPartyLibraries._Swiper_.Swiper', (props, callerComponent) =>
 {
     if (props.modules)
     {
         ConvertToSwiperModules(props.modules);
+    }
+
+    if (props.onSwiper == null && props.name != null)
+    {
+        const name = props.name;
+
+        props.onSwiper = function (swiperInstance)
+        {
+            const partialState = {};
+            partialState[name] = swiperInstance;
+
+            callerComponent.setState(partialState);          
+        };
+    }
+
+    if (props.thumbs)
+    {
+        var swiperInstanceName = props.thumbs.swiperInstanceName;
+        if (swiperInstanceName != null)
+        {
+            props.thumbs.swiper = callerComponent.state[swiperInstanceName];
+        }
     }
 
     return props;

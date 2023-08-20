@@ -92,12 +92,14 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
 
     if (props.onSwiper == null && props.name != null)
     {
+        const name = props.name;
+
         props.onSwiper = function (swiperInstance)
         {
             const partialState = {};
-            partialState[swiperInstance.props.name] = swiperInstance;
+            partialState[name] = swiperInstance;
 
-            component.setState(partialState);          
+            callerComponent.setState(partialState);          
         };
     }
 
@@ -106,7 +108,7 @@ ReactWithDotNet.OnThirdPartyComponentPropsCalculated('ReactWithDotNet.ThirdParty
         var swiperInstanceName = props.thumbs.swiperInstanceName;
         if (swiperInstanceName != null)
         {
-            props.thumbs.swiper = component.state[swiperInstanceName];
+            props.thumbs.swiper = callerComponent.state[swiperInstanceName];
         }
     }
 

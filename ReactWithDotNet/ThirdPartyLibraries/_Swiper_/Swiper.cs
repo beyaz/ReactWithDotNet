@@ -69,8 +69,7 @@ public class Swiper : ThirdPartyReactComponent
     public bool? loop { get; set; }
     
     [ReactProp]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
-    public dynamic thumbs { get; } = new ExpandoObject();
+    public SwiperThumbs thumbs { get; } = new ();
     
     [ReactProp]
     public string className { get; set; }
@@ -127,6 +126,22 @@ public class Swiper : ThirdPartyReactComponent
 
     [ReactProp]
     public bool? allowTouchMove { get; set; }
+    
+    
+    internal static (bool needToExport, object value)
+        GetPropertyValueForSerializeToClient(object component, string propertyName)
+    {
+        var instance = (Swiper)component;
+
+        if (propertyName == nameof(thumbs) && instance.thumbs is { swiper: not null })
+        {
+            instance.thumbs.swiper.name ??= Guid.NewGuid().ToString("N");
+
+            return (true, new { swiperInstanceName = instance.thumbs.swiper.name });
+        }
+
+        return default;
+    }
 }
 
 public sealed class SwiperNavigationOption
@@ -170,6 +185,12 @@ public sealed record SwiperBreakpoint
 {
     public double slidesPerView { get; init; }
     public double spaceBetween { get; init; }
+}
+
+[Serializable]
+public sealed class SwiperThumbs
+{
+    public Swiper swiper { get; set; }
 }
 
 public class SwiperSlide : ThirdPartyReactComponent;
