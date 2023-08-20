@@ -190,7 +190,7 @@ partial class Mixin
     /// <summary>
     /// "url(urlValue)
     /// </summary>
-    public static string url(string urlValue) => $"url({url})";
+    public static string url(string urlValue) => $"url({urlValue})";
     
     static string BorderStyle(string styleName, double widthAsPx, string color)
     {
