@@ -76,7 +76,7 @@ class SwiperThumbsGalleryDemo : ReactComponent
     
     void OnSlideChanged(SwiperInstance instance)
     {
-        ActiveImageIndex = instance.realIndex;
+        ActiveImageIndex = instance.activeIndex;
     }
     
     public int ActiveImageIndex { get; set; }

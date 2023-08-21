@@ -155,7 +155,6 @@ public sealed class SwiperNavigationOption
 [Serializable]
 public sealed class SwiperInstance
 {
-    public int realIndex { get; set; }
     public int activeIndex { get; set; }
 }
 
