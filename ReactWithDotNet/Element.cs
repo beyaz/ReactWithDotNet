@@ -3,21 +3,6 @@ using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
-public sealed class ElementCollection : List<Element>
-{
-    internal ElementCollection()
-    {
-        
-    }
-    public void Add(ElementCollection elements)
-    {
-        if (elements is not null)
-        {
-            AddRange(elements);
-        }
-    }
-}
-
 /// <summary>
 ///     The element
 /// </summary>
