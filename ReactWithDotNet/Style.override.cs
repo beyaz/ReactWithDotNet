@@ -106,6 +106,11 @@ partial class Style : IEnumerable<StyleModifier>, IModifier
     {
         modifier?.ModifyStyle(this);
     }
+    
+    public void Add(Func<StyleModifier> modifier)
+    {
+        modifier?.Invoke()?.ModifyStyle(this);
+    }
 
     public void Add(Style styleForImport)
     {
