@@ -63,6 +63,18 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return new HtmlTextNode { text = text };
     }
+    public static implicit operator Element(int number)
+    {
+        return new HtmlTextNode { text = number.ToString() };
+    }
+    public static implicit operator Element(int? number)
+    {
+        return new HtmlTextNode { text = number?.ToString() };
+    }
+    public static implicit operator Element(double? number)
+    {
+        return new HtmlTextNode { text = number?.ToString() };
+    }
 
     /// <summary>
     ///     Adds the specified element.
