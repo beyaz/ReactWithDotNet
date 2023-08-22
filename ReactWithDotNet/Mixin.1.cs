@@ -395,47 +395,6 @@ public static partial class Mixin
     public static StyleModifier BottomRight(double bottomAndRight) => Bottom(bottomAndRight) + Right(bottomAndRight);
     public static StyleModifier TopRight(double topAndRight) => Top(topAndRight) + Right(topAndRight);
 
-   
-
-    /// <summary>
-    ///     Adds elements to children
-    /// </summary>
-    public static ElementModifier Children(IEnumerable<Element> children)
-    {
-        if (children is null)
-        {
-            return null;
-        }
-
-        var array = children.ToArray();
-
-        void modifyElement(Element element)
-        {
-            element.children.Clear();
-            element.children.AddRange(array);
-        }
-
-        return new(modifyElement);
-    }
-
-    public static ElementModifier Children(params Element[] children)
-    {
-        if (children is null)
-        {
-            return null;
-        }
-
-        var array = children.ToArray();
-
-        void modifyElement(Element element)
-        {
-            element.children.Clear();
-            element.children.AddRange(array);
-        }
-
-        return new(modifyElement);
-    }
-
     public static ElementModifier Key(string key)
     {
         if (string.IsNullOrWhiteSpace(key))
