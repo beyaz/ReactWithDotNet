@@ -17,7 +17,7 @@ class MainContentContainer : ReactPureComponent
             MaxWidth(1200),
             JustifyContentCenter,
 
-            Children(children),
+            children,
 
             MediaQueryOnMobile(PaddingLeftRight("5%")),
             MediaQueryOnTablet(PaddingLeftRight("10%")),

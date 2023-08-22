@@ -71,7 +71,7 @@ class MobileMenu : ReactComponent
                         new FlexColumn(JustifyContentSpaceEvenly, BorderLeft(Solid(1, Theme.grey_100)), PaddingLeft(10))
                         {
                             AnimateHeightAndOpacity(true),
-                            Children(children)
+                            children
                         }
                     },
                     ContentOnClosed = new Fragment(Key("content"))
@@ -84,7 +84,7 @@ class MobileMenu : ReactComponent
                         new FlexColumn(JustifyContentSpaceEvenly, BorderLeft(Solid(1, Theme.grey_100)), PaddingLeft(10))
                         {
                             AnimateHeightAndOpacity(false),
-                            Children(children)
+                            children
                         }
                     }
                 }
