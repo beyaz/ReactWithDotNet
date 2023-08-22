@@ -1,12 +1,8 @@
-﻿namespace ReactWithDotNet.ThirdPartyLibraries.FramerMotion;
+﻿
+namespace ReactWithDotNet.ThirdPartyLibraries.FramerMotion;
 
-public sealed class motion : ElementBase
+public static class motion 
 {
-    motion()
-    {
-        
-    }
-    
     public sealed class div : ElementBase
     {
         [ReactProp]
@@ -29,6 +25,8 @@ public sealed class motion : ElementBase
         [ReactProp]
         [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
         public dynamic whileHover { get; } = new ExpandoObject();
+        
+        public static IModifier Modify(Action<div> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
     }
     
     public sealed class button : ElementBase
