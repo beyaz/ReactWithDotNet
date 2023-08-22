@@ -2,6 +2,11 @@
 
 public sealed class motion : ElementBase
 {
+    motion()
+    {
+        
+    }
+    
     public sealed class div : ElementBase
     {
         [ReactProp]
