@@ -5,6 +5,10 @@ namespace ReactWithDotNet;
 
 public sealed class ElementCollection : List<Element>
 {
+    internal ElementCollection()
+    {
+        
+    }
     public void Add(ElementCollection elements)
     {
         if (elements is not null)
