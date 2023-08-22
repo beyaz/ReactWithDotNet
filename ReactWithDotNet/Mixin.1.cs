@@ -791,6 +791,14 @@ public static partial class Mixin
     {
         return condition ? element : null;
     }
+    
+    /// <summary>
+    ///     Returns given <paramref name="element" /> when condition is true otherwise returns null
+    /// </summary>
+    public static Element When(bool? condition, Element element)
+    {
+        return condition == true ? element : null;
+    }
 
     /// <summary>
     ///     Calls given <paramref name="elementFunc" /> when condition is true otherwise returns null
@@ -799,7 +807,13 @@ public static partial class Mixin
     {
         return condition ? elementFunc() : null;
     }
-
+    /// <summary>
+    ///     Calls given <paramref name="elementFunc" /> when condition is true otherwise returns null
+    /// </summary>
+    public static Element When(bool? condition, Func<Element> elementFunc)
+    {
+        return condition == true ? elementFunc() : null;
+    }
    
 
 
