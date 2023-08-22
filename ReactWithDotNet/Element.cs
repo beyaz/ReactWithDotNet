@@ -3,24 +3,35 @@ using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
+public sealed class ElementCollection : List<Element>
+{
+    public void Add(ElementCollection elements)
+    {
+        if (elements is not null)
+        {
+            AddRange(elements);
+        }
+    }
+}
+
 /// <summary>
 ///     The element
 /// </summary>
 [JsonObject]
 public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 {
-    internal List<Element> _children;
+    internal ElementCollection _children;
 
     /// <summary>
     ///     The children
     /// </summary>
     [System.Text.Json.Serialization.JsonIgnore]
     [JsonIgnore]
-    public List<Element> children
+    public ElementCollection children
     {
         get
         {
-            _children ??= new List<Element>();
+            _children ??= new ElementCollection();
 
             return _children;
         }
