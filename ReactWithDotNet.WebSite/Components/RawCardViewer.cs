@@ -32,9 +32,9 @@ class RawCardViewer : ReactPureComponent
     {
         return new div(FlexGrow(1))
         {
-            MediaQueryOnDesktop(Width(33.333 | percent)),
-            MediaQueryOnTablet(Width(50 | percent)),
-            MediaQueryOnMobile(Width(100 | percent)),
+            MediaQueryOnDesktop(Width(33.333 * percent)),
+            MediaQueryOnTablet(Width(50 * percent)),
+            MediaQueryOnMobile(Width(100 * percent)),
 
             new a
             {
@@ -65,12 +65,12 @@ class RawCardViewer : ReactPureComponent
                             CreateTitleIcon
                         },
 
-                        new div(FontWeightBold, FontSize(1.1 | rem))
+                        new div(FontWeightBold, FontSize(1.1 * rem))
                         {
                             Model.Title
                         }
                     },
-                    new div(Color(Theme.grey_700), FontSize(0.875|rem))
+                    new div(Color(Theme.grey_700), FontSize(0.875 * rem))
                     {
                         Model.Description
                     }

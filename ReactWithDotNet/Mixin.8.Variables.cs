@@ -89,7 +89,7 @@ public sealed class CssUnit
         _finalValue = finalValue;
     }
 
-    public static CssUnit operator |(double value, CssUnit cssUnit)
+    public static CssUnit operator *(double value, CssUnit cssUnit)
     {
         return new CssUnit(cssUnit._type, value + cssUnit._type);
     }
