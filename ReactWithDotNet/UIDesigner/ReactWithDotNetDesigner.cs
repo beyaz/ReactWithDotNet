@@ -180,7 +180,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     {
                         { "thumb", new Style
                         {
-                           WidthHeight(28),
+                           WidthHeight(21),
                            BackgroundWhite
                         }},
                         {"valueLabel",new Style {
