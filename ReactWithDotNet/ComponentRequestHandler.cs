@@ -253,7 +253,13 @@ static class ComponentRequestHandler
 
             try
             {
-                var response = methodInfo.Invoke(instance, createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray));
+                var parameters = createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray);
+                if (parameters.hasError)
+                {
+                    return new ComponentResponse { ErrorMessage = parameters.errorMessage };
+                }
+                
+                var response = methodInfo.Invoke(instance, parameters.value);
                 if (response is Task task)
                 {
                     await task;
@@ -319,12 +325,12 @@ static class ComponentRequestHandler
             return null;
         }
 
-        static object[] createMethodArguments(MethodInfo methodInfo, IReadOnlyList<string> eventArgumentsAsJsonArray)
+        static (bool hasError, string errorMessage, object[] value) createMethodArguments(MethodInfo methodInfo, IReadOnlyList<string> eventArgumentsAsJsonArray)
         {
             var parameterInfoList = methodInfo.GetParameters();
             if (parameterInfoList.Length == 0)
             {
-                return Empty<object>();
+                return (default, default, Empty<object>());
             }
 
             var eventArguments = new object[parameterInfoList.Length];
@@ -332,11 +338,30 @@ static class ComponentRequestHandler
             for (var i = 0; i < parameterInfoList.Length; i++)
             {
                 var parameterInfo = parameterInfoList[i];
+
+                try
+                {
+                    eventArguments[i] = DeserializeJson(eventArgumentsAsJsonArray[i], parameterInfo.ParameterType);
+                }
+                catch (Exception)
+                {
+                    return (hasError: true,
+                        errorMessage: $"""
+                                       Methot parameter not deserialized.
+                                       Method: {methodInfo.DeclaringType}::{methodInfo.Name}
+                                       Parameter Index: {i}
+                                       Parameter Name: {parameterInfo.Name}
+                                       Parameter Type: {parameterInfo.ParameterType}
+                                       Value: {eventArgumentsAsJsonArray[i]}
+                                       """,
+
+                        value: null);
+
+                }
                 
-                eventArguments[i] = DeserializeJson(eventArgumentsAsJsonArray[i], parameterInfo.ParameterType);
             }
 
-            return eventArguments;
+            return (default,default,eventArguments);
         }
     }
 
