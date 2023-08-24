@@ -17,6 +17,12 @@ public abstract class ThirdPartyReactComponent : Element
         style.Apply(modifiers);
     }
 
+    /// <summary>
+    ///     Gets or sets the name of the class.
+    /// </summary>
+    [ReactProp]
+    public string className { get; set; }
+
     //[ReactProp]
     //public string className { get; set; }
 
@@ -84,15 +90,13 @@ public abstract class ThirdPartyReactComponent : Element
 
     public void AddClass(string cssClassName)
     {
-        throw DeveloperException("ThirdPartyClassName");
+        if (string.IsNullOrWhiteSpace(className))
+        {
+            className = cssClassName;
+            return;
+        }
 
-        //if (string.IsNullOrWhiteSpace(className))
-        //{
-        //    className = cssClassName;
-        //    return;
-        //}
-
-        //className += " " + cssClassName;
+        className += " " + cssClassName;
     }
 
     internal Element InvokeSuspenseFallback()
