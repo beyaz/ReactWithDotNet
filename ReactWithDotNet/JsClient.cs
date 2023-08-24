@@ -43,6 +43,16 @@ partial class Mixin
     {
         ListenEvent(client, eventName, handler.Method.Name);
     }
+    
+    public static void ListenEvent(this Client client, string eventName, Action<string> handler)
+    {
+        ListenEvent(client, eventName, handler.Method.Name);
+    }
+    public static void ListenEvent(this Client client, string eventName, Action<int> handler)
+    {
+        ListenEvent(client, eventName, handler.Method.Name);
+    }
+    
     public static void ListenEvent<TEventArgument1>(this Client client, string eventName, Action<TEventArgument1> handler)
     {
         ListenEvent(client, eventName, handler.Method.Name);
