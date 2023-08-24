@@ -319,7 +319,7 @@ static class ComponentRequestHandler
             return null;
         }
 
-        object[] createMethodArguments(MethodInfo methodInfo, IReadOnlyList<string> eventArgumentsAsJsonArray)
+        static object[] createMethodArguments(MethodInfo methodInfo, IReadOnlyList<string> eventArgumentsAsJsonArray)
         {
             var parameterInfoList = methodInfo.GetParameters();
             if (parameterInfoList.Length == 0)
@@ -331,7 +331,9 @@ static class ComponentRequestHandler
 
             for (var i = 0; i < parameterInfoList.Length; i++)
             {
-                eventArguments[i] = DeserializeJson(eventArgumentsAsJsonArray[i], parameterInfoList[i].ParameterType);
+                var parameterInfo = parameterInfoList[i];
+                
+                eventArguments[i] = DeserializeJson(eventArgumentsAsJsonArray[i], parameterInfo.ParameterType);
             }
 
             return eventArguments;
