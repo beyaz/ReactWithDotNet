@@ -31,7 +31,7 @@ sealed class ElementSerializerContext
 
     internal readonly DynamicStyleContentForEmbedInClient DynamicStyles = new();
 
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
 
@@ -598,14 +598,14 @@ static partial class ElementSerializer
         return false;
     }
 
-    static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element)
+    static void TryCallBeforeSerializeElementToClient(this ElementSerializerContext context, Element element, Element parent)
     {
         if (element is null || context.BeforeSerializeElementToClient is null)
         {
             return;
         }
 
-        context.BeforeSerializeElementToClient(element, context.ReactContext);
+        context.BeforeSerializeElementToClient(context.ReactContext, element, parent);
     }
 
     class CacheableMethodInfo

@@ -8,7 +8,7 @@ sealed class ProcessReactWithDotNetRequestInput
 {
     internal Func<string, Type> FindType;
 
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; set; }
+    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; set; }
 
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
     public ComponentRequest ComponentRequest { get; set; }
@@ -261,7 +261,7 @@ partial class Mixin
 public sealed class CalculateFirstRender
 {
     public Type LayoutType, MainContentType;
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 
     public HttpContext HttpContext { get; init; }
 
@@ -272,7 +272,7 @@ public sealed class CalculateFirstRender
 
 sealed class CalculateComponentHtmlTextInput
 {
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 
     public Element Component { get; init; }
 
@@ -285,7 +285,7 @@ sealed class CalculateComponentHtmlTextInput
 
 public sealed class CalculateRenderInfoInput
 {
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 
     public HttpContext HttpContext { get; init; }
 
@@ -294,12 +294,14 @@ public sealed class CalculateRenderInfoInput
 
 public sealed class CalculateComponentRenderInfoInput
 {
-    public Action<Element, ReactContext> BeforeSerializeElementToClient { get; init; }
+    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
     public Element Component { get; init; }
     public HttpContext HttpContext { get; init; }
     public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
     public string QueryString { get; init; }
 }
+
+public delegate void BeforeSerializeElementToClient(ReactContext reactContext, Element element, Element parent);
 
 public sealed class ComponentRenderInfo
 {

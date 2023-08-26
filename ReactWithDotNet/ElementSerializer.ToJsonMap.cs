@@ -152,7 +152,7 @@ partial class ElementSerializer
                     continue;
                 }
 
-                context.TryCallBeforeSerializeElementToClient(node.Element);
+                context.TryCallBeforeSerializeElementToClient(node.Element, node.Parent?.Element);
 
                 node.ElementAsJsonMap = await LeafToMap(node, context);
 
@@ -677,7 +677,7 @@ partial class ElementSerializer
         {
             if (child.ElementIsHtmlTextElement)
             {
-                context.TryCallBeforeSerializeElementToClient(child.Element);
+                context.TryCallBeforeSerializeElementToClient(child.Element, node.Element);
 
                 (childElements ??= new List<object>()).Add(child.ElementAsHtmlTextElement.innerText);
             }
