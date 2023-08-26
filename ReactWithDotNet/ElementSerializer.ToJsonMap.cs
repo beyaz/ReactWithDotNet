@@ -13,6 +13,8 @@ partial class ElementSerializer
 
     public static async Task<IReadOnlyJsonMap> ToJsonMap(this Element element, ElementSerializerContext context)
     {
+        var tracer = context.Tracer;
+        
         var node = ConvertToNode(element);
 
         while (true)
@@ -166,10 +168,16 @@ partial class ElementSerializer
 
             if (node.ElementIsDotNetReactPureComponent)
             {
+
+                node.Begin ??= tracer.ElapsedMilliseconds;
+                
+                
                 var reactPureComponent = node.ElementAsDotNetReactPureComponent;
 
                 if (node.DotNetComponentRenderMethodInvoked is false)
                 {
+                    
+                    
                     reactPureComponent.Context = context.ReactContext;
 
                     node.DotNetComponentRenderMethodInvoked = true;
@@ -228,6 +236,13 @@ partial class ElementSerializer
                 node.ElementAsJsonMap = map;
 
                 node.IsCompleted = true;
+                
+                node.End ??= tracer.ElapsedMilliseconds;
+
+                if (node.End - node.Begin >= 3)
+                {
+                    tracer.Trace($"{reactPureComponent.GetType().FullName} rendered in {node.End - node.Begin} milliseconds");
+                }
 
                 continue;
             }
@@ -245,7 +260,7 @@ partial class ElementSerializer
                 {
                     node.Stopwatch = new Stopwatch();
                     node.Stopwatch.Start();
-                    context.Tracer.IndentLevel++;
+                    tracer.IndentLevel++;
                 }
 
                 if (context.ComponentStack.Count == 0)
@@ -355,7 +370,7 @@ partial class ElementSerializer
                         stopwatch.Stop();
                         if (stopwatch.ElapsedMilliseconds > 10)
                         {
-                            context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} :: OverrideStateFromPropsBeforeRender  duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+                            tracer.Trace($"{dotNetTypeOfReactComponent.FullName} :: OverrideStateFromPropsBeforeRender  duration is {stopwatch.ElapsedMilliseconds} milliseconds");
                         }
                     }
 
@@ -465,7 +480,7 @@ partial class ElementSerializer
                     {
                         var elementSerializerContext = new ElementSerializerContext
                         {
-                            Tracer                             = context.Tracer,
+                            Tracer                             = tracer,
                             BeforeSerializeElementToClient     = context.BeforeSerializeElementToClient,
                             ComponentUniqueIdentifierNextValue = context.ComponentUniqueIdentifierNextValue + 1,
                             ReactContext                       = context.ReactContext,
@@ -631,10 +646,10 @@ partial class ElementSerializer
 
                     if (node.Stopwatch.ElapsedMilliseconds >= 3)
                     {
-                        context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");
+                        tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");
                     }
 
-                    context.Tracer.IndentLevel--;
+                    tracer.IndentLevel--;
                 }
             }
         }
@@ -1139,6 +1154,8 @@ partial class ElementSerializer
 
         public Node Parent { get; set; }
         public Stopwatch Stopwatch { get; set; }
+        public long? Begin { get; set; }
+        public long? End { get; set; }
     }
 
     sealed class TypeInfo

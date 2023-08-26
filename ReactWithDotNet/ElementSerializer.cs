@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -7,28 +8,27 @@ namespace ReactWithDotNet;
 
 sealed class Tracer
 {
-    public int IndentLevel { get; set; }
-
     internal readonly LinkedList<string> Messages = new();
+
+    readonly Stopwatch stopwatch = new();
+
+    public Tracer()
+    {
+        stopwatch.Start();
+    }
+
+    public long ElapsedMilliseconds => stopwatch.ElapsedMilliseconds;
+    
+    public int IndentLevel { get; set; }
 
     public void Trace(string message)
     {
         Messages.AddLast("".PadRight(IndentLevel) + message);
     }
-
-    public void Trace(LinkedList<string> messageList)
-    {
-        foreach (var message in messageList)
-        {
-            Trace(message);
-        }
-    }
 }
 
 sealed class ElementSerializerContext
 {
-    public Tracer Tracer { get; init; }
-
     internal readonly Stack<ReactComponentBase> ComponentStack = new();
 
     internal readonly DynamicStyleContentForEmbedInClient DynamicStyles = new();
@@ -44,6 +44,7 @@ sealed class ElementSerializerContext
     public bool SkipHandleCacheableMethods { get; set; }
 
     public StateTree StateTree { get; init; }
+    public Tracer Tracer { get; init; }
 }
 
 static partial class ElementSerializer
@@ -149,9 +150,9 @@ static partial class ElementSerializer
     }
 
     static (bool needToExport, string cssClassName) ConvertStyleToCssClass(Style style,
-                                                                           bool fullExport,
-                                                                           int? componentUniqueIdentifier,
-                                                                           Func<CssClassInfo, string> getCssClassName)
+        bool fullExport,
+        int? componentUniqueIdentifier,
+        Func<CssClassInfo, string> getCssClassName)
     {
         if (style is null)
         {
@@ -196,7 +197,7 @@ static partial class ElementSerializer
             }
 
             var uniqueMediaQueries = new List<MediaQuery>();
-            
+
             foreach (var mediaQuery in mediaQueries)
             {
                 var existingValue = uniqueMediaQueries.FirstOrDefault(x => hasValueAndEqual(x.Query, mediaQuery.Query));
@@ -205,7 +206,7 @@ static partial class ElementSerializer
                     uniqueMediaQueries.Add(mediaQuery);
                     continue;
                 }
-                
+
                 existingValue.Style.Import(mediaQuery.Style);
             }
 
@@ -220,8 +221,8 @@ static partial class ElementSerializer
 
                 a = Regex.Replace(a, @"\s", "");
                 b = Regex.Replace(b, @"\s", "");
-                
-                return a.Equals(b,StringComparison.OrdinalIgnoreCase);
+
+                return a.Equals(b, StringComparison.OrdinalIgnoreCase);
             }
         }
     }
@@ -262,7 +263,7 @@ static partial class ElementSerializer
         return propertyName;
     }
 
-    static async Task<ValueExportInfo<object>> GetPropertyValue(TypeInfo typeInfo,object instance, PropertyAccessInfo property, ElementSerializerContext context)
+    static async Task<ValueExportInfo<object>> GetPropertyValue(TypeInfo typeInfo, object instance, PropertyAccessInfo property, ElementSerializerContext context)
     {
         var propertyInfo = property.PropertyInfo;
 
@@ -282,7 +283,7 @@ static partial class ElementSerializer
                 return output.value;
             }
         }
-        
+
         if (property.TransformValueInServerSide != null)
         {
             string convertStyleToCssClass(Style style)
@@ -410,7 +411,7 @@ static partial class ElementSerializer
                 {
                     return bindingExpressionAsBoolean.AsBindingPath();
                 }
-                
+
                 if (propertyValue is Expression<Func<double>> bindingExpressionAsDouble)
                 {
                     return bindingExpressionAsDouble.AsBindingPath();
@@ -570,8 +571,6 @@ static partial class ElementSerializer
         return style;
     }
 
-    
-
     static Exception HandlerMethodShouldBelongToReactComponent(PropertyInfo propertyInfo, object handlerTarget)
     {
         throw DeveloperException(string.Join(Environment.NewLine,
@@ -618,7 +617,7 @@ static partial class ElementSerializer
         public string MethodName { get; set; }
         public object Parameter { get; set; }
     }
-    
+
     sealed class ValueExportInfo<TValue> where TValue : class
     {
         public static readonly ValueExportInfo<TValue> NotExportable = new();
@@ -627,7 +626,7 @@ static partial class ElementSerializer
 
         ValueExportInfo(TValue value)
         {
-            Value   = value;
+            Value        = value;
             NeedToExport = true;
         }
 
@@ -637,7 +636,10 @@ static partial class ElementSerializer
             NeedToExport = false;
         }
 
-        public static implicit operator ValueExportInfo<TValue>(TValue value) => new(value);
+        public static implicit operator ValueExportInfo<TValue>(TValue value)
+        {
+            return new ValueExportInfo<TValue>(value);
+        }
     }
 }
 

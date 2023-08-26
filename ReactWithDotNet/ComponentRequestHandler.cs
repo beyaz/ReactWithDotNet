@@ -1,5 +1,4 @@
 ﻿using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Reflection;
 using System.Web;
 using Newtonsoft.Json;
@@ -73,9 +72,6 @@ static class ComponentRequestHandler
 
         var tracer = new Tracer();
 
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-
         try
         {
             context = CreateContext(request);
@@ -86,9 +82,9 @@ static class ComponentRequestHandler
                 await task;
             }
 
-            if (stopwatch.ElapsedMilliseconds >= 3 && input.OnReactContextCreated is not null)
+            if (tracer.ElapsedMilliseconds >= 3 && input.OnReactContextCreated is not null)
             {
-                tracer.Trace($"OnReactContextCreated -> {input.OnReactContextCreated.Method.Name} duration is {stopwatch.ElapsedMilliseconds}");
+                tracer.Trace($"OnReactContextCreated -> {input.OnReactContextCreated.Method.Name} duration is {tracer.ElapsedMilliseconds}");
             }
 
             if (request.MethodName == "FetchComponent")
@@ -172,7 +168,7 @@ static class ComponentRequestHandler
 
             tracer.IndentLevel--;
 
-            tracer.Trace($"Total time in ReactWithDotnet is {stopwatch.ElapsedMilliseconds} milliseconds.");
+            tracer.Trace($"Total time in ReactWithDotnet is {tracer.ElapsedMilliseconds} milliseconds.");
 
             return new ComponentResponse
             {
@@ -245,7 +241,7 @@ static class ComponentRequestHandler
 
             try
             {
-                var begin = stopwatch.ElapsedMilliseconds;
+                var begin = tracer.ElapsedMilliseconds;
 
                 // i n v o k e
                 {
@@ -262,7 +258,7 @@ static class ComponentRequestHandler
                     }
                 }
 
-                var end = stopwatch.ElapsedMilliseconds;
+                var end = tracer.ElapsedMilliseconds;
                 if (end - begin >= 3)
                 {
                     tracer.Trace($"Method '{methodInfo.Name}' invocation finished in {end - begin} milliseconds");
@@ -294,7 +290,7 @@ static class ComponentRequestHandler
 
             tracer.IndentLevel--;
 
-            tracer.Trace($"Total time in ReactWithDotnet is {stopwatch.ElapsedMilliseconds} milliseconds.");
+            tracer.Trace($"Total time in ReactWithDotnet is {tracer.ElapsedMilliseconds} milliseconds.");
 
             return new ComponentResponse
             {
