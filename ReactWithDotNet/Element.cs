@@ -25,6 +25,8 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
             return _children;
         }
     }
+    
+    public bool HasChildren=>_children == null || _children.Count == 0;
 
     /// <summary>
     ///     Gets or sets the key.
