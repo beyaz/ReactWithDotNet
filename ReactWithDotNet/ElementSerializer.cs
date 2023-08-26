@@ -18,12 +18,10 @@ sealed class Tracer
     }
 
     public long ElapsedMilliseconds => stopwatch.ElapsedMilliseconds;
-    
-    public int IndentLevel { get; set; }
 
     public void Trace(string message)
     {
-        Messages.AddLast("".PadRight(IndentLevel) + message);
+        Messages.AddLast(message);
     }
 }
 

@@ -162,11 +162,7 @@ static class ComponentRequestHandler
                 CalculateSuspenseFallbackForThirdPartyReactComponents = input.CalculateSuspenseFallbackForThirdPartyReactComponents
             };
 
-            tracer.IndentLevel++;
-
             var map = await instance.ToJsonMap(serializerContext);
-
-            tracer.IndentLevel--;
 
             tracer.Trace($"Total time in ReactWithDotnet is {tracer.ElapsedMilliseconds} milliseconds.");
 
@@ -284,11 +280,7 @@ static class ComponentRequestHandler
                 ReactContext                       = context
             };
 
-            tracer.IndentLevel++;
-
             var map = await instance.ToJsonMap(serializerContext);
-
-            tracer.IndentLevel--;
 
             tracer.Trace($"Total time in ReactWithDotnet is {tracer.ElapsedMilliseconds} milliseconds.");
 

@@ -260,7 +260,6 @@ partial class ElementSerializer
                 {
                     node.Stopwatch = new Stopwatch();
                     node.Stopwatch.Start();
-                    tracer.IndentLevel++;
                 }
 
                 if (context.ComponentStack.Count == 0)
@@ -648,8 +647,6 @@ partial class ElementSerializer
                     {
                         tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");
                     }
-
-                    tracer.IndentLevel--;
                 }
             }
         }
