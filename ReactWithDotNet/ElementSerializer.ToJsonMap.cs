@@ -465,6 +465,7 @@ partial class ElementSerializer
                     {
                         var elementSerializerContext = new ElementSerializerContext
                         {
+                            Tracer                             = context.Tracer,
                             BeforeSerializeElementToClient     = context.BeforeSerializeElementToClient,
                             ComponentUniqueIdentifierNextValue = context.ComponentUniqueIdentifierNextValue + 1,
                             ReactContext                       = context.ReactContext,
@@ -501,7 +502,7 @@ partial class ElementSerializer
 
                             var cachedVersion = await ToJsonMap(component, newElementSerializerContext);
 
-                            context.Tracer.Trace(newElementSerializerContext.Tracer.Messages);
+                           
 
                             // take back dynamic styles
                             context.DynamicStyles.ListOfClasses.Clear();

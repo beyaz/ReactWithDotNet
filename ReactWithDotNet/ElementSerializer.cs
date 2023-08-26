@@ -27,7 +27,7 @@ sealed class Tracer
 
 sealed class ElementSerializerContext
 {
-    public readonly Tracer Tracer = new();
+    public Tracer Tracer { get; init; }
 
     internal readonly Stack<ReactComponentBase> ComponentStack = new();
 

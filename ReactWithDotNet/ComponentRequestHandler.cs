@@ -20,7 +20,7 @@ sealed class ClientStateInfo
 sealed class ComponentRequest
 {
     public int CallFunctionId { get; set; }
-    
+
     public IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
 
     public double? ClientHeight { get; set; }
@@ -71,14 +71,24 @@ static class ComponentRequestHandler
 
         ReactContext context;
 
+        var tracer = new Tracer();
+
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
         try
         {
             context = CreateContext(request);
 
-            var task = input.OnReactContextCreated?.Invoke(input.HttpContext,context);
+            var task = input.OnReactContextCreated?.Invoke(input.HttpContext, context);
             if (task is not null)
             {
                 await task;
+            }
+
+            if (stopwatch.ElapsedMilliseconds >= 3 && input.OnReactContextCreated is not null)
+            {
+                tracer.Trace($"OnReactContextCreated -> {input.OnReactContextCreated.Method.Name} duration is {stopwatch.ElapsedMilliseconds}");
             }
 
             if (request.MethodName == "FetchComponent")
@@ -100,15 +110,11 @@ static class ComponentRequestHandler
 
         async Task<ComponentResponse> fetchComponent()
         {
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-
             if (string.IsNullOrWhiteSpace(request.FullName))
             {
                 return new ComponentResponse { ErrorMessage = "request.FullName is empty." };
             }
-            
+
             var type = findType(request.FullName);
             if (type == null)
             {
@@ -152,6 +158,7 @@ static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
+                Tracer                                                = tracer,
                 ComponentUniqueIdentifierNextValue                    = request.ComponentUniqueIdentifier,
                 StateTree                                             = stateTree,
                 BeforeSerializeElementToClient                        = beforeSerializeElementToClient,
@@ -159,17 +166,11 @@ static class ComponentRequestHandler
                 CalculateSuspenseFallbackForThirdPartyReactComponents = input.CalculateSuspenseFallbackForThirdPartyReactComponents
             };
 
-            var tracer = serializerContext.Tracer;
-
-            tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
-
             tracer.IndentLevel++;
 
             var map = await instance.ToJsonMap(serializerContext);
 
             tracer.IndentLevel--;
-
-            tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
             tracer.Trace($"Total time in ReactWithDotnet is {stopwatch.ElapsedMilliseconds} milliseconds.");
 
@@ -183,14 +184,8 @@ static class ComponentRequestHandler
             };
         }
 
-        
-        
         async Task<ComponentResponse> handleComponentEvent()
         {
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-
             var type = findType(request.FullName);
             if (type == null)
             {
@@ -205,11 +200,8 @@ static class ComponentRequestHandler
 
             instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier;
 
-            
-            
             // transfer properties
             {
-
                 var errorMessage = ElementSerializer.TransferPropertiesToDotNetComponent(instance, type, request.CapturedStateTree["0"].DotNetProperties);
                 if (errorMessage is not null)
                 {
@@ -253,16 +245,27 @@ static class ComponentRequestHandler
 
             try
             {
-                var parameters = createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray);
-                if (parameters.hasError)
+                var begin = stopwatch.ElapsedMilliseconds;
+
+                // i n v o k e
                 {
-                    return new ComponentResponse { ErrorMessage = parameters.errorMessage };
+                    var parameters = createMethodArguments(methodInfo, request.EventArgumentsAsJsonArray);
+                    if (parameters.hasError)
+                    {
+                        return new ComponentResponse { ErrorMessage = parameters.errorMessage };
+                    }
+
+                    var response = methodInfo.Invoke(instance, parameters.value);
+                    if (response is Task task)
+                    {
+                        await task;
+                    }
                 }
-                
-                var response = methodInfo.Invoke(instance, parameters.value);
-                if (response is Task task)
+
+                var end = stopwatch.ElapsedMilliseconds;
+                if (end - begin >= 3)
                 {
-                    await task;
+                    tracer.Trace($"Method '{methodInfo.Name}' invocation finished in {end - begin} milliseconds");
                 }
             }
             catch (Exception exception)
@@ -278,25 +281,18 @@ static class ComponentRequestHandler
 
             var serializerContext = new ElementSerializerContext
             {
+                Tracer                             = tracer,
                 ComponentUniqueIdentifierNextValue = request.LastUsedComponentUniqueIdentifier + 1,
                 StateTree                          = stateTree,
                 BeforeSerializeElementToClient     = beforeSerializeElementToClient,
                 ReactContext                       = context
             };
 
-            var tracer = serializerContext.Tracer;
-
-            tracer.Trace($"Method '{methodInfo.Name}' invoked in {stopwatch.ElapsedMilliseconds} milliseconds.");
-
-            tracer.Trace($"Serialization started at {stopwatch.ElapsedMilliseconds}");
-
             tracer.IndentLevel++;
 
             var map = await instance.ToJsonMap(serializerContext);
 
             tracer.IndentLevel--;
-
-            tracer.Trace($"Serialization finished at {stopwatch.ElapsedMilliseconds}");
 
             tracer.Trace($"Total time in ReactWithDotnet is {stopwatch.ElapsedMilliseconds} milliseconds.");
 
@@ -354,14 +350,11 @@ static class ComponentRequestHandler
                                        Parameter Type: {parameterInfo.ParameterType}
                                        Value: {eventArgumentsAsJsonArray[i]}
                                        """,
-
                         value: null);
-
                 }
-                
             }
 
-            return (default,default,eventArguments);
+            return (default, default, eventArguments);
         }
     }
 
@@ -372,7 +365,7 @@ static class ComponentRequestHandler
             Query        = string.IsNullOrWhiteSpace(request.QueryString) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.QueryString),
             ClientWidth  = request.ClientWidth,
             ClientHeight = request.ClientHeight,
-            
+
             CapturedStateTree = request.CapturedStateTree
         };
 
@@ -382,7 +375,7 @@ static class ComponentRequestHandler
 
 partial class Mixin
 {
-    #pragma warning disable CA2200
+#pragma warning disable CA2200
     public static object DeserializeJson(string json, Type returnType)
     {
         try
@@ -395,9 +388,9 @@ partial class Mixin
             throw exception;
         }
     }
-    #pragma warning restore CA2200
+#pragma warning restore CA2200
 
-    #pragma warning disable CA2200
+#pragma warning disable CA2200
     public static T DeserializeJson<T>(string json)
     {
         try
@@ -411,7 +404,7 @@ partial class Mixin
             throw exception;
         }
     }
-    #pragma warning restore CA2200
+#pragma warning restore CA2200
 }
 
 sealed class StateTree
