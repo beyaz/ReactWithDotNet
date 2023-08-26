@@ -64,7 +64,7 @@ sealed class JsonMap : IReadOnlyJsonMap
         }
     }
 
-    internal class Node
+    internal sealed class Node
     {
         public string Key;
         public Node Next;
