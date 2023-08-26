@@ -152,11 +152,6 @@ partial class ElementSerializer
                     continue;
                 }
 
-                if (node.ElementIsHtmlElement)
-                {
-                    node.ElementAsHtmlElement.BeforeSerialize(node.Parent?.ElementAsHtmlElement);
-                }
-
                 context.TryCallBeforeSerializeElementToClient(node.Element);
 
                 node.ElementAsJsonMap = await LeafToMap(node, context);

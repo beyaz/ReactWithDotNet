@@ -13,7 +13,7 @@ class MainPageContentDescription : ReactPureComponent
                 new HighlightedText{Text = "Write [react.js]  application in [c#]  language"}
             },
 
-            Space(20),
+            SpaceY(20),
             new div
             {
                 LineHeight40,
@@ -21,7 +21,7 @@ class MainPageContentDescription : ReactPureComponent
                 FontWeight400,
                 Text("MUI offers a comprehensive suite of UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components.")
             },
-            Space(40),
+            SpaceY(40),
 
             new FlexRow(JustifyContentFlexStart, WidthMaximized, MediaQueryOnMobileOrTablet(JustifyContentCenter))
             {

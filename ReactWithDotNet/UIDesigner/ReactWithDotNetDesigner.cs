@@ -144,7 +144,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 "
             },
             
-            Space(5),
+            SpaceY(5),
             new MethodSelectionView
             {
                 ClassFilter               = state.ClassFilter,
@@ -154,7 +154,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 AssemblyFilePath          = state.SelectedAssemblyFilePath
             },
 
-            Space(5),
+            SpaceY(5),
 
             new fieldset
             {

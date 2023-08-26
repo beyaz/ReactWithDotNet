@@ -247,11 +247,7 @@ public abstract class HtmlElement : Element
 
         className += " " + cssClassName;
     }
-
-    internal virtual void BeforeSerialize(HtmlElement parent)
-    {
-    }
-
+    
     protected static HtmlElementModifier Modify<THtmlElement>(Action<THtmlElement> modifyAction)
         where THtmlElement : HtmlElement
     {

@@ -672,28 +672,6 @@ public static partial class Mixin
 
     public static HtmlElementModifier RowSpan(int? rowSpan) => CreateHtmlElementModifier<td>(element => element.rowSpan = rowSpan);
 
-    
-    /// <summary>
-    ///     <br>if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value</br>
-    ///     <br>
-    ///         if parent is display='flex' and flexDirection = 'column' then create empty div element with style.height =
-    ///         value
-    ///     </br>
-    /// </summary>
-    public static Element Space(string value) => new Space(value);
-
-    /// <summary>
-    ///     <br>
-    ///         if parent is display='flex' and flexDirection = 'row' then create empty div element with style.width = value +
-    ///         'px'
-    ///     </br>
-    ///     <br>
-    ///         if parent is display='flex' and flexDirection = 'column' then create empty div element with style.height =
-    ///         value + 'px'
-    ///     </br>
-    /// </summary>
-    public static Element Space(double valueInPx) => new Space(valueInPx);
-
     /// <summary>
     ///     Creates new div element wihth given width
     /// </summary>
