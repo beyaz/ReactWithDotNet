@@ -628,7 +628,7 @@ partial class ElementSerializer
                 {
                     node.Stopwatch.Stop();
 
-                    if (node.Stopwatch.ElapsedMilliseconds > 10)
+                    if (node.Stopwatch.ElapsedMilliseconds >= 3)
                     {
                         context.Tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");
                     }
