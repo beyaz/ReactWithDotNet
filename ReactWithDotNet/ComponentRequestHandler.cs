@@ -84,7 +84,7 @@ static class ComponentRequestHandler
 
             if (tracer.ElapsedMilliseconds >= 3 && input.OnReactContextCreated is not null)
             {
-                tracer.Trace($"OnReactContextCreated -> {input.OnReactContextCreated.Method.Name} duration is {tracer.ElapsedMilliseconds}");
+                tracer.Trace($"{input.OnReactContextCreated.Method.DeclaringType}::{input.OnReactContextCreated.Method.Name} invoked in {tracer.ElapsedMilliseconds} milliseconds");
             }
 
             if (request.MethodName == "FetchComponent")

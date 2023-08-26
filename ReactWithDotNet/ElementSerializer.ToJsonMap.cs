@@ -369,7 +369,7 @@ partial class ElementSerializer
                         stopwatch.Stop();
                         if (stopwatch.ElapsedMilliseconds > 10)
                         {
-                            tracer.Trace($"{dotNetTypeOfReactComponent.FullName} :: OverrideStateFromPropsBeforeRender  duration is {stopwatch.ElapsedMilliseconds} milliseconds");
+                            tracer.Trace($"{dotNetTypeOfReactComponent.FullName}::OverrideStateFromPropsBeforeRender  invoked in {stopwatch.ElapsedMilliseconds} milliseconds");
                         }
                     }
 
@@ -645,7 +645,7 @@ partial class ElementSerializer
 
                     if (node.Stopwatch.ElapsedMilliseconds >= 3)
                     {
-                        tracer.Trace($"{dotNetTypeOfReactComponent.FullName} duration is {node.Stopwatch.ElapsedMilliseconds} milliseconds");
+                        tracer.Trace($"{dotNetTypeOfReactComponent.FullName} rendered in {node.Stopwatch.ElapsedMilliseconds} milliseconds");
                     }
                 }
             }
