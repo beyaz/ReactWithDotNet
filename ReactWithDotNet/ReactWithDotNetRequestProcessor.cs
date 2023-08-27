@@ -17,7 +17,7 @@ sealed class ProcessReactWithDotNetRequestInput
 
     public Element Instance { get; set; }
 
-    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; set; }
+    public OnReactContextCreated OnReactContextCreated { get; set; }
 }
 
 static class ReactWithDotNetRequestProcessor
@@ -265,7 +265,7 @@ public sealed class CalculateFirstRender
 
     public HttpContext HttpContext { get; init; }
 
-    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
+    public OnReactContextCreated OnReactContextCreated { get; init; }
 
     public string QueryString { get; init; }
 }
@@ -278,7 +278,7 @@ sealed class CalculateComponentHtmlTextInput
 
     public HttpContext HttpContext { get; init; }
 
-    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
+    public OnReactContextCreated OnReactContextCreated { get; init; }
 
     public string QueryString { get; init; }
 }
@@ -289,7 +289,7 @@ public sealed class CalculateRenderInfoInput
 
     public HttpContext HttpContext { get; init; }
 
-    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
+    public OnReactContextCreated OnReactContextCreated { get; init; }
 }
 
 public sealed class CalculateComponentRenderInfoInput
@@ -297,11 +297,13 @@ public sealed class CalculateComponentRenderInfoInput
     public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
     public Element Component { get; init; }
     public HttpContext HttpContext { get; init; }
-    public Func<HttpContext, ReactContext, Task> OnReactContextCreated { get; init; }
+    public OnReactContextCreated OnReactContextCreated { get; init; }
     public string QueryString { get; init; }
 }
 
 public delegate void BeforeSerializeElementToClient(ReactContext reactContext, Element element, Element parent);
+
+public delegate Task OnReactContextCreated(HttpContext httpContext, ReactContext reactContext);
 
 public sealed class ComponentRenderInfo
 {
