@@ -21,17 +21,13 @@ class CSharpPropertyMapperView : ReactComponent<CSharpPropertyMapperModel>
         state = new CSharpPropertyMapperModel
         {
             FigmaCss = @"
-font-family: 'Open Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-/* or 150% */
 
-
-/* Neutral/N900 */
-
-color: #4A4A49;
+class AnyClass
+{
+  public string A {get; set;}
+  public int B {get; set;}
+  public double C {get; set;}
+}
 "
         };
         state.ReactInlineStyle = FigmaCssToReactInlineCss(state.FigmaCss);
@@ -43,7 +39,7 @@ color: #4A4A49;
     {
         var cssEditor = new CodeMirror
         {
-            extensions = { "css", "githubLight" },
+            extensions = { "cpp", "githubLight" },
             onChange   = OnCssValueChanged,
             value      = state.FigmaCss,
             basicSetup =
@@ -97,8 +93,8 @@ color: #4A4A49;
             PrimeReactCssLibs,
             new div(FontSize23, Padding(10), TextAlignCenter)
             {
-                "Figma css to React inline style",
-                (small)" ( paste any figma css text to left panel )"
+                "C# code property mapper generator",
+                (small)" ( paste any part of c# class text to left panel )"
             },
             new FlexRow(WidthHeightMaximized, Height(400), BorderForPaper, BorderRadiusForPaper)
             {
@@ -128,41 +124,7 @@ color: #4A4A49;
 
     static string FigmaCssToReactInlineCss(string figmaCssText)
     {
-        return string.Join("," + Environment.NewLine, splitToLines(figmaCssText).Select(processLine));
-
-        static IEnumerable<string> splitToLines(string figmaCssText)
-        {
-            return figmaCssText.Trim().Split('\n').Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x));
-        }
-
-        static string processLine(string line)
-        {
-            line = line.Trim();
-
-            if (line.StartsWith("/*"))
-            {
-                return line;
-            }
-
-            var array = line.Split(new[] { ':', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-            if (array.Length >= 2)
-            {
-                return $"{keyToPropertyName(array[0])} = \"{array[1]}\"";
-            }
-
-            return line;
-        }
-
-        static string keyToPropertyName(string key)
-        {
-            var names = key.Split('-', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-            if (names.Length == 2)
-            {
-                return names[0] + char.ToUpper(names[1][0], new CultureInfo("en-US")) + names[1].Substring(1);
-            }
-
-            return key;
-        }
+        return TextTransformer.Transform(figmaCssText);
     }
 
     void ClearStatusMessage()
@@ -201,3 +163,8 @@ color: #4A4A49;
         }
     }
 }
+
+
+
+
+
