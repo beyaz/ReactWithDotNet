@@ -43,6 +43,7 @@ class PageHelperApps : ReactComponent
             {
                 return new FigmaCss2ReactInlineStyleConverterView();
             }
+            
 
             return "No app selected";
         }

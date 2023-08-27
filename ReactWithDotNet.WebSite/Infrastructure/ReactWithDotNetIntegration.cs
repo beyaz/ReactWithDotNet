@@ -16,7 +16,8 @@ static class ReactWithDotNetIntegration
         endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
 
         endpoints.MapGet("/LiveEditor", async httpContext => { await WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(HtmlToCSharpView)); });
-
+        endpoints.MapGet("/CSharpPropertyMapper", async httpContext => { await WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(CSharpPropertyMapperView)); });
+        
 #if DEBUG // this two endpoints should use only development mode
 
         endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), async httpContext =>
