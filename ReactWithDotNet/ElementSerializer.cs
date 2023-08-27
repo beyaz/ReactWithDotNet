@@ -50,7 +50,7 @@ static partial class ElementSerializer
     const string ___HasComponentDidMountMethod___ = "$HasComponentDidMountMethod";
     const string ___RootNode___ = "$RootNode";
     const string ___Type___ = "$Type";
-    const string ___TypeOfState___ = "$TypeOfState";
+    
 
     static readonly ValueExportInfo<object> NotExportableObject = ValueExportInfo<object>.NotExportable;
 

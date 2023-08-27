@@ -11,7 +11,6 @@ import {createRoot} from 'react-dom/client';
 var createElement = React.createElement;
 
 const DotNetTypeOfReactComponent = '$Type';
-const FullTypeNameOfState = '$TypeOfState';
 const RootNode = '$RootNode';
 const ClientTasks = '$ClientTasks';
 const SyncId = '$SyncId';
@@ -461,7 +460,6 @@ const VisitFiberNodeForCaptureState = (parentScope, fiberNode) =>
         const stateInfo =
         {
             StateAsJson: JSON.stringify(fiberNode.stateNode.state[DotNetState]),
-            FullTypeNameOfState: NotNull(fiberNode.memoizedProps.$jsonNode[FullTypeNameOfState]),
             FullTypeNameOfComponent: fiberNode.stateNode.state[DotNetTypeOfReactComponent],
             ComponentUniqueIdentifier: fiberNode.stateNode.state[DotNetComponentUniqueIdentifier]
         };
@@ -491,8 +489,7 @@ const CaptureStateTreeFromFiberNode = (rootFiberNode) =>
 
     map['0'] =
     {
-        StateAsJson: JSON.stringify(rootFiberNode.stateNode.state[DotNetState]),
-        FullTypeNameOfState: NotNull(rootFiberNode.memoizedProps.$jsonNode[FullTypeNameOfState])
+        StateAsJson: JSON.stringify(rootFiberNode.stateNode.state[DotNetState])
     };
 
     var rootScope = { map: map, index: 0, breadcrumb: '0' };

@@ -294,13 +294,10 @@ partial class ElementSerializer
 
                         if (true == stateTree.ChildStates?.TryGetValue(stateTree.BreadCrumbPath, out var clientStateInfo))
                         {
-                            if (stateProperty.PropertyInfo.PropertyType.GetFullName() == clientStateInfo.FullTypeNameOfState)
+                            if (reactStatefulComponent.GetType().GetFullName() == clientStateInfo.FullTypeNameOfComponent)
                             {
-                                if (reactStatefulComponent.GetType().GetFullName() == clientStateInfo.FullTypeNameOfComponent)
-                                {
-                                    var stateValue = DeserializeJson(clientStateInfo.StateAsJson, stateProperty.PropertyInfo.PropertyType);
-                                    stateProperty.SetValueFunc(reactStatefulComponent, stateValue);
-                                }
+                                var stateValue = DeserializeJson(clientStateInfo.StateAsJson, stateProperty.PropertyInfo.PropertyType);
+                                stateProperty.SetValueFunc(reactStatefulComponent, stateValue);
                             }
                         }
 
@@ -437,7 +434,6 @@ partial class ElementSerializer
                 map.Add(___RootNode___, node.DotNetComponentRootNode.ElementAsJsonMap);
                 map.Add(dotNetState, state);
                 map.Add(___Type___, GetReactComponentTypeInfo(reactStatefulComponent));
-                map.Add(___TypeOfState___, typeInfo.StateProperty.PropertyInfo.PropertyType.GetFullName());
                 map.Add(nameof(Element.key), reactStatefulComponent.key);
                 map.Add("DotNetProperties", dotNetProperties);
 

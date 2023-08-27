@@ -168,7 +168,7 @@ static class HtmlTextGenerator
     static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
     {
         if (name == "key" || name == "DotNetProperties" || name == "onClick" || name == "$DotNetComponentUniqueIdentifier" ||
-            name == "$State" || name == "$Type" || name == "$TypeOfState" ||
+            name == "$State" || name == "$Type"  ||
             name == "$ClientTasks")
         {
             return;
