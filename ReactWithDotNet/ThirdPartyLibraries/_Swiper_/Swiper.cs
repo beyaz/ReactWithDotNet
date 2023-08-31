@@ -40,6 +40,21 @@ public class Swiper : ThirdPartyReactComponent
     [ReactProp]
     public SwiperAutoplay autoplay { get; } = new();
 
+    /// <summary>
+    /// Sample: <br/>
+    /// // when window width is &gt;= 320px <br/>
+    /// 320: { <br/>
+    ///  slidesPerView: 2, <br/>
+    ///  spaceBetween: 20 <br/>
+    /// },
+    /// <br/>
+    /// <br/>
+    /// // when window width is &gt;= 480px <br/>
+    /// 480: { <br/>
+    ///   slidesPerView: 3, <br/>
+    ///   spaceBetween: 30 <br/>
+    /// }<br/>
+    /// </summary>
     [ReactProp]
     [ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEnumerableIsEmpty))]
     public Dictionary<int, SwiperBreakpoint> breakpoints { get; } = new();
@@ -71,8 +86,8 @@ public class Swiper : ThirdPartyReactComponent
     [ReactProp]
     public SwiperThumbs thumbs { get; } = new ();
     
-    [ReactProp]
-    public string className { get; set; }
+    //[ReactProp]
+    //public string className { get; set; }
 
     [ReactProp]
     public IReadOnlyList<string> modules { get; set; }
