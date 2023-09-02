@@ -2523,7 +2523,9 @@ var ReactWithDotNet =
 
     IsMediaMobile: IsMobile,
     IsMediaTablet: IsTablet,
-    IsMediaDesktop: IsDesktop
+    IsMediaDesktop: IsDesktop,
+
+    Call: InvokeJsFunctionInPath
 };
 
 window.ReactWithDotNet = ReactWithDotNet;
