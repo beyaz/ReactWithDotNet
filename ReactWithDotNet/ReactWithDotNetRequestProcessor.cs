@@ -43,7 +43,7 @@ static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static async Task<string> CalculateFirstRender(CalculateFirstRender input)
+    public static async Task<string> CalculateFirstRender(CalculateFirstRenderInput input)
     {
         if (input is null)
         {
@@ -258,7 +258,7 @@ partial class Mixin
     }
 }
 
-public sealed class CalculateFirstRender
+public sealed class CalculateFirstRenderInput
 {
     public Type LayoutType, MainContentType;
     public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }

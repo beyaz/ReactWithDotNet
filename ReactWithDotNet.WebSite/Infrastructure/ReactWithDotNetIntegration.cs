@@ -67,7 +67,7 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires]      = "0";
         httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-        var html = await CalculateFirstRender(new CalculateFirstRender
+        var html = await CalculateFirstRender(new CalculateFirstRenderInput
         {
             LayoutType            = layoutType,
             MainContentType       = mainContentType,
