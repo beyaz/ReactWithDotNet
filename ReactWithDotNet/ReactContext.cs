@@ -13,7 +13,11 @@ public sealed class ReactContextKey<TValue>
         Key = key;
     }
 
-    public TValue this[ReactContext reactContext] => reactContext.TryGetValue(this);
+    public TValue this[ReactContext reactContext]
+    {
+        get => reactContext.TryGetValue(this);
+        set => reactContext.Set(Key,value);
+    }
 }
 
 public sealed class ReactContext
