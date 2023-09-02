@@ -1952,9 +1952,9 @@ function RenderComponentIn(input)
     });
 }
 
-function InvokeJsFunctionInPath(callerReactComponent, jsFunctionPath, jsFunctionArguments)
+function InvokeJsFunctionInPath(thisArg, jsFunctionPath, jsFunctionArguments)
 {
-    GetExternalJsObject(jsFunctionPath).apply(callerReactComponent, jsFunctionArguments);
+    GetExternalJsObject(jsFunctionPath).apply(thisArg, jsFunctionArguments);
 }
 
 const ExternalJsObjectMap = {
