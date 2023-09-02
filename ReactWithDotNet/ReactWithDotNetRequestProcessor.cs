@@ -8,16 +8,17 @@ sealed class ProcessReactWithDotNetRequestInput
 {
     internal Func<string, Type> FindType;
 
-    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; set; }
+    public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 
-    public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; set; }
+    public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; init; }
+    
     public ComponentRequest ComponentRequest { get; set; }
 
-    public HttpContext HttpContext { get; set; }
+    public HttpContext HttpContext { get; init; }
 
-    public Element Instance { get; set; }
+    public Element Instance { get; init; }
 
-    public OnReactContextCreated OnReactContextCreated { get; set; }
+    public OnReactContextCreated OnReactContextCreated { get; init; }
 }
 
 static class ReactWithDotNetRequestProcessor
