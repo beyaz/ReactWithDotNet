@@ -6,8 +6,6 @@ namespace ReactWithDotNet;
 
 sealed class ProcessReactWithDotNetRequestInput
 {
-    internal Func<string, Type> FindType;
-
     public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 
     public bool CalculateSuspenseFallbackForThirdPartyReactComponents { get; init; }
@@ -28,8 +26,6 @@ static class ReactWithDotNetRequestProcessor
         var httpContext = input.HttpContext;
 
         input.ComponentRequest ??= await readJson();
-
-        input.FindType = Type.GetType;
 
         return await ComponentRequestHandler.HandleRequest(input);
 
@@ -117,7 +113,6 @@ partial class Mixin
         var request = new ProcessReactWithDotNetRequestInput
         {
             HttpContext                                           = input.HttpContext,
-            FindType                                              = Type.GetType,
             Instance                                              = input.Component,
             OnReactContextCreated                                 = input.OnReactContextCreated,
             BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
@@ -160,7 +155,6 @@ partial class Mixin
         var request = new ProcessReactWithDotNetRequestInput
         {
             HttpContext                                           = input.HttpContext,
-            FindType                                              = Type.GetType,
             Instance                                              = input.Component,
             OnReactContextCreated                                 = input.OnReactContextCreated,
             BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
