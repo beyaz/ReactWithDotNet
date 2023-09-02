@@ -2138,7 +2138,7 @@ RegisterCoreFunction("SetCookie", function (cookieName, cookieValue, expiredays)
 
     exdate.setDate(exdate.getDate() + expiredays);
 
-    document.cookie = cookieName + "=" + escape(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
+    document.cookie = cookieName + "=" + encodeURI(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
 });
 
 RegisterCoreFunction("HistoryBack", function ()
