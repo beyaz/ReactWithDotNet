@@ -1336,7 +1336,7 @@ function ProcessClientTasks(clientTasks, component)
         const jsFunctionPath      = clientTasks[i].JsFunctionPath;
         const jsFunctionArguments = clientTasks[i].JsFunctionArguments;
 
-        InvokeJsFunctionInPath(component, jsFunctionPath, jsFunctionArguments);
+        InvokeJsFunctionInPath(jsFunctionPath, component, jsFunctionArguments);
     }
 }
 
@@ -1952,9 +1952,9 @@ function RenderComponentIn(input)
     });
 }
 
-function InvokeJsFunctionInPath(callerReactComponent, jsFunctionPath, jsFunctionArguments)
+function InvokeJsFunctionInPath(jsFunctionPath, callerInstance, jsFunctionArguments)
 {
-    GetExternalJsObject(jsFunctionPath).apply(callerReactComponent, jsFunctionArguments);
+    GetExternalJsObject(jsFunctionPath).apply(callerInstance, jsFunctionArguments);
 }
 
 const ExternalJsObjectMap = {
@@ -2138,7 +2138,7 @@ RegisterCoreFunction("SetCookie", function (cookieName, cookieValue, expiredays)
 
     exdate.setDate(exdate.getDate() + expiredays);
 
-    document.cookie = cookieName + "=" + escape(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
+    document.cookie = cookieName + "=" + encodeURI(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
 });
 
 RegisterCoreFunction("HistoryBack", function ()
@@ -2523,7 +2523,9 @@ var ReactWithDotNet =
 
     IsMediaMobile: IsMobile,
     IsMediaTablet: IsTablet,
-    IsMediaDesktop: IsDesktop
+    IsMediaDesktop: IsDesktop,
+
+    Call: InvokeJsFunctionInPath
 };
 
 window.ReactWithDotNet = ReactWithDotNet;
