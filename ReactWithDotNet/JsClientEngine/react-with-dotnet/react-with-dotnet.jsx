@@ -1336,7 +1336,7 @@ function ProcessClientTasks(clientTasks, component)
         const jsFunctionPath      = clientTasks[i].JsFunctionPath;
         const jsFunctionArguments = clientTasks[i].JsFunctionArguments;
 
-        InvokeJsFunctionInPath(component, jsFunctionPath, jsFunctionArguments);
+        InvokeJsFunctionInPath(jsFunctionPath, component, jsFunctionArguments);
     }
 }
 
@@ -1952,9 +1952,9 @@ function RenderComponentIn(input)
     });
 }
 
-function InvokeJsFunctionInPath(thisArg, jsFunctionPath, jsFunctionArguments)
+function InvokeJsFunctionInPath(jsFunctionPath, callerInstance, jsFunctionArguments)
 {
-    GetExternalJsObject(jsFunctionPath).apply(thisArg, jsFunctionArguments);
+    GetExternalJsObject(jsFunctionPath).apply(callerInstance, jsFunctionArguments);
 }
 
 const ExternalJsObjectMap = {
