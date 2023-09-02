@@ -17,6 +17,8 @@ sealed class ProcessReactWithDotNetRequestInput
     public Element Instance { get; init; }
 
     public OnReactContextCreated OnReactContextCreated { get; init; }
+    
+    public ReactContext ReactContext { get; init; }
 }
 
 static class ReactWithDotNetRequestProcessor
@@ -64,12 +66,15 @@ partial class Mixin
             BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
         });
 
+        var reactContext = layoutInstance.RenderInfo.ComponentResponse.ReactContext;
+
         return await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
         {
             HttpContext                    = input.HttpContext,
             Component                      = (Element)layoutInstance,
             QueryString                    = input.HttpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
+            ReactContext = reactContext,
             BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
         });
     }
@@ -115,6 +120,7 @@ partial class Mixin
             HttpContext                                           = input.HttpContext,
             Instance                                              = input.Component,
             OnReactContextCreated                                 = input.OnReactContextCreated,
+            ReactContext                                          = input.ReactContext,
             BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
@@ -276,6 +282,8 @@ sealed class CalculateComponentHtmlTextInput
     public OnReactContextCreated OnReactContextCreated { get; init; }
 
     public string QueryString { get; init; }
+    
+    public ReactContext ReactContext { get; init; }
 }
 
 public sealed class CalculateRenderInfoInput

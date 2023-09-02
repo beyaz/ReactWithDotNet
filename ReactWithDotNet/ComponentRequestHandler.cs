@@ -55,6 +55,8 @@ class ComponentResponse
     public int LastUsedComponentUniqueIdentifier { get; set; }
 
     public IReadOnlyCollection<string> Trace { get; set; }
+
+    internal ReactContext ReactContext;
 }
 
 static class ComponentRequestHandler
@@ -67,24 +69,28 @@ static class ComponentRequestHandler
 
         var beforeSerializeElementToClient = input.BeforeSerializeElementToClient;
 
-        ReactContext context;
+        var context = input.ReactContext;
 
         var tracer = new Tracer();
 
         try
         {
-            context = CreateContext(request);
-
-            var task = input.OnReactContextCreated?.Invoke(input.HttpContext, context);
-            if (task is not null)
+            if (context == null)
             {
-                await task;
-            }
+                context = CreateContext(request);
 
-            if (tracer.ElapsedMilliseconds >= 3 && input.OnReactContextCreated is not null)
-            {
-                tracer.Trace($"{input.OnReactContextCreated.Method.DeclaringType}::{input.OnReactContextCreated.Method.Name} invoked in {tracer.ElapsedMilliseconds} milliseconds");
+                var task = input.OnReactContextCreated?.Invoke(input.HttpContext, context);
+                if (task is not null)
+                {
+                    await task;
+                }
+
+                if (tracer.ElapsedMilliseconds >= 3 && input.OnReactContextCreated is not null)
+                {
+                    tracer.Trace($"{input.OnReactContextCreated.Method.DeclaringType}::{input.OnReactContextCreated.Method.Name} invoked in {tracer.ElapsedMilliseconds} milliseconds");
+                }
             }
+            
 
             if (request.MethodName == "FetchComponent")
             {
@@ -171,7 +177,8 @@ static class ComponentRequestHandler
                 ElementAsJson                     = map,
                 Trace                             = tracer.Messages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
-                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1
+                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1,
+                ReactContext                      = context
             };
         }
 
@@ -289,7 +296,8 @@ static class ComponentRequestHandler
                 ElementAsJson                     = map,
                 Trace                             = tracer.Messages,
                 DynamicStyles                     = serializerContext.DynamicStyles.CalculateCssClassList(),
-                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1
+                LastUsedComponentUniqueIdentifier = serializerContext.ComponentUniqueIdentifierNextValue - 1,
+                ReactContext = context
             };
         }
 
