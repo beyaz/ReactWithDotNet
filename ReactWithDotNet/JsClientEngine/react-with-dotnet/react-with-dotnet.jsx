@@ -1954,7 +1954,9 @@ function RenderComponentIn(input)
 
 function InvokeJsFunctionInPath(jsFunctionPath, callerInstance, jsFunctionArguments)
 {
-    GetExternalJsObject(jsFunctionPath).apply(callerInstance, jsFunctionArguments);
+    const fn = GetExternalJsObject(jsFunctionPath);
+
+    return fn.apply(callerInstance, jsFunctionArguments);
 }
 
 const ExternalJsObjectMap = {
