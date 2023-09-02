@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Type = System.Type;
@@ -45,20 +44,6 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
 
     protected override Element render()
     {
-        var (successfullyRead, queryString) = ReadPropertyValueInJsonText<string>(state?.JsonTextForDotNetMethodParameters, "$QueryString");
-        if (successfullyRead)
-        {
-            Context.Query = HttpUtility.ParseQueryString(queryString);
-        }
-        else
-        {
-            (successfullyRead, queryString) = ReadPropertyValueInJsonText<string>(state?.JsonTextForDotNetInstanceProperties, "$QueryString");
-            if (successfullyRead)
-            {
-                Context.Query = HttpUtility.ParseQueryString(queryString);
-            }
-        }
-
         return createElement() + ComponentIndicatorStyle;
     }
 
@@ -74,26 +59,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
         return null;
     }
 
-    static (bool successfullyRead, TValue value) ReadPropertyValueInJsonText<TValue>(string json, string propertyNameInJson)
-    {
-        JObject jObject;
-
-        try
-        {
-            jObject = (JObject)DeserializeJson(json.HasValue() ? json : "{}", typeof(JObject));
-        }
-        catch (Exception)
-        {
-            return default;
-        }
-
-        if (jObject.TryGetValue(propertyNameInJson, out var jToken))
-        {
-            return (successfullyRead: true, jToken.ToObject<TValue>());
-        }
-
-        return default;
-    }
+   
 
     Element createElement()
     {

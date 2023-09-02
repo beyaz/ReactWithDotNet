@@ -1,7 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.Web;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 // ReSharper disable once UnusedTypeParameter
 public sealed class ReactContextKey<TValue>
@@ -28,13 +25,6 @@ public sealed class ReactContext
     }
     readonly Dictionary<string, object> map = new();
 
-    public double? ClientHeight { get; internal set; }
-
-    public double? ClientWidth { get; internal set; }
-
-    public NameValueCollection Query { get; internal set; } = new();
-
-    //public string QueryAsString => string.Join("&", Query.AllKeys.Select(key => $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(Query[key])}"));
     
     internal IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; init; }
 

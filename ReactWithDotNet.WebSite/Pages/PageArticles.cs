@@ -3,12 +3,11 @@ namespace ReactWithDotNet.WebSite.Pages;
 
 class PageArticles : ReactPureComponent
 {
-    string ArticleId => Context.Query[QueryKey.Id];
-    
     protected override Element render()
     {
-
-        if (string.IsNullOrWhiteSpace(ArticleId) == false)
+        var articleId = KeyForHttpContext[Context].Request.Query[QueryKey.Id];
+        
+        if (string.IsNullOrWhiteSpace(articleId) == false)
         {
             return new FlexRow(DisplayFlex, JustifyContentCenter)
             {

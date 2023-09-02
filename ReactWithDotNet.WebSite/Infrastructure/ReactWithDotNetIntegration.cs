@@ -56,6 +56,9 @@ static class ReactWithDotNetIntegration
     static Task InitializeTheme(HttpContext httpContext, ReactContext context)
     {
         context.Set(ThemeKey, new LightTheme());
+
+        KeyForHttpContext[context] = httpContext;
+        
         return Task.CompletedTask;
     }
 

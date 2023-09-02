@@ -1,6 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.Reflection;
-using System.Web;
+﻿using System.Reflection;
 using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
@@ -357,10 +355,6 @@ static class ComponentRequestHandler
     {
         var context = new ReactContext
         {
-            Query        = string.IsNullOrWhiteSpace(request.QueryString) ? new NameValueCollection() : HttpUtility.ParseQueryString(request.QueryString),
-            ClientWidth  = request.ClientWidth,
-            ClientHeight = request.ClientHeight,
-
             CapturedStateTree = request.CapturedStateTree
         };
 

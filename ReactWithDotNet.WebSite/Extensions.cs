@@ -1,11 +1,14 @@
 ﻿using System.IO;
+using Microsoft.AspNetCore.Http;
 using ReactWithDotNet.WebSite.Content;
 
 namespace ReactWithDotNet.WebSite;
 
 static partial class Extensions
 {
-    public static ReactContextKey<LightTheme> ThemeKey = new(nameof(ThemeKey));
+    public static readonly ReactContextKey<LightTheme> ThemeKey = new(nameof(ThemeKey));
+    public static readonly ReactContextKey<HttpContext> KeyForHttpContext = new(nameof(KeyForHttpContext));
+        
 
     public static IModifier GetPageLink(string pageName) => Href($"/?p={pageName}");
 

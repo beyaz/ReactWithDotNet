@@ -5,8 +5,6 @@ namespace ReactWithDotNet.WebSite;
 
 public class MainWindow : ReactPureComponent
 {
-    private string PageName => Context.Query[QueryKey.Page];
-
     protected override Element render()
     {
         return new div(WidthMaximized, HeightMaximized)
@@ -27,7 +25,9 @@ public class MainWindow : ReactPureComponent
 
         Element createContent()
         {
-            var typeOfPage = Type.GetType($"ReactWithDotNet.WebSite.Pages.{PageName}") ?? typeof(PageMain);
+            var pageName = KeyForHttpContext[Context].Request.Query[QueryKey.Page];
+            
+            var typeOfPage = Type.GetType($"ReactWithDotNet.WebSite.Pages.{pageName}") ?? typeof(PageMain);
 
             return (Element)Activator.CreateInstance(typeOfPage);
         }
