@@ -13,19 +13,18 @@ public sealed class ReactContextKey<TValue>
     public TValue this[ReactContext reactContext]
     {
         get => reactContext.TryGetValue(this);
-        set => reactContext.Set(Key,value);
+        set => reactContext.Set(Key, value);
     }
 }
 
 public sealed class ReactContext
 {
-    internal ReactContext()
-    {
-        
-    }
     readonly Dictionary<string, object> map = new();
 
-    
+    internal ReactContext()
+    {
+    }
+
     internal IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; init; }
 
     public bool Contains<TValue>(ReactContextKey<TValue> key)
