@@ -36,7 +36,7 @@ public sealed class ReactContext
 
     public string QueryAsString => string.Join("&", Query.AllKeys.Select(key => $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(Query[key])}"));
     
-    internal IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; set; }
+    internal IReadOnlyDictionary<string, ClientStateInfo> CapturedStateTree { get; init; }
 
     public bool Contains<TValue>(ReactContextKey<TValue> key)
     {
