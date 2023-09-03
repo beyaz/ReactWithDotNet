@@ -226,7 +226,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
         Element createVerticleRuler()
         {
-            var maxHeight = 500;
+            var maxHeight = 600;
             
             var step = 50;
             var max = maxHeight / step + 1;
