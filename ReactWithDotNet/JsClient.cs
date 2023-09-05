@@ -142,9 +142,9 @@ partial class Mixin
     }
 
     #region GotoMethod
-    public static void GotoMethod(this Client client, int timeout, Action action)
+    public static void GotoMethod(this Client client, int timeoutInMilliseconds, Action action)
     {
-        GotoMethod(client, timeout, action.Method.GetNameWithToken());
+        GotoMethod(client, timeoutInMilliseconds, action.Method.GetNameWithToken());
     }
 
     public static void GotoMethod(this Client client, Action action)
@@ -152,9 +152,9 @@ partial class Mixin
         GotoMethod(client, 0, action.Method.GetNameWithToken());
     }
 
-    public static void GotoMethod<TArgument>(this Client client, int timeout, Action<TArgument> action, TArgument argument)
+    public static void GotoMethod<TArgument>(this Client client, int timeoutInMilliseconds, Action<TArgument> action, TArgument argument)
     {
-        GotoMethod(client, timeout, action.Method.GetNameWithToken(), argument);
+        GotoMethod(client, timeoutInMilliseconds, action.Method.GetNameWithToken(), argument);
     }
 
     public static void GotoMethod<TArgument>(this Client client, Action<TArgument> action, TArgument argument)
@@ -162,9 +162,9 @@ partial class Mixin
         GotoMethod(client, 3, action.Method.GetNameWithToken(), argument);
     }
 
-    public static void GotoMethod<TArgument1, TArgument2>(this Client client, int timeout, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
+    public static void GotoMethod<TArgument1, TArgument2>(this Client client, int timeoutInMilliseconds, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
     {
-        GotoMethod(client, timeout, action.Method.GetNameWithToken(), argument1, argument2);
+        GotoMethod(client, timeoutInMilliseconds, action.Method.GetNameWithToken(), argument1, argument2);
     }
 
     public static void GotoMethod<TArgument1, TArgument2>(this Client client, Action<TArgument1, TArgument2> action, TArgument1 argument1, TArgument2 argument2)
@@ -172,9 +172,9 @@ partial class Mixin
         GotoMethod(client, 3, action.Method.GetNameWithToken(), argument1, argument2);
     }
 
-    static void GotoMethod(Client client, int timeout, string methodName, params object[] methodArguments)
+    static void GotoMethod(Client client, int timeoutInMilliseconds, string methodName, params object[] methodArguments)
     {
-        client.CallJsFunction(Core + nameof(GotoMethod), timeout, methodName, methodArguments);
+        client.CallJsFunction(Core + nameof(GotoMethod), timeoutInMilliseconds, methodName, methodArguments);
     }
     #endregion
 }
