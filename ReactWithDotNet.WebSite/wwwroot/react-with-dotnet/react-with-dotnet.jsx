@@ -256,10 +256,16 @@ function IsEmptyObject(obj)
 const FunctionExecutionQueue = [];
 
 var FunctionExecutionQueueStateIsExecuting = false;
+var IsWaitingRemoteResponse = false;
 
 function OnReactStateReady()
 {
     FunctionExecutionQueueStateIsExecuting = false;
+
+    if (IsWaitingRemoteResponse === true)
+    {
+        return;
+    }
 
     EmitNextFunctionInFunctionExecutionQueue();
 }
@@ -302,7 +308,7 @@ function PushToFunctionExecutionQueue(fn, forceWait)
         return entry;
     }
 
-    if (!FunctionExecutionQueueStateIsExecuting)
+    if (FunctionExecutionQueueStateIsExecuting === false && IsWaitingRemoteResponse === false)
     {
         EmitNextFunctionInFunctionExecutionQueue();
     }
@@ -885,19 +891,7 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
             return;
         }
 
-        if (IsWaitingRemoteResponse === true)
-        {
-            StartAction(/*remoteMethodName*/remoteMethodName, /*component*/targetComponent, /*eventArguments*/eventArguments);
-            return;
-        }
-
-        // TODO: check
-        if (FunctionExecutionQueueStateIsExecuting === true)
-        {
-            FunctionExecutionQueueStateIsExecuting = false;
-        }
-
-        StartAction(/*remoteMethodName*/remoteMethodName, /*component*/targetComponent, /*eventArguments*/eventArguments);
+        StartAction(remoteMethodName, targetComponent, eventArguments);
     }
 }
 
@@ -1826,8 +1820,6 @@ function DefinePureComponent(componentDeclaration)
 
     return NewPureComponent;
 }
-
-var IsWaitingRemoteResponse = false;
 
 function SendRequest(request, onSuccess, onFail)
 {
