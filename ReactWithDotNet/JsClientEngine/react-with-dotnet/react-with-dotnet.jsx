@@ -1688,6 +1688,7 @@ function DefineComponent(componentDeclaration)
                             OnReactStateReady();
                         }
 
+                        ReactIsBusy = true;
                         component.setState(newState, stateCallback);
 
                         return;
@@ -1703,6 +1704,7 @@ function DefineComponent(componentDeclaration)
                     StartAction(/*remoteMethodName*/'componentDidMount', component, /*eventArguments*/[]);
                 }
 
+                ReactIsBusy = true;
                 component.setState(partialState, stateCallBack);
             }
 
