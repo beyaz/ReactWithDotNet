@@ -255,12 +255,12 @@ function IsEmptyObject(obj)
 
 const FunctionExecutionQueue = [];
 
-var FunctionExecutionQueueStateIsExecuting = false;
+var ReactIsBusy = false;
 var IsWaitingRemoteResponse = false;
 
 function OnReactStateReady()
 {
-    FunctionExecutionQueueStateIsExecuting = false;
+    ReactIsBusy = false;
 
     if (IsWaitingRemoteResponse === true)
     {
@@ -272,7 +272,7 @@ function OnReactStateReady()
 
 function EmitNextFunctionInFunctionExecutionQueue()
 {
-    if (FunctionExecutionQueueStateIsExecuting === true)
+    if (ReactIsBusy === true)
     {
         throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
     }
@@ -287,7 +287,8 @@ function EmitNextFunctionInFunctionExecutionQueue()
             return;
         }
 
-        FunctionExecutionQueueStateIsExecuting = true;
+        ReactIsBusy = true;
+
         FunctionExecutionQueueCurrentEntry = item;
 
         item.fn(item);
@@ -308,7 +309,7 @@ function PushToFunctionExecutionQueue(fn, forceWait)
         return entry;
     }
 
-    if (FunctionExecutionQueueStateIsExecuting === false && IsWaitingRemoteResponse === false)
+    if (ReactIsBusy === false && IsWaitingRemoteResponse === false)
     {
         EmitNextFunctionInFunctionExecutionQueue();
     }
