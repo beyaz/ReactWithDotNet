@@ -1419,6 +1419,7 @@ function HandleAction(data, executionQueueEntry)
             OnReactStateReady();
         }
 
+        ReactIsBusy = true;
         component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
     }
 
@@ -1598,6 +1599,7 @@ function HandleComponentClientTasks(component)
         OnReactStateReady();
     }
 
+    ReactIsBusy = true;
     component.setState(partialState, stateCallback);
 
     return true;
