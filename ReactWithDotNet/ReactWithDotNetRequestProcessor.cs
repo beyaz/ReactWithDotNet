@@ -49,10 +49,18 @@ partial class Mixin
             throw new ArgumentNullException(nameof(input));
         }
 
-        var layoutInstance = (IPageLayout)Activator.CreateInstance(input.LayoutType);
+        var layoutType = input.LayoutType;
+        if (layoutType is null)
+        {
+            throw new ArgumentNullException(nameof(input.LayoutType));
+        }
+        
+        var instance = Activator.CreateInstance(layoutType);
+
+        var layoutInstance = instance as IPageLayout;
         if (layoutInstance == null)
         {
-            throw new InvalidOperationException();
+            throw DeveloperException($"{layoutType} should be support interface: {typeof(IPageLayout)}");
         }
 
         var component = (Element)Activator.CreateInstance(input.MainContentType);
