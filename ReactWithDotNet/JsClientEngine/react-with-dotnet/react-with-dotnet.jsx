@@ -272,7 +272,7 @@ function OnReactStateReady()
 
 function EmitNextFunctionInFunctionExecutionQueue()
 {
-    if (FunctionExecutionQueueStateIsExecuting)
+    if (FunctionExecutionQueueStateIsExecuting === true)
     {
         throw CreateNewDeveloperError("ReactWithDotNet event queue problem occured.");
     }
