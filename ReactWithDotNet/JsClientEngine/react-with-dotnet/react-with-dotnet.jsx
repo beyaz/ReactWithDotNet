@@ -1663,11 +1663,16 @@ function DefineComponent(componentDeclaration)
         {
             const component = this;
 
-            function HandleHasComponentDidMount()
+            function HandleHasComponentDidMount(isDirectCall)
             {
                 const hasComponentDidMountMethod = component.state[HasComponentDidMountMethod];
                 if (hasComponentDidMountMethod !== true)
                 {
+                    if (isDirectCall !== true)
+                    {
+                        OnReactStateReady();
+                    }
+
                     return;
                 }
 
@@ -1718,7 +1723,7 @@ function DefineComponent(componentDeclaration)
             }
             else
             {
-                HandleHasComponentDidMount();
+                HandleHasComponentDidMount(/*isDirectCall*/true);
             }
         }
 
