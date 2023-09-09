@@ -317,6 +317,12 @@ function PushToFunctionExecutionQueue(fn, forceWait)
     return entry;
 }
 
+function SetState(component, partialState, stateCallback)
+{
+    ReactIsBusy = true;
+    component.setState(partialState, stateCallback);
+}
+
 function TryGetValueInPath(obj, steps)
 {
     steps = typeof steps === "string" ? steps.split(".") : steps;
@@ -1419,8 +1425,7 @@ function HandleAction(data, executionQueueEntry)
             OnReactStateReady();
         }
 
-        ReactIsBusy = true;
-        component.setState(CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
+        SetState(component, CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
     }
 
     function onFail(error)
@@ -1595,11 +1600,8 @@ function HandleComponentClientTasks(component)
         shouldBeReferenceEquals();
 
         freeSpace.waitingClientTasks = null;
-
-        OnReactStateReady();
     }
 
-    ReactIsBusy = true;
     component.setState(partialState, stateCallback);
 
     return true;
@@ -1695,8 +1697,7 @@ function DefineComponent(componentDeclaration)
                             OnReactStateReady();
                         }
 
-                        ReactIsBusy = true;
-                        component.setState(newState, stateCallback);
+                        SetState(component, newState, stateCallback);
 
                         return;
                     }
@@ -1711,8 +1712,7 @@ function DefineComponent(componentDeclaration)
                     StartAction(/*remoteMethodName*/'componentDidMount', component, /*eventArguments*/[]);
                 }
 
-                ReactIsBusy = true;
-                component.setState(partialState, stateCallBack);
+                SetState(component, partialState, stateCallBack);
             }
 
 
