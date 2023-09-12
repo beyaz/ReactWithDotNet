@@ -1,0 +1,1 @@
+export { ReactPlayer as default } from 'react-player';
