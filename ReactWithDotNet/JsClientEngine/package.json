@@ -36,7 +36,9 @@
 
         "google-map-react": "^2.2.0",
 
-        "react-free-scrollbar": "^0.3.4",
+      "react-free-scrollbar": "^0.3.4",
+
+      "react-player": "^2.13.0",
 
         "react-awesome-reveal": "^4.1.0",
         "@emotion/react": "^11.10.5",
