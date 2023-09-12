@@ -124,7 +124,6 @@ public sealed class ReactPlayer : ElementBase
     /// Override options for the various players, see config prop
     /// </summary>
     [ReactProp]
-    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
     public dynamic config { get; } = new ExpandoObject();
     
     
