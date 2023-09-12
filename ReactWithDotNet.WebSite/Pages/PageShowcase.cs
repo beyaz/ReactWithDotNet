@@ -93,7 +93,8 @@ class PageShowcase : ReactComponent
         typeof(PrimeReactTabViewDemo),
         typeof(RSuiteAutoCompleteDemo),
         typeof(SwiperThumbsGalleryDemo),
-        typeof(EventBusDemo)
+        typeof(EventBusDemo),
+        typeof(ReactPlayerDemo)
     };
 
     void OnSearchFinished()

@@ -33,6 +33,16 @@ public sealed class ReactPlayer : ElementBase
     
     
     /// <summary>
+    /// Applies the playsinline attribute where supported
+    /// <br/>
+    /// Default: false
+    /// </summary>
+    [ReactProp]
+    public bool? playsinline { get; set; }
+    
+    
+    
+    /// <summary>
     /// Set to true to show just the video thumbnail, which loads the full player on click
     /// <br/>
     ///  Pass in an image URL to override the preview image
@@ -78,7 +88,7 @@ public sealed class ReactPlayer : ElementBase
     ///  Default: 640px
     /// </summary>
     [ReactProp]
-    public double? width { get; set; }
+    public string width { get; set; }
     
     
     /// <summary>
@@ -87,7 +97,7 @@ public sealed class ReactPlayer : ElementBase
     ///  Default: 360px
     /// </summary>
     [ReactProp]
-    public double? height { get; set; }
+    public string height { get; set; }
     
     
     /// <summary>
