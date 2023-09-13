@@ -532,6 +532,12 @@ partial class ElementSerializer
 
                         dotNetProperties.Foreach(copyPropertyValueDeeply);
 
+                        stateProperty.SetValueFunc(component, ReflectionHelper.DeepCopy(state));
+
+                        component.Client = ReflectionHelper.DeepCopy(component.Client);
+
+                        return component;
+                        
                         void copyPropertyValueDeeply(string dotNetPropertyName, object dotNetPropertyValue)
                         {
                             var noNeedToDeeplyAssign = dotNetPropertyValue is null || dotNetPropertyValue is string || dotNetPropertyValue.GetType().IsValueType;
@@ -548,12 +554,6 @@ partial class ElementSerializer
 
                             dotNetPropertyInfo.SetValue(component, ReflectionHelper.DeepCopy(dotNetPropertyInfo.GetValue(component)));
                         }
-
-                        stateProperty.SetValueFunc(component, ReflectionHelper.DeepCopy(state));
-
-                        component.Client = ReflectionHelper.DeepCopy(component.Client);
-
-                        return component;
                     }
 
                     foreach (var cacheableMethod in typeInfo.ParameterizedCacheableMethodInfoList)
