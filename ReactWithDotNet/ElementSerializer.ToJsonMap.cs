@@ -530,7 +530,7 @@ partial class ElementSerializer
                     {
                         var component = (ReactComponentBase)reactStatefulComponent.Clone();
 
-                        dotNetProperties.Foreach(copyPropertyValueDeeply);
+                        dotNetProperties.Foreach((name,value)=>copyPropertyValueDeeply(dotNetTypeOfReactComponent,component, name, value));
 
                         stateProperty.SetValueFunc(component, ReflectionHelper.DeepCopy(state));
 
@@ -538,7 +538,7 @@ partial class ElementSerializer
 
                         return component;
                         
-                        void copyPropertyValueDeeply(string dotNetPropertyName, object dotNetPropertyValue)
+                        static void copyPropertyValueDeeply(Type dotNetTypeOfReactComponent, object component, string dotNetPropertyName, object dotNetPropertyValue)
                         {
                             var noNeedToDeeplyAssign = dotNetPropertyValue is null || dotNetPropertyValue is string || dotNetPropertyValue.GetType().IsValueType;
                             if (noNeedToDeeplyAssign)
