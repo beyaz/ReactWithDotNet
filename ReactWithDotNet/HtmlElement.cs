@@ -136,6 +136,13 @@ public abstract class HtmlElement : Element
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public Action<MouseEvent> onClick { get; set; }
+    
+    /// <summary>
+    ///     Gets or sets the on click.
+    /// </summary>
+    [ReactProp]
+    public Action onClickPreview { get; set; }
+    
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
