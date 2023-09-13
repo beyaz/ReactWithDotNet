@@ -512,6 +512,7 @@ partial class ElementSerializer
                             // take back dynamic styles
                             context.DynamicStyles.ListOfClasses.Clear();
                             context.DynamicStyles.ListOfClasses.AddRange(newElementSerializerContext.DynamicStyles.ListOfClasses);
+                            context.ComponentUniqueIdentifierNextValue = newElementSerializerContext.ComponentUniqueIdentifierNextValue;
 
                             cacheableMethodInfo = new CacheableMethodInfo
                             {
@@ -600,6 +601,7 @@ partial class ElementSerializer
                                 // take back dynamic styles
                                 context.DynamicStyles.ListOfClasses.Clear();
                                 context.DynamicStyles.ListOfClasses.AddRange(newElementSerializerContext.DynamicStyles.ListOfClasses);
+                                context.ComponentUniqueIdentifierNextValue = newElementSerializerContext.ComponentUniqueIdentifierNextValue;
 
                                 cacheableMethodInfo = new CacheableMethodInfo
                                 {
