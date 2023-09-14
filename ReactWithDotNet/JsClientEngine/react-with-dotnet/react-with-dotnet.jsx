@@ -1451,7 +1451,9 @@ function HandleAction(actionArguments)
             OnReactStateReady();
         }
 
-        SetState(component, CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
+        const partialState = CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson);
+
+        SetState(component, partialState, stateCallback);
     }
 
     function onFail(error)
