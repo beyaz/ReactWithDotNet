@@ -634,6 +634,9 @@ public static partial class Mixin
 
     public static HtmlElementModifier OnClick(Action<MouseEvent> onClickHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onClick = onClickHandler);
+    
+    public static HtmlElementModifier OnClickPreview(Action onClickPreview)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onClickPreview = onClickPreview);
 
     public static HtmlElementModifier OnMouseEnter(Action<MouseEvent> onMouseEnterHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseEnter = onMouseEnterHandler);
