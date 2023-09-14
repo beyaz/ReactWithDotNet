@@ -31,7 +31,12 @@ public class OnClickPreviewDemo : ReactComponent
         Count++;
     }
 
-    class Btn : ReactComponent
+
+    class BtState
+    {
+        public string PreviewText { get; set; }
+    }
+    class Btn : ReactComponent<BtState>
     {
         public Action<MouseEvent> OnClick;
         
@@ -49,16 +54,16 @@ public class OnClickPreviewDemo : ReactComponent
                 },
                 children =
                 {
-                    "Click Me"+PreviewText
+                    "Click Me"+state.PreviewText
                 }
             };
         }
 
-        public string PreviewText { get; set; }
+     
         
         void OnClickPreview()
         {
-            PreviewText = "Preview";
+            state.PreviewText = "Preview";
         }
     }
 }

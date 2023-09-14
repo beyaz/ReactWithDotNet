@@ -328,6 +328,17 @@ static partial class ElementSerializer
                     }
                     
                     var newTarget = (ReactComponentBase)target.Clone();
+
+                    var newTargetTypeInfo = GetTypeInfo(target.GetType());
+                    if (newTargetTypeInfo.StateProperty is not null)
+                    {
+                        var targetState = newTargetTypeInfo.StateProperty.GetValueFunc(target);
+                        if (targetState is EmptyState == false)
+                        {
+                            newTargetTypeInfo.StateProperty.SetValueFunc(newTarget, ReflectionHelper.DeepCopy(targetState));
+                        }
+                    }
+                    
                     action.Method.Invoke(newTarget, null);
                     newTarget.InvokeRender();
 

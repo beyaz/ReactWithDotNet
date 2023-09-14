@@ -851,7 +851,7 @@ function tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArgum
     return null;
 }
 
-function ConvertToEventHandlerFunction(parentJsonNode, propName, remoteMethodInfo)
+function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 {
     const remoteMethodName   = remoteMethodInfo.remoteMethodName;
     const handlerComponentUniqueIdentifier = remoteMethodInfo.HandlerComponentUniqueIdentifier;
@@ -1065,7 +1065,7 @@ function ConvertToReactElement(jsonNode, component)
             // tryProcessAsEventHandler
             if (propValue.$isRemoteMethod === true)
             {
-                props[propName] = ConvertToEventHandlerFunction(jsonNode, propName, propValue);
+                props[propName] = ConvertToEventHandlerFunction(jsonNode, propValue);
 
                 continue;
             }
@@ -1139,6 +1139,8 @@ function ConvertToReactElement(jsonNode, component)
 
                         }, debounceTimeout);
                     }
+
+                    newState[SyncId] = GetNextSequence();
 
                     targetComponent.setState(newState);
 
@@ -1451,7 +1453,14 @@ function HandleAction(actionArguments)
             OnReactStateReady();
         }
 
-        SetState(component, CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson), stateCallback);
+        const partialState = CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson);
+
+        //if (actionArguments.onPreviewHandler)
+        //{
+        //    partialState[SyncId] = GetNextSequence();
+        //}
+
+        SetState(component, partialState, stateCallback);
     }
 
     function onFail(error)
@@ -1483,7 +1492,7 @@ function CaclculateNewStateFromJsonElement(componentState, jsonElement)
     const newState = {};
 
     newState[DotNetState]     = NotNull(jsonElement[DotNetState]);
-    newState[SyncId]          = ShouldBeNumber(componentState[SyncId]) + 1;
+    newState[SyncId]          = GetNextSequence();
     newState[RootNode]        = jsonElement[RootNode];
     newState[ClientTasks]     = jsonElement[ClientTasks];
     newState[DotNetProperties] = jsonElement[DotNetProperties];
@@ -1806,7 +1815,7 @@ function DefineComponent(componentDeclaration)
                 return null;
             }
 
-            if (syncIdInState <= syncIdInProp)
+            if (syncIdInState < syncIdInProp)
             {
                 const partialState = {};
 
@@ -1814,6 +1823,7 @@ function DefineComponent(componentDeclaration)
                 partialState[RootNode] = nextProps.$jsonNode[RootNode];
                 partialState[ClientTasks] = nextProps.$jsonNode[ClientTasks];
                 partialState[DotNetProperties] = NotNull(nextProps.$jsonNode[DotNetProperties]);
+                partialState[DotNetState] = NotNull(nextProps.$jsonNode[DotNetState]);
 
                 const componentActiveUniqueIdentifier = NotNull(prevState[DotNetComponentUniqueIdentifier]);
                 const componentNextUniqueIdentifier   = NotNull(nextProps.$jsonNode[DotNetComponentUniqueIdentifier]);
