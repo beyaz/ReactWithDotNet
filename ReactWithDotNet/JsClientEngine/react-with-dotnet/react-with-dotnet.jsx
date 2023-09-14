@@ -851,7 +851,7 @@ function tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArgum
     return null;
 }
 
-function ConvertToEventHandlerFunction(remoteMethodInfo)
+function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 {
     const remoteMethodName   = remoteMethodInfo.remoteMethodName;
     const handlerComponentUniqueIdentifier = remoteMethodInfo.HandlerComponentUniqueIdentifier;
@@ -861,6 +861,20 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
 
     NotNull(remoteMethodName);
     NotNull(handlerComponentUniqueIdentifier);
+
+    const onClickPreview = parentJsonNode.$onClickPreview;
+    let onPreviewHandler = null;
+    if (onClickPreview)
+    {
+        onPreviewHandler = function ()
+        {
+            const cmp = GetComponentByDotNetComponentUniqueIdentifier(onClickPreview.$DotNetComponentUniqueIdentifier);
+
+            const newState = CaclculateNewStateFromJsonElement(cmp.state, onClickPreview);
+
+            cmp.setState(newState);
+        }
+    }
 
     return function ()
     {
@@ -901,7 +915,8 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
         const actionArguments = {
             component: targetComponent,
             remoteMethodName: remoteMethodName,
-            remoteMethodArguments: eventArguments
+            remoteMethodArguments: eventArguments,
+            onPreviewHandler: onPreviewHandler
         };
         StartAction(actionArguments);
     }
@@ -1050,7 +1065,7 @@ function ConvertToReactElement(jsonNode, component)
             // tryProcessAsEventHandler
             if (propValue.$isRemoteMethod === true)
             {
-                props[propName] = ConvertToEventHandlerFunction(propValue);
+                props[propName] = ConvertToEventHandlerFunction(jsonNode, propValue);
 
                 continue;
             }
@@ -1455,6 +1470,11 @@ function HandleAction(actionArguments)
         OnReactStateReady();
     }
 
+    if (actionArguments.onPreviewHandler)
+    {
+        actionArguments.onPreviewHandler();
+    }
+
     SendRequest(request, onSuccess, onFail);
 }
 
@@ -1786,7 +1806,7 @@ function DefineComponent(componentDeclaration)
                 return null;
             }
 
-            if (syncIdInState < syncIdInProp)
+            if (syncIdInState <= syncIdInProp)
             {
                 const partialState = {};
 

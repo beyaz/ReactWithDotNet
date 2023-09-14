@@ -141,6 +141,7 @@ public abstract class HtmlElement : Element
     ///     Gets or sets the on click.
     /// </summary>
     [ReactProp]
+    [JsonPropertyName("$onClickPreview")]
     public Action onClickPreview { get; set; }
     
 

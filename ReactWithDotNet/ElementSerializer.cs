@@ -43,6 +43,7 @@ sealed class ElementSerializerContext
 
     public StateTree StateTree { get; init; }
     public Tracer Tracer { get; init; }
+    public bool IsCapturingPreview { get; set; }
 }
 
 static partial class ElementSerializer
@@ -318,6 +319,25 @@ static partial class ElementSerializer
         {
             if (action.Target is ReactComponentBase target)
             {
+                // special case
+                if (propertyInfo.Name == "onClickPreview" && propertyInfo.DeclaringType== typeof(HtmlElement))
+                {
+                    if (context.IsCapturingPreview)
+                    {
+                        return NotExportableObject;
+                    }
+                    
+                    var newTarget = (ReactComponentBase)target.Clone();
+                    action.Method.Invoke(newTarget, null);
+                    newTarget.InvokeRender();
+
+                    context.IsCapturingPreview = true;
+                    var newMap = await ToJsonMap(newTarget, context);
+                    context.IsCapturingPreview = false;
+
+                    return (JsonMap)newMap;
+                }
+                
                 propertyValue = new RemoteMethodInfo
                 {
                     IsRemoteMethod                   = true,
