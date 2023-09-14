@@ -898,7 +898,12 @@ function ConvertToEventHandlerFunction(remoteMethodInfo)
             return;
         }
 
-        StartAction(remoteMethodName, targetComponent, eventArguments);
+        const actionArguments = {
+            component: targetComponent,
+            remoteMethodName: remoteMethodName,
+            remoteMethodArguments: eventArguments
+        };
+        StartAction(actionArguments);
     }
 }
 
@@ -1109,7 +1114,12 @@ function ConvertToReactElement(jsonNode, component)
 
                         newState[timeoutKey] = setTimeout(() =>
                         {
-                            const executionEntry = StartAction(debounceHandler, targetComponent, /*eventArguments*/[]);
+                            const actionArguments = {
+                                component: targetComponent,
+                                remoteMethodName: debounceHandler,
+                                remoteMethodArguments: []
+                            };
+                            const executionEntry = StartAction(actionArguments);
                             executionEntry.name = executionQueueItemName;
 
                         }, debounceTimeout);
@@ -1341,20 +1351,21 @@ function ProcessClientTasks(clientTasks, component)
     }
 }
 
-function StartAction(remoteMethodName, component, eventArguments)
+function StartAction(actionArguments)
 {
     function execute(executionQueueEntry)
     {
-        HandleAction({ remoteMethodName: remoteMethodName, component: component, eventArguments: eventArguments }, executionQueueEntry);
+        actionArguments.executionQueueEntry = executionQueueEntry;
+        HandleAction(actionArguments);
     }
     return PushToFunctionExecutionQueue(execute);
 }
 
 
-function HandleAction(data, executionQueueEntry)
+function HandleAction(actionArguments)
 {
-    const remoteMethodName = data.remoteMethodName;
-    let component = NotNull(data.component);
+    const remoteMethodName = actionArguments.remoteMethodName;
+    let component = NotNull(actionArguments.component);
 
     component = GetComponentByDotNetComponentUniqueIdentifier(component[DotNetComponentUniqueIdentifiers][0]);
 
@@ -1387,10 +1398,10 @@ function HandleAction(data, executionQueueEntry)
         LastUsedComponentUniqueIdentifier: LastUsedComponentUniqueIdentifier,
         ComponentUniqueIdentifier: NotNull(component.state[DotNetComponentUniqueIdentifier]),
 
-        CallFunctionId: executionQueueEntry.id
+        CallFunctionId: actionArguments.executionQueueEntry.id
     };
 
-    request.eventArgumentsAsJsonArray = data.eventArguments.map(JSON.stringify);
+    request.eventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
 
     function onSuccess(response)
     {
@@ -1709,7 +1720,12 @@ function DefineComponent(componentDeclaration)
 
                 function stateCallBack()
                 {
-                    StartAction(/*remoteMethodName*/'componentDidMount', component, /*eventArguments*/[]);
+                    const actionArguments = {
+                        component: component,
+                        remoteMethodName: 'componentDidMount',
+                        remoteMethodArguments: []
+                    };
+                    StartAction(actionArguments);
                 }
 
                 SetState(component, partialState, stateCallBack);
@@ -2184,7 +2200,13 @@ RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMe
             return;
         }
 
-        StartAction(remoteMethodName, component, remoteMethodArguments);
+        const actionArguments = {
+            component: component,
+            remoteMethodName: remoteMethodName,
+            remoteMethodArguments: remoteMethodArguments
+        };
+
+        StartAction(actionArguments);
 
     }, timeout);
 });
@@ -2222,7 +2244,13 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
 
     const onEventFired = (eventArgumentsAsArray) =>
     {
-        const entry = StartAction(remoteMethodName, component, eventArgumentsAsArray);
+        const actionArguments = {
+            component: component,
+            remoteMethodName: remoteMethodName,
+            remoteMethodArguments: eventArgumentsAsArray
+        };
+
+        const entry = StartAction(actionArguments);
 
         // guard for removed node before send to server
         component[ON_COMPONENT_DESTROY].push(() =>
@@ -2249,7 +2277,13 @@ RegisterCoreFunction("ListenEventOnlyOnce", function (eventName, remoteMethodNam
     {
         EventBus.Remove(eventName, onEventFired);
 
-        const entry = StartAction(remoteMethodName, component, eventArgumentsAsArray);
+        const actionArguments = {
+            component: component,
+            remoteMethodName: remoteMethodName,
+            remoteMethodArguments: eventArgumentsAsArray
+        };
+
+        const entry = StartAction(actionArguments);
 
         // guard for removed node before send to server
         component[ON_COMPONENT_DESTROY].push(() =>
@@ -2304,7 +2338,13 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
     {
         const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
-        const entry = StartAction(remoteMethodName, handlerComponent, eventArgumentsAsArray);
+        const actionArguments = {
+            component: handlerComponent,
+            remoteMethodName: remoteMethodName,
+            remoteMethodArguments: eventArgumentsAsArray
+        };
+
+        const entry = StartAction(actionArguments);
 
         // guard for removed node before send to server
         handlerComponent[ON_COMPONENT_DESTROY].push(() =>
@@ -2356,7 +2396,12 @@ RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName
         {
             const handlerComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
 
-            StartAction(remoteMethodName, handlerComponent, /*eventArguments*/[]);
+            const actionArguments = {
+                component: handlerComponent,
+                remoteMethodName: remoteMethodName,
+                remoteMethodArguments: []
+            };
+            StartAction(actionArguments);
         }
     }
 
