@@ -870,7 +870,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
         {
             const cmp = GetComponentByDotNetComponentUniqueIdentifier(onClickPreview.$DotNetComponentUniqueIdentifier);
 
-            const newState = CaclculateNewStateFromJsonElement(cmp.state, onClickPreview);
+            const newState = CalculateNewStateFromJsonElement(cmp.state, onClickPreview);
 
             cmp.setState(newState);
         }
@@ -905,7 +905,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
         const cachedMethodInfo = tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArguments);
         if (cachedMethodInfo)
         {
-            const newState = CaclculateNewStateFromJsonElement(targetComponent.state, cachedMethodInfo.ElementAsJson);
+            const newState = CalculateNewStateFromJsonElement(targetComponent.state, cachedMethodInfo.ElementAsJson);
 
             targetComponent.setState(newState);
 
@@ -1453,12 +1453,7 @@ function HandleAction(actionArguments)
             OnReactStateReady();
         }
 
-        const partialState = CaclculateNewStateFromJsonElement(component.state, response.ElementAsJson);
-
-        //if (actionArguments.onPreviewHandler)
-        //{
-        //    partialState[SyncId] = GetNextSequence();
-        //}
+        const partialState = CalculateNewStateFromJsonElement(component.state, response.ElementAsJson);
 
         SetState(component, partialState, stateCallback);
     }
@@ -1487,7 +1482,7 @@ function HandleAction(actionArguments)
     SendRequest(request, onSuccess, onFail);
 }
 
-function CaclculateNewStateFromJsonElement(componentState, jsonElement)
+function CalculateNewStateFromJsonElement(componentState, jsonElement)
 {
     const newState = {};
 
@@ -1723,7 +1718,7 @@ function DefineComponent(componentDeclaration)
                     const cachedMethodInfo = tryToFindCachedMethodInfo(component, 'componentDidMount', []);
                     if (cachedMethodInfo)
                     {
-                        const newState = CaclculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
+                        const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
 
                         const clientTasks = newState[ClientTasks];
 
@@ -2223,7 +2218,7 @@ RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMe
         const cachedMethodInfo = tryToFindCachedMethodInfo(component, remoteMethodName, remoteMethodArguments);
         if (cachedMethodInfo)
         {
-            const newState = CaclculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
+            const newState = CalculateNewStateFromJsonElement(component.state, cachedMethodInfo.ElementAsJson);
 
             component.setState(newState);
 
