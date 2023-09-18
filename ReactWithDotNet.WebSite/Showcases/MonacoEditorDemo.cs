@@ -1,28 +1,67 @@
-﻿using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
+﻿using System.Threading.Tasks;
+using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-public class MonacoEditorDemo : ReactComponent
+class MonacoEditorDemoState
 {
+    public string Content { get; set; }
     
-    
+    public int LetterCount { get; set; }
+}
+class MonacoEditorDemo : ReactComponent<MonacoEditorDemoState>
+{
+    protected override Task constructor()
+    {
+
+        state = new MonacoEditorDemoState
+        {
+            Content = """
+                      {
+                        "name": "xyz",
+                        "year": 6,
+                        "hasValue": null
+                      }
+                      """
+        };
+        
+        OnValueChanged();
+        
+        return Task.CompletedTask;
+    }
+
     protected override Element render()
     {
-        return new Editor
+        return new FlexColumn
         {
-            width           = "640px",
-            height          = "360px",
-            defaultLanguage = "json",
-          
-
-            options =
+            new link{href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet"},
+            new Editor
             {
-                renderLineHighlight ="none",
-                matchBrackets       ="always"
+                width           = "640px",
+                height          = "360px",
+                defaultLanguage = "json",
+          
+                valueBind                = ()=>state.Content,
+                valueBindDebounceTimeout = 500,
+                valueBindDebounceHandler = OnValueChanged,
+
+                options =
+                {
+                    renderLineHighlight ="none",
+                    fontFamily          ="'IBM Plex Mono Medium', 'Courier New', monospace",
+                    minimap = new { enabled = false }
+                }
+            },
+            new FlexRow
+            {
+                (b)"Letter Count:", state.LetterCount
             }
         };
     }
 
-    
+    void OnValueChanged()
+    {
+        state.LetterCount = state.Content.Length;
+    }
 }
