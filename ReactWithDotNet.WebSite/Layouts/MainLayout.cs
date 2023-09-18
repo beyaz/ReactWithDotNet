@@ -63,7 +63,7 @@ class MainLayout : ReactPureComponent, IPageLayout
                     text = 
                     $@"
 
-import {{ReactWithDotNet}} from './{root}/dist/index.js';
+import {{ReactWithDotNet}} from './{root}/dist/index.js?v={Guid.NewGuid():N}';
 
 ReactWithDotNet.StrictMode = false;
 ReactWithDotNet.RenderComponentIn({{
