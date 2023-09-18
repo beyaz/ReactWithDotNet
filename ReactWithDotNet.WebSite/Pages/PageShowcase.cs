@@ -95,7 +95,8 @@ class PageShowcase : ReactComponent
         typeof(SwiperThumbsGalleryDemo),
         typeof(EventBusDemo),
         typeof(ReactPlayerDemo),
-        typeof(OnClickPreviewDemo)
+        typeof(OnClickPreviewDemo),
+        typeof(MonacoEditorDemo)
     };
 
     void OnSearchFinished()
