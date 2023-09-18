@@ -10,7 +10,8 @@ public class Editor : ThirdPartyReactComponent
     {
     }
 
-  
+    [ReactProp]
+    public string width { get; set; }
 
     [ReactProp]
     public string height { get; set; }
@@ -26,6 +27,9 @@ public class Editor : ThirdPartyReactComponent
 
     [ReactProp]
     public string defaultValue { get; set; }
+    
+    [ReactProp]
+    public string value { get; set; }
     
     [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]

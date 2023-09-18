@@ -1,5 +1,5 @@
 ﻿using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
-using ReactWithDotNet.ThirdPartyLibraries.React_Player;
+
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
@@ -11,16 +11,15 @@ public class MonacoEditorDemo : ReactComponent
     {
         return new Editor
         {
-            style =
-            {
-                width  = "640px",
-                height = "360px"
-            },
+            width           = "640px",
+            height          = "360px",
             defaultLanguage = "json",
-            defaultValue    = "{yy:6}",
+          
+
             options =
             {
-                renderLineHighlight ="none"
+                renderLineHighlight ="none",
+                matchBrackets       ="always"
             }
         };
     }
