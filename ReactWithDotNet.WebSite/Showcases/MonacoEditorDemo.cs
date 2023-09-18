@@ -26,7 +26,7 @@ class MonacoEditorDemo : ReactComponent<MonacoEditorDemoState>
                       """
         };
         
-        OnValueChanged();
+        OnKeypressFinished();
         
         return Task.CompletedTask;
     }
@@ -44,7 +44,7 @@ class MonacoEditorDemo : ReactComponent<MonacoEditorDemoState>
           
                 valueBind                = ()=>state.Content,
                 valueBindDebounceTimeout = 500,
-                valueBindDebounceHandler = OnValueChanged,
+                valueBindDebounceHandler = OnKeypressFinished,
 
                 options =
                 {
@@ -60,7 +60,7 @@ class MonacoEditorDemo : ReactComponent<MonacoEditorDemoState>
         };
     }
 
-    void OnValueChanged()
+    void OnKeypressFinished()
     {
         state.LetterCount = state.Content.Length;
     }
