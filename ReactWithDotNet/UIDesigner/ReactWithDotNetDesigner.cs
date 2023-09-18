@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Newtonsoft.Json;
+using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
@@ -53,16 +54,24 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 valueBind = () => state.JsonTextForDotNetInstanceProperties;
             }
 
-            return new CodeMirror
+            return new Fragment
             {
-                extensions               = { "json", "githubLight" },
-                valueBind                = valueBind,
-                valueBindDebounceTimeout = 700,
-                valueBindDebounceHandler = OnKeypressFinished,
-                basicSetup =
+                new link{href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet"},
+                
+                new Editor
                 {
-                    highlightActiveLine       = false,
-                    highlightActiveLineGutter = false,
+                    defaultLanguage          = "json",
+                    valueBind                = valueBind,
+                    valueBindDebounceTimeout = 700,
+                    valueBindDebounceHandler = OnKeypressFinished,
+                    options =
+                    {
+                        renderLineHighlight ="none",
+                        fontFamily          ="'IBM Plex Mono Medium', 'Courier New', monospace",
+                        fontSize = 11,
+                        minimap             = new { enabled = false },
+                        lineNumbers = "off"
+                    }
                 }
             };
         }
