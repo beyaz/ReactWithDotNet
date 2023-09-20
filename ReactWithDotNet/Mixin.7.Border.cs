@@ -295,5 +295,13 @@ partial class Mixin
     public static StyleModifier BorderTopStyle(string value) => new(style => style.borderTopStyle = value);
     public static StyleModifier BorderBottomStyle(string value) => new(style => style.borderBottomStyle = value);
     public static StyleModifier BorderLeftStyle(string value) => new(style => style.borderLeftStyle = value);
+    
+    
+    /// <summary>
+    /// normal|multiply|screen|overlay|darken|lighten|color-dodge|color-burn|difference|exclusion|hue|saturation|color|luminosity
+    /// </summary>
+    public static StyleModifier MixBlendMode(string value) => new(style => style.mixBlendMode = value);
+    
+    
 
 }
