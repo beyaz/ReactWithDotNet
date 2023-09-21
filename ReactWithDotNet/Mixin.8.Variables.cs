@@ -67,6 +67,8 @@ partial class Mixin
         => $"cubic-bezier({x1}, {y1}, {x2}, {y2})";
 
     public static StyleModifier Width(CssUnit width) => Width(width.ToString());
+    
+    public static StyleModifier Height(CssUnit value) => Height(value.ToString());
 
     public static StyleModifier Width(string width) => new(style => style.width = width);
 
