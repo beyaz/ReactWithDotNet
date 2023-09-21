@@ -87,7 +87,7 @@ public sealed class input : HtmlElement
     }
 
     [ReactProp]
-    public string autocomplete { get; set; }
+    public string autoComplete { get; set; }
 
     [ReactProp]
     public bool? @checked { get; set; }
