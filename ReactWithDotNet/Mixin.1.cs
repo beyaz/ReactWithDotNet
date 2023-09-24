@@ -562,7 +562,26 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier LeftRight(double pixelValue) => new(style => style.leftRight = pixelValue.AsPixel());
 
-    public static StyleModifier LeftRightBottom(string valueForLeftAndRightAndBottom) => new(style => style.leftRightBottom = valueForLeftAndRightAndBottom);
+    /// <summary>
+    ///     style.left = <paramref name="value" /> 
+    ///     <br />
+    ///     style.right = <paramref name="value" />
+    ///     <br />
+    ///     style.bottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier LeftRightBottom(string value) 
+        => new(style => style.leftRightBottom = value);
+    
+    
+    /// <summary>
+    ///     style.left = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.right = <paramref name="value" /> + 'px'
+    ///     <br />
+    ///     style.bottom = <paramref name="value" /> + 'px'
+    /// </summary>
+    public static StyleModifier LeftRightBottom(double value) 
+        => new(style => style.leftRightBottom = value.AsPixel());
 
 
 
