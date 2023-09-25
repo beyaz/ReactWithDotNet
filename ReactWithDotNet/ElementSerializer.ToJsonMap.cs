@@ -312,13 +312,11 @@ partial class ElementSerializer
 
                 reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
 
-                var getDerivedStateFromPropsMethodShouldInvoke = true;
+               
 
                 var state = stateProperty.GetValueFunc(reactStatefulComponent);
                 if (state == null)
                 {
-                    getDerivedStateFromPropsMethodShouldInvoke = false;
-
                     await reactStatefulComponent.InvokeConstructor();
 
                     if (reactStatefulComponent.IsStateNull)
@@ -350,6 +348,7 @@ partial class ElementSerializer
                         }
                     }
 
+                    var getDerivedStateFromPropsMethodShouldInvoke = true;
                     if (getDerivedStateFromPropsMethodShouldInvoke)
                     {
                         var stopwatch = new Stopwatch();
