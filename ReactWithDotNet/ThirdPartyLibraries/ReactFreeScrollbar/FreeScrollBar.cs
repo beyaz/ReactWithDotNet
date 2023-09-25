@@ -54,8 +54,8 @@ public sealed class FreeScrollBar : ThirdPartyReactComponent
     [ReactProp]
     public string tracksize { get; set; }
     
-    [ReactProp]
-    public string className { get; set; }
+    //[ReactProp]
+    //public string className { get; set; }
     
 
     /// <summary>

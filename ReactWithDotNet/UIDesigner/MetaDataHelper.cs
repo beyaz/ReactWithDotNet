@@ -89,6 +89,11 @@ static class MetadataHelper
                 label         = type.Name
             };
 
+            if (type.IsNested)
+            {
+                classNode.label = type.DeclaringType?.Name + "+" + classNode.label;
+            }
+
             VisitMethods(type, m =>
             {
                 if (!string.IsNullOrWhiteSpace(methodFilter))
