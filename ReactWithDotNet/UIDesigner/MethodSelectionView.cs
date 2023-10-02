@@ -43,11 +43,59 @@ class MethodSelectionView : ReactComponent
         }
 
         var nodes = MetadataHelper.GetMetadataNodes(AssemblyFilePath, classFilter,methodFilter).ToArray();
-
-        return SingleSelectionTree<MetadataNode>.FindNodeByKey(nodes, treeNodeKey);
+        
+        return FindTreeNode(nodes, x=>HasMatch(x,treeNodeKey));
     }
+    
+    static bool HasMatch(MetadataNode node, string treeNodeKey)
+    {
+        if (node.IsClass)
+        {
+            return node.TypeReference.FullName == treeNodeKey;
+        }
 
-   
+        if (node.IsMethod)
+        {
+            return node.MethodReference.MetadataToken.ToString() == treeNodeKey;
+        }
+
+        return false;
+    }
+    
+
+    static MetadataNode FindTreeNode(IEnumerable<MetadataNode> nodes, Func<MetadataNode, bool> hasMatch)
+    {
+        if (nodes == null)
+        {
+            return null;
+        }
+        
+        foreach (var childNode in nodes)
+        {
+            var found = FindTreeNode(childNode, hasMatch);
+            if (found is not null)
+            {
+                return found;
+            }
+        }
+        
+        return null;
+    }
+    static MetadataNode FindTreeNode(MetadataNode node, Func<MetadataNode,bool> hasMatch)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+
+        if (hasMatch(node))
+        {
+            return node;
+        }
+
+        return FindTreeNode(node.children, hasMatch);
+    }
+    
 
     protected override Element render()
     {
@@ -71,61 +119,76 @@ class MethodSelectionView : ReactComponent
                 }
             }
         }
-     
-        
-        var tree = new SingleSelectionTree<MetadataNode>
+
+        return new div(Height(400), MarginLeftRight(3),OverflowYScroll,CursorPointer, Border(Solid(1,"rgb(217, 217, 217)")), BorderRadius(3))
         {
-            nodeTemplate      = nodeTemplate,
-            value             = nodes,
-            onSelectionChange = OnSelectionChanged,
-            selectionKeys     = SelectedMethodTreeNodeKey,
-            style             = { PrimaryBackground },
+            AsTreeView(nodes)
         };
-
-     
-
-        return tree + Height(400)+ MarginLeftRight(3);
-        
     }
 
-    //Element AsTreeView(IReadOnlyList<MetadataNode> nodes)
-    //{
-    //    return new FlexColumn
-    //    {
-    //        nodes.Select(toItem)
-    //    };
-
-    //    Element toItem(MetadataNode node)
-    //    {
-    //        if (node.children?.Count > 0)
-    //        {
-    //            var parent = nodeTemplate(node);
-    //            var chldrn = AsTreeView(node.children);
-
-    //            return new Fragment
-    //            {
-    //                parent,
-    //                chldrn + MarginLeft(10)
-    //            };
-
-    //        }
-
-    //        return nodeTemplate(node);
-
-    //    }
-    //}
-    
-    
-
-    static Element nodeTemplate(MetadataNode node)
+    Element AsTreeView(IReadOnlyList<MetadataNode> nodes)
     {
+        return new Fragment
+        {
+            nodes.Select(toItem)
+        };
+
+        Element toItem(MetadataNode node)
+        {
+            if (node.children?.Count > 0)
+            {
+                var parent = nodeTemplate(node);
+                var chldrn = AsTreeView(node.children);
+
+                return new Fragment
+                {
+                    parent+OnClick(OnTreeItemClicked),
+                    chldrn
+                };
+
+            }
+
+            return nodeTemplate(node);
+        }
+    }
+
+    void OnTreeItemClicked(MouseEvent e)
+    {
+        DispatchEvent(() => SelectionChanged, e.FirstNotEmptyId);
+    }
+
+    Element nodeTemplate(MetadataNode node)
+    {
+
+        void arrangeBackground(HtmlElement el)
+        {
+            
+            el += new []
+            {
+                Hover(BackgroundImage(linear_gradient(90, "#d5d5c1", "whitesmoke")), BorderRadius(3)),
+                
+                When(HasMatch(node, SelectedMethodTreeNodeKey), new[]
+                {
+                    BackgroundImage(linear_gradient(90, "#d1d1c8", "whitesmoke")),
+                    BorderRadius(3)
+                })
+            };
+
+            el.onClick = OnTreeItemClicked;
+
+        }
+        
         if (node.IsMethod)
         {
             return new FlexRow(AlignItemsCenter)
             {
-                new img { Src(GetSvgUrl("Method")), wh(11), mt(5) },
+                new img { Src(GetSvgUrl("Method")), wh(11), mt(5),ml(20) },
 
-                new div { Text(node.label), MarginLeft(5), FontSize13 }
+                new div { Text(node.label), MarginLeft(5), FontSize13 },
+                
+                Id(node.MethodReference.MetadataToken),
+                
+                arrangeBackground
             };
         }
 
@@ -133,9 +196,12 @@ class MethodSelectionView : ReactComponent
         {
             return new FlexRow(AlignItemsCenter)
             {
-                new img { Src(GetSvgUrl("Class")), wh(14) },
+                new img { Src(GetSvgUrl("Class")), wh(14), ml(10) },
 
-                new div { Text(node.label), MarginLeft(5), FontSize13 }
+                new div { Text(node.label), MarginLeft(5), FontSize13 },
+                
+                Id(node.TypeReference.FullName),
+                arrangeBackground
             };
         }
 
@@ -145,7 +211,7 @@ class MethodSelectionView : ReactComponent
             {
                 new img { Src(GetSvgUrl("Namespace")), wh(14) },
 
-                new div { Text(node.label), MarginLeft(5), FontSize13 }
+                new div { Text(node.label), MarginLeft(5), FontSize13 },
             };
         }
 

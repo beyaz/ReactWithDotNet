@@ -16,9 +16,10 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
         Client.GotoMethod(700, Refresh);
 
         var fullAssemblyPath = state.SelectedAssemblyFilePath;
-        var fileInfo = new FileInfo(fullAssemblyPath);
-        if (fileInfo.Exists)
+     
+        if (File.Exists(fullAssemblyPath))
         {
+            var fileInfo = new FileInfo(fullAssemblyPath);
             if (LastWriteTime != fileInfo.LastWriteTime)
             {
                 Client.RunJavascript("window.parent.ReactWithDotNet.DispatchEvent('ComponentPreviewRefreshed',[])");

@@ -313,6 +313,13 @@ public abstract class HtmlElement : Element
 
         return element;
     }
+    
+    public static HtmlElement operator +(HtmlElement element, StyleModifier[] styleModifiers)
+    {
+        element.Apply(styleModifiers);
+
+        return element;
+    }
 
     public static HtmlElement operator +(HtmlElement htmlElement, HtmlElementModifier htmlElementModifier)
     {
@@ -344,6 +351,17 @@ public abstract class HtmlElement : Element
     {
         htmlElementModifier?.Process(this);
     }
+    
+    public void Add(Action<HtmlElement> modifyHtmlElement)
+    {
+        if (modifyHtmlElement == null)
+        {
+            return;
+        }
+        
+        modifyHtmlElement(this);
+    }
+    
 
     [SuppressMessage("ReSharper", "ParameterHidesMember")]
     public void Add(Style style)
