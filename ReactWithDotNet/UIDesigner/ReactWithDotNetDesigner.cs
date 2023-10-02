@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
-using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
-using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 using static ReactWithDotNet.UIDesigner.Extensions;
 using Slider = ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Slider;
 
