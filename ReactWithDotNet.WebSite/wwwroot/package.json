@@ -52,6 +52,8 @@
     "prismjs": "^1.29.0",
     "react-simple-code-editor": "^0.13.1",
 
-    "@monaco-editor/react": "^4.5.2"
+    "@monaco-editor/react": "^4.5.2",
+
+     "react-split": "^2.0.14"
   }
 }
