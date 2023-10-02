@@ -396,13 +396,21 @@ static partial class ElementSerializer
         if (propertyValue is Expression<Func<int>> ||
             propertyValue is Expression<Func<double>> ||
             propertyValue is Expression<Func<string>> ||
-            propertyValue is Expression<Func<bool>>)
+            propertyValue is Expression<Func<bool>>||
+            propertyValue is Expression<Func<InputValueBinder>>)
         {
             static object getTargetValueFromExpression(PropertyInfo pi, LambdaExpression lambdaExpression)
             {
                 var expression = lambdaExpression.Body;
                 while (true)
                 {
+                    if (expression is UnaryExpression unaryExpression)
+                    {
+                        expression = unaryExpression.Operand;
+
+                        continue;
+                    }
+                    
                     if (expression is MemberExpression memberExpression)
                     {
                         expression = memberExpression.Expression;
@@ -444,6 +452,11 @@ static partial class ElementSerializer
                 if (propertyValue is Expression<Func<double>> bindingExpressionAsDouble)
                 {
                     return bindingExpressionAsDouble.AsBindingPath();
+                }
+                
+                if (propertyValue is Expression<Func<InputValueBinder>> bindingExpressionAsInputValueBinder)
+                {
+                    return bindingExpressionAsInputValueBinder.AsBindingPath();
                 }
 
                 throw new NotImplementedException();

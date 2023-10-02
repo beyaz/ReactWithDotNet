@@ -72,6 +72,19 @@ public sealed class button : HtmlElement
     }
 }
 
+[Serializable]
+public sealed class InputValueBinder
+{
+    public static implicit operator InputValueBinder(string value)
+    {
+        return new InputValueBinder();
+    }
+    public static implicit operator InputValueBinder(double value)
+    {
+        return new InputValueBinder();
+    }
+}
+
 public sealed class input : HtmlElement
 {
     public input()
@@ -142,13 +155,7 @@ public sealed class input : HtmlElement
     [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
-    public Expression<Func<string>> valueBind { get; set; }
-    
-    
-    [ReactProp]
-    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
-    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
-    public Expression<Func<double>> valueBindAsNumber { get; set; }
+    public Expression<Func<InputValueBinder>> valueBind { get; set; }
 
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below<br />

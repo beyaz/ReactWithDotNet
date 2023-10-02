@@ -13,6 +13,13 @@ static class Extensions
 
         while (expression is not null)
         {
+            if (expression is UnaryExpression unaryExpression)
+            {
+                expression = unaryExpression.Operand;
+
+                continue;
+            }
+            
             if (expression is MemberExpression memberExpression)
             {
                 path.Add(memberExpression.Member.Name);

@@ -125,7 +125,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             {
                 Border("1px solid #d9d9d9"),
                 BorderRadius(4),
-                PaddingTop(15),
+                //PaddingTop(15),
                
                 new legend
                 {
@@ -137,10 +137,10 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     type                     = "range",
                     min                      =300,
                     max                      = 1600,
-                    valueBindAsNumber        = ()=>state.ScreenWidth,
+                    valueBind        = ()=>state.ScreenWidth,
                     valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnMediaSizeChanged,
-                    style = { Height(7), WidthMaximized}
+                    style = { Height(7), WidthMaximized, BorderRadius(38)}
                 },
                 //new Slider
                 //{
