@@ -81,7 +81,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             return new small(Text(text), Color("rgb(73 86 193)"), FontWeight600);
         }
 
-        var propertyPanel = new FlexColumn(PaddingLeftRight(5), Height("100%"), Width("100%"), FontSize15)
+        var propertyPanel = new FlexColumn(Height("100%"), Width("100%"), FontSize15)
         {
             new link { href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap", rel = "stylesheet" },
 
@@ -102,12 +102,13 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             {
                 createLabel("Filter by method name"),
 
-                new InputText
+                new input
                 {
+                    type                     ="text",
                     valueBind                = () => state.MethodFilter,
                     valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnFilterChanged,
-                    style                    = { FontSize12 }
+                    style                    = { FontSize12, Padding(8), Border(Solid(1,"#ced4da")), Focus(OutlineNone), BorderRadius(3), Color("#495057") }
                 }
             },
 
