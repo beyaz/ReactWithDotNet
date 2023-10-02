@@ -382,8 +382,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 { 
                     When(state.PropertyPanelIsClosed, PositionStatic),
                     
-                    new LoadingIcon()+Size(12,12),
-                    Top(5)
+                    new LoadingIcon()+Size(12,12)
                 }),
                 
                 new div
@@ -634,17 +633,15 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
     {
         protected override Element render()
         {
-            var name = GetType().FullName?.Replace(".","-");
-            
             return new div
             {
                 new style
                 {
                     """
-                    .loader {
+                    .loader-designer-react-with-dot-net {
                       border: 1px solid #f3f3f3;
                       border-radius: 50%;
-                      border-top: 1px solid #A08139;
+                      border-top: 1px solid #c3beb7;
                     
                       -webkit-animation: spin 1s linear infinite; /* Safari */
                       animation: spin 1s linear infinite;
@@ -663,7 +660,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     """
                 },
 
-                new div { className = "loader", style = { WidthHeightMaximized } }
+                new div { className = "loader-designer-react-with-dot-net", style = { WidthHeightMaximized } }
             };
         }
     }
