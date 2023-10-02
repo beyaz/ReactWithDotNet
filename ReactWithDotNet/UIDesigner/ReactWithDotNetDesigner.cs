@@ -382,7 +382,8 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 { 
                     When(state.PropertyPanelIsClosed, PositionStatic),
                     
-                    new LoadingIcon()+Size(12,12)
+                    new LoadingIcon()+Size(12,12),
+                    Top(5)
                 }),
                 
                 new div
@@ -633,33 +634,33 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
     {
         protected override Element render()
         {
+            var name = GetType().FullName?.Replace(".","-");
+            
             return new div
             {
                 new style
                 {
-                    text = @"
-
-.loader {
-  border: 1px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 1px solid #A08139;
-
-  -webkit-animation: spin 1s linear infinite; /* Safari */
-  animation: spin 1s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-"
+                    """
+                    .loader {
+                      border: 1px solid #f3f3f3;
+                      border-radius: 50%;
+                      border-top: 1px solid #A08139;
+                    
+                      -webkit-animation: spin 1s linear infinite; /* Safari */
+                      animation: spin 1s linear infinite;
+                    }
+                    
+                    /* Safari */
+                    @-webkit-keyframes spin {
+                      0% { -webkit-transform: rotate(0deg); }
+                      100% { -webkit-transform: rotate(360deg); }
+                    }
+                    
+                    @keyframes spin {
+                      0% { transform: rotate(0deg); }
+                      100% { transform: rotate(360deg); }
+                    }
+                    """
                 },
 
                 new div { className = "loader", style = { WidthHeightMaximized } }
