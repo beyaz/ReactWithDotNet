@@ -378,7 +378,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
         {
             new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
             {
-                When(UpdatingProgress is > 0 and <= 100,()=>new div(PositionAbsolute,Right(0))
+                When(UpdatingProgress is > 0 and <= 100,()=>new div(PositionAbsolute,TopRight(5))
                 { 
                     When(state.PropertyPanelIsClosed, PositionStatic),
                     
