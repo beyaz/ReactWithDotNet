@@ -84,9 +84,38 @@ class MethodSelectionView : ReactComponent
 
      
 
-        return tree + Height(200)+ MarginLeftRight(3);
+        return tree + Height(400)+ MarginLeftRight(3);
         
     }
+
+    //Element AsTreeView(IReadOnlyList<MetadataNode> nodes)
+    //{
+    //    return new FlexColumn
+    //    {
+    //        nodes.Select(toItem)
+    //    };
+
+    //    Element toItem(MetadataNode node)
+    //    {
+    //        if (node.children?.Count > 0)
+    //        {
+    //            var parent = nodeTemplate(node);
+    //            var chldrn = AsTreeView(node.children);
+
+    //            return new Fragment
+    //            {
+    //                parent,
+    //                chldrn + MarginLeft(10)
+    //            };
+
+    //        }
+
+    //        return nodeTemplate(node);
+
+    //    }
+    //}
+    
+    
 
     static Element nodeTemplate(MetadataNode node)
     {
@@ -94,7 +123,7 @@ class MethodSelectionView : ReactComponent
         {
             return new FlexRow(AlignItemsCenter)
             {
-                new img { Src(GetSvgUrl("Method")), wh(14), mt(5) },
+                new img { Src(GetSvgUrl("Method")), wh(11), mt(5) },
 
                 new div { Text(node.label), MarginLeft(5), FontSize13 }
             };
