@@ -2,7 +2,7 @@
 using static ReactWithDotNet.UIDesigner.Extensions;
 namespace ReactWithDotNet.UIDesigner;
 
-class MetadataNode : TreeNode
+class MetadataNode 
 {
     public bool IsClass { get; set; }
     public bool IsMethod { get; set; }
@@ -13,6 +13,8 @@ class MetadataNode : TreeNode
     public TypeReference TypeReference { get; set; }
 
     public List<MetadataNode> children { get; } = new();
+    
+    public string label { get; set; }
 }
 
 
@@ -101,24 +103,6 @@ class MethodSelectionView : ReactComponent
     {
         var nodes = GetNodes().ToList();
 
-        if (nodes.Count == 1)
-        {
-            foreach (var namespaceNode in nodes)
-            {
-                if (namespaceNode.children.Count <=2)
-                {
-                    namespaceNode.expanded = true;
-                }
-
-                foreach (var classNode in namespaceNode.children.Take(1))
-                {
-                    if (classNode.children.Count <= 2)
-                    {
-                        classNode.expanded = true;
-                    }
-                }
-            }
-        }
 
         return new div(Height(400), MarginLeftRight(3),OverflowYScroll,CursorPointer, Border(Solid(1,"rgb(217, 217, 217)")), BorderRadius(3))
         {
