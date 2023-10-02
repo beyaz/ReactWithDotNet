@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Newtonsoft.Json;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
-using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 using static ReactWithDotNet.UIDesigner.Extensions;
 using Slider = ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Slider;
 
@@ -383,17 +382,12 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                 { 
                     When(state.PropertyPanelIsClosed, PositionStatic),
                     
-                    new CircularProgress
-                    { 
-                        variant = "determinate",
-                        value   = UpdatingProgress,
-                        size    = 12
-                    }
+                    new LoadingIcon()+Size(12,12)
                 }),
                 
                 new div
                 { 
-                    (state.PropertyPanelIsClosed ? "→" : "←"),
+                    state.PropertyPanelIsClosed ? "→" : "←",
                     OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel: ClosePropertyPanel),
                     PositionAbsolute, 
                     TopRight(0), 
