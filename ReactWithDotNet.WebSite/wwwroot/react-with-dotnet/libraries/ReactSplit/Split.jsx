@@ -1,1 +1,3 @@
-export { Split as default } from 'react-split';
+import Split from 'react-split'
+
+export default Split;
