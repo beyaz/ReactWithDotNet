@@ -89,12 +89,13 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
             {
                 createLabel("Filter by class name"),
 
-                new InputText
+                new input
                 {
+                    type="text",
                     valueBind                = () => state.ClassFilter,
                     valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnFilterChanged,
-                    style                    = { FontSize12 }
+                    style                    = { FontSize12, Padding(8), Border(Solid(1,"#ced4da")), Focus(OutlineNone), BorderRadius(3), Color("#495057") }
                 }
             },
             new FlexColumn(MarginLeftRight(3), MarginTopBottom(3))
