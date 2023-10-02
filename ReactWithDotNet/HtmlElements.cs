@@ -143,6 +143,12 @@ public sealed class input : HtmlElement
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
     public Expression<Func<string>> valueBind { get; set; }
+    
+    
+    [ReactProp]
+    [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
+    [ReactTransformValueInClient("ReactWithDotNet::Core::ReplaceEmptyStringWhenIsNull")]
+    public Expression<Func<double>> valueBindAsNumber { get; set; }
 
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below<br />
@@ -159,6 +165,15 @@ public sealed class input : HtmlElement
     ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
     /// </summary>
     public int? valueBindDebounceTimeout { get; set; }
+
+    [ReactProp]
+    public int? max { get; set; }
+    
+    [ReactProp]
+    public int? min { get; set; }
+    
+    [ReactProp]
+    public int? step { get; set; }
 }
 
 public sealed class HtmlTextNode : HtmlElement;
