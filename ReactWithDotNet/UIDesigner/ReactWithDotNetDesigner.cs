@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
-using Slider = ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Slider;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -141,34 +140,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnMediaSizeChanged,
                     style = { Height(7), WidthMaximized, BorderRadius(38)}
-                },
-                //new Slider
-                //{
-                //    step = 10,
-                //    min=300,
-                //    max = 1600,
-                //    valueBind = ()=>state.ScreenWidth,
-                //    valueBindDebounceTimeout = 500,
-                //    valueBindDebounceHandler = OnMediaSizeChanged,
-                    
-                //    valueLabelDisplay = "on",
-                //    classes =
-                //    {
-                //        { "thumb", new Style
-                //        {
-                //           WidthHeight(21),
-                //           BackgroundWhite
-                //        }},
-                //        {"valueLabel",new Style {
-                            
-                //            FontSize12,
-                //            FontWeightNormal,
-                //            Top(-1),
-                //            BackgroundColor("unset"),
-                //            Color("#1976d2")
-                //        }}
-                //    }
-                //}
+                }
             },
 
             new FlexColumn(HeightMaximized)
