@@ -14,6 +14,44 @@ partial class Mixin
     {
         return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
     }
+    
+    /// <summary>
+    /// Automatically generates a css class then adds class name to element.
+    /// <br/>
+    /// css class will be automatically remove when component destroyed.
+    /// <br/>
+    /// Example:
+    /// <code>
+    /// arrowDown.WithClass(new Style
+    /// {
+    ///    Transform("rotate(-180deg)")
+    /// })
+    /// </code>
+    /// </summary>
+    public static TElement WithClass<TElement>(this TElement element, Style cssBody) where TElement : HtmlElement
+    {
+        (element.classNameList ??= new List<Style>()).Add(cssBody);
+
+        return element;
+    }
+    
+    /// <summary>
+    /// Automatically generates a css class then adds class name to element.
+    /// <br/>
+    /// css class will be automatically remove when component destroyed.
+    /// <br/>
+    /// Example:
+    /// <code>
+    /// arrowDown.WithClass(new []
+    /// {
+    ///    Transform("rotate(-180deg)")
+    /// })
+    /// </code>
+    /// </summary>
+    public static TElement WithClass<TElement>(this TElement element, StyleModifier[] styleModifiers) where TElement : HtmlElement
+    {
+        return element.WithClass(new Style(styleModifiers));
+    }
 }
 
 public abstract class HtmlElement : Element
@@ -255,6 +293,11 @@ public abstract class HtmlElement : Element
 
         className += " " + cssClassName;
     }
+    
+    
+
+    internal List<Style> classNameList;
+    
     
     protected static HtmlElementModifier Modify<THtmlElement>(Action<THtmlElement> modifyAction)
         where THtmlElement : HtmlElement

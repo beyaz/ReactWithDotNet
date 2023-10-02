@@ -923,6 +923,18 @@ partial class ElementSerializer
                 map.Add("style", valueExportInfo.Value);
             }
         }
+        
+        if (htmlElement.classNameList is not null)
+        {
+            foreach (var style in htmlElement.classNameList)
+            {
+                var response = ConvertStyleToCssClass(style, true, context.ComponentStack.PeekForComponentUniqueIdentifier(), context.DynamicStyles.GetClassName);
+                if (response.needToExport)
+                {
+                    htmlElement.AddClass(response.cssClassName);
+                }
+            }
+        }
 
         await AddReactAttributes(map.Add, htmlElement, context);
 
