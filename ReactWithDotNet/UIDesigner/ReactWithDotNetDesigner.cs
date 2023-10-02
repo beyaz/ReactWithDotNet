@@ -111,49 +111,6 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
                     style                    = { FontSize12, Padding(8), Border(Solid(1,"#ced4da")), Focus(OutlineNone), BorderRadius(3), Color("#495057") }
                 }
             },
-
-          
-            new style
-            {
-                
-                @"
-
-.cm-editor {
-  height: calc(100% - 10px);
-}
-.cm-theme-light {
-  height: calc(100% - 2px);
-  font-size: 12px;
-}
-
-.ͼ1.cm-editor.cm-focused {
-    outline: none;
-}
-
-/* left-side-key */
-.ͼ18{
-    color: #c0bcc8;
-    font-weight: bold;
-}
-
-
-/* string */
-.ͼ1b{
-    color: #f44336;
-    font-weight: bold;
-}
-/* number */
-.ͼ19 {
-    color: #141413;
-    font-weight: bold;
-}
-/* boolean */
-.ͼ1g {
-    color: #2c1aeb;
-    font-weight: bold;
-}
-"
-            },
             
             SpaceY(5),
             new MethodSelectionView
