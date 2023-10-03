@@ -1,7 +1,7 @@
-﻿namespace ReactWithDotNet.ThirdPartyLibraries.ReactSplit;
+﻿namespace ReactWithDotNet.ThirdPartyLibraries.ReactSplitPane;
 
 
-public sealed class Split : ThirdPartyReactComponent
+public sealed class SplitPane : ThirdPartyReactComponent
 {
 
     [ReactProp]
