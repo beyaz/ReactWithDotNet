@@ -18,3 +18,11 @@ public sealed class AutoComplete : ElementBase
     [ReactProp]
     public string placeholder { get; set; }
 }
+
+
+
+public sealed class Modal : ElementBase
+{
+    [ReactProp]
+    public bool? open  { get; set; }
+}
