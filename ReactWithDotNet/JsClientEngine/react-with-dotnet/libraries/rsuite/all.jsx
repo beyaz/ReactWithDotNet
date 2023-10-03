@@ -7,6 +7,8 @@ var isFirstAccess = true;
 
 const Prefix = "ReactWithDotNet.ThirdPartyLibraries.ReactSuite.";
 
+ReactWithDotNet.RegisterExternalJsObject(Prefix + "Modal", React.lazy(() => import('./Modal')));
+
 ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete", React.lazy(() => import('./AutoComplete')));
 ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete::OnChange", args => [args[0]]);
 
