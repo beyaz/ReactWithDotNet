@@ -25,4 +25,12 @@ public sealed class Modal : ElementBase
 {
     [ReactProp]
     public bool? open  { get; set; }
+    
+    [ReactProp]
+    public Action onClose { get; set; }
+    
+    
+    public sealed class Header : ElementBase;
+    
+    public sealed class Body : ElementBase;
 }
