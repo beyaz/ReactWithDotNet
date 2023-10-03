@@ -17,6 +17,9 @@ public class Autocomplete<TOption> : Autocomplete where TOption : class
 
     [ReactProp]
     public TOption value { get; set; }
+    
+    [ReactProp]
+    public bool? freeSolo { get; set; }
 
     internal static (bool needToExport, object value)
         GetPropertyValueForSerializeToClient(object component, string propertyName)
