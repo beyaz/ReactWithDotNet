@@ -1,1 +1,3 @@
-export { AutoComplete as default } from 'rsuite';
+import { AutoComplete } from 'rsuite';
+
+export default AutoComplete;
