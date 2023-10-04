@@ -1,1 +1,1 @@
-export { Modal as default } from 'rsuite';
+export { AutoComplete as default } from 'rsuite';
