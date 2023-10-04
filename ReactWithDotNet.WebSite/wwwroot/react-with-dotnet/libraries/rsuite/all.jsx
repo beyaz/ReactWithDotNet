@@ -2,19 +2,21 @@
 import React from 'react';
 import ReactWithDotNet from "../../react-with-dotnet";
 
+function RegisterReactSuiteComponent(name, cmp)
+{
+    const Prefix = "ReactWithDotNet.ThirdPartyLibraries.ReactSuite.";
+
+    ReactWithDotNet.RegisterExternalJsObject(Prefix + name, cmp);
+}
+
+RegisterReactSuiteComponent("AutoComplete", React.lazy(() => import('./AutoComplete')));
+RegisterReactSuiteComponent("AutoComplete::OnChange", args => [args[0]]);
+
+RegisterReactSuiteComponent("Modal", React.lazy(() => import('./Modal')));
+RegisterReactSuiteComponent("Modal+Header", React.lazy(() => import('./Modal.Header')));
+RegisterReactSuiteComponent("Modal+Body", React.lazy(() => import('./Modal.Body')));
 
 var isFirstAccess = true;
-
-const Prefix = "ReactWithDotNet.ThirdPartyLibraries.ReactSuite.";
-
-ReactWithDotNet.RegisterExternalJsObject(Prefix + "Modal", React.lazy(() => import('./Modal')));
-ReactWithDotNet.RegisterExternalJsObject(Prefix + "Modal+Header", React.lazy(() => import('./Modal.Header')));
-ReactWithDotNet.RegisterExternalJsObject(Prefix + "Modal+Body", React.lazy(() => import('./Modal.Body')));
-
-
-ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete", React.lazy(() => import('./AutoComplete')));
-ReactWithDotNet.RegisterExternalJsObject(Prefix + "AutoComplete::OnChange", args => [args[0]]);
-
 
 ReactWithDotNet.OnFindExternalObject(name =>
 {
