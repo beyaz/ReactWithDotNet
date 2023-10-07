@@ -109,6 +109,29 @@ public class ExportStyleProperties
         
         
         
+        ////////////////////////////////////////
+        // transfer
+        ////////////////////////////////////////
+        list.Add("");
+        list.Add($"{indent}static void transfer(Style source, Style target)");
+        list.Add($"{indent}{{");
+        
+        foreach (var name in propertyNames)
+        {
+            var propertyName = getPropertyName(name);
+            
+            list.Add($"{indent}{indent}if (source.{propertyName} != null)");
+            list.Add( $"{indent}{indent}{{");
+            list.Add($"{indent}{indent}{indent}target.{propertyName} = source.{propertyName};");
+            list.Add( $"{indent}{indent}}}");
+            
+        }
+        
+        list.Add($"{indent}}}");
+        ////////////////////////////////////////
+        
+        
+        
         
         list.Add("}");// end of class
 
