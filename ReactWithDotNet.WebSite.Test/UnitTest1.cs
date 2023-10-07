@@ -23,7 +23,7 @@ public class UnitTest1
                """,
 
                """
-               new a { target = "_blank", style = { color= "rgb(28, 32, 37)", borderRadius = "12px;"} }
+               new a { target = "_blank", style = { borderRadius = "12px", color = "rgb(28, 32, 37)" } }
                """);
     }
 

@@ -648,7 +648,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (attribute.Name == "style" && style is not null)
                 {
-                    return $"{{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value+"\""))} }}";
+                    return $"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value+"\""))} }}";
                 }
                     
                 return  $"{attribute.Name} = \"{attribute.Value}\"";
