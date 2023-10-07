@@ -20123,6 +20123,11 @@ partial class Mixin
     public static StyleModifier ScrollMarginTop(string value) => new(style => style.scrollMarginTop = value);
 
     /// <summary>
+    ///     style.scrollMarginTop = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginTop(double value) => new(style => style.scrollMarginTop = value.AsPixel());
+
+    /// <summary>
     ///     style.scrollPadding = <paramref name="value" />
     /// </summary>
     public static StyleModifier ScrollPadding(string value) => new(style => style.scrollPadding = value);

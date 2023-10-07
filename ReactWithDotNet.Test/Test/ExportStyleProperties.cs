@@ -208,7 +208,7 @@ public class ExportStyleProperties
             list.Add($"{indent}public static StyleModifier {getStyleModifierName(propertyName)}(string value) => new(style => style.{propertyName} = value);");
             list.Add("");
 
-            if (name == "borderImageOutset" || name == "borderImageWidth" || name == "fill" || name == "clipPath")
+            if (name == "borderImageOutset" || name == "borderImageWidth" || name == "fill" || name == "clipPath" || name == "scrollMarginTop")
             {
                 list.Add($"{indent}/// <summary>");
                 list.Add($"{indent}/// {indent}style.{propertyName} = <paramref name=\"value\" />");

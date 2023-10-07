@@ -2,6 +2,9 @@
 
 public sealed class svg : HtmlElement
 {
+    
+    [ReactProp]
+    public string focusable { get; set; }
     public svg()
     {
     }
@@ -87,6 +90,8 @@ public sealed class svg : HtmlElement
     ///     svg.viewBox = '<paramref name="minX" /> <paramref name="minY" /> <paramref name="width" /> <paramref name="height" />'
     /// </summary>
     public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) => ViewBox($"{minX} {minY} {width} {height}");
+
+    public static HtmlElementModifier Focusable(string value) => Modify<svg>(el => el.focusable = value);
 }
 
 partial class Mixin
