@@ -624,23 +624,24 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         string constructorPart = null;
 
-        
-        //string styleInstance = null;
-        
-        //var styleAttribute = htmlNode.Attributes["style"];
-        //if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
-        //{
-        //    var styleValue = string.Join("; ", Style.ParseCss(styleAttribute.Value).ToDictionary().Select((propertyName, propertyValue) =>
-        //    {
-        //        return propertyName + " = " + propertyValue;
-        //    }));
-        //    styleInstance = $"new Style {{ {styleValue} }}";
-                
-        //    htmlNode.Attributes.Remove("style");
-        //}
-        
-        
-        
+
+        Style style= null;
+
+        var styleAttribute = htmlNode.Attributes["style"];
+        if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
+        {
+            style = Style.ParseCss(styleAttribute.Value);
+            
+            htmlNode.Attributes.Remove("style");
+        }
+
+        string styleAsCode()
+        {
+            return $"new Style {{ {string.Join("; ", style.ToDictionary().Select((propertyName, propertyValue) => propertyName + " = " + propertyValue))} }}";
+        }
+
+
+
         var attributeMap = htmlNode.Attributes.ToMap();
 
         bool hasAttribute(string expectedAttributeName, string expectedValue)
