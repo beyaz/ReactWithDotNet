@@ -591,7 +591,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             sb.AppendLine(paddingAsString + line);
         }
 
-        return sb.ToString();
+        return sb.ToString().Trim();
     }
 
     static List<string> ToCSharpCode(HtmlNode htmlNode)
@@ -641,7 +641,30 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return $"new Style {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value+"\""))} }}";
         }
 
-
+        if (htmlNode.ChildNodes.Count == 0)
+        {
+            
+            string attributeToString(HtmlAttribute attribute)
+            {
+                if (attribute.Name == "style" && style is not null)
+                {
+                    return $"{{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value+"\""))} }}";
+                }
+                    
+                return  $"{attribute.Name} = \"{attribute.Value}\"";
+            }
+            
+            if (style is not null)
+            {
+                htmlNode.Attributes.Add("style", "");
+            }
+            
+            return new List<string>
+            {
+                // one line
+                $"new {htmlNodeName} {{ {string.Join(", ", htmlNode.Attributes.Select(attributeToString))} }}"
+            };
+        }
 
 
         var attributeMap = htmlNode.Attributes.ToMap();
@@ -762,6 +785,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (htmlNode.ChildNodes.Count == 0)
             {
+                
+                
                 if (htmlNode.Name == "link" || htmlNode.Name == "path")
                 {
                     return new List<string>
