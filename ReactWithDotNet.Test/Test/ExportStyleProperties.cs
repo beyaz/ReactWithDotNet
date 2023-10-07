@@ -12,6 +12,8 @@ public class ExportStyleProperties
     {
         var propertyNames = GetPropertyNamesOfStyleClass();
 
+        var rezervedWords = new [] { "float" };
+        
         var list = new List<string>
         {
             "namespace ReactWithDotNet;",
@@ -22,7 +24,13 @@ public class ExportStyleProperties
 
         foreach (var propertyName in propertyNames)
         {
-            list.Add($"    public string {propertyName} {{ get; set; }}");
+            var prefix = "";
+            
+            if (rezervedWords.Contains(propertyName))
+            {
+                prefix = "@";
+            }
+            list.Add($"    public string {prefix}{propertyName} {{ get; set; }}");
         }
         
         list.Add("}");
@@ -441,6 +449,7 @@ public class ExportStyleProperties
                             textAlign
                             textAlignLast
                             textAnchor
+                            textCombineHorizontal
                             textCombineUpright
                             textDecoration
                             textDecorationColor
@@ -654,6 +663,22 @@ public class ExportStyleProperties
                             zIndex
                             zoom
                             mozOsxFontSmoothing
+                            boxDecorationBreak
+                            cssFloat
+                            cssText
+                            fontLanguageOverride
+                            fontSizeAdjust
+                            gridAutoPosition
+                            icon
+                            imageResolution
+                            imeMode
+                            marks
+                            navDown
+                            navIndex
+                            navLeft
+                            navRight
+                            navUp
+                            overflowClipBox
                             """;
         
         
