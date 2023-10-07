@@ -596,6 +596,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static List<string> ToCSharpCode(HtmlNode htmlNode)
     {
+        
         var htmlNodeName = htmlNode.OriginalName;
         if (htmlNodeName == "clippath")
         {
@@ -637,8 +638,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         string styleAsCode()
         {
-            return $"new Style {{ {string.Join("; ", style.ToDictionary().Select((propertyName, propertyValue) => propertyName + " = " + propertyValue))} }}";
+            return $"new Style {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value+"\""))} }}";
         }
+
 
 
 
@@ -659,7 +661,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             attributeMap.Remove("xmlns");
         }
 
-        if (attributeMap.Count > 0)
+        if (attributeMap.Count > 0 || style is not null)
         {
             ApplyShortHands(attributeMap);
 
@@ -732,6 +734,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
 
+            if (style is not null)
+            {
+                attributeMap.Add("*style*", styleAsCode());
+            }
             constructorPart = $"({string.Join(", ", attributeMap.Select(p => ToModifier(p.Key, p.Value)))})";
         }
 
@@ -892,6 +898,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static string ToModifier(string name, string value)
     {
+        if (name =="*style*")
+        {
+            return value;
+        }
         if (char.IsUpper(name[0]) && string.IsNullOrEmpty(value))
         {
             return name;
