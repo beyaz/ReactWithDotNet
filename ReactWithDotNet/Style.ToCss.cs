@@ -82,6 +82,8 @@ partial class Style
         var sb = new StringBuilder();
 
         var separator = isImportant ? " !important;" : ";";
+        
+        toCss(this, sb, separator);
 
         if (alignContent != null)
         {
