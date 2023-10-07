@@ -24,6 +24,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             htmlAttributeCollection.Remove(htmlAttribute);
         }
     }
+    
+    static void Insert(this HtmlAttributeCollection htmlAttributeCollection, int index, string name, string value)
+    {
+        htmlAttributeCollection.Add(name, value);
+
+        var attribute = htmlAttributeCollection[name];
+        
+        htmlAttributeCollection.Remove(attribute);
+        
+        htmlAttributeCollection.Insert(index, attribute);
+    }
+    
     public static string HtmlToCSharp(string htmlRootNode)
     {
         if (string.IsNullOrWhiteSpace(htmlRootNode))
@@ -704,7 +716,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (htmlNode.Attributes.Any() || modifiers.Any())
                 {
-                    htmlNode.Attributes.Add("text",htmlNode.ChildNodes[0].InnerText);
+                    htmlNode.Attributes.Insert(0,"text",htmlNode.ChildNodes[0].InnerText);
                     htmlNode.ChildNodes.RemoveAt(0);
                 }
             }
