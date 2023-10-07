@@ -2,6 +2,11 @@
 
 namespace ReactWithDotNet;
 
+/// <summary>
+/// PureComponent is similar to Component but it skips re-renders for same props and state.
+/// <br/>
+/// https://react.dev/reference/react/PureComponent
+/// </summary>
 public abstract class PureComponent : Element
 {
     internal Func<Element> DesignerCustomizedRender;
