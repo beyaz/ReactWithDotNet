@@ -44,21 +44,21 @@ public class ExportStyleProperties
         
         
         list.Add("");
-        list.Add("static bool IsEmpty(Style s)");
-        list.Add("{");
+        list.Add($"{indent}static bool IsEmpty(Style s)");
+        list.Add($"{indent}{{");
         
         foreach (var name in propertyNames)
         {
             var propertyName = getPropertyName(name);
             
-            list.Add($"{indent}if ({propertyName} == null)");
-            list.Add( $"{indent}{{");
-            list.Add($"{indent}{indent}return false;");
-            list.Add( $"{indent}");
+            list.Add($"{indent}{indent}if (s.{propertyName} == null)");
+            list.Add( $"{indent}{indent}{{");
+            list.Add($"{indent}{indent}{indent}return false;");
+            list.Add( $"{indent}{indent}");
             
         }
         
-        list.Add($"{indent}return true;");
+        list.Add($"{indent}{indent}return true;");
         list.Add("}");
 
         var sb = new StringBuilder();
