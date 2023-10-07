@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Text;
-using System.Xml;
 using HtmlAgilityPack;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
@@ -70,19 +69,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         return data;
     }
-    
-    /// <summary>
-    ///     Removes value from start of str
-    /// </summary>
-     static string RemoveFromStart(this string data, string value)
-    {
-        return RemoveFromStart(data, value, StringComparison.OrdinalIgnoreCase);
-    }
 
     /// <summary>
     ///     Removes value from start of str
     /// </summary>
-     static string RemoveFromStart(this string data, string value, StringComparison comparison)
+     static string RemoveFromStart(this string data, string value, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
     {
         if (data == null)
         {
@@ -97,41 +88,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return data;
     }
 
-    static void ApplyShortHands(Dictionary<string, string> attributeMap)
-    {
-        
-        targetBlank();
-
-   
-
-     
-        
-        
-
-        
-
-        
-
-
-        
-
-       
-
-        
-        
-        void targetBlank()
-        {
-            if (attributeMap.TryGetValue("target", out var target))
-            {
-                if (target == "_blank")
-                {
-                    attributeMap.Remove("target");
-
-                    attributeMap.Add("TargetBlank", "");
-                }
-            }
-        }
-    }
+    
 
     static string CamelCase(string str)
     {
@@ -420,7 +377,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         
                         if (string.IsNullOrWhiteSpace(xStyle) is false&&
                             string.IsNullOrWhiteSpace(xWidth) is false&&
-                            string.IsNullOrWhiteSpace(xColor) is true)
+                            string.IsNullOrWhiteSpace(xColor))
                         {
                             style[prefix] = $"{xWidth} {xStyle}";
 
@@ -594,29 +551,27 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
 
 
-        foreach (var htmlNodeAttribute in htmlNode.Attributes)
+        foreach (var htmlAttribute in htmlNode.Attributes)
         {
-            FixAttributeName(htmlNodeAttribute);
+            FixAttributeName(htmlAttribute);
         }
         
-        var attributeMap = htmlNode.Attributes.ToMap();
-
-       
-
-       
-
-        if (attributeMap.Count > 0 || style is not null)
+        
+        
+        
+        foreach (var htmlAttribute in htmlNode.Attributes)
         {
-            ApplyShortHands(attributeMap);
-
-          
-
-            if (style is not null)
-            {
-                attributeMap.Add("*style*", styleAsCode());
-            }
-            constructorPart = $"({string.Join(", ", attributeMap.Select(p => ToModifier(p.Key, p.Value)))})";
+            modifiers.Add(ToModifier(htmlAttribute));
         }
+
+        if (style is not null)
+        {
+            modifiers.Add(styleAsCode());
+        }
+        
+       
+
+       
 
         
 
@@ -680,71 +635,26 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     
 
-    static string ToModifier(string name, string value)
+    static string ToModifier(HtmlAttribute htmlAttribute)
     {
-        if (name =="*style*")
+       
+        
+        if (htmlAttribute.Name == "target" && htmlAttribute.Value == "_blank")
         {
-            return value;
+            return "TargetBlank";
         }
-        if (char.IsUpper(name[0]) && string.IsNullOrEmpty(value))
-        {
-            return name;
-        }
+        
 
-        if (name == "flex" && value.Split(' ').Length == 3)
-        {
-            return $"Flex({string.Join(", ", value.Split(' '))})";
-        }
+        
 
-        if (value.EndsWith("px"))
-        {
-            if ("LineHeight FontSize".Split(' ').Any(x => x == CamelCase(name)))
-            {
-                if (int.TryParse(value.RemoveFromEnd("px"), out var valueAsNumber) && valueAsNumber <= 40)
-                {
-                    return $"{CamelCase(name)}{valueAsNumber}";
-                }
-            }
-
-            return $"{CamelCase(name)}({value.RemoveFromEnd("px")})";
-        }
-
-        if (value.EndsWith("%") || value.StartsWith("#") || value.Contains(' ') || value.Contains('/') || name == "background")
-        {
-            if ("Width Height".Split(' ').Any(x => x == CamelCase(name)))
-            {
-                if (int.TryParse(value.RemoveFromEnd("%"), out var valueAsNumber) && valueAsNumber == 100)
-                {
-                    return $"{CamelCase(name)}Maximized";
-                }
-            }
-
-            return $"{CamelCase(name)}(\"{value}\")";
-        }
-
-        if (decimal.TryParse(value, out var valueAsNumeric))
-        {
-            if ("FontWeight LineHeight".Split(' ').Any(x => x == CamelCase(name)))
-            {
-                return $"{CamelCase(name)}{CamelCase(value)}";
-            }
-
-            return $"{CamelCase(name)}({valueAsNumeric})";
-        }
-
-        if ("Id ClassName Alt Src Href".Split(' ').Any(x => x == CamelCase(name)))
-        {
-            return $"{CamelCase(name)}(\"{CamelCase(value)}\")";
-        }
-
-        var modifierFullName = $"{CamelCase(name)}{CamelCase(value)}";
+        var modifierFullName = $"{CamelCase(htmlAttribute.Name)}{CamelCase(htmlAttribute.Value)}";
 
         if (typeof(Mixin).GetProperty(modifierFullName) is not null)
         {
             return modifierFullName;
         }
 
-        return $"{CamelCase(name)}(\"{CamelCase(value)}\")";
+        return $"{CamelCase(htmlAttribute.Name)}(\"{htmlAttribute.Value}\")";
     }
 
 
