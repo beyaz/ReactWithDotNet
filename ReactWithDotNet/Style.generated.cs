@@ -11379,4 +11379,2532 @@ partial class Style
             target.overflowClipBox = source.overflowClipBox;
         }
     }
+
+    static void visitNotNullValues(Style s, Action<string, string> action)
+    {
+        if (s.accentColor != null)
+        {
+            action(nameof(accentColor), s.accentColor);
+        }
+        if (s.additiveSymbols != null)
+        {
+            action(nameof(additiveSymbols), s.additiveSymbols);
+        }
+        if (s.alignContent != null)
+        {
+            action(nameof(alignContent), s.alignContent);
+        }
+        if (s.alignItems != null)
+        {
+            action(nameof(alignItems), s.alignItems);
+        }
+        if (s.alignSelf != null)
+        {
+            action(nameof(alignSelf), s.alignSelf);
+        }
+        if (s.alignmentBaseline != null)
+        {
+            action(nameof(alignmentBaseline), s.alignmentBaseline);
+        }
+        if (s.all != null)
+        {
+            action(nameof(all), s.all);
+        }
+        if (s.animation != null)
+        {
+            action(nameof(animation), s.animation);
+        }
+        if (s.animationComposition != null)
+        {
+            action(nameof(animationComposition), s.animationComposition);
+        }
+        if (s.animationDelay != null)
+        {
+            action(nameof(animationDelay), s.animationDelay);
+        }
+        if (s.animationDirection != null)
+        {
+            action(nameof(animationDirection), s.animationDirection);
+        }
+        if (s.animationDuration != null)
+        {
+            action(nameof(animationDuration), s.animationDuration);
+        }
+        if (s.animationFillMode != null)
+        {
+            action(nameof(animationFillMode), s.animationFillMode);
+        }
+        if (s.animationIterationCount != null)
+        {
+            action(nameof(animationIterationCount), s.animationIterationCount);
+        }
+        if (s.animationName != null)
+        {
+            action(nameof(animationName), s.animationName);
+        }
+        if (s.animationPlayState != null)
+        {
+            action(nameof(animationPlayState), s.animationPlayState);
+        }
+        if (s.animationRange != null)
+        {
+            action(nameof(animationRange), s.animationRange);
+        }
+        if (s.animationRangeEnd != null)
+        {
+            action(nameof(animationRangeEnd), s.animationRangeEnd);
+        }
+        if (s.animationRangeStart != null)
+        {
+            action(nameof(animationRangeStart), s.animationRangeStart);
+        }
+        if (s.animationTimeline != null)
+        {
+            action(nameof(animationTimeline), s.animationTimeline);
+        }
+        if (s.animationTimingFunction != null)
+        {
+            action(nameof(animationTimingFunction), s.animationTimingFunction);
+        }
+        if (s.appRegion != null)
+        {
+            action(nameof(appRegion), s.appRegion);
+        }
+        if (s.appearance != null)
+        {
+            action(nameof(appearance), s.appearance);
+        }
+        if (s.ascentOverride != null)
+        {
+            action(nameof(ascentOverride), s.ascentOverride);
+        }
+        if (s.aspectRatio != null)
+        {
+            action(nameof(aspectRatio), s.aspectRatio);
+        }
+        if (s.backdropFilter != null)
+        {
+            action(nameof(backdropFilter), s.backdropFilter);
+        }
+        if (s.backfaceVisibility != null)
+        {
+            action(nameof(backfaceVisibility), s.backfaceVisibility);
+        }
+        if (s.background != null)
+        {
+            action(nameof(background), s.background);
+        }
+        if (s.backgroundAttachment != null)
+        {
+            action(nameof(backgroundAttachment), s.backgroundAttachment);
+        }
+        if (s.backgroundBlendMode != null)
+        {
+            action(nameof(backgroundBlendMode), s.backgroundBlendMode);
+        }
+        if (s.backgroundClip != null)
+        {
+            action(nameof(backgroundClip), s.backgroundClip);
+        }
+        if (s.backgroundColor != null)
+        {
+            action(nameof(backgroundColor), s.backgroundColor);
+        }
+        if (s.backgroundImage != null)
+        {
+            action(nameof(backgroundImage), s.backgroundImage);
+        }
+        if (s.backgroundOrigin != null)
+        {
+            action(nameof(backgroundOrigin), s.backgroundOrigin);
+        }
+        if (s.backgroundPosition != null)
+        {
+            action(nameof(backgroundPosition), s.backgroundPosition);
+        }
+        if (s.backgroundPositionX != null)
+        {
+            action(nameof(backgroundPositionX), s.backgroundPositionX);
+        }
+        if (s.backgroundPositionY != null)
+        {
+            action(nameof(backgroundPositionY), s.backgroundPositionY);
+        }
+        if (s.backgroundRepeat != null)
+        {
+            action(nameof(backgroundRepeat), s.backgroundRepeat);
+        }
+        if (s.backgroundRepeatX != null)
+        {
+            action(nameof(backgroundRepeatX), s.backgroundRepeatX);
+        }
+        if (s.backgroundRepeatY != null)
+        {
+            action(nameof(backgroundRepeatY), s.backgroundRepeatY);
+        }
+        if (s.backgroundSize != null)
+        {
+            action(nameof(backgroundSize), s.backgroundSize);
+        }
+        if (s.basePalette != null)
+        {
+            action(nameof(basePalette), s.basePalette);
+        }
+        if (s.baselineShift != null)
+        {
+            action(nameof(baselineShift), s.baselineShift);
+        }
+        if (s.baselineSource != null)
+        {
+            action(nameof(baselineSource), s.baselineSource);
+        }
+        if (s.blockSize != null)
+        {
+            action(nameof(blockSize), s.blockSize);
+        }
+        if (s.border != null)
+        {
+            action(nameof(border), s.border);
+        }
+        if (s.borderBlock != null)
+        {
+            action(nameof(borderBlock), s.borderBlock);
+        }
+        if (s.borderBlockColor != null)
+        {
+            action(nameof(borderBlockColor), s.borderBlockColor);
+        }
+        if (s.borderBlockEnd != null)
+        {
+            action(nameof(borderBlockEnd), s.borderBlockEnd);
+        }
+        if (s.borderBlockEndColor != null)
+        {
+            action(nameof(borderBlockEndColor), s.borderBlockEndColor);
+        }
+        if (s.borderBlockEndStyle != null)
+        {
+            action(nameof(borderBlockEndStyle), s.borderBlockEndStyle);
+        }
+        if (s.borderBlockEndWidth != null)
+        {
+            action(nameof(borderBlockEndWidth), s.borderBlockEndWidth);
+        }
+        if (s.borderBlockStart != null)
+        {
+            action(nameof(borderBlockStart), s.borderBlockStart);
+        }
+        if (s.borderBlockStartColor != null)
+        {
+            action(nameof(borderBlockStartColor), s.borderBlockStartColor);
+        }
+        if (s.borderBlockStartStyle != null)
+        {
+            action(nameof(borderBlockStartStyle), s.borderBlockStartStyle);
+        }
+        if (s.borderBlockStartWidth != null)
+        {
+            action(nameof(borderBlockStartWidth), s.borderBlockStartWidth);
+        }
+        if (s.borderBlockStyle != null)
+        {
+            action(nameof(borderBlockStyle), s.borderBlockStyle);
+        }
+        if (s.borderBlockWidth != null)
+        {
+            action(nameof(borderBlockWidth), s.borderBlockWidth);
+        }
+        if (s.borderBottom != null)
+        {
+            action(nameof(borderBottom), s.borderBottom);
+        }
+        if (s.borderBottomColor != null)
+        {
+            action(nameof(borderBottomColor), s.borderBottomColor);
+        }
+        if (s.borderBottomLeftRadius != null)
+        {
+            action(nameof(borderBottomLeftRadius), s.borderBottomLeftRadius);
+        }
+        if (s.borderBottomRightRadius != null)
+        {
+            action(nameof(borderBottomRightRadius), s.borderBottomRightRadius);
+        }
+        if (s.borderBottomStyle != null)
+        {
+            action(nameof(borderBottomStyle), s.borderBottomStyle);
+        }
+        if (s.borderBottomWidth != null)
+        {
+            action(nameof(borderBottomWidth), s.borderBottomWidth);
+        }
+        if (s.borderCollapse != null)
+        {
+            action(nameof(borderCollapse), s.borderCollapse);
+        }
+        if (s.borderColor != null)
+        {
+            action(nameof(borderColor), s.borderColor);
+        }
+        if (s.borderEndEndRadius != null)
+        {
+            action(nameof(borderEndEndRadius), s.borderEndEndRadius);
+        }
+        if (s.borderEndStartRadius != null)
+        {
+            action(nameof(borderEndStartRadius), s.borderEndStartRadius);
+        }
+        if (s.borderImage != null)
+        {
+            action(nameof(borderImage), s.borderImage);
+        }
+        if (s.borderImageOutset != null)
+        {
+            action(nameof(borderImageOutset), s.borderImageOutset);
+        }
+        if (s.borderImageRepeat != null)
+        {
+            action(nameof(borderImageRepeat), s.borderImageRepeat);
+        }
+        if (s.borderImageSlice != null)
+        {
+            action(nameof(borderImageSlice), s.borderImageSlice);
+        }
+        if (s.borderImageSource != null)
+        {
+            action(nameof(borderImageSource), s.borderImageSource);
+        }
+        if (s.borderImageWidth != null)
+        {
+            action(nameof(borderImageWidth), s.borderImageWidth);
+        }
+        if (s.borderInline != null)
+        {
+            action(nameof(borderInline), s.borderInline);
+        }
+        if (s.borderInlineColor != null)
+        {
+            action(nameof(borderInlineColor), s.borderInlineColor);
+        }
+        if (s.borderInlineEnd != null)
+        {
+            action(nameof(borderInlineEnd), s.borderInlineEnd);
+        }
+        if (s.borderInlineEndColor != null)
+        {
+            action(nameof(borderInlineEndColor), s.borderInlineEndColor);
+        }
+        if (s.borderInlineEndStyle != null)
+        {
+            action(nameof(borderInlineEndStyle), s.borderInlineEndStyle);
+        }
+        if (s.borderInlineEndWidth != null)
+        {
+            action(nameof(borderInlineEndWidth), s.borderInlineEndWidth);
+        }
+        if (s.borderInlineStart != null)
+        {
+            action(nameof(borderInlineStart), s.borderInlineStart);
+        }
+        if (s.borderInlineStartColor != null)
+        {
+            action(nameof(borderInlineStartColor), s.borderInlineStartColor);
+        }
+        if (s.borderInlineStartStyle != null)
+        {
+            action(nameof(borderInlineStartStyle), s.borderInlineStartStyle);
+        }
+        if (s.borderInlineStartWidth != null)
+        {
+            action(nameof(borderInlineStartWidth), s.borderInlineStartWidth);
+        }
+        if (s.borderInlineStyle != null)
+        {
+            action(nameof(borderInlineStyle), s.borderInlineStyle);
+        }
+        if (s.borderInlineWidth != null)
+        {
+            action(nameof(borderInlineWidth), s.borderInlineWidth);
+        }
+        if (s.borderLeft != null)
+        {
+            action(nameof(borderLeft), s.borderLeft);
+        }
+        if (s.borderLeftColor != null)
+        {
+            action(nameof(borderLeftColor), s.borderLeftColor);
+        }
+        if (s.borderLeftStyle != null)
+        {
+            action(nameof(borderLeftStyle), s.borderLeftStyle);
+        }
+        if (s.borderLeftWidth != null)
+        {
+            action(nameof(borderLeftWidth), s.borderLeftWidth);
+        }
+        if (s.borderRadius != null)
+        {
+            action(nameof(borderRadius), s.borderRadius);
+        }
+        if (s.borderRight != null)
+        {
+            action(nameof(borderRight), s.borderRight);
+        }
+        if (s.borderRightColor != null)
+        {
+            action(nameof(borderRightColor), s.borderRightColor);
+        }
+        if (s.borderRightStyle != null)
+        {
+            action(nameof(borderRightStyle), s.borderRightStyle);
+        }
+        if (s.borderRightWidth != null)
+        {
+            action(nameof(borderRightWidth), s.borderRightWidth);
+        }
+        if (s.borderSpacing != null)
+        {
+            action(nameof(borderSpacing), s.borderSpacing);
+        }
+        if (s.borderStartEndRadius != null)
+        {
+            action(nameof(borderStartEndRadius), s.borderStartEndRadius);
+        }
+        if (s.borderStartStartRadius != null)
+        {
+            action(nameof(borderStartStartRadius), s.borderStartStartRadius);
+        }
+        if (s.borderStyle != null)
+        {
+            action(nameof(borderStyle), s.borderStyle);
+        }
+        if (s.borderTop != null)
+        {
+            action(nameof(borderTop), s.borderTop);
+        }
+        if (s.borderTopColor != null)
+        {
+            action(nameof(borderTopColor), s.borderTopColor);
+        }
+        if (s.borderTopLeftRadius != null)
+        {
+            action(nameof(borderTopLeftRadius), s.borderTopLeftRadius);
+        }
+        if (s.borderTopRightRadius != null)
+        {
+            action(nameof(borderTopRightRadius), s.borderTopRightRadius);
+        }
+        if (s.borderTopStyle != null)
+        {
+            action(nameof(borderTopStyle), s.borderTopStyle);
+        }
+        if (s.borderTopWidth != null)
+        {
+            action(nameof(borderTopWidth), s.borderTopWidth);
+        }
+        if (s.borderWidth != null)
+        {
+            action(nameof(borderWidth), s.borderWidth);
+        }
+        if (s.bottom != null)
+        {
+            action(nameof(bottom), s.bottom);
+        }
+        if (s.boxShadow != null)
+        {
+            action(nameof(boxShadow), s.boxShadow);
+        }
+        if (s.boxSizing != null)
+        {
+            action(nameof(boxSizing), s.boxSizing);
+        }
+        if (s.breakAfter != null)
+        {
+            action(nameof(breakAfter), s.breakAfter);
+        }
+        if (s.breakBefore != null)
+        {
+            action(nameof(breakBefore), s.breakBefore);
+        }
+        if (s.breakInside != null)
+        {
+            action(nameof(breakInside), s.breakInside);
+        }
+        if (s.bufferedRendering != null)
+        {
+            action(nameof(bufferedRendering), s.bufferedRendering);
+        }
+        if (s.captionSide != null)
+        {
+            action(nameof(captionSide), s.captionSide);
+        }
+        if (s.caretColor != null)
+        {
+            action(nameof(caretColor), s.caretColor);
+        }
+        if (s.clear != null)
+        {
+            action(nameof(clear), s.clear);
+        }
+        if (s.clip != null)
+        {
+            action(nameof(clip), s.clip);
+        }
+        if (s.clipPath != null)
+        {
+            action(nameof(clipPath), s.clipPath);
+        }
+        if (s.clipRule != null)
+        {
+            action(nameof(clipRule), s.clipRule);
+        }
+        if (s.color != null)
+        {
+            action(nameof(color), s.color);
+        }
+        if (s.colorInterpolation != null)
+        {
+            action(nameof(colorInterpolation), s.colorInterpolation);
+        }
+        if (s.colorInterpolationFilters != null)
+        {
+            action(nameof(colorInterpolationFilters), s.colorInterpolationFilters);
+        }
+        if (s.colorRendering != null)
+        {
+            action(nameof(colorRendering), s.colorRendering);
+        }
+        if (s.colorScheme != null)
+        {
+            action(nameof(colorScheme), s.colorScheme);
+        }
+        if (s.columnCount != null)
+        {
+            action(nameof(columnCount), s.columnCount);
+        }
+        if (s.columnFill != null)
+        {
+            action(nameof(columnFill), s.columnFill);
+        }
+        if (s.columnGap != null)
+        {
+            action(nameof(columnGap), s.columnGap);
+        }
+        if (s.columnRule != null)
+        {
+            action(nameof(columnRule), s.columnRule);
+        }
+        if (s.columnRuleColor != null)
+        {
+            action(nameof(columnRuleColor), s.columnRuleColor);
+        }
+        if (s.columnRuleStyle != null)
+        {
+            action(nameof(columnRuleStyle), s.columnRuleStyle);
+        }
+        if (s.columnRuleWidth != null)
+        {
+            action(nameof(columnRuleWidth), s.columnRuleWidth);
+        }
+        if (s.columnSpan != null)
+        {
+            action(nameof(columnSpan), s.columnSpan);
+        }
+        if (s.columnWidth != null)
+        {
+            action(nameof(columnWidth), s.columnWidth);
+        }
+        if (s.columns != null)
+        {
+            action(nameof(columns), s.columns);
+        }
+        if (s.contain != null)
+        {
+            action(nameof(contain), s.contain);
+        }
+        if (s.containIntrinsicBlockSize != null)
+        {
+            action(nameof(containIntrinsicBlockSize), s.containIntrinsicBlockSize);
+        }
+        if (s.containIntrinsicHeight != null)
+        {
+            action(nameof(containIntrinsicHeight), s.containIntrinsicHeight);
+        }
+        if (s.containIntrinsicInlineSize != null)
+        {
+            action(nameof(containIntrinsicInlineSize), s.containIntrinsicInlineSize);
+        }
+        if (s.containIntrinsicSize != null)
+        {
+            action(nameof(containIntrinsicSize), s.containIntrinsicSize);
+        }
+        if (s.containIntrinsicWidth != null)
+        {
+            action(nameof(containIntrinsicWidth), s.containIntrinsicWidth);
+        }
+        if (s.container != null)
+        {
+            action(nameof(container), s.container);
+        }
+        if (s.containerName != null)
+        {
+            action(nameof(containerName), s.containerName);
+        }
+        if (s.containerType != null)
+        {
+            action(nameof(containerType), s.containerType);
+        }
+        if (s.content != null)
+        {
+            action(nameof(content), s.content);
+        }
+        if (s.contentVisibility != null)
+        {
+            action(nameof(contentVisibility), s.contentVisibility);
+        }
+        if (s.counterIncrement != null)
+        {
+            action(nameof(counterIncrement), s.counterIncrement);
+        }
+        if (s.counterReset != null)
+        {
+            action(nameof(counterReset), s.counterReset);
+        }
+        if (s.counterSet != null)
+        {
+            action(nameof(counterSet), s.counterSet);
+        }
+        if (s.cursor != null)
+        {
+            action(nameof(cursor), s.cursor);
+        }
+        if (s.cx != null)
+        {
+            action(nameof(cx), s.cx);
+        }
+        if (s.cy != null)
+        {
+            action(nameof(cy), s.cy);
+        }
+        if (s.d != null)
+        {
+            action(nameof(d), s.d);
+        }
+        if (s.descentOverride != null)
+        {
+            action(nameof(descentOverride), s.descentOverride);
+        }
+        if (s.direction != null)
+        {
+            action(nameof(direction), s.direction);
+        }
+        if (s.display != null)
+        {
+            action(nameof(display), s.display);
+        }
+        if (s.dominantBaseline != null)
+        {
+            action(nameof(dominantBaseline), s.dominantBaseline);
+        }
+        if (s.emptyCells != null)
+        {
+            action(nameof(emptyCells), s.emptyCells);
+        }
+        if (s.fallback != null)
+        {
+            action(nameof(fallback), s.fallback);
+        }
+        if (s.fill != null)
+        {
+            action(nameof(fill), s.fill);
+        }
+        if (s.fillOpacity != null)
+        {
+            action(nameof(fillOpacity), s.fillOpacity);
+        }
+        if (s.fillRule != null)
+        {
+            action(nameof(fillRule), s.fillRule);
+        }
+        if (s.filter != null)
+        {
+            action(nameof(filter), s.filter);
+        }
+        if (s.flex != null)
+        {
+            action(nameof(flex), s.flex);
+        }
+        if (s.flexBasis != null)
+        {
+            action(nameof(flexBasis), s.flexBasis);
+        }
+        if (s.flexDirection != null)
+        {
+            action(nameof(flexDirection), s.flexDirection);
+        }
+        if (s.flexFlow != null)
+        {
+            action(nameof(flexFlow), s.flexFlow);
+        }
+        if (s.flexGrow != null)
+        {
+            action(nameof(flexGrow), s.flexGrow);
+        }
+        if (s.flexShrink != null)
+        {
+            action(nameof(flexShrink), s.flexShrink);
+        }
+        if (s.flexWrap != null)
+        {
+            action(nameof(flexWrap), s.flexWrap);
+        }
+        if (s.@float != null)
+        {
+            action(nameof(@float), s.@float);
+        }
+        if (s.floodColor != null)
+        {
+            action(nameof(floodColor), s.floodColor);
+        }
+        if (s.floodOpacity != null)
+        {
+            action(nameof(floodOpacity), s.floodOpacity);
+        }
+        if (s.font != null)
+        {
+            action(nameof(font), s.font);
+        }
+        if (s.fontDisplay != null)
+        {
+            action(nameof(fontDisplay), s.fontDisplay);
+        }
+        if (s.fontFamily != null)
+        {
+            action(nameof(fontFamily), s.fontFamily);
+        }
+        if (s.fontFeatureSettings != null)
+        {
+            action(nameof(fontFeatureSettings), s.fontFeatureSettings);
+        }
+        if (s.fontKerning != null)
+        {
+            action(nameof(fontKerning), s.fontKerning);
+        }
+        if (s.fontOpticalSizing != null)
+        {
+            action(nameof(fontOpticalSizing), s.fontOpticalSizing);
+        }
+        if (s.fontPalette != null)
+        {
+            action(nameof(fontPalette), s.fontPalette);
+        }
+        if (s.fontSize != null)
+        {
+            action(nameof(fontSize), s.fontSize);
+        }
+        if (s.fontStretch != null)
+        {
+            action(nameof(fontStretch), s.fontStretch);
+        }
+        if (s.fontStyle != null)
+        {
+            action(nameof(fontStyle), s.fontStyle);
+        }
+        if (s.fontSynthesis != null)
+        {
+            action(nameof(fontSynthesis), s.fontSynthesis);
+        }
+        if (s.fontSynthesisSmallCaps != null)
+        {
+            action(nameof(fontSynthesisSmallCaps), s.fontSynthesisSmallCaps);
+        }
+        if (s.fontSynthesisStyle != null)
+        {
+            action(nameof(fontSynthesisStyle), s.fontSynthesisStyle);
+        }
+        if (s.fontSynthesisWeight != null)
+        {
+            action(nameof(fontSynthesisWeight), s.fontSynthesisWeight);
+        }
+        if (s.fontVariant != null)
+        {
+            action(nameof(fontVariant), s.fontVariant);
+        }
+        if (s.fontVariantAlternates != null)
+        {
+            action(nameof(fontVariantAlternates), s.fontVariantAlternates);
+        }
+        if (s.fontVariantCaps != null)
+        {
+            action(nameof(fontVariantCaps), s.fontVariantCaps);
+        }
+        if (s.fontVariantEastAsian != null)
+        {
+            action(nameof(fontVariantEastAsian), s.fontVariantEastAsian);
+        }
+        if (s.fontVariantLigatures != null)
+        {
+            action(nameof(fontVariantLigatures), s.fontVariantLigatures);
+        }
+        if (s.fontVariantNumeric != null)
+        {
+            action(nameof(fontVariantNumeric), s.fontVariantNumeric);
+        }
+        if (s.fontVariantPosition != null)
+        {
+            action(nameof(fontVariantPosition), s.fontVariantPosition);
+        }
+        if (s.fontVariationSettings != null)
+        {
+            action(nameof(fontVariationSettings), s.fontVariationSettings);
+        }
+        if (s.fontWeight != null)
+        {
+            action(nameof(fontWeight), s.fontWeight);
+        }
+        if (s.forcedColorAdjust != null)
+        {
+            action(nameof(forcedColorAdjust), s.forcedColorAdjust);
+        }
+        if (s.gap != null)
+        {
+            action(nameof(gap), s.gap);
+        }
+        if (s.grid != null)
+        {
+            action(nameof(grid), s.grid);
+        }
+        if (s.gridArea != null)
+        {
+            action(nameof(gridArea), s.gridArea);
+        }
+        if (s.gridAutoColumns != null)
+        {
+            action(nameof(gridAutoColumns), s.gridAutoColumns);
+        }
+        if (s.gridAutoFlow != null)
+        {
+            action(nameof(gridAutoFlow), s.gridAutoFlow);
+        }
+        if (s.gridAutoRows != null)
+        {
+            action(nameof(gridAutoRows), s.gridAutoRows);
+        }
+        if (s.gridColumn != null)
+        {
+            action(nameof(gridColumn), s.gridColumn);
+        }
+        if (s.gridColumnEnd != null)
+        {
+            action(nameof(gridColumnEnd), s.gridColumnEnd);
+        }
+        if (s.gridColumnGap != null)
+        {
+            action(nameof(gridColumnGap), s.gridColumnGap);
+        }
+        if (s.gridColumnStart != null)
+        {
+            action(nameof(gridColumnStart), s.gridColumnStart);
+        }
+        if (s.gridGap != null)
+        {
+            action(nameof(gridGap), s.gridGap);
+        }
+        if (s.gridRow != null)
+        {
+            action(nameof(gridRow), s.gridRow);
+        }
+        if (s.gridRowEnd != null)
+        {
+            action(nameof(gridRowEnd), s.gridRowEnd);
+        }
+        if (s.gridRowGap != null)
+        {
+            action(nameof(gridRowGap), s.gridRowGap);
+        }
+        if (s.gridRowStart != null)
+        {
+            action(nameof(gridRowStart), s.gridRowStart);
+        }
+        if (s.gridTemplate != null)
+        {
+            action(nameof(gridTemplate), s.gridTemplate);
+        }
+        if (s.gridTemplateAreas != null)
+        {
+            action(nameof(gridTemplateAreas), s.gridTemplateAreas);
+        }
+        if (s.gridTemplateColumns != null)
+        {
+            action(nameof(gridTemplateColumns), s.gridTemplateColumns);
+        }
+        if (s.gridTemplateRows != null)
+        {
+            action(nameof(gridTemplateRows), s.gridTemplateRows);
+        }
+        if (s.height != null)
+        {
+            action(nameof(height), s.height);
+        }
+        if (s.hyphenateCharacter != null)
+        {
+            action(nameof(hyphenateCharacter), s.hyphenateCharacter);
+        }
+        if (s.hyphenateLimitChars != null)
+        {
+            action(nameof(hyphenateLimitChars), s.hyphenateLimitChars);
+        }
+        if (s.hyphens != null)
+        {
+            action(nameof(hyphens), s.hyphens);
+        }
+        if (s.imageOrientation != null)
+        {
+            action(nameof(imageOrientation), s.imageOrientation);
+        }
+        if (s.imageRendering != null)
+        {
+            action(nameof(imageRendering), s.imageRendering);
+        }
+        if (s.inherits != null)
+        {
+            action(nameof(inherits), s.inherits);
+        }
+        if (s.initialLetter != null)
+        {
+            action(nameof(initialLetter), s.initialLetter);
+        }
+        if (s.initialValue != null)
+        {
+            action(nameof(initialValue), s.initialValue);
+        }
+        if (s.inlineSize != null)
+        {
+            action(nameof(inlineSize), s.inlineSize);
+        }
+        if (s.inset != null)
+        {
+            action(nameof(inset), s.inset);
+        }
+        if (s.insetBlock != null)
+        {
+            action(nameof(insetBlock), s.insetBlock);
+        }
+        if (s.insetBlockEnd != null)
+        {
+            action(nameof(insetBlockEnd), s.insetBlockEnd);
+        }
+        if (s.insetBlockStart != null)
+        {
+            action(nameof(insetBlockStart), s.insetBlockStart);
+        }
+        if (s.insetInline != null)
+        {
+            action(nameof(insetInline), s.insetInline);
+        }
+        if (s.insetInlineEnd != null)
+        {
+            action(nameof(insetInlineEnd), s.insetInlineEnd);
+        }
+        if (s.insetInlineStart != null)
+        {
+            action(nameof(insetInlineStart), s.insetInlineStart);
+        }
+        if (s.isolation != null)
+        {
+            action(nameof(isolation), s.isolation);
+        }
+        if (s.justifyContent != null)
+        {
+            action(nameof(justifyContent), s.justifyContent);
+        }
+        if (s.justifyItems != null)
+        {
+            action(nameof(justifyItems), s.justifyItems);
+        }
+        if (s.justifySelf != null)
+        {
+            action(nameof(justifySelf), s.justifySelf);
+        }
+        if (s.left != null)
+        {
+            action(nameof(left), s.left);
+        }
+        if (s.letterSpacing != null)
+        {
+            action(nameof(letterSpacing), s.letterSpacing);
+        }
+        if (s.lightingColor != null)
+        {
+            action(nameof(lightingColor), s.lightingColor);
+        }
+        if (s.lineBreak != null)
+        {
+            action(nameof(lineBreak), s.lineBreak);
+        }
+        if (s.lineGapOverride != null)
+        {
+            action(nameof(lineGapOverride), s.lineGapOverride);
+        }
+        if (s.lineHeight != null)
+        {
+            action(nameof(lineHeight), s.lineHeight);
+        }
+        if (s.listStyle != null)
+        {
+            action(nameof(listStyle), s.listStyle);
+        }
+        if (s.listStyleImage != null)
+        {
+            action(nameof(listStyleImage), s.listStyleImage);
+        }
+        if (s.listStylePosition != null)
+        {
+            action(nameof(listStylePosition), s.listStylePosition);
+        }
+        if (s.listStyleType != null)
+        {
+            action(nameof(listStyleType), s.listStyleType);
+        }
+        if (s.margin != null)
+        {
+            action(nameof(margin), s.margin);
+        }
+        if (s.marginBlock != null)
+        {
+            action(nameof(marginBlock), s.marginBlock);
+        }
+        if (s.marginBlockEnd != null)
+        {
+            action(nameof(marginBlockEnd), s.marginBlockEnd);
+        }
+        if (s.marginBlockStart != null)
+        {
+            action(nameof(marginBlockStart), s.marginBlockStart);
+        }
+        if (s.marginBottom != null)
+        {
+            action(nameof(marginBottom), s.marginBottom);
+        }
+        if (s.marginInline != null)
+        {
+            action(nameof(marginInline), s.marginInline);
+        }
+        if (s.marginInlineEnd != null)
+        {
+            action(nameof(marginInlineEnd), s.marginInlineEnd);
+        }
+        if (s.marginInlineStart != null)
+        {
+            action(nameof(marginInlineStart), s.marginInlineStart);
+        }
+        if (s.marginLeft != null)
+        {
+            action(nameof(marginLeft), s.marginLeft);
+        }
+        if (s.marginRight != null)
+        {
+            action(nameof(marginRight), s.marginRight);
+        }
+        if (s.marginTop != null)
+        {
+            action(nameof(marginTop), s.marginTop);
+        }
+        if (s.marker != null)
+        {
+            action(nameof(marker), s.marker);
+        }
+        if (s.markerEnd != null)
+        {
+            action(nameof(markerEnd), s.markerEnd);
+        }
+        if (s.markerMid != null)
+        {
+            action(nameof(markerMid), s.markerMid);
+        }
+        if (s.markerStart != null)
+        {
+            action(nameof(markerStart), s.markerStart);
+        }
+        if (s.mask != null)
+        {
+            action(nameof(mask), s.mask);
+        }
+        if (s.maskType != null)
+        {
+            action(nameof(maskType), s.maskType);
+        }
+        if (s.mathDepth != null)
+        {
+            action(nameof(mathDepth), s.mathDepth);
+        }
+        if (s.mathShift != null)
+        {
+            action(nameof(mathShift), s.mathShift);
+        }
+        if (s.mathStyle != null)
+        {
+            action(nameof(mathStyle), s.mathStyle);
+        }
+        if (s.maxBlockSize != null)
+        {
+            action(nameof(maxBlockSize), s.maxBlockSize);
+        }
+        if (s.maxHeight != null)
+        {
+            action(nameof(maxHeight), s.maxHeight);
+        }
+        if (s.maxInlineSize != null)
+        {
+            action(nameof(maxInlineSize), s.maxInlineSize);
+        }
+        if (s.maxWidth != null)
+        {
+            action(nameof(maxWidth), s.maxWidth);
+        }
+        if (s.minBlockSize != null)
+        {
+            action(nameof(minBlockSize), s.minBlockSize);
+        }
+        if (s.minHeight != null)
+        {
+            action(nameof(minHeight), s.minHeight);
+        }
+        if (s.minInlineSize != null)
+        {
+            action(nameof(minInlineSize), s.minInlineSize);
+        }
+        if (s.minWidth != null)
+        {
+            action(nameof(minWidth), s.minWidth);
+        }
+        if (s.mixBlendMode != null)
+        {
+            action(nameof(mixBlendMode), s.mixBlendMode);
+        }
+        if (s.negative != null)
+        {
+            action(nameof(negative), s.negative);
+        }
+        if (s.objectFit != null)
+        {
+            action(nameof(objectFit), s.objectFit);
+        }
+        if (s.objectPosition != null)
+        {
+            action(nameof(objectPosition), s.objectPosition);
+        }
+        if (s.objectViewBox != null)
+        {
+            action(nameof(objectViewBox), s.objectViewBox);
+        }
+        if (s.offset != null)
+        {
+            action(nameof(offset), s.offset);
+        }
+        if (s.offsetAnchor != null)
+        {
+            action(nameof(offsetAnchor), s.offsetAnchor);
+        }
+        if (s.offsetDistance != null)
+        {
+            action(nameof(offsetDistance), s.offsetDistance);
+        }
+        if (s.offsetPath != null)
+        {
+            action(nameof(offsetPath), s.offsetPath);
+        }
+        if (s.offsetPosition != null)
+        {
+            action(nameof(offsetPosition), s.offsetPosition);
+        }
+        if (s.offsetRotate != null)
+        {
+            action(nameof(offsetRotate), s.offsetRotate);
+        }
+        if (s.opacity != null)
+        {
+            action(nameof(opacity), s.opacity);
+        }
+        if (s.order != null)
+        {
+            action(nameof(order), s.order);
+        }
+        if (s.orphans != null)
+        {
+            action(nameof(orphans), s.orphans);
+        }
+        if (s.outline != null)
+        {
+            action(nameof(outline), s.outline);
+        }
+        if (s.outlineColor != null)
+        {
+            action(nameof(outlineColor), s.outlineColor);
+        }
+        if (s.outlineOffset != null)
+        {
+            action(nameof(outlineOffset), s.outlineOffset);
+        }
+        if (s.outlineStyle != null)
+        {
+            action(nameof(outlineStyle), s.outlineStyle);
+        }
+        if (s.outlineWidth != null)
+        {
+            action(nameof(outlineWidth), s.outlineWidth);
+        }
+        if (s.overflow != null)
+        {
+            action(nameof(overflow), s.overflow);
+        }
+        if (s.overflowAnchor != null)
+        {
+            action(nameof(overflowAnchor), s.overflowAnchor);
+        }
+        if (s.overflowClipMargin != null)
+        {
+            action(nameof(overflowClipMargin), s.overflowClipMargin);
+        }
+        if (s.overflowWrap != null)
+        {
+            action(nameof(overflowWrap), s.overflowWrap);
+        }
+        if (s.overflowX != null)
+        {
+            action(nameof(overflowX), s.overflowX);
+        }
+        if (s.overflowY != null)
+        {
+            action(nameof(overflowY), s.overflowY);
+        }
+        if (s.overlay != null)
+        {
+            action(nameof(overlay), s.overlay);
+        }
+        if (s.overrideColors != null)
+        {
+            action(nameof(overrideColors), s.overrideColors);
+        }
+        if (s.overscrollBehavior != null)
+        {
+            action(nameof(overscrollBehavior), s.overscrollBehavior);
+        }
+        if (s.overscrollBehaviorBlock != null)
+        {
+            action(nameof(overscrollBehaviorBlock), s.overscrollBehaviorBlock);
+        }
+        if (s.overscrollBehaviorInline != null)
+        {
+            action(nameof(overscrollBehaviorInline), s.overscrollBehaviorInline);
+        }
+        if (s.overscrollBehaviorX != null)
+        {
+            action(nameof(overscrollBehaviorX), s.overscrollBehaviorX);
+        }
+        if (s.overscrollBehaviorY != null)
+        {
+            action(nameof(overscrollBehaviorY), s.overscrollBehaviorY);
+        }
+        if (s.pad != null)
+        {
+            action(nameof(pad), s.pad);
+        }
+        if (s.padding != null)
+        {
+            action(nameof(padding), s.padding);
+        }
+        if (s.paddingBlock != null)
+        {
+            action(nameof(paddingBlock), s.paddingBlock);
+        }
+        if (s.paddingBlockEnd != null)
+        {
+            action(nameof(paddingBlockEnd), s.paddingBlockEnd);
+        }
+        if (s.paddingBlockStart != null)
+        {
+            action(nameof(paddingBlockStart), s.paddingBlockStart);
+        }
+        if (s.paddingBottom != null)
+        {
+            action(nameof(paddingBottom), s.paddingBottom);
+        }
+        if (s.paddingInline != null)
+        {
+            action(nameof(paddingInline), s.paddingInline);
+        }
+        if (s.paddingInlineEnd != null)
+        {
+            action(nameof(paddingInlineEnd), s.paddingInlineEnd);
+        }
+        if (s.paddingInlineStart != null)
+        {
+            action(nameof(paddingInlineStart), s.paddingInlineStart);
+        }
+        if (s.paddingLeft != null)
+        {
+            action(nameof(paddingLeft), s.paddingLeft);
+        }
+        if (s.paddingRight != null)
+        {
+            action(nameof(paddingRight), s.paddingRight);
+        }
+        if (s.paddingTop != null)
+        {
+            action(nameof(paddingTop), s.paddingTop);
+        }
+        if (s.page != null)
+        {
+            action(nameof(page), s.page);
+        }
+        if (s.pageBreakAfter != null)
+        {
+            action(nameof(pageBreakAfter), s.pageBreakAfter);
+        }
+        if (s.pageBreakBefore != null)
+        {
+            action(nameof(pageBreakBefore), s.pageBreakBefore);
+        }
+        if (s.pageBreakInside != null)
+        {
+            action(nameof(pageBreakInside), s.pageBreakInside);
+        }
+        if (s.pageOrientation != null)
+        {
+            action(nameof(pageOrientation), s.pageOrientation);
+        }
+        if (s.paintOrder != null)
+        {
+            action(nameof(paintOrder), s.paintOrder);
+        }
+        if (s.perspective != null)
+        {
+            action(nameof(perspective), s.perspective);
+        }
+        if (s.perspectiveOrigin != null)
+        {
+            action(nameof(perspectiveOrigin), s.perspectiveOrigin);
+        }
+        if (s.placeContent != null)
+        {
+            action(nameof(placeContent), s.placeContent);
+        }
+        if (s.placeItems != null)
+        {
+            action(nameof(placeItems), s.placeItems);
+        }
+        if (s.placeSelf != null)
+        {
+            action(nameof(placeSelf), s.placeSelf);
+        }
+        if (s.pointerEvents != null)
+        {
+            action(nameof(pointerEvents), s.pointerEvents);
+        }
+        if (s.position != null)
+        {
+            action(nameof(position), s.position);
+        }
+        if (s.prefix != null)
+        {
+            action(nameof(prefix), s.prefix);
+        }
+        if (s.quotes != null)
+        {
+            action(nameof(quotes), s.quotes);
+        }
+        if (s.r != null)
+        {
+            action(nameof(r), s.r);
+        }
+        if (s.range != null)
+        {
+            action(nameof(range), s.range);
+        }
+        if (s.resize != null)
+        {
+            action(nameof(resize), s.resize);
+        }
+        if (s.right != null)
+        {
+            action(nameof(right), s.right);
+        }
+        if (s.rotate != null)
+        {
+            action(nameof(rotate), s.rotate);
+        }
+        if (s.rowGap != null)
+        {
+            action(nameof(rowGap), s.rowGap);
+        }
+        if (s.rubyPosition != null)
+        {
+            action(nameof(rubyPosition), s.rubyPosition);
+        }
+        if (s.rx != null)
+        {
+            action(nameof(rx), s.rx);
+        }
+        if (s.ry != null)
+        {
+            action(nameof(ry), s.ry);
+        }
+        if (s.scale != null)
+        {
+            action(nameof(scale), s.scale);
+        }
+        if (s.scrollBehavior != null)
+        {
+            action(nameof(scrollBehavior), s.scrollBehavior);
+        }
+        if (s.scrollMargin != null)
+        {
+            action(nameof(scrollMargin), s.scrollMargin);
+        }
+        if (s.scrollMarginBlock != null)
+        {
+            action(nameof(scrollMarginBlock), s.scrollMarginBlock);
+        }
+        if (s.scrollMarginBlockEnd != null)
+        {
+            action(nameof(scrollMarginBlockEnd), s.scrollMarginBlockEnd);
+        }
+        if (s.scrollMarginBlockStart != null)
+        {
+            action(nameof(scrollMarginBlockStart), s.scrollMarginBlockStart);
+        }
+        if (s.scrollMarginBottom != null)
+        {
+            action(nameof(scrollMarginBottom), s.scrollMarginBottom);
+        }
+        if (s.scrollMarginInline != null)
+        {
+            action(nameof(scrollMarginInline), s.scrollMarginInline);
+        }
+        if (s.scrollMarginInlineEnd != null)
+        {
+            action(nameof(scrollMarginInlineEnd), s.scrollMarginInlineEnd);
+        }
+        if (s.scrollMarginInlineStart != null)
+        {
+            action(nameof(scrollMarginInlineStart), s.scrollMarginInlineStart);
+        }
+        if (s.scrollMarginLeft != null)
+        {
+            action(nameof(scrollMarginLeft), s.scrollMarginLeft);
+        }
+        if (s.scrollMarginRight != null)
+        {
+            action(nameof(scrollMarginRight), s.scrollMarginRight);
+        }
+        if (s.scrollMarginTop != null)
+        {
+            action(nameof(scrollMarginTop), s.scrollMarginTop);
+        }
+        if (s.scrollPadding != null)
+        {
+            action(nameof(scrollPadding), s.scrollPadding);
+        }
+        if (s.scrollPaddingBlock != null)
+        {
+            action(nameof(scrollPaddingBlock), s.scrollPaddingBlock);
+        }
+        if (s.scrollPaddingBlockEnd != null)
+        {
+            action(nameof(scrollPaddingBlockEnd), s.scrollPaddingBlockEnd);
+        }
+        if (s.scrollPaddingBlockStart != null)
+        {
+            action(nameof(scrollPaddingBlockStart), s.scrollPaddingBlockStart);
+        }
+        if (s.scrollPaddingBottom != null)
+        {
+            action(nameof(scrollPaddingBottom), s.scrollPaddingBottom);
+        }
+        if (s.scrollPaddingInline != null)
+        {
+            action(nameof(scrollPaddingInline), s.scrollPaddingInline);
+        }
+        if (s.scrollPaddingInlineEnd != null)
+        {
+            action(nameof(scrollPaddingInlineEnd), s.scrollPaddingInlineEnd);
+        }
+        if (s.scrollPaddingInlineStart != null)
+        {
+            action(nameof(scrollPaddingInlineStart), s.scrollPaddingInlineStart);
+        }
+        if (s.scrollPaddingLeft != null)
+        {
+            action(nameof(scrollPaddingLeft), s.scrollPaddingLeft);
+        }
+        if (s.scrollPaddingRight != null)
+        {
+            action(nameof(scrollPaddingRight), s.scrollPaddingRight);
+        }
+        if (s.scrollPaddingTop != null)
+        {
+            action(nameof(scrollPaddingTop), s.scrollPaddingTop);
+        }
+        if (s.scrollSnapAlign != null)
+        {
+            action(nameof(scrollSnapAlign), s.scrollSnapAlign);
+        }
+        if (s.scrollSnapStop != null)
+        {
+            action(nameof(scrollSnapStop), s.scrollSnapStop);
+        }
+        if (s.scrollSnapType != null)
+        {
+            action(nameof(scrollSnapType), s.scrollSnapType);
+        }
+        if (s.scrollTimeline != null)
+        {
+            action(nameof(scrollTimeline), s.scrollTimeline);
+        }
+        if (s.scrollTimelineAxis != null)
+        {
+            action(nameof(scrollTimelineAxis), s.scrollTimelineAxis);
+        }
+        if (s.scrollTimelineName != null)
+        {
+            action(nameof(scrollTimelineName), s.scrollTimelineName);
+        }
+        if (s.scrollbarGutter != null)
+        {
+            action(nameof(scrollbarGutter), s.scrollbarGutter);
+        }
+        if (s.shapeImageThreshold != null)
+        {
+            action(nameof(shapeImageThreshold), s.shapeImageThreshold);
+        }
+        if (s.shapeMargin != null)
+        {
+            action(nameof(shapeMargin), s.shapeMargin);
+        }
+        if (s.shapeOutside != null)
+        {
+            action(nameof(shapeOutside), s.shapeOutside);
+        }
+        if (s.shapeRendering != null)
+        {
+            action(nameof(shapeRendering), s.shapeRendering);
+        }
+        if (s.size != null)
+        {
+            action(nameof(size), s.size);
+        }
+        if (s.sizeAdjust != null)
+        {
+            action(nameof(sizeAdjust), s.sizeAdjust);
+        }
+        if (s.speak != null)
+        {
+            action(nameof(speak), s.speak);
+        }
+        if (s.speakAs != null)
+        {
+            action(nameof(speakAs), s.speakAs);
+        }
+        if (s.src != null)
+        {
+            action(nameof(src), s.src);
+        }
+        if (s.stopColor != null)
+        {
+            action(nameof(stopColor), s.stopColor);
+        }
+        if (s.stopOpacity != null)
+        {
+            action(nameof(stopOpacity), s.stopOpacity);
+        }
+        if (s.stroke != null)
+        {
+            action(nameof(stroke), s.stroke);
+        }
+        if (s.strokeDasharray != null)
+        {
+            action(nameof(strokeDasharray), s.strokeDasharray);
+        }
+        if (s.strokeDashoffset != null)
+        {
+            action(nameof(strokeDashoffset), s.strokeDashoffset);
+        }
+        if (s.strokeLinecap != null)
+        {
+            action(nameof(strokeLinecap), s.strokeLinecap);
+        }
+        if (s.strokeLinejoin != null)
+        {
+            action(nameof(strokeLinejoin), s.strokeLinejoin);
+        }
+        if (s.strokeMiterlimit != null)
+        {
+            action(nameof(strokeMiterlimit), s.strokeMiterlimit);
+        }
+        if (s.strokeOpacity != null)
+        {
+            action(nameof(strokeOpacity), s.strokeOpacity);
+        }
+        if (s.strokeWidth != null)
+        {
+            action(nameof(strokeWidth), s.strokeWidth);
+        }
+        if (s.suffix != null)
+        {
+            action(nameof(suffix), s.suffix);
+        }
+        if (s.symbols != null)
+        {
+            action(nameof(symbols), s.symbols);
+        }
+        if (s.syntax != null)
+        {
+            action(nameof(syntax), s.syntax);
+        }
+        if (s.system != null)
+        {
+            action(nameof(system), s.system);
+        }
+        if (s.tabSize != null)
+        {
+            action(nameof(tabSize), s.tabSize);
+        }
+        if (s.tableLayout != null)
+        {
+            action(nameof(tableLayout), s.tableLayout);
+        }
+        if (s.textAlign != null)
+        {
+            action(nameof(textAlign), s.textAlign);
+        }
+        if (s.textAlignLast != null)
+        {
+            action(nameof(textAlignLast), s.textAlignLast);
+        }
+        if (s.textAnchor != null)
+        {
+            action(nameof(textAnchor), s.textAnchor);
+        }
+        if (s.textCombineHorizontal != null)
+        {
+            action(nameof(textCombineHorizontal), s.textCombineHorizontal);
+        }
+        if (s.textCombineUpright != null)
+        {
+            action(nameof(textCombineUpright), s.textCombineUpright);
+        }
+        if (s.textDecoration != null)
+        {
+            action(nameof(textDecoration), s.textDecoration);
+        }
+        if (s.textDecorationColor != null)
+        {
+            action(nameof(textDecorationColor), s.textDecorationColor);
+        }
+        if (s.textDecorationLine != null)
+        {
+            action(nameof(textDecorationLine), s.textDecorationLine);
+        }
+        if (s.textDecorationSkipInk != null)
+        {
+            action(nameof(textDecorationSkipInk), s.textDecorationSkipInk);
+        }
+        if (s.textDecorationStyle != null)
+        {
+            action(nameof(textDecorationStyle), s.textDecorationStyle);
+        }
+        if (s.textDecorationThickness != null)
+        {
+            action(nameof(textDecorationThickness), s.textDecorationThickness);
+        }
+        if (s.textEmphasis != null)
+        {
+            action(nameof(textEmphasis), s.textEmphasis);
+        }
+        if (s.textEmphasisColor != null)
+        {
+            action(nameof(textEmphasisColor), s.textEmphasisColor);
+        }
+        if (s.textEmphasisPosition != null)
+        {
+            action(nameof(textEmphasisPosition), s.textEmphasisPosition);
+        }
+        if (s.textEmphasisStyle != null)
+        {
+            action(nameof(textEmphasisStyle), s.textEmphasisStyle);
+        }
+        if (s.textIndent != null)
+        {
+            action(nameof(textIndent), s.textIndent);
+        }
+        if (s.textOrientation != null)
+        {
+            action(nameof(textOrientation), s.textOrientation);
+        }
+        if (s.textOverflow != null)
+        {
+            action(nameof(textOverflow), s.textOverflow);
+        }
+        if (s.textRendering != null)
+        {
+            action(nameof(textRendering), s.textRendering);
+        }
+        if (s.textShadow != null)
+        {
+            action(nameof(textShadow), s.textShadow);
+        }
+        if (s.textSizeAdjust != null)
+        {
+            action(nameof(textSizeAdjust), s.textSizeAdjust);
+        }
+        if (s.textTransform != null)
+        {
+            action(nameof(textTransform), s.textTransform);
+        }
+        if (s.textUnderlineOffset != null)
+        {
+            action(nameof(textUnderlineOffset), s.textUnderlineOffset);
+        }
+        if (s.textUnderlinePosition != null)
+        {
+            action(nameof(textUnderlinePosition), s.textUnderlinePosition);
+        }
+        if (s.textWrap != null)
+        {
+            action(nameof(textWrap), s.textWrap);
+        }
+        if (s.timelineScope != null)
+        {
+            action(nameof(timelineScope), s.timelineScope);
+        }
+        if (s.top != null)
+        {
+            action(nameof(top), s.top);
+        }
+        if (s.touchAction != null)
+        {
+            action(nameof(touchAction), s.touchAction);
+        }
+        if (s.transform != null)
+        {
+            action(nameof(transform), s.transform);
+        }
+        if (s.transformBox != null)
+        {
+            action(nameof(transformBox), s.transformBox);
+        }
+        if (s.transformOrigin != null)
+        {
+            action(nameof(transformOrigin), s.transformOrigin);
+        }
+        if (s.transformStyle != null)
+        {
+            action(nameof(transformStyle), s.transformStyle);
+        }
+        if (s.transition != null)
+        {
+            action(nameof(transition), s.transition);
+        }
+        if (s.transitionBehavior != null)
+        {
+            action(nameof(transitionBehavior), s.transitionBehavior);
+        }
+        if (s.transitionDelay != null)
+        {
+            action(nameof(transitionDelay), s.transitionDelay);
+        }
+        if (s.transitionDuration != null)
+        {
+            action(nameof(transitionDuration), s.transitionDuration);
+        }
+        if (s.transitionProperty != null)
+        {
+            action(nameof(transitionProperty), s.transitionProperty);
+        }
+        if (s.transitionTimingFunction != null)
+        {
+            action(nameof(transitionTimingFunction), s.transitionTimingFunction);
+        }
+        if (s.translate != null)
+        {
+            action(nameof(translate), s.translate);
+        }
+        if (s.unicodeBidi != null)
+        {
+            action(nameof(unicodeBidi), s.unicodeBidi);
+        }
+        if (s.unicodeRange != null)
+        {
+            action(nameof(unicodeRange), s.unicodeRange);
+        }
+        if (s.userSelect != null)
+        {
+            action(nameof(userSelect), s.userSelect);
+        }
+        if (s.vectorEffect != null)
+        {
+            action(nameof(vectorEffect), s.vectorEffect);
+        }
+        if (s.verticalAlign != null)
+        {
+            action(nameof(verticalAlign), s.verticalAlign);
+        }
+        if (s.viewTimeline != null)
+        {
+            action(nameof(viewTimeline), s.viewTimeline);
+        }
+        if (s.viewTimelineAxis != null)
+        {
+            action(nameof(viewTimelineAxis), s.viewTimelineAxis);
+        }
+        if (s.viewTimelineInset != null)
+        {
+            action(nameof(viewTimelineInset), s.viewTimelineInset);
+        }
+        if (s.viewTimelineName != null)
+        {
+            action(nameof(viewTimelineName), s.viewTimelineName);
+        }
+        if (s.viewTransitionName != null)
+        {
+            action(nameof(viewTransitionName), s.viewTransitionName);
+        }
+        if (s.visibility != null)
+        {
+            action(nameof(visibility), s.visibility);
+        }
+        if (s.webkitAlignContent != null)
+        {
+            action(nameof(webkitAlignContent), s.webkitAlignContent);
+        }
+        if (s.webkitAlignItems != null)
+        {
+            action(nameof(webkitAlignItems), s.webkitAlignItems);
+        }
+        if (s.webkitAlignSelf != null)
+        {
+            action(nameof(webkitAlignSelf), s.webkitAlignSelf);
+        }
+        if (s.webkitAnimation != null)
+        {
+            action(nameof(webkitAnimation), s.webkitAnimation);
+        }
+        if (s.webkitAnimationDelay != null)
+        {
+            action(nameof(webkitAnimationDelay), s.webkitAnimationDelay);
+        }
+        if (s.webkitAnimationDirection != null)
+        {
+            action(nameof(webkitAnimationDirection), s.webkitAnimationDirection);
+        }
+        if (s.webkitAnimationDuration != null)
+        {
+            action(nameof(webkitAnimationDuration), s.webkitAnimationDuration);
+        }
+        if (s.webkitAnimationFillMode != null)
+        {
+            action(nameof(webkitAnimationFillMode), s.webkitAnimationFillMode);
+        }
+        if (s.webkitAnimationIterationCount != null)
+        {
+            action(nameof(webkitAnimationIterationCount), s.webkitAnimationIterationCount);
+        }
+        if (s.webkitAnimationName != null)
+        {
+            action(nameof(webkitAnimationName), s.webkitAnimationName);
+        }
+        if (s.webkitAnimationPlayState != null)
+        {
+            action(nameof(webkitAnimationPlayState), s.webkitAnimationPlayState);
+        }
+        if (s.webkitAnimationTimingFunction != null)
+        {
+            action(nameof(webkitAnimationTimingFunction), s.webkitAnimationTimingFunction);
+        }
+        if (s.webkitAppRegion != null)
+        {
+            action(nameof(webkitAppRegion), s.webkitAppRegion);
+        }
+        if (s.webkitAppearance != null)
+        {
+            action(nameof(webkitAppearance), s.webkitAppearance);
+        }
+        if (s.webkitBackfaceVisibility != null)
+        {
+            action(nameof(webkitBackfaceVisibility), s.webkitBackfaceVisibility);
+        }
+        if (s.webkitBackgroundClip != null)
+        {
+            action(nameof(webkitBackgroundClip), s.webkitBackgroundClip);
+        }
+        if (s.webkitBackgroundOrigin != null)
+        {
+            action(nameof(webkitBackgroundOrigin), s.webkitBackgroundOrigin);
+        }
+        if (s.webkitBackgroundSize != null)
+        {
+            action(nameof(webkitBackgroundSize), s.webkitBackgroundSize);
+        }
+        if (s.webkitBorderAfter != null)
+        {
+            action(nameof(webkitBorderAfter), s.webkitBorderAfter);
+        }
+        if (s.webkitBorderAfterColor != null)
+        {
+            action(nameof(webkitBorderAfterColor), s.webkitBorderAfterColor);
+        }
+        if (s.webkitBorderAfterStyle != null)
+        {
+            action(nameof(webkitBorderAfterStyle), s.webkitBorderAfterStyle);
+        }
+        if (s.webkitBorderAfterWidth != null)
+        {
+            action(nameof(webkitBorderAfterWidth), s.webkitBorderAfterWidth);
+        }
+        if (s.webkitBorderBefore != null)
+        {
+            action(nameof(webkitBorderBefore), s.webkitBorderBefore);
+        }
+        if (s.webkitBorderBeforeColor != null)
+        {
+            action(nameof(webkitBorderBeforeColor), s.webkitBorderBeforeColor);
+        }
+        if (s.webkitBorderBeforeStyle != null)
+        {
+            action(nameof(webkitBorderBeforeStyle), s.webkitBorderBeforeStyle);
+        }
+        if (s.webkitBorderBeforeWidth != null)
+        {
+            action(nameof(webkitBorderBeforeWidth), s.webkitBorderBeforeWidth);
+        }
+        if (s.webkitBorderBottomLeftRadius != null)
+        {
+            action(nameof(webkitBorderBottomLeftRadius), s.webkitBorderBottomLeftRadius);
+        }
+        if (s.webkitBorderBottomRightRadius != null)
+        {
+            action(nameof(webkitBorderBottomRightRadius), s.webkitBorderBottomRightRadius);
+        }
+        if (s.webkitBorderEnd != null)
+        {
+            action(nameof(webkitBorderEnd), s.webkitBorderEnd);
+        }
+        if (s.webkitBorderEndColor != null)
+        {
+            action(nameof(webkitBorderEndColor), s.webkitBorderEndColor);
+        }
+        if (s.webkitBorderEndStyle != null)
+        {
+            action(nameof(webkitBorderEndStyle), s.webkitBorderEndStyle);
+        }
+        if (s.webkitBorderEndWidth != null)
+        {
+            action(nameof(webkitBorderEndWidth), s.webkitBorderEndWidth);
+        }
+        if (s.webkitBorderHorizontalSpacing != null)
+        {
+            action(nameof(webkitBorderHorizontalSpacing), s.webkitBorderHorizontalSpacing);
+        }
+        if (s.webkitBorderImage != null)
+        {
+            action(nameof(webkitBorderImage), s.webkitBorderImage);
+        }
+        if (s.webkitBorderRadius != null)
+        {
+            action(nameof(webkitBorderRadius), s.webkitBorderRadius);
+        }
+        if (s.webkitBorderStart != null)
+        {
+            action(nameof(webkitBorderStart), s.webkitBorderStart);
+        }
+        if (s.webkitBorderStartColor != null)
+        {
+            action(nameof(webkitBorderStartColor), s.webkitBorderStartColor);
+        }
+        if (s.webkitBorderStartStyle != null)
+        {
+            action(nameof(webkitBorderStartStyle), s.webkitBorderStartStyle);
+        }
+        if (s.webkitBorderStartWidth != null)
+        {
+            action(nameof(webkitBorderStartWidth), s.webkitBorderStartWidth);
+        }
+        if (s.webkitBorderTopLeftRadius != null)
+        {
+            action(nameof(webkitBorderTopLeftRadius), s.webkitBorderTopLeftRadius);
+        }
+        if (s.webkitBorderTopRightRadius != null)
+        {
+            action(nameof(webkitBorderTopRightRadius), s.webkitBorderTopRightRadius);
+        }
+        if (s.webkitBorderVerticalSpacing != null)
+        {
+            action(nameof(webkitBorderVerticalSpacing), s.webkitBorderVerticalSpacing);
+        }
+        if (s.webkitBoxAlign != null)
+        {
+            action(nameof(webkitBoxAlign), s.webkitBoxAlign);
+        }
+        if (s.webkitBoxDecorationBreak != null)
+        {
+            action(nameof(webkitBoxDecorationBreak), s.webkitBoxDecorationBreak);
+        }
+        if (s.webkitBoxDirection != null)
+        {
+            action(nameof(webkitBoxDirection), s.webkitBoxDirection);
+        }
+        if (s.webkitBoxFlex != null)
+        {
+            action(nameof(webkitBoxFlex), s.webkitBoxFlex);
+        }
+        if (s.webkitBoxOrdinalGroup != null)
+        {
+            action(nameof(webkitBoxOrdinalGroup), s.webkitBoxOrdinalGroup);
+        }
+        if (s.webkitBoxOrient != null)
+        {
+            action(nameof(webkitBoxOrient), s.webkitBoxOrient);
+        }
+        if (s.webkitBoxPack != null)
+        {
+            action(nameof(webkitBoxPack), s.webkitBoxPack);
+        }
+        if (s.webkitBoxReflect != null)
+        {
+            action(nameof(webkitBoxReflect), s.webkitBoxReflect);
+        }
+        if (s.webkitBoxShadow != null)
+        {
+            action(nameof(webkitBoxShadow), s.webkitBoxShadow);
+        }
+        if (s.webkitBoxSizing != null)
+        {
+            action(nameof(webkitBoxSizing), s.webkitBoxSizing);
+        }
+        if (s.webkitClipPath != null)
+        {
+            action(nameof(webkitClipPath), s.webkitClipPath);
+        }
+        if (s.webkitColumnBreakAfter != null)
+        {
+            action(nameof(webkitColumnBreakAfter), s.webkitColumnBreakAfter);
+        }
+        if (s.webkitColumnBreakBefore != null)
+        {
+            action(nameof(webkitColumnBreakBefore), s.webkitColumnBreakBefore);
+        }
+        if (s.webkitColumnBreakInside != null)
+        {
+            action(nameof(webkitColumnBreakInside), s.webkitColumnBreakInside);
+        }
+        if (s.webkitColumnCount != null)
+        {
+            action(nameof(webkitColumnCount), s.webkitColumnCount);
+        }
+        if (s.webkitColumnGap != null)
+        {
+            action(nameof(webkitColumnGap), s.webkitColumnGap);
+        }
+        if (s.webkitColumnRule != null)
+        {
+            action(nameof(webkitColumnRule), s.webkitColumnRule);
+        }
+        if (s.webkitColumnRuleColor != null)
+        {
+            action(nameof(webkitColumnRuleColor), s.webkitColumnRuleColor);
+        }
+        if (s.webkitColumnRuleStyle != null)
+        {
+            action(nameof(webkitColumnRuleStyle), s.webkitColumnRuleStyle);
+        }
+        if (s.webkitColumnRuleWidth != null)
+        {
+            action(nameof(webkitColumnRuleWidth), s.webkitColumnRuleWidth);
+        }
+        if (s.webkitColumnSpan != null)
+        {
+            action(nameof(webkitColumnSpan), s.webkitColumnSpan);
+        }
+        if (s.webkitColumnWidth != null)
+        {
+            action(nameof(webkitColumnWidth), s.webkitColumnWidth);
+        }
+        if (s.webkitColumns != null)
+        {
+            action(nameof(webkitColumns), s.webkitColumns);
+        }
+        if (s.webkitFilter != null)
+        {
+            action(nameof(webkitFilter), s.webkitFilter);
+        }
+        if (s.webkitFlex != null)
+        {
+            action(nameof(webkitFlex), s.webkitFlex);
+        }
+        if (s.webkitFlexBasis != null)
+        {
+            action(nameof(webkitFlexBasis), s.webkitFlexBasis);
+        }
+        if (s.webkitFlexDirection != null)
+        {
+            action(nameof(webkitFlexDirection), s.webkitFlexDirection);
+        }
+        if (s.webkitFlexFlow != null)
+        {
+            action(nameof(webkitFlexFlow), s.webkitFlexFlow);
+        }
+        if (s.webkitFlexGrow != null)
+        {
+            action(nameof(webkitFlexGrow), s.webkitFlexGrow);
+        }
+        if (s.webkitFlexShrink != null)
+        {
+            action(nameof(webkitFlexShrink), s.webkitFlexShrink);
+        }
+        if (s.webkitFlexWrap != null)
+        {
+            action(nameof(webkitFlexWrap), s.webkitFlexWrap);
+        }
+        if (s.webkitFontFeatureSettings != null)
+        {
+            action(nameof(webkitFontFeatureSettings), s.webkitFontFeatureSettings);
+        }
+        if (s.webkitFontSmoothing != null)
+        {
+            action(nameof(webkitFontSmoothing), s.webkitFontSmoothing);
+        }
+        if (s.webkitHyphenateCharacter != null)
+        {
+            action(nameof(webkitHyphenateCharacter), s.webkitHyphenateCharacter);
+        }
+        if (s.webkitJustifyContent != null)
+        {
+            action(nameof(webkitJustifyContent), s.webkitJustifyContent);
+        }
+        if (s.webkitLineBreak != null)
+        {
+            action(nameof(webkitLineBreak), s.webkitLineBreak);
+        }
+        if (s.webkitLineClamp != null)
+        {
+            action(nameof(webkitLineClamp), s.webkitLineClamp);
+        }
+        if (s.webkitLocale != null)
+        {
+            action(nameof(webkitLocale), s.webkitLocale);
+        }
+        if (s.webkitLogicalHeight != null)
+        {
+            action(nameof(webkitLogicalHeight), s.webkitLogicalHeight);
+        }
+        if (s.webkitLogicalWidth != null)
+        {
+            action(nameof(webkitLogicalWidth), s.webkitLogicalWidth);
+        }
+        if (s.webkitMarginAfter != null)
+        {
+            action(nameof(webkitMarginAfter), s.webkitMarginAfter);
+        }
+        if (s.webkitMarginBefore != null)
+        {
+            action(nameof(webkitMarginBefore), s.webkitMarginBefore);
+        }
+        if (s.webkitMarginEnd != null)
+        {
+            action(nameof(webkitMarginEnd), s.webkitMarginEnd);
+        }
+        if (s.webkitMarginStart != null)
+        {
+            action(nameof(webkitMarginStart), s.webkitMarginStart);
+        }
+        if (s.webkitMask != null)
+        {
+            action(nameof(webkitMask), s.webkitMask);
+        }
+        if (s.webkitMaskBoxImage != null)
+        {
+            action(nameof(webkitMaskBoxImage), s.webkitMaskBoxImage);
+        }
+        if (s.webkitMaskBoxImageOutset != null)
+        {
+            action(nameof(webkitMaskBoxImageOutset), s.webkitMaskBoxImageOutset);
+        }
+        if (s.webkitMaskBoxImageRepeat != null)
+        {
+            action(nameof(webkitMaskBoxImageRepeat), s.webkitMaskBoxImageRepeat);
+        }
+        if (s.webkitMaskBoxImageSlice != null)
+        {
+            action(nameof(webkitMaskBoxImageSlice), s.webkitMaskBoxImageSlice);
+        }
+        if (s.webkitMaskBoxImageSource != null)
+        {
+            action(nameof(webkitMaskBoxImageSource), s.webkitMaskBoxImageSource);
+        }
+        if (s.webkitMaskBoxImageWidth != null)
+        {
+            action(nameof(webkitMaskBoxImageWidth), s.webkitMaskBoxImageWidth);
+        }
+        if (s.webkitMaskClip != null)
+        {
+            action(nameof(webkitMaskClip), s.webkitMaskClip);
+        }
+        if (s.webkitMaskComposite != null)
+        {
+            action(nameof(webkitMaskComposite), s.webkitMaskComposite);
+        }
+        if (s.webkitMaskImage != null)
+        {
+            action(nameof(webkitMaskImage), s.webkitMaskImage);
+        }
+        if (s.webkitMaskOrigin != null)
+        {
+            action(nameof(webkitMaskOrigin), s.webkitMaskOrigin);
+        }
+        if (s.webkitMaskPosition != null)
+        {
+            action(nameof(webkitMaskPosition), s.webkitMaskPosition);
+        }
+        if (s.webkitMaskPositionX != null)
+        {
+            action(nameof(webkitMaskPositionX), s.webkitMaskPositionX);
+        }
+        if (s.webkitMaskPositionY != null)
+        {
+            action(nameof(webkitMaskPositionY), s.webkitMaskPositionY);
+        }
+        if (s.webkitMaskRepeat != null)
+        {
+            action(nameof(webkitMaskRepeat), s.webkitMaskRepeat);
+        }
+        if (s.webkitMaskRepeatX != null)
+        {
+            action(nameof(webkitMaskRepeatX), s.webkitMaskRepeatX);
+        }
+        if (s.webkitMaskRepeatY != null)
+        {
+            action(nameof(webkitMaskRepeatY), s.webkitMaskRepeatY);
+        }
+        if (s.webkitMaskSize != null)
+        {
+            action(nameof(webkitMaskSize), s.webkitMaskSize);
+        }
+        if (s.webkitMaxLogicalHeight != null)
+        {
+            action(nameof(webkitMaxLogicalHeight), s.webkitMaxLogicalHeight);
+        }
+        if (s.webkitMaxLogicalWidth != null)
+        {
+            action(nameof(webkitMaxLogicalWidth), s.webkitMaxLogicalWidth);
+        }
+        if (s.webkitMinLogicalHeight != null)
+        {
+            action(nameof(webkitMinLogicalHeight), s.webkitMinLogicalHeight);
+        }
+        if (s.webkitMinLogicalWidth != null)
+        {
+            action(nameof(webkitMinLogicalWidth), s.webkitMinLogicalWidth);
+        }
+        if (s.webkitOpacity != null)
+        {
+            action(nameof(webkitOpacity), s.webkitOpacity);
+        }
+        if (s.webkitOrder != null)
+        {
+            action(nameof(webkitOrder), s.webkitOrder);
+        }
+        if (s.webkitPaddingAfter != null)
+        {
+            action(nameof(webkitPaddingAfter), s.webkitPaddingAfter);
+        }
+        if (s.webkitPaddingBefore != null)
+        {
+            action(nameof(webkitPaddingBefore), s.webkitPaddingBefore);
+        }
+        if (s.webkitPaddingEnd != null)
+        {
+            action(nameof(webkitPaddingEnd), s.webkitPaddingEnd);
+        }
+        if (s.webkitPaddingStart != null)
+        {
+            action(nameof(webkitPaddingStart), s.webkitPaddingStart);
+        }
+        if (s.webkitPerspective != null)
+        {
+            action(nameof(webkitPerspective), s.webkitPerspective);
+        }
+        if (s.webkitPerspectiveOrigin != null)
+        {
+            action(nameof(webkitPerspectiveOrigin), s.webkitPerspectiveOrigin);
+        }
+        if (s.webkitPerspectiveOriginX != null)
+        {
+            action(nameof(webkitPerspectiveOriginX), s.webkitPerspectiveOriginX);
+        }
+        if (s.webkitPerspectiveOriginY != null)
+        {
+            action(nameof(webkitPerspectiveOriginY), s.webkitPerspectiveOriginY);
+        }
+        if (s.webkitPrintColorAdjust != null)
+        {
+            action(nameof(webkitPrintColorAdjust), s.webkitPrintColorAdjust);
+        }
+        if (s.webkitRtlOrdering != null)
+        {
+            action(nameof(webkitRtlOrdering), s.webkitRtlOrdering);
+        }
+        if (s.webkitRubyPosition != null)
+        {
+            action(nameof(webkitRubyPosition), s.webkitRubyPosition);
+        }
+        if (s.webkitShapeImageThreshold != null)
+        {
+            action(nameof(webkitShapeImageThreshold), s.webkitShapeImageThreshold);
+        }
+        if (s.webkitShapeMargin != null)
+        {
+            action(nameof(webkitShapeMargin), s.webkitShapeMargin);
+        }
+        if (s.webkitShapeOutside != null)
+        {
+            action(nameof(webkitShapeOutside), s.webkitShapeOutside);
+        }
+        if (s.webkitTapHighlightColor != null)
+        {
+            action(nameof(webkitTapHighlightColor), s.webkitTapHighlightColor);
+        }
+        if (s.webkitTextCombine != null)
+        {
+            action(nameof(webkitTextCombine), s.webkitTextCombine);
+        }
+        if (s.webkitTextDecorationsInEffect != null)
+        {
+            action(nameof(webkitTextDecorationsInEffect), s.webkitTextDecorationsInEffect);
+        }
+        if (s.webkitTextEmphasis != null)
+        {
+            action(nameof(webkitTextEmphasis), s.webkitTextEmphasis);
+        }
+        if (s.webkitTextEmphasisColor != null)
+        {
+            action(nameof(webkitTextEmphasisColor), s.webkitTextEmphasisColor);
+        }
+        if (s.webkitTextEmphasisPosition != null)
+        {
+            action(nameof(webkitTextEmphasisPosition), s.webkitTextEmphasisPosition);
+        }
+        if (s.webkitTextEmphasisStyle != null)
+        {
+            action(nameof(webkitTextEmphasisStyle), s.webkitTextEmphasisStyle);
+        }
+        if (s.webkitTextFillColor != null)
+        {
+            action(nameof(webkitTextFillColor), s.webkitTextFillColor);
+        }
+        if (s.webkitTextOrientation != null)
+        {
+            action(nameof(webkitTextOrientation), s.webkitTextOrientation);
+        }
+        if (s.webkitTextSecurity != null)
+        {
+            action(nameof(webkitTextSecurity), s.webkitTextSecurity);
+        }
+        if (s.webkitTextSizeAdjust != null)
+        {
+            action(nameof(webkitTextSizeAdjust), s.webkitTextSizeAdjust);
+        }
+        if (s.webkitTextStroke != null)
+        {
+            action(nameof(webkitTextStroke), s.webkitTextStroke);
+        }
+        if (s.webkitTextStrokeColor != null)
+        {
+            action(nameof(webkitTextStrokeColor), s.webkitTextStrokeColor);
+        }
+        if (s.webkitTextStrokeWidth != null)
+        {
+            action(nameof(webkitTextStrokeWidth), s.webkitTextStrokeWidth);
+        }
+        if (s.webkitTransform != null)
+        {
+            action(nameof(webkitTransform), s.webkitTransform);
+        }
+        if (s.webkitTransformOrigin != null)
+        {
+            action(nameof(webkitTransformOrigin), s.webkitTransformOrigin);
+        }
+        if (s.webkitTransformOriginX != null)
+        {
+            action(nameof(webkitTransformOriginX), s.webkitTransformOriginX);
+        }
+        if (s.webkitTransformOriginY != null)
+        {
+            action(nameof(webkitTransformOriginY), s.webkitTransformOriginY);
+        }
+        if (s.webkitTransformOriginZ != null)
+        {
+            action(nameof(webkitTransformOriginZ), s.webkitTransformOriginZ);
+        }
+        if (s.webkitTransformStyle != null)
+        {
+            action(nameof(webkitTransformStyle), s.webkitTransformStyle);
+        }
+        if (s.webkitTransition != null)
+        {
+            action(nameof(webkitTransition), s.webkitTransition);
+        }
+        if (s.webkitTransitionDelay != null)
+        {
+            action(nameof(webkitTransitionDelay), s.webkitTransitionDelay);
+        }
+        if (s.webkitTransitionDuration != null)
+        {
+            action(nameof(webkitTransitionDuration), s.webkitTransitionDuration);
+        }
+        if (s.webkitTransitionProperty != null)
+        {
+            action(nameof(webkitTransitionProperty), s.webkitTransitionProperty);
+        }
+        if (s.webkitTransitionTimingFunction != null)
+        {
+            action(nameof(webkitTransitionTimingFunction), s.webkitTransitionTimingFunction);
+        }
+        if (s.webkitUserDrag != null)
+        {
+            action(nameof(webkitUserDrag), s.webkitUserDrag);
+        }
+        if (s.webkitUserModify != null)
+        {
+            action(nameof(webkitUserModify), s.webkitUserModify);
+        }
+        if (s.webkitUserSelect != null)
+        {
+            action(nameof(webkitUserSelect), s.webkitUserSelect);
+        }
+        if (s.webkitWritingMode != null)
+        {
+            action(nameof(webkitWritingMode), s.webkitWritingMode);
+        }
+        if (s.whiteSpace != null)
+        {
+            action(nameof(whiteSpace), s.whiteSpace);
+        }
+        if (s.whiteSpaceCollapse != null)
+        {
+            action(nameof(whiteSpaceCollapse), s.whiteSpaceCollapse);
+        }
+        if (s.widows != null)
+        {
+            action(nameof(widows), s.widows);
+        }
+        if (s.width != null)
+        {
+            action(nameof(width), s.width);
+        }
+        if (s.willChange != null)
+        {
+            action(nameof(willChange), s.willChange);
+        }
+        if (s.wordBreak != null)
+        {
+            action(nameof(wordBreak), s.wordBreak);
+        }
+        if (s.wordSpacing != null)
+        {
+            action(nameof(wordSpacing), s.wordSpacing);
+        }
+        if (s.wordWrap != null)
+        {
+            action(nameof(wordWrap), s.wordWrap);
+        }
+        if (s.writingMode != null)
+        {
+            action(nameof(writingMode), s.writingMode);
+        }
+        if (s.x != null)
+        {
+            action(nameof(x), s.x);
+        }
+        if (s.y != null)
+        {
+            action(nameof(y), s.y);
+        }
+        if (s.zIndex != null)
+        {
+            action(nameof(zIndex), s.zIndex);
+        }
+        if (s.zoom != null)
+        {
+            action(nameof(zoom), s.zoom);
+        }
+        if (s.mozOsxFontSmoothing != null)
+        {
+            action(nameof(mozOsxFontSmoothing), s.mozOsxFontSmoothing);
+        }
+        if (s.boxDecorationBreak != null)
+        {
+            action(nameof(boxDecorationBreak), s.boxDecorationBreak);
+        }
+        if (s.cssFloat != null)
+        {
+            action(nameof(cssFloat), s.cssFloat);
+        }
+        if (s.cssText != null)
+        {
+            action(nameof(cssText), s.cssText);
+        }
+        if (s.fontLanguageOverride != null)
+        {
+            action(nameof(fontLanguageOverride), s.fontLanguageOverride);
+        }
+        if (s.fontSizeAdjust != null)
+        {
+            action(nameof(fontSizeAdjust), s.fontSizeAdjust);
+        }
+        if (s.gridAutoPosition != null)
+        {
+            action(nameof(gridAutoPosition), s.gridAutoPosition);
+        }
+        if (s.icon != null)
+        {
+            action(nameof(icon), s.icon);
+        }
+        if (s.imageResolution != null)
+        {
+            action(nameof(imageResolution), s.imageResolution);
+        }
+        if (s.imeMode != null)
+        {
+            action(nameof(imeMode), s.imeMode);
+        }
+        if (s.marks != null)
+        {
+            action(nameof(marks), s.marks);
+        }
+        if (s.navDown != null)
+        {
+            action(nameof(navDown), s.navDown);
+        }
+        if (s.navIndex != null)
+        {
+            action(nameof(navIndex), s.navIndex);
+        }
+        if (s.navLeft != null)
+        {
+            action(nameof(navLeft), s.navLeft);
+        }
+        if (s.navRight != null)
+        {
+            action(nameof(navRight), s.navRight);
+        }
+        if (s.navUp != null)
+        {
+            action(nameof(navUp), s.navUp);
+        }
+        if (s.overflowClipBox != null)
+        {
+            action(nameof(overflowClipBox), s.overflowClipBox);
+        }
+    }
 }
