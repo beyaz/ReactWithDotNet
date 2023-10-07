@@ -10,7 +10,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     {
         { "class", "className" },
         { "for", "htmlFor" },
-        { "viewbox", "viewBox" },
         { "rowspan", "rowSpan" },
         { "colspan", "colSpan" },
         { "cellspacing", "cellSpacing" },
@@ -96,9 +95,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static void FixAttributeName(HtmlAttribute htmlAttribute)
     {
-        if (AttributeRealNameMap.ContainsKey(htmlAttribute.Name))
+        if (AttributeRealNameMap.ContainsKey(htmlAttribute.OriginalName))
         {
-            htmlAttribute.Name = AttributeRealNameMap[htmlAttribute.Name];
+            htmlAttribute.Name = AttributeRealNameMap[htmlAttribute.OriginalName];
         }
 
         if (htmlAttribute.Name.Contains(":"))
@@ -136,6 +135,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         foreach (var htmlAttribute in items)
         {
             htmlAttributeCollection.Remove(htmlAttribute);
+        }
+    }
+    
+    static void RemoveAll(this HtmlNodeCollection htmlNodeCollection, Func<HtmlNode, bool> match)
+    {
+        var nodes = htmlNodeCollection.Where(match).ToList();
+
+        foreach (var node in nodes)
+        {
+            htmlNodeCollection.Remove(node);
         }
     }
 
@@ -236,7 +245,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return new List<string> { "br" };
         }
 
-        string constructorPart = null;
 
         Style style = null;
 
@@ -402,6 +410,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
+        
+        // remove comments
+        {
+            htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
+        }
 
         bool canBeExportInOneLine()
         {
@@ -557,7 +570,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return new List<string>
             {
                 // one line
-                $"new {htmlNodeName}{constructorPart}",
+                $"new {htmlNodeName}({string.Join(", ", modifiers)})",
                 "{",
                 ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
                 "}"
@@ -583,7 +596,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             var lines = new List<string>
             {
-                $"new {htmlNodeName}{constructorPart}",
+                $"new {htmlNodeName}({string.Join(", ", modifiers)})",
                 "{"
             };
 
@@ -614,6 +627,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return "TargetBlank";
         }
+        
+        if (htmlAttribute.Name == "focusable" && htmlAttribute.OwnerNode.Name =="svg")
+        {
+            return $"svg.Focusable(\"{htmlAttribute.Value}\")";
+        }
+        
+        if (htmlAttribute.Name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && htmlAttribute.OwnerNode.Name =="svg")
+        {
+            return $"ViewBox(\"{htmlAttribute.Value}\")";
+        }
+        
+        
 
         var modifierFullName = $"{CamelCase(htmlAttribute.Name)}{CamelCase(htmlAttribute.Value)}";
 
