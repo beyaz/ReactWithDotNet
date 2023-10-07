@@ -577,6 +577,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
 
 
+        foreach (var htmlNodeAttribute in htmlNode.Attributes)
+        {
+            FixAttributeName(htmlNodeAttribute);
+        }
+        
         var attributeMap = htmlNode.Attributes.ToMap();
 
        
@@ -613,28 +618,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             };
         }
 
-        // check can be written in one line
-        {
-            if (htmlNode.ChildNodes.Count == 0)
-            {
-                
-                
-                if (htmlNode.Name == "link" || htmlNode.Name == "path")
-                {
-                    return new List<string>
-                    {
-                        // one line
-                        $"new {htmlNodeName} {{ {string.Join(", ", attributeMap.Select(p => $"{p.Key} = \"{p.Value}\""))} }}"
-                    };
-                }
-
-                return new List<string>
-                {
-                    // one line
-                    $"new {htmlNodeName}{constructorPart ?? "()"}"
-                };
-            }
-        }
+        
 
         // multi line
         {
@@ -691,95 +675,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             htmlAttribute.Name = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
         }
     }
-    static IReadOnlyDictionary<string, string> ToDictionary(HtmlAttribute htmlAttribute)
-    {
-        if (htmlAttribute.Name == "style" && !string.IsNullOrWhiteSpace(htmlAttribute.Value))
-        {
-            return Style.ParseCss(htmlAttribute.Value).ToDictionary();
-        }
 
-        var lines = new Dictionary<string, string>();
-
-        
-        
-        var attributeName = htmlAttribute.OriginalName;
-        if (attributeName == "class")
-        {
-            attributeName = "className";
-        }
-
-        if (attributeName == "for")
-        {
-            attributeName = "htmlFor";
-        }
-
-        if (attributeName == "viewbox")
-        {
-            attributeName = "viewBox";
-        }
-        
-        if (attributeName == "rowspan")
-        {
-            attributeName = "rowSpan";
-        }
-        if (attributeName == "colspan")
-        {
-            attributeName = "colSpan";
-        }
-        if (attributeName == "cellspacing")
-        {
-            attributeName = "CellSpacing";
-        }
-        if (attributeName == "cellpadding")
-        {
-            attributeName = "cellPadding";
-        }
-        
-        
-
-        if (attributeName == "tabindex")
-        {
-            attributeName = "tabIndex";
-        }
-
-        if (attributeName == "preserveaspectratio")
-        {
-            attributeName = "preserveAspectRatio";
-        }
-
-        if (attributeName.Contains("-") && !attributeName.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
-        {
-            var parts = attributeName.Split("-");
-
-            attributeName = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
-        }
-
-        if (attributeName.Contains(":"))
-        {
-            var parts = attributeName.Split(":");
-
-            attributeName = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
-        }
-
-        lines.Add(attributeName, htmlAttribute.Value);
-
-        return lines;
-    }
-
-    static Dictionary<string, string> ToMap(this HtmlAttributeCollection htmlAttributes)
-    {
-        var map = new Dictionary<string, string>();
-
-        foreach (var htmlAttribute in htmlAttributes)
-        {
-            foreach (var (key, value) in ToDictionary(htmlAttribute))
-            {
-                map.Add(key, value);
-            }
-        }
-
-        return map;
-    }
+    
 
     static string ToModifier(string name, string value)
     {
