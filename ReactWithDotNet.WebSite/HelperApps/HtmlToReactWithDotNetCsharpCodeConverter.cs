@@ -340,27 +340,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (style is not null)
                 {
-                    // r o w
-                    if (style.display == "inline-flex" &&
-                        (style.flexDirection is null || style.flexDirection == "row") &&
-                        style.justifyContent == "center" &&
-                        style.alignItems == "center")
-                    {
-                        htmlNodeName  = "InlineFlexRowCentered";
-                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
-                    }
-                    
-                    
-                    if (style.display == "flex" &&
-                        (style.flexDirection is null || style.flexDirection == "row") &&
-                        style.justifyContent == "center" &&
-                        style.alignItems == "center")
-                    {
-                        
-                        htmlNodeName  = "FlexRowCentered";
-                        style.display = style.flexDirection = style.justifyContent = style.alignItems= null;
-                    }
-
                     // c o l u m n s
                     if (style.display == "inline-flex" &&
                         style.flexDirection == "column" &&
@@ -381,9 +360,33 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         htmlNodeName  = "FlexColumnCentered";
                         style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
                     }
-                   
+                    
+                    if (style.display == "flex" && style.flexDirection == "column")
+                    {
+                        htmlNodeName  = "FlexColumn";
+                        style.display = style.flexDirection = null;
+                    }
+                    
+                    // r o w
+                    if (style.display == "inline-flex" &&
+                        (style.flexDirection is null || style.flexDirection == "row") &&
+                        style.justifyContent == "center" &&
+                        style.alignItems == "center")
+                    {
+                        htmlNodeName  = "InlineFlexRowCentered";
+                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                    }
                     
                     
+                    if (style.display == "flex" &&
+                        (style.flexDirection is null || style.flexDirection == "row") &&
+                        style.justifyContent == "center" &&
+                        style.alignItems == "center")
+                    {
+                        
+                        htmlNodeName  = "FlexRowCentered";
+                        style.display = style.flexDirection = style.justifyContent = style.alignItems= null;
+                    }
                     
                     if (style.display == "flex" && style.flexDirection == "row")
                     {
@@ -592,74 +595,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             ApplyShortHands(attributeMap);
 
-            if (htmlNodeName == "div")
-            {
-                if (hasAttribute(nameof(DisplayInlineFlexRowCentered), null))
-                {
-                    htmlNodeName = nameof(InlineFlexRowCentered);
-                    attributeMap.Remove(nameof(DisplayInlineFlexRowCentered));
-                }
-                
-                if (hasAttribute(nameof(DisplayInlineFlexRow), null))
-                {
-                    htmlNodeName = nameof(InlineFlexRow);
-                    attributeMap.Remove(nameof(DisplayInlineFlexRow));
-                }
-                
-                if (hasAttribute(nameof(DisplayFlexRow), null))
-                {
-                    htmlNodeName = nameof(FlexRow);
-                    attributeMap.Remove(nameof(DisplayFlexRow));
-                }
-                
-                if (hasAttribute(nameof(DisplayInlineFlexColumnCentered), null))
-                {
-                    htmlNodeName = nameof(InlineFlexColumnCentered);
-                    attributeMap.Remove(nameof(DisplayInlineFlexColumnCentered));
-                }
-                
-                if (hasAttribute(nameof(DisplayInlineFlexColumn), null))
-                {
-                    htmlNodeName = nameof(InlineFlexColumn);
-                    attributeMap.Remove(nameof(DisplayInlineFlexColumn));
-                }
-                
-                if (hasAttribute(nameof(DisplayFlexColumn), null))
-                {
-                    htmlNodeName = nameof(FlexColumn);
-                    attributeMap.Remove(nameof(DisplayFlexColumn));
-                }
-                
-                if (hasAttribute("display", "flex"))
-                {
-                    if (hasAttribute("flexDirection", "column"))
-                    {
-                        htmlNodeName = "FlexColumn";
-                        attributeMap.Remove("display");
-                        attributeMap.Remove("flexDirection");
-
-                        if (hasAttribute("JustifyContent", "center") && hasAttribute("AlignItems", "center"))
-                        {
-                            htmlNodeName = "FlexColumnCenter";
-                            attributeMap.Remove("JustifyContent");
-                            attributeMap.Remove("AlignItems");
-                        }
-                    }
-                    else if (hasAttribute("flexDirection", "row"))
-                    {
-                        htmlNodeName = "FlexRow";
-                        attributeMap.Remove("display");
-                        attributeMap.Remove("flexDirection");
-
-                        if (hasAttribute("JustifyContent", "center") && hasAttribute("AlignItems", "center"))
-                        {
-                            htmlNodeName = "FlexRowCenter";
-                            attributeMap.Remove("JustifyContent");
-                            attributeMap.Remove("AlignItems");
-                        }
-                    }
-                }
-            }
+          
 
             if (style is not null)
             {
