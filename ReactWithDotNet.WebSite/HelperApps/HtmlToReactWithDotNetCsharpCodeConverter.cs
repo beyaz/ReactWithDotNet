@@ -716,7 +716,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (htmlNode.Attributes.Any() || modifiers.Any())
                 {
-                    htmlNode.Attributes.Insert(0,"text",htmlNode.ChildNodes[0].InnerText);
+                    htmlNode.Attributes.Insert(0,"text",htmlNode.ChildNodes[0].InnerText.Trim());
                     htmlNode.ChildNodes.RemoveAt(0);
                 }
             }
@@ -857,7 +857,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         
                         lines[^1] += ",";
                     }
-                    
+
+                    lines[^1] = lines[^1].RemoveFromEnd(",");
                     lines.Add("}");
                 }
             
