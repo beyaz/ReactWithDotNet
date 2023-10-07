@@ -197,9 +197,9 @@ public class ExportStyleProperties
         foreach (var name in propertyNames)
         {
             var propertyName = getPropertyName(name);
-            list.Add("/// <summary>");
-            list.Add($"///     style.{propertyName} = <paramref name=\"value\" />");
-            list.Add("/// </summary>");
+            list.Add($"{indent}/// <summary>");
+            list.Add($"{indent}/// {indent}style.{propertyName} = <paramref name=\"value\" />");
+            list.Add($"{indent}/// </summary>");
             list.Add($"{indent}public static StyleModifier {getStyleModifierName(propertyName)}(string value) => new(style => style.{propertyName} = value);");
         }
         list.Add("}");
