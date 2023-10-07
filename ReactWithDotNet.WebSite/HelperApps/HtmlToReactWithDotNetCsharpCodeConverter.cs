@@ -629,7 +629,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         Style style= null;
 
         var styleAttribute = htmlNode.Attributes["style"];
-        if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
+        if (!string.IsNullOrWhiteSpace(styleAttribute?.Value))
         {
             style = Style.ParseCss(styleAttribute.Value);
             
@@ -962,4 +962,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         return $"{CamelCase(name)}(\"{CamelCase(value)}\")";
     }
+
+
 }
