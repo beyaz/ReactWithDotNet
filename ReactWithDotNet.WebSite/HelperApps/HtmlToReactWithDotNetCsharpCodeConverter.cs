@@ -122,35 +122,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         displayFlexColumn();
 
         displayFlexRow();
-        data();
-        aria();
-        
-        
-        void aria()
-        {
-            var dataList = attributeMap.Where(x => x.Key.StartsWith("aria-", StringComparison.OrdinalIgnoreCase)).ToList();
-            
-            
-            foreach (var (key, value) in dataList)
-            {
-                attributeMap.Remove(key);
-
-                attributeMap.Add($"Aria(\"{key.RemoveFromStart("data-")}\", \"{value}\")", null);
-            }
-        }
-        
-        void data()
-        {
-            var dataList = attributeMap.Where(x => x.Key.StartsWith("data-", StringComparison.OrdinalIgnoreCase)).ToList();
-            
-            
-            foreach (var (key, value) in dataList)
-            {
-                attributeMap.Remove(key);
-
-                attributeMap.Add($"Data(\"{key.RemoveFromStart("data-")}\", \"{value}\")", null);
-            }
-        }
+       
         
         
         
@@ -733,6 +705,51 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (style is not null)
                 {
+                    // r o w
+                    if (style.display == "inline-flex" &&
+                        (style.flexDirection is null || style.flexDirection == "row") &&
+                        style.justifyContent == "center" &&
+                        style.alignItems == "center")
+                    {
+                        htmlNodeName  = "InlineFlexRowCentered";
+                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                    }
+                    
+                    
+                    if (style.display == "flex" &&
+                        (style.flexDirection is null || style.flexDirection == "row") &&
+                        style.justifyContent == "center" &&
+                        style.alignItems == "center")
+                    {
+                        
+                        htmlNodeName  = "FlexRowCentered";
+                        style.display = style.flexDirection = style.justifyContent = style.alignItems= null;
+                    }
+
+                    // c o l u m n s
+                    if (style.display == "inline-flex" &&
+                        style.flexDirection == "column" &&
+                        style.justifyContent == "center" &&
+                        style.alignItems == "center")
+                    {
+                        htmlNodeName  = "InlineFlexColumnCentered";
+                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                    }
+                    
+                    
+                    if (style.display == "flex" &&
+                        style.flexDirection == "column" &&
+                        style.justifyContent == "center" &&
+                        style.alignItems == "center")
+                    {
+                        
+                        htmlNodeName  = "FlexColumnCentered";
+                        style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                    }
+                   
+                    
+                    
+                    
                     if (style.display == "flex" && style.flexDirection == "row")
                     {
                         htmlNodeName  = "FlexRow";
