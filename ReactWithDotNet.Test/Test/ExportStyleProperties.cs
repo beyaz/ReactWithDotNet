@@ -51,7 +51,7 @@ public class ExportStyleProperties
         {
             var propertyName = getPropertyName(name);
             
-            list.Add($"{indent}{indent}if (s.{propertyName} == null)");
+            list.Add($"{indent}{indent}if (s.{propertyName} != null)");
             list.Add( $"{indent}{indent}{{");
             list.Add($"{indent}{indent}{indent}return false;");
             list.Add( $"{indent}{indent}");
