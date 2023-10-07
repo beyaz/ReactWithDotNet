@@ -49,6 +49,20 @@ public class UnitTest1
                    style = { borderRadius = "12px", color = "rgb(28, 32, 37)" }
                }
                """);
+        
+        
+        Assert("""
+               <div aria-hidden="true"   data-testid="AcUnitIcon"  style = "display: flex; flexDirection: row; color: blue;">
+               
+               </div>
+               """,
+
+               """
+               new FlexRow(Aria("hidden", "true"), Data("testid", "AcUnitIcon"))
+               {
+                   style = { color = "blue" }
+               }
+               """);
     }
 
 
