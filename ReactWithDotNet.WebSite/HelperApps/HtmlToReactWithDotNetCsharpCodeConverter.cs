@@ -665,6 +665,32 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
     }
 
+    static readonly IReadOnlyDictionary<string, string> AttributeRealNameMap = new Dictionary<string, string>
+    {
+        {"class","className"},
+        {"for","htmlFor"},
+        {"viewbox","viewBox"},
+        {"rowspan","rowSpan"},
+        {"colspan","colSpan"},
+        {"cellspacing","cellSpacing"},
+        {"cellpadding","cellPadding"},
+        {"tabindex","tabIndex"},
+        {"preserveaspectratio","preserveAspectRatio"}
+    };
+    static void FixAttributeName(HtmlAttribute htmlAttribute)
+    {
+        if (AttributeRealNameMap.ContainsKey(htmlAttribute.Name))
+        {
+            htmlAttribute.Name = AttributeRealNameMap[htmlAttribute.Name];
+        }
+        
+        if (htmlAttribute.Name.Contains(":"))
+        {
+            var parts = htmlAttribute.Name.Split(":");
+
+            htmlAttribute.Name = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
+        }
+    }
     static IReadOnlyDictionary<string, string> ToDictionary(HtmlAttribute htmlAttribute)
     {
         if (htmlAttribute.Name == "style" && !string.IsNullOrWhiteSpace(htmlAttribute.Value))
@@ -674,6 +700,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         var lines = new Dictionary<string, string>();
 
+        
+        
         var attributeName = htmlAttribute.OriginalName;
         if (attributeName == "class")
         {
