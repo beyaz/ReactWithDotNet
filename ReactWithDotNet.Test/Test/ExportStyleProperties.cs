@@ -194,11 +194,11 @@ public class ExportStyleProperties
         list.Add("partial class Mixin");
         list.Add("{");
 
-        var propertyNamesForStyleModifiers = new string[]{"borderImageOutset"};
+        var propertyNamesForStyleModifiers = new []{"borderImageOutset"};
         
         foreach (var propertyName in propertyNamesForStyleModifiers)
         {
-            list.Add($"{indent}public static StyleModifier {getStyleModifierName(propertyName)}(string value) => new(style => style.{propertyName} = color);");
+            list.Add($"{indent}public static StyleModifier {getStyleModifierName(propertyName)}(string value) => new(style => style.{propertyName} = value);");
         }
         list.Add("}");
         ////////////////////////////////////////
