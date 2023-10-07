@@ -100,7 +100,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     static void ApplyShortHands(Dictionary<string, string> attributeMap)
     {
         
-        borderShortHands();
         targetBlank();
 
    
@@ -118,24 +117,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
        
 
-        
-        
-        void borderShortHands()
-        {
-            foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
-            {
-                if (attributeMap.TryGetValue($"{prefix}Style", out var style) &&
-                    attributeMap.TryGetValue($"{prefix}Width", out var width) &&
-                    !attributeMap.ContainsKey($"{prefix}Color") &&
-                    !attributeMap.ContainsKey($"{prefix}"))
-                {
-                    attributeMap.Remove($"{prefix}Style");
-                    attributeMap.Remove($"{prefix}Width");
-
-                    attributeMap.Add($"{prefix}", $"{width} {style}");
-                }
-            }
-        }
         
         
         void targetBlank()
@@ -408,6 +389,40 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     {
                         htmlNodeName  = "FlexRow";
                         style.display = style.flexDirection = null;
+                    }
+                }
+            }
+        }
+
+        // border
+        {
+            if (style is not null)
+            {
+                foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
+                {
+                    var xStyle = style[$"{prefix}Style"];
+                    var xWidth = style[$"{prefix}Width"];
+                    var xColor = style[$"{prefix}Color"];
+
+                    if (style[prefix] is null)
+                    {
+                        if (string.IsNullOrWhiteSpace(xStyle) is false&&
+                            string.IsNullOrWhiteSpace(xWidth) is false&&
+                            string.IsNullOrWhiteSpace(xColor) is false)
+                        {
+                            style[prefix] = $"{xWidth} {xStyle} {xColor}";
+
+                            style[$"{prefix}Style"] = style[$"{prefix}Width"] = style[$"{prefix}Color"] = null;
+                        }
+                        
+                        if (string.IsNullOrWhiteSpace(xStyle) is false&&
+                            string.IsNullOrWhiteSpace(xWidth) is false&&
+                            string.IsNullOrWhiteSpace(xColor) is true)
+                        {
+                            style[prefix] = $"{xWidth} {xStyle}";
+
+                            style[$"{prefix}Style"] = style[$"{prefix}Width"] = style[$"{prefix}Color"] = null;
+                        }
                     }
                 }
             }
