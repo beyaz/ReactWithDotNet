@@ -661,7 +661,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
             static string toAriaModifier(HtmlAttribute htmlAttribute)
             {
-                return $"Aria(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")";
+                return $"Aria(\"{htmlAttribute.Name.RemoveFromStart("aria-")}\", \"{htmlAttribute.Value}\")";
             }
             
             modifiers.AddRange(htmlNode.Attributes.Where(isAriaAttribute).Select(toAriaModifier));
@@ -721,9 +721,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (htmlNode.Attributes.Count > 0)
             {
-                sb.Append("{");
+                sb.Append(" { ");
                 sb.Append(string.Join(", ", htmlNode.Attributes.Select(attributeToString)));
-                sb.Append("}");
+                sb.Append(" }");
             }
             
             return new List<string>
