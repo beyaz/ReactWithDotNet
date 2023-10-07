@@ -1,145 +1,31 @@
 using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static System.String;
-
 namespace ReactWithDotNet.Test;
 
 [TestClass]
-[Ignore]
-public class UnitTest1
+//[Ignore]
+public class ExportStyleProperties
 {
     [TestMethod]
     public void ExportCommonHtmlElements()
     {
-        TagInfo[] map =
-        {
-            new() { Tag = "article", Comment = "Specifies independent, self-contained content." },
-
-            new() { Tag = "div", Comment = Empty },
-
-            new() { Tag = "p", Comment = "Defines a paragraph" },
-
-            new() { Tag = "pre", Comment  = "Preformatted text" },
-            new() { Tag = "code", Comment = "Define some text as computer code in a document" },
-
-            new() { Tag = "ol", Comment = "Ordered list" },
-
-            new() { Tag = "ul", Comment = "Unordered (bulleted) list" },
-
-            new() { Tag = "li", Comment = "List item" },
-
-            new() { Tag = "label", CreateClassAsPartial = true },
-
-            new() { Tag = "h1", Comment = Empty },
-
-            new() { Tag = "h2", Comment = Empty },
-            new() { Tag = "h3", Comment = Empty },
-            new() { Tag = "h4", Comment = Empty },
-            new() { Tag = "h5", Comment = Empty },
-            new() { Tag = "h6", Comment = Empty },
-
-            new() { Tag = "header", Comment = Empty },
-
-            new() { Tag = "span", Comment = "Inline container used to mark up a part of a text, or a part of a document." },
-
-            new() { Tag = "sup", Comment = "Superscript text" },
-
-            new() { Tag = "sub", Comment = "Subscript text" },
-
-            new() { Tag = "ins", Comment = "Inserted text" },
-
-            new() { Tag = "del", Comment = "Deleted text" },
-
-            new() { Tag = "small", Comment = "Smaller text" },
-
-            new() { Tag = "mark", Comment = "Marked text" },
-
-            new() { Tag = "em", Comment = "Emphasized text" },
-
-            new() { Tag = "b", Comment = "Bold text" },
-
-            new() { Tag = "i", Comment = "Italic text" },
-            
-            new() { Tag = "u", Comment = "Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline." },
-
-            new() { Tag = "strong", Comment = "Important text" },
-
-            new() { Tag = "section", Comment = "Section in a document", EnableStringIntegration = false },
-
-            new() { Tag = "aside", EnableStringIntegration = false },
-
-            new() { Tag = "fieldset", EnableStringIntegration = false },
-
-            new() { Tag = "legend", EnableStringIntegration = false },
-
-            new() { Tag = "nav", EnableStringIntegration = false },
-
-            new() { Tag = "main", EnableStringIntegration = false },
-
-            new() { Tag = "footer", EnableStringIntegration = false },
-
-            new() { Tag = "figure", EnableStringIntegration = false },
-
-            new() { Tag = "hr", EnableStringIntegration = false },
-
-            new() { Tag = "figcaption" }
-        };
+        var propertyNames = GetPropertyNamesOfStyleClass();
 
         var list = new List<string>
         {
-            "namespace ReactWithDotNet;"
+            "namespace ReactWithDotNet;",
+            "",
+            "partial class Style",
+            "{"
         };
 
-        foreach (var item in map)
+        foreach (var propertyName in propertyNames)
         {
-            addComment(null);
-
-            var partialModifier = "";
-            if (item.CreateClassAsPartial)
-            {
-                partialModifier = " partial";
-            }
-
-            list.Add($"public sealed{partialModifier} class {item.Tag} : HtmlElement");
-            list.Add("{");
-
-            addComment();
-            list.Add($"    public {item.Tag}() {{ }}");
-
-            list.Add(Empty);
-            addComment();
-            list.Add($"    public {item.Tag}(params IModifier[] modifiers) : base(modifiers) {{ }}");
-
-            if (item.EnableStringIntegration)
-            {
-                list.Add(Empty);
-                addComment();
-                list.Add($"    public {item.Tag}(string innerText) : base(innerText) {{  }}");
-
-                list.Add(Empty);
-                addComment();
-                list.Add($"    public static implicit operator {item.Tag}(string text) => new() {{ text = text }};");
-            }
-
-            list.Add(Empty);
-            addComment();
-            list.Add($"    public {item.Tag}(Style style) : base(style) {{ }}");
-
-            list.Add("}");
-
-            list.Add(Empty);
-
-            void addComment(string padding = "    ")
-            {
-                if (IsNullOrWhiteSpace(item.Comment) == false)
-                {
-                    list.Add($"{padding}/// <summary>");
-                    list.Add($"{padding}///     {item.Comment}");
-                    list.Add($"{padding}/// </summary>");
-                }
-            }
+            list.Add($"    public string {propertyName} {{ get; set; }}");
         }
+        
+        list.Add("}");
 
         var sb = new StringBuilder();
 
@@ -148,14 +34,631 @@ public class UnitTest1
             sb.AppendLine(item);
         }
 
-        File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
+        File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\Style.generated.cs", sb.ToString());
     }
 
-    class TagInfo
+    static IReadOnlyList<string> GetPropertyNamesOfStyleClass()
     {
-        public string Comment { get; init; }
-        public bool CreateClassAsPartial { get; init; }
-        public bool EnableStringIntegration { get; init; } = true;
-        public string Tag { get; init; }
+        const string text = """
+                            accentColor
+                            additiveSymbols
+                            alignContent
+                            alignItems
+                            alignSelf
+                            alignmentBaseline
+                            all
+                            animation
+                            animationComposition
+                            animationDelay
+                            animationDirection
+                            animationDuration
+                            animationFillMode
+                            animationIterationCount
+                            animationName
+                            animationPlayState
+                            animationRange
+                            animationRangeEnd
+                            animationRangeStart
+                            animationTimeline
+                            animationTimingFunction
+                            appRegion
+                            appearance
+                            ascentOverride
+                            aspectRatio
+                            backdropFilter
+                            backfaceVisibility
+                            background
+                            backgroundAttachment
+                            backgroundBlendMode
+                            backgroundClip
+                            backgroundColor
+                            backgroundImage
+                            backgroundOrigin
+                            backgroundPosition
+                            backgroundPositionX
+                            backgroundPositionY
+                            backgroundRepeat
+                            backgroundRepeatX
+                            backgroundRepeatY
+                            backgroundSize
+                            basePalette
+                            baselineShift
+                            baselineSource
+                            blockSize
+                            border
+                            borderBlock
+                            borderBlockColor
+                            borderBlockEnd
+                            borderBlockEndColor
+                            borderBlockEndStyle
+                            borderBlockEndWidth
+                            borderBlockStart
+                            borderBlockStartColor
+                            borderBlockStartStyle
+                            borderBlockStartWidth
+                            borderBlockStyle
+                            borderBlockWidth
+                            borderBottom
+                            borderBottomColor
+                            borderBottomLeftRadius
+                            borderBottomRightRadius
+                            borderBottomStyle
+                            borderBottomWidth
+                            borderCollapse
+                            borderColor
+                            borderEndEndRadius
+                            borderEndStartRadius
+                            borderImage
+                            borderImageOutset
+                            borderImageRepeat
+                            borderImageSlice
+                            borderImageSource
+                            borderImageWidth
+                            borderInline
+                            borderInlineColor
+                            borderInlineEnd
+                            borderInlineEndColor
+                            borderInlineEndStyle
+                            borderInlineEndWidth
+                            borderInlineStart
+                            borderInlineStartColor
+                            borderInlineStartStyle
+                            borderInlineStartWidth
+                            borderInlineStyle
+                            borderInlineWidth
+                            borderLeft
+                            borderLeftColor
+                            borderLeftStyle
+                            borderLeftWidth
+                            borderRadius
+                            borderRight
+                            borderRightColor
+                            borderRightStyle
+                            borderRightWidth
+                            borderSpacing
+                            borderStartEndRadius
+                            borderStartStartRadius
+                            borderStyle
+                            borderTop
+                            borderTopColor
+                            borderTopLeftRadius
+                            borderTopRightRadius
+                            borderTopStyle
+                            borderTopWidth
+                            borderWidth
+                            bottom
+                            boxShadow
+                            boxSizing
+                            breakAfter
+                            breakBefore
+                            breakInside
+                            bufferedRendering
+                            captionSide
+                            caretColor
+                            clear
+                            clip
+                            clipPath
+                            clipRule
+                            color
+                            colorInterpolation
+                            colorInterpolationFilters
+                            colorRendering
+                            colorScheme
+                            columnCount
+                            columnFill
+                            columnGap
+                            columnRule
+                            columnRuleColor
+                            columnRuleStyle
+                            columnRuleWidth
+                            columnSpan
+                            columnWidth
+                            columns
+                            contain
+                            containIntrinsicBlockSize
+                            containIntrinsicHeight
+                            containIntrinsicInlineSize
+                            containIntrinsicSize
+                            containIntrinsicWidth
+                            container
+                            containerName
+                            containerType
+                            content
+                            contentVisibility
+                            counterIncrement
+                            counterReset
+                            counterSet
+                            cursor
+                            cx
+                            cy
+                            d
+                            descentOverride
+                            direction
+                            display
+                            dominantBaseline
+                            emptyCells
+                            fallback
+                            fill
+                            fillOpacity
+                            fillRule
+                            filter
+                            flex
+                            flexBasis
+                            flexDirection
+                            flexFlow
+                            flexGrow
+                            flexShrink
+                            flexWrap
+                            float
+                            floodColor
+                            floodOpacity
+                            font
+                            fontDisplay
+                            fontFamily
+                            fontFeatureSettings
+                            fontKerning
+                            fontOpticalSizing
+                            fontPalette
+                            fontSize
+                            fontStretch
+                            fontStyle
+                            fontSynthesis
+                            fontSynthesisSmallCaps
+                            fontSynthesisStyle
+                            fontSynthesisWeight
+                            fontVariant
+                            fontVariantAlternates
+                            fontVariantCaps
+                            fontVariantEastAsian
+                            fontVariantLigatures
+                            fontVariantNumeric
+                            fontVariantPosition
+                            fontVariationSettings
+                            fontWeight
+                            forcedColorAdjust
+                            gap
+                            grid
+                            gridArea
+                            gridAutoColumns
+                            gridAutoFlow
+                            gridAutoRows
+                            gridColumn
+                            gridColumnEnd
+                            gridColumnGap
+                            gridColumnStart
+                            gridGap
+                            gridRow
+                            gridRowEnd
+                            gridRowGap
+                            gridRowStart
+                            gridTemplate
+                            gridTemplateAreas
+                            gridTemplateColumns
+                            gridTemplateRows
+                            height
+                            hyphenateCharacter
+                            hyphenateLimitChars
+                            hyphens
+                            imageOrientation
+                            imageRendering
+                            inherits
+                            initialLetter
+                            initialValue
+                            inlineSize
+                            inset
+                            insetBlock
+                            insetBlockEnd
+                            insetBlockStart
+                            insetInline
+                            insetInlineEnd
+                            insetInlineStart
+                            isolation
+                            justifyContent
+                            justifyItems
+                            justifySelf
+                            left
+                            letterSpacing
+                            lightingColor
+                            lineBreak
+                            lineGapOverride
+                            lineHeight
+                            listStyle
+                            listStyleImage
+                            listStylePosition
+                            listStyleType
+                            margin
+                            marginBlock
+                            marginBlockEnd
+                            marginBlockStart
+                            marginBottom
+                            marginInline
+                            marginInlineEnd
+                            marginInlineStart
+                            marginLeft
+                            marginRight
+                            marginTop
+                            marker
+                            markerEnd
+                            markerMid
+                            markerStart
+                            mask
+                            maskType
+                            mathDepth
+                            mathShift
+                            mathStyle
+                            maxBlockSize
+                            maxHeight
+                            maxInlineSize
+                            maxWidth
+                            minBlockSize
+                            minHeight
+                            minInlineSize
+                            minWidth
+                            mixBlendMode
+                            negative
+                            objectFit
+                            objectPosition
+                            objectViewBox
+                            offset
+                            offsetAnchor
+                            offsetDistance
+                            offsetPath
+                            offsetPosition
+                            offsetRotate
+                            opacity
+                            order
+                            orphans
+                            outline
+                            outlineColor
+                            outlineOffset
+                            outlineStyle
+                            outlineWidth
+                            overflow
+                            overflowAnchor
+                            overflowClipMargin
+                            overflowWrap
+                            overflowX
+                            overflowY
+                            overlay
+                            overrideColors
+                            overscrollBehavior
+                            overscrollBehaviorBlock
+                            overscrollBehaviorInline
+                            overscrollBehaviorX
+                            overscrollBehaviorY
+                            pad
+                            padding
+                            paddingBlock
+                            paddingBlockEnd
+                            paddingBlockStart
+                            paddingBottom
+                            paddingInline
+                            paddingInlineEnd
+                            paddingInlineStart
+                            paddingLeft
+                            paddingRight
+                            paddingTop
+                            page
+                            pageBreakAfter
+                            pageBreakBefore
+                            pageBreakInside
+                            pageOrientation
+                            paintOrder
+                            perspective
+                            perspectiveOrigin
+                            placeContent
+                            placeItems
+                            placeSelf
+                            pointerEvents
+                            position
+                            prefix
+                            quotes
+                            r
+                            range
+                            resize
+                            right
+                            rotate
+                            rowGap
+                            rubyPosition
+                            rx
+                            ry
+                            scale
+                            scrollBehavior
+                            scrollMargin
+                            scrollMarginBlock
+                            scrollMarginBlockEnd
+                            scrollMarginBlockStart
+                            scrollMarginBottom
+                            scrollMarginInline
+                            scrollMarginInlineEnd
+                            scrollMarginInlineStart
+                            scrollMarginLeft
+                            scrollMarginRight
+                            scrollMarginTop
+                            scrollPadding
+                            scrollPaddingBlock
+                            scrollPaddingBlockEnd
+                            scrollPaddingBlockStart
+                            scrollPaddingBottom
+                            scrollPaddingInline
+                            scrollPaddingInlineEnd
+                            scrollPaddingInlineStart
+                            scrollPaddingLeft
+                            scrollPaddingRight
+                            scrollPaddingTop
+                            scrollSnapAlign
+                            scrollSnapStop
+                            scrollSnapType
+                            scrollTimeline
+                            scrollTimelineAxis
+                            scrollTimelineName
+                            scrollbarGutter
+                            shapeImageThreshold
+                            shapeMargin
+                            shapeOutside
+                            shapeRendering
+                            size
+                            sizeAdjust
+                            speak
+                            speakAs
+                            src
+                            stopColor
+                            stopOpacity
+                            stroke
+                            strokeDasharray
+                            strokeDashoffset
+                            strokeLinecap
+                            strokeLinejoin
+                            strokeMiterlimit
+                            strokeOpacity
+                            strokeWidth
+                            suffix
+                            symbols
+                            syntax
+                            system
+                            tabSize
+                            tableLayout
+                            textAlign
+                            textAlignLast
+                            textAnchor
+                            textCombineUpright
+                            textDecoration
+                            textDecorationColor
+                            textDecorationLine
+                            textDecorationSkipInk
+                            textDecorationStyle
+                            textDecorationThickness
+                            textEmphasis
+                            textEmphasisColor
+                            textEmphasisPosition
+                            textEmphasisStyle
+                            textIndent
+                            textOrientation
+                            textOverflow
+                            textRendering
+                            textShadow
+                            textSizeAdjust
+                            textTransform
+                            textUnderlineOffset
+                            textUnderlinePosition
+                            textWrap
+                            timelineScope
+                            top
+                            touchAction
+                            transform
+                            transformBox
+                            transformOrigin
+                            transformStyle
+                            transition
+                            transitionBehavior
+                            transitionDelay
+                            transitionDuration
+                            transitionProperty
+                            transitionTimingFunction
+                            translate
+                            unicodeBidi
+                            unicodeRange
+                            userSelect
+                            vectorEffect
+                            verticalAlign
+                            viewTimeline
+                            viewTimelineAxis
+                            viewTimelineInset
+                            viewTimelineName
+                            viewTransitionName
+                            visibility
+                            webkitAlignContent
+                            webkitAlignItems
+                            webkitAlignSelf
+                            webkitAnimation
+                            webkitAnimationDelay
+                            webkitAnimationDirection
+                            webkitAnimationDuration
+                            webkitAnimationFillMode
+                            webkitAnimationIterationCount
+                            webkitAnimationName
+                            webkitAnimationPlayState
+                            webkitAnimationTimingFunction
+                            webkitAppRegion
+                            webkitAppearance
+                            webkitBackfaceVisibility
+                            webkitBackgroundClip
+                            webkitBackgroundOrigin
+                            webkitBackgroundSize
+                            webkitBorderAfter
+                            webkitBorderAfterColor
+                            webkitBorderAfterStyle
+                            webkitBorderAfterWidth
+                            webkitBorderBefore
+                            webkitBorderBeforeColor
+                            webkitBorderBeforeStyle
+                            webkitBorderBeforeWidth
+                            webkitBorderBottomLeftRadius
+                            webkitBorderBottomRightRadius
+                            webkitBorderEnd
+                            webkitBorderEndColor
+                            webkitBorderEndStyle
+                            webkitBorderEndWidth
+                            webkitBorderHorizontalSpacing
+                            webkitBorderImage
+                            webkitBorderRadius
+                            webkitBorderStart
+                            webkitBorderStartColor
+                            webkitBorderStartStyle
+                            webkitBorderStartWidth
+                            webkitBorderTopLeftRadius
+                            webkitBorderTopRightRadius
+                            webkitBorderVerticalSpacing
+                            webkitBoxAlign
+                            webkitBoxDecorationBreak
+                            webkitBoxDirection
+                            webkitBoxFlex
+                            webkitBoxOrdinalGroup
+                            webkitBoxOrient
+                            webkitBoxPack
+                            webkitBoxReflect
+                            webkitBoxShadow
+                            webkitBoxSizing
+                            webkitClipPath
+                            webkitColumnBreakAfter
+                            webkitColumnBreakBefore
+                            webkitColumnBreakInside
+                            webkitColumnCount
+                            webkitColumnGap
+                            webkitColumnRule
+                            webkitColumnRuleColor
+                            webkitColumnRuleStyle
+                            webkitColumnRuleWidth
+                            webkitColumnSpan
+                            webkitColumnWidth
+                            webkitColumns
+                            webkitFilter
+                            webkitFlex
+                            webkitFlexBasis
+                            webkitFlexDirection
+                            webkitFlexFlow
+                            webkitFlexGrow
+                            webkitFlexShrink
+                            webkitFlexWrap
+                            webkitFontFeatureSettings
+                            webkitFontSmoothing
+                            webkitHyphenateCharacter
+                            webkitJustifyContent
+                            webkitLineBreak
+                            webkitLineClamp
+                            webkitLocale
+                            webkitLogicalHeight
+                            webkitLogicalWidth
+                            webkitMarginAfter
+                            webkitMarginBefore
+                            webkitMarginEnd
+                            webkitMarginStart
+                            webkitMask
+                            webkitMaskBoxImage
+                            webkitMaskBoxImageOutset
+                            webkitMaskBoxImageRepeat
+                            webkitMaskBoxImageSlice
+                            webkitMaskBoxImageSource
+                            webkitMaskBoxImageWidth
+                            webkitMaskClip
+                            webkitMaskComposite
+                            webkitMaskImage
+                            webkitMaskOrigin
+                            webkitMaskPosition
+                            webkitMaskPositionX
+                            webkitMaskPositionY
+                            webkitMaskRepeat
+                            webkitMaskRepeatX
+                            webkitMaskRepeatY
+                            webkitMaskSize
+                            webkitMaxLogicalHeight
+                            webkitMaxLogicalWidth
+                            webkitMinLogicalHeight
+                            webkitMinLogicalWidth
+                            webkitOpacity
+                            webkitOrder
+                            webkitPaddingAfter
+                            webkitPaddingBefore
+                            webkitPaddingEnd
+                            webkitPaddingStart
+                            webkitPerspective
+                            webkitPerspectiveOrigin
+                            webkitPerspectiveOriginX
+                            webkitPerspectiveOriginY
+                            webkitPrintColorAdjust
+                            webkitRtlOrdering
+                            webkitRubyPosition
+                            webkitShapeImageThreshold
+                            webkitShapeMargin
+                            webkitShapeOutside
+                            webkitTapHighlightColor
+                            webkitTextCombine
+                            webkitTextDecorationsInEffect
+                            webkitTextEmphasis
+                            webkitTextEmphasisColor
+                            webkitTextEmphasisPosition
+                            webkitTextEmphasisStyle
+                            webkitTextFillColor
+                            webkitTextOrientation
+                            webkitTextSecurity
+                            webkitTextSizeAdjust
+                            webkitTextStroke
+                            webkitTextStrokeColor
+                            webkitTextStrokeWidth
+                            webkitTransform
+                            webkitTransformOrigin
+                            webkitTransformOriginX
+                            webkitTransformOriginY
+                            webkitTransformOriginZ
+                            webkitTransformStyle
+                            webkitTransition
+                            webkitTransitionDelay
+                            webkitTransitionDuration
+                            webkitTransitionProperty
+                            webkitTransitionTimingFunction
+                            webkitUserDrag
+                            webkitUserModify
+                            webkitUserSelect
+                            webkitWritingMode
+                            whiteSpace
+                            whiteSpaceCollapse
+                            widows
+                            width
+                            willChange
+                            wordBreak
+                            wordSpacing
+                            wordWrap
+                            writingMode
+                            x
+                            y
+                            zIndex
+                            zoom
+                            mozOsxFontSmoothing
+                            """;
+        
+        
+        return text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()).ToList();
     }
+    
+
 }
