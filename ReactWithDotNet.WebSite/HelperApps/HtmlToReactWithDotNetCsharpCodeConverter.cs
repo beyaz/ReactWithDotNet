@@ -579,15 +579,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         var attributeMap = htmlNode.Attributes.ToMap();
 
-        bool hasAttribute(string expectedAttributeName, string expectedValue)
-        {
-            if (attributeMap.ContainsKey(expectedAttributeName) && attributeMap[expectedAttributeName] == expectedValue)
-            {
-                return true;
-            }
-
-            return false;
-        }
+       
 
        
 
