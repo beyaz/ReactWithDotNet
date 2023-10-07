@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
@@ -184,6 +185,24 @@ public class ExportStyleProperties
         
         
         list.Add("}");// end of class
+        
+        
+        ////////////////////////////////////////
+        // mixin
+        ////////////////////////////////////////
+        list.Add("");
+        list.Add("partial class Mixin");
+        list.Add("{");
+
+        var propertyNamesForStyleModifiers = new string[]{"borderImageOutset"};
+        
+        foreach (var propertyName in propertyNamesForStyleModifiers)
+        {
+            list.Add($"{indent}public static StyleModifier {getStyleModifierName(propertyName)}(string value) => new(style => style.{propertyName} = color);");
+        }
+        list.Add("}");
+        ////////////////////////////////////////
+        
 
         var sb = new StringBuilder();
 
@@ -193,7 +212,11 @@ public class ExportStyleProperties
         }
 
         File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\Style.generated.cs", sb.ToString());
-        
+
+        static string getStyleModifierName(string propertyName)
+        {
+            return char.ToUpper(propertyName[0], new CultureInfo("en-US")) + propertyName.Substring(1);
+        }
         
         static string ConvertCamelCaseToSnakeCase(string input)
         {
