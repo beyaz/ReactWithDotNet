@@ -99,19 +99,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static void ApplyShortHands(Dictionary<string, string> attributeMap)
     {
-        widthHeightMaxiimized();
-
-        paddingLeftRight();
-        paddingTopBottom();
-        padding();
-
-        marginLeftRight();
-        marginTopBottom();
-        margin();
-
-        borderLeftRight();
-        borderTopBottom();
-        border();
+        
         borderShortHands();
         targetBlank();
 
@@ -121,208 +109,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         
         
 
-        void widthHeightMaxiimized()
-        {
-            if (attributeMap.TryGetValue("width", out var width))
-            {
-                if (attributeMap.TryGetValue("height", out var height))
-                {
-                    if (width == "100%" && height == "100%")
-                    {
-                        attributeMap.Remove("width");
-                        attributeMap.Remove("height");
+        
 
-                        attributeMap.Add("WidthHeightMaximized", null);
-                    }
-                }
-            }
-        }
+        
 
-        void paddingLeftRight()
-        {
-            if (attributeMap.TryGetValue("paddingLeft", out var left))
-            {
-                if (attributeMap.TryGetValue("paddingRight", out var right))
-                {
-                    if (left == right)
-                    {
-                        attributeMap.Remove("paddingLeft");
-                        attributeMap.Remove("paddingRight");
 
-                        attributeMap.Add("paddingLeftRight", left);
-                    }
-                }
-            }
-        }
+        
 
-        void paddingTopBottom()
-        {
-            if (attributeMap.TryGetValue("paddingTop", out var top) &&
-                attributeMap.TryGetValue("paddingBottom", out var bottom))
-            {
-                if (top == bottom)
-                {
-                    attributeMap.Remove("paddingTop");
-                    attributeMap.Remove("paddingBottom");
+       
 
-                    attributeMap.Add("paddingTopBottom", top);
-                }
-            }
-        }
-
-        void padding()
-        {
-            if (attributeMap.TryGetValue("paddingTopBottom", out var topBottom) &&
-                attributeMap.TryGetValue("paddingLeftRight", out var leftRight))
-            {
-                if (topBottom == leftRight)
-                {
-                    attributeMap.Remove("paddingTopBottom");
-                    attributeMap.Remove("paddingLeftRight");
-
-                    attributeMap.Add("padding", topBottom);
-
-                    return;
-                }
-
-                if (topBottom.EndsWith("px") && 
-                    leftRight.EndsWith("px")&&
-                    double.TryParse(topBottom.RemoveFromEnd("px"), out var topBottomAsNumber) &&
-                    double.TryParse(leftRight.RemoveFromEnd("px"), out var leftRightAsNumber))
-                {
-                    attributeMap.Remove("paddingTopBottom");
-                    attributeMap.Remove("paddingLeftRight");
-                    
-                    attributeMap.Add($"Padding({topBottomAsNumber}, {leftRightAsNumber})", null);
-                    return;
-                }
-                
-                attributeMap.Remove("paddingTopBottom");
-                attributeMap.Remove("paddingLeftRight");
-                    
-                attributeMap.Add($"Padding(\"{topBottom} {leftRight}\")", null);
-                
-            }
-        }
-
-        void marginLeftRight()
-        {
-            if (attributeMap.TryGetValue("marginLeft", out var left))
-            {
-                if (attributeMap.TryGetValue("marginRight", out var right))
-                {
-                    if (left == right)
-                    {
-                        attributeMap.Remove("marginLeft");
-                        attributeMap.Remove("marginRight");
-
-                        attributeMap.Add("marginLeftRight", left);
-                    }
-                }
-            }
-        }
-
-        void marginTopBottom()
-        {
-            if (attributeMap.TryGetValue("marginTop", out var top) &&
-                attributeMap.TryGetValue("marginBottom", out var bottom))
-            {
-                if (top == bottom)
-                {
-                    attributeMap.Remove("marginTop");
-                    attributeMap.Remove("marginBottom");
-
-                    attributeMap.Add("marginTopBottom", top);
-                }
-            }
-        }
-
-        void margin()
-        {
-            if (attributeMap.TryGetValue("marginTopBottom", out var topBottom) &&
-                attributeMap.TryGetValue("marginLeftRight", out var leftRight))
-            {
-                if (topBottom == leftRight)
-                {
-                    attributeMap.Remove("marginTopBottom");
-                    attributeMap.Remove("marginLeftRight");
-
-                    attributeMap.Add("margin", topBottom);
-                    return;
-                }
-                
-                if (topBottom.EndsWith("px") && 
-                    leftRight.EndsWith("px")&&
-                    double.TryParse(topBottom.RemoveFromEnd("px"), out var topBottomAsNumber) &&
-                    double.TryParse(leftRight.RemoveFromEnd("px"), out var leftRightAsNumber))
-                {
-                    attributeMap.Remove("marginTopBottom");
-                    attributeMap.Remove("marginLeftRight");
-                    
-                    attributeMap.Add($"Margin({topBottomAsNumber}, {leftRightAsNumber})", null);
-                    return;
-                }
-                
-                attributeMap.Remove("marginTopBottom");
-                attributeMap.Remove("marginLeftRight");
-                    
-                attributeMap.Add($"Margin(\"{topBottom} {leftRight}\")", null);
-            }
-        }
-
-        void borderLeftRight()
-        {
-            if (attributeMap.TryGetValue("borderLeft", out var left))
-            {
-                if (attributeMap.TryGetValue("borderRight", out var right))
-                {
-                    if (left == right)
-                    {
-                        attributeMap.Remove("borderLeft");
-                        attributeMap.Remove("borderRight");
-
-                        attributeMap.Add("borderLeftRight", left);
-                    }
-                }
-            }
-        }
-
-        void borderTopBottom()
-        {
-            if (attributeMap.TryGetValue("borderTop", out var top) &&
-                attributeMap.TryGetValue("borderBottom", out var bottom))
-            {
-                if (top == bottom)
-                {
-                    attributeMap.Remove("borderTop");
-                    attributeMap.Remove("borderBottom");
-
-                    attributeMap.Add("borderTopBottom", top);
-                }
-            }
-        }
-
-        void border()
-        {
-            if (attributeMap.TryGetValue("borderTopBottom", out var topBottom) &&
-                attributeMap.TryGetValue("borderLeftRight", out var leftRight))
-            {
-                if (topBottom == leftRight)
-                {
-                    attributeMap.Remove("borderTopBottom");
-                    attributeMap.Remove("borderLeftRight");
-
-                    attributeMap.Add("border", topBottom);
-                }
-            }
-            
-            
-            if (attributeMap.TryGetValue("border", out var borderValue) && borderValue == "0")
-            {
-                attributeMap.Remove("border");
-                attributeMap.Add("BorderNone", null);
-            }
-        }
         
         
         void borderShortHands()
