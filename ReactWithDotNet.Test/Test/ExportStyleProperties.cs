@@ -42,7 +42,9 @@ public class ExportStyleProperties
             return name;
         }
         
-        
+        ////////////////////////////////////////
+        // isEmpty
+        ////////////////////////////////////////
         list.Add("");
         list.Add($"{indent}static bool isEmpty(Style s)");
         list.Add($"{indent}{{");
@@ -60,6 +62,29 @@ public class ExportStyleProperties
         
         list.Add($"{indent}{indent}return true;");
         list.Add($"{indent}}}");
+        
+        ////////////////////////////////////////
+        // getValueByName
+        ////////////////////////////////////////
+        list.Add("");
+        list.Add($"{indent}static string getByName(Style s, string name)");
+        list.Add($"{indent}{{");
+        
+        foreach (var name in propertyNames)
+        {
+            var propertyName = getPropertyName(name);
+            
+            list.Add($"{indent}{indent}if (nameof({propertyName}).Equals(name, StringComparison.OrdinalIgnoreCase))");
+            list.Add( $"{indent}{indent}{{");
+            list.Add($"{indent}{indent}{indent}return s.{propertyName};");
+            list.Add( $"{indent}{indent}}}");
+            
+        }
+        
+        list.Add($"{indent}{indent}throw CssParseException(name);");
+        list.Add($"{indent}}}");
+        
+        
         
         
         list.Add("}");// end of class
