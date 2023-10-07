@@ -20,9 +20,9 @@ partial class Style
             return;
         }
 
-        foreach (var line in css.Trim().Split(";").Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)))
+        foreach (var line in css.Trim().Split(";").Select(v => v.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)))
         {
-            var array = line.Trim().Split(":").Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            var array = line.Trim().Split(":").Select(v => v.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)).ToArray();
             if (array.Length != 2)
             {
                 throw CssParseException(line);
