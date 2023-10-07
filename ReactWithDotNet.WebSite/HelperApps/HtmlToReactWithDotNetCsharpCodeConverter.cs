@@ -659,12 +659,28 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 return htmlAttribute.Name.StartsWith("aria-", StringComparison.OrdinalIgnoreCase);
             }
-            
-            foreach (var htmlAttribute in htmlNode.Attributes.Where(isAriaAttribute))
+            static string toAriaModifier(HtmlAttribute htmlAttribute)
             {
-                modifiers.Add($"Aria(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")");
+                return $"Aria(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")";
             }
+            
+            modifiers.AddRange(htmlNode.Attributes.Where(isAriaAttribute).Select(toAriaModifier));
             htmlNode.Attributes.RemoveAll(isAriaAttribute);
+        }
+        
+        // data-*
+        {
+            static bool isDataAttribute(HtmlAttribute htmlAttribute)
+            {
+                return htmlAttribute.Name.StartsWith("data-", StringComparison.OrdinalIgnoreCase);
+            }
+            static string toDataModifier(HtmlAttribute htmlAttribute)
+            {
+                return $"Data(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")";
+            }
+            
+            modifiers.AddRange(htmlNode.Attributes.Where(isDataAttribute).Select(toDataModifier));
+            htmlNode.Attributes.RemoveAll(isDataAttribute);
         }
         
         if (htmlNode.ChildNodes.Count == 0)
@@ -684,11 +700,35 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 htmlNode.Attributes.Add("style", "");
             }
+
+            var sb = new StringBuilder();
+            sb.Append($"new {htmlNodeName}");
+
+            if (modifiers.Count == 0 && htmlNode.Attributes.Count == 0)
+            {
+                sb.Append("()");
+                return new List<string>
+                {
+                    sb.ToString()
+                };
+            }
+            if (modifiers.Count > 0)
+            {
+                sb.Append("(");
+                sb.Append(string.Join(", ", modifiers));
+                sb.Append(")");
+            }
+
+            if (htmlNode.Attributes.Count > 0)
+            {
+                sb.Append("{");
+                sb.Append(string.Join(", ", htmlNode.Attributes.Select(attributeToString)));
+                sb.Append("}");
+            }
             
             return new List<string>
             {
-                // one line
-                $"new {htmlNodeName} {{ {string.Join(", ", htmlNode.Attributes.Select(attributeToString))} }}"
+                sb.ToString()
             };
         }
 
