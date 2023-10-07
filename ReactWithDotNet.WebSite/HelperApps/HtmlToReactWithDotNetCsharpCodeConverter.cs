@@ -624,24 +624,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         string constructorPart = null;
 
-        string calculateStyleInstance()
-        {
-            string styleInstance = null;
         
-            var styleAttribute = htmlNode.Attributes["style"];
-            if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
-            {
-                var styleValue = string.Join("; ", Style.ParseCss(styleAttribute.Value).ToDictionary().Select((propertyName, propertyValue) =>
-                {
-                    return propertyName + " = " + propertyValue;
-                }));
-                styleInstance = $"new Style {{ {styleValue} }}";
+        //string styleInstance = null;
+        
+        //var styleAttribute = htmlNode.Attributes["style"];
+        //if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
+        //{
+        //    var styleValue = string.Join("; ", Style.ParseCss(styleAttribute.Value).ToDictionary().Select((propertyName, propertyValue) =>
+        //    {
+        //        return propertyName + " = " + propertyValue;
+        //    }));
+        //    styleInstance = $"new Style {{ {styleValue} }}";
                 
-                htmlNode.Attributes.Remove("style");
-            }
-
-            return styleInstance;
-        }
+        //    htmlNode.Attributes.Remove("style");
+        //}
         
         
         
