@@ -5691,4 +5691,3164 @@ partial class Style
         }
         throw CssParseException(name);
     }
+
+    static void setByName(Style s, string name, string value)
+    {
+        if (nameof(accentColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.accentColor = value;
+            return;
+        }
+        if (nameof(additiveSymbols).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.additiveSymbols = value;
+            return;
+        }
+        if (nameof(alignContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.alignContent = value;
+            return;
+        }
+        if (nameof(alignItems).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.alignItems = value;
+            return;
+        }
+        if (nameof(alignSelf).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.alignSelf = value;
+            return;
+        }
+        if (nameof(alignmentBaseline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.alignmentBaseline = value;
+            return;
+        }
+        if (nameof(all).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.all = value;
+            return;
+        }
+        if (nameof(animation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animation = value;
+            return;
+        }
+        if (nameof(animationComposition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationComposition = value;
+            return;
+        }
+        if (nameof(animationDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationDelay = value;
+            return;
+        }
+        if (nameof(animationDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationDirection = value;
+            return;
+        }
+        if (nameof(animationDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationDuration = value;
+            return;
+        }
+        if (nameof(animationFillMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationFillMode = value;
+            return;
+        }
+        if (nameof(animationIterationCount).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationIterationCount = value;
+            return;
+        }
+        if (nameof(animationName).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationName = value;
+            return;
+        }
+        if (nameof(animationPlayState).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationPlayState = value;
+            return;
+        }
+        if (nameof(animationRange).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationRange = value;
+            return;
+        }
+        if (nameof(animationRangeEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationRangeEnd = value;
+            return;
+        }
+        if (nameof(animationRangeStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationRangeStart = value;
+            return;
+        }
+        if (nameof(animationTimeline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationTimeline = value;
+            return;
+        }
+        if (nameof(animationTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.animationTimingFunction = value;
+            return;
+        }
+        if (nameof(appRegion).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.appRegion = value;
+            return;
+        }
+        if (nameof(appearance).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.appearance = value;
+            return;
+        }
+        if (nameof(ascentOverride).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.ascentOverride = value;
+            return;
+        }
+        if (nameof(aspectRatio).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.aspectRatio = value;
+            return;
+        }
+        if (nameof(backdropFilter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backdropFilter = value;
+            return;
+        }
+        if (nameof(backfaceVisibility).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backfaceVisibility = value;
+            return;
+        }
+        if (nameof(background).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.background = value;
+            return;
+        }
+        if (nameof(backgroundAttachment).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundAttachment = value;
+            return;
+        }
+        if (nameof(backgroundBlendMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundBlendMode = value;
+            return;
+        }
+        if (nameof(backgroundClip).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundClip = value;
+            return;
+        }
+        if (nameof(backgroundColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundColor = value;
+            return;
+        }
+        if (nameof(backgroundImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundImage = value;
+            return;
+        }
+        if (nameof(backgroundOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundOrigin = value;
+            return;
+        }
+        if (nameof(backgroundPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundPosition = value;
+            return;
+        }
+        if (nameof(backgroundPositionX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundPositionX = value;
+            return;
+        }
+        if (nameof(backgroundPositionY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundPositionY = value;
+            return;
+        }
+        if (nameof(backgroundRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundRepeat = value;
+            return;
+        }
+        if (nameof(backgroundRepeatX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundRepeatX = value;
+            return;
+        }
+        if (nameof(backgroundRepeatY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundRepeatY = value;
+            return;
+        }
+        if (nameof(backgroundSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.backgroundSize = value;
+            return;
+        }
+        if (nameof(basePalette).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.basePalette = value;
+            return;
+        }
+        if (nameof(baselineShift).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.baselineShift = value;
+            return;
+        }
+        if (nameof(baselineSource).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.baselineSource = value;
+            return;
+        }
+        if (nameof(blockSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.blockSize = value;
+            return;
+        }
+        if (nameof(border).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.border = value;
+            return;
+        }
+        if (nameof(borderBlock).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlock = value;
+            return;
+        }
+        if (nameof(borderBlockColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockColor = value;
+            return;
+        }
+        if (nameof(borderBlockEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockEnd = value;
+            return;
+        }
+        if (nameof(borderBlockEndColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockEndColor = value;
+            return;
+        }
+        if (nameof(borderBlockEndStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockEndStyle = value;
+            return;
+        }
+        if (nameof(borderBlockEndWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockEndWidth = value;
+            return;
+        }
+        if (nameof(borderBlockStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockStart = value;
+            return;
+        }
+        if (nameof(borderBlockStartColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockStartColor = value;
+            return;
+        }
+        if (nameof(borderBlockStartStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockStartStyle = value;
+            return;
+        }
+        if (nameof(borderBlockStartWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockStartWidth = value;
+            return;
+        }
+        if (nameof(borderBlockStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockStyle = value;
+            return;
+        }
+        if (nameof(borderBlockWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBlockWidth = value;
+            return;
+        }
+        if (nameof(borderBottom).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBottom = value;
+            return;
+        }
+        if (nameof(borderBottomColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBottomColor = value;
+            return;
+        }
+        if (nameof(borderBottomLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBottomLeftRadius = value;
+            return;
+        }
+        if (nameof(borderBottomRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBottomRightRadius = value;
+            return;
+        }
+        if (nameof(borderBottomStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBottomStyle = value;
+            return;
+        }
+        if (nameof(borderBottomWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderBottomWidth = value;
+            return;
+        }
+        if (nameof(borderCollapse).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderCollapse = value;
+            return;
+        }
+        if (nameof(borderColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderColor = value;
+            return;
+        }
+        if (nameof(borderEndEndRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderEndEndRadius = value;
+            return;
+        }
+        if (nameof(borderEndStartRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderEndStartRadius = value;
+            return;
+        }
+        if (nameof(borderImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderImage = value;
+            return;
+        }
+        if (nameof(borderImageOutset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderImageOutset = value;
+            return;
+        }
+        if (nameof(borderImageRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderImageRepeat = value;
+            return;
+        }
+        if (nameof(borderImageSlice).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderImageSlice = value;
+            return;
+        }
+        if (nameof(borderImageSource).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderImageSource = value;
+            return;
+        }
+        if (nameof(borderImageWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderImageWidth = value;
+            return;
+        }
+        if (nameof(borderInline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInline = value;
+            return;
+        }
+        if (nameof(borderInlineColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineColor = value;
+            return;
+        }
+        if (nameof(borderInlineEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineEnd = value;
+            return;
+        }
+        if (nameof(borderInlineEndColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineEndColor = value;
+            return;
+        }
+        if (nameof(borderInlineEndStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineEndStyle = value;
+            return;
+        }
+        if (nameof(borderInlineEndWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineEndWidth = value;
+            return;
+        }
+        if (nameof(borderInlineStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineStart = value;
+            return;
+        }
+        if (nameof(borderInlineStartColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineStartColor = value;
+            return;
+        }
+        if (nameof(borderInlineStartStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineStartStyle = value;
+            return;
+        }
+        if (nameof(borderInlineStartWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineStartWidth = value;
+            return;
+        }
+        if (nameof(borderInlineStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineStyle = value;
+            return;
+        }
+        if (nameof(borderInlineWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderInlineWidth = value;
+            return;
+        }
+        if (nameof(borderLeft).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderLeft = value;
+            return;
+        }
+        if (nameof(borderLeftColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderLeftColor = value;
+            return;
+        }
+        if (nameof(borderLeftStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderLeftStyle = value;
+            return;
+        }
+        if (nameof(borderLeftWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderLeftWidth = value;
+            return;
+        }
+        if (nameof(borderRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderRadius = value;
+            return;
+        }
+        if (nameof(borderRight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderRight = value;
+            return;
+        }
+        if (nameof(borderRightColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderRightColor = value;
+            return;
+        }
+        if (nameof(borderRightStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderRightStyle = value;
+            return;
+        }
+        if (nameof(borderRightWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderRightWidth = value;
+            return;
+        }
+        if (nameof(borderSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderSpacing = value;
+            return;
+        }
+        if (nameof(borderStartEndRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderStartEndRadius = value;
+            return;
+        }
+        if (nameof(borderStartStartRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderStartStartRadius = value;
+            return;
+        }
+        if (nameof(borderStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderStyle = value;
+            return;
+        }
+        if (nameof(borderTop).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderTop = value;
+            return;
+        }
+        if (nameof(borderTopColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderTopColor = value;
+            return;
+        }
+        if (nameof(borderTopLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderTopLeftRadius = value;
+            return;
+        }
+        if (nameof(borderTopRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderTopRightRadius = value;
+            return;
+        }
+        if (nameof(borderTopStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderTopStyle = value;
+            return;
+        }
+        if (nameof(borderTopWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderTopWidth = value;
+            return;
+        }
+        if (nameof(borderWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.borderWidth = value;
+            return;
+        }
+        if (nameof(bottom).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.bottom = value;
+            return;
+        }
+        if (nameof(boxShadow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.boxShadow = value;
+            return;
+        }
+        if (nameof(boxSizing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.boxSizing = value;
+            return;
+        }
+        if (nameof(breakAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.breakAfter = value;
+            return;
+        }
+        if (nameof(breakBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.breakBefore = value;
+            return;
+        }
+        if (nameof(breakInside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.breakInside = value;
+            return;
+        }
+        if (nameof(bufferedRendering).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.bufferedRendering = value;
+            return;
+        }
+        if (nameof(captionSide).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.captionSide = value;
+            return;
+        }
+        if (nameof(caretColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.caretColor = value;
+            return;
+        }
+        if (nameof(clear).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.clear = value;
+            return;
+        }
+        if (nameof(clip).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.clip = value;
+            return;
+        }
+        if (nameof(clipPath).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.clipPath = value;
+            return;
+        }
+        if (nameof(clipRule).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.clipRule = value;
+            return;
+        }
+        if (nameof(color).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.color = value;
+            return;
+        }
+        if (nameof(colorInterpolation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.colorInterpolation = value;
+            return;
+        }
+        if (nameof(colorInterpolationFilters).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.colorInterpolationFilters = value;
+            return;
+        }
+        if (nameof(colorRendering).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.colorRendering = value;
+            return;
+        }
+        if (nameof(colorScheme).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.colorScheme = value;
+            return;
+        }
+        if (nameof(columnCount).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnCount = value;
+            return;
+        }
+        if (nameof(columnFill).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnFill = value;
+            return;
+        }
+        if (nameof(columnGap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnGap = value;
+            return;
+        }
+        if (nameof(columnRule).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnRule = value;
+            return;
+        }
+        if (nameof(columnRuleColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnRuleColor = value;
+            return;
+        }
+        if (nameof(columnRuleStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnRuleStyle = value;
+            return;
+        }
+        if (nameof(columnRuleWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnRuleWidth = value;
+            return;
+        }
+        if (nameof(columnSpan).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnSpan = value;
+            return;
+        }
+        if (nameof(columnWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columnWidth = value;
+            return;
+        }
+        if (nameof(columns).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.columns = value;
+            return;
+        }
+        if (nameof(contain).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.contain = value;
+            return;
+        }
+        if (nameof(containIntrinsicBlockSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.containIntrinsicBlockSize = value;
+            return;
+        }
+        if (nameof(containIntrinsicHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.containIntrinsicHeight = value;
+            return;
+        }
+        if (nameof(containIntrinsicInlineSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.containIntrinsicInlineSize = value;
+            return;
+        }
+        if (nameof(containIntrinsicSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.containIntrinsicSize = value;
+            return;
+        }
+        if (nameof(containIntrinsicWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.containIntrinsicWidth = value;
+            return;
+        }
+        if (nameof(container).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.container = value;
+            return;
+        }
+        if (nameof(containerName).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.containerName = value;
+            return;
+        }
+        if (nameof(containerType).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.containerType = value;
+            return;
+        }
+        if (nameof(content).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.content = value;
+            return;
+        }
+        if (nameof(contentVisibility).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.contentVisibility = value;
+            return;
+        }
+        if (nameof(counterIncrement).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.counterIncrement = value;
+            return;
+        }
+        if (nameof(counterReset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.counterReset = value;
+            return;
+        }
+        if (nameof(counterSet).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.counterSet = value;
+            return;
+        }
+        if (nameof(cursor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.cursor = value;
+            return;
+        }
+        if (nameof(cx).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.cx = value;
+            return;
+        }
+        if (nameof(cy).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.cy = value;
+            return;
+        }
+        if (nameof(d).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.d = value;
+            return;
+        }
+        if (nameof(descentOverride).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.descentOverride = value;
+            return;
+        }
+        if (nameof(direction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.direction = value;
+            return;
+        }
+        if (nameof(display).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.display = value;
+            return;
+        }
+        if (nameof(dominantBaseline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.dominantBaseline = value;
+            return;
+        }
+        if (nameof(emptyCells).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.emptyCells = value;
+            return;
+        }
+        if (nameof(fallback).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fallback = value;
+            return;
+        }
+        if (nameof(fill).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fill = value;
+            return;
+        }
+        if (nameof(fillOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fillOpacity = value;
+            return;
+        }
+        if (nameof(fillRule).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fillRule = value;
+            return;
+        }
+        if (nameof(filter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.filter = value;
+            return;
+        }
+        if (nameof(flex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.flex = value;
+            return;
+        }
+        if (nameof(flexBasis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.flexBasis = value;
+            return;
+        }
+        if (nameof(flexDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.flexDirection = value;
+            return;
+        }
+        if (nameof(flexFlow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.flexFlow = value;
+            return;
+        }
+        if (nameof(flexGrow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.flexGrow = value;
+            return;
+        }
+        if (nameof(flexShrink).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.flexShrink = value;
+            return;
+        }
+        if (nameof(flexWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.flexWrap = value;
+            return;
+        }
+        if (nameof(@float).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.@float = value;
+            return;
+        }
+        if (nameof(floodColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.floodColor = value;
+            return;
+        }
+        if (nameof(floodOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.floodOpacity = value;
+            return;
+        }
+        if (nameof(font).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.font = value;
+            return;
+        }
+        if (nameof(fontDisplay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontDisplay = value;
+            return;
+        }
+        if (nameof(fontFamily).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontFamily = value;
+            return;
+        }
+        if (nameof(fontFeatureSettings).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontFeatureSettings = value;
+            return;
+        }
+        if (nameof(fontKerning).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontKerning = value;
+            return;
+        }
+        if (nameof(fontOpticalSizing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontOpticalSizing = value;
+            return;
+        }
+        if (nameof(fontPalette).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontPalette = value;
+            return;
+        }
+        if (nameof(fontSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontSize = value;
+            return;
+        }
+        if (nameof(fontStretch).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontStretch = value;
+            return;
+        }
+        if (nameof(fontStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontStyle = value;
+            return;
+        }
+        if (nameof(fontSynthesis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontSynthesis = value;
+            return;
+        }
+        if (nameof(fontSynthesisSmallCaps).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontSynthesisSmallCaps = value;
+            return;
+        }
+        if (nameof(fontSynthesisStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontSynthesisStyle = value;
+            return;
+        }
+        if (nameof(fontSynthesisWeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontSynthesisWeight = value;
+            return;
+        }
+        if (nameof(fontVariant).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontVariant = value;
+            return;
+        }
+        if (nameof(fontVariantAlternates).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontVariantAlternates = value;
+            return;
+        }
+        if (nameof(fontVariantCaps).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontVariantCaps = value;
+            return;
+        }
+        if (nameof(fontVariantEastAsian).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontVariantEastAsian = value;
+            return;
+        }
+        if (nameof(fontVariantLigatures).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontVariantLigatures = value;
+            return;
+        }
+        if (nameof(fontVariantNumeric).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontVariantNumeric = value;
+            return;
+        }
+        if (nameof(fontVariantPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontVariantPosition = value;
+            return;
+        }
+        if (nameof(fontVariationSettings).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontVariationSettings = value;
+            return;
+        }
+        if (nameof(fontWeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontWeight = value;
+            return;
+        }
+        if (nameof(forcedColorAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.forcedColorAdjust = value;
+            return;
+        }
+        if (nameof(gap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gap = value;
+            return;
+        }
+        if (nameof(grid).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.grid = value;
+            return;
+        }
+        if (nameof(gridArea).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridArea = value;
+            return;
+        }
+        if (nameof(gridAutoColumns).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridAutoColumns = value;
+            return;
+        }
+        if (nameof(gridAutoFlow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridAutoFlow = value;
+            return;
+        }
+        if (nameof(gridAutoRows).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridAutoRows = value;
+            return;
+        }
+        if (nameof(gridColumn).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridColumn = value;
+            return;
+        }
+        if (nameof(gridColumnEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridColumnEnd = value;
+            return;
+        }
+        if (nameof(gridColumnGap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridColumnGap = value;
+            return;
+        }
+        if (nameof(gridColumnStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridColumnStart = value;
+            return;
+        }
+        if (nameof(gridGap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridGap = value;
+            return;
+        }
+        if (nameof(gridRow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridRow = value;
+            return;
+        }
+        if (nameof(gridRowEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridRowEnd = value;
+            return;
+        }
+        if (nameof(gridRowGap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridRowGap = value;
+            return;
+        }
+        if (nameof(gridRowStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridRowStart = value;
+            return;
+        }
+        if (nameof(gridTemplate).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridTemplate = value;
+            return;
+        }
+        if (nameof(gridTemplateAreas).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridTemplateAreas = value;
+            return;
+        }
+        if (nameof(gridTemplateColumns).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridTemplateColumns = value;
+            return;
+        }
+        if (nameof(gridTemplateRows).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridTemplateRows = value;
+            return;
+        }
+        if (nameof(height).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.height = value;
+            return;
+        }
+        if (nameof(hyphenateCharacter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.hyphenateCharacter = value;
+            return;
+        }
+        if (nameof(hyphenateLimitChars).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.hyphenateLimitChars = value;
+            return;
+        }
+        if (nameof(hyphens).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.hyphens = value;
+            return;
+        }
+        if (nameof(imageOrientation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.imageOrientation = value;
+            return;
+        }
+        if (nameof(imageRendering).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.imageRendering = value;
+            return;
+        }
+        if (nameof(inherits).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.inherits = value;
+            return;
+        }
+        if (nameof(initialLetter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.initialLetter = value;
+            return;
+        }
+        if (nameof(initialValue).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.initialValue = value;
+            return;
+        }
+        if (nameof(inlineSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.inlineSize = value;
+            return;
+        }
+        if (nameof(inset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.inset = value;
+            return;
+        }
+        if (nameof(insetBlock).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.insetBlock = value;
+            return;
+        }
+        if (nameof(insetBlockEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.insetBlockEnd = value;
+            return;
+        }
+        if (nameof(insetBlockStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.insetBlockStart = value;
+            return;
+        }
+        if (nameof(insetInline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.insetInline = value;
+            return;
+        }
+        if (nameof(insetInlineEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.insetInlineEnd = value;
+            return;
+        }
+        if (nameof(insetInlineStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.insetInlineStart = value;
+            return;
+        }
+        if (nameof(isolation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.isolation = value;
+            return;
+        }
+        if (nameof(justifyContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.justifyContent = value;
+            return;
+        }
+        if (nameof(justifyItems).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.justifyItems = value;
+            return;
+        }
+        if (nameof(justifySelf).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.justifySelf = value;
+            return;
+        }
+        if (nameof(left).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.left = value;
+            return;
+        }
+        if (nameof(letterSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.letterSpacing = value;
+            return;
+        }
+        if (nameof(lightingColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.lightingColor = value;
+            return;
+        }
+        if (nameof(lineBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.lineBreak = value;
+            return;
+        }
+        if (nameof(lineGapOverride).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.lineGapOverride = value;
+            return;
+        }
+        if (nameof(lineHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.lineHeight = value;
+            return;
+        }
+        if (nameof(listStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.listStyle = value;
+            return;
+        }
+        if (nameof(listStyleImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.listStyleImage = value;
+            return;
+        }
+        if (nameof(listStylePosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.listStylePosition = value;
+            return;
+        }
+        if (nameof(listStyleType).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.listStyleType = value;
+            return;
+        }
+        if (nameof(margin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.margin = value;
+            return;
+        }
+        if (nameof(marginBlock).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginBlock = value;
+            return;
+        }
+        if (nameof(marginBlockEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginBlockEnd = value;
+            return;
+        }
+        if (nameof(marginBlockStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginBlockStart = value;
+            return;
+        }
+        if (nameof(marginBottom).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginBottom = value;
+            return;
+        }
+        if (nameof(marginInline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginInline = value;
+            return;
+        }
+        if (nameof(marginInlineEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginInlineEnd = value;
+            return;
+        }
+        if (nameof(marginInlineStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginInlineStart = value;
+            return;
+        }
+        if (nameof(marginLeft).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginLeft = value;
+            return;
+        }
+        if (nameof(marginRight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginRight = value;
+            return;
+        }
+        if (nameof(marginTop).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marginTop = value;
+            return;
+        }
+        if (nameof(marker).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marker = value;
+            return;
+        }
+        if (nameof(markerEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.markerEnd = value;
+            return;
+        }
+        if (nameof(markerMid).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.markerMid = value;
+            return;
+        }
+        if (nameof(markerStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.markerStart = value;
+            return;
+        }
+        if (nameof(mask).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.mask = value;
+            return;
+        }
+        if (nameof(maskType).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.maskType = value;
+            return;
+        }
+        if (nameof(mathDepth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.mathDepth = value;
+            return;
+        }
+        if (nameof(mathShift).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.mathShift = value;
+            return;
+        }
+        if (nameof(mathStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.mathStyle = value;
+            return;
+        }
+        if (nameof(maxBlockSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.maxBlockSize = value;
+            return;
+        }
+        if (nameof(maxHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.maxHeight = value;
+            return;
+        }
+        if (nameof(maxInlineSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.maxInlineSize = value;
+            return;
+        }
+        if (nameof(maxWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.maxWidth = value;
+            return;
+        }
+        if (nameof(minBlockSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.minBlockSize = value;
+            return;
+        }
+        if (nameof(minHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.minHeight = value;
+            return;
+        }
+        if (nameof(minInlineSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.minInlineSize = value;
+            return;
+        }
+        if (nameof(minWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.minWidth = value;
+            return;
+        }
+        if (nameof(mixBlendMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.mixBlendMode = value;
+            return;
+        }
+        if (nameof(negative).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.negative = value;
+            return;
+        }
+        if (nameof(objectFit).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.objectFit = value;
+            return;
+        }
+        if (nameof(objectPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.objectPosition = value;
+            return;
+        }
+        if (nameof(objectViewBox).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.objectViewBox = value;
+            return;
+        }
+        if (nameof(offset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.offset = value;
+            return;
+        }
+        if (nameof(offsetAnchor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.offsetAnchor = value;
+            return;
+        }
+        if (nameof(offsetDistance).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.offsetDistance = value;
+            return;
+        }
+        if (nameof(offsetPath).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.offsetPath = value;
+            return;
+        }
+        if (nameof(offsetPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.offsetPosition = value;
+            return;
+        }
+        if (nameof(offsetRotate).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.offsetRotate = value;
+            return;
+        }
+        if (nameof(opacity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.opacity = value;
+            return;
+        }
+        if (nameof(order).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.order = value;
+            return;
+        }
+        if (nameof(orphans).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.orphans = value;
+            return;
+        }
+        if (nameof(outline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.outline = value;
+            return;
+        }
+        if (nameof(outlineColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.outlineColor = value;
+            return;
+        }
+        if (nameof(outlineOffset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.outlineOffset = value;
+            return;
+        }
+        if (nameof(outlineStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.outlineStyle = value;
+            return;
+        }
+        if (nameof(outlineWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.outlineWidth = value;
+            return;
+        }
+        if (nameof(overflow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overflow = value;
+            return;
+        }
+        if (nameof(overflowAnchor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overflowAnchor = value;
+            return;
+        }
+        if (nameof(overflowClipMargin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overflowClipMargin = value;
+            return;
+        }
+        if (nameof(overflowWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overflowWrap = value;
+            return;
+        }
+        if (nameof(overflowX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overflowX = value;
+            return;
+        }
+        if (nameof(overflowY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overflowY = value;
+            return;
+        }
+        if (nameof(overlay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overlay = value;
+            return;
+        }
+        if (nameof(overrideColors).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overrideColors = value;
+            return;
+        }
+        if (nameof(overscrollBehavior).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overscrollBehavior = value;
+            return;
+        }
+        if (nameof(overscrollBehaviorBlock).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overscrollBehaviorBlock = value;
+            return;
+        }
+        if (nameof(overscrollBehaviorInline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overscrollBehaviorInline = value;
+            return;
+        }
+        if (nameof(overscrollBehaviorX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overscrollBehaviorX = value;
+            return;
+        }
+        if (nameof(overscrollBehaviorY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overscrollBehaviorY = value;
+            return;
+        }
+        if (nameof(pad).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.pad = value;
+            return;
+        }
+        if (nameof(padding).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.padding = value;
+            return;
+        }
+        if (nameof(paddingBlock).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingBlock = value;
+            return;
+        }
+        if (nameof(paddingBlockEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingBlockEnd = value;
+            return;
+        }
+        if (nameof(paddingBlockStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingBlockStart = value;
+            return;
+        }
+        if (nameof(paddingBottom).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingBottom = value;
+            return;
+        }
+        if (nameof(paddingInline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingInline = value;
+            return;
+        }
+        if (nameof(paddingInlineEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingInlineEnd = value;
+            return;
+        }
+        if (nameof(paddingInlineStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingInlineStart = value;
+            return;
+        }
+        if (nameof(paddingLeft).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingLeft = value;
+            return;
+        }
+        if (nameof(paddingRight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingRight = value;
+            return;
+        }
+        if (nameof(paddingTop).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paddingTop = value;
+            return;
+        }
+        if (nameof(page).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.page = value;
+            return;
+        }
+        if (nameof(pageBreakAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.pageBreakAfter = value;
+            return;
+        }
+        if (nameof(pageBreakBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.pageBreakBefore = value;
+            return;
+        }
+        if (nameof(pageBreakInside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.pageBreakInside = value;
+            return;
+        }
+        if (nameof(pageOrientation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.pageOrientation = value;
+            return;
+        }
+        if (nameof(paintOrder).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.paintOrder = value;
+            return;
+        }
+        if (nameof(perspective).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.perspective = value;
+            return;
+        }
+        if (nameof(perspectiveOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.perspectiveOrigin = value;
+            return;
+        }
+        if (nameof(placeContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.placeContent = value;
+            return;
+        }
+        if (nameof(placeItems).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.placeItems = value;
+            return;
+        }
+        if (nameof(placeSelf).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.placeSelf = value;
+            return;
+        }
+        if (nameof(pointerEvents).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.pointerEvents = value;
+            return;
+        }
+        if (nameof(position).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.position = value;
+            return;
+        }
+        if (nameof(prefix).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.prefix = value;
+            return;
+        }
+        if (nameof(quotes).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.quotes = value;
+            return;
+        }
+        if (nameof(r).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.r = value;
+            return;
+        }
+        if (nameof(range).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.range = value;
+            return;
+        }
+        if (nameof(resize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.resize = value;
+            return;
+        }
+        if (nameof(right).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.right = value;
+            return;
+        }
+        if (nameof(rotate).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.rotate = value;
+            return;
+        }
+        if (nameof(rowGap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.rowGap = value;
+            return;
+        }
+        if (nameof(rubyPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.rubyPosition = value;
+            return;
+        }
+        if (nameof(rx).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.rx = value;
+            return;
+        }
+        if (nameof(ry).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.ry = value;
+            return;
+        }
+        if (nameof(scale).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scale = value;
+            return;
+        }
+        if (nameof(scrollBehavior).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollBehavior = value;
+            return;
+        }
+        if (nameof(scrollMargin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMargin = value;
+            return;
+        }
+        if (nameof(scrollMarginBlock).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginBlock = value;
+            return;
+        }
+        if (nameof(scrollMarginBlockEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginBlockEnd = value;
+            return;
+        }
+        if (nameof(scrollMarginBlockStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginBlockStart = value;
+            return;
+        }
+        if (nameof(scrollMarginBottom).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginBottom = value;
+            return;
+        }
+        if (nameof(scrollMarginInline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginInline = value;
+            return;
+        }
+        if (nameof(scrollMarginInlineEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginInlineEnd = value;
+            return;
+        }
+        if (nameof(scrollMarginInlineStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginInlineStart = value;
+            return;
+        }
+        if (nameof(scrollMarginLeft).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginLeft = value;
+            return;
+        }
+        if (nameof(scrollMarginRight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginRight = value;
+            return;
+        }
+        if (nameof(scrollMarginTop).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollMarginTop = value;
+            return;
+        }
+        if (nameof(scrollPadding).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPadding = value;
+            return;
+        }
+        if (nameof(scrollPaddingBlock).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingBlock = value;
+            return;
+        }
+        if (nameof(scrollPaddingBlockEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingBlockEnd = value;
+            return;
+        }
+        if (nameof(scrollPaddingBlockStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingBlockStart = value;
+            return;
+        }
+        if (nameof(scrollPaddingBottom).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingBottom = value;
+            return;
+        }
+        if (nameof(scrollPaddingInline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingInline = value;
+            return;
+        }
+        if (nameof(scrollPaddingInlineEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingInlineEnd = value;
+            return;
+        }
+        if (nameof(scrollPaddingInlineStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingInlineStart = value;
+            return;
+        }
+        if (nameof(scrollPaddingLeft).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingLeft = value;
+            return;
+        }
+        if (nameof(scrollPaddingRight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingRight = value;
+            return;
+        }
+        if (nameof(scrollPaddingTop).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollPaddingTop = value;
+            return;
+        }
+        if (nameof(scrollSnapAlign).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollSnapAlign = value;
+            return;
+        }
+        if (nameof(scrollSnapStop).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollSnapStop = value;
+            return;
+        }
+        if (nameof(scrollSnapType).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollSnapType = value;
+            return;
+        }
+        if (nameof(scrollTimeline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollTimeline = value;
+            return;
+        }
+        if (nameof(scrollTimelineAxis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollTimelineAxis = value;
+            return;
+        }
+        if (nameof(scrollTimelineName).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollTimelineName = value;
+            return;
+        }
+        if (nameof(scrollbarGutter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.scrollbarGutter = value;
+            return;
+        }
+        if (nameof(shapeImageThreshold).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.shapeImageThreshold = value;
+            return;
+        }
+        if (nameof(shapeMargin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.shapeMargin = value;
+            return;
+        }
+        if (nameof(shapeOutside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.shapeOutside = value;
+            return;
+        }
+        if (nameof(shapeRendering).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.shapeRendering = value;
+            return;
+        }
+        if (nameof(size).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.size = value;
+            return;
+        }
+        if (nameof(sizeAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.sizeAdjust = value;
+            return;
+        }
+        if (nameof(speak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.speak = value;
+            return;
+        }
+        if (nameof(speakAs).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.speakAs = value;
+            return;
+        }
+        if (nameof(src).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.src = value;
+            return;
+        }
+        if (nameof(stopColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.stopColor = value;
+            return;
+        }
+        if (nameof(stopOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.stopOpacity = value;
+            return;
+        }
+        if (nameof(stroke).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.stroke = value;
+            return;
+        }
+        if (nameof(strokeDasharray).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.strokeDasharray = value;
+            return;
+        }
+        if (nameof(strokeDashoffset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.strokeDashoffset = value;
+            return;
+        }
+        if (nameof(strokeLinecap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.strokeLinecap = value;
+            return;
+        }
+        if (nameof(strokeLinejoin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.strokeLinejoin = value;
+            return;
+        }
+        if (nameof(strokeMiterlimit).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.strokeMiterlimit = value;
+            return;
+        }
+        if (nameof(strokeOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.strokeOpacity = value;
+            return;
+        }
+        if (nameof(strokeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.strokeWidth = value;
+            return;
+        }
+        if (nameof(suffix).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.suffix = value;
+            return;
+        }
+        if (nameof(symbols).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.symbols = value;
+            return;
+        }
+        if (nameof(syntax).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.syntax = value;
+            return;
+        }
+        if (nameof(system).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.system = value;
+            return;
+        }
+        if (nameof(tabSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.tabSize = value;
+            return;
+        }
+        if (nameof(tableLayout).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.tableLayout = value;
+            return;
+        }
+        if (nameof(textAlign).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textAlign = value;
+            return;
+        }
+        if (nameof(textAlignLast).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textAlignLast = value;
+            return;
+        }
+        if (nameof(textAnchor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textAnchor = value;
+            return;
+        }
+        if (nameof(textCombineHorizontal).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textCombineHorizontal = value;
+            return;
+        }
+        if (nameof(textCombineUpright).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textCombineUpright = value;
+            return;
+        }
+        if (nameof(textDecoration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textDecoration = value;
+            return;
+        }
+        if (nameof(textDecorationColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textDecorationColor = value;
+            return;
+        }
+        if (nameof(textDecorationLine).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textDecorationLine = value;
+            return;
+        }
+        if (nameof(textDecorationSkipInk).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textDecorationSkipInk = value;
+            return;
+        }
+        if (nameof(textDecorationStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textDecorationStyle = value;
+            return;
+        }
+        if (nameof(textDecorationThickness).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textDecorationThickness = value;
+            return;
+        }
+        if (nameof(textEmphasis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textEmphasis = value;
+            return;
+        }
+        if (nameof(textEmphasisColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textEmphasisColor = value;
+            return;
+        }
+        if (nameof(textEmphasisPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textEmphasisPosition = value;
+            return;
+        }
+        if (nameof(textEmphasisStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textEmphasisStyle = value;
+            return;
+        }
+        if (nameof(textIndent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textIndent = value;
+            return;
+        }
+        if (nameof(textOrientation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textOrientation = value;
+            return;
+        }
+        if (nameof(textOverflow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textOverflow = value;
+            return;
+        }
+        if (nameof(textRendering).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textRendering = value;
+            return;
+        }
+        if (nameof(textShadow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textShadow = value;
+            return;
+        }
+        if (nameof(textSizeAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textSizeAdjust = value;
+            return;
+        }
+        if (nameof(textTransform).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textTransform = value;
+            return;
+        }
+        if (nameof(textUnderlineOffset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textUnderlineOffset = value;
+            return;
+        }
+        if (nameof(textUnderlinePosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textUnderlinePosition = value;
+            return;
+        }
+        if (nameof(textWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.textWrap = value;
+            return;
+        }
+        if (nameof(timelineScope).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.timelineScope = value;
+            return;
+        }
+        if (nameof(top).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.top = value;
+            return;
+        }
+        if (nameof(touchAction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.touchAction = value;
+            return;
+        }
+        if (nameof(transform).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transform = value;
+            return;
+        }
+        if (nameof(transformBox).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transformBox = value;
+            return;
+        }
+        if (nameof(transformOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transformOrigin = value;
+            return;
+        }
+        if (nameof(transformStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transformStyle = value;
+            return;
+        }
+        if (nameof(transition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transition = value;
+            return;
+        }
+        if (nameof(transitionBehavior).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transitionBehavior = value;
+            return;
+        }
+        if (nameof(transitionDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transitionDelay = value;
+            return;
+        }
+        if (nameof(transitionDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transitionDuration = value;
+            return;
+        }
+        if (nameof(transitionProperty).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transitionProperty = value;
+            return;
+        }
+        if (nameof(transitionTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.transitionTimingFunction = value;
+            return;
+        }
+        if (nameof(translate).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.translate = value;
+            return;
+        }
+        if (nameof(unicodeBidi).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.unicodeBidi = value;
+            return;
+        }
+        if (nameof(unicodeRange).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.unicodeRange = value;
+            return;
+        }
+        if (nameof(userSelect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.userSelect = value;
+            return;
+        }
+        if (nameof(vectorEffect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.vectorEffect = value;
+            return;
+        }
+        if (nameof(verticalAlign).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.verticalAlign = value;
+            return;
+        }
+        if (nameof(viewTimeline).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.viewTimeline = value;
+            return;
+        }
+        if (nameof(viewTimelineAxis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.viewTimelineAxis = value;
+            return;
+        }
+        if (nameof(viewTimelineInset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.viewTimelineInset = value;
+            return;
+        }
+        if (nameof(viewTimelineName).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.viewTimelineName = value;
+            return;
+        }
+        if (nameof(viewTransitionName).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.viewTransitionName = value;
+            return;
+        }
+        if (nameof(visibility).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.visibility = value;
+            return;
+        }
+        if (nameof(webkitAlignContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAlignContent = value;
+            return;
+        }
+        if (nameof(webkitAlignItems).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAlignItems = value;
+            return;
+        }
+        if (nameof(webkitAlignSelf).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAlignSelf = value;
+            return;
+        }
+        if (nameof(webkitAnimation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimation = value;
+            return;
+        }
+        if (nameof(webkitAnimationDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimationDelay = value;
+            return;
+        }
+        if (nameof(webkitAnimationDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimationDirection = value;
+            return;
+        }
+        if (nameof(webkitAnimationDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimationDuration = value;
+            return;
+        }
+        if (nameof(webkitAnimationFillMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimationFillMode = value;
+            return;
+        }
+        if (nameof(webkitAnimationIterationCount).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimationIterationCount = value;
+            return;
+        }
+        if (nameof(webkitAnimationName).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimationName = value;
+            return;
+        }
+        if (nameof(webkitAnimationPlayState).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimationPlayState = value;
+            return;
+        }
+        if (nameof(webkitAnimationTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAnimationTimingFunction = value;
+            return;
+        }
+        if (nameof(webkitAppRegion).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAppRegion = value;
+            return;
+        }
+        if (nameof(webkitAppearance).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitAppearance = value;
+            return;
+        }
+        if (nameof(webkitBackfaceVisibility).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBackfaceVisibility = value;
+            return;
+        }
+        if (nameof(webkitBackgroundClip).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBackgroundClip = value;
+            return;
+        }
+        if (nameof(webkitBackgroundOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBackgroundOrigin = value;
+            return;
+        }
+        if (nameof(webkitBackgroundSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBackgroundSize = value;
+            return;
+        }
+        if (nameof(webkitBorderAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderAfter = value;
+            return;
+        }
+        if (nameof(webkitBorderAfterColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderAfterColor = value;
+            return;
+        }
+        if (nameof(webkitBorderAfterStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderAfterStyle = value;
+            return;
+        }
+        if (nameof(webkitBorderAfterWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderAfterWidth = value;
+            return;
+        }
+        if (nameof(webkitBorderBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderBefore = value;
+            return;
+        }
+        if (nameof(webkitBorderBeforeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderBeforeColor = value;
+            return;
+        }
+        if (nameof(webkitBorderBeforeStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderBeforeStyle = value;
+            return;
+        }
+        if (nameof(webkitBorderBeforeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderBeforeWidth = value;
+            return;
+        }
+        if (nameof(webkitBorderBottomLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderBottomLeftRadius = value;
+            return;
+        }
+        if (nameof(webkitBorderBottomRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderBottomRightRadius = value;
+            return;
+        }
+        if (nameof(webkitBorderEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderEnd = value;
+            return;
+        }
+        if (nameof(webkitBorderEndColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderEndColor = value;
+            return;
+        }
+        if (nameof(webkitBorderEndStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderEndStyle = value;
+            return;
+        }
+        if (nameof(webkitBorderEndWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderEndWidth = value;
+            return;
+        }
+        if (nameof(webkitBorderHorizontalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderHorizontalSpacing = value;
+            return;
+        }
+        if (nameof(webkitBorderImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderImage = value;
+            return;
+        }
+        if (nameof(webkitBorderRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderRadius = value;
+            return;
+        }
+        if (nameof(webkitBorderStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderStart = value;
+            return;
+        }
+        if (nameof(webkitBorderStartColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderStartColor = value;
+            return;
+        }
+        if (nameof(webkitBorderStartStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderStartStyle = value;
+            return;
+        }
+        if (nameof(webkitBorderStartWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderStartWidth = value;
+            return;
+        }
+        if (nameof(webkitBorderTopLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderTopLeftRadius = value;
+            return;
+        }
+        if (nameof(webkitBorderTopRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderTopRightRadius = value;
+            return;
+        }
+        if (nameof(webkitBorderVerticalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBorderVerticalSpacing = value;
+            return;
+        }
+        if (nameof(webkitBoxAlign).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxAlign = value;
+            return;
+        }
+        if (nameof(webkitBoxDecorationBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxDecorationBreak = value;
+            return;
+        }
+        if (nameof(webkitBoxDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxDirection = value;
+            return;
+        }
+        if (nameof(webkitBoxFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxFlex = value;
+            return;
+        }
+        if (nameof(webkitBoxOrdinalGroup).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxOrdinalGroup = value;
+            return;
+        }
+        if (nameof(webkitBoxOrient).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxOrient = value;
+            return;
+        }
+        if (nameof(webkitBoxPack).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxPack = value;
+            return;
+        }
+        if (nameof(webkitBoxReflect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxReflect = value;
+            return;
+        }
+        if (nameof(webkitBoxShadow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxShadow = value;
+            return;
+        }
+        if (nameof(webkitBoxSizing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitBoxSizing = value;
+            return;
+        }
+        if (nameof(webkitClipPath).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitClipPath = value;
+            return;
+        }
+        if (nameof(webkitColumnBreakAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnBreakAfter = value;
+            return;
+        }
+        if (nameof(webkitColumnBreakBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnBreakBefore = value;
+            return;
+        }
+        if (nameof(webkitColumnBreakInside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnBreakInside = value;
+            return;
+        }
+        if (nameof(webkitColumnCount).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnCount = value;
+            return;
+        }
+        if (nameof(webkitColumnGap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnGap = value;
+            return;
+        }
+        if (nameof(webkitColumnRule).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnRule = value;
+            return;
+        }
+        if (nameof(webkitColumnRuleColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnRuleColor = value;
+            return;
+        }
+        if (nameof(webkitColumnRuleStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnRuleStyle = value;
+            return;
+        }
+        if (nameof(webkitColumnRuleWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnRuleWidth = value;
+            return;
+        }
+        if (nameof(webkitColumnSpan).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnSpan = value;
+            return;
+        }
+        if (nameof(webkitColumnWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumnWidth = value;
+            return;
+        }
+        if (nameof(webkitColumns).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitColumns = value;
+            return;
+        }
+        if (nameof(webkitFilter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFilter = value;
+            return;
+        }
+        if (nameof(webkitFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFlex = value;
+            return;
+        }
+        if (nameof(webkitFlexBasis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFlexBasis = value;
+            return;
+        }
+        if (nameof(webkitFlexDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFlexDirection = value;
+            return;
+        }
+        if (nameof(webkitFlexFlow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFlexFlow = value;
+            return;
+        }
+        if (nameof(webkitFlexGrow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFlexGrow = value;
+            return;
+        }
+        if (nameof(webkitFlexShrink).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFlexShrink = value;
+            return;
+        }
+        if (nameof(webkitFlexWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFlexWrap = value;
+            return;
+        }
+        if (nameof(webkitFontFeatureSettings).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFontFeatureSettings = value;
+            return;
+        }
+        if (nameof(webkitFontSmoothing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitFontSmoothing = value;
+            return;
+        }
+        if (nameof(webkitHyphenateCharacter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitHyphenateCharacter = value;
+            return;
+        }
+        if (nameof(webkitJustifyContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitJustifyContent = value;
+            return;
+        }
+        if (nameof(webkitLineBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitLineBreak = value;
+            return;
+        }
+        if (nameof(webkitLineClamp).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitLineClamp = value;
+            return;
+        }
+        if (nameof(webkitLocale).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitLocale = value;
+            return;
+        }
+        if (nameof(webkitLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitLogicalHeight = value;
+            return;
+        }
+        if (nameof(webkitLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitLogicalWidth = value;
+            return;
+        }
+        if (nameof(webkitMarginAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMarginAfter = value;
+            return;
+        }
+        if (nameof(webkitMarginBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMarginBefore = value;
+            return;
+        }
+        if (nameof(webkitMarginEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMarginEnd = value;
+            return;
+        }
+        if (nameof(webkitMarginStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMarginStart = value;
+            return;
+        }
+        if (nameof(webkitMask).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMask = value;
+            return;
+        }
+        if (nameof(webkitMaskBoxImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskBoxImage = value;
+            return;
+        }
+        if (nameof(webkitMaskBoxImageOutset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskBoxImageOutset = value;
+            return;
+        }
+        if (nameof(webkitMaskBoxImageRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskBoxImageRepeat = value;
+            return;
+        }
+        if (nameof(webkitMaskBoxImageSlice).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskBoxImageSlice = value;
+            return;
+        }
+        if (nameof(webkitMaskBoxImageSource).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskBoxImageSource = value;
+            return;
+        }
+        if (nameof(webkitMaskBoxImageWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskBoxImageWidth = value;
+            return;
+        }
+        if (nameof(webkitMaskClip).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskClip = value;
+            return;
+        }
+        if (nameof(webkitMaskComposite).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskComposite = value;
+            return;
+        }
+        if (nameof(webkitMaskImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskImage = value;
+            return;
+        }
+        if (nameof(webkitMaskOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskOrigin = value;
+            return;
+        }
+        if (nameof(webkitMaskPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskPosition = value;
+            return;
+        }
+        if (nameof(webkitMaskPositionX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskPositionX = value;
+            return;
+        }
+        if (nameof(webkitMaskPositionY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskPositionY = value;
+            return;
+        }
+        if (nameof(webkitMaskRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskRepeat = value;
+            return;
+        }
+        if (nameof(webkitMaskRepeatX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskRepeatX = value;
+            return;
+        }
+        if (nameof(webkitMaskRepeatY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskRepeatY = value;
+            return;
+        }
+        if (nameof(webkitMaskSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaskSize = value;
+            return;
+        }
+        if (nameof(webkitMaxLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaxLogicalHeight = value;
+            return;
+        }
+        if (nameof(webkitMaxLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMaxLogicalWidth = value;
+            return;
+        }
+        if (nameof(webkitMinLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMinLogicalHeight = value;
+            return;
+        }
+        if (nameof(webkitMinLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitMinLogicalWidth = value;
+            return;
+        }
+        if (nameof(webkitOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitOpacity = value;
+            return;
+        }
+        if (nameof(webkitOrder).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitOrder = value;
+            return;
+        }
+        if (nameof(webkitPaddingAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPaddingAfter = value;
+            return;
+        }
+        if (nameof(webkitPaddingBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPaddingBefore = value;
+            return;
+        }
+        if (nameof(webkitPaddingEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPaddingEnd = value;
+            return;
+        }
+        if (nameof(webkitPaddingStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPaddingStart = value;
+            return;
+        }
+        if (nameof(webkitPerspective).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPerspective = value;
+            return;
+        }
+        if (nameof(webkitPerspectiveOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPerspectiveOrigin = value;
+            return;
+        }
+        if (nameof(webkitPerspectiveOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPerspectiveOriginX = value;
+            return;
+        }
+        if (nameof(webkitPerspectiveOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPerspectiveOriginY = value;
+            return;
+        }
+        if (nameof(webkitPrintColorAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitPrintColorAdjust = value;
+            return;
+        }
+        if (nameof(webkitRtlOrdering).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitRtlOrdering = value;
+            return;
+        }
+        if (nameof(webkitRubyPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitRubyPosition = value;
+            return;
+        }
+        if (nameof(webkitShapeImageThreshold).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitShapeImageThreshold = value;
+            return;
+        }
+        if (nameof(webkitShapeMargin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitShapeMargin = value;
+            return;
+        }
+        if (nameof(webkitShapeOutside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitShapeOutside = value;
+            return;
+        }
+        if (nameof(webkitTapHighlightColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTapHighlightColor = value;
+            return;
+        }
+        if (nameof(webkitTextCombine).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextCombine = value;
+            return;
+        }
+        if (nameof(webkitTextDecorationsInEffect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextDecorationsInEffect = value;
+            return;
+        }
+        if (nameof(webkitTextEmphasis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextEmphasis = value;
+            return;
+        }
+        if (nameof(webkitTextEmphasisColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextEmphasisColor = value;
+            return;
+        }
+        if (nameof(webkitTextEmphasisPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextEmphasisPosition = value;
+            return;
+        }
+        if (nameof(webkitTextEmphasisStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextEmphasisStyle = value;
+            return;
+        }
+        if (nameof(webkitTextFillColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextFillColor = value;
+            return;
+        }
+        if (nameof(webkitTextOrientation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextOrientation = value;
+            return;
+        }
+        if (nameof(webkitTextSecurity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextSecurity = value;
+            return;
+        }
+        if (nameof(webkitTextSizeAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextSizeAdjust = value;
+            return;
+        }
+        if (nameof(webkitTextStroke).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextStroke = value;
+            return;
+        }
+        if (nameof(webkitTextStrokeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextStrokeColor = value;
+            return;
+        }
+        if (nameof(webkitTextStrokeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTextStrokeWidth = value;
+            return;
+        }
+        if (nameof(webkitTransform).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransform = value;
+            return;
+        }
+        if (nameof(webkitTransformOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransformOrigin = value;
+            return;
+        }
+        if (nameof(webkitTransformOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransformOriginX = value;
+            return;
+        }
+        if (nameof(webkitTransformOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransformOriginY = value;
+            return;
+        }
+        if (nameof(webkitTransformOriginZ).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransformOriginZ = value;
+            return;
+        }
+        if (nameof(webkitTransformStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransformStyle = value;
+            return;
+        }
+        if (nameof(webkitTransition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransition = value;
+            return;
+        }
+        if (nameof(webkitTransitionDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransitionDelay = value;
+            return;
+        }
+        if (nameof(webkitTransitionDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransitionDuration = value;
+            return;
+        }
+        if (nameof(webkitTransitionProperty).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransitionProperty = value;
+            return;
+        }
+        if (nameof(webkitTransitionTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitTransitionTimingFunction = value;
+            return;
+        }
+        if (nameof(webkitUserDrag).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitUserDrag = value;
+            return;
+        }
+        if (nameof(webkitUserModify).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitUserModify = value;
+            return;
+        }
+        if (nameof(webkitUserSelect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitUserSelect = value;
+            return;
+        }
+        if (nameof(webkitWritingMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.webkitWritingMode = value;
+            return;
+        }
+        if (nameof(whiteSpace).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.whiteSpace = value;
+            return;
+        }
+        if (nameof(whiteSpaceCollapse).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.whiteSpaceCollapse = value;
+            return;
+        }
+        if (nameof(widows).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.widows = value;
+            return;
+        }
+        if (nameof(width).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.width = value;
+            return;
+        }
+        if (nameof(willChange).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.willChange = value;
+            return;
+        }
+        if (nameof(wordBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.wordBreak = value;
+            return;
+        }
+        if (nameof(wordSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.wordSpacing = value;
+            return;
+        }
+        if (nameof(wordWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.wordWrap = value;
+            return;
+        }
+        if (nameof(writingMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.writingMode = value;
+            return;
+        }
+        if (nameof(x).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.x = value;
+            return;
+        }
+        if (nameof(y).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.y = value;
+            return;
+        }
+        if (nameof(zIndex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.zIndex = value;
+            return;
+        }
+        if (nameof(zoom).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.zoom = value;
+            return;
+        }
+        if (nameof(mozOsxFontSmoothing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.mozOsxFontSmoothing = value;
+            return;
+        }
+        if (nameof(boxDecorationBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.boxDecorationBreak = value;
+            return;
+        }
+        if (nameof(cssFloat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.cssFloat = value;
+            return;
+        }
+        if (nameof(cssText).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.cssText = value;
+            return;
+        }
+        if (nameof(fontLanguageOverride).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontLanguageOverride = value;
+            return;
+        }
+        if (nameof(fontSizeAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.fontSizeAdjust = value;
+            return;
+        }
+        if (nameof(gridAutoPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.gridAutoPosition = value;
+            return;
+        }
+        if (nameof(icon).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.icon = value;
+            return;
+        }
+        if (nameof(imageResolution).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.imageResolution = value;
+            return;
+        }
+        if (nameof(imeMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.imeMode = value;
+            return;
+        }
+        if (nameof(marks).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.marks = value;
+            return;
+        }
+        if (nameof(navDown).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.navDown = value;
+            return;
+        }
+        if (nameof(navIndex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.navIndex = value;
+            return;
+        }
+        if (nameof(navLeft).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.navLeft = value;
+            return;
+        }
+        if (nameof(navRight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.navRight = value;
+            return;
+        }
+        if (nameof(navUp).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.navUp = value;
+            return;
+        }
+        if (nameof(overflowClipBox).Equals(name, StringComparison.OrdinalIgnoreCase))
+        {
+            s.overflowClipBox = value;
+            return;
+        }
+        throw CssParseException(name);
+    }
 }
