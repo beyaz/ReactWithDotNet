@@ -18330,4 +18330,3171 @@ partial class Style
     }
 }
 
+partial class Mixin
+{
+    /// <summary>
+    ///     style.accentColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AccentColor(string value) => new(style => style.accentColor = value);
 
+    /// <summary>
+    ///     style.additiveSymbols = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AdditiveSymbols(string value) => new(style => style.additiveSymbols = value);
+
+    /// <summary>
+    ///     style.alignContent = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AlignContent(string value) => new(style => style.alignContent = value);
+
+    /// <summary>
+    ///     style.alignItems = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AlignItems(string value) => new(style => style.alignItems = value);
+
+    /// <summary>
+    ///     style.alignSelf = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AlignSelf(string value) => new(style => style.alignSelf = value);
+
+    /// <summary>
+    ///     style.alignmentBaseline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AlignmentBaseline(string value) => new(style => style.alignmentBaseline = value);
+
+    /// <summary>
+    ///     style.all = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier All(string value) => new(style => style.all = value);
+
+    /// <summary>
+    ///     style.animation = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Animation(string value) => new(style => style.animation = value);
+
+    /// <summary>
+    ///     style.animationComposition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationComposition(string value) => new(style => style.animationComposition = value);
+
+    /// <summary>
+    ///     style.animationDelay = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationDelay(string value) => new(style => style.animationDelay = value);
+
+    /// <summary>
+    ///     style.animationDirection = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationDirection(string value) => new(style => style.animationDirection = value);
+
+    /// <summary>
+    ///     style.animationDuration = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationDuration(string value) => new(style => style.animationDuration = value);
+
+    /// <summary>
+    ///     style.animationFillMode = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationFillMode(string value) => new(style => style.animationFillMode = value);
+
+    /// <summary>
+    ///     style.animationIterationCount = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationIterationCount(string value) => new(style => style.animationIterationCount = value);
+
+    /// <summary>
+    ///     style.animationName = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationName(string value) => new(style => style.animationName = value);
+
+    /// <summary>
+    ///     style.animationPlayState = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationPlayState(string value) => new(style => style.animationPlayState = value);
+
+    /// <summary>
+    ///     style.animationRange = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationRange(string value) => new(style => style.animationRange = value);
+
+    /// <summary>
+    ///     style.animationRangeEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationRangeEnd(string value) => new(style => style.animationRangeEnd = value);
+
+    /// <summary>
+    ///     style.animationRangeStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationRangeStart(string value) => new(style => style.animationRangeStart = value);
+
+    /// <summary>
+    ///     style.animationTimeline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationTimeline(string value) => new(style => style.animationTimeline = value);
+
+    /// <summary>
+    ///     style.animationTimingFunction = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AnimationTimingFunction(string value) => new(style => style.animationTimingFunction = value);
+
+    /// <summary>
+    ///     style.appRegion = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AppRegion(string value) => new(style => style.appRegion = value);
+
+    /// <summary>
+    ///     style.appearance = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Appearance(string value) => new(style => style.appearance = value);
+
+    /// <summary>
+    ///     style.ascentOverride = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AscentOverride(string value) => new(style => style.ascentOverride = value);
+
+    /// <summary>
+    ///     style.aspectRatio = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier AspectRatio(string value) => new(style => style.aspectRatio = value);
+
+    /// <summary>
+    ///     style.backdropFilter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackdropFilter(string value) => new(style => style.backdropFilter = value);
+
+    /// <summary>
+    ///     style.backfaceVisibility = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackfaceVisibility(string value) => new(style => style.backfaceVisibility = value);
+
+    /// <summary>
+    ///     style.background = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Background(string value) => new(style => style.background = value);
+
+    /// <summary>
+    ///     style.backgroundAttachment = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundAttachment(string value) => new(style => style.backgroundAttachment = value);
+
+    /// <summary>
+    ///     style.backgroundBlendMode = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundBlendMode(string value) => new(style => style.backgroundBlendMode = value);
+
+    /// <summary>
+    ///     style.backgroundClip = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundClip(string value) => new(style => style.backgroundClip = value);
+
+    /// <summary>
+    ///     style.backgroundColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundColor(string value) => new(style => style.backgroundColor = value);
+
+    /// <summary>
+    ///     style.backgroundImage = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundImage(string value) => new(style => style.backgroundImage = value);
+
+    /// <summary>
+    ///     style.backgroundOrigin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundOrigin(string value) => new(style => style.backgroundOrigin = value);
+
+    /// <summary>
+    ///     style.backgroundPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundPosition(string value) => new(style => style.backgroundPosition = value);
+
+    /// <summary>
+    ///     style.backgroundPositionX = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundPositionX(string value) => new(style => style.backgroundPositionX = value);
+
+    /// <summary>
+    ///     style.backgroundPositionY = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundPositionY(string value) => new(style => style.backgroundPositionY = value);
+
+    /// <summary>
+    ///     style.backgroundRepeat = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundRepeat(string value) => new(style => style.backgroundRepeat = value);
+
+    /// <summary>
+    ///     style.backgroundRepeatX = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundRepeatX(string value) => new(style => style.backgroundRepeatX = value);
+
+    /// <summary>
+    ///     style.backgroundRepeatY = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundRepeatY(string value) => new(style => style.backgroundRepeatY = value);
+
+    /// <summary>
+    ///     style.backgroundSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BackgroundSize(string value) => new(style => style.backgroundSize = value);
+
+    /// <summary>
+    ///     style.basePalette = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BasePalette(string value) => new(style => style.basePalette = value);
+
+    /// <summary>
+    ///     style.baselineShift = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BaselineShift(string value) => new(style => style.baselineShift = value);
+
+    /// <summary>
+    ///     style.baselineSource = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BaselineSource(string value) => new(style => style.baselineSource = value);
+
+    /// <summary>
+    ///     style.blockSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BlockSize(string value) => new(style => style.blockSize = value);
+
+    /// <summary>
+    ///     style.border = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Border(string value) => new(style => style.border = value);
+
+    /// <summary>
+    ///     style.borderBlock = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlock(string value) => new(style => style.borderBlock = value);
+
+    /// <summary>
+    ///     style.borderBlockColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockColor(string value) => new(style => style.borderBlockColor = value);
+
+    /// <summary>
+    ///     style.borderBlockEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockEnd(string value) => new(style => style.borderBlockEnd = value);
+
+    /// <summary>
+    ///     style.borderBlockEndColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockEndColor(string value) => new(style => style.borderBlockEndColor = value);
+
+    /// <summary>
+    ///     style.borderBlockEndStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockEndStyle(string value) => new(style => style.borderBlockEndStyle = value);
+
+    /// <summary>
+    ///     style.borderBlockEndWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockEndWidth(string value) => new(style => style.borderBlockEndWidth = value);
+
+    /// <summary>
+    ///     style.borderBlockStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockStart(string value) => new(style => style.borderBlockStart = value);
+
+    /// <summary>
+    ///     style.borderBlockStartColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockStartColor(string value) => new(style => style.borderBlockStartColor = value);
+
+    /// <summary>
+    ///     style.borderBlockStartStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockStartStyle(string value) => new(style => style.borderBlockStartStyle = value);
+
+    /// <summary>
+    ///     style.borderBlockStartWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockStartWidth(string value) => new(style => style.borderBlockStartWidth = value);
+
+    /// <summary>
+    ///     style.borderBlockStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockStyle(string value) => new(style => style.borderBlockStyle = value);
+
+    /// <summary>
+    ///     style.borderBlockWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBlockWidth(string value) => new(style => style.borderBlockWidth = value);
+
+    /// <summary>
+    ///     style.borderBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBottom(string value) => new(style => style.borderBottom = value);
+
+    /// <summary>
+    ///     style.borderBottomColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBottomColor(string value) => new(style => style.borderBottomColor = value);
+
+    /// <summary>
+    ///     style.borderBottomLeftRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBottomLeftRadius(string value) => new(style => style.borderBottomLeftRadius = value);
+
+    /// <summary>
+    ///     style.borderBottomRightRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBottomRightRadius(string value) => new(style => style.borderBottomRightRadius = value);
+
+    /// <summary>
+    ///     style.borderBottomStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBottomStyle(string value) => new(style => style.borderBottomStyle = value);
+
+    /// <summary>
+    ///     style.borderBottomWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderBottomWidth(string value) => new(style => style.borderBottomWidth = value);
+
+    /// <summary>
+    ///     style.borderCollapse = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderCollapse(string value) => new(style => style.borderCollapse = value);
+
+    /// <summary>
+    ///     style.borderColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderColor(string value) => new(style => style.borderColor = value);
+
+    /// <summary>
+    ///     style.borderEndEndRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderEndEndRadius(string value) => new(style => style.borderEndEndRadius = value);
+
+    /// <summary>
+    ///     style.borderEndStartRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderEndStartRadius(string value) => new(style => style.borderEndStartRadius = value);
+
+    /// <summary>
+    ///     style.borderImage = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderImage(string value) => new(style => style.borderImage = value);
+
+    /// <summary>
+    ///     style.borderImageOutset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderImageOutset(string value) => new(style => style.borderImageOutset = value);
+
+    /// <summary>
+    ///     style.borderImageOutset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderImageOutset(double value) => new(style => style.borderImageOutset = value.AsPixel());
+
+    /// <summary>
+    ///     style.borderImageRepeat = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderImageRepeat(string value) => new(style => style.borderImageRepeat = value);
+
+    /// <summary>
+    ///     style.borderImageSlice = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderImageSlice(string value) => new(style => style.borderImageSlice = value);
+
+    /// <summary>
+    ///     style.borderImageSource = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderImageSource(string value) => new(style => style.borderImageSource = value);
+
+    /// <summary>
+    ///     style.borderImageWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderImageWidth(string value) => new(style => style.borderImageWidth = value);
+
+    /// <summary>
+    ///     style.borderImageWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderImageWidth(double value) => new(style => style.borderImageWidth = value.AsPixel());
+
+    /// <summary>
+    ///     style.borderInline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInline(string value) => new(style => style.borderInline = value);
+
+    /// <summary>
+    ///     style.borderInlineColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineColor(string value) => new(style => style.borderInlineColor = value);
+
+    /// <summary>
+    ///     style.borderInlineEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineEnd(string value) => new(style => style.borderInlineEnd = value);
+
+    /// <summary>
+    ///     style.borderInlineEndColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineEndColor(string value) => new(style => style.borderInlineEndColor = value);
+
+    /// <summary>
+    ///     style.borderInlineEndStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineEndStyle(string value) => new(style => style.borderInlineEndStyle = value);
+
+    /// <summary>
+    ///     style.borderInlineEndWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineEndWidth(string value) => new(style => style.borderInlineEndWidth = value);
+
+    /// <summary>
+    ///     style.borderInlineStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineStart(string value) => new(style => style.borderInlineStart = value);
+
+    /// <summary>
+    ///     style.borderInlineStartColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineStartColor(string value) => new(style => style.borderInlineStartColor = value);
+
+    /// <summary>
+    ///     style.borderInlineStartStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineStartStyle(string value) => new(style => style.borderInlineStartStyle = value);
+
+    /// <summary>
+    ///     style.borderInlineStartWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineStartWidth(string value) => new(style => style.borderInlineStartWidth = value);
+
+    /// <summary>
+    ///     style.borderInlineStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineStyle(string value) => new(style => style.borderInlineStyle = value);
+
+    /// <summary>
+    ///     style.borderInlineWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderInlineWidth(string value) => new(style => style.borderInlineWidth = value);
+
+    /// <summary>
+    ///     style.borderLeft = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderLeft(string value) => new(style => style.borderLeft = value);
+
+    /// <summary>
+    ///     style.borderLeftColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderLeftColor(string value) => new(style => style.borderLeftColor = value);
+
+    /// <summary>
+    ///     style.borderLeftStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderLeftStyle(string value) => new(style => style.borderLeftStyle = value);
+
+    /// <summary>
+    ///     style.borderLeftWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderLeftWidth(string value) => new(style => style.borderLeftWidth = value);
+
+    /// <summary>
+    ///     style.borderRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderRadius(string value) => new(style => style.borderRadius = value);
+
+    /// <summary>
+    ///     style.borderRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderRight(string value) => new(style => style.borderRight = value);
+
+    /// <summary>
+    ///     style.borderRightColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderRightColor(string value) => new(style => style.borderRightColor = value);
+
+    /// <summary>
+    ///     style.borderRightStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderRightStyle(string value) => new(style => style.borderRightStyle = value);
+
+    /// <summary>
+    ///     style.borderRightWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderRightWidth(string value) => new(style => style.borderRightWidth = value);
+
+    /// <summary>
+    ///     style.borderSpacing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderSpacing(string value) => new(style => style.borderSpacing = value);
+
+    /// <summary>
+    ///     style.borderStartEndRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderStartEndRadius(string value) => new(style => style.borderStartEndRadius = value);
+
+    /// <summary>
+    ///     style.borderStartStartRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderStartStartRadius(string value) => new(style => style.borderStartStartRadius = value);
+
+    /// <summary>
+    ///     style.borderStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderStyle(string value) => new(style => style.borderStyle = value);
+
+    /// <summary>
+    ///     style.borderTop = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderTop(string value) => new(style => style.borderTop = value);
+
+    /// <summary>
+    ///     style.borderTopColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderTopColor(string value) => new(style => style.borderTopColor = value);
+
+    /// <summary>
+    ///     style.borderTopLeftRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderTopLeftRadius(string value) => new(style => style.borderTopLeftRadius = value);
+
+    /// <summary>
+    ///     style.borderTopRightRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderTopRightRadius(string value) => new(style => style.borderTopRightRadius = value);
+
+    /// <summary>
+    ///     style.borderTopStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderTopStyle(string value) => new(style => style.borderTopStyle = value);
+
+    /// <summary>
+    ///     style.borderTopWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderTopWidth(string value) => new(style => style.borderTopWidth = value);
+
+    /// <summary>
+    ///     style.borderWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BorderWidth(string value) => new(style => style.borderWidth = value);
+
+    /// <summary>
+    ///     style.bottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Bottom(string value) => new(style => style.bottom = value);
+
+    /// <summary>
+    ///     style.boxShadow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BoxShadow(string value) => new(style => style.boxShadow = value);
+
+    /// <summary>
+    ///     style.boxSizing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BoxSizing(string value) => new(style => style.boxSizing = value);
+
+    /// <summary>
+    ///     style.breakAfter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BreakAfter(string value) => new(style => style.breakAfter = value);
+
+    /// <summary>
+    ///     style.breakBefore = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BreakBefore(string value) => new(style => style.breakBefore = value);
+
+    /// <summary>
+    ///     style.breakInside = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BreakInside(string value) => new(style => style.breakInside = value);
+
+    /// <summary>
+    ///     style.bufferedRendering = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BufferedRendering(string value) => new(style => style.bufferedRendering = value);
+
+    /// <summary>
+    ///     style.captionSide = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier CaptionSide(string value) => new(style => style.captionSide = value);
+
+    /// <summary>
+    ///     style.caretColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier CaretColor(string value) => new(style => style.caretColor = value);
+
+    /// <summary>
+    ///     style.clear = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Clear(string value) => new(style => style.clear = value);
+
+    /// <summary>
+    ///     style.clip = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Clip(string value) => new(style => style.clip = value);
+
+    /// <summary>
+    ///     style.clipPath = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ClipPath(string value) => new(style => style.clipPath = value);
+
+    /// <summary>
+    ///     style.clipPath = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ClipPath(double value) => new(style => style.clipPath = value.AsPixel());
+
+    /// <summary>
+    ///     style.clipRule = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ClipRule(string value) => new(style => style.clipRule = value);
+
+    /// <summary>
+    ///     style.color = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Color(string value) => new(style => style.color = value);
+
+    /// <summary>
+    ///     style.colorInterpolation = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColorInterpolation(string value) => new(style => style.colorInterpolation = value);
+
+    /// <summary>
+    ///     style.colorInterpolationFilters = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColorInterpolationFilters(string value) => new(style => style.colorInterpolationFilters = value);
+
+    /// <summary>
+    ///     style.colorRendering = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColorRendering(string value) => new(style => style.colorRendering = value);
+
+    /// <summary>
+    ///     style.colorScheme = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColorScheme(string value) => new(style => style.colorScheme = value);
+
+    /// <summary>
+    ///     style.columnCount = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnCount(string value) => new(style => style.columnCount = value);
+
+    /// <summary>
+    ///     style.columnFill = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnFill(string value) => new(style => style.columnFill = value);
+
+    /// <summary>
+    ///     style.columnGap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnGap(string value) => new(style => style.columnGap = value);
+
+    /// <summary>
+    ///     style.columnRule = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnRule(string value) => new(style => style.columnRule = value);
+
+    /// <summary>
+    ///     style.columnRuleColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnRuleColor(string value) => new(style => style.columnRuleColor = value);
+
+    /// <summary>
+    ///     style.columnRuleStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnRuleStyle(string value) => new(style => style.columnRuleStyle = value);
+
+    /// <summary>
+    ///     style.columnRuleWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnRuleWidth(string value) => new(style => style.columnRuleWidth = value);
+
+    /// <summary>
+    ///     style.columnSpan = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnSpan(string value) => new(style => style.columnSpan = value);
+
+    /// <summary>
+    ///     style.columnWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ColumnWidth(string value) => new(style => style.columnWidth = value);
+
+    /// <summary>
+    ///     style.columns = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Columns(string value) => new(style => style.columns = value);
+
+    /// <summary>
+    ///     style.contain = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Contain(string value) => new(style => style.contain = value);
+
+    /// <summary>
+    ///     style.containIntrinsicBlockSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ContainIntrinsicBlockSize(string value) => new(style => style.containIntrinsicBlockSize = value);
+
+    /// <summary>
+    ///     style.containIntrinsicHeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ContainIntrinsicHeight(string value) => new(style => style.containIntrinsicHeight = value);
+
+    /// <summary>
+    ///     style.containIntrinsicInlineSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ContainIntrinsicInlineSize(string value) => new(style => style.containIntrinsicInlineSize = value);
+
+    /// <summary>
+    ///     style.containIntrinsicSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ContainIntrinsicSize(string value) => new(style => style.containIntrinsicSize = value);
+
+    /// <summary>
+    ///     style.containIntrinsicWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ContainIntrinsicWidth(string value) => new(style => style.containIntrinsicWidth = value);
+
+    /// <summary>
+    ///     style.container = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Container(string value) => new(style => style.container = value);
+
+    /// <summary>
+    ///     style.containerName = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ContainerName(string value) => new(style => style.containerName = value);
+
+    /// <summary>
+    ///     style.containerType = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ContainerType(string value) => new(style => style.containerType = value);
+
+    /// <summary>
+    ///     style.content = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Content(string value) => new(style => style.content = value);
+
+    /// <summary>
+    ///     style.contentVisibility = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ContentVisibility(string value) => new(style => style.contentVisibility = value);
+
+    /// <summary>
+    ///     style.counterIncrement = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier CounterIncrement(string value) => new(style => style.counterIncrement = value);
+
+    /// <summary>
+    ///     style.counterReset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier CounterReset(string value) => new(style => style.counterReset = value);
+
+    /// <summary>
+    ///     style.counterSet = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier CounterSet(string value) => new(style => style.counterSet = value);
+
+    /// <summary>
+    ///     style.cursor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Cursor(string value) => new(style => style.cursor = value);
+
+    /// <summary>
+    ///     style.cx = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Cx(string value) => new(style => style.cx = value);
+
+    /// <summary>
+    ///     style.cy = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Cy(string value) => new(style => style.cy = value);
+
+    /// <summary>
+    ///     style.d = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier D(string value) => new(style => style.d = value);
+
+    /// <summary>
+    ///     style.descentOverride = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier DescentOverride(string value) => new(style => style.descentOverride = value);
+
+    /// <summary>
+    ///     style.direction = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Direction(string value) => new(style => style.direction = value);
+
+    /// <summary>
+    ///     style.display = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Display(string value) => new(style => style.display = value);
+
+    /// <summary>
+    ///     style.dominantBaseline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier DominantBaseline(string value) => new(style => style.dominantBaseline = value);
+
+    /// <summary>
+    ///     style.emptyCells = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier EmptyCells(string value) => new(style => style.emptyCells = value);
+
+    /// <summary>
+    ///     style.fallback = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Fallback(string value) => new(style => style.fallback = value);
+
+    /// <summary>
+    ///     style.fill = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Fill(string value) => new(style => style.fill = value);
+
+    /// <summary>
+    ///     style.fill = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Fill(double value) => new(style => style.fill = value.AsPixel());
+
+    /// <summary>
+    ///     style.fillOpacity = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FillOpacity(string value) => new(style => style.fillOpacity = value);
+
+    /// <summary>
+    ///     style.fillRule = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FillRule(string value) => new(style => style.fillRule = value);
+
+    /// <summary>
+    ///     style.filter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Filter(string value) => new(style => style.filter = value);
+
+    /// <summary>
+    ///     style.flex = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Flex(string value) => new(style => style.flex = value);
+
+    /// <summary>
+    ///     style.flexBasis = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FlexBasis(string value) => new(style => style.flexBasis = value);
+
+    /// <summary>
+    ///     style.flexDirection = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FlexDirection(string value) => new(style => style.flexDirection = value);
+
+    /// <summary>
+    ///     style.flexFlow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FlexFlow(string value) => new(style => style.flexFlow = value);
+
+    /// <summary>
+    ///     style.flexGrow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FlexGrow(string value) => new(style => style.flexGrow = value);
+
+    /// <summary>
+    ///     style.flexShrink = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FlexShrink(string value) => new(style => style.flexShrink = value);
+
+    /// <summary>
+    ///     style.@float = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier @float(string value) => new(style => style.@float = value);
+
+    /// <summary>
+    ///     style.floodColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FloodColor(string value) => new(style => style.floodColor = value);
+
+    /// <summary>
+    ///     style.floodOpacity = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FloodOpacity(string value) => new(style => style.floodOpacity = value);
+
+    /// <summary>
+    ///     style.font = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Font(string value) => new(style => style.font = value);
+
+    /// <summary>
+    ///     style.fontDisplay = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontDisplay(string value) => new(style => style.fontDisplay = value);
+
+    /// <summary>
+    ///     style.fontFamily = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontFamily(string value) => new(style => style.fontFamily = value);
+
+    /// <summary>
+    ///     style.fontFeatureSettings = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontFeatureSettings(string value) => new(style => style.fontFeatureSettings = value);
+
+    /// <summary>
+    ///     style.fontKerning = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontKerning(string value) => new(style => style.fontKerning = value);
+
+    /// <summary>
+    ///     style.fontOpticalSizing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontOpticalSizing(string value) => new(style => style.fontOpticalSizing = value);
+
+    /// <summary>
+    ///     style.fontPalette = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontPalette(string value) => new(style => style.fontPalette = value);
+
+    /// <summary>
+    ///     style.fontSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontSize(string value) => new(style => style.fontSize = value);
+
+    /// <summary>
+    ///     style.fontStretch = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontStretch(string value) => new(style => style.fontStretch = value);
+
+    /// <summary>
+    ///     style.fontStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontStyle(string value) => new(style => style.fontStyle = value);
+
+    /// <summary>
+    ///     style.fontSynthesis = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontSynthesis(string value) => new(style => style.fontSynthesis = value);
+
+    /// <summary>
+    ///     style.fontSynthesisSmallCaps = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontSynthesisSmallCaps(string value) => new(style => style.fontSynthesisSmallCaps = value);
+
+    /// <summary>
+    ///     style.fontSynthesisStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontSynthesisStyle(string value) => new(style => style.fontSynthesisStyle = value);
+
+    /// <summary>
+    ///     style.fontSynthesisWeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontSynthesisWeight(string value) => new(style => style.fontSynthesisWeight = value);
+
+    /// <summary>
+    ///     style.fontVariant = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontVariant(string value) => new(style => style.fontVariant = value);
+
+    /// <summary>
+    ///     style.fontVariantAlternates = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontVariantAlternates(string value) => new(style => style.fontVariantAlternates = value);
+
+    /// <summary>
+    ///     style.fontVariantCaps = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontVariantCaps(string value) => new(style => style.fontVariantCaps = value);
+
+    /// <summary>
+    ///     style.fontVariantEastAsian = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontVariantEastAsian(string value) => new(style => style.fontVariantEastAsian = value);
+
+    /// <summary>
+    ///     style.fontVariantLigatures = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontVariantLigatures(string value) => new(style => style.fontVariantLigatures = value);
+
+    /// <summary>
+    ///     style.fontVariantNumeric = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontVariantNumeric(string value) => new(style => style.fontVariantNumeric = value);
+
+    /// <summary>
+    ///     style.fontVariantPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontVariantPosition(string value) => new(style => style.fontVariantPosition = value);
+
+    /// <summary>
+    ///     style.fontVariationSettings = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontVariationSettings(string value) => new(style => style.fontVariationSettings = value);
+
+    /// <summary>
+    ///     style.fontWeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontWeight(string value) => new(style => style.fontWeight = value);
+
+    /// <summary>
+    ///     style.forcedColorAdjust = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ForcedColorAdjust(string value) => new(style => style.forcedColorAdjust = value);
+
+    /// <summary>
+    ///     style.gap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Gap(string value) => new(style => style.gap = value);
+
+    /// <summary>
+    ///     style.grid = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Grid(string value) => new(style => style.grid = value);
+
+    /// <summary>
+    ///     style.gridArea = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridArea(string value) => new(style => style.gridArea = value);
+
+    /// <summary>
+    ///     style.gridAutoColumns = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridAutoColumns(string value) => new(style => style.gridAutoColumns = value);
+
+    /// <summary>
+    ///     style.gridAutoFlow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridAutoFlow(string value) => new(style => style.gridAutoFlow = value);
+
+    /// <summary>
+    ///     style.gridAutoRows = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridAutoRows(string value) => new(style => style.gridAutoRows = value);
+
+    /// <summary>
+    ///     style.gridColumn = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridColumn(string value) => new(style => style.gridColumn = value);
+
+    /// <summary>
+    ///     style.gridColumnEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridColumnEnd(string value) => new(style => style.gridColumnEnd = value);
+
+    /// <summary>
+    ///     style.gridColumnGap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridColumnGap(string value) => new(style => style.gridColumnGap = value);
+
+    /// <summary>
+    ///     style.gridColumnStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridColumnStart(string value) => new(style => style.gridColumnStart = value);
+
+    /// <summary>
+    ///     style.gridGap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridGap(string value) => new(style => style.gridGap = value);
+
+    /// <summary>
+    ///     style.gridRow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridRow(string value) => new(style => style.gridRow = value);
+
+    /// <summary>
+    ///     style.gridRowEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridRowEnd(string value) => new(style => style.gridRowEnd = value);
+
+    /// <summary>
+    ///     style.gridRowGap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridRowGap(string value) => new(style => style.gridRowGap = value);
+
+    /// <summary>
+    ///     style.gridRowStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridRowStart(string value) => new(style => style.gridRowStart = value);
+
+    /// <summary>
+    ///     style.gridTemplate = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridTemplate(string value) => new(style => style.gridTemplate = value);
+
+    /// <summary>
+    ///     style.gridTemplateAreas = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridTemplateAreas(string value) => new(style => style.gridTemplateAreas = value);
+
+    /// <summary>
+    ///     style.gridTemplateColumns = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridTemplateColumns(string value) => new(style => style.gridTemplateColumns = value);
+
+    /// <summary>
+    ///     style.gridTemplateRows = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridTemplateRows(string value) => new(style => style.gridTemplateRows = value);
+
+    /// <summary>
+    ///     style.height = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Height(string value) => new(style => style.height = value);
+
+    /// <summary>
+    ///     style.hyphenateCharacter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier HyphenateCharacter(string value) => new(style => style.hyphenateCharacter = value);
+
+    /// <summary>
+    ///     style.hyphenateLimitChars = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier HyphenateLimitChars(string value) => new(style => style.hyphenateLimitChars = value);
+
+    /// <summary>
+    ///     style.hyphens = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Hyphens(string value) => new(style => style.hyphens = value);
+
+    /// <summary>
+    ///     style.imageOrientation = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ImageOrientation(string value) => new(style => style.imageOrientation = value);
+
+    /// <summary>
+    ///     style.imageRendering = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ImageRendering(string value) => new(style => style.imageRendering = value);
+
+    /// <summary>
+    ///     style.inherits = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Inherits(string value) => new(style => style.inherits = value);
+
+    /// <summary>
+    ///     style.initialLetter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InitialLetter(string value) => new(style => style.initialLetter = value);
+
+    /// <summary>
+    ///     style.initialValue = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InitialValue(string value) => new(style => style.initialValue = value);
+
+    /// <summary>
+    ///     style.inlineSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InlineSize(string value) => new(style => style.inlineSize = value);
+
+    /// <summary>
+    ///     style.inset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Inset(string value) => new(style => style.inset = value);
+
+    /// <summary>
+    ///     style.insetBlock = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InsetBlock(string value) => new(style => style.insetBlock = value);
+
+    /// <summary>
+    ///     style.insetBlockEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InsetBlockEnd(string value) => new(style => style.insetBlockEnd = value);
+
+    /// <summary>
+    ///     style.insetBlockStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InsetBlockStart(string value) => new(style => style.insetBlockStart = value);
+
+    /// <summary>
+    ///     style.insetInline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InsetInline(string value) => new(style => style.insetInline = value);
+
+    /// <summary>
+    ///     style.insetInlineEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InsetInlineEnd(string value) => new(style => style.insetInlineEnd = value);
+
+    /// <summary>
+    ///     style.insetInlineStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier InsetInlineStart(string value) => new(style => style.insetInlineStart = value);
+
+    /// <summary>
+    ///     style.isolation = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Isolation(string value) => new(style => style.isolation = value);
+
+    /// <summary>
+    ///     style.justifyContent = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier JustifyContent(string value) => new(style => style.justifyContent = value);
+
+    /// <summary>
+    ///     style.justifyItems = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier JustifyItems(string value) => new(style => style.justifyItems = value);
+
+    /// <summary>
+    ///     style.justifySelf = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier JustifySelf(string value) => new(style => style.justifySelf = value);
+
+    /// <summary>
+    ///     style.left = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Left(string value) => new(style => style.left = value);
+
+    /// <summary>
+    ///     style.letterSpacing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier LetterSpacing(string value) => new(style => style.letterSpacing = value);
+
+    /// <summary>
+    ///     style.lightingColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier LightingColor(string value) => new(style => style.lightingColor = value);
+
+    /// <summary>
+    ///     style.lineBreak = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier LineBreak(string value) => new(style => style.lineBreak = value);
+
+    /// <summary>
+    ///     style.lineGapOverride = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier LineGapOverride(string value) => new(style => style.lineGapOverride = value);
+
+    /// <summary>
+    ///     style.lineHeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier LineHeight(string value) => new(style => style.lineHeight = value);
+
+    /// <summary>
+    ///     style.listStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ListStyle(string value) => new(style => style.listStyle = value);
+
+    /// <summary>
+    ///     style.listStyleImage = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ListStyleImage(string value) => new(style => style.listStyleImage = value);
+
+    /// <summary>
+    ///     style.listStylePosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ListStylePosition(string value) => new(style => style.listStylePosition = value);
+
+    /// <summary>
+    ///     style.listStyleType = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ListStyleType(string value) => new(style => style.listStyleType = value);
+
+    /// <summary>
+    ///     style.margin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Margin(string value) => new(style => style.margin = value);
+
+    /// <summary>
+    ///     style.marginBlock = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginBlock(string value) => new(style => style.marginBlock = value);
+
+    /// <summary>
+    ///     style.marginBlockEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginBlockEnd(string value) => new(style => style.marginBlockEnd = value);
+
+    /// <summary>
+    ///     style.marginBlockStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginBlockStart(string value) => new(style => style.marginBlockStart = value);
+
+    /// <summary>
+    ///     style.marginBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginBottom(string value) => new(style => style.marginBottom = value);
+
+    /// <summary>
+    ///     style.marginInline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginInline(string value) => new(style => style.marginInline = value);
+
+    /// <summary>
+    ///     style.marginInlineEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginInlineEnd(string value) => new(style => style.marginInlineEnd = value);
+
+    /// <summary>
+    ///     style.marginInlineStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginInlineStart(string value) => new(style => style.marginInlineStart = value);
+
+    /// <summary>
+    ///     style.marginLeft = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginLeft(string value) => new(style => style.marginLeft = value);
+
+    /// <summary>
+    ///     style.marginRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginRight(string value) => new(style => style.marginRight = value);
+
+    /// <summary>
+    ///     style.marginTop = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarginTop(string value) => new(style => style.marginTop = value);
+
+    /// <summary>
+    ///     style.marker = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Marker(string value) => new(style => style.marker = value);
+
+    /// <summary>
+    ///     style.markerEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarkerEnd(string value) => new(style => style.markerEnd = value);
+
+    /// <summary>
+    ///     style.markerMid = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarkerMid(string value) => new(style => style.markerMid = value);
+
+    /// <summary>
+    ///     style.markerStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MarkerStart(string value) => new(style => style.markerStart = value);
+
+    /// <summary>
+    ///     style.mask = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Mask(string value) => new(style => style.mask = value);
+
+    /// <summary>
+    ///     style.maskType = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MaskType(string value) => new(style => style.maskType = value);
+
+    /// <summary>
+    ///     style.mathDepth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MathDepth(string value) => new(style => style.mathDepth = value);
+
+    /// <summary>
+    ///     style.mathShift = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MathShift(string value) => new(style => style.mathShift = value);
+
+    /// <summary>
+    ///     style.mathStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MathStyle(string value) => new(style => style.mathStyle = value);
+
+    /// <summary>
+    ///     style.maxBlockSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MaxBlockSize(string value) => new(style => style.maxBlockSize = value);
+
+    /// <summary>
+    ///     style.maxHeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MaxHeight(string value) => new(style => style.maxHeight = value);
+
+    /// <summary>
+    ///     style.maxInlineSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MaxInlineSize(string value) => new(style => style.maxInlineSize = value);
+
+    /// <summary>
+    ///     style.maxWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MaxWidth(string value) => new(style => style.maxWidth = value);
+
+    /// <summary>
+    ///     style.minBlockSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MinBlockSize(string value) => new(style => style.minBlockSize = value);
+
+    /// <summary>
+    ///     style.minHeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MinHeight(string value) => new(style => style.minHeight = value);
+
+    /// <summary>
+    ///     style.minInlineSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MinInlineSize(string value) => new(style => style.minInlineSize = value);
+
+    /// <summary>
+    ///     style.minWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MinWidth(string value) => new(style => style.minWidth = value);
+
+    /// <summary>
+    ///     style.mixBlendMode = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MixBlendMode(string value) => new(style => style.mixBlendMode = value);
+
+    /// <summary>
+    ///     style.negative = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Negative(string value) => new(style => style.negative = value);
+
+    /// <summary>
+    ///     style.objectFit = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ObjectFit(string value) => new(style => style.objectFit = value);
+
+    /// <summary>
+    ///     style.objectPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ObjectPosition(string value) => new(style => style.objectPosition = value);
+
+    /// <summary>
+    ///     style.objectViewBox = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ObjectViewBox(string value) => new(style => style.objectViewBox = value);
+
+    /// <summary>
+    ///     style.offset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Offset(string value) => new(style => style.offset = value);
+
+    /// <summary>
+    ///     style.offsetAnchor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OffsetAnchor(string value) => new(style => style.offsetAnchor = value);
+
+    /// <summary>
+    ///     style.offsetDistance = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OffsetDistance(string value) => new(style => style.offsetDistance = value);
+
+    /// <summary>
+    ///     style.offsetPath = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OffsetPath(string value) => new(style => style.offsetPath = value);
+
+    /// <summary>
+    ///     style.offsetPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OffsetPosition(string value) => new(style => style.offsetPosition = value);
+
+    /// <summary>
+    ///     style.offsetRotate = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OffsetRotate(string value) => new(style => style.offsetRotate = value);
+
+    /// <summary>
+    ///     style.opacity = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Opacity(string value) => new(style => style.opacity = value);
+
+    /// <summary>
+    ///     style.order = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Order(string value) => new(style => style.order = value);
+
+    /// <summary>
+    ///     style.orphans = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Orphans(string value) => new(style => style.orphans = value);
+
+    /// <summary>
+    ///     style.outline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Outline(string value) => new(style => style.outline = value);
+
+    /// <summary>
+    ///     style.outlineColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OutlineColor(string value) => new(style => style.outlineColor = value);
+
+    /// <summary>
+    ///     style.outlineOffset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OutlineOffset(string value) => new(style => style.outlineOffset = value);
+
+    /// <summary>
+    ///     style.outlineStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OutlineStyle(string value) => new(style => style.outlineStyle = value);
+
+    /// <summary>
+    ///     style.outlineWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OutlineWidth(string value) => new(style => style.outlineWidth = value);
+
+    /// <summary>
+    ///     style.overflow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Overflow(string value) => new(style => style.overflow = value);
+
+    /// <summary>
+    ///     style.overflowAnchor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverflowAnchor(string value) => new(style => style.overflowAnchor = value);
+
+    /// <summary>
+    ///     style.overflowClipMargin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverflowClipMargin(string value) => new(style => style.overflowClipMargin = value);
+
+    /// <summary>
+    ///     style.overflowWrap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverflowWrap(string value) => new(style => style.overflowWrap = value);
+
+    /// <summary>
+    ///     style.overflowX = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverflowX(string value) => new(style => style.overflowX = value);
+
+    /// <summary>
+    ///     style.overflowY = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverflowY(string value) => new(style => style.overflowY = value);
+
+    /// <summary>
+    ///     style.overlay = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Overlay(string value) => new(style => style.overlay = value);
+
+    /// <summary>
+    ///     style.overrideColors = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverrideColors(string value) => new(style => style.overrideColors = value);
+
+    /// <summary>
+    ///     style.overscrollBehavior = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverscrollBehavior(string value) => new(style => style.overscrollBehavior = value);
+
+    /// <summary>
+    ///     style.overscrollBehaviorBlock = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverscrollBehaviorBlock(string value) => new(style => style.overscrollBehaviorBlock = value);
+
+    /// <summary>
+    ///     style.overscrollBehaviorInline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverscrollBehaviorInline(string value) => new(style => style.overscrollBehaviorInline = value);
+
+    /// <summary>
+    ///     style.overscrollBehaviorX = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverscrollBehaviorX(string value) => new(style => style.overscrollBehaviorX = value);
+
+    /// <summary>
+    ///     style.overscrollBehaviorY = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverscrollBehaviorY(string value) => new(style => style.overscrollBehaviorY = value);
+
+    /// <summary>
+    ///     style.pad = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Pad(string value) => new(style => style.pad = value);
+
+    /// <summary>
+    ///     style.padding = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Padding(string value) => new(style => style.padding = value);
+
+    /// <summary>
+    ///     style.paddingBlock = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingBlock(string value) => new(style => style.paddingBlock = value);
+
+    /// <summary>
+    ///     style.paddingBlockEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingBlockEnd(string value) => new(style => style.paddingBlockEnd = value);
+
+    /// <summary>
+    ///     style.paddingBlockStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingBlockStart(string value) => new(style => style.paddingBlockStart = value);
+
+    /// <summary>
+    ///     style.paddingBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingBottom(string value) => new(style => style.paddingBottom = value);
+
+    /// <summary>
+    ///     style.paddingInline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingInline(string value) => new(style => style.paddingInline = value);
+
+    /// <summary>
+    ///     style.paddingInlineEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingInlineEnd(string value) => new(style => style.paddingInlineEnd = value);
+
+    /// <summary>
+    ///     style.paddingInlineStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingInlineStart(string value) => new(style => style.paddingInlineStart = value);
+
+    /// <summary>
+    ///     style.paddingLeft = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingLeft(string value) => new(style => style.paddingLeft = value);
+
+    /// <summary>
+    ///     style.paddingRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingRight(string value) => new(style => style.paddingRight = value);
+
+    /// <summary>
+    ///     style.paddingTop = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaddingTop(string value) => new(style => style.paddingTop = value);
+
+    /// <summary>
+    ///     style.page = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Page(string value) => new(style => style.page = value);
+
+    /// <summary>
+    ///     style.pageBreakAfter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PageBreakAfter(string value) => new(style => style.pageBreakAfter = value);
+
+    /// <summary>
+    ///     style.pageBreakBefore = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PageBreakBefore(string value) => new(style => style.pageBreakBefore = value);
+
+    /// <summary>
+    ///     style.pageBreakInside = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PageBreakInside(string value) => new(style => style.pageBreakInside = value);
+
+    /// <summary>
+    ///     style.pageOrientation = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PageOrientation(string value) => new(style => style.pageOrientation = value);
+
+    /// <summary>
+    ///     style.paintOrder = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PaintOrder(string value) => new(style => style.paintOrder = value);
+
+    /// <summary>
+    ///     style.perspective = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Perspective(string value) => new(style => style.perspective = value);
+
+    /// <summary>
+    ///     style.perspectiveOrigin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PerspectiveOrigin(string value) => new(style => style.perspectiveOrigin = value);
+
+    /// <summary>
+    ///     style.placeContent = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PlaceContent(string value) => new(style => style.placeContent = value);
+
+    /// <summary>
+    ///     style.placeItems = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PlaceItems(string value) => new(style => style.placeItems = value);
+
+    /// <summary>
+    ///     style.placeSelf = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PlaceSelf(string value) => new(style => style.placeSelf = value);
+
+    /// <summary>
+    ///     style.pointerEvents = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier PointerEvents(string value) => new(style => style.pointerEvents = value);
+
+    /// <summary>
+    ///     style.position = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Position(string value) => new(style => style.position = value);
+
+    /// <summary>
+    ///     style.prefix = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Prefix(string value) => new(style => style.prefix = value);
+
+    /// <summary>
+    ///     style.quotes = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Quotes(string value) => new(style => style.quotes = value);
+
+    /// <summary>
+    ///     style.r = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier R(string value) => new(style => style.r = value);
+
+    /// <summary>
+    ///     style.range = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Range(string value) => new(style => style.range = value);
+
+    /// <summary>
+    ///     style.resize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Resize(string value) => new(style => style.resize = value);
+
+    /// <summary>
+    ///     style.right = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Right(string value) => new(style => style.right = value);
+
+    /// <summary>
+    ///     style.rotate = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Rotate(string value) => new(style => style.rotate = value);
+
+    /// <summary>
+    ///     style.rowGap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier RowGap(string value) => new(style => style.rowGap = value);
+
+    /// <summary>
+    ///     style.rubyPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier RubyPosition(string value) => new(style => style.rubyPosition = value);
+
+    /// <summary>
+    ///     style.rx = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Rx(string value) => new(style => style.rx = value);
+
+    /// <summary>
+    ///     style.ry = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Ry(string value) => new(style => style.ry = value);
+
+    /// <summary>
+    ///     style.scale = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Scale(string value) => new(style => style.scale = value);
+
+    /// <summary>
+    ///     style.scrollBehavior = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollBehavior(string value) => new(style => style.scrollBehavior = value);
+
+    /// <summary>
+    ///     style.scrollMargin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMargin(string value) => new(style => style.scrollMargin = value);
+
+    /// <summary>
+    ///     style.scrollMarginBlock = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginBlock(string value) => new(style => style.scrollMarginBlock = value);
+
+    /// <summary>
+    ///     style.scrollMarginBlockEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginBlockEnd(string value) => new(style => style.scrollMarginBlockEnd = value);
+
+    /// <summary>
+    ///     style.scrollMarginBlockStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginBlockStart(string value) => new(style => style.scrollMarginBlockStart = value);
+
+    /// <summary>
+    ///     style.scrollMarginBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginBottom(string value) => new(style => style.scrollMarginBottom = value);
+
+    /// <summary>
+    ///     style.scrollMarginInline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginInline(string value) => new(style => style.scrollMarginInline = value);
+
+    /// <summary>
+    ///     style.scrollMarginInlineEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginInlineEnd(string value) => new(style => style.scrollMarginInlineEnd = value);
+
+    /// <summary>
+    ///     style.scrollMarginInlineStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginInlineStart(string value) => new(style => style.scrollMarginInlineStart = value);
+
+    /// <summary>
+    ///     style.scrollMarginLeft = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginLeft(string value) => new(style => style.scrollMarginLeft = value);
+
+    /// <summary>
+    ///     style.scrollMarginRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginRight(string value) => new(style => style.scrollMarginRight = value);
+
+    /// <summary>
+    ///     style.scrollMarginTop = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollMarginTop(string value) => new(style => style.scrollMarginTop = value);
+
+    /// <summary>
+    ///     style.scrollPadding = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPadding(string value) => new(style => style.scrollPadding = value);
+
+    /// <summary>
+    ///     style.scrollPaddingBlock = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingBlock(string value) => new(style => style.scrollPaddingBlock = value);
+
+    /// <summary>
+    ///     style.scrollPaddingBlockEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingBlockEnd(string value) => new(style => style.scrollPaddingBlockEnd = value);
+
+    /// <summary>
+    ///     style.scrollPaddingBlockStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingBlockStart(string value) => new(style => style.scrollPaddingBlockStart = value);
+
+    /// <summary>
+    ///     style.scrollPaddingBottom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingBottom(string value) => new(style => style.scrollPaddingBottom = value);
+
+    /// <summary>
+    ///     style.scrollPaddingInline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingInline(string value) => new(style => style.scrollPaddingInline = value);
+
+    /// <summary>
+    ///     style.scrollPaddingInlineEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingInlineEnd(string value) => new(style => style.scrollPaddingInlineEnd = value);
+
+    /// <summary>
+    ///     style.scrollPaddingInlineStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingInlineStart(string value) => new(style => style.scrollPaddingInlineStart = value);
+
+    /// <summary>
+    ///     style.scrollPaddingLeft = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingLeft(string value) => new(style => style.scrollPaddingLeft = value);
+
+    /// <summary>
+    ///     style.scrollPaddingRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingRight(string value) => new(style => style.scrollPaddingRight = value);
+
+    /// <summary>
+    ///     style.scrollPaddingTop = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollPaddingTop(string value) => new(style => style.scrollPaddingTop = value);
+
+    /// <summary>
+    ///     style.scrollSnapAlign = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollSnapAlign(string value) => new(style => style.scrollSnapAlign = value);
+
+    /// <summary>
+    ///     style.scrollSnapStop = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollSnapStop(string value) => new(style => style.scrollSnapStop = value);
+
+    /// <summary>
+    ///     style.scrollSnapType = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollSnapType(string value) => new(style => style.scrollSnapType = value);
+
+    /// <summary>
+    ///     style.scrollTimeline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollTimeline(string value) => new(style => style.scrollTimeline = value);
+
+    /// <summary>
+    ///     style.scrollTimelineAxis = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollTimelineAxis(string value) => new(style => style.scrollTimelineAxis = value);
+
+    /// <summary>
+    ///     style.scrollTimelineName = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollTimelineName(string value) => new(style => style.scrollTimelineName = value);
+
+    /// <summary>
+    ///     style.scrollbarGutter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ScrollbarGutter(string value) => new(style => style.scrollbarGutter = value);
+
+    /// <summary>
+    ///     style.shapeImageThreshold = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ShapeImageThreshold(string value) => new(style => style.shapeImageThreshold = value);
+
+    /// <summary>
+    ///     style.shapeMargin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ShapeMargin(string value) => new(style => style.shapeMargin = value);
+
+    /// <summary>
+    ///     style.shapeOutside = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ShapeOutside(string value) => new(style => style.shapeOutside = value);
+
+    /// <summary>
+    ///     style.shapeRendering = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ShapeRendering(string value) => new(style => style.shapeRendering = value);
+
+    /// <summary>
+    ///     style.size = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Size(string value) => new(style => style.size = value);
+
+    /// <summary>
+    ///     style.sizeAdjust = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier SizeAdjust(string value) => new(style => style.sizeAdjust = value);
+
+    /// <summary>
+    ///     style.speak = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Speak(string value) => new(style => style.speak = value);
+
+    /// <summary>
+    ///     style.speakAs = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier SpeakAs(string value) => new(style => style.speakAs = value);
+
+    /// <summary>
+    ///     style.stopColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StopColor(string value) => new(style => style.stopColor = value);
+
+    /// <summary>
+    ///     style.stopOpacity = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StopOpacity(string value) => new(style => style.stopOpacity = value);
+
+    /// <summary>
+    ///     style.stroke = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Stroke(string value) => new(style => style.stroke = value);
+
+    /// <summary>
+    ///     style.strokeDasharray = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StrokeDasharray(string value) => new(style => style.strokeDasharray = value);
+
+    /// <summary>
+    ///     style.strokeDashoffset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StrokeDashoffset(string value) => new(style => style.strokeDashoffset = value);
+
+    /// <summary>
+    ///     style.strokeLinecap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StrokeLinecap(string value) => new(style => style.strokeLinecap = value);
+
+    /// <summary>
+    ///     style.strokeLinejoin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StrokeLinejoin(string value) => new(style => style.strokeLinejoin = value);
+
+    /// <summary>
+    ///     style.strokeMiterlimit = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StrokeMiterlimit(string value) => new(style => style.strokeMiterlimit = value);
+
+    /// <summary>
+    ///     style.strokeOpacity = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StrokeOpacity(string value) => new(style => style.strokeOpacity = value);
+
+    /// <summary>
+    ///     style.strokeWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier StrokeWidth(string value) => new(style => style.strokeWidth = value);
+
+    /// <summary>
+    ///     style.suffix = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Suffix(string value) => new(style => style.suffix = value);
+
+    /// <summary>
+    ///     style.symbols = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Symbols(string value) => new(style => style.symbols = value);
+
+    /// <summary>
+    ///     style.syntax = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Syntax(string value) => new(style => style.syntax = value);
+
+    /// <summary>
+    ///     style.system = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier System(string value) => new(style => style.system = value);
+
+    /// <summary>
+    ///     style.tabSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TabSize(string value) => new(style => style.tabSize = value);
+
+    /// <summary>
+    ///     style.tableLayout = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TableLayout(string value) => new(style => style.tableLayout = value);
+
+    /// <summary>
+    ///     style.textAlign = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextAlign(string value) => new(style => style.textAlign = value);
+
+    /// <summary>
+    ///     style.textAlignLast = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextAlignLast(string value) => new(style => style.textAlignLast = value);
+
+    /// <summary>
+    ///     style.textAnchor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextAnchor(string value) => new(style => style.textAnchor = value);
+
+    /// <summary>
+    ///     style.textCombineHorizontal = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextCombineHorizontal(string value) => new(style => style.textCombineHorizontal = value);
+
+    /// <summary>
+    ///     style.textCombineUpright = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextCombineUpright(string value) => new(style => style.textCombineUpright = value);
+
+    /// <summary>
+    ///     style.textDecoration = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextDecoration(string value) => new(style => style.textDecoration = value);
+
+    /// <summary>
+    ///     style.textDecorationColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextDecorationColor(string value) => new(style => style.textDecorationColor = value);
+
+    /// <summary>
+    ///     style.textDecorationLine = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextDecorationLine(string value) => new(style => style.textDecorationLine = value);
+
+    /// <summary>
+    ///     style.textDecorationSkipInk = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextDecorationSkipInk(string value) => new(style => style.textDecorationSkipInk = value);
+
+    /// <summary>
+    ///     style.textDecorationStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextDecorationStyle(string value) => new(style => style.textDecorationStyle = value);
+
+    /// <summary>
+    ///     style.textDecorationThickness = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextDecorationThickness(string value) => new(style => style.textDecorationThickness = value);
+
+    /// <summary>
+    ///     style.textEmphasis = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextEmphasis(string value) => new(style => style.textEmphasis = value);
+
+    /// <summary>
+    ///     style.textEmphasisColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextEmphasisColor(string value) => new(style => style.textEmphasisColor = value);
+
+    /// <summary>
+    ///     style.textEmphasisPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextEmphasisPosition(string value) => new(style => style.textEmphasisPosition = value);
+
+    /// <summary>
+    ///     style.textEmphasisStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextEmphasisStyle(string value) => new(style => style.textEmphasisStyle = value);
+
+    /// <summary>
+    ///     style.textIndent = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextIndent(string value) => new(style => style.textIndent = value);
+
+    /// <summary>
+    ///     style.textOrientation = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextOrientation(string value) => new(style => style.textOrientation = value);
+
+    /// <summary>
+    ///     style.textOverflow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextOverflow(string value) => new(style => style.textOverflow = value);
+
+    /// <summary>
+    ///     style.textRendering = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextRendering(string value) => new(style => style.textRendering = value);
+
+    /// <summary>
+    ///     style.textShadow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextShadow(string value) => new(style => style.textShadow = value);
+
+    /// <summary>
+    ///     style.textSizeAdjust = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextSizeAdjust(string value) => new(style => style.textSizeAdjust = value);
+
+    /// <summary>
+    ///     style.textTransform = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextTransform(string value) => new(style => style.textTransform = value);
+
+    /// <summary>
+    ///     style.textUnderlineOffset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextUnderlineOffset(string value) => new(style => style.textUnderlineOffset = value);
+
+    /// <summary>
+    ///     style.textUnderlinePosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextUnderlinePosition(string value) => new(style => style.textUnderlinePosition = value);
+
+    /// <summary>
+    ///     style.textWrap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TextWrap(string value) => new(style => style.textWrap = value);
+
+    /// <summary>
+    ///     style.timelineScope = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TimelineScope(string value) => new(style => style.timelineScope = value);
+
+    /// <summary>
+    ///     style.top = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Top(string value) => new(style => style.top = value);
+
+    /// <summary>
+    ///     style.touchAction = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TouchAction(string value) => new(style => style.touchAction = value);
+
+    /// <summary>
+    ///     style.transform = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Transform(string value) => new(style => style.transform = value);
+
+    /// <summary>
+    ///     style.transformBox = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransformBox(string value) => new(style => style.transformBox = value);
+
+    /// <summary>
+    ///     style.transformOrigin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransformOrigin(string value) => new(style => style.transformOrigin = value);
+
+    /// <summary>
+    ///     style.transformStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransformStyle(string value) => new(style => style.transformStyle = value);
+
+    /// <summary>
+    ///     style.transition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Transition(string value) => new(style => style.transition = value);
+
+    /// <summary>
+    ///     style.transitionBehavior = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransitionBehavior(string value) => new(style => style.transitionBehavior = value);
+
+    /// <summary>
+    ///     style.transitionDelay = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransitionDelay(string value) => new(style => style.transitionDelay = value);
+
+    /// <summary>
+    ///     style.transitionDuration = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransitionDuration(string value) => new(style => style.transitionDuration = value);
+
+    /// <summary>
+    ///     style.transitionProperty = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransitionProperty(string value) => new(style => style.transitionProperty = value);
+
+    /// <summary>
+    ///     style.transitionTimingFunction = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier TransitionTimingFunction(string value) => new(style => style.transitionTimingFunction = value);
+
+    /// <summary>
+    ///     style.translate = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Translate(string value) => new(style => style.translate = value);
+
+    /// <summary>
+    ///     style.unicodeBidi = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier UnicodeBidi(string value) => new(style => style.unicodeBidi = value);
+
+    /// <summary>
+    ///     style.unicodeRange = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier UnicodeRange(string value) => new(style => style.unicodeRange = value);
+
+    /// <summary>
+    ///     style.userSelect = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier UserSelect(string value) => new(style => style.userSelect = value);
+
+    /// <summary>
+    ///     style.vectorEffect = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier VectorEffect(string value) => new(style => style.vectorEffect = value);
+
+    /// <summary>
+    ///     style.verticalAlign = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier VerticalAlign(string value) => new(style => style.verticalAlign = value);
+
+    /// <summary>
+    ///     style.viewTimeline = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ViewTimeline(string value) => new(style => style.viewTimeline = value);
+
+    /// <summary>
+    ///     style.viewTimelineAxis = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ViewTimelineAxis(string value) => new(style => style.viewTimelineAxis = value);
+
+    /// <summary>
+    ///     style.viewTimelineInset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ViewTimelineInset(string value) => new(style => style.viewTimelineInset = value);
+
+    /// <summary>
+    ///     style.viewTimelineName = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ViewTimelineName(string value) => new(style => style.viewTimelineName = value);
+
+    /// <summary>
+    ///     style.viewTransitionName = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ViewTransitionName(string value) => new(style => style.viewTransitionName = value);
+
+    /// <summary>
+    ///     style.visibility = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Visibility(string value) => new(style => style.visibility = value);
+
+    /// <summary>
+    ///     style.webkitAlignContent = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAlignContent(string value) => new(style => style.webkitAlignContent = value);
+
+    /// <summary>
+    ///     style.webkitAlignItems = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAlignItems(string value) => new(style => style.webkitAlignItems = value);
+
+    /// <summary>
+    ///     style.webkitAlignSelf = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAlignSelf(string value) => new(style => style.webkitAlignSelf = value);
+
+    /// <summary>
+    ///     style.webkitAnimation = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimation(string value) => new(style => style.webkitAnimation = value);
+
+    /// <summary>
+    ///     style.webkitAnimationDelay = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimationDelay(string value) => new(style => style.webkitAnimationDelay = value);
+
+    /// <summary>
+    ///     style.webkitAnimationDirection = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimationDirection(string value) => new(style => style.webkitAnimationDirection = value);
+
+    /// <summary>
+    ///     style.webkitAnimationDuration = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimationDuration(string value) => new(style => style.webkitAnimationDuration = value);
+
+    /// <summary>
+    ///     style.webkitAnimationFillMode = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimationFillMode(string value) => new(style => style.webkitAnimationFillMode = value);
+
+    /// <summary>
+    ///     style.webkitAnimationIterationCount = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimationIterationCount(string value) => new(style => style.webkitAnimationIterationCount = value);
+
+    /// <summary>
+    ///     style.webkitAnimationName = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimationName(string value) => new(style => style.webkitAnimationName = value);
+
+    /// <summary>
+    ///     style.webkitAnimationPlayState = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimationPlayState(string value) => new(style => style.webkitAnimationPlayState = value);
+
+    /// <summary>
+    ///     style.webkitAnimationTimingFunction = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAnimationTimingFunction(string value) => new(style => style.webkitAnimationTimingFunction = value);
+
+    /// <summary>
+    ///     style.webkitAppRegion = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAppRegion(string value) => new(style => style.webkitAppRegion = value);
+
+    /// <summary>
+    ///     style.webkitAppearance = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitAppearance(string value) => new(style => style.webkitAppearance = value);
+
+    /// <summary>
+    ///     style.webkitBackfaceVisibility = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBackfaceVisibility(string value) => new(style => style.webkitBackfaceVisibility = value);
+
+    /// <summary>
+    ///     style.webkitBackgroundClip = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBackgroundClip(string value) => new(style => style.webkitBackgroundClip = value);
+
+    /// <summary>
+    ///     style.webkitBackgroundOrigin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBackgroundOrigin(string value) => new(style => style.webkitBackgroundOrigin = value);
+
+    /// <summary>
+    ///     style.webkitBackgroundSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBackgroundSize(string value) => new(style => style.webkitBackgroundSize = value);
+
+    /// <summary>
+    ///     style.webkitBorderAfter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderAfter(string value) => new(style => style.webkitBorderAfter = value);
+
+    /// <summary>
+    ///     style.webkitBorderAfterColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderAfterColor(string value) => new(style => style.webkitBorderAfterColor = value);
+
+    /// <summary>
+    ///     style.webkitBorderAfterStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderAfterStyle(string value) => new(style => style.webkitBorderAfterStyle = value);
+
+    /// <summary>
+    ///     style.webkitBorderAfterWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderAfterWidth(string value) => new(style => style.webkitBorderAfterWidth = value);
+
+    /// <summary>
+    ///     style.webkitBorderBefore = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderBefore(string value) => new(style => style.webkitBorderBefore = value);
+
+    /// <summary>
+    ///     style.webkitBorderBeforeColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderBeforeColor(string value) => new(style => style.webkitBorderBeforeColor = value);
+
+    /// <summary>
+    ///     style.webkitBorderBeforeStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderBeforeStyle(string value) => new(style => style.webkitBorderBeforeStyle = value);
+
+    /// <summary>
+    ///     style.webkitBorderBeforeWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderBeforeWidth(string value) => new(style => style.webkitBorderBeforeWidth = value);
+
+    /// <summary>
+    ///     style.webkitBorderBottomLeftRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderBottomLeftRadius(string value) => new(style => style.webkitBorderBottomLeftRadius = value);
+
+    /// <summary>
+    ///     style.webkitBorderBottomRightRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderBottomRightRadius(string value) => new(style => style.webkitBorderBottomRightRadius = value);
+
+    /// <summary>
+    ///     style.webkitBorderEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderEnd(string value) => new(style => style.webkitBorderEnd = value);
+
+    /// <summary>
+    ///     style.webkitBorderEndColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderEndColor(string value) => new(style => style.webkitBorderEndColor = value);
+
+    /// <summary>
+    ///     style.webkitBorderEndStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderEndStyle(string value) => new(style => style.webkitBorderEndStyle = value);
+
+    /// <summary>
+    ///     style.webkitBorderEndWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderEndWidth(string value) => new(style => style.webkitBorderEndWidth = value);
+
+    /// <summary>
+    ///     style.webkitBorderHorizontalSpacing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderHorizontalSpacing(string value) => new(style => style.webkitBorderHorizontalSpacing = value);
+
+    /// <summary>
+    ///     style.webkitBorderImage = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderImage(string value) => new(style => style.webkitBorderImage = value);
+
+    /// <summary>
+    ///     style.webkitBorderRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderRadius(string value) => new(style => style.webkitBorderRadius = value);
+
+    /// <summary>
+    ///     style.webkitBorderStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderStart(string value) => new(style => style.webkitBorderStart = value);
+
+    /// <summary>
+    ///     style.webkitBorderStartColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderStartColor(string value) => new(style => style.webkitBorderStartColor = value);
+
+    /// <summary>
+    ///     style.webkitBorderStartStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderStartStyle(string value) => new(style => style.webkitBorderStartStyle = value);
+
+    /// <summary>
+    ///     style.webkitBorderStartWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderStartWidth(string value) => new(style => style.webkitBorderStartWidth = value);
+
+    /// <summary>
+    ///     style.webkitBorderTopLeftRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderTopLeftRadius(string value) => new(style => style.webkitBorderTopLeftRadius = value);
+
+    /// <summary>
+    ///     style.webkitBorderTopRightRadius = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderTopRightRadius(string value) => new(style => style.webkitBorderTopRightRadius = value);
+
+    /// <summary>
+    ///     style.webkitBorderVerticalSpacing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBorderVerticalSpacing(string value) => new(style => style.webkitBorderVerticalSpacing = value);
+
+    /// <summary>
+    ///     style.webkitBoxAlign = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxAlign(string value) => new(style => style.webkitBoxAlign = value);
+
+    /// <summary>
+    ///     style.webkitBoxDecorationBreak = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxDecorationBreak(string value) => new(style => style.webkitBoxDecorationBreak = value);
+
+    /// <summary>
+    ///     style.webkitBoxDirection = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxDirection(string value) => new(style => style.webkitBoxDirection = value);
+
+    /// <summary>
+    ///     style.webkitBoxFlex = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxFlex(string value) => new(style => style.webkitBoxFlex = value);
+
+    /// <summary>
+    ///     style.webkitBoxOrdinalGroup = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxOrdinalGroup(string value) => new(style => style.webkitBoxOrdinalGroup = value);
+
+    /// <summary>
+    ///     style.webkitBoxOrient = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxOrient(string value) => new(style => style.webkitBoxOrient = value);
+
+    /// <summary>
+    ///     style.webkitBoxPack = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxPack(string value) => new(style => style.webkitBoxPack = value);
+
+    /// <summary>
+    ///     style.webkitBoxReflect = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxReflect(string value) => new(style => style.webkitBoxReflect = value);
+
+    /// <summary>
+    ///     style.webkitBoxShadow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxShadow(string value) => new(style => style.webkitBoxShadow = value);
+
+    /// <summary>
+    ///     style.webkitBoxSizing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitBoxSizing(string value) => new(style => style.webkitBoxSizing = value);
+
+    /// <summary>
+    ///     style.webkitClipPath = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitClipPath(string value) => new(style => style.webkitClipPath = value);
+
+    /// <summary>
+    ///     style.webkitColumnBreakAfter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnBreakAfter(string value) => new(style => style.webkitColumnBreakAfter = value);
+
+    /// <summary>
+    ///     style.webkitColumnBreakBefore = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnBreakBefore(string value) => new(style => style.webkitColumnBreakBefore = value);
+
+    /// <summary>
+    ///     style.webkitColumnBreakInside = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnBreakInside(string value) => new(style => style.webkitColumnBreakInside = value);
+
+    /// <summary>
+    ///     style.webkitColumnCount = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnCount(string value) => new(style => style.webkitColumnCount = value);
+
+    /// <summary>
+    ///     style.webkitColumnGap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnGap(string value) => new(style => style.webkitColumnGap = value);
+
+    /// <summary>
+    ///     style.webkitColumnRule = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnRule(string value) => new(style => style.webkitColumnRule = value);
+
+    /// <summary>
+    ///     style.webkitColumnRuleColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnRuleColor(string value) => new(style => style.webkitColumnRuleColor = value);
+
+    /// <summary>
+    ///     style.webkitColumnRuleStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnRuleStyle(string value) => new(style => style.webkitColumnRuleStyle = value);
+
+    /// <summary>
+    ///     style.webkitColumnRuleWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnRuleWidth(string value) => new(style => style.webkitColumnRuleWidth = value);
+
+    /// <summary>
+    ///     style.webkitColumnSpan = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnSpan(string value) => new(style => style.webkitColumnSpan = value);
+
+    /// <summary>
+    ///     style.webkitColumnWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumnWidth(string value) => new(style => style.webkitColumnWidth = value);
+
+    /// <summary>
+    ///     style.webkitColumns = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitColumns(string value) => new(style => style.webkitColumns = value);
+
+    /// <summary>
+    ///     style.webkitFilter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFilter(string value) => new(style => style.webkitFilter = value);
+
+    /// <summary>
+    ///     style.webkitFlex = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFlex(string value) => new(style => style.webkitFlex = value);
+
+    /// <summary>
+    ///     style.webkitFlexBasis = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFlexBasis(string value) => new(style => style.webkitFlexBasis = value);
+
+    /// <summary>
+    ///     style.webkitFlexDirection = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFlexDirection(string value) => new(style => style.webkitFlexDirection = value);
+
+    /// <summary>
+    ///     style.webkitFlexFlow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFlexFlow(string value) => new(style => style.webkitFlexFlow = value);
+
+    /// <summary>
+    ///     style.webkitFlexGrow = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFlexGrow(string value) => new(style => style.webkitFlexGrow = value);
+
+    /// <summary>
+    ///     style.webkitFlexShrink = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFlexShrink(string value) => new(style => style.webkitFlexShrink = value);
+
+    /// <summary>
+    ///     style.webkitFlexWrap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFlexWrap(string value) => new(style => style.webkitFlexWrap = value);
+
+    /// <summary>
+    ///     style.webkitFontFeatureSettings = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFontFeatureSettings(string value) => new(style => style.webkitFontFeatureSettings = value);
+
+    /// <summary>
+    ///     style.webkitFontSmoothing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitFontSmoothing(string value) => new(style => style.webkitFontSmoothing = value);
+
+    /// <summary>
+    ///     style.webkitHyphenateCharacter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitHyphenateCharacter(string value) => new(style => style.webkitHyphenateCharacter = value);
+
+    /// <summary>
+    ///     style.webkitJustifyContent = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitJustifyContent(string value) => new(style => style.webkitJustifyContent = value);
+
+    /// <summary>
+    ///     style.webkitLineBreak = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitLineBreak(string value) => new(style => style.webkitLineBreak = value);
+
+    /// <summary>
+    ///     style.webkitLineClamp = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitLineClamp(string value) => new(style => style.webkitLineClamp = value);
+
+    /// <summary>
+    ///     style.webkitLocale = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitLocale(string value) => new(style => style.webkitLocale = value);
+
+    /// <summary>
+    ///     style.webkitLogicalHeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitLogicalHeight(string value) => new(style => style.webkitLogicalHeight = value);
+
+    /// <summary>
+    ///     style.webkitLogicalWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitLogicalWidth(string value) => new(style => style.webkitLogicalWidth = value);
+
+    /// <summary>
+    ///     style.webkitMarginAfter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMarginAfter(string value) => new(style => style.webkitMarginAfter = value);
+
+    /// <summary>
+    ///     style.webkitMarginBefore = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMarginBefore(string value) => new(style => style.webkitMarginBefore = value);
+
+    /// <summary>
+    ///     style.webkitMarginEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMarginEnd(string value) => new(style => style.webkitMarginEnd = value);
+
+    /// <summary>
+    ///     style.webkitMarginStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMarginStart(string value) => new(style => style.webkitMarginStart = value);
+
+    /// <summary>
+    ///     style.webkitMask = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMask(string value) => new(style => style.webkitMask = value);
+
+    /// <summary>
+    ///     style.webkitMaskBoxImage = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskBoxImage(string value) => new(style => style.webkitMaskBoxImage = value);
+
+    /// <summary>
+    ///     style.webkitMaskBoxImageOutset = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskBoxImageOutset(string value) => new(style => style.webkitMaskBoxImageOutset = value);
+
+    /// <summary>
+    ///     style.webkitMaskBoxImageRepeat = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskBoxImageRepeat(string value) => new(style => style.webkitMaskBoxImageRepeat = value);
+
+    /// <summary>
+    ///     style.webkitMaskBoxImageSlice = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskBoxImageSlice(string value) => new(style => style.webkitMaskBoxImageSlice = value);
+
+    /// <summary>
+    ///     style.webkitMaskBoxImageSource = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskBoxImageSource(string value) => new(style => style.webkitMaskBoxImageSource = value);
+
+    /// <summary>
+    ///     style.webkitMaskBoxImageWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskBoxImageWidth(string value) => new(style => style.webkitMaskBoxImageWidth = value);
+
+    /// <summary>
+    ///     style.webkitMaskClip = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskClip(string value) => new(style => style.webkitMaskClip = value);
+
+    /// <summary>
+    ///     style.webkitMaskComposite = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskComposite(string value) => new(style => style.webkitMaskComposite = value);
+
+    /// <summary>
+    ///     style.webkitMaskImage = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskImage(string value) => new(style => style.webkitMaskImage = value);
+
+    /// <summary>
+    ///     style.webkitMaskOrigin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskOrigin(string value) => new(style => style.webkitMaskOrigin = value);
+
+    /// <summary>
+    ///     style.webkitMaskPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskPosition(string value) => new(style => style.webkitMaskPosition = value);
+
+    /// <summary>
+    ///     style.webkitMaskPositionX = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskPositionX(string value) => new(style => style.webkitMaskPositionX = value);
+
+    /// <summary>
+    ///     style.webkitMaskPositionY = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskPositionY(string value) => new(style => style.webkitMaskPositionY = value);
+
+    /// <summary>
+    ///     style.webkitMaskRepeat = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskRepeat(string value) => new(style => style.webkitMaskRepeat = value);
+
+    /// <summary>
+    ///     style.webkitMaskRepeatX = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskRepeatX(string value) => new(style => style.webkitMaskRepeatX = value);
+
+    /// <summary>
+    ///     style.webkitMaskRepeatY = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskRepeatY(string value) => new(style => style.webkitMaskRepeatY = value);
+
+    /// <summary>
+    ///     style.webkitMaskSize = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaskSize(string value) => new(style => style.webkitMaskSize = value);
+
+    /// <summary>
+    ///     style.webkitMaxLogicalHeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaxLogicalHeight(string value) => new(style => style.webkitMaxLogicalHeight = value);
+
+    /// <summary>
+    ///     style.webkitMaxLogicalWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMaxLogicalWidth(string value) => new(style => style.webkitMaxLogicalWidth = value);
+
+    /// <summary>
+    ///     style.webkitMinLogicalHeight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMinLogicalHeight(string value) => new(style => style.webkitMinLogicalHeight = value);
+
+    /// <summary>
+    ///     style.webkitMinLogicalWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitMinLogicalWidth(string value) => new(style => style.webkitMinLogicalWidth = value);
+
+    /// <summary>
+    ///     style.webkitOpacity = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitOpacity(string value) => new(style => style.webkitOpacity = value);
+
+    /// <summary>
+    ///     style.webkitOrder = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitOrder(string value) => new(style => style.webkitOrder = value);
+
+    /// <summary>
+    ///     style.webkitPaddingAfter = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPaddingAfter(string value) => new(style => style.webkitPaddingAfter = value);
+
+    /// <summary>
+    ///     style.webkitPaddingBefore = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPaddingBefore(string value) => new(style => style.webkitPaddingBefore = value);
+
+    /// <summary>
+    ///     style.webkitPaddingEnd = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPaddingEnd(string value) => new(style => style.webkitPaddingEnd = value);
+
+    /// <summary>
+    ///     style.webkitPaddingStart = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPaddingStart(string value) => new(style => style.webkitPaddingStart = value);
+
+    /// <summary>
+    ///     style.webkitPerspective = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPerspective(string value) => new(style => style.webkitPerspective = value);
+
+    /// <summary>
+    ///     style.webkitPerspectiveOrigin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPerspectiveOrigin(string value) => new(style => style.webkitPerspectiveOrigin = value);
+
+    /// <summary>
+    ///     style.webkitPerspectiveOriginX = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPerspectiveOriginX(string value) => new(style => style.webkitPerspectiveOriginX = value);
+
+    /// <summary>
+    ///     style.webkitPerspectiveOriginY = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPerspectiveOriginY(string value) => new(style => style.webkitPerspectiveOriginY = value);
+
+    /// <summary>
+    ///     style.webkitPrintColorAdjust = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitPrintColorAdjust(string value) => new(style => style.webkitPrintColorAdjust = value);
+
+    /// <summary>
+    ///     style.webkitRtlOrdering = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitRtlOrdering(string value) => new(style => style.webkitRtlOrdering = value);
+
+    /// <summary>
+    ///     style.webkitRubyPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitRubyPosition(string value) => new(style => style.webkitRubyPosition = value);
+
+    /// <summary>
+    ///     style.webkitShapeImageThreshold = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitShapeImageThreshold(string value) => new(style => style.webkitShapeImageThreshold = value);
+
+    /// <summary>
+    ///     style.webkitShapeMargin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitShapeMargin(string value) => new(style => style.webkitShapeMargin = value);
+
+    /// <summary>
+    ///     style.webkitShapeOutside = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitShapeOutside(string value) => new(style => style.webkitShapeOutside = value);
+
+    /// <summary>
+    ///     style.webkitTapHighlightColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTapHighlightColor(string value) => new(style => style.webkitTapHighlightColor = value);
+
+    /// <summary>
+    ///     style.webkitTextCombine = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextCombine(string value) => new(style => style.webkitTextCombine = value);
+
+    /// <summary>
+    ///     style.webkitTextDecorationsInEffect = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextDecorationsInEffect(string value) => new(style => style.webkitTextDecorationsInEffect = value);
+
+    /// <summary>
+    ///     style.webkitTextEmphasis = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextEmphasis(string value) => new(style => style.webkitTextEmphasis = value);
+
+    /// <summary>
+    ///     style.webkitTextEmphasisColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextEmphasisColor(string value) => new(style => style.webkitTextEmphasisColor = value);
+
+    /// <summary>
+    ///     style.webkitTextEmphasisPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextEmphasisPosition(string value) => new(style => style.webkitTextEmphasisPosition = value);
+
+    /// <summary>
+    ///     style.webkitTextEmphasisStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextEmphasisStyle(string value) => new(style => style.webkitTextEmphasisStyle = value);
+
+    /// <summary>
+    ///     style.webkitTextFillColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextFillColor(string value) => new(style => style.webkitTextFillColor = value);
+
+    /// <summary>
+    ///     style.webkitTextOrientation = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextOrientation(string value) => new(style => style.webkitTextOrientation = value);
+
+    /// <summary>
+    ///     style.webkitTextSecurity = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextSecurity(string value) => new(style => style.webkitTextSecurity = value);
+
+    /// <summary>
+    ///     style.webkitTextSizeAdjust = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextSizeAdjust(string value) => new(style => style.webkitTextSizeAdjust = value);
+
+    /// <summary>
+    ///     style.webkitTextStroke = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextStroke(string value) => new(style => style.webkitTextStroke = value);
+
+    /// <summary>
+    ///     style.webkitTextStrokeColor = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextStrokeColor(string value) => new(style => style.webkitTextStrokeColor = value);
+
+    /// <summary>
+    ///     style.webkitTextStrokeWidth = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTextStrokeWidth(string value) => new(style => style.webkitTextStrokeWidth = value);
+
+    /// <summary>
+    ///     style.webkitTransform = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransform(string value) => new(style => style.webkitTransform = value);
+
+    /// <summary>
+    ///     style.webkitTransformOrigin = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransformOrigin(string value) => new(style => style.webkitTransformOrigin = value);
+
+    /// <summary>
+    ///     style.webkitTransformOriginX = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransformOriginX(string value) => new(style => style.webkitTransformOriginX = value);
+
+    /// <summary>
+    ///     style.webkitTransformOriginY = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransformOriginY(string value) => new(style => style.webkitTransformOriginY = value);
+
+    /// <summary>
+    ///     style.webkitTransformOriginZ = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransformOriginZ(string value) => new(style => style.webkitTransformOriginZ = value);
+
+    /// <summary>
+    ///     style.webkitTransformStyle = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransformStyle(string value) => new(style => style.webkitTransformStyle = value);
+
+    /// <summary>
+    ///     style.webkitTransition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransition(string value) => new(style => style.webkitTransition = value);
+
+    /// <summary>
+    ///     style.webkitTransitionDelay = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransitionDelay(string value) => new(style => style.webkitTransitionDelay = value);
+
+    /// <summary>
+    ///     style.webkitTransitionDuration = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransitionDuration(string value) => new(style => style.webkitTransitionDuration = value);
+
+    /// <summary>
+    ///     style.webkitTransitionProperty = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransitionProperty(string value) => new(style => style.webkitTransitionProperty = value);
+
+    /// <summary>
+    ///     style.webkitTransitionTimingFunction = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitTransitionTimingFunction(string value) => new(style => style.webkitTransitionTimingFunction = value);
+
+    /// <summary>
+    ///     style.webkitUserDrag = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitUserDrag(string value) => new(style => style.webkitUserDrag = value);
+
+    /// <summary>
+    ///     style.webkitUserModify = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitUserModify(string value) => new(style => style.webkitUserModify = value);
+
+    /// <summary>
+    ///     style.webkitUserSelect = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitUserSelect(string value) => new(style => style.webkitUserSelect = value);
+
+    /// <summary>
+    ///     style.webkitWritingMode = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WebkitWritingMode(string value) => new(style => style.webkitWritingMode = value);
+
+    /// <summary>
+    ///     style.whiteSpace = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WhiteSpace(string value) => new(style => style.whiteSpace = value);
+
+    /// <summary>
+    ///     style.whiteSpaceCollapse = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WhiteSpaceCollapse(string value) => new(style => style.whiteSpaceCollapse = value);
+
+    /// <summary>
+    ///     style.widows = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Widows(string value) => new(style => style.widows = value);
+
+    /// <summary>
+    ///     style.width = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Width(string value) => new(style => style.width = value);
+
+    /// <summary>
+    ///     style.willChange = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WillChange(string value) => new(style => style.willChange = value);
+
+    /// <summary>
+    ///     style.wordBreak = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WordBreak(string value) => new(style => style.wordBreak = value);
+
+    /// <summary>
+    ///     style.wordSpacing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WordSpacing(string value) => new(style => style.wordSpacing = value);
+
+    /// <summary>
+    ///     style.wordWrap = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WordWrap(string value) => new(style => style.wordWrap = value);
+
+    /// <summary>
+    ///     style.writingMode = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier WritingMode(string value) => new(style => style.writingMode = value);
+
+    /// <summary>
+    ///     style.x = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier X(string value) => new(style => style.x = value);
+
+    /// <summary>
+    ///     style.y = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Y(string value) => new(style => style.y = value);
+
+    /// <summary>
+    ///     style.zIndex = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ZIndex(string value) => new(style => style.zIndex = value);
+
+    /// <summary>
+    ///     style.zoom = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Zoom(string value) => new(style => style.zoom = value);
+
+    /// <summary>
+    ///     style.mozOsxFontSmoothing = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier MozOsxFontSmoothing(string value) => new(style => style.mozOsxFontSmoothing = value);
+
+    /// <summary>
+    ///     style.boxDecorationBreak = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier BoxDecorationBreak(string value) => new(style => style.boxDecorationBreak = value);
+
+    /// <summary>
+    ///     style.cssFloat = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier CssFloat(string value) => new(style => style.cssFloat = value);
+
+    /// <summary>
+    ///     style.cssText = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier CssText(string value) => new(style => style.cssText = value);
+
+    /// <summary>
+    ///     style.fontLanguageOverride = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontLanguageOverride(string value) => new(style => style.fontLanguageOverride = value);
+
+    /// <summary>
+    ///     style.fontSizeAdjust = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier FontSizeAdjust(string value) => new(style => style.fontSizeAdjust = value);
+
+    /// <summary>
+    ///     style.gridAutoPosition = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier GridAutoPosition(string value) => new(style => style.gridAutoPosition = value);
+
+    /// <summary>
+    ///     style.icon = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Icon(string value) => new(style => style.icon = value);
+
+    /// <summary>
+    ///     style.imageResolution = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ImageResolution(string value) => new(style => style.imageResolution = value);
+
+    /// <summary>
+    ///     style.imeMode = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier ImeMode(string value) => new(style => style.imeMode = value);
+
+    /// <summary>
+    ///     style.marks = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier Marks(string value) => new(style => style.marks = value);
+
+    /// <summary>
+    ///     style.navDown = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier NavDown(string value) => new(style => style.navDown = value);
+
+    /// <summary>
+    ///     style.navIndex = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier NavIndex(string value) => new(style => style.navIndex = value);
+
+    /// <summary>
+    ///     style.navLeft = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier NavLeft(string value) => new(style => style.navLeft = value);
+
+    /// <summary>
+    ///     style.navRight = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier NavRight(string value) => new(style => style.navRight = value);
+
+    /// <summary>
+    ///     style.navUp = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier NavUp(string value) => new(style => style.navUp = value);
+
+    /// <summary>
+    ///     style.overflowClipBox = <paramref name="value" />
+    /// </summary>
+    public static StyleModifier OverflowClipBox(string value) => new(style => style.overflowClipBox = value);
+
+}

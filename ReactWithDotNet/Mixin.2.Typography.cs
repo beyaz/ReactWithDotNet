@@ -145,18 +145,9 @@ partial class Mixin
     /// </summary>
     public static StyleModifier WebkitFontSmoothingAntialiased => WebkitFontSmoothing("antialiased");
 
-    /// <summary>
-    ///     style.fontFamily = fontFamily
-    /// </summary>
-    public static StyleModifier FontFamily(string fontFamily)
-    {
-        return new StyleModifier(style => style.fontFamily = fontFamily);
-    }
+   
 
-    public static StyleModifier FontSize(string fontSize)
-    {
-        return new StyleModifier(style => style.fontSize = fontSize);
-    }
+   
 
     public static StyleModifier FontSize(double fontSizePx)
     {
@@ -168,15 +159,9 @@ partial class Mixin
         return FontSize(cssUnit.ToString());
     }
 
-    public static StyleModifier FontStyle(string fontStyle)
-    {
-        return new StyleModifier(style => style.fontStyle = fontStyle);
-    }
+   
 
-    public static StyleModifier FontWeight(string fontWeight)
-    {
-        return new StyleModifier(style => style.fontWeight = fontWeight);
-    }
+    
 
     /// <summary>
     ///     style.letterSpacing = <paramref name="letterSpacingAsPixel" /> + 'px'
@@ -186,10 +171,7 @@ partial class Mixin
         return new StyleModifier(style => style.letterSpacing = letterSpacingAsPixel.AsPixel());
     }
 
-    public static StyleModifier LineHeight(string lineHeight)
-    {
-        return new StyleModifier(style => style.lineHeight = lineHeight);
-    }
+    
 
     public static StyleModifier LineHeight(double lineHeightPx)
     {
@@ -201,21 +183,9 @@ partial class Mixin
         return LineHeight(cssUnit.ToString());
     }
 
-    /// <summary>
-    ///     <b>-moz-osx-font-smoothing</b> = <paramref name="value" />
-    /// </summary>
-    public static StyleModifier MozOsxFontSmoothing(string value)
-    {
-        return new StyleModifier(style => style.mozOsxFontSmoothing = value);
-    }
+    
 
-    /// <summary>
-    ///     <b>-webkit-font-smoothing</b> = <paramref name="value" />
-    /// </summary>
-    public static StyleModifier WebkitFontSmoothing(string value)
-    {
-        return new StyleModifier(style => style.webkitFontSmoothing = value);
-    }
+   
     
     
     

@@ -126,6 +126,7 @@ public static partial class Mixin
     public static StyleModifier FlexNoWrap => new(style => style.flexWrap = "nowrap");
 
     public static StyleModifier FlexWrap => new(style => style.flexWrap = "wrap");
+    
     public static StyleModifier FlexWrapReverse => new(style => style.flexWrap = "wrap-reverse");
 
     /// <summary>
@@ -334,11 +335,7 @@ public static partial class Mixin
         }
     }
 
-    /// <summary>
-    ///     style.backdropFilter = value
-    /// </summary>
-    public static StyleModifier BackdropFilter(string value) =>
-        new(style => style.backdropFilter = value);
+   
 
     /// <summary>
     ///     style.backdropFilter = blur(px)
@@ -346,15 +343,11 @@ public static partial class Mixin
     public static StyleModifier BackdropFilterBlur(double px) =>
         new(style => style.backdropFilter = $"blur({px}px)");
 
-    public static StyleModifier Background(string background)
-        => new(style => style.background = background);
+ 
 
-    public static StyleModifier WebkitTextFillColor(string color)
-        => new(style => style.webkitTextFillColor = color);
+   
 
 
-    public static StyleModifier WebkitBackgroundClip(string value)
-        => new(style => style.webkitBackgroundClip = value);
 
     public static StyleModifier WebkitBackgroundClipText=>WebkitBackgroundClip("text");
 
@@ -362,15 +355,6 @@ public static partial class Mixin
 
     
 
-    /// <summary>
-    /// The background-image property sets one or more background images for an element.
-    /// <br/>
-    /// By default, a background-image is placed at the top-left corner of an element, and repeated both vertically and horizontally.
-    /// <br/>
-    /// style.backgroundImage = <paramref name="backgroundImage"/>
-    /// </summary>
-    public static StyleModifier BackgroundImage(string backgroundImage) 
-        => new(style => style.backgroundImage = backgroundImage);
     
     
     /// <summary>
@@ -385,10 +369,8 @@ public static partial class Mixin
 
 
 
-    public static StyleModifier BackgroundColor(string backgroundColor) => new(style => style.backgroundColor = backgroundColor);
-
+   
     
-    public static StyleModifier Bottom(string bottom) => new(style => style.bottom = bottom);
     public static StyleModifier Bottom(double bottom) => Bottom(bottom.AsPixel());
 
     public static StyleModifier BottomRight(string bottomAndRight) => Bottom(bottomAndRight) + Right(bottomAndRight);
@@ -412,23 +394,10 @@ public static partial class Mixin
 
     public static HtmlElementModifier ClassName(string className) => CreateHtmlElementModifier<HtmlElement>(element => element.className = className);
 
-    /// <summary>
-    ///     style.clear = value
-    /// </summary>
-    public static StyleModifier Clear(string value) =>
-        new(style => style.clear = value);
+    
 
-    public static StyleModifier Color(string color) => new(style => style.color = color);
 
-    /// <summary>
-    ///     style.content = <paramref name="content" />
-    /// </summary>
-    public static StyleModifier Content(string content) => new(style => style.content = content);
 
-    /// <summary>
-    ///     style.cursor = <paramref name="value" />
-    /// </summary>
-    public static StyleModifier Cursor(string value) => new(style => style.cursor = value);
 
     /// <summary>
     ///     initialize dir attribute of html element
@@ -451,15 +420,7 @@ public static partial class Mixin
     public static StyleModifier FlexShrink(double value)
         => new(style => style.flexShrink = value + "");
 
-    /// <summary>
-    ///     Specifies the initial length of a flexible item.
-    ///     <br/>
-    ///     style.flexBasis = <paramref name="value" />
-    ///     <br/>
-    ///     Note: If the element is not a flexible item, the flex-shrink property has no effect.
-    /// </summary>
-    public static StyleModifier FlexBasis(string value)
-        => new(style => style.flexBasis = value);
+   
 
     /// <summary>
     ///     Specifies the initial length of a flexible item.
@@ -494,7 +455,6 @@ public static partial class Mixin
   
 
     public static StyleModifier Gap(double gap) => new(style => style.gap = gap.AsPixel());
-    public static StyleModifier Gap(string gap) => new(style => style.gap = gap);
 
     public static string GetFullName(this Type type)
     {
@@ -507,7 +467,6 @@ public static partial class Mixin
     public static StyleModifier Height0 => Height(0);
     
     public static StyleModifier Height(double height) => Height(height.AsPixel());
-    public static StyleModifier Height(string height) => new(style => style.height = height);
 
 
 
@@ -552,7 +511,6 @@ public static partial class Mixin
     public static HtmlElementModifier Lang(string lang) => CreateHtmlElementModifier<HtmlElement>(element => element.lang = lang);
 
     public static StyleModifier Left(double left) => Left(left.AsPixel());
-    public static StyleModifier Left(string left) => new(style => style.left = left);
     public static StyleModifier LeftRight(string valueForLeftAndRight) => new(style => style.leftRight = valueForLeftAndRight);
 
     /// <summary>
@@ -585,10 +543,6 @@ public static partial class Mixin
 
 
 
-    /// <summary>
-    ///     style.listStyle = <paramref name="listStyle" />
-    /// </summary>
-    public static StyleModifier ListStyle(string listStyle) => new(style => style.listStyle = listStyle);
 
     /// <summary>
     ///     style.listStyle = 'inside'
@@ -605,20 +559,12 @@ public static partial class Mixin
     /// </summary>
     public static StyleModifier ListStyleSquare() => ListStyle("square");
 
-    /// <summary>
-    ///     style.maxHeight = <paramref name="maxHeight" />
-    /// </summary>
-    public static StyleModifier MaxHeight(string maxHeight) => new(style => style.maxHeight = maxHeight);
 
     /// <summary>
     ///     style.maxHeight = <paramref name="maxHeight" /> + "px"
     /// </summary>
     public static StyleModifier MaxHeight(double maxHeight) => MaxHeight(maxHeight.AsPixel());
 
-    /// <summary>
-    ///     style.maxWidth = <paramref name="maxWidth" />
-    /// </summary>
-    public static StyleModifier MaxWidth(string maxWidth) => new(style => style.maxWidth = maxWidth);
 
     /// <summary>
     ///     style.maxWidth = <paramref name="maxWidth" /> + 'px'
@@ -626,20 +572,12 @@ public static partial class Mixin
     public static StyleModifier MaxWidth(double maxWidth) => MaxWidth(maxWidth.AsPixel());
 
 
-    /// <summary>
-    ///     style.minHeight = <paramref name="minHeight" />
-    /// </summary>
-    public static StyleModifier MinHeight(string minHeight) => new(style => style.minHeight = minHeight);
 
     /// <summary>
     ///     style.minHeight = <paramref name="minHeight" /> + "px"
     /// </summary>
     public static StyleModifier MinHeight(double minHeight) => new(style => style.minHeight = minHeight.AsPixel());
 
-    /// <summary>
-    ///     style.minWidth = minWidth
-    /// </summary>
-    public static StyleModifier MinWidth(string minWidth) => new(style => style.minWidth = minWidth);
 
     /// <summary>
     ///     style.minWidth = minWidth + 'px'
@@ -676,10 +614,6 @@ public static partial class Mixin
     public static HtmlElementModifier OnScroll(string jsMethodName) => CreateHtmlElementModifier<HtmlElement>(element => element.onScroll = jsMethodName);
 
     
-    /// <summary>
-    ///     style.right = right
-    /// </summary>
-    public static StyleModifier Right(string right) => new(style => style.right = right);
 
     /// <summary>
     ///     style.right = right + 'px'
@@ -713,9 +647,7 @@ public static partial class Mixin
     public static HtmlElementModifier DangerouslySetInnerHTML(string html)
         => CreateHtmlElementModifier<HtmlElement>(element => element.dangerouslySetInnerHTML = html);
 
-    public static StyleModifier TextAlign(string textAlign) => new(style => style.textAlign = textAlign);
 
-    public static StyleModifier TextDecoration(string textDecoration) => new(style => style.textDecoration = textDecoration);
 
     
     /// <summary>
@@ -724,7 +656,6 @@ public static partial class Mixin
     public static HtmlElementModifier Title(string title) => CreateHtmlElementModifier<HtmlElement>(element => element.title = title);
 
     public static StyleModifier Top(double top) => Top(top.AsPixel());
-    public static StyleModifier Top(string top) => new(style => style.top = top);
 
     public static StyleModifier TopBottom(string valueForTopAndBottom) => new(style => style.topBottom = valueForTopAndBottom);
 
@@ -862,13 +793,9 @@ public static partial class Mixin
     #endregion
 
     #region Margin
-    public static StyleModifier Margin(string margin) => new(style => style.margin = margin);
     public static StyleModifier Margin(double margin) => new(style => style.margin = margin.AsPixel());
     public static StyleModifier Margin(double topBottomPx, double lefRighttPx) => Margin($"{topBottomPx}px {lefRighttPx}px");
-    public static StyleModifier MarginRight(string marginRight) => new(style => style.marginRight = marginRight);
-    public static StyleModifier MarginLeft(string marginLeft) => new(style => style.marginLeft = marginLeft);
-    public static StyleModifier MarginTop(string marginTop) => new(style => style.marginTop = marginTop);
-    public static StyleModifier MarginBottom(string marginBottom) => new(style => style.marginBottom = marginBottom);
+    
 
     public static StyleModifier MarginLeft(double marginLeftAsPx) => new(style => style.marginLeft = marginLeftAsPx.AsPixel());
     public static StyleModifier MarginRight(double marginRightAsPx) => new(style => style.marginRight = marginRightAsPx.AsPixel());
@@ -890,12 +817,9 @@ public static partial class Mixin
 
     #region Padding
     public static StyleModifier Padding(double paddingPx) => new(style => style.padding = paddingPx.AsPixel());
-    public static StyleModifier Padding(string padding) => new(style => style.padding = padding);
+    
     public static StyleModifier Padding(double topBottomPx, double lefRighttPx) => Padding($"{topBottomPx}px {lefRighttPx}px");
-    public static StyleModifier PaddingRight(string paddingRight) => new(style => style.paddingRight = paddingRight);
-    public static StyleModifier PaddingLeft(string paddingLeft) => new(style => style.paddingLeft = paddingLeft);
-    public static StyleModifier PaddingTop(string paddingTop) => new(style => style.paddingTop = paddingTop);
-    public static StyleModifier PaddingBottom(string paddingBottom) => new(style => style.paddingBottom = paddingBottom);
+    
 
     public static StyleModifier PaddingLeft(double paddingLeftAsPx) => new(style => style.paddingLeft = paddingLeftAsPx.AsPixel());
     public static StyleModifier PaddingRight(double paddingRightAsPx) => new(style => style.paddingRight = paddingRightAsPx.AsPixel());

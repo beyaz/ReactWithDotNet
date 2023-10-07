@@ -44,30 +44,17 @@ partial class Mixin
     /// </summary>
     public static StyleModifier VisibilityVisible => Visibility("visible");
 
-    /// <summary>
-    ///     style.opacity = <paramref name="opacity" />
-    /// </summary>
-    public static StyleModifier Opacity(string opacity) => new(style => style.opacity = opacity);
+    
 
     /// <summary>
     ///     style.opacity = <paramref name="opacity" />
     /// </summary>
     public static StyleModifier Opacity(double opacity) => new(style => style.opacity = opacity.ToString(CultureInfo.InvariantCulture));
 
-    /// <summary>
-    ///     style.textTransform = <paramref name="textTransform" />
-    /// </summary>
-    public static StyleModifier TextTransform(string textTransform) => new(style => style.textTransform = textTransform);
+  
 
-    /// <summary>
-    ///     style.transform = <paramref name="transform" />
-    /// </summary>
-    public static StyleModifier Transform(string transform) => new(style => style.transform = transform);
+    
 
-    /// <summary>
-    ///     style.transition = <paramref name="transition" />
-    /// </summary>
-    public static StyleModifier Transition(string transition) => new(style => style.transition = transition);
 
     /// <summary>
     ///     style.transition = {<paramref name="propertyName" />} {<paramref name="durationAsMilliseconds" />}ms
@@ -96,15 +83,8 @@ partial class Mixin
     public static StyleModifier Transition(string propertyName, double durationAsMilliseconds, string easingFunction, double delayAsMilliseconds)
         => Transition($"{propertyName} {durationAsMilliseconds}ms {easingFunction} {delayAsMilliseconds}ms");
 
-    /// <summary>
-    ///     style.visibility = <paramref name="visibility" />
-    /// </summary>
-    public static StyleModifier Visibility(string visibility) => new(style => style.visibility = visibility);
+  
     
     
-    /// <summary>
-    ///     style.transformOrigin = <paramref name="value" />
-    /// </summary>
-    public static StyleModifier TransformOrigin(string value) => new(style => style.transformOrigin = value);
     
 }

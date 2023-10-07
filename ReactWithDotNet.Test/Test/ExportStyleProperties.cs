@@ -196,12 +196,26 @@ public class ExportStyleProperties
 
         foreach (var name in propertyNames)
         {
+            if (name =="flexWrap" || name =="src")
+            {
+                continue;
+            }
+            
             var propertyName = getPropertyName(name);
             list.Add($"{indent}/// <summary>");
             list.Add($"{indent}/// {indent}style.{propertyName} = <paramref name=\"value\" />");
             list.Add($"{indent}/// </summary>");
             list.Add($"{indent}public static StyleModifier {getStyleModifierName(propertyName)}(string value) => new(style => style.{propertyName} = value);");
             list.Add("");
+
+            if (name == "borderImageOutset" || name == "borderImageWidth" || name == "fill" || name == "clipPath")
+            {
+                list.Add($"{indent}/// <summary>");
+                list.Add($"{indent}/// {indent}style.{propertyName} = <paramref name=\"value\" />");
+                list.Add($"{indent}/// </summary>");
+                list.Add($"{indent}public static StyleModifier {getStyleModifierName(propertyName)}(double value) => new(style => style.{propertyName} = value.AsPixel());");
+                list.Add("");
+            }
         }
         list.Add("}");
         ////////////////////////////////////////

@@ -91,10 +91,7 @@ public sealed class svg : HtmlElement
 
 partial class Mixin
 {
-    /// <summary>
-    ///     svg.fill = <paramref name="color" />
-    /// </summary>
-    public static HtmlElementModifier Fill(string color) => svg.Fill(color);
+    
     
     /// <summary>
     ///     svg.viewBox = <paramref name="viewBox" />
@@ -109,10 +106,6 @@ partial class Mixin
         => svg.ViewBox(  minX,  minY,  width,  height);
 
 
-    /// <summary>
-    ///     g.clipPath = <paramref name="value" />
-    /// </summary>
-    public static HtmlElementModifier ClipPath(string value) => g.ClipPath(value);
 }
 
 

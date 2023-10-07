@@ -4,8 +4,7 @@ partial class Mixin
 {
     public static StyleModifier BorderNone => Border("none");
 
-    public static StyleModifier Border(string border)
-        => new(style => style.border = border);
+   
 
     public static StyleModifier Border(string top, string right, string bottom, string left)
         => new(style => style.border = $"{top} {right} {bottom} {left}");
@@ -13,43 +12,29 @@ partial class Mixin
     public static StyleModifier Border(double top, double right, double bottom, double left)
         => Border(top.AsPixel(), right.AsPixel(), bottom.AsPixel(), left.AsPixel());
 
-    public static StyleModifier BorderBottom(string borderBottom)
-        => new(style => style.borderBottom = borderBottom);
+  
 
-    /// <summary>
-    ///     style.borderColor = <paramref name="color" />
-    /// </summary>
-    public static StyleModifier BorderColor(string color)
-        => new(style => style.borderColor = color);
+   
 
-    public static StyleModifier BorderLeft(string borderLeft)
-        => new(style => style.borderLeft = borderLeft);
 
-    public static StyleModifier BorderRadius(string borderRadius)
-        => new(style => style.borderRadius = borderRadius);
 
     public static StyleModifier BorderRadius(double borderRadius)
         => BorderRadius(borderRadius.AsPixel());
 
 
-    public static StyleModifier BorderTopLeftRadius(string borderRadius)
-        => new(style => style.borderTopLeftRadius = borderRadius);
 
     public static StyleModifier BorderTopLeftRadius(double borderRadius)
         => BorderTopLeftRadius(borderRadius.AsPixel());
 
-    public static StyleModifier BorderBottomLeftRadius(string borderRadius)
-        => new(style => style.borderBottomLeftRadius = borderRadius);
+  
 
     public static StyleModifier BorderBottomLeftRadius(double borderRadius)
         => BorderBottomLeftRadius(borderRadius.AsPixel());
 
 
-    public static StyleModifier BorderTopRightRadius(string borderRadius)
-        => new(style => style.borderTopRightRadius = borderRadius);
 
-    public static StyleModifier BorderBottomRightRadius(string borderRadius)
-        => new(style => style.borderBottomRightRadius = borderRadius);
+
+    
 
     public static StyleModifier BorderTopRightRadius(double borderRadius) 
         => BorderTopRightRadius(borderRadius.AsPixel());
@@ -59,31 +44,14 @@ partial class Mixin
 
 
 
-    public static StyleModifier BorderRight(string borderRight)
-        => new(style => style.borderRight = borderRight);
+   
 
-    public static StyleModifier BorderTop(string borderTop)
-        => new(style => style.borderTop = borderTop);
+  
     
-    public static StyleModifier BorderRightWidth(string borderRightWidth)
-        => new(style => style.borderRightWidth = borderRightWidth);
+   
     
-    public static StyleModifier BorderLeftWidth(string borderLeftWidth)
-        => new(style => style.borderLeftWidth = borderLeftWidth);
     
-    public static StyleModifier BorderTopWidth(string borderTopWidth)
-        => new(style => style.borderTopWidth = borderTopWidth);
-    
-    public static StyleModifier BorderBottomWidth(string borderBottomWidth)
-        => new(style => style.borderBottomWidth = borderBottomWidth);
-    
-    /// <summary>
-    /// specifies the indentation of the first line in a text-block
-    /// <br/>
-    /// style.textIndent = <paramref name="value"/>
-    /// </summary>
-    public static StyleModifier TextIndent(string value)
-        => new(style => style.textIndent = value);
+ 
     
     /// <summary>
     /// specifies the indentation of the first line in a text-block
@@ -160,8 +128,7 @@ partial class Mixin
         style.borderRight = borderValue;
     });
 
-    public static StyleModifier BoxShadow(string boxShadow)
-        => new(style => style.boxShadow = boxShadow);
+  
 
     public static StyleModifier BoxShadow(double offsetX, double offsetY, double blurRadius, double spreadRadius, string color)
         => BoxShadow($"{offsetX}px {offsetY}px {blurRadius}px {spreadRadius}px {color}");
@@ -209,11 +176,7 @@ partial class Mixin
     
     
     
-    /// <summary>
-    ///     style.outline = <paramref name="value" />
-    /// </summary>
-    public static StyleModifier Outline(string value)
-        => new(style => style.outline = value);
+    
     
     /// <summary>
     ///     style.outline = none
@@ -222,13 +185,7 @@ partial class Mixin
     
     
     
-    /// <summary>
-    /// Sets whether table borders should collapse into a single border or be separated as in standard HTML.
-    /// <br/>
-    /// style.borderCollapse = <paramref name="value"/>
-    /// </summary>
-    public static StyleModifier BorderCollapse(string value)
-        => new(style => style.borderCollapse = value);
+    
     
     /// <summary>
     ///     style.borderCollapse = collapse
@@ -291,16 +248,10 @@ partial class Mixin
     
     
     
-    public static StyleModifier BorderRightStyle(string value) => new(style => style.borderRightStyle = value);
-    public static StyleModifier BorderTopStyle(string value) => new(style => style.borderTopStyle = value);
-    public static StyleModifier BorderBottomStyle(string value) => new(style => style.borderBottomStyle = value);
-    public static StyleModifier BorderLeftStyle(string value) => new(style => style.borderLeftStyle = value);
+   
     
     
-    /// <summary>
-    /// normal|multiply|screen|overlay|darken|lighten|color-dodge|color-burn|difference|exclusion|hue|saturation|color|luminosity
-    /// </summary>
-    public static StyleModifier MixBlendMode(string value) => new(style => style.mixBlendMode = value);
+    
     
     
 

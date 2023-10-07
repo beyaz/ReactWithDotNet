@@ -70,7 +70,6 @@ partial class Mixin
     
     public static StyleModifier Height(CssUnit value) => Height(value.ToString());
 
-    public static StyleModifier Width(string width) => new(style => style.width = width);
 
     public const string inherit = "inherit";
 }

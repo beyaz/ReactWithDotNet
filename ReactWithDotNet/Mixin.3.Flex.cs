@@ -49,13 +49,7 @@ partial class Mixin
 
     #region AlignSelf
 
-    /// <summary>
-    ///     <para>style.alignSelf = <paramref name="value" /></para>
-    /// </summary>
-    public static StyleModifier AlignSelf(string value)
-    {
-        return new StyleModifier(style => style.alignSelf = value);
-    }
+    
 
     /// <summary>
     ///     <para>style.alignSelf = "auto"</para>
