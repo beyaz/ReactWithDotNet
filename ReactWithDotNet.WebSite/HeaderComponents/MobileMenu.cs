@@ -54,49 +54,23 @@ class MobileMenu : Component
     {
         public Menu Model { get; set; }
 
+        public bool IsOpen { get; set; }
+        
         protected override Element render()
         {
             return new div(Padding(10))
             {
-                new CollapseContainer
+                new FlexRow(AlignItemsCenter, PaddingBottom(10))
                 {
-                    ContentOnOpened = new Fragment(Key("content"))
-                    {
-                        new FlexRow(AlignItemsCenter, PaddingBottom(10))
-                        {
-                            new span { Model.Title, FontSize14, FontWeight600, Color(Theme.text_secondary) },
-                            new ArrowUpDownIcon { IsArrowUp = true }
-                        },
-                        new FlexColumn(JustifyContentSpaceEvenly, BorderLeft(Solid(1, Theme.grey_100)), PaddingLeft(10))
-                        {
-                            AnimateHeightAndOpacity(true),
-                            children
-                        }
-                    },
-                    ContentOnClosed = new Fragment(Key("content"))
-                    {
-                        new FlexRow(AlignItemsCenter, PaddingBottom(10))
-                        {
-                            new span { Model.Title, FontSize14, FontWeight600, Color(Theme.text_secondary) },
-                            new ArrowUpDownIcon { IsArrowUp = false }
-                        },
-                        new FlexColumn(JustifyContentSpaceEvenly, BorderLeft(Solid(1, Theme.grey_100)), PaddingLeft(10))
-                        {
-                            AnimateHeightAndOpacity(false),
-                            children
-                        }
-                    }
+                    new span { Model.Title, FontSize14, FontWeight600, Color(Theme.text_secondary) },
+                    new ArrowUpDownIcon { IsArrowUp = IsOpen } + OnClick(_=>IsOpen = !IsOpen)
+                },
+                new FlexColumn(JustifyContentSpaceEvenly, BorderLeft(Solid(1, Theme.grey_100)), PaddingLeft(10))
+                {
+                    AnimateHeightAndOpacity(IsOpen),
+                    children
                 }
             };
         }
     }
-}
-
-class CollapseContainer : ThirdPartyReactComponent
-{
-    [ReactProp]
-    public Element ContentOnOpened { get; set; }
-
-    [ReactProp]
-    public Element ContentOnClosed{ get; set; }
 }

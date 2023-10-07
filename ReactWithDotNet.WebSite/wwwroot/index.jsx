@@ -22,20 +22,3 @@ import "./react-with-dotnet/libraries/MonacoEditorReact/all";
 
 
 export { ReactWithDotNet };
-
-
-    
-
-
-import React, { useState } from 'react';
-
-ReactWithDotNet.RegisterExternalJsObject('ReactWithDotNet.WebSite.HeaderComponents.CollapseContainer', props =>
-{
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <div onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? props.ContentOnOpened : props.ContentOnClosed}
-        </div>
-    );
-});
