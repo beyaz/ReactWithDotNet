@@ -137,7 +137,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             htmlAttributeCollection.Remove(htmlAttribute);
         }
     }
-    
+
     static void RemoveAll(this HtmlNodeCollection htmlNodeCollection, Func<HtmlNode, bool> match)
     {
         var nodes = htmlNodeCollection.Where(match).ToList();
@@ -244,7 +244,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return new List<string> { "br" };
         }
-
 
         Style style = null;
 
@@ -410,7 +409,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
         }
-        
+
         // remove comments
         {
             htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
@@ -627,18 +626,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return "TargetBlank";
         }
-        
-        if (htmlAttribute.Name == "focusable" && htmlAttribute.OwnerNode.Name =="svg")
+
+        if (htmlAttribute.Name == "focusable" && htmlAttribute.OwnerNode.Name == "svg")
         {
             return $"svg.Focusable(\"{htmlAttribute.Value}\")";
         }
-        
-        if (htmlAttribute.Name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && htmlAttribute.OwnerNode.Name =="svg")
+
+        if (htmlAttribute.Name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && htmlAttribute.OwnerNode.Name == "svg")
         {
             return $"ViewBox(\"{htmlAttribute.Value}\")";
         }
-        
-        
 
         var modifierFullName = $"{CamelCase(htmlAttribute.Name)}{CamelCase(htmlAttribute.Value)}";
 
