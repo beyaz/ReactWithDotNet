@@ -44,7 +44,7 @@ public class ExportStyleProperties
         
         
         list.Add("");
-        list.Add($"{indent}static bool IsEmpty(Style s)");
+        list.Add($"{indent}static bool isEmpty(Style s)");
         list.Add($"{indent}{{");
         
         foreach (var name in propertyNames)
@@ -54,12 +54,15 @@ public class ExportStyleProperties
             list.Add($"{indent}{indent}if (s.{propertyName} != null)");
             list.Add( $"{indent}{indent}{{");
             list.Add($"{indent}{indent}{indent}return false;");
-            list.Add( $"{indent}{indent}");
+            list.Add( $"{indent}{indent}}}");
             
         }
         
         list.Add($"{indent}{indent}return true;");
-        list.Add("}");
+        list.Add($"{indent}}}");
+        
+        
+        list.Add("}");// end of class
 
         var sb = new StringBuilder();
 
