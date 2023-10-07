@@ -716,8 +716,28 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (htmlNode.Attributes.Any() || modifiers.Any())
                 {
-                    htmlNode.Attributes.Insert(0,"text",htmlNode.ChildNodes[0].InnerText.Trim());
+                    var text = htmlNode.ChildNodes[0].InnerText.Trim();
+                    if (string.IsNullOrWhiteSpace(text) is false)
+                    {
+                        htmlNode.Attributes.Insert(0,"text", text);    
+                    }
+                    
                     htmlNode.ChildNodes.RemoveAt(0);
+                }
+            }
+        }
+        
+        // Flex
+        {
+            if (htmlNodeName == "div")
+            {
+                if (style is not null)
+                {
+                    if (style.display == "flex" && style.flexDirection == "row")
+                    {
+                        htmlNodeName  = "FlexRow";
+                        style.display = style.flexDirection = null;
+                    }
                 }
             }
         }

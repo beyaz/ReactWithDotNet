@@ -58,10 +58,7 @@ public class UnitTest1
                """,
 
                """
-               new FlexRow(Aria("hidden", "true"), Data("testid", "AcUnitIcon"))
-               {
-                   style = { color = "blue" }
-               }
+               new FlexRow(Aria("hidden", "true"), Data("testid", "AcUnitIcon")) { style = { color = "blue" } }
                """);
     }
 
