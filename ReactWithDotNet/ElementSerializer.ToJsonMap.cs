@@ -335,6 +335,11 @@ partial class ElementSerializer
 
                 if (node.DotNetComponentRenderMethodInvoked is false)
                 {
+                    if (reactStatefulComponent._children?.Count > 0)
+                    {
+                        node.IsHighOrderComponent = true;
+                    }
+                    
                     node.DotNetComponentRenderMethodInvoked = true;
 
                     if (reactStatefulComponent.Modifiers is not null)
@@ -451,7 +456,7 @@ partial class ElementSerializer
                     map.Add("$ClientTasks", reactStatefulComponent.Client.TaskList);
                 }
 
-                if (typeInfo.IsReactHigherOrderComponent)
+                if (node.IsHighOrderComponent)
                 {
                     map.Add("$LogicalChildrenCount", reactStatefulComponent._children?.Count ?? 0);
                 }
@@ -895,7 +900,6 @@ partial class ElementSerializer
                 CustomEventPropertiesOfType          = reactCustomEventProperties,
                 DotNetPropertiesOfType               = propertyAccessors,
                 ReactAttributedPropertiesOfType      = reactProperties,
-                IsReactHigherOrderComponent          = type.GetCustomAttribute<ReactHigherOrderComponentAttribute>() is not null,
                 CacheableMethodInfoList              = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodAttribute>() != null).ToArray(),
                 ParameterizedCacheableMethodInfoList = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(m => m.GetCustomAttribute<CacheThisMethodByTheseParametersAttribute>() != null).ToArray(),
                 StateProperty                        = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance)?.ToFastAccess(),
@@ -1157,6 +1161,7 @@ partial class ElementSerializer
         public Stopwatch Stopwatch { get; set; }
         public long? Begin { get; set; }
         public long? End { get; set; }
+        public bool IsHighOrderComponent { get; set; }
     }
 
     sealed class TypeInfo
@@ -1165,7 +1170,6 @@ partial class ElementSerializer
         public IReadOnlyList<PropertyAccessInfo> CustomEventPropertiesOfType { get; init; }
         public IReadOnlyList<PropertyAccessInfo> DotNetPropertiesOfType { get; init; }
         public Func<object, string, (bool needToExport, object value)> GetPropertyValueForSerializeToClient { get; init; }
-        public bool IsReactHigherOrderComponent { get; init; }
         public IReadOnlyList<MethodInfo> ParameterizedCacheableMethodInfoList { get; init; }
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
         public PropertyAccessInfo StateProperty { get; init; }

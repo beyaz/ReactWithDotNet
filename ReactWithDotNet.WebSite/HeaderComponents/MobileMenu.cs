@@ -50,7 +50,6 @@ class MobileMenu : Component
                    : VisibilityCollapse + Opacity0 + Height0);
     }
 
-    [ReactHigherOrderComponent]
     class MenuView : Component
     {
         public Menu Model { get; set; }

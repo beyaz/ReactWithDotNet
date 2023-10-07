@@ -6,7 +6,6 @@ class FaqItemState
     public bool IsOpen { get; set; }
 }
 
-[ReactHigherOrderComponent]
 class FaqItem : Component<FaqItemState>
 {
     public string Title { get; set; }
@@ -30,8 +29,10 @@ class FaqItem : Component<FaqItemState>
                 }
             },
             
-            state.IsOpen?
-            Content:null
+            new div(When(state.IsOpen is false, DisplayNone))
+            {
+                children
+            }
         };
 
     }

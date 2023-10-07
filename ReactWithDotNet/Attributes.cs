@@ -45,13 +45,6 @@ public class ReactRealTypeAttribute : Attribute
     public Type Type { get; }
 }
 
-[AttributeUsage(AttributeTargets.Class)]
-public class ReactHigherOrderComponentAttribute : Attribute
-{
-}
-
-
-
 [AttributeUsage(AttributeTargets.Property)]
 public class ReactTransformValueInClientAttribute : Attribute
 {
