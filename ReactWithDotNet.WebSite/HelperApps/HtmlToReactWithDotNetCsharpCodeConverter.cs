@@ -7,6 +7,16 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 
 static class HtmlToReactWithDotNetCsharpCodeConverter
 {
+
+    static void RemoveAll(this HtmlAttributeCollection htmlAttributeCollection, Func<HtmlAttribute, bool> match)
+    {
+        var items = htmlAttributeCollection.Where(match).ToList();
+
+        foreach (var htmlAttribute in items)
+        {
+            htmlAttributeCollection.Remove(htmlAttribute);
+        }
+    }
     public static string HtmlToCSharp(string htmlRootNode)
     {
         if (string.IsNullOrWhiteSpace(htmlRootNode))
@@ -596,6 +606,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static List<string> ToCSharpCode(HtmlNode htmlNode)
     {
+
+        var modifiers = new List<string>();
         
         var htmlNodeName = htmlNode.OriginalName;
         if (htmlNodeName == "clippath")
@@ -641,6 +653,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return $"new Style {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value+"\""))} }}";
         }
 
+        // aria-*
+        {
+            static bool isAriaAttribute(HtmlAttribute htmlAttribute)
+            {
+                return htmlAttribute.Name.StartsWith("aria-", StringComparison.OrdinalIgnoreCase);
+            }
+            
+            foreach (var htmlAttribute in htmlNode.Attributes.Where(isAriaAttribute))
+            {
+                modifiers.Add($"Aria(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")");
+            }
+            htmlNode.Attributes.RemoveAll(isAriaAttribute);
+        }
+        
         if (htmlNode.ChildNodes.Count == 0)
         {
             
