@@ -8851,4 +8851,2532 @@ partial class Style
         }
         throw CssParseException(name);
     }
+
+    static void transfer(Style source, Style target)
+    {
+        if (source.accentColor != null)
+        {
+            target.accentColor = source.accentColor;
+        }
+        if (source.additiveSymbols != null)
+        {
+            target.additiveSymbols = source.additiveSymbols;
+        }
+        if (source.alignContent != null)
+        {
+            target.alignContent = source.alignContent;
+        }
+        if (source.alignItems != null)
+        {
+            target.alignItems = source.alignItems;
+        }
+        if (source.alignSelf != null)
+        {
+            target.alignSelf = source.alignSelf;
+        }
+        if (source.alignmentBaseline != null)
+        {
+            target.alignmentBaseline = source.alignmentBaseline;
+        }
+        if (source.all != null)
+        {
+            target.all = source.all;
+        }
+        if (source.animation != null)
+        {
+            target.animation = source.animation;
+        }
+        if (source.animationComposition != null)
+        {
+            target.animationComposition = source.animationComposition;
+        }
+        if (source.animationDelay != null)
+        {
+            target.animationDelay = source.animationDelay;
+        }
+        if (source.animationDirection != null)
+        {
+            target.animationDirection = source.animationDirection;
+        }
+        if (source.animationDuration != null)
+        {
+            target.animationDuration = source.animationDuration;
+        }
+        if (source.animationFillMode != null)
+        {
+            target.animationFillMode = source.animationFillMode;
+        }
+        if (source.animationIterationCount != null)
+        {
+            target.animationIterationCount = source.animationIterationCount;
+        }
+        if (source.animationName != null)
+        {
+            target.animationName = source.animationName;
+        }
+        if (source.animationPlayState != null)
+        {
+            target.animationPlayState = source.animationPlayState;
+        }
+        if (source.animationRange != null)
+        {
+            target.animationRange = source.animationRange;
+        }
+        if (source.animationRangeEnd != null)
+        {
+            target.animationRangeEnd = source.animationRangeEnd;
+        }
+        if (source.animationRangeStart != null)
+        {
+            target.animationRangeStart = source.animationRangeStart;
+        }
+        if (source.animationTimeline != null)
+        {
+            target.animationTimeline = source.animationTimeline;
+        }
+        if (source.animationTimingFunction != null)
+        {
+            target.animationTimingFunction = source.animationTimingFunction;
+        }
+        if (source.appRegion != null)
+        {
+            target.appRegion = source.appRegion;
+        }
+        if (source.appearance != null)
+        {
+            target.appearance = source.appearance;
+        }
+        if (source.ascentOverride != null)
+        {
+            target.ascentOverride = source.ascentOverride;
+        }
+        if (source.aspectRatio != null)
+        {
+            target.aspectRatio = source.aspectRatio;
+        }
+        if (source.backdropFilter != null)
+        {
+            target.backdropFilter = source.backdropFilter;
+        }
+        if (source.backfaceVisibility != null)
+        {
+            target.backfaceVisibility = source.backfaceVisibility;
+        }
+        if (source.background != null)
+        {
+            target.background = source.background;
+        }
+        if (source.backgroundAttachment != null)
+        {
+            target.backgroundAttachment = source.backgroundAttachment;
+        }
+        if (source.backgroundBlendMode != null)
+        {
+            target.backgroundBlendMode = source.backgroundBlendMode;
+        }
+        if (source.backgroundClip != null)
+        {
+            target.backgroundClip = source.backgroundClip;
+        }
+        if (source.backgroundColor != null)
+        {
+            target.backgroundColor = source.backgroundColor;
+        }
+        if (source.backgroundImage != null)
+        {
+            target.backgroundImage = source.backgroundImage;
+        }
+        if (source.backgroundOrigin != null)
+        {
+            target.backgroundOrigin = source.backgroundOrigin;
+        }
+        if (source.backgroundPosition != null)
+        {
+            target.backgroundPosition = source.backgroundPosition;
+        }
+        if (source.backgroundPositionX != null)
+        {
+            target.backgroundPositionX = source.backgroundPositionX;
+        }
+        if (source.backgroundPositionY != null)
+        {
+            target.backgroundPositionY = source.backgroundPositionY;
+        }
+        if (source.backgroundRepeat != null)
+        {
+            target.backgroundRepeat = source.backgroundRepeat;
+        }
+        if (source.backgroundRepeatX != null)
+        {
+            target.backgroundRepeatX = source.backgroundRepeatX;
+        }
+        if (source.backgroundRepeatY != null)
+        {
+            target.backgroundRepeatY = source.backgroundRepeatY;
+        }
+        if (source.backgroundSize != null)
+        {
+            target.backgroundSize = source.backgroundSize;
+        }
+        if (source.basePalette != null)
+        {
+            target.basePalette = source.basePalette;
+        }
+        if (source.baselineShift != null)
+        {
+            target.baselineShift = source.baselineShift;
+        }
+        if (source.baselineSource != null)
+        {
+            target.baselineSource = source.baselineSource;
+        }
+        if (source.blockSize != null)
+        {
+            target.blockSize = source.blockSize;
+        }
+        if (source.border != null)
+        {
+            target.border = source.border;
+        }
+        if (source.borderBlock != null)
+        {
+            target.borderBlock = source.borderBlock;
+        }
+        if (source.borderBlockColor != null)
+        {
+            target.borderBlockColor = source.borderBlockColor;
+        }
+        if (source.borderBlockEnd != null)
+        {
+            target.borderBlockEnd = source.borderBlockEnd;
+        }
+        if (source.borderBlockEndColor != null)
+        {
+            target.borderBlockEndColor = source.borderBlockEndColor;
+        }
+        if (source.borderBlockEndStyle != null)
+        {
+            target.borderBlockEndStyle = source.borderBlockEndStyle;
+        }
+        if (source.borderBlockEndWidth != null)
+        {
+            target.borderBlockEndWidth = source.borderBlockEndWidth;
+        }
+        if (source.borderBlockStart != null)
+        {
+            target.borderBlockStart = source.borderBlockStart;
+        }
+        if (source.borderBlockStartColor != null)
+        {
+            target.borderBlockStartColor = source.borderBlockStartColor;
+        }
+        if (source.borderBlockStartStyle != null)
+        {
+            target.borderBlockStartStyle = source.borderBlockStartStyle;
+        }
+        if (source.borderBlockStartWidth != null)
+        {
+            target.borderBlockStartWidth = source.borderBlockStartWidth;
+        }
+        if (source.borderBlockStyle != null)
+        {
+            target.borderBlockStyle = source.borderBlockStyle;
+        }
+        if (source.borderBlockWidth != null)
+        {
+            target.borderBlockWidth = source.borderBlockWidth;
+        }
+        if (source.borderBottom != null)
+        {
+            target.borderBottom = source.borderBottom;
+        }
+        if (source.borderBottomColor != null)
+        {
+            target.borderBottomColor = source.borderBottomColor;
+        }
+        if (source.borderBottomLeftRadius != null)
+        {
+            target.borderBottomLeftRadius = source.borderBottomLeftRadius;
+        }
+        if (source.borderBottomRightRadius != null)
+        {
+            target.borderBottomRightRadius = source.borderBottomRightRadius;
+        }
+        if (source.borderBottomStyle != null)
+        {
+            target.borderBottomStyle = source.borderBottomStyle;
+        }
+        if (source.borderBottomWidth != null)
+        {
+            target.borderBottomWidth = source.borderBottomWidth;
+        }
+        if (source.borderCollapse != null)
+        {
+            target.borderCollapse = source.borderCollapse;
+        }
+        if (source.borderColor != null)
+        {
+            target.borderColor = source.borderColor;
+        }
+        if (source.borderEndEndRadius != null)
+        {
+            target.borderEndEndRadius = source.borderEndEndRadius;
+        }
+        if (source.borderEndStartRadius != null)
+        {
+            target.borderEndStartRadius = source.borderEndStartRadius;
+        }
+        if (source.borderImage != null)
+        {
+            target.borderImage = source.borderImage;
+        }
+        if (source.borderImageOutset != null)
+        {
+            target.borderImageOutset = source.borderImageOutset;
+        }
+        if (source.borderImageRepeat != null)
+        {
+            target.borderImageRepeat = source.borderImageRepeat;
+        }
+        if (source.borderImageSlice != null)
+        {
+            target.borderImageSlice = source.borderImageSlice;
+        }
+        if (source.borderImageSource != null)
+        {
+            target.borderImageSource = source.borderImageSource;
+        }
+        if (source.borderImageWidth != null)
+        {
+            target.borderImageWidth = source.borderImageWidth;
+        }
+        if (source.borderInline != null)
+        {
+            target.borderInline = source.borderInline;
+        }
+        if (source.borderInlineColor != null)
+        {
+            target.borderInlineColor = source.borderInlineColor;
+        }
+        if (source.borderInlineEnd != null)
+        {
+            target.borderInlineEnd = source.borderInlineEnd;
+        }
+        if (source.borderInlineEndColor != null)
+        {
+            target.borderInlineEndColor = source.borderInlineEndColor;
+        }
+        if (source.borderInlineEndStyle != null)
+        {
+            target.borderInlineEndStyle = source.borderInlineEndStyle;
+        }
+        if (source.borderInlineEndWidth != null)
+        {
+            target.borderInlineEndWidth = source.borderInlineEndWidth;
+        }
+        if (source.borderInlineStart != null)
+        {
+            target.borderInlineStart = source.borderInlineStart;
+        }
+        if (source.borderInlineStartColor != null)
+        {
+            target.borderInlineStartColor = source.borderInlineStartColor;
+        }
+        if (source.borderInlineStartStyle != null)
+        {
+            target.borderInlineStartStyle = source.borderInlineStartStyle;
+        }
+        if (source.borderInlineStartWidth != null)
+        {
+            target.borderInlineStartWidth = source.borderInlineStartWidth;
+        }
+        if (source.borderInlineStyle != null)
+        {
+            target.borderInlineStyle = source.borderInlineStyle;
+        }
+        if (source.borderInlineWidth != null)
+        {
+            target.borderInlineWidth = source.borderInlineWidth;
+        }
+        if (source.borderLeft != null)
+        {
+            target.borderLeft = source.borderLeft;
+        }
+        if (source.borderLeftColor != null)
+        {
+            target.borderLeftColor = source.borderLeftColor;
+        }
+        if (source.borderLeftStyle != null)
+        {
+            target.borderLeftStyle = source.borderLeftStyle;
+        }
+        if (source.borderLeftWidth != null)
+        {
+            target.borderLeftWidth = source.borderLeftWidth;
+        }
+        if (source.borderRadius != null)
+        {
+            target.borderRadius = source.borderRadius;
+        }
+        if (source.borderRight != null)
+        {
+            target.borderRight = source.borderRight;
+        }
+        if (source.borderRightColor != null)
+        {
+            target.borderRightColor = source.borderRightColor;
+        }
+        if (source.borderRightStyle != null)
+        {
+            target.borderRightStyle = source.borderRightStyle;
+        }
+        if (source.borderRightWidth != null)
+        {
+            target.borderRightWidth = source.borderRightWidth;
+        }
+        if (source.borderSpacing != null)
+        {
+            target.borderSpacing = source.borderSpacing;
+        }
+        if (source.borderStartEndRadius != null)
+        {
+            target.borderStartEndRadius = source.borderStartEndRadius;
+        }
+        if (source.borderStartStartRadius != null)
+        {
+            target.borderStartStartRadius = source.borderStartStartRadius;
+        }
+        if (source.borderStyle != null)
+        {
+            target.borderStyle = source.borderStyle;
+        }
+        if (source.borderTop != null)
+        {
+            target.borderTop = source.borderTop;
+        }
+        if (source.borderTopColor != null)
+        {
+            target.borderTopColor = source.borderTopColor;
+        }
+        if (source.borderTopLeftRadius != null)
+        {
+            target.borderTopLeftRadius = source.borderTopLeftRadius;
+        }
+        if (source.borderTopRightRadius != null)
+        {
+            target.borderTopRightRadius = source.borderTopRightRadius;
+        }
+        if (source.borderTopStyle != null)
+        {
+            target.borderTopStyle = source.borderTopStyle;
+        }
+        if (source.borderTopWidth != null)
+        {
+            target.borderTopWidth = source.borderTopWidth;
+        }
+        if (source.borderWidth != null)
+        {
+            target.borderWidth = source.borderWidth;
+        }
+        if (source.bottom != null)
+        {
+            target.bottom = source.bottom;
+        }
+        if (source.boxShadow != null)
+        {
+            target.boxShadow = source.boxShadow;
+        }
+        if (source.boxSizing != null)
+        {
+            target.boxSizing = source.boxSizing;
+        }
+        if (source.breakAfter != null)
+        {
+            target.breakAfter = source.breakAfter;
+        }
+        if (source.breakBefore != null)
+        {
+            target.breakBefore = source.breakBefore;
+        }
+        if (source.breakInside != null)
+        {
+            target.breakInside = source.breakInside;
+        }
+        if (source.bufferedRendering != null)
+        {
+            target.bufferedRendering = source.bufferedRendering;
+        }
+        if (source.captionSide != null)
+        {
+            target.captionSide = source.captionSide;
+        }
+        if (source.caretColor != null)
+        {
+            target.caretColor = source.caretColor;
+        }
+        if (source.clear != null)
+        {
+            target.clear = source.clear;
+        }
+        if (source.clip != null)
+        {
+            target.clip = source.clip;
+        }
+        if (source.clipPath != null)
+        {
+            target.clipPath = source.clipPath;
+        }
+        if (source.clipRule != null)
+        {
+            target.clipRule = source.clipRule;
+        }
+        if (source.color != null)
+        {
+            target.color = source.color;
+        }
+        if (source.colorInterpolation != null)
+        {
+            target.colorInterpolation = source.colorInterpolation;
+        }
+        if (source.colorInterpolationFilters != null)
+        {
+            target.colorInterpolationFilters = source.colorInterpolationFilters;
+        }
+        if (source.colorRendering != null)
+        {
+            target.colorRendering = source.colorRendering;
+        }
+        if (source.colorScheme != null)
+        {
+            target.colorScheme = source.colorScheme;
+        }
+        if (source.columnCount != null)
+        {
+            target.columnCount = source.columnCount;
+        }
+        if (source.columnFill != null)
+        {
+            target.columnFill = source.columnFill;
+        }
+        if (source.columnGap != null)
+        {
+            target.columnGap = source.columnGap;
+        }
+        if (source.columnRule != null)
+        {
+            target.columnRule = source.columnRule;
+        }
+        if (source.columnRuleColor != null)
+        {
+            target.columnRuleColor = source.columnRuleColor;
+        }
+        if (source.columnRuleStyle != null)
+        {
+            target.columnRuleStyle = source.columnRuleStyle;
+        }
+        if (source.columnRuleWidth != null)
+        {
+            target.columnRuleWidth = source.columnRuleWidth;
+        }
+        if (source.columnSpan != null)
+        {
+            target.columnSpan = source.columnSpan;
+        }
+        if (source.columnWidth != null)
+        {
+            target.columnWidth = source.columnWidth;
+        }
+        if (source.columns != null)
+        {
+            target.columns = source.columns;
+        }
+        if (source.contain != null)
+        {
+            target.contain = source.contain;
+        }
+        if (source.containIntrinsicBlockSize != null)
+        {
+            target.containIntrinsicBlockSize = source.containIntrinsicBlockSize;
+        }
+        if (source.containIntrinsicHeight != null)
+        {
+            target.containIntrinsicHeight = source.containIntrinsicHeight;
+        }
+        if (source.containIntrinsicInlineSize != null)
+        {
+            target.containIntrinsicInlineSize = source.containIntrinsicInlineSize;
+        }
+        if (source.containIntrinsicSize != null)
+        {
+            target.containIntrinsicSize = source.containIntrinsicSize;
+        }
+        if (source.containIntrinsicWidth != null)
+        {
+            target.containIntrinsicWidth = source.containIntrinsicWidth;
+        }
+        if (source.container != null)
+        {
+            target.container = source.container;
+        }
+        if (source.containerName != null)
+        {
+            target.containerName = source.containerName;
+        }
+        if (source.containerType != null)
+        {
+            target.containerType = source.containerType;
+        }
+        if (source.content != null)
+        {
+            target.content = source.content;
+        }
+        if (source.contentVisibility != null)
+        {
+            target.contentVisibility = source.contentVisibility;
+        }
+        if (source.counterIncrement != null)
+        {
+            target.counterIncrement = source.counterIncrement;
+        }
+        if (source.counterReset != null)
+        {
+            target.counterReset = source.counterReset;
+        }
+        if (source.counterSet != null)
+        {
+            target.counterSet = source.counterSet;
+        }
+        if (source.cursor != null)
+        {
+            target.cursor = source.cursor;
+        }
+        if (source.cx != null)
+        {
+            target.cx = source.cx;
+        }
+        if (source.cy != null)
+        {
+            target.cy = source.cy;
+        }
+        if (source.d != null)
+        {
+            target.d = source.d;
+        }
+        if (source.descentOverride != null)
+        {
+            target.descentOverride = source.descentOverride;
+        }
+        if (source.direction != null)
+        {
+            target.direction = source.direction;
+        }
+        if (source.display != null)
+        {
+            target.display = source.display;
+        }
+        if (source.dominantBaseline != null)
+        {
+            target.dominantBaseline = source.dominantBaseline;
+        }
+        if (source.emptyCells != null)
+        {
+            target.emptyCells = source.emptyCells;
+        }
+        if (source.fallback != null)
+        {
+            target.fallback = source.fallback;
+        }
+        if (source.fill != null)
+        {
+            target.fill = source.fill;
+        }
+        if (source.fillOpacity != null)
+        {
+            target.fillOpacity = source.fillOpacity;
+        }
+        if (source.fillRule != null)
+        {
+            target.fillRule = source.fillRule;
+        }
+        if (source.filter != null)
+        {
+            target.filter = source.filter;
+        }
+        if (source.flex != null)
+        {
+            target.flex = source.flex;
+        }
+        if (source.flexBasis != null)
+        {
+            target.flexBasis = source.flexBasis;
+        }
+        if (source.flexDirection != null)
+        {
+            target.flexDirection = source.flexDirection;
+        }
+        if (source.flexFlow != null)
+        {
+            target.flexFlow = source.flexFlow;
+        }
+        if (source.flexGrow != null)
+        {
+            target.flexGrow = source.flexGrow;
+        }
+        if (source.flexShrink != null)
+        {
+            target.flexShrink = source.flexShrink;
+        }
+        if (source.flexWrap != null)
+        {
+            target.flexWrap = source.flexWrap;
+        }
+        if (source.@float != null)
+        {
+            target.@float = source.@float;
+        }
+        if (source.floodColor != null)
+        {
+            target.floodColor = source.floodColor;
+        }
+        if (source.floodOpacity != null)
+        {
+            target.floodOpacity = source.floodOpacity;
+        }
+        if (source.font != null)
+        {
+            target.font = source.font;
+        }
+        if (source.fontDisplay != null)
+        {
+            target.fontDisplay = source.fontDisplay;
+        }
+        if (source.fontFamily != null)
+        {
+            target.fontFamily = source.fontFamily;
+        }
+        if (source.fontFeatureSettings != null)
+        {
+            target.fontFeatureSettings = source.fontFeatureSettings;
+        }
+        if (source.fontKerning != null)
+        {
+            target.fontKerning = source.fontKerning;
+        }
+        if (source.fontOpticalSizing != null)
+        {
+            target.fontOpticalSizing = source.fontOpticalSizing;
+        }
+        if (source.fontPalette != null)
+        {
+            target.fontPalette = source.fontPalette;
+        }
+        if (source.fontSize != null)
+        {
+            target.fontSize = source.fontSize;
+        }
+        if (source.fontStretch != null)
+        {
+            target.fontStretch = source.fontStretch;
+        }
+        if (source.fontStyle != null)
+        {
+            target.fontStyle = source.fontStyle;
+        }
+        if (source.fontSynthesis != null)
+        {
+            target.fontSynthesis = source.fontSynthesis;
+        }
+        if (source.fontSynthesisSmallCaps != null)
+        {
+            target.fontSynthesisSmallCaps = source.fontSynthesisSmallCaps;
+        }
+        if (source.fontSynthesisStyle != null)
+        {
+            target.fontSynthesisStyle = source.fontSynthesisStyle;
+        }
+        if (source.fontSynthesisWeight != null)
+        {
+            target.fontSynthesisWeight = source.fontSynthesisWeight;
+        }
+        if (source.fontVariant != null)
+        {
+            target.fontVariant = source.fontVariant;
+        }
+        if (source.fontVariantAlternates != null)
+        {
+            target.fontVariantAlternates = source.fontVariantAlternates;
+        }
+        if (source.fontVariantCaps != null)
+        {
+            target.fontVariantCaps = source.fontVariantCaps;
+        }
+        if (source.fontVariantEastAsian != null)
+        {
+            target.fontVariantEastAsian = source.fontVariantEastAsian;
+        }
+        if (source.fontVariantLigatures != null)
+        {
+            target.fontVariantLigatures = source.fontVariantLigatures;
+        }
+        if (source.fontVariantNumeric != null)
+        {
+            target.fontVariantNumeric = source.fontVariantNumeric;
+        }
+        if (source.fontVariantPosition != null)
+        {
+            target.fontVariantPosition = source.fontVariantPosition;
+        }
+        if (source.fontVariationSettings != null)
+        {
+            target.fontVariationSettings = source.fontVariationSettings;
+        }
+        if (source.fontWeight != null)
+        {
+            target.fontWeight = source.fontWeight;
+        }
+        if (source.forcedColorAdjust != null)
+        {
+            target.forcedColorAdjust = source.forcedColorAdjust;
+        }
+        if (source.gap != null)
+        {
+            target.gap = source.gap;
+        }
+        if (source.grid != null)
+        {
+            target.grid = source.grid;
+        }
+        if (source.gridArea != null)
+        {
+            target.gridArea = source.gridArea;
+        }
+        if (source.gridAutoColumns != null)
+        {
+            target.gridAutoColumns = source.gridAutoColumns;
+        }
+        if (source.gridAutoFlow != null)
+        {
+            target.gridAutoFlow = source.gridAutoFlow;
+        }
+        if (source.gridAutoRows != null)
+        {
+            target.gridAutoRows = source.gridAutoRows;
+        }
+        if (source.gridColumn != null)
+        {
+            target.gridColumn = source.gridColumn;
+        }
+        if (source.gridColumnEnd != null)
+        {
+            target.gridColumnEnd = source.gridColumnEnd;
+        }
+        if (source.gridColumnGap != null)
+        {
+            target.gridColumnGap = source.gridColumnGap;
+        }
+        if (source.gridColumnStart != null)
+        {
+            target.gridColumnStart = source.gridColumnStart;
+        }
+        if (source.gridGap != null)
+        {
+            target.gridGap = source.gridGap;
+        }
+        if (source.gridRow != null)
+        {
+            target.gridRow = source.gridRow;
+        }
+        if (source.gridRowEnd != null)
+        {
+            target.gridRowEnd = source.gridRowEnd;
+        }
+        if (source.gridRowGap != null)
+        {
+            target.gridRowGap = source.gridRowGap;
+        }
+        if (source.gridRowStart != null)
+        {
+            target.gridRowStart = source.gridRowStart;
+        }
+        if (source.gridTemplate != null)
+        {
+            target.gridTemplate = source.gridTemplate;
+        }
+        if (source.gridTemplateAreas != null)
+        {
+            target.gridTemplateAreas = source.gridTemplateAreas;
+        }
+        if (source.gridTemplateColumns != null)
+        {
+            target.gridTemplateColumns = source.gridTemplateColumns;
+        }
+        if (source.gridTemplateRows != null)
+        {
+            target.gridTemplateRows = source.gridTemplateRows;
+        }
+        if (source.height != null)
+        {
+            target.height = source.height;
+        }
+        if (source.hyphenateCharacter != null)
+        {
+            target.hyphenateCharacter = source.hyphenateCharacter;
+        }
+        if (source.hyphenateLimitChars != null)
+        {
+            target.hyphenateLimitChars = source.hyphenateLimitChars;
+        }
+        if (source.hyphens != null)
+        {
+            target.hyphens = source.hyphens;
+        }
+        if (source.imageOrientation != null)
+        {
+            target.imageOrientation = source.imageOrientation;
+        }
+        if (source.imageRendering != null)
+        {
+            target.imageRendering = source.imageRendering;
+        }
+        if (source.inherits != null)
+        {
+            target.inherits = source.inherits;
+        }
+        if (source.initialLetter != null)
+        {
+            target.initialLetter = source.initialLetter;
+        }
+        if (source.initialValue != null)
+        {
+            target.initialValue = source.initialValue;
+        }
+        if (source.inlineSize != null)
+        {
+            target.inlineSize = source.inlineSize;
+        }
+        if (source.inset != null)
+        {
+            target.inset = source.inset;
+        }
+        if (source.insetBlock != null)
+        {
+            target.insetBlock = source.insetBlock;
+        }
+        if (source.insetBlockEnd != null)
+        {
+            target.insetBlockEnd = source.insetBlockEnd;
+        }
+        if (source.insetBlockStart != null)
+        {
+            target.insetBlockStart = source.insetBlockStart;
+        }
+        if (source.insetInline != null)
+        {
+            target.insetInline = source.insetInline;
+        }
+        if (source.insetInlineEnd != null)
+        {
+            target.insetInlineEnd = source.insetInlineEnd;
+        }
+        if (source.insetInlineStart != null)
+        {
+            target.insetInlineStart = source.insetInlineStart;
+        }
+        if (source.isolation != null)
+        {
+            target.isolation = source.isolation;
+        }
+        if (source.justifyContent != null)
+        {
+            target.justifyContent = source.justifyContent;
+        }
+        if (source.justifyItems != null)
+        {
+            target.justifyItems = source.justifyItems;
+        }
+        if (source.justifySelf != null)
+        {
+            target.justifySelf = source.justifySelf;
+        }
+        if (source.left != null)
+        {
+            target.left = source.left;
+        }
+        if (source.letterSpacing != null)
+        {
+            target.letterSpacing = source.letterSpacing;
+        }
+        if (source.lightingColor != null)
+        {
+            target.lightingColor = source.lightingColor;
+        }
+        if (source.lineBreak != null)
+        {
+            target.lineBreak = source.lineBreak;
+        }
+        if (source.lineGapOverride != null)
+        {
+            target.lineGapOverride = source.lineGapOverride;
+        }
+        if (source.lineHeight != null)
+        {
+            target.lineHeight = source.lineHeight;
+        }
+        if (source.listStyle != null)
+        {
+            target.listStyle = source.listStyle;
+        }
+        if (source.listStyleImage != null)
+        {
+            target.listStyleImage = source.listStyleImage;
+        }
+        if (source.listStylePosition != null)
+        {
+            target.listStylePosition = source.listStylePosition;
+        }
+        if (source.listStyleType != null)
+        {
+            target.listStyleType = source.listStyleType;
+        }
+        if (source.margin != null)
+        {
+            target.margin = source.margin;
+        }
+        if (source.marginBlock != null)
+        {
+            target.marginBlock = source.marginBlock;
+        }
+        if (source.marginBlockEnd != null)
+        {
+            target.marginBlockEnd = source.marginBlockEnd;
+        }
+        if (source.marginBlockStart != null)
+        {
+            target.marginBlockStart = source.marginBlockStart;
+        }
+        if (source.marginBottom != null)
+        {
+            target.marginBottom = source.marginBottom;
+        }
+        if (source.marginInline != null)
+        {
+            target.marginInline = source.marginInline;
+        }
+        if (source.marginInlineEnd != null)
+        {
+            target.marginInlineEnd = source.marginInlineEnd;
+        }
+        if (source.marginInlineStart != null)
+        {
+            target.marginInlineStart = source.marginInlineStart;
+        }
+        if (source.marginLeft != null)
+        {
+            target.marginLeft = source.marginLeft;
+        }
+        if (source.marginRight != null)
+        {
+            target.marginRight = source.marginRight;
+        }
+        if (source.marginTop != null)
+        {
+            target.marginTop = source.marginTop;
+        }
+        if (source.marker != null)
+        {
+            target.marker = source.marker;
+        }
+        if (source.markerEnd != null)
+        {
+            target.markerEnd = source.markerEnd;
+        }
+        if (source.markerMid != null)
+        {
+            target.markerMid = source.markerMid;
+        }
+        if (source.markerStart != null)
+        {
+            target.markerStart = source.markerStart;
+        }
+        if (source.mask != null)
+        {
+            target.mask = source.mask;
+        }
+        if (source.maskType != null)
+        {
+            target.maskType = source.maskType;
+        }
+        if (source.mathDepth != null)
+        {
+            target.mathDepth = source.mathDepth;
+        }
+        if (source.mathShift != null)
+        {
+            target.mathShift = source.mathShift;
+        }
+        if (source.mathStyle != null)
+        {
+            target.mathStyle = source.mathStyle;
+        }
+        if (source.maxBlockSize != null)
+        {
+            target.maxBlockSize = source.maxBlockSize;
+        }
+        if (source.maxHeight != null)
+        {
+            target.maxHeight = source.maxHeight;
+        }
+        if (source.maxInlineSize != null)
+        {
+            target.maxInlineSize = source.maxInlineSize;
+        }
+        if (source.maxWidth != null)
+        {
+            target.maxWidth = source.maxWidth;
+        }
+        if (source.minBlockSize != null)
+        {
+            target.minBlockSize = source.minBlockSize;
+        }
+        if (source.minHeight != null)
+        {
+            target.minHeight = source.minHeight;
+        }
+        if (source.minInlineSize != null)
+        {
+            target.minInlineSize = source.minInlineSize;
+        }
+        if (source.minWidth != null)
+        {
+            target.minWidth = source.minWidth;
+        }
+        if (source.mixBlendMode != null)
+        {
+            target.mixBlendMode = source.mixBlendMode;
+        }
+        if (source.negative != null)
+        {
+            target.negative = source.negative;
+        }
+        if (source.objectFit != null)
+        {
+            target.objectFit = source.objectFit;
+        }
+        if (source.objectPosition != null)
+        {
+            target.objectPosition = source.objectPosition;
+        }
+        if (source.objectViewBox != null)
+        {
+            target.objectViewBox = source.objectViewBox;
+        }
+        if (source.offset != null)
+        {
+            target.offset = source.offset;
+        }
+        if (source.offsetAnchor != null)
+        {
+            target.offsetAnchor = source.offsetAnchor;
+        }
+        if (source.offsetDistance != null)
+        {
+            target.offsetDistance = source.offsetDistance;
+        }
+        if (source.offsetPath != null)
+        {
+            target.offsetPath = source.offsetPath;
+        }
+        if (source.offsetPosition != null)
+        {
+            target.offsetPosition = source.offsetPosition;
+        }
+        if (source.offsetRotate != null)
+        {
+            target.offsetRotate = source.offsetRotate;
+        }
+        if (source.opacity != null)
+        {
+            target.opacity = source.opacity;
+        }
+        if (source.order != null)
+        {
+            target.order = source.order;
+        }
+        if (source.orphans != null)
+        {
+            target.orphans = source.orphans;
+        }
+        if (source.outline != null)
+        {
+            target.outline = source.outline;
+        }
+        if (source.outlineColor != null)
+        {
+            target.outlineColor = source.outlineColor;
+        }
+        if (source.outlineOffset != null)
+        {
+            target.outlineOffset = source.outlineOffset;
+        }
+        if (source.outlineStyle != null)
+        {
+            target.outlineStyle = source.outlineStyle;
+        }
+        if (source.outlineWidth != null)
+        {
+            target.outlineWidth = source.outlineWidth;
+        }
+        if (source.overflow != null)
+        {
+            target.overflow = source.overflow;
+        }
+        if (source.overflowAnchor != null)
+        {
+            target.overflowAnchor = source.overflowAnchor;
+        }
+        if (source.overflowClipMargin != null)
+        {
+            target.overflowClipMargin = source.overflowClipMargin;
+        }
+        if (source.overflowWrap != null)
+        {
+            target.overflowWrap = source.overflowWrap;
+        }
+        if (source.overflowX != null)
+        {
+            target.overflowX = source.overflowX;
+        }
+        if (source.overflowY != null)
+        {
+            target.overflowY = source.overflowY;
+        }
+        if (source.overlay != null)
+        {
+            target.overlay = source.overlay;
+        }
+        if (source.overrideColors != null)
+        {
+            target.overrideColors = source.overrideColors;
+        }
+        if (source.overscrollBehavior != null)
+        {
+            target.overscrollBehavior = source.overscrollBehavior;
+        }
+        if (source.overscrollBehaviorBlock != null)
+        {
+            target.overscrollBehaviorBlock = source.overscrollBehaviorBlock;
+        }
+        if (source.overscrollBehaviorInline != null)
+        {
+            target.overscrollBehaviorInline = source.overscrollBehaviorInline;
+        }
+        if (source.overscrollBehaviorX != null)
+        {
+            target.overscrollBehaviorX = source.overscrollBehaviorX;
+        }
+        if (source.overscrollBehaviorY != null)
+        {
+            target.overscrollBehaviorY = source.overscrollBehaviorY;
+        }
+        if (source.pad != null)
+        {
+            target.pad = source.pad;
+        }
+        if (source.padding != null)
+        {
+            target.padding = source.padding;
+        }
+        if (source.paddingBlock != null)
+        {
+            target.paddingBlock = source.paddingBlock;
+        }
+        if (source.paddingBlockEnd != null)
+        {
+            target.paddingBlockEnd = source.paddingBlockEnd;
+        }
+        if (source.paddingBlockStart != null)
+        {
+            target.paddingBlockStart = source.paddingBlockStart;
+        }
+        if (source.paddingBottom != null)
+        {
+            target.paddingBottom = source.paddingBottom;
+        }
+        if (source.paddingInline != null)
+        {
+            target.paddingInline = source.paddingInline;
+        }
+        if (source.paddingInlineEnd != null)
+        {
+            target.paddingInlineEnd = source.paddingInlineEnd;
+        }
+        if (source.paddingInlineStart != null)
+        {
+            target.paddingInlineStart = source.paddingInlineStart;
+        }
+        if (source.paddingLeft != null)
+        {
+            target.paddingLeft = source.paddingLeft;
+        }
+        if (source.paddingRight != null)
+        {
+            target.paddingRight = source.paddingRight;
+        }
+        if (source.paddingTop != null)
+        {
+            target.paddingTop = source.paddingTop;
+        }
+        if (source.page != null)
+        {
+            target.page = source.page;
+        }
+        if (source.pageBreakAfter != null)
+        {
+            target.pageBreakAfter = source.pageBreakAfter;
+        }
+        if (source.pageBreakBefore != null)
+        {
+            target.pageBreakBefore = source.pageBreakBefore;
+        }
+        if (source.pageBreakInside != null)
+        {
+            target.pageBreakInside = source.pageBreakInside;
+        }
+        if (source.pageOrientation != null)
+        {
+            target.pageOrientation = source.pageOrientation;
+        }
+        if (source.paintOrder != null)
+        {
+            target.paintOrder = source.paintOrder;
+        }
+        if (source.perspective != null)
+        {
+            target.perspective = source.perspective;
+        }
+        if (source.perspectiveOrigin != null)
+        {
+            target.perspectiveOrigin = source.perspectiveOrigin;
+        }
+        if (source.placeContent != null)
+        {
+            target.placeContent = source.placeContent;
+        }
+        if (source.placeItems != null)
+        {
+            target.placeItems = source.placeItems;
+        }
+        if (source.placeSelf != null)
+        {
+            target.placeSelf = source.placeSelf;
+        }
+        if (source.pointerEvents != null)
+        {
+            target.pointerEvents = source.pointerEvents;
+        }
+        if (source.position != null)
+        {
+            target.position = source.position;
+        }
+        if (source.prefix != null)
+        {
+            target.prefix = source.prefix;
+        }
+        if (source.quotes != null)
+        {
+            target.quotes = source.quotes;
+        }
+        if (source.r != null)
+        {
+            target.r = source.r;
+        }
+        if (source.range != null)
+        {
+            target.range = source.range;
+        }
+        if (source.resize != null)
+        {
+            target.resize = source.resize;
+        }
+        if (source.right != null)
+        {
+            target.right = source.right;
+        }
+        if (source.rotate != null)
+        {
+            target.rotate = source.rotate;
+        }
+        if (source.rowGap != null)
+        {
+            target.rowGap = source.rowGap;
+        }
+        if (source.rubyPosition != null)
+        {
+            target.rubyPosition = source.rubyPosition;
+        }
+        if (source.rx != null)
+        {
+            target.rx = source.rx;
+        }
+        if (source.ry != null)
+        {
+            target.ry = source.ry;
+        }
+        if (source.scale != null)
+        {
+            target.scale = source.scale;
+        }
+        if (source.scrollBehavior != null)
+        {
+            target.scrollBehavior = source.scrollBehavior;
+        }
+        if (source.scrollMargin != null)
+        {
+            target.scrollMargin = source.scrollMargin;
+        }
+        if (source.scrollMarginBlock != null)
+        {
+            target.scrollMarginBlock = source.scrollMarginBlock;
+        }
+        if (source.scrollMarginBlockEnd != null)
+        {
+            target.scrollMarginBlockEnd = source.scrollMarginBlockEnd;
+        }
+        if (source.scrollMarginBlockStart != null)
+        {
+            target.scrollMarginBlockStart = source.scrollMarginBlockStart;
+        }
+        if (source.scrollMarginBottom != null)
+        {
+            target.scrollMarginBottom = source.scrollMarginBottom;
+        }
+        if (source.scrollMarginInline != null)
+        {
+            target.scrollMarginInline = source.scrollMarginInline;
+        }
+        if (source.scrollMarginInlineEnd != null)
+        {
+            target.scrollMarginInlineEnd = source.scrollMarginInlineEnd;
+        }
+        if (source.scrollMarginInlineStart != null)
+        {
+            target.scrollMarginInlineStart = source.scrollMarginInlineStart;
+        }
+        if (source.scrollMarginLeft != null)
+        {
+            target.scrollMarginLeft = source.scrollMarginLeft;
+        }
+        if (source.scrollMarginRight != null)
+        {
+            target.scrollMarginRight = source.scrollMarginRight;
+        }
+        if (source.scrollMarginTop != null)
+        {
+            target.scrollMarginTop = source.scrollMarginTop;
+        }
+        if (source.scrollPadding != null)
+        {
+            target.scrollPadding = source.scrollPadding;
+        }
+        if (source.scrollPaddingBlock != null)
+        {
+            target.scrollPaddingBlock = source.scrollPaddingBlock;
+        }
+        if (source.scrollPaddingBlockEnd != null)
+        {
+            target.scrollPaddingBlockEnd = source.scrollPaddingBlockEnd;
+        }
+        if (source.scrollPaddingBlockStart != null)
+        {
+            target.scrollPaddingBlockStart = source.scrollPaddingBlockStart;
+        }
+        if (source.scrollPaddingBottom != null)
+        {
+            target.scrollPaddingBottom = source.scrollPaddingBottom;
+        }
+        if (source.scrollPaddingInline != null)
+        {
+            target.scrollPaddingInline = source.scrollPaddingInline;
+        }
+        if (source.scrollPaddingInlineEnd != null)
+        {
+            target.scrollPaddingInlineEnd = source.scrollPaddingInlineEnd;
+        }
+        if (source.scrollPaddingInlineStart != null)
+        {
+            target.scrollPaddingInlineStart = source.scrollPaddingInlineStart;
+        }
+        if (source.scrollPaddingLeft != null)
+        {
+            target.scrollPaddingLeft = source.scrollPaddingLeft;
+        }
+        if (source.scrollPaddingRight != null)
+        {
+            target.scrollPaddingRight = source.scrollPaddingRight;
+        }
+        if (source.scrollPaddingTop != null)
+        {
+            target.scrollPaddingTop = source.scrollPaddingTop;
+        }
+        if (source.scrollSnapAlign != null)
+        {
+            target.scrollSnapAlign = source.scrollSnapAlign;
+        }
+        if (source.scrollSnapStop != null)
+        {
+            target.scrollSnapStop = source.scrollSnapStop;
+        }
+        if (source.scrollSnapType != null)
+        {
+            target.scrollSnapType = source.scrollSnapType;
+        }
+        if (source.scrollTimeline != null)
+        {
+            target.scrollTimeline = source.scrollTimeline;
+        }
+        if (source.scrollTimelineAxis != null)
+        {
+            target.scrollTimelineAxis = source.scrollTimelineAxis;
+        }
+        if (source.scrollTimelineName != null)
+        {
+            target.scrollTimelineName = source.scrollTimelineName;
+        }
+        if (source.scrollbarGutter != null)
+        {
+            target.scrollbarGutter = source.scrollbarGutter;
+        }
+        if (source.shapeImageThreshold != null)
+        {
+            target.shapeImageThreshold = source.shapeImageThreshold;
+        }
+        if (source.shapeMargin != null)
+        {
+            target.shapeMargin = source.shapeMargin;
+        }
+        if (source.shapeOutside != null)
+        {
+            target.shapeOutside = source.shapeOutside;
+        }
+        if (source.shapeRendering != null)
+        {
+            target.shapeRendering = source.shapeRendering;
+        }
+        if (source.size != null)
+        {
+            target.size = source.size;
+        }
+        if (source.sizeAdjust != null)
+        {
+            target.sizeAdjust = source.sizeAdjust;
+        }
+        if (source.speak != null)
+        {
+            target.speak = source.speak;
+        }
+        if (source.speakAs != null)
+        {
+            target.speakAs = source.speakAs;
+        }
+        if (source.src != null)
+        {
+            target.src = source.src;
+        }
+        if (source.stopColor != null)
+        {
+            target.stopColor = source.stopColor;
+        }
+        if (source.stopOpacity != null)
+        {
+            target.stopOpacity = source.stopOpacity;
+        }
+        if (source.stroke != null)
+        {
+            target.stroke = source.stroke;
+        }
+        if (source.strokeDasharray != null)
+        {
+            target.strokeDasharray = source.strokeDasharray;
+        }
+        if (source.strokeDashoffset != null)
+        {
+            target.strokeDashoffset = source.strokeDashoffset;
+        }
+        if (source.strokeLinecap != null)
+        {
+            target.strokeLinecap = source.strokeLinecap;
+        }
+        if (source.strokeLinejoin != null)
+        {
+            target.strokeLinejoin = source.strokeLinejoin;
+        }
+        if (source.strokeMiterlimit != null)
+        {
+            target.strokeMiterlimit = source.strokeMiterlimit;
+        }
+        if (source.strokeOpacity != null)
+        {
+            target.strokeOpacity = source.strokeOpacity;
+        }
+        if (source.strokeWidth != null)
+        {
+            target.strokeWidth = source.strokeWidth;
+        }
+        if (source.suffix != null)
+        {
+            target.suffix = source.suffix;
+        }
+        if (source.symbols != null)
+        {
+            target.symbols = source.symbols;
+        }
+        if (source.syntax != null)
+        {
+            target.syntax = source.syntax;
+        }
+        if (source.system != null)
+        {
+            target.system = source.system;
+        }
+        if (source.tabSize != null)
+        {
+            target.tabSize = source.tabSize;
+        }
+        if (source.tableLayout != null)
+        {
+            target.tableLayout = source.tableLayout;
+        }
+        if (source.textAlign != null)
+        {
+            target.textAlign = source.textAlign;
+        }
+        if (source.textAlignLast != null)
+        {
+            target.textAlignLast = source.textAlignLast;
+        }
+        if (source.textAnchor != null)
+        {
+            target.textAnchor = source.textAnchor;
+        }
+        if (source.textCombineHorizontal != null)
+        {
+            target.textCombineHorizontal = source.textCombineHorizontal;
+        }
+        if (source.textCombineUpright != null)
+        {
+            target.textCombineUpright = source.textCombineUpright;
+        }
+        if (source.textDecoration != null)
+        {
+            target.textDecoration = source.textDecoration;
+        }
+        if (source.textDecorationColor != null)
+        {
+            target.textDecorationColor = source.textDecorationColor;
+        }
+        if (source.textDecorationLine != null)
+        {
+            target.textDecorationLine = source.textDecorationLine;
+        }
+        if (source.textDecorationSkipInk != null)
+        {
+            target.textDecorationSkipInk = source.textDecorationSkipInk;
+        }
+        if (source.textDecorationStyle != null)
+        {
+            target.textDecorationStyle = source.textDecorationStyle;
+        }
+        if (source.textDecorationThickness != null)
+        {
+            target.textDecorationThickness = source.textDecorationThickness;
+        }
+        if (source.textEmphasis != null)
+        {
+            target.textEmphasis = source.textEmphasis;
+        }
+        if (source.textEmphasisColor != null)
+        {
+            target.textEmphasisColor = source.textEmphasisColor;
+        }
+        if (source.textEmphasisPosition != null)
+        {
+            target.textEmphasisPosition = source.textEmphasisPosition;
+        }
+        if (source.textEmphasisStyle != null)
+        {
+            target.textEmphasisStyle = source.textEmphasisStyle;
+        }
+        if (source.textIndent != null)
+        {
+            target.textIndent = source.textIndent;
+        }
+        if (source.textOrientation != null)
+        {
+            target.textOrientation = source.textOrientation;
+        }
+        if (source.textOverflow != null)
+        {
+            target.textOverflow = source.textOverflow;
+        }
+        if (source.textRendering != null)
+        {
+            target.textRendering = source.textRendering;
+        }
+        if (source.textShadow != null)
+        {
+            target.textShadow = source.textShadow;
+        }
+        if (source.textSizeAdjust != null)
+        {
+            target.textSizeAdjust = source.textSizeAdjust;
+        }
+        if (source.textTransform != null)
+        {
+            target.textTransform = source.textTransform;
+        }
+        if (source.textUnderlineOffset != null)
+        {
+            target.textUnderlineOffset = source.textUnderlineOffset;
+        }
+        if (source.textUnderlinePosition != null)
+        {
+            target.textUnderlinePosition = source.textUnderlinePosition;
+        }
+        if (source.textWrap != null)
+        {
+            target.textWrap = source.textWrap;
+        }
+        if (source.timelineScope != null)
+        {
+            target.timelineScope = source.timelineScope;
+        }
+        if (source.top != null)
+        {
+            target.top = source.top;
+        }
+        if (source.touchAction != null)
+        {
+            target.touchAction = source.touchAction;
+        }
+        if (source.transform != null)
+        {
+            target.transform = source.transform;
+        }
+        if (source.transformBox != null)
+        {
+            target.transformBox = source.transformBox;
+        }
+        if (source.transformOrigin != null)
+        {
+            target.transformOrigin = source.transformOrigin;
+        }
+        if (source.transformStyle != null)
+        {
+            target.transformStyle = source.transformStyle;
+        }
+        if (source.transition != null)
+        {
+            target.transition = source.transition;
+        }
+        if (source.transitionBehavior != null)
+        {
+            target.transitionBehavior = source.transitionBehavior;
+        }
+        if (source.transitionDelay != null)
+        {
+            target.transitionDelay = source.transitionDelay;
+        }
+        if (source.transitionDuration != null)
+        {
+            target.transitionDuration = source.transitionDuration;
+        }
+        if (source.transitionProperty != null)
+        {
+            target.transitionProperty = source.transitionProperty;
+        }
+        if (source.transitionTimingFunction != null)
+        {
+            target.transitionTimingFunction = source.transitionTimingFunction;
+        }
+        if (source.translate != null)
+        {
+            target.translate = source.translate;
+        }
+        if (source.unicodeBidi != null)
+        {
+            target.unicodeBidi = source.unicodeBidi;
+        }
+        if (source.unicodeRange != null)
+        {
+            target.unicodeRange = source.unicodeRange;
+        }
+        if (source.userSelect != null)
+        {
+            target.userSelect = source.userSelect;
+        }
+        if (source.vectorEffect != null)
+        {
+            target.vectorEffect = source.vectorEffect;
+        }
+        if (source.verticalAlign != null)
+        {
+            target.verticalAlign = source.verticalAlign;
+        }
+        if (source.viewTimeline != null)
+        {
+            target.viewTimeline = source.viewTimeline;
+        }
+        if (source.viewTimelineAxis != null)
+        {
+            target.viewTimelineAxis = source.viewTimelineAxis;
+        }
+        if (source.viewTimelineInset != null)
+        {
+            target.viewTimelineInset = source.viewTimelineInset;
+        }
+        if (source.viewTimelineName != null)
+        {
+            target.viewTimelineName = source.viewTimelineName;
+        }
+        if (source.viewTransitionName != null)
+        {
+            target.viewTransitionName = source.viewTransitionName;
+        }
+        if (source.visibility != null)
+        {
+            target.visibility = source.visibility;
+        }
+        if (source.webkitAlignContent != null)
+        {
+            target.webkitAlignContent = source.webkitAlignContent;
+        }
+        if (source.webkitAlignItems != null)
+        {
+            target.webkitAlignItems = source.webkitAlignItems;
+        }
+        if (source.webkitAlignSelf != null)
+        {
+            target.webkitAlignSelf = source.webkitAlignSelf;
+        }
+        if (source.webkitAnimation != null)
+        {
+            target.webkitAnimation = source.webkitAnimation;
+        }
+        if (source.webkitAnimationDelay != null)
+        {
+            target.webkitAnimationDelay = source.webkitAnimationDelay;
+        }
+        if (source.webkitAnimationDirection != null)
+        {
+            target.webkitAnimationDirection = source.webkitAnimationDirection;
+        }
+        if (source.webkitAnimationDuration != null)
+        {
+            target.webkitAnimationDuration = source.webkitAnimationDuration;
+        }
+        if (source.webkitAnimationFillMode != null)
+        {
+            target.webkitAnimationFillMode = source.webkitAnimationFillMode;
+        }
+        if (source.webkitAnimationIterationCount != null)
+        {
+            target.webkitAnimationIterationCount = source.webkitAnimationIterationCount;
+        }
+        if (source.webkitAnimationName != null)
+        {
+            target.webkitAnimationName = source.webkitAnimationName;
+        }
+        if (source.webkitAnimationPlayState != null)
+        {
+            target.webkitAnimationPlayState = source.webkitAnimationPlayState;
+        }
+        if (source.webkitAnimationTimingFunction != null)
+        {
+            target.webkitAnimationTimingFunction = source.webkitAnimationTimingFunction;
+        }
+        if (source.webkitAppRegion != null)
+        {
+            target.webkitAppRegion = source.webkitAppRegion;
+        }
+        if (source.webkitAppearance != null)
+        {
+            target.webkitAppearance = source.webkitAppearance;
+        }
+        if (source.webkitBackfaceVisibility != null)
+        {
+            target.webkitBackfaceVisibility = source.webkitBackfaceVisibility;
+        }
+        if (source.webkitBackgroundClip != null)
+        {
+            target.webkitBackgroundClip = source.webkitBackgroundClip;
+        }
+        if (source.webkitBackgroundOrigin != null)
+        {
+            target.webkitBackgroundOrigin = source.webkitBackgroundOrigin;
+        }
+        if (source.webkitBackgroundSize != null)
+        {
+            target.webkitBackgroundSize = source.webkitBackgroundSize;
+        }
+        if (source.webkitBorderAfter != null)
+        {
+            target.webkitBorderAfter = source.webkitBorderAfter;
+        }
+        if (source.webkitBorderAfterColor != null)
+        {
+            target.webkitBorderAfterColor = source.webkitBorderAfterColor;
+        }
+        if (source.webkitBorderAfterStyle != null)
+        {
+            target.webkitBorderAfterStyle = source.webkitBorderAfterStyle;
+        }
+        if (source.webkitBorderAfterWidth != null)
+        {
+            target.webkitBorderAfterWidth = source.webkitBorderAfterWidth;
+        }
+        if (source.webkitBorderBefore != null)
+        {
+            target.webkitBorderBefore = source.webkitBorderBefore;
+        }
+        if (source.webkitBorderBeforeColor != null)
+        {
+            target.webkitBorderBeforeColor = source.webkitBorderBeforeColor;
+        }
+        if (source.webkitBorderBeforeStyle != null)
+        {
+            target.webkitBorderBeforeStyle = source.webkitBorderBeforeStyle;
+        }
+        if (source.webkitBorderBeforeWidth != null)
+        {
+            target.webkitBorderBeforeWidth = source.webkitBorderBeforeWidth;
+        }
+        if (source.webkitBorderBottomLeftRadius != null)
+        {
+            target.webkitBorderBottomLeftRadius = source.webkitBorderBottomLeftRadius;
+        }
+        if (source.webkitBorderBottomRightRadius != null)
+        {
+            target.webkitBorderBottomRightRadius = source.webkitBorderBottomRightRadius;
+        }
+        if (source.webkitBorderEnd != null)
+        {
+            target.webkitBorderEnd = source.webkitBorderEnd;
+        }
+        if (source.webkitBorderEndColor != null)
+        {
+            target.webkitBorderEndColor = source.webkitBorderEndColor;
+        }
+        if (source.webkitBorderEndStyle != null)
+        {
+            target.webkitBorderEndStyle = source.webkitBorderEndStyle;
+        }
+        if (source.webkitBorderEndWidth != null)
+        {
+            target.webkitBorderEndWidth = source.webkitBorderEndWidth;
+        }
+        if (source.webkitBorderHorizontalSpacing != null)
+        {
+            target.webkitBorderHorizontalSpacing = source.webkitBorderHorizontalSpacing;
+        }
+        if (source.webkitBorderImage != null)
+        {
+            target.webkitBorderImage = source.webkitBorderImage;
+        }
+        if (source.webkitBorderRadius != null)
+        {
+            target.webkitBorderRadius = source.webkitBorderRadius;
+        }
+        if (source.webkitBorderStart != null)
+        {
+            target.webkitBorderStart = source.webkitBorderStart;
+        }
+        if (source.webkitBorderStartColor != null)
+        {
+            target.webkitBorderStartColor = source.webkitBorderStartColor;
+        }
+        if (source.webkitBorderStartStyle != null)
+        {
+            target.webkitBorderStartStyle = source.webkitBorderStartStyle;
+        }
+        if (source.webkitBorderStartWidth != null)
+        {
+            target.webkitBorderStartWidth = source.webkitBorderStartWidth;
+        }
+        if (source.webkitBorderTopLeftRadius != null)
+        {
+            target.webkitBorderTopLeftRadius = source.webkitBorderTopLeftRadius;
+        }
+        if (source.webkitBorderTopRightRadius != null)
+        {
+            target.webkitBorderTopRightRadius = source.webkitBorderTopRightRadius;
+        }
+        if (source.webkitBorderVerticalSpacing != null)
+        {
+            target.webkitBorderVerticalSpacing = source.webkitBorderVerticalSpacing;
+        }
+        if (source.webkitBoxAlign != null)
+        {
+            target.webkitBoxAlign = source.webkitBoxAlign;
+        }
+        if (source.webkitBoxDecorationBreak != null)
+        {
+            target.webkitBoxDecorationBreak = source.webkitBoxDecorationBreak;
+        }
+        if (source.webkitBoxDirection != null)
+        {
+            target.webkitBoxDirection = source.webkitBoxDirection;
+        }
+        if (source.webkitBoxFlex != null)
+        {
+            target.webkitBoxFlex = source.webkitBoxFlex;
+        }
+        if (source.webkitBoxOrdinalGroup != null)
+        {
+            target.webkitBoxOrdinalGroup = source.webkitBoxOrdinalGroup;
+        }
+        if (source.webkitBoxOrient != null)
+        {
+            target.webkitBoxOrient = source.webkitBoxOrient;
+        }
+        if (source.webkitBoxPack != null)
+        {
+            target.webkitBoxPack = source.webkitBoxPack;
+        }
+        if (source.webkitBoxReflect != null)
+        {
+            target.webkitBoxReflect = source.webkitBoxReflect;
+        }
+        if (source.webkitBoxShadow != null)
+        {
+            target.webkitBoxShadow = source.webkitBoxShadow;
+        }
+        if (source.webkitBoxSizing != null)
+        {
+            target.webkitBoxSizing = source.webkitBoxSizing;
+        }
+        if (source.webkitClipPath != null)
+        {
+            target.webkitClipPath = source.webkitClipPath;
+        }
+        if (source.webkitColumnBreakAfter != null)
+        {
+            target.webkitColumnBreakAfter = source.webkitColumnBreakAfter;
+        }
+        if (source.webkitColumnBreakBefore != null)
+        {
+            target.webkitColumnBreakBefore = source.webkitColumnBreakBefore;
+        }
+        if (source.webkitColumnBreakInside != null)
+        {
+            target.webkitColumnBreakInside = source.webkitColumnBreakInside;
+        }
+        if (source.webkitColumnCount != null)
+        {
+            target.webkitColumnCount = source.webkitColumnCount;
+        }
+        if (source.webkitColumnGap != null)
+        {
+            target.webkitColumnGap = source.webkitColumnGap;
+        }
+        if (source.webkitColumnRule != null)
+        {
+            target.webkitColumnRule = source.webkitColumnRule;
+        }
+        if (source.webkitColumnRuleColor != null)
+        {
+            target.webkitColumnRuleColor = source.webkitColumnRuleColor;
+        }
+        if (source.webkitColumnRuleStyle != null)
+        {
+            target.webkitColumnRuleStyle = source.webkitColumnRuleStyle;
+        }
+        if (source.webkitColumnRuleWidth != null)
+        {
+            target.webkitColumnRuleWidth = source.webkitColumnRuleWidth;
+        }
+        if (source.webkitColumnSpan != null)
+        {
+            target.webkitColumnSpan = source.webkitColumnSpan;
+        }
+        if (source.webkitColumnWidth != null)
+        {
+            target.webkitColumnWidth = source.webkitColumnWidth;
+        }
+        if (source.webkitColumns != null)
+        {
+            target.webkitColumns = source.webkitColumns;
+        }
+        if (source.webkitFilter != null)
+        {
+            target.webkitFilter = source.webkitFilter;
+        }
+        if (source.webkitFlex != null)
+        {
+            target.webkitFlex = source.webkitFlex;
+        }
+        if (source.webkitFlexBasis != null)
+        {
+            target.webkitFlexBasis = source.webkitFlexBasis;
+        }
+        if (source.webkitFlexDirection != null)
+        {
+            target.webkitFlexDirection = source.webkitFlexDirection;
+        }
+        if (source.webkitFlexFlow != null)
+        {
+            target.webkitFlexFlow = source.webkitFlexFlow;
+        }
+        if (source.webkitFlexGrow != null)
+        {
+            target.webkitFlexGrow = source.webkitFlexGrow;
+        }
+        if (source.webkitFlexShrink != null)
+        {
+            target.webkitFlexShrink = source.webkitFlexShrink;
+        }
+        if (source.webkitFlexWrap != null)
+        {
+            target.webkitFlexWrap = source.webkitFlexWrap;
+        }
+        if (source.webkitFontFeatureSettings != null)
+        {
+            target.webkitFontFeatureSettings = source.webkitFontFeatureSettings;
+        }
+        if (source.webkitFontSmoothing != null)
+        {
+            target.webkitFontSmoothing = source.webkitFontSmoothing;
+        }
+        if (source.webkitHyphenateCharacter != null)
+        {
+            target.webkitHyphenateCharacter = source.webkitHyphenateCharacter;
+        }
+        if (source.webkitJustifyContent != null)
+        {
+            target.webkitJustifyContent = source.webkitJustifyContent;
+        }
+        if (source.webkitLineBreak != null)
+        {
+            target.webkitLineBreak = source.webkitLineBreak;
+        }
+        if (source.webkitLineClamp != null)
+        {
+            target.webkitLineClamp = source.webkitLineClamp;
+        }
+        if (source.webkitLocale != null)
+        {
+            target.webkitLocale = source.webkitLocale;
+        }
+        if (source.webkitLogicalHeight != null)
+        {
+            target.webkitLogicalHeight = source.webkitLogicalHeight;
+        }
+        if (source.webkitLogicalWidth != null)
+        {
+            target.webkitLogicalWidth = source.webkitLogicalWidth;
+        }
+        if (source.webkitMarginAfter != null)
+        {
+            target.webkitMarginAfter = source.webkitMarginAfter;
+        }
+        if (source.webkitMarginBefore != null)
+        {
+            target.webkitMarginBefore = source.webkitMarginBefore;
+        }
+        if (source.webkitMarginEnd != null)
+        {
+            target.webkitMarginEnd = source.webkitMarginEnd;
+        }
+        if (source.webkitMarginStart != null)
+        {
+            target.webkitMarginStart = source.webkitMarginStart;
+        }
+        if (source.webkitMask != null)
+        {
+            target.webkitMask = source.webkitMask;
+        }
+        if (source.webkitMaskBoxImage != null)
+        {
+            target.webkitMaskBoxImage = source.webkitMaskBoxImage;
+        }
+        if (source.webkitMaskBoxImageOutset != null)
+        {
+            target.webkitMaskBoxImageOutset = source.webkitMaskBoxImageOutset;
+        }
+        if (source.webkitMaskBoxImageRepeat != null)
+        {
+            target.webkitMaskBoxImageRepeat = source.webkitMaskBoxImageRepeat;
+        }
+        if (source.webkitMaskBoxImageSlice != null)
+        {
+            target.webkitMaskBoxImageSlice = source.webkitMaskBoxImageSlice;
+        }
+        if (source.webkitMaskBoxImageSource != null)
+        {
+            target.webkitMaskBoxImageSource = source.webkitMaskBoxImageSource;
+        }
+        if (source.webkitMaskBoxImageWidth != null)
+        {
+            target.webkitMaskBoxImageWidth = source.webkitMaskBoxImageWidth;
+        }
+        if (source.webkitMaskClip != null)
+        {
+            target.webkitMaskClip = source.webkitMaskClip;
+        }
+        if (source.webkitMaskComposite != null)
+        {
+            target.webkitMaskComposite = source.webkitMaskComposite;
+        }
+        if (source.webkitMaskImage != null)
+        {
+            target.webkitMaskImage = source.webkitMaskImage;
+        }
+        if (source.webkitMaskOrigin != null)
+        {
+            target.webkitMaskOrigin = source.webkitMaskOrigin;
+        }
+        if (source.webkitMaskPosition != null)
+        {
+            target.webkitMaskPosition = source.webkitMaskPosition;
+        }
+        if (source.webkitMaskPositionX != null)
+        {
+            target.webkitMaskPositionX = source.webkitMaskPositionX;
+        }
+        if (source.webkitMaskPositionY != null)
+        {
+            target.webkitMaskPositionY = source.webkitMaskPositionY;
+        }
+        if (source.webkitMaskRepeat != null)
+        {
+            target.webkitMaskRepeat = source.webkitMaskRepeat;
+        }
+        if (source.webkitMaskRepeatX != null)
+        {
+            target.webkitMaskRepeatX = source.webkitMaskRepeatX;
+        }
+        if (source.webkitMaskRepeatY != null)
+        {
+            target.webkitMaskRepeatY = source.webkitMaskRepeatY;
+        }
+        if (source.webkitMaskSize != null)
+        {
+            target.webkitMaskSize = source.webkitMaskSize;
+        }
+        if (source.webkitMaxLogicalHeight != null)
+        {
+            target.webkitMaxLogicalHeight = source.webkitMaxLogicalHeight;
+        }
+        if (source.webkitMaxLogicalWidth != null)
+        {
+            target.webkitMaxLogicalWidth = source.webkitMaxLogicalWidth;
+        }
+        if (source.webkitMinLogicalHeight != null)
+        {
+            target.webkitMinLogicalHeight = source.webkitMinLogicalHeight;
+        }
+        if (source.webkitMinLogicalWidth != null)
+        {
+            target.webkitMinLogicalWidth = source.webkitMinLogicalWidth;
+        }
+        if (source.webkitOpacity != null)
+        {
+            target.webkitOpacity = source.webkitOpacity;
+        }
+        if (source.webkitOrder != null)
+        {
+            target.webkitOrder = source.webkitOrder;
+        }
+        if (source.webkitPaddingAfter != null)
+        {
+            target.webkitPaddingAfter = source.webkitPaddingAfter;
+        }
+        if (source.webkitPaddingBefore != null)
+        {
+            target.webkitPaddingBefore = source.webkitPaddingBefore;
+        }
+        if (source.webkitPaddingEnd != null)
+        {
+            target.webkitPaddingEnd = source.webkitPaddingEnd;
+        }
+        if (source.webkitPaddingStart != null)
+        {
+            target.webkitPaddingStart = source.webkitPaddingStart;
+        }
+        if (source.webkitPerspective != null)
+        {
+            target.webkitPerspective = source.webkitPerspective;
+        }
+        if (source.webkitPerspectiveOrigin != null)
+        {
+            target.webkitPerspectiveOrigin = source.webkitPerspectiveOrigin;
+        }
+        if (source.webkitPerspectiveOriginX != null)
+        {
+            target.webkitPerspectiveOriginX = source.webkitPerspectiveOriginX;
+        }
+        if (source.webkitPerspectiveOriginY != null)
+        {
+            target.webkitPerspectiveOriginY = source.webkitPerspectiveOriginY;
+        }
+        if (source.webkitPrintColorAdjust != null)
+        {
+            target.webkitPrintColorAdjust = source.webkitPrintColorAdjust;
+        }
+        if (source.webkitRtlOrdering != null)
+        {
+            target.webkitRtlOrdering = source.webkitRtlOrdering;
+        }
+        if (source.webkitRubyPosition != null)
+        {
+            target.webkitRubyPosition = source.webkitRubyPosition;
+        }
+        if (source.webkitShapeImageThreshold != null)
+        {
+            target.webkitShapeImageThreshold = source.webkitShapeImageThreshold;
+        }
+        if (source.webkitShapeMargin != null)
+        {
+            target.webkitShapeMargin = source.webkitShapeMargin;
+        }
+        if (source.webkitShapeOutside != null)
+        {
+            target.webkitShapeOutside = source.webkitShapeOutside;
+        }
+        if (source.webkitTapHighlightColor != null)
+        {
+            target.webkitTapHighlightColor = source.webkitTapHighlightColor;
+        }
+        if (source.webkitTextCombine != null)
+        {
+            target.webkitTextCombine = source.webkitTextCombine;
+        }
+        if (source.webkitTextDecorationsInEffect != null)
+        {
+            target.webkitTextDecorationsInEffect = source.webkitTextDecorationsInEffect;
+        }
+        if (source.webkitTextEmphasis != null)
+        {
+            target.webkitTextEmphasis = source.webkitTextEmphasis;
+        }
+        if (source.webkitTextEmphasisColor != null)
+        {
+            target.webkitTextEmphasisColor = source.webkitTextEmphasisColor;
+        }
+        if (source.webkitTextEmphasisPosition != null)
+        {
+            target.webkitTextEmphasisPosition = source.webkitTextEmphasisPosition;
+        }
+        if (source.webkitTextEmphasisStyle != null)
+        {
+            target.webkitTextEmphasisStyle = source.webkitTextEmphasisStyle;
+        }
+        if (source.webkitTextFillColor != null)
+        {
+            target.webkitTextFillColor = source.webkitTextFillColor;
+        }
+        if (source.webkitTextOrientation != null)
+        {
+            target.webkitTextOrientation = source.webkitTextOrientation;
+        }
+        if (source.webkitTextSecurity != null)
+        {
+            target.webkitTextSecurity = source.webkitTextSecurity;
+        }
+        if (source.webkitTextSizeAdjust != null)
+        {
+            target.webkitTextSizeAdjust = source.webkitTextSizeAdjust;
+        }
+        if (source.webkitTextStroke != null)
+        {
+            target.webkitTextStroke = source.webkitTextStroke;
+        }
+        if (source.webkitTextStrokeColor != null)
+        {
+            target.webkitTextStrokeColor = source.webkitTextStrokeColor;
+        }
+        if (source.webkitTextStrokeWidth != null)
+        {
+            target.webkitTextStrokeWidth = source.webkitTextStrokeWidth;
+        }
+        if (source.webkitTransform != null)
+        {
+            target.webkitTransform = source.webkitTransform;
+        }
+        if (source.webkitTransformOrigin != null)
+        {
+            target.webkitTransformOrigin = source.webkitTransformOrigin;
+        }
+        if (source.webkitTransformOriginX != null)
+        {
+            target.webkitTransformOriginX = source.webkitTransformOriginX;
+        }
+        if (source.webkitTransformOriginY != null)
+        {
+            target.webkitTransformOriginY = source.webkitTransformOriginY;
+        }
+        if (source.webkitTransformOriginZ != null)
+        {
+            target.webkitTransformOriginZ = source.webkitTransformOriginZ;
+        }
+        if (source.webkitTransformStyle != null)
+        {
+            target.webkitTransformStyle = source.webkitTransformStyle;
+        }
+        if (source.webkitTransition != null)
+        {
+            target.webkitTransition = source.webkitTransition;
+        }
+        if (source.webkitTransitionDelay != null)
+        {
+            target.webkitTransitionDelay = source.webkitTransitionDelay;
+        }
+        if (source.webkitTransitionDuration != null)
+        {
+            target.webkitTransitionDuration = source.webkitTransitionDuration;
+        }
+        if (source.webkitTransitionProperty != null)
+        {
+            target.webkitTransitionProperty = source.webkitTransitionProperty;
+        }
+        if (source.webkitTransitionTimingFunction != null)
+        {
+            target.webkitTransitionTimingFunction = source.webkitTransitionTimingFunction;
+        }
+        if (source.webkitUserDrag != null)
+        {
+            target.webkitUserDrag = source.webkitUserDrag;
+        }
+        if (source.webkitUserModify != null)
+        {
+            target.webkitUserModify = source.webkitUserModify;
+        }
+        if (source.webkitUserSelect != null)
+        {
+            target.webkitUserSelect = source.webkitUserSelect;
+        }
+        if (source.webkitWritingMode != null)
+        {
+            target.webkitWritingMode = source.webkitWritingMode;
+        }
+        if (source.whiteSpace != null)
+        {
+            target.whiteSpace = source.whiteSpace;
+        }
+        if (source.whiteSpaceCollapse != null)
+        {
+            target.whiteSpaceCollapse = source.whiteSpaceCollapse;
+        }
+        if (source.widows != null)
+        {
+            target.widows = source.widows;
+        }
+        if (source.width != null)
+        {
+            target.width = source.width;
+        }
+        if (source.willChange != null)
+        {
+            target.willChange = source.willChange;
+        }
+        if (source.wordBreak != null)
+        {
+            target.wordBreak = source.wordBreak;
+        }
+        if (source.wordSpacing != null)
+        {
+            target.wordSpacing = source.wordSpacing;
+        }
+        if (source.wordWrap != null)
+        {
+            target.wordWrap = source.wordWrap;
+        }
+        if (source.writingMode != null)
+        {
+            target.writingMode = source.writingMode;
+        }
+        if (source.x != null)
+        {
+            target.x = source.x;
+        }
+        if (source.y != null)
+        {
+            target.y = source.y;
+        }
+        if (source.zIndex != null)
+        {
+            target.zIndex = source.zIndex;
+        }
+        if (source.zoom != null)
+        {
+            target.zoom = source.zoom;
+        }
+        if (source.mozOsxFontSmoothing != null)
+        {
+            target.mozOsxFontSmoothing = source.mozOsxFontSmoothing;
+        }
+        if (source.boxDecorationBreak != null)
+        {
+            target.boxDecorationBreak = source.boxDecorationBreak;
+        }
+        if (source.cssFloat != null)
+        {
+            target.cssFloat = source.cssFloat;
+        }
+        if (source.cssText != null)
+        {
+            target.cssText = source.cssText;
+        }
+        if (source.fontLanguageOverride != null)
+        {
+            target.fontLanguageOverride = source.fontLanguageOverride;
+        }
+        if (source.fontSizeAdjust != null)
+        {
+            target.fontSizeAdjust = source.fontSizeAdjust;
+        }
+        if (source.gridAutoPosition != null)
+        {
+            target.gridAutoPosition = source.gridAutoPosition;
+        }
+        if (source.icon != null)
+        {
+            target.icon = source.icon;
+        }
+        if (source.imageResolution != null)
+        {
+            target.imageResolution = source.imageResolution;
+        }
+        if (source.imeMode != null)
+        {
+            target.imeMode = source.imeMode;
+        }
+        if (source.marks != null)
+        {
+            target.marks = source.marks;
+        }
+        if (source.navDown != null)
+        {
+            target.navDown = source.navDown;
+        }
+        if (source.navIndex != null)
+        {
+            target.navIndex = source.navIndex;
+        }
+        if (source.navLeft != null)
+        {
+            target.navLeft = source.navLeft;
+        }
+        if (source.navRight != null)
+        {
+            target.navRight = source.navRight;
+        }
+        if (source.navUp != null)
+        {
+            target.navUp = source.navUp;
+        }
+        if (source.overflowClipBox != null)
+        {
+            target.overflowClipBox = source.overflowClipBox;
+        }
+    }
 }
