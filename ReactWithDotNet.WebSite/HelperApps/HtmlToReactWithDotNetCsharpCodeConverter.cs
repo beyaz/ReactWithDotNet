@@ -7,7 +7,14 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 
 static class HtmlToReactWithDotNetCsharpCodeConverter
 {
-
+    public static IReadOnlyList<T> Fold<T>(this IEnumerable<IEnumerable<T>> enumerable)
+    {
+        return enumerable.Aggregate(new List<T>(), (list, item) =>
+        {
+            list.AddRange(item);
+            return list;
+        });
+    }
     static void RemoveAll(this HtmlAttributeCollection htmlAttributeCollection, Func<HtmlAttribute, bool> match)
     {
         var items = htmlAttributeCollection.Where(match).ToList();
@@ -690,18 +697,79 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 htmlNode.Attributes.Remove("xmlns");
             }
         }
+
+        // innerText
+        {
+            if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
+            {
+                if (htmlNode.Attributes.Any() || modifiers.Any())
+                {
+                    htmlNode.Attributes.Add("text",htmlNode.ChildNodes[0].InnerText);
+                    htmlNode.ChildNodes.RemoveAt(0);
+                }
+            }
+        }
+
+        bool canBeExportInOneLine()
+        {
+            if (htmlNode.Attributes.Contains("text"))
+            {
+                return false;
+            }
+            
+            if (htmlNode.Attributes.Count <= 3)
+            {
+                return true;
+            }
+
+            if (style is not null)
+            {
+                if (canStyleExportInOneLine(style))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        static bool canStyleExportInOneLine(Style style)
+        {
+            return style.ToDictionary().Count <= 3;
+        }
         
         if (htmlNode.ChildNodes.Count == 0)
         {
-            
-            string attributeToString(HtmlAttribute attribute)
+            List<string> attributeToString(HtmlAttribute attribute)
             {
                 if (attribute.Name == "style" && style is not null)
                 {
-                    return $"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value+"\""))} }}";
+                    if (canStyleExportInOneLine(style))
+                    {
+                        return new List<string> { $"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}"};
+                    }
+
+                    var returnList = new List<string>
+                    {
+                        "style =",
+                        "{"
+                    };
+                    
+                    returnList.AddRange(style.ToDictionary().Select(toLine));
+
+                    returnList[^1] = returnList[^1].RemoveFromEnd(",");
+                    
+                    returnList.Add("}");
+
+                    return returnList;
+                    
+                    static string toLine(KeyValuePair<string, string> kv)
+                    {
+                        return kv.Key + " = \"" + kv.Value + "\",";
+                    }
                 }
                     
-                return  $"{attribute.Name} = \"{attribute.Value}\"";
+                return  new List<string>{$"{attribute.Name} = \"{attribute.Value}\""};
             }
             
             if (style is not null)
@@ -709,35 +777,81 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 htmlNode.Attributes.Add("style", "");
             }
 
-            var sb = new StringBuilder();
-            sb.Append($"new {htmlNodeName}");
-
-            if (modifiers.Count == 0 && htmlNode.Attributes.Count == 0)
+            if (canBeExportInOneLine())
             {
-                sb.Append("()");
+                var sb = new StringBuilder();
+                sb.Append($"new {htmlNodeName}");
+
+                if (modifiers.Count == 0 && htmlNode.Attributes.Count == 0)
+                {
+                    sb.Append("()");
+                    return new List<string>
+                    {
+                        sb.ToString()
+                    };
+                }
+                if (modifiers.Count > 0)
+                {
+                    sb.Append("(");
+                    sb.Append(string.Join(", ", modifiers));
+                    sb.Append(")");
+                }
+
+                if (htmlNode.Attributes.Count > 0)
+                {
+                    sb.Append(" { ");
+                    sb.Append(string.Join(", ", htmlNode.Attributes.Select(attributeToString).Fold()));
+                    sb.Append(" }");
+                }
+            
                 return new List<string>
                 {
                     sb.ToString()
                 };
             }
-            if (modifiers.Count > 0)
-            {
-                sb.Append("(");
-                sb.Append(string.Join(", ", modifiers));
-                sb.Append(")");
-            }
 
-            if (htmlNode.Attributes.Count > 0)
+            // multiline
             {
-                sb.Append(" { ");
-                sb.Append(string.Join(", ", htmlNode.Attributes.Select(attributeToString)));
-                sb.Append(" }");
+                var sb = new StringBuilder();
+                sb.Append($"new {htmlNodeName}");
+                
+                if (modifiers.Count > 0)
+                {
+                    sb.Append("(");
+                    sb.Append(string.Join(", ", modifiers));
+                    sb.Append(")");
+                }
+
+                var lines = new List<string>
+                {
+                    sb.ToString()
+                };
+                
+                
+                if (htmlNode.Attributes.Count > 0)
+                {
+                    lines.Add("{");
+                    
+                    foreach (var list in htmlNode.Attributes.Select(attributeToString))
+                    {
+                        if (list.Count > 0)
+                        {
+                            lines.AddRange(list);
+                        }
+                        else
+                        {
+                            lines.Add(list[0]);
+                        }
+                        
+                        lines[^1] += ",";
+                    }
+                    
+                    lines.Add("}");
+                }
+            
+                return lines;
             }
             
-            return new List<string>
-            {
-                sb.ToString()
-            };
         }
 
 

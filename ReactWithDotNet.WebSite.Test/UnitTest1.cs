@@ -25,7 +25,7 @@ public class UnitTest1
                """
                new a { target = "_blank", style = { borderRadius = "12px", color = "rgb(28, 32, 37)" } }
                """);
-        
+
         Assert("""
                <a target='_blank'  aria-hidden="true"   data-testid="AcUnitIcon"  style = "color:rgb(28, 32, 37);border-radius:12px;"/>
                """,
@@ -33,6 +33,26 @@ public class UnitTest1
                """
                new a(Aria("hidden", "true"), Data("testid", "AcUnitIcon")) { target = "_blank", style = { borderRadius = "12px", color = "rgb(28, 32, 37)" } }
                """);
+
+
+        //Assert("""
+        //       <a target='_blank'  aria-hidden="true"   data-testid="AcUnitIcon"  style = "color:rgb(28, 32, 37);border-radius:12px;">
+        //       xyz
+        //       </a>
+        //       """,
+
+        //       """
+        //       new a(Aria("hidden", "true"), Data("testid", "AcUnitIcon"))
+        //       {
+        //           text = "xyz",
+        //           target = "_blank", 
+        //           style = 
+        //           { 
+        //               borderRadius = "12px", 
+        //               color = "rgb(28, 32, 37)" 
+        //           }
+        //       }
+        //       """);
     }
 
 
