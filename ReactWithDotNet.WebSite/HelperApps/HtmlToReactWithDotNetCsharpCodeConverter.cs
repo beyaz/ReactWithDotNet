@@ -93,7 +93,21 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         displayFlexRow();
         data();
+        aria();
         
+        
+        void aria()
+        {
+            var dataList = attributeMap.Where(x => x.Key.StartsWith("aria-", StringComparison.OrdinalIgnoreCase)).ToList();
+            
+            
+            foreach (var (key, value) in dataList)
+            {
+                attributeMap.Remove(key);
+
+                attributeMap.Add($"Aria(\"{key.RemoveFromStart("data-")}\", \"{value}\")", null);
+            }
+        }
         
         void data()
         {
