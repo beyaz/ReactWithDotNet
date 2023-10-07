@@ -117,50 +117,33 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             },
             new FlexRow(WidthHeightMaximized, BorderForPaper, BorderRadiusForPaper)
             {
-                new Splitter(WidthHeightMaximized, x=>x.gutterSize = 10)
+                new FlexRow(WidthHeightMaximized)
                 {
                     
-                    new SplitterPanel
+                    new FlexColumn(WidthHeightMaximized, Gap(20))
                     {
-                        new Splitter(x=>x.layout="vertical", x=>x.gutterSize = 10)
+                        new FreeScrollBar(WidthHeightMaximized, Border(Solid(1,"#d1d9d1")), BorderRadius(5))
                         {
-                            new SplitterPanel
-                            {
-                                new FreeScrollBar(WidthHeightMaximized)
-                                {
-                                    htmlEditor
-                                }
-                        
-                            },
-                            new SplitterPanel
-                            {
-                                new FreeScrollBar(WidthHeightMaximized)
-                                {
-                                    csharpEditor
-                                }
-                        
-                            }
+                            htmlEditor
+                        },
+                        new FreeScrollBar(WidthHeightMaximized, Border(Solid(1,"#d1d9d1")), BorderRadius(5))
+                        {
+                            csharpEditor
                         }
                     }
                     
                     ,
                     
-                    new SplitterPanel
+                    new FreeScrollBar(WidthHeightMaximized)
                     {
-                        new FreeScrollBar(WidthHeightMaximized)
-                        {
-                            // paper
-                            BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
-                            BackgroundSize("10px 10px"),
+                        // paper
+                        BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
+                        BackgroundSize("10px 10px"),
                             
-                            new FlexRowCentered(WidthHeightMaximized, Padding(15))
-                            {
-                                CreatePreview
-                            }
+                        new FlexRowCentered(WidthHeightMaximized, Padding(15))
+                        {
+                            CreatePreview
                         }
-                        
-                        
-                        
                     }
                 }
             },
@@ -194,7 +177,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             sb.AppendLine();
             sb.AppendLine("namespace Preview;");
             sb.AppendLine();
-            sb.AppendLine("class SampleComponent: ReactComponent");
+            sb.AppendLine("class SampleComponent: Component");
             sb.AppendLine("{");
             
             sb.AppendLine("  protected override Element render()");
