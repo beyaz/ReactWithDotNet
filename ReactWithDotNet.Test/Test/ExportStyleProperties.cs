@@ -135,7 +135,7 @@ public class ExportStyleProperties
         
         
         ////////////////////////////////////////
-        // transfer
+        // visitNotNullValues
         ////////////////////////////////////////
         list.Add("");
         list.Add($"{indent}static void visitNotNullValues(Style s, Action<string, string> action)");
@@ -156,6 +156,31 @@ public class ExportStyleProperties
         ////////////////////////////////////////
         
         
+        ////////////////////////////////////////
+        // toCss
+        ////////////////////////////////////////
+        list.Add("");
+        list.Add($"{indent}static void toCss(Style s, System.Text.StringBuilder sb, string separator)");
+        list.Add($"{indent}{{");
+        
+        foreach (var name in propertyNames)
+        {
+            var propertyName = getPropertyName(name);
+            
+            list.Add($"{indent}{indent}if (s.{propertyName} != null)");
+            list.Add( $"{indent}{indent}{{");
+            list.Add($"{indent}{indent}{indent}sb.Append(\"{ConvertCamelCaseToSnakeCase(propertyName)}\");");
+            list.Add($"{indent}{indent}{indent}sb.Append(\":\");");
+            list.Add($"{indent}{indent}{indent}sb.Append(s.{propertyName});");
+            list.Add($"{indent}{indent}{indent}sb.Append(separator);");
+            list.Add( $"{indent}{indent}}}");
+            
+        }
+        
+        list.Add($"{indent}}}");
+        ////////////////////////////////////////
+        
+        
         
         
         list.Add("}");// end of class
@@ -168,6 +193,47 @@ public class ExportStyleProperties
         }
 
         File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\Style.generated.cs", sb.ToString());
+        
+        
+        static string ConvertCamelCaseToSnakeCase(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            var resultBuilder = new StringBuilder();
+            bool lastCharWasUpper = false;
+
+            foreach (char c in input.AsSpan())
+            {
+                if (char.IsUpper(c))
+                {
+                    if (!lastCharWasUpper)
+                    {
+                        if (resultBuilder.Length > 0)
+                        {
+                            resultBuilder.Append('-');
+                        }
+
+                        resultBuilder.Append(char.ToLower(c));
+                    }
+                    else
+                    {
+                        resultBuilder.Append(c);
+                    }
+
+                    lastCharWasUpper = true;
+                }
+                else
+                {
+                    resultBuilder.Append(c);
+                    lastCharWasUpper = false;
+                }
+            }
+
+            return resultBuilder.ToString();
+        }
     }
 
     static IReadOnlyList<string> GetPropertyNamesOfStyleClass()
