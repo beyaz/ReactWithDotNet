@@ -575,6 +575,23 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
             
         }
+        
+        if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
+        {
+            if (htmlNode.Attributes.Count == 0)
+            {
+                return new List<string> { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
+            }
+
+            return new List<string>
+            {
+                // one line
+                $"new {htmlNodeName}{constructorPart}",
+                "{",
+                ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
+                "}"
+            };
+        }
 
 
         foreach (var htmlNodeAttribute in htmlNode.Attributes)
@@ -601,22 +618,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             constructorPart = $"({string.Join(", ", attributeMap.Select(p => ToModifier(p.Key, p.Value)))})";
         }
 
-        if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
-        {
-            if (htmlNode.Attributes.Count == 0)
-            {
-                return new List<string> { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
-            }
-
-            return new List<string>
-            {
-                // one line
-                $"new {htmlNodeName}{constructorPart}",
-                "{",
-                ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText),
-                "}"
-            };
-        }
+        
 
         
 
