@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ReactWithDotNet.Test;
 
@@ -7,12 +8,13 @@ namespace ReactWithDotNet.Test;
 //[Ignore]
 public class ExportStyleProperties
 {
+    static readonly string[] rezervedWords =  { "float" };
     [TestMethod]
     public void ExportCommonHtmlElements()
     {
         var propertyNames = GetPropertyNamesOfStyleClass();
 
-        var rezervedWords = new [] { "float" };
+        const string indent = "    ";
         
         var list = new List<string>
         {
@@ -22,17 +24,41 @@ public class ExportStyleProperties
             "{"
         };
 
-        foreach (var propertyName in propertyNames)
+        foreach (var name in propertyNames)
         {
-            var prefix = "";
+            var propertyName = getPropertyName(name);
             
-            if (rezervedWords.Contains(propertyName))
+            list.Add($"{indent}public string {propertyName} {{ get; set; }}");
+        }
+
+        static string getPropertyName(string name)
+        {
+            
+            if (rezervedWords.Contains(name))
             {
-                prefix = "@";
+                return "@" + name;
             }
-            list.Add($"    public string {prefix}{propertyName} {{ get; set; }}");
+            
+            return name;
         }
         
+        
+        list.Add("");
+        list.Add("static bool IsEmpty(Style s)");
+        list.Add("{");
+        
+        foreach (var name in propertyNames)
+        {
+            var propertyName = getPropertyName(name);
+            
+            list.Add($"{indent}if ({propertyName} == null)");
+            list.Add( $"{indent}{{");
+            list.Add($"{indent}{indent}return false;");
+            list.Add( $"{indent}");
+            
+        }
+        
+        list.Add($"{indent}return true;");
         list.Add("}");
 
         var sb = new StringBuilder();
