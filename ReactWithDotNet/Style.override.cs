@@ -227,7 +227,6 @@ partial class Style : IEnumerable<StyleModifier>, IModifier
         }
     }
 
-    public string borderInlineStyle { get; set; }
     #endregion
 
     public Style Clone()
