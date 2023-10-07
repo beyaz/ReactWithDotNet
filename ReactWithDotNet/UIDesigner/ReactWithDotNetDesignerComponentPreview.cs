@@ -5,7 +5,7 @@ using Type = System.Type;
 
 namespace ReactWithDotNet.UIDesigner;
 
-public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithDotNetDesignerModel>
+public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNetDesignerModel>
 {
     public DateTime? LastWriteTime { get; set; }
 
@@ -137,7 +137,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                                 return component;
                             }
 
-                            if (instance is ReactPureComponent reactPureComponent)
+                            if (instance is PureComponent reactPureComponent)
                             {
                                 reactPureComponent.key     = "0";
                                 reactPureComponent.Context = Context;
@@ -209,7 +209,7 @@ public class ReactWithDotNetDesignerComponentPreview : ReactComponent<ReactWithD
                         return component;
                     }
 
-                    if (instance is ReactPureComponent reactPureComponent)
+                    if (instance is PureComponent reactPureComponent)
                     {
                         reactPureComponent.key     = "0";
                         reactPureComponent.Context = Context;

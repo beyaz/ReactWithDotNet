@@ -322,7 +322,7 @@ partial class ElementSerializer
                     if (reactStatefulComponent.IsStateNull)
                     {
                         // maybe developer forget init state
-                        if (reactStatefulComponent is ReactComponent<EmptyState> reactComponent)
+                        if (reactStatefulComponent is Component<EmptyState> reactComponent)
                         {
                             reactComponent.InitState(new EmptyState());
                         }
@@ -807,7 +807,7 @@ partial class ElementSerializer
             };
         }
 
-        if (element is ReactPureComponent pureComponent)
+        if (element is PureComponent pureComponent)
         {
             return new Node
             {
@@ -1100,7 +1100,7 @@ partial class ElementSerializer
 
     sealed class Node
     {
-        public ReactPureComponent ElementAsDotNetReactPureComponent;
+        public PureComponent ElementAsDotNetReactPureComponent;
         public bool ElementIsDotNetReactPureComponent;
         public bool IsSuspenseFallbackElementCalculated;
         public Element SuspenseFallbackElement;

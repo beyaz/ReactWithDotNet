@@ -3,7 +3,7 @@ using ReactWithDotNet.ThirdPartyLibraries.ReactSuite;
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-public class RSuiteAutoCompleteDemo : ReactComponent
+public class RSuiteAutoCompleteDemo : Component
 {
     public string SelectedValue { get; set; }
     

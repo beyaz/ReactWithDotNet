@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.Components;
 
-class Article : ReactPureComponent
+class Article : PureComponent
 {
     public string FilePathInContentFolder { get; set; }
     

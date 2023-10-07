@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Components;
 
-class YoutubeCard : ReactPureComponent
+class YoutubeCard : PureComponent
 {
     public YoutubeLink Model { get; set; }
 

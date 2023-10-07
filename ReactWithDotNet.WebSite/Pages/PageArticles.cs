@@ -1,7 +1,7 @@
 ﻿
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageArticles : ReactPureComponent
+class PageArticles : PureComponent
 {
     protected override Element render()
     {

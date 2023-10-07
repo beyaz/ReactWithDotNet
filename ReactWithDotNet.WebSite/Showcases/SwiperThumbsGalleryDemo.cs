@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-class SwiperThumbsGalleryDemo : ReactComponent
+class SwiperThumbsGalleryDemo : Component
 {
     protected override Element render()
     {

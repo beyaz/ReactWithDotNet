@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Showcases
 {
-    public class MuiTextFieldDemo : ReactPureComponent
+    public class MuiTextFieldDemo : PureComponent
     {
         protected override Element render()
         {

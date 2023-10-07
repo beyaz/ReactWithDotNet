@@ -9,7 +9,7 @@ class ModelA
     public int ClickCount2 { get; set; }
 }
 
-class ComponentA : ReactComponent<ModelA>
+class ComponentA : Component<ModelA>
 {
     protected override Task constructor()
     {
@@ -45,7 +45,7 @@ class ContainerModel
     public string PropC { get; set; }
     public int ClickCount { get; set; }
 }
-class Container : ReactComponent<ContainerModel>
+class Container : Component<ContainerModel>
 {
     protected override Element render()
     {

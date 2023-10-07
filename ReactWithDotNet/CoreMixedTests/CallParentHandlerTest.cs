@@ -8,7 +8,7 @@ class ModelA
     public int ClickCount { get; set; }
 }
 
-class ComponentA : ReactComponent<ModelA>
+class ComponentA : Component<ModelA>
 {
     protected override Task constructor()
     {
@@ -75,7 +75,7 @@ class ModelB
     public int ClickCount { get; set; }
 }
 
-class ComponentB : ReactComponent<ModelB>
+class ComponentB : Component<ModelB>
 {
     [ReactCustomEvent]
     public Action<int> OnCountMod4 { get; set; }
@@ -130,7 +130,7 @@ class ContainerModel
     public int ClickCount { get; set; }
     public string CalledFromChild { get; set; } = "Waiting";
 }
-class Container : ReactComponent<ContainerModel>
+class Container : Component<ContainerModel>
 {
     protected override Element render()
     {

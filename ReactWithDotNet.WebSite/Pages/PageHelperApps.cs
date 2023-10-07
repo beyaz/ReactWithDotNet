@@ -3,7 +3,7 @@ using ReactWithDotNet.WebSite.HelperApps;
 
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageHelperApps : ReactComponent
+class PageHelperApps : Component
 {
     public string SelectedAppName { get; set; } = nameof(HtmlToCSharpView);
 

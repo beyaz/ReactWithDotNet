@@ -5,7 +5,7 @@ namespace ReactWithDotNet.WebSite.Components;
 
 
 
-class RawCardViewer : ReactPureComponent
+class RawCardViewer : PureComponent
 {
     public RawCard Model { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.Components;
 
-class HamburgerButton : ReactComponent
+class HamburgerButton : Component
 {
     public bool IsOpen { get; set; }
 

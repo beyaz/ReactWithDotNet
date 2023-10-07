@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.ThirdPartyLibraries.ReactWithDotNetSkeleton;
 
-public class Skeleton : ReactPureComponent
+public class Skeleton : PureComponent
 {
     protected override Element render()
     {

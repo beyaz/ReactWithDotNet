@@ -114,7 +114,7 @@ static class MetadataHelper
 
             if (classNode.children.Count == 0)
             {
-                if (!(type.IsSubclassOf(typeof(ReactComponentBase)) || type.IsSubclassOf(typeof(ReactPureComponent))))
+                if (!(type.IsSubclassOf(typeof(ReactComponentBase)) || type.IsSubclassOf(typeof(PureComponent))))
                 {
                     return null;
                 }
@@ -237,7 +237,7 @@ static class MetadataHelper
             {
                 return true;
             }
-            if (typeof(ReactPureComponent).IsAssignableFrom(t.BaseType))
+            if (typeof(PureComponent).IsAssignableFrom(t.BaseType))
             {
                 return true;
             }

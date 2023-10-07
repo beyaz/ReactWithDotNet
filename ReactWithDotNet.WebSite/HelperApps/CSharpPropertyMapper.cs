@@ -14,7 +14,7 @@ class CSharpPropertyMapperModel
     public string StatusMessage { get; set; }
 }
 
-class CSharpPropertyMapperView : ReactComponent<CSharpPropertyMapperModel>
+class CSharpPropertyMapperView : Component<CSharpPropertyMapperModel>
 {
     protected override Task constructor()
     {

@@ -4,7 +4,7 @@ using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 namespace ReactWithDotNet.WebSite.Showcases;
 
 
-class Firer : ReactComponent
+class Firer : Component
 {
     public int Id { get; set; }
     
@@ -38,7 +38,7 @@ class Firer : ReactComponent
 
 
 
-class Container : ReactComponent
+class Container : Component
 {
     public int FiredId { get; set; }
 
@@ -87,7 +87,7 @@ class Container : ReactComponent
 
 
 
-public class EventBusDemo : ReactPureComponent
+public class EventBusDemo : PureComponent
 {
     protected override Element render()
     {

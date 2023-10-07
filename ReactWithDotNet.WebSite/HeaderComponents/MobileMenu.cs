@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.HeaderComponents;
 
-class MobileMenu : ReactComponent
+class MobileMenu : Component
 {
     public bool IsOpen { get; set; }
 
@@ -51,7 +51,7 @@ class MobileMenu : ReactComponent
     }
 
     [ReactHigherOrderComponent]
-    class MenuView : ReactComponent
+    class MenuView : Component
     {
         public Menu Model { get; set; }
 

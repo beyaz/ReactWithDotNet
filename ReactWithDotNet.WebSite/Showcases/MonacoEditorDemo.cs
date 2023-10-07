@@ -10,7 +10,7 @@ class MonacoEditorDemoState
     
     public int LetterCount { get; set; }
 }
-class MonacoEditorDemo : ReactComponent<MonacoEditorDemoState>
+class MonacoEditorDemo : Component<MonacoEditorDemoState>
 {
     protected override Task constructor()
     {

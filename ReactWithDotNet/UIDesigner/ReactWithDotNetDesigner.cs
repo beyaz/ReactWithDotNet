@@ -5,7 +5,7 @@ using static ReactWithDotNet.UIDesigner.Extensions;
 
 namespace ReactWithDotNet.UIDesigner;
 
-public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerModel>
+public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
     public static bool IsAttached { get; set; }
 
@@ -527,13 +527,13 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
 
                 if (propertyInfo.DeclaringType == typeof(Element) ||
                     propertyInfo.DeclaringType == typeof(ReactComponentBase)||
-                    propertyInfo.DeclaringType == typeof(ReactPureComponent))
+                    propertyInfo.DeclaringType == typeof(PureComponent))
                 {
                     continue;
                 }
 
                 if (propertyInfo.DeclaringType?.IsGenericType == true &&
-                    propertyInfo.DeclaringType.GetGenericTypeDefinition() == typeof(ReactComponent<>))
+                    propertyInfo.DeclaringType.GetGenericTypeDefinition() == typeof(Component<>))
                 {
                     continue;
                 }
@@ -612,7 +612,7 @@ public class ReactWithDotNetDesigner : ReactComponent<ReactWithDotNetDesignerMod
     
     
     // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
-    class LoadingIcon : ReactPureComponent
+    class LoadingIcon : PureComponent
     {
         protected override Element render()
         {

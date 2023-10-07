@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
-class MainPageHeader : ReactPureComponent
+class MainPageHeader : PureComponent
 {
     protected override Element render()
     {

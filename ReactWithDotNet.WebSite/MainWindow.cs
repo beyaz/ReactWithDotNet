@@ -3,7 +3,7 @@ using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
 
-public class MainWindow : ReactPureComponent
+public class MainWindow : PureComponent
 {
     protected override Element render()
     {

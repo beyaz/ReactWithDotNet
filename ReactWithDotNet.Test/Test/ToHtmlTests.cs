@@ -309,7 +309,7 @@ public class ToHtmlTests
         actualHtml.Should().BeEquivalentTo(expectedHtml.Trim());
     }
 
-    class SamplePureComponent : ReactComponent
+    class SamplePureComponent : Component
     {
         protected override Element render()
         {
@@ -317,7 +317,7 @@ public class ToHtmlTests
         }
     }
 
-    class SamplePureComponent2 : ReactComponent
+    class SamplePureComponent2 : Component
     {
         protected override Element render()
         {

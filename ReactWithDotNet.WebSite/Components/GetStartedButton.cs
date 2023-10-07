@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.Components;
 
-class GetStartedButton : ReactPureComponent
+class GetStartedButton : PureComponent
 {
     protected override Element render()
     {

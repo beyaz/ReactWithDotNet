@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-public class OnClickPreviewDemo : ReactComponent
+public class OnClickPreviewDemo : Component
 {
     public int Count  { get; set; }
     
@@ -36,7 +36,7 @@ public class OnClickPreviewDemo : ReactComponent
     {
         public string PreviewText { get; set; }
     }
-    class Btn : ReactComponent<BtState>
+    class Btn : Component<BtState>
     {
         public Action<MouseEvent> OnClick;
         

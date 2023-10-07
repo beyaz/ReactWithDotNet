@@ -133,18 +133,18 @@ static class ComponentRequestHandler
                 reactComponentBase.Context                   = context;
                 await reactComponentBase.InvokeConstructor();
             }
-            else if (instance is ReactPureComponent reactPureComponent)
+            else if (instance is PureComponent reactPureComponent)
             {
                 reactPureComponent.key     = "0";
                 reactPureComponent.Context = context;
             }
             else
             {
-                throw DeveloperException($"{instance.GetType().FullName} should be inherit from {nameof(ReactPureComponent)} or {nameof(ReactComponent)}");
+                throw DeveloperException($"{instance.GetType().FullName} should be inherit from {nameof(PureComponent)} or {nameof(Component)}");
             }
 
             // maybe developer forget init state
-            if (instance is ReactComponent<EmptyState> { IsStateNull: true } reactComponent)
+            if (instance is Component<EmptyState> { IsStateNull: true } reactComponent)
             {
                 reactComponent.InitState(new EmptyState());
             }

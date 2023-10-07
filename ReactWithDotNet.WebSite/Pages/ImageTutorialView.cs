@@ -9,7 +9,7 @@ class TutorialItem
     public string ImageSrc { get; set; }
 }
 
-class TutorialItemView : ReactPureComponent
+class TutorialItemView : PureComponent
 {
     public TutorialItem Model { get; set; }
 
@@ -31,7 +31,7 @@ class TutorialItemView : ReactPureComponent
     }
 }
 
-class ImageTutorialView : ReactComponent
+class ImageTutorialView : Component
 {
     public IReadOnlyList<TutorialItem> Items { get; set; }
     

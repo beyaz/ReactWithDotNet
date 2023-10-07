@@ -14,7 +14,7 @@ class FigmaCss2ReactInlineStyleConverterModel
     public string StatusMessage { get; set; }
 }
 
-class FigmaCss2ReactInlineStyleConverterView : ReactComponent<FigmaCss2ReactInlineStyleConverterModel>
+class FigmaCss2ReactInlineStyleConverterView : Component<FigmaCss2ReactInlineStyleConverterModel>
 {
     protected override Task constructor()
     {

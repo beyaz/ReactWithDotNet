@@ -139,7 +139,7 @@ public abstract class ReactComponentBase : Element
     }
 }
 
-public abstract class ReactComponent<TState> : ReactComponentBase where TState : class, new()
+public abstract class Component<TState> : ReactComponentBase where TState : class, new()
 {
     protected TState state { get; set; }
 
@@ -157,10 +157,10 @@ public abstract class ReactComponent<TState> : ReactComponentBase where TState :
     
 }
 
-public abstract class ReactComponent : ReactComponent<EmptyState>
+public abstract class Component : Component<EmptyState>
 {
     protected static IModifier Modify<TComponent>(Action<TComponent> modifyAction)
-        where TComponent : ReactComponent => CreateComponentModifier(modifyAction);
+        where TComponent : Component => CreateComponentModifier(modifyAction);
 }
 
 [Serializable]

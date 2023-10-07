@@ -77,7 +77,7 @@ static class DynamicCode
         {
             MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
             MetadataReference.CreateFromFile(typeof(Console).Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(ReactComponent).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(Component).Assembly.Location),
             MetadataReference.CreateFromFile(typeof(div).Assembly.Location)
         };
 

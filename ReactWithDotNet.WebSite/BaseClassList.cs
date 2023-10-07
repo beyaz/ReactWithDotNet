@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite;
 
-public abstract class ReactComponent : ReactWithDotNet.ReactComponent
+public abstract class Component : ReactWithDotNet.Component
 {
     protected LightTheme Theme => ThemeKey[Context];
 
@@ -10,7 +10,7 @@ public abstract class ReactComponent : ReactWithDotNet.ReactComponent
 
     public StyleModifier BorderForPaper => Border(Solid(1,Theme.grey_200));
 }
-public abstract class ReactPureComponent : ReactWithDotNet.ReactPureComponent
+public abstract class PureComponent : ReactWithDotNet.PureComponent
 {
     protected LightTheme Theme => ThemeKey[Context];
 
@@ -19,7 +19,7 @@ public abstract class ReactPureComponent : ReactWithDotNet.ReactPureComponent
     public StyleModifier BorderForPaper => Border(Solid(1, Theme.grey_200));
 }
 
-public abstract class ReactComponent<TState> : ReactWithDotNet.ReactComponent<TState> where TState :class, new()
+public abstract class Component<TState> : ReactWithDotNet.Component<TState> where TState :class, new()
 {
     protected LightTheme Theme => ThemeKey[Context];
 

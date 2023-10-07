@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.Components;
 
-class MainPageContentDescription : ReactPureComponent
+class MainPageContentDescription : PureComponent
 {
     protected override Element render()
     {

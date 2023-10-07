@@ -6,7 +6,7 @@ class HomePageDemoComponentState
 {
     public bool ShowMessage { get; set; }
 }
-class HomePageDemoComponent : ReactComponent<HomePageDemoComponentState>
+class HomePageDemoComponent : Component<HomePageDemoComponentState>
 {
     protected override Task constructor()
     {

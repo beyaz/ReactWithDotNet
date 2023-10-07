@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.HeaderComponents;
 
-public class Logo : ReactPureComponent
+public class Logo : PureComponent
 {
     protected override Element render()
     {
@@ -17,7 +17,7 @@ public class Logo : ReactPureComponent
     }
 }
 
-public class OnlyTextLogo : ReactPureComponent
+public class OnlyTextLogo : PureComponent
 {
     protected override Element render()
     {

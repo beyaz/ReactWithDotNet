@@ -3,7 +3,7 @@ using ReactWithDotNet.WebSite.Content;
 
 namespace ReactWithDotNet.WebSite.HeaderComponents;
 
-class HeaderMenuBar : ReactPureComponent
+class HeaderMenuBar : PureComponent
 {
     static StyleModifier BorderRadius => BorderRadius(10);
 

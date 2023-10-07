@@ -3,7 +3,7 @@ using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 
 namespace ReactWithDotNet.WebSite.Components;
 
-class CSharpCodePanel : ReactPureComponent
+class CSharpCodePanel : PureComponent
 {
     public string Code { get; set; }
     

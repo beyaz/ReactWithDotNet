@@ -59,9 +59,9 @@ static partial class Extensions
         return enumerable.Select(convert).ToList();
     }
 
-    static readonly Dictionary<string, ReactPureComponent> svgFileCache = new();
+    static readonly Dictionary<string, PureComponent> svgFileCache = new();
     
-    public static ReactPureComponent GetSvgByClassName(string className)
+    public static PureComponent GetSvgByClassName(string className)
     {
         className = className.Replace(".svg","");
         
@@ -76,7 +76,7 @@ static partial class Extensions
             throw new TypeLoadException(className);
         }
         
-        instance = (ReactPureComponent)Activator.CreateInstance(type);
+        instance = (PureComponent)Activator.CreateInstance(type);
 
         svgFileCache.TryAdd(className, instance);
 

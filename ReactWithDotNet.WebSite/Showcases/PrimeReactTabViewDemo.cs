@@ -6,7 +6,7 @@ namespace ReactWithDotNet.WebSite.Showcases;
 
 
 
-public class PrimeReactTabViewDemo : ReactPureComponent
+public class PrimeReactTabViewDemo : PureComponent
 {
     
     protected override Element render()

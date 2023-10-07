@@ -9,7 +9,7 @@ class ModelA
     public bool isMouseEntered { get; set; }
 }
 
-class ComponentA : ReactComponent<ModelA>
+class ComponentA : Component<ModelA>
 {
     
 
@@ -54,7 +54,7 @@ class ModelB
     public int ClickCount { get; set; }
 }
 
-class ComponentB : ReactComponent<ModelB>
+class ComponentB : Component<ModelB>
 {
    
 
@@ -89,7 +89,7 @@ class ModelC
     public int ClickCount { get; set; }
 }
 
-class ComponentC : ReactComponent<ModelC>
+class ComponentC : Component<ModelC>
 {
     
 
@@ -117,7 +117,7 @@ class ModelContainer1
     public int ClickCount { get; set; }
 }
 
-class Container1 : ReactComponent<ModelContainer1>
+class Container1 : Component<ModelContainer1>
 {
   
 
@@ -169,7 +169,7 @@ class ModelContainer2
     public int ClickCount { get; set; }
 }
 
-class Container2 : ReactComponent<ModelContainer2>
+class Container2 : Component<ModelContainer2>
 {
     
 
@@ -207,7 +207,7 @@ class ModelContainer3
     public int ClickCount { get; set; }
 }
 
-class Container3 : ReactComponent<ModelContainer3>
+class Container3 : Component<ModelContainer3>
 {
     
 

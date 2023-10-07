@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet;
 
-public abstract class ReactPureComponent : Element
+public abstract class PureComponent : Element
 {
     internal Func<Element> DesignerCustomizedRender;
 
@@ -32,7 +32,7 @@ public abstract class ReactPureComponent : Element
     }
 
     protected static IModifier Modify<TPureComponent>(Action<TPureComponent> modifyAction)
-        where TPureComponent : ReactPureComponent
+        where TPureComponent : PureComponent
     {
         return CreatePureComponentModifier(modifyAction);
     }

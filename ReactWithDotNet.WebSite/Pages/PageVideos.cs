@@ -1,7 +1,7 @@
 ﻿
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageVideos : ReactPureComponent
+class PageVideos : PureComponent
 {
     protected override Element render()
     {

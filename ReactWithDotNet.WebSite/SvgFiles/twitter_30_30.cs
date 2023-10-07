@@ -1,7 +1,7 @@
 ﻿namespace ReactWithDotNet.WebSite.SvgFiles;
 
 
-class twitter_30_30 : ReactPureComponent
+class twitter_30_30 : PureComponent
 {
     public int WidthHeight { get; set; } = 30;
 

@@ -14,7 +14,7 @@ class HtmlToCSharpViewModel
     public string StatusMessage { get; set; }
 }
 
-class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
+class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 {
     protected override Task constructor()
     {
@@ -236,7 +236,7 @@ class HtmlToCSharpView : ReactComponent<HtmlToCSharpViewModel>
             {
                 var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
                 
-                return (ReactWithDotNet.ReactComponent)instance;
+                return (ReactWithDotNet.Component)instance;
             }
 
             if (sourceCodeHasError)

@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-public class MuiCardDemo : ReactPureComponent
+public class MuiCardDemo : PureComponent
 {
     protected override Element render()
     {

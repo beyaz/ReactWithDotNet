@@ -8,7 +8,7 @@ class ModelA
 
 }
 
-class ComponentA : ReactComponent<ModelA>
+class ComponentA : Component<ModelA>
 {
     public string A_Prop_1 { get; set; }
 
@@ -45,7 +45,7 @@ class ModelB
     public int ClickCount { get; set; }
 }
 
-class ComponentB : ReactComponent<ModelB>
+class ComponentB : Component<ModelB>
 {
     public string B_Prop_1 { get; set; }
 
@@ -99,7 +99,7 @@ class RedBorderModel
     public int BorderWidth { get; set; } = 5;
 }
 
-class RedBorder:ReactComponent<RedBorderModel>
+class RedBorder:Component<RedBorderModel>
 {
     protected override Task constructor()
     {
@@ -124,7 +124,7 @@ class ModelContainer1
     public int ClickCount { get; set; }
 }
 
-class Container1 : ReactComponent<ModelContainer1>
+class Container1 : Component<ModelContainer1>
 {
     protected override Task constructor()
     {

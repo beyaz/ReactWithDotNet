@@ -1,7 +1,7 @@
 ﻿
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageModifiers : ReactPureComponent
+class PageModifiers : PureComponent
 {
     protected override Element render()
     {
@@ -81,7 +81,7 @@ new div
     }
 }
 
-class PageTechnicalDetail : ReactPureComponent
+class PageTechnicalDetail : PureComponent
 {
     protected override Element render()
     {
@@ -136,7 +136,7 @@ class PageTechnicalDetail : ReactPureComponent
     }
 }
 
-class PageDocuments : ReactPureComponent
+class PageDocuments : PureComponent
 {
     protected override Element render()
     {

@@ -7,7 +7,7 @@ class ModelA
     public int ClickCount { get; set; }
 }
 
-class ComponentA : ReactComponent<ModelA>
+class ComponentA : Component<ModelA>
 {
     protected override Task constructor()
     {
@@ -41,7 +41,7 @@ class ModelB
     public int ClickCount { get; set; }
 }
 
-class ComponentB : ReactComponent<ModelB>
+class ComponentB : Component<ModelB>
 {
    
 
@@ -73,7 +73,7 @@ class ContainerModel
 {
     public int ClickCount { get; set; }
 }
-class Container : ReactComponent<ContainerModel>
+class Container : Component<ContainerModel>
 {
     protected override Element render()
     {

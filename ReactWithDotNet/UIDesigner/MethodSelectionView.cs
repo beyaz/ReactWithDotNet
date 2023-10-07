@@ -16,7 +16,7 @@ class MetadataNode
     public TypeReference TypeReference { get; set; }
 }
 
-class MethodSelectionView : ReactComponent
+class MethodSelectionView : Component
 {
     public string AssemblyFilePath { get; set; }
 

@@ -81,7 +81,7 @@ abstract class ReactComponentModifier : IModifier
     internal abstract void Modify(ReactComponentBase reactComponent);
 }
 
-sealed class ReactComponentModifier<TComponent> : ReactComponentModifier where TComponent : ReactComponent
+sealed class ReactComponentModifier<TComponent> : ReactComponentModifier where TComponent : Component
 {
     internal readonly Action<TComponent> modify;
 
@@ -103,10 +103,10 @@ sealed class ReactComponentModifier<TComponent> : ReactComponentModifier where T
 
 abstract class ReactPureComponentModifier : IModifier
 {
-    internal abstract void Modify(ReactPureComponent pureComponent);
+    internal abstract void Modify(PureComponent pureComponent);
 }
 
-sealed class ReactPureComponentModifier<TPureComponent> : ReactPureComponentModifier where TPureComponent : ReactPureComponent
+sealed class ReactPureComponentModifier<TPureComponent> : ReactPureComponentModifier where TPureComponent : PureComponent
 {
     internal readonly Action<TPureComponent> modify;
 
@@ -115,7 +115,7 @@ sealed class ReactPureComponentModifier<TPureComponent> : ReactPureComponentModi
         modify = modifyPureComponent ?? throw new ArgumentNullException(nameof(modifyPureComponent));
     }
 
-    internal override void Modify(ReactPureComponent pureComponent)
+    internal override void Modify(PureComponent pureComponent)
     {
         if (pureComponent == null)
         {
@@ -184,7 +184,7 @@ partial class Mixin
         return element;
     }
 
-    public static IModifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : ReactComponent
+    public static IModifier CreateComponentModifier<TComponent>(Action<TComponent> modifyAction) where TComponent : Component
     {
         return new ReactComponentModifier<TComponent>(modifyAction);
     }
@@ -195,7 +195,7 @@ partial class Mixin
     }
 
     public static IModifier CreatePureComponentModifier<TPureComponent>(Action<TPureComponent> modifyAction)
-        where TPureComponent : ReactPureComponent
+        where TPureComponent : PureComponent
     {
         return new ReactPureComponentModifier<TPureComponent>(modifyAction);
     }
@@ -275,7 +275,7 @@ static class ModifyHelper
             }
         }
 
-        if (element is ReactPureComponent reactPureComponent)
+        if (element is PureComponent reactPureComponent)
         {
             (reactPureComponent.Modifiers ??= new List<IModifier>()).Add(modifier);
             return;

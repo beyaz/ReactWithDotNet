@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Showcases;
 
-public class ReactPlayerDemo : ReactPureComponent
+public class ReactPlayerDemo : PureComponent
 {
     protected override Element render()
     {

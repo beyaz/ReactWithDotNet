@@ -3,7 +3,7 @@ using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
 
 namespace ReactWithDotNet.WebSite.Components;
 
-class DemoPanel : ReactComponent
+class DemoPanel : Component
 {
     public string CSharpCode { get; set; }
 

@@ -3,7 +3,7 @@ using ReactWithDotNet.WebSite.Showcases;
 
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageShowcase : ReactComponent
+class PageShowcase : Component
 {
     public string SearchValue { get; set; }
 

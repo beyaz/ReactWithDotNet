@@ -141,7 +141,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return Enumerable.Empty<IModifier>().GetEnumerator();
     }
 
-    class ToStringHandlerComponent : ReactPureComponent
+    class ToStringHandlerComponent : PureComponent
     {
         Element _element;
 

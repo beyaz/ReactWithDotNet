@@ -1,6 +1,6 @@
 ﻿namespace ReactWithDotNet.WebSite.Components;
 
-class ArrowUpDownIcon : ReactPureComponent
+class ArrowUpDownIcon : PureComponent
 {
     public bool IsArrowUp { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace ReactWithDotNet.WebSite.Components;
 
-class HighlightedText : ReactPureComponent
+class HighlightedText : PureComponent
 {
     public string Text { get; set; }
     

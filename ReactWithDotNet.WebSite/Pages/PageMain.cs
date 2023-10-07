@@ -1,7 +1,7 @@
 ﻿
 namespace ReactWithDotNet.WebSite.Pages;
 
-class PageMain: ReactPureComponent
+class PageMain: PureComponent
 {
     protected override Element render()
     {

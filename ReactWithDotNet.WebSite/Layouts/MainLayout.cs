@@ -2,7 +2,7 @@
 namespace ReactWithDotNet.WebSite;
 
 
-class MainLayout : ReactPureComponent, IPageLayout
+class MainLayout : PureComponent, IPageLayout
 {
     public ComponentRenderInfo RenderInfo { get; set; }
     
