@@ -682,6 +682,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             modifiers.AddRange(htmlNode.Attributes.Where(isDataAttribute).Select(toDataModifier));
             htmlNode.Attributes.RemoveAll(isDataAttribute);
         }
+
+        // remove svg.xmlns
+        {
+            if (htmlNode.Name == "svg" && htmlNode.Attributes.Contains("xmlns") && htmlNode.Attributes["xmlns"].Value == "http://www.w3.org/2000/svg")
+            {
+                htmlNode.Attributes.Remove("xmlns");
+            }
+        }
         
         if (htmlNode.ChildNodes.Count == 0)
         {
@@ -745,10 +753,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return false;
         }
 
-        if (htmlNode.Name == "svg" && attributeMap.ContainsKey("xmlns") && attributeMap["xmlns"] == "http://www.w3.org/2000/svg")
-        {
-            attributeMap.Remove("xmlns");
-        }
+       
 
         if (attributeMap.Count > 0 || style is not null)
         {
