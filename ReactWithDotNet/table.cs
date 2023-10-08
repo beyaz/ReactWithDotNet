@@ -52,12 +52,8 @@ public sealed class tfoot : HtmlElement
     }
 }
 
-public sealed class tr : HtmlElement
+partial class tr
 {
-    public tr(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [ReactProp]
     public int? colSpan { get; set; }
 
@@ -74,16 +70,8 @@ partial class th
     public int? rowSpan { get; set; }
 }
 
-public sealed class td : HtmlElement
+partial class td
 {
-    public td()
-    {
-    }
-
-    public td(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-
     [ReactProp]
     public int? colSpan { get; set; }
 

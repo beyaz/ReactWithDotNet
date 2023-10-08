@@ -824,3 +824,29 @@ public sealed partial class th : HtmlElement
     public th(Style style) : base(style) { }
 }
 
+public sealed partial class td : HtmlElement
+{
+    public td() { }
+
+    public td(params IModifier[] modifiers) : base(modifiers) { }
+
+    public td(string innerText) : base(innerText) {  }
+
+    public static implicit operator td(string text) => new() { text = text };
+
+    public td(Style style) : base(style) { }
+}
+
+public sealed partial class tr : HtmlElement
+{
+    public tr() { }
+
+    public tr(params IModifier[] modifiers) : base(modifiers) { }
+
+    public tr(string innerText) : base(innerText) {  }
+
+    public static implicit operator tr(string text) => new() { text = text };
+
+    public tr(Style style) : base(style) { }
+}
+

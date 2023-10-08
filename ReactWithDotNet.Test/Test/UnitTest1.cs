@@ -86,12 +86,8 @@ public class UnitTest1
             new() { Tag = "figcaption" },
             
             new() { Tag = "th", Comment = Empty, CreateClassAsPartial = true },
-            //new() { Tag = "h6", Comment = Empty },
-            //new() { Tag = "h6", Comment = Empty },
-            //new() { Tag = "h6", Comment = Empty },
-            //new() { Tag = "h6", Comment = Empty },
-            //new() { Tag = "h6", Comment = Empty },
-            //new() { Tag = "h6", Comment = Empty }
+            new() { Tag = "td", Comment = Empty, CreateClassAsPartial = true },
+            new() { Tag = "tr", Comment = Empty, CreateClassAsPartial = true },
         };
 
         var list = new List<string>
