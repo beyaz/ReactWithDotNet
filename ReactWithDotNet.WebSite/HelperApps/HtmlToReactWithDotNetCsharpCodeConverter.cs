@@ -93,10 +93,19 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return value;
     }
 
+    static IReadOnlyList<T> Fold<T>(this IEnumerable<IEnumerable<T>> enumerable)
+    {
+        return enumerable.Aggregate(new List<T>(), (list, item) =>
+        {
+            list.AddRange(item);
+            return list;
+        });
+    }
+
     static string GetName(this HtmlAttribute htmlAttribute)
     {
         var name = htmlAttribute.Name;
-        
+
         if (htmlAttribute.OriginalName != name)
         {
             if (name.All(char.IsLower) && htmlAttribute.OriginalName.Any(char.IsUpper))
@@ -104,7 +113,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 name = htmlAttribute.OriginalName;
             }
         }
-        
+
         if (AttributeRealNameMap.ContainsKey(name))
         {
             return AttributeRealNameMap[name];
@@ -118,19 +127,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
 
         return name;
-    }
-    
-  
-    
-    
-
-    static IReadOnlyList<T> Fold<T>(this IEnumerable<IEnumerable<T>> enumerable)
-    {
-        return enumerable.Aggregate(new List<T>(), (list, item) =>
-        {
-            list.AddRange(item);
-            return list;
-        });
     }
 
     static void Insert(this HtmlAttributeCollection htmlAttributeCollection, int index, string name, string value)
@@ -291,7 +287,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
 
             modifiers.AddRange(htmlNode.Attributes.RemoveAll(isAriaAttribute).Select(toAriaModifier));
-            
         }
 
         // data-*
@@ -307,7 +302,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
 
             modifiers.AddRange(htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier));
-            
         }
 
         // remove svg.xmlns
@@ -319,22 +313,19 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     htmlNode.Attributes.Remove("xmlns");
                 }
             }
-            
+
             if (htmlNode.Name == "svg" || htmlNode.Name == "path")
             {
                 static bool isSnakeCaseAttribute(HtmlAttribute htmlAttribute)
                 {
-                    return htmlAttribute.Name.IndexOf("-",StringComparison.OrdinalIgnoreCase) > 0;
+                    return htmlAttribute.Name.IndexOf("-", StringComparison.OrdinalIgnoreCase) > 0;
                 }
-                
+
                 foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isSnakeCaseAttribute))
                 {
                     style[htmlAttribute.Name] = htmlAttribute.Value;
                 }
             }
-            
-            
-            
         }
 
         // innerText
@@ -451,7 +442,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
         }
-        
+
         bool canBeExportInOneLine()
         {
             if (htmlNode.Attributes.Contains("text"))
@@ -466,13 +457,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return false;
                 }
             }
-            
+
             if (htmlNode.Attributes.Count <= 3)
             {
                 return true;
             }
-
-            
 
             return false;
         }
@@ -615,8 +604,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             };
         }
 
-       
-
         foreach (var htmlAttribute in htmlNode.Attributes)
         {
             modifiers.Add(ToModifier(htmlAttribute));
@@ -658,28 +645,30 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static string ToModifier(HtmlAttribute htmlAttribute)
     {
-        if (htmlAttribute.Name == "target" && htmlAttribute.Value == "_blank")
+        var attributeName = htmlAttribute.GetName();
+
+        if (attributeName == "target" && htmlAttribute.Value == "_blank")
         {
             return "TargetBlank";
         }
 
-        if (htmlAttribute.Name == "focusable" && htmlAttribute.OwnerNode.Name == "svg")
+        if (attributeName == "focusable" && htmlAttribute.OwnerNode.Name == "svg")
         {
             return $"svg.Focusable(\"{htmlAttribute.Value}\")";
         }
 
-        if (htmlAttribute.Name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && htmlAttribute.OwnerNode.Name == "svg")
+        if (attributeName.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && htmlAttribute.OwnerNode.Name == "svg")
         {
             return $"ViewBox(\"{htmlAttribute.Value}\")";
         }
 
-        var modifierFullName = $"{CamelCase(htmlAttribute.Name)}{CamelCase(htmlAttribute.Value)}";
+        var modifierFullName = $"{CamelCase(attributeName)}{CamelCase(htmlAttribute.Value)}";
 
         if (typeof(Mixin).GetProperty(modifierFullName) is not null)
         {
             return modifierFullName;
         }
 
-        return $"{CamelCase(htmlAttribute.Name)}(\"{htmlAttribute.Value}\")";
+        return $"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")";
     }
 }
