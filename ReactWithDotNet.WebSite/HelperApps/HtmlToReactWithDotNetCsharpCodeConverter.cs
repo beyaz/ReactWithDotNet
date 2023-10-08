@@ -502,7 +502,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     }
                 }
 
-                return new List<string> { $"{attribute.Name} = \"{attribute.Value}\"" };
+                return new List<string> { $"{attribute.GetName()} = \"{attribute.Value}\"" };
             }
 
             if (style is not null)
