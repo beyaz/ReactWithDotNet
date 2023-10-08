@@ -261,12 +261,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         Style style = null;
 
-        var styleAttribute = htmlNode.Attributes["style"];
-        if (!string.IsNullOrWhiteSpace(styleAttribute?.Value))
+        // grab style attribute
         {
-            style = Style.ParseCss(styleAttribute.Value);
-
-            htmlNode.Attributes.Remove("style");
+            var styleAttribute = htmlNode.Attributes["style"];
+            if (styleAttribute != null)
+            {
+                if (!string.IsNullOrWhiteSpace(styleAttribute.Value))
+                {
+                    style = Style.ParseCss(styleAttribute.Value);
+                }
+                
+                htmlNode.Attributes.Remove("style");
+            }
         }
 
         string styleAsCode()
