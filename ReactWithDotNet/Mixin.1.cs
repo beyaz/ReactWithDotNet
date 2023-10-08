@@ -503,7 +503,23 @@ public static partial class Mixin
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
-    public static HtmlElementModifier Id(string id) => CreateHtmlElementModifier<HtmlElement>(element => element.id = id);
+    public static HtmlElementModifier Id(string id) 
+        => CreateHtmlElementModifier<HtmlElement>(element => element.id = id);
+    
+    
+    /// <summary>
+    /// Specifies whether an element is draggable or not.
+    /// <br/>
+    /// Tip: Links and images are draggable by default.
+    /// </summary>
+    public static HtmlElementModifier Draggable(string value) 
+        => CreateHtmlElementModifier<HtmlElement>(element => element.draggable = value);
+    
+    
+
+    
+    
+    
 
     /// <summary>
     ///     initialize id attribute of html element

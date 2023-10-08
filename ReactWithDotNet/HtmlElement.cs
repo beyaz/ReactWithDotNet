@@ -100,6 +100,15 @@ public abstract class HtmlElement : Element
         }
     }
 
+    /// <summary>
+    /// Specifies whether an element is draggable or not.
+    /// <br/>
+    /// Tip: Links and images are draggable by default.
+    /// </summary>
+    [ReactProp]
+    public string draggable { get; set; }
+    
+    
     [ReactProp]
     public bool? autofocus { get; set; }
 
