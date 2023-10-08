@@ -662,6 +662,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return $"svg.Focusable(\"{htmlAttribute.Value}\")";
         }
+        
+        if (attributeName == "type" && htmlAttribute.OwnerNode.Name == "button")
+        {
+            return $"button.Type(\"{htmlAttribute.Value}\")";
+        }
 
         if (attributeName.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && htmlAttribute.OwnerNode.Name == "svg")
         {
