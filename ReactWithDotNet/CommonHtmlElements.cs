@@ -811,3 +811,16 @@ public sealed class figcaption : HtmlElement
     public figcaption(Style style) : base(style) { }
 }
 
+public sealed partial class th : HtmlElement
+{
+    public th() { }
+
+    public th(params IModifier[] modifiers) : base(modifiers) { }
+
+    public th(string innerText) : base(innerText) {  }
+
+    public static implicit operator th(string text) => new() { text = text };
+
+    public th(Style style) : base(style) { }
+}
+

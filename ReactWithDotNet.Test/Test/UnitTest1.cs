@@ -6,7 +6,7 @@ using static System.String;
 namespace ReactWithDotNet.Test;
 
 [TestClass]
-[Ignore]
+//[Ignore]
 public class UnitTest1
 {
     [TestMethod]
@@ -83,7 +83,15 @@ public class UnitTest1
 
             new() { Tag = "hr", EnableStringIntegration = false },
 
-            new() { Tag = "figcaption" }
+            new() { Tag = "figcaption" },
+            
+            new() { Tag = "th", Comment = Empty, CreateClassAsPartial = true },
+            //new() { Tag = "h6", Comment = Empty },
+            //new() { Tag = "h6", Comment = Empty },
+            //new() { Tag = "h6", Comment = Empty },
+            //new() { Tag = "h6", Comment = Empty },
+            //new() { Tag = "h6", Comment = Empty },
+            //new() { Tag = "h6", Comment = Empty }
         };
 
         var list = new List<string>
