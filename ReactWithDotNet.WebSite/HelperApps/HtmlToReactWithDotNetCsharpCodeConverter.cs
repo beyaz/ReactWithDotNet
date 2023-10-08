@@ -120,27 +120,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return name;
     }
     
-    static void FixAttributeName(HtmlAttribute htmlAttribute)
-    {
-        if (htmlAttribute.OriginalName!= htmlAttribute.Name)
-        {
-            if (htmlAttribute.Name.All(char.IsLower) && htmlAttribute.OriginalName.Any(char.IsUpper))
-            {
-                htmlAttribute.Name = htmlAttribute.OriginalName;
-            }
-        }
-        if (AttributeRealNameMap.ContainsKey(htmlAttribute.OriginalName))
-        {
-            htmlAttribute.Name = AttributeRealNameMap[htmlAttribute.OriginalName];
-        }
-
-        if (htmlAttribute.Name.Contains(":"))
-        {
-            var parts = htmlAttribute.Name.Split(":");
-
-            htmlAttribute.Name = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
-        }
-    }
+  
     
     
 
@@ -472,12 +452,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
         }
         
-        // fix attribute names
-        foreach (var htmlAttribute in htmlNode.Attributes)
-        {
-            FixAttributeName(htmlAttribute);
-        }
-
         bool canBeExportInOneLine()
         {
             if (htmlNode.Attributes.Contains("text"))
