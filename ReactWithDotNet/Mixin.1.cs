@@ -486,13 +486,20 @@ public static partial class Mixin
         return Pseudo(x => x.hover, modifiers);
     }
 
-    /// <summary>
-    ///     Creates a new div with given width
-    ///     <br />
-    ///     new div{ style = {width = <paramref name="valueInPx" />}}
-    /// </summary>
-    public static HtmlElement HSpace(double valueInPx) => new div(Width(valueInPx));
 
+
+
+    /// <summary>
+    ///     initialize tabIndex attribute of html element
+    /// </summary>
+    public static HtmlElementModifier TabIndex(string tabIndex) => CreateHtmlElementModifier<HtmlElement>(element => element.tabIndex = tabIndex);
+
+    /// <summary>
+    ///     initialize tabIndex attribute of html element
+    /// </summary>
+    public static HtmlElementModifier TabIndex(int tabIndex) => TabIndex(tabIndex.ToString());
+    
+    
     /// <summary>
     ///     initialize id attribute of html element
     /// </summary>
