@@ -93,8 +93,42 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return value;
     }
 
+    static string GetName(this HtmlAttribute htmlAttribute)
+    {
+        var name = htmlAttribute.Name;
+        
+        if (htmlAttribute.OriginalName != name)
+        {
+            if (name.All(char.IsLower) && htmlAttribute.OriginalName.Any(char.IsUpper))
+            {
+                name = htmlAttribute.OriginalName;
+            }
+        }
+        
+        if (AttributeRealNameMap.ContainsKey(name))
+        {
+            return AttributeRealNameMap[name];
+        }
+
+        if (name.Contains(":"))
+        {
+            var parts = name.Split(":");
+
+            return parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
+        }
+
+        return name;
+    }
+    
     static void FixAttributeName(HtmlAttribute htmlAttribute)
     {
+        if (htmlAttribute.OriginalName!= htmlAttribute.Name)
+        {
+            if (htmlAttribute.Name.All(char.IsLower) && htmlAttribute.OriginalName.Any(char.IsUpper))
+            {
+                htmlAttribute.Name = htmlAttribute.OriginalName;
+            }
+        }
         if (AttributeRealNameMap.ContainsKey(htmlAttribute.OriginalName))
         {
             htmlAttribute.Name = AttributeRealNameMap[htmlAttribute.OriginalName];
@@ -107,6 +141,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             htmlAttribute.Name = parts[0] + char.ToUpper(parts[1][0]) + parts[1].Substring(1);
         }
     }
+    
+    
 
     static IReadOnlyList<T> Fold<T>(this IEnumerable<IEnumerable<T>> enumerable)
     {
