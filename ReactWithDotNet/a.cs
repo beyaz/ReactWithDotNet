@@ -22,6 +22,16 @@ public sealed class a : HtmlElement
     [ReactProp]
     public string target { get; set; }
 
+    /// <summary>
+    ///     Specifies the relationship between the current document and the linked document.
+    ///     <br />
+    ///     Only used if the href attribute is present.
+    ///     <br />
+    ///     Tip: Search engines can use this attribute to get more information about a link!
+    /// </summary>
+    [ReactProp]
+    public string rel { get; set; }
+
     #region Modifiers
     /// <summary>
     ///     a.target = '_blank'
@@ -37,6 +47,18 @@ public sealed class a : HtmlElement
     ///     a.target = <paramref name="target" />
     /// </summary>
     public static HtmlElementModifier Target(string target) => Modify<a>(element => element.target = target);
+    
+    /// <summary>
+    ///     a.href = <paramref name="value" />;
+    ///     <br/>
+    ///     <br/>
+    ///     Specifies the relationship between the current document and the linked document.
+    ///     <br />
+    ///     Only used if the href attribute is present.
+    ///     <br />
+    ///     Tip: Search engines can use this attribute to get more information about a link!
+    /// </summary>
+    public static HtmlElementModifier Rel(string value) => Modify<a>(element => element.rel = value);
     #endregion
 }
 
@@ -51,4 +73,17 @@ partial class Mixin
     ///     a.target = '_blank'
     /// </summary>
     public static HtmlElementModifier TargetBlank => a.TargetBlank;
+    
+    
+    /// <summary>
+    ///     a.href = <paramref name="value" />;
+    ///     <br/>
+    ///     <br/>
+    ///     Specifies the relationship between the current document and the linked document.
+    ///     <br />
+    ///     Only used if the href attribute is present.
+    ///     <br />
+    ///     Tip: Search engines can use this attribute to get more information about a link!
+    /// </summary>
+    public static HtmlElementModifier Rel(string value) => a.Rel(value);
 }

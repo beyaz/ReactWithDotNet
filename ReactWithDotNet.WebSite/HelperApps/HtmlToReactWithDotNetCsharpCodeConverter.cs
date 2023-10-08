@@ -302,7 +302,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     htmlNode.Attributes.Remove("xmlns");
                 }
-
+            }
+            
+            if (htmlNode.Name == "svg" || htmlNode.Name == "path")
+            {
                 static bool isSnakeCaseAttribute(HtmlAttribute htmlAttribute)
                 {
                     return htmlAttribute.Name.IndexOf("-",StringComparison.OrdinalIgnoreCase) > 0;
@@ -313,7 +316,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     style[htmlAttribute.Name] = htmlAttribute.Value;
                 }
             }
-            
             
             
             
@@ -441,18 +443,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return false;
             }
 
+            if (style is not null)
+            {
+                if (canStyleExportInOneLine(style) is false)
+                {
+                    return false;
+                }
+            }
+            
             if (htmlNode.Attributes.Count <= 3)
             {
                 return true;
             }
 
-            if (style is not null)
-            {
-                if (canStyleExportInOneLine(style))
-                {
-                    return true;
-                }
-            }
+            
 
             return false;
         }
