@@ -435,6 +435,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
         }
+        
+        // fix attribute names
+        foreach (var htmlAttribute in htmlNode.Attributes)
+        {
+            FixAttributeName(htmlAttribute);
+        }
 
         bool canBeExportInOneLine()
         {
@@ -599,10 +605,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             };
         }
 
-        foreach (var htmlAttribute in htmlNode.Attributes)
-        {
-            FixAttributeName(htmlAttribute);
-        }
+       
 
         foreach (var htmlAttribute in htmlNode.Attributes)
         {
