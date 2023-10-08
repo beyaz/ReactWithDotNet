@@ -128,7 +128,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         htmlAttributeCollection.Insert(index, attribute);
     }
 
-    static void RemoveAll(this HtmlAttributeCollection htmlAttributeCollection, Func<HtmlAttribute, bool> match)
+    static IReadOnlyList<HtmlAttribute> RemoveAll(this HtmlAttributeCollection htmlAttributeCollection, Func<HtmlAttribute, bool> match)
     {
         var items = htmlAttributeCollection.Where(match).ToList();
 
@@ -136,6 +136,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             htmlAttributeCollection.Remove(htmlAttribute);
         }
+
+        return items;
     }
 
     static void RemoveAll(this HtmlNodeCollection htmlNodeCollection, Func<HtmlNode, bool> match)
@@ -272,8 +274,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return $"Aria(\"{htmlAttribute.Name.RemoveFromStart("aria-")}\", \"{htmlAttribute.Value}\")";
             }
 
-            modifiers.AddRange(htmlNode.Attributes.Where(isAriaAttribute).Select(toAriaModifier));
-            htmlNode.Attributes.RemoveAll(isAriaAttribute);
+            modifiers.AddRange(htmlNode.Attributes.RemoveAll(isAriaAttribute).Select(toAriaModifier));
+            
         }
 
         // data-*
@@ -288,16 +290,33 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return $"Data(\"{htmlAttribute.Name.RemoveFromStart("data-")}\", \"{htmlAttribute.Value}\")";
             }
 
-            modifiers.AddRange(htmlNode.Attributes.Where(isDataAttribute).Select(toDataModifier));
-            htmlNode.Attributes.RemoveAll(isDataAttribute);
+            modifiers.AddRange(htmlNode.Attributes.RemoveAll(isDataAttribute).Select(toDataModifier));
+            
         }
 
         // remove svg.xmlns
         {
-            if (htmlNode.Name == "svg" && htmlNode.Attributes.Contains("xmlns") && htmlNode.Attributes["xmlns"].Value == "http://www.w3.org/2000/svg")
+            if (htmlNode.Name == "svg")
             {
-                htmlNode.Attributes.Remove("xmlns");
+                if (htmlNode.Attributes.Contains("xmlns") && htmlNode.Attributes["xmlns"].Value == "http://www.w3.org/2000/svg")
+                {
+                    htmlNode.Attributes.Remove("xmlns");
+                }
+
+                static bool isSnakeCaseAttribute(HtmlAttribute htmlAttribute)
+                {
+                    return htmlAttribute.Name.IndexOf("-",StringComparison.OrdinalIgnoreCase) > 0;
+                }
+                
+                foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isSnakeCaseAttribute))
+                {
+                    style[htmlAttribute.Name] = htmlAttribute.Value;
+                }
             }
+            
+            
+            
+            
         }
 
         // innerText
