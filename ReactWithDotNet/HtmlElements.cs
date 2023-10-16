@@ -105,6 +105,9 @@ public sealed class input : HtmlElement
     }
 
     [ReactProp]
+    public string required { get; set; }
+    
+    [ReactProp]
     public string autoComplete { get; set; }
 
     [ReactProp]
@@ -343,4 +346,22 @@ public sealed class textarea : HtmlElement
     [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
+}
+
+
+public sealed class form : HtmlElement
+{
+    [ReactProp]
+    public string action { get; set; }
+    
+    [ReactProp]
+    public string method { get; set; }
+
+    public form()
+    {
+    }
+
+    public form(params IModifier[] modifiers) : base(modifiers)
+    {
+    }
 }
