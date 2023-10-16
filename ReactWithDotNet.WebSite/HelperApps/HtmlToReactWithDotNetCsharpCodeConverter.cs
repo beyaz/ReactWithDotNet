@@ -679,6 +679,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return modifierFullName;
         }
+        
+        if (typeof(Mixin).GetMethod(CamelCase(attributeName), new []{typeof(string)}) is not null)
+        {
+            return $"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")";
+        }
 
         return $"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")";
     }
