@@ -109,6 +109,17 @@ public abstract class HtmlElement : Element
     public string draggable { get; set; }
     
     
+    /// <summary>
+    ///     Specifies whether the content of an element is editable or not.
+    /// <br/>
+    ///     true|false
+    /// </summary>
+    [ReactProp]
+    public string contenteditable { get; set; }
+    
+    
+    
+    
     [ReactProp]
     public bool? autofocus { get; set; }
 
