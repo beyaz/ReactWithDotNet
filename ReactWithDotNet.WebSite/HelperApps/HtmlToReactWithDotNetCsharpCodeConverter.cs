@@ -57,6 +57,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
     }
 
+    static string LowerCaseFirstChar(string str)
+    {
+        return char.ToLower(str[0], new CultureInfo("en-US")) + str.Substring(1);
+    }
+    
     static string ConvertToCSharpString(string value)
     {
         if (value == null)
@@ -593,9 +598,19 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
         }
 
+        foreach (var htmlAttribute in htmlNode.Attributes)
+        {
+            modifiers.Add(ToModifier(htmlAttribute));
+        }
+
+        if (style is not null)
+        {
+            modifiers.Add(styleAsCode());
+        }
+        
         if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
         {
-            if (htmlNode.Attributes.Count == 0)
+            if (htmlNode.Attributes.Count == 0 && style is null)
             {
                 return new List<string> { $"({htmlNodeName})" + ConvertToCSharpString(htmlNode.ChildNodes[0].InnerText) };
             }
@@ -610,15 +625,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             };
         }
 
-        foreach (var htmlAttribute in htmlNode.Attributes)
-        {
-            modifiers.Add(ToModifier(htmlAttribute));
-        }
-
-        if (style is not null)
-        {
-            modifiers.Add(styleAsCode());
-        }
+        
 
         // multi line
         {
@@ -685,6 +692,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return $"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")";
         }
 
-        return $"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")";
+        return $"CreateHtmlElementModifier<{htmlAttribute.OwnerNode.Name}>(x => x.{LowerCaseFirstChar(CamelCase(attributeName))} = \"{htmlAttribute.Value}\")";
     }
 }
