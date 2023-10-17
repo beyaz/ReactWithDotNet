@@ -59,10 +59,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
     }
 
-    static string LowerCaseFirstChar(string str)
-    {
-        return char.ToLower(str[0], new CultureInfo("en-US")) + str.Substring(1);
-    }
+   
     
     static string ConvertToCSharpString(string value)
     {
@@ -522,7 +519,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return new List<string> { $"{propertyInfo.Name} = \"{attribute.Value}\"" };
                 }
 
-                return new List<string> { $"{attribute.GetName()} = \"{attribute.Value}\"" };
+                return new List<string> { $"// {attribute.GetName()} = \"{attribute.Value}\"" };
             }
 
             if (style is not null)
@@ -713,10 +710,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static PropertyInfo TryFindProperty(string htmlTagName, string attributeName)
     {
-        var propertyName = LowerCaseFirstChar(CamelCase(attributeName));
-
+        var propertyName = string.Join(string.Empty, attributeName.Split(":-".ToCharArray(),StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()));
         
-        return typeof(div).Assembly.GetType(nameof(ReactWithDotNet)+"."+htmlTagName)?.GetProperty(propertyName,BindingFlags.IgnoreCase |  BindingFlags.Public | BindingFlags.Instance);
+        return TryFindTypeOfHtmlTag(htmlTagName)?.GetProperty(propertyName,BindingFlags.IgnoreCase |  BindingFlags.Public | BindingFlags.Instance);
+    }
+    
+    static Type TryFindTypeOfHtmlTag(string htmlTagName)
+    {
+        return typeof(div).Assembly.GetType(nameof(ReactWithDotNet) + "." + htmlTagName, throwOnError: false, ignoreCase: true);
     }
 
     static string GetTagName(this HtmlAttribute htmlAttribute)
