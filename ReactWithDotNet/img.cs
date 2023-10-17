@@ -14,7 +14,7 @@ public sealed class img : HtmlElement
     public string alt { get; set; }
 
     [ReactProp]
-    public int height { get; set; }
+    public string height { get; set; }
 
     [ReactProp]
     public string loading { get; set; }
@@ -23,7 +23,7 @@ public sealed class img : HtmlElement
     public string src { get; set; }
 
     [ReactProp]
-    public int width { get; set; }
+    public string width { get; set; }
 
     public static HtmlElementModifier Alt(string alt) => Modify<img>(element => element.alt = alt);
 
