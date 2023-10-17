@@ -326,11 +326,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (htmlNode.Name == "svg" || htmlNode.Name == "path")
             {
-                static bool isSnakeCaseAttribute(HtmlAttribute htmlAttribute)
-                {
-                    return htmlAttribute.Name.IndexOf("-", StringComparison.OrdinalIgnoreCase) > 0;
-                }
-
                 bool isStyleAttribute(HtmlAttribute htmlAttribute)
                 {
                     if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
@@ -342,11 +337,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     }
 
                     return false;
-                }
-
-                foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isSnakeCaseAttribute))
-                {
-                    style[htmlAttribute.Name] = htmlAttribute.Value;
                 }
                 
                 foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isStyleAttribute))

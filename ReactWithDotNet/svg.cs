@@ -138,6 +138,12 @@ public sealed class path : HtmlElement
 
     [ReactProp]
     public string stroke { get; set; }
+    
+    [ReactProp]
+    public string strokeLinecap { get; set; }
+    
+    [ReactProp]
+    public string strokeLinejoin { get; set; }
 }
 
 public sealed class g : HtmlElement
