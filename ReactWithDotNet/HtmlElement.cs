@@ -280,6 +280,7 @@ public abstract class HtmlElement : Element
     public string text
     {
         set => innerText = value;
+        get => innerText;
     }
 
     [ReactProp]

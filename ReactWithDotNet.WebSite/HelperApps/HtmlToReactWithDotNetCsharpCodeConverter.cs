@@ -1,6 +1,8 @@
 ﻿using System.Globalization;
+using System.Reflection;
 using System.Text;
 using HtmlAgilityPack;
+using PropertyInfo = System.Reflection.PropertyInfo;
 
 namespace ReactWithDotNet.WebSite.HelperApps;
 
@@ -509,8 +511,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     static string toLine(KeyValuePair<string, string> kv)
                     {
+                        
                         return kv.Key + " = \"" + kv.Value + "\",";
                     }
+                }
+                
+                var propertyInfo = TryFindProperty(attribute.GetTagName(), attribute.GetName());
+                if (propertyInfo is not null)
+                {
+                    return new List<string> { $"{propertyInfo.Name} = \"{attribute.Value}\"" };
                 }
 
                 return new List<string> { $"{attribute.GetName()} = \"{attribute.Value}\"" };
@@ -692,6 +701,27 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return $"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")";
         }
 
-        return $"CreateHtmlElementModifier<{htmlAttribute.OwnerNode.Name}>(x => x.{LowerCaseFirstChar(CamelCase(attributeName))} = \"{htmlAttribute.Value}\")";
+
+        var propertyInfo = TryFindProperty(htmlAttribute.GetTagName(), attributeName);
+        if (propertyInfo is not null)
+        {
+            return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = \"{htmlAttribute.Value}\")";    
+        }
+
+        return $"/* {htmlAttribute.GetTagName()}.{attributeName} = \"{htmlAttribute.Value}\"*/";
     }
+
+    static PropertyInfo TryFindProperty(string htmlTagName, string attributeName)
+    {
+        var propertyName = LowerCaseFirstChar(CamelCase(attributeName));
+
+        
+        return typeof(div).Assembly.GetType(nameof(ReactWithDotNet)+"."+htmlTagName)?.GetProperty(propertyName,BindingFlags.IgnoreCase |  BindingFlags.Public | BindingFlags.Instance);
+    }
+
+    static string GetTagName(this HtmlAttribute htmlAttribute)
+    {
+        return htmlAttribute.OwnerNode.Name;
+    }
+    
 }
