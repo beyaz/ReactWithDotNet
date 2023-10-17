@@ -335,7 +335,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
                     {
-                        if (typeof(Style)?.GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
+                        if (typeof(Style).GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
                         {
                             return true;
                         }
