@@ -519,6 +519,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return new List<string> { $"{propertyInfo.Name} = \"{attribute.Value}\"" };
                 }
 
+                if (canBeExportInOneLine())
+                {
+                    return new List<string> { $"/* {attribute.GetName()} = \"{attribute.Value}\"*/" };
+                }
                 return new List<string> { $"// {attribute.GetName()} = \"{attribute.Value}\"" };
             }
 
