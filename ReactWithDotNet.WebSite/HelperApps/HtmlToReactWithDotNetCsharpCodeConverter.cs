@@ -330,17 +330,26 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     return htmlAttribute.Name.IndexOf("-", StringComparison.OrdinalIgnoreCase) > 0;
                 }
-                
-                //bool isStyleAttribute(HtmlAttribute htmlAttribute)
-                //{
-                //    if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
-                //    {
-                //        style[htmlAttribute.Name] = htmlAttribute.Value;
-                //    }
-                        
-                //}
+
+                bool isStyleAttribute(HtmlAttribute htmlAttribute)
+                {
+                    if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
+                    {
+                        if (typeof(Style)?.GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
 
                 foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isSnakeCaseAttribute))
+                {
+                    style[htmlAttribute.Name] = htmlAttribute.Value;
+                }
+                
+                foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isStyleAttribute))
                 {
                     style[htmlAttribute.Name] = htmlAttribute.Value;
                 }
