@@ -62,6 +62,9 @@ public sealed class button : HtmlElement
 {
     [ReactProp]
     public string type { get; set; }
+    
+    [ReactProp]
+    public string disabled { get; set; }
 
     public button()
     {
@@ -223,6 +226,9 @@ public sealed class select : HtmlElement
     [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = nameof(onChange))]
     public Expression<Func<string>> valueBind { get; set; }
+    
+    [ReactProp]
+    public string disabled { get; set; }
 }
 
 public sealed class option : HtmlElement
@@ -237,6 +243,9 @@ public sealed class option : HtmlElement
 
     [ReactProp]
     public bool? selected { get; set; }
+    
+    [ReactProp]
+    public string disabled { get; set; }
 
     [ReactProp]
     public string value { get; set; }
@@ -346,6 +355,9 @@ public sealed class textarea : HtmlElement
     [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
+    
+    [ReactProp]
+    public string disabled { get; set; }
 }
 
 
