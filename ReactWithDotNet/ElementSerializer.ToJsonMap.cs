@@ -916,7 +916,7 @@ partial class ElementSerializer
     static async Task<JsonMap> LeafToMap(HtmlElement htmlElement, ElementSerializerContext context)
     {
         var map = new JsonMap();
-        map.Add("$tag", htmlElement.Type);
+        map.Add("$tag", htmlElement.__type__);
         map.Add("key", htmlElement.key);
 
         if (htmlElement._style is not null)

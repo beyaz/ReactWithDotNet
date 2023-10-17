@@ -299,7 +299,7 @@ public abstract class HtmlElement : Element
     public string translate { get; set; }
 
     [JsonPropertyName("$type")]
-    public virtual string Type => GetType().Name.ToLower();
+    public virtual string __type__ => GetType().Name.ToLower();
 
     /// <summary>
     ///     Adds given cssClassName ot class attribute of html element

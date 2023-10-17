@@ -28,7 +28,7 @@ public sealed class FlexRow : HtmlElement
         style.flexDirection = "row";
     }
 
-    public override string Type => nameof(div);
+    public override string __type__ => nameof(div);
 }
 
 /// <summary>
@@ -59,7 +59,7 @@ public sealed class InlineFlexRow : HtmlElement
         style.flexDirection = "row";
     }
 
-    public override string Type => nameof(div);
+    public override string __type__ => nameof(div);
 }
 
 /// <summary>
@@ -90,7 +90,7 @@ public sealed class FlexColumn : HtmlElement
         style.flexDirection = "column";
     }
 
-    public override string Type => nameof(div);
+    public override string __type__ => nameof(div);
 }
 
 /// <summary>
@@ -121,7 +121,7 @@ public sealed class InlineFlexColumn : HtmlElement
         style.flexDirection = "column";
     }
 
-    public override string Type => nameof(div);
+    public override string __type__ => nameof(div);
 }
 
 /// <summary>
@@ -166,7 +166,7 @@ public sealed class FlexRowCentered : HtmlElement
         this.Apply(modifiers);
     }
 
-    public override string Type => nameof(div);
+    public override string __type__ => nameof(div);
 }
 
 /// <summary>
@@ -211,7 +211,7 @@ public sealed class InlineFlexRowCentered : HtmlElement
         this.Apply(modifiers);
     }
 
-    public override string Type => nameof(div);
+    public override string __type__ => nameof(div);
 }
 
 /// <summary>
@@ -256,7 +256,7 @@ public sealed class FlexColumnCentered : HtmlElement
         this.Apply(modifiers);
     }
 
-    public override string Type => nameof(div);
+    public override string __type__ => nameof(div);
 }
 
 /// <summary>
@@ -301,7 +301,7 @@ public sealed class InlineFlexColumnCentered : HtmlElement
         this.Apply(modifiers);
     }
 
-    public override string Type => nameof(div);
+    public override string __type__ => nameof(div);
 }
 
 partial class Mixin
