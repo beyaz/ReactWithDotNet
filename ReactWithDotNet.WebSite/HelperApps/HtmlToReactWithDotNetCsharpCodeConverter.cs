@@ -330,6 +330,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     return htmlAttribute.Name.IndexOf("-", StringComparison.OrdinalIgnoreCase) > 0;
                 }
+                
+                //bool isStyleAttribute(HtmlAttribute htmlAttribute)
+                //{
+                //    if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
+                //    {
+                //        style[htmlAttribute.Name] = htmlAttribute.Value;
+                //    }
+                        
+                //}
 
                 foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isSnakeCaseAttribute))
                 {
