@@ -840,10 +840,20 @@ partial class ElementSerializer
             {
                 foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
                 {
+                    // TODO: fixme
                     var isAction = propertyInfo.PropertyType.FullName == typeof(Action).FullName;
                     var isGenericAction = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsGenericAction1Or2Or3();
 
                     if (isAction || isGenericAction)
+                    {
+                        reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
+                        continue;
+                    }
+                    
+                    var isVoidTask = propertyInfo.PropertyType.FullName == typeof(Func<Task>).FullName;
+                    var isVoidTaskWithParameter = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsVoidTaskFunc1Or2Or3();
+
+                    if (isVoidTask || isVoidTaskWithParameter)
                     {
                         reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
                         continue;

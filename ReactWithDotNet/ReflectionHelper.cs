@@ -137,4 +137,12 @@ static class ReflectionHelper
 
         return typeDefinition == typeof(Action<>) || typeDefinition == typeof(Action<,>) || typeDefinition == typeof(Action<,,>);
     }
+    
+    public static bool IsVoidTaskFunc1Or2Or3(this Type type)
+    {
+        // todo: rename with more meaningfull
+        var typeDefinition = type.GetGenericTypeDefinition();
+
+        return typeDefinition == typeof(Func<Task>) || typeDefinition == typeof(Func<,>) || typeDefinition == typeof(Func<,,>);
+    }
 }
