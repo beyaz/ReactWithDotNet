@@ -450,159 +450,159 @@ partial class Style
     public string viewTimelineName { get; set; }
     public string viewTransitionName { get; set; }
     public string visibility { get; set; }
-    public string webkitAlignContent { get; set; }
-    public string webkitAlignItems { get; set; }
-    public string webkitAlignSelf { get; set; }
-    public string webkitAnimation { get; set; }
-    public string webkitAnimationDelay { get; set; }
-    public string webkitAnimationDirection { get; set; }
-    public string webkitAnimationDuration { get; set; }
-    public string webkitAnimationFillMode { get; set; }
-    public string webkitAnimationIterationCount { get; set; }
-    public string webkitAnimationName { get; set; }
-    public string webkitAnimationPlayState { get; set; }
-    public string webkitAnimationTimingFunction { get; set; }
-    public string webkitAppRegion { get; set; }
-    public string webkitAppearance { get; set; }
-    public string webkitBackfaceVisibility { get; set; }
-    public string webkitBackgroundClip { get; set; }
-    public string webkitBackgroundOrigin { get; set; }
-    public string webkitBackgroundSize { get; set; }
-    public string webkitBorderAfter { get; set; }
-    public string webkitBorderAfterColor { get; set; }
-    public string webkitBorderAfterStyle { get; set; }
-    public string webkitBorderAfterWidth { get; set; }
-    public string webkitBorderBefore { get; set; }
-    public string webkitBorderBeforeColor { get; set; }
-    public string webkitBorderBeforeStyle { get; set; }
-    public string webkitBorderBeforeWidth { get; set; }
-    public string webkitBorderBottomLeftRadius { get; set; }
-    public string webkitBorderBottomRightRadius { get; set; }
-    public string webkitBorderEnd { get; set; }
-    public string webkitBorderEndColor { get; set; }
-    public string webkitBorderEndStyle { get; set; }
-    public string webkitBorderEndWidth { get; set; }
-    public string webkitBorderHorizontalSpacing { get; set; }
-    public string webkitBorderImage { get; set; }
-    public string webkitBorderRadius { get; set; }
-    public string webkitBorderStart { get; set; }
-    public string webkitBorderStartColor { get; set; }
-    public string webkitBorderStartStyle { get; set; }
-    public string webkitBorderStartWidth { get; set; }
-    public string webkitBorderTopLeftRadius { get; set; }
-    public string webkitBorderTopRightRadius { get; set; }
-    public string webkitBorderVerticalSpacing { get; set; }
-    public string webkitBoxAlign { get; set; }
-    public string webkitBoxDecorationBreak { get; set; }
-    public string webkitBoxDirection { get; set; }
-    public string webkitBoxFlex { get; set; }
-    public string webkitBoxOrdinalGroup { get; set; }
-    public string webkitBoxOrient { get; set; }
-    public string webkitBoxPack { get; set; }
-    public string webkitBoxReflect { get; set; }
-    public string webkitBoxShadow { get; set; }
-    public string webkitBoxSizing { get; set; }
-    public string webkitClipPath { get; set; }
-    public string webkitColumnBreakAfter { get; set; }
-    public string webkitColumnBreakBefore { get; set; }
-    public string webkitColumnBreakInside { get; set; }
-    public string webkitColumnCount { get; set; }
-    public string webkitColumnGap { get; set; }
-    public string webkitColumnRule { get; set; }
-    public string webkitColumnRuleColor { get; set; }
-    public string webkitColumnRuleStyle { get; set; }
-    public string webkitColumnRuleWidth { get; set; }
-    public string webkitColumnSpan { get; set; }
-    public string webkitColumnWidth { get; set; }
-    public string webkitColumns { get; set; }
-    public string webkitFilter { get; set; }
-    public string webkitFlex { get; set; }
-    public string webkitFlexBasis { get; set; }
-    public string webkitFlexDirection { get; set; }
-    public string webkitFlexFlow { get; set; }
-    public string webkitFlexGrow { get; set; }
-    public string webkitFlexShrink { get; set; }
-    public string webkitFlexWrap { get; set; }
-    public string webkitFontFeatureSettings { get; set; }
-    public string webkitFontSmoothing { get; set; }
-    public string webkitHyphenateCharacter { get; set; }
-    public string webkitJustifyContent { get; set; }
-    public string webkitLineBreak { get; set; }
-    public string webkitLineClamp { get; set; }
-    public string webkitLocale { get; set; }
-    public string webkitLogicalHeight { get; set; }
-    public string webkitLogicalWidth { get; set; }
-    public string webkitMarginAfter { get; set; }
-    public string webkitMarginBefore { get; set; }
-    public string webkitMarginEnd { get; set; }
-    public string webkitMarginStart { get; set; }
-    public string webkitMask { get; set; }
-    public string webkitMaskBoxImage { get; set; }
-    public string webkitMaskBoxImageOutset { get; set; }
-    public string webkitMaskBoxImageRepeat { get; set; }
-    public string webkitMaskBoxImageSlice { get; set; }
-    public string webkitMaskBoxImageSource { get; set; }
-    public string webkitMaskBoxImageWidth { get; set; }
-    public string webkitMaskClip { get; set; }
-    public string webkitMaskComposite { get; set; }
-    public string webkitMaskImage { get; set; }
-    public string webkitMaskOrigin { get; set; }
-    public string webkitMaskPosition { get; set; }
-    public string webkitMaskPositionX { get; set; }
-    public string webkitMaskPositionY { get; set; }
-    public string webkitMaskRepeat { get; set; }
-    public string webkitMaskRepeatX { get; set; }
-    public string webkitMaskRepeatY { get; set; }
-    public string webkitMaskSize { get; set; }
-    public string webkitMaxLogicalHeight { get; set; }
-    public string webkitMaxLogicalWidth { get; set; }
-    public string webkitMinLogicalHeight { get; set; }
-    public string webkitMinLogicalWidth { get; set; }
-    public string webkitOpacity { get; set; }
-    public string webkitOrder { get; set; }
-    public string webkitPaddingAfter { get; set; }
-    public string webkitPaddingBefore { get; set; }
-    public string webkitPaddingEnd { get; set; }
-    public string webkitPaddingStart { get; set; }
-    public string webkitPerspective { get; set; }
-    public string webkitPerspectiveOrigin { get; set; }
-    public string webkitPerspectiveOriginX { get; set; }
-    public string webkitPerspectiveOriginY { get; set; }
-    public string webkitPrintColorAdjust { get; set; }
-    public string webkitRtlOrdering { get; set; }
-    public string webkitRubyPosition { get; set; }
-    public string webkitShapeImageThreshold { get; set; }
-    public string webkitShapeMargin { get; set; }
-    public string webkitShapeOutside { get; set; }
-    public string webkitTapHighlightColor { get; set; }
-    public string webkitTextCombine { get; set; }
-    public string webkitTextDecorationsInEffect { get; set; }
-    public string webkitTextEmphasis { get; set; }
-    public string webkitTextEmphasisColor { get; set; }
-    public string webkitTextEmphasisPosition { get; set; }
-    public string webkitTextEmphasisStyle { get; set; }
-    public string webkitTextFillColor { get; set; }
-    public string webkitTextOrientation { get; set; }
-    public string webkitTextSecurity { get; set; }
-    public string webkitTextSizeAdjust { get; set; }
-    public string webkitTextStroke { get; set; }
-    public string webkitTextStrokeColor { get; set; }
-    public string webkitTextStrokeWidth { get; set; }
-    public string webkitTransform { get; set; }
-    public string webkitTransformOrigin { get; set; }
-    public string webkitTransformOriginX { get; set; }
-    public string webkitTransformOriginY { get; set; }
-    public string webkitTransformOriginZ { get; set; }
-    public string webkitTransformStyle { get; set; }
-    public string webkitTransition { get; set; }
-    public string webkitTransitionDelay { get; set; }
-    public string webkitTransitionDuration { get; set; }
-    public string webkitTransitionProperty { get; set; }
-    public string webkitTransitionTimingFunction { get; set; }
-    public string webkitUserDrag { get; set; }
-    public string webkitUserModify { get; set; }
-    public string webkitUserSelect { get; set; }
-    public string webkitWritingMode { get; set; }
+    public string WebkitAlignContent { get; set; }
+    public string WebkitAlignItems { get; set; }
+    public string WebkitAlignSelf { get; set; }
+    public string WebkitAnimation { get; set; }
+    public string WebkitAnimationDelay { get; set; }
+    public string WebkitAnimationDirection { get; set; }
+    public string WebkitAnimationDuration { get; set; }
+    public string WebkitAnimationFillMode { get; set; }
+    public string WebkitAnimationIterationCount { get; set; }
+    public string WebkitAnimationName { get; set; }
+    public string WebkitAnimationPlayState { get; set; }
+    public string WebkitAnimationTimingFunction { get; set; }
+    public string WebkitAppRegion { get; set; }
+    public string WebkitAppearance { get; set; }
+    public string WebkitBackfaceVisibility { get; set; }
+    public string WebkitBackgroundClip { get; set; }
+    public string WebkitBackgroundOrigin { get; set; }
+    public string WebkitBackgroundSize { get; set; }
+    public string WebkitBorderAfter { get; set; }
+    public string WebkitBorderAfterColor { get; set; }
+    public string WebkitBorderAfterStyle { get; set; }
+    public string WebkitBorderAfterWidth { get; set; }
+    public string WebkitBorderBefore { get; set; }
+    public string WebkitBorderBeforeColor { get; set; }
+    public string WebkitBorderBeforeStyle { get; set; }
+    public string WebkitBorderBeforeWidth { get; set; }
+    public string WebkitBorderBottomLeftRadius { get; set; }
+    public string WebkitBorderBottomRightRadius { get; set; }
+    public string WebkitBorderEnd { get; set; }
+    public string WebkitBorderEndColor { get; set; }
+    public string WebkitBorderEndStyle { get; set; }
+    public string WebkitBorderEndWidth { get; set; }
+    public string WebkitBorderHorizontalSpacing { get; set; }
+    public string WebkitBorderImage { get; set; }
+    public string WebkitBorderRadius { get; set; }
+    public string WebkitBorderStart { get; set; }
+    public string WebkitBorderStartColor { get; set; }
+    public string WebkitBorderStartStyle { get; set; }
+    public string WebkitBorderStartWidth { get; set; }
+    public string WebkitBorderTopLeftRadius { get; set; }
+    public string WebkitBorderTopRightRadius { get; set; }
+    public string WebkitBorderVerticalSpacing { get; set; }
+    public string WebkitBoxAlign { get; set; }
+    public string WebkitBoxDecorationBreak { get; set; }
+    public string WebkitBoxDirection { get; set; }
+    public string WebkitBoxFlex { get; set; }
+    public string WebkitBoxOrdinalGroup { get; set; }
+    public string WebkitBoxOrient { get; set; }
+    public string WebkitBoxPack { get; set; }
+    public string WebkitBoxReflect { get; set; }
+    public string WebkitBoxShadow { get; set; }
+    public string WebkitBoxSizing { get; set; }
+    public string WebkitClipPath { get; set; }
+    public string WebkitColumnBreakAfter { get; set; }
+    public string WebkitColumnBreakBefore { get; set; }
+    public string WebkitColumnBreakInside { get; set; }
+    public string WebkitColumnCount { get; set; }
+    public string WebkitColumnGap { get; set; }
+    public string WebkitColumnRule { get; set; }
+    public string WebkitColumnRuleColor { get; set; }
+    public string WebkitColumnRuleStyle { get; set; }
+    public string WebkitColumnRuleWidth { get; set; }
+    public string WebkitColumnSpan { get; set; }
+    public string WebkitColumnWidth { get; set; }
+    public string WebkitColumns { get; set; }
+    public string WebkitFilter { get; set; }
+    public string WebkitFlex { get; set; }
+    public string WebkitFlexBasis { get; set; }
+    public string WebkitFlexDirection { get; set; }
+    public string WebkitFlexFlow { get; set; }
+    public string WebkitFlexGrow { get; set; }
+    public string WebkitFlexShrink { get; set; }
+    public string WebkitFlexWrap { get; set; }
+    public string WebkitFontFeatureSettings { get; set; }
+    public string WebkitFontSmoothing { get; set; }
+    public string WebkitHyphenateCharacter { get; set; }
+    public string WebkitJustifyContent { get; set; }
+    public string WebkitLineBreak { get; set; }
+    public string WebkitLineClamp { get; set; }
+    public string WebkitLocale { get; set; }
+    public string WebkitLogicalHeight { get; set; }
+    public string WebkitLogicalWidth { get; set; }
+    public string WebkitMarginAfter { get; set; }
+    public string WebkitMarginBefore { get; set; }
+    public string WebkitMarginEnd { get; set; }
+    public string WebkitMarginStart { get; set; }
+    public string WebkitMask { get; set; }
+    public string WebkitMaskBoxImage { get; set; }
+    public string WebkitMaskBoxImageOutset { get; set; }
+    public string WebkitMaskBoxImageRepeat { get; set; }
+    public string WebkitMaskBoxImageSlice { get; set; }
+    public string WebkitMaskBoxImageSource { get; set; }
+    public string WebkitMaskBoxImageWidth { get; set; }
+    public string WebkitMaskClip { get; set; }
+    public string WebkitMaskComposite { get; set; }
+    public string WebkitMaskImage { get; set; }
+    public string WebkitMaskOrigin { get; set; }
+    public string WebkitMaskPosition { get; set; }
+    public string WebkitMaskPositionX { get; set; }
+    public string WebkitMaskPositionY { get; set; }
+    public string WebkitMaskRepeat { get; set; }
+    public string WebkitMaskRepeatX { get; set; }
+    public string WebkitMaskRepeatY { get; set; }
+    public string WebkitMaskSize { get; set; }
+    public string WebkitMaxLogicalHeight { get; set; }
+    public string WebkitMaxLogicalWidth { get; set; }
+    public string WebkitMinLogicalHeight { get; set; }
+    public string WebkitMinLogicalWidth { get; set; }
+    public string WebkitOpacity { get; set; }
+    public string WebkitOrder { get; set; }
+    public string WebkitPaddingAfter { get; set; }
+    public string WebkitPaddingBefore { get; set; }
+    public string WebkitPaddingEnd { get; set; }
+    public string WebkitPaddingStart { get; set; }
+    public string WebkitPerspective { get; set; }
+    public string WebkitPerspectiveOrigin { get; set; }
+    public string WebkitPerspectiveOriginX { get; set; }
+    public string WebkitPerspectiveOriginY { get; set; }
+    public string WebkitPrintColorAdjust { get; set; }
+    public string WebkitRtlOrdering { get; set; }
+    public string WebkitRubyPosition { get; set; }
+    public string WebkitShapeImageThreshold { get; set; }
+    public string WebkitShapeMargin { get; set; }
+    public string WebkitShapeOutside { get; set; }
+    public string WebkitTapHighlightColor { get; set; }
+    public string WebkitTextCombine { get; set; }
+    public string WebkitTextDecorationsInEffect { get; set; }
+    public string WebkitTextEmphasis { get; set; }
+    public string WebkitTextEmphasisColor { get; set; }
+    public string WebkitTextEmphasisPosition { get; set; }
+    public string WebkitTextEmphasisStyle { get; set; }
+    public string WebkitTextFillColor { get; set; }
+    public string WebkitTextOrientation { get; set; }
+    public string WebkitTextSecurity { get; set; }
+    public string WebkitTextSizeAdjust { get; set; }
+    public string WebkitTextStroke { get; set; }
+    public string WebkitTextStrokeColor { get; set; }
+    public string WebkitTextStrokeWidth { get; set; }
+    public string WebkitTransform { get; set; }
+    public string WebkitTransformOrigin { get; set; }
+    public string WebkitTransformOriginX { get; set; }
+    public string WebkitTransformOriginY { get; set; }
+    public string WebkitTransformOriginZ { get; set; }
+    public string WebkitTransformStyle { get; set; }
+    public string WebkitTransition { get; set; }
+    public string WebkitTransitionDelay { get; set; }
+    public string WebkitTransitionDuration { get; set; }
+    public string WebkitTransitionProperty { get; set; }
+    public string WebkitTransitionTimingFunction { get; set; }
+    public string WebkitUserDrag { get; set; }
+    public string WebkitUserModify { get; set; }
+    public string WebkitUserSelect { get; set; }
+    public string WebkitWritingMode { get; set; }
     public string whiteSpace { get; set; }
     public string whiteSpaceCollapse { get; set; }
     public string widows { get; set; }
@@ -2428,615 +2428,615 @@ partial class Style
         {
             return false;
         }
-        if (s.webkitAlignContent != null)
+        if (s.WebkitAlignContent != null)
         {
             return false;
         }
-        if (s.webkitAlignItems != null)
+        if (s.WebkitAlignItems != null)
         {
             return false;
         }
-        if (s.webkitAlignSelf != null)
+        if (s.WebkitAlignSelf != null)
         {
             return false;
         }
-        if (s.webkitAnimation != null)
+        if (s.WebkitAnimation != null)
         {
             return false;
         }
-        if (s.webkitAnimationDelay != null)
+        if (s.WebkitAnimationDelay != null)
         {
             return false;
         }
-        if (s.webkitAnimationDirection != null)
+        if (s.WebkitAnimationDirection != null)
         {
             return false;
         }
-        if (s.webkitAnimationDuration != null)
+        if (s.WebkitAnimationDuration != null)
         {
             return false;
         }
-        if (s.webkitAnimationFillMode != null)
+        if (s.WebkitAnimationFillMode != null)
         {
             return false;
         }
-        if (s.webkitAnimationIterationCount != null)
+        if (s.WebkitAnimationIterationCount != null)
         {
             return false;
         }
-        if (s.webkitAnimationName != null)
+        if (s.WebkitAnimationName != null)
         {
             return false;
         }
-        if (s.webkitAnimationPlayState != null)
+        if (s.WebkitAnimationPlayState != null)
         {
             return false;
         }
-        if (s.webkitAnimationTimingFunction != null)
+        if (s.WebkitAnimationTimingFunction != null)
         {
             return false;
         }
-        if (s.webkitAppRegion != null)
+        if (s.WebkitAppRegion != null)
         {
             return false;
         }
-        if (s.webkitAppearance != null)
+        if (s.WebkitAppearance != null)
         {
             return false;
         }
-        if (s.webkitBackfaceVisibility != null)
+        if (s.WebkitBackfaceVisibility != null)
         {
             return false;
         }
-        if (s.webkitBackgroundClip != null)
+        if (s.WebkitBackgroundClip != null)
         {
             return false;
         }
-        if (s.webkitBackgroundOrigin != null)
+        if (s.WebkitBackgroundOrigin != null)
         {
             return false;
         }
-        if (s.webkitBackgroundSize != null)
+        if (s.WebkitBackgroundSize != null)
         {
             return false;
         }
-        if (s.webkitBorderAfter != null)
+        if (s.WebkitBorderAfter != null)
         {
             return false;
         }
-        if (s.webkitBorderAfterColor != null)
+        if (s.WebkitBorderAfterColor != null)
         {
             return false;
         }
-        if (s.webkitBorderAfterStyle != null)
+        if (s.WebkitBorderAfterStyle != null)
         {
             return false;
         }
-        if (s.webkitBorderAfterWidth != null)
+        if (s.WebkitBorderAfterWidth != null)
         {
             return false;
         }
-        if (s.webkitBorderBefore != null)
+        if (s.WebkitBorderBefore != null)
         {
             return false;
         }
-        if (s.webkitBorderBeforeColor != null)
+        if (s.WebkitBorderBeforeColor != null)
         {
             return false;
         }
-        if (s.webkitBorderBeforeStyle != null)
+        if (s.WebkitBorderBeforeStyle != null)
         {
             return false;
         }
-        if (s.webkitBorderBeforeWidth != null)
+        if (s.WebkitBorderBeforeWidth != null)
         {
             return false;
         }
-        if (s.webkitBorderBottomLeftRadius != null)
+        if (s.WebkitBorderBottomLeftRadius != null)
         {
             return false;
         }
-        if (s.webkitBorderBottomRightRadius != null)
+        if (s.WebkitBorderBottomRightRadius != null)
         {
             return false;
         }
-        if (s.webkitBorderEnd != null)
+        if (s.WebkitBorderEnd != null)
         {
             return false;
         }
-        if (s.webkitBorderEndColor != null)
+        if (s.WebkitBorderEndColor != null)
         {
             return false;
         }
-        if (s.webkitBorderEndStyle != null)
+        if (s.WebkitBorderEndStyle != null)
         {
             return false;
         }
-        if (s.webkitBorderEndWidth != null)
+        if (s.WebkitBorderEndWidth != null)
         {
             return false;
         }
-        if (s.webkitBorderHorizontalSpacing != null)
+        if (s.WebkitBorderHorizontalSpacing != null)
         {
             return false;
         }
-        if (s.webkitBorderImage != null)
+        if (s.WebkitBorderImage != null)
         {
             return false;
         }
-        if (s.webkitBorderRadius != null)
+        if (s.WebkitBorderRadius != null)
         {
             return false;
         }
-        if (s.webkitBorderStart != null)
+        if (s.WebkitBorderStart != null)
         {
             return false;
         }
-        if (s.webkitBorderStartColor != null)
+        if (s.WebkitBorderStartColor != null)
         {
             return false;
         }
-        if (s.webkitBorderStartStyle != null)
+        if (s.WebkitBorderStartStyle != null)
         {
             return false;
         }
-        if (s.webkitBorderStartWidth != null)
+        if (s.WebkitBorderStartWidth != null)
         {
             return false;
         }
-        if (s.webkitBorderTopLeftRadius != null)
+        if (s.WebkitBorderTopLeftRadius != null)
         {
             return false;
         }
-        if (s.webkitBorderTopRightRadius != null)
+        if (s.WebkitBorderTopRightRadius != null)
         {
             return false;
         }
-        if (s.webkitBorderVerticalSpacing != null)
+        if (s.WebkitBorderVerticalSpacing != null)
         {
             return false;
         }
-        if (s.webkitBoxAlign != null)
+        if (s.WebkitBoxAlign != null)
         {
             return false;
         }
-        if (s.webkitBoxDecorationBreak != null)
+        if (s.WebkitBoxDecorationBreak != null)
         {
             return false;
         }
-        if (s.webkitBoxDirection != null)
+        if (s.WebkitBoxDirection != null)
         {
             return false;
         }
-        if (s.webkitBoxFlex != null)
+        if (s.WebkitBoxFlex != null)
         {
             return false;
         }
-        if (s.webkitBoxOrdinalGroup != null)
+        if (s.WebkitBoxOrdinalGroup != null)
         {
             return false;
         }
-        if (s.webkitBoxOrient != null)
+        if (s.WebkitBoxOrient != null)
         {
             return false;
         }
-        if (s.webkitBoxPack != null)
+        if (s.WebkitBoxPack != null)
         {
             return false;
         }
-        if (s.webkitBoxReflect != null)
+        if (s.WebkitBoxReflect != null)
         {
             return false;
         }
-        if (s.webkitBoxShadow != null)
+        if (s.WebkitBoxShadow != null)
         {
             return false;
         }
-        if (s.webkitBoxSizing != null)
+        if (s.WebkitBoxSizing != null)
         {
             return false;
         }
-        if (s.webkitClipPath != null)
+        if (s.WebkitClipPath != null)
         {
             return false;
         }
-        if (s.webkitColumnBreakAfter != null)
+        if (s.WebkitColumnBreakAfter != null)
         {
             return false;
         }
-        if (s.webkitColumnBreakBefore != null)
+        if (s.WebkitColumnBreakBefore != null)
         {
             return false;
         }
-        if (s.webkitColumnBreakInside != null)
+        if (s.WebkitColumnBreakInside != null)
         {
             return false;
         }
-        if (s.webkitColumnCount != null)
+        if (s.WebkitColumnCount != null)
         {
             return false;
         }
-        if (s.webkitColumnGap != null)
+        if (s.WebkitColumnGap != null)
         {
             return false;
         }
-        if (s.webkitColumnRule != null)
+        if (s.WebkitColumnRule != null)
         {
             return false;
         }
-        if (s.webkitColumnRuleColor != null)
+        if (s.WebkitColumnRuleColor != null)
         {
             return false;
         }
-        if (s.webkitColumnRuleStyle != null)
+        if (s.WebkitColumnRuleStyle != null)
         {
             return false;
         }
-        if (s.webkitColumnRuleWidth != null)
+        if (s.WebkitColumnRuleWidth != null)
         {
             return false;
         }
-        if (s.webkitColumnSpan != null)
+        if (s.WebkitColumnSpan != null)
         {
             return false;
         }
-        if (s.webkitColumnWidth != null)
+        if (s.WebkitColumnWidth != null)
         {
             return false;
         }
-        if (s.webkitColumns != null)
+        if (s.WebkitColumns != null)
         {
             return false;
         }
-        if (s.webkitFilter != null)
+        if (s.WebkitFilter != null)
         {
             return false;
         }
-        if (s.webkitFlex != null)
+        if (s.WebkitFlex != null)
         {
             return false;
         }
-        if (s.webkitFlexBasis != null)
+        if (s.WebkitFlexBasis != null)
         {
             return false;
         }
-        if (s.webkitFlexDirection != null)
+        if (s.WebkitFlexDirection != null)
         {
             return false;
         }
-        if (s.webkitFlexFlow != null)
+        if (s.WebkitFlexFlow != null)
         {
             return false;
         }
-        if (s.webkitFlexGrow != null)
+        if (s.WebkitFlexGrow != null)
         {
             return false;
         }
-        if (s.webkitFlexShrink != null)
+        if (s.WebkitFlexShrink != null)
         {
             return false;
         }
-        if (s.webkitFlexWrap != null)
+        if (s.WebkitFlexWrap != null)
         {
             return false;
         }
-        if (s.webkitFontFeatureSettings != null)
+        if (s.WebkitFontFeatureSettings != null)
         {
             return false;
         }
-        if (s.webkitFontSmoothing != null)
+        if (s.WebkitFontSmoothing != null)
         {
             return false;
         }
-        if (s.webkitHyphenateCharacter != null)
+        if (s.WebkitHyphenateCharacter != null)
         {
             return false;
         }
-        if (s.webkitJustifyContent != null)
+        if (s.WebkitJustifyContent != null)
         {
             return false;
         }
-        if (s.webkitLineBreak != null)
+        if (s.WebkitLineBreak != null)
         {
             return false;
         }
-        if (s.webkitLineClamp != null)
+        if (s.WebkitLineClamp != null)
         {
             return false;
         }
-        if (s.webkitLocale != null)
+        if (s.WebkitLocale != null)
         {
             return false;
         }
-        if (s.webkitLogicalHeight != null)
+        if (s.WebkitLogicalHeight != null)
         {
             return false;
         }
-        if (s.webkitLogicalWidth != null)
+        if (s.WebkitLogicalWidth != null)
         {
             return false;
         }
-        if (s.webkitMarginAfter != null)
+        if (s.WebkitMarginAfter != null)
         {
             return false;
         }
-        if (s.webkitMarginBefore != null)
+        if (s.WebkitMarginBefore != null)
         {
             return false;
         }
-        if (s.webkitMarginEnd != null)
+        if (s.WebkitMarginEnd != null)
         {
             return false;
         }
-        if (s.webkitMarginStart != null)
+        if (s.WebkitMarginStart != null)
         {
             return false;
         }
-        if (s.webkitMask != null)
+        if (s.WebkitMask != null)
         {
             return false;
         }
-        if (s.webkitMaskBoxImage != null)
+        if (s.WebkitMaskBoxImage != null)
         {
             return false;
         }
-        if (s.webkitMaskBoxImageOutset != null)
+        if (s.WebkitMaskBoxImageOutset != null)
         {
             return false;
         }
-        if (s.webkitMaskBoxImageRepeat != null)
+        if (s.WebkitMaskBoxImageRepeat != null)
         {
             return false;
         }
-        if (s.webkitMaskBoxImageSlice != null)
+        if (s.WebkitMaskBoxImageSlice != null)
         {
             return false;
         }
-        if (s.webkitMaskBoxImageSource != null)
+        if (s.WebkitMaskBoxImageSource != null)
         {
             return false;
         }
-        if (s.webkitMaskBoxImageWidth != null)
+        if (s.WebkitMaskBoxImageWidth != null)
         {
             return false;
         }
-        if (s.webkitMaskClip != null)
+        if (s.WebkitMaskClip != null)
         {
             return false;
         }
-        if (s.webkitMaskComposite != null)
+        if (s.WebkitMaskComposite != null)
         {
             return false;
         }
-        if (s.webkitMaskImage != null)
+        if (s.WebkitMaskImage != null)
         {
             return false;
         }
-        if (s.webkitMaskOrigin != null)
+        if (s.WebkitMaskOrigin != null)
         {
             return false;
         }
-        if (s.webkitMaskPosition != null)
+        if (s.WebkitMaskPosition != null)
         {
             return false;
         }
-        if (s.webkitMaskPositionX != null)
+        if (s.WebkitMaskPositionX != null)
         {
             return false;
         }
-        if (s.webkitMaskPositionY != null)
+        if (s.WebkitMaskPositionY != null)
         {
             return false;
         }
-        if (s.webkitMaskRepeat != null)
+        if (s.WebkitMaskRepeat != null)
         {
             return false;
         }
-        if (s.webkitMaskRepeatX != null)
+        if (s.WebkitMaskRepeatX != null)
         {
             return false;
         }
-        if (s.webkitMaskRepeatY != null)
+        if (s.WebkitMaskRepeatY != null)
         {
             return false;
         }
-        if (s.webkitMaskSize != null)
+        if (s.WebkitMaskSize != null)
         {
             return false;
         }
-        if (s.webkitMaxLogicalHeight != null)
+        if (s.WebkitMaxLogicalHeight != null)
         {
             return false;
         }
-        if (s.webkitMaxLogicalWidth != null)
+        if (s.WebkitMaxLogicalWidth != null)
         {
             return false;
         }
-        if (s.webkitMinLogicalHeight != null)
+        if (s.WebkitMinLogicalHeight != null)
         {
             return false;
         }
-        if (s.webkitMinLogicalWidth != null)
+        if (s.WebkitMinLogicalWidth != null)
         {
             return false;
         }
-        if (s.webkitOpacity != null)
+        if (s.WebkitOpacity != null)
         {
             return false;
         }
-        if (s.webkitOrder != null)
+        if (s.WebkitOrder != null)
         {
             return false;
         }
-        if (s.webkitPaddingAfter != null)
+        if (s.WebkitPaddingAfter != null)
         {
             return false;
         }
-        if (s.webkitPaddingBefore != null)
+        if (s.WebkitPaddingBefore != null)
         {
             return false;
         }
-        if (s.webkitPaddingEnd != null)
+        if (s.WebkitPaddingEnd != null)
         {
             return false;
         }
-        if (s.webkitPaddingStart != null)
+        if (s.WebkitPaddingStart != null)
         {
             return false;
         }
-        if (s.webkitPerspective != null)
+        if (s.WebkitPerspective != null)
         {
             return false;
         }
-        if (s.webkitPerspectiveOrigin != null)
+        if (s.WebkitPerspectiveOrigin != null)
         {
             return false;
         }
-        if (s.webkitPerspectiveOriginX != null)
+        if (s.WebkitPerspectiveOriginX != null)
         {
             return false;
         }
-        if (s.webkitPerspectiveOriginY != null)
+        if (s.WebkitPerspectiveOriginY != null)
         {
             return false;
         }
-        if (s.webkitPrintColorAdjust != null)
+        if (s.WebkitPrintColorAdjust != null)
         {
             return false;
         }
-        if (s.webkitRtlOrdering != null)
+        if (s.WebkitRtlOrdering != null)
         {
             return false;
         }
-        if (s.webkitRubyPosition != null)
+        if (s.WebkitRubyPosition != null)
         {
             return false;
         }
-        if (s.webkitShapeImageThreshold != null)
+        if (s.WebkitShapeImageThreshold != null)
         {
             return false;
         }
-        if (s.webkitShapeMargin != null)
+        if (s.WebkitShapeMargin != null)
         {
             return false;
         }
-        if (s.webkitShapeOutside != null)
+        if (s.WebkitShapeOutside != null)
         {
             return false;
         }
-        if (s.webkitTapHighlightColor != null)
+        if (s.WebkitTapHighlightColor != null)
         {
             return false;
         }
-        if (s.webkitTextCombine != null)
+        if (s.WebkitTextCombine != null)
         {
             return false;
         }
-        if (s.webkitTextDecorationsInEffect != null)
+        if (s.WebkitTextDecorationsInEffect != null)
         {
             return false;
         }
-        if (s.webkitTextEmphasis != null)
+        if (s.WebkitTextEmphasis != null)
         {
             return false;
         }
-        if (s.webkitTextEmphasisColor != null)
+        if (s.WebkitTextEmphasisColor != null)
         {
             return false;
         }
-        if (s.webkitTextEmphasisPosition != null)
+        if (s.WebkitTextEmphasisPosition != null)
         {
             return false;
         }
-        if (s.webkitTextEmphasisStyle != null)
+        if (s.WebkitTextEmphasisStyle != null)
         {
             return false;
         }
-        if (s.webkitTextFillColor != null)
+        if (s.WebkitTextFillColor != null)
         {
             return false;
         }
-        if (s.webkitTextOrientation != null)
+        if (s.WebkitTextOrientation != null)
         {
             return false;
         }
-        if (s.webkitTextSecurity != null)
+        if (s.WebkitTextSecurity != null)
         {
             return false;
         }
-        if (s.webkitTextSizeAdjust != null)
+        if (s.WebkitTextSizeAdjust != null)
         {
             return false;
         }
-        if (s.webkitTextStroke != null)
+        if (s.WebkitTextStroke != null)
         {
             return false;
         }
-        if (s.webkitTextStrokeColor != null)
+        if (s.WebkitTextStrokeColor != null)
         {
             return false;
         }
-        if (s.webkitTextStrokeWidth != null)
+        if (s.WebkitTextStrokeWidth != null)
         {
             return false;
         }
-        if (s.webkitTransform != null)
+        if (s.WebkitTransform != null)
         {
             return false;
         }
-        if (s.webkitTransformOrigin != null)
+        if (s.WebkitTransformOrigin != null)
         {
             return false;
         }
-        if (s.webkitTransformOriginX != null)
+        if (s.WebkitTransformOriginX != null)
         {
             return false;
         }
-        if (s.webkitTransformOriginY != null)
+        if (s.WebkitTransformOriginY != null)
         {
             return false;
         }
-        if (s.webkitTransformOriginZ != null)
+        if (s.WebkitTransformOriginZ != null)
         {
             return false;
         }
-        if (s.webkitTransformStyle != null)
+        if (s.WebkitTransformStyle != null)
         {
             return false;
         }
-        if (s.webkitTransition != null)
+        if (s.WebkitTransition != null)
         {
             return false;
         }
-        if (s.webkitTransitionDelay != null)
+        if (s.WebkitTransitionDelay != null)
         {
             return false;
         }
-        if (s.webkitTransitionDuration != null)
+        if (s.WebkitTransitionDuration != null)
         {
             return false;
         }
-        if (s.webkitTransitionProperty != null)
+        if (s.WebkitTransitionProperty != null)
         {
             return false;
         }
-        if (s.webkitTransitionTimingFunction != null)
+        if (s.WebkitTransitionTimingFunction != null)
         {
             return false;
         }
-        if (s.webkitUserDrag != null)
+        if (s.WebkitUserDrag != null)
         {
             return false;
         }
-        if (s.webkitUserModify != null)
+        if (s.WebkitUserModify != null)
         {
             return false;
         }
-        if (s.webkitUserSelect != null)
+        if (s.WebkitUserSelect != null)
         {
             return false;
         }
-        if (s.webkitWritingMode != null)
+        if (s.WebkitWritingMode != null)
         {
             return false;
         }
@@ -4957,617 +4957,617 @@ partial class Style
         {
             return s.visibility;
         }
-        if (nameof(webkitAlignContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAlignContent).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAlignContent;
+            return s.WebkitAlignContent;
         }
-        if (nameof(webkitAlignItems).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAlignItems).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAlignItems;
+            return s.WebkitAlignItems;
         }
-        if (nameof(webkitAlignSelf).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAlignSelf).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAlignSelf;
+            return s.WebkitAlignSelf;
         }
-        if (nameof(webkitAnimation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimation).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimation;
+            return s.WebkitAnimation;
         }
-        if (nameof(webkitAnimationDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimationDelay;
+            return s.WebkitAnimationDelay;
         }
-        if (nameof(webkitAnimationDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimationDirection;
+            return s.WebkitAnimationDirection;
         }
-        if (nameof(webkitAnimationDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimationDuration;
+            return s.WebkitAnimationDuration;
         }
-        if (nameof(webkitAnimationFillMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationFillMode).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimationFillMode;
+            return s.WebkitAnimationFillMode;
         }
-        if (nameof(webkitAnimationIterationCount).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationIterationCount).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimationIterationCount;
+            return s.WebkitAnimationIterationCount;
         }
-        if (nameof(webkitAnimationName).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationName).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimationName;
+            return s.WebkitAnimationName;
         }
-        if (nameof(webkitAnimationPlayState).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationPlayState).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimationPlayState;
+            return s.WebkitAnimationPlayState;
         }
-        if (nameof(webkitAnimationTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAnimationTimingFunction;
+            return s.WebkitAnimationTimingFunction;
         }
-        if (nameof(webkitAppRegion).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAppRegion).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAppRegion;
+            return s.WebkitAppRegion;
         }
-        if (nameof(webkitAppearance).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAppearance).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitAppearance;
+            return s.WebkitAppearance;
         }
-        if (nameof(webkitBackfaceVisibility).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBackfaceVisibility).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBackfaceVisibility;
+            return s.WebkitBackfaceVisibility;
         }
-        if (nameof(webkitBackgroundClip).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBackgroundClip).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBackgroundClip;
+            return s.WebkitBackgroundClip;
         }
-        if (nameof(webkitBackgroundOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBackgroundOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBackgroundOrigin;
+            return s.WebkitBackgroundOrigin;
         }
-        if (nameof(webkitBackgroundSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBackgroundSize).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBackgroundSize;
+            return s.WebkitBackgroundSize;
         }
-        if (nameof(webkitBorderAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderAfter;
+            return s.WebkitBorderAfter;
         }
-        if (nameof(webkitBorderAfterColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderAfterColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderAfterColor;
+            return s.WebkitBorderAfterColor;
         }
-        if (nameof(webkitBorderAfterStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderAfterStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderAfterStyle;
+            return s.WebkitBorderAfterStyle;
         }
-        if (nameof(webkitBorderAfterWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderAfterWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderAfterWidth;
+            return s.WebkitBorderAfterWidth;
         }
-        if (nameof(webkitBorderBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderBefore;
+            return s.WebkitBorderBefore;
         }
-        if (nameof(webkitBorderBeforeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBeforeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderBeforeColor;
+            return s.WebkitBorderBeforeColor;
         }
-        if (nameof(webkitBorderBeforeStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBeforeStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderBeforeStyle;
+            return s.WebkitBorderBeforeStyle;
         }
-        if (nameof(webkitBorderBeforeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBeforeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderBeforeWidth;
+            return s.WebkitBorderBeforeWidth;
         }
-        if (nameof(webkitBorderBottomLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBottomLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderBottomLeftRadius;
+            return s.WebkitBorderBottomLeftRadius;
         }
-        if (nameof(webkitBorderBottomRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBottomRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderBottomRightRadius;
+            return s.WebkitBorderBottomRightRadius;
         }
-        if (nameof(webkitBorderEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderEnd;
+            return s.WebkitBorderEnd;
         }
-        if (nameof(webkitBorderEndColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderEndColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderEndColor;
+            return s.WebkitBorderEndColor;
         }
-        if (nameof(webkitBorderEndStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderEndStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderEndStyle;
+            return s.WebkitBorderEndStyle;
         }
-        if (nameof(webkitBorderEndWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderEndWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderEndWidth;
+            return s.WebkitBorderEndWidth;
         }
-        if (nameof(webkitBorderHorizontalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderHorizontalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderHorizontalSpacing;
+            return s.WebkitBorderHorizontalSpacing;
         }
-        if (nameof(webkitBorderImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderImage).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderImage;
+            return s.WebkitBorderImage;
         }
-        if (nameof(webkitBorderRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderRadius;
+            return s.WebkitBorderRadius;
         }
-        if (nameof(webkitBorderStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderStart).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderStart;
+            return s.WebkitBorderStart;
         }
-        if (nameof(webkitBorderStartColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderStartColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderStartColor;
+            return s.WebkitBorderStartColor;
         }
-        if (nameof(webkitBorderStartStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderStartStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderStartStyle;
+            return s.WebkitBorderStartStyle;
         }
-        if (nameof(webkitBorderStartWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderStartWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderStartWidth;
+            return s.WebkitBorderStartWidth;
         }
-        if (nameof(webkitBorderTopLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderTopLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderTopLeftRadius;
+            return s.WebkitBorderTopLeftRadius;
         }
-        if (nameof(webkitBorderTopRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderTopRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderTopRightRadius;
+            return s.WebkitBorderTopRightRadius;
         }
-        if (nameof(webkitBorderVerticalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderVerticalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBorderVerticalSpacing;
+            return s.WebkitBorderVerticalSpacing;
         }
-        if (nameof(webkitBoxAlign).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxAlign).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxAlign;
+            return s.WebkitBoxAlign;
         }
-        if (nameof(webkitBoxDecorationBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxDecorationBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxDecorationBreak;
+            return s.WebkitBoxDecorationBreak;
         }
-        if (nameof(webkitBoxDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxDirection;
+            return s.WebkitBoxDirection;
         }
-        if (nameof(webkitBoxFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxFlex;
+            return s.WebkitBoxFlex;
         }
-        if (nameof(webkitBoxOrdinalGroup).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxOrdinalGroup).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxOrdinalGroup;
+            return s.WebkitBoxOrdinalGroup;
         }
-        if (nameof(webkitBoxOrient).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxOrient).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxOrient;
+            return s.WebkitBoxOrient;
         }
-        if (nameof(webkitBoxPack).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxPack).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxPack;
+            return s.WebkitBoxPack;
         }
-        if (nameof(webkitBoxReflect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxReflect).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxReflect;
+            return s.WebkitBoxReflect;
         }
-        if (nameof(webkitBoxShadow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxShadow).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxShadow;
+            return s.WebkitBoxShadow;
         }
-        if (nameof(webkitBoxSizing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxSizing).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitBoxSizing;
+            return s.WebkitBoxSizing;
         }
-        if (nameof(webkitClipPath).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitClipPath).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitClipPath;
+            return s.WebkitClipPath;
         }
-        if (nameof(webkitColumnBreakAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnBreakAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnBreakAfter;
+            return s.WebkitColumnBreakAfter;
         }
-        if (nameof(webkitColumnBreakBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnBreakBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnBreakBefore;
+            return s.WebkitColumnBreakBefore;
         }
-        if (nameof(webkitColumnBreakInside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnBreakInside).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnBreakInside;
+            return s.WebkitColumnBreakInside;
         }
-        if (nameof(webkitColumnCount).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnCount).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnCount;
+            return s.WebkitColumnCount;
         }
-        if (nameof(webkitColumnGap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnGap).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnGap;
+            return s.WebkitColumnGap;
         }
-        if (nameof(webkitColumnRule).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnRule).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnRule;
+            return s.WebkitColumnRule;
         }
-        if (nameof(webkitColumnRuleColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnRuleColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnRuleColor;
+            return s.WebkitColumnRuleColor;
         }
-        if (nameof(webkitColumnRuleStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnRuleStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnRuleStyle;
+            return s.WebkitColumnRuleStyle;
         }
-        if (nameof(webkitColumnRuleWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnRuleWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnRuleWidth;
+            return s.WebkitColumnRuleWidth;
         }
-        if (nameof(webkitColumnSpan).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnSpan).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnSpan;
+            return s.WebkitColumnSpan;
         }
-        if (nameof(webkitColumnWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumnWidth;
+            return s.WebkitColumnWidth;
         }
-        if (nameof(webkitColumns).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumns).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitColumns;
+            return s.WebkitColumns;
         }
-        if (nameof(webkitFilter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFilter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFilter;
+            return s.WebkitFilter;
         }
-        if (nameof(webkitFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFlex;
+            return s.WebkitFlex;
         }
-        if (nameof(webkitFlexBasis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexBasis).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFlexBasis;
+            return s.WebkitFlexBasis;
         }
-        if (nameof(webkitFlexDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFlexDirection;
+            return s.WebkitFlexDirection;
         }
-        if (nameof(webkitFlexFlow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexFlow).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFlexFlow;
+            return s.WebkitFlexFlow;
         }
-        if (nameof(webkitFlexGrow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexGrow).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFlexGrow;
+            return s.WebkitFlexGrow;
         }
-        if (nameof(webkitFlexShrink).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexShrink).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFlexShrink;
+            return s.WebkitFlexShrink;
         }
-        if (nameof(webkitFlexWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFlexWrap;
+            return s.WebkitFlexWrap;
         }
-        if (nameof(webkitFontFeatureSettings).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFontFeatureSettings).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFontFeatureSettings;
+            return s.WebkitFontFeatureSettings;
         }
-        if (nameof(webkitFontSmoothing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFontSmoothing).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitFontSmoothing;
+            return s.WebkitFontSmoothing;
         }
-        if (nameof(webkitHyphenateCharacter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitHyphenateCharacter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitHyphenateCharacter;
+            return s.WebkitHyphenateCharacter;
         }
-        if (nameof(webkitJustifyContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitJustifyContent).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitJustifyContent;
+            return s.WebkitJustifyContent;
         }
-        if (nameof(webkitLineBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLineBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitLineBreak;
+            return s.WebkitLineBreak;
         }
-        if (nameof(webkitLineClamp).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLineClamp).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitLineClamp;
+            return s.WebkitLineClamp;
         }
-        if (nameof(webkitLocale).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLocale).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitLocale;
+            return s.WebkitLocale;
         }
-        if (nameof(webkitLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitLogicalHeight;
+            return s.WebkitLogicalHeight;
         }
-        if (nameof(webkitLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitLogicalWidth;
+            return s.WebkitLogicalWidth;
         }
-        if (nameof(webkitMarginAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMarginAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMarginAfter;
+            return s.WebkitMarginAfter;
         }
-        if (nameof(webkitMarginBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMarginBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMarginBefore;
+            return s.WebkitMarginBefore;
         }
-        if (nameof(webkitMarginEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMarginEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMarginEnd;
+            return s.WebkitMarginEnd;
         }
-        if (nameof(webkitMarginStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMarginStart).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMarginStart;
+            return s.WebkitMarginStart;
         }
-        if (nameof(webkitMask).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMask).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMask;
+            return s.WebkitMask;
         }
-        if (nameof(webkitMaskBoxImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImage).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskBoxImage;
+            return s.WebkitMaskBoxImage;
         }
-        if (nameof(webkitMaskBoxImageOutset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageOutset).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskBoxImageOutset;
+            return s.WebkitMaskBoxImageOutset;
         }
-        if (nameof(webkitMaskBoxImageRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskBoxImageRepeat;
+            return s.WebkitMaskBoxImageRepeat;
         }
-        if (nameof(webkitMaskBoxImageSlice).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageSlice).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskBoxImageSlice;
+            return s.WebkitMaskBoxImageSlice;
         }
-        if (nameof(webkitMaskBoxImageSource).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageSource).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskBoxImageSource;
+            return s.WebkitMaskBoxImageSource;
         }
-        if (nameof(webkitMaskBoxImageWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskBoxImageWidth;
+            return s.WebkitMaskBoxImageWidth;
         }
-        if (nameof(webkitMaskClip).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskClip).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskClip;
+            return s.WebkitMaskClip;
         }
-        if (nameof(webkitMaskComposite).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskComposite).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskComposite;
+            return s.WebkitMaskComposite;
         }
-        if (nameof(webkitMaskImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskImage).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskImage;
+            return s.WebkitMaskImage;
         }
-        if (nameof(webkitMaskOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskOrigin;
+            return s.WebkitMaskOrigin;
         }
-        if (nameof(webkitMaskPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskPosition;
+            return s.WebkitMaskPosition;
         }
-        if (nameof(webkitMaskPositionX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskPositionX).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskPositionX;
+            return s.WebkitMaskPositionX;
         }
-        if (nameof(webkitMaskPositionY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskPositionY).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskPositionY;
+            return s.WebkitMaskPositionY;
         }
-        if (nameof(webkitMaskRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskRepeat;
+            return s.WebkitMaskRepeat;
         }
-        if (nameof(webkitMaskRepeatX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskRepeatX).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskRepeatX;
+            return s.WebkitMaskRepeatX;
         }
-        if (nameof(webkitMaskRepeatY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskRepeatY).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskRepeatY;
+            return s.WebkitMaskRepeatY;
         }
-        if (nameof(webkitMaskSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskSize).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaskSize;
+            return s.WebkitMaskSize;
         }
-        if (nameof(webkitMaxLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaxLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaxLogicalHeight;
+            return s.WebkitMaxLogicalHeight;
         }
-        if (nameof(webkitMaxLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaxLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMaxLogicalWidth;
+            return s.WebkitMaxLogicalWidth;
         }
-        if (nameof(webkitMinLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMinLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMinLogicalHeight;
+            return s.WebkitMinLogicalHeight;
         }
-        if (nameof(webkitMinLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMinLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitMinLogicalWidth;
+            return s.WebkitMinLogicalWidth;
         }
-        if (nameof(webkitOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitOpacity;
+            return s.WebkitOpacity;
         }
-        if (nameof(webkitOrder).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitOrder).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitOrder;
+            return s.WebkitOrder;
         }
-        if (nameof(webkitPaddingAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPaddingAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPaddingAfter;
+            return s.WebkitPaddingAfter;
         }
-        if (nameof(webkitPaddingBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPaddingBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPaddingBefore;
+            return s.WebkitPaddingBefore;
         }
-        if (nameof(webkitPaddingEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPaddingEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPaddingEnd;
+            return s.WebkitPaddingEnd;
         }
-        if (nameof(webkitPaddingStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPaddingStart).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPaddingStart;
+            return s.WebkitPaddingStart;
         }
-        if (nameof(webkitPerspective).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPerspective).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPerspective;
+            return s.WebkitPerspective;
         }
-        if (nameof(webkitPerspectiveOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPerspectiveOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPerspectiveOrigin;
+            return s.WebkitPerspectiveOrigin;
         }
-        if (nameof(webkitPerspectiveOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPerspectiveOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPerspectiveOriginX;
+            return s.WebkitPerspectiveOriginX;
         }
-        if (nameof(webkitPerspectiveOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPerspectiveOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPerspectiveOriginY;
+            return s.WebkitPerspectiveOriginY;
         }
-        if (nameof(webkitPrintColorAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPrintColorAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitPrintColorAdjust;
+            return s.WebkitPrintColorAdjust;
         }
-        if (nameof(webkitRtlOrdering).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitRtlOrdering).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitRtlOrdering;
+            return s.WebkitRtlOrdering;
         }
-        if (nameof(webkitRubyPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitRubyPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitRubyPosition;
+            return s.WebkitRubyPosition;
         }
-        if (nameof(webkitShapeImageThreshold).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitShapeImageThreshold).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitShapeImageThreshold;
+            return s.WebkitShapeImageThreshold;
         }
-        if (nameof(webkitShapeMargin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitShapeMargin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitShapeMargin;
+            return s.WebkitShapeMargin;
         }
-        if (nameof(webkitShapeOutside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitShapeOutside).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitShapeOutside;
+            return s.WebkitShapeOutside;
         }
-        if (nameof(webkitTapHighlightColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTapHighlightColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTapHighlightColor;
+            return s.WebkitTapHighlightColor;
         }
-        if (nameof(webkitTextCombine).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextCombine).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextCombine;
+            return s.WebkitTextCombine;
         }
-        if (nameof(webkitTextDecorationsInEffect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextDecorationsInEffect).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextDecorationsInEffect;
+            return s.WebkitTextDecorationsInEffect;
         }
-        if (nameof(webkitTextEmphasis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextEmphasis).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextEmphasis;
+            return s.WebkitTextEmphasis;
         }
-        if (nameof(webkitTextEmphasisColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextEmphasisColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextEmphasisColor;
+            return s.WebkitTextEmphasisColor;
         }
-        if (nameof(webkitTextEmphasisPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextEmphasisPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextEmphasisPosition;
+            return s.WebkitTextEmphasisPosition;
         }
-        if (nameof(webkitTextEmphasisStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextEmphasisStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextEmphasisStyle;
+            return s.WebkitTextEmphasisStyle;
         }
-        if (nameof(webkitTextFillColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextFillColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextFillColor;
+            return s.WebkitTextFillColor;
         }
-        if (nameof(webkitTextOrientation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextOrientation).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextOrientation;
+            return s.WebkitTextOrientation;
         }
-        if (nameof(webkitTextSecurity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextSecurity).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextSecurity;
+            return s.WebkitTextSecurity;
         }
-        if (nameof(webkitTextSizeAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextSizeAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextSizeAdjust;
+            return s.WebkitTextSizeAdjust;
         }
-        if (nameof(webkitTextStroke).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextStroke).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextStroke;
+            return s.WebkitTextStroke;
         }
-        if (nameof(webkitTextStrokeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextStrokeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextStrokeColor;
+            return s.WebkitTextStrokeColor;
         }
-        if (nameof(webkitTextStrokeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextStrokeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTextStrokeWidth;
+            return s.WebkitTextStrokeWidth;
         }
-        if (nameof(webkitTransform).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransform).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransform;
+            return s.WebkitTransform;
         }
-        if (nameof(webkitTransformOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransformOrigin;
+            return s.WebkitTransformOrigin;
         }
-        if (nameof(webkitTransformOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransformOriginX;
+            return s.WebkitTransformOriginX;
         }
-        if (nameof(webkitTransformOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransformOriginY;
+            return s.WebkitTransformOriginY;
         }
-        if (nameof(webkitTransformOriginZ).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformOriginZ).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransformOriginZ;
+            return s.WebkitTransformOriginZ;
         }
-        if (nameof(webkitTransformStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransformStyle;
+            return s.WebkitTransformStyle;
         }
-        if (nameof(webkitTransition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransition).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransition;
+            return s.WebkitTransition;
         }
-        if (nameof(webkitTransitionDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransitionDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransitionDelay;
+            return s.WebkitTransitionDelay;
         }
-        if (nameof(webkitTransitionDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransitionDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransitionDuration;
+            return s.WebkitTransitionDuration;
         }
-        if (nameof(webkitTransitionProperty).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransitionProperty).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransitionProperty;
+            return s.WebkitTransitionProperty;
         }
-        if (nameof(webkitTransitionTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransitionTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitTransitionTimingFunction;
+            return s.WebkitTransitionTimingFunction;
         }
-        if (nameof(webkitUserDrag).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitUserDrag).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitUserDrag;
+            return s.WebkitUserDrag;
         }
-        if (nameof(webkitUserModify).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitUserModify).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitUserModify;
+            return s.WebkitUserModify;
         }
-        if (nameof(webkitUserSelect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitUserSelect).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitUserSelect;
+            return s.WebkitUserSelect;
         }
-        if (nameof(webkitWritingMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitWritingMode).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            return s.webkitWritingMode;
+            return s.WebkitWritingMode;
         }
         if (nameof(whiteSpace).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
@@ -7934,769 +7934,769 @@ partial class Style
             s.visibility = value;
             return;
         }
-        if (nameof(webkitAlignContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAlignContent).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAlignContent = value;
+            s.WebkitAlignContent = value;
             return;
         }
-        if (nameof(webkitAlignItems).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAlignItems).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAlignItems = value;
+            s.WebkitAlignItems = value;
             return;
         }
-        if (nameof(webkitAlignSelf).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAlignSelf).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAlignSelf = value;
+            s.WebkitAlignSelf = value;
             return;
         }
-        if (nameof(webkitAnimation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimation).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimation = value;
+            s.WebkitAnimation = value;
             return;
         }
-        if (nameof(webkitAnimationDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimationDelay = value;
+            s.WebkitAnimationDelay = value;
             return;
         }
-        if (nameof(webkitAnimationDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimationDirection = value;
+            s.WebkitAnimationDirection = value;
             return;
         }
-        if (nameof(webkitAnimationDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimationDuration = value;
+            s.WebkitAnimationDuration = value;
             return;
         }
-        if (nameof(webkitAnimationFillMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationFillMode).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimationFillMode = value;
+            s.WebkitAnimationFillMode = value;
             return;
         }
-        if (nameof(webkitAnimationIterationCount).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationIterationCount).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimationIterationCount = value;
+            s.WebkitAnimationIterationCount = value;
             return;
         }
-        if (nameof(webkitAnimationName).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationName).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimationName = value;
+            s.WebkitAnimationName = value;
             return;
         }
-        if (nameof(webkitAnimationPlayState).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationPlayState).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimationPlayState = value;
+            s.WebkitAnimationPlayState = value;
             return;
         }
-        if (nameof(webkitAnimationTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAnimationTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAnimationTimingFunction = value;
+            s.WebkitAnimationTimingFunction = value;
             return;
         }
-        if (nameof(webkitAppRegion).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAppRegion).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAppRegion = value;
+            s.WebkitAppRegion = value;
             return;
         }
-        if (nameof(webkitAppearance).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitAppearance).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitAppearance = value;
+            s.WebkitAppearance = value;
             return;
         }
-        if (nameof(webkitBackfaceVisibility).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBackfaceVisibility).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBackfaceVisibility = value;
+            s.WebkitBackfaceVisibility = value;
             return;
         }
-        if (nameof(webkitBackgroundClip).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBackgroundClip).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBackgroundClip = value;
+            s.WebkitBackgroundClip = value;
             return;
         }
-        if (nameof(webkitBackgroundOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBackgroundOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBackgroundOrigin = value;
+            s.WebkitBackgroundOrigin = value;
             return;
         }
-        if (nameof(webkitBackgroundSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBackgroundSize).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBackgroundSize = value;
+            s.WebkitBackgroundSize = value;
             return;
         }
-        if (nameof(webkitBorderAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderAfter = value;
+            s.WebkitBorderAfter = value;
             return;
         }
-        if (nameof(webkitBorderAfterColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderAfterColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderAfterColor = value;
+            s.WebkitBorderAfterColor = value;
             return;
         }
-        if (nameof(webkitBorderAfterStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderAfterStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderAfterStyle = value;
+            s.WebkitBorderAfterStyle = value;
             return;
         }
-        if (nameof(webkitBorderAfterWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderAfterWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderAfterWidth = value;
+            s.WebkitBorderAfterWidth = value;
             return;
         }
-        if (nameof(webkitBorderBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderBefore = value;
+            s.WebkitBorderBefore = value;
             return;
         }
-        if (nameof(webkitBorderBeforeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBeforeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderBeforeColor = value;
+            s.WebkitBorderBeforeColor = value;
             return;
         }
-        if (nameof(webkitBorderBeforeStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBeforeStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderBeforeStyle = value;
+            s.WebkitBorderBeforeStyle = value;
             return;
         }
-        if (nameof(webkitBorderBeforeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBeforeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderBeforeWidth = value;
+            s.WebkitBorderBeforeWidth = value;
             return;
         }
-        if (nameof(webkitBorderBottomLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBottomLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderBottomLeftRadius = value;
+            s.WebkitBorderBottomLeftRadius = value;
             return;
         }
-        if (nameof(webkitBorderBottomRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderBottomRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderBottomRightRadius = value;
+            s.WebkitBorderBottomRightRadius = value;
             return;
         }
-        if (nameof(webkitBorderEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderEnd = value;
+            s.WebkitBorderEnd = value;
             return;
         }
-        if (nameof(webkitBorderEndColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderEndColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderEndColor = value;
+            s.WebkitBorderEndColor = value;
             return;
         }
-        if (nameof(webkitBorderEndStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderEndStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderEndStyle = value;
+            s.WebkitBorderEndStyle = value;
             return;
         }
-        if (nameof(webkitBorderEndWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderEndWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderEndWidth = value;
+            s.WebkitBorderEndWidth = value;
             return;
         }
-        if (nameof(webkitBorderHorizontalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderHorizontalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderHorizontalSpacing = value;
+            s.WebkitBorderHorizontalSpacing = value;
             return;
         }
-        if (nameof(webkitBorderImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderImage).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderImage = value;
+            s.WebkitBorderImage = value;
             return;
         }
-        if (nameof(webkitBorderRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderRadius = value;
+            s.WebkitBorderRadius = value;
             return;
         }
-        if (nameof(webkitBorderStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderStart).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderStart = value;
+            s.WebkitBorderStart = value;
             return;
         }
-        if (nameof(webkitBorderStartColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderStartColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderStartColor = value;
+            s.WebkitBorderStartColor = value;
             return;
         }
-        if (nameof(webkitBorderStartStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderStartStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderStartStyle = value;
+            s.WebkitBorderStartStyle = value;
             return;
         }
-        if (nameof(webkitBorderStartWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderStartWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderStartWidth = value;
+            s.WebkitBorderStartWidth = value;
             return;
         }
-        if (nameof(webkitBorderTopLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderTopLeftRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderTopLeftRadius = value;
+            s.WebkitBorderTopLeftRadius = value;
             return;
         }
-        if (nameof(webkitBorderTopRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderTopRightRadius).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderTopRightRadius = value;
+            s.WebkitBorderTopRightRadius = value;
             return;
         }
-        if (nameof(webkitBorderVerticalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBorderVerticalSpacing).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBorderVerticalSpacing = value;
+            s.WebkitBorderVerticalSpacing = value;
             return;
         }
-        if (nameof(webkitBoxAlign).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxAlign).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxAlign = value;
+            s.WebkitBoxAlign = value;
             return;
         }
-        if (nameof(webkitBoxDecorationBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxDecorationBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxDecorationBreak = value;
+            s.WebkitBoxDecorationBreak = value;
             return;
         }
-        if (nameof(webkitBoxDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxDirection = value;
+            s.WebkitBoxDirection = value;
             return;
         }
-        if (nameof(webkitBoxFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxFlex = value;
+            s.WebkitBoxFlex = value;
             return;
         }
-        if (nameof(webkitBoxOrdinalGroup).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxOrdinalGroup).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxOrdinalGroup = value;
+            s.WebkitBoxOrdinalGroup = value;
             return;
         }
-        if (nameof(webkitBoxOrient).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxOrient).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxOrient = value;
+            s.WebkitBoxOrient = value;
             return;
         }
-        if (nameof(webkitBoxPack).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxPack).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxPack = value;
+            s.WebkitBoxPack = value;
             return;
         }
-        if (nameof(webkitBoxReflect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxReflect).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxReflect = value;
+            s.WebkitBoxReflect = value;
             return;
         }
-        if (nameof(webkitBoxShadow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxShadow).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxShadow = value;
+            s.WebkitBoxShadow = value;
             return;
         }
-        if (nameof(webkitBoxSizing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitBoxSizing).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitBoxSizing = value;
+            s.WebkitBoxSizing = value;
             return;
         }
-        if (nameof(webkitClipPath).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitClipPath).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitClipPath = value;
+            s.WebkitClipPath = value;
             return;
         }
-        if (nameof(webkitColumnBreakAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnBreakAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnBreakAfter = value;
+            s.WebkitColumnBreakAfter = value;
             return;
         }
-        if (nameof(webkitColumnBreakBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnBreakBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnBreakBefore = value;
+            s.WebkitColumnBreakBefore = value;
             return;
         }
-        if (nameof(webkitColumnBreakInside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnBreakInside).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnBreakInside = value;
+            s.WebkitColumnBreakInside = value;
             return;
         }
-        if (nameof(webkitColumnCount).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnCount).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnCount = value;
+            s.WebkitColumnCount = value;
             return;
         }
-        if (nameof(webkitColumnGap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnGap).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnGap = value;
+            s.WebkitColumnGap = value;
             return;
         }
-        if (nameof(webkitColumnRule).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnRule).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnRule = value;
+            s.WebkitColumnRule = value;
             return;
         }
-        if (nameof(webkitColumnRuleColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnRuleColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnRuleColor = value;
+            s.WebkitColumnRuleColor = value;
             return;
         }
-        if (nameof(webkitColumnRuleStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnRuleStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnRuleStyle = value;
+            s.WebkitColumnRuleStyle = value;
             return;
         }
-        if (nameof(webkitColumnRuleWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnRuleWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnRuleWidth = value;
+            s.WebkitColumnRuleWidth = value;
             return;
         }
-        if (nameof(webkitColumnSpan).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnSpan).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnSpan = value;
+            s.WebkitColumnSpan = value;
             return;
         }
-        if (nameof(webkitColumnWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumnWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumnWidth = value;
+            s.WebkitColumnWidth = value;
             return;
         }
-        if (nameof(webkitColumns).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitColumns).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitColumns = value;
+            s.WebkitColumns = value;
             return;
         }
-        if (nameof(webkitFilter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFilter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFilter = value;
+            s.WebkitFilter = value;
             return;
         }
-        if (nameof(webkitFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlex).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFlex = value;
+            s.WebkitFlex = value;
             return;
         }
-        if (nameof(webkitFlexBasis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexBasis).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFlexBasis = value;
+            s.WebkitFlexBasis = value;
             return;
         }
-        if (nameof(webkitFlexDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexDirection).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFlexDirection = value;
+            s.WebkitFlexDirection = value;
             return;
         }
-        if (nameof(webkitFlexFlow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexFlow).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFlexFlow = value;
+            s.WebkitFlexFlow = value;
             return;
         }
-        if (nameof(webkitFlexGrow).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexGrow).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFlexGrow = value;
+            s.WebkitFlexGrow = value;
             return;
         }
-        if (nameof(webkitFlexShrink).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexShrink).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFlexShrink = value;
+            s.WebkitFlexShrink = value;
             return;
         }
-        if (nameof(webkitFlexWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFlexWrap).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFlexWrap = value;
+            s.WebkitFlexWrap = value;
             return;
         }
-        if (nameof(webkitFontFeatureSettings).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFontFeatureSettings).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFontFeatureSettings = value;
+            s.WebkitFontFeatureSettings = value;
             return;
         }
-        if (nameof(webkitFontSmoothing).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitFontSmoothing).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitFontSmoothing = value;
+            s.WebkitFontSmoothing = value;
             return;
         }
-        if (nameof(webkitHyphenateCharacter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitHyphenateCharacter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitHyphenateCharacter = value;
+            s.WebkitHyphenateCharacter = value;
             return;
         }
-        if (nameof(webkitJustifyContent).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitJustifyContent).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitJustifyContent = value;
+            s.WebkitJustifyContent = value;
             return;
         }
-        if (nameof(webkitLineBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLineBreak).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitLineBreak = value;
+            s.WebkitLineBreak = value;
             return;
         }
-        if (nameof(webkitLineClamp).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLineClamp).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitLineClamp = value;
+            s.WebkitLineClamp = value;
             return;
         }
-        if (nameof(webkitLocale).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLocale).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitLocale = value;
+            s.WebkitLocale = value;
             return;
         }
-        if (nameof(webkitLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitLogicalHeight = value;
+            s.WebkitLogicalHeight = value;
             return;
         }
-        if (nameof(webkitLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitLogicalWidth = value;
+            s.WebkitLogicalWidth = value;
             return;
         }
-        if (nameof(webkitMarginAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMarginAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMarginAfter = value;
+            s.WebkitMarginAfter = value;
             return;
         }
-        if (nameof(webkitMarginBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMarginBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMarginBefore = value;
+            s.WebkitMarginBefore = value;
             return;
         }
-        if (nameof(webkitMarginEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMarginEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMarginEnd = value;
+            s.WebkitMarginEnd = value;
             return;
         }
-        if (nameof(webkitMarginStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMarginStart).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMarginStart = value;
+            s.WebkitMarginStart = value;
             return;
         }
-        if (nameof(webkitMask).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMask).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMask = value;
+            s.WebkitMask = value;
             return;
         }
-        if (nameof(webkitMaskBoxImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImage).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskBoxImage = value;
+            s.WebkitMaskBoxImage = value;
             return;
         }
-        if (nameof(webkitMaskBoxImageOutset).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageOutset).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskBoxImageOutset = value;
+            s.WebkitMaskBoxImageOutset = value;
             return;
         }
-        if (nameof(webkitMaskBoxImageRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskBoxImageRepeat = value;
+            s.WebkitMaskBoxImageRepeat = value;
             return;
         }
-        if (nameof(webkitMaskBoxImageSlice).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageSlice).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskBoxImageSlice = value;
+            s.WebkitMaskBoxImageSlice = value;
             return;
         }
-        if (nameof(webkitMaskBoxImageSource).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageSource).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskBoxImageSource = value;
+            s.WebkitMaskBoxImageSource = value;
             return;
         }
-        if (nameof(webkitMaskBoxImageWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskBoxImageWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskBoxImageWidth = value;
+            s.WebkitMaskBoxImageWidth = value;
             return;
         }
-        if (nameof(webkitMaskClip).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskClip).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskClip = value;
+            s.WebkitMaskClip = value;
             return;
         }
-        if (nameof(webkitMaskComposite).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskComposite).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskComposite = value;
+            s.WebkitMaskComposite = value;
             return;
         }
-        if (nameof(webkitMaskImage).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskImage).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskImage = value;
+            s.WebkitMaskImage = value;
             return;
         }
-        if (nameof(webkitMaskOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskOrigin = value;
+            s.WebkitMaskOrigin = value;
             return;
         }
-        if (nameof(webkitMaskPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskPosition = value;
+            s.WebkitMaskPosition = value;
             return;
         }
-        if (nameof(webkitMaskPositionX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskPositionX).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskPositionX = value;
+            s.WebkitMaskPositionX = value;
             return;
         }
-        if (nameof(webkitMaskPositionY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskPositionY).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskPositionY = value;
+            s.WebkitMaskPositionY = value;
             return;
         }
-        if (nameof(webkitMaskRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskRepeat).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskRepeat = value;
+            s.WebkitMaskRepeat = value;
             return;
         }
-        if (nameof(webkitMaskRepeatX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskRepeatX).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskRepeatX = value;
+            s.WebkitMaskRepeatX = value;
             return;
         }
-        if (nameof(webkitMaskRepeatY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskRepeatY).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskRepeatY = value;
+            s.WebkitMaskRepeatY = value;
             return;
         }
-        if (nameof(webkitMaskSize).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaskSize).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaskSize = value;
+            s.WebkitMaskSize = value;
             return;
         }
-        if (nameof(webkitMaxLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaxLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaxLogicalHeight = value;
+            s.WebkitMaxLogicalHeight = value;
             return;
         }
-        if (nameof(webkitMaxLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMaxLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMaxLogicalWidth = value;
+            s.WebkitMaxLogicalWidth = value;
             return;
         }
-        if (nameof(webkitMinLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMinLogicalHeight).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMinLogicalHeight = value;
+            s.WebkitMinLogicalHeight = value;
             return;
         }
-        if (nameof(webkitMinLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitMinLogicalWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitMinLogicalWidth = value;
+            s.WebkitMinLogicalWidth = value;
             return;
         }
-        if (nameof(webkitOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitOpacity).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitOpacity = value;
+            s.WebkitOpacity = value;
             return;
         }
-        if (nameof(webkitOrder).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitOrder).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitOrder = value;
+            s.WebkitOrder = value;
             return;
         }
-        if (nameof(webkitPaddingAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPaddingAfter).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPaddingAfter = value;
+            s.WebkitPaddingAfter = value;
             return;
         }
-        if (nameof(webkitPaddingBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPaddingBefore).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPaddingBefore = value;
+            s.WebkitPaddingBefore = value;
             return;
         }
-        if (nameof(webkitPaddingEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPaddingEnd).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPaddingEnd = value;
+            s.WebkitPaddingEnd = value;
             return;
         }
-        if (nameof(webkitPaddingStart).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPaddingStart).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPaddingStart = value;
+            s.WebkitPaddingStart = value;
             return;
         }
-        if (nameof(webkitPerspective).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPerspective).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPerspective = value;
+            s.WebkitPerspective = value;
             return;
         }
-        if (nameof(webkitPerspectiveOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPerspectiveOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPerspectiveOrigin = value;
+            s.WebkitPerspectiveOrigin = value;
             return;
         }
-        if (nameof(webkitPerspectiveOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPerspectiveOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPerspectiveOriginX = value;
+            s.WebkitPerspectiveOriginX = value;
             return;
         }
-        if (nameof(webkitPerspectiveOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPerspectiveOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPerspectiveOriginY = value;
+            s.WebkitPerspectiveOriginY = value;
             return;
         }
-        if (nameof(webkitPrintColorAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitPrintColorAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitPrintColorAdjust = value;
+            s.WebkitPrintColorAdjust = value;
             return;
         }
-        if (nameof(webkitRtlOrdering).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitRtlOrdering).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitRtlOrdering = value;
+            s.WebkitRtlOrdering = value;
             return;
         }
-        if (nameof(webkitRubyPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitRubyPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitRubyPosition = value;
+            s.WebkitRubyPosition = value;
             return;
         }
-        if (nameof(webkitShapeImageThreshold).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitShapeImageThreshold).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitShapeImageThreshold = value;
+            s.WebkitShapeImageThreshold = value;
             return;
         }
-        if (nameof(webkitShapeMargin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitShapeMargin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitShapeMargin = value;
+            s.WebkitShapeMargin = value;
             return;
         }
-        if (nameof(webkitShapeOutside).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitShapeOutside).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitShapeOutside = value;
+            s.WebkitShapeOutside = value;
             return;
         }
-        if (nameof(webkitTapHighlightColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTapHighlightColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTapHighlightColor = value;
+            s.WebkitTapHighlightColor = value;
             return;
         }
-        if (nameof(webkitTextCombine).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextCombine).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextCombine = value;
+            s.WebkitTextCombine = value;
             return;
         }
-        if (nameof(webkitTextDecorationsInEffect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextDecorationsInEffect).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextDecorationsInEffect = value;
+            s.WebkitTextDecorationsInEffect = value;
             return;
         }
-        if (nameof(webkitTextEmphasis).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextEmphasis).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextEmphasis = value;
+            s.WebkitTextEmphasis = value;
             return;
         }
-        if (nameof(webkitTextEmphasisColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextEmphasisColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextEmphasisColor = value;
+            s.WebkitTextEmphasisColor = value;
             return;
         }
-        if (nameof(webkitTextEmphasisPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextEmphasisPosition).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextEmphasisPosition = value;
+            s.WebkitTextEmphasisPosition = value;
             return;
         }
-        if (nameof(webkitTextEmphasisStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextEmphasisStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextEmphasisStyle = value;
+            s.WebkitTextEmphasisStyle = value;
             return;
         }
-        if (nameof(webkitTextFillColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextFillColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextFillColor = value;
+            s.WebkitTextFillColor = value;
             return;
         }
-        if (nameof(webkitTextOrientation).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextOrientation).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextOrientation = value;
+            s.WebkitTextOrientation = value;
             return;
         }
-        if (nameof(webkitTextSecurity).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextSecurity).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextSecurity = value;
+            s.WebkitTextSecurity = value;
             return;
         }
-        if (nameof(webkitTextSizeAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextSizeAdjust).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextSizeAdjust = value;
+            s.WebkitTextSizeAdjust = value;
             return;
         }
-        if (nameof(webkitTextStroke).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextStroke).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextStroke = value;
+            s.WebkitTextStroke = value;
             return;
         }
-        if (nameof(webkitTextStrokeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextStrokeColor).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextStrokeColor = value;
+            s.WebkitTextStrokeColor = value;
             return;
         }
-        if (nameof(webkitTextStrokeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTextStrokeWidth).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTextStrokeWidth = value;
+            s.WebkitTextStrokeWidth = value;
             return;
         }
-        if (nameof(webkitTransform).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransform).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransform = value;
+            s.WebkitTransform = value;
             return;
         }
-        if (nameof(webkitTransformOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformOrigin).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransformOrigin = value;
+            s.WebkitTransformOrigin = value;
             return;
         }
-        if (nameof(webkitTransformOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformOriginX).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransformOriginX = value;
+            s.WebkitTransformOriginX = value;
             return;
         }
-        if (nameof(webkitTransformOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformOriginY).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransformOriginY = value;
+            s.WebkitTransformOriginY = value;
             return;
         }
-        if (nameof(webkitTransformOriginZ).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformOriginZ).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransformOriginZ = value;
+            s.WebkitTransformOriginZ = value;
             return;
         }
-        if (nameof(webkitTransformStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransformStyle).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransformStyle = value;
+            s.WebkitTransformStyle = value;
             return;
         }
-        if (nameof(webkitTransition).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransition).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransition = value;
+            s.WebkitTransition = value;
             return;
         }
-        if (nameof(webkitTransitionDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransitionDelay).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransitionDelay = value;
+            s.WebkitTransitionDelay = value;
             return;
         }
-        if (nameof(webkitTransitionDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransitionDuration).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransitionDuration = value;
+            s.WebkitTransitionDuration = value;
             return;
         }
-        if (nameof(webkitTransitionProperty).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransitionProperty).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransitionProperty = value;
+            s.WebkitTransitionProperty = value;
             return;
         }
-        if (nameof(webkitTransitionTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitTransitionTimingFunction).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitTransitionTimingFunction = value;
+            s.WebkitTransitionTimingFunction = value;
             return;
         }
-        if (nameof(webkitUserDrag).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitUserDrag).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitUserDrag = value;
+            s.WebkitUserDrag = value;
             return;
         }
-        if (nameof(webkitUserModify).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitUserModify).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitUserModify = value;
+            s.WebkitUserModify = value;
             return;
         }
-        if (nameof(webkitUserSelect).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitUserSelect).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitUserSelect = value;
+            s.WebkitUserSelect = value;
             return;
         }
-        if (nameof(webkitWritingMode).Equals(name, StringComparison.OrdinalIgnoreCase))
+        if (nameof(WebkitWritingMode).Equals(name, StringComparison.OrdinalIgnoreCase))
         {
-            s.webkitWritingMode = value;
+            s.WebkitWritingMode = value;
             return;
         }
         if (nameof(whiteSpace).Equals(name, StringComparison.OrdinalIgnoreCase))
@@ -10646,617 +10646,617 @@ partial class Style
         {
             target.visibility = source.visibility;
         }
-        if (source.webkitAlignContent != null)
+        if (source.WebkitAlignContent != null)
         {
-            target.webkitAlignContent = source.webkitAlignContent;
+            target.WebkitAlignContent = source.WebkitAlignContent;
         }
-        if (source.webkitAlignItems != null)
+        if (source.WebkitAlignItems != null)
         {
-            target.webkitAlignItems = source.webkitAlignItems;
+            target.WebkitAlignItems = source.WebkitAlignItems;
         }
-        if (source.webkitAlignSelf != null)
+        if (source.WebkitAlignSelf != null)
         {
-            target.webkitAlignSelf = source.webkitAlignSelf;
+            target.WebkitAlignSelf = source.WebkitAlignSelf;
         }
-        if (source.webkitAnimation != null)
+        if (source.WebkitAnimation != null)
         {
-            target.webkitAnimation = source.webkitAnimation;
+            target.WebkitAnimation = source.WebkitAnimation;
         }
-        if (source.webkitAnimationDelay != null)
+        if (source.WebkitAnimationDelay != null)
         {
-            target.webkitAnimationDelay = source.webkitAnimationDelay;
+            target.WebkitAnimationDelay = source.WebkitAnimationDelay;
         }
-        if (source.webkitAnimationDirection != null)
+        if (source.WebkitAnimationDirection != null)
         {
-            target.webkitAnimationDirection = source.webkitAnimationDirection;
+            target.WebkitAnimationDirection = source.WebkitAnimationDirection;
         }
-        if (source.webkitAnimationDuration != null)
+        if (source.WebkitAnimationDuration != null)
         {
-            target.webkitAnimationDuration = source.webkitAnimationDuration;
+            target.WebkitAnimationDuration = source.WebkitAnimationDuration;
         }
-        if (source.webkitAnimationFillMode != null)
+        if (source.WebkitAnimationFillMode != null)
         {
-            target.webkitAnimationFillMode = source.webkitAnimationFillMode;
+            target.WebkitAnimationFillMode = source.WebkitAnimationFillMode;
         }
-        if (source.webkitAnimationIterationCount != null)
+        if (source.WebkitAnimationIterationCount != null)
         {
-            target.webkitAnimationIterationCount = source.webkitAnimationIterationCount;
+            target.WebkitAnimationIterationCount = source.WebkitAnimationIterationCount;
         }
-        if (source.webkitAnimationName != null)
+        if (source.WebkitAnimationName != null)
         {
-            target.webkitAnimationName = source.webkitAnimationName;
+            target.WebkitAnimationName = source.WebkitAnimationName;
         }
-        if (source.webkitAnimationPlayState != null)
+        if (source.WebkitAnimationPlayState != null)
         {
-            target.webkitAnimationPlayState = source.webkitAnimationPlayState;
+            target.WebkitAnimationPlayState = source.WebkitAnimationPlayState;
         }
-        if (source.webkitAnimationTimingFunction != null)
+        if (source.WebkitAnimationTimingFunction != null)
         {
-            target.webkitAnimationTimingFunction = source.webkitAnimationTimingFunction;
+            target.WebkitAnimationTimingFunction = source.WebkitAnimationTimingFunction;
         }
-        if (source.webkitAppRegion != null)
+        if (source.WebkitAppRegion != null)
         {
-            target.webkitAppRegion = source.webkitAppRegion;
+            target.WebkitAppRegion = source.WebkitAppRegion;
         }
-        if (source.webkitAppearance != null)
+        if (source.WebkitAppearance != null)
         {
-            target.webkitAppearance = source.webkitAppearance;
+            target.WebkitAppearance = source.WebkitAppearance;
         }
-        if (source.webkitBackfaceVisibility != null)
+        if (source.WebkitBackfaceVisibility != null)
         {
-            target.webkitBackfaceVisibility = source.webkitBackfaceVisibility;
+            target.WebkitBackfaceVisibility = source.WebkitBackfaceVisibility;
         }
-        if (source.webkitBackgroundClip != null)
+        if (source.WebkitBackgroundClip != null)
         {
-            target.webkitBackgroundClip = source.webkitBackgroundClip;
+            target.WebkitBackgroundClip = source.WebkitBackgroundClip;
         }
-        if (source.webkitBackgroundOrigin != null)
+        if (source.WebkitBackgroundOrigin != null)
         {
-            target.webkitBackgroundOrigin = source.webkitBackgroundOrigin;
+            target.WebkitBackgroundOrigin = source.WebkitBackgroundOrigin;
         }
-        if (source.webkitBackgroundSize != null)
+        if (source.WebkitBackgroundSize != null)
         {
-            target.webkitBackgroundSize = source.webkitBackgroundSize;
+            target.WebkitBackgroundSize = source.WebkitBackgroundSize;
         }
-        if (source.webkitBorderAfter != null)
+        if (source.WebkitBorderAfter != null)
         {
-            target.webkitBorderAfter = source.webkitBorderAfter;
+            target.WebkitBorderAfter = source.WebkitBorderAfter;
         }
-        if (source.webkitBorderAfterColor != null)
+        if (source.WebkitBorderAfterColor != null)
         {
-            target.webkitBorderAfterColor = source.webkitBorderAfterColor;
+            target.WebkitBorderAfterColor = source.WebkitBorderAfterColor;
         }
-        if (source.webkitBorderAfterStyle != null)
+        if (source.WebkitBorderAfterStyle != null)
         {
-            target.webkitBorderAfterStyle = source.webkitBorderAfterStyle;
+            target.WebkitBorderAfterStyle = source.WebkitBorderAfterStyle;
         }
-        if (source.webkitBorderAfterWidth != null)
+        if (source.WebkitBorderAfterWidth != null)
         {
-            target.webkitBorderAfterWidth = source.webkitBorderAfterWidth;
+            target.WebkitBorderAfterWidth = source.WebkitBorderAfterWidth;
         }
-        if (source.webkitBorderBefore != null)
+        if (source.WebkitBorderBefore != null)
         {
-            target.webkitBorderBefore = source.webkitBorderBefore;
+            target.WebkitBorderBefore = source.WebkitBorderBefore;
         }
-        if (source.webkitBorderBeforeColor != null)
+        if (source.WebkitBorderBeforeColor != null)
         {
-            target.webkitBorderBeforeColor = source.webkitBorderBeforeColor;
+            target.WebkitBorderBeforeColor = source.WebkitBorderBeforeColor;
         }
-        if (source.webkitBorderBeforeStyle != null)
+        if (source.WebkitBorderBeforeStyle != null)
         {
-            target.webkitBorderBeforeStyle = source.webkitBorderBeforeStyle;
+            target.WebkitBorderBeforeStyle = source.WebkitBorderBeforeStyle;
         }
-        if (source.webkitBorderBeforeWidth != null)
+        if (source.WebkitBorderBeforeWidth != null)
         {
-            target.webkitBorderBeforeWidth = source.webkitBorderBeforeWidth;
+            target.WebkitBorderBeforeWidth = source.WebkitBorderBeforeWidth;
         }
-        if (source.webkitBorderBottomLeftRadius != null)
+        if (source.WebkitBorderBottomLeftRadius != null)
         {
-            target.webkitBorderBottomLeftRadius = source.webkitBorderBottomLeftRadius;
+            target.WebkitBorderBottomLeftRadius = source.WebkitBorderBottomLeftRadius;
         }
-        if (source.webkitBorderBottomRightRadius != null)
+        if (source.WebkitBorderBottomRightRadius != null)
         {
-            target.webkitBorderBottomRightRadius = source.webkitBorderBottomRightRadius;
+            target.WebkitBorderBottomRightRadius = source.WebkitBorderBottomRightRadius;
         }
-        if (source.webkitBorderEnd != null)
+        if (source.WebkitBorderEnd != null)
         {
-            target.webkitBorderEnd = source.webkitBorderEnd;
+            target.WebkitBorderEnd = source.WebkitBorderEnd;
         }
-        if (source.webkitBorderEndColor != null)
+        if (source.WebkitBorderEndColor != null)
         {
-            target.webkitBorderEndColor = source.webkitBorderEndColor;
+            target.WebkitBorderEndColor = source.WebkitBorderEndColor;
         }
-        if (source.webkitBorderEndStyle != null)
+        if (source.WebkitBorderEndStyle != null)
         {
-            target.webkitBorderEndStyle = source.webkitBorderEndStyle;
+            target.WebkitBorderEndStyle = source.WebkitBorderEndStyle;
         }
-        if (source.webkitBorderEndWidth != null)
+        if (source.WebkitBorderEndWidth != null)
         {
-            target.webkitBorderEndWidth = source.webkitBorderEndWidth;
+            target.WebkitBorderEndWidth = source.WebkitBorderEndWidth;
         }
-        if (source.webkitBorderHorizontalSpacing != null)
+        if (source.WebkitBorderHorizontalSpacing != null)
         {
-            target.webkitBorderHorizontalSpacing = source.webkitBorderHorizontalSpacing;
+            target.WebkitBorderHorizontalSpacing = source.WebkitBorderHorizontalSpacing;
         }
-        if (source.webkitBorderImage != null)
+        if (source.WebkitBorderImage != null)
         {
-            target.webkitBorderImage = source.webkitBorderImage;
+            target.WebkitBorderImage = source.WebkitBorderImage;
         }
-        if (source.webkitBorderRadius != null)
+        if (source.WebkitBorderRadius != null)
         {
-            target.webkitBorderRadius = source.webkitBorderRadius;
+            target.WebkitBorderRadius = source.WebkitBorderRadius;
         }
-        if (source.webkitBorderStart != null)
+        if (source.WebkitBorderStart != null)
         {
-            target.webkitBorderStart = source.webkitBorderStart;
+            target.WebkitBorderStart = source.WebkitBorderStart;
         }
-        if (source.webkitBorderStartColor != null)
+        if (source.WebkitBorderStartColor != null)
         {
-            target.webkitBorderStartColor = source.webkitBorderStartColor;
+            target.WebkitBorderStartColor = source.WebkitBorderStartColor;
         }
-        if (source.webkitBorderStartStyle != null)
+        if (source.WebkitBorderStartStyle != null)
         {
-            target.webkitBorderStartStyle = source.webkitBorderStartStyle;
+            target.WebkitBorderStartStyle = source.WebkitBorderStartStyle;
         }
-        if (source.webkitBorderStartWidth != null)
+        if (source.WebkitBorderStartWidth != null)
         {
-            target.webkitBorderStartWidth = source.webkitBorderStartWidth;
+            target.WebkitBorderStartWidth = source.WebkitBorderStartWidth;
         }
-        if (source.webkitBorderTopLeftRadius != null)
+        if (source.WebkitBorderTopLeftRadius != null)
         {
-            target.webkitBorderTopLeftRadius = source.webkitBorderTopLeftRadius;
+            target.WebkitBorderTopLeftRadius = source.WebkitBorderTopLeftRadius;
         }
-        if (source.webkitBorderTopRightRadius != null)
+        if (source.WebkitBorderTopRightRadius != null)
         {
-            target.webkitBorderTopRightRadius = source.webkitBorderTopRightRadius;
+            target.WebkitBorderTopRightRadius = source.WebkitBorderTopRightRadius;
         }
-        if (source.webkitBorderVerticalSpacing != null)
+        if (source.WebkitBorderVerticalSpacing != null)
         {
-            target.webkitBorderVerticalSpacing = source.webkitBorderVerticalSpacing;
+            target.WebkitBorderVerticalSpacing = source.WebkitBorderVerticalSpacing;
         }
-        if (source.webkitBoxAlign != null)
+        if (source.WebkitBoxAlign != null)
         {
-            target.webkitBoxAlign = source.webkitBoxAlign;
+            target.WebkitBoxAlign = source.WebkitBoxAlign;
         }
-        if (source.webkitBoxDecorationBreak != null)
+        if (source.WebkitBoxDecorationBreak != null)
         {
-            target.webkitBoxDecorationBreak = source.webkitBoxDecorationBreak;
+            target.WebkitBoxDecorationBreak = source.WebkitBoxDecorationBreak;
         }
-        if (source.webkitBoxDirection != null)
+        if (source.WebkitBoxDirection != null)
         {
-            target.webkitBoxDirection = source.webkitBoxDirection;
+            target.WebkitBoxDirection = source.WebkitBoxDirection;
         }
-        if (source.webkitBoxFlex != null)
+        if (source.WebkitBoxFlex != null)
         {
-            target.webkitBoxFlex = source.webkitBoxFlex;
+            target.WebkitBoxFlex = source.WebkitBoxFlex;
         }
-        if (source.webkitBoxOrdinalGroup != null)
+        if (source.WebkitBoxOrdinalGroup != null)
         {
-            target.webkitBoxOrdinalGroup = source.webkitBoxOrdinalGroup;
+            target.WebkitBoxOrdinalGroup = source.WebkitBoxOrdinalGroup;
         }
-        if (source.webkitBoxOrient != null)
+        if (source.WebkitBoxOrient != null)
         {
-            target.webkitBoxOrient = source.webkitBoxOrient;
+            target.WebkitBoxOrient = source.WebkitBoxOrient;
         }
-        if (source.webkitBoxPack != null)
+        if (source.WebkitBoxPack != null)
         {
-            target.webkitBoxPack = source.webkitBoxPack;
+            target.WebkitBoxPack = source.WebkitBoxPack;
         }
-        if (source.webkitBoxReflect != null)
+        if (source.WebkitBoxReflect != null)
         {
-            target.webkitBoxReflect = source.webkitBoxReflect;
+            target.WebkitBoxReflect = source.WebkitBoxReflect;
         }
-        if (source.webkitBoxShadow != null)
+        if (source.WebkitBoxShadow != null)
         {
-            target.webkitBoxShadow = source.webkitBoxShadow;
+            target.WebkitBoxShadow = source.WebkitBoxShadow;
         }
-        if (source.webkitBoxSizing != null)
+        if (source.WebkitBoxSizing != null)
         {
-            target.webkitBoxSizing = source.webkitBoxSizing;
+            target.WebkitBoxSizing = source.WebkitBoxSizing;
         }
-        if (source.webkitClipPath != null)
+        if (source.WebkitClipPath != null)
         {
-            target.webkitClipPath = source.webkitClipPath;
+            target.WebkitClipPath = source.WebkitClipPath;
         }
-        if (source.webkitColumnBreakAfter != null)
+        if (source.WebkitColumnBreakAfter != null)
         {
-            target.webkitColumnBreakAfter = source.webkitColumnBreakAfter;
+            target.WebkitColumnBreakAfter = source.WebkitColumnBreakAfter;
         }
-        if (source.webkitColumnBreakBefore != null)
+        if (source.WebkitColumnBreakBefore != null)
         {
-            target.webkitColumnBreakBefore = source.webkitColumnBreakBefore;
+            target.WebkitColumnBreakBefore = source.WebkitColumnBreakBefore;
         }
-        if (source.webkitColumnBreakInside != null)
+        if (source.WebkitColumnBreakInside != null)
         {
-            target.webkitColumnBreakInside = source.webkitColumnBreakInside;
+            target.WebkitColumnBreakInside = source.WebkitColumnBreakInside;
         }
-        if (source.webkitColumnCount != null)
+        if (source.WebkitColumnCount != null)
         {
-            target.webkitColumnCount = source.webkitColumnCount;
+            target.WebkitColumnCount = source.WebkitColumnCount;
         }
-        if (source.webkitColumnGap != null)
+        if (source.WebkitColumnGap != null)
         {
-            target.webkitColumnGap = source.webkitColumnGap;
+            target.WebkitColumnGap = source.WebkitColumnGap;
         }
-        if (source.webkitColumnRule != null)
+        if (source.WebkitColumnRule != null)
         {
-            target.webkitColumnRule = source.webkitColumnRule;
+            target.WebkitColumnRule = source.WebkitColumnRule;
         }
-        if (source.webkitColumnRuleColor != null)
+        if (source.WebkitColumnRuleColor != null)
         {
-            target.webkitColumnRuleColor = source.webkitColumnRuleColor;
+            target.WebkitColumnRuleColor = source.WebkitColumnRuleColor;
         }
-        if (source.webkitColumnRuleStyle != null)
+        if (source.WebkitColumnRuleStyle != null)
         {
-            target.webkitColumnRuleStyle = source.webkitColumnRuleStyle;
+            target.WebkitColumnRuleStyle = source.WebkitColumnRuleStyle;
         }
-        if (source.webkitColumnRuleWidth != null)
+        if (source.WebkitColumnRuleWidth != null)
         {
-            target.webkitColumnRuleWidth = source.webkitColumnRuleWidth;
+            target.WebkitColumnRuleWidth = source.WebkitColumnRuleWidth;
         }
-        if (source.webkitColumnSpan != null)
+        if (source.WebkitColumnSpan != null)
         {
-            target.webkitColumnSpan = source.webkitColumnSpan;
+            target.WebkitColumnSpan = source.WebkitColumnSpan;
         }
-        if (source.webkitColumnWidth != null)
+        if (source.WebkitColumnWidth != null)
         {
-            target.webkitColumnWidth = source.webkitColumnWidth;
+            target.WebkitColumnWidth = source.WebkitColumnWidth;
         }
-        if (source.webkitColumns != null)
+        if (source.WebkitColumns != null)
         {
-            target.webkitColumns = source.webkitColumns;
+            target.WebkitColumns = source.WebkitColumns;
         }
-        if (source.webkitFilter != null)
+        if (source.WebkitFilter != null)
         {
-            target.webkitFilter = source.webkitFilter;
+            target.WebkitFilter = source.WebkitFilter;
         }
-        if (source.webkitFlex != null)
+        if (source.WebkitFlex != null)
         {
-            target.webkitFlex = source.webkitFlex;
+            target.WebkitFlex = source.WebkitFlex;
         }
-        if (source.webkitFlexBasis != null)
+        if (source.WebkitFlexBasis != null)
         {
-            target.webkitFlexBasis = source.webkitFlexBasis;
+            target.WebkitFlexBasis = source.WebkitFlexBasis;
         }
-        if (source.webkitFlexDirection != null)
+        if (source.WebkitFlexDirection != null)
         {
-            target.webkitFlexDirection = source.webkitFlexDirection;
+            target.WebkitFlexDirection = source.WebkitFlexDirection;
         }
-        if (source.webkitFlexFlow != null)
+        if (source.WebkitFlexFlow != null)
         {
-            target.webkitFlexFlow = source.webkitFlexFlow;
+            target.WebkitFlexFlow = source.WebkitFlexFlow;
         }
-        if (source.webkitFlexGrow != null)
+        if (source.WebkitFlexGrow != null)
         {
-            target.webkitFlexGrow = source.webkitFlexGrow;
+            target.WebkitFlexGrow = source.WebkitFlexGrow;
         }
-        if (source.webkitFlexShrink != null)
+        if (source.WebkitFlexShrink != null)
         {
-            target.webkitFlexShrink = source.webkitFlexShrink;
+            target.WebkitFlexShrink = source.WebkitFlexShrink;
         }
-        if (source.webkitFlexWrap != null)
+        if (source.WebkitFlexWrap != null)
         {
-            target.webkitFlexWrap = source.webkitFlexWrap;
+            target.WebkitFlexWrap = source.WebkitFlexWrap;
         }
-        if (source.webkitFontFeatureSettings != null)
+        if (source.WebkitFontFeatureSettings != null)
         {
-            target.webkitFontFeatureSettings = source.webkitFontFeatureSettings;
+            target.WebkitFontFeatureSettings = source.WebkitFontFeatureSettings;
         }
-        if (source.webkitFontSmoothing != null)
+        if (source.WebkitFontSmoothing != null)
         {
-            target.webkitFontSmoothing = source.webkitFontSmoothing;
+            target.WebkitFontSmoothing = source.WebkitFontSmoothing;
         }
-        if (source.webkitHyphenateCharacter != null)
+        if (source.WebkitHyphenateCharacter != null)
         {
-            target.webkitHyphenateCharacter = source.webkitHyphenateCharacter;
+            target.WebkitHyphenateCharacter = source.WebkitHyphenateCharacter;
         }
-        if (source.webkitJustifyContent != null)
+        if (source.WebkitJustifyContent != null)
         {
-            target.webkitJustifyContent = source.webkitJustifyContent;
+            target.WebkitJustifyContent = source.WebkitJustifyContent;
         }
-        if (source.webkitLineBreak != null)
+        if (source.WebkitLineBreak != null)
         {
-            target.webkitLineBreak = source.webkitLineBreak;
+            target.WebkitLineBreak = source.WebkitLineBreak;
         }
-        if (source.webkitLineClamp != null)
+        if (source.WebkitLineClamp != null)
         {
-            target.webkitLineClamp = source.webkitLineClamp;
+            target.WebkitLineClamp = source.WebkitLineClamp;
         }
-        if (source.webkitLocale != null)
+        if (source.WebkitLocale != null)
         {
-            target.webkitLocale = source.webkitLocale;
+            target.WebkitLocale = source.WebkitLocale;
         }
-        if (source.webkitLogicalHeight != null)
+        if (source.WebkitLogicalHeight != null)
         {
-            target.webkitLogicalHeight = source.webkitLogicalHeight;
+            target.WebkitLogicalHeight = source.WebkitLogicalHeight;
         }
-        if (source.webkitLogicalWidth != null)
+        if (source.WebkitLogicalWidth != null)
         {
-            target.webkitLogicalWidth = source.webkitLogicalWidth;
+            target.WebkitLogicalWidth = source.WebkitLogicalWidth;
         }
-        if (source.webkitMarginAfter != null)
+        if (source.WebkitMarginAfter != null)
         {
-            target.webkitMarginAfter = source.webkitMarginAfter;
+            target.WebkitMarginAfter = source.WebkitMarginAfter;
         }
-        if (source.webkitMarginBefore != null)
+        if (source.WebkitMarginBefore != null)
         {
-            target.webkitMarginBefore = source.webkitMarginBefore;
+            target.WebkitMarginBefore = source.WebkitMarginBefore;
         }
-        if (source.webkitMarginEnd != null)
+        if (source.WebkitMarginEnd != null)
         {
-            target.webkitMarginEnd = source.webkitMarginEnd;
+            target.WebkitMarginEnd = source.WebkitMarginEnd;
         }
-        if (source.webkitMarginStart != null)
+        if (source.WebkitMarginStart != null)
         {
-            target.webkitMarginStart = source.webkitMarginStart;
+            target.WebkitMarginStart = source.WebkitMarginStart;
         }
-        if (source.webkitMask != null)
+        if (source.WebkitMask != null)
         {
-            target.webkitMask = source.webkitMask;
+            target.WebkitMask = source.WebkitMask;
         }
-        if (source.webkitMaskBoxImage != null)
+        if (source.WebkitMaskBoxImage != null)
         {
-            target.webkitMaskBoxImage = source.webkitMaskBoxImage;
+            target.WebkitMaskBoxImage = source.WebkitMaskBoxImage;
         }
-        if (source.webkitMaskBoxImageOutset != null)
+        if (source.WebkitMaskBoxImageOutset != null)
         {
-            target.webkitMaskBoxImageOutset = source.webkitMaskBoxImageOutset;
+            target.WebkitMaskBoxImageOutset = source.WebkitMaskBoxImageOutset;
         }
-        if (source.webkitMaskBoxImageRepeat != null)
+        if (source.WebkitMaskBoxImageRepeat != null)
         {
-            target.webkitMaskBoxImageRepeat = source.webkitMaskBoxImageRepeat;
+            target.WebkitMaskBoxImageRepeat = source.WebkitMaskBoxImageRepeat;
         }
-        if (source.webkitMaskBoxImageSlice != null)
+        if (source.WebkitMaskBoxImageSlice != null)
         {
-            target.webkitMaskBoxImageSlice = source.webkitMaskBoxImageSlice;
+            target.WebkitMaskBoxImageSlice = source.WebkitMaskBoxImageSlice;
         }
-        if (source.webkitMaskBoxImageSource != null)
+        if (source.WebkitMaskBoxImageSource != null)
         {
-            target.webkitMaskBoxImageSource = source.webkitMaskBoxImageSource;
+            target.WebkitMaskBoxImageSource = source.WebkitMaskBoxImageSource;
         }
-        if (source.webkitMaskBoxImageWidth != null)
+        if (source.WebkitMaskBoxImageWidth != null)
         {
-            target.webkitMaskBoxImageWidth = source.webkitMaskBoxImageWidth;
+            target.WebkitMaskBoxImageWidth = source.WebkitMaskBoxImageWidth;
         }
-        if (source.webkitMaskClip != null)
+        if (source.WebkitMaskClip != null)
         {
-            target.webkitMaskClip = source.webkitMaskClip;
+            target.WebkitMaskClip = source.WebkitMaskClip;
         }
-        if (source.webkitMaskComposite != null)
+        if (source.WebkitMaskComposite != null)
         {
-            target.webkitMaskComposite = source.webkitMaskComposite;
+            target.WebkitMaskComposite = source.WebkitMaskComposite;
         }
-        if (source.webkitMaskImage != null)
+        if (source.WebkitMaskImage != null)
         {
-            target.webkitMaskImage = source.webkitMaskImage;
+            target.WebkitMaskImage = source.WebkitMaskImage;
         }
-        if (source.webkitMaskOrigin != null)
+        if (source.WebkitMaskOrigin != null)
         {
-            target.webkitMaskOrigin = source.webkitMaskOrigin;
+            target.WebkitMaskOrigin = source.WebkitMaskOrigin;
         }
-        if (source.webkitMaskPosition != null)
+        if (source.WebkitMaskPosition != null)
         {
-            target.webkitMaskPosition = source.webkitMaskPosition;
+            target.WebkitMaskPosition = source.WebkitMaskPosition;
         }
-        if (source.webkitMaskPositionX != null)
+        if (source.WebkitMaskPositionX != null)
         {
-            target.webkitMaskPositionX = source.webkitMaskPositionX;
+            target.WebkitMaskPositionX = source.WebkitMaskPositionX;
         }
-        if (source.webkitMaskPositionY != null)
+        if (source.WebkitMaskPositionY != null)
         {
-            target.webkitMaskPositionY = source.webkitMaskPositionY;
+            target.WebkitMaskPositionY = source.WebkitMaskPositionY;
         }
-        if (source.webkitMaskRepeat != null)
+        if (source.WebkitMaskRepeat != null)
         {
-            target.webkitMaskRepeat = source.webkitMaskRepeat;
+            target.WebkitMaskRepeat = source.WebkitMaskRepeat;
         }
-        if (source.webkitMaskRepeatX != null)
+        if (source.WebkitMaskRepeatX != null)
         {
-            target.webkitMaskRepeatX = source.webkitMaskRepeatX;
+            target.WebkitMaskRepeatX = source.WebkitMaskRepeatX;
         }
-        if (source.webkitMaskRepeatY != null)
+        if (source.WebkitMaskRepeatY != null)
         {
-            target.webkitMaskRepeatY = source.webkitMaskRepeatY;
+            target.WebkitMaskRepeatY = source.WebkitMaskRepeatY;
         }
-        if (source.webkitMaskSize != null)
+        if (source.WebkitMaskSize != null)
         {
-            target.webkitMaskSize = source.webkitMaskSize;
+            target.WebkitMaskSize = source.WebkitMaskSize;
         }
-        if (source.webkitMaxLogicalHeight != null)
+        if (source.WebkitMaxLogicalHeight != null)
         {
-            target.webkitMaxLogicalHeight = source.webkitMaxLogicalHeight;
+            target.WebkitMaxLogicalHeight = source.WebkitMaxLogicalHeight;
         }
-        if (source.webkitMaxLogicalWidth != null)
+        if (source.WebkitMaxLogicalWidth != null)
         {
-            target.webkitMaxLogicalWidth = source.webkitMaxLogicalWidth;
+            target.WebkitMaxLogicalWidth = source.WebkitMaxLogicalWidth;
         }
-        if (source.webkitMinLogicalHeight != null)
+        if (source.WebkitMinLogicalHeight != null)
         {
-            target.webkitMinLogicalHeight = source.webkitMinLogicalHeight;
+            target.WebkitMinLogicalHeight = source.WebkitMinLogicalHeight;
         }
-        if (source.webkitMinLogicalWidth != null)
+        if (source.WebkitMinLogicalWidth != null)
         {
-            target.webkitMinLogicalWidth = source.webkitMinLogicalWidth;
+            target.WebkitMinLogicalWidth = source.WebkitMinLogicalWidth;
         }
-        if (source.webkitOpacity != null)
+        if (source.WebkitOpacity != null)
         {
-            target.webkitOpacity = source.webkitOpacity;
+            target.WebkitOpacity = source.WebkitOpacity;
         }
-        if (source.webkitOrder != null)
+        if (source.WebkitOrder != null)
         {
-            target.webkitOrder = source.webkitOrder;
+            target.WebkitOrder = source.WebkitOrder;
         }
-        if (source.webkitPaddingAfter != null)
+        if (source.WebkitPaddingAfter != null)
         {
-            target.webkitPaddingAfter = source.webkitPaddingAfter;
+            target.WebkitPaddingAfter = source.WebkitPaddingAfter;
         }
-        if (source.webkitPaddingBefore != null)
+        if (source.WebkitPaddingBefore != null)
         {
-            target.webkitPaddingBefore = source.webkitPaddingBefore;
+            target.WebkitPaddingBefore = source.WebkitPaddingBefore;
         }
-        if (source.webkitPaddingEnd != null)
+        if (source.WebkitPaddingEnd != null)
         {
-            target.webkitPaddingEnd = source.webkitPaddingEnd;
+            target.WebkitPaddingEnd = source.WebkitPaddingEnd;
         }
-        if (source.webkitPaddingStart != null)
+        if (source.WebkitPaddingStart != null)
         {
-            target.webkitPaddingStart = source.webkitPaddingStart;
+            target.WebkitPaddingStart = source.WebkitPaddingStart;
         }
-        if (source.webkitPerspective != null)
+        if (source.WebkitPerspective != null)
         {
-            target.webkitPerspective = source.webkitPerspective;
+            target.WebkitPerspective = source.WebkitPerspective;
         }
-        if (source.webkitPerspectiveOrigin != null)
+        if (source.WebkitPerspectiveOrigin != null)
         {
-            target.webkitPerspectiveOrigin = source.webkitPerspectiveOrigin;
+            target.WebkitPerspectiveOrigin = source.WebkitPerspectiveOrigin;
         }
-        if (source.webkitPerspectiveOriginX != null)
+        if (source.WebkitPerspectiveOriginX != null)
         {
-            target.webkitPerspectiveOriginX = source.webkitPerspectiveOriginX;
+            target.WebkitPerspectiveOriginX = source.WebkitPerspectiveOriginX;
         }
-        if (source.webkitPerspectiveOriginY != null)
+        if (source.WebkitPerspectiveOriginY != null)
         {
-            target.webkitPerspectiveOriginY = source.webkitPerspectiveOriginY;
+            target.WebkitPerspectiveOriginY = source.WebkitPerspectiveOriginY;
         }
-        if (source.webkitPrintColorAdjust != null)
+        if (source.WebkitPrintColorAdjust != null)
         {
-            target.webkitPrintColorAdjust = source.webkitPrintColorAdjust;
+            target.WebkitPrintColorAdjust = source.WebkitPrintColorAdjust;
         }
-        if (source.webkitRtlOrdering != null)
+        if (source.WebkitRtlOrdering != null)
         {
-            target.webkitRtlOrdering = source.webkitRtlOrdering;
+            target.WebkitRtlOrdering = source.WebkitRtlOrdering;
         }
-        if (source.webkitRubyPosition != null)
+        if (source.WebkitRubyPosition != null)
         {
-            target.webkitRubyPosition = source.webkitRubyPosition;
+            target.WebkitRubyPosition = source.WebkitRubyPosition;
         }
-        if (source.webkitShapeImageThreshold != null)
+        if (source.WebkitShapeImageThreshold != null)
         {
-            target.webkitShapeImageThreshold = source.webkitShapeImageThreshold;
+            target.WebkitShapeImageThreshold = source.WebkitShapeImageThreshold;
         }
-        if (source.webkitShapeMargin != null)
+        if (source.WebkitShapeMargin != null)
         {
-            target.webkitShapeMargin = source.webkitShapeMargin;
+            target.WebkitShapeMargin = source.WebkitShapeMargin;
         }
-        if (source.webkitShapeOutside != null)
+        if (source.WebkitShapeOutside != null)
         {
-            target.webkitShapeOutside = source.webkitShapeOutside;
+            target.WebkitShapeOutside = source.WebkitShapeOutside;
         }
-        if (source.webkitTapHighlightColor != null)
+        if (source.WebkitTapHighlightColor != null)
         {
-            target.webkitTapHighlightColor = source.webkitTapHighlightColor;
+            target.WebkitTapHighlightColor = source.WebkitTapHighlightColor;
         }
-        if (source.webkitTextCombine != null)
+        if (source.WebkitTextCombine != null)
         {
-            target.webkitTextCombine = source.webkitTextCombine;
+            target.WebkitTextCombine = source.WebkitTextCombine;
         }
-        if (source.webkitTextDecorationsInEffect != null)
+        if (source.WebkitTextDecorationsInEffect != null)
         {
-            target.webkitTextDecorationsInEffect = source.webkitTextDecorationsInEffect;
+            target.WebkitTextDecorationsInEffect = source.WebkitTextDecorationsInEffect;
         }
-        if (source.webkitTextEmphasis != null)
+        if (source.WebkitTextEmphasis != null)
         {
-            target.webkitTextEmphasis = source.webkitTextEmphasis;
+            target.WebkitTextEmphasis = source.WebkitTextEmphasis;
         }
-        if (source.webkitTextEmphasisColor != null)
+        if (source.WebkitTextEmphasisColor != null)
         {
-            target.webkitTextEmphasisColor = source.webkitTextEmphasisColor;
+            target.WebkitTextEmphasisColor = source.WebkitTextEmphasisColor;
         }
-        if (source.webkitTextEmphasisPosition != null)
+        if (source.WebkitTextEmphasisPosition != null)
         {
-            target.webkitTextEmphasisPosition = source.webkitTextEmphasisPosition;
+            target.WebkitTextEmphasisPosition = source.WebkitTextEmphasisPosition;
         }
-        if (source.webkitTextEmphasisStyle != null)
+        if (source.WebkitTextEmphasisStyle != null)
         {
-            target.webkitTextEmphasisStyle = source.webkitTextEmphasisStyle;
+            target.WebkitTextEmphasisStyle = source.WebkitTextEmphasisStyle;
         }
-        if (source.webkitTextFillColor != null)
+        if (source.WebkitTextFillColor != null)
         {
-            target.webkitTextFillColor = source.webkitTextFillColor;
+            target.WebkitTextFillColor = source.WebkitTextFillColor;
         }
-        if (source.webkitTextOrientation != null)
+        if (source.WebkitTextOrientation != null)
         {
-            target.webkitTextOrientation = source.webkitTextOrientation;
+            target.WebkitTextOrientation = source.WebkitTextOrientation;
         }
-        if (source.webkitTextSecurity != null)
+        if (source.WebkitTextSecurity != null)
         {
-            target.webkitTextSecurity = source.webkitTextSecurity;
+            target.WebkitTextSecurity = source.WebkitTextSecurity;
         }
-        if (source.webkitTextSizeAdjust != null)
+        if (source.WebkitTextSizeAdjust != null)
         {
-            target.webkitTextSizeAdjust = source.webkitTextSizeAdjust;
+            target.WebkitTextSizeAdjust = source.WebkitTextSizeAdjust;
         }
-        if (source.webkitTextStroke != null)
+        if (source.WebkitTextStroke != null)
         {
-            target.webkitTextStroke = source.webkitTextStroke;
+            target.WebkitTextStroke = source.WebkitTextStroke;
         }
-        if (source.webkitTextStrokeColor != null)
+        if (source.WebkitTextStrokeColor != null)
         {
-            target.webkitTextStrokeColor = source.webkitTextStrokeColor;
+            target.WebkitTextStrokeColor = source.WebkitTextStrokeColor;
         }
-        if (source.webkitTextStrokeWidth != null)
+        if (source.WebkitTextStrokeWidth != null)
         {
-            target.webkitTextStrokeWidth = source.webkitTextStrokeWidth;
+            target.WebkitTextStrokeWidth = source.WebkitTextStrokeWidth;
         }
-        if (source.webkitTransform != null)
+        if (source.WebkitTransform != null)
         {
-            target.webkitTransform = source.webkitTransform;
+            target.WebkitTransform = source.WebkitTransform;
         }
-        if (source.webkitTransformOrigin != null)
+        if (source.WebkitTransformOrigin != null)
         {
-            target.webkitTransformOrigin = source.webkitTransformOrigin;
+            target.WebkitTransformOrigin = source.WebkitTransformOrigin;
         }
-        if (source.webkitTransformOriginX != null)
+        if (source.WebkitTransformOriginX != null)
         {
-            target.webkitTransformOriginX = source.webkitTransformOriginX;
+            target.WebkitTransformOriginX = source.WebkitTransformOriginX;
         }
-        if (source.webkitTransformOriginY != null)
+        if (source.WebkitTransformOriginY != null)
         {
-            target.webkitTransformOriginY = source.webkitTransformOriginY;
+            target.WebkitTransformOriginY = source.WebkitTransformOriginY;
         }
-        if (source.webkitTransformOriginZ != null)
+        if (source.WebkitTransformOriginZ != null)
         {
-            target.webkitTransformOriginZ = source.webkitTransformOriginZ;
+            target.WebkitTransformOriginZ = source.WebkitTransformOriginZ;
         }
-        if (source.webkitTransformStyle != null)
+        if (source.WebkitTransformStyle != null)
         {
-            target.webkitTransformStyle = source.webkitTransformStyle;
+            target.WebkitTransformStyle = source.WebkitTransformStyle;
         }
-        if (source.webkitTransition != null)
+        if (source.WebkitTransition != null)
         {
-            target.webkitTransition = source.webkitTransition;
+            target.WebkitTransition = source.WebkitTransition;
         }
-        if (source.webkitTransitionDelay != null)
+        if (source.WebkitTransitionDelay != null)
         {
-            target.webkitTransitionDelay = source.webkitTransitionDelay;
+            target.WebkitTransitionDelay = source.WebkitTransitionDelay;
         }
-        if (source.webkitTransitionDuration != null)
+        if (source.WebkitTransitionDuration != null)
         {
-            target.webkitTransitionDuration = source.webkitTransitionDuration;
+            target.WebkitTransitionDuration = source.WebkitTransitionDuration;
         }
-        if (source.webkitTransitionProperty != null)
+        if (source.WebkitTransitionProperty != null)
         {
-            target.webkitTransitionProperty = source.webkitTransitionProperty;
+            target.WebkitTransitionProperty = source.WebkitTransitionProperty;
         }
-        if (source.webkitTransitionTimingFunction != null)
+        if (source.WebkitTransitionTimingFunction != null)
         {
-            target.webkitTransitionTimingFunction = source.webkitTransitionTimingFunction;
+            target.WebkitTransitionTimingFunction = source.WebkitTransitionTimingFunction;
         }
-        if (source.webkitUserDrag != null)
+        if (source.WebkitUserDrag != null)
         {
-            target.webkitUserDrag = source.webkitUserDrag;
+            target.WebkitUserDrag = source.WebkitUserDrag;
         }
-        if (source.webkitUserModify != null)
+        if (source.WebkitUserModify != null)
         {
-            target.webkitUserModify = source.webkitUserModify;
+            target.WebkitUserModify = source.WebkitUserModify;
         }
-        if (source.webkitUserSelect != null)
+        if (source.WebkitUserSelect != null)
         {
-            target.webkitUserSelect = source.webkitUserSelect;
+            target.WebkitUserSelect = source.WebkitUserSelect;
         }
-        if (source.webkitWritingMode != null)
+        if (source.WebkitWritingMode != null)
         {
-            target.webkitWritingMode = source.webkitWritingMode;
+            target.WebkitWritingMode = source.WebkitWritingMode;
         }
         if (source.whiteSpace != null)
         {
@@ -13174,617 +13174,617 @@ partial class Style
         {
             action(nameof(visibility), s.visibility);
         }
-        if (s.webkitAlignContent != null)
+        if (s.WebkitAlignContent != null)
         {
-            action(nameof(webkitAlignContent), s.webkitAlignContent);
+            action(nameof(WebkitAlignContent), s.WebkitAlignContent);
         }
-        if (s.webkitAlignItems != null)
+        if (s.WebkitAlignItems != null)
         {
-            action(nameof(webkitAlignItems), s.webkitAlignItems);
+            action(nameof(WebkitAlignItems), s.WebkitAlignItems);
         }
-        if (s.webkitAlignSelf != null)
+        if (s.WebkitAlignSelf != null)
         {
-            action(nameof(webkitAlignSelf), s.webkitAlignSelf);
+            action(nameof(WebkitAlignSelf), s.WebkitAlignSelf);
         }
-        if (s.webkitAnimation != null)
+        if (s.WebkitAnimation != null)
         {
-            action(nameof(webkitAnimation), s.webkitAnimation);
+            action(nameof(WebkitAnimation), s.WebkitAnimation);
         }
-        if (s.webkitAnimationDelay != null)
+        if (s.WebkitAnimationDelay != null)
         {
-            action(nameof(webkitAnimationDelay), s.webkitAnimationDelay);
+            action(nameof(WebkitAnimationDelay), s.WebkitAnimationDelay);
         }
-        if (s.webkitAnimationDirection != null)
+        if (s.WebkitAnimationDirection != null)
         {
-            action(nameof(webkitAnimationDirection), s.webkitAnimationDirection);
+            action(nameof(WebkitAnimationDirection), s.WebkitAnimationDirection);
         }
-        if (s.webkitAnimationDuration != null)
+        if (s.WebkitAnimationDuration != null)
         {
-            action(nameof(webkitAnimationDuration), s.webkitAnimationDuration);
+            action(nameof(WebkitAnimationDuration), s.WebkitAnimationDuration);
         }
-        if (s.webkitAnimationFillMode != null)
+        if (s.WebkitAnimationFillMode != null)
         {
-            action(nameof(webkitAnimationFillMode), s.webkitAnimationFillMode);
+            action(nameof(WebkitAnimationFillMode), s.WebkitAnimationFillMode);
         }
-        if (s.webkitAnimationIterationCount != null)
+        if (s.WebkitAnimationIterationCount != null)
         {
-            action(nameof(webkitAnimationIterationCount), s.webkitAnimationIterationCount);
+            action(nameof(WebkitAnimationIterationCount), s.WebkitAnimationIterationCount);
         }
-        if (s.webkitAnimationName != null)
+        if (s.WebkitAnimationName != null)
         {
-            action(nameof(webkitAnimationName), s.webkitAnimationName);
+            action(nameof(WebkitAnimationName), s.WebkitAnimationName);
         }
-        if (s.webkitAnimationPlayState != null)
+        if (s.WebkitAnimationPlayState != null)
         {
-            action(nameof(webkitAnimationPlayState), s.webkitAnimationPlayState);
+            action(nameof(WebkitAnimationPlayState), s.WebkitAnimationPlayState);
         }
-        if (s.webkitAnimationTimingFunction != null)
+        if (s.WebkitAnimationTimingFunction != null)
         {
-            action(nameof(webkitAnimationTimingFunction), s.webkitAnimationTimingFunction);
+            action(nameof(WebkitAnimationTimingFunction), s.WebkitAnimationTimingFunction);
         }
-        if (s.webkitAppRegion != null)
+        if (s.WebkitAppRegion != null)
         {
-            action(nameof(webkitAppRegion), s.webkitAppRegion);
+            action(nameof(WebkitAppRegion), s.WebkitAppRegion);
         }
-        if (s.webkitAppearance != null)
+        if (s.WebkitAppearance != null)
         {
-            action(nameof(webkitAppearance), s.webkitAppearance);
+            action(nameof(WebkitAppearance), s.WebkitAppearance);
         }
-        if (s.webkitBackfaceVisibility != null)
+        if (s.WebkitBackfaceVisibility != null)
         {
-            action(nameof(webkitBackfaceVisibility), s.webkitBackfaceVisibility);
+            action(nameof(WebkitBackfaceVisibility), s.WebkitBackfaceVisibility);
         }
-        if (s.webkitBackgroundClip != null)
+        if (s.WebkitBackgroundClip != null)
         {
-            action(nameof(webkitBackgroundClip), s.webkitBackgroundClip);
+            action(nameof(WebkitBackgroundClip), s.WebkitBackgroundClip);
         }
-        if (s.webkitBackgroundOrigin != null)
+        if (s.WebkitBackgroundOrigin != null)
         {
-            action(nameof(webkitBackgroundOrigin), s.webkitBackgroundOrigin);
+            action(nameof(WebkitBackgroundOrigin), s.WebkitBackgroundOrigin);
         }
-        if (s.webkitBackgroundSize != null)
+        if (s.WebkitBackgroundSize != null)
         {
-            action(nameof(webkitBackgroundSize), s.webkitBackgroundSize);
+            action(nameof(WebkitBackgroundSize), s.WebkitBackgroundSize);
         }
-        if (s.webkitBorderAfter != null)
+        if (s.WebkitBorderAfter != null)
         {
-            action(nameof(webkitBorderAfter), s.webkitBorderAfter);
+            action(nameof(WebkitBorderAfter), s.WebkitBorderAfter);
         }
-        if (s.webkitBorderAfterColor != null)
+        if (s.WebkitBorderAfterColor != null)
         {
-            action(nameof(webkitBorderAfterColor), s.webkitBorderAfterColor);
+            action(nameof(WebkitBorderAfterColor), s.WebkitBorderAfterColor);
         }
-        if (s.webkitBorderAfterStyle != null)
+        if (s.WebkitBorderAfterStyle != null)
         {
-            action(nameof(webkitBorderAfterStyle), s.webkitBorderAfterStyle);
+            action(nameof(WebkitBorderAfterStyle), s.WebkitBorderAfterStyle);
         }
-        if (s.webkitBorderAfterWidth != null)
+        if (s.WebkitBorderAfterWidth != null)
         {
-            action(nameof(webkitBorderAfterWidth), s.webkitBorderAfterWidth);
+            action(nameof(WebkitBorderAfterWidth), s.WebkitBorderAfterWidth);
         }
-        if (s.webkitBorderBefore != null)
+        if (s.WebkitBorderBefore != null)
         {
-            action(nameof(webkitBorderBefore), s.webkitBorderBefore);
+            action(nameof(WebkitBorderBefore), s.WebkitBorderBefore);
         }
-        if (s.webkitBorderBeforeColor != null)
+        if (s.WebkitBorderBeforeColor != null)
         {
-            action(nameof(webkitBorderBeforeColor), s.webkitBorderBeforeColor);
+            action(nameof(WebkitBorderBeforeColor), s.WebkitBorderBeforeColor);
         }
-        if (s.webkitBorderBeforeStyle != null)
+        if (s.WebkitBorderBeforeStyle != null)
         {
-            action(nameof(webkitBorderBeforeStyle), s.webkitBorderBeforeStyle);
+            action(nameof(WebkitBorderBeforeStyle), s.WebkitBorderBeforeStyle);
         }
-        if (s.webkitBorderBeforeWidth != null)
+        if (s.WebkitBorderBeforeWidth != null)
         {
-            action(nameof(webkitBorderBeforeWidth), s.webkitBorderBeforeWidth);
+            action(nameof(WebkitBorderBeforeWidth), s.WebkitBorderBeforeWidth);
         }
-        if (s.webkitBorderBottomLeftRadius != null)
+        if (s.WebkitBorderBottomLeftRadius != null)
         {
-            action(nameof(webkitBorderBottomLeftRadius), s.webkitBorderBottomLeftRadius);
+            action(nameof(WebkitBorderBottomLeftRadius), s.WebkitBorderBottomLeftRadius);
         }
-        if (s.webkitBorderBottomRightRadius != null)
+        if (s.WebkitBorderBottomRightRadius != null)
         {
-            action(nameof(webkitBorderBottomRightRadius), s.webkitBorderBottomRightRadius);
+            action(nameof(WebkitBorderBottomRightRadius), s.WebkitBorderBottomRightRadius);
         }
-        if (s.webkitBorderEnd != null)
+        if (s.WebkitBorderEnd != null)
         {
-            action(nameof(webkitBorderEnd), s.webkitBorderEnd);
+            action(nameof(WebkitBorderEnd), s.WebkitBorderEnd);
         }
-        if (s.webkitBorderEndColor != null)
+        if (s.WebkitBorderEndColor != null)
         {
-            action(nameof(webkitBorderEndColor), s.webkitBorderEndColor);
+            action(nameof(WebkitBorderEndColor), s.WebkitBorderEndColor);
         }
-        if (s.webkitBorderEndStyle != null)
+        if (s.WebkitBorderEndStyle != null)
         {
-            action(nameof(webkitBorderEndStyle), s.webkitBorderEndStyle);
+            action(nameof(WebkitBorderEndStyle), s.WebkitBorderEndStyle);
         }
-        if (s.webkitBorderEndWidth != null)
+        if (s.WebkitBorderEndWidth != null)
         {
-            action(nameof(webkitBorderEndWidth), s.webkitBorderEndWidth);
+            action(nameof(WebkitBorderEndWidth), s.WebkitBorderEndWidth);
         }
-        if (s.webkitBorderHorizontalSpacing != null)
+        if (s.WebkitBorderHorizontalSpacing != null)
         {
-            action(nameof(webkitBorderHorizontalSpacing), s.webkitBorderHorizontalSpacing);
+            action(nameof(WebkitBorderHorizontalSpacing), s.WebkitBorderHorizontalSpacing);
         }
-        if (s.webkitBorderImage != null)
+        if (s.WebkitBorderImage != null)
         {
-            action(nameof(webkitBorderImage), s.webkitBorderImage);
+            action(nameof(WebkitBorderImage), s.WebkitBorderImage);
         }
-        if (s.webkitBorderRadius != null)
+        if (s.WebkitBorderRadius != null)
         {
-            action(nameof(webkitBorderRadius), s.webkitBorderRadius);
+            action(nameof(WebkitBorderRadius), s.WebkitBorderRadius);
         }
-        if (s.webkitBorderStart != null)
+        if (s.WebkitBorderStart != null)
         {
-            action(nameof(webkitBorderStart), s.webkitBorderStart);
+            action(nameof(WebkitBorderStart), s.WebkitBorderStart);
         }
-        if (s.webkitBorderStartColor != null)
+        if (s.WebkitBorderStartColor != null)
         {
-            action(nameof(webkitBorderStartColor), s.webkitBorderStartColor);
+            action(nameof(WebkitBorderStartColor), s.WebkitBorderStartColor);
         }
-        if (s.webkitBorderStartStyle != null)
+        if (s.WebkitBorderStartStyle != null)
         {
-            action(nameof(webkitBorderStartStyle), s.webkitBorderStartStyle);
+            action(nameof(WebkitBorderStartStyle), s.WebkitBorderStartStyle);
         }
-        if (s.webkitBorderStartWidth != null)
+        if (s.WebkitBorderStartWidth != null)
         {
-            action(nameof(webkitBorderStartWidth), s.webkitBorderStartWidth);
+            action(nameof(WebkitBorderStartWidth), s.WebkitBorderStartWidth);
         }
-        if (s.webkitBorderTopLeftRadius != null)
+        if (s.WebkitBorderTopLeftRadius != null)
         {
-            action(nameof(webkitBorderTopLeftRadius), s.webkitBorderTopLeftRadius);
+            action(nameof(WebkitBorderTopLeftRadius), s.WebkitBorderTopLeftRadius);
         }
-        if (s.webkitBorderTopRightRadius != null)
+        if (s.WebkitBorderTopRightRadius != null)
         {
-            action(nameof(webkitBorderTopRightRadius), s.webkitBorderTopRightRadius);
+            action(nameof(WebkitBorderTopRightRadius), s.WebkitBorderTopRightRadius);
         }
-        if (s.webkitBorderVerticalSpacing != null)
+        if (s.WebkitBorderVerticalSpacing != null)
         {
-            action(nameof(webkitBorderVerticalSpacing), s.webkitBorderVerticalSpacing);
+            action(nameof(WebkitBorderVerticalSpacing), s.WebkitBorderVerticalSpacing);
         }
-        if (s.webkitBoxAlign != null)
+        if (s.WebkitBoxAlign != null)
         {
-            action(nameof(webkitBoxAlign), s.webkitBoxAlign);
+            action(nameof(WebkitBoxAlign), s.WebkitBoxAlign);
         }
-        if (s.webkitBoxDecorationBreak != null)
+        if (s.WebkitBoxDecorationBreak != null)
         {
-            action(nameof(webkitBoxDecorationBreak), s.webkitBoxDecorationBreak);
+            action(nameof(WebkitBoxDecorationBreak), s.WebkitBoxDecorationBreak);
         }
-        if (s.webkitBoxDirection != null)
+        if (s.WebkitBoxDirection != null)
         {
-            action(nameof(webkitBoxDirection), s.webkitBoxDirection);
+            action(nameof(WebkitBoxDirection), s.WebkitBoxDirection);
         }
-        if (s.webkitBoxFlex != null)
+        if (s.WebkitBoxFlex != null)
         {
-            action(nameof(webkitBoxFlex), s.webkitBoxFlex);
+            action(nameof(WebkitBoxFlex), s.WebkitBoxFlex);
         }
-        if (s.webkitBoxOrdinalGroup != null)
+        if (s.WebkitBoxOrdinalGroup != null)
         {
-            action(nameof(webkitBoxOrdinalGroup), s.webkitBoxOrdinalGroup);
+            action(nameof(WebkitBoxOrdinalGroup), s.WebkitBoxOrdinalGroup);
         }
-        if (s.webkitBoxOrient != null)
+        if (s.WebkitBoxOrient != null)
         {
-            action(nameof(webkitBoxOrient), s.webkitBoxOrient);
+            action(nameof(WebkitBoxOrient), s.WebkitBoxOrient);
         }
-        if (s.webkitBoxPack != null)
+        if (s.WebkitBoxPack != null)
         {
-            action(nameof(webkitBoxPack), s.webkitBoxPack);
+            action(nameof(WebkitBoxPack), s.WebkitBoxPack);
         }
-        if (s.webkitBoxReflect != null)
+        if (s.WebkitBoxReflect != null)
         {
-            action(nameof(webkitBoxReflect), s.webkitBoxReflect);
+            action(nameof(WebkitBoxReflect), s.WebkitBoxReflect);
         }
-        if (s.webkitBoxShadow != null)
+        if (s.WebkitBoxShadow != null)
         {
-            action(nameof(webkitBoxShadow), s.webkitBoxShadow);
+            action(nameof(WebkitBoxShadow), s.WebkitBoxShadow);
         }
-        if (s.webkitBoxSizing != null)
+        if (s.WebkitBoxSizing != null)
         {
-            action(nameof(webkitBoxSizing), s.webkitBoxSizing);
+            action(nameof(WebkitBoxSizing), s.WebkitBoxSizing);
         }
-        if (s.webkitClipPath != null)
+        if (s.WebkitClipPath != null)
         {
-            action(nameof(webkitClipPath), s.webkitClipPath);
+            action(nameof(WebkitClipPath), s.WebkitClipPath);
         }
-        if (s.webkitColumnBreakAfter != null)
+        if (s.WebkitColumnBreakAfter != null)
         {
-            action(nameof(webkitColumnBreakAfter), s.webkitColumnBreakAfter);
+            action(nameof(WebkitColumnBreakAfter), s.WebkitColumnBreakAfter);
         }
-        if (s.webkitColumnBreakBefore != null)
+        if (s.WebkitColumnBreakBefore != null)
         {
-            action(nameof(webkitColumnBreakBefore), s.webkitColumnBreakBefore);
+            action(nameof(WebkitColumnBreakBefore), s.WebkitColumnBreakBefore);
         }
-        if (s.webkitColumnBreakInside != null)
+        if (s.WebkitColumnBreakInside != null)
         {
-            action(nameof(webkitColumnBreakInside), s.webkitColumnBreakInside);
+            action(nameof(WebkitColumnBreakInside), s.WebkitColumnBreakInside);
         }
-        if (s.webkitColumnCount != null)
+        if (s.WebkitColumnCount != null)
         {
-            action(nameof(webkitColumnCount), s.webkitColumnCount);
+            action(nameof(WebkitColumnCount), s.WebkitColumnCount);
         }
-        if (s.webkitColumnGap != null)
+        if (s.WebkitColumnGap != null)
         {
-            action(nameof(webkitColumnGap), s.webkitColumnGap);
+            action(nameof(WebkitColumnGap), s.WebkitColumnGap);
         }
-        if (s.webkitColumnRule != null)
+        if (s.WebkitColumnRule != null)
         {
-            action(nameof(webkitColumnRule), s.webkitColumnRule);
+            action(nameof(WebkitColumnRule), s.WebkitColumnRule);
         }
-        if (s.webkitColumnRuleColor != null)
+        if (s.WebkitColumnRuleColor != null)
         {
-            action(nameof(webkitColumnRuleColor), s.webkitColumnRuleColor);
+            action(nameof(WebkitColumnRuleColor), s.WebkitColumnRuleColor);
         }
-        if (s.webkitColumnRuleStyle != null)
+        if (s.WebkitColumnRuleStyle != null)
         {
-            action(nameof(webkitColumnRuleStyle), s.webkitColumnRuleStyle);
+            action(nameof(WebkitColumnRuleStyle), s.WebkitColumnRuleStyle);
         }
-        if (s.webkitColumnRuleWidth != null)
+        if (s.WebkitColumnRuleWidth != null)
         {
-            action(nameof(webkitColumnRuleWidth), s.webkitColumnRuleWidth);
+            action(nameof(WebkitColumnRuleWidth), s.WebkitColumnRuleWidth);
         }
-        if (s.webkitColumnSpan != null)
+        if (s.WebkitColumnSpan != null)
         {
-            action(nameof(webkitColumnSpan), s.webkitColumnSpan);
+            action(nameof(WebkitColumnSpan), s.WebkitColumnSpan);
         }
-        if (s.webkitColumnWidth != null)
+        if (s.WebkitColumnWidth != null)
         {
-            action(nameof(webkitColumnWidth), s.webkitColumnWidth);
+            action(nameof(WebkitColumnWidth), s.WebkitColumnWidth);
         }
-        if (s.webkitColumns != null)
+        if (s.WebkitColumns != null)
         {
-            action(nameof(webkitColumns), s.webkitColumns);
+            action(nameof(WebkitColumns), s.WebkitColumns);
         }
-        if (s.webkitFilter != null)
+        if (s.WebkitFilter != null)
         {
-            action(nameof(webkitFilter), s.webkitFilter);
+            action(nameof(WebkitFilter), s.WebkitFilter);
         }
-        if (s.webkitFlex != null)
+        if (s.WebkitFlex != null)
         {
-            action(nameof(webkitFlex), s.webkitFlex);
+            action(nameof(WebkitFlex), s.WebkitFlex);
         }
-        if (s.webkitFlexBasis != null)
+        if (s.WebkitFlexBasis != null)
         {
-            action(nameof(webkitFlexBasis), s.webkitFlexBasis);
+            action(nameof(WebkitFlexBasis), s.WebkitFlexBasis);
         }
-        if (s.webkitFlexDirection != null)
+        if (s.WebkitFlexDirection != null)
         {
-            action(nameof(webkitFlexDirection), s.webkitFlexDirection);
+            action(nameof(WebkitFlexDirection), s.WebkitFlexDirection);
         }
-        if (s.webkitFlexFlow != null)
+        if (s.WebkitFlexFlow != null)
         {
-            action(nameof(webkitFlexFlow), s.webkitFlexFlow);
+            action(nameof(WebkitFlexFlow), s.WebkitFlexFlow);
         }
-        if (s.webkitFlexGrow != null)
+        if (s.WebkitFlexGrow != null)
         {
-            action(nameof(webkitFlexGrow), s.webkitFlexGrow);
+            action(nameof(WebkitFlexGrow), s.WebkitFlexGrow);
         }
-        if (s.webkitFlexShrink != null)
+        if (s.WebkitFlexShrink != null)
         {
-            action(nameof(webkitFlexShrink), s.webkitFlexShrink);
+            action(nameof(WebkitFlexShrink), s.WebkitFlexShrink);
         }
-        if (s.webkitFlexWrap != null)
+        if (s.WebkitFlexWrap != null)
         {
-            action(nameof(webkitFlexWrap), s.webkitFlexWrap);
+            action(nameof(WebkitFlexWrap), s.WebkitFlexWrap);
         }
-        if (s.webkitFontFeatureSettings != null)
+        if (s.WebkitFontFeatureSettings != null)
         {
-            action(nameof(webkitFontFeatureSettings), s.webkitFontFeatureSettings);
+            action(nameof(WebkitFontFeatureSettings), s.WebkitFontFeatureSettings);
         }
-        if (s.webkitFontSmoothing != null)
+        if (s.WebkitFontSmoothing != null)
         {
-            action(nameof(webkitFontSmoothing), s.webkitFontSmoothing);
+            action(nameof(WebkitFontSmoothing), s.WebkitFontSmoothing);
         }
-        if (s.webkitHyphenateCharacter != null)
+        if (s.WebkitHyphenateCharacter != null)
         {
-            action(nameof(webkitHyphenateCharacter), s.webkitHyphenateCharacter);
+            action(nameof(WebkitHyphenateCharacter), s.WebkitHyphenateCharacter);
         }
-        if (s.webkitJustifyContent != null)
+        if (s.WebkitJustifyContent != null)
         {
-            action(nameof(webkitJustifyContent), s.webkitJustifyContent);
+            action(nameof(WebkitJustifyContent), s.WebkitJustifyContent);
         }
-        if (s.webkitLineBreak != null)
+        if (s.WebkitLineBreak != null)
         {
-            action(nameof(webkitLineBreak), s.webkitLineBreak);
+            action(nameof(WebkitLineBreak), s.WebkitLineBreak);
         }
-        if (s.webkitLineClamp != null)
+        if (s.WebkitLineClamp != null)
         {
-            action(nameof(webkitLineClamp), s.webkitLineClamp);
+            action(nameof(WebkitLineClamp), s.WebkitLineClamp);
         }
-        if (s.webkitLocale != null)
+        if (s.WebkitLocale != null)
         {
-            action(nameof(webkitLocale), s.webkitLocale);
+            action(nameof(WebkitLocale), s.WebkitLocale);
         }
-        if (s.webkitLogicalHeight != null)
+        if (s.WebkitLogicalHeight != null)
         {
-            action(nameof(webkitLogicalHeight), s.webkitLogicalHeight);
+            action(nameof(WebkitLogicalHeight), s.WebkitLogicalHeight);
         }
-        if (s.webkitLogicalWidth != null)
+        if (s.WebkitLogicalWidth != null)
         {
-            action(nameof(webkitLogicalWidth), s.webkitLogicalWidth);
+            action(nameof(WebkitLogicalWidth), s.WebkitLogicalWidth);
         }
-        if (s.webkitMarginAfter != null)
+        if (s.WebkitMarginAfter != null)
         {
-            action(nameof(webkitMarginAfter), s.webkitMarginAfter);
+            action(nameof(WebkitMarginAfter), s.WebkitMarginAfter);
         }
-        if (s.webkitMarginBefore != null)
+        if (s.WebkitMarginBefore != null)
         {
-            action(nameof(webkitMarginBefore), s.webkitMarginBefore);
+            action(nameof(WebkitMarginBefore), s.WebkitMarginBefore);
         }
-        if (s.webkitMarginEnd != null)
+        if (s.WebkitMarginEnd != null)
         {
-            action(nameof(webkitMarginEnd), s.webkitMarginEnd);
+            action(nameof(WebkitMarginEnd), s.WebkitMarginEnd);
         }
-        if (s.webkitMarginStart != null)
+        if (s.WebkitMarginStart != null)
         {
-            action(nameof(webkitMarginStart), s.webkitMarginStart);
+            action(nameof(WebkitMarginStart), s.WebkitMarginStart);
         }
-        if (s.webkitMask != null)
+        if (s.WebkitMask != null)
         {
-            action(nameof(webkitMask), s.webkitMask);
+            action(nameof(WebkitMask), s.WebkitMask);
         }
-        if (s.webkitMaskBoxImage != null)
+        if (s.WebkitMaskBoxImage != null)
         {
-            action(nameof(webkitMaskBoxImage), s.webkitMaskBoxImage);
+            action(nameof(WebkitMaskBoxImage), s.WebkitMaskBoxImage);
         }
-        if (s.webkitMaskBoxImageOutset != null)
+        if (s.WebkitMaskBoxImageOutset != null)
         {
-            action(nameof(webkitMaskBoxImageOutset), s.webkitMaskBoxImageOutset);
+            action(nameof(WebkitMaskBoxImageOutset), s.WebkitMaskBoxImageOutset);
         }
-        if (s.webkitMaskBoxImageRepeat != null)
+        if (s.WebkitMaskBoxImageRepeat != null)
         {
-            action(nameof(webkitMaskBoxImageRepeat), s.webkitMaskBoxImageRepeat);
+            action(nameof(WebkitMaskBoxImageRepeat), s.WebkitMaskBoxImageRepeat);
         }
-        if (s.webkitMaskBoxImageSlice != null)
+        if (s.WebkitMaskBoxImageSlice != null)
         {
-            action(nameof(webkitMaskBoxImageSlice), s.webkitMaskBoxImageSlice);
+            action(nameof(WebkitMaskBoxImageSlice), s.WebkitMaskBoxImageSlice);
         }
-        if (s.webkitMaskBoxImageSource != null)
+        if (s.WebkitMaskBoxImageSource != null)
         {
-            action(nameof(webkitMaskBoxImageSource), s.webkitMaskBoxImageSource);
+            action(nameof(WebkitMaskBoxImageSource), s.WebkitMaskBoxImageSource);
         }
-        if (s.webkitMaskBoxImageWidth != null)
+        if (s.WebkitMaskBoxImageWidth != null)
         {
-            action(nameof(webkitMaskBoxImageWidth), s.webkitMaskBoxImageWidth);
+            action(nameof(WebkitMaskBoxImageWidth), s.WebkitMaskBoxImageWidth);
         }
-        if (s.webkitMaskClip != null)
+        if (s.WebkitMaskClip != null)
         {
-            action(nameof(webkitMaskClip), s.webkitMaskClip);
+            action(nameof(WebkitMaskClip), s.WebkitMaskClip);
         }
-        if (s.webkitMaskComposite != null)
+        if (s.WebkitMaskComposite != null)
         {
-            action(nameof(webkitMaskComposite), s.webkitMaskComposite);
+            action(nameof(WebkitMaskComposite), s.WebkitMaskComposite);
         }
-        if (s.webkitMaskImage != null)
+        if (s.WebkitMaskImage != null)
         {
-            action(nameof(webkitMaskImage), s.webkitMaskImage);
+            action(nameof(WebkitMaskImage), s.WebkitMaskImage);
         }
-        if (s.webkitMaskOrigin != null)
+        if (s.WebkitMaskOrigin != null)
         {
-            action(nameof(webkitMaskOrigin), s.webkitMaskOrigin);
+            action(nameof(WebkitMaskOrigin), s.WebkitMaskOrigin);
         }
-        if (s.webkitMaskPosition != null)
+        if (s.WebkitMaskPosition != null)
         {
-            action(nameof(webkitMaskPosition), s.webkitMaskPosition);
+            action(nameof(WebkitMaskPosition), s.WebkitMaskPosition);
         }
-        if (s.webkitMaskPositionX != null)
+        if (s.WebkitMaskPositionX != null)
         {
-            action(nameof(webkitMaskPositionX), s.webkitMaskPositionX);
+            action(nameof(WebkitMaskPositionX), s.WebkitMaskPositionX);
         }
-        if (s.webkitMaskPositionY != null)
+        if (s.WebkitMaskPositionY != null)
         {
-            action(nameof(webkitMaskPositionY), s.webkitMaskPositionY);
+            action(nameof(WebkitMaskPositionY), s.WebkitMaskPositionY);
         }
-        if (s.webkitMaskRepeat != null)
+        if (s.WebkitMaskRepeat != null)
         {
-            action(nameof(webkitMaskRepeat), s.webkitMaskRepeat);
+            action(nameof(WebkitMaskRepeat), s.WebkitMaskRepeat);
         }
-        if (s.webkitMaskRepeatX != null)
+        if (s.WebkitMaskRepeatX != null)
         {
-            action(nameof(webkitMaskRepeatX), s.webkitMaskRepeatX);
+            action(nameof(WebkitMaskRepeatX), s.WebkitMaskRepeatX);
         }
-        if (s.webkitMaskRepeatY != null)
+        if (s.WebkitMaskRepeatY != null)
         {
-            action(nameof(webkitMaskRepeatY), s.webkitMaskRepeatY);
+            action(nameof(WebkitMaskRepeatY), s.WebkitMaskRepeatY);
         }
-        if (s.webkitMaskSize != null)
+        if (s.WebkitMaskSize != null)
         {
-            action(nameof(webkitMaskSize), s.webkitMaskSize);
+            action(nameof(WebkitMaskSize), s.WebkitMaskSize);
         }
-        if (s.webkitMaxLogicalHeight != null)
+        if (s.WebkitMaxLogicalHeight != null)
         {
-            action(nameof(webkitMaxLogicalHeight), s.webkitMaxLogicalHeight);
+            action(nameof(WebkitMaxLogicalHeight), s.WebkitMaxLogicalHeight);
         }
-        if (s.webkitMaxLogicalWidth != null)
+        if (s.WebkitMaxLogicalWidth != null)
         {
-            action(nameof(webkitMaxLogicalWidth), s.webkitMaxLogicalWidth);
+            action(nameof(WebkitMaxLogicalWidth), s.WebkitMaxLogicalWidth);
         }
-        if (s.webkitMinLogicalHeight != null)
+        if (s.WebkitMinLogicalHeight != null)
         {
-            action(nameof(webkitMinLogicalHeight), s.webkitMinLogicalHeight);
+            action(nameof(WebkitMinLogicalHeight), s.WebkitMinLogicalHeight);
         }
-        if (s.webkitMinLogicalWidth != null)
+        if (s.WebkitMinLogicalWidth != null)
         {
-            action(nameof(webkitMinLogicalWidth), s.webkitMinLogicalWidth);
+            action(nameof(WebkitMinLogicalWidth), s.WebkitMinLogicalWidth);
         }
-        if (s.webkitOpacity != null)
+        if (s.WebkitOpacity != null)
         {
-            action(nameof(webkitOpacity), s.webkitOpacity);
+            action(nameof(WebkitOpacity), s.WebkitOpacity);
         }
-        if (s.webkitOrder != null)
+        if (s.WebkitOrder != null)
         {
-            action(nameof(webkitOrder), s.webkitOrder);
+            action(nameof(WebkitOrder), s.WebkitOrder);
         }
-        if (s.webkitPaddingAfter != null)
+        if (s.WebkitPaddingAfter != null)
         {
-            action(nameof(webkitPaddingAfter), s.webkitPaddingAfter);
+            action(nameof(WebkitPaddingAfter), s.WebkitPaddingAfter);
         }
-        if (s.webkitPaddingBefore != null)
+        if (s.WebkitPaddingBefore != null)
         {
-            action(nameof(webkitPaddingBefore), s.webkitPaddingBefore);
+            action(nameof(WebkitPaddingBefore), s.WebkitPaddingBefore);
         }
-        if (s.webkitPaddingEnd != null)
+        if (s.WebkitPaddingEnd != null)
         {
-            action(nameof(webkitPaddingEnd), s.webkitPaddingEnd);
+            action(nameof(WebkitPaddingEnd), s.WebkitPaddingEnd);
         }
-        if (s.webkitPaddingStart != null)
+        if (s.WebkitPaddingStart != null)
         {
-            action(nameof(webkitPaddingStart), s.webkitPaddingStart);
+            action(nameof(WebkitPaddingStart), s.WebkitPaddingStart);
         }
-        if (s.webkitPerspective != null)
+        if (s.WebkitPerspective != null)
         {
-            action(nameof(webkitPerspective), s.webkitPerspective);
+            action(nameof(WebkitPerspective), s.WebkitPerspective);
         }
-        if (s.webkitPerspectiveOrigin != null)
+        if (s.WebkitPerspectiveOrigin != null)
         {
-            action(nameof(webkitPerspectiveOrigin), s.webkitPerspectiveOrigin);
+            action(nameof(WebkitPerspectiveOrigin), s.WebkitPerspectiveOrigin);
         }
-        if (s.webkitPerspectiveOriginX != null)
+        if (s.WebkitPerspectiveOriginX != null)
         {
-            action(nameof(webkitPerspectiveOriginX), s.webkitPerspectiveOriginX);
+            action(nameof(WebkitPerspectiveOriginX), s.WebkitPerspectiveOriginX);
         }
-        if (s.webkitPerspectiveOriginY != null)
+        if (s.WebkitPerspectiveOriginY != null)
         {
-            action(nameof(webkitPerspectiveOriginY), s.webkitPerspectiveOriginY);
+            action(nameof(WebkitPerspectiveOriginY), s.WebkitPerspectiveOriginY);
         }
-        if (s.webkitPrintColorAdjust != null)
+        if (s.WebkitPrintColorAdjust != null)
         {
-            action(nameof(webkitPrintColorAdjust), s.webkitPrintColorAdjust);
+            action(nameof(WebkitPrintColorAdjust), s.WebkitPrintColorAdjust);
         }
-        if (s.webkitRtlOrdering != null)
+        if (s.WebkitRtlOrdering != null)
         {
-            action(nameof(webkitRtlOrdering), s.webkitRtlOrdering);
+            action(nameof(WebkitRtlOrdering), s.WebkitRtlOrdering);
         }
-        if (s.webkitRubyPosition != null)
+        if (s.WebkitRubyPosition != null)
         {
-            action(nameof(webkitRubyPosition), s.webkitRubyPosition);
+            action(nameof(WebkitRubyPosition), s.WebkitRubyPosition);
         }
-        if (s.webkitShapeImageThreshold != null)
+        if (s.WebkitShapeImageThreshold != null)
         {
-            action(nameof(webkitShapeImageThreshold), s.webkitShapeImageThreshold);
+            action(nameof(WebkitShapeImageThreshold), s.WebkitShapeImageThreshold);
         }
-        if (s.webkitShapeMargin != null)
+        if (s.WebkitShapeMargin != null)
         {
-            action(nameof(webkitShapeMargin), s.webkitShapeMargin);
+            action(nameof(WebkitShapeMargin), s.WebkitShapeMargin);
         }
-        if (s.webkitShapeOutside != null)
+        if (s.WebkitShapeOutside != null)
         {
-            action(nameof(webkitShapeOutside), s.webkitShapeOutside);
+            action(nameof(WebkitShapeOutside), s.WebkitShapeOutside);
         }
-        if (s.webkitTapHighlightColor != null)
+        if (s.WebkitTapHighlightColor != null)
         {
-            action(nameof(webkitTapHighlightColor), s.webkitTapHighlightColor);
+            action(nameof(WebkitTapHighlightColor), s.WebkitTapHighlightColor);
         }
-        if (s.webkitTextCombine != null)
+        if (s.WebkitTextCombine != null)
         {
-            action(nameof(webkitTextCombine), s.webkitTextCombine);
+            action(nameof(WebkitTextCombine), s.WebkitTextCombine);
         }
-        if (s.webkitTextDecorationsInEffect != null)
+        if (s.WebkitTextDecorationsInEffect != null)
         {
-            action(nameof(webkitTextDecorationsInEffect), s.webkitTextDecorationsInEffect);
+            action(nameof(WebkitTextDecorationsInEffect), s.WebkitTextDecorationsInEffect);
         }
-        if (s.webkitTextEmphasis != null)
+        if (s.WebkitTextEmphasis != null)
         {
-            action(nameof(webkitTextEmphasis), s.webkitTextEmphasis);
+            action(nameof(WebkitTextEmphasis), s.WebkitTextEmphasis);
         }
-        if (s.webkitTextEmphasisColor != null)
+        if (s.WebkitTextEmphasisColor != null)
         {
-            action(nameof(webkitTextEmphasisColor), s.webkitTextEmphasisColor);
+            action(nameof(WebkitTextEmphasisColor), s.WebkitTextEmphasisColor);
         }
-        if (s.webkitTextEmphasisPosition != null)
+        if (s.WebkitTextEmphasisPosition != null)
         {
-            action(nameof(webkitTextEmphasisPosition), s.webkitTextEmphasisPosition);
+            action(nameof(WebkitTextEmphasisPosition), s.WebkitTextEmphasisPosition);
         }
-        if (s.webkitTextEmphasisStyle != null)
+        if (s.WebkitTextEmphasisStyle != null)
         {
-            action(nameof(webkitTextEmphasisStyle), s.webkitTextEmphasisStyle);
+            action(nameof(WebkitTextEmphasisStyle), s.WebkitTextEmphasisStyle);
         }
-        if (s.webkitTextFillColor != null)
+        if (s.WebkitTextFillColor != null)
         {
-            action(nameof(webkitTextFillColor), s.webkitTextFillColor);
+            action(nameof(WebkitTextFillColor), s.WebkitTextFillColor);
         }
-        if (s.webkitTextOrientation != null)
+        if (s.WebkitTextOrientation != null)
         {
-            action(nameof(webkitTextOrientation), s.webkitTextOrientation);
+            action(nameof(WebkitTextOrientation), s.WebkitTextOrientation);
         }
-        if (s.webkitTextSecurity != null)
+        if (s.WebkitTextSecurity != null)
         {
-            action(nameof(webkitTextSecurity), s.webkitTextSecurity);
+            action(nameof(WebkitTextSecurity), s.WebkitTextSecurity);
         }
-        if (s.webkitTextSizeAdjust != null)
+        if (s.WebkitTextSizeAdjust != null)
         {
-            action(nameof(webkitTextSizeAdjust), s.webkitTextSizeAdjust);
+            action(nameof(WebkitTextSizeAdjust), s.WebkitTextSizeAdjust);
         }
-        if (s.webkitTextStroke != null)
+        if (s.WebkitTextStroke != null)
         {
-            action(nameof(webkitTextStroke), s.webkitTextStroke);
+            action(nameof(WebkitTextStroke), s.WebkitTextStroke);
         }
-        if (s.webkitTextStrokeColor != null)
+        if (s.WebkitTextStrokeColor != null)
         {
-            action(nameof(webkitTextStrokeColor), s.webkitTextStrokeColor);
+            action(nameof(WebkitTextStrokeColor), s.WebkitTextStrokeColor);
         }
-        if (s.webkitTextStrokeWidth != null)
+        if (s.WebkitTextStrokeWidth != null)
         {
-            action(nameof(webkitTextStrokeWidth), s.webkitTextStrokeWidth);
+            action(nameof(WebkitTextStrokeWidth), s.WebkitTextStrokeWidth);
         }
-        if (s.webkitTransform != null)
+        if (s.WebkitTransform != null)
         {
-            action(nameof(webkitTransform), s.webkitTransform);
+            action(nameof(WebkitTransform), s.WebkitTransform);
         }
-        if (s.webkitTransformOrigin != null)
+        if (s.WebkitTransformOrigin != null)
         {
-            action(nameof(webkitTransformOrigin), s.webkitTransformOrigin);
+            action(nameof(WebkitTransformOrigin), s.WebkitTransformOrigin);
         }
-        if (s.webkitTransformOriginX != null)
+        if (s.WebkitTransformOriginX != null)
         {
-            action(nameof(webkitTransformOriginX), s.webkitTransformOriginX);
+            action(nameof(WebkitTransformOriginX), s.WebkitTransformOriginX);
         }
-        if (s.webkitTransformOriginY != null)
+        if (s.WebkitTransformOriginY != null)
         {
-            action(nameof(webkitTransformOriginY), s.webkitTransformOriginY);
+            action(nameof(WebkitTransformOriginY), s.WebkitTransformOriginY);
         }
-        if (s.webkitTransformOriginZ != null)
+        if (s.WebkitTransformOriginZ != null)
         {
-            action(nameof(webkitTransformOriginZ), s.webkitTransformOriginZ);
+            action(nameof(WebkitTransformOriginZ), s.WebkitTransformOriginZ);
         }
-        if (s.webkitTransformStyle != null)
+        if (s.WebkitTransformStyle != null)
         {
-            action(nameof(webkitTransformStyle), s.webkitTransformStyle);
+            action(nameof(WebkitTransformStyle), s.WebkitTransformStyle);
         }
-        if (s.webkitTransition != null)
+        if (s.WebkitTransition != null)
         {
-            action(nameof(webkitTransition), s.webkitTransition);
+            action(nameof(WebkitTransition), s.WebkitTransition);
         }
-        if (s.webkitTransitionDelay != null)
+        if (s.WebkitTransitionDelay != null)
         {
-            action(nameof(webkitTransitionDelay), s.webkitTransitionDelay);
+            action(nameof(WebkitTransitionDelay), s.WebkitTransitionDelay);
         }
-        if (s.webkitTransitionDuration != null)
+        if (s.WebkitTransitionDuration != null)
         {
-            action(nameof(webkitTransitionDuration), s.webkitTransitionDuration);
+            action(nameof(WebkitTransitionDuration), s.WebkitTransitionDuration);
         }
-        if (s.webkitTransitionProperty != null)
+        if (s.WebkitTransitionProperty != null)
         {
-            action(nameof(webkitTransitionProperty), s.webkitTransitionProperty);
+            action(nameof(WebkitTransitionProperty), s.WebkitTransitionProperty);
         }
-        if (s.webkitTransitionTimingFunction != null)
+        if (s.WebkitTransitionTimingFunction != null)
         {
-            action(nameof(webkitTransitionTimingFunction), s.webkitTransitionTimingFunction);
+            action(nameof(WebkitTransitionTimingFunction), s.WebkitTransitionTimingFunction);
         }
-        if (s.webkitUserDrag != null)
+        if (s.WebkitUserDrag != null)
         {
-            action(nameof(webkitUserDrag), s.webkitUserDrag);
+            action(nameof(WebkitUserDrag), s.WebkitUserDrag);
         }
-        if (s.webkitUserModify != null)
+        if (s.WebkitUserModify != null)
         {
-            action(nameof(webkitUserModify), s.webkitUserModify);
+            action(nameof(WebkitUserModify), s.WebkitUserModify);
         }
-        if (s.webkitUserSelect != null)
+        if (s.WebkitUserSelect != null)
         {
-            action(nameof(webkitUserSelect), s.webkitUserSelect);
+            action(nameof(WebkitUserSelect), s.WebkitUserSelect);
         }
-        if (s.webkitWritingMode != null)
+        if (s.WebkitWritingMode != null)
         {
-            action(nameof(webkitWritingMode), s.webkitWritingMode);
+            action(nameof(WebkitWritingMode), s.WebkitWritingMode);
         }
         if (s.whiteSpace != null)
         {
@@ -17046,1075 +17046,1075 @@ partial class Style
             sb.Append(s.visibility);
             sb.Append(separator);
         }
-        if (s.webkitAlignContent != null)
+        if (s.WebkitAlignContent != null)
         {
             sb.Append("webkit-align-content");
             sb.Append(":");
-            sb.Append(s.webkitAlignContent);
+            sb.Append(s.WebkitAlignContent);
             sb.Append(separator);
         }
-        if (s.webkitAlignItems != null)
+        if (s.WebkitAlignItems != null)
         {
             sb.Append("webkit-align-items");
             sb.Append(":");
-            sb.Append(s.webkitAlignItems);
+            sb.Append(s.WebkitAlignItems);
             sb.Append(separator);
         }
-        if (s.webkitAlignSelf != null)
+        if (s.WebkitAlignSelf != null)
         {
             sb.Append("webkit-align-self");
             sb.Append(":");
-            sb.Append(s.webkitAlignSelf);
+            sb.Append(s.WebkitAlignSelf);
             sb.Append(separator);
         }
-        if (s.webkitAnimation != null)
+        if (s.WebkitAnimation != null)
         {
             sb.Append("webkit-animation");
             sb.Append(":");
-            sb.Append(s.webkitAnimation);
+            sb.Append(s.WebkitAnimation);
             sb.Append(separator);
         }
-        if (s.webkitAnimationDelay != null)
+        if (s.WebkitAnimationDelay != null)
         {
             sb.Append("webkit-animation-delay");
             sb.Append(":");
-            sb.Append(s.webkitAnimationDelay);
+            sb.Append(s.WebkitAnimationDelay);
             sb.Append(separator);
         }
-        if (s.webkitAnimationDirection != null)
+        if (s.WebkitAnimationDirection != null)
         {
             sb.Append("webkit-animation-direction");
             sb.Append(":");
-            sb.Append(s.webkitAnimationDirection);
+            sb.Append(s.WebkitAnimationDirection);
             sb.Append(separator);
         }
-        if (s.webkitAnimationDuration != null)
+        if (s.WebkitAnimationDuration != null)
         {
             sb.Append("webkit-animation-duration");
             sb.Append(":");
-            sb.Append(s.webkitAnimationDuration);
+            sb.Append(s.WebkitAnimationDuration);
             sb.Append(separator);
         }
-        if (s.webkitAnimationFillMode != null)
+        if (s.WebkitAnimationFillMode != null)
         {
             sb.Append("webkit-animation-fill-mode");
             sb.Append(":");
-            sb.Append(s.webkitAnimationFillMode);
+            sb.Append(s.WebkitAnimationFillMode);
             sb.Append(separator);
         }
-        if (s.webkitAnimationIterationCount != null)
+        if (s.WebkitAnimationIterationCount != null)
         {
             sb.Append("webkit-animation-iteration-count");
             sb.Append(":");
-            sb.Append(s.webkitAnimationIterationCount);
+            sb.Append(s.WebkitAnimationIterationCount);
             sb.Append(separator);
         }
-        if (s.webkitAnimationName != null)
+        if (s.WebkitAnimationName != null)
         {
             sb.Append("webkit-animation-name");
             sb.Append(":");
-            sb.Append(s.webkitAnimationName);
+            sb.Append(s.WebkitAnimationName);
             sb.Append(separator);
         }
-        if (s.webkitAnimationPlayState != null)
+        if (s.WebkitAnimationPlayState != null)
         {
             sb.Append("webkit-animation-play-state");
             sb.Append(":");
-            sb.Append(s.webkitAnimationPlayState);
+            sb.Append(s.WebkitAnimationPlayState);
             sb.Append(separator);
         }
-        if (s.webkitAnimationTimingFunction != null)
+        if (s.WebkitAnimationTimingFunction != null)
         {
             sb.Append("webkit-animation-timing-function");
             sb.Append(":");
-            sb.Append(s.webkitAnimationTimingFunction);
+            sb.Append(s.WebkitAnimationTimingFunction);
             sb.Append(separator);
         }
-        if (s.webkitAppRegion != null)
+        if (s.WebkitAppRegion != null)
         {
             sb.Append("webkit-app-region");
             sb.Append(":");
-            sb.Append(s.webkitAppRegion);
+            sb.Append(s.WebkitAppRegion);
             sb.Append(separator);
         }
-        if (s.webkitAppearance != null)
+        if (s.WebkitAppearance != null)
         {
             sb.Append("webkit-appearance");
             sb.Append(":");
-            sb.Append(s.webkitAppearance);
+            sb.Append(s.WebkitAppearance);
             sb.Append(separator);
         }
-        if (s.webkitBackfaceVisibility != null)
+        if (s.WebkitBackfaceVisibility != null)
         {
             sb.Append("webkit-backface-visibility");
             sb.Append(":");
-            sb.Append(s.webkitBackfaceVisibility);
+            sb.Append(s.WebkitBackfaceVisibility);
             sb.Append(separator);
         }
-        if (s.webkitBackgroundClip != null)
+        if (s.WebkitBackgroundClip != null)
         {
             sb.Append("webkit-background-clip");
             sb.Append(":");
-            sb.Append(s.webkitBackgroundClip);
+            sb.Append(s.WebkitBackgroundClip);
             sb.Append(separator);
         }
-        if (s.webkitBackgroundOrigin != null)
+        if (s.WebkitBackgroundOrigin != null)
         {
             sb.Append("webkit-background-origin");
             sb.Append(":");
-            sb.Append(s.webkitBackgroundOrigin);
+            sb.Append(s.WebkitBackgroundOrigin);
             sb.Append(separator);
         }
-        if (s.webkitBackgroundSize != null)
+        if (s.WebkitBackgroundSize != null)
         {
             sb.Append("webkit-background-size");
             sb.Append(":");
-            sb.Append(s.webkitBackgroundSize);
+            sb.Append(s.WebkitBackgroundSize);
             sb.Append(separator);
         }
-        if (s.webkitBorderAfter != null)
+        if (s.WebkitBorderAfter != null)
         {
             sb.Append("webkit-border-after");
             sb.Append(":");
-            sb.Append(s.webkitBorderAfter);
+            sb.Append(s.WebkitBorderAfter);
             sb.Append(separator);
         }
-        if (s.webkitBorderAfterColor != null)
+        if (s.WebkitBorderAfterColor != null)
         {
             sb.Append("webkit-border-after-color");
             sb.Append(":");
-            sb.Append(s.webkitBorderAfterColor);
+            sb.Append(s.WebkitBorderAfterColor);
             sb.Append(separator);
         }
-        if (s.webkitBorderAfterStyle != null)
+        if (s.WebkitBorderAfterStyle != null)
         {
             sb.Append("webkit-border-after-style");
             sb.Append(":");
-            sb.Append(s.webkitBorderAfterStyle);
+            sb.Append(s.WebkitBorderAfterStyle);
             sb.Append(separator);
         }
-        if (s.webkitBorderAfterWidth != null)
+        if (s.WebkitBorderAfterWidth != null)
         {
             sb.Append("webkit-border-after-width");
             sb.Append(":");
-            sb.Append(s.webkitBorderAfterWidth);
+            sb.Append(s.WebkitBorderAfterWidth);
             sb.Append(separator);
         }
-        if (s.webkitBorderBefore != null)
+        if (s.WebkitBorderBefore != null)
         {
             sb.Append("webkit-border-before");
             sb.Append(":");
-            sb.Append(s.webkitBorderBefore);
+            sb.Append(s.WebkitBorderBefore);
             sb.Append(separator);
         }
-        if (s.webkitBorderBeforeColor != null)
+        if (s.WebkitBorderBeforeColor != null)
         {
             sb.Append("webkit-border-before-color");
             sb.Append(":");
-            sb.Append(s.webkitBorderBeforeColor);
+            sb.Append(s.WebkitBorderBeforeColor);
             sb.Append(separator);
         }
-        if (s.webkitBorderBeforeStyle != null)
+        if (s.WebkitBorderBeforeStyle != null)
         {
             sb.Append("webkit-border-before-style");
             sb.Append(":");
-            sb.Append(s.webkitBorderBeforeStyle);
+            sb.Append(s.WebkitBorderBeforeStyle);
             sb.Append(separator);
         }
-        if (s.webkitBorderBeforeWidth != null)
+        if (s.WebkitBorderBeforeWidth != null)
         {
             sb.Append("webkit-border-before-width");
             sb.Append(":");
-            sb.Append(s.webkitBorderBeforeWidth);
+            sb.Append(s.WebkitBorderBeforeWidth);
             sb.Append(separator);
         }
-        if (s.webkitBorderBottomLeftRadius != null)
+        if (s.WebkitBorderBottomLeftRadius != null)
         {
             sb.Append("webkit-border-bottom-left-radius");
             sb.Append(":");
-            sb.Append(s.webkitBorderBottomLeftRadius);
+            sb.Append(s.WebkitBorderBottomLeftRadius);
             sb.Append(separator);
         }
-        if (s.webkitBorderBottomRightRadius != null)
+        if (s.WebkitBorderBottomRightRadius != null)
         {
             sb.Append("webkit-border-bottom-right-radius");
             sb.Append(":");
-            sb.Append(s.webkitBorderBottomRightRadius);
+            sb.Append(s.WebkitBorderBottomRightRadius);
             sb.Append(separator);
         }
-        if (s.webkitBorderEnd != null)
+        if (s.WebkitBorderEnd != null)
         {
             sb.Append("webkit-border-end");
             sb.Append(":");
-            sb.Append(s.webkitBorderEnd);
+            sb.Append(s.WebkitBorderEnd);
             sb.Append(separator);
         }
-        if (s.webkitBorderEndColor != null)
+        if (s.WebkitBorderEndColor != null)
         {
             sb.Append("webkit-border-end-color");
             sb.Append(":");
-            sb.Append(s.webkitBorderEndColor);
+            sb.Append(s.WebkitBorderEndColor);
             sb.Append(separator);
         }
-        if (s.webkitBorderEndStyle != null)
+        if (s.WebkitBorderEndStyle != null)
         {
             sb.Append("webkit-border-end-style");
             sb.Append(":");
-            sb.Append(s.webkitBorderEndStyle);
+            sb.Append(s.WebkitBorderEndStyle);
             sb.Append(separator);
         }
-        if (s.webkitBorderEndWidth != null)
+        if (s.WebkitBorderEndWidth != null)
         {
             sb.Append("webkit-border-end-width");
             sb.Append(":");
-            sb.Append(s.webkitBorderEndWidth);
+            sb.Append(s.WebkitBorderEndWidth);
             sb.Append(separator);
         }
-        if (s.webkitBorderHorizontalSpacing != null)
+        if (s.WebkitBorderHorizontalSpacing != null)
         {
             sb.Append("webkit-border-horizontal-spacing");
             sb.Append(":");
-            sb.Append(s.webkitBorderHorizontalSpacing);
+            sb.Append(s.WebkitBorderHorizontalSpacing);
             sb.Append(separator);
         }
-        if (s.webkitBorderImage != null)
+        if (s.WebkitBorderImage != null)
         {
             sb.Append("webkit-border-image");
             sb.Append(":");
-            sb.Append(s.webkitBorderImage);
+            sb.Append(s.WebkitBorderImage);
             sb.Append(separator);
         }
-        if (s.webkitBorderRadius != null)
+        if (s.WebkitBorderRadius != null)
         {
             sb.Append("webkit-border-radius");
             sb.Append(":");
-            sb.Append(s.webkitBorderRadius);
+            sb.Append(s.WebkitBorderRadius);
             sb.Append(separator);
         }
-        if (s.webkitBorderStart != null)
+        if (s.WebkitBorderStart != null)
         {
             sb.Append("webkit-border-start");
             sb.Append(":");
-            sb.Append(s.webkitBorderStart);
+            sb.Append(s.WebkitBorderStart);
             sb.Append(separator);
         }
-        if (s.webkitBorderStartColor != null)
+        if (s.WebkitBorderStartColor != null)
         {
             sb.Append("webkit-border-start-color");
             sb.Append(":");
-            sb.Append(s.webkitBorderStartColor);
+            sb.Append(s.WebkitBorderStartColor);
             sb.Append(separator);
         }
-        if (s.webkitBorderStartStyle != null)
+        if (s.WebkitBorderStartStyle != null)
         {
             sb.Append("webkit-border-start-style");
             sb.Append(":");
-            sb.Append(s.webkitBorderStartStyle);
+            sb.Append(s.WebkitBorderStartStyle);
             sb.Append(separator);
         }
-        if (s.webkitBorderStartWidth != null)
+        if (s.WebkitBorderStartWidth != null)
         {
             sb.Append("webkit-border-start-width");
             sb.Append(":");
-            sb.Append(s.webkitBorderStartWidth);
+            sb.Append(s.WebkitBorderStartWidth);
             sb.Append(separator);
         }
-        if (s.webkitBorderTopLeftRadius != null)
+        if (s.WebkitBorderTopLeftRadius != null)
         {
             sb.Append("webkit-border-top-left-radius");
             sb.Append(":");
-            sb.Append(s.webkitBorderTopLeftRadius);
+            sb.Append(s.WebkitBorderTopLeftRadius);
             sb.Append(separator);
         }
-        if (s.webkitBorderTopRightRadius != null)
+        if (s.WebkitBorderTopRightRadius != null)
         {
             sb.Append("webkit-border-top-right-radius");
             sb.Append(":");
-            sb.Append(s.webkitBorderTopRightRadius);
+            sb.Append(s.WebkitBorderTopRightRadius);
             sb.Append(separator);
         }
-        if (s.webkitBorderVerticalSpacing != null)
+        if (s.WebkitBorderVerticalSpacing != null)
         {
             sb.Append("webkit-border-vertical-spacing");
             sb.Append(":");
-            sb.Append(s.webkitBorderVerticalSpacing);
+            sb.Append(s.WebkitBorderVerticalSpacing);
             sb.Append(separator);
         }
-        if (s.webkitBoxAlign != null)
+        if (s.WebkitBoxAlign != null)
         {
             sb.Append("webkit-box-align");
             sb.Append(":");
-            sb.Append(s.webkitBoxAlign);
+            sb.Append(s.WebkitBoxAlign);
             sb.Append(separator);
         }
-        if (s.webkitBoxDecorationBreak != null)
+        if (s.WebkitBoxDecorationBreak != null)
         {
             sb.Append("webkit-box-decoration-break");
             sb.Append(":");
-            sb.Append(s.webkitBoxDecorationBreak);
+            sb.Append(s.WebkitBoxDecorationBreak);
             sb.Append(separator);
         }
-        if (s.webkitBoxDirection != null)
+        if (s.WebkitBoxDirection != null)
         {
             sb.Append("webkit-box-direction");
             sb.Append(":");
-            sb.Append(s.webkitBoxDirection);
+            sb.Append(s.WebkitBoxDirection);
             sb.Append(separator);
         }
-        if (s.webkitBoxFlex != null)
+        if (s.WebkitBoxFlex != null)
         {
             sb.Append("webkit-box-flex");
             sb.Append(":");
-            sb.Append(s.webkitBoxFlex);
+            sb.Append(s.WebkitBoxFlex);
             sb.Append(separator);
         }
-        if (s.webkitBoxOrdinalGroup != null)
+        if (s.WebkitBoxOrdinalGroup != null)
         {
             sb.Append("webkit-box-ordinal-group");
             sb.Append(":");
-            sb.Append(s.webkitBoxOrdinalGroup);
+            sb.Append(s.WebkitBoxOrdinalGroup);
             sb.Append(separator);
         }
-        if (s.webkitBoxOrient != null)
+        if (s.WebkitBoxOrient != null)
         {
             sb.Append("webkit-box-orient");
             sb.Append(":");
-            sb.Append(s.webkitBoxOrient);
+            sb.Append(s.WebkitBoxOrient);
             sb.Append(separator);
         }
-        if (s.webkitBoxPack != null)
+        if (s.WebkitBoxPack != null)
         {
             sb.Append("webkit-box-pack");
             sb.Append(":");
-            sb.Append(s.webkitBoxPack);
+            sb.Append(s.WebkitBoxPack);
             sb.Append(separator);
         }
-        if (s.webkitBoxReflect != null)
+        if (s.WebkitBoxReflect != null)
         {
             sb.Append("webkit-box-reflect");
             sb.Append(":");
-            sb.Append(s.webkitBoxReflect);
+            sb.Append(s.WebkitBoxReflect);
             sb.Append(separator);
         }
-        if (s.webkitBoxShadow != null)
+        if (s.WebkitBoxShadow != null)
         {
             sb.Append("webkit-box-shadow");
             sb.Append(":");
-            sb.Append(s.webkitBoxShadow);
+            sb.Append(s.WebkitBoxShadow);
             sb.Append(separator);
         }
-        if (s.webkitBoxSizing != null)
+        if (s.WebkitBoxSizing != null)
         {
             sb.Append("webkit-box-sizing");
             sb.Append(":");
-            sb.Append(s.webkitBoxSizing);
+            sb.Append(s.WebkitBoxSizing);
             sb.Append(separator);
         }
-        if (s.webkitClipPath != null)
+        if (s.WebkitClipPath != null)
         {
             sb.Append("webkit-clip-path");
             sb.Append(":");
-            sb.Append(s.webkitClipPath);
+            sb.Append(s.WebkitClipPath);
             sb.Append(separator);
         }
-        if (s.webkitColumnBreakAfter != null)
+        if (s.WebkitColumnBreakAfter != null)
         {
             sb.Append("webkit-column-break-after");
             sb.Append(":");
-            sb.Append(s.webkitColumnBreakAfter);
+            sb.Append(s.WebkitColumnBreakAfter);
             sb.Append(separator);
         }
-        if (s.webkitColumnBreakBefore != null)
+        if (s.WebkitColumnBreakBefore != null)
         {
             sb.Append("webkit-column-break-before");
             sb.Append(":");
-            sb.Append(s.webkitColumnBreakBefore);
+            sb.Append(s.WebkitColumnBreakBefore);
             sb.Append(separator);
         }
-        if (s.webkitColumnBreakInside != null)
+        if (s.WebkitColumnBreakInside != null)
         {
             sb.Append("webkit-column-break-inside");
             sb.Append(":");
-            sb.Append(s.webkitColumnBreakInside);
+            sb.Append(s.WebkitColumnBreakInside);
             sb.Append(separator);
         }
-        if (s.webkitColumnCount != null)
+        if (s.WebkitColumnCount != null)
         {
             sb.Append("webkit-column-count");
             sb.Append(":");
-            sb.Append(s.webkitColumnCount);
+            sb.Append(s.WebkitColumnCount);
             sb.Append(separator);
         }
-        if (s.webkitColumnGap != null)
+        if (s.WebkitColumnGap != null)
         {
             sb.Append("webkit-column-gap");
             sb.Append(":");
-            sb.Append(s.webkitColumnGap);
+            sb.Append(s.WebkitColumnGap);
             sb.Append(separator);
         }
-        if (s.webkitColumnRule != null)
+        if (s.WebkitColumnRule != null)
         {
             sb.Append("webkit-column-rule");
             sb.Append(":");
-            sb.Append(s.webkitColumnRule);
+            sb.Append(s.WebkitColumnRule);
             sb.Append(separator);
         }
-        if (s.webkitColumnRuleColor != null)
+        if (s.WebkitColumnRuleColor != null)
         {
             sb.Append("webkit-column-rule-color");
             sb.Append(":");
-            sb.Append(s.webkitColumnRuleColor);
+            sb.Append(s.WebkitColumnRuleColor);
             sb.Append(separator);
         }
-        if (s.webkitColumnRuleStyle != null)
+        if (s.WebkitColumnRuleStyle != null)
         {
             sb.Append("webkit-column-rule-style");
             sb.Append(":");
-            sb.Append(s.webkitColumnRuleStyle);
+            sb.Append(s.WebkitColumnRuleStyle);
             sb.Append(separator);
         }
-        if (s.webkitColumnRuleWidth != null)
+        if (s.WebkitColumnRuleWidth != null)
         {
             sb.Append("webkit-column-rule-width");
             sb.Append(":");
-            sb.Append(s.webkitColumnRuleWidth);
+            sb.Append(s.WebkitColumnRuleWidth);
             sb.Append(separator);
         }
-        if (s.webkitColumnSpan != null)
+        if (s.WebkitColumnSpan != null)
         {
             sb.Append("webkit-column-span");
             sb.Append(":");
-            sb.Append(s.webkitColumnSpan);
+            sb.Append(s.WebkitColumnSpan);
             sb.Append(separator);
         }
-        if (s.webkitColumnWidth != null)
+        if (s.WebkitColumnWidth != null)
         {
             sb.Append("webkit-column-width");
             sb.Append(":");
-            sb.Append(s.webkitColumnWidth);
+            sb.Append(s.WebkitColumnWidth);
             sb.Append(separator);
         }
-        if (s.webkitColumns != null)
+        if (s.WebkitColumns != null)
         {
             sb.Append("webkit-columns");
             sb.Append(":");
-            sb.Append(s.webkitColumns);
+            sb.Append(s.WebkitColumns);
             sb.Append(separator);
         }
-        if (s.webkitFilter != null)
+        if (s.WebkitFilter != null)
         {
             sb.Append("webkit-filter");
             sb.Append(":");
-            sb.Append(s.webkitFilter);
+            sb.Append(s.WebkitFilter);
             sb.Append(separator);
         }
-        if (s.webkitFlex != null)
+        if (s.WebkitFlex != null)
         {
             sb.Append("webkit-flex");
             sb.Append(":");
-            sb.Append(s.webkitFlex);
+            sb.Append(s.WebkitFlex);
             sb.Append(separator);
         }
-        if (s.webkitFlexBasis != null)
+        if (s.WebkitFlexBasis != null)
         {
             sb.Append("webkit-flex-basis");
             sb.Append(":");
-            sb.Append(s.webkitFlexBasis);
+            sb.Append(s.WebkitFlexBasis);
             sb.Append(separator);
         }
-        if (s.webkitFlexDirection != null)
+        if (s.WebkitFlexDirection != null)
         {
             sb.Append("webkit-flex-direction");
             sb.Append(":");
-            sb.Append(s.webkitFlexDirection);
+            sb.Append(s.WebkitFlexDirection);
             sb.Append(separator);
         }
-        if (s.webkitFlexFlow != null)
+        if (s.WebkitFlexFlow != null)
         {
             sb.Append("webkit-flex-flow");
             sb.Append(":");
-            sb.Append(s.webkitFlexFlow);
+            sb.Append(s.WebkitFlexFlow);
             sb.Append(separator);
         }
-        if (s.webkitFlexGrow != null)
+        if (s.WebkitFlexGrow != null)
         {
             sb.Append("webkit-flex-grow");
             sb.Append(":");
-            sb.Append(s.webkitFlexGrow);
+            sb.Append(s.WebkitFlexGrow);
             sb.Append(separator);
         }
-        if (s.webkitFlexShrink != null)
+        if (s.WebkitFlexShrink != null)
         {
             sb.Append("webkit-flex-shrink");
             sb.Append(":");
-            sb.Append(s.webkitFlexShrink);
+            sb.Append(s.WebkitFlexShrink);
             sb.Append(separator);
         }
-        if (s.webkitFlexWrap != null)
+        if (s.WebkitFlexWrap != null)
         {
             sb.Append("webkit-flex-wrap");
             sb.Append(":");
-            sb.Append(s.webkitFlexWrap);
+            sb.Append(s.WebkitFlexWrap);
             sb.Append(separator);
         }
-        if (s.webkitFontFeatureSettings != null)
+        if (s.WebkitFontFeatureSettings != null)
         {
             sb.Append("webkit-font-feature-settings");
             sb.Append(":");
-            sb.Append(s.webkitFontFeatureSettings);
+            sb.Append(s.WebkitFontFeatureSettings);
             sb.Append(separator);
         }
-        if (s.webkitFontSmoothing != null)
+        if (s.WebkitFontSmoothing != null)
         {
             sb.Append("webkit-font-smoothing");
             sb.Append(":");
-            sb.Append(s.webkitFontSmoothing);
+            sb.Append(s.WebkitFontSmoothing);
             sb.Append(separator);
         }
-        if (s.webkitHyphenateCharacter != null)
+        if (s.WebkitHyphenateCharacter != null)
         {
             sb.Append("webkit-hyphenate-character");
             sb.Append(":");
-            sb.Append(s.webkitHyphenateCharacter);
+            sb.Append(s.WebkitHyphenateCharacter);
             sb.Append(separator);
         }
-        if (s.webkitJustifyContent != null)
+        if (s.WebkitJustifyContent != null)
         {
             sb.Append("webkit-justify-content");
             sb.Append(":");
-            sb.Append(s.webkitJustifyContent);
+            sb.Append(s.WebkitJustifyContent);
             sb.Append(separator);
         }
-        if (s.webkitLineBreak != null)
+        if (s.WebkitLineBreak != null)
         {
             sb.Append("webkit-line-break");
             sb.Append(":");
-            sb.Append(s.webkitLineBreak);
+            sb.Append(s.WebkitLineBreak);
             sb.Append(separator);
         }
-        if (s.webkitLineClamp != null)
+        if (s.WebkitLineClamp != null)
         {
             sb.Append("webkit-line-clamp");
             sb.Append(":");
-            sb.Append(s.webkitLineClamp);
+            sb.Append(s.WebkitLineClamp);
             sb.Append(separator);
         }
-        if (s.webkitLocale != null)
+        if (s.WebkitLocale != null)
         {
             sb.Append("webkit-locale");
             sb.Append(":");
-            sb.Append(s.webkitLocale);
+            sb.Append(s.WebkitLocale);
             sb.Append(separator);
         }
-        if (s.webkitLogicalHeight != null)
+        if (s.WebkitLogicalHeight != null)
         {
             sb.Append("webkit-logical-height");
             sb.Append(":");
-            sb.Append(s.webkitLogicalHeight);
+            sb.Append(s.WebkitLogicalHeight);
             sb.Append(separator);
         }
-        if (s.webkitLogicalWidth != null)
+        if (s.WebkitLogicalWidth != null)
         {
             sb.Append("webkit-logical-width");
             sb.Append(":");
-            sb.Append(s.webkitLogicalWidth);
+            sb.Append(s.WebkitLogicalWidth);
             sb.Append(separator);
         }
-        if (s.webkitMarginAfter != null)
+        if (s.WebkitMarginAfter != null)
         {
             sb.Append("webkit-margin-after");
             sb.Append(":");
-            sb.Append(s.webkitMarginAfter);
+            sb.Append(s.WebkitMarginAfter);
             sb.Append(separator);
         }
-        if (s.webkitMarginBefore != null)
+        if (s.WebkitMarginBefore != null)
         {
             sb.Append("webkit-margin-before");
             sb.Append(":");
-            sb.Append(s.webkitMarginBefore);
+            sb.Append(s.WebkitMarginBefore);
             sb.Append(separator);
         }
-        if (s.webkitMarginEnd != null)
+        if (s.WebkitMarginEnd != null)
         {
             sb.Append("webkit-margin-end");
             sb.Append(":");
-            sb.Append(s.webkitMarginEnd);
+            sb.Append(s.WebkitMarginEnd);
             sb.Append(separator);
         }
-        if (s.webkitMarginStart != null)
+        if (s.WebkitMarginStart != null)
         {
             sb.Append("webkit-margin-start");
             sb.Append(":");
-            sb.Append(s.webkitMarginStart);
+            sb.Append(s.WebkitMarginStart);
             sb.Append(separator);
         }
-        if (s.webkitMask != null)
+        if (s.WebkitMask != null)
         {
             sb.Append("webkit-mask");
             sb.Append(":");
-            sb.Append(s.webkitMask);
+            sb.Append(s.WebkitMask);
             sb.Append(separator);
         }
-        if (s.webkitMaskBoxImage != null)
+        if (s.WebkitMaskBoxImage != null)
         {
             sb.Append("webkit-mask-box-image");
             sb.Append(":");
-            sb.Append(s.webkitMaskBoxImage);
+            sb.Append(s.WebkitMaskBoxImage);
             sb.Append(separator);
         }
-        if (s.webkitMaskBoxImageOutset != null)
+        if (s.WebkitMaskBoxImageOutset != null)
         {
             sb.Append("webkit-mask-box-image-outset");
             sb.Append(":");
-            sb.Append(s.webkitMaskBoxImageOutset);
+            sb.Append(s.WebkitMaskBoxImageOutset);
             sb.Append(separator);
         }
-        if (s.webkitMaskBoxImageRepeat != null)
+        if (s.WebkitMaskBoxImageRepeat != null)
         {
             sb.Append("webkit-mask-box-image-repeat");
             sb.Append(":");
-            sb.Append(s.webkitMaskBoxImageRepeat);
+            sb.Append(s.WebkitMaskBoxImageRepeat);
             sb.Append(separator);
         }
-        if (s.webkitMaskBoxImageSlice != null)
+        if (s.WebkitMaskBoxImageSlice != null)
         {
             sb.Append("webkit-mask-box-image-slice");
             sb.Append(":");
-            sb.Append(s.webkitMaskBoxImageSlice);
+            sb.Append(s.WebkitMaskBoxImageSlice);
             sb.Append(separator);
         }
-        if (s.webkitMaskBoxImageSource != null)
+        if (s.WebkitMaskBoxImageSource != null)
         {
             sb.Append("webkit-mask-box-image-source");
             sb.Append(":");
-            sb.Append(s.webkitMaskBoxImageSource);
+            sb.Append(s.WebkitMaskBoxImageSource);
             sb.Append(separator);
         }
-        if (s.webkitMaskBoxImageWidth != null)
+        if (s.WebkitMaskBoxImageWidth != null)
         {
             sb.Append("webkit-mask-box-image-width");
             sb.Append(":");
-            sb.Append(s.webkitMaskBoxImageWidth);
+            sb.Append(s.WebkitMaskBoxImageWidth);
             sb.Append(separator);
         }
-        if (s.webkitMaskClip != null)
+        if (s.WebkitMaskClip != null)
         {
             sb.Append("webkit-mask-clip");
             sb.Append(":");
-            sb.Append(s.webkitMaskClip);
+            sb.Append(s.WebkitMaskClip);
             sb.Append(separator);
         }
-        if (s.webkitMaskComposite != null)
+        if (s.WebkitMaskComposite != null)
         {
             sb.Append("webkit-mask-composite");
             sb.Append(":");
-            sb.Append(s.webkitMaskComposite);
+            sb.Append(s.WebkitMaskComposite);
             sb.Append(separator);
         }
-        if (s.webkitMaskImage != null)
+        if (s.WebkitMaskImage != null)
         {
             sb.Append("webkit-mask-image");
             sb.Append(":");
-            sb.Append(s.webkitMaskImage);
+            sb.Append(s.WebkitMaskImage);
             sb.Append(separator);
         }
-        if (s.webkitMaskOrigin != null)
+        if (s.WebkitMaskOrigin != null)
         {
             sb.Append("webkit-mask-origin");
             sb.Append(":");
-            sb.Append(s.webkitMaskOrigin);
+            sb.Append(s.WebkitMaskOrigin);
             sb.Append(separator);
         }
-        if (s.webkitMaskPosition != null)
+        if (s.WebkitMaskPosition != null)
         {
             sb.Append("webkit-mask-position");
             sb.Append(":");
-            sb.Append(s.webkitMaskPosition);
+            sb.Append(s.WebkitMaskPosition);
             sb.Append(separator);
         }
-        if (s.webkitMaskPositionX != null)
+        if (s.WebkitMaskPositionX != null)
         {
             sb.Append("webkit-mask-position-x");
             sb.Append(":");
-            sb.Append(s.webkitMaskPositionX);
+            sb.Append(s.WebkitMaskPositionX);
             sb.Append(separator);
         }
-        if (s.webkitMaskPositionY != null)
+        if (s.WebkitMaskPositionY != null)
         {
             sb.Append("webkit-mask-position-y");
             sb.Append(":");
-            sb.Append(s.webkitMaskPositionY);
+            sb.Append(s.WebkitMaskPositionY);
             sb.Append(separator);
         }
-        if (s.webkitMaskRepeat != null)
+        if (s.WebkitMaskRepeat != null)
         {
             sb.Append("webkit-mask-repeat");
             sb.Append(":");
-            sb.Append(s.webkitMaskRepeat);
+            sb.Append(s.WebkitMaskRepeat);
             sb.Append(separator);
         }
-        if (s.webkitMaskRepeatX != null)
+        if (s.WebkitMaskRepeatX != null)
         {
             sb.Append("webkit-mask-repeat-x");
             sb.Append(":");
-            sb.Append(s.webkitMaskRepeatX);
+            sb.Append(s.WebkitMaskRepeatX);
             sb.Append(separator);
         }
-        if (s.webkitMaskRepeatY != null)
+        if (s.WebkitMaskRepeatY != null)
         {
             sb.Append("webkit-mask-repeat-y");
             sb.Append(":");
-            sb.Append(s.webkitMaskRepeatY);
+            sb.Append(s.WebkitMaskRepeatY);
             sb.Append(separator);
         }
-        if (s.webkitMaskSize != null)
+        if (s.WebkitMaskSize != null)
         {
             sb.Append("webkit-mask-size");
             sb.Append(":");
-            sb.Append(s.webkitMaskSize);
+            sb.Append(s.WebkitMaskSize);
             sb.Append(separator);
         }
-        if (s.webkitMaxLogicalHeight != null)
+        if (s.WebkitMaxLogicalHeight != null)
         {
             sb.Append("webkit-max-logical-height");
             sb.Append(":");
-            sb.Append(s.webkitMaxLogicalHeight);
+            sb.Append(s.WebkitMaxLogicalHeight);
             sb.Append(separator);
         }
-        if (s.webkitMaxLogicalWidth != null)
+        if (s.WebkitMaxLogicalWidth != null)
         {
             sb.Append("webkit-max-logical-width");
             sb.Append(":");
-            sb.Append(s.webkitMaxLogicalWidth);
+            sb.Append(s.WebkitMaxLogicalWidth);
             sb.Append(separator);
         }
-        if (s.webkitMinLogicalHeight != null)
+        if (s.WebkitMinLogicalHeight != null)
         {
             sb.Append("webkit-min-logical-height");
             sb.Append(":");
-            sb.Append(s.webkitMinLogicalHeight);
+            sb.Append(s.WebkitMinLogicalHeight);
             sb.Append(separator);
         }
-        if (s.webkitMinLogicalWidth != null)
+        if (s.WebkitMinLogicalWidth != null)
         {
             sb.Append("webkit-min-logical-width");
             sb.Append(":");
-            sb.Append(s.webkitMinLogicalWidth);
+            sb.Append(s.WebkitMinLogicalWidth);
             sb.Append(separator);
         }
-        if (s.webkitOpacity != null)
+        if (s.WebkitOpacity != null)
         {
             sb.Append("webkit-opacity");
             sb.Append(":");
-            sb.Append(s.webkitOpacity);
+            sb.Append(s.WebkitOpacity);
             sb.Append(separator);
         }
-        if (s.webkitOrder != null)
+        if (s.WebkitOrder != null)
         {
             sb.Append("webkit-order");
             sb.Append(":");
-            sb.Append(s.webkitOrder);
+            sb.Append(s.WebkitOrder);
             sb.Append(separator);
         }
-        if (s.webkitPaddingAfter != null)
+        if (s.WebkitPaddingAfter != null)
         {
             sb.Append("webkit-padding-after");
             sb.Append(":");
-            sb.Append(s.webkitPaddingAfter);
+            sb.Append(s.WebkitPaddingAfter);
             sb.Append(separator);
         }
-        if (s.webkitPaddingBefore != null)
+        if (s.WebkitPaddingBefore != null)
         {
             sb.Append("webkit-padding-before");
             sb.Append(":");
-            sb.Append(s.webkitPaddingBefore);
+            sb.Append(s.WebkitPaddingBefore);
             sb.Append(separator);
         }
-        if (s.webkitPaddingEnd != null)
+        if (s.WebkitPaddingEnd != null)
         {
             sb.Append("webkit-padding-end");
             sb.Append(":");
-            sb.Append(s.webkitPaddingEnd);
+            sb.Append(s.WebkitPaddingEnd);
             sb.Append(separator);
         }
-        if (s.webkitPaddingStart != null)
+        if (s.WebkitPaddingStart != null)
         {
             sb.Append("webkit-padding-start");
             sb.Append(":");
-            sb.Append(s.webkitPaddingStart);
+            sb.Append(s.WebkitPaddingStart);
             sb.Append(separator);
         }
-        if (s.webkitPerspective != null)
+        if (s.WebkitPerspective != null)
         {
             sb.Append("webkit-perspective");
             sb.Append(":");
-            sb.Append(s.webkitPerspective);
+            sb.Append(s.WebkitPerspective);
             sb.Append(separator);
         }
-        if (s.webkitPerspectiveOrigin != null)
+        if (s.WebkitPerspectiveOrigin != null)
         {
             sb.Append("webkit-perspective-origin");
             sb.Append(":");
-            sb.Append(s.webkitPerspectiveOrigin);
+            sb.Append(s.WebkitPerspectiveOrigin);
             sb.Append(separator);
         }
-        if (s.webkitPerspectiveOriginX != null)
+        if (s.WebkitPerspectiveOriginX != null)
         {
             sb.Append("webkit-perspective-origin-x");
             sb.Append(":");
-            sb.Append(s.webkitPerspectiveOriginX);
+            sb.Append(s.WebkitPerspectiveOriginX);
             sb.Append(separator);
         }
-        if (s.webkitPerspectiveOriginY != null)
+        if (s.WebkitPerspectiveOriginY != null)
         {
             sb.Append("webkit-perspective-origin-y");
             sb.Append(":");
-            sb.Append(s.webkitPerspectiveOriginY);
+            sb.Append(s.WebkitPerspectiveOriginY);
             sb.Append(separator);
         }
-        if (s.webkitPrintColorAdjust != null)
+        if (s.WebkitPrintColorAdjust != null)
         {
             sb.Append("webkit-print-color-adjust");
             sb.Append(":");
-            sb.Append(s.webkitPrintColorAdjust);
+            sb.Append(s.WebkitPrintColorAdjust);
             sb.Append(separator);
         }
-        if (s.webkitRtlOrdering != null)
+        if (s.WebkitRtlOrdering != null)
         {
             sb.Append("webkit-rtl-ordering");
             sb.Append(":");
-            sb.Append(s.webkitRtlOrdering);
+            sb.Append(s.WebkitRtlOrdering);
             sb.Append(separator);
         }
-        if (s.webkitRubyPosition != null)
+        if (s.WebkitRubyPosition != null)
         {
             sb.Append("webkit-ruby-position");
             sb.Append(":");
-            sb.Append(s.webkitRubyPosition);
+            sb.Append(s.WebkitRubyPosition);
             sb.Append(separator);
         }
-        if (s.webkitShapeImageThreshold != null)
+        if (s.WebkitShapeImageThreshold != null)
         {
             sb.Append("webkit-shape-image-threshold");
             sb.Append(":");
-            sb.Append(s.webkitShapeImageThreshold);
+            sb.Append(s.WebkitShapeImageThreshold);
             sb.Append(separator);
         }
-        if (s.webkitShapeMargin != null)
+        if (s.WebkitShapeMargin != null)
         {
             sb.Append("webkit-shape-margin");
             sb.Append(":");
-            sb.Append(s.webkitShapeMargin);
+            sb.Append(s.WebkitShapeMargin);
             sb.Append(separator);
         }
-        if (s.webkitShapeOutside != null)
+        if (s.WebkitShapeOutside != null)
         {
             sb.Append("webkit-shape-outside");
             sb.Append(":");
-            sb.Append(s.webkitShapeOutside);
+            sb.Append(s.WebkitShapeOutside);
             sb.Append(separator);
         }
-        if (s.webkitTapHighlightColor != null)
+        if (s.WebkitTapHighlightColor != null)
         {
             sb.Append("webkit-tap-highlight-color");
             sb.Append(":");
-            sb.Append(s.webkitTapHighlightColor);
+            sb.Append(s.WebkitTapHighlightColor);
             sb.Append(separator);
         }
-        if (s.webkitTextCombine != null)
+        if (s.WebkitTextCombine != null)
         {
             sb.Append("webkit-text-combine");
             sb.Append(":");
-            sb.Append(s.webkitTextCombine);
+            sb.Append(s.WebkitTextCombine);
             sb.Append(separator);
         }
-        if (s.webkitTextDecorationsInEffect != null)
+        if (s.WebkitTextDecorationsInEffect != null)
         {
             sb.Append("webkit-text-decorations-in-effect");
             sb.Append(":");
-            sb.Append(s.webkitTextDecorationsInEffect);
+            sb.Append(s.WebkitTextDecorationsInEffect);
             sb.Append(separator);
         }
-        if (s.webkitTextEmphasis != null)
+        if (s.WebkitTextEmphasis != null)
         {
             sb.Append("webkit-text-emphasis");
             sb.Append(":");
-            sb.Append(s.webkitTextEmphasis);
+            sb.Append(s.WebkitTextEmphasis);
             sb.Append(separator);
         }
-        if (s.webkitTextEmphasisColor != null)
+        if (s.WebkitTextEmphasisColor != null)
         {
             sb.Append("webkit-text-emphasis-color");
             sb.Append(":");
-            sb.Append(s.webkitTextEmphasisColor);
+            sb.Append(s.WebkitTextEmphasisColor);
             sb.Append(separator);
         }
-        if (s.webkitTextEmphasisPosition != null)
+        if (s.WebkitTextEmphasisPosition != null)
         {
             sb.Append("webkit-text-emphasis-position");
             sb.Append(":");
-            sb.Append(s.webkitTextEmphasisPosition);
+            sb.Append(s.WebkitTextEmphasisPosition);
             sb.Append(separator);
         }
-        if (s.webkitTextEmphasisStyle != null)
+        if (s.WebkitTextEmphasisStyle != null)
         {
             sb.Append("webkit-text-emphasis-style");
             sb.Append(":");
-            sb.Append(s.webkitTextEmphasisStyle);
+            sb.Append(s.WebkitTextEmphasisStyle);
             sb.Append(separator);
         }
-        if (s.webkitTextFillColor != null)
+        if (s.WebkitTextFillColor != null)
         {
             sb.Append("webkit-text-fill-color");
             sb.Append(":");
-            sb.Append(s.webkitTextFillColor);
+            sb.Append(s.WebkitTextFillColor);
             sb.Append(separator);
         }
-        if (s.webkitTextOrientation != null)
+        if (s.WebkitTextOrientation != null)
         {
             sb.Append("webkit-text-orientation");
             sb.Append(":");
-            sb.Append(s.webkitTextOrientation);
+            sb.Append(s.WebkitTextOrientation);
             sb.Append(separator);
         }
-        if (s.webkitTextSecurity != null)
+        if (s.WebkitTextSecurity != null)
         {
             sb.Append("webkit-text-security");
             sb.Append(":");
-            sb.Append(s.webkitTextSecurity);
+            sb.Append(s.WebkitTextSecurity);
             sb.Append(separator);
         }
-        if (s.webkitTextSizeAdjust != null)
+        if (s.WebkitTextSizeAdjust != null)
         {
             sb.Append("webkit-text-size-adjust");
             sb.Append(":");
-            sb.Append(s.webkitTextSizeAdjust);
+            sb.Append(s.WebkitTextSizeAdjust);
             sb.Append(separator);
         }
-        if (s.webkitTextStroke != null)
+        if (s.WebkitTextStroke != null)
         {
             sb.Append("webkit-text-stroke");
             sb.Append(":");
-            sb.Append(s.webkitTextStroke);
+            sb.Append(s.WebkitTextStroke);
             sb.Append(separator);
         }
-        if (s.webkitTextStrokeColor != null)
+        if (s.WebkitTextStrokeColor != null)
         {
             sb.Append("webkit-text-stroke-color");
             sb.Append(":");
-            sb.Append(s.webkitTextStrokeColor);
+            sb.Append(s.WebkitTextStrokeColor);
             sb.Append(separator);
         }
-        if (s.webkitTextStrokeWidth != null)
+        if (s.WebkitTextStrokeWidth != null)
         {
             sb.Append("webkit-text-stroke-width");
             sb.Append(":");
-            sb.Append(s.webkitTextStrokeWidth);
+            sb.Append(s.WebkitTextStrokeWidth);
             sb.Append(separator);
         }
-        if (s.webkitTransform != null)
+        if (s.WebkitTransform != null)
         {
             sb.Append("webkit-transform");
             sb.Append(":");
-            sb.Append(s.webkitTransform);
+            sb.Append(s.WebkitTransform);
             sb.Append(separator);
         }
-        if (s.webkitTransformOrigin != null)
+        if (s.WebkitTransformOrigin != null)
         {
             sb.Append("webkit-transform-origin");
             sb.Append(":");
-            sb.Append(s.webkitTransformOrigin);
+            sb.Append(s.WebkitTransformOrigin);
             sb.Append(separator);
         }
-        if (s.webkitTransformOriginX != null)
+        if (s.WebkitTransformOriginX != null)
         {
             sb.Append("webkit-transform-origin-x");
             sb.Append(":");
-            sb.Append(s.webkitTransformOriginX);
+            sb.Append(s.WebkitTransformOriginX);
             sb.Append(separator);
         }
-        if (s.webkitTransformOriginY != null)
+        if (s.WebkitTransformOriginY != null)
         {
             sb.Append("webkit-transform-origin-y");
             sb.Append(":");
-            sb.Append(s.webkitTransformOriginY);
+            sb.Append(s.WebkitTransformOriginY);
             sb.Append(separator);
         }
-        if (s.webkitTransformOriginZ != null)
+        if (s.WebkitTransformOriginZ != null)
         {
             sb.Append("webkit-transform-origin-z");
             sb.Append(":");
-            sb.Append(s.webkitTransformOriginZ);
+            sb.Append(s.WebkitTransformOriginZ);
             sb.Append(separator);
         }
-        if (s.webkitTransformStyle != null)
+        if (s.WebkitTransformStyle != null)
         {
             sb.Append("webkit-transform-style");
             sb.Append(":");
-            sb.Append(s.webkitTransformStyle);
+            sb.Append(s.WebkitTransformStyle);
             sb.Append(separator);
         }
-        if (s.webkitTransition != null)
+        if (s.WebkitTransition != null)
         {
             sb.Append("webkit-transition");
             sb.Append(":");
-            sb.Append(s.webkitTransition);
+            sb.Append(s.WebkitTransition);
             sb.Append(separator);
         }
-        if (s.webkitTransitionDelay != null)
+        if (s.WebkitTransitionDelay != null)
         {
             sb.Append("webkit-transition-delay");
             sb.Append(":");
-            sb.Append(s.webkitTransitionDelay);
+            sb.Append(s.WebkitTransitionDelay);
             sb.Append(separator);
         }
-        if (s.webkitTransitionDuration != null)
+        if (s.WebkitTransitionDuration != null)
         {
             sb.Append("webkit-transition-duration");
             sb.Append(":");
-            sb.Append(s.webkitTransitionDuration);
+            sb.Append(s.WebkitTransitionDuration);
             sb.Append(separator);
         }
-        if (s.webkitTransitionProperty != null)
+        if (s.WebkitTransitionProperty != null)
         {
             sb.Append("webkit-transition-property");
             sb.Append(":");
-            sb.Append(s.webkitTransitionProperty);
+            sb.Append(s.WebkitTransitionProperty);
             sb.Append(separator);
         }
-        if (s.webkitTransitionTimingFunction != null)
+        if (s.WebkitTransitionTimingFunction != null)
         {
             sb.Append("webkit-transition-timing-function");
             sb.Append(":");
-            sb.Append(s.webkitTransitionTimingFunction);
+            sb.Append(s.WebkitTransitionTimingFunction);
             sb.Append(separator);
         }
-        if (s.webkitUserDrag != null)
+        if (s.WebkitUserDrag != null)
         {
             sb.Append("webkit-user-drag");
             sb.Append(":");
-            sb.Append(s.webkitUserDrag);
+            sb.Append(s.WebkitUserDrag);
             sb.Append(separator);
         }
-        if (s.webkitUserModify != null)
+        if (s.WebkitUserModify != null)
         {
             sb.Append("webkit-user-modify");
             sb.Append(":");
-            sb.Append(s.webkitUserModify);
+            sb.Append(s.WebkitUserModify);
             sb.Append(separator);
         }
-        if (s.webkitUserSelect != null)
+        if (s.WebkitUserSelect != null)
         {
             sb.Append("webkit-user-select");
             sb.Append(":");
-            sb.Append(s.webkitUserSelect);
+            sb.Append(s.WebkitUserSelect);
             sb.Append(separator);
         }
-        if (s.webkitWritingMode != null)
+        if (s.WebkitWritingMode != null)
         {
             sb.Append("webkit-writing-mode");
             sb.Append(":");
-            sb.Append(s.webkitWritingMode);
+            sb.Append(s.WebkitWritingMode);
             sb.Append(separator);
         }
         if (s.whiteSpace != null)
@@ -20588,769 +20588,769 @@ partial class Mixin
     public static StyleModifier Visibility(string value) => new(style => style.visibility = value);
 
     /// <summary>
-    ///     style.webkitAlignContent = <paramref name="value" />
+    ///     style.WebkitAlignContent = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAlignContent(string value) => new(style => style.webkitAlignContent = value);
+    public static StyleModifier WebkitAlignContent(string value) => new(style => style.WebkitAlignContent = value);
 
     /// <summary>
-    ///     style.webkitAlignItems = <paramref name="value" />
+    ///     style.WebkitAlignItems = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAlignItems(string value) => new(style => style.webkitAlignItems = value);
+    public static StyleModifier WebkitAlignItems(string value) => new(style => style.WebkitAlignItems = value);
 
     /// <summary>
-    ///     style.webkitAlignSelf = <paramref name="value" />
+    ///     style.WebkitAlignSelf = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAlignSelf(string value) => new(style => style.webkitAlignSelf = value);
+    public static StyleModifier WebkitAlignSelf(string value) => new(style => style.WebkitAlignSelf = value);
 
     /// <summary>
-    ///     style.webkitAnimation = <paramref name="value" />
+    ///     style.WebkitAnimation = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimation(string value) => new(style => style.webkitAnimation = value);
+    public static StyleModifier WebkitAnimation(string value) => new(style => style.WebkitAnimation = value);
 
     /// <summary>
-    ///     style.webkitAnimationDelay = <paramref name="value" />
+    ///     style.WebkitAnimationDelay = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimationDelay(string value) => new(style => style.webkitAnimationDelay = value);
+    public static StyleModifier WebkitAnimationDelay(string value) => new(style => style.WebkitAnimationDelay = value);
 
     /// <summary>
-    ///     style.webkitAnimationDirection = <paramref name="value" />
+    ///     style.WebkitAnimationDirection = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimationDirection(string value) => new(style => style.webkitAnimationDirection = value);
+    public static StyleModifier WebkitAnimationDirection(string value) => new(style => style.WebkitAnimationDirection = value);
 
     /// <summary>
-    ///     style.webkitAnimationDuration = <paramref name="value" />
+    ///     style.WebkitAnimationDuration = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimationDuration(string value) => new(style => style.webkitAnimationDuration = value);
+    public static StyleModifier WebkitAnimationDuration(string value) => new(style => style.WebkitAnimationDuration = value);
 
     /// <summary>
-    ///     style.webkitAnimationFillMode = <paramref name="value" />
+    ///     style.WebkitAnimationFillMode = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimationFillMode(string value) => new(style => style.webkitAnimationFillMode = value);
+    public static StyleModifier WebkitAnimationFillMode(string value) => new(style => style.WebkitAnimationFillMode = value);
 
     /// <summary>
-    ///     style.webkitAnimationIterationCount = <paramref name="value" />
+    ///     style.WebkitAnimationIterationCount = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimationIterationCount(string value) => new(style => style.webkitAnimationIterationCount = value);
+    public static StyleModifier WebkitAnimationIterationCount(string value) => new(style => style.WebkitAnimationIterationCount = value);
 
     /// <summary>
-    ///     style.webkitAnimationName = <paramref name="value" />
+    ///     style.WebkitAnimationName = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimationName(string value) => new(style => style.webkitAnimationName = value);
+    public static StyleModifier WebkitAnimationName(string value) => new(style => style.WebkitAnimationName = value);
 
     /// <summary>
-    ///     style.webkitAnimationPlayState = <paramref name="value" />
+    ///     style.WebkitAnimationPlayState = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimationPlayState(string value) => new(style => style.webkitAnimationPlayState = value);
+    public static StyleModifier WebkitAnimationPlayState(string value) => new(style => style.WebkitAnimationPlayState = value);
 
     /// <summary>
-    ///     style.webkitAnimationTimingFunction = <paramref name="value" />
+    ///     style.WebkitAnimationTimingFunction = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAnimationTimingFunction(string value) => new(style => style.webkitAnimationTimingFunction = value);
+    public static StyleModifier WebkitAnimationTimingFunction(string value) => new(style => style.WebkitAnimationTimingFunction = value);
 
     /// <summary>
-    ///     style.webkitAppRegion = <paramref name="value" />
+    ///     style.WebkitAppRegion = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAppRegion(string value) => new(style => style.webkitAppRegion = value);
+    public static StyleModifier WebkitAppRegion(string value) => new(style => style.WebkitAppRegion = value);
 
     /// <summary>
-    ///     style.webkitAppearance = <paramref name="value" />
+    ///     style.WebkitAppearance = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitAppearance(string value) => new(style => style.webkitAppearance = value);
+    public static StyleModifier WebkitAppearance(string value) => new(style => style.WebkitAppearance = value);
 
     /// <summary>
-    ///     style.webkitBackfaceVisibility = <paramref name="value" />
+    ///     style.WebkitBackfaceVisibility = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBackfaceVisibility(string value) => new(style => style.webkitBackfaceVisibility = value);
+    public static StyleModifier WebkitBackfaceVisibility(string value) => new(style => style.WebkitBackfaceVisibility = value);
 
     /// <summary>
-    ///     style.webkitBackgroundClip = <paramref name="value" />
+    ///     style.WebkitBackgroundClip = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBackgroundClip(string value) => new(style => style.webkitBackgroundClip = value);
+    public static StyleModifier WebkitBackgroundClip(string value) => new(style => style.WebkitBackgroundClip = value);
 
     /// <summary>
-    ///     style.webkitBackgroundOrigin = <paramref name="value" />
+    ///     style.WebkitBackgroundOrigin = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBackgroundOrigin(string value) => new(style => style.webkitBackgroundOrigin = value);
+    public static StyleModifier WebkitBackgroundOrigin(string value) => new(style => style.WebkitBackgroundOrigin = value);
 
     /// <summary>
-    ///     style.webkitBackgroundSize = <paramref name="value" />
+    ///     style.WebkitBackgroundSize = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBackgroundSize(string value) => new(style => style.webkitBackgroundSize = value);
+    public static StyleModifier WebkitBackgroundSize(string value) => new(style => style.WebkitBackgroundSize = value);
 
     /// <summary>
-    ///     style.webkitBorderAfter = <paramref name="value" />
+    ///     style.WebkitBorderAfter = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderAfter(string value) => new(style => style.webkitBorderAfter = value);
+    public static StyleModifier WebkitBorderAfter(string value) => new(style => style.WebkitBorderAfter = value);
 
     /// <summary>
-    ///     style.webkitBorderAfterColor = <paramref name="value" />
+    ///     style.WebkitBorderAfterColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderAfterColor(string value) => new(style => style.webkitBorderAfterColor = value);
+    public static StyleModifier WebkitBorderAfterColor(string value) => new(style => style.WebkitBorderAfterColor = value);
 
     /// <summary>
-    ///     style.webkitBorderAfterStyle = <paramref name="value" />
+    ///     style.WebkitBorderAfterStyle = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderAfterStyle(string value) => new(style => style.webkitBorderAfterStyle = value);
+    public static StyleModifier WebkitBorderAfterStyle(string value) => new(style => style.WebkitBorderAfterStyle = value);
 
     /// <summary>
-    ///     style.webkitBorderAfterWidth = <paramref name="value" />
+    ///     style.WebkitBorderAfterWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderAfterWidth(string value) => new(style => style.webkitBorderAfterWidth = value);
+    public static StyleModifier WebkitBorderAfterWidth(string value) => new(style => style.WebkitBorderAfterWidth = value);
 
     /// <summary>
-    ///     style.webkitBorderBefore = <paramref name="value" />
+    ///     style.WebkitBorderBefore = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderBefore(string value) => new(style => style.webkitBorderBefore = value);
+    public static StyleModifier WebkitBorderBefore(string value) => new(style => style.WebkitBorderBefore = value);
 
     /// <summary>
-    ///     style.webkitBorderBeforeColor = <paramref name="value" />
+    ///     style.WebkitBorderBeforeColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderBeforeColor(string value) => new(style => style.webkitBorderBeforeColor = value);
+    public static StyleModifier WebkitBorderBeforeColor(string value) => new(style => style.WebkitBorderBeforeColor = value);
 
     /// <summary>
-    ///     style.webkitBorderBeforeStyle = <paramref name="value" />
+    ///     style.WebkitBorderBeforeStyle = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderBeforeStyle(string value) => new(style => style.webkitBorderBeforeStyle = value);
+    public static StyleModifier WebkitBorderBeforeStyle(string value) => new(style => style.WebkitBorderBeforeStyle = value);
 
     /// <summary>
-    ///     style.webkitBorderBeforeWidth = <paramref name="value" />
+    ///     style.WebkitBorderBeforeWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderBeforeWidth(string value) => new(style => style.webkitBorderBeforeWidth = value);
+    public static StyleModifier WebkitBorderBeforeWidth(string value) => new(style => style.WebkitBorderBeforeWidth = value);
 
     /// <summary>
-    ///     style.webkitBorderBottomLeftRadius = <paramref name="value" />
+    ///     style.WebkitBorderBottomLeftRadius = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderBottomLeftRadius(string value) => new(style => style.webkitBorderBottomLeftRadius = value);
+    public static StyleModifier WebkitBorderBottomLeftRadius(string value) => new(style => style.WebkitBorderBottomLeftRadius = value);
 
     /// <summary>
-    ///     style.webkitBorderBottomRightRadius = <paramref name="value" />
+    ///     style.WebkitBorderBottomRightRadius = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderBottomRightRadius(string value) => new(style => style.webkitBorderBottomRightRadius = value);
+    public static StyleModifier WebkitBorderBottomRightRadius(string value) => new(style => style.WebkitBorderBottomRightRadius = value);
 
     /// <summary>
-    ///     style.webkitBorderEnd = <paramref name="value" />
+    ///     style.WebkitBorderEnd = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderEnd(string value) => new(style => style.webkitBorderEnd = value);
+    public static StyleModifier WebkitBorderEnd(string value) => new(style => style.WebkitBorderEnd = value);
 
     /// <summary>
-    ///     style.webkitBorderEndColor = <paramref name="value" />
+    ///     style.WebkitBorderEndColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderEndColor(string value) => new(style => style.webkitBorderEndColor = value);
+    public static StyleModifier WebkitBorderEndColor(string value) => new(style => style.WebkitBorderEndColor = value);
 
     /// <summary>
-    ///     style.webkitBorderEndStyle = <paramref name="value" />
+    ///     style.WebkitBorderEndStyle = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderEndStyle(string value) => new(style => style.webkitBorderEndStyle = value);
+    public static StyleModifier WebkitBorderEndStyle(string value) => new(style => style.WebkitBorderEndStyle = value);
 
     /// <summary>
-    ///     style.webkitBorderEndWidth = <paramref name="value" />
+    ///     style.WebkitBorderEndWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderEndWidth(string value) => new(style => style.webkitBorderEndWidth = value);
+    public static StyleModifier WebkitBorderEndWidth(string value) => new(style => style.WebkitBorderEndWidth = value);
 
     /// <summary>
-    ///     style.webkitBorderHorizontalSpacing = <paramref name="value" />
+    ///     style.WebkitBorderHorizontalSpacing = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderHorizontalSpacing(string value) => new(style => style.webkitBorderHorizontalSpacing = value);
+    public static StyleModifier WebkitBorderHorizontalSpacing(string value) => new(style => style.WebkitBorderHorizontalSpacing = value);
 
     /// <summary>
-    ///     style.webkitBorderImage = <paramref name="value" />
+    ///     style.WebkitBorderImage = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderImage(string value) => new(style => style.webkitBorderImage = value);
+    public static StyleModifier WebkitBorderImage(string value) => new(style => style.WebkitBorderImage = value);
 
     /// <summary>
-    ///     style.webkitBorderRadius = <paramref name="value" />
+    ///     style.WebkitBorderRadius = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderRadius(string value) => new(style => style.webkitBorderRadius = value);
+    public static StyleModifier WebkitBorderRadius(string value) => new(style => style.WebkitBorderRadius = value);
 
     /// <summary>
-    ///     style.webkitBorderStart = <paramref name="value" />
+    ///     style.WebkitBorderStart = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderStart(string value) => new(style => style.webkitBorderStart = value);
+    public static StyleModifier WebkitBorderStart(string value) => new(style => style.WebkitBorderStart = value);
 
     /// <summary>
-    ///     style.webkitBorderStartColor = <paramref name="value" />
+    ///     style.WebkitBorderStartColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderStartColor(string value) => new(style => style.webkitBorderStartColor = value);
+    public static StyleModifier WebkitBorderStartColor(string value) => new(style => style.WebkitBorderStartColor = value);
 
     /// <summary>
-    ///     style.webkitBorderStartStyle = <paramref name="value" />
+    ///     style.WebkitBorderStartStyle = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderStartStyle(string value) => new(style => style.webkitBorderStartStyle = value);
+    public static StyleModifier WebkitBorderStartStyle(string value) => new(style => style.WebkitBorderStartStyle = value);
 
     /// <summary>
-    ///     style.webkitBorderStartWidth = <paramref name="value" />
+    ///     style.WebkitBorderStartWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderStartWidth(string value) => new(style => style.webkitBorderStartWidth = value);
+    public static StyleModifier WebkitBorderStartWidth(string value) => new(style => style.WebkitBorderStartWidth = value);
 
     /// <summary>
-    ///     style.webkitBorderTopLeftRadius = <paramref name="value" />
+    ///     style.WebkitBorderTopLeftRadius = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderTopLeftRadius(string value) => new(style => style.webkitBorderTopLeftRadius = value);
+    public static StyleModifier WebkitBorderTopLeftRadius(string value) => new(style => style.WebkitBorderTopLeftRadius = value);
 
     /// <summary>
-    ///     style.webkitBorderTopRightRadius = <paramref name="value" />
+    ///     style.WebkitBorderTopRightRadius = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderTopRightRadius(string value) => new(style => style.webkitBorderTopRightRadius = value);
+    public static StyleModifier WebkitBorderTopRightRadius(string value) => new(style => style.WebkitBorderTopRightRadius = value);
 
     /// <summary>
-    ///     style.webkitBorderVerticalSpacing = <paramref name="value" />
+    ///     style.WebkitBorderVerticalSpacing = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBorderVerticalSpacing(string value) => new(style => style.webkitBorderVerticalSpacing = value);
+    public static StyleModifier WebkitBorderVerticalSpacing(string value) => new(style => style.WebkitBorderVerticalSpacing = value);
 
     /// <summary>
-    ///     style.webkitBoxAlign = <paramref name="value" />
+    ///     style.WebkitBoxAlign = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxAlign(string value) => new(style => style.webkitBoxAlign = value);
+    public static StyleModifier WebkitBoxAlign(string value) => new(style => style.WebkitBoxAlign = value);
 
     /// <summary>
-    ///     style.webkitBoxDecorationBreak = <paramref name="value" />
+    ///     style.WebkitBoxDecorationBreak = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxDecorationBreak(string value) => new(style => style.webkitBoxDecorationBreak = value);
+    public static StyleModifier WebkitBoxDecorationBreak(string value) => new(style => style.WebkitBoxDecorationBreak = value);
 
     /// <summary>
-    ///     style.webkitBoxDirection = <paramref name="value" />
+    ///     style.WebkitBoxDirection = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxDirection(string value) => new(style => style.webkitBoxDirection = value);
+    public static StyleModifier WebkitBoxDirection(string value) => new(style => style.WebkitBoxDirection = value);
 
     /// <summary>
-    ///     style.webkitBoxFlex = <paramref name="value" />
+    ///     style.WebkitBoxFlex = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxFlex(string value) => new(style => style.webkitBoxFlex = value);
+    public static StyleModifier WebkitBoxFlex(string value) => new(style => style.WebkitBoxFlex = value);
 
     /// <summary>
-    ///     style.webkitBoxOrdinalGroup = <paramref name="value" />
+    ///     style.WebkitBoxOrdinalGroup = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxOrdinalGroup(string value) => new(style => style.webkitBoxOrdinalGroup = value);
+    public static StyleModifier WebkitBoxOrdinalGroup(string value) => new(style => style.WebkitBoxOrdinalGroup = value);
 
     /// <summary>
-    ///     style.webkitBoxOrient = <paramref name="value" />
+    ///     style.WebkitBoxOrient = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxOrient(string value) => new(style => style.webkitBoxOrient = value);
+    public static StyleModifier WebkitBoxOrient(string value) => new(style => style.WebkitBoxOrient = value);
 
     /// <summary>
-    ///     style.webkitBoxPack = <paramref name="value" />
+    ///     style.WebkitBoxPack = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxPack(string value) => new(style => style.webkitBoxPack = value);
+    public static StyleModifier WebkitBoxPack(string value) => new(style => style.WebkitBoxPack = value);
 
     /// <summary>
-    ///     style.webkitBoxReflect = <paramref name="value" />
+    ///     style.WebkitBoxReflect = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxReflect(string value) => new(style => style.webkitBoxReflect = value);
+    public static StyleModifier WebkitBoxReflect(string value) => new(style => style.WebkitBoxReflect = value);
 
     /// <summary>
-    ///     style.webkitBoxShadow = <paramref name="value" />
+    ///     style.WebkitBoxShadow = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxShadow(string value) => new(style => style.webkitBoxShadow = value);
+    public static StyleModifier WebkitBoxShadow(string value) => new(style => style.WebkitBoxShadow = value);
 
     /// <summary>
-    ///     style.webkitBoxSizing = <paramref name="value" />
+    ///     style.WebkitBoxSizing = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitBoxSizing(string value) => new(style => style.webkitBoxSizing = value);
+    public static StyleModifier WebkitBoxSizing(string value) => new(style => style.WebkitBoxSizing = value);
 
     /// <summary>
-    ///     style.webkitClipPath = <paramref name="value" />
+    ///     style.WebkitClipPath = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitClipPath(string value) => new(style => style.webkitClipPath = value);
+    public static StyleModifier WebkitClipPath(string value) => new(style => style.WebkitClipPath = value);
 
     /// <summary>
-    ///     style.webkitColumnBreakAfter = <paramref name="value" />
+    ///     style.WebkitColumnBreakAfter = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnBreakAfter(string value) => new(style => style.webkitColumnBreakAfter = value);
+    public static StyleModifier WebkitColumnBreakAfter(string value) => new(style => style.WebkitColumnBreakAfter = value);
 
     /// <summary>
-    ///     style.webkitColumnBreakBefore = <paramref name="value" />
+    ///     style.WebkitColumnBreakBefore = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnBreakBefore(string value) => new(style => style.webkitColumnBreakBefore = value);
+    public static StyleModifier WebkitColumnBreakBefore(string value) => new(style => style.WebkitColumnBreakBefore = value);
 
     /// <summary>
-    ///     style.webkitColumnBreakInside = <paramref name="value" />
+    ///     style.WebkitColumnBreakInside = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnBreakInside(string value) => new(style => style.webkitColumnBreakInside = value);
+    public static StyleModifier WebkitColumnBreakInside(string value) => new(style => style.WebkitColumnBreakInside = value);
 
     /// <summary>
-    ///     style.webkitColumnCount = <paramref name="value" />
+    ///     style.WebkitColumnCount = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnCount(string value) => new(style => style.webkitColumnCount = value);
+    public static StyleModifier WebkitColumnCount(string value) => new(style => style.WebkitColumnCount = value);
 
     /// <summary>
-    ///     style.webkitColumnGap = <paramref name="value" />
+    ///     style.WebkitColumnGap = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnGap(string value) => new(style => style.webkitColumnGap = value);
+    public static StyleModifier WebkitColumnGap(string value) => new(style => style.WebkitColumnGap = value);
 
     /// <summary>
-    ///     style.webkitColumnRule = <paramref name="value" />
+    ///     style.WebkitColumnRule = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnRule(string value) => new(style => style.webkitColumnRule = value);
+    public static StyleModifier WebkitColumnRule(string value) => new(style => style.WebkitColumnRule = value);
 
     /// <summary>
-    ///     style.webkitColumnRuleColor = <paramref name="value" />
+    ///     style.WebkitColumnRuleColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnRuleColor(string value) => new(style => style.webkitColumnRuleColor = value);
+    public static StyleModifier WebkitColumnRuleColor(string value) => new(style => style.WebkitColumnRuleColor = value);
 
     /// <summary>
-    ///     style.webkitColumnRuleStyle = <paramref name="value" />
+    ///     style.WebkitColumnRuleStyle = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnRuleStyle(string value) => new(style => style.webkitColumnRuleStyle = value);
+    public static StyleModifier WebkitColumnRuleStyle(string value) => new(style => style.WebkitColumnRuleStyle = value);
 
     /// <summary>
-    ///     style.webkitColumnRuleWidth = <paramref name="value" />
+    ///     style.WebkitColumnRuleWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnRuleWidth(string value) => new(style => style.webkitColumnRuleWidth = value);
+    public static StyleModifier WebkitColumnRuleWidth(string value) => new(style => style.WebkitColumnRuleWidth = value);
 
     /// <summary>
-    ///     style.webkitColumnSpan = <paramref name="value" />
+    ///     style.WebkitColumnSpan = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnSpan(string value) => new(style => style.webkitColumnSpan = value);
+    public static StyleModifier WebkitColumnSpan(string value) => new(style => style.WebkitColumnSpan = value);
 
     /// <summary>
-    ///     style.webkitColumnWidth = <paramref name="value" />
+    ///     style.WebkitColumnWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumnWidth(string value) => new(style => style.webkitColumnWidth = value);
+    public static StyleModifier WebkitColumnWidth(string value) => new(style => style.WebkitColumnWidth = value);
 
     /// <summary>
-    ///     style.webkitColumns = <paramref name="value" />
+    ///     style.WebkitColumns = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitColumns(string value) => new(style => style.webkitColumns = value);
+    public static StyleModifier WebkitColumns(string value) => new(style => style.WebkitColumns = value);
 
     /// <summary>
-    ///     style.webkitFilter = <paramref name="value" />
+    ///     style.WebkitFilter = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFilter(string value) => new(style => style.webkitFilter = value);
+    public static StyleModifier WebkitFilter(string value) => new(style => style.WebkitFilter = value);
 
     /// <summary>
-    ///     style.webkitFlex = <paramref name="value" />
+    ///     style.WebkitFlex = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFlex(string value) => new(style => style.webkitFlex = value);
+    public static StyleModifier WebkitFlex(string value) => new(style => style.WebkitFlex = value);
 
     /// <summary>
-    ///     style.webkitFlexBasis = <paramref name="value" />
+    ///     style.WebkitFlexBasis = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFlexBasis(string value) => new(style => style.webkitFlexBasis = value);
+    public static StyleModifier WebkitFlexBasis(string value) => new(style => style.WebkitFlexBasis = value);
 
     /// <summary>
-    ///     style.webkitFlexDirection = <paramref name="value" />
+    ///     style.WebkitFlexDirection = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFlexDirection(string value) => new(style => style.webkitFlexDirection = value);
+    public static StyleModifier WebkitFlexDirection(string value) => new(style => style.WebkitFlexDirection = value);
 
     /// <summary>
-    ///     style.webkitFlexFlow = <paramref name="value" />
+    ///     style.WebkitFlexFlow = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFlexFlow(string value) => new(style => style.webkitFlexFlow = value);
+    public static StyleModifier WebkitFlexFlow(string value) => new(style => style.WebkitFlexFlow = value);
 
     /// <summary>
-    ///     style.webkitFlexGrow = <paramref name="value" />
+    ///     style.WebkitFlexGrow = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFlexGrow(string value) => new(style => style.webkitFlexGrow = value);
+    public static StyleModifier WebkitFlexGrow(string value) => new(style => style.WebkitFlexGrow = value);
 
     /// <summary>
-    ///     style.webkitFlexShrink = <paramref name="value" />
+    ///     style.WebkitFlexShrink = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFlexShrink(string value) => new(style => style.webkitFlexShrink = value);
+    public static StyleModifier WebkitFlexShrink(string value) => new(style => style.WebkitFlexShrink = value);
 
     /// <summary>
-    ///     style.webkitFlexWrap = <paramref name="value" />
+    ///     style.WebkitFlexWrap = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFlexWrap(string value) => new(style => style.webkitFlexWrap = value);
+    public static StyleModifier WebkitFlexWrap(string value) => new(style => style.WebkitFlexWrap = value);
 
     /// <summary>
-    ///     style.webkitFontFeatureSettings = <paramref name="value" />
+    ///     style.WebkitFontFeatureSettings = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFontFeatureSettings(string value) => new(style => style.webkitFontFeatureSettings = value);
+    public static StyleModifier WebkitFontFeatureSettings(string value) => new(style => style.WebkitFontFeatureSettings = value);
 
     /// <summary>
-    ///     style.webkitFontSmoothing = <paramref name="value" />
+    ///     style.WebkitFontSmoothing = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitFontSmoothing(string value) => new(style => style.webkitFontSmoothing = value);
+    public static StyleModifier WebkitFontSmoothing(string value) => new(style => style.WebkitFontSmoothing = value);
 
     /// <summary>
-    ///     style.webkitHyphenateCharacter = <paramref name="value" />
+    ///     style.WebkitHyphenateCharacter = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitHyphenateCharacter(string value) => new(style => style.webkitHyphenateCharacter = value);
+    public static StyleModifier WebkitHyphenateCharacter(string value) => new(style => style.WebkitHyphenateCharacter = value);
 
     /// <summary>
-    ///     style.webkitJustifyContent = <paramref name="value" />
+    ///     style.WebkitJustifyContent = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitJustifyContent(string value) => new(style => style.webkitJustifyContent = value);
+    public static StyleModifier WebkitJustifyContent(string value) => new(style => style.WebkitJustifyContent = value);
 
     /// <summary>
-    ///     style.webkitLineBreak = <paramref name="value" />
+    ///     style.WebkitLineBreak = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitLineBreak(string value) => new(style => style.webkitLineBreak = value);
+    public static StyleModifier WebkitLineBreak(string value) => new(style => style.WebkitLineBreak = value);
 
     /// <summary>
-    ///     style.webkitLineClamp = <paramref name="value" />
+    ///     style.WebkitLineClamp = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitLineClamp(string value) => new(style => style.webkitLineClamp = value);
+    public static StyleModifier WebkitLineClamp(string value) => new(style => style.WebkitLineClamp = value);
 
     /// <summary>
-    ///     style.webkitLocale = <paramref name="value" />
+    ///     style.WebkitLocale = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitLocale(string value) => new(style => style.webkitLocale = value);
+    public static StyleModifier WebkitLocale(string value) => new(style => style.WebkitLocale = value);
 
     /// <summary>
-    ///     style.webkitLogicalHeight = <paramref name="value" />
+    ///     style.WebkitLogicalHeight = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitLogicalHeight(string value) => new(style => style.webkitLogicalHeight = value);
+    public static StyleModifier WebkitLogicalHeight(string value) => new(style => style.WebkitLogicalHeight = value);
 
     /// <summary>
-    ///     style.webkitLogicalWidth = <paramref name="value" />
+    ///     style.WebkitLogicalWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitLogicalWidth(string value) => new(style => style.webkitLogicalWidth = value);
+    public static StyleModifier WebkitLogicalWidth(string value) => new(style => style.WebkitLogicalWidth = value);
 
     /// <summary>
-    ///     style.webkitMarginAfter = <paramref name="value" />
+    ///     style.WebkitMarginAfter = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMarginAfter(string value) => new(style => style.webkitMarginAfter = value);
+    public static StyleModifier WebkitMarginAfter(string value) => new(style => style.WebkitMarginAfter = value);
 
     /// <summary>
-    ///     style.webkitMarginBefore = <paramref name="value" />
+    ///     style.WebkitMarginBefore = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMarginBefore(string value) => new(style => style.webkitMarginBefore = value);
+    public static StyleModifier WebkitMarginBefore(string value) => new(style => style.WebkitMarginBefore = value);
 
     /// <summary>
-    ///     style.webkitMarginEnd = <paramref name="value" />
+    ///     style.WebkitMarginEnd = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMarginEnd(string value) => new(style => style.webkitMarginEnd = value);
+    public static StyleModifier WebkitMarginEnd(string value) => new(style => style.WebkitMarginEnd = value);
 
     /// <summary>
-    ///     style.webkitMarginStart = <paramref name="value" />
+    ///     style.WebkitMarginStart = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMarginStart(string value) => new(style => style.webkitMarginStart = value);
+    public static StyleModifier WebkitMarginStart(string value) => new(style => style.WebkitMarginStart = value);
 
     /// <summary>
-    ///     style.webkitMask = <paramref name="value" />
+    ///     style.WebkitMask = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMask(string value) => new(style => style.webkitMask = value);
+    public static StyleModifier WebkitMask(string value) => new(style => style.WebkitMask = value);
 
     /// <summary>
-    ///     style.webkitMaskBoxImage = <paramref name="value" />
+    ///     style.WebkitMaskBoxImage = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskBoxImage(string value) => new(style => style.webkitMaskBoxImage = value);
+    public static StyleModifier WebkitMaskBoxImage(string value) => new(style => style.WebkitMaskBoxImage = value);
 
     /// <summary>
-    ///     style.webkitMaskBoxImageOutset = <paramref name="value" />
+    ///     style.WebkitMaskBoxImageOutset = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskBoxImageOutset(string value) => new(style => style.webkitMaskBoxImageOutset = value);
+    public static StyleModifier WebkitMaskBoxImageOutset(string value) => new(style => style.WebkitMaskBoxImageOutset = value);
 
     /// <summary>
-    ///     style.webkitMaskBoxImageRepeat = <paramref name="value" />
+    ///     style.WebkitMaskBoxImageRepeat = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskBoxImageRepeat(string value) => new(style => style.webkitMaskBoxImageRepeat = value);
+    public static StyleModifier WebkitMaskBoxImageRepeat(string value) => new(style => style.WebkitMaskBoxImageRepeat = value);
 
     /// <summary>
-    ///     style.webkitMaskBoxImageSlice = <paramref name="value" />
+    ///     style.WebkitMaskBoxImageSlice = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskBoxImageSlice(string value) => new(style => style.webkitMaskBoxImageSlice = value);
+    public static StyleModifier WebkitMaskBoxImageSlice(string value) => new(style => style.WebkitMaskBoxImageSlice = value);
 
     /// <summary>
-    ///     style.webkitMaskBoxImageSource = <paramref name="value" />
+    ///     style.WebkitMaskBoxImageSource = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskBoxImageSource(string value) => new(style => style.webkitMaskBoxImageSource = value);
+    public static StyleModifier WebkitMaskBoxImageSource(string value) => new(style => style.WebkitMaskBoxImageSource = value);
 
     /// <summary>
-    ///     style.webkitMaskBoxImageWidth = <paramref name="value" />
+    ///     style.WebkitMaskBoxImageWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskBoxImageWidth(string value) => new(style => style.webkitMaskBoxImageWidth = value);
+    public static StyleModifier WebkitMaskBoxImageWidth(string value) => new(style => style.WebkitMaskBoxImageWidth = value);
 
     /// <summary>
-    ///     style.webkitMaskClip = <paramref name="value" />
+    ///     style.WebkitMaskClip = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskClip(string value) => new(style => style.webkitMaskClip = value);
+    public static StyleModifier WebkitMaskClip(string value) => new(style => style.WebkitMaskClip = value);
 
     /// <summary>
-    ///     style.webkitMaskComposite = <paramref name="value" />
+    ///     style.WebkitMaskComposite = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskComposite(string value) => new(style => style.webkitMaskComposite = value);
+    public static StyleModifier WebkitMaskComposite(string value) => new(style => style.WebkitMaskComposite = value);
 
     /// <summary>
-    ///     style.webkitMaskImage = <paramref name="value" />
+    ///     style.WebkitMaskImage = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskImage(string value) => new(style => style.webkitMaskImage = value);
+    public static StyleModifier WebkitMaskImage(string value) => new(style => style.WebkitMaskImage = value);
 
     /// <summary>
-    ///     style.webkitMaskOrigin = <paramref name="value" />
+    ///     style.WebkitMaskOrigin = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskOrigin(string value) => new(style => style.webkitMaskOrigin = value);
+    public static StyleModifier WebkitMaskOrigin(string value) => new(style => style.WebkitMaskOrigin = value);
 
     /// <summary>
-    ///     style.webkitMaskPosition = <paramref name="value" />
+    ///     style.WebkitMaskPosition = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskPosition(string value) => new(style => style.webkitMaskPosition = value);
+    public static StyleModifier WebkitMaskPosition(string value) => new(style => style.WebkitMaskPosition = value);
 
     /// <summary>
-    ///     style.webkitMaskPositionX = <paramref name="value" />
+    ///     style.WebkitMaskPositionX = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskPositionX(string value) => new(style => style.webkitMaskPositionX = value);
+    public static StyleModifier WebkitMaskPositionX(string value) => new(style => style.WebkitMaskPositionX = value);
 
     /// <summary>
-    ///     style.webkitMaskPositionY = <paramref name="value" />
+    ///     style.WebkitMaskPositionY = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskPositionY(string value) => new(style => style.webkitMaskPositionY = value);
+    public static StyleModifier WebkitMaskPositionY(string value) => new(style => style.WebkitMaskPositionY = value);
 
     /// <summary>
-    ///     style.webkitMaskRepeat = <paramref name="value" />
+    ///     style.WebkitMaskRepeat = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskRepeat(string value) => new(style => style.webkitMaskRepeat = value);
+    public static StyleModifier WebkitMaskRepeat(string value) => new(style => style.WebkitMaskRepeat = value);
 
     /// <summary>
-    ///     style.webkitMaskRepeatX = <paramref name="value" />
+    ///     style.WebkitMaskRepeatX = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskRepeatX(string value) => new(style => style.webkitMaskRepeatX = value);
+    public static StyleModifier WebkitMaskRepeatX(string value) => new(style => style.WebkitMaskRepeatX = value);
 
     /// <summary>
-    ///     style.webkitMaskRepeatY = <paramref name="value" />
+    ///     style.WebkitMaskRepeatY = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskRepeatY(string value) => new(style => style.webkitMaskRepeatY = value);
+    public static StyleModifier WebkitMaskRepeatY(string value) => new(style => style.WebkitMaskRepeatY = value);
 
     /// <summary>
-    ///     style.webkitMaskSize = <paramref name="value" />
+    ///     style.WebkitMaskSize = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaskSize(string value) => new(style => style.webkitMaskSize = value);
+    public static StyleModifier WebkitMaskSize(string value) => new(style => style.WebkitMaskSize = value);
 
     /// <summary>
-    ///     style.webkitMaxLogicalHeight = <paramref name="value" />
+    ///     style.WebkitMaxLogicalHeight = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaxLogicalHeight(string value) => new(style => style.webkitMaxLogicalHeight = value);
+    public static StyleModifier WebkitMaxLogicalHeight(string value) => new(style => style.WebkitMaxLogicalHeight = value);
 
     /// <summary>
-    ///     style.webkitMaxLogicalWidth = <paramref name="value" />
+    ///     style.WebkitMaxLogicalWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMaxLogicalWidth(string value) => new(style => style.webkitMaxLogicalWidth = value);
+    public static StyleModifier WebkitMaxLogicalWidth(string value) => new(style => style.WebkitMaxLogicalWidth = value);
 
     /// <summary>
-    ///     style.webkitMinLogicalHeight = <paramref name="value" />
+    ///     style.WebkitMinLogicalHeight = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMinLogicalHeight(string value) => new(style => style.webkitMinLogicalHeight = value);
+    public static StyleModifier WebkitMinLogicalHeight(string value) => new(style => style.WebkitMinLogicalHeight = value);
 
     /// <summary>
-    ///     style.webkitMinLogicalWidth = <paramref name="value" />
+    ///     style.WebkitMinLogicalWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitMinLogicalWidth(string value) => new(style => style.webkitMinLogicalWidth = value);
+    public static StyleModifier WebkitMinLogicalWidth(string value) => new(style => style.WebkitMinLogicalWidth = value);
 
     /// <summary>
-    ///     style.webkitOpacity = <paramref name="value" />
+    ///     style.WebkitOpacity = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitOpacity(string value) => new(style => style.webkitOpacity = value);
+    public static StyleModifier WebkitOpacity(string value) => new(style => style.WebkitOpacity = value);
 
     /// <summary>
-    ///     style.webkitOrder = <paramref name="value" />
+    ///     style.WebkitOrder = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitOrder(string value) => new(style => style.webkitOrder = value);
+    public static StyleModifier WebkitOrder(string value) => new(style => style.WebkitOrder = value);
 
     /// <summary>
-    ///     style.webkitPaddingAfter = <paramref name="value" />
+    ///     style.WebkitPaddingAfter = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPaddingAfter(string value) => new(style => style.webkitPaddingAfter = value);
+    public static StyleModifier WebkitPaddingAfter(string value) => new(style => style.WebkitPaddingAfter = value);
 
     /// <summary>
-    ///     style.webkitPaddingBefore = <paramref name="value" />
+    ///     style.WebkitPaddingBefore = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPaddingBefore(string value) => new(style => style.webkitPaddingBefore = value);
+    public static StyleModifier WebkitPaddingBefore(string value) => new(style => style.WebkitPaddingBefore = value);
 
     /// <summary>
-    ///     style.webkitPaddingEnd = <paramref name="value" />
+    ///     style.WebkitPaddingEnd = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPaddingEnd(string value) => new(style => style.webkitPaddingEnd = value);
+    public static StyleModifier WebkitPaddingEnd(string value) => new(style => style.WebkitPaddingEnd = value);
 
     /// <summary>
-    ///     style.webkitPaddingStart = <paramref name="value" />
+    ///     style.WebkitPaddingStart = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPaddingStart(string value) => new(style => style.webkitPaddingStart = value);
+    public static StyleModifier WebkitPaddingStart(string value) => new(style => style.WebkitPaddingStart = value);
 
     /// <summary>
-    ///     style.webkitPerspective = <paramref name="value" />
+    ///     style.WebkitPerspective = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPerspective(string value) => new(style => style.webkitPerspective = value);
+    public static StyleModifier WebkitPerspective(string value) => new(style => style.WebkitPerspective = value);
 
     /// <summary>
-    ///     style.webkitPerspectiveOrigin = <paramref name="value" />
+    ///     style.WebkitPerspectiveOrigin = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPerspectiveOrigin(string value) => new(style => style.webkitPerspectiveOrigin = value);
+    public static StyleModifier WebkitPerspectiveOrigin(string value) => new(style => style.WebkitPerspectiveOrigin = value);
 
     /// <summary>
-    ///     style.webkitPerspectiveOriginX = <paramref name="value" />
+    ///     style.WebkitPerspectiveOriginX = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPerspectiveOriginX(string value) => new(style => style.webkitPerspectiveOriginX = value);
+    public static StyleModifier WebkitPerspectiveOriginX(string value) => new(style => style.WebkitPerspectiveOriginX = value);
 
     /// <summary>
-    ///     style.webkitPerspectiveOriginY = <paramref name="value" />
+    ///     style.WebkitPerspectiveOriginY = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPerspectiveOriginY(string value) => new(style => style.webkitPerspectiveOriginY = value);
+    public static StyleModifier WebkitPerspectiveOriginY(string value) => new(style => style.WebkitPerspectiveOriginY = value);
 
     /// <summary>
-    ///     style.webkitPrintColorAdjust = <paramref name="value" />
+    ///     style.WebkitPrintColorAdjust = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitPrintColorAdjust(string value) => new(style => style.webkitPrintColorAdjust = value);
+    public static StyleModifier WebkitPrintColorAdjust(string value) => new(style => style.WebkitPrintColorAdjust = value);
 
     /// <summary>
-    ///     style.webkitRtlOrdering = <paramref name="value" />
+    ///     style.WebkitRtlOrdering = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitRtlOrdering(string value) => new(style => style.webkitRtlOrdering = value);
+    public static StyleModifier WebkitRtlOrdering(string value) => new(style => style.WebkitRtlOrdering = value);
 
     /// <summary>
-    ///     style.webkitRubyPosition = <paramref name="value" />
+    ///     style.WebkitRubyPosition = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitRubyPosition(string value) => new(style => style.webkitRubyPosition = value);
+    public static StyleModifier WebkitRubyPosition(string value) => new(style => style.WebkitRubyPosition = value);
 
     /// <summary>
-    ///     style.webkitShapeImageThreshold = <paramref name="value" />
+    ///     style.WebkitShapeImageThreshold = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitShapeImageThreshold(string value) => new(style => style.webkitShapeImageThreshold = value);
+    public static StyleModifier WebkitShapeImageThreshold(string value) => new(style => style.WebkitShapeImageThreshold = value);
 
     /// <summary>
-    ///     style.webkitShapeMargin = <paramref name="value" />
+    ///     style.WebkitShapeMargin = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitShapeMargin(string value) => new(style => style.webkitShapeMargin = value);
+    public static StyleModifier WebkitShapeMargin(string value) => new(style => style.WebkitShapeMargin = value);
 
     /// <summary>
-    ///     style.webkitShapeOutside = <paramref name="value" />
+    ///     style.WebkitShapeOutside = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitShapeOutside(string value) => new(style => style.webkitShapeOutside = value);
+    public static StyleModifier WebkitShapeOutside(string value) => new(style => style.WebkitShapeOutside = value);
 
     /// <summary>
-    ///     style.webkitTapHighlightColor = <paramref name="value" />
+    ///     style.WebkitTapHighlightColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTapHighlightColor(string value) => new(style => style.webkitTapHighlightColor = value);
+    public static StyleModifier WebkitTapHighlightColor(string value) => new(style => style.WebkitTapHighlightColor = value);
 
     /// <summary>
-    ///     style.webkitTextCombine = <paramref name="value" />
+    ///     style.WebkitTextCombine = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextCombine(string value) => new(style => style.webkitTextCombine = value);
+    public static StyleModifier WebkitTextCombine(string value) => new(style => style.WebkitTextCombine = value);
 
     /// <summary>
-    ///     style.webkitTextDecorationsInEffect = <paramref name="value" />
+    ///     style.WebkitTextDecorationsInEffect = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextDecorationsInEffect(string value) => new(style => style.webkitTextDecorationsInEffect = value);
+    public static StyleModifier WebkitTextDecorationsInEffect(string value) => new(style => style.WebkitTextDecorationsInEffect = value);
 
     /// <summary>
-    ///     style.webkitTextEmphasis = <paramref name="value" />
+    ///     style.WebkitTextEmphasis = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextEmphasis(string value) => new(style => style.webkitTextEmphasis = value);
+    public static StyleModifier WebkitTextEmphasis(string value) => new(style => style.WebkitTextEmphasis = value);
 
     /// <summary>
-    ///     style.webkitTextEmphasisColor = <paramref name="value" />
+    ///     style.WebkitTextEmphasisColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextEmphasisColor(string value) => new(style => style.webkitTextEmphasisColor = value);
+    public static StyleModifier WebkitTextEmphasisColor(string value) => new(style => style.WebkitTextEmphasisColor = value);
 
     /// <summary>
-    ///     style.webkitTextEmphasisPosition = <paramref name="value" />
+    ///     style.WebkitTextEmphasisPosition = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextEmphasisPosition(string value) => new(style => style.webkitTextEmphasisPosition = value);
+    public static StyleModifier WebkitTextEmphasisPosition(string value) => new(style => style.WebkitTextEmphasisPosition = value);
 
     /// <summary>
-    ///     style.webkitTextEmphasisStyle = <paramref name="value" />
+    ///     style.WebkitTextEmphasisStyle = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextEmphasisStyle(string value) => new(style => style.webkitTextEmphasisStyle = value);
+    public static StyleModifier WebkitTextEmphasisStyle(string value) => new(style => style.WebkitTextEmphasisStyle = value);
 
     /// <summary>
-    ///     style.webkitTextFillColor = <paramref name="value" />
+    ///     style.WebkitTextFillColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextFillColor(string value) => new(style => style.webkitTextFillColor = value);
+    public static StyleModifier WebkitTextFillColor(string value) => new(style => style.WebkitTextFillColor = value);
 
     /// <summary>
-    ///     style.webkitTextOrientation = <paramref name="value" />
+    ///     style.WebkitTextOrientation = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextOrientation(string value) => new(style => style.webkitTextOrientation = value);
+    public static StyleModifier WebkitTextOrientation(string value) => new(style => style.WebkitTextOrientation = value);
 
     /// <summary>
-    ///     style.webkitTextSecurity = <paramref name="value" />
+    ///     style.WebkitTextSecurity = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextSecurity(string value) => new(style => style.webkitTextSecurity = value);
+    public static StyleModifier WebkitTextSecurity(string value) => new(style => style.WebkitTextSecurity = value);
 
     /// <summary>
-    ///     style.webkitTextSizeAdjust = <paramref name="value" />
+    ///     style.WebkitTextSizeAdjust = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextSizeAdjust(string value) => new(style => style.webkitTextSizeAdjust = value);
+    public static StyleModifier WebkitTextSizeAdjust(string value) => new(style => style.WebkitTextSizeAdjust = value);
 
     /// <summary>
-    ///     style.webkitTextStroke = <paramref name="value" />
+    ///     style.WebkitTextStroke = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextStroke(string value) => new(style => style.webkitTextStroke = value);
+    public static StyleModifier WebkitTextStroke(string value) => new(style => style.WebkitTextStroke = value);
 
     /// <summary>
-    ///     style.webkitTextStrokeColor = <paramref name="value" />
+    ///     style.WebkitTextStrokeColor = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextStrokeColor(string value) => new(style => style.webkitTextStrokeColor = value);
+    public static StyleModifier WebkitTextStrokeColor(string value) => new(style => style.WebkitTextStrokeColor = value);
 
     /// <summary>
-    ///     style.webkitTextStrokeWidth = <paramref name="value" />
+    ///     style.WebkitTextStrokeWidth = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTextStrokeWidth(string value) => new(style => style.webkitTextStrokeWidth = value);
+    public static StyleModifier WebkitTextStrokeWidth(string value) => new(style => style.WebkitTextStrokeWidth = value);
 
     /// <summary>
-    ///     style.webkitTransform = <paramref name="value" />
+    ///     style.WebkitTransform = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransform(string value) => new(style => style.webkitTransform = value);
+    public static StyleModifier WebkitTransform(string value) => new(style => style.WebkitTransform = value);
 
     /// <summary>
-    ///     style.webkitTransformOrigin = <paramref name="value" />
+    ///     style.WebkitTransformOrigin = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransformOrigin(string value) => new(style => style.webkitTransformOrigin = value);
+    public static StyleModifier WebkitTransformOrigin(string value) => new(style => style.WebkitTransformOrigin = value);
 
     /// <summary>
-    ///     style.webkitTransformOriginX = <paramref name="value" />
+    ///     style.WebkitTransformOriginX = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransformOriginX(string value) => new(style => style.webkitTransformOriginX = value);
+    public static StyleModifier WebkitTransformOriginX(string value) => new(style => style.WebkitTransformOriginX = value);
 
     /// <summary>
-    ///     style.webkitTransformOriginY = <paramref name="value" />
+    ///     style.WebkitTransformOriginY = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransformOriginY(string value) => new(style => style.webkitTransformOriginY = value);
+    public static StyleModifier WebkitTransformOriginY(string value) => new(style => style.WebkitTransformOriginY = value);
 
     /// <summary>
-    ///     style.webkitTransformOriginZ = <paramref name="value" />
+    ///     style.WebkitTransformOriginZ = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransformOriginZ(string value) => new(style => style.webkitTransformOriginZ = value);
+    public static StyleModifier WebkitTransformOriginZ(string value) => new(style => style.WebkitTransformOriginZ = value);
 
     /// <summary>
-    ///     style.webkitTransformStyle = <paramref name="value" />
+    ///     style.WebkitTransformStyle = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransformStyle(string value) => new(style => style.webkitTransformStyle = value);
+    public static StyleModifier WebkitTransformStyle(string value) => new(style => style.WebkitTransformStyle = value);
 
     /// <summary>
-    ///     style.webkitTransition = <paramref name="value" />
+    ///     style.WebkitTransition = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransition(string value) => new(style => style.webkitTransition = value);
+    public static StyleModifier WebkitTransition(string value) => new(style => style.WebkitTransition = value);
 
     /// <summary>
-    ///     style.webkitTransitionDelay = <paramref name="value" />
+    ///     style.WebkitTransitionDelay = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransitionDelay(string value) => new(style => style.webkitTransitionDelay = value);
+    public static StyleModifier WebkitTransitionDelay(string value) => new(style => style.WebkitTransitionDelay = value);
 
     /// <summary>
-    ///     style.webkitTransitionDuration = <paramref name="value" />
+    ///     style.WebkitTransitionDuration = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransitionDuration(string value) => new(style => style.webkitTransitionDuration = value);
+    public static StyleModifier WebkitTransitionDuration(string value) => new(style => style.WebkitTransitionDuration = value);
 
     /// <summary>
-    ///     style.webkitTransitionProperty = <paramref name="value" />
+    ///     style.WebkitTransitionProperty = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransitionProperty(string value) => new(style => style.webkitTransitionProperty = value);
+    public static StyleModifier WebkitTransitionProperty(string value) => new(style => style.WebkitTransitionProperty = value);
 
     /// <summary>
-    ///     style.webkitTransitionTimingFunction = <paramref name="value" />
+    ///     style.WebkitTransitionTimingFunction = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitTransitionTimingFunction(string value) => new(style => style.webkitTransitionTimingFunction = value);
+    public static StyleModifier WebkitTransitionTimingFunction(string value) => new(style => style.WebkitTransitionTimingFunction = value);
 
     /// <summary>
-    ///     style.webkitUserDrag = <paramref name="value" />
+    ///     style.WebkitUserDrag = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitUserDrag(string value) => new(style => style.webkitUserDrag = value);
+    public static StyleModifier WebkitUserDrag(string value) => new(style => style.WebkitUserDrag = value);
 
     /// <summary>
-    ///     style.webkitUserModify = <paramref name="value" />
+    ///     style.WebkitUserModify = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitUserModify(string value) => new(style => style.webkitUserModify = value);
+    public static StyleModifier WebkitUserModify(string value) => new(style => style.WebkitUserModify = value);
 
     /// <summary>
-    ///     style.webkitUserSelect = <paramref name="value" />
+    ///     style.WebkitUserSelect = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitUserSelect(string value) => new(style => style.webkitUserSelect = value);
+    public static StyleModifier WebkitUserSelect(string value) => new(style => style.WebkitUserSelect = value);
 
     /// <summary>
-    ///     style.webkitWritingMode = <paramref name="value" />
+    ///     style.WebkitWritingMode = <paramref name="value" />
     /// </summary>
-    public static StyleModifier WebkitWritingMode(string value) => new(style => style.webkitWritingMode = value);
+    public static StyleModifier WebkitWritingMode(string value) => new(style => style.WebkitWritingMode = value);
 
     /// <summary>
     ///     style.whiteSpace = <paramref name="value" />
