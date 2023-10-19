@@ -133,14 +133,35 @@ static class ReflectionHelper
     
     public static bool IsGenericAction1Or2Or3(this Type type)
     {
-        var typeDefinition = type.GetGenericTypeDefinition();
+        // TODO: remove
+        try
+        {
+            var typeDefinition = type.GetGenericTypeDefinition();
 
-        return typeDefinition == typeof(Action<>) || typeDefinition == typeof(Action<,>) || typeDefinition == typeof(Action<,,>);
+            return typeDefinition == typeof(Action<>) || typeDefinition == typeof(Action<,>) || typeDefinition == typeof(Action<,,>);
+        }
+        catch (Exception e)
+        {
+            return false;
+
+        }
+        
     }
     
     public static bool IsVoidTaskFunc1Or2Or3(this Type type)
     {
         // todo: rename with more meaningfull
+
+        if (type.BaseType == typeof(MulticastDelegate))
+        {
+            var invokeMethodInfo = type.GetMethod("Invoke");
+            if (invokeMethodInfo is not null && 
+                invokeMethodInfo.ReturnType == typeof(Task) &&
+                invokeMethodInfo.GetParameters().Length <= 3)
+            {
+                return true;
+            }
+        }
         
         var genericArguments = type.GetGenericArguments();
         
@@ -156,6 +177,7 @@ static class ReflectionHelper
                 return true;
             }
         }
+        
 
         return false;
     }
