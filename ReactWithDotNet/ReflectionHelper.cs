@@ -162,22 +162,6 @@ static class ReflectionHelper
                 return true;
             }
         }
-        
-        var genericArguments = type.GetGenericArguments();
-        
-        var typeDefinition = type.GetGenericTypeDefinition();
-
-        var typeDefinitionName = typeDefinition.Name;
-        
-        if (typeDefinitionName == "Func`1" || typeDefinitionName == "Func`2" || typeDefinitionName == "Func`3"|| typeDefinitionName == "Func`4")
-        {
-            var lastArgumentIsTask = genericArguments[^1] == typeof(Task);
-            if (lastArgumentIsTask)
-            {
-                return true;
-            }
-        }
-        
 
         return false;
     }
