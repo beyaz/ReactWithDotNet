@@ -834,10 +834,9 @@ partial class ElementSerializer
     {
         if (!TypeInfoMap.TryGetValue(type, out var typeInfo))
         {
-            var reactCustomEventProperties = new List<PropertyAccessInfo>();
-
             var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
             
+            var reactCustomEventProperties = new List<PropertyAccessInfo>();
             {
                 foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
                 {
@@ -850,7 +849,7 @@ partial class ElementSerializer
                         continue;
                     }
 
-                    throw DeveloperException("ReactCustomEventAttribute can only use with Action or Action<A> or Action<A,B> or Action<A,B,C>");
+                    throw DeveloperException($"{nameof(ReactCustomEventAttribute)} can only use with Func<Task> or Func<A,Task> or Func<A,B,Task> or Func<A,B,C,Task>");
                 }
             }
 
