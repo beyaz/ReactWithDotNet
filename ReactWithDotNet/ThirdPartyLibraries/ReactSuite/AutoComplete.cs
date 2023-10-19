@@ -10,7 +10,7 @@ public sealed class AutoComplete : ElementBase
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Prefix + nameof(AutoComplete) + "::OnChange")]
-    public Action<string> onChange { get; set; }
+    public Func<string,Task> onChange { get; set; }
 
     [ReactProp]
     public string value { get; set; }

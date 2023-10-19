@@ -141,16 +141,22 @@ static class ReflectionHelper
     public static bool IsVoidTaskFunc1Or2Or3(this Type type)
     {
         // todo: rename with more meaningfull
+        
+        var genericArguments = type.GetGenericArguments();
+        
         var typeDefinition = type.GetGenericTypeDefinition();
 
-        var val =  typeDefinition == typeof(Func<Task>) || typeDefinition == typeof(Func<,>) || typeDefinition == typeof(Func<,,>);
-
-        if (val)
+        var typeDefinitionName = typeDefinition.Name;
+        
+        if (typeDefinitionName == "Func`1" || typeDefinitionName == "Func`2" || typeDefinitionName == "Func`3"|| typeDefinitionName == "Func`4")
         {
-            return true;
+            var lastArgumentIsTask = genericArguments[^1] == typeof(Task);
+            if (lastArgumentIsTask)
+            {
+                return true;
+            }
         }
 
         return false;
-
     }
 }

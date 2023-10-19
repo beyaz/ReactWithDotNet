@@ -1,4 +1,5 @@
 ﻿
+
 using ReactWithDotNet.ThirdPartyLibraries.ReactSuite;
 
 namespace ReactWithDotNet.WebSite.Showcases;
@@ -13,7 +14,7 @@ public class RSuiteAutoCompleteDemo : Component
         {
             new AutoComplete
             {
-                onChange = e => SelectedValue = e,
+                onChange = e => Task.FromResult(SelectedValue = e),
 
                 placeholder = "Search in names",
                 data = new[]
