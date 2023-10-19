@@ -143,6 +143,14 @@ static class ReflectionHelper
         // todo: rename with more meaningfull
         var typeDefinition = type.GetGenericTypeDefinition();
 
-        return typeDefinition == typeof(Func<Task>) || typeDefinition == typeof(Func<,>) || typeDefinition == typeof(Func<,,>);
+        var val =  typeDefinition == typeof(Func<Task>) || typeDefinition == typeof(Func<,>) || typeDefinition == typeof(Func<,,>);
+
+        if (val)
+        {
+            return true;
+        }
+
+        return false;
+
     }
 }

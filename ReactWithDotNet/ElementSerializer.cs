@@ -365,7 +365,7 @@ static partial class ElementSerializer
             }
             
             
-            if (propertyInfo.PropertyType.IsGenericAction1Or2Or3())
+            if (propertyInfo.PropertyType.IsGenericAction1Or2Or3() || propertyInfo.PropertyType.IsVoidTaskFunc1Or2Or3())
             {
                 if (@delegate.Target is ReactComponentBase target)
                 {
