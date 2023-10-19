@@ -315,78 +315,79 @@ static partial class ElementSerializer
             }
         }
 
-        if (propertyValue is Action action)
+        if (propertyValue is Delegate @delegate)
         {
-            if (action.Target is ReactComponentBase target)
+            if (propertyValue is Action)
             {
-                // special case
-                if (propertyInfo.Name == "onClickPreview" && propertyInfo.DeclaringType== typeof(HtmlElement))
+                if (@delegate.Target is ReactComponentBase target)
                 {
-                    if (context.IsCapturingPreview)
+                    // special case
+                    if (propertyInfo.Name == "onClickPreview" && propertyInfo.DeclaringType== typeof(HtmlElement))
                     {
-                        return NotExportableObject;
-                    }
-                    
-                    var newTarget = (ReactComponentBase)target.Clone();
-
-                    var newTargetTypeInfo = GetTypeInfo(target.GetType());
-                    if (newTargetTypeInfo.StateProperty is not null)
-                    {
-                        var targetState = newTargetTypeInfo.StateProperty.GetValueFunc(target);
-                        if (targetState is EmptyState == false)
+                        if (context.IsCapturingPreview)
                         {
-                            newTargetTypeInfo.StateProperty.SetValueFunc(newTarget, ReflectionHelper.DeepCopy(targetState));
+                            return NotExportableObject;
                         }
-                    }
                     
-                    action.Method.Invoke(newTarget, null);
-                    newTarget.InvokeRender();
+                        var newTarget = (ReactComponentBase)target.Clone();
 
-                    context.IsCapturingPreview = true;
-                    var newMap = await ToJsonMap(newTarget, context);
-                    context.IsCapturingPreview = false;
+                        var newTargetTypeInfo = GetTypeInfo(target.GetType());
+                        if (newTargetTypeInfo.StateProperty is not null)
+                        {
+                            var targetState = newTargetTypeInfo.StateProperty.GetValueFunc(target);
+                            if (targetState is EmptyState == false)
+                            {
+                                newTargetTypeInfo.StateProperty.SetValueFunc(newTarget, ReflectionHelper.DeepCopy(targetState));
+                            }
+                        }
+                    
+                        @delegate.Method.Invoke(newTarget, null);
+                        newTarget.InvokeRender();
 
-                    return (JsonMap)newMap;
-                }
+                        context.IsCapturingPreview = true;
+                        var newMap = await ToJsonMap(newTarget, context);
+                        context.IsCapturingPreview = false;
+
+                        return (JsonMap)newMap;
+                    }
                 
-                propertyValue = new RemoteMethodInfo
+                    propertyValue = new RemoteMethodInfo
+                    {
+                        IsRemoteMethod                   = true,
+                        remoteMethodName                 = @delegate.Method.GetNameWithToken(),
+                        HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
+                    };
+                }
+                else
                 {
-                    IsRemoteMethod                   = true,
-                    remoteMethodName                 = action.Method.GetNameWithToken(),
-                    HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier
-                };
+                    throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
+                }
             }
-            else
-            {
-                throw HandlerMethodShouldBelongToReactComponent(propertyInfo, action.Target);
-            }
-        }
-
-        if (propertyInfo.PropertyType.IsGenericType)
-        {
+            
+            
             if (propertyInfo.PropertyType.IsGenericAction1Or2Or3())
             {
-                var @delegate = (Delegate)propertyValue;
-                if (@delegate is not null)
+                if (@delegate.Target is ReactComponentBase target)
                 {
-                    if (@delegate.Target is ReactComponentBase target)
+                    propertyValue = new RemoteMethodInfo
                     {
-                        propertyValue = new RemoteMethodInfo
-                        {
-                            IsRemoteMethod                   = true,
-                            remoteMethodName                 = @delegate.Method.GetNameWithToken(),
-                            HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
-                            FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
-                            StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null
-                        };
-                    }
-                    else
-                    {
-                        throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
-                    }
+                        IsRemoteMethod                   = true,
+                        remoteMethodName                 = @delegate.Method.GetNameWithToken(),
+                        HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
+                        FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
+                        StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null
+                    };
+                }
+                else
+                {
+                    throw HandlerMethodShouldBelongToReactComponent(propertyInfo, @delegate.Target);
                 }
             }
         }
+        
+        
+
+        
 
         if (propertyValue is Enum enumValue)
         {
