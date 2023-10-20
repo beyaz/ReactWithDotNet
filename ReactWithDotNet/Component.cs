@@ -72,70 +72,58 @@ public abstract class ReactComponentBase : Element
         return Task.CompletedTask;
     }
 
-    // TODO: Fix action to Func task
-    
     /// <summary>
-    ///     Sample event declaration <br />
-    ///     [ReactCustomEvent] public Action OnUserChanged { get; set; }
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
-    ///     DispatchEvent(()=> OnUserChanged);
+    ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
-    protected void DispatchEvent(Expression<Func<Action>> expressionForAccessingCustomReactEventProperty)
+    protected void DispatchEvent(Expression<Func<Func<Task>>> expressionForAccessingCustomReactEventProperty)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)));
     }
 
     /// <summary>
-    ///     Sample event decleration <br />
-    ///     [ReactCustomEvent] public Action&lt;UserInfo&gt; OnUserChanged { get; set; }
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
-    ///     DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo);
-    /// </summary>
-    protected void DispatchEvent<A>(Expression<Func<Action<A>>> expressionForAccessingCustomReactEventProperty, A a)
-    {
-        Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
-    }
-    
-    
-    /// <summary>
-    ///     Sample event decleration <br />
-    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
-    ///     <br />
-    ///     <br />
-    ///     Sample event dispatching <br />
-    ///     DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo);
+    ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
     protected void DispatchEvent<A>(Expression<Func<Func<A,Task>>> expressionForAccessingCustomReactEventProperty, A a)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
     }
-
+    
     /// <summary>
-    ///     Sample event decleration <br />
-    ///     [ReactCustomEvent] public Action&lt;UserInfo,OrderInfo&gt; OnUserChanged { get; set; }
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
-    ///     DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo, state.SelectedOrderInfo);
+    ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
-    protected void DispatchEvent<A, B>(Expression<Func<Action<A, B>>> expressionForAccessingCustomReactEventProperty, A a, B b)
+    protected void DispatchEvent<A, B>(Expression<Func<Func<A,B,Task>>> expressionForAccessingCustomReactEventProperty, A a, B b)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b);
     }
 
     /// <summary>
-    ///     Sample event declaration <br />
-    ///     [ReactCustomEvent] public Action&lt;UserInfo,OrderInfo,CommissionInfo&gt; OnUserChanged { get; set; }
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
-    ///     DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo, state.SelectedOrderInfo, state.SelectedCommissionInfo);
+    ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
-    protected void DispatchEvent<A, B, C>(Expression<Func<Action<A, B>>> expressionForAccessingCustomReactEventProperty, A a, B b, C c)
+    protected void DispatchEvent<A, B, C>(Expression<Func<Func<A, B, C, Task>>> expressionForAccessingCustomReactEventProperty, A a, B b, C c)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b, c);
     }
@@ -144,14 +132,7 @@ public abstract class ReactComponentBase : Element
 
     string GetPropertyNameOfCustomReactEvent(MemberExpression expression)
     {
-        // todo: fix for only events;
-        
         var propertyNameOfCustomReactEvent = expression.Member.Name;
-
-        if (GetType().GetEvent(propertyNameOfCustomReactEvent) is not null)
-        {
-            return propertyNameOfCustomReactEvent;
-        }
         
         if (GetType().GetProperty(propertyNameOfCustomReactEvent)?.GetCustomAttribute<ReactCustomEventAttribute>() is null)
         {
