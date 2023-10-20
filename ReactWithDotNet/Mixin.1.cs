@@ -618,10 +618,10 @@ public static partial class Mixin
     public static HtmlElementModifier OnClickPreview(Action onClickPreview)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onClickPreview = onClickPreview);
 
-    public static HtmlElementModifier OnMouseEnter(Action<MouseEvent> onMouseEnterHandler)
+    public static HtmlElementModifier OnMouseEnter(Func<MouseEvent,Task> onMouseEnterHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseEnter = onMouseEnterHandler);
 
-    public static HtmlElementModifier OnMouseLeave(Action<MouseEvent> onMouseLeaveHandler)
+    public static HtmlElementModifier OnMouseLeave(Func<MouseEvent,Task> onMouseLeaveHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseLeave = onMouseLeaveHandler);
 
     /// <summary>

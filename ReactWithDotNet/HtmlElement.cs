@@ -205,11 +205,11 @@ public abstract class HtmlElement : Element
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Action<MouseEvent> onMouseEnter { get; set; }
+    public Func<MouseEvent,Task> onMouseEnter { get; set; }
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Action<MouseEvent> onMouseLeave { get; set; }
+    public Func<MouseEvent,Task> onMouseLeave { get; set; }
 
     /// <summary>
     ///     Handler <paramref name="value" /> should be in client js codes.<br />
