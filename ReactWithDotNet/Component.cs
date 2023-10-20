@@ -72,6 +72,8 @@ public abstract class ReactComponentBase : Element
         return Task.CompletedTask;
     }
 
+    // TODO: Fix action to Func task
+    
     /// <summary>
     ///     Sample event declaration <br />
     ///     [ReactCustomEvent] public Action OnUserChanged { get; set; }
@@ -94,6 +96,20 @@ public abstract class ReactComponentBase : Element
     ///     DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo);
     /// </summary>
     protected void DispatchEvent<A>(Expression<Func<Action<A>>> expressionForAccessingCustomReactEventProperty, A a)
+    {
+        Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
+    }
+    
+    
+    /// <summary>
+    ///     Sample event decleration <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
+    ///     <br />
+    ///     <br />
+    ///     Sample event dispatching <br />
+    ///     DispatchEvent(()=> OnUserChanged, state.SelectedUserInfo);
+    /// </summary>
+    protected void DispatchEvent<A>(Expression<Func<Func<A,Task>>> expressionForAccessingCustomReactEventProperty, A a)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
     }
