@@ -83,7 +83,7 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(NavigateToUrl), url);
     }
 
-    public static void OnOutsideClicked(this Client client, string idOfElement, Action action)
+    public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> action)
     {
         if (action.Target is ReactComponentBase target)
         {
