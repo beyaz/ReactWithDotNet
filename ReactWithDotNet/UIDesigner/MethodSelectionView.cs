@@ -27,7 +27,7 @@ class MethodSelectionView : Component
     public string SelectedMethodTreeNodeKey { get; set; }
 
     [ReactCustomEvent]
-    public Action<string> SelectionChanged { get; set; }
+    public Func<string,Task> SelectionChanged { get; set; }
 
     public static MetadataNode FindTreeNode(string AssemblyFilePath, string treeNodeKey, string classFilter, string methodFilter)
     {

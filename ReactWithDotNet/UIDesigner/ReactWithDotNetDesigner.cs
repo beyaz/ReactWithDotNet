@@ -432,7 +432,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         return false;
     }
     
-    void OnElementSelected(string keyOfSelectedTreeNode)
+    Task OnElementSelected(string keyOfSelectedTreeNode)
     {
         var classFilter = state.ClassFilter;
         var methodFileter = state.MethodFilter;
@@ -489,6 +489,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         }
 
         SaveState();
+        
+        return Task.CompletedTask;
         
         void initializeInstanceJson()
         {
