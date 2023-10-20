@@ -81,7 +81,7 @@ class PageShowcase : Component
                 CursorDefault,
                 When(isSelected,Background(Theme.grey_100)),
                 When(!isSelected, Hover(Background(Theme.grey_100))),
-                OnClick(e=>FullTypeNameOfSelectedSample = e.target.id)
+                OnClick(e=>Task.FromResult(FullTypeNameOfSelectedSample = e.target.id))
             };
         }
     }

@@ -612,7 +612,7 @@ public static partial class Mixin
         return JsonSerializationOptionHelper.Modify(options);
     }
 
-    public static HtmlElementModifier OnClick(Action<MouseEvent> onClickHandler)
+    public static HtmlElementModifier OnClick(Func<MouseEvent,Task> onClickHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onClick = onClickHandler);
     
     public static HtmlElementModifier OnClickPreview(Action onClickPreview)

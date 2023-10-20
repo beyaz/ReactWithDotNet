@@ -6,11 +6,17 @@ class MobileMenu : Component
 {
     public bool IsOpen { get; set; }
 
+    Task Clicked(MouseEvent _)
+    {
+        IsOpen = !IsOpen;
+        
+        return Task.CompletedTask; 
+    }
     protected override Element render()
     {
         return new div
         {
-            new HamburgerButton { IsOpen = IsOpen, Click = _ => IsOpen = !IsOpen } + MediaQueryOnTabletOrDesktop(DisplayNone),
+            new HamburgerButton { IsOpen = IsOpen, Click = Clicked } + MediaQueryOnTabletOrDesktop(DisplayNone),
 
             new FlexColumn(PositionFixed, Top(70), LeftRight(0), DisplayNoneWhenNotMobile,
                            BoxShadow("rgb(170 180 190 / 30%) 0px 4px 20px"))
@@ -55,7 +61,12 @@ class MobileMenu : Component
         public Menu Model { get; set; }
 
         public bool IsOpen { get; set; }
+        Task Clicked(MouseEvent _)
+        {
+            IsOpen = !IsOpen;
         
+            return Task.CompletedTask; 
+        }
         protected override Element render()
         {
             return new div(Padding(10))
@@ -63,7 +74,7 @@ class MobileMenu : Component
                 new FlexRow(AlignItemsCenter, PaddingBottom(10))
                 {
                     new span { Model.Title, FontSize14, FontWeight600, Color(Theme.text_secondary) },
-                    new ArrowUpDownIcon { IsArrowUp = IsOpen } + OnClick(_=>IsOpen = !IsOpen)
+                    new ArrowUpDownIcon { IsArrowUp = IsOpen } + OnClick(Clicked)
                 },
                 new FlexColumn(JustifyContentSpaceEvenly, BorderLeft(Solid(1, Theme.grey_100)), PaddingLeft(10))
                 {

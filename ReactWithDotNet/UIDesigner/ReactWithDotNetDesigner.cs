@@ -150,7 +150,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 {
                     When(canShowInstanceEditor(), new div(Text("Instance json"))
                     {
-                        OnClick(_ => state.IsInstanceEditorActive = true),
+                        OnClick(_ => Task.FromResult(state.IsInstanceEditorActive = true)),
                         When(state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
                         Padding(10),
                         FlexGrow(1),
@@ -159,7 +159,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                     When(canShowParametersEditor(), new div(Text("Parameters json"))
                     {
-                        OnClick(_ => state.IsInstanceEditorActive = false),
+                        OnClick(_ => Task.FromResult(state.IsInstanceEditorActive = false)),
                         When(!state.IsInstanceEditorActive, BorderBottom("2px solid #2196f3"), Color("#2196f3"), FontWeight600),
                         Padding(10),
                         FlexGrow(1),
@@ -401,15 +401,18 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         SaveState();
     }
 
-    void ClosePropertyPanel(MouseEvent _)
+    Task ClosePropertyPanel(MouseEvent _)
     {
         state.PropertyPanelIsClosed = true;
         SaveState();
+        
+        return Task.CompletedTask;
     }
-    void OpenPropertyPanel(MouseEvent _)
+    Task OpenPropertyPanel(MouseEvent _)
     {
         state.PropertyPanelIsClosed = false;
         SaveState();
+        return Task.CompletedTask;
     }
     
     bool canShowInstanceEditor()

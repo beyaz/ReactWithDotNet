@@ -15,9 +15,11 @@ class HomePageDemoComponent : Component<HomePageDemoComponentState>
         return Task.CompletedTask;
     }
 
-    void OnButtonClicked(MouseEvent e)
+    Task OnButtonClicked(MouseEvent e)
     {
         state.ShowMessage = true;
+        
+        return Task.CompletedTask;
     }
 
     protected override Element render()

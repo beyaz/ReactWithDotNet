@@ -194,8 +194,10 @@ class MethodSelectionView : Component
         return new List<MetadataNode>();
     }
 
-    void OnTreeItemClicked(MouseEvent e)
+    Task OnTreeItemClicked(MouseEvent e)
     {
         DispatchEvent(() => SelectionChanged, e.FirstNotEmptyId);
+        
+        return Task.CompletedTask;
     }
 }

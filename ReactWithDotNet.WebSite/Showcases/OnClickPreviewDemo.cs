@@ -26,9 +26,11 @@ public class OnClickPreviewDemo : Component
         };
     }
 
-    void OnClick(MouseEvent obj)
+    Task OnClick(MouseEvent obj)
     {
         Count++;
+
+        return Task.Delay(1000);
     }
 
 
@@ -38,7 +40,7 @@ public class OnClickPreviewDemo : Component
     }
     class Btn : Component<BtState>
     {
-        public Action<MouseEvent> OnClick;
+        public Func<MouseEvent, Task> OnClick;
         
         protected override Element render()
         {

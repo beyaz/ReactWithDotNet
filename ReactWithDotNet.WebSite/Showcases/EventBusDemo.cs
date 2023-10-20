@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
-
-namespace ReactWithDotNet.WebSite.Showcases;
+﻿namespace ReactWithDotNet.WebSite.Showcases;
 
 
 class Firer : Component
@@ -28,9 +25,11 @@ class Firer : Component
         };
     }
 
-    void OnClickHandler(MouseEvent obj)
+    Task OnClickHandler(MouseEvent obj)
     {
         Client.DispatchEvent("XYZ", Id);
+        
+        return Task.CompletedTask;
     }
 }
 
@@ -56,9 +55,11 @@ class Container : Component
         FiredId = id;
     }
     
-    void OnClickHandler(MouseEvent obj)
+    Task OnClickHandler(MouseEvent obj)
     {
         FiredId++;
+        
+        return Task.CompletedTask;
     }
 
     protected override Element render()

@@ -40,8 +40,10 @@ class FaqItem : Component<FaqItemState>
 
     }
 
-    void OnDropDownClicked(MouseEvent obj)
+    Task OnDropDownClicked(MouseEvent obj)
     {
         state.IsOpen = !state.IsOpen;
+        
+        return Task.CompletedTask;
     }
 }
