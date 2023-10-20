@@ -10,7 +10,7 @@ public class Autocomplete<TOption> : Autocomplete where TOption : class
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries.MUI.Material.Autocomplete::calculate_onChange_arguments")]
-    public Action<ChangeEvent, TOption> onChange { get; set; }
+    public Func<ChangeEvent, TOption,Task> onChange { get; set; }
 
     [ReactProp]
     public IEnumerable<TOption> options { get; set; }

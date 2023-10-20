@@ -22,7 +22,7 @@ public class Editor : ThirdPartyReactComponent
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact::OnChange")]
-    public Action<string> onChange { get; set; }
+    public Func<string,Task> onChange { get; set; }
     
 
     [ReactProp]

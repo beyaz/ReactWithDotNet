@@ -16,14 +16,14 @@ class PageHelperApps : Component
                 new Button
                 {
                     variant  = "outlined",
-                    onClick  = _ => SelectedAppName = nameof(HtmlToCSharpView),
+                    onClick  = _ => { SelectedAppName = nameof(HtmlToCSharpView); return Task.CompletedTask; },
                     disabled = SelectedAppName == nameof(HtmlToCSharpView),
                     children = { "Html to CSharp" }
                 },
                 new Button
                 {
                     variant  = "outlined",
-                    onClick  = _ => SelectedAppName = nameof(FigmaCss2ReactInlineStyleConverterView),
+                    onClick  = _ => { SelectedAppName = nameof(FigmaCss2ReactInlineStyleConverterView); return Task.CompletedTask; },
                     disabled = SelectedAppName == nameof(FigmaCss2ReactInlineStyleConverterView),
                     children = { "Figma css to React Inline style" }
                 }

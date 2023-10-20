@@ -50,14 +50,18 @@ class ImageTutorialView : Component
                     new Button
                     {
                         variant  = "outlined",
-                        onClick  = _ => SelectedIndex--,
+                        onClick  = _ =>
+                        {
+                             SelectedIndex--;
+                             return Task.CompletedTask;
+                        },
                         disabled = SelectedIndex<=0,
                         children = { "<" }
                     },
                     new Button
                     {
                         variant  = "outlined",
-                        onClick  = _ => SelectedIndex++,
+                        onClick  = _ => { SelectedIndex ++; return Task.CompletedTask; },
                         disabled = SelectedIndex >= Items.Count-1,
                         children = { ">" } 
                     }

@@ -74,9 +74,11 @@ class SwiperThumbsGalleryDemo : Component
         };
     }
     
-    void OnSlideChanged(SwiperInstance instance)
+    Task OnSlideChanged(SwiperInstance instance)
     {
         ActiveImageIndex = instance.activeIndex;
+
+        return Task.CompletedTask;
     }
     
     public int ActiveImageIndex { get; set; }

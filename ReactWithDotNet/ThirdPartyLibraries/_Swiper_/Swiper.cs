@@ -101,16 +101,16 @@ public class Swiper : ThirdPartyReactComponent
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
-    public Action<SwiperInstance> onSlideChange { get; set; }
+    public Func<SwiperInstance, Task> onSlideChange { get; set; }
     
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
-    public Action<SwiperInstance> onActiveIndexChange { get; set; }
+    public Func<SwiperInstance, Task> onActiveIndexChange { get; set; }
     
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
-    public Action<SwiperInstance> onSlideChangeTransitionStart { get; set; }
+    public Func<SwiperInstance, Task> onSlideChangeTransitionStart { get; set; }
 
     [ReactProp]
     [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
@@ -122,7 +122,7 @@ public class Swiper : ThirdPartyReactComponent
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet.ThirdPartyLibraries._Swiper_::GrabSwiperInstance")]
-    public Action<SwiperInstance> slideChangeTransitionEnd { get; set; }
+    public Func<SwiperInstance, Task> slideChangeTransitionEnd { get; set; }
 
     [ReactProp]
     public double? slidesPerView { get; set; }

@@ -39,8 +39,12 @@ class DemoPanel : Component
                     size     = "small",
                     value    = (!IsSourceCodeVisible).ToString(),
                     @checked = IsSourceCodeVisible,
-                    onChange = _ => IsSourceCodeVisible = !IsSourceCodeVisible
-
+                    onChange = _ =>
+                    {
+                         IsSourceCodeVisible = !IsSourceCodeVisible;
+                         
+                         return Task.CompletedTask;
+                    }
                 }
             };
         }
