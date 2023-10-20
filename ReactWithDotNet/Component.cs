@@ -144,8 +144,15 @@ public abstract class ReactComponentBase : Element
 
     string GetPropertyNameOfCustomReactEvent(MemberExpression expression)
     {
+        // todo: fix for only events;
+        
         var propertyNameOfCustomReactEvent = expression.Member.Name;
 
+        if (GetType().GetEvent(propertyNameOfCustomReactEvent) is not null)
+        {
+            return propertyNameOfCustomReactEvent;
+        }
+        
         if (GetType().GetProperty(propertyNameOfCustomReactEvent)?.GetCustomAttribute<ReactCustomEventAttribute>() is null)
         {
             throw DeveloperException($"{GetType().FullName}::{propertyNameOfCustomReactEvent} should contains 'ReactCustomEvent' attribute.");
