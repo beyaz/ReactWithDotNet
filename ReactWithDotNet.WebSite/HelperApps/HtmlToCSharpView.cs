@@ -47,14 +47,15 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         return Task.CompletedTask;
     }
 
-    void CSharpCode_OnEditFinished()
+    Task CSharpCode_OnEditFinished()
     {
-        
+        return Task.CompletedTask;
     }
     
-    void HtmlText_OnEditFinished()
+    Task HtmlText_OnEditFinished()
     {
         OnHtmlValueChanged(state.HtmlText);
+        return Task.CompletedTask;
     }
     
     protected override Element render()

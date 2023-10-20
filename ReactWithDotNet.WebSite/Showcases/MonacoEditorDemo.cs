@@ -60,8 +60,10 @@ class MonacoEditorDemo : Component<MonacoEditorDemoState>
         };
     }
 
-    void OnKeypressFinished()
+    Task OnKeypressFinished()
     {
         state.LetterCount = state.Content.Length;
+        
+        return Task.CompletedTask;
     }
 }

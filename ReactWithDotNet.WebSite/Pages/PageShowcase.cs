@@ -99,7 +99,8 @@ class PageShowcase : Component
         typeof(MonacoEditorDemo)
     };
 
-    void OnSearchFinished()
+    Task OnSearchFinished()
     {
+        return Task.CompletedTask;
     }
 }

@@ -56,7 +56,7 @@ public sealed class Slider : ElementBase
     ///     component.valueBindDebounceTimeout = 600 // milliseconds<br />
     ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
     /// </summary>
-    public Action valueBindDebounceHandler { get; set; }
+    public Func<Task> valueBindDebounceHandler { get; set; }
 
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below<br />

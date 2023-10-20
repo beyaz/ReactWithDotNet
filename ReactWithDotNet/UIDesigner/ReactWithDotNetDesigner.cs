@@ -396,9 +396,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         };
     }
     
-    void OnMediaSizeChanged()
+    Task OnMediaSizeChanged()
     {
         SaveState();
+        
+        return Task.CompletedTask;
     }
 
     Task ClosePropertyPanel(MouseEvent _)
@@ -589,13 +591,15 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         }
     }
 
-    void OnKeypressFinished()
+    Task OnKeypressFinished()
     {
         SaveState();
+        return Task.CompletedTask;
     }
 
-    void OnFilterChanged()
+    Task OnFilterChanged()
     {
+        return Task.CompletedTask;
     }
 
     void SaveState()

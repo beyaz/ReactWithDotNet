@@ -137,18 +137,18 @@ public sealed class input : HtmlElement
     /// </summary>
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Action<MouseEvent> onBlur { get; set; }
+    public Func<MouseEvent,Task> onBlur { get; set; }
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
-    public Action<ChangeEvent> onChange { get; set; }
+    public Func<ChangeEvent,Task> onChange { get; set; }
 
     /// <summary>
     ///     occurs when an element gets focus.
     /// </summary>
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Action<MouseEvent> onFocus { get; set; }
+    public Func<MouseEvent,Task> onFocus { get; set; }
 
     [ReactProp]
     public string placeholder { get; set; }
@@ -174,7 +174,7 @@ public sealed class input : HtmlElement
     ///     component.valueBindDebounceTimeout = 600 // milliseconds<br />
     ///     component.valueBindDebounceHandler = OnUserIterationFinished<br />
     /// </summary>
-    public Action valueBindDebounceHandler { get; set; }
+    public Func<Task> valueBindDebounceHandler { get; set; }
 
     /// <summary>
     ///     if you want to handle when user iteraction finished see example below<br />
@@ -218,7 +218,7 @@ public sealed class select : HtmlElement
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
-    public Action<ChangeEvent> onChange { get; set; }
+    public Func<ChangeEvent,Task> onChange { get; set; }
 
     [ReactProp]
     public string value { get; set; }
