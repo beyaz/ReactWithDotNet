@@ -4,7 +4,7 @@ class HamburgerButton : Component
 {
     public bool IsOpen { get; set; }
 
-    public Func<MouseEvent,Task> Click { get; set; }
+    public MouseEventHandler Click { get; set; }
 
     protected override Element render()
     {

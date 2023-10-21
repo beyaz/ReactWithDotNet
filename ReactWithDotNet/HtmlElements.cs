@@ -148,7 +148,7 @@ public sealed class input : HtmlElement
     /// </summary>
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Func<MouseEvent,Task> onFocus { get; set; }
+    public Func<MouseEvent,Task> onFocus { get; set; } // TODO: give FocusEvent react
 
     [ReactProp]
     public string placeholder { get; set; }

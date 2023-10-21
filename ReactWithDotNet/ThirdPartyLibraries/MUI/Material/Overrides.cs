@@ -8,7 +8,7 @@ public sealed partial class Switch : SwitchBase
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction(Core__CalculateSyntheticChangeEventArguments)]
-    public Func<ChangeEvent, Task> onChange { get; set; }
+    public ChangeEventHandler onChange { get; set; }
 }
 
 public sealed partial class TextField : ElementBase

@@ -165,9 +165,11 @@ color: #4A4A49;
         }
     }
 
-    void ClearStatusMessage()
+    Task ClearStatusMessage()
     {
         state.StatusMessage = null;
+        
+        return Task.CompletedTask;
     }
 
     void OnCssValueChanged(string figmaCssText)

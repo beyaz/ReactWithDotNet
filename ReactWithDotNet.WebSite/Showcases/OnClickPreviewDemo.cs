@@ -40,7 +40,7 @@ public class OnClickPreviewDemo : Component
     }
     class Btn : Component<BtState>
     {
-        public Func<MouseEvent, Task> OnClick;
+        public MouseEventHandler OnClick;
         
         protected override Element render()
         {

@@ -14,5 +14,5 @@ public sealed class Button : ElementBase
 
         [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Func<MouseEvent,Task> onClick { get; set; }
+    public MouseEventHandler onClick { get; set; }
 }

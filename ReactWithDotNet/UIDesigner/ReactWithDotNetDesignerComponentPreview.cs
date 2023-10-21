@@ -9,7 +9,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 {
     public DateTime? LastWriteTime { get; set; }
 
-    public void Refresh()
+    public Task Refresh()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
@@ -27,6 +27,8 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
             LastWriteTime = fileInfo.LastWriteTime;
         }
+        
+        return Task.CompletedTask;
     }
 
     protected override Task componentDidMount()

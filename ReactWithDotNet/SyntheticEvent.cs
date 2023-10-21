@@ -64,6 +64,8 @@ public sealed class MouseEvent : UIEvent
     public string type { get; set; }
 }
 
+public delegate Task MouseEventHandler(MouseEvent e);
+
 public sealed class ChangeEvent : UIEvent
 {
     public bool bubbles { get; set; }
@@ -74,3 +76,5 @@ public sealed class ChangeEvent : UIEvent
 
     public string type { get; set; }
 }
+
+public delegate Task ChangeEventHandler(ChangeEvent e);

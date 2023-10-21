@@ -193,7 +193,7 @@ public abstract class HtmlElement : Element
     /// </summary>
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Func<MouseEvent,Task> onClick { get; set; }
+    public MouseEventHandler onClick { get; set; }
     
     /// <summary>
     ///     Gets or sets the on click.
@@ -205,11 +205,11 @@ public abstract class HtmlElement : Element
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Func<MouseEvent,Task> onMouseEnter { get; set; }
+    public MouseEventHandler onMouseEnter { get; set; }
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Func<MouseEvent,Task> onMouseLeave { get; set; }
+    public MouseEventHandler onMouseLeave { get; set; }
 
     /// <summary>
     ///     Handler <paramref name="value" /> should be in client js codes.<br />

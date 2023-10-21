@@ -612,16 +612,16 @@ public static partial class Mixin
         return JsonSerializationOptionHelper.Modify(options);
     }
 
-    public static HtmlElementModifier OnClick(Func<MouseEvent,Task> onClickHandler)
+    public static HtmlElementModifier OnClick(MouseEventHandler onClickHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onClick = onClickHandler);
     
     public static HtmlElementModifier OnClickPreview(Action onClickPreview)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onClickPreview = onClickPreview);
 
-    public static HtmlElementModifier OnMouseEnter(Func<MouseEvent,Task> onMouseEnterHandler)
+    public static HtmlElementModifier OnMouseEnter(MouseEventHandler onMouseEnterHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseEnter = onMouseEnterHandler);
 
-    public static HtmlElementModifier OnMouseLeave(Func<MouseEvent,Task> onMouseLeaveHandler)
+    public static HtmlElementModifier OnMouseLeave(MouseEventHandler onMouseLeaveHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseLeave = onMouseLeaveHandler);
 
     /// <summary>

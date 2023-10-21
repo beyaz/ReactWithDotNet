@@ -142,11 +142,17 @@ partial class Mixin
     }
 
     #region GotoMethod
-    public static void GotoMethod(this Client client, int timeoutInMilliseconds, Action action)
+    public static void GotoMethod(this Client client, int timeoutInMilliseconds, Func<Task> action)
     {
         GotoMethod(client, timeoutInMilliseconds, action.Method.GetNameWithToken());
     }
 
+    // TODO: Fix actions
+    public static void GotoMethod(this Client client, Func<Task> action)
+    {
+        GotoMethod(client, 0, action.Method.GetNameWithToken());
+    }
+    
     public static void GotoMethod(this Client client, Action action)
     {
         GotoMethod(client, 0, action.Method.GetNameWithToken());

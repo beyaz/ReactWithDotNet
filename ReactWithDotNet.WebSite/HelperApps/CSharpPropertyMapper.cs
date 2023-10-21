@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using System.Threading.Tasks;
-using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
+﻿using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 
@@ -127,9 +125,11 @@ class AnyClass
         return TextTransformer.Transform(figmaCssText);
     }
 
-    void ClearStatusMessage()
+    Task ClearStatusMessage()
     {
         state.StatusMessage = null;
+        
+        return Task.CompletedTask;
     }
 
     void OnCssValueChanged(string figmaCssText)
