@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
+﻿using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
+using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.UIW.ReactCodemirror;
 
 namespace ReactWithDotNet.WebSite.Components;
@@ -15,26 +16,41 @@ class CSharpCodePanel : PureComponent
             Height(300),
             FontSize12,
             
-            new style
-            {
-                $".cm-editor{{ {new Style
-                {
-                    Background(Theme.EditorBackground),
-                    BoxShadow(0, 4, 8, -3, rgba(0,0,0,0.1))
+            //new style
+            //{
+            //    $".cm-editor{{ {new Style
+            //    {
+            //        Background(Theme.EditorBackground),
+            //        BoxShadow(0, 4, 8, -3, rgba(0,0,0,0.1))
 
-                }.ToCss()
-                } }}"
-            },
-            new CodeMirror
+            //    }.ToCss()
+            //    } }}"
+            //},
+            
+            new Editor
             {
-                extensions = { "java", "githubLight" },
-                value = Code,
-                basicSetup =
+                defaultLanguage          = "csharp",
+                value                = Code,
+                options =
                 {
-                    highlightActiveLine       = false,
-                    highlightActiveLineGutter = false,
+                    renderLineHighlight ="none",
+                    fontFamily          ="'IBM Plex Mono Medium', 'Courier New', monospace",
+                    fontSize            = 11,
+                    minimap             = new { enabled = false },
+                    lineNumbers         = "off"
                 }
             }
+            
+            //new CodeMirror
+            //{
+            //    extensions = { "java", "githubLight" },
+            //    value = Code,
+            //    basicSetup =
+            //    {
+            //        highlightActiveLine       = false,
+            //        highlightActiveLineGutter = false,
+            //    }
+            //}
         };
     }
 }
