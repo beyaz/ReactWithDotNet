@@ -36,6 +36,19 @@ class MainLayout : PureComponent, IPageLayout
                 new meta{name    = "viewport", content = "width=device-width, initial-scale=1"},
                 new title{ "React with DotNet" },
                 
+                new style
+                {
+                    """
+
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    
+                    """
+                },
+                
                 arrangeFonts(),
 
                 new link { href = "https://fonts.googleapis.com/icon?family=Material+Icons", rel = "stylesheet" },

@@ -1,7 +1,7 @@
 ﻿siteName: Your site Name
 menuList:
   -
-    title: Menü1
+    title: Products
     children:
       -
         title: Videos
@@ -16,7 +16,7 @@ menuList:
         description: Desctiption for sub menü lorem ipsum
   
   -
-    title: Menü2
+    title: Doc
     children:
       -
         title: Sub Menu 1
@@ -34,7 +34,7 @@ menuList:
         description: Documentation of api
   
   -
-    title: Menü3
+    title: Pricing
     children:
       -
         title: Sub Menu 1

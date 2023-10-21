@@ -64,5 +64,18 @@ public class LightTheme
     public string text_secondary => P.text_secondary;
     public string EditorBackground => linear_gradientTo("right","bottom", rgb(255, 255, 255), rgb(235, 235, 235));
 
+    
+    // B L U E  https://tailwindcss.com/docs/customizing-colors
+    public string Blue50 = "#eff6ff";
+    public string Blue100 = "#dbeafe";
+    public string Blue200 = "#bfdbfe";
+    public string Blue300 = "#93c5fd";
+    public string Blue400 = "#60a5fa";
+    public string Blue500 = "#3b82f6";
+    public string Blue600 = "#2563eb";
+    public string Blue700 = "#1d4ed8";
+    public string Blue800 = "#1e40af";
+    public string Blue900 = "#1e3a8a";
+    public string Blue950 = "#172554";
 
 }

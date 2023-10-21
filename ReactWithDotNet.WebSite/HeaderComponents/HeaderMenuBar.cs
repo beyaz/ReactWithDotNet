@@ -9,12 +9,12 @@ class HeaderMenuBar : PureComponent
 
     protected override Element render()
     {
-        return new FlexRow(WidthMaximized, JustifyContentSpaceBetween, AlignItemsCenter, MinHeight(80))
+        return new FlexRow(WidthMaximized, JustifyContentSpaceBetween, AlignItemsCenter, Height(60))
         {
-            new FlexRow(Gap(40))
+            new FlexRow(AlignItemsCenter)
             {
-                new a { Href("/"), new OnlyTextLogo(), PaddingTopBottom(10), TextDecorationNone, Color(inherit) },
-
+                new Logo(),
+                SpaceX(10),
                 new nav(DisplayFlex, AlignItemsCenter, MediaQueryOnMobile(DisplayNone))
                 {
                     RawData.MenuList.Select(AsTooltip)
@@ -41,7 +41,7 @@ class HeaderMenuBar : PureComponent
 
                         children =
                         {
-                            new svg(WidthHeight(20), svg.Fill(rgba(0, 0, 0, 0.54)), svg.ViewBox(0, 0, 24, 24))
+                            new svg(WidthHeight(20), svg.Fill(Theme.Blue700), svg.ViewBox(0, 0, 24, 24))
                             {
                                 new path { d = x.Svg }
                             }

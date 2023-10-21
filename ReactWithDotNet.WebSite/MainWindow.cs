@@ -11,16 +11,16 @@ public class MainWindow : PureComponent
         {
             new MainPageHeader(),
 
-            new main
-            {
-                createContent
-            },
+            //new main
+            //{
+            //    createContent
+            //},
 
 
-            new footer(BorderTop(Solid(1, Theme.grey_100)), Height(50), DisplayFlexRowCentered)
-            {
-                new HighlightedText { Text = RawData.FooterText }
-            }
+            //new footer(BorderTop(Solid(1, Theme.grey_100)), Height(50), DisplayFlexRowCentered)
+            //{
+            //    new HighlightedText { Text = RawData.FooterText }
+            //}
         };
 
         Element createContent()

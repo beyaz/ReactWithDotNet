@@ -84,14 +84,14 @@ static partial class Extensions
         return instance;
     }
 
-    public static Style Container => new()
+    public static Style ContainerStyle => new()
     {
+        WidthMaximized,
         MaxWidth(1200),
         DisplayFlexRow,
         JustifyContentCenter,
 
-        PaddingLeftRight("5%"),
-        WhenMediaSizeIsGreaterThanMobile(PaddingLeftRight("10%"))
+        PaddingLeftRight(24)
     };
     
     public static string Grey50 ="#F3F6F9";

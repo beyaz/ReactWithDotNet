@@ -300,6 +300,10 @@ public sealed class link : HtmlElement
 
     [ReactProp]
     public string rel { get; set; }
+    
+    [ReactProp]
+    public string sizes { get; set; }
+    
 
     [ReactProp]
     public string type { get; set; }
