@@ -30,6 +30,7 @@ class CSharpCodePanel : PureComponent
             new Editor
             {
                 defaultLanguage          = "csharp",
+                
                 value                = Code,
                 options =
                 {
