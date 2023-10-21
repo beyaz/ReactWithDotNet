@@ -10,11 +10,11 @@ class CSharpCodePanel : PureComponent
     
     protected override Element render()
     {
-        return new FreeScrollBar
+        return new div
         {
-            WidthMaximized,
-            Height(300),
-            FontSize12,
+            WidthHeightMaximized,
+            
+            //FontSize12,
             
             //new style
             //{

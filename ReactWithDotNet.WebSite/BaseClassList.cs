@@ -77,5 +77,18 @@ public class LightTheme
     public string Blue800 = "#1e40af";
     public string Blue900 = "#1e3a8a";
     public string Blue950 = "#172554";
+    
+    // G R A Y  https://tailwindcss.com/docs/customizing-colors
+    public string Gray50  = "#f9fafb";
+    public string Gray100 = "#f3f4f6";
+    public string Gray200 = "#e5e7eb";
+    public string Gray300 = "#d1d5db";
+    public string Gray400 = "#9ca3af";
+    public string Gray500 = "#6b7280";
+    public string Gray600 = "#4b5563";
+    public string Gray700 = "#374151";
+    public string Gray800 = "#1f2937";
+    public string Gray900 = "#111827";
+    public string Gray950 = "#030712";
 
 }
