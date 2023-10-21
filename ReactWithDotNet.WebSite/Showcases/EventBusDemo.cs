@@ -12,9 +12,9 @@ class Firer : Component
         return base.constructor();
     }
     
-    void On_XYZ_Fired(int id)
+    Task On_XYZ_Fired(int id)
     {
-      
+        return Task.CompletedTask;
     }
     
     protected override Element render()
@@ -50,9 +50,10 @@ class Container : Component
 
    
 
-    void On_XYZ_Fired(int id)
+    Task On_XYZ_Fired(int id)
     {
         FiredId = id;
+        return Task.CompletedTask;
     }
     
     Task OnClickHandler(MouseEvent obj)

@@ -23,20 +23,21 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         return Task.CompletedTask;
     }
 
-    void OnComponentPreviewRefreshed()
+    Task OnComponentPreviewRefreshed()
     {
         UpdatingProgress = 25;
         Client.GotoMethod(UpdateProgress,UpdatingProgress+25);
+        return Task.CompletedTask;
     }
     
-    void UpdateProgress(int newValue)
+    Task UpdateProgress(int newValue)
     {
         UpdatingProgress = newValue;
         if (UpdatingProgress <= 100)
         {
             Client.GotoMethod(500,UpdateProgress,UpdatingProgress+25);    
         }
-        
+        return Task.CompletedTask;
     }
     
     protected override Element render()
