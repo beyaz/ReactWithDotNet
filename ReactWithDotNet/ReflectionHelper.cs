@@ -131,22 +131,6 @@ static class ReflectionHelper
         return null;
     }
     
-    public static bool IsGenericAction1Or2Or3(this Type type)
-    {
-        // TODO: remove
-        try
-        {
-            var typeDefinition = type.GetGenericTypeDefinition();
-
-            return typeDefinition == typeof(Action<>) || typeDefinition == typeof(Action<,>) || typeDefinition == typeof(Action<,,>);
-        }
-        catch (Exception e)
-        {
-            return false;
-
-        }
-        
-    }
     
     public static bool IsVoidTaskFunc1Or2Or3(this Type type)
     {
