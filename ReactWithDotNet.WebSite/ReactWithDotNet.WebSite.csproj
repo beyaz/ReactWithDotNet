@@ -40,4 +40,53 @@
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
+
+	<!-- npm -->
+	<PropertyGroup>
+		<AppRoot>wwwroot\</AppRoot>
+	</PropertyGroup>
+	<Target Name="_EnsureNodeEnvironment_" BeforeTargets="rebuild;build" Condition=" !Exists('$(AppRoot)node_modules') ">
+		<Exec Command="node --version" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+		<Exec WorkingDirectory="$(AppRoot)" Command="npm install" />
+	</Target>
+	<Target Name="_NpmRunForDebug_" BeforeTargets="rebuild" Condition=" '$(Configuration)' == 'Debug' ">
+		<Exec Command="node --version" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+		<Message Importance="high" Text="Runinning npm command: 'npm run dev'" />
+		<Exec WorkingDirectory="$(AppRoot)" Command="npm run dev" />
+	</Target>
+	<Target Name="_NpmRunForRelease_" BeforeTargets="rebuild" Condition=" '$(Configuration)' == 'Release' ">
+		<Exec Command="node --version" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+		<Message Importance="high" Text="Runinning npm command: 'npm run build'" />
+		<Exec WorkingDirectory="$(AppRoot)" Command="npm run build" />
+	</Target>
+
+	<Target Name="_BeforePublish_" AfterTargets="ComputeFilesToPublish">
+		<Exec WorkingDirectory="$(AppRoot)" Command="npm install" />
+		<Exec WorkingDirectory="$(AppRoot)" Command="npm run build" />
+	</Target>
+
+	<Target Name="_AfterPublish_" AfterTargets="Publish">
+		<Delete Files="$(PublishDir)/ReactWithDotNet.pdb" />
+		<Delete Files="$(PublishDir)/ReactWithDotNet.xml" />
+		<Delete Files="$(PublishDir)/$(MSBuildProjectName).pdb" />
+		<Delete Files="$(PublishDir)/$(MSBuildProjectName).xml" />
+
+		<Delete Files="$(PublishDir)/wwwroot/index.jsx" />
+		<Delete Files="$(PublishDir)/wwwroot/index-dev.jsx" />
+		<Delete Files="$(PublishDir)/wwwroot/package.json" />
+		<Delete Files="$(PublishDir)/wwwroot/package-lock.json" />
+
+		<RemoveDir Directories="$(PublishDir)\wwwroot\react-with-dotnet" />
+	</Target>
+
 </Project>
