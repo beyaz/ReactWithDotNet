@@ -17,4 +17,15 @@ public class StyleTests
 
         style.ToCss().Should().BeEquivalentTo("height:5.32rem;min-width:4.56px;");
     }
+    
+    [TestMethod]
+    public void _2_()
+    {
+        var style = new Style
+        {
+            WebkitBackgroundClip = "text"
+        };
+
+        style.ToCss().Should().BeEquivalentTo("-webkit-background-clip:text;");
+    }
 }
