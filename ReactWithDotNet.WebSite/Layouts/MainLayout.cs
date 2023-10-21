@@ -61,12 +61,12 @@ class MainLayout : PureComponent, IPageLayout
                 // So user first iteraction time will be minimize.
                 
                
-                new script { type = "module", src = $"{root}/dist/index.js" },
                 new link
                 {
                     rel = "stylesheet",
                     type = "text/css",
-                    href = $"{root}/dist/index.css"
+                    href = $"{root}/dist/index.css",
+                    crossorigin = "anonymous"
                 },
                 
 
@@ -97,7 +97,7 @@ ReactWithDotNet.RenderComponentIn({{
             
             return new Element[]
             {
-                new link{href   = "https://fonts.gstatic.com", rel = "preconnect", crossOrigin = "anonymous"},
+                new link{href   = "https://fonts.gstatic.com", rel = "preconnect", crossorigin = "anonymous"},
                 
                 new link{href   = "https://fonts.googleapis.com", rel = "preconnect"},
                 
@@ -110,7 +110,7 @@ ReactWithDotNet.RenderComponentIn({{
                     rel = "preload", 
                     href = $"{fonts}PlusJakartaSans-ExtraBold-subset.woff2",
                     type="font/woff2",
-                    crossOrigin = "anonymous",
+                    crossorigin = "anonymous",
                     @as = "font"
                 },
                 

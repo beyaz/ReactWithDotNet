@@ -289,8 +289,8 @@ public sealed class CssClass
 
 public sealed class link : HtmlElement
 {
-    [ReactProp]
-    public string crossOrigin { get; set; }
+    //[ReactProp]
+    //public string crossOrigin { get; set; }
 
     [ReactProp]
     public string href { get; set; }
