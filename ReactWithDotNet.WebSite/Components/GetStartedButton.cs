@@ -10,7 +10,7 @@ class GetStartedButton : PureComponent
             style =
             {
                 backgroundImage = "linear-gradient(to right, #DA22FF 0%, #9733EE  51%, #DA22FF  100%)",
-                margin          = "10px",
+                //margin          = "10px",
                 padding         = "15px 45px",
                 textAlign       = "center",
                 textTransform   = "uppercase",

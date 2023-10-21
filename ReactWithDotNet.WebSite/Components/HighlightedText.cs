@@ -24,7 +24,7 @@ class HighlightedText : PureComponent
                 PaddingLeftRight(3),
                 WebkitBackgroundClipText,
                 WebkitTextFillColor(Transparent),
-                Background(linear_gradientTo("right", Theme.primary_main, Theme.primary_700))
+                Background(linear_gradientTo("right", Theme.Blue400, Theme.Blue700))
             }
         };
     }

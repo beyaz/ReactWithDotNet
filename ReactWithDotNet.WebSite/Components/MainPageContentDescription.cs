@@ -6,9 +6,10 @@ class MainPageContentDescription : PureComponent
     {
         return new FlexColumn(AlignItemsCenter)
         {
-            new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize(64), FontWeight800, MediaQueryOnMobileOrTablet(TextAlignCenter))
+            SpaceY(60),
+            new div(FontFamily_PlusJakartaSans_ExtraBold, FontSize(56), FontWeight800, MediaQueryOnMobileOrTablet(TextAlignCenter))
             {
-                LineHeight(75),
+                LineHeight(62),
                 
                 new HighlightedText{Text = "Write [react.js]  application in [c#]  language"}
             },
@@ -16,7 +17,7 @@ class MainPageContentDescription : PureComponent
             SpaceY(20),
             new div
             {
-                LineHeight40,
+                LineHeight30,
                 Color(Theme.grey_700),
                 FontWeight400,
                 Text("MUI offers a comprehensive suite of UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components.")
