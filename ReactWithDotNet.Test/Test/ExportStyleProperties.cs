@@ -169,7 +169,7 @@ public class ExportStyleProperties
             
             list.Add($"{indent}{indent}if (s.{propertyName} != null)");
             list.Add( $"{indent}{indent}{{");
-            list.Add($"{indent}{indent}{indent}sb.Append(\"{ConvertCamelCaseToSnakeCase(propertyName)}\");");
+            list.Add($"{indent}{indent}{indent}sb.Append(\"{ArrangeWebKit(ConvertCamelCaseToSnakeCase(propertyName))}\");");
             list.Add($"{indent}{indent}{indent}sb.Append(\":\");");
             list.Add($"{indent}{indent}{indent}sb.Append(s.{propertyName});");
             list.Add($"{indent}{indent}{indent}sb.Append(separator);");
@@ -233,7 +233,16 @@ public class ExportStyleProperties
         {
             return char.ToUpper(propertyName[0], new CultureInfo("en-US")) + propertyName.Substring(1);
         }
-        
+
+        static string ArrangeWebKit(string styleKey)
+        {
+            if (styleKey.StartsWith("webkit-", StringComparison.OrdinalIgnoreCase))
+            {
+                return "-" + styleKey;
+            }
+
+            return styleKey;
+        }
         static string ConvertCamelCaseToSnakeCase(string input)
         {
             if (string.IsNullOrEmpty(input))
