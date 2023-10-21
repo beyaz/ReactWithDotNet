@@ -17048,1071 +17048,1071 @@ partial class Style
         }
         if (s.WebkitAlignContent != null)
         {
-            sb.Append("webkit-align-content");
+            sb.Append("-webkit-align-content");
             sb.Append(":");
             sb.Append(s.WebkitAlignContent);
             sb.Append(separator);
         }
         if (s.WebkitAlignItems != null)
         {
-            sb.Append("webkit-align-items");
+            sb.Append("-webkit-align-items");
             sb.Append(":");
             sb.Append(s.WebkitAlignItems);
             sb.Append(separator);
         }
         if (s.WebkitAlignSelf != null)
         {
-            sb.Append("webkit-align-self");
+            sb.Append("-webkit-align-self");
             sb.Append(":");
             sb.Append(s.WebkitAlignSelf);
             sb.Append(separator);
         }
         if (s.WebkitAnimation != null)
         {
-            sb.Append("webkit-animation");
+            sb.Append("-webkit-animation");
             sb.Append(":");
             sb.Append(s.WebkitAnimation);
             sb.Append(separator);
         }
         if (s.WebkitAnimationDelay != null)
         {
-            sb.Append("webkit-animation-delay");
+            sb.Append("-webkit-animation-delay");
             sb.Append(":");
             sb.Append(s.WebkitAnimationDelay);
             sb.Append(separator);
         }
         if (s.WebkitAnimationDirection != null)
         {
-            sb.Append("webkit-animation-direction");
+            sb.Append("-webkit-animation-direction");
             sb.Append(":");
             sb.Append(s.WebkitAnimationDirection);
             sb.Append(separator);
         }
         if (s.WebkitAnimationDuration != null)
         {
-            sb.Append("webkit-animation-duration");
+            sb.Append("-webkit-animation-duration");
             sb.Append(":");
             sb.Append(s.WebkitAnimationDuration);
             sb.Append(separator);
         }
         if (s.WebkitAnimationFillMode != null)
         {
-            sb.Append("webkit-animation-fill-mode");
+            sb.Append("-webkit-animation-fill-mode");
             sb.Append(":");
             sb.Append(s.WebkitAnimationFillMode);
             sb.Append(separator);
         }
         if (s.WebkitAnimationIterationCount != null)
         {
-            sb.Append("webkit-animation-iteration-count");
+            sb.Append("-webkit-animation-iteration-count");
             sb.Append(":");
             sb.Append(s.WebkitAnimationIterationCount);
             sb.Append(separator);
         }
         if (s.WebkitAnimationName != null)
         {
-            sb.Append("webkit-animation-name");
+            sb.Append("-webkit-animation-name");
             sb.Append(":");
             sb.Append(s.WebkitAnimationName);
             sb.Append(separator);
         }
         if (s.WebkitAnimationPlayState != null)
         {
-            sb.Append("webkit-animation-play-state");
+            sb.Append("-webkit-animation-play-state");
             sb.Append(":");
             sb.Append(s.WebkitAnimationPlayState);
             sb.Append(separator);
         }
         if (s.WebkitAnimationTimingFunction != null)
         {
-            sb.Append("webkit-animation-timing-function");
+            sb.Append("-webkit-animation-timing-function");
             sb.Append(":");
             sb.Append(s.WebkitAnimationTimingFunction);
             sb.Append(separator);
         }
         if (s.WebkitAppRegion != null)
         {
-            sb.Append("webkit-app-region");
+            sb.Append("-webkit-app-region");
             sb.Append(":");
             sb.Append(s.WebkitAppRegion);
             sb.Append(separator);
         }
         if (s.WebkitAppearance != null)
         {
-            sb.Append("webkit-appearance");
+            sb.Append("-webkit-appearance");
             sb.Append(":");
             sb.Append(s.WebkitAppearance);
             sb.Append(separator);
         }
         if (s.WebkitBackfaceVisibility != null)
         {
-            sb.Append("webkit-backface-visibility");
+            sb.Append("-webkit-backface-visibility");
             sb.Append(":");
             sb.Append(s.WebkitBackfaceVisibility);
             sb.Append(separator);
         }
         if (s.WebkitBackgroundClip != null)
         {
-            sb.Append("webkit-background-clip");
+            sb.Append("-webkit-background-clip");
             sb.Append(":");
             sb.Append(s.WebkitBackgroundClip);
             sb.Append(separator);
         }
         if (s.WebkitBackgroundOrigin != null)
         {
-            sb.Append("webkit-background-origin");
+            sb.Append("-webkit-background-origin");
             sb.Append(":");
             sb.Append(s.WebkitBackgroundOrigin);
             sb.Append(separator);
         }
         if (s.WebkitBackgroundSize != null)
         {
-            sb.Append("webkit-background-size");
+            sb.Append("-webkit-background-size");
             sb.Append(":");
             sb.Append(s.WebkitBackgroundSize);
             sb.Append(separator);
         }
         if (s.WebkitBorderAfter != null)
         {
-            sb.Append("webkit-border-after");
+            sb.Append("-webkit-border-after");
             sb.Append(":");
             sb.Append(s.WebkitBorderAfter);
             sb.Append(separator);
         }
         if (s.WebkitBorderAfterColor != null)
         {
-            sb.Append("webkit-border-after-color");
+            sb.Append("-webkit-border-after-color");
             sb.Append(":");
             sb.Append(s.WebkitBorderAfterColor);
             sb.Append(separator);
         }
         if (s.WebkitBorderAfterStyle != null)
         {
-            sb.Append("webkit-border-after-style");
+            sb.Append("-webkit-border-after-style");
             sb.Append(":");
             sb.Append(s.WebkitBorderAfterStyle);
             sb.Append(separator);
         }
         if (s.WebkitBorderAfterWidth != null)
         {
-            sb.Append("webkit-border-after-width");
+            sb.Append("-webkit-border-after-width");
             sb.Append(":");
             sb.Append(s.WebkitBorderAfterWidth);
             sb.Append(separator);
         }
         if (s.WebkitBorderBefore != null)
         {
-            sb.Append("webkit-border-before");
+            sb.Append("-webkit-border-before");
             sb.Append(":");
             sb.Append(s.WebkitBorderBefore);
             sb.Append(separator);
         }
         if (s.WebkitBorderBeforeColor != null)
         {
-            sb.Append("webkit-border-before-color");
+            sb.Append("-webkit-border-before-color");
             sb.Append(":");
             sb.Append(s.WebkitBorderBeforeColor);
             sb.Append(separator);
         }
         if (s.WebkitBorderBeforeStyle != null)
         {
-            sb.Append("webkit-border-before-style");
+            sb.Append("-webkit-border-before-style");
             sb.Append(":");
             sb.Append(s.WebkitBorderBeforeStyle);
             sb.Append(separator);
         }
         if (s.WebkitBorderBeforeWidth != null)
         {
-            sb.Append("webkit-border-before-width");
+            sb.Append("-webkit-border-before-width");
             sb.Append(":");
             sb.Append(s.WebkitBorderBeforeWidth);
             sb.Append(separator);
         }
         if (s.WebkitBorderBottomLeftRadius != null)
         {
-            sb.Append("webkit-border-bottom-left-radius");
+            sb.Append("-webkit-border-bottom-left-radius");
             sb.Append(":");
             sb.Append(s.WebkitBorderBottomLeftRadius);
             sb.Append(separator);
         }
         if (s.WebkitBorderBottomRightRadius != null)
         {
-            sb.Append("webkit-border-bottom-right-radius");
+            sb.Append("-webkit-border-bottom-right-radius");
             sb.Append(":");
             sb.Append(s.WebkitBorderBottomRightRadius);
             sb.Append(separator);
         }
         if (s.WebkitBorderEnd != null)
         {
-            sb.Append("webkit-border-end");
+            sb.Append("-webkit-border-end");
             sb.Append(":");
             sb.Append(s.WebkitBorderEnd);
             sb.Append(separator);
         }
         if (s.WebkitBorderEndColor != null)
         {
-            sb.Append("webkit-border-end-color");
+            sb.Append("-webkit-border-end-color");
             sb.Append(":");
             sb.Append(s.WebkitBorderEndColor);
             sb.Append(separator);
         }
         if (s.WebkitBorderEndStyle != null)
         {
-            sb.Append("webkit-border-end-style");
+            sb.Append("-webkit-border-end-style");
             sb.Append(":");
             sb.Append(s.WebkitBorderEndStyle);
             sb.Append(separator);
         }
         if (s.WebkitBorderEndWidth != null)
         {
-            sb.Append("webkit-border-end-width");
+            sb.Append("-webkit-border-end-width");
             sb.Append(":");
             sb.Append(s.WebkitBorderEndWidth);
             sb.Append(separator);
         }
         if (s.WebkitBorderHorizontalSpacing != null)
         {
-            sb.Append("webkit-border-horizontal-spacing");
+            sb.Append("-webkit-border-horizontal-spacing");
             sb.Append(":");
             sb.Append(s.WebkitBorderHorizontalSpacing);
             sb.Append(separator);
         }
         if (s.WebkitBorderImage != null)
         {
-            sb.Append("webkit-border-image");
+            sb.Append("-webkit-border-image");
             sb.Append(":");
             sb.Append(s.WebkitBorderImage);
             sb.Append(separator);
         }
         if (s.WebkitBorderRadius != null)
         {
-            sb.Append("webkit-border-radius");
+            sb.Append("-webkit-border-radius");
             sb.Append(":");
             sb.Append(s.WebkitBorderRadius);
             sb.Append(separator);
         }
         if (s.WebkitBorderStart != null)
         {
-            sb.Append("webkit-border-start");
+            sb.Append("-webkit-border-start");
             sb.Append(":");
             sb.Append(s.WebkitBorderStart);
             sb.Append(separator);
         }
         if (s.WebkitBorderStartColor != null)
         {
-            sb.Append("webkit-border-start-color");
+            sb.Append("-webkit-border-start-color");
             sb.Append(":");
             sb.Append(s.WebkitBorderStartColor);
             sb.Append(separator);
         }
         if (s.WebkitBorderStartStyle != null)
         {
-            sb.Append("webkit-border-start-style");
+            sb.Append("-webkit-border-start-style");
             sb.Append(":");
             sb.Append(s.WebkitBorderStartStyle);
             sb.Append(separator);
         }
         if (s.WebkitBorderStartWidth != null)
         {
-            sb.Append("webkit-border-start-width");
+            sb.Append("-webkit-border-start-width");
             sb.Append(":");
             sb.Append(s.WebkitBorderStartWidth);
             sb.Append(separator);
         }
         if (s.WebkitBorderTopLeftRadius != null)
         {
-            sb.Append("webkit-border-top-left-radius");
+            sb.Append("-webkit-border-top-left-radius");
             sb.Append(":");
             sb.Append(s.WebkitBorderTopLeftRadius);
             sb.Append(separator);
         }
         if (s.WebkitBorderTopRightRadius != null)
         {
-            sb.Append("webkit-border-top-right-radius");
+            sb.Append("-webkit-border-top-right-radius");
             sb.Append(":");
             sb.Append(s.WebkitBorderTopRightRadius);
             sb.Append(separator);
         }
         if (s.WebkitBorderVerticalSpacing != null)
         {
-            sb.Append("webkit-border-vertical-spacing");
+            sb.Append("-webkit-border-vertical-spacing");
             sb.Append(":");
             sb.Append(s.WebkitBorderVerticalSpacing);
             sb.Append(separator);
         }
         if (s.WebkitBoxAlign != null)
         {
-            sb.Append("webkit-box-align");
+            sb.Append("-webkit-box-align");
             sb.Append(":");
             sb.Append(s.WebkitBoxAlign);
             sb.Append(separator);
         }
         if (s.WebkitBoxDecorationBreak != null)
         {
-            sb.Append("webkit-box-decoration-break");
+            sb.Append("-webkit-box-decoration-break");
             sb.Append(":");
             sb.Append(s.WebkitBoxDecorationBreak);
             sb.Append(separator);
         }
         if (s.WebkitBoxDirection != null)
         {
-            sb.Append("webkit-box-direction");
+            sb.Append("-webkit-box-direction");
             sb.Append(":");
             sb.Append(s.WebkitBoxDirection);
             sb.Append(separator);
         }
         if (s.WebkitBoxFlex != null)
         {
-            sb.Append("webkit-box-flex");
+            sb.Append("-webkit-box-flex");
             sb.Append(":");
             sb.Append(s.WebkitBoxFlex);
             sb.Append(separator);
         }
         if (s.WebkitBoxOrdinalGroup != null)
         {
-            sb.Append("webkit-box-ordinal-group");
+            sb.Append("-webkit-box-ordinal-group");
             sb.Append(":");
             sb.Append(s.WebkitBoxOrdinalGroup);
             sb.Append(separator);
         }
         if (s.WebkitBoxOrient != null)
         {
-            sb.Append("webkit-box-orient");
+            sb.Append("-webkit-box-orient");
             sb.Append(":");
             sb.Append(s.WebkitBoxOrient);
             sb.Append(separator);
         }
         if (s.WebkitBoxPack != null)
         {
-            sb.Append("webkit-box-pack");
+            sb.Append("-webkit-box-pack");
             sb.Append(":");
             sb.Append(s.WebkitBoxPack);
             sb.Append(separator);
         }
         if (s.WebkitBoxReflect != null)
         {
-            sb.Append("webkit-box-reflect");
+            sb.Append("-webkit-box-reflect");
             sb.Append(":");
             sb.Append(s.WebkitBoxReflect);
             sb.Append(separator);
         }
         if (s.WebkitBoxShadow != null)
         {
-            sb.Append("webkit-box-shadow");
+            sb.Append("-webkit-box-shadow");
             sb.Append(":");
             sb.Append(s.WebkitBoxShadow);
             sb.Append(separator);
         }
         if (s.WebkitBoxSizing != null)
         {
-            sb.Append("webkit-box-sizing");
+            sb.Append("-webkit-box-sizing");
             sb.Append(":");
             sb.Append(s.WebkitBoxSizing);
             sb.Append(separator);
         }
         if (s.WebkitClipPath != null)
         {
-            sb.Append("webkit-clip-path");
+            sb.Append("-webkit-clip-path");
             sb.Append(":");
             sb.Append(s.WebkitClipPath);
             sb.Append(separator);
         }
         if (s.WebkitColumnBreakAfter != null)
         {
-            sb.Append("webkit-column-break-after");
+            sb.Append("-webkit-column-break-after");
             sb.Append(":");
             sb.Append(s.WebkitColumnBreakAfter);
             sb.Append(separator);
         }
         if (s.WebkitColumnBreakBefore != null)
         {
-            sb.Append("webkit-column-break-before");
+            sb.Append("-webkit-column-break-before");
             sb.Append(":");
             sb.Append(s.WebkitColumnBreakBefore);
             sb.Append(separator);
         }
         if (s.WebkitColumnBreakInside != null)
         {
-            sb.Append("webkit-column-break-inside");
+            sb.Append("-webkit-column-break-inside");
             sb.Append(":");
             sb.Append(s.WebkitColumnBreakInside);
             sb.Append(separator);
         }
         if (s.WebkitColumnCount != null)
         {
-            sb.Append("webkit-column-count");
+            sb.Append("-webkit-column-count");
             sb.Append(":");
             sb.Append(s.WebkitColumnCount);
             sb.Append(separator);
         }
         if (s.WebkitColumnGap != null)
         {
-            sb.Append("webkit-column-gap");
+            sb.Append("-webkit-column-gap");
             sb.Append(":");
             sb.Append(s.WebkitColumnGap);
             sb.Append(separator);
         }
         if (s.WebkitColumnRule != null)
         {
-            sb.Append("webkit-column-rule");
+            sb.Append("-webkit-column-rule");
             sb.Append(":");
             sb.Append(s.WebkitColumnRule);
             sb.Append(separator);
         }
         if (s.WebkitColumnRuleColor != null)
         {
-            sb.Append("webkit-column-rule-color");
+            sb.Append("-webkit-column-rule-color");
             sb.Append(":");
             sb.Append(s.WebkitColumnRuleColor);
             sb.Append(separator);
         }
         if (s.WebkitColumnRuleStyle != null)
         {
-            sb.Append("webkit-column-rule-style");
+            sb.Append("-webkit-column-rule-style");
             sb.Append(":");
             sb.Append(s.WebkitColumnRuleStyle);
             sb.Append(separator);
         }
         if (s.WebkitColumnRuleWidth != null)
         {
-            sb.Append("webkit-column-rule-width");
+            sb.Append("-webkit-column-rule-width");
             sb.Append(":");
             sb.Append(s.WebkitColumnRuleWidth);
             sb.Append(separator);
         }
         if (s.WebkitColumnSpan != null)
         {
-            sb.Append("webkit-column-span");
+            sb.Append("-webkit-column-span");
             sb.Append(":");
             sb.Append(s.WebkitColumnSpan);
             sb.Append(separator);
         }
         if (s.WebkitColumnWidth != null)
         {
-            sb.Append("webkit-column-width");
+            sb.Append("-webkit-column-width");
             sb.Append(":");
             sb.Append(s.WebkitColumnWidth);
             sb.Append(separator);
         }
         if (s.WebkitColumns != null)
         {
-            sb.Append("webkit-columns");
+            sb.Append("-webkit-columns");
             sb.Append(":");
             sb.Append(s.WebkitColumns);
             sb.Append(separator);
         }
         if (s.WebkitFilter != null)
         {
-            sb.Append("webkit-filter");
+            sb.Append("-webkit-filter");
             sb.Append(":");
             sb.Append(s.WebkitFilter);
             sb.Append(separator);
         }
         if (s.WebkitFlex != null)
         {
-            sb.Append("webkit-flex");
+            sb.Append("-webkit-flex");
             sb.Append(":");
             sb.Append(s.WebkitFlex);
             sb.Append(separator);
         }
         if (s.WebkitFlexBasis != null)
         {
-            sb.Append("webkit-flex-basis");
+            sb.Append("-webkit-flex-basis");
             sb.Append(":");
             sb.Append(s.WebkitFlexBasis);
             sb.Append(separator);
         }
         if (s.WebkitFlexDirection != null)
         {
-            sb.Append("webkit-flex-direction");
+            sb.Append("-webkit-flex-direction");
             sb.Append(":");
             sb.Append(s.WebkitFlexDirection);
             sb.Append(separator);
         }
         if (s.WebkitFlexFlow != null)
         {
-            sb.Append("webkit-flex-flow");
+            sb.Append("-webkit-flex-flow");
             sb.Append(":");
             sb.Append(s.WebkitFlexFlow);
             sb.Append(separator);
         }
         if (s.WebkitFlexGrow != null)
         {
-            sb.Append("webkit-flex-grow");
+            sb.Append("-webkit-flex-grow");
             sb.Append(":");
             sb.Append(s.WebkitFlexGrow);
             sb.Append(separator);
         }
         if (s.WebkitFlexShrink != null)
         {
-            sb.Append("webkit-flex-shrink");
+            sb.Append("-webkit-flex-shrink");
             sb.Append(":");
             sb.Append(s.WebkitFlexShrink);
             sb.Append(separator);
         }
         if (s.WebkitFlexWrap != null)
         {
-            sb.Append("webkit-flex-wrap");
+            sb.Append("-webkit-flex-wrap");
             sb.Append(":");
             sb.Append(s.WebkitFlexWrap);
             sb.Append(separator);
         }
         if (s.WebkitFontFeatureSettings != null)
         {
-            sb.Append("webkit-font-feature-settings");
+            sb.Append("-webkit-font-feature-settings");
             sb.Append(":");
             sb.Append(s.WebkitFontFeatureSettings);
             sb.Append(separator);
         }
         if (s.WebkitFontSmoothing != null)
         {
-            sb.Append("webkit-font-smoothing");
+            sb.Append("-webkit-font-smoothing");
             sb.Append(":");
             sb.Append(s.WebkitFontSmoothing);
             sb.Append(separator);
         }
         if (s.WebkitHyphenateCharacter != null)
         {
-            sb.Append("webkit-hyphenate-character");
+            sb.Append("-webkit-hyphenate-character");
             sb.Append(":");
             sb.Append(s.WebkitHyphenateCharacter);
             sb.Append(separator);
         }
         if (s.WebkitJustifyContent != null)
         {
-            sb.Append("webkit-justify-content");
+            sb.Append("-webkit-justify-content");
             sb.Append(":");
             sb.Append(s.WebkitJustifyContent);
             sb.Append(separator);
         }
         if (s.WebkitLineBreak != null)
         {
-            sb.Append("webkit-line-break");
+            sb.Append("-webkit-line-break");
             sb.Append(":");
             sb.Append(s.WebkitLineBreak);
             sb.Append(separator);
         }
         if (s.WebkitLineClamp != null)
         {
-            sb.Append("webkit-line-clamp");
+            sb.Append("-webkit-line-clamp");
             sb.Append(":");
             sb.Append(s.WebkitLineClamp);
             sb.Append(separator);
         }
         if (s.WebkitLocale != null)
         {
-            sb.Append("webkit-locale");
+            sb.Append("-webkit-locale");
             sb.Append(":");
             sb.Append(s.WebkitLocale);
             sb.Append(separator);
         }
         if (s.WebkitLogicalHeight != null)
         {
-            sb.Append("webkit-logical-height");
+            sb.Append("-webkit-logical-height");
             sb.Append(":");
             sb.Append(s.WebkitLogicalHeight);
             sb.Append(separator);
         }
         if (s.WebkitLogicalWidth != null)
         {
-            sb.Append("webkit-logical-width");
+            sb.Append("-webkit-logical-width");
             sb.Append(":");
             sb.Append(s.WebkitLogicalWidth);
             sb.Append(separator);
         }
         if (s.WebkitMarginAfter != null)
         {
-            sb.Append("webkit-margin-after");
+            sb.Append("-webkit-margin-after");
             sb.Append(":");
             sb.Append(s.WebkitMarginAfter);
             sb.Append(separator);
         }
         if (s.WebkitMarginBefore != null)
         {
-            sb.Append("webkit-margin-before");
+            sb.Append("-webkit-margin-before");
             sb.Append(":");
             sb.Append(s.WebkitMarginBefore);
             sb.Append(separator);
         }
         if (s.WebkitMarginEnd != null)
         {
-            sb.Append("webkit-margin-end");
+            sb.Append("-webkit-margin-end");
             sb.Append(":");
             sb.Append(s.WebkitMarginEnd);
             sb.Append(separator);
         }
         if (s.WebkitMarginStart != null)
         {
-            sb.Append("webkit-margin-start");
+            sb.Append("-webkit-margin-start");
             sb.Append(":");
             sb.Append(s.WebkitMarginStart);
             sb.Append(separator);
         }
         if (s.WebkitMask != null)
         {
-            sb.Append("webkit-mask");
+            sb.Append("-webkit-mask");
             sb.Append(":");
             sb.Append(s.WebkitMask);
             sb.Append(separator);
         }
         if (s.WebkitMaskBoxImage != null)
         {
-            sb.Append("webkit-mask-box-image");
+            sb.Append("-webkit-mask-box-image");
             sb.Append(":");
             sb.Append(s.WebkitMaskBoxImage);
             sb.Append(separator);
         }
         if (s.WebkitMaskBoxImageOutset != null)
         {
-            sb.Append("webkit-mask-box-image-outset");
+            sb.Append("-webkit-mask-box-image-outset");
             sb.Append(":");
             sb.Append(s.WebkitMaskBoxImageOutset);
             sb.Append(separator);
         }
         if (s.WebkitMaskBoxImageRepeat != null)
         {
-            sb.Append("webkit-mask-box-image-repeat");
+            sb.Append("-webkit-mask-box-image-repeat");
             sb.Append(":");
             sb.Append(s.WebkitMaskBoxImageRepeat);
             sb.Append(separator);
         }
         if (s.WebkitMaskBoxImageSlice != null)
         {
-            sb.Append("webkit-mask-box-image-slice");
+            sb.Append("-webkit-mask-box-image-slice");
             sb.Append(":");
             sb.Append(s.WebkitMaskBoxImageSlice);
             sb.Append(separator);
         }
         if (s.WebkitMaskBoxImageSource != null)
         {
-            sb.Append("webkit-mask-box-image-source");
+            sb.Append("-webkit-mask-box-image-source");
             sb.Append(":");
             sb.Append(s.WebkitMaskBoxImageSource);
             sb.Append(separator);
         }
         if (s.WebkitMaskBoxImageWidth != null)
         {
-            sb.Append("webkit-mask-box-image-width");
+            sb.Append("-webkit-mask-box-image-width");
             sb.Append(":");
             sb.Append(s.WebkitMaskBoxImageWidth);
             sb.Append(separator);
         }
         if (s.WebkitMaskClip != null)
         {
-            sb.Append("webkit-mask-clip");
+            sb.Append("-webkit-mask-clip");
             sb.Append(":");
             sb.Append(s.WebkitMaskClip);
             sb.Append(separator);
         }
         if (s.WebkitMaskComposite != null)
         {
-            sb.Append("webkit-mask-composite");
+            sb.Append("-webkit-mask-composite");
             sb.Append(":");
             sb.Append(s.WebkitMaskComposite);
             sb.Append(separator);
         }
         if (s.WebkitMaskImage != null)
         {
-            sb.Append("webkit-mask-image");
+            sb.Append("-webkit-mask-image");
             sb.Append(":");
             sb.Append(s.WebkitMaskImage);
             sb.Append(separator);
         }
         if (s.WebkitMaskOrigin != null)
         {
-            sb.Append("webkit-mask-origin");
+            sb.Append("-webkit-mask-origin");
             sb.Append(":");
             sb.Append(s.WebkitMaskOrigin);
             sb.Append(separator);
         }
         if (s.WebkitMaskPosition != null)
         {
-            sb.Append("webkit-mask-position");
+            sb.Append("-webkit-mask-position");
             sb.Append(":");
             sb.Append(s.WebkitMaskPosition);
             sb.Append(separator);
         }
         if (s.WebkitMaskPositionX != null)
         {
-            sb.Append("webkit-mask-position-x");
+            sb.Append("-webkit-mask-position-x");
             sb.Append(":");
             sb.Append(s.WebkitMaskPositionX);
             sb.Append(separator);
         }
         if (s.WebkitMaskPositionY != null)
         {
-            sb.Append("webkit-mask-position-y");
+            sb.Append("-webkit-mask-position-y");
             sb.Append(":");
             sb.Append(s.WebkitMaskPositionY);
             sb.Append(separator);
         }
         if (s.WebkitMaskRepeat != null)
         {
-            sb.Append("webkit-mask-repeat");
+            sb.Append("-webkit-mask-repeat");
             sb.Append(":");
             sb.Append(s.WebkitMaskRepeat);
             sb.Append(separator);
         }
         if (s.WebkitMaskRepeatX != null)
         {
-            sb.Append("webkit-mask-repeat-x");
+            sb.Append("-webkit-mask-repeat-x");
             sb.Append(":");
             sb.Append(s.WebkitMaskRepeatX);
             sb.Append(separator);
         }
         if (s.WebkitMaskRepeatY != null)
         {
-            sb.Append("webkit-mask-repeat-y");
+            sb.Append("-webkit-mask-repeat-y");
             sb.Append(":");
             sb.Append(s.WebkitMaskRepeatY);
             sb.Append(separator);
         }
         if (s.WebkitMaskSize != null)
         {
-            sb.Append("webkit-mask-size");
+            sb.Append("-webkit-mask-size");
             sb.Append(":");
             sb.Append(s.WebkitMaskSize);
             sb.Append(separator);
         }
         if (s.WebkitMaxLogicalHeight != null)
         {
-            sb.Append("webkit-max-logical-height");
+            sb.Append("-webkit-max-logical-height");
             sb.Append(":");
             sb.Append(s.WebkitMaxLogicalHeight);
             sb.Append(separator);
         }
         if (s.WebkitMaxLogicalWidth != null)
         {
-            sb.Append("webkit-max-logical-width");
+            sb.Append("-webkit-max-logical-width");
             sb.Append(":");
             sb.Append(s.WebkitMaxLogicalWidth);
             sb.Append(separator);
         }
         if (s.WebkitMinLogicalHeight != null)
         {
-            sb.Append("webkit-min-logical-height");
+            sb.Append("-webkit-min-logical-height");
             sb.Append(":");
             sb.Append(s.WebkitMinLogicalHeight);
             sb.Append(separator);
         }
         if (s.WebkitMinLogicalWidth != null)
         {
-            sb.Append("webkit-min-logical-width");
+            sb.Append("-webkit-min-logical-width");
             sb.Append(":");
             sb.Append(s.WebkitMinLogicalWidth);
             sb.Append(separator);
         }
         if (s.WebkitOpacity != null)
         {
-            sb.Append("webkit-opacity");
+            sb.Append("-webkit-opacity");
             sb.Append(":");
             sb.Append(s.WebkitOpacity);
             sb.Append(separator);
         }
         if (s.WebkitOrder != null)
         {
-            sb.Append("webkit-order");
+            sb.Append("-webkit-order");
             sb.Append(":");
             sb.Append(s.WebkitOrder);
             sb.Append(separator);
         }
         if (s.WebkitPaddingAfter != null)
         {
-            sb.Append("webkit-padding-after");
+            sb.Append("-webkit-padding-after");
             sb.Append(":");
             sb.Append(s.WebkitPaddingAfter);
             sb.Append(separator);
         }
         if (s.WebkitPaddingBefore != null)
         {
-            sb.Append("webkit-padding-before");
+            sb.Append("-webkit-padding-before");
             sb.Append(":");
             sb.Append(s.WebkitPaddingBefore);
             sb.Append(separator);
         }
         if (s.WebkitPaddingEnd != null)
         {
-            sb.Append("webkit-padding-end");
+            sb.Append("-webkit-padding-end");
             sb.Append(":");
             sb.Append(s.WebkitPaddingEnd);
             sb.Append(separator);
         }
         if (s.WebkitPaddingStart != null)
         {
-            sb.Append("webkit-padding-start");
+            sb.Append("-webkit-padding-start");
             sb.Append(":");
             sb.Append(s.WebkitPaddingStart);
             sb.Append(separator);
         }
         if (s.WebkitPerspective != null)
         {
-            sb.Append("webkit-perspective");
+            sb.Append("-webkit-perspective");
             sb.Append(":");
             sb.Append(s.WebkitPerspective);
             sb.Append(separator);
         }
         if (s.WebkitPerspectiveOrigin != null)
         {
-            sb.Append("webkit-perspective-origin");
+            sb.Append("-webkit-perspective-origin");
             sb.Append(":");
             sb.Append(s.WebkitPerspectiveOrigin);
             sb.Append(separator);
         }
         if (s.WebkitPerspectiveOriginX != null)
         {
-            sb.Append("webkit-perspective-origin-x");
+            sb.Append("-webkit-perspective-origin-x");
             sb.Append(":");
             sb.Append(s.WebkitPerspectiveOriginX);
             sb.Append(separator);
         }
         if (s.WebkitPerspectiveOriginY != null)
         {
-            sb.Append("webkit-perspective-origin-y");
+            sb.Append("-webkit-perspective-origin-y");
             sb.Append(":");
             sb.Append(s.WebkitPerspectiveOriginY);
             sb.Append(separator);
         }
         if (s.WebkitPrintColorAdjust != null)
         {
-            sb.Append("webkit-print-color-adjust");
+            sb.Append("-webkit-print-color-adjust");
             sb.Append(":");
             sb.Append(s.WebkitPrintColorAdjust);
             sb.Append(separator);
         }
         if (s.WebkitRtlOrdering != null)
         {
-            sb.Append("webkit-rtl-ordering");
+            sb.Append("-webkit-rtl-ordering");
             sb.Append(":");
             sb.Append(s.WebkitRtlOrdering);
             sb.Append(separator);
         }
         if (s.WebkitRubyPosition != null)
         {
-            sb.Append("webkit-ruby-position");
+            sb.Append("-webkit-ruby-position");
             sb.Append(":");
             sb.Append(s.WebkitRubyPosition);
             sb.Append(separator);
         }
         if (s.WebkitShapeImageThreshold != null)
         {
-            sb.Append("webkit-shape-image-threshold");
+            sb.Append("-webkit-shape-image-threshold");
             sb.Append(":");
             sb.Append(s.WebkitShapeImageThreshold);
             sb.Append(separator);
         }
         if (s.WebkitShapeMargin != null)
         {
-            sb.Append("webkit-shape-margin");
+            sb.Append("-webkit-shape-margin");
             sb.Append(":");
             sb.Append(s.WebkitShapeMargin);
             sb.Append(separator);
         }
         if (s.WebkitShapeOutside != null)
         {
-            sb.Append("webkit-shape-outside");
+            sb.Append("-webkit-shape-outside");
             sb.Append(":");
             sb.Append(s.WebkitShapeOutside);
             sb.Append(separator);
         }
         if (s.WebkitTapHighlightColor != null)
         {
-            sb.Append("webkit-tap-highlight-color");
+            sb.Append("-webkit-tap-highlight-color");
             sb.Append(":");
             sb.Append(s.WebkitTapHighlightColor);
             sb.Append(separator);
         }
         if (s.WebkitTextCombine != null)
         {
-            sb.Append("webkit-text-combine");
+            sb.Append("-webkit-text-combine");
             sb.Append(":");
             sb.Append(s.WebkitTextCombine);
             sb.Append(separator);
         }
         if (s.WebkitTextDecorationsInEffect != null)
         {
-            sb.Append("webkit-text-decorations-in-effect");
+            sb.Append("-webkit-text-decorations-in-effect");
             sb.Append(":");
             sb.Append(s.WebkitTextDecorationsInEffect);
             sb.Append(separator);
         }
         if (s.WebkitTextEmphasis != null)
         {
-            sb.Append("webkit-text-emphasis");
+            sb.Append("-webkit-text-emphasis");
             sb.Append(":");
             sb.Append(s.WebkitTextEmphasis);
             sb.Append(separator);
         }
         if (s.WebkitTextEmphasisColor != null)
         {
-            sb.Append("webkit-text-emphasis-color");
+            sb.Append("-webkit-text-emphasis-color");
             sb.Append(":");
             sb.Append(s.WebkitTextEmphasisColor);
             sb.Append(separator);
         }
         if (s.WebkitTextEmphasisPosition != null)
         {
-            sb.Append("webkit-text-emphasis-position");
+            sb.Append("-webkit-text-emphasis-position");
             sb.Append(":");
             sb.Append(s.WebkitTextEmphasisPosition);
             sb.Append(separator);
         }
         if (s.WebkitTextEmphasisStyle != null)
         {
-            sb.Append("webkit-text-emphasis-style");
+            sb.Append("-webkit-text-emphasis-style");
             sb.Append(":");
             sb.Append(s.WebkitTextEmphasisStyle);
             sb.Append(separator);
         }
         if (s.WebkitTextFillColor != null)
         {
-            sb.Append("webkit-text-fill-color");
+            sb.Append("-webkit-text-fill-color");
             sb.Append(":");
             sb.Append(s.WebkitTextFillColor);
             sb.Append(separator);
         }
         if (s.WebkitTextOrientation != null)
         {
-            sb.Append("webkit-text-orientation");
+            sb.Append("-webkit-text-orientation");
             sb.Append(":");
             sb.Append(s.WebkitTextOrientation);
             sb.Append(separator);
         }
         if (s.WebkitTextSecurity != null)
         {
-            sb.Append("webkit-text-security");
+            sb.Append("-webkit-text-security");
             sb.Append(":");
             sb.Append(s.WebkitTextSecurity);
             sb.Append(separator);
         }
         if (s.WebkitTextSizeAdjust != null)
         {
-            sb.Append("webkit-text-size-adjust");
+            sb.Append("-webkit-text-size-adjust");
             sb.Append(":");
             sb.Append(s.WebkitTextSizeAdjust);
             sb.Append(separator);
         }
         if (s.WebkitTextStroke != null)
         {
-            sb.Append("webkit-text-stroke");
+            sb.Append("-webkit-text-stroke");
             sb.Append(":");
             sb.Append(s.WebkitTextStroke);
             sb.Append(separator);
         }
         if (s.WebkitTextStrokeColor != null)
         {
-            sb.Append("webkit-text-stroke-color");
+            sb.Append("-webkit-text-stroke-color");
             sb.Append(":");
             sb.Append(s.WebkitTextStrokeColor);
             sb.Append(separator);
         }
         if (s.WebkitTextStrokeWidth != null)
         {
-            sb.Append("webkit-text-stroke-width");
+            sb.Append("-webkit-text-stroke-width");
             sb.Append(":");
             sb.Append(s.WebkitTextStrokeWidth);
             sb.Append(separator);
         }
         if (s.WebkitTransform != null)
         {
-            sb.Append("webkit-transform");
+            sb.Append("-webkit-transform");
             sb.Append(":");
             sb.Append(s.WebkitTransform);
             sb.Append(separator);
         }
         if (s.WebkitTransformOrigin != null)
         {
-            sb.Append("webkit-transform-origin");
+            sb.Append("-webkit-transform-origin");
             sb.Append(":");
             sb.Append(s.WebkitTransformOrigin);
             sb.Append(separator);
         }
         if (s.WebkitTransformOriginX != null)
         {
-            sb.Append("webkit-transform-origin-x");
+            sb.Append("-webkit-transform-origin-x");
             sb.Append(":");
             sb.Append(s.WebkitTransformOriginX);
             sb.Append(separator);
         }
         if (s.WebkitTransformOriginY != null)
         {
-            sb.Append("webkit-transform-origin-y");
+            sb.Append("-webkit-transform-origin-y");
             sb.Append(":");
             sb.Append(s.WebkitTransformOriginY);
             sb.Append(separator);
         }
         if (s.WebkitTransformOriginZ != null)
         {
-            sb.Append("webkit-transform-origin-z");
+            sb.Append("-webkit-transform-origin-z");
             sb.Append(":");
             sb.Append(s.WebkitTransformOriginZ);
             sb.Append(separator);
         }
         if (s.WebkitTransformStyle != null)
         {
-            sb.Append("webkit-transform-style");
+            sb.Append("-webkit-transform-style");
             sb.Append(":");
             sb.Append(s.WebkitTransformStyle);
             sb.Append(separator);
         }
         if (s.WebkitTransition != null)
         {
-            sb.Append("webkit-transition");
+            sb.Append("-webkit-transition");
             sb.Append(":");
             sb.Append(s.WebkitTransition);
             sb.Append(separator);
         }
         if (s.WebkitTransitionDelay != null)
         {
-            sb.Append("webkit-transition-delay");
+            sb.Append("-webkit-transition-delay");
             sb.Append(":");
             sb.Append(s.WebkitTransitionDelay);
             sb.Append(separator);
         }
         if (s.WebkitTransitionDuration != null)
         {
-            sb.Append("webkit-transition-duration");
+            sb.Append("-webkit-transition-duration");
             sb.Append(":");
             sb.Append(s.WebkitTransitionDuration);
             sb.Append(separator);
         }
         if (s.WebkitTransitionProperty != null)
         {
-            sb.Append("webkit-transition-property");
+            sb.Append("-webkit-transition-property");
             sb.Append(":");
             sb.Append(s.WebkitTransitionProperty);
             sb.Append(separator);
         }
         if (s.WebkitTransitionTimingFunction != null)
         {
-            sb.Append("webkit-transition-timing-function");
+            sb.Append("-webkit-transition-timing-function");
             sb.Append(":");
             sb.Append(s.WebkitTransitionTimingFunction);
             sb.Append(separator);
         }
         if (s.WebkitUserDrag != null)
         {
-            sb.Append("webkit-user-drag");
+            sb.Append("-webkit-user-drag");
             sb.Append(":");
             sb.Append(s.WebkitUserDrag);
             sb.Append(separator);
         }
         if (s.WebkitUserModify != null)
         {
-            sb.Append("webkit-user-modify");
+            sb.Append("-webkit-user-modify");
             sb.Append(":");
             sb.Append(s.WebkitUserModify);
             sb.Append(separator);
         }
         if (s.WebkitUserSelect != null)
         {
-            sb.Append("webkit-user-select");
+            sb.Append("-webkit-user-select");
             sb.Append(":");
             sb.Append(s.WebkitUserSelect);
             sb.Append(separator);
         }
         if (s.WebkitWritingMode != null)
         {
-            sb.Append("webkit-writing-mode");
+            sb.Append("-webkit-writing-mode");
             sb.Append(":");
             sb.Append(s.WebkitWritingMode);
             sb.Append(separator);
