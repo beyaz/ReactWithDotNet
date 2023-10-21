@@ -1311,6 +1311,11 @@ function ConvertToSyntheticChangeEvent(e)
 
 function ConvertToShadowHtmlElement(htmlElement)
 {
+    if (htmlElement == null)
+    {
+        return null;
+    }
+
     let value = null;
 
     if (htmlElement.value != null)
@@ -2176,6 +2181,28 @@ RegisterCoreFunction('ConvertDotnetSerializedStringDateToJsDate', function(dotne
 RegisterCoreFunction("CalculateSyntheticMouseEventArguments", (argumentsAsArray) => [ConvertToSyntheticMouseEvent(argumentsAsArray[0])]);
 
 RegisterCoreFunction("CalculateSyntheticChangeEventArguments", (argumentsAsArray) => [ConvertToSyntheticChangeEvent(argumentsAsArray[0])]);
+
+RegisterCoreFunction("CalculateSyntheticFocusEventArguments", (argumentsAsArray) =>
+{
+    const e = argumentsAsArray[0];
+
+    return [
+        {
+            bubbles: e.bubbles,
+            cancelable: e.cancelable,
+            currentTarget: ConvertToShadowHtmlElement(e.currentTarget),
+            defaultPrevented: e.defaultPrevented,
+            detail: e.detail,
+            eventPhase: e.eventPhase,
+            isTrusted: e.isTrusted,
+            target: ConvertToShadowHtmlElement(e.target),
+            relatedTarget: ConvertToShadowHtmlElement(e.relatedTarget),
+            timeStamp: e.timeStamp,
+            type: e.type
+        }
+    ];
+
+});
 
 RegisterCoreFunction("SetCookie", function (cookieName, cookieValue, expiredays)
 {

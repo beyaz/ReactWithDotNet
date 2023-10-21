@@ -78,3 +78,31 @@ public sealed class ChangeEvent : UIEvent
 }
 
 public delegate Task ChangeEventHandler(ChangeEvent e);
+
+
+public sealed class FocusEvent
+{
+    public bool bubbles { get; set; }
+
+    public bool cancelable { get; set; }
+
+    public ShadowHtmlElement currentTarget { get; set; }
+
+    public bool defaultPrevented { get; set; }
+
+    public int detail { get; set; }
+
+    public int eventPhase { get; set; }
+
+    public bool isTrusted { get; set; }
+    
+    public ShadowHtmlElement target { get; set; }
+    
+    public ShadowHtmlElement relatedTarget { get; set; }
+
+    public double timeStamp { get; set; }
+
+    public string type { get; set; }
+}
+
+public delegate Task FocusEventHandler(FocusEvent e);

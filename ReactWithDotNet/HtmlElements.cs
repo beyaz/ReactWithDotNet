@@ -136,8 +136,8 @@ public sealed class input : HtmlElement
     ///     Occurs when an element loses focus.
     /// </summary>
     [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Func<MouseEvent,Task> onBlur { get; set; }
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments")]
+    public FocusEventHandler onBlur { get; set; }
 
     [ReactProp]
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticChangeEventArguments")]
@@ -147,8 +147,8 @@ public sealed class input : HtmlElement
     ///     occurs when an element gets focus.
     /// </summary>
     [ReactProp]
-    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
-    public Func<MouseEvent,Task> onFocus { get; set; } // TODO: give FocusEvent react
+    [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticFocusEventArguments")]
+    public FocusEventHandler onFocus { get; set; } // TODO: give FocusEvent react
 
     [ReactProp]
     public string placeholder { get; set; }
