@@ -783,6 +783,24 @@ public static partial class Mixin
 
         return JsonSerializer.Serialize(value, options);
     }
+    
+    internal static string SerializeToJsonBySystemTextJson(object value)
+    {
+        var options = new JsonSerializerOptions();
+
+        options = options.ModifyForReactWithDotNet();
+
+        return JsonSerializer.Serialize(value, options);
+    }
+    
+    internal static object DeserializeFromJsonBySystemTextJson(string  json, Type returnType)
+    {
+        var options = new JsonSerializerOptions();
+
+        options = options.ModifyForReactWithDotNet();
+
+        return JsonSerializer.Deserialize(json,returnType, options);
+    }
 
     static StyleModifier Pseudo(Func<Style, Style> accessToPseudo, StyleModifier[] styleModifiers)
     {
