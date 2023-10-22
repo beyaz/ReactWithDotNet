@@ -793,7 +793,7 @@ public static partial class Mixin
         return JsonSerializer.Serialize(value, options);
     }
     
-    internal static object DeserializeFromJsonBySystemTextJson(string  json, Type returnType)
+    internal static object DeserializeJsonBySystemTextJson(string  json, Type returnType)
     {
         var options = new JsonSerializerOptions();
 
