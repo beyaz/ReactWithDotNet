@@ -90,6 +90,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         this.Apply(modifiers);
     }
+    
+    public void Add(StyleModifier[] modifiers)
+    {
+        this.Apply(modifiers);
+    }
 
     public void Add(IEnumerable<Element> elements)
     {
