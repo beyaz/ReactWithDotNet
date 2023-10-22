@@ -24,6 +24,8 @@ static partial class JsonSerializationOptionHelper
 
         options.Converters.Add(new ValueTupleFactory());
 
+        options.Converters.Add(new JsonConverterForType());
+
         return options;
     }
 
@@ -42,13 +44,60 @@ static partial class JsonSerializationOptionHelper
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
             var converter = (JsonConverter)Activator.CreateInstance(typeof(EnumToStringConverter<>)
-                                                                       .MakeGenericType(typeToConvert),
+                                                                        .MakeGenericType(typeToConvert),
                                                                     BindingFlags.Instance | BindingFlags.Public,
-                                                                    binder: null,
-                                                                    args: null,
-                                                                    culture: null)!;
+                                                                    null,
+                                                                    null,
+                                                                    null)!;
 
             return converter;
+        }
+    }
+
+    public class JsonConverterForType : JsonConverterFactory
+    {
+        static readonly TypeConverter ConverterInstance = new();
+
+        public override bool CanConvert(Type typeToConvert)
+        {
+            if (typeToConvert.FullName == "System.RuntimeType")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        {
+            return ConverterInstance;
+        }
+
+        class TypeConverter : JsonConverter<Type>
+        {
+            public override Type Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                if (reader.Read())
+                {
+                    if (reader.ValueSpan.Length > 0)
+                    {
+                        return Type.GetType(reader.ValueSpan.ToString());
+                    }
+                }
+
+                return null;
+            }
+
+            public override void Write(Utf8JsonWriter writer, Type value, JsonSerializerOptions options)
+            {
+                if (value is null)
+                {
+                    writer.WriteNullValue();
+                    return;
+                }
+
+                writer.WriteStringValue($"{value.FullName},{value.Assembly.GetName().Name}");
+            }
         }
     }
 
@@ -65,14 +114,14 @@ static partial class JsonSerializationOptionHelper
         }
     }
 
-    class ReadOnlyJsonMapConverter : JsonConverter<IReadOnlyJsonMap>
+    class JsMapConverter : JsonConverter<JsonMap>
     {
-        public override IReadOnlyJsonMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override JsonMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override void Write(Utf8JsonWriter writer, IReadOnlyJsonMap jsonMap, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, JsonMap jsonMap, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
@@ -89,14 +138,14 @@ static partial class JsonSerializationOptionHelper
         }
     }
 
-    class JsMapConverter : JsonConverter<JsonMap>
+    class ReadOnlyJsonMapConverter : JsonConverter<IReadOnlyJsonMap>
     {
-        public override JsonMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IReadOnlyJsonMap Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override void Write(Utf8JsonWriter writer, JsonMap jsonMap, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IReadOnlyJsonMap jsonMap, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
