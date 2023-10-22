@@ -1,4 +1,5 @@
 ﻿using ReactWithDotNet.ThirdPartyLibraries.MUI.Material;
+using ReactWithDotNet.WebSite.HelperApps;
 
 namespace ReactWithDotNet.WebSite.Components;
 
@@ -79,9 +80,38 @@ class Playground : Component
         };
     }
 
+    public bool ForceExecute { get; set; }
+    
     Task ExecuteClicked(MouseEvent e)
     {
-        return Task.Delay(3000);
+        ForceExecute = true;
+
+        return Task.CompletedTask;
+    }
+    
+    Element CreatePreview()
+    {
+        if (Files?.Count  > 0)
+        {
+            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = 
+                DynamicCode.LoadAndFindType(Files.Select(x=>x.fileContent).ToArray(), "Preview.SampleComponent");
+            
+            if (isTypeFound)
+            {
+                var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
+                
+                return (ReactWithDotNet.Component)instance;
+            }
+
+            if (sourceCodeHasError)
+            {
+                return sourceCodeError;
+            }
+
+            DynamicCode.TryClear(assemblyLoadContext);
+        }
+
+        return null;
     }
     
     protected override Element render()
@@ -105,7 +135,7 @@ class Playground : Component
 
                 new FlexRowCentered(Width("50%"), Background(rgb(246, 247, 249)))
                 {
-                    "output"
+                    ForceExecute ? CreatePreview() : null
                 }
             },
         };
