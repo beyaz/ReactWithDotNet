@@ -9,11 +9,11 @@ namespace ReactWithDotNet.WebSite.HelperApps;
 
 static class DynamicCode
 {
-    public static (bool isCompiledSuccessfully, byte[] bytesOfAssembly, string compileError) Compile(string sourceCode)
+    public static (bool isCompiledSuccessfully, byte[] bytesOfAssembly, string compileError) Compile(IReadOnlyList<string> sourceCodes)
     {
         using (var peStream = new MemoryStream())
         {
-            var result = GenerateCode(sourceCode).Emit(peStream);
+            var result = GenerateCode(sourceCodes).Emit(peStream);
 
             if (!result.Success)
             {
@@ -21,7 +21,7 @@ static class DynamicCode
                     .Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error)
                     .Select(x => x.GetMessage());
 
-                return (default,default, string.Join(Environment.NewLine, compileErrors));
+                return (default, default, string.Join(Environment.NewLine, compileErrors));
             }
 
             peStream.Seek(0, SeekOrigin.Begin);
@@ -29,19 +29,15 @@ static class DynamicCode
             return (isCompiledSuccessfully: true, peStream.ToArray(), default);
         }
     }
-    
- 
-    
-        
-    public static (bool isTypeFound, Type type, AssemblyLoadContext assemblyLoadContext,bool sourceCodeHasError, string sourceCodeError) LoadAndFindType(string sourceCode, string fullTypeName)
+
+    public static (bool isTypeFound, Type type, AssemblyLoadContext assemblyLoadContext, bool sourceCodeHasError, string sourceCodeError) LoadAndFindType(IReadOnlyList<string> sourceCodes, string fullTypeName)
     {
-        
-        var ( isCompiledSuccessfully,  bytesOfAssembly,  compileError) = Compile(sourceCode);
+        var (isCompiledSuccessfully, bytesOfAssembly, compileError) = Compile(sourceCodes);
         if (!isCompiledSuccessfully)
         {
-            return (isTypeFound: default, type:default, assemblyLoadContext: default,sourceCodeHasError: true,sourceCodeError:compileError );
+            return (isTypeFound: default, type: default, assemblyLoadContext: default, sourceCodeHasError: true, sourceCodeError: compileError);
         }
-        
+
         using (var asm = new MemoryStream(bytesOfAssembly))
         {
             var assemblyLoadContext = new SimpleUnloadableAssemblyLoadContext();
@@ -52,7 +48,7 @@ static class DynamicCode
             if (type == null)
             {
                 TryClear(assemblyLoadContext);
-                
+
                 return default;
             }
 
@@ -60,15 +56,13 @@ static class DynamicCode
         }
     }
 
-
     public static bool TryClear(AssemblyLoadContext assemblyLoadContext)
     {
         return TryClear(new WeakReference(assemblyLoadContext));
     }
 
-    static CSharpCompilation GenerateCode(string sourceCode)
+    static CSharpCompilation GenerateCode(IReadOnlyList<string> sourceCodes)
     {
-        var codeString = SourceText.From(sourceCode);
         var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview);
 
         var references = new List<MetadataReference>
@@ -83,7 +77,7 @@ static class DynamicCode
             .ForEach(a => references.Add(MetadataReference.CreateFromFile(Assembly.Load(a).Location)));
 
         return CSharpCompilation.Create("Hello.dll",
-                                        new[] { SyntaxFactory.ParseSyntaxTree(codeString, options) },
+                                        sourceCodes.Select(sourceCode => SyntaxFactory.ParseSyntaxTree(SourceText.From(sourceCode), options)).ToArray(),
                                         references,
                                         new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
                                                                      optimizationLevel: OptimizationLevel.Release,

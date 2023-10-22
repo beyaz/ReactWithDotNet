@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using System.Threading.Tasks;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
 using ReactWithDotNet.ThirdPartyLibraries.ReactFreeScrollbar;
 using ReactWithDotNet.ThirdPartyLibraries.ReactSimpleCodeEditor;
@@ -215,7 +214,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
     {
         if (state.CSharpCode?.Length  > 0)
         {
-            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(state.CSharpCode, "Preview.SampleComponent");
+            var (isTypeFound, type, assemblyLoadContext, sourceCodeHasError, sourceCodeError) = DynamicCode.LoadAndFindType(new []{state.CSharpCode}, "Preview.SampleComponent");
             if (isTypeFound)
             {
                 var instance = type.Assembly.CreateInstance("Preview.SampleComponent");
