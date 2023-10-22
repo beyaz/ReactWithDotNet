@@ -24,7 +24,7 @@ static partial class JsonSerializationOptionHelper
 
         options.Converters.Add(new ValueTupleFactory());
 
-        options.Converters.Add(new JsonConverterForType());
+        options.Converters.Add(new JsonConverterFactoryForType());
 
         return options;
     }
@@ -54,7 +54,7 @@ static partial class JsonSerializationOptionHelper
         }
     }
 
-    public class JsonConverterForType : JsonConverterFactory
+    public class JsonConverterFactoryForType : JsonConverterFactory
     {
         static readonly TypeConverter ConverterInstance = new();
 

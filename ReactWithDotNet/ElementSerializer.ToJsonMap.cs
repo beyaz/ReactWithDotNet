@@ -1226,7 +1226,7 @@ partial class ElementSerializer
 
             if (value is string valueAsString && property.PropertyType == typeof(Type))
             {
-                return JsonConverterForType.DeserializeType(valueAsString);
+                return JsonConverterFactoryForType.DeserializeType(valueAsString);
             }
 
             var changeResponse = ChangeType(value, property.PropertyType);
