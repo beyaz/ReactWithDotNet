@@ -70,7 +70,7 @@ static partial class JsonSerializationOptionHelper
 
         public override bool CanConvert(Type typeToConvert)
         {
-            if (typeToConvert.FullName == "System.RuntimeType")
+            if (typeToConvert.FullName == "System.RuntimeType" || typeToConvert.FullName == "System.Type")
             {
                 return true;
             }
