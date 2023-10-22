@@ -153,7 +153,7 @@ public abstract class Component<TState> : ReactComponentBase where TState : clas
 
     protected override Task constructor()
     {
-        state = new TState();
+        state ??= new TState();
 
         return Task.CompletedTask;
     }
