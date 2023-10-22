@@ -69,9 +69,7 @@ static class DynamicCode
     static CSharpCompilation GenerateCode(string sourceCode)
     {
         var codeString = SourceText.From(sourceCode);
-        var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp11);
-
-        var parsedSyntaxTree = SyntaxFactory.ParseSyntaxTree(codeString, options);
+        var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview);
 
         var references = new List<MetadataReference>
         {
@@ -85,7 +83,7 @@ static class DynamicCode
             .ForEach(a => references.Add(MetadataReference.CreateFromFile(Assembly.Load(a).Location)));
 
         return CSharpCompilation.Create("Hello.dll",
-                                        new[] { parsedSyntaxTree },
+                                        new[] { SyntaxFactory.ParseSyntaxTree(codeString, options) },
                                         references,
                                         new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
                                                                      optimizationLevel: OptimizationLevel.Release,
