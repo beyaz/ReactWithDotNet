@@ -76,8 +76,18 @@ static class DynamicCode
         Assembly.GetEntryAssembly()?.GetReferencedAssemblies().ToList()
             .ForEach(a => references.Add(MetadataReference.CreateFromFile(Assembly.Load(a).Location)));
 
+        const string globalUsings = """
+                                    global using System;
+                                    global using System.Linq.Expressions;
+                                    global using ReactWithDotNet;
+                                    global using System.Collections.Generic;
+                                    global using System.Linq;
+                                    global using static ReactWithDotNet.Mixin;
+                                    global using System.Threading.Tasks;
+                                    """;
+        
         return CSharpCompilation.Create("Hello.dll",
-                                        sourceCodes.Select(sourceCode => SyntaxFactory.ParseSyntaxTree(SourceText.From(sourceCode), options)).ToArray(),
+                                        sourceCodes.Select(sourceCode => SyntaxFactory.ParseSyntaxTree(SourceText.From(globalUsings+sourceCode), options)).ToArray(),
                                         references,
                                         new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
                                                                      optimizationLevel: OptimizationLevel.Release,

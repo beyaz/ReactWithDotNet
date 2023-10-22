@@ -1,4 +1,5 @@
-﻿using ReactWithDotNet.WebSite.HeaderComponents;
+﻿using System.IO;
+using ReactWithDotNet.WebSite.HeaderComponents;
 using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
@@ -13,7 +14,13 @@ public class MainWindow : PureComponent
 
             new main
             {
-                createContent
+                // createContent
+                new Playground
+                {
+                    Files                         = Directory.GetFiles(nameof(_1_HelloWorld)).Select(fi=>(Path.GetFileName(fi), File.ReadAllText(fi))).ToList(),
+                    FullTypeNameOfTargetComponent = typeof(ReactWithDotNet.WebSite._1_HelloWorld.HomePageDemoComponent).FullName,
+                    TypeOfTargetComponent         = typeof(ReactWithDotNet.WebSite._1_HelloWorld.HomePageDemoComponent)
+                }
             },
 
 
