@@ -58,6 +58,16 @@ static partial class JsonSerializationOptionHelper
     {
         static readonly TypeConverter ConverterInstance = new();
 
+        public static Type DeserializeType(string type)
+        {
+            return Type.GetType(type);
+        }
+
+        public static string SerializeType(Type type)
+        {
+            return $"{type.FullName},{type.Assembly.GetName().Name}";
+        }
+
         public override bool CanConvert(Type typeToConvert)
         {
             if (typeToConvert.FullName == "System.RuntimeType")
@@ -81,7 +91,7 @@ static partial class JsonSerializationOptionHelper
                 {
                     if (reader.ValueSpan.Length > 0)
                     {
-                        return Type.GetType(reader.ValueSpan.ToString());
+                        return DeserializeType(reader.ValueSpan.ToString());
                     }
                 }
 
@@ -96,7 +106,7 @@ static partial class JsonSerializationOptionHelper
                     return;
                 }
 
-                writer.WriteStringValue($"{value.FullName},{value.Assembly.GetName().Name}");
+                writer.WriteStringValue(SerializeType(value));
             }
         }
     }

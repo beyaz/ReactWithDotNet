@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using static ReactWithDotNet.JsonSerializationOptionHelper;
 
 namespace ReactWithDotNet;
 
@@ -1204,35 +1205,38 @@ partial class ElementSerializer
                 return $"Property not found.{type.FullName}::{key}";
             }
 
-            var propertyValue = value;
+            property.SetValue(instance, RecalculatePropertyValue(property, value));
+        }
+
+        return null;
+
+        static object RecalculatePropertyValue(PropertyInfo property, object value)
+        {
             if (value is JToken jToken)
             {
                 if (property.PropertyType == typeof(Style))
                 {
                     var style = new Style();
                     style.Import(jToken.ToObject<Dictionary<string, string>>());
-                    propertyValue = style;
+                    return style;
                 }
-                else
-                {
-                    propertyValue = jToken.ToObject(property.PropertyType);
-                }
+
+                return jToken.ToObject(property.PropertyType);
             }
-            else
+
+            if (value is string valueAsString && property.PropertyType == typeof(Type))
             {
-                var changeResponse = ChangeType(propertyValue, property.PropertyType);
-                if (changeResponse.exception is not null)
-                {
-                    throw DeveloperException(changeResponse.exception.Message);
-                }
-
-                propertyValue = changeResponse.value;
+                return JsonConverterForType.DeserializeType(valueAsString);
             }
 
-            property.SetValue(instance, propertyValue);
-        }
+            var changeResponse = ChangeType(value, property.PropertyType);
+            if (changeResponse.exception is not null)
+            {
+                throw DeveloperException(changeResponse.exception.Message);
+            }
 
-        return null;
+            return  changeResponse.value;
+        }
     }
 }
 
