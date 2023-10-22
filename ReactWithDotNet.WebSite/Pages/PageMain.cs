@@ -7,14 +7,15 @@ class PageMain: PureComponent
     {
         return new FlexRowCentered(WidthMaximized)
         {
-            new FlexRow(Gap(20), ContainerStyle, JustifyContentSpaceAround)
+            new FlexColumn(Gap(20), ContainerStyle, FlexDirectionColumn)
             {
-                new MainPageContentDescription()+FlexGrow(1),
+                new MainPageContentDescription(),
                 
-                new MainPageContentSample()+FlexGrow(1),
-            
-                // C S S
-                MediaQueryOnMobileOrTablet(FlexWrap, Gap(50))
+                SpaceY(15),
+                
+                new MainPageContentSample{ Height(300)},
+                
+                SpaceY(30)
             }
         };
     }

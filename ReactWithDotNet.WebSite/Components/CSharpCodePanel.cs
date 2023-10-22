@@ -32,13 +32,15 @@ class CSharpCodePanel : PureComponent
                 defaultLanguage          = "csharp",
                 
                 value                = Code,
+                
                 options =
                 {
                     renderLineHighlight ="none",
-                    fontFamily          ="'IBM Plex Mono Medium', 'Courier New', monospace",
+                    fontFamily          ="Consolas, monospace",
                     fontSize            = 11,
                     minimap             = new { enabled = false },
-                    lineNumbers         = "off"
+                    lineNumbers         = "off",
+                    readOnly = true
                 }
             }
             
