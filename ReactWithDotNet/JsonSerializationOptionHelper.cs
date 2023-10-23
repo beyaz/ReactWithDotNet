@@ -207,13 +207,12 @@ partial class Mixin
 
             if (jsonElement.ValueKind == JsonValueKind.Object)
             {
-                // TODO: Fix for style
-                //if (property.PropertyType == typeof(Style))
-                //{
-                //    var style = new Style();
-                //    style.Import(jToken.ToObject<Dictionary<string, string>>());
-                //    return style;
-                //}
+                if (targetType == typeof(Style))
+                {
+                    var style = new Style();
+                    style.Import(jsonElement.Deserialize<Dictionary<string, string>>());
+                    return style;
+                }
 
                 return jsonElement.Deserialize(targetType);
             }
