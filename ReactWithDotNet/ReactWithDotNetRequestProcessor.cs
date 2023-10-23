@@ -35,7 +35,7 @@ static class ReactWithDotNetRequestProcessor
         {
             using var reader = new StreamReader(httpContext.Request.Body, Encoding.UTF8, true, 1024, true);
 
-            return DeserializeJson<ComponentRequest>(await reader.ReadToEndAsync());
+            return DeserializeJsonBySystemTextJson<ComponentRequest>(await reader.ReadToEndAsync());
         }
     }
 }

@@ -1,11 +1,251 @@
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static ReactWithDotNet.JsonSerializationOptionHelper;
 
 namespace ReactWithDotNet;
 
+partial class Mixin
+{
+    internal static object ArrangeValueForTargetType(object value, Type targetType)
+    {
+        if (value is null)
+        {
+            if (targetType.IsClass)
+            {
+                return null;
+            }
+
+            return Activator.CreateInstance(targetType);
+        }
+
+
+
+        if (value is System.Text.Json.JsonElement jsonElement)
+        {
+            if (targetType == typeof(string))
+            {
+                return jsonElement.GetString();
+            }
+
+            // BOOL
+            if (targetType == typeof(bool) || targetType == typeof(bool?))
+            {
+                return jsonElement.GetBoolean();
+            }
+
+
+            // DATE
+            if (targetType == typeof(DateTime))
+            {
+                return jsonElement.GetDateTime();
+            }
+
+            if (targetType == typeof(DateTime?))
+            {
+                if (jsonElement.TryGetDateTime(out var dateTimeValue))
+                {
+                    return dateTimeValue;
+                }
+            }
+
+            // DATETIMEOFFSET
+            if (targetType == typeof(DateTimeOffset))
+            {
+                return jsonElement.GetDateTimeOffset();
+            }
+
+            if (targetType == typeof(DateTimeOffset?))
+            {
+                if (jsonElement.TryGetDateTimeOffset(out var dateTimeOffsetValue))
+                {
+                    return dateTimeOffsetValue;
+                }
+            }
+
+            // GUID
+            if (targetType == typeof(Guid))
+            {
+                return jsonElement.GetGuid();
+            }
+
+            if (targetType == typeof(Guid?))
+            {
+                if (jsonElement.TryGetGuid(out var guidValue))
+                {
+                    return guidValue;
+                }
+            }
+
+
+            // NUMBER TYPES
+            if (targetType == typeof(sbyte))
+            {
+                return jsonElement.GetSByte();
+            }
+
+            if (targetType == typeof(byte))
+            {
+                return jsonElement.GetByte();
+            }
+
+
+            if (targetType == typeof(short))
+            {
+                return jsonElement.GetInt16();
+            }
+
+            if (targetType == typeof(int))
+            {
+                return jsonElement.GetInt32();
+            }
+
+            if (targetType == typeof(long))
+            {
+                return jsonElement.GetInt64();
+            }
+
+            if (targetType == typeof(double))
+            {
+                return jsonElement.GetDouble();
+            }
+
+            if (targetType == typeof(float))
+            {
+                return jsonElement.GetSingle();
+            }
+
+            if (targetType == typeof(decimal))
+            {
+                return jsonElement.GetDecimal();
+            }
+
+
+            // UNSIGNED NUMBER TYPES
+            if (targetType == typeof(ushort))
+            {
+                return jsonElement.GetUInt16();
+            }
+
+            if (targetType == typeof(uint))
+            {
+                return jsonElement.GetUInt32();
+            }
+
+            if (targetType == typeof(ulong))
+            {
+                return jsonElement.GetUInt64();
+            }
+
+            // NULLABLE NUMBER TYPES
+            if (targetType == typeof(sbyte?))
+            {
+                if (jsonElement.TryGetSByte(out var sbyteValue))
+                {
+                    return sbyteValue;
+                }
+            }
+
+            if (targetType == typeof(byte?))
+            {
+                if (jsonElement.TryGetByte(out var byteValue))
+                {
+                    return byteValue;
+                }
+            }
+
+
+            if (targetType == typeof(short?))
+            {
+                if (jsonElement.TryGetInt16(out var int16Value))
+                {
+                    return int16Value;
+                }
+            }
+
+            if (targetType == typeof(int?))
+            {
+                if (jsonElement.TryGetInt32(out var int32Value))
+                {
+                    return int32Value;
+                }
+            }
+
+            if (targetType == typeof(long?))
+            {
+                if (jsonElement.TryGetInt64(out var int64Value))
+                {
+                    return int64Value;
+                }
+            }
+
+            if (targetType == typeof(double?))
+            {
+                if (jsonElement.TryGetDouble(out var doubleValue))
+                {
+                    return doubleValue;
+                }
+            }
+
+            if (targetType == typeof(float?))
+            {
+                if (jsonElement.TryGetSingle(out var floatValue))
+                {
+                    return floatValue;
+                }
+            }
+
+            if (targetType == typeof(decimal?))
+            {
+                if (jsonElement.TryGetDecimal(out var decimalValue))
+                {
+                    return decimalValue;
+                }
+            }
+
+
+
+            if (jsonElement.ValueKind == JsonValueKind.Object)
+            {
+                // TODO: Fix for style
+                //if (property.PropertyType == typeof(Style))
+                //{
+                //    var style = new Style();
+                //    style.Import(jToken.ToObject<Dictionary<string, string>>());
+                //    return style;
+                //}
+
+                return jsonElement.Deserialize(targetType);
+            }
+
+            if (jsonElement.ValueKind == JsonValueKind.Array)
+            {
+                return jsonElement.Deserialize(targetType);
+            }
+
+            throw new Exception();
+        }
+
+        if (value is string valueAsString && targetType == typeof(Type))
+        {
+            return JsonConverterFactoryForType.DeserializeType(valueAsString);
+        }
+
+        var changeResponse = ChangeType(value, targetType);
+        if (changeResponse.exception is not null)
+        {
+            throw DeveloperException(changeResponse.exception.Message);
+        }
+
+        return changeResponse.value;
+    }
+}
 static partial class JsonSerializationOptionHelper
 {
+
+   
+
+
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
     {
         options.WriteIndented = true;
@@ -176,6 +416,7 @@ static partial class JsonSerializationOptionHelper
     {
         public override Style Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            
             throw new NotImplementedException();
         }
 

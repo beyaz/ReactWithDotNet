@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using static ReactWithDotNet.JsonSerializationOptionHelper;
 
 namespace ReactWithDotNet;
 
@@ -297,7 +294,7 @@ partial class ElementSerializer
                         {
                             if (reactStatefulComponent.GetType().GetFullName() == clientStateInfo.FullTypeNameOfComponent)
                             {
-                                var stateValue = DeserializeJson(clientStateInfo.StateAsJson, stateProperty.PropertyInfo.PropertyType);
+                                var stateValue = DeserializeJsonBySystemTextJson(clientStateInfo.StateAsJson, stateProperty.PropertyInfo.PropertyType);
                                 stateProperty.SetValueFunc(reactStatefulComponent, stateValue);
                             }
                         }
@@ -864,7 +861,6 @@ partial class ElementSerializer
                         || propertyInfo.Name == nameof(ReactComponentBase.Client)
                         || propertyInfo.Name == "state"
                         || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
-                        || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
                         || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
                        )
                     {
@@ -1205,38 +1201,10 @@ partial class ElementSerializer
                 return $"Property not found.{type.FullName}::{key}";
             }
 
-            property.SetValue(instance, RecalculatePropertyValue(property, value));
+            property.SetValue(instance, ArrangeValueForTargetType(value, property.PropertyType));
         }
 
         return null;
-
-        static object RecalculatePropertyValue(PropertyInfo property, object value)
-        {
-            if (value is JToken jToken)
-            {
-                if (property.PropertyType == typeof(Style))
-                {
-                    var style = new Style();
-                    style.Import(jToken.ToObject<Dictionary<string, string>>());
-                    return style;
-                }
-
-                return jToken.ToObject(property.PropertyType);
-            }
-
-            if (value is string valueAsString && property.PropertyType == typeof(Type))
-            {
-                return JsonConverterFactoryForType.DeserializeType(valueAsString);
-            }
-
-            var changeResponse = ChangeType(value, property.PropertyType);
-            if (changeResponse.exception is not null)
-            {
-                throw DeveloperException(changeResponse.exception.Message);
-            }
-
-            return  changeResponse.value;
-        }
     }
 }
 

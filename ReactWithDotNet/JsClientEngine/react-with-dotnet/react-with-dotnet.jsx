@@ -1416,14 +1416,14 @@ function HandleAction(actionArguments)
         EventHandlerMethodName: NotNull(remoteMethodName),
         FullName: NotNull(component.constructor)[DotNetTypeOfReactComponent],
         CapturedStateTree: capturedStateTreeResponse.value,
-        ComponentKey: NotNull(component.props.$jsonNode.key),
+        ComponentKey: parseInt(NotNull(component.props.$jsonNode.key)),
         LastUsedComponentUniqueIdentifier: LastUsedComponentUniqueIdentifier,
         ComponentUniqueIdentifier: NotNull(component.state[DotNetComponentUniqueIdentifier]),
 
         CallFunctionId: actionArguments.executionQueueEntry.id
     };
 
-    request.eventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
+    request.EventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
 
     function onSuccess(response)
     {

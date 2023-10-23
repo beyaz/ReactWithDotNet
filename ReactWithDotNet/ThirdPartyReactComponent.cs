@@ -48,7 +48,6 @@ public abstract class ThirdPartyReactComponent : Element
     ///     Default value is simple empty div element
     /// </summary>
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
     public Element SuspenseFallback { get; set; }
 
     [JsonPropertyName("$type")]

@@ -5,7 +5,6 @@ namespace ReactWithDotNet;
 partial class Style
 {
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
     public bool IsEmpty => isEmpty(this);
 
     public string this[string key]

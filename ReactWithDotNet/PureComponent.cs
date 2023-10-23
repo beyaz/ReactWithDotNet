@@ -16,7 +16,6 @@ public abstract class PureComponent : Element
     internal Style StyleForRootElement;
 
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
     public Style style
     {
         get
@@ -28,7 +27,6 @@ public abstract class PureComponent : Element
     }
 
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
     protected internal ReactContext Context { get; internal set; }
 
     internal Element InvokeRender()

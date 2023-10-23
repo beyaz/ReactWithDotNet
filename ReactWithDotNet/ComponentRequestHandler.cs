@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
@@ -307,7 +306,7 @@ static class ComponentRequestHandler
                 return $"MissingMember at {typeOfInstance.FullName}::state";
             }
 
-            var state = DeserializeJson(stateAsJson, statePropertyInfo.PropertyType);
+            var state = DeserializeJsonBySystemTextJson(stateAsJson, statePropertyInfo.PropertyType);
 
             statePropertyInfo.SetValue(instance, state);
 
@@ -330,7 +329,7 @@ static class ComponentRequestHandler
 
                 try
                 {
-                    eventArguments[i] = DeserializeJson(eventArgumentsAsJsonArray[i], parameterInfo.ParameterType);
+                    eventArguments[i] = DeserializeJsonBySystemTextJson(eventArgumentsAsJsonArray[i], parameterInfo.ParameterType);
                 }
                 catch (Exception)
                 {
@@ -360,40 +359,6 @@ static class ComponentRequestHandler
 
         return context;
     }
-}
-
-partial class Mixin
-{
-#pragma warning disable CA2200
-    public static object DeserializeJson(string json, Type returnType)
-    {
-        try
-        {
-            return JsonConvert.DeserializeObject(json, returnType);
-        }
-        catch (Exception exception)
-        {
-            // ReSharper disable once PossibleIntendedRethrow
-            throw exception;
-        }
-    }
-#pragma warning restore CA2200
-
-#pragma warning disable CA2200
-    public static T DeserializeJson<T>(string json)
-    {
-        try
-        {
-            return JsonConvert.DeserializeObject<T>(json);
-        }
-        catch (Exception exception)
-        {
-            // ReSharper disable once PossibleIntendedRethrow
-
-            throw exception;
-        }
-    }
-#pragma warning restore CA2200
 }
 
 sealed class StateTree

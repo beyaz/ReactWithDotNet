@@ -1,12 +1,10 @@
 ﻿using System.Collections;
-using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
 /// <summary>
 ///     The element
 /// </summary>
-[JsonObject]
 public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 {
     internal ElementCollection _children;
@@ -15,7 +13,6 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     ///     The children
     /// </summary>
     [System.Text.Json.Serialization.JsonIgnore]
-    [JsonIgnore]
     public ElementCollection children
     {
         get

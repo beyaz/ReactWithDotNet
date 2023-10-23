@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
@@ -507,7 +508,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 return;
             }
 
-            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? string.Empty) ?? new Dictionary<string, object>();
+            var map = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? string.Empty) ?? new Dictionary<string, object>();
 
             foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(typeOfInstance)?.GetProperties(BindingFlags.Instance | BindingFlags.Public) ?? new PropertyInfo[] { })
             {
@@ -562,16 +563,21 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 }
             }
 
-            state.JsonTextForDotNetInstanceProperties = JsonConvert.SerializeObject(map, new JsonSerializerSettings
+            
+
+           
+            
+            
+            state.JsonTextForDotNetInstanceProperties = System.Text.Json.JsonSerializer.Serialize(map,new JsonSerializerOptions
             {
-                DefaultValueHandling = DefaultValueHandling.Include,
-                Formatting           = Formatting.Indented
+                WriteIndented = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
         }
 
         void initializeParametersJson()
         {
-            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? string.Empty) ?? new Dictionary<string, object>();
+            var map = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetMethodParameters ?? string.Empty) ?? new Dictionary<string, object>();
 
             foreach (var parameterInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(state.SelectedMethod)?.GetParameters() ?? new ParameterInfo[] { })
             {
@@ -583,11 +589,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                 map.Add(name, ReflectionHelper.CreateDefaultValue(parameterInfo.ParameterType));
             }
-
-            state.JsonTextForDotNetMethodParameters = JsonConvert.SerializeObject(map, new JsonSerializerSettings
+            
+            state.JsonTextForDotNetMethodParameters = System.Text.Json.JsonSerializer.Serialize(map,new JsonSerializerOptions
             {
-                DefaultValueHandling = DefaultValueHandling.Include,
-                Formatting           = Formatting.Indented
+                WriteIndented          = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
         }
     }

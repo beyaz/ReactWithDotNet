@@ -89,7 +89,6 @@ public abstract class HtmlElement : Element
     public string accesskey { get; set; }
 
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
     public Dictionary<string, string> aria
     {
         get
@@ -148,7 +147,6 @@ public abstract class HtmlElement : Element
     ///     Note: Custom attributes prefixed with "data-" will be completely ignored by the user agent.<br />
     /// </summary>
     [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
     public Dictionary<string, string> data
     {
         get

@@ -795,11 +795,37 @@ public static partial class Mixin
     
     internal static object DeserializeJsonBySystemTextJson(string  json, Type returnType)
     {
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return returnType.IsValueType ? Activator.CreateInstance(returnType) : null;
+        }
+        
         var options = new JsonSerializerOptions();
 
         options = options.ModifyForReactWithDotNet();
 
         return JsonSerializer.Deserialize(json,returnType, options);
+    }
+    internal static T DeserializeJsonBySystemTextJson<T>(string  json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return default;
+        }
+        
+        var options = new JsonSerializerOptions();
+
+        options = options.ModifyForReactWithDotNet();
+
+        try
+        {
+            return JsonSerializer.Deserialize<T>(json, options);
+        }
+        catch (Exception e)
+        {
+            // TODO: check here
+            throw e;
+        }
     }
 
     static StyleModifier Pseudo(Func<Style, Style> accessToPseudo, StyleModifier[] styleModifiers)

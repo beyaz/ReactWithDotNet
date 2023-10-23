@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using Newtonsoft.Json;
 
 namespace ReactWithDotNet;
 
@@ -13,7 +12,6 @@ public abstract class ReactComponentBase : Element
     internal List<IModifier> Modifiers;
 
     [System.Text.Json.Serialization.JsonIgnore]
-    [JsonIgnore]
     public Style style
     {
         get
@@ -27,15 +25,12 @@ public abstract class ReactComponentBase : Element
     internal abstract bool IsStateNull { get; }
 
     [System.Text.Json.Serialization.JsonIgnore]
-    [JsonIgnore]
     public Client Client { get; internal set; } = new();
 
     [System.Text.Json.Serialization.JsonIgnore]
-    [JsonIgnore]
     protected internal int? ComponentUniqueIdentifier { get; set; }
 
     [System.Text.Json.Serialization.JsonIgnore]
-    [JsonIgnore]
     public ReactContext Context { get; internal set; }
 
     public static ReactComponentBase operator +(ReactComponentBase component, Style style)

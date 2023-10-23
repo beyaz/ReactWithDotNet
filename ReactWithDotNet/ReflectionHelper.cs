@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using System.Reflection.Emit;
-using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ReactWithDotNet;
 
@@ -72,9 +72,9 @@ static class ReflectionHelper
 
     public static T DeepCopy<T>(T value)
     {
-        var json = JsonConvert.SerializeObject(value);
+        var json = JsonSerializer.Serialize(value);
 
-        return (T)JsonConvert.DeserializeObject(json, value.GetType());
+        return (T)JsonSerializer.Deserialize(json, value.GetType());
     }
 
     public static MethodInfo FindMethod(this Type type, string methodName, BindingFlags bindingFlags)

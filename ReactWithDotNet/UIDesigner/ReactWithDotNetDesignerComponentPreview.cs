@@ -1,6 +1,4 @@
 ﻿using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Type = System.Type;
 
 namespace ReactWithDotNet.UIDesigner;
@@ -83,26 +81,23 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                         var methodParameters = methodInfo.GetParameters();
 
-                        var jsObject = (JObject)DeserializeJson(state.JsonTextForDotNetMethodParameters.HasValue() ? state.JsonTextForDotNetMethodParameters : "{}", typeof(JObject));
-                        foreach (var parameterInfo in methodParameters)
+                        if (state.JsonTextForDotNetMethodParameters.HasValue())
                         {
-                            var parameterName = parameterInfo.Name;
-                            var parameterType = parameterInfo.ParameterType;
-
-                            if (parameterName is not null)
+                            var dictionary = DeserializeJsonBySystemTextJson<Dictionary<string,object>>(state.JsonTextForDotNetMethodParameters);
+                            foreach (var parameterInfo in methodParameters)
                             {
-                                var parameterValueAsJsonObject = jsObject[parameterName];
-                                if (parameterValueAsJsonObject is not null)
-                                {
-                                    invocationParameters.Add(parameterValueAsJsonObject.ToObject(parameterType));
-                                    continue;
-                                }
+                                var parameterName = parameterInfo.Name;
+                                var parameterType = parameterInfo.ParameterType;
 
+                                if (parameterName is not null && dictionary.TryGetValue(parameterName, out var parameterValueAsJsonObject))
+                                {
+                                    invocationParameters.Add(ArrangeValueForTargetType(parameterValueAsJsonObject,parameterType));
+                                }
+                                
                                 return new div { text = $"Missing parameter {parameterName}" };
                             }
-
-                            return new div { text = "parameterName not be evaluated" };
                         }
+                       
 
                         if (methodInfo.IsStatic)
                         {
@@ -117,7 +112,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 return new div { text = "Method declaring type is null." };
                             }
 
-                            var instance = (Element)DeserializeJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", declaringType);
+                            var instance = (Element)DeserializeJsonBySystemTextJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", declaringType);
                             tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
                             if (instance is ReactComponentBase component)
                             {
@@ -163,21 +158,18 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                         return;
                     }
                     
-                    var jsonForInstance = (JObject)DeserializeJson(jsonTextForDotNetInstanceProperties, typeof(JObject));
-                    var jsonForInstanceState = jsonForInstance["state"];
-                    if (jsonForInstanceState is null)
+                    var map = DeserializeJsonBySystemTextJson<Dictionary<string,object>>(jsonTextForDotNetInstanceProperties);
+
+                    if (map.TryGetValue("state", out var stateValue))
                     {
-                        return;
+                        var stateProperty = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance);
+                        if (stateProperty is null)
+                        {
+                            return;
+                        }
+
+                        stateProperty.SetValue(instance, ArrangeValueForTargetType(stateValue, stateProperty.PropertyType));
                     }
-                    var stateProperty = type.GetProperty("state", BindingFlags.NonPublic | BindingFlags.Instance);
-                    if (stateProperty is null)
-                    {
-                        return;
-                    }
-                    
-                    var stateValue = jsonForInstanceState.ToObject(stateProperty.PropertyType);
-                    
-                    stateProperty.SetValue(instance, stateValue);
                 }
                 
                 if (state.SelectedType is not null)
@@ -188,7 +180,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                         return "type not found.@" + state.SelectedType.FullName;
                     }
 
-                    var instance = (Element)DeserializeJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", type);
+                    var instance = (Element)DeserializeJsonBySystemTextJson(state.JsonTextForDotNetInstanceProperties.HasValue() ? state.JsonTextForDotNetInstanceProperties : "{}", type);
 
                     tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
                     
@@ -225,7 +217,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         }
         catch (Exception exception)
         {
-            if (exception is JsonReaderException)
+            if (exception is System.Text.Json.JsonException)
             {
                 return new div(exception.Message);
             }
@@ -248,7 +240,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     {
                         var propertyType = stateProperty.PropertyType;
 
-                        var val = DeserializeJson(stateAsJson, propertyType);
+                        var val = DeserializeJsonBySystemTextJson(stateAsJson, propertyType);
 
                         stateProperty.SetValue(component, val);
                     }
