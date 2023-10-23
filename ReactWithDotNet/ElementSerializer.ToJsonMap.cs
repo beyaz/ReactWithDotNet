@@ -1186,7 +1186,7 @@ partial class ElementSerializer
         {
             if (key == "$LogicalChildrenCount")
             {
-                var childrenCount = Convert.ToInt32(value);
+                var childrenCount = (int)ArrangeValueForTargetType(value, typeof(int));
                 for (var i = 0; i < childrenCount; i++)
                 {
                     instance.children.Add(new FakeChild { Index = i });

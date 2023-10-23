@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
 namespace ReactWithDotNet;
@@ -27,16 +27,9 @@ static class ReactWithDotNetRequestProcessor
     {
         var httpContext = input.HttpContext;
 
-        input.ComponentRequest ??= await readJson();
+        input.ComponentRequest ??= await JsonSerializer.DeserializeAsync<ComponentRequest>(httpContext.Request.Body, JsonSerializerOptionsInstance);
 
         return await ComponentRequestHandler.HandleRequest(input);
-
-        async Task<ComponentRequest> readJson()
-        {
-            using var reader = new StreamReader(httpContext.Request.Body, Encoding.UTF8, true, 1024, true);
-
-            return DeserializeJsonBySystemTextJson<ComponentRequest>(await reader.ReadToEndAsync());
-        }
     }
 }
 

@@ -777,21 +777,9 @@ public static partial class Mixin
 
     internal static string ToJson(this ComponentResponse value)
     {
-        var options = new JsonSerializerOptions();
-
-        options = options.ModifyForReactWithDotNet();
-
-        return JsonSerializer.Serialize(value, options);
+        return JsonSerializer.Serialize(value, JsonSerializerOptionsInstance);
     }
-    
-    internal static string SerializeToJsonBySystemTextJson(object value)
-    {
-        var options = new JsonSerializerOptions();
-
-        options = options.ModifyForReactWithDotNet();
-
-        return JsonSerializer.Serialize(value, options);
-    }
+ 
     
     internal static object DeserializeJsonBySystemTextJson(string  json, Type returnType)
     {
@@ -800,11 +788,7 @@ public static partial class Mixin
             return returnType.IsValueType ? Activator.CreateInstance(returnType) : null;
         }
         
-        var options = new JsonSerializerOptions();
-
-        options = options.ModifyForReactWithDotNet();
-
-        return JsonSerializer.Deserialize(json,returnType, options);
+        return JsonSerializer.Deserialize(json,returnType, JsonSerializerOptionsInstance);
     }
     internal static T DeserializeJsonBySystemTextJson<T>(string  json)
     {
@@ -813,20 +797,11 @@ public static partial class Mixin
             return default;
         }
         
-        var options = new JsonSerializerOptions();
-
-        options = options.ModifyForReactWithDotNet();
-
-        try
-        {
-            return JsonSerializer.Deserialize<T>(json, options);
-        }
-        catch (Exception e)
-        {
-            // TODO: check here
-            throw e;
-        }
+        return JsonSerializer.Deserialize<T>(json, JsonSerializerOptionsInstance);
     }
+
+    internal static readonly JsonSerializerOptions JsonSerializerOptionsInstance = new JsonSerializerOptions().ModifyForReactWithDotNet();
+    
 
     static StyleModifier Pseudo(Func<Style, Style> accessToPseudo, StyleModifier[] styleModifiers)
     {
