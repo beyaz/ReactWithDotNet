@@ -247,7 +247,8 @@ static partial class JsonSerializationOptionHelper
 
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
     {
-        options.WriteIndented = true;
+        options.WriteIndented  = true;
+        options.NumberHandling = JsonNumberHandling.AllowReadingFromString;
 
         options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 
