@@ -21,7 +21,7 @@ partial class Mixin
 
 
 
-        if (value is System.Text.Json.JsonElement jsonElement)
+        if (value is JsonElement jsonElement)
         {
             if (targetType == typeof(string))
             {
