@@ -19,35 +19,3 @@ public sealed class table : HtmlElement
     }
 }
 
-public sealed class thead : HtmlElement
-{
-    public thead()
-    {
-    }
-
-    public thead(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
-
-public sealed class tbody : HtmlElement
-{
-    public tbody()
-    {
-    }
-
-    public tbody(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
-
-public sealed class tfoot : HtmlElement
-{
-    public tfoot()
-    {
-    }
-
-    public tfoot(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}

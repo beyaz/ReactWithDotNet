@@ -811,6 +811,45 @@ public sealed class figcaption : HtmlElement
     public figcaption(Style style) : base(style) { }
 }
 
+public sealed class thead : HtmlElement
+{
+    public thead() { }
+
+    public thead(params IModifier[] modifiers) : base(modifiers) { }
+
+    public thead(string innerText) : base(innerText) {  }
+
+    public static implicit operator thead(string text) => new() { text = text };
+
+    public thead(Style style) : base(style) { }
+}
+
+public sealed class tbody : HtmlElement
+{
+    public tbody() { }
+
+    public tbody(params IModifier[] modifiers) : base(modifiers) { }
+
+    public tbody(string innerText) : base(innerText) {  }
+
+    public static implicit operator tbody(string text) => new() { text = text };
+
+    public tbody(Style style) : base(style) { }
+}
+
+public sealed class tfoot : HtmlElement
+{
+    public tfoot() { }
+
+    public tfoot(params IModifier[] modifiers) : base(modifiers) { }
+
+    public tfoot(string innerText) : base(innerText) {  }
+
+    public static implicit operator tfoot(string text) => new() { text = text };
+
+    public tfoot(Style style) : base(style) { }
+}
+
 public sealed class th : HtmlElement
 {
     [ReactProp]

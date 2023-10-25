@@ -85,6 +85,10 @@ public class UnitTest1
 
             new() { Tag = "figcaption" },
             
+            new() { Tag = "thead" },
+            new() { Tag = "tbody" },
+            new() { Tag = "tfoot" },
+            
             new()
             {
                 Tag = "th", 
