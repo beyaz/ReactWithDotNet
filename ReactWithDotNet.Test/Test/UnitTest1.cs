@@ -612,6 +612,52 @@ public class UnitTest1
                     }
                 },
                 EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "path",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "d",
+                        Comment = "Path data"
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "fill",
+                        Comment = "Fill color"
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke",
+                        Comment = "Stroke color"
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-width",
+                        Comment = "Stroke width"
+                    },
+                    
+                    new AttributeInfo
+                    {
+                        Name    = "fillRule"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "clipRule"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "strokeLinecap"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "strokeLinejoin"
+                    },
+                },
+                EnableCastFromString = false
             }
         };
 

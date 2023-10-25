@@ -1319,6 +1319,12 @@ public sealed class radialGradient : HtmlElement
 public sealed class clipPath : HtmlElement
 {
     /// <summary>
+    ///     Specifies a clipping path for the element.
+    /// </summary>
+    [ReactProp]
+    public string clipPath { get; set; }
+
+    /// <summary>
     ///     Specifies the fill rule for the clipping path.
     /// </summary>
     [ReactProp]
@@ -1335,5 +1341,50 @@ public sealed class clipPath : HtmlElement
     public clipPath(params IModifier[] modifiers) : base(modifiers) { }
 
     public clipPath(Style style) : base(style) { }
+}
+
+public sealed class path : HtmlElement
+{
+    /// <summary>
+    ///     Path data
+    /// </summary>
+    [ReactProp]
+    public string d { get; set; }
+
+    /// <summary>
+    ///     Fill color
+    /// </summary>
+    [ReactProp]
+    public string fill { get; set; }
+
+    /// <summary>
+    ///     Stroke color
+    /// </summary>
+    [ReactProp]
+    public string stroke { get; set; }
+
+    /// <summary>
+    ///     Stroke width
+    /// </summary>
+    [ReactProp]
+    public string strokeWidth { get; set; }
+
+    [ReactProp]
+    public string fillRule { get; set; }
+
+    [ReactProp]
+    public string clipRule { get; set; }
+
+    [ReactProp]
+    public string strokeLinecap { get; set; }
+
+    [ReactProp]
+    public string strokeLinejoin { get; set; }
+
+    public path() { }
+
+    public path(params IModifier[] modifiers) : base(modifiers) { }
+
+    public path(Style style) : base(style) { }
 }
 

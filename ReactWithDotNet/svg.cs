@@ -114,37 +114,7 @@ partial class Mixin
 }
 
 
-public sealed class path : HtmlElement
-{
-    public path()
-    {
-    }
 
-    public path(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    
-    [ReactProp]
-    public string d { get; set; }
-
-    [ReactProp]
-    public string fill { get; set; }
-    
-    [ReactProp]
-    public string fillRule { get; set; }
-    
-    [ReactProp]
-    public string clipRule { get; set; }
-
-    [ReactProp]
-    public string stroke { get; set; }
-    
-    [ReactProp]
-    public string strokeLinecap { get; set; }
-    
-    [ReactProp]
-    public string strokeLinejoin { get; set; }
-}
 
 public sealed class g : HtmlElement
 {
@@ -174,16 +144,7 @@ public sealed class g : HtmlElement
 
 public sealed class defs : HtmlElement;
 
-public sealed class clipPath : HtmlElement
-{
-    public clipPath()
-    {
-        
-    }
-    public clipPath(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
+
 public sealed class linearGradient : HtmlElement;
 public sealed class stop : HtmlElement
 {
