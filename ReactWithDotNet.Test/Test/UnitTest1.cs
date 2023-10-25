@@ -85,8 +85,40 @@ public class UnitTest1
 
             new() { Tag = "figcaption" },
             
-            new() { Tag = "th", Comment = Empty, CreateClassAsPartial = true },
-            new() { Tag = "td", Comment = Empty, CreateClassAsPartial = true },
+            new()
+            {
+                Tag = "th", 
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name = "colSpan",
+                        Type = "int?"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "rowSpan",
+                        Type = "int?"
+                    }
+                }
+            },
+            new()
+            {
+                Tag = "td", 
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name = "colSpan",
+                        Type = "int?"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "rowSpan",
+                        Type = "int?"
+                    }
+                }
+            },
             new()
             {
                 Tag = "tr", 

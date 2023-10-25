@@ -811,8 +811,14 @@ public sealed class figcaption : HtmlElement
     public figcaption(Style style) : base(style) { }
 }
 
-public sealed partial class th : HtmlElement
+public sealed class th : HtmlElement
 {
+    [ReactProp]
+    public int? colSpan { get; set; }
+
+    [ReactProp]
+    public int? rowSpan { get; set; }
+
     public th() { }
 
     public th(params IModifier[] modifiers) : base(modifiers) { }
@@ -824,8 +830,14 @@ public sealed partial class th : HtmlElement
     public th(Style style) : base(style) { }
 }
 
-public sealed partial class td : HtmlElement
+public sealed class td : HtmlElement
 {
+    [ReactProp]
+    public int? colSpan { get; set; }
+
+    [ReactProp]
+    public int? rowSpan { get; set; }
+
     public td() { }
 
     public td(params IModifier[] modifiers) : base(modifiers) { }

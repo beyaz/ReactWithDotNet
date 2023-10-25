@@ -51,21 +51,3 @@ public sealed class tfoot : HtmlElement
     {
     }
 }
-
-partial class th 
-{
-    [ReactProp]
-    public int? colSpan { get; set; }
-
-    [ReactProp]
-    public int? rowSpan { get; set; }
-}
-
-partial class td
-{
-    [ReactProp]
-    public int? colSpan { get; set; }
-
-    [ReactProp]
-    public int? rowSpan { get; set; }
-}
