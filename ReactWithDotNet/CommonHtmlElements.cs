@@ -42,10 +42,6 @@ public sealed class button : HtmlElement
 
     public button(params IModifier[] modifiers) : base(modifiers) { }
 
-    public button(string innerText) : base(innerText) {  }
-
-    public static implicit operator button(string text) => new() { text = text };
-
     public button(Style style) : base(style) { }
 }
 
@@ -842,10 +838,6 @@ public sealed class table : HtmlElement
 
     public table(params IModifier[] modifiers) : base(modifiers) { }
 
-    public table(string innerText) : base(innerText) {  }
-
-    public static implicit operator table(string text) => new() { text = text };
-
     public table(Style style) : base(style) { }
 }
 
@@ -854,10 +846,6 @@ public sealed class thead : HtmlElement
     public thead() { }
 
     public thead(params IModifier[] modifiers) : base(modifiers) { }
-
-    public thead(string innerText) : base(innerText) {  }
-
-    public static implicit operator thead(string text) => new() { text = text };
 
     public thead(Style style) : base(style) { }
 }
@@ -868,10 +856,6 @@ public sealed class tbody : HtmlElement
 
     public tbody(params IModifier[] modifiers) : base(modifiers) { }
 
-    public tbody(string innerText) : base(innerText) {  }
-
-    public static implicit operator tbody(string text) => new() { text = text };
-
     public tbody(Style style) : base(style) { }
 }
 
@@ -880,10 +864,6 @@ public sealed class tfoot : HtmlElement
     public tfoot() { }
 
     public tfoot(params IModifier[] modifiers) : base(modifiers) { }
-
-    public tfoot(string innerText) : base(innerText) {  }
-
-    public static implicit operator tfoot(string text) => new() { text = text };
 
     public tfoot(Style style) : base(style) { }
 }
@@ -899,10 +879,6 @@ public sealed class th : HtmlElement
     public th() { }
 
     public th(params IModifier[] modifiers) : base(modifiers) { }
-
-    public th(string innerText) : base(innerText) {  }
-
-    public static implicit operator th(string text) => new() { text = text };
 
     public th(Style style) : base(style) { }
 }
@@ -937,10 +913,6 @@ public sealed class tr : HtmlElement
     public tr() { }
 
     public tr(params IModifier[] modifiers) : base(modifiers) { }
-
-    public tr(string innerText) : base(innerText) {  }
-
-    public static implicit operator tr(string text) => new() { text = text };
 
     public tr(Style style) : base(style) { }
 }
