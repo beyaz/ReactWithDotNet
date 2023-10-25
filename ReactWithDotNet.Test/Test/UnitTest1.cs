@@ -254,6 +254,50 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
+            
+            new()
+            {
+                Tag = "ellipse",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "cx",
+                        Comment = "The x-coordinate of the center of the ellipse."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "cy",
+                        Comment = "The y-coordinate of the center of the ellipse."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "rx",
+                        Comment = "The radius of the ellipse along the x-axis."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "ry",
+                        Comment = "The radius of the ellipse along the y-axis."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "fill",
+                        Comment = "The fill color of the ellipse."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke",
+                        Comment = "The stroke color of the ellipse."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-width",
+                        Comment = "The width of the stroke."
+                    }
+                },
+                EnableCastFromString = false
+            },
         };
 
         var list = new List<string>
@@ -261,6 +305,8 @@ public class UnitTest1
             "namespace ReactWithDotNet;"
         };
 
+        const string padding = "    ";
+            
         foreach (var item in map)
         {
             addComment(null);
@@ -278,6 +324,13 @@ public class UnitTest1
             {
                 foreach (var attribute in item.Attributes)
                 {
+                    if (IsNullOrWhiteSpace(attribute.Comment) == false)
+                    {
+                        list.Add($"{padding}/// <summary>");
+                        list.Add($"{padding}///     {attribute.Comment}");
+                        list.Add($"{padding}/// </summary>");
+                    }
+                    
                     list.Add("    [ReactProp]");
                     list.Add($"    public {attribute.Type} {attribute.Name} {{ get; set; }}");
                     list.Add(Empty);
@@ -333,8 +386,9 @@ public class UnitTest1
 
     class AttributeInfo
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
+        public string Name { get; init; }
+        public string Comment { get; init; }
+        public string Type { get; init; } = "string";
     }
 
     class TagInfo
@@ -346,3 +400,14 @@ public class UnitTest1
         public string Tag { get; init; }
     }
 }
+
+/*
+ List attribute names of html 'ellipse' tag in this format
+   
+   new AttributeInfo
+   {
+   Name = "#name",
+   Comment = "#description"
+   }
+
+ */
