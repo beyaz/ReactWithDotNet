@@ -83,23 +83,23 @@ public class UnitTest1
 
             new() { Tag = "strong", Comment = "Important text" },
 
-            new() { Tag = "section", Comment = "Section in a document", EnableStringIntegration = false },
+            new() { Tag = "section", Comment = "Section in a document", EnableCastFromString = false },
 
-            new() { Tag = "aside", EnableStringIntegration = false },
+            new() { Tag = "aside", EnableCastFromString = false },
 
-            new() { Tag = "fieldset", EnableStringIntegration = false },
+            new() { Tag = "fieldset", EnableCastFromString = false },
 
-            new() { Tag = "legend", EnableStringIntegration = false },
+            new() { Tag = "legend", EnableCastFromString = false },
 
-            new() { Tag = "nav", EnableStringIntegration = false },
+            new() { Tag = "nav", EnableCastFromString = false },
 
-            new() { Tag = "main", EnableStringIntegration = false },
+            new() { Tag = "main", EnableCastFromString = false },
 
-            new() { Tag = "footer", EnableStringIntegration = false },
+            new() { Tag = "footer", EnableCastFromString = false },
 
-            new() { Tag = "figure", EnableStringIntegration = false },
+            new() { Tag = "figure", EnableCastFromString = false },
 
-            new() { Tag = "hr", EnableStringIntegration = false },
+            new() { Tag = "hr", EnableCastFromString = false },
 
             new() { Tag = "figcaption" },
             
@@ -216,7 +216,7 @@ public class UnitTest1
             addComment();
             list.Add($"    public {item.Tag}(params IModifier[] modifiers) : base(modifiers) {{ }}");
 
-            if (item.EnableStringIntegration)
+            if (item.EnableCastFromString)
             {
                 list.Add(Empty);
                 addComment();
@@ -260,7 +260,7 @@ public class UnitTest1
     {
         public string Comment { get; init; }
         public bool CreateClassAsPartial { get; init; }
-        public bool EnableStringIntegration { get; init; } = true;
+        public bool EnableCastFromString { get; init; } = true;
         public string Tag { get; init; }
         
         public IReadOnlyList<AttributeInfo> Attributes { get; init; }
