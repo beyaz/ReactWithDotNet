@@ -310,22 +310,7 @@ public sealed class circle : HtmlElement
     [ReactProp] public string stroke{ get; set; }
     [ReactProp] public string fill{ get; set; }
 }
-public sealed class ellipse : HtmlElement
-{
-    public ellipse()
-    {
-    }
 
-    public ellipse(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    [ReactProp]public string cx{ get; set; }
-   [ReactProp]public string cy{ get; set; }
-   [ReactProp]public string rx{ get; set; }
-   [ReactProp]public string ry{ get; set; }
-   [ReactProp]public string stroke{ get; set; }
-    [ReactProp] public string fill{ get; set; }
-}
 public sealed class line : HtmlElement
 {
     public line()

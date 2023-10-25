@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -332,7 +333,7 @@ public class UnitTest1
                     }
                     
                     list.Add("    [ReactProp]");
-                    list.Add($"    public {attribute.Type} {attribute.Name} {{ get; set; }}");
+                    list.Add($"    public {attribute.Type} {CamelCase(attribute.Name)} {{ get; set; }}");
                     list.Add(Empty);
                 }
             }
@@ -382,6 +383,18 @@ public class UnitTest1
         }
 
         File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
+        
+        static string CamelCase(string str)
+        {
+            if (str.IndexOf('-') > 0)
+            {
+                var names = str.Split("-");
+                    
+                return names[0] + string.Join(string.Empty, names.Skip(1).Select(name=>char.ToUpper(name[0], new CultureInfo("en-US")) + name.Substring(1)));
+            }
+
+            return str;
+        }
     }
 
     class AttributeInfo

@@ -935,3 +935,54 @@ public sealed class option : HtmlElement
     public option(Style style) : base(style) { }
 }
 
+public sealed class ellipse : HtmlElement
+{
+    /// <summary>
+    ///     The x-coordinate of the center of the ellipse.
+    /// </summary>
+    [ReactProp]
+    public string cx { get; set; }
+
+    /// <summary>
+    ///     The y-coordinate of the center of the ellipse.
+    /// </summary>
+    [ReactProp]
+    public string cy { get; set; }
+
+    /// <summary>
+    ///     The radius of the ellipse along the x-axis.
+    /// </summary>
+    [ReactProp]
+    public string rx { get; set; }
+
+    /// <summary>
+    ///     The radius of the ellipse along the y-axis.
+    /// </summary>
+    [ReactProp]
+    public string ry { get; set; }
+
+    /// <summary>
+    ///     The fill color of the ellipse.
+    /// </summary>
+    [ReactProp]
+    public string fill { get; set; }
+
+    /// <summary>
+    ///     The stroke color of the ellipse.
+    /// </summary>
+    [ReactProp]
+    public string stroke { get; set; }
+
+    /// <summary>
+    ///     The width of the stroke.
+    /// </summary>
+    [ReactProp]
+    public string strokeWidth { get; set; }
+
+    public ellipse() { }
+
+    public ellipse(params IModifier[] modifiers) : base(modifiers) { }
+
+    public ellipse(Style style) : base(style) { }
+}
+
