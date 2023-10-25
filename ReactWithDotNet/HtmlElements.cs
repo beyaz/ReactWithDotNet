@@ -73,11 +73,6 @@ public sealed class button : HtmlElement
     public button(params IModifier[] modifiers) : base(modifiers)
     {
     }
-    
-    /// <summary>
-    ///     button.type = <paramref name="type" />
-    /// </summary>
-    public new static HtmlElementModifier Type(string type) => Modify<button>(element => element.type = type);
 }
 
 [Serializable]
