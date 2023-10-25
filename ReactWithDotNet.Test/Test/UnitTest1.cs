@@ -475,6 +475,143 @@ public class UnitTest1
                     }
                 },
                 EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "rect",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "x",
+                        Comment = "The x-coordinate of the top-left corner of the rectangle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "y",
+                        Comment = "The y-coordinate of the top-left corner of the rectangle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "width",
+                        Comment = "The width of the rectangle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "height",
+                        Comment = "The height of the rectangle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "rx",
+                        Comment = "The border radius of the rectangle on the horizontal axis."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "ry",
+                        Comment = "The border radius of the rectangle on the vertical axis."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "fill",
+                        Comment = "The fill color of the rectangle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke",
+                        Comment = "The stroke color of the rectangle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-width",
+                        Comment = "The width of the rectangle's stroke."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-linecap",
+                        Comment = "The linecap style of the rectangle's stroke."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-linejoin",
+                        Comment = "The linejoin style of the rectangle's stroke."
+                    }
+                },
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "radialGradient",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "cx",
+                        Comment = "The x-coordinate of the center of the gradient."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "cy",
+                        Comment = "The y-coordinate of the center of the gradient."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "fx",
+                        Comment = "The x-coordinate of the focal point of the gradient."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "fy",
+                        Comment = "The y-coordinate of the focal point of the gradient."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "r",
+                        Comment = "The radius of the gradient."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "spreadMethod",
+                        Comment = "The method used to spread the gradient."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "gradientUnits",
+                        Comment = "The units used to specify the gradient."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "gradientTransform",
+                        Comment = "A transform to apply to the gradient."
+                    }
+                },
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "clipPath",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "clip-path",
+                        Comment = "Specifies a clipping path for the element.",
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "clip-rule",
+                        Comment = "Specifies the fill rule for the clipping path.",
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "clip-box",
+                        Comment = "Specifies the reference box for the clipping path.",
+                    }
+                },
+                EnableCastFromString = false
             }
         };
 
@@ -596,4 +733,4 @@ public class UnitTest1
 // {
 //     Name    = "#name",
 //     Comment = "#description"
-// }
+// },

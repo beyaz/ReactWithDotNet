@@ -1184,3 +1184,156 @@ public sealed class polygon : HtmlElement
     public polygon(Style style) : base(style) { }
 }
 
+public sealed class rect : HtmlElement
+{
+    /// <summary>
+    ///     The x-coordinate of the top-left corner of the rectangle.
+    /// </summary>
+    [ReactProp]
+    public string x { get; set; }
+
+    /// <summary>
+    ///     The y-coordinate of the top-left corner of the rectangle.
+    /// </summary>
+    [ReactProp]
+    public string y { get; set; }
+
+    /// <summary>
+    ///     The width of the rectangle.
+    /// </summary>
+    [ReactProp]
+    public string width { get; set; }
+
+    /// <summary>
+    ///     The height of the rectangle.
+    /// </summary>
+    [ReactProp]
+    public string height { get; set; }
+
+    /// <summary>
+    ///     The border radius of the rectangle on the horizontal axis.
+    /// </summary>
+    [ReactProp]
+    public string rx { get; set; }
+
+    /// <summary>
+    ///     The border radius of the rectangle on the vertical axis.
+    /// </summary>
+    [ReactProp]
+    public string ry { get; set; }
+
+    /// <summary>
+    ///     The fill color of the rectangle.
+    /// </summary>
+    [ReactProp]
+    public string fill { get; set; }
+
+    /// <summary>
+    ///     The stroke color of the rectangle.
+    /// </summary>
+    [ReactProp]
+    public string stroke { get; set; }
+
+    /// <summary>
+    ///     The width of the rectangle's stroke.
+    /// </summary>
+    [ReactProp]
+    public string strokeWidth { get; set; }
+
+    /// <summary>
+    ///     The linecap style of the rectangle's stroke.
+    /// </summary>
+    [ReactProp]
+    public string strokeLinecap { get; set; }
+
+    /// <summary>
+    ///     The linejoin style of the rectangle's stroke.
+    /// </summary>
+    [ReactProp]
+    public string strokeLinejoin { get; set; }
+
+    public rect() { }
+
+    public rect(params IModifier[] modifiers) : base(modifiers) { }
+
+    public rect(Style style) : base(style) { }
+}
+
+public sealed class radialGradient : HtmlElement
+{
+    /// <summary>
+    ///     The x-coordinate of the center of the gradient.
+    /// </summary>
+    [ReactProp]
+    public string cx { get; set; }
+
+    /// <summary>
+    ///     The y-coordinate of the center of the gradient.
+    /// </summary>
+    [ReactProp]
+    public string cy { get; set; }
+
+    /// <summary>
+    ///     The x-coordinate of the focal point of the gradient.
+    /// </summary>
+    [ReactProp]
+    public string fx { get; set; }
+
+    /// <summary>
+    ///     The y-coordinate of the focal point of the gradient.
+    /// </summary>
+    [ReactProp]
+    public string fy { get; set; }
+
+    /// <summary>
+    ///     The radius of the gradient.
+    /// </summary>
+    [ReactProp]
+    public string r { get; set; }
+
+    /// <summary>
+    ///     The method used to spread the gradient.
+    /// </summary>
+    [ReactProp]
+    public string spreadMethod { get; set; }
+
+    /// <summary>
+    ///     The units used to specify the gradient.
+    /// </summary>
+    [ReactProp]
+    public string gradientUnits { get; set; }
+
+    /// <summary>
+    ///     A transform to apply to the gradient.
+    /// </summary>
+    [ReactProp]
+    public string gradientTransform { get; set; }
+
+    public radialGradient() { }
+
+    public radialGradient(params IModifier[] modifiers) : base(modifiers) { }
+
+    public radialGradient(Style style) : base(style) { }
+}
+
+public sealed class clipPath : HtmlElement
+{
+    /// <summary>
+    ///     Specifies the fill rule for the clipping path.
+    /// </summary>
+    [ReactProp]
+    public string clipRule { get; set; }
+
+    /// <summary>
+    ///     Specifies the reference box for the clipping path.
+    /// </summary>
+    [ReactProp]
+    public string clipBox { get; set; }
+
+    public clipPath() { }
+
+    public clipPath(params IModifier[] modifiers) : base(modifiers) { }
+
+    public clipPath(Style style) : base(style) { }
+}
+
