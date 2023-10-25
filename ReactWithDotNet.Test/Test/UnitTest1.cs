@@ -85,6 +85,24 @@ public class UnitTest1
 
             new() { Tag = "figcaption" },
             
+            new()
+            {
+                Tag = "table", 
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name = "cellSpacing",
+                        Type = "double?"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "cellPadding",
+                        Type = "double?"
+                    }
+                }
+            },
+            
             new() { Tag = "thead" },
             new() { Tag = "tbody" },
             new() { Tag = "tfoot" },

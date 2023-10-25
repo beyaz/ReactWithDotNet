@@ -811,6 +811,25 @@ public sealed class figcaption : HtmlElement
     public figcaption(Style style) : base(style) { }
 }
 
+public sealed class table : HtmlElement
+{
+    [ReactProp]
+    public double? cellSpacing { get; set; }
+
+    [ReactProp]
+    public double? cellPadding { get; set; }
+
+    public table() { }
+
+    public table(params IModifier[] modifiers) : base(modifiers) { }
+
+    public table(string innerText) : base(innerText) {  }
+
+    public static implicit operator table(string text) => new() { text = text };
+
+    public table(Style style) : base(style) { }
+}
+
 public sealed class thead : HtmlElement
 {
     public thead() { }
