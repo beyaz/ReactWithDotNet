@@ -52,15 +52,6 @@ public sealed class tfoot : HtmlElement
     }
 }
 
-partial class tr
-{
-    [ReactProp]
-    public int? colSpan { get; set; }
-
-    [ReactProp]
-    public int? rowSpan { get; set; }
-}
-
 partial class th 
 {
     [ReactProp]

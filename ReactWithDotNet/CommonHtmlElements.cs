@@ -837,8 +837,14 @@ public sealed partial class td : HtmlElement
     public td(Style style) : base(style) { }
 }
 
-public sealed partial class tr : HtmlElement
+public sealed class tr : HtmlElement
 {
+    [ReactProp]
+    public int? colSpan { get; set; }
+
+    [ReactProp]
+    public int? rowSpan { get; set; }
+
     public tr() { }
 
     public tr(params IModifier[] modifiers) : base(modifiers) { }

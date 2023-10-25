@@ -87,7 +87,23 @@ public class UnitTest1
             
             new() { Tag = "th", Comment = Empty, CreateClassAsPartial = true },
             new() { Tag = "td", Comment = Empty, CreateClassAsPartial = true },
-            new() { Tag = "tr", Comment = Empty, CreateClassAsPartial = true },
+            new()
+            {
+                Tag = "tr", 
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name = "colSpan",
+                        Type = "int?"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "rowSpan",
+                        Type = "int?"
+                    }
+                }
+            },
         };
 
         var list = new List<string>
@@ -108,9 +124,22 @@ public class UnitTest1
             list.Add($"public sealed{partialModifier} class {item.Tag} : HtmlElement");
             list.Add("{");
 
+            if (item.Attributes is not null)
+            {
+                foreach (var attribute in item.Attributes)
+                {
+                    list.Add( "    [ReactProp]");
+                    list.Add($"    public {attribute.Type} {attribute.Name} {{ get; set; }}");
+                    list.Add(Empty);
+                }
+            }
+            
             addComment();
             list.Add($"    public {item.Tag}() {{ }}");
 
+            
+            
+            
             list.Add(Empty);
             addComment();
             list.Add($"    public {item.Tag}(params IModifier[] modifiers) : base(modifiers) {{ }}");
@@ -161,5 +190,13 @@ public class UnitTest1
         public bool CreateClassAsPartial { get; init; }
         public bool EnableStringIntegration { get; init; } = true;
         public string Tag { get; init; }
+        
+        public IReadOnlyList<AttributeInfo> Attributes { get; init; }
+    }
+
+    class AttributeInfo
+    {
+        public string Type { get; set; }
+        public string Name { get; set; }
     }
 }
