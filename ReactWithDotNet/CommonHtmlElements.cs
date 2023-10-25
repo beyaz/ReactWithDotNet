@@ -1133,3 +1133,54 @@ public sealed class circle : HtmlElement
     public circle(Style style) : base(style) { }
 }
 
+public sealed class polygon : HtmlElement
+{
+    /// <summary>
+    ///     Specifies the coordinates of the polygon's vertices, in (x, y) pairs, separated by commas.
+    /// </summary>
+    [ReactProp]
+    public string points { get; set; }
+
+    /// <summary>
+    ///     Specifies the fill color of the polygon.
+    /// </summary>
+    [ReactProp]
+    public string fill { get; set; }
+
+    /// <summary>
+    ///     Specifies the stroke color of the polygon.
+    /// </summary>
+    [ReactProp]
+    public string stroke { get; set; }
+
+    /// <summary>
+    ///     Specifies the width of the polygon's stroke, in pixels.
+    /// </summary>
+    [ReactProp]
+    public string strokeWidth { get; set; }
+
+    /// <summary>
+    ///     Specifies the type of line cap used for the polygon's stroke.
+    /// </summary>
+    [ReactProp]
+    public string strokeLinecap { get; set; }
+
+    /// <summary>
+    ///     Specifies the type of line join used for the polygon's stroke.
+    /// </summary>
+    [ReactProp]
+    public string strokeLinejoin { get; set; }
+
+    /// <summary>
+    ///     Specifies how the polygon is filled.
+    /// </summary>
+    [ReactProp]
+    public string fillRule { get; set; }
+
+    public polygon() { }
+
+    public polygon(params IModifier[] modifiers) : base(modifiers) { }
+
+    public polygon(Style style) : base(style) { }
+}
+

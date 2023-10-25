@@ -425,6 +425,56 @@ public class UnitTest1
                     }
                 },
                 EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "polygon",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "points",
+                        Comment = "Specifies the coordinates of the polygon's vertices, in (x, y) pairs, separated by commas.",
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "fill",
+                        Comment = "Specifies the fill color of the polygon.",
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "stroke",
+                        Comment = "Specifies the stroke color of the polygon.",
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-width",
+                        Comment = "Specifies the width of the polygon's stroke, in pixels.",
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-linecap",
+                        Comment = "Specifies the type of line cap used for the polygon's stroke.",
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-linejoin",
+                        Comment = "Specifies the type of line join used for the polygon's stroke.",
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "fill-rule",
+                        Comment = "Specifies how the polygon is filled.",
+                    }
+                },
+                EnableCastFromString = false
             }
         };
 

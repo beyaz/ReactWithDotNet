@@ -267,29 +267,4 @@ public sealed class rect : HtmlElement
     public string y { get; set; }
 }
 
-public sealed class polygon : HtmlElement
-{
-    public polygon()
-    {
-    }
-
-    public polygon(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    [ReactProp]
-    public string fill { get; set; }
-
-    [ReactProp]
-    public string points { get; set; }
-
-    [ReactProp]
-    public string stroke { get; set; }
-
-    [ReactProp]
-    public string strokeWidth { get; set; }
-
-    [ReactProp]
-    public string transform { get; set; }
-}
-
 
