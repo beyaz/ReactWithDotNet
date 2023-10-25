@@ -917,3 +917,21 @@ public sealed class tr : HtmlElement
     public tr(Style style) : base(style) { }
 }
 
+public sealed class option : HtmlElement
+{
+    [ReactProp]
+    public bool? selected { get; set; }
+
+    [ReactProp]
+    public string disabled { get; set; }
+
+    [ReactProp]
+    public string value { get; set; }
+
+    public option() { }
+
+    public option(params IModifier[] modifiers) : base(modifiers) { }
+
+    public option(Style style) : base(style) { }
+}
+

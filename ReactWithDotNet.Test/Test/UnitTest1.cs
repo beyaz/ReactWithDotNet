@@ -229,7 +229,31 @@ public class UnitTest1
                     }
                 },
                 EnableCastFromString = false
-            }
+            },
+            
+            new()
+            {
+                Tag = "option",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name = "selected",
+                        Type = "bool?"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "disabled",
+                        Type = "string"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "value",
+                        Type = "string"
+                    }
+                },
+                EnableCastFromString = false
+            },
         };
 
         var list = new List<string>

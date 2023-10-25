@@ -211,25 +211,6 @@ public sealed class select : HtmlElement
     public string disabled { get; set; }
 }
 
-public sealed class option : HtmlElement
-{
-    public option()
-    {
-    }
-
-    public option(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-
-    [ReactProp]
-    public bool? selected { get; set; }
-    
-    [ReactProp]
-    public string disabled { get; set; }
-
-    [ReactProp]
-    public string value { get; set; }
-}
 
 public sealed class style : HtmlElement
 {
