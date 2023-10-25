@@ -58,22 +58,7 @@ public sealed class meta : HtmlElement
     public static HtmlElementModifier Name(string name) => Modify<meta>(element => element.name = name);
 }
 
-public sealed class button : HtmlElement
-{
-    [ReactProp]
-    public string type { get; set; }
-    
-    [ReactProp]
-    public string disabled { get; set; }
 
-    public button()
-    {
-    }
-
-    public button(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
 
 [Serializable]
 public sealed class InputValueBinder

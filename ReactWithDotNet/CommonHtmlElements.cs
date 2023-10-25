@@ -30,6 +30,25 @@ public sealed class article : HtmlElement
     public article(Style style) : base(style) { }
 }
 
+public sealed class button : HtmlElement
+{
+    [ReactProp]
+    public string type { get; set; }
+
+    [ReactProp]
+    public string disabled { get; set; }
+
+    public button() { }
+
+    public button(params IModifier[] modifiers) : base(modifiers) { }
+
+    public button(string innerText) : base(innerText) {  }
+
+    public static implicit operator button(string text) => new() { text = text };
+
+    public button(Style style) : base(style) { }
+}
+
 public sealed class div : HtmlElement
 {
     public div() { }

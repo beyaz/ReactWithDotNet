@@ -15,7 +15,25 @@ public class UnitTest1
         TagInfo[] map =
         {
             new() { Tag = "article", Comment = "Specifies independent, self-contained content." },
-
+            
+            new()
+            {
+                Tag = "button", 
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name = "type",
+                        Type = "string"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "disabled",
+                        Type = "string"
+                    }
+                }
+            },
+            
             new() { Tag = "div", Comment = Empty },
 
             new() { Tag = "p", Comment = "Defines a paragraph" },
