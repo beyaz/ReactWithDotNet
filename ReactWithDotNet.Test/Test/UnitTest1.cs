@@ -14,11 +14,16 @@ public class UnitTest1
     {
         TagInfo[] map =
         {
-            new() { Tag = "article", Comment = "Specifies independent, self-contained content." },
-            
             new()
             {
-                Tag = "button", 
+                Tag                  = "article",
+                Comment              = "Specifies independent, self-contained content.",
+                EnableCastFromString = true
+            },
+
+            new()
+            {
+                Tag = "button",
                 Attributes = new[]
                 {
                     new AttributeInfo
@@ -31,57 +36,102 @@ public class UnitTest1
                         Name = "disabled",
                         Type = "string"
                     }
-                }
+                },
+                EnableCastFromString = false
             },
-            
-            new() { Tag = "div", Comment = Empty },
 
-            new() { Tag = "p", Comment = "Defines a paragraph" },
+            new()
+            {
+                Tag                  = "div",
+                Comment              = Empty,
+                EnableCastFromString = true
+            },
 
-            new() { Tag = "pre", Comment  = "Preformatted text" },
-            new() { Tag = "code", Comment = "Define some text as computer code in a document" },
+            new()
+            {
+                Tag                  = "p",
+                Comment              = "Defines a paragraph",
+                EnableCastFromString = true
+            },
 
-            new() { Tag = "ol", Comment = "Ordered list" },
+            new()
+            {
+                Tag                  = "pre",
+                Comment              = "Preformatted text",
+                EnableCastFromString = true
+            },
+            new()
+            {
+                Tag                  = "code",
+                Comment              = "Define some text as computer code in a document",
+                EnableCastFromString = true
+            },
 
-            new() { Tag = "ul", Comment = "Unordered (bulleted) list" },
+            new()
+            {
+                Tag                  = "ol",
+                Comment              = "Ordered list",
+                EnableCastFromString = true
+            },
 
-            new() { Tag = "li", Comment = "List item" },
+            new()
+            {
+                Tag                  = "ul",
+                Comment              = "Unordered (bulleted) list",
+                EnableCastFromString = true
+            },
 
-            new() { Tag = "label", CreateClassAsPartial = true },
+            new()
+            {
+                Tag                  = "li",
+                Comment              = "List item",
+                EnableCastFromString = true
+            },
 
-            new() { Tag = "h1", Comment = Empty },
+            new()
+            {
+                Tag                  = "label",
+                CreateClassAsPartial = true,
+                EnableCastFromString = true
+            },
 
-            new() { Tag = "h2", Comment = Empty },
-            new() { Tag = "h3", Comment = Empty },
-            new() { Tag = "h4", Comment = Empty },
-            new() { Tag = "h5", Comment = Empty },
-            new() { Tag = "h6", Comment = Empty },
+            new() { Tag = "h1", Comment = Empty, EnableCastFromString = true },
+            new() { Tag = "h2", Comment = Empty, EnableCastFromString = true },
+            new() { Tag = "h3", Comment = Empty, EnableCastFromString = true },
+            new() { Tag = "h4", Comment = Empty, EnableCastFromString = true },
+            new() { Tag = "h5", Comment = Empty, EnableCastFromString = true },
+            new() { Tag = "h6", Comment = Empty, EnableCastFromString = true },
 
-            new() { Tag = "header", Comment = Empty },
+            new() { Tag = "header", Comment = Empty, EnableCastFromString = true },
 
-            new() { Tag = "span", Comment = "Inline container used to mark up a part of a text, or a part of a document." },
+            new() { Tag = "span", Comment = "Inline container used to mark up a part of a text, or a part of a document.", EnableCastFromString = true },
 
-            new() { Tag = "sup", Comment = "Superscript text" },
+            new() { Tag = "sup", Comment = "Superscript text", EnableCastFromString = true },
 
-            new() { Tag = "sub", Comment = "Subscript text" },
+            new() { Tag = "sub", Comment = "Subscript text", EnableCastFromString = true },
 
-            new() { Tag = "ins", Comment = "Inserted text" },
+            new() { Tag = "ins", Comment = "Inserted text", EnableCastFromString = true },
 
-            new() { Tag = "del", Comment = "Deleted text" },
+            new() { Tag = "del", Comment = "Deleted text", EnableCastFromString = true },
 
-            new() { Tag = "small", Comment = "Smaller text" },
+            new() { Tag = "small", Comment = "Smaller text", EnableCastFromString = true },
 
-            new() { Tag = "mark", Comment = "Marked text" },
+            new() { Tag = "mark", Comment = "Marked text", EnableCastFromString = true },
 
-            new() { Tag = "em", Comment = "Emphasized text" },
+            new() { Tag = "em", Comment = "Emphasized text", EnableCastFromString = true },
 
-            new() { Tag = "b", Comment = "Bold text" },
+            new() { Tag = "b", Comment = "Bold text", EnableCastFromString = true },
 
-            new() { Tag = "i", Comment = "Italic text" },
-            
-            new() { Tag = "u", Comment = "Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline." },
+            new() { Tag = "i", Comment = "Italic text", EnableCastFromString = true },
 
-            new() { Tag = "strong", Comment = "Important text" },
+            new()
+            {
+                Tag                  = "u",
+                Comment              = "Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.",
+                EnableCastFromString = true
+            },
+
+            new() { Tag = "strong", Comment = "Important text", EnableCastFromString = true },
 
             new() { Tag = "section", Comment = "Section in a document", EnableCastFromString = false },
 
@@ -101,11 +151,11 @@ public class UnitTest1
 
             new() { Tag = "hr", EnableCastFromString = false },
 
-            new() { Tag = "figcaption" },
-            
+            new() { Tag = "figcaption", EnableCastFromString = true },
+
             new()
             {
-                Tag = "table", 
+                Tag = "table",
                 Attributes = new[]
                 {
                     new AttributeInfo
@@ -118,16 +168,17 @@ public class UnitTest1
                         Name = "cellPadding",
                         Type = "double?"
                     }
-                }
+                },
+                EnableCastFromString = false
             },
-            
-            new() { Tag = "thead" },
-            new() { Tag = "tbody" },
-            new() { Tag = "tfoot" },
-            
+
+            new() { Tag = "thead", EnableCastFromString = false },
+            new() { Tag = "tbody", EnableCastFromString = false },
+            new() { Tag = "tfoot", EnableCastFromString = false },
+
             new()
             {
-                Tag = "th", 
+                Tag = "th",
                 Attributes = new[]
                 {
                     new AttributeInfo
@@ -140,11 +191,12 @@ public class UnitTest1
                         Name = "rowSpan",
                         Type = "int?"
                     }
-                }
+                },
+                EnableCastFromString = false
             },
             new()
             {
-                Tag = "td", 
+                Tag = "td",
                 Attributes = new[]
                 {
                     new AttributeInfo
@@ -157,11 +209,12 @@ public class UnitTest1
                         Name = "rowSpan",
                         Type = "int?"
                     }
-                }
+                },
+                EnableCastFromString = true
             },
             new()
             {
-                Tag = "tr", 
+                Tag = "tr",
                 Attributes = new[]
                 {
                     new AttributeInfo
@@ -174,8 +227,9 @@ public class UnitTest1
                         Name = "rowSpan",
                         Type = "int?"
                     }
-                }
-            },
+                },
+                EnableCastFromString = false
+            }
         };
 
         var list = new List<string>
@@ -200,18 +254,15 @@ public class UnitTest1
             {
                 foreach (var attribute in item.Attributes)
                 {
-                    list.Add( "    [ReactProp]");
+                    list.Add("    [ReactProp]");
                     list.Add($"    public {attribute.Type} {attribute.Name} {{ get; set; }}");
                     list.Add(Empty);
                 }
             }
-            
+
             addComment();
             list.Add($"    public {item.Tag}() {{ }}");
 
-            
-            
-            
             list.Add(Empty);
             addComment();
             list.Add($"    public {item.Tag}(params IModifier[] modifiers) : base(modifiers) {{ }}");
@@ -256,19 +307,18 @@ public class UnitTest1
         File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
     }
 
+    class AttributeInfo
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+    }
+
     class TagInfo
     {
+        public IReadOnlyList<AttributeInfo> Attributes { get; init; }
         public string Comment { get; init; }
         public bool CreateClassAsPartial { get; init; }
         public bool EnableCastFromString { get; init; } = true;
         public string Tag { get; init; }
-        
-        public IReadOnlyList<AttributeInfo> Attributes { get; init; }
-    }
-
-    class AttributeInfo
-    {
-        public string Type { get; set; }
-        public string Name { get; set; }
     }
 }
