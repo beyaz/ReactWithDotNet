@@ -293,23 +293,3 @@ public sealed class polygon : HtmlElement
 }
 
 
-public sealed class circle : HtmlElement
-{
-    public circle()
-    {
-    }
-
-    public circle(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    
-    [ReactProp]
-    public string cx{ get; set; }
-    [ReactProp] public string cy{ get; set; }
-    [ReactProp] public string r{ get; set; }
-    [ReactProp] public string stroke{ get; set; }
-    [ReactProp] public string fill{ get; set; }
-}
-
-
-

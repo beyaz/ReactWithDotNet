@@ -1088,3 +1088,48 @@ public sealed class polyline : HtmlElement
     public polyline(Style style) : base(style) { }
 }
 
+public sealed class circle : HtmlElement
+{
+    /// <summary>
+    ///     The x-coordinate of the center of the circle.
+    /// </summary>
+    [ReactProp]
+    public string cx { get; set; }
+
+    /// <summary>
+    ///     The y-coordinate of the center of the circle.
+    /// </summary>
+    [ReactProp]
+    public string cy { get; set; }
+
+    /// <summary>
+    ///     The radius of the circle.
+    /// </summary>
+    [ReactProp]
+    public string r { get; set; }
+
+    /// <summary>
+    ///     The fill color of the circle.
+    /// </summary>
+    [ReactProp]
+    public string fill { get; set; }
+
+    /// <summary>
+    ///     The stroke color of the circle.
+    /// </summary>
+    [ReactProp]
+    public string stroke { get; set; }
+
+    /// <summary>
+    ///     The width of the stroke of the circle.
+    /// </summary>
+    [ReactProp]
+    public string strokeWidth { get; set; }
+
+    public circle() { }
+
+    public circle(params IModifier[] modifiers) : base(modifiers) { }
+
+    public circle(Style style) : base(style) { }
+}
+

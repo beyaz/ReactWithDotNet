@@ -231,7 +231,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "option",
@@ -255,7 +255,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "ellipse",
@@ -299,7 +299,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "line",
@@ -355,12 +355,11 @@ public class UnitTest1
                         Name    = "stroke-opacity",
                         Comment = "The opacity (transparency) of the line's stroke."
                     }
-
                 },
                 EnableCastFromString = false
             },
-            
-             new()
+
+            new()
             {
                 Tag = "polyline",
                 Attributes = new[]
@@ -388,6 +387,45 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
+
+            new()
+            {
+                Tag = "circle",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "cx",
+                        Comment = "The x-coordinate of the center of the circle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "cy",
+                        Comment = "The y-coordinate of the center of the circle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "r",
+                        Comment = "The radius of the circle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "fill",
+                        Comment = "The fill color of the circle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke",
+                        Comment = "The stroke color of the circle."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-width",
+                        Comment = "The width of the stroke of the circle."
+                    }
+                },
+                EnableCastFromString = false
+            }
         };
 
         var list = new List<string>
@@ -396,7 +434,7 @@ public class UnitTest1
         };
 
         const string padding = "    ";
-            
+
         foreach (var item in map)
         {
             addComment(null);
@@ -420,7 +458,7 @@ public class UnitTest1
                         list.Add($"{padding}///     {attribute.Comment}");
                         list.Add($"{padding}/// </summary>");
                     }
-                    
+
                     list.Add("    [ReactProp]");
                     list.Add($"    public {attribute.Type} {CamelCase(attribute.Name)} {{ get; set; }}");
                     list.Add(Empty);
@@ -453,13 +491,13 @@ public class UnitTest1
 
             list.Add(Empty);
 
-            void addComment(string padding = "    ")
+            void addComment(string space = "    ")
             {
                 if (IsNullOrWhiteSpace(item.Comment) == false)
                 {
-                    list.Add($"{padding}/// <summary>");
-                    list.Add($"{padding}///     {item.Comment}");
-                    list.Add($"{padding}/// </summary>");
+                    list.Add($"{space}/// <summary>");
+                    list.Add($"{space}///     {item.Comment}");
+                    list.Add($"{space}/// </summary>");
                 }
             }
         }
@@ -472,14 +510,14 @@ public class UnitTest1
         }
 
         File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\CommonHtmlElements.cs", sb.ToString());
-        
+
         static string CamelCase(string str)
         {
             if (str.IndexOf('-') > 0)
             {
                 var names = str.Split("-");
-                    
-                return names[0] + string.Join(string.Empty, names.Skip(1).Select(name=>char.ToUpper(name[0], new CultureInfo("en-US")) + name.Substring(1)));
+
+                return names[0] + Join(Empty, names.Skip(1).Select(name => char.ToUpper(name[0], new CultureInfo("en-US")) + name.Substring(1)));
             }
 
             return str;
@@ -488,8 +526,8 @@ public class UnitTest1
 
     class AttributeInfo
     {
-        public string Name { get; init; }
         public string Comment { get; init; }
+        public string Name { get; init; }
         public string Type { get; init; } = "string";
     }
 
@@ -503,12 +541,9 @@ public class UnitTest1
     }
 }
 
-
 // List attribute names of html 'ellipse' tag in this format
 // new AttributeInfo
 // {
 //     Name    = "#name",
 //     Comment = "#description"
 // }
-
-
