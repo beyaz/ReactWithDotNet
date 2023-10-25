@@ -116,31 +116,7 @@ partial class Mixin
 
 
 
-public sealed class g : HtmlElement
-{
-    public g()
-    {
-    }
 
-    public g(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    
-    [ReactProp]
-    public string opacity { get; set; }
-    
-    [ReactProp]
-    public string clipPath { get; set; }
-
-    [ReactProp]
-    public string transform { get; set; }
-    
-    
-    /// <summary>
-    ///     g.clipPath = <paramref name="value" />
-    /// </summary>
-    public static HtmlElementModifier ClipPath(string value) => Modify<g>(el => el.clipPath = value);
-}
 
 public sealed class defs : HtmlElement;
 

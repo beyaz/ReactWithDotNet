@@ -597,11 +597,6 @@ public class UnitTest1
                 {
                     new AttributeInfo
                     {
-                        Name    = "clip-path",
-                        Comment = "Specifies a clipping path for the element.",
-                    },
-                    new AttributeInfo
-                    {
                         Name    = "clip-rule",
                         Comment = "Specifies the fill rule for the clipping path.",
                     },
@@ -656,6 +651,29 @@ public class UnitTest1
                     {
                         Name = "strokeLinejoin"
                     },
+                },
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "g",
+                Attributes = new[]
+                {
+                    
+                    new AttributeInfo
+                    {
+                        Name    = "opacity"
+                    },
+                    
+                    new AttributeInfo
+                    {
+                        Name = "clipPath"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "transform"
+                    }
                 },
                 EnableCastFromString = false
             }

@@ -1319,12 +1319,6 @@ public sealed class radialGradient : HtmlElement
 public sealed class clipPath : HtmlElement
 {
     /// <summary>
-    ///     Specifies a clipping path for the element.
-    /// </summary>
-    [ReactProp]
-    public string clipPath { get; set; }
-
-    /// <summary>
     ///     Specifies the fill rule for the clipping path.
     /// </summary>
     [ReactProp]
@@ -1386,5 +1380,23 @@ public sealed class path : HtmlElement
     public path(params IModifier[] modifiers) : base(modifiers) { }
 
     public path(Style style) : base(style) { }
+}
+
+public sealed class g : HtmlElement
+{
+    [ReactProp]
+    public string opacity { get; set; }
+
+    [ReactProp]
+    public string clipPath { get; set; }
+
+    [ReactProp]
+    public string transform { get; set; }
+
+    public g() { }
+
+    public g(params IModifier[] modifiers) : base(modifiers) { }
+
+    public g(Style style) : base(style) { }
 }
 
