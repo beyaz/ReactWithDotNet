@@ -196,11 +196,6 @@ partial class Mixin
     ///     style.borderCollapse = separate
     /// </summary>
     public static StyleModifier BorderCollapseSeparate => BorderCollapse("separate");
-
-    /// <summary>
-    ///     table.cellSpacing = <paramref name="value" />
-    /// </summary>
-    public static HtmlElementModifier CellSpacing(double? value) => table.CellSpacing(value);
     
     /// <summary>
     ///     table.cellPadding = <paramref name="value" />
