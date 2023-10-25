@@ -986,3 +986,105 @@ public sealed class ellipse : HtmlElement
     public ellipse(Style style) : base(style) { }
 }
 
+public sealed class line : HtmlElement
+{
+    /// <summary>
+    ///     The x-coordinate of the start point of the line.
+    /// </summary>
+    [ReactProp]
+    public string x1 { get; set; }
+
+    /// <summary>
+    ///     The y-coordinate of the start point of the line.
+    /// </summary>
+    [ReactProp]
+    public string y1 { get; set; }
+
+    /// <summary>
+    ///     The x-coordinate of the end point of the line.
+    /// </summary>
+    [ReactProp]
+    public string x2 { get; set; }
+
+    /// <summary>
+    ///     The y-coordinate of the end point of the line.
+    /// </summary>
+    [ReactProp]
+    public string y2 { get; set; }
+
+    /// <summary>
+    ///     The stroke (outline) color of the line.
+    /// </summary>
+    [ReactProp]
+    public string stroke { get; set; }
+
+    /// <summary>
+    ///     The width of the line's outline.
+    /// </summary>
+    [ReactProp]
+    public string strokeWidth { get; set; }
+
+    /// <summary>
+    ///     Pattern of dashes and gaps used in the line's stroke.
+    /// </summary>
+    [ReactProp]
+    public string strokeDasharray { get; set; }
+
+    /// <summary>
+    ///     The style of the line's endpoints.
+    /// </summary>
+    [ReactProp]
+    public string strokeLinecap { get; set; }
+
+    /// <summary>
+    ///     The style of the line's corners.
+    /// </summary>
+    [ReactProp]
+    public string strokeLinejoin { get; set; }
+
+    /// <summary>
+    ///     The opacity (transparency) of the line's stroke.
+    /// </summary>
+    [ReactProp]
+    public string strokeOpacity { get; set; }
+
+    public line() { }
+
+    public line(params IModifier[] modifiers) : base(modifiers) { }
+
+    public line(Style style) : base(style) { }
+}
+
+public sealed class polyline : HtmlElement
+{
+    /// <summary>
+    ///     A list of points defining the vertices of the polyline.
+    /// </summary>
+    [ReactProp]
+    public string points { get; set; }
+
+    /// <summary>
+    ///     The fill color of the polyline.
+    /// </summary>
+    [ReactProp]
+    public string fill { get; set; }
+
+    /// <summary>
+    ///     The stroke (outline) color of the polyline.
+    /// </summary>
+    [ReactProp]
+    public string stroke { get; set; }
+
+    /// <summary>
+    ///     The width of the polyline's outline.
+    /// </summary>
+    [ReactProp]
+    public string strokeWidth { get; set; }
+
+    public polyline() { }
+
+    public polyline(params IModifier[] modifiers) : base(modifiers) { }
+
+    public polyline(Style style) : base(style) { }
+}
+

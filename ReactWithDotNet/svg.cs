@@ -311,34 +311,5 @@ public sealed class circle : HtmlElement
     [ReactProp] public string fill{ get; set; }
 }
 
-public sealed class line : HtmlElement
-{
-    public line()
-    {
-    }
 
-    public line(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    
-    [ReactProp]  public string x1{ get; set; }
-  [ReactProp]  public string x2{ get; set; }
-  [ReactProp]  public string y1{ get; set; }
-  [ReactProp]  public string y2{ get; set; }
-    [ReactProp] public string stroke{ get; set; }
-}
-public sealed class polyline : HtmlElement
-{
-    public polyline()
-    {
-    }
-
-    public polyline(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    
-    [ReactProp]  public string points{ get; set; }
-  [ReactProp]  public string fill{ get; set; }
-    [ReactProp] public string stroke{ get; set; }
-}
 

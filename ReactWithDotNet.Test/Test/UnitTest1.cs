@@ -299,6 +299,95 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
+            
+            new()
+            {
+                Tag = "line",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "x1",
+                        Comment = "The x-coordinate of the start point of the line."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "y1",
+                        Comment = "The y-coordinate of the start point of the line."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "x2",
+                        Comment = "The x-coordinate of the end point of the line."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "y2",
+                        Comment = "The y-coordinate of the end point of the line."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke",
+                        Comment = "The stroke (outline) color of the line."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-width",
+                        Comment = "The width of the line's outline."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-dasharray",
+                        Comment = "Pattern of dashes and gaps used in the line's stroke."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-linecap",
+                        Comment = "The style of the line's endpoints."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-linejoin",
+                        Comment = "The style of the line's corners."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-opacity",
+                        Comment = "The opacity (transparency) of the line's stroke."
+                    }
+
+                },
+                EnableCastFromString = false
+            },
+            
+             new()
+            {
+                Tag = "polyline",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "points",
+                        Comment = "A list of points defining the vertices of the polyline."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "fill",
+                        Comment = "The fill color of the polyline."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke",
+                        Comment = "The stroke (outline) color of the polyline."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "stroke-width",
+                        Comment = "The width of the polyline's outline."
+                    }
+                },
+                EnableCastFromString = false
+            },
         };
 
         var list = new List<string>
@@ -414,13 +503,12 @@ public class UnitTest1
     }
 }
 
-/*
- List attribute names of html 'ellipse' tag in this format
-   
-   new AttributeInfo
-   {
-   Name = "#name",
-   Comment = "#description"
-   }
 
- */
+// List attribute names of html 'ellipse' tag in this format
+// new AttributeInfo
+// {
+//     Name    = "#name",
+//     Comment = "#description"
+// }
+
+
