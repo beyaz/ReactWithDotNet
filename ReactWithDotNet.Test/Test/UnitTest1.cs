@@ -726,6 +726,30 @@ public class UnitTest1
                     }
                 },
                 EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "body",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "background",
+                        Comment = "Specifies the URL of a background image to be displayed behind the document's content."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "bgcolor",
+                        Comment = "Specifies the background color of the document's body."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "link",
+                        Comment = "Specifies the color of unvisited links in the document's body."
+                    }
+                },
+                EnableCastFromString = false
             }
         };
 

@@ -27,16 +27,6 @@ public sealed class script : HtmlElement
     public string type { get; set; }
 }
 
-public sealed class body : HtmlElement
-{
-    public body()
-    {
-    }
-
-    public body(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
 
 
 

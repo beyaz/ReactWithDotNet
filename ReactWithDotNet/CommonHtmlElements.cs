@@ -1457,3 +1457,31 @@ public sealed class meta : HtmlElement
     public meta(Style style) : base(style) { }
 }
 
+public sealed class body : HtmlElement
+{
+    /// <summary>
+    ///     Specifies the URL of a background image to be displayed behind the document's content.
+    /// </summary>
+    [ReactProp]
+    public string background { get; set; }
+
+    /// <summary>
+    ///     Specifies the background color of the document's body.
+    /// </summary>
+    [ReactProp]
+    public string bgcolor { get; set; }
+
+    /// <summary>
+    ///     Specifies the color of unvisited links in the document's body.
+    /// </summary>
+    [ReactProp]
+    public string link { get; set; }
+
+
+    public body() { }
+
+    public body(params IModifier[] modifiers) : base(modifiers) { }
+
+    public body(Style style) : base(style) { }
+}
+
