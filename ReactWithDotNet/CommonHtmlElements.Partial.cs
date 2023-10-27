@@ -1,10 +1,6 @@
 namespace ReactWithDotNet;
 
-partial class label
-{
-    [ReactProp]
-    public string htmlFor { get; set; }
-}
+
 
 sealed class Nbsp : HtmlElement
 {

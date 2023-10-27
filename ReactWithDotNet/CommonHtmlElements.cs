@@ -244,19 +244,6 @@ public sealed class li : HtmlElement
     public li(Style style) : base(style) { }
 }
 
-public sealed partial class label : HtmlElement
-{
-    public label() { }
-
-    public label(params IModifier[] modifiers) : base(modifiers) { }
-
-    public label(string innerText) : base(innerText) {  }
-
-    public static implicit operator label(string text) => new() { text = text };
-
-    public label(Style style) : base(style) { }
-}
-
 public sealed class h1 : HtmlElement
 {
     public h1() { }
@@ -1558,8 +1545,6 @@ public sealed class head : HtmlElement
     [ReactProp]
     public string profile { get; set; }
 
-   
-
     /// <summary>
     ///     Provides a link to an external resource, such as a stylesheet or script file.
     /// </summary>
@@ -1571,7 +1556,6 @@ public sealed class head : HtmlElement
     /// </summary>
     [ReactProp]
     public string meta { get; set; }
-
 
     /// <summary>
     ///     Provides JavaScript code to be executed in the browser.
@@ -1585,11 +1569,122 @@ public sealed class head : HtmlElement
     [ReactProp]
     public string noscript { get; set; }
 
-
     public head() { }
 
     public head(params IModifier[] modifiers) : base(modifiers) { }
 
     public head(Style style) : base(style) { }
+}
+
+public sealed class html : HtmlElement
+{
+    /// <summary>
+    ///     Hides the element from display.
+    /// </summary>
+    [ReactProp]
+    public string hidden { get; set; }
+
+    /// <summary>
+    ///     Specifies the URL of a manifest file, which provides information about the web app.
+    /// </summary>
+    [ReactProp]
+    public string manifest { get; set; }
+
+    /// <summary>
+    ///     Specifies the namespace of the element.
+    /// </summary>
+    [ReactProp]
+    public string xmlns { get; set; } = "http://www.w3.org/1999/xhtml";
+
+    /// <summary>
+    ///     Specifies the prefix of the element.
+    /// </summary>
+    [ReactProp]
+    public string prefix { get; set; }
+
+    /// <summary>
+    ///     Specifies the version of the HTML specification to which the element conforms.
+    /// </summary>
+    [ReactProp]
+    public string version { get; set; }
+
+    public html() { }
+
+    public html(params IModifier[] modifiers) : base(modifiers) { }
+
+    public html(Style style) : base(style) { }
+}
+
+public sealed class label : HtmlElement
+{
+    /// <summary>
+    ///     Specifies which form element a label is bound to.
+    /// </summary>
+    [ReactProp]
+    public string htmlFor { get; set; }
+
+    /// <summary>
+    ///     Defines a keyboard shortcut to activate the element.
+    /// </summary>
+    [ReactProp]
+    public string accesskey { get; set; }
+
+    /// <summary>
+    ///     Specifies whether the content of the element is editable.
+    /// </summary>
+    [ReactProp]
+    public string contenteditable { get; set; }
+
+    /// <summary>
+    ///     Specifies whether the element is draggable.
+    /// </summary>
+    [ReactProp]
+    public string draggable { get; set; }
+
+    /// <summary>
+    ///     Specifies whether the element is a drop target.
+    /// </summary>
+    [ReactProp]
+    public string dropzone { get; set; }
+
+    /// <summary>
+    ///     Hides the element from view.
+    /// </summary>
+    [ReactProp]
+    public string hidden { get; set; }
+
+    /// <summary>
+    ///     Specifies whether the element's content should be spellchecked.
+    /// </summary>
+    [ReactProp]
+    public string spellcheck { get; set; }
+
+    /// <summary>
+    ///     Specifies the element's position in the tab order.
+    /// </summary>
+    [ReactProp]
+    public string tabindex { get; set; }
+
+    /// <summary>
+    ///     Adds a tooltip to the element.
+    /// </summary>
+    [ReactProp]
+    public string title { get; set; }
+
+    /// <summary>
+    ///     Specifies whether the element's content should be translated.
+    /// </summary>
+    [ReactProp]
+    public string translate { get; set; }
+
+    public label() { }
+
+    public label(params IModifier[] modifiers) : base(modifiers) { }
+
+    public label(string innerText) : base(innerText) {  }
+
+    public static implicit operator label(string text) => new() { text = text };
+
+    public label(Style style) : base(style) { }
 }
 

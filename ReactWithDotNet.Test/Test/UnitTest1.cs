@@ -89,12 +89,7 @@ public class UnitTest1
                 EnableCastFromString = true
             },
 
-            new()
-            {
-                Tag                  = "label",
-                CreateClassAsPartial = true,
-                EnableCastFromString = true
-            },
+           
 
             new() { Tag = "h1", Comment = Empty, EnableCastFromString = true },
             new() { Tag = "h2", Comment = Empty, EnableCastFromString = true },
@@ -848,7 +843,108 @@ public class UnitTest1
                     //}
                 },
                 EnableCastFromString = false
-            }
+            },
+            
+            
+            new()
+            {
+                Tag = "html",
+                Attributes = new[]
+                {
+                   
+                    new AttributeInfo
+                    {
+                        Name    = "hidden",
+                        Comment = "Hides the element from display."
+                    },
+                    
+                    new AttributeInfo
+                    {
+                        Name    = "manifest",
+                        Comment = "Specifies the URL of a manifest file, which provides information about the web app."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "xmlns",
+                        Comment = "Specifies the namespace of the element.",
+                        DefaultValue = "http://www.w3.org/1999/xhtml"
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "prefix",
+                        Comment = "Specifies the prefix of the element."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "version",
+                        Comment = "Specifies the version of the HTML specification to which the element conforms."
+                    }
+                },
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag                  = "label",
+                EnableCastFromString = true,
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "htmlFor",
+                        Comment = "Specifies which form element a label is bound to."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "accesskey",
+                        Comment = "Defines a keyboard shortcut to activate the element."
+                    },
+                   
+                    new AttributeInfo
+                    {
+                        Name    = "contenteditable",
+                        Comment = "Specifies whether the content of the element is editable."
+                    },
+                    
+                    new AttributeInfo
+                    {
+                        Name    = "draggable",
+                        Comment = "Specifies whether the element is draggable."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "dropzone",
+                        Comment = "Specifies whether the element is a drop target."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "hidden",
+                        Comment = "Hides the element from view."
+                    },
+                   
+                    new AttributeInfo
+                    {
+                        Name    = "spellcheck",
+                        Comment = "Specifies whether the element's content should be spellchecked."
+                    },
+                    
+                    new AttributeInfo
+                    {
+                        Name    = "tabindex",
+                        Comment = "Specifies the element's position in the tab order."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "title",
+                        Comment = "Adds a tooltip to the element."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "translate",
+                        Comment = "Specifies whether the element's content should be translated."
+                    }
+                },
+            },
         };
 
         var list = new List<string>
@@ -882,8 +978,13 @@ public class UnitTest1
                         list.Add($"{padding}/// </summary>");
                     }
 
+                    var partDefaultValueAssignment = "";
+                    if (attribute.DefaultValue is not null)
+                    {
+                        partDefaultValueAssignment = $" = \"{attribute.DefaultValue}\";";
+                    }
                     list.Add("    [ReactProp]");
-                    list.Add($"    public {attribute.Type} {CamelCase(attribute.Name)} {{ get; set; }}");
+                    list.Add($"    public {attribute.Type} {CamelCase(attribute.Name)} {{ get; set; }}{partDefaultValueAssignment}");
                     list.Add(Empty);
                 }
             }
@@ -952,6 +1053,7 @@ public class UnitTest1
         public string Comment { get; init; }
         public string Name { get; init; }
         public string Type { get; init; } = "string";
+        public string DefaultValue { get; set; }
     }
 
     class TagInfo

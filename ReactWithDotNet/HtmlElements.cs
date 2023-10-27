@@ -1,29 +1,5 @@
 ﻿namespace ReactWithDotNet;
 
-public sealed class html : HtmlElement
-{
-    public html()
-    {
-    }
-
-    public html(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-
-    [ReactProp]
-    public string xmlns { get; set; } = "http://www.w3.org/1999/xhtml";
-}
-
-
-
-
-
-
-
-
-
-
-
 [Serializable]
 public sealed class InputValueBinder
 {
