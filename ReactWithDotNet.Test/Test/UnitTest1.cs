@@ -750,6 +750,63 @@ public class UnitTest1
                     }
                 },
                 EnableCastFromString = false
+            },
+            new()
+            {
+                Tag = "script",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "async",
+                        Comment = "Specifies that the script should be executed asynchronously. This means that the browser will not wait for the script to finish executing before continuing to parse the rest of the HTML."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "defer",
+                        Comment = "Specifies that the script should be executed after the browser has finished parsing the rest of the HTML. This is similar to async, but it ensures that scripts are executed in the order they are specified in the HTML."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "integrity",
+                        Comment = "Specifies a subresource integrity (SRI) hash for the script. This helps to protect against man-in-the-middle attacks."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "language",
+                        Comment = "Specifies the scripting language of the script. This is deprecated, but is still supported by most browsers."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "nomodule",
+                        Comment = "Specifies that the script should be ignored if the browser does not support modules."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "src",
+                        Comment = "Specifies the URL of an external script file."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "type",
+                        Comment = "Specifies the type of the script. The most common value is application/javascript."
+                    }
+                },
+                EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "title",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "language",
+                        Comment = "Specifies the language of the title."
+                    }
+                },
+                EnableCastFromString = false
             }
         };
 

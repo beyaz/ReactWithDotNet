@@ -16,16 +16,9 @@ public sealed class html : HtmlElement
 
 public sealed class head : HtmlElement;
 
-public sealed class title : HtmlElement;
 
-public sealed class script : HtmlElement
-{
-    [ReactProp]
-    public string src { get; set; }
 
-    [ReactProp]
-    public string type { get; set; }
-}
+
 
 
 

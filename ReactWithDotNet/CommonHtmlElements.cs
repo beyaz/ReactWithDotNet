@@ -1477,11 +1477,77 @@ public sealed class body : HtmlElement
     [ReactProp]
     public string link { get; set; }
 
-
     public body() { }
 
     public body(params IModifier[] modifiers) : base(modifiers) { }
 
     public body(Style style) : base(style) { }
+}
+
+public sealed class script : HtmlElement
+{
+    /// <summary>
+    ///     Specifies that the script should be executed asynchronously. This means that the browser will not wait for the script to finish executing before continuing to parse the rest of the HTML.
+    /// </summary>
+    [ReactProp]
+    public string async { get; set; }
+
+    /// <summary>
+    ///     Specifies that the script should be executed after the browser has finished parsing the rest of the HTML. This is similar to async, but it ensures that scripts are executed in the order they are specified in the HTML.
+    /// </summary>
+    [ReactProp]
+    public string defer { get; set; }
+
+    /// <summary>
+    ///     Specifies a subresource integrity (SRI) hash for the script. This helps to protect against man-in-the-middle attacks.
+    /// </summary>
+    [ReactProp]
+    public string integrity { get; set; }
+
+    /// <summary>
+    ///     Specifies the scripting language of the script. This is deprecated, but is still supported by most browsers.
+    /// </summary>
+    [ReactProp]
+    public string language { get; set; }
+
+    /// <summary>
+    ///     Specifies that the script should be ignored if the browser does not support modules.
+    /// </summary>
+    [ReactProp]
+    public string nomodule { get; set; }
+
+    /// <summary>
+    ///     Specifies the URL of an external script file.
+    /// </summary>
+    [ReactProp]
+    public string src { get; set; }
+
+    /// <summary>
+    ///     Specifies the type of the script. The most common value is application/javascript.
+    /// </summary>
+    [ReactProp]
+    public string type { get; set; }
+
+    public script() { }
+
+    public script(params IModifier[] modifiers) : base(modifiers) { }
+
+    public script(Style style) : base(style) { }
+}
+
+public sealed class title : HtmlElement
+{
+    /// <summary>
+    ///     Specifies the language of the title.
+    /// </summary>
+    [ReactProp]
+    public string language { get; set; }
+
+
+    public title() { }
+
+    public title(params IModifier[] modifiers) : base(modifiers) { }
+
+    public title(Style style) : base(style) { }
 }
 
