@@ -214,14 +214,19 @@ partial class Mixin
                     return style;
                 }
 
-                return jsonElement.Deserialize(targetType);
+                return jsonElement.Deserialize(targetType,JsonSerializerOptionsInstance);
             }
 
             if (jsonElement.ValueKind == JsonValueKind.Array)
             {
-                return jsonElement.Deserialize(targetType);
+                return jsonElement.Deserialize(targetType,JsonSerializerOptionsInstance);
             }
 
+            if (jsonElement.ValueKind == JsonValueKind.String && targetType == typeof(Type))
+            {
+                return JsonConverterFactoryForType.DeserializeType(jsonElement.GetString());
+            }
+            
             throw new Exception();
         }
 
@@ -327,15 +332,7 @@ static partial class JsonSerializationOptionHelper
         {
             public override Type Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                if (reader.Read())
-                {
-                    if (reader.ValueSpan.Length > 0)
-                    {
-                        return DeserializeType(reader.ValueSpan.ToString());
-                    }
-                }
-
-                return null;
+                return DeserializeType(reader.GetString());
             }
 
             public override void Write(Utf8JsonWriter writer, Type value, JsonSerializerOptions options)
