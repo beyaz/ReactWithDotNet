@@ -65,6 +65,11 @@ public abstract class HtmlElement : Element
     {
     }
 
+    protected HtmlElement(StyleModifier[] styleModifiers)
+    {
+        this.Apply(styleModifiers);
+    }
+    
     protected HtmlElement(params IModifier[] modifiers)
     {
         this.Apply(modifiers);
