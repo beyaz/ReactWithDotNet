@@ -14,7 +14,6 @@ public sealed class html : HtmlElement
     public string xmlns { get; set; } = "http://www.w3.org/1999/xhtml";
 }
 
-public sealed class head : HtmlElement;
 
 
 

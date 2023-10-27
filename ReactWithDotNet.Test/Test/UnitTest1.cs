@@ -807,6 +807,47 @@ public class UnitTest1
                     }
                 },
                 EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "head",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "profile",
+                        Comment = "Provides a URL to a profile document for the current document.",
+                    },
+                   
+                    new AttributeInfo
+                    {
+                        Name    = "link",
+                        Comment = "Provides a link to an external resource, such as a stylesheet or script file.",
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "meta",
+                        Comment = "Provides metadata about the document, such as the character encoding, author, and keywords.",
+                    },
+                   
+                    new AttributeInfo
+                    {
+                        Name    = "script",
+                        Comment = "Provides JavaScript code to be executed in the browser.",
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "noscript",
+                        Comment = "Provides content to be displayed if the browser does not support JavaScript.",
+                    },
+                    //new AttributeInfo
+                    //{
+                    //    Name    = "base",
+                    //    Comment = "Specifies the base URL for all relative URLs in the document.",
+                    //}
+                },
+                EnableCastFromString = false
             }
         };
 

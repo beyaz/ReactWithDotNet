@@ -1543,11 +1543,53 @@ public sealed class title : HtmlElement
     [ReactProp]
     public string language { get; set; }
 
-
     public title() { }
 
     public title(params IModifier[] modifiers) : base(modifiers) { }
 
     public title(Style style) : base(style) { }
+}
+
+public sealed class head : HtmlElement
+{
+    /// <summary>
+    ///     Provides a URL to a profile document for the current document.
+    /// </summary>
+    [ReactProp]
+    public string profile { get; set; }
+
+   
+
+    /// <summary>
+    ///     Provides a link to an external resource, such as a stylesheet or script file.
+    /// </summary>
+    [ReactProp]
+    public string link { get; set; }
+
+    /// <summary>
+    ///     Provides metadata about the document, such as the character encoding, author, and keywords.
+    /// </summary>
+    [ReactProp]
+    public string meta { get; set; }
+
+
+    /// <summary>
+    ///     Provides JavaScript code to be executed in the browser.
+    /// </summary>
+    [ReactProp]
+    public string script { get; set; }
+
+    /// <summary>
+    ///     Provides content to be displayed if the browser does not support JavaScript.
+    /// </summary>
+    [ReactProp]
+    public string noscript { get; set; }
+
+
+    public head() { }
+
+    public head(params IModifier[] modifiers) : base(modifiers) { }
+
+    public head(Style style) : base(style) { }
 }
 
