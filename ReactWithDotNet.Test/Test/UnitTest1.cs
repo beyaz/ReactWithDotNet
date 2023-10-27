@@ -894,23 +894,9 @@ public class UnitTest1
                         Name    = "htmlFor",
                         Comment = "Specifies which form element a label is bound to."
                     },
-                    new AttributeInfo
-                    {
-                        Name    = "accesskey",
-                        Comment = "Defines a keyboard shortcut to activate the element."
-                    },
+                    
 
-                    new AttributeInfo
-                    {
-                        Name    = "contenteditable",
-                        Comment = "Specifies whether the content of the element is editable."
-                    },
-
-                    new AttributeInfo
-                    {
-                        Name    = "draggable",
-                        Comment = "Specifies whether the element is draggable."
-                    },
+                    
                     new AttributeInfo
                     {
                         Name    = "dropzone",
@@ -922,26 +908,12 @@ public class UnitTest1
                         Comment = "Hides the element from view."
                     },
 
-                    new AttributeInfo
-                    {
-                        Name    = "spellcheck",
-                        Comment = "Specifies whether the element's content should be spellchecked."
-                    },
+                    
 
                     new AttributeInfo
                     {
                         Name    = "tabindex",
                         Comment = "Specifies the element's position in the tab order."
-                    },
-                    new AttributeInfo
-                    {
-                        Name    = "title",
-                        Comment = "Adds a tooltip to the element."
-                    },
-                    new AttributeInfo
-                    {
-                        Name    = "translate",
-                        Comment = "Specifies whether the element's content should be translated."
                     }
                 },
             },

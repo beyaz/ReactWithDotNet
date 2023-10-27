@@ -1624,24 +1624,6 @@ public sealed class label : HtmlElement
     public string htmlFor { get; set; }
 
     /// <summary>
-    ///     Defines a keyboard shortcut to activate the element.
-    /// </summary>
-    [ReactProp]
-    public string accesskey { get; set; }
-
-    /// <summary>
-    ///     Specifies whether the content of the element is editable.
-    /// </summary>
-    [ReactProp]
-    public string contenteditable { get; set; }
-
-    /// <summary>
-    ///     Specifies whether the element is draggable.
-    /// </summary>
-    [ReactProp]
-    public string draggable { get; set; }
-
-    /// <summary>
     ///     Specifies whether the element is a drop target.
     /// </summary>
     [ReactProp]
@@ -1654,28 +1636,10 @@ public sealed class label : HtmlElement
     public string hidden { get; set; }
 
     /// <summary>
-    ///     Specifies whether the element's content should be spellchecked.
-    /// </summary>
-    [ReactProp]
-    public string spellcheck { get; set; }
-
-    /// <summary>
     ///     Specifies the element's position in the tab order.
     /// </summary>
     [ReactProp]
     public string tabindex { get; set; }
-
-    /// <summary>
-    ///     Adds a tooltip to the element.
-    /// </summary>
-    [ReactProp]
-    public string title { get; set; }
-
-    /// <summary>
-    ///     Specifies whether the element's content should be translated.
-    /// </summary>
-    [ReactProp]
-    public string translate { get; set; }
 
     public label() { }
 
