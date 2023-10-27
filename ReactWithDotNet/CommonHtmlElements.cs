@@ -28,6 +28,11 @@ public sealed class article : HtmlElement
     ///     Specifies independent, self-contained content.
     /// </summary>
     public article(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Specifies independent, self-contained content.
+    /// </summary>
+    public article(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class button : HtmlElement
@@ -43,6 +48,8 @@ public sealed class button : HtmlElement
     public button(params IModifier[] modifiers) : base(modifiers) { }
 
     public button(Style style) : base(style) { }
+
+    public button(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class div : HtmlElement
@@ -56,6 +63,8 @@ public sealed class div : HtmlElement
     public static implicit operator div(string text) => new() { text = text };
 
     public div(Style style) : base(style) { }
+
+    public div(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -87,6 +96,11 @@ public sealed class p : HtmlElement
     ///     Defines a paragraph
     /// </summary>
     public p(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Defines a paragraph
+    /// </summary>
+    public p(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -118,6 +132,11 @@ public sealed class pre : HtmlElement
     ///     Preformatted text
     /// </summary>
     public pre(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Preformatted text
+    /// </summary>
+    public pre(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -149,6 +168,11 @@ public sealed class code : HtmlElement
     ///     Define some text as computer code in a document
     /// </summary>
     public code(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Define some text as computer code in a document
+    /// </summary>
+    public code(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -180,6 +204,11 @@ public sealed class ol : HtmlElement
     ///     Ordered list
     /// </summary>
     public ol(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Ordered list
+    /// </summary>
+    public ol(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -211,6 +240,11 @@ public sealed class ul : HtmlElement
     ///     Unordered (bulleted) list
     /// </summary>
     public ul(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Unordered (bulleted) list
+    /// </summary>
+    public ul(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -242,6 +276,11 @@ public sealed class li : HtmlElement
     ///     List item
     /// </summary>
     public li(Style style) : base(style) { }
+
+    /// <summary>
+    ///     List item
+    /// </summary>
+    public li(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class h1 : HtmlElement
@@ -255,6 +294,8 @@ public sealed class h1 : HtmlElement
     public static implicit operator h1(string text) => new() { text = text };
 
     public h1(Style style) : base(style) { }
+
+    public h1(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class h2 : HtmlElement
@@ -268,6 +309,8 @@ public sealed class h2 : HtmlElement
     public static implicit operator h2(string text) => new() { text = text };
 
     public h2(Style style) : base(style) { }
+
+    public h2(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class h3 : HtmlElement
@@ -281,6 +324,8 @@ public sealed class h3 : HtmlElement
     public static implicit operator h3(string text) => new() { text = text };
 
     public h3(Style style) : base(style) { }
+
+    public h3(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class h4 : HtmlElement
@@ -294,6 +339,8 @@ public sealed class h4 : HtmlElement
     public static implicit operator h4(string text) => new() { text = text };
 
     public h4(Style style) : base(style) { }
+
+    public h4(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class h5 : HtmlElement
@@ -307,6 +354,8 @@ public sealed class h5 : HtmlElement
     public static implicit operator h5(string text) => new() { text = text };
 
     public h5(Style style) : base(style) { }
+
+    public h5(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class h6 : HtmlElement
@@ -320,6 +369,8 @@ public sealed class h6 : HtmlElement
     public static implicit operator h6(string text) => new() { text = text };
 
     public h6(Style style) : base(style) { }
+
+    public h6(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class header : HtmlElement
@@ -333,6 +384,8 @@ public sealed class header : HtmlElement
     public static implicit operator header(string text) => new() { text = text };
 
     public header(Style style) : base(style) { }
+
+    public header(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -364,6 +417,11 @@ public sealed class span : HtmlElement
     ///     Inline container used to mark up a part of a text, or a part of a document.
     /// </summary>
     public span(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Inline container used to mark up a part of a text, or a part of a document.
+    /// </summary>
+    public span(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -395,6 +453,11 @@ public sealed class sup : HtmlElement
     ///     Superscript text
     /// </summary>
     public sup(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Superscript text
+    /// </summary>
+    public sup(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -426,6 +489,11 @@ public sealed class sub : HtmlElement
     ///     Subscript text
     /// </summary>
     public sub(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Subscript text
+    /// </summary>
+    public sub(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -457,6 +525,11 @@ public sealed class ins : HtmlElement
     ///     Inserted text
     /// </summary>
     public ins(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Inserted text
+    /// </summary>
+    public ins(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -488,6 +561,11 @@ public sealed class del : HtmlElement
     ///     Deleted text
     /// </summary>
     public del(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Deleted text
+    /// </summary>
+    public del(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -519,6 +597,11 @@ public sealed class small : HtmlElement
     ///     Smaller text
     /// </summary>
     public small(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Smaller text
+    /// </summary>
+    public small(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -550,6 +633,11 @@ public sealed class mark : HtmlElement
     ///     Marked text
     /// </summary>
     public mark(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Marked text
+    /// </summary>
+    public mark(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -581,6 +669,11 @@ public sealed class em : HtmlElement
     ///     Emphasized text
     /// </summary>
     public em(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Emphasized text
+    /// </summary>
+    public em(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -612,6 +705,11 @@ public sealed class b : HtmlElement
     ///     Bold text
     /// </summary>
     public b(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Bold text
+    /// </summary>
+    public b(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -643,6 +741,11 @@ public sealed class i : HtmlElement
     ///     Italic text
     /// </summary>
     public i(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Italic text
+    /// </summary>
+    public i(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -674,6 +777,11 @@ public sealed class u : HtmlElement
     ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
     /// </summary>
     public u(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Represents some text that is unarticulated and styled differently from normal text, such as misspelled words or proper names in Chinese text. The content inside is typically displayed with an underline.
+    /// </summary>
+    public u(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -705,6 +813,11 @@ public sealed class strong : HtmlElement
     ///     Important text
     /// </summary>
     public strong(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Important text
+    /// </summary>
+    public strong(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 /// <summary>
@@ -726,6 +839,11 @@ public sealed class section : HtmlElement
     ///     Section in a document
     /// </summary>
     public section(Style style) : base(style) { }
+
+    /// <summary>
+    ///     Section in a document
+    /// </summary>
+    public section(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class aside : HtmlElement
@@ -735,6 +853,8 @@ public sealed class aside : HtmlElement
     public aside(params IModifier[] modifiers) : base(modifiers) { }
 
     public aside(Style style) : base(style) { }
+
+    public aside(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class fieldset : HtmlElement
@@ -744,6 +864,8 @@ public sealed class fieldset : HtmlElement
     public fieldset(params IModifier[] modifiers) : base(modifiers) { }
 
     public fieldset(Style style) : base(style) { }
+
+    public fieldset(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class legend : HtmlElement
@@ -753,6 +875,8 @@ public sealed class legend : HtmlElement
     public legend(params IModifier[] modifiers) : base(modifiers) { }
 
     public legend(Style style) : base(style) { }
+
+    public legend(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class nav : HtmlElement
@@ -762,6 +886,8 @@ public sealed class nav : HtmlElement
     public nav(params IModifier[] modifiers) : base(modifiers) { }
 
     public nav(Style style) : base(style) { }
+
+    public nav(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class main : HtmlElement
@@ -771,6 +897,8 @@ public sealed class main : HtmlElement
     public main(params IModifier[] modifiers) : base(modifiers) { }
 
     public main(Style style) : base(style) { }
+
+    public main(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class footer : HtmlElement
@@ -780,6 +908,8 @@ public sealed class footer : HtmlElement
     public footer(params IModifier[] modifiers) : base(modifiers) { }
 
     public footer(Style style) : base(style) { }
+
+    public footer(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class figure : HtmlElement
@@ -789,6 +919,8 @@ public sealed class figure : HtmlElement
     public figure(params IModifier[] modifiers) : base(modifiers) { }
 
     public figure(Style style) : base(style) { }
+
+    public figure(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class hr : HtmlElement
@@ -798,6 +930,8 @@ public sealed class hr : HtmlElement
     public hr(params IModifier[] modifiers) : base(modifiers) { }
 
     public hr(Style style) : base(style) { }
+
+    public hr(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class figcaption : HtmlElement
@@ -811,6 +945,8 @@ public sealed class figcaption : HtmlElement
     public static implicit operator figcaption(string text) => new() { text = text };
 
     public figcaption(Style style) : base(style) { }
+
+    public figcaption(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class table : HtmlElement
@@ -826,6 +962,8 @@ public sealed class table : HtmlElement
     public table(params IModifier[] modifiers) : base(modifiers) { }
 
     public table(Style style) : base(style) { }
+
+    public table(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class thead : HtmlElement
@@ -835,6 +973,8 @@ public sealed class thead : HtmlElement
     public thead(params IModifier[] modifiers) : base(modifiers) { }
 
     public thead(Style style) : base(style) { }
+
+    public thead(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class tbody : HtmlElement
@@ -844,6 +984,8 @@ public sealed class tbody : HtmlElement
     public tbody(params IModifier[] modifiers) : base(modifiers) { }
 
     public tbody(Style style) : base(style) { }
+
+    public tbody(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class tfoot : HtmlElement
@@ -853,6 +995,8 @@ public sealed class tfoot : HtmlElement
     public tfoot(params IModifier[] modifiers) : base(modifiers) { }
 
     public tfoot(Style style) : base(style) { }
+
+    public tfoot(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class th : HtmlElement
@@ -868,6 +1012,8 @@ public sealed class th : HtmlElement
     public th(params IModifier[] modifiers) : base(modifiers) { }
 
     public th(Style style) : base(style) { }
+
+    public th(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class td : HtmlElement
@@ -887,6 +1033,8 @@ public sealed class td : HtmlElement
     public static implicit operator td(string text) => new() { text = text };
 
     public td(Style style) : base(style) { }
+
+    public td(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class tr : HtmlElement
@@ -902,6 +1050,8 @@ public sealed class tr : HtmlElement
     public tr(params IModifier[] modifiers) : base(modifiers) { }
 
     public tr(Style style) : base(style) { }
+
+    public tr(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class option : HtmlElement
@@ -920,6 +1070,8 @@ public sealed class option : HtmlElement
     public option(params IModifier[] modifiers) : base(modifiers) { }
 
     public option(Style style) : base(style) { }
+
+    public option(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class ellipse : HtmlElement
@@ -971,6 +1123,8 @@ public sealed class ellipse : HtmlElement
     public ellipse(params IModifier[] modifiers) : base(modifiers) { }
 
     public ellipse(Style style) : base(style) { }
+
+    public ellipse(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class line : HtmlElement
@@ -1040,6 +1194,8 @@ public sealed class line : HtmlElement
     public line(params IModifier[] modifiers) : base(modifiers) { }
 
     public line(Style style) : base(style) { }
+
+    public line(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class polyline : HtmlElement
@@ -1073,6 +1229,8 @@ public sealed class polyline : HtmlElement
     public polyline(params IModifier[] modifiers) : base(modifiers) { }
 
     public polyline(Style style) : base(style) { }
+
+    public polyline(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class circle : HtmlElement
@@ -1118,6 +1276,8 @@ public sealed class circle : HtmlElement
     public circle(params IModifier[] modifiers) : base(modifiers) { }
 
     public circle(Style style) : base(style) { }
+
+    public circle(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class polygon : HtmlElement
@@ -1169,6 +1329,8 @@ public sealed class polygon : HtmlElement
     public polygon(params IModifier[] modifiers) : base(modifiers) { }
 
     public polygon(Style style) : base(style) { }
+
+    public polygon(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class rect : HtmlElement
@@ -1244,6 +1406,8 @@ public sealed class rect : HtmlElement
     public rect(params IModifier[] modifiers) : base(modifiers) { }
 
     public rect(Style style) : base(style) { }
+
+    public rect(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class radialGradient : HtmlElement
@@ -1301,6 +1465,8 @@ public sealed class radialGradient : HtmlElement
     public radialGradient(params IModifier[] modifiers) : base(modifiers) { }
 
     public radialGradient(Style style) : base(style) { }
+
+    public radialGradient(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class clipPath : HtmlElement
@@ -1322,6 +1488,8 @@ public sealed class clipPath : HtmlElement
     public clipPath(params IModifier[] modifiers) : base(modifiers) { }
 
     public clipPath(Style style) : base(style) { }
+
+    public clipPath(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class path : HtmlElement
@@ -1367,6 +1535,8 @@ public sealed class path : HtmlElement
     public path(params IModifier[] modifiers) : base(modifiers) { }
 
     public path(Style style) : base(style) { }
+
+    public path(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class g : HtmlElement
@@ -1385,6 +1555,8 @@ public sealed class g : HtmlElement
     public g(params IModifier[] modifiers) : base(modifiers) { }
 
     public g(Style style) : base(style) { }
+
+    public g(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class meta : HtmlElement
@@ -1442,6 +1614,8 @@ public sealed class meta : HtmlElement
     public meta(params IModifier[] modifiers) : base(modifiers) { }
 
     public meta(Style style) : base(style) { }
+
+    public meta(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class body : HtmlElement
@@ -1469,6 +1643,8 @@ public sealed class body : HtmlElement
     public body(params IModifier[] modifiers) : base(modifiers) { }
 
     public body(Style style) : base(style) { }
+
+    public body(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class script : HtmlElement
@@ -1520,6 +1696,8 @@ public sealed class script : HtmlElement
     public script(params IModifier[] modifiers) : base(modifiers) { }
 
     public script(Style style) : base(style) { }
+
+    public script(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class title : HtmlElement
@@ -1535,6 +1713,8 @@ public sealed class title : HtmlElement
     public title(params IModifier[] modifiers) : base(modifiers) { }
 
     public title(Style style) : base(style) { }
+
+    public title(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class head : HtmlElement
@@ -1574,6 +1754,8 @@ public sealed class head : HtmlElement
     public head(params IModifier[] modifiers) : base(modifiers) { }
 
     public head(Style style) : base(style) { }
+
+    public head(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class html : HtmlElement
@@ -1613,6 +1795,8 @@ public sealed class html : HtmlElement
     public html(params IModifier[] modifiers) : base(modifiers) { }
 
     public html(Style style) : base(style) { }
+
+    public html(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class label : HtmlElement
@@ -1650,6 +1834,8 @@ public sealed class label : HtmlElement
     public static implicit operator label(string text) => new() { text = text };
 
     public label(Style style) : base(style) { }
+
+    public label(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
 public sealed class a : HtmlElement
@@ -1719,5 +1905,7 @@ public sealed class a : HtmlElement
     public a(params IModifier[] modifiers) : base(modifiers) { }
 
     public a(Style style) : base(style) { }
+
+    public a(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 

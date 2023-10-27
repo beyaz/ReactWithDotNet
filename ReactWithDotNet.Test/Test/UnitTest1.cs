@@ -1045,6 +1045,12 @@ public class UnitTest1
             list.Add(Empty);
             addComment();
             list.Add($"    public {item.Tag}(Style style) : base(style) {{ }}");
+            
+            
+            list.Add(Empty);
+            addComment();
+            list.Add($"    public {item.Tag}(StyleModifier[] styleModifiers) : base(styleModifiers) {{ }}");
+            
 
             list.Add("}");
 
