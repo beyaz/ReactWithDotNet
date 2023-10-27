@@ -676,6 +676,56 @@ public class UnitTest1
                     }
                 },
                 EnableCastFromString = false
+            },
+            
+            new()
+            {
+                Tag = "meta",
+                Attributes = new[]
+                {
+                    
+                    new AttributeInfo
+                    {
+                    Name  = "charset",
+                    Comment = "Specifies the character encoding of the document."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "http-equiv",
+                        Comment = "Specifies the name of the HTTP header that the meta tag should be equivalent to."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "name",
+                        Comment = "Specifies the name of the metadata property."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "content",
+                        Comment = "Specifies the value of the metadata property."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "scheme",
+                        Comment = "Specifies the URL scheme for the content attribute of the meta tag."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "itemprop",
+                        Comment = "Specifies the Microdata item property that the meta tag represents."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "property",
+                        Comment = "Specifies the schema.org property that the meta tag represents."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "src",
+                        Comment = "Specifies the URL for a resource associated with the meta tag."
+                    }
+                },
+                EnableCastFromString = false
             }
         };
 

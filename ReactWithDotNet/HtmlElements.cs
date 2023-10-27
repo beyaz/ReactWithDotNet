@@ -38,25 +38,7 @@ public sealed class body : HtmlElement
     }
 }
 
-public sealed class meta : HtmlElement
-{
-    [ReactProp]
-    public string charset { get; set; }
 
-    [ReactProp]
-    public string content { get; set; }
-
-    [ReactProp]
-    public string httpEquiv { get; set; }
-
-    [ReactProp]
-    public string name { get; set; }
-
-    public static HtmlElementModifier Charset(string charset) => Modify<meta>(element => element.charset = charset);
-    public static HtmlElementModifier Content(string content) => Modify<meta>(element => element.content = content);
-    public static HtmlElementModifier HttpEquiv(string httpEquiv) => Modify<meta>(element => element.httpEquiv = httpEquiv);
-    public static HtmlElementModifier Name(string name) => Modify<meta>(element => element.name = name);
-}
 
 
 

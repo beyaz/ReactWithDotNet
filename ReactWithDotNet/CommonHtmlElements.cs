@@ -1400,3 +1400,60 @@ public sealed class g : HtmlElement
     public g(Style style) : base(style) { }
 }
 
+public sealed class meta : HtmlElement
+{
+    /// <summary>
+    ///     Specifies the character encoding of the document.
+    /// </summary>
+    [ReactProp]
+    public string charset { get; set; }
+
+    /// <summary>
+    ///     Specifies the name of the HTTP header that the meta tag should be equivalent to.
+    /// </summary>
+    [ReactProp]
+    public string httpEquiv { get; set; }
+
+    /// <summary>
+    ///     Specifies the name of the metadata property.
+    /// </summary>
+    [ReactProp]
+    public string name { get; set; }
+
+    /// <summary>
+    ///     Specifies the value of the metadata property.
+    /// </summary>
+    [ReactProp]
+    public string content { get; set; }
+
+    /// <summary>
+    ///     Specifies the URL scheme for the content attribute of the meta tag.
+    /// </summary>
+    [ReactProp]
+    public string scheme { get; set; }
+
+    /// <summary>
+    ///     Specifies the Microdata item property that the meta tag represents.
+    /// </summary>
+    [ReactProp]
+    public string itemprop { get; set; }
+
+    /// <summary>
+    ///     Specifies the schema.org property that the meta tag represents.
+    /// </summary>
+    [ReactProp]
+    public string property { get; set; }
+
+    /// <summary>
+    ///     Specifies the URL for a resource associated with the meta tag.
+    /// </summary>
+    [ReactProp]
+    public string src { get; set; }
+
+    public meta() { }
+
+    public meta(params IModifier[] modifiers) : base(modifiers) { }
+
+    public meta(Style style) : base(style) { }
+}
+
