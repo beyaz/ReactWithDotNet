@@ -32,48 +32,27 @@ public sealed class a : HtmlElement
     [ReactProp]
     public string rel { get; set; }
 
-    #region Modifiers
-    /// <summary>
-    ///     a.target = '_blank'
-    /// </summary>
-    public static HtmlElementModifier TargetBlank => Target("_blank");
-
-    /// <summary>
-    ///     a.href = <paramref name="href" />
-    /// </summary>
-    public static HtmlElementModifier Href(string href) => Modify<a>(element => element.href = href);
-
-    /// <summary>
-    ///     a.target = <paramref name="target" />
-    /// </summary>
-    public static HtmlElementModifier Target(string target) => Modify<a>(element => element.target = target);
-    
-    /// <summary>
-    ///     a.href = <paramref name="value" />;
-    ///     <br/>
-    ///     <br/>
-    ///     Specifies the relationship between the current document and the linked document.
-    ///     <br />
-    ///     Only used if the href attribute is present.
-    ///     <br />
-    ///     Tip: Search engines can use this attribute to get more information about a link!
-    /// </summary>
-    public static HtmlElementModifier Rel(string value) => Modify<a>(element => element.rel = value);
-    #endregion
 }
 
 partial class Mixin
 {
-    /// <summary>
-    ///     a.href = <paramref name="href" />
-    /// </summary>
-    public static HtmlElementModifier Href(string href) => a.Href(href);
+   
 
     /// <summary>
     ///     a.target = '_blank'
     /// </summary>
-    public static HtmlElementModifier TargetBlank => a.TargetBlank;
+    public static HtmlElementModifier TargetBlank => Target("_blank");
     
+    
+    /// <summary>
+    ///     a.href = <paramref name="href" />
+    /// </summary>
+    public static HtmlElementModifier Href(string href) => CreateHtmlElementModifier<a>(element => element.href = href);
+
+    /// <summary>
+    ///     a.target = <paramref name="target" />
+    /// </summary>
+    public static HtmlElementModifier Target(string target) => CreateHtmlElementModifier<a>(element => element.target = target);
     
     /// <summary>
     ///     a.href = <paramref name="value" />;
@@ -85,5 +64,5 @@ partial class Mixin
     ///     <br />
     ///     Tip: Search engines can use this attribute to get more information about a link!
     /// </summary>
-    public static HtmlElementModifier Rel(string value) => a.Rel(value);
+    public static HtmlElementModifier Rel(string value) => CreateHtmlElementModifier<a>(element => element.rel = value);
 }
