@@ -1688,3 +1688,72 @@ public sealed class label : HtmlElement
     public label(Style style) : base(style) { }
 }
 
+public sealed class a : HtmlElement
+{
+    /// <summary>
+    ///     The URL of the linked resource.
+    /// </summary>
+    [ReactProp]
+    public string href { get; set; }
+
+    /// <summary>
+    ///     Specifies where the linked resource should be opened. Can be `_blank`, `_self`, `_parent`, or `_top`.
+    /// </summary>
+    [ReactProp]
+    public string target { get; set; }
+
+    /// <summary>
+    ///     Specifies the relationship between the current document and the linked resource. Can be `alternate`, `author`, `bookmark`, `canonical`, `external`, `help`, `license`, `next`, `nofollow`, `noreferrer`, `noopener`, `prev`, `search`, `sponsored`, or `stylesheet`.
+    /// </summary>
+    [ReactProp]
+    public string rel { get; set; }
+
+    /// <summary>
+    ///     Specifies the MIME type of the linked resource, if applicable.
+    /// </summary>
+    [ReactProp]
+    public string type { get; set; }
+
+    /// <summary>
+    ///     Specifies whether the linked resource should be downloaded or opened in a new browser tab.
+    /// </summary>
+    [ReactProp]
+    public string download { get; set; }
+
+    /// <summary>
+    ///     A list of URLs to which a ping should be sent when the user clicks on the link.
+    /// </summary>
+    [ReactProp]
+    public string ping { get; set; }
+
+    /// <summary>
+    ///     Specifies the media types for which the link is relevant.
+    /// </summary>
+    [ReactProp]
+    public string media { get; set; }
+
+    /// <summary>
+    ///     Specifies the language of the linked resource.
+    /// </summary>
+    [ReactProp]
+    public string hreflang { get; set; }
+
+    /// <summary>
+    ///     Specifies a name for the link. This can be used to target the link with JavaScript.
+    /// </summary>
+    [ReactProp]
+    public string name { get; set; }
+
+    /// <summary>
+    ///     Specifies the tab order of the link.
+    /// </summary>
+    [ReactProp]
+    public string tabindex { get; set; }
+
+    public a() { }
+
+    public a(params IModifier[] modifiers) : base(modifiers) { }
+
+    public a(Style style) : base(style) { }
+}
+

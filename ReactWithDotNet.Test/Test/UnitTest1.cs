@@ -89,7 +89,7 @@ public class UnitTest1
                 EnableCastFromString = true
             },
 
-           
+
 
             new() { Tag = "h1", Comment = Empty, EnableCastFromString = true },
             new() { Tag = "h2", Comment = Empty, EnableCastFromString = true },
@@ -421,7 +421,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "polygon",
@@ -471,7 +471,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "rect",
@@ -535,7 +535,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "radialGradient",
@@ -584,7 +584,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "clipPath",
@@ -603,7 +603,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "path",
@@ -629,10 +629,10 @@ public class UnitTest1
                         Name    = "stroke-width",
                         Comment = "Stroke width"
                     },
-                    
+
                     new AttributeInfo
                     {
-                        Name    = "fillRule"
+                        Name = "fillRule"
                     },
                     new AttributeInfo
                     {
@@ -649,18 +649,18 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "g",
                 Attributes = new[]
                 {
-                    
+
                     new AttributeInfo
                     {
-                        Name    = "opacity"
+                        Name = "opacity"
                     },
-                    
+
                     new AttributeInfo
                     {
                         Name = "clipPath"
@@ -672,17 +672,17 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "meta",
                 Attributes = new[]
                 {
-                    
+
                     new AttributeInfo
                     {
-                    Name  = "charset",
-                    Comment = "Specifies the character encoding of the document."
+                        Name    = "charset",
+                        Comment = "Specifies the character encoding of the document."
                     },
                     new AttributeInfo
                     {
@@ -722,7 +722,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "body",
@@ -789,7 +789,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "title",
@@ -803,7 +803,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "head",
@@ -814,7 +814,7 @@ public class UnitTest1
                         Name    = "profile",
                         Comment = "Provides a URL to a profile document for the current document.",
                     },
-                   
+
                     new AttributeInfo
                     {
                         Name    = "link",
@@ -825,7 +825,7 @@ public class UnitTest1
                         Name    = "meta",
                         Comment = "Provides metadata about the document, such as the character encoding, author, and keywords.",
                     },
-                   
+
                     new AttributeInfo
                     {
                         Name    = "script",
@@ -844,20 +844,20 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
-            
+
+
             new()
             {
                 Tag = "html",
                 Attributes = new[]
                 {
-                   
+
                     new AttributeInfo
                     {
                         Name    = "hidden",
                         Comment = "Hides the element from display."
                     },
-                    
+
                     new AttributeInfo
                     {
                         Name    = "manifest",
@@ -865,8 +865,8 @@ public class UnitTest1
                     },
                     new AttributeInfo
                     {
-                        Name    = "xmlns",
-                        Comment = "Specifies the namespace of the element.",
+                        Name         = "xmlns",
+                        Comment      = "Specifies the namespace of the element.",
                         DefaultValue = "http://www.w3.org/1999/xhtml"
                     },
                     new AttributeInfo
@@ -882,7 +882,7 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag                  = "label",
@@ -899,13 +899,13 @@ public class UnitTest1
                         Name    = "accesskey",
                         Comment = "Defines a keyboard shortcut to activate the element."
                     },
-                   
+
                     new AttributeInfo
                     {
                         Name    = "contenteditable",
                         Comment = "Specifies whether the content of the element is editable."
                     },
-                    
+
                     new AttributeInfo
                     {
                         Name    = "draggable",
@@ -921,13 +921,13 @@ public class UnitTest1
                         Name    = "hidden",
                         Comment = "Hides the element from view."
                     },
-                   
+
                     new AttributeInfo
                     {
                         Name    = "spellcheck",
                         Comment = "Specifies whether the element's content should be spellchecked."
                     },
-                    
+
                     new AttributeInfo
                     {
                         Name    = "tabindex",
@@ -944,6 +944,69 @@ public class UnitTest1
                         Comment = "Specifies whether the element's content should be translated."
                     }
                 },
+            },
+
+            new()
+            {
+                Tag = "a",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "href",
+                        Comment = "The URL of the linked resource."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "target",
+                        Comment = "Specifies where the linked resource should be opened. Can be `_blank`, `_self`, `_parent`, or `_top`."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "rel",
+                        Comment = "Specifies the relationship between the current document and the linked resource. Can be `alternate`, `author`, `bookmark`, `canonical`, `external`, `help`, `license`, `next`, `nofollow`, `noreferrer`, `noopener`, `prev`, `search`, `sponsored`, or `stylesheet`."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "type",
+                        Comment = "Specifies the MIME type of the linked resource, if applicable."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "download",
+                        Comment = "Specifies whether the linked resource should be downloaded or opened in a new browser tab."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "ping",
+                        Comment = "A list of URLs to which a ping should be sent when the user clicks on the link."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "media",
+                        Comment = "Specifies the media types for which the link is relevant."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "hreflang",
+                        Comment = "Specifies the language of the linked resource."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "name",
+                        Comment = "Specifies a name for the link. This can be used to target the link with JavaScript."
+                    },
+                   
+                    
+                   
+                    
+                    new AttributeInfo
+                    {
+                        Name    = "tabindex",
+                        Comment = "Specifies the tab order of the link."
+                    }
+                },
+                EnableCastFromString = false
             },
         };
 
