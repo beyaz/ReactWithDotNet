@@ -42,8 +42,11 @@
 
 
 	<!-- npm -->
+	<ItemGroup>
+		<JsFilesIdDist Include="wwwroot/dist/*.*"/>
+	</ItemGroup>
 	<PropertyGroup>
-		<AppRoot>wwwroot\</AppRoot>
+		<AppRoot>wwwroot\</AppRoot>		
 	</PropertyGroup>
 	<Target Name="_EnsureNodeEnvironment_" BeforeTargets="rebuild;build" Condition=" !Exists('$(AppRoot)node_modules') ">
 		<Exec Command="node --version" ContinueOnError="true">
@@ -71,11 +74,13 @@
 	</Target>
 
 	<Target Name="_BeforePublish_" AfterTargets="ComputeFilesToPublish">
+		<RemoveDir Directories="$(AppRoot)dist/" />
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm install" />
 		<Exec WorkingDirectory="$(AppRoot)" Command="npm run build" />
 	</Target>
 
 	<Target Name="_AfterPublish_" AfterTargets="Publish">
+		<Copy SourceFiles="@(JsFilesIdDist)" DestinationFolder="$(PublishDir)/wwwroot/dist/" SkipUnchangedFiles="true" />
 		<Delete Files="$(PublishDir)/ReactWithDotNet.pdb" />
 		<Delete Files="$(PublishDir)/ReactWithDotNet.xml" />
 		<Delete Files="$(PublishDir)/$(MSBuildProjectName).pdb" />
@@ -87,6 +92,11 @@
 		<Delete Files="$(PublishDir)/wwwroot/package-lock.json" />
 
 		<RemoveDir Directories="$(PublishDir)\wwwroot\react-with-dotnet" />
+
+		
+		
 	</Target>
+
+	
 
 </Project>
