@@ -672,6 +672,48 @@ public class UnitTest1
                 },
                 EnableCastFromString = false
             },
+            
+            new()
+            {
+                Tag = "mask",
+                Attributes = new[]
+                {
+
+                    new AttributeInfo
+                    {
+                        Name = "height",
+                        Comment = "This attribute defines the height of the masking area. Value type: length ; Default value: 120%; Animatable: yes"
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name = "maskContentUnits",
+                        Comment = "This attribute defines the coordinate system for the contents of the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: userSpaceOnUse; Animatable: yes"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "maskUnits",
+                        Comment="This attribute defines the coordinate system for attributes x, y, width and height on the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: objectBoundingBox; Animatable: yes"
+                    },
+                    
+                    new AttributeInfo
+                    {
+                        Name    = "x",
+                        Comment = "This attribute defines the x-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes"
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "y",
+                        Comment = "This attribute defines the y-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes"
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "width",
+                        Comment = "This attribute defines the width of the masking area. Value type: 'length' ; Default value: 120%; Animatable: yes"
+                    }
+                },
+                EnableCastFromString = false
+            },
 
             new()
             {
