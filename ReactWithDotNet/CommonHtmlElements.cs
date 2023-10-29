@@ -1559,6 +1559,53 @@ public sealed class g : HtmlElement
     public g(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 }
 
+public sealed class mask : HtmlElement
+{
+    /// <summary>
+    ///     This attribute defines the height of the masking area. Value type: length ; Default value: 120%; Animatable: yes
+    /// </summary>
+    [ReactProp]
+    public string height { get; set; }
+
+    /// <summary>
+    ///     This attribute defines the coordinate system for the contents of the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: userSpaceOnUse; Animatable: yes
+    /// </summary>
+    [ReactProp]
+    public string maskContentUnits { get; set; }
+
+    /// <summary>
+    ///     This attribute defines the coordinate system for attributes x, y, width and height on the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: objectBoundingBox; Animatable: yes
+    /// </summary>
+    [ReactProp]
+    public string maskUnits { get; set; }
+
+    /// <summary>
+    ///     This attribute defines the x-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes
+    /// </summary>
+    [ReactProp]
+    public string x { get; set; }
+
+    /// <summary>
+    ///     This attribute defines the y-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes
+    /// </summary>
+    [ReactProp]
+    public string y { get; set; }
+
+    /// <summary>
+    ///     This attribute defines the width of the masking area. Value type: 'length' ; Default value: 120%; Animatable: yes
+    /// </summary>
+    [ReactProp]
+    public string width { get; set; }
+
+    public mask() { }
+
+    public mask(params IModifier[] modifiers) : base(modifiers) { }
+
+    public mask(Style style) : base(style) { }
+
+    public mask(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+}
+
 public sealed class meta : HtmlElement
 {
     /// <summary>
