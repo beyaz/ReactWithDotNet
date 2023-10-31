@@ -38,7 +38,6 @@ public class RawCard
 
 public class SiteRawData
 {
-    public string FooterText { get; set; }
     public string SiteName { get; set; }
     public IReadOnlyList<Menu> MenuList { get; set; }
     public IReadOnlyList<SocialMediaLink> SocialMediaLinks { get; set; }

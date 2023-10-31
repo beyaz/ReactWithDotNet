@@ -18,11 +18,8 @@ public class MainWindow : PureComponent
                 
             },
 
-
-            new footer(BorderTop(Solid(1, Theme.grey_100)), Height(50), DisplayFlexRowCentered)
-            {
-                new HighlightedText { Text = RawData.FooterText }
-            }
+            new Footer()
+            
         };
 
         Element createContent()
@@ -33,5 +30,20 @@ public class MainWindow : PureComponent
 
             return (Element)Activator.CreateInstance(typeOfPage);
         }
+    }
+}
+
+class Footer : PureComponent
+{
+    protected override Element render()
+    {
+        return new footer(PositionFixed,Bottom(0), BorderTop(Solid(1, Theme.grey_100)), Height(50),WidthMaximized)
+        {
+            DisplayFlexRowCentered,
+            new HighlightedText
+            {
+                Text = "React [\u2665] .Net"
+            }
+        };
     }
 }
