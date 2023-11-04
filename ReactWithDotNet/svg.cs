@@ -137,5 +137,7 @@ public sealed class stop : HtmlElement
     
 }
 
+public sealed class noscript : HtmlElement;
+
 
 

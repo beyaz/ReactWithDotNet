@@ -8,7 +8,7 @@ namespace ReactWithDotNet.Test;
 
 [TestClass]
 //[Ignore]
-public class UnitTest1
+public class ExportingCommonHtmlElements
 {
     [TestMethod]
     public void ExportCommonHtmlElements()
