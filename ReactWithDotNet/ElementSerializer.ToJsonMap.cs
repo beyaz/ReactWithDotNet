@@ -503,7 +503,11 @@ partial class ElementSerializer
                         {
                             var component = cloneComponent();
 
-                            cacheableMethod.Invoke(component, new object[cacheableMethod.GetParameters().Length]);
+                            var invocationResponse = cacheableMethod.Invoke(component, new object[cacheableMethod.GetParameters().Length]);
+                            if (invocationResponse is Task invocationResponseAsTask)
+                            {
+                                await invocationResponseAsTask;
+                            }
 
                             var newElementSerializerContext = createNewElementSerializerContext();
 
@@ -588,7 +592,11 @@ partial class ElementSerializer
                                 {
                                     try
                                     {
-                                        cacheableMethod.Invoke(component, new[] { parameter });
+                                        var invocationResponse = cacheableMethod.Invoke(component, new[] { parameter });
+                                        if (invocationResponse is Task invocationResponseAsTask)
+                                        {
+                                            await invocationResponseAsTask;
+                                        }
                                     }
                                     catch (Exception exception)
                                     {
