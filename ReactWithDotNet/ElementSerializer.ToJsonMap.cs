@@ -541,7 +541,14 @@ partial class ElementSerializer
 
                         stateProperty.SetValueFunc(component, ReflectionHelper.DeepCopy(state));
 
-                        component.Client = ReflectionHelper.DeepCopy(component.Client);
+                        if (component.Client.TaskList.Count == 0)
+                        {
+                            component.Client = new Client();
+                        }
+                        else
+                        {
+                            component.Client = ReflectionHelper.DeepCopy(component.Client);    
+                        }
 
                         return component;
                         
