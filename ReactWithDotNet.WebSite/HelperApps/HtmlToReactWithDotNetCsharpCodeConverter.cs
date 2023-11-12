@@ -721,6 +721,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = {valueAsDouble:F1})";            
                 }
             }
+            if (propertyInfo.PropertyType == typeof(int?))
+            {
+                if (int.TryParse(htmlAttribute.Value, out var valueAsInt32))
+                {
+                    return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = {valueAsInt32})";            
+                }
+            }
             
             return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = \"{htmlAttribute.Value}\")";    
         }
