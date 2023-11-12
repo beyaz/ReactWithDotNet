@@ -1097,6 +1097,7 @@ public class ExportingCommonHtmlElements
              new()
             {
                 Tag = "svg",
+                CreateClassAsPartial = true,
                 Attributes = new[]
                 {
                     new AttributeInfo
