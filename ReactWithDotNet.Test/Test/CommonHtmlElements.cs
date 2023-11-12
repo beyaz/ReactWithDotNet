@@ -1168,6 +1168,24 @@ public class ExportingCommonHtmlElements
             list.Add(Empty);
             list.Add($"    public static HtmlElementModifier Modify(Action<{item.Tag}> modifyAction) => CreateHtmlElementModifier(modifyAction);");
             
+            if (item.Attributes is not null)
+            {
+                foreach (var attribute in item.Attributes)
+                {
+                    if (IsNullOrWhiteSpace(attribute.Comment) == false)
+                    {
+                        list.Add($"{padding}/// <summary>");
+                        list.Add($"{padding}/// {CamelCase(attribute.Name)} = value");
+                        list.Add($"{padding}/// <br/>");
+                        list.Add($"{padding}///     {attribute.Comment}");
+                        list.Add($"{padding}/// </summary>");
+                    }
+                   
+                    list.Add($"    public static HtmlElementModifier {UpperCaseFirstChar(CamelCase(attribute.Name))}({attribute.Type} value) => Modify(x => x.{CamelCase(attribute.Name)} = value);");
+                    list.Add(Empty);
+                }
+            }
+            
 
             list.Add("}");
 
@@ -1203,6 +1221,11 @@ public class ExportingCommonHtmlElements
             }
 
             return str;
+        }
+        
+        static string UpperCaseFirstChar(string str)
+        {
+            return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
         }
     }
 
