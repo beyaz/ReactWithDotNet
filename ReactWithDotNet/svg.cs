@@ -74,7 +74,6 @@ public sealed class svg : HtmlElement
     /// </summary>
     public static HtmlElementModifier ViewBox(double  minX, double minY, double width, double height) => ViewBox($"{minX} {minY} {width} {height}");
 
-    public static HtmlElementModifier Focusable(string value) => Modify<svg>(el => el.focusable = value);
 }
 
 partial class Mixin
