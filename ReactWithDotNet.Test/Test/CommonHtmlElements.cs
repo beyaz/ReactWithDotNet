@@ -1142,6 +1142,14 @@ public class ExportingCommonHtmlElements
                         Name    = "version",
                         Comment = "The SVG version of the element."
                     },
+                    new AttributeInfo
+                    {
+                        Name    = "viewBox"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "fill"
+                    },
                 },
                 EnableCastFromString = false
             },

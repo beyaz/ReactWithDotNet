@@ -3051,3 +3051,106 @@ public sealed class img : HtmlElement
 
 }
 
+public sealed partial class svg : HtmlElement
+{
+    [ReactProp]
+    public string focusable { get; set; }
+
+    [ReactProp]
+    public string xlinkHref { get; set; }
+
+    [ReactProp]
+    public string xmlnsXlink { get; set; }
+
+    /// <summary>
+    ///     Specifies how the SVG element should be scaled and aligned to fit its viewport.
+    /// </summary>
+    [ReactProp]
+    public string preserveAspectRatio { get; set; }
+
+    /// <summary>
+    ///     The width of the SVG element in pixels.
+    /// </summary>
+    [ReactProp]
+    public string width { get; set; }
+
+    /// <summary>
+    ///     The height of the SVG element in pixels.
+    /// </summary>
+    [ReactProp]
+    public string height { get; set; }
+
+    /// <summary>
+    ///     The namespace URI for the SVG element.
+    /// </summary>
+    [ReactProp]
+    public string xmlns { get; set; } = "http://www.w3.org/2000/svg";
+
+    /// <summary>
+    ///     The SVG version of the element.
+    /// </summary>
+    [ReactProp]
+    public string version { get; set; }
+
+    [ReactProp]
+    public string viewBox { get; set; }
+
+    [ReactProp]
+    public string fill { get; set; }
+
+    public svg() { }
+
+    public svg(params IModifier[] modifiers) : base(modifiers) { }
+
+    public svg(Style style) : base(style) { }
+
+    public svg(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<svg> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Focusable(string value) => Modify(x => x.focusable = value);
+
+    public static HtmlElementModifier XlinkHref(string value) => Modify(x => x.xlinkHref = value);
+
+    public static HtmlElementModifier XmlnsXlink(string value) => Modify(x => x.xmlnsXlink = value);
+
+    /// <summary>
+    ///     preserveAspectRatio = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies how the SVG element should be scaled and aligned to fit its viewport.
+    /// </summary>
+    public static HtmlElementModifier PreserveAspectRatio(string value) => Modify(x => x.preserveAspectRatio = value);
+
+    /// <summary>
+    ///     width = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the SVG element in pixels.
+    /// </summary>
+    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+
+    /// <summary>
+    ///     height = <paramref name="value"/>
+    /// <br/>
+    ///     The height of the SVG element in pixels.
+    /// </summary>
+    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+
+    /// <summary>
+    ///     xmlns = <paramref name="value"/>
+    /// <br/>
+    ///     The namespace URI for the SVG element.
+    /// </summary>
+    public static HtmlElementModifier Xmlns(string value) => Modify(x => x.xmlns = value);
+
+    /// <summary>
+    ///     version = <paramref name="value"/>
+    /// <br/>
+    ///     The SVG version of the element.
+    /// </summary>
+    public static HtmlElementModifier Version(string value) => Modify(x => x.version = value);
+
+    public static HtmlElementModifier ViewBox(string value) => Modify(x => x.viewBox = value);
+
+    public static HtmlElementModifier Fill(string value) => Modify(x => x.fill = value);
+
+}
+
