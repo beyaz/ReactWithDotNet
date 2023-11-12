@@ -1093,6 +1093,57 @@ public class ExportingCommonHtmlElements
                 },
                 EnableCastFromString = false
             },
+            
+             new()
+            {
+                Tag = "svg",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "focusable"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "xlinkHref"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "xmlnsXlink"
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "preserveAspectRatio",
+                        Comment = "Specifies how the SVG element should be scaled and aligned to fit its viewport."
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "width",
+                        Comment = "The width of the SVG element in pixels."
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "height",
+                        Comment = "The height of the SVG element in pixels."
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "xmlns",
+                        Comment = "The namespace URI for the SVG element.",
+                        DefaultValue = "http://www.w3.org/2000/svg"
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "version",
+                        Comment = "The SVG version of the element."
+                    },
+                },
+                EnableCastFromString = false
+            },
         };
 
         var list = new List<string>
