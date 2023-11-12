@@ -126,31 +126,34 @@ class CssClassInfo
 
         // compare MediaQueries
         {
-            if (a.MediaQueries is not null && b.MediaQueries is null)
+            var aMediaQueries = a.MediaQueries;
+            var bMediaQueries = b.MediaQueries;
+            
+            if (aMediaQueries is not null && bMediaQueries is null)
             {
                 return false;
             }
 
-            if (a.MediaQueries is null && b.MediaQueries is not null)
+            if (aMediaQueries is null && bMediaQueries is not null)
             {
                 return false;
             }
 
-            if (a.MediaQueries is not null && b.MediaQueries is not null)
+            if (aMediaQueries is not null)
             {
-                if (a.MediaQueries.Count != b.MediaQueries.Count)
+                if (aMediaQueries.Count != bMediaQueries.Count)
                 {
                     return false;
                 }
 
-                for (var i = 0; i < a.MediaQueries.Count; i++)
+                for (var i = 0; i < aMediaQueries.Count; i++)
                 {
-                    if (a.MediaQueries[i].mediaRule != b.MediaQueries[i].mediaRule)
+                    if (aMediaQueries[i].mediaRule != bMediaQueries[i].mediaRule)
                     {
                         return false;
                     }
 
-                    if (a.MediaQueries[i].cssBody != b.MediaQueries[i].cssBody)
+                    if (aMediaQueries[i].cssBody != bMediaQueries[i].cssBody)
                     {
                         return false;
                     }
