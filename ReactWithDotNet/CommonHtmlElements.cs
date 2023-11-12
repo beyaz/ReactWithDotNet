@@ -54,6 +54,10 @@ public sealed class button : HtmlElement
     public button(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<button> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
+
+    public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
+
 }
 
 public sealed class div : HtmlElement
@@ -1042,6 +1046,10 @@ public sealed class table : HtmlElement
     public table(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<table> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier CellSpacing(double? value) => Modify(x => x.cellSpacing = value);
+
+    public static HtmlElementModifier CellPadding(double? value) => Modify(x => x.cellPadding = value);
+
 }
 
 public sealed class thead : HtmlElement
@@ -1100,6 +1108,10 @@ public sealed class th : HtmlElement
     public th(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<th> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
+
+    public static HtmlElementModifier RowSpan(int? value) => Modify(x => x.rowSpan = value);
+
 }
 
 public sealed class td : HtmlElement
@@ -1123,6 +1135,10 @@ public sealed class td : HtmlElement
     public td(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<td> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
+
+    public static HtmlElementModifier RowSpan(int? value) => Modify(x => x.rowSpan = value);
+
 }
 
 public sealed class tr : HtmlElement
@@ -1142,6 +1158,10 @@ public sealed class tr : HtmlElement
     public tr(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<tr> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier ColSpan(int? value) => Modify(x => x.colSpan = value);
+
+    public static HtmlElementModifier RowSpan(int? value) => Modify(x => x.rowSpan = value);
+
 }
 
 public sealed class option : HtmlElement
@@ -1164,6 +1184,12 @@ public sealed class option : HtmlElement
     public option(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<option> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Selected(bool? value) => Modify(x => x.selected = value);
+
+    public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
+
+    public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
+
 }
 
 public sealed class ellipse : HtmlElement
@@ -1219,6 +1245,55 @@ public sealed class ellipse : HtmlElement
     public ellipse(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<ellipse> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     cx = <paramref name="value"/>
+    /// <br/>
+    ///     The x-coordinate of the center of the ellipse.
+    /// </summary>
+    public static HtmlElementModifier Cx(string value) => Modify(x => x.cx = value);
+
+    /// <summary>
+    ///     cy = <paramref name="value"/>
+    /// <br/>
+    ///     The y-coordinate of the center of the ellipse.
+    /// </summary>
+    public static HtmlElementModifier Cy(string value) => Modify(x => x.cy = value);
+
+    /// <summary>
+    ///     rx = <paramref name="value"/>
+    /// <br/>
+    ///     The radius of the ellipse along the x-axis.
+    /// </summary>
+    public static HtmlElementModifier Rx(string value) => Modify(x => x.rx = value);
+
+    /// <summary>
+    ///     ry = <paramref name="value"/>
+    /// <br/>
+    ///     The radius of the ellipse along the y-axis.
+    /// </summary>
+    public static HtmlElementModifier Ry(string value) => Modify(x => x.ry = value);
+
+    /// <summary>
+    ///     fill = <paramref name="value"/>
+    /// <br/>
+    ///     The fill color of the ellipse.
+    /// </summary>
+    public static HtmlElementModifier Fill(string value) => Modify(x => x.fill = value);
+
+    /// <summary>
+    ///     stroke = <paramref name="value"/>
+    /// <br/>
+    ///     The stroke color of the ellipse.
+    /// </summary>
+    public static HtmlElementModifier Stroke(string value) => Modify(x => x.stroke = value);
+
+    /// <summary>
+    ///     strokeWidth = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+
 }
 
 public sealed class line : HtmlElement
@@ -1292,6 +1367,76 @@ public sealed class line : HtmlElement
     public line(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<line> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     x1 = <paramref name="value"/>
+    /// <br/>
+    ///     The x-coordinate of the start point of the line.
+    /// </summary>
+    public static HtmlElementModifier X1(string value) => Modify(x => x.x1 = value);
+
+    /// <summary>
+    ///     y1 = <paramref name="value"/>
+    /// <br/>
+    ///     The y-coordinate of the start point of the line.
+    /// </summary>
+    public static HtmlElementModifier Y1(string value) => Modify(x => x.y1 = value);
+
+    /// <summary>
+    ///     x2 = <paramref name="value"/>
+    /// <br/>
+    ///     The x-coordinate of the end point of the line.
+    /// </summary>
+    public static HtmlElementModifier X2(string value) => Modify(x => x.x2 = value);
+
+    /// <summary>
+    ///     y2 = <paramref name="value"/>
+    /// <br/>
+    ///     The y-coordinate of the end point of the line.
+    /// </summary>
+    public static HtmlElementModifier Y2(string value) => Modify(x => x.y2 = value);
+
+    /// <summary>
+    ///     stroke = <paramref name="value"/>
+    /// <br/>
+    ///     The stroke (outline) color of the line.
+    /// </summary>
+    public static HtmlElementModifier Stroke(string value) => Modify(x => x.stroke = value);
+
+    /// <summary>
+    ///     strokeWidth = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the line's outline.
+    /// </summary>
+    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+
+    /// <summary>
+    ///     strokeDasharray = <paramref name="value"/>
+    /// <br/>
+    ///     Pattern of dashes and gaps used in the line's stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeDasharray(string value) => Modify(x => x.strokeDasharray = value);
+
+    /// <summary>
+    ///     strokeLinecap = <paramref name="value"/>
+    /// <br/>
+    ///     The style of the line's endpoints.
+    /// </summary>
+    public static HtmlElementModifier StrokeLinecap(string value) => Modify(x => x.strokeLinecap = value);
+
+    /// <summary>
+    ///     strokeLinejoin = <paramref name="value"/>
+    /// <br/>
+    ///     The style of the line's corners.
+    /// </summary>
+    public static HtmlElementModifier StrokeLinejoin(string value) => Modify(x => x.strokeLinejoin = value);
+
+    /// <summary>
+    ///     strokeOpacity = <paramref name="value"/>
+    /// <br/>
+    ///     The opacity (transparency) of the line's stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeOpacity(string value) => Modify(x => x.strokeOpacity = value);
+
 }
 
 public sealed class polyline : HtmlElement
@@ -1329,6 +1474,34 @@ public sealed class polyline : HtmlElement
     public polyline(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<polyline> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     points = <paramref name="value"/>
+    /// <br/>
+    ///     A list of points defining the vertices of the polyline.
+    /// </summary>
+    public static HtmlElementModifier Points(string value) => Modify(x => x.points = value);
+
+    /// <summary>
+    ///     fill = <paramref name="value"/>
+    /// <br/>
+    ///     The fill color of the polyline.
+    /// </summary>
+    public static HtmlElementModifier Fill(string value) => Modify(x => x.fill = value);
+
+    /// <summary>
+    ///     stroke = <paramref name="value"/>
+    /// <br/>
+    ///     The stroke (outline) color of the polyline.
+    /// </summary>
+    public static HtmlElementModifier Stroke(string value) => Modify(x => x.stroke = value);
+
+    /// <summary>
+    ///     strokeWidth = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the polyline's outline.
+    /// </summary>
+    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+
 }
 
 public sealed class circle : HtmlElement
@@ -1378,6 +1551,48 @@ public sealed class circle : HtmlElement
     public circle(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<circle> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     cx = <paramref name="value"/>
+    /// <br/>
+    ///     The x-coordinate of the center of the circle.
+    /// </summary>
+    public static HtmlElementModifier Cx(string value) => Modify(x => x.cx = value);
+
+    /// <summary>
+    ///     cy = <paramref name="value"/>
+    /// <br/>
+    ///     The y-coordinate of the center of the circle.
+    /// </summary>
+    public static HtmlElementModifier Cy(string value) => Modify(x => x.cy = value);
+
+    /// <summary>
+    ///     r = <paramref name="value"/>
+    /// <br/>
+    ///     The radius of the circle.
+    /// </summary>
+    public static HtmlElementModifier R(string value) => Modify(x => x.r = value);
+
+    /// <summary>
+    ///     fill = <paramref name="value"/>
+    /// <br/>
+    ///     The fill color of the circle.
+    /// </summary>
+    public static HtmlElementModifier Fill(string value) => Modify(x => x.fill = value);
+
+    /// <summary>
+    ///     stroke = <paramref name="value"/>
+    /// <br/>
+    ///     The stroke color of the circle.
+    /// </summary>
+    public static HtmlElementModifier Stroke(string value) => Modify(x => x.stroke = value);
+
+    /// <summary>
+    ///     strokeWidth = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the stroke of the circle.
+    /// </summary>
+    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+
 }
 
 public sealed class polygon : HtmlElement
@@ -1433,6 +1648,55 @@ public sealed class polygon : HtmlElement
     public polygon(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<polygon> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     points = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the coordinates of the polygon's vertices, in (x, y) pairs, separated by commas.
+    /// </summary>
+    public static HtmlElementModifier Points(string value) => Modify(x => x.points = value);
+
+    /// <summary>
+    ///     fill = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the fill color of the polygon.
+    /// </summary>
+    public static HtmlElementModifier Fill(string value) => Modify(x => x.fill = value);
+
+    /// <summary>
+    ///     stroke = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the stroke color of the polygon.
+    /// </summary>
+    public static HtmlElementModifier Stroke(string value) => Modify(x => x.stroke = value);
+
+    /// <summary>
+    ///     strokeWidth = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the width of the polygon's stroke, in pixels.
+    /// </summary>
+    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+
+    /// <summary>
+    ///     strokeLinecap = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the type of line cap used for the polygon's stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeLinecap(string value) => Modify(x => x.strokeLinecap = value);
+
+    /// <summary>
+    ///     strokeLinejoin = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the type of line join used for the polygon's stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeLinejoin(string value) => Modify(x => x.strokeLinejoin = value);
+
+    /// <summary>
+    ///     fillRule = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies how the polygon is filled.
+    /// </summary>
+    public static HtmlElementModifier FillRule(string value) => Modify(x => x.fillRule = value);
+
 }
 
 public sealed class rect : HtmlElement
@@ -1512,6 +1776,83 @@ public sealed class rect : HtmlElement
     public rect(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<rect> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     x = <paramref name="value"/>
+    /// <br/>
+    ///     The x-coordinate of the top-left corner of the rectangle.
+    /// </summary>
+    public static HtmlElementModifier X(string value) => Modify(x => x.x = value);
+
+    /// <summary>
+    ///     y = <paramref name="value"/>
+    /// <br/>
+    ///     The y-coordinate of the top-left corner of the rectangle.
+    /// </summary>
+    public static HtmlElementModifier Y(string value) => Modify(x => x.y = value);
+
+    /// <summary>
+    ///     width = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the rectangle.
+    /// </summary>
+    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+
+    /// <summary>
+    ///     height = <paramref name="value"/>
+    /// <br/>
+    ///     The height of the rectangle.
+    /// </summary>
+    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+
+    /// <summary>
+    ///     rx = <paramref name="value"/>
+    /// <br/>
+    ///     The border radius of the rectangle on the horizontal axis.
+    /// </summary>
+    public static HtmlElementModifier Rx(string value) => Modify(x => x.rx = value);
+
+    /// <summary>
+    ///     ry = <paramref name="value"/>
+    /// <br/>
+    ///     The border radius of the rectangle on the vertical axis.
+    /// </summary>
+    public static HtmlElementModifier Ry(string value) => Modify(x => x.ry = value);
+
+    /// <summary>
+    ///     fill = <paramref name="value"/>
+    /// <br/>
+    ///     The fill color of the rectangle.
+    /// </summary>
+    public static HtmlElementModifier Fill(string value) => Modify(x => x.fill = value);
+
+    /// <summary>
+    ///     stroke = <paramref name="value"/>
+    /// <br/>
+    ///     The stroke color of the rectangle.
+    /// </summary>
+    public static HtmlElementModifier Stroke(string value) => Modify(x => x.stroke = value);
+
+    /// <summary>
+    ///     strokeWidth = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the rectangle's stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+
+    /// <summary>
+    ///     strokeLinecap = <paramref name="value"/>
+    /// <br/>
+    ///     The linecap style of the rectangle's stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeLinecap(string value) => Modify(x => x.strokeLinecap = value);
+
+    /// <summary>
+    ///     strokeLinejoin = <paramref name="value"/>
+    /// <br/>
+    ///     The linejoin style of the rectangle's stroke.
+    /// </summary>
+    public static HtmlElementModifier StrokeLinejoin(string value) => Modify(x => x.strokeLinejoin = value);
+
 }
 
 public sealed class radialGradient : HtmlElement
@@ -1573,6 +1914,62 @@ public sealed class radialGradient : HtmlElement
     public radialGradient(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<radialGradient> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     cx = <paramref name="value"/>
+    /// <br/>
+    ///     The x-coordinate of the center of the gradient.
+    /// </summary>
+    public static HtmlElementModifier Cx(string value) => Modify(x => x.cx = value);
+
+    /// <summary>
+    ///     cy = <paramref name="value"/>
+    /// <br/>
+    ///     The y-coordinate of the center of the gradient.
+    /// </summary>
+    public static HtmlElementModifier Cy(string value) => Modify(x => x.cy = value);
+
+    /// <summary>
+    ///     fx = <paramref name="value"/>
+    /// <br/>
+    ///     The x-coordinate of the focal point of the gradient.
+    /// </summary>
+    public static HtmlElementModifier Fx(string value) => Modify(x => x.fx = value);
+
+    /// <summary>
+    ///     fy = <paramref name="value"/>
+    /// <br/>
+    ///     The y-coordinate of the focal point of the gradient.
+    /// </summary>
+    public static HtmlElementModifier Fy(string value) => Modify(x => x.fy = value);
+
+    /// <summary>
+    ///     r = <paramref name="value"/>
+    /// <br/>
+    ///     The radius of the gradient.
+    /// </summary>
+    public static HtmlElementModifier R(string value) => Modify(x => x.r = value);
+
+    /// <summary>
+    ///     spreadMethod = <paramref name="value"/>
+    /// <br/>
+    ///     The method used to spread the gradient.
+    /// </summary>
+    public static HtmlElementModifier SpreadMethod(string value) => Modify(x => x.spreadMethod = value);
+
+    /// <summary>
+    ///     gradientUnits = <paramref name="value"/>
+    /// <br/>
+    ///     The units used to specify the gradient.
+    /// </summary>
+    public static HtmlElementModifier GradientUnits(string value) => Modify(x => x.gradientUnits = value);
+
+    /// <summary>
+    ///     gradientTransform = <paramref name="value"/>
+    /// <br/>
+    ///     A transform to apply to the gradient.
+    /// </summary>
+    public static HtmlElementModifier GradientTransform(string value) => Modify(x => x.gradientTransform = value);
+
 }
 
 public sealed class clipPath : HtmlElement
@@ -1598,6 +1995,20 @@ public sealed class clipPath : HtmlElement
     public clipPath(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<clipPath> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     clipRule = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the fill rule for the clipping path.
+    /// </summary>
+    public static HtmlElementModifier ClipRule(string value) => Modify(x => x.clipRule = value);
+
+    /// <summary>
+    ///     clipBox = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the reference box for the clipping path.
+    /// </summary>
+    public static HtmlElementModifier ClipBox(string value) => Modify(x => x.clipBox = value);
+
 }
 
 public sealed class path : HtmlElement
@@ -1647,6 +2058,42 @@ public sealed class path : HtmlElement
     public path(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<path> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     d = <paramref name="value"/>
+    /// <br/>
+    ///     Path data
+    /// </summary>
+    public static HtmlElementModifier D(string value) => Modify(x => x.d = value);
+
+    /// <summary>
+    ///     fill = <paramref name="value"/>
+    /// <br/>
+    ///     Fill color
+    /// </summary>
+    public static HtmlElementModifier Fill(string value) => Modify(x => x.fill = value);
+
+    /// <summary>
+    ///     stroke = <paramref name="value"/>
+    /// <br/>
+    ///     Stroke color
+    /// </summary>
+    public static HtmlElementModifier Stroke(string value) => Modify(x => x.stroke = value);
+
+    /// <summary>
+    ///     strokeWidth = <paramref name="value"/>
+    /// <br/>
+    ///     Stroke width
+    /// </summary>
+    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+
+    public static HtmlElementModifier FillRule(string value) => Modify(x => x.fillRule = value);
+
+    public static HtmlElementModifier ClipRule(string value) => Modify(x => x.clipRule = value);
+
+    public static HtmlElementModifier StrokeLinecap(string value) => Modify(x => x.strokeLinecap = value);
+
+    public static HtmlElementModifier StrokeLinejoin(string value) => Modify(x => x.strokeLinejoin = value);
+
 }
 
 public sealed class g : HtmlElement
@@ -1669,6 +2116,12 @@ public sealed class g : HtmlElement
     public g(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<g> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    public static HtmlElementModifier Opacity(string value) => Modify(x => x.opacity = value);
+
+    public static HtmlElementModifier ClipPath(string value) => Modify(x => x.clipPath = value);
+
+    public static HtmlElementModifier Transform(string value) => Modify(x => x.transform = value);
+
 }
 
 public sealed class mask : HtmlElement
@@ -1718,6 +2171,48 @@ public sealed class mask : HtmlElement
     public mask(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<mask> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     height = <paramref name="value"/>
+    /// <br/>
+    ///     This attribute defines the height of the masking area. Value type: length ; Default value: 120%; Animatable: yes
+    /// </summary>
+    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+
+    /// <summary>
+    ///     maskContentUnits = <paramref name="value"/>
+    /// <br/>
+    ///     This attribute defines the coordinate system for the contents of the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: userSpaceOnUse; Animatable: yes
+    /// </summary>
+    public static HtmlElementModifier MaskContentUnits(string value) => Modify(x => x.maskContentUnits = value);
+
+    /// <summary>
+    ///     maskUnits = <paramref name="value"/>
+    /// <br/>
+    ///     This attribute defines the coordinate system for attributes x, y, width and height on the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: objectBoundingBox; Animatable: yes
+    /// </summary>
+    public static HtmlElementModifier MaskUnits(string value) => Modify(x => x.maskUnits = value);
+
+    /// <summary>
+    ///     x = <paramref name="value"/>
+    /// <br/>
+    ///     This attribute defines the x-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes
+    /// </summary>
+    public static HtmlElementModifier X(string value) => Modify(x => x.x = value);
+
+    /// <summary>
+    ///     y = <paramref name="value"/>
+    /// <br/>
+    ///     This attribute defines the y-axis coordinate of the top-left corner of the masking area. Value type: 'coordinate' ; Default value: -10%; Animatable: yes
+    /// </summary>
+    public static HtmlElementModifier Y(string value) => Modify(x => x.y = value);
+
+    /// <summary>
+    ///     width = <paramref name="value"/>
+    /// <br/>
+    ///     This attribute defines the width of the masking area. Value type: 'length' ; Default value: 120%; Animatable: yes
+    /// </summary>
+    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+
 }
 
 public sealed class meta : HtmlElement
@@ -1779,6 +2274,62 @@ public sealed class meta : HtmlElement
     public meta(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<meta> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     charset = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the character encoding of the document.
+    /// </summary>
+    public static HtmlElementModifier Charset(string value) => Modify(x => x.charset = value);
+
+    /// <summary>
+    ///     httpEquiv = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the name of the HTTP header that the meta tag should be equivalent to.
+    /// </summary>
+    public static HtmlElementModifier HttpEquiv(string value) => Modify(x => x.httpEquiv = value);
+
+    /// <summary>
+    ///     name = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the name of the metadata property.
+    /// </summary>
+    public static HtmlElementModifier Name(string value) => Modify(x => x.name = value);
+
+    /// <summary>
+    ///     content = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the value of the metadata property.
+    /// </summary>
+    public static HtmlElementModifier Content(string value) => Modify(x => x.content = value);
+
+    /// <summary>
+    ///     scheme = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL scheme for the content attribute of the meta tag.
+    /// </summary>
+    public static HtmlElementModifier Scheme(string value) => Modify(x => x.scheme = value);
+
+    /// <summary>
+    ///     itemprop = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the Microdata item property that the meta tag represents.
+    /// </summary>
+    public static HtmlElementModifier Itemprop(string value) => Modify(x => x.itemprop = value);
+
+    /// <summary>
+    ///     property = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the schema.org property that the meta tag represents.
+    /// </summary>
+    public static HtmlElementModifier Property(string value) => Modify(x => x.property = value);
+
+    /// <summary>
+    ///     src = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL for a resource associated with the meta tag.
+    /// </summary>
+    public static HtmlElementModifier Src(string value) => Modify(x => x.src = value);
+
 }
 
 public sealed class body : HtmlElement
@@ -1810,6 +2361,27 @@ public sealed class body : HtmlElement
     public body(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<body> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     background = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL of a background image to be displayed behind the document's content.
+    /// </summary>
+    public static HtmlElementModifier Background(string value) => Modify(x => x.background = value);
+
+    /// <summary>
+    ///     bgcolor = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the background color of the document's body.
+    /// </summary>
+    public static HtmlElementModifier Bgcolor(string value) => Modify(x => x.bgcolor = value);
+
+    /// <summary>
+    ///     link = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the color of unvisited links in the document's body.
+    /// </summary>
+    public static HtmlElementModifier Link(string value) => Modify(x => x.link = value);
+
 }
 
 public sealed class script : HtmlElement
@@ -1865,6 +2437,55 @@ public sealed class script : HtmlElement
     public script(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<script> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     async = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the script should be executed asynchronously. This means that the browser will not wait for the script to finish executing before continuing to parse the rest of the HTML.
+    /// </summary>
+    public static HtmlElementModifier Async(string value) => Modify(x => x.async = value);
+
+    /// <summary>
+    ///     defer = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the script should be executed after the browser has finished parsing the rest of the HTML. This is similar to async, but it ensures that scripts are executed in the order they are specified in the HTML.
+    /// </summary>
+    public static HtmlElementModifier Defer(string value) => Modify(x => x.defer = value);
+
+    /// <summary>
+    ///     integrity = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies a subresource integrity (SRI) hash for the script. This helps to protect against man-in-the-middle attacks.
+    /// </summary>
+    public static HtmlElementModifier Integrity(string value) => Modify(x => x.integrity = value);
+
+    /// <summary>
+    ///     language = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the scripting language of the script. This is deprecated, but is still supported by most browsers.
+    /// </summary>
+    public static HtmlElementModifier Language(string value) => Modify(x => x.language = value);
+
+    /// <summary>
+    ///     nomodule = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the script should be ignored if the browser does not support modules.
+    /// </summary>
+    public static HtmlElementModifier Nomodule(string value) => Modify(x => x.nomodule = value);
+
+    /// <summary>
+    ///     src = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL of an external script file.
+    /// </summary>
+    public static HtmlElementModifier Src(string value) => Modify(x => x.src = value);
+
+    /// <summary>
+    ///     type = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the type of the script. The most common value is application/javascript.
+    /// </summary>
+    public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
+
 }
 
 public sealed class title : HtmlElement
@@ -1884,6 +2505,13 @@ public sealed class title : HtmlElement
     public title(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<title> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     language = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the language of the title.
+    /// </summary>
+    public static HtmlElementModifier Language(string value) => Modify(x => x.language = value);
+
 }
 
 public sealed class head : HtmlElement
@@ -1927,6 +2555,41 @@ public sealed class head : HtmlElement
     public head(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<head> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     profile = <paramref name="value"/>
+    /// <br/>
+    ///     Provides a URL to a profile document for the current document.
+    /// </summary>
+    public static HtmlElementModifier Profile(string value) => Modify(x => x.profile = value);
+
+    /// <summary>
+    ///     link = <paramref name="value"/>
+    /// <br/>
+    ///     Provides a link to an external resource, such as a stylesheet or script file.
+    /// </summary>
+    public static HtmlElementModifier Link(string value) => Modify(x => x.link = value);
+
+    /// <summary>
+    ///     meta = <paramref name="value"/>
+    /// <br/>
+    ///     Provides metadata about the document, such as the character encoding, author, and keywords.
+    /// </summary>
+    public static HtmlElementModifier Meta(string value) => Modify(x => x.meta = value);
+
+    /// <summary>
+    ///     script = <paramref name="value"/>
+    /// <br/>
+    ///     Provides JavaScript code to be executed in the browser.
+    /// </summary>
+    public static HtmlElementModifier Script(string value) => Modify(x => x.script = value);
+
+    /// <summary>
+    ///     noscript = <paramref name="value"/>
+    /// <br/>
+    ///     Provides content to be displayed if the browser does not support JavaScript.
+    /// </summary>
+    public static HtmlElementModifier Noscript(string value) => Modify(x => x.noscript = value);
+
 }
 
 public sealed class html : HtmlElement
@@ -1970,6 +2633,41 @@ public sealed class html : HtmlElement
     public html(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<html> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     hidden = <paramref name="value"/>
+    /// <br/>
+    ///     Hides the element from display.
+    /// </summary>
+    public static HtmlElementModifier Hidden(string value) => Modify(x => x.hidden = value);
+
+    /// <summary>
+    ///     manifest = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL of a manifest file, which provides information about the web app.
+    /// </summary>
+    public static HtmlElementModifier Manifest(string value) => Modify(x => x.manifest = value);
+
+    /// <summary>
+    ///     xmlns = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the namespace of the element.
+    /// </summary>
+    public static HtmlElementModifier Xmlns(string value) => Modify(x => x.xmlns = value);
+
+    /// <summary>
+    ///     prefix = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the prefix of the element.
+    /// </summary>
+    public static HtmlElementModifier Prefix(string value) => Modify(x => x.prefix = value);
+
+    /// <summary>
+    ///     version = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the version of the HTML specification to which the element conforms.
+    /// </summary>
+    public static HtmlElementModifier Version(string value) => Modify(x => x.version = value);
+
 }
 
 public sealed class label : HtmlElement
@@ -2011,6 +2709,34 @@ public sealed class label : HtmlElement
     public label(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<label> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     htmlFor = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies which form element a label is bound to.
+    /// </summary>
+    public static HtmlElementModifier HtmlFor(string value) => Modify(x => x.htmlFor = value);
+
+    /// <summary>
+    ///     dropzone = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies whether the element is a drop target.
+    /// </summary>
+    public static HtmlElementModifier Dropzone(string value) => Modify(x => x.dropzone = value);
+
+    /// <summary>
+    ///     hidden = <paramref name="value"/>
+    /// <br/>
+    ///     Hides the element from view.
+    /// </summary>
+    public static HtmlElementModifier Hidden(string value) => Modify(x => x.hidden = value);
+
+    /// <summary>
+    ///     tabindex = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the element's position in the tab order.
+    /// </summary>
+    public static HtmlElementModifier Tabindex(string value) => Modify(x => x.tabindex = value);
+
 }
 
 public sealed class a : HtmlElement
@@ -2084,6 +2810,76 @@ public sealed class a : HtmlElement
     public a(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<a> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     href = <paramref name="value"/>
+    /// <br/>
+    ///     The URL of the linked resource.
+    /// </summary>
+    public static HtmlElementModifier Href(string value) => Modify(x => x.href = value);
+
+    /// <summary>
+    ///     target = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies where the linked resource should be opened. Can be `_blank`, `_self`, `_parent`, or `_top`.
+    /// </summary>
+    public static HtmlElementModifier Target(string value) => Modify(x => x.target = value);
+
+    /// <summary>
+    ///     rel = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the relationship between the current document and the linked resource. Can be `alternate`, `author`, `bookmark`, `canonical`, `external`, `help`, `license`, `next`, `nofollow`, `noreferrer`, `noopener`, `prev`, `search`, `sponsored`, or `stylesheet`.
+    /// </summary>
+    public static HtmlElementModifier Rel(string value) => Modify(x => x.rel = value);
+
+    /// <summary>
+    ///     type = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the MIME type of the linked resource, if applicable.
+    /// </summary>
+    public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
+
+    /// <summary>
+    ///     download = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies whether the linked resource should be downloaded or opened in a new browser tab.
+    /// </summary>
+    public static HtmlElementModifier Download(string value) => Modify(x => x.download = value);
+
+    /// <summary>
+    ///     ping = <paramref name="value"/>
+    /// <br/>
+    ///     A list of URLs to which a ping should be sent when the user clicks on the link.
+    /// </summary>
+    public static HtmlElementModifier Ping(string value) => Modify(x => x.ping = value);
+
+    /// <summary>
+    ///     media = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the media types for which the link is relevant.
+    /// </summary>
+    public static HtmlElementModifier Media(string value) => Modify(x => x.media = value);
+
+    /// <summary>
+    ///     hreflang = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the language of the linked resource.
+    /// </summary>
+    public static HtmlElementModifier Hreflang(string value) => Modify(x => x.hreflang = value);
+
+    /// <summary>
+    ///     name = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies a name for the link. This can be used to target the link with JavaScript.
+    /// </summary>
+    public static HtmlElementModifier Name(string value) => Modify(x => x.name = value);
+
+    /// <summary>
+    ///     tabindex = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the tab order of the link.
+    /// </summary>
+    public static HtmlElementModifier Tabindex(string value) => Modify(x => x.tabindex = value);
+
 }
 
 public sealed class img : HtmlElement
@@ -2169,5 +2965,89 @@ public sealed class img : HtmlElement
     public img(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<img> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     src = <paramref name="value"/>
+    /// <br/>
+    ///     The URL of the image file.
+    /// </summary>
+    public static HtmlElementModifier Src(string value) => Modify(x => x.src = value);
+
+    /// <summary>
+    ///     srcset = <paramref name="value"/>
+    /// <br/>
+    ///     A list of image files to use in different situations, such as different screen sizes or device types.
+    /// </summary>
+    public static HtmlElementModifier Srcset(string value) => Modify(x => x.srcset = value);
+
+    /// <summary>
+    ///     usemap = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies an image as a client-side image map.
+    /// </summary>
+    public static HtmlElementModifier Usemap(string value) => Modify(x => x.usemap = value);
+
+    /// <summary>
+    ///     alt = <paramref name="value"/>
+    /// <br/>
+    ///     An alternate text for the image, if the image for some reason cannot be displayed.
+    /// </summary>
+    public static HtmlElementModifier Alt(string value) => Modify(x => x.alt = value);
+
+    /// <summary>
+    ///     width = <paramref name="value"/>
+    /// <br/>
+    ///     The width of the image, in pixels.
+    /// </summary>
+    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+
+    /// <summary>
+    ///     height = <paramref name="value"/>
+    /// <br/>
+    ///     The height of the image, in pixels.
+    /// </summary>
+    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+
+    /// <summary>
+    ///     ismap = <paramref name="value"/>
+    /// <br/>
+    ///     A Boolean attribute that indicates whether the image is an image map.
+    /// </summary>
+    public static HtmlElementModifier Ismap(string value) => Modify(x => x.ismap = value);
+
+    /// <summary>
+    ///     longdesc = <paramref name="value"/>
+    /// <br/>
+    ///     A longer description of the image, for use by screen readers and other assistive technologies.
+    /// </summary>
+    public static HtmlElementModifier Longdesc(string value) => Modify(x => x.longdesc = value);
+
+    /// <summary>
+    ///     crossorigin = <paramref name="value"/>
+    /// <br/>
+    ///     A string that specifies the CORS setting for the image.
+    /// </summary>
+    public static HtmlElementModifier Crossorigin(string value) => Modify(x => x.crossorigin = value);
+
+    /// <summary>
+    ///     loading = <paramref name="value"/>
+    /// <br/>
+    ///     A string that specifies how the image should be loaded.
+    /// </summary>
+    public static HtmlElementModifier Loading(string value) => Modify(x => x.loading = value);
+
+    /// <summary>
+    ///     decoding = <paramref name="value"/>
+    /// <br/>
+    ///     A string that specifies how the image should be decoded.
+    /// </summary>
+    public static HtmlElementModifier Decoding(string value) => Modify(x => x.decoding = value);
+
+    /// <summary>
+    ///     referrerpolicy = <paramref name="value"/>
+    /// <br/>
+    ///     A string that specifies how much referrer information is sent with requests for the image.
+    /// </summary>
+    public static HtmlElementModifier Referrerpolicy(string value) => Modify(x => x.referrerpolicy = value);
+
 }
 

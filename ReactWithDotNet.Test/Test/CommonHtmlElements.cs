@@ -1175,7 +1175,7 @@ public class ExportingCommonHtmlElements
                     if (IsNullOrWhiteSpace(attribute.Comment) == false)
                     {
                         list.Add($"{padding}/// <summary>");
-                        list.Add($"{padding}/// {CamelCase(attribute.Name)} = value");
+                        list.Add($"{padding}///     {CamelCase(attribute.Name)} = <paramref name=\"value\"/>");
                         list.Add($"{padding}/// <br/>");
                         list.Add($"{padding}///     {attribute.Comment}");
                         list.Add($"{padding}/// </summary>");
