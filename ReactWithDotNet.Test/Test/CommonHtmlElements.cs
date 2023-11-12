@@ -1093,6 +1093,10 @@ public class ExportingCommonHtmlElements
             addComment();
             list.Add($"    public {item.Tag}(StyleModifier[] styleModifiers) : base(styleModifiers) {{ }}");
             
+            
+            list.Add(Empty);
+            list.Add($"    public static HtmlElementModifier Modify(Action<{item.Tag}> modifyAction) => CreateHtmlElementModifier(modifyAction);");
+            
 
             list.Add("}");
 
