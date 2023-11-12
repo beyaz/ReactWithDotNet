@@ -322,7 +322,7 @@ public abstract class HtmlElement : Element
 
     internal List<Style> classNameList;
     
-    
+    // TODO: check usage and remove
     protected static HtmlElementModifier Modify<THtmlElement>(Action<THtmlElement> modifyAction)
         where THtmlElement : HtmlElement
     {
