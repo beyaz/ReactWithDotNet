@@ -647,9 +647,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         // multi line
         {
+            var partConstructor = "";
+            if (modifiers.Count > 0)
+            {
+                partConstructor = $"({string.Join(", ", modifiers)})";
+            }
             var lines = new List<string>
             {
-                $"new {htmlNodeName}({string.Join(", ", modifiers)})",
+                $"new {htmlNodeName}{partConstructor}",
                 "{"
             };
 
