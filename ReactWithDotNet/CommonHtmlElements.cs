@@ -2086,3 +2086,88 @@ public sealed class a : HtmlElement
     public static HtmlElementModifier Modify(Action<a> modifyAction) => CreateHtmlElementModifier(modifyAction);
 }
 
+public sealed class img : HtmlElement
+{
+    /// <summary>
+    ///     The URL of the image file.
+    /// </summary>
+    [ReactProp]
+    public string src { get; set; }
+
+    /// <summary>
+    ///     A list of image files to use in different situations, such as different screen sizes or device types.
+    /// </summary>
+    [ReactProp]
+    public string srcset { get; set; }
+
+    /// <summary>
+    ///     Specifies an image as a client-side image map.
+    /// </summary>
+    [ReactProp]
+    public string usemap { get; set; }
+
+    /// <summary>
+    ///     An alternate text for the image, if the image for some reason cannot be displayed.
+    /// </summary>
+    [ReactProp]
+    public string alt { get; set; }
+
+    /// <summary>
+    ///     The width of the image, in pixels.
+    /// </summary>
+    [ReactProp]
+    public string width { get; set; }
+
+    /// <summary>
+    ///     The height of the image, in pixels.
+    /// </summary>
+    [ReactProp]
+    public string height { get; set; }
+
+    /// <summary>
+    ///     A Boolean attribute that indicates whether the image is an image map.
+    /// </summary>
+    [ReactProp]
+    public string ismap { get; set; }
+
+    /// <summary>
+    ///     A longer description of the image, for use by screen readers and other assistive technologies.
+    /// </summary>
+    [ReactProp]
+    public string longdesc { get; set; }
+
+    /// <summary>
+    ///     A string that specifies the CORS setting for the image.
+    /// </summary>
+    [ReactProp]
+    public string crossorigin { get; set; }
+
+    /// <summary>
+    ///     A string that specifies how the image should be loaded.
+    /// </summary>
+    [ReactProp]
+    public string loading { get; set; }
+
+    /// <summary>
+    ///     A string that specifies how the image should be decoded.
+    /// </summary>
+    [ReactProp]
+    public string decoding { get; set; }
+
+    /// <summary>
+    ///     A string that specifies how much referrer information is sent with requests for the image.
+    /// </summary>
+    [ReactProp]
+    public string referrerpolicy { get; set; }
+
+    public img() { }
+
+    public img(params IModifier[] modifiers) : base(modifiers) { }
+
+    public img(Style style) : base(style) { }
+
+    public img(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<img> modifyAction) => CreateHtmlElementModifier(modifyAction);
+}
+
