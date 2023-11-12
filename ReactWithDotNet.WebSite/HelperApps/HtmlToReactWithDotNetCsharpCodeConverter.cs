@@ -714,6 +714,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         var propertyInfo = TryFindProperty(htmlAttribute.GetTagName(), attributeName);
         if (propertyInfo is not null)
         {
+            if (propertyInfo.PropertyType == typeof(double?))
+            {
+                if (double.TryParse(htmlAttribute.Value, out var valueAsDouble))
+                {
+                    return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = {valueAsDouble:F1})";            
+                }
+            }
+            
             return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = \"{htmlAttribute.Value}\")";    
         }
 
