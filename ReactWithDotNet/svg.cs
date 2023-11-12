@@ -48,24 +48,7 @@ public sealed class svg : HtmlElement
     /// </summary>
     public static HtmlElementModifier Width(double width) => Width(width.AsPixel());
 
-    /// <summary>
-    ///     svg.width = <paramref name="widthAndHeight" />
-    /// <br/>
-    ///     svg.height = <paramref name="widthAndHeight" />
-    /// </summary>
-    public static HtmlElementModifier WidthHeight(string widthAndHeight) => Modify<svg>(el =>
-    {
-        el.width  = widthAndHeight;
-        el.height = widthAndHeight;
-    });
-
-    /// <summary>
-    ///     svg.width = <paramref name="widthAndHeight" /> + 'px'
-    /// <br/>
-    ///     svg.height = <paramref name="widthAndHeight" /> + 'px'
-    /// </summary>
-    public static HtmlElementModifier WidthHeight(double widthAndHeight) => WidthHeight(widthAndHeight.AsPixel());
-
+    
     /// <summary>
     ///     svg.height = <paramref name="height" />
     /// </summary>
