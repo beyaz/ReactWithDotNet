@@ -25,9 +25,9 @@ public sealed class img : HtmlElement
     [ReactProp]
     public string width { get; set; }
 
-    public static HtmlElementModifier Alt(string alt) => Modify<img>(element => element.alt = alt);
+    public static HtmlElementModifier Alt(string alt) => CreateHtmlElementModifier<img>(element => element.alt = alt);
 
-    public static HtmlElementModifier Src(string src) => Modify<img>(element => element.src = src);
+    public static HtmlElementModifier Src(string src) => CreateHtmlElementModifier<img>(element => element.src = src);
 }
 
 partial class Mixin
@@ -35,10 +35,10 @@ partial class Mixin
     /// <summary>
     ///     img.alt = <paramref name="alt" />
     /// </summary>
-    public static HtmlElementModifier Alt(string alt) => img.Alt(alt);
+    public static HtmlElementModifier Alt(string alt) => CreateHtmlElementModifier<img>(element => element.alt = alt);
 
     /// <summary>
     ///     img.src = <paramref name="src" />
     /// </summary>
-    public static HtmlElementModifier Src(string src) => img.Src(src);
+    public static HtmlElementModifier Src(string src) => CreateHtmlElementModifier<img>(element => element.src = src);
 }

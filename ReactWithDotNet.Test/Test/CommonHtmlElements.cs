@@ -1022,6 +1022,77 @@ public class ExportingCommonHtmlElements
                 },
                 EnableCastFromString = false
             },
+            
+            
+             
+            new()
+            {
+                Tag = "img",
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "src",
+                        Comment = "The URL of the image file."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "srcset",
+                        Comment = "A list of image files to use in different situations, such as different screen sizes or device types."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "usemap",
+                        Comment = "Specifies an image as a client-side image map."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "alt",
+                        Comment = "An alternate text for the image, if the image for some reason cannot be displayed."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "width",
+                        Comment = "The width of the image, in pixels."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "height",
+                        Comment = "The height of the image, in pixels."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "ismap",
+                        Comment = "A Boolean attribute that indicates whether the image is an image map."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "longdesc",
+                        Comment = "A longer description of the image, for use by screen readers and other assistive technologies."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "crossorigin",
+                        Comment = "A string that specifies the CORS setting for the image."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "loading",
+                        Comment = "A string that specifies how the image should be loaded."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "decoding",
+                        Comment = "A string that specifies how the image should be decoded."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "referrerpolicy",
+                        Comment = "A string that specifies how much referrer information is sent with requests for the image."
+                    },
+                },
+                EnableCastFromString = false
+            },
         };
 
         var list = new List<string>
