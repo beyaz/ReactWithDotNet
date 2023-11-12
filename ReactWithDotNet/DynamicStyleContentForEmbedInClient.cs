@@ -89,31 +89,34 @@ class CssClassInfo
 
         // compare Pseudos
         {
-            if (a.Pseudos is not null && b.Pseudos is null)
+            var aPseudos = a.Pseudos;
+            var bPseudos = b.Pseudos;
+            
+            if (aPseudos is not null && bPseudos is null)
             {
                 return false;
             }
 
-            if (a.Pseudos is null && b.Pseudos is not null)
+            if (aPseudos is null && bPseudos is not null)
             {
                 return false;
             }
 
-            if (a.Pseudos is not null && b.Pseudos is not null)
+            if (aPseudos is not null)
             {
-                if (a.Pseudos.Count != b.Pseudos.Count)
+                if (aPseudos.Count != bPseudos.Count)
                 {
                     return false;
                 }
 
-                for (var i = 0; i < a.Pseudos.Count; i++)
+                for (var i = 0; i < aPseudos.Count; i++)
                 {
-                    if (a.Pseudos[i].Name != b.Pseudos[i].Name)
+                    if (aPseudos[i].Name != bPseudos[i].Name)
                     {
                         return false;
                     }
 
-                    if (a.Pseudos[i].BodyOfCss != b.Pseudos[i].BodyOfCss)
+                    if (aPseudos[i].BodyOfCss != bPseudos[i].BodyOfCss)
                     {
                         return false;
                     }
