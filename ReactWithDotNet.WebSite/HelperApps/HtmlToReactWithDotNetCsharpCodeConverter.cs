@@ -59,8 +59,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
     }
 
-   
-    
     static string ConvertToCSharpString(string value)
     {
         if (value == null)
@@ -131,6 +129,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
 
         return name;
+    }
+
+    static string GetTagName(this HtmlAttribute htmlAttribute)
+    {
+        return htmlAttribute.OwnerNode.Name;
     }
 
     static void Insert(this HtmlAttributeCollection htmlAttributeCollection, int index, string name, string value)
@@ -274,7 +277,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     style = Style.ParseCss(styleAttribute.Value);
                 }
-                
+
                 htmlNode.Attributes.Remove("style");
             }
         }
@@ -338,7 +341,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     return false;
                 }
-                
+
                 foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isStyleAttribute))
                 {
                     style[htmlAttribute.Name] = htmlAttribute.Value;
@@ -516,11 +519,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     static string toLine(KeyValuePair<string, string> kv)
                     {
-                        
                         return kv.Key + " = \"" + kv.Value + "\",";
                     }
                 }
-                
+
                 var propertyInfo = TryFindProperty(attribute.GetTagName(), attribute.GetName());
                 if (propertyInfo is not null)
                 {
@@ -531,6 +533,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     return new List<string> { $"/* {attribute.GetName()} = \"{attribute.Value}\"*/" };
                 }
+
                 return new List<string> { $"// {attribute.GetName()} = \"{attribute.Value}\"" };
             }
 
@@ -625,7 +628,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             modifiers.Add(styleAsCode());
         }
-        
+
         if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
         {
             if (htmlNode.Attributes.Count == 0 && style is null)
@@ -643,8 +646,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             };
         }
 
-        
-
         // multi line
         {
             var partConstructor = "";
@@ -652,6 +653,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 partConstructor = $"({string.Join(", ", modifiers)})";
             }
+
             var lines = new List<string>
             {
                 $"new {htmlNodeName}{partConstructor}",
@@ -692,7 +694,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return $"svg.Focusable(\"{htmlAttribute.Value}\")";
         }
-        
+
         if (attributeName == "type" && htmlAttribute.OwnerNode.Name == "button")
         {
             return $"button.Type(\"{htmlAttribute.Value}\")";
@@ -709,12 +711,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return modifierFullName;
         }
-        
-        if (typeof(Mixin).GetMethod(CamelCase(attributeName), new []{typeof(string)}) is not null)
+
+        if (typeof(Mixin).GetMethod(CamelCase(attributeName), new[] { typeof(string) }) is not null)
         {
             return $"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")";
         }
-
 
         var propertyInfo = TryFindProperty(htmlAttribute.GetTagName(), attributeName);
         if (propertyInfo is not null)
@@ -723,38 +724,38 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (double.TryParse(htmlAttribute.Value, out var valueAsDouble))
                 {
-                    return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = {valueAsDouble})";            
+                    return $"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})";
                 }
             }
+
             if (propertyInfo.PropertyType == typeof(int?))
             {
                 if (int.TryParse(htmlAttribute.Value, out var valueAsInt32))
                 {
-                    return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = {valueAsInt32})";            
+                    return $"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})";
                 }
             }
-            
-            return $"CreateHtmlElementModifier<{htmlAttribute.GetTagName()}>(x => x.{propertyInfo.Name} = \"{htmlAttribute.Value}\")";    
+
+            return $"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{htmlAttribute.Value}\")";
         }
 
         return $"/* {htmlAttribute.GetTagName()}.{attributeName} = \"{htmlAttribute.Value}\"*/";
+
+        static string UpperCaseFirstChar(string str)
+        {
+            return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
+        }
     }
 
     static PropertyInfo TryFindProperty(string htmlTagName, string attributeName)
     {
-        var propertyName = string.Join(string.Empty, attributeName.Split(":-".ToCharArray(),StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim()));
-        
-        return TryFindTypeOfHtmlTag(htmlTagName)?.GetProperty(propertyName,BindingFlags.IgnoreCase |  BindingFlags.Public | BindingFlags.Instance);
-    }
-    
-    static Type TryFindTypeOfHtmlTag(string htmlTagName)
-    {
-        return typeof(div).Assembly.GetType(nameof(ReactWithDotNet) + "." + htmlTagName, throwOnError: false, ignoreCase: true);
+        var propertyName = string.Join(string.Empty, attributeName.Split(":-".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()));
+
+        return TryFindTypeOfHtmlTag(htmlTagName)?.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
     }
 
-    static string GetTagName(this HtmlAttribute htmlAttribute)
+    static Type TryFindTypeOfHtmlTag(string htmlTagName)
     {
-        return htmlAttribute.OwnerNode.Name;
+        return typeof(div).Assembly.GetType(nameof(ReactWithDotNet) + "." + htmlTagName, false, true);
     }
-    
 }
