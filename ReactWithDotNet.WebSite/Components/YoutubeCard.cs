@@ -24,7 +24,7 @@ class YoutubeCard : PureComponent
                 BorderTopLeftRadius(5),
                 BorderBottomLeftRadius(5),
                 Src($"https://i.ytimg.com/vi_webp/{Model.YoutubeVideoId}/maxresdefault.webp"), 
-                Alt(Model.Title),
+                img.Alt(Model.Title),
                 Width(200),
                 Height(160),
                 ObjectFitFill
