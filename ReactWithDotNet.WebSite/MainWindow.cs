@@ -1,5 +1,4 @@
-﻿using System.IO;
-using ReactWithDotNet.WebSite.HeaderComponents;
+﻿using ReactWithDotNet.WebSite.HeaderComponents;
 using ReactWithDotNet.WebSite.Pages;
 
 namespace ReactWithDotNet.WebSite;
