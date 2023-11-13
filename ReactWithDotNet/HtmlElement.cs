@@ -317,18 +317,9 @@ public abstract class HtmlElement : Element
 
         className += " " + cssClassName;
     }
-    
-    
 
     internal List<Style> classNameList;
     
-    // TODO: check usage and remove
-    protected static HtmlElementModifier Modify<THtmlElement>(Action<THtmlElement> modifyAction)
-        where THtmlElement : HtmlElement
-    {
-        return CreateHtmlElementModifier(modifyAction);
-    }
-
     #region Operators
 
     public static HtmlElement operator +(HtmlElement element, Style style)
