@@ -7,16 +7,9 @@ namespace ReactWithDotNet.Test;
 [TestClass]
 public class SerializationTests
 {
-    class A
-    {
-        public string Prop0 { get; set; }
-        public A Child { get; set; }
-    }
-    
     [TestMethod]
     public void NestedSerialize()
     {
-
         var a = new A
         {
             Prop0 = "p0",
@@ -55,5 +48,61 @@ public class SerializationTests
         var a2 = DeserializeJsonBySystemTextJson<A>(json);
 
         a2.Child.Child.Child.Child.Child.Child.Child.Prop0.Should().Be("p7");
+    }
+
+    [TestMethod]
+    public void NestedSerialize2()
+    {
+        var a = new A
+        {
+            Prop0 = "p0",
+            Children = new List<A>
+            {
+                new()
+                {
+                    Prop0 = "p1"
+                },
+                new()
+                {
+                    Prop0 = "p2",
+                    Children = new List<A>
+                    {
+                        new()
+                        {
+                            Prop0 = "p3"
+                        },
+                        new()
+                        {
+                            Prop0 = "p4",
+                            Children = new List<A>
+                            {
+                                new()
+                                {
+                                    Prop0 = "p5"
+                                },
+                                new()
+                                {
+                                    Prop0 = "p6"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        var json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
+
+        var a2 = DeserializeJsonBySystemTextJson<A>(json);
+
+        a2.Children[1].Children[1].Children[1].Prop0.Should().Be("p6");
+    }
+
+    class A
+    {
+        public A Child { get; set; }
+
+        public List<A> Children { get; set; }
+        public string Prop0 { get; set; }
     }
 }
