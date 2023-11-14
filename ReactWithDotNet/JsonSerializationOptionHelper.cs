@@ -246,10 +246,6 @@ partial class Mixin
 }
 static partial class JsonSerializationOptionHelper
 {
-
-   
-
-
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
     {
         options.WriteIndented  = true;
