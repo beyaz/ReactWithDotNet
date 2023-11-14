@@ -536,6 +536,13 @@ const GetNextSequence = (() =>
 })();
 
 
+var DotNetComponentInstanceId_Next_Value = 1;
+function InitializeDotNetComponentInstanceId(component)
+{
+    component['$DotNetComponentInstanceId'] = DotNetComponentInstanceId_Next_Value++;
+}
+
+
 class LinkedListNode
 {
     constructor(data)
@@ -1692,6 +1699,8 @@ function DefineComponent(componentDeclaration)
             instance[CUSTOM_EVENT_LISTENER_MAP] = {};
 
             instance[DotNetComponentUniqueIdentifiers] = [NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier])];
+
+            InitializeDotNetComponentInstanceId(instance);
 
             COMPONENT_CACHE.Register(instance);
         }
