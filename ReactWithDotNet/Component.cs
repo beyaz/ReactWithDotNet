@@ -70,7 +70,7 @@ public abstract class ReactComponentBase : Element
     /// <summary>
     ///     Sample event declaration
     ///     <br />
-    ///     [ReactCustomEvent] public Func&lt;UserInfo&gt; OnUserChanged { get; set; }
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
@@ -84,7 +84,7 @@ public abstract class ReactComponentBase : Element
     /// <summary>
     ///     Sample event declaration
     ///     <br />
-    ///     [ReactCustomEvent] public Func&lt;UserInfo&gt; OnUserChanged { get; set; }
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
@@ -98,7 +98,7 @@ public abstract class ReactComponentBase : Element
     /// <summary>
     ///     Sample event declaration
     ///     <br />
-    ///     [ReactCustomEvent] public Func&lt;UserInfo&gt; OnUserChanged { get; set; }
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
@@ -112,7 +112,7 @@ public abstract class ReactComponentBase : Element
     /// <summary>
     ///     Sample event declaration
     ///     <br />
-    ///     [ReactCustomEvent] public Func&lt;UserInfo&gt; OnUserChanged { get; set; }
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
     ///     <br />
     ///     <br />
     ///     Sample event dispatching <br />
