@@ -87,16 +87,26 @@ static class ComponentRequestHandler
                     tracer.Trace($"{input.OnReactContextCreated.Method.DeclaringType}::{input.OnReactContextCreated.Method.Name} invoked in {tracer.ElapsedMilliseconds} milliseconds");
                 }
             }
-            
 
-            if (request.MethodName == "FetchComponent")
+            try
             {
-                return await fetchComponent();
+                if (request.MethodName == "FetchComponent")
+                {
+                    return await fetchComponent();
+                }
+
+                if (request.MethodName == "HandleComponentEvent")
+                {
+                    return await handleComponentEvent();
+                }
             }
-
-            if (request.MethodName == "HandleComponentEvent")
+            finally
             {
-                return await handleComponentEvent();
+                var task = input.OnReactContextDisposed?.Invoke(input.HttpContext, context);
+                if (task is not null)
+                {
+                    await task;
+                }
             }
 
             return new ComponentResponse { ErrorMessage = $"Not implemented method. {request.MethodName}" };

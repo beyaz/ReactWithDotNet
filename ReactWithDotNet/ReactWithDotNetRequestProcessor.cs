@@ -18,6 +18,9 @@ sealed class ProcessReactWithDotNetRequestInput
 
     public OnReactContextCreated OnReactContextCreated { get; init; }
     
+    public OnReactContextDisposed OnReactContextDisposed { get; init; }
+    
+    
     public ReactContext ReactContext { get; init; }
 }
 
@@ -64,6 +67,7 @@ partial class Mixin
             HttpContext                    = input.HttpContext,
             QueryString                    = input.HttpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
+            OnReactContextDisposed         = input.OnReactContextDisposed,
             BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
         });
 
@@ -75,7 +79,8 @@ partial class Mixin
             Component                      = (Element)layoutInstance,
             QueryString                    = input.HttpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
-            ReactContext = reactContext,
+            OnReactContextDisposed         = input.OnReactContextDisposed,
+            ReactContext                   = reactContext,
             BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
         });
     }
@@ -96,6 +101,7 @@ partial class Mixin
         {
             HttpContext                    = calculateRenderInfoInput.HttpContext,
             OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
+            OnReactContextDisposed         = calculateRenderInfoInput.OnReactContextDisposed,
             BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient
         };
 
@@ -121,6 +127,7 @@ partial class Mixin
             HttpContext                                           = input.HttpContext,
             Instance                                              = input.Component,
             OnReactContextCreated                                 = input.OnReactContextCreated,
+            OnReactContextDisposed                                = input.OnReactContextDisposed,
             ReactContext                                          = input.ReactContext,
             BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
@@ -164,6 +171,7 @@ partial class Mixin
             HttpContext                                           = input.HttpContext,
             Instance                                              = input.Component,
             OnReactContextCreated                                 = input.OnReactContextCreated,
+            OnReactContextDisposed                                = input.OnReactContextDisposed,
             BeforeSerializeElementToClient                        = input.BeforeSerializeElementToClient,
             CalculateSuspenseFallbackForThirdPartyReactComponents = true,
 
@@ -268,6 +276,7 @@ public sealed class CalculateFirstRenderInput
     public HttpContext HttpContext { get; init; }
 
     public OnReactContextCreated OnReactContextCreated { get; init; }
+    public OnReactContextDisposed OnReactContextDisposed { get; init; }
 
     public string QueryString { get; init; }
 }
@@ -281,6 +290,7 @@ sealed class CalculateComponentHtmlTextInput
     public HttpContext HttpContext { get; init; }
 
     public OnReactContextCreated OnReactContextCreated { get; init; }
+    public OnReactContextDisposed OnReactContextDisposed { get; init; }
 
     public string QueryString { get; init; }
     
@@ -294,6 +304,7 @@ public sealed class CalculateRenderInfoInput
     public HttpContext HttpContext { get; init; }
 
     public OnReactContextCreated OnReactContextCreated { get; init; }
+    public OnReactContextDisposed OnReactContextDisposed { get; init; }
 }
 
 public sealed class CalculateComponentRenderInfoInput
@@ -302,12 +313,14 @@ public sealed class CalculateComponentRenderInfoInput
     public Element Component { get; init; }
     public HttpContext HttpContext { get; init; }
     public OnReactContextCreated OnReactContextCreated { get; init; }
+    public OnReactContextDisposed OnReactContextDisposed { get; init; }
     public string QueryString { get; init; }
 }
 
 public delegate void BeforeSerializeElementToClient(ReactContext reactContext, Element element, Element parent);
 
 public delegate Task OnReactContextCreated(HttpContext httpContext, ReactContext reactContext);
+public delegate Task OnReactContextDisposed(HttpContext httpContext, ReactContext reactContext);
 
 public sealed class ComponentRenderInfo
 {
