@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
 using System.Globalization;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
@@ -154,6 +155,11 @@ static class Exporter
 
         if (dotNetType is null)
         {
+            if (memberInfo.RemainingPart.StartsWith(":(event: React.SyntheticEvent) => void"))
+            {
+                
+            }
+            
             return lines;
         }
         

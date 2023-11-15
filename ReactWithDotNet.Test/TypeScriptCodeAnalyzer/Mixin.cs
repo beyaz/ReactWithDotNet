@@ -17,17 +17,27 @@ static class Mixin
 
     public static bool StartsWith(this IReadOnlyList<Token> tokens, string value)
     {
-        tokens = tokens?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
-        if (tokens.Count > 1)
+        if (tokens is null || value is null)
         {
-            var reactNode = TsLexer.ParseTokens(value, 0);
-            if (reactNode.hasRead)
-            {
-                if (TsParser.FindMatch(tokens, 0, reactNode.tokens).isFound)
-                {
-                    return true;
-                }
-            }
+            return false;
+        }
+
+        if (tokens.Count <= 1)
+        {
+            return false;
+        }
+        
+        var reactNode = TsLexer.ParseTokens(value, 0);
+        if (!reactNode.hasRead)
+        {
+            return false;
+        }
+
+        var valueAsTokens = reactNode.tokens;
+        
+        if (TsParser.FindMatch(tokens, 0, valueAsTokens).isFound)
+        {
+            return true;
         }
 
         return false;
