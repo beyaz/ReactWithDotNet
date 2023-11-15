@@ -249,4 +249,6 @@ public sealed class Tooltip : ElementBase
     }
     
     public static IModifier Modify(Action<Tooltip> modifyAction) => CreateThirdPartyReactComponentModifier(modifyAction);
+
+    public static IModifier Title(string title) => Modify(x => x.title = title);
 }
