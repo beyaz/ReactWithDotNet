@@ -151,39 +151,42 @@ static class Exporter
             }
         }
 
-        if (dotNetType is not null)
+        if (dotNetType is null)
         {
-            var memberName = memberInfo.Name;
-            if (memberName == "checked")
-            {
-                memberName = "@" + memberName;
-            }
-
-            lines.Add("[ReactProp]");
-
-            if (dotNetType == "dynamic")
-            {
-                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
-                lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
-                return lines;
-            }
-
-            if (dotNetType == "init_only_style_map")
-            {
-                lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
-                lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
-                return lines;
-            }
-
-            if (dotNetType == "Style")
-            {
-                lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenStyleEmpty))]");
-                lines.Add($"public Style {memberInfo.Name} {{ get; }} = new ();");
-                return lines;
-            }
-
-            lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
+            return lines;
         }
+        
+        
+        var memberName = memberInfo.Name;
+        if (memberName == "checked")
+        {
+            memberName = "@" + memberName;
+        }
+
+        lines.Add("[ReactProp]");
+
+        if (dotNetType == "dynamic")
+        {
+            lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenEmpty))]");
+            lines.Add($"public dynamic {memberInfo.Name} {{ get; }} = new ExpandoObject();");
+            return lines;
+        }
+
+        if (dotNetType == "init_only_style_map")
+        {
+            lines.Add("[ReactTransformValueInServerSide(typeof(convert_mui_style_map_to_class_map))]");
+            lines.Add($"public Dictionary<string, Style> {memberInfo.Name} {{ get; }} = new ();");
+            return lines;
+        }
+
+        if (dotNetType == "Style")
+        {
+            lines.Add("[ReactTransformValueInServerSide(typeof(DoNotSendToClientWhenStyleEmpty))]");
+            lines.Add($"public Style {memberInfo.Name} {{ get; }} = new ();");
+            return lines;
+        }
+
+        lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
 
         return lines;
     }
