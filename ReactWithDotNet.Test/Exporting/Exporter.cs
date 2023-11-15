@@ -1,4 +1,5 @@
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
+using System.Globalization;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.TokenMatch;
 
@@ -187,8 +188,21 @@ static class Exporter
         }
 
         lines.Add($"public {dotNetType} {memberName} {{ get; set; }}");
+        
+        lines.Add(string.Empty);
+        
+        if (memberInfo.Comment is not null)
+        {
+            lines.AddRange(AsCSharpComment(memberInfo.Comment));
+        }
+        lines.Add($"public static IModifier {UpperCaseFirstChar(memberName)}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
 
         return lines;
+        
+        static string UpperCaseFirstChar(string str)
+        {
+            return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
+        }
     }
 
     public static (bool success, (string comment, string name, IReadOnlyList<Token> remainingPart))
