@@ -141,6 +141,16 @@ static class Exporter
             lines.AddRange(AsCSharpComment(memberInfo.Comment));
         }
 
+        if (isVoidFunction())
+        {
+            var (hasRead, parameters, newIndex) = TypeScriptCodeAnalyzer.TsParser.TryReadFunctionParameters(memberInfo.RemainingPart, 1);
+            if (hasRead)
+            {
+                lines.Add($"public Func<Task,{string.Join(", ",parameters.Select(p=>$"{p.tsTypeReference} {p.parameterName}"))}> {memberInfo.Name} {{get;set;}}");
+                return lines;
+            }
+        }
+        
         if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > {input.ClassName} > {memberInfo.Name}", out var dotNetType))
         {
             if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > * > {memberInfo.Name}", out dotNetType))
@@ -155,11 +165,6 @@ static class Exporter
 
         if (dotNetType is null)
         {
-            if (memberInfo.RemainingPart.StartsWith(":(event: React.SyntheticEvent) => void"))
-            {
-                
-            }
-            
             return lines;
         }
         
@@ -204,7 +209,21 @@ static class Exporter
         lines.Add($"public static IModifier {UpperCaseFirstChar(memberName)}({dotNetType} value) => CreateThirdPartyReactComponentModifier<{input.ClassName}>(x => x.{memberName} = value);");
 
         return lines;
-        
+
+        bool isVoidFunction()
+        {
+            if (memberInfo.RemainingPart.StartsWith(":("))
+            {
+                if (memberInfo.RemainingPart.EndsWith("=> void"))
+                {
+                    
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
         static string UpperCaseFirstChar(string str)
         {
             return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);

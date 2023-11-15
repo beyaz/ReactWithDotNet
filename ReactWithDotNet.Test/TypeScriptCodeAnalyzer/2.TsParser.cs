@@ -553,4 +553,85 @@ static class TsParser
 
         return (hasRead, readValues, i);
     }
+
+    public static (bool hasRead, IReadOnlyList<(TsTypeReference tsTypeReference, string parameterName)> parameters, int newIndex) TryReadFunctionParameters(IReadOnlyList<Token> tokens, int startIndex)
+    {
+
+        var parameters = new List<(TsTypeReference tsTypeReference, string parameterName)>();
+        
+        
+        var i = startIndex;
+
+        skipSpaces();
+
+        if (tokens[i].tokenType == TokenType.LeftParenthesis)
+        {
+            i++;
+            skipSpaces();
+
+            var allParametersReadSuccessfully = false;
+            
+            while (true)
+            {
+                if (tokens[i].tokenType == TokenType.RightParenthesis) // end of parameters
+                {
+                    i++;
+                    allParametersReadSuccessfully = true;
+                    break;
+                }
+                
+                if (tokens[i].tokenType == TokenType.Comma)
+                {
+                    i++;
+                }
+                
+                if (tokens[i].tokenType == TokenType.AlfaNumeric)
+                {
+                    var parameterName = tokens[i].value;
+                    
+                    i++;
+                    skipSpaces();
+                    
+                    if (tokens[i].tokenType == TokenType.Colon)
+                    {
+                        i++;
+                    }
+                    skipSpaces();
+                    
+                    var (hasRead, tsTypeReference, newIndex) = TryReadTypeReference(tokens, i);
+                    if (hasRead)
+                    {
+                        parameters.Add((tsTypeReference,parameterName));
+                        i = newIndex;
+                        continue;
+                    }
+                }
+                
+                break;
+            }
+
+            
+            if (allParametersReadSuccessfully)
+            {
+                return (hasRead: true, parameters, i);
+            }
+            
+            
+            
+        }
+        
+        return (hasRead: false,default,default);
+        
+        void skipSpaces()
+        {
+            if (i >= tokens.Count)
+            {
+                return;
+            }
+            if (tokens[i].tokenType == TokenType.Space)
+            {
+                i++;
+            }
+        }
+    }
 }
