@@ -127,19 +127,7 @@ static class Exporter
             return default;
         }
 
-        var (success, dotNetTypeName) = ResolveDotNetTypeName(tokens);
-        if (success)
-        {
-            return (true, dotNetTypeName);
-        }
-
-        var (hasMatch, dotNetType) = TryMatchDotNetOneParameterAction(memberInfo);
-        if (hasMatch)
-        {
-            return (true, dotNetType);
-        }
-        
-        return default;
+        return ResolveDotNetTypeName(tokens).Or(() => TryMatchDotNetOneParameterAction(memberInfo)).Or(()=>default);
     }
 
     static IReadOnlyList<string> AsCSharpMember(ExportInput input, TsMemberInfo memberInfo)
