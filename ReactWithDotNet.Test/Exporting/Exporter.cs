@@ -31,15 +31,8 @@ static class Exporter
         return default;
     }
 
-
-    static (bool hasMatch, string dotNetType) TryMatchDotNetType(TsMemberInfo memberInfo)
+    static (bool success, string dotNetType) ResolveDotNetTypeName(IReadOnlyList<Token> tokens)
     {
-        var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
-        if (tokens.Count <= 0)
-        {
-            return default;
-        }
-
         if (tokens.Count == 1)
         {
             var name = tokens[0].value;
@@ -64,7 +57,7 @@ static class Exporter
                 return (true, "dynamic");
             }
         }
-
+        
         // is object
         if (tokens[0].tokenType == TokenType.LeftBrace && tokens[^1].tokenType == TokenType.RightBrace)
         {
@@ -122,6 +115,23 @@ static class Exporter
 
             return (true, "object");
         }
+        
+        return default;
+    }
+
+    static (bool hasMatch, string dotNetType) ResolveDotNetTypeName(TsMemberInfo memberInfo)
+    {
+        var tokens = memberInfo.RemainingPart?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
+        if (tokens.Count <= 0)
+        {
+            return default;
+        }
+
+        var (success, dotNetTypeName) = ResolveDotNetTypeName(tokens);
+        if (success)
+        {
+            return (true, dotNetTypeName);
+        }
 
         var (hasMatch, dotNetType) = TryMatchDotNetOneParameterAction(memberInfo);
         if (hasMatch)
@@ -155,7 +165,7 @@ static class Exporter
         {
             if (!input.PropToDotNetTypeMap.TryGetValue($"{input.NamespaceName} > * > {memberInfo.Name}", out dotNetType))
             {
-                var matchResponse = TryMatchDotNetType(memberInfo);
+                var matchResponse = ResolveDotNetTypeName(memberInfo);
                 if (matchResponse.hasMatch)
                 {
                     dotNetType = matchResponse.dotNetType;
