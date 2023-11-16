@@ -446,6 +446,15 @@ static class TsParser
 
                         return (true, tsTypeReference, i + 1);
                     }
+
+                    {
+                        var tsTypeReference = new TsTypeReference
+                        {
+                            Name = name
+                        };
+
+                        return (true, tsTypeReference, i);
+                    }
                 }
 
             }

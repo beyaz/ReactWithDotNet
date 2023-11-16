@@ -9,6 +9,17 @@ namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 public class TsParserTests
 {
     [TestMethod]
+    public void ParseTypeReference_0()
+    {
+        var tokens = ParseTokens("React.ReactNode", 0).tokens;
+        
+        var (hasRead, tsTypeReference, newIndex) = TsParser.TryReadTypeReference(tokens, 0);
+
+        hasRead.Should().BeTrue();
+        tsTypeReference.Name.Should().Be("React.ReactNode");
+    }
+    
+    [TestMethod]
     public void ParseTypeReference()
     {
         var tokens = ParseTokens("Partial<AlertClasses>;", 0).tokens;
@@ -75,16 +86,11 @@ public class TsParserTests
     [TestMethod]
     public void __function_parsing_1()
     {
-        var tokens = ParseTokens(" (event: React.SyntheticEvent) => void", 0).tokens;
+        var tokens = ParseTokens("   (event: React.SyntheticEvent) => void", 0).tokens;
 
-        var typeReference = TsParser.TryReadTypeReference(tokens, 0).tsTypeReference;
-
-        typeReference.IsGeneric.Should().BeTrue();
-        
-        typeReference.GenericArguments[0].Name.Should().Be("React.ReactNode");
-        typeReference.GenericArguments[1].Name.Should().Be("undefined");
-        typeReference.GenericArguments[2].StringValue.Should().Be("fixed");
-        typeReference.Name.Should().Be("YYY");
+         var (hasRead, parameters, _) = TsParser.TryReadFunctionParameters(tokens, 0);
+         hasRead.Should().BeTrue();
+         parameters.Count.Should().Be(1);
     }
 
     
