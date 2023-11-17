@@ -21,6 +21,16 @@ static class FP
 
         return b();
     }
+    
+    public static Response<TTarget> To<TSource,TTarget>(this Response<TSource> sourceResponse, Func<TSource, TTarget> nextFunc)
+    {
+        if (sourceResponse.Success)
+        {
+            return nextFunc(sourceResponse.Value);
+        }
+
+        return sourceResponse.FailInfo;
+    }
 
     public static FailInfo Fail(string failMessage)
     {
