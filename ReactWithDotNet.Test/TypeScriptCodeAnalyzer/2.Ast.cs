@@ -25,13 +25,9 @@ class TsTypeReference
 
 class TsMemberInfo
 {
-    public string Comment { get; set; }
-    public bool IsNullable { get; set; }
-    public string Name { get; set; }
-    public TsTypeReference PropertyType { get; set; }
-    public IReadOnlyList<Token> MethodSignature { get; set; }
-
-    public IReadOnlyList<Token> RemainingPart { get; set; }
+    public string Comment { get; init; }
+    public string Name { get; init; }
+    public IReadOnlyList<Token> RemainingPart { get; init; }
 }
 
 static class Ast
