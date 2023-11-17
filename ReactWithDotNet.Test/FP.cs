@@ -16,6 +16,34 @@ static class FP
     {
         return new FailMessage { Message = failMessage };
     }
+
+    public static Response<IReadOnlyList<TTarget>> Select<TSource, TTarget>(Response<IReadOnlyList<IReadOnlyList<TSource>>> response, Func<IReadOnlyList<TSource>, Response<TTarget>> convertFunc)
+    {
+        if (response.Fail)
+        {
+            return Fail(response.FailMessage);
+        }
+
+        if (response.Value == null)
+        {
+            return null;
+        }
+
+        var returnList = new List<TTarget>();
+        
+        foreach (var item in response.Value)
+        {
+            var convertResponse = convertFunc(item);
+            if (convertResponse.Fail)
+            {
+                return Fail(convertResponse.FailMessage);
+            }
+            
+            returnList.Add(convertResponse.Value);
+        }
+
+        return returnList;
+    }
 }
 
 public sealed class FailMessage
