@@ -56,7 +56,7 @@ static class Mixin
             var reactNode = TsLexer.ParseTokens(value, 0);
             if (reactNode.hasRead)
             {
-                var valueAsTokens = reactNode.tokens.Where(IsNotSpace).Where(IsNotColon).ToList();
+                var valueAsTokens = reactNode.tokens.Where(IsNotSpace).ToList();
 
                 if (valueAsTokens.Count == tokens.Count)
                 {

@@ -11,10 +11,10 @@ public class TsParserTests
     [TestMethod]
     public void FullMatchTest()
     {
-        var tokens = ParseTokens("Partial< AlertClasses >  ;", 0).tokens;
+        var tokens = ParseTokens("Partial<    AlertClasses >  ;", 0).tokens;
 
-        tokens.FullMatch("  Partial <").Should().BeTrue();
-        tokens.FullMatch("  Partial >").Should().BeFalse();
+        tokens.FullMatch("  Partial<    AlertClasses>     ;").Should().BeTrue();
+        tokens.FullMatch("  Partial<AlertClasses").Should().BeFalse();
     }
     
     [TestMethod]
