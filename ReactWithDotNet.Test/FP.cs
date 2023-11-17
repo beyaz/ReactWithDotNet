@@ -12,3 +12,20 @@ static class FP
         return b();
     }
 }
+
+public class OperationResponse
+{
+    public bool Success { get; init; }
+    public bool Fail { get; init; }
+    public string FailMessage { get; init; }
+}
+
+public class OperationResponse<TValue> : OperationResponse
+{
+    public TValue Value { get; init; }
+    
+    public static implicit operator OperationResponse<TValue>(TValue value)
+    {
+        return new OperationResponse<TValue> { Value = value };
+    }
+}
