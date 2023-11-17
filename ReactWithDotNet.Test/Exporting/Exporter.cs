@@ -31,11 +31,12 @@ static class Exporter
         return default;
     }
 
-    static (bool success, string dotNetType) ResolveDotNetTypeName(IReadOnlyList<Token> tokens)
+    static (bool success, string dotNetType) ResolveDotNetTypeName(IReadOnlyList<Token> tokens,int startIndex, int endIndex)
     {
-        if (tokens.Count == 1)
+        
+        if (endIndex - startIndex == 1)
         {
-            var name = tokens[0].value;
+            var name = tokens[startIndex].value;
 
             if (name.Equals("string", StringComparison.OrdinalIgnoreCase))
             {
@@ -59,7 +60,7 @@ static class Exporter
         }
         
         // is object
-        if (tokens[0].tokenType == TokenType.LeftBrace && tokens[^1].tokenType == TokenType.RightBrace)
+        if (tokens[startIndex].tokenType == TokenType.LeftBrace && tokens[endIndex].tokenType == TokenType.RightBrace)
         {
             return (true, "dynamic");
         }
@@ -127,7 +128,7 @@ static class Exporter
             return default;
         }
 
-        return ResolveDotNetTypeName(tokens).Or(() => TryMatchDotNetOneParameterAction(memberInfo)).Or(()=>default);
+        return ResolveDotNetTypeName(tokens,0, tokens.Count-1).Or(() => TryMatchDotNetOneParameterAction(memberInfo)).Or(()=>default);
     }
 
     static IReadOnlyList<string> AsCSharpMember(ExportInput input, TsMemberInfo memberInfo)
