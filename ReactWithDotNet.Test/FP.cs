@@ -11,6 +11,16 @@ static class FP
 
         return b();
     }
+    
+    public static (bool success, T value) Or<T>(this Response<T> a, Func<(bool success, T value)> b)
+    {
+        if (a.Success)
+        {
+            return (true, a.Value);
+        }
+
+        return b();
+    }
 
     public static FailInfo Fail(string failMessage)
     {

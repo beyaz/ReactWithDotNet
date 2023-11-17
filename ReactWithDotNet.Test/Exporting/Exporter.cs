@@ -31,7 +31,7 @@ static class Exporter
         return default;
     }
 
-    static (bool success, string dotNetType) ResolveDotNetTypeName(IReadOnlyList<Token> tokens,int startIndex, int endIndex)
+    static Response<string> ResolveDotNetTypeName(IReadOnlyList<Token> tokens,int startIndex, int endIndex)
     {
         
         if (endIndex - startIndex == 1)
@@ -40,69 +40,69 @@ static class Exporter
 
             if (name.Equals("string", StringComparison.OrdinalIgnoreCase))
             {
-                return (true, "string");
+                return "string";
             }
 
             if (name.Equals("number", StringComparison.OrdinalIgnoreCase))
             {
-                return (true, "double?");
+                return "double?";
             }
 
             if (name.Equals("boolean", StringComparison.OrdinalIgnoreCase))
             {
-                return (true, "bool?");
+                return "bool?";
             }
 
             if (name.Equals("dynamic", StringComparison.OrdinalIgnoreCase))
             {
-                return (true, "dynamic");
+                return "dynamic";
             }
         }
         
         // is object
         if (tokens[startIndex].tokenType == TokenType.LeftBrace && tokens[endIndex].tokenType == TokenType.RightBrace)
         {
-            return (true, "dynamic");
+            return "dynamic";
         }
 
         if (tokens.StartsWith("Partial<"))
         {
-            return (true, "dynamic");
+            return "dynamic";
         }
 
         if (tokens.StartsWith("React.ReactNode"))
         {
-            return (true, "Element");
+            return "Element";
         }
 
         if (tokens.StartsWith("OverridableStringUnion"))
         {
-            return (true, "string");
+            return "string";
         }
 
         if (tokens.FullMatch("string | number"))
         {
-            return (true, "int?");
+            return "int?";
         }
 
         if (tokens.FullMatch("string | undefined"))
         {
-            return (true, "string");
+            return "string";
         }
         
         if (tokens.FullMatch("number | undefined"))
         {
-            return (true, "double?");
+            return "double?";
         }
 
         if (tokens.FullMatch("boolean | undefined"))
         {
-            return (true, "bool?");
+            return "bool?";
         }
 
         if (tokens.FullMatch("React.CSSProperties | undefined"))
         {
-            return (true, "Style");
+            return "Style";
         }
         
 
@@ -111,13 +111,13 @@ static class Exporter
         {
             if (tsTypeReference.UnionTypes?.All(t => t.IsStringValue || t.Name == "undefined") == true)
             {
-                return (true, "string");
+                return "string";
             }
 
-            return (true, "object");
+            return "object";
         }
         
-        return default;
+        return None;
     }
 
     static (bool hasMatch, string dotNetType) ResolveDotNetTypeName(TsMemberInfo memberInfo)
