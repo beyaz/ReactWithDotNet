@@ -170,13 +170,6 @@ static class Ast
             var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
             if (isFound)
             {
-                TsMemberInfo asTsMemberInfo((string comment, string name, IReadOnlyList<Token> remainingPart) x) => new()
-                {
-                    Comment = x.comment,
-                    Name = x.name, 
-                    RemainingPart = x.remainingPart
-                };
-
                 var response = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
                 if (response.Success)
                 {
