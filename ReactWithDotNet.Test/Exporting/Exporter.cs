@@ -146,7 +146,7 @@ static class Exporter
             if (functionParameters.Success)
             {
                 //parameters.Select(p=>ResolveDotNetTypeName(p.tsTypeReference.Tokens))
-                lines.Add($"public Func<Task,{string.Join(", ",functionParameters.Value.parameters.Select(p=>$"{p.tsTypeReference} {p.parameterName}"))}> {memberInfo.Name} {{get;set;}}");
+                lines.Add($"public Func<Task,{string.Join(", ",functionParameters.Value.parameters.Select(p=>$"{p.TypeReference} {p.ParameterName}"))}> {memberInfo.Name} {{get;set;}}");
                 return lines;
             }
         }

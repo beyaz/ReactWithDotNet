@@ -573,10 +573,10 @@ static class Ast
         return (hasRead, readValues, i);
     }
 
-    public static Response<(IReadOnlyList<(TsTypeReference tsTypeReference, string parameterName)> parameters, int newIndex)> TryReadFunctionParameters(IReadOnlyList<Token> tokens, int startIndex)
+    public static Response<(IReadOnlyList<TsMethodParameterInfo> parameters, int newIndex)> TryReadFunctionParameters(IReadOnlyList<Token> tokens, int startIndex)
     {
 
-        var parameters = new List<(TsTypeReference tsTypeReference, string parameterName)>();
+        var parameters = new List<TsMethodParameterInfo>();
         
         
         var i = startIndex;
@@ -620,7 +620,7 @@ static class Ast
                     var (hasRead, tsTypeReference, newIndex) = TryReadTypeReference(tokens, i);
                     if (hasRead)
                     {
-                        parameters.Add((tsTypeReference,parameterName));
+                        parameters.Add( new TsMethodParameterInfo{ TypeReference = tsTypeReference, ParameterName = parameterName});
                         i = newIndex;
                         continue;
                     }
