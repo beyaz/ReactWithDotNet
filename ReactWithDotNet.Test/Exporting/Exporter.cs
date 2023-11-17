@@ -144,6 +144,7 @@ static class Exporter
             var (hasRead, parameters, newIndex) = TypeScriptCodeAnalyzer.TsParser.TryReadFunctionParameters(memberInfo.RemainingPart, 1);
             if (hasRead)
             {
+                //parameters.Select(p=>ResolveDotNetTypeName(p.tsTypeReference.Tokens))
                 lines.Add($"public Func<Task,{string.Join(", ",parameters.Select(p=>$"{p.tsTypeReference} {p.parameterName}"))}> {memberInfo.Name} {{get;set;}}");
                 return lines;
             }

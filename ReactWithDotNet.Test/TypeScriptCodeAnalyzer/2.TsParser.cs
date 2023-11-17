@@ -19,6 +19,9 @@ class TsTypeReference
 
     public bool IsGeneric { get; set; }
     public IReadOnlyList<TsTypeReference> GenericArguments { get; set; }
+    public IReadOnlyList<Token> Tokens { get; set; }
+    public int StartIndex { get; set; }
+    public int EndIndex { get; set; }
 }
 
 class TsMemberInfo
@@ -200,7 +203,11 @@ static class TsParser
             var tsTypeReference = new TsTypeReference
             {
                 StringValue = tokens[i].value,
-                IsStringValue = true
+                IsStringValue = true,
+                
+                Tokens     = tokens,
+                StartIndex = startIndex,
+                EndIndex   = i-1
             };
 
             return (true, tsTypeReference, i+1);
@@ -213,12 +220,15 @@ static class TsParser
 
             skipSpaces();
 
-            if (i >= tokens.Count || tokens[i].tokenType == TokenType.Union || tokens[i].tokenType == TokenType.SemiColon)
+            if (i >= tokens.Count || tokens[i].tokenType == TokenType.Union || tokens[i].tokenType == TokenType.SemiColon|| tokens[i].tokenType == TokenType.RightParenthesis)
             {
                 var tsTypeReference = new TsTypeReference
                 {
                     Name = name,
-                    IsSimpleNamedType =  true
+                    IsSimpleNamedType =  true,
+                    Tokens = tokens,
+                    StartIndex = startIndex,
+                    EndIndex = i-1
                 };
 
                 return (true, tsTypeReference, i);
@@ -296,7 +306,10 @@ static class TsParser
         var tsTypeReference = new TsTypeReference
         {
             IsUnionType = true,
-            UnionTypes  = unionTypes
+            UnionTypes  = unionTypes,
+            Tokens      = tokens,
+            StartIndex  = startIndex,
+            EndIndex    = i-1
         };
 
         return (true, tsTypeReference, i);
