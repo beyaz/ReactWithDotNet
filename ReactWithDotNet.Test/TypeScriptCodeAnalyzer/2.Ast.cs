@@ -180,7 +180,7 @@ static class Ast
                 var response = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
                 if (response.Success)
                 {
-                    return (true, response.Value.Select(x => Exporter.ParseMemberTokens(x).Item2).ToList(), indexOfPair + 1);
+                    return (true, response.Value.Select(x => Exporter.ParseMemberTokens(x).Value).ToList(), indexOfPair + 1);
                 }
               
             }

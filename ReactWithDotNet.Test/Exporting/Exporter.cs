@@ -230,8 +230,7 @@ static class Exporter
         }
     }
 
-    public static (bool success, TsMemberInfo)
-        ParseMemberTokens(IReadOnlyList<Token> tokens)
+    public static Response<TsMemberInfo> ParseMemberTokens(IReadOnlyList<Token> tokens)
     {
         tokens = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
 
@@ -257,10 +256,10 @@ static class Exporter
                 i++;
             }
 
-            return (true, new TsMemberInfo{Comment = comment, Name = name, RemainingPart = tokens.ToList().GetRange(i, tokens.Count - i)});
+            return new TsMemberInfo { Comment = comment, Name = name, RemainingPart = tokens.ToList().GetRange(i, tokens.Count - i) };
         }
 
-        return (false, default);
+        return Fail("Member not resolved.");
     }
 
     static (Exception exception, IReadOnlyList<string> lines) CalculateCSharpFileContentLines(ExportInput input)
