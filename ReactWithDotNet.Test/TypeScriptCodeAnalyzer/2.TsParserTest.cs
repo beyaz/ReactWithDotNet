@@ -18,6 +18,14 @@ public class TsParserTests
     }
     
     [TestMethod]
+    public void IsEqualsTest()
+    {
+        var tokensA = ParseTokens("Partial<    AlertClasses >  ;", 0).tokens;
+        var tokensB = ParseTokens(" Partial  <    AlertClasses >  ;", 0).tokens;
+        IsEquals(tokensA, 0, tokensA.Count - 1, tokensB, 0, tokensB.Count - 1).Should().BeTrue();
+    }
+    
+    [TestMethod]
     public void ParseTypeReference_0()
     {
         var tokens = ParseTokens("React.ReactNode", 0).tokens;

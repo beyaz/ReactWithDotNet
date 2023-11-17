@@ -76,6 +76,72 @@ static class Mixin
         return false;
     }
 
+    public static (bool success, Token, int tokenIndex) ReadToken(IReadOnlyList<Token> tokens, int index)
+    {
+        if (tokens is null || index >= tokens.Count ||  index < 0)
+        {
+            return default;
+        }
+        
+        while (tokens[index].tokenType == TokenType.Space)
+        {
+            index++;
+        }
+        
+        if (index >= tokens.Count)
+        {
+            return default;
+        }
+
+        return (true, tokens[index], index);
+    }
+
+    public static bool IsEquals(IReadOnlyList<Token> tokensA, int startIndexA, int endIndexA, IReadOnlyList<Token> tokensB, int startIndexB, int endIndexB )
+    {
+        if (tokensA is null || startIndexA >= tokensA.Count || endIndexA > tokensA.Count || startIndexA < 0)
+        {
+            return false;
+        }
+        
+        if (tokensB is null || startIndexB >= tokensA.Count || endIndexB > tokensB.Count || startIndexB < 0)
+        {
+            return false;
+        }
+
+
+        while (true)
+        {
+            if (startIndexA == endIndexA+1 && startIndexB == endIndexB+1)
+            {
+                return true;
+            }
+            
+            var (hasReadA, tokenA, tokenIndexA) = ReadToken(tokensA,startIndexA);
+            if (hasReadA && tokenIndexA <= endIndexA)
+            {
+                startIndexA = tokenIndexA+1;
+                
+                var (hasReadB, tokenB, tokenIndexB) = ReadToken(tokensB,startIndexB);
+                if (hasReadB && tokenIndexB <= endIndexB)
+                {
+                    startIndexB = tokenIndexB+1;
+                    
+                    if (TsParser.Equals(tokenA, tokenB))
+                    {
+                        continue;
+                    }
+                    
+                    return false;
+                }
+            }
+            
+            return false;
+            
+        }
+
+    }
+    
+
     public static bool FullMatch(this IReadOnlyList<Token> tokens, params TokenMatch[] matchSteps)
     {
         tokens ??= new List<Token>();
