@@ -35,7 +35,7 @@ public class TsParserTests
     {
         var tokens = ParseTokens("React.ReactNode", 0).tokens;
         
-        var (hasRead, tsTypeReference, newIndex) = TsParser.TryReadTypeReference(tokens, 0);
+        var (hasRead, tsTypeReference, newIndex) = TsAst.TryReadTypeReference(tokens, 0);
 
         hasRead.Should().BeTrue();
         tsTypeReference.Name.Should().Be("React.ReactNode");
@@ -46,7 +46,7 @@ public class TsParserTests
     {
         var tokens = ParseTokens("Partial<AlertClasses>;", 0).tokens;
         
-        var (hasRead, tsTypeReference, newIndex) = TsParser.TryReadTypeReference(tokens, 0);
+        var (hasRead, tsTypeReference, newIndex) = TsAst.TryReadTypeReference(tokens, 0);
 
         hasRead.Should().BeTrue();
         tsTypeReference.Name.Should().Be("Partial");
@@ -59,7 +59,7 @@ public class TsParserTests
     {
         var tokens = ParseTokens(" abc.def", 0).tokens;
 
-        var typeReference = TsParser.TryReadOnlyOneTypeReference(tokens, 0).tsTypeReference;
+        var typeReference = TsAst.TryReadOnlyOneTypeReference(tokens, 0).tsTypeReference;
 
         typeReference.Name.Should().Be("abc.def");
         typeReference.IsSimpleNamedType.Should().BeTrue();
@@ -70,7 +70,7 @@ public class TsParserTests
     {
         var tokens = ParseTokens(" React.ReactNode |  undefined; ", 0).tokens;
 
-        var typeReference = TsParser.TryReadOnlyOneTypeReference(tokens, 0).tsTypeReference;
+        var typeReference = TsAst.TryReadOnlyOneTypeReference(tokens, 0).tsTypeReference;
 
         typeReference.Name.Should().Be("React.ReactNode");
         typeReference.IsSimpleNamedType.Should().BeTrue();
@@ -81,7 +81,7 @@ public class TsParserTests
     {
         var tokens = ParseTokens(" React.ReactNode |  undefined | 'fixed'; ", 0).tokens;
 
-        var typeReference = TsParser.TryReadUnionTypeReference(tokens, 0).tsTypeReference;
+        var typeReference = TsAst.TryReadUnionTypeReference(tokens, 0).tsTypeReference;
 
         typeReference.UnionTypes[0].Name.Should().Be("React.ReactNode");
         typeReference.UnionTypes[1].Name.Should().Be("undefined");
@@ -94,7 +94,7 @@ public class TsParserTests
     {
         var tokens = ParseTokens(" YYY<React.ReactNode |  undefined | 'fixed'>; ", 0).tokens;
 
-        var typeReference = TsParser.TryReadTypeReference(tokens, 0).tsTypeReference;
+        var typeReference = TsAst.TryReadTypeReference(tokens, 0).tsTypeReference;
 
         typeReference.IsGeneric.Should().BeTrue();
         
@@ -110,7 +110,7 @@ public class TsParserTests
     {
         var tokens = ParseTokens("   (event: React.SyntheticEvent) => void", 0).tokens;
 
-         var (hasRead, parameters, _) = TsParser.TryReadFunctionParameters(tokens, 0);
+         var (hasRead, parameters, _) = TsAst.TryReadFunctionParameters(tokens, 0);
          hasRead.Should().BeTrue();
          parameters.Count.Should().Be(1);
     }
@@ -160,7 +160,7 @@ public class TsParserTests
 
 ", 0).tokens;
 
-        var memberTokens = TsParser.ParseToMemberTokens(tokens, 0,tokens.Count).value;
+        var memberTokens = TsAst.ParseToMemberTokens(tokens, 0,tokens.Count).value;
 
         memberTokens.Count.Should().Be(5);
 

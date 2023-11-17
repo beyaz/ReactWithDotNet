@@ -2,7 +2,6 @@ using ReactWithDotNet.Exporting;
 
 namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 
-record TsProperty(string comment, string propertyName, string propertyType);
 
 class TsTypeReference
 {
@@ -33,10 +32,9 @@ class TsMemberInfo
     public IReadOnlyList<Token> MethodSignature { get; set; }
 
     public IReadOnlyList<Token> RemainingPart { get; set; }
-    
 }
 
-static class TsParser
+static class TsAst
 {
     public static (bool fail, string failMessage, IReadOnlyList<IReadOnlyList<Token>> value)
         ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
