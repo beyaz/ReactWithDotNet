@@ -230,7 +230,7 @@ static class Exporter
         }
     }
 
-    public static (bool success, (string comment, string name, IReadOnlyList<Token> remainingPart))
+    public static (bool success, TsMemberInfo)
         ParseMemberTokens(IReadOnlyList<Token> tokens)
     {
         tokens = tokens.Where(t => t.tokenType != TokenType.Space).ToList();
@@ -257,7 +257,7 @@ static class Exporter
                 i++;
             }
 
-            return (true, (comment, name, tokens.ToList().GetRange(i, tokens.Count - i)));
+            return (true, new TsMemberInfo{Comment = comment, Name = name, RemainingPart = tokens.ToList().GetRange(i, tokens.Count - i)});
         }
 
         return (false, default);
