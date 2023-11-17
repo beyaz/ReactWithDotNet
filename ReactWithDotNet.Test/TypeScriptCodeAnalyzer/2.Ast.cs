@@ -23,6 +23,12 @@ class TsTypeReference
     public int EndIndex { get; set; }
 }
 
+sealed class TsMethodParameterInfo
+{
+    public TsTypeReference TypeReference { get; init; }
+    public string ParameterName { get; init; }
+}
+
 class TsMemberInfo
 {
     public string Comment { get; init; }
