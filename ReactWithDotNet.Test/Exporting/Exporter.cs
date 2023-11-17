@@ -106,7 +106,7 @@ static class Exporter
         }
         
 
-        var (hasRead, tsTypeReference, _) = TsAst.TryReadUnionTypeReference(tokens, 0);
+        var (hasRead, tsTypeReference, _) = Ast.TryReadUnionTypeReference(tokens, 0);
         if (hasRead)
         {
             if (tsTypeReference.UnionTypes?.All(t => t.IsStringValue || t.Name == "undefined") == true)
@@ -142,7 +142,7 @@ static class Exporter
 
         if (isVoidFunction())
         {
-            var (hasRead, parameters, newIndex) = TypeScriptCodeAnalyzer.TsAst.TryReadFunctionParameters(memberInfo.RemainingPart, 1);
+            var (hasRead, parameters, newIndex) = TypeScriptCodeAnalyzer.Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1);
             if (hasRead)
             {
                 //parameters.Select(p=>ResolveDotNetTypeName(p.tsTypeReference.Tokens))
@@ -276,13 +276,13 @@ static class Exporter
             return (null, new List<string>());
         }
 
-        var (isFound, indexOfLastMatchedToken) = TsAst.FindMatch(tokens, 0, TsLexer.ParseTokens(input.StartFrom, 0).tokens);
+        var (isFound, indexOfLastMatchedToken) = Ast.FindMatch(tokens, 0, TsLexer.ParseTokens(input.StartFrom, 0).tokens);
         if (!isFound)
         {
             return (null, new List<string>());
         }
 
-        (hasRead, var members, _) = TsAst.TryReadMembers(tokens, indexOfLastMatchedToken);
+        (hasRead, var members, _) = Ast.TryReadMembers(tokens, indexOfLastMatchedToken);
         if (!hasRead)
         {
             return (null, new List<string>());

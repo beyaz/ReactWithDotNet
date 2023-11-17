@@ -34,7 +34,7 @@ class TsMemberInfo
     public IReadOnlyList<Token> RemainingPart { get; set; }
 }
 
-static class TsAst
+static class Ast
 {
     public static (bool fail, string failMessage, IReadOnlyList<IReadOnlyList<Token>> value)
         ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
@@ -175,7 +175,12 @@ static class TsAst
             var (isFound, indexOfPair) = FindPair(tokens, i, x => x.tokenType == TokenType.RightBrace);
             if (isFound)
             {
-                TsMemberInfo asTsMemberInfo((string comment, string name, IReadOnlyList<Token> remainingPart) x) => new() { Comment = x.comment, Name = x.name, RemainingPart = x.remainingPart };
+                TsMemberInfo asTsMemberInfo((string comment, string name, IReadOnlyList<Token> remainingPart) x) => new()
+                {
+                    Comment = x.comment,
+                    Name = x.name, 
+                    RemainingPart = x.remainingPart
+                };
 
                 var (fail, _, value) = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
                 if (!fail)
