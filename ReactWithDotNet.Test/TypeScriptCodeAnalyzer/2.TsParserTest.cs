@@ -23,6 +23,11 @@ public class TsParserTests
         var tokensA = ParseTokens("Partial<    AlertClasses >  ;", 0).tokens;
         var tokensB = ParseTokens(" Partial  <    AlertClasses >  ;", 0).tokens;
         IsEquals(tokensA, 0, tokensA.Count - 1, tokensB, 0, tokensB.Count - 1).Should().BeTrue();
+        
+        
+        tokensA = ParseTokens("<>Partial< ", 0).tokens;
+        tokensB = ParseTokens(" Partial  <", 0).tokens;
+        IsEquals(tokensA, 2, tokensA.Count - 1, tokensB, 0, tokensB.Count - 1).Should().BeTrue();
     }
     
     [TestMethod]
