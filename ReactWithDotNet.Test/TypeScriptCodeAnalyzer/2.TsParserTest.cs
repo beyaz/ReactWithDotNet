@@ -9,6 +9,15 @@ namespace ReactWithDotNet.TypeScriptCodeAnalyzer;
 public class TsParserTests
 {
     [TestMethod]
+    public void FullMatchTest()
+    {
+        var tokens = ParseTokens("Partial< AlertClasses >  ;", 0).tokens;
+
+        tokens.FullMatch("  Partial <").Should().BeTrue();
+        tokens.FullMatch("  Partial >").Should().BeFalse();
+    }
+    
+    [TestMethod]
     public void ParseTypeReference_0()
     {
         var tokens = ParseTokens("React.ReactNode", 0).tokens;

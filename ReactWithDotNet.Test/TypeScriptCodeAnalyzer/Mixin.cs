@@ -45,7 +45,12 @@ static class Mixin
 
     public static bool FullMatch(this IReadOnlyList<Token> tokens, string value)
     {
-        tokens = tokens?.Where(IsNotSpace).Where(IsNotColon).ToList() ?? new List<Token>();
+        if (tokens is null || value is null)
+        {
+            return false;
+        }
+
+        tokens = tokens.Where(IsNotSpace).ToList();
         if (tokens.Count > 1)
         {
             var reactNode = TsLexer.ParseTokens(value, 0);
