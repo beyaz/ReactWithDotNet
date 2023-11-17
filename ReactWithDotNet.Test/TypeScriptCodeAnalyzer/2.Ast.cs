@@ -567,7 +567,7 @@ static class Ast
         return (hasRead, readValues, i);
     }
 
-    public static (bool hasRead, IReadOnlyList<(TsTypeReference tsTypeReference, string parameterName)> parameters, int newIndex) TryReadFunctionParameters(IReadOnlyList<Token> tokens, int startIndex)
+    public static Response<(IReadOnlyList<(TsTypeReference tsTypeReference, string parameterName)> parameters, int newIndex)> TryReadFunctionParameters(IReadOnlyList<Token> tokens, int startIndex)
     {
 
         var parameters = new List<(TsTypeReference tsTypeReference, string parameterName)>();
@@ -626,14 +626,11 @@ static class Ast
             
             if (allParametersReadSuccessfully)
             {
-                return (hasRead: true, parameters, i);
+                return (parameters, i);
             }
-            
-            
-            
         }
         
-        return (hasRead: false,default,default);
+        return None;
         
         void skipSpaces()
         {

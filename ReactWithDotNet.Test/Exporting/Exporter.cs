@@ -142,11 +142,11 @@ static class Exporter
 
         if (isVoidFunction())
         {
-            var (hasRead, parameters, newIndex) = Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1);
-            if (hasRead)
+            var functionParameters = Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1);
+            if (functionParameters.Success)
             {
                 //parameters.Select(p=>ResolveDotNetTypeName(p.tsTypeReference.Tokens))
-                lines.Add($"public Func<Task,{string.Join(", ",parameters.Select(p=>$"{p.tsTypeReference} {p.parameterName}"))}> {memberInfo.Name} {{get;set;}}");
+                lines.Add($"public Func<Task,{string.Join(", ",functionParameters.Value.parameters.Select(p=>$"{p.tsTypeReference} {p.parameterName}"))}> {memberInfo.Name} {{get;set;}}");
                 return lines;
             }
         }

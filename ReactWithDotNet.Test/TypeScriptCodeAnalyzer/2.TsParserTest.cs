@@ -110,8 +110,8 @@ public class TsParserTests
     {
         var tokens = ParseTokens("   (event: React.SyntheticEvent) => void", 0).tokens;
 
-         var (hasRead, parameters, _) = Ast.TryReadFunctionParameters(tokens, 0);
-         hasRead.Should().BeTrue();
+         var (parameters, _) = Ast.TryReadFunctionParameters(tokens, 0).Value;
+         
          parameters.Count.Should().Be(1);
     }
 

@@ -17,6 +17,8 @@ static class FP
         return new FailInfo { Message = failMessage };
     }
 
+    public static FailInfo None => Fail("None");
+
     public static Response<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Response<IReadOnlyList<IReadOnlyList<TSource>>> response, Func<IReadOnlyList<TSource>, Response<TTarget>> convertFunc)
     {
         if (response.Fail)
