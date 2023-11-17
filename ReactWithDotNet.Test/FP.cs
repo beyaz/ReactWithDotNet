@@ -66,6 +66,34 @@ static class FP
 
         return returnList;
     }
+    
+    public static Response<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Response<IReadOnlyList<TSource>> response, Func<TSource, Response<TTarget>> convertFunc)
+    {
+        if (response.Fail)
+        {
+            return response.FailInfo;
+        }
+
+        if (response.Value == null)
+        {
+            return null;
+        }
+
+        var returnList = new List<TTarget>();
+        
+        foreach (var item in response.Value)
+        {
+            var convertResponse = convertFunc(item);
+            if (convertResponse.Fail)
+            {
+                return convertResponse.FailInfo;
+            }
+            
+            returnList.Add(convertResponse.Value);
+        }
+
+        return returnList;
+    }
 }
 
 public sealed class FailInfo

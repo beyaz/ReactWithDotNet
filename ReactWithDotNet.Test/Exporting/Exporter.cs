@@ -145,7 +145,7 @@ static class Exporter
             var functionParameters = Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1).To(x=>x.parameters);
             if (functionParameters.Success)
             {
-                //functionParameters.Value.parameters.Select(p=>ResolveDotNetTypeName(p.TypeReference.Tokens,0,p.TypeReference.Tokens.Count))
+                var temp = functionParameters.Select(p => ResolveDotNetTypeName(p.TypeReference.Tokens, 0, p.TypeReference.Tokens.Count));
                     
                     
                 lines.Add($"public Func<Task,{string.Join(", ",functionParameters.Value.Select(p=>$"{p.TypeReference} {p.ParameterName}"))}> {memberInfo.Name} {{get;set;}}");
