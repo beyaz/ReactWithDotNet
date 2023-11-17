@@ -22,7 +22,7 @@ public sealed class FailMessage
 {
     public string Message { get; init; }
 }
-public class OperationResponse
+public class Response
 {
     public bool Success { get; init; }
     public bool Fail { get; init; }
@@ -30,17 +30,17 @@ public class OperationResponse
     
 }
 
-public class OperationResponse<TValue> : OperationResponse
+public class Response<TValue> : Response
 {
     public TValue Value { get; init; }
     
-    public static implicit operator OperationResponse<TValue>(TValue value)
+    public static implicit operator Response<TValue>(TValue value)
     {
-        return new OperationResponse<TValue> { Value = value };
+        return new Response<TValue> { Value = value, Success = true };
     }
     
-    public static implicit operator OperationResponse<TValue>(FailMessage failMessage)
+    public static implicit operator Response<TValue>(FailMessage failMessage)
     {
-        return new OperationResponse<TValue> { Fail = true, FailMessage = failMessage.Message};
+        return new Response<TValue> { Fail = true, FailMessage = failMessage.Message};
     }
 }

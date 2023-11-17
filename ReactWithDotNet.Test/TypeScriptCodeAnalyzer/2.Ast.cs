@@ -32,8 +32,7 @@ class TsMemberInfo
 
 static class Ast
 {
-    public static (bool fail, string failMessage, IReadOnlyList<IReadOnlyList<Token>> value)
-        ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
+    public static Response<IReadOnlyList<IReadOnlyList<Token>>> ParseToMemberTokens(IReadOnlyList<Token> tokens, int startIndex, int endIndex)
     {
         var returnValue = new List<IReadOnlyList<Token>>();
 
@@ -50,7 +49,7 @@ static class Ast
                 var (isFound, indexOfPair) = FindPair(tokens, j, x => x.tokenType == TokenType.RightBrace);
                 if (!isFound)
                 {
-                    return (fail: true, "Left brace pair nor found.", default);
+                    return Fail("Left brace pair nor found.");
                 }
 
                 j = indexOfPair + 1;
@@ -71,9 +70,9 @@ static class Ast
         }
 
 
-        return (default, default, returnValue);
+        return returnValue;
     }
-
+    
     public static (bool isFound, int indexOfLastMatchedToken) FindMatch(IReadOnlyList<Token> tokens, int startIndex, IReadOnlyList<Token> searchTokens)
     {
         var i = startIndex;
@@ -178,10 +177,10 @@ static class Ast
                     RemainingPart = x.remainingPart
                 };
 
-                var (fail, _, value) = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
-                if (!fail)
+                var response = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
+                if (response.Success)
                 {
-                    return (true, value.Select(x => Exporter.ParseMemberTokens(x).Item2).Select(asTsMemberInfo).ToList(), indexOfPair + 1);
+                    return (true, response.Value.Select(x => Exporter.ParseMemberTokens(x).Item2).Select(asTsMemberInfo).ToList(), indexOfPair + 1);
                 }
               
             }

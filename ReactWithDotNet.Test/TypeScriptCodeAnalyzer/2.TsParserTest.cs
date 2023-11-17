@@ -160,7 +160,7 @@ public class TsParserTests
 
 ", 0).tokens;
 
-        var memberTokens = Ast.ParseToMemberTokens(tokens, 0,tokens.Count).value;
+        var memberTokens = Ast.ParseToMemberTokens(tokens, 0,tokens.Count).Value;
 
         memberTokens.Count.Should().Be(5);
 
