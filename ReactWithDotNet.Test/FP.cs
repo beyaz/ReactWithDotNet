@@ -12,16 +12,16 @@ static class FP
         return b();
     }
 
-    public static FailMessage Fail(string failMessage)
+    public static FailInfo Fail(string failMessage)
     {
-        return new FailMessage { Message = failMessage };
+        return new FailInfo { Message = failMessage };
     }
 
     public static Response<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Response<IReadOnlyList<IReadOnlyList<TSource>>> response, Func<IReadOnlyList<TSource>, Response<TTarget>> convertFunc)
     {
         if (response.Fail)
         {
-            return Fail(response.FailMessage);
+            return response.FailInfo;
         }
 
         if (response.Value == null)
@@ -36,7 +36,7 @@ static class FP
             var convertResponse = convertFunc(item);
             if (convertResponse.Fail)
             {
-                return Fail(convertResponse.FailMessage);
+                return convertResponse.FailInfo;
             }
             
             returnList.Add(convertResponse.Value);
@@ -46,7 +46,7 @@ static class FP
     }
 }
 
-public sealed class FailMessage
+public sealed class FailInfo
 {
     public string Message { get; init; }
 }
@@ -54,7 +54,7 @@ public class Response
 {
     public bool Success { get; init; }
     public bool Fail { get; init; }
-    public string FailMessage { get; init; }
+    public FailInfo FailInfo { get; init; }
     
 }
 
@@ -67,8 +67,8 @@ public class Response<TValue> : Response
         return new Response<TValue> { Value = value, Success = true };
     }
     
-    public static implicit operator Response<TValue>(FailMessage failMessage)
+    public static implicit operator Response<TValue>(FailInfo failInfo)
     {
-        return new Response<TValue> { Fail = true, FailMessage = failMessage.Message};
+        return new Response<TValue> { Fail = true, FailInfo= failInfo};
     }
 }
