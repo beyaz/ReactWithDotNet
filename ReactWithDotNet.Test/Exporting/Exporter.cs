@@ -142,7 +142,7 @@ static class Exporter
 
         if (isVoidFunction())
         {
-            var (hasRead, parameters, newIndex) = TypeScriptCodeAnalyzer.Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1);
+            var (hasRead, parameters, newIndex) = Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1);
             if (hasRead)
             {
                 //parameters.Select(p=>ResolveDotNetTypeName(p.tsTypeReference.Tokens))
