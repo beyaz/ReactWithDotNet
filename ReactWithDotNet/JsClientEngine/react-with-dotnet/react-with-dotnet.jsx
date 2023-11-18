@@ -1390,6 +1390,33 @@ function StartAction(actionArguments)
     return PushToFunctionExecutionQueue(execute);
 }
 
+function IsSyntheticBaseEvent(e)
+{
+    try
+    {
+        return e.constructor.prototype.constructor.name === 'SyntheticBaseEvent';
+    }
+    catch (exception)
+    {
+        return false;
+    }
+}
+
+function ArrangeRemoteMethodArguments(remoteMethodArguments)
+{
+    if (remoteMethodArguments)
+    {
+        for (var i = 0; i < remoteMethodArguments.length; i++)
+        {
+            var prm = remoteMethodArguments[i];
+
+            if (IsSyntheticBaseEvent(prm) && prm._reactName && prm._reactName.indexOf('Mouse') > 0)
+            {
+                remoteMethodArguments[i] = ConvertToSyntheticMouseEvent(prm);
+            }
+        }
+    }    
+}
 
 function HandleAction(actionArguments)
 {
@@ -1429,6 +1456,8 @@ function HandleAction(actionArguments)
 
         CallFunctionId: actionArguments.executionQueueEntry.id
     };
+
+    ArrangeRemoteMethodArguments(actionArguments.remoteMethodArguments);
 
     request.EventArgumentsAsJsonArray = actionArguments.remoteMethodArguments.map(JSON.stringify);
 
