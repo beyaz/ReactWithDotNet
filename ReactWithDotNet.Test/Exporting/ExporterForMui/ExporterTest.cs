@@ -56,6 +56,18 @@ public class ExporterTest
             IsContainer = true
         });
     }
+    [TestMethod]
+    public void Accordion()
+    {
+        Exporter.ExportToCSharpFile(new ExportInput
+        {
+            DefinitionTsCode = GetTsCode(nameof(Accordion)),
+            StartFrom        = "AdditionalProps & {",
+            ClassName        = "Accordion",
+            SkipMembers      = new[] { "children" },
+            IsContainer      = true
+        });
+    }
 
     [TestMethod]
     public void CardMedia()
