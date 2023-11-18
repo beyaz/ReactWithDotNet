@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Diagnostics;
+
+namespace ReactWithDotNet;
 
 public class BaseSyntheticEvent
 {
@@ -12,6 +14,7 @@ public class UIEvent : BaseSyntheticEvent
 {
 }
 
+[DebuggerDisplay("{tagName}")]
 public sealed class ShadowHtmlElement
 {
     public string id { get; set; }
