@@ -1,7 +1,6 @@
-using Newtonsoft.Json.Linq;
 using ReactWithDotNet.TypeScriptCodeAnalyzer;
+using System.Collections.Generic;
 using System.Globalization;
-using static ReactWithDotNet.TypeScriptCodeAnalyzer.Mixin;
 using static ReactWithDotNet.TypeScriptCodeAnalyzer.TokenMatch;
 
 namespace ReactWithDotNet.Exporting;
@@ -65,17 +64,21 @@ static class Exporter
             return "dynamic";
         }
 
-        if (tokens.StartsWith("Partial<"))
+        if (tokens.StartsWith(startIndex, "Partial<"))
         {
             return "dynamic";
         }
 
-        if (tokens.StartsWith("React.ReactNode"))
+        if (tokens.StartsWith(startIndex,"React.ReactNode"))
         {
             return "Element";
         }
-
-        if (tokens.StartsWith("OverridableStringUnion"))
+        if (tokens.StartsWith(startIndex,"React.SyntheticEvent"))
+        {
+            return "SyntheticEvent";
+        }
+        
+        if (tokens.StartsWith(startIndex,"OverridableStringUnion"))
         {
             return "string";
         }
@@ -106,7 +109,7 @@ static class Exporter
         }
         
 
-        var (hasRead, tsTypeReference, _) = Ast.TryReadUnionTypeReference(tokens, 0);
+        var (hasRead, tsTypeReference, _) = Ast.TryReadUnionTypeReference(tokens, startIndex);
         if (hasRead)
         {
             if (tsTypeReference.UnionTypes?.All(t => t.IsStringValue || t.Name == "undefined") == true)
@@ -131,6 +134,24 @@ static class Exporter
         return ResolveDotNetTypeName(tokens,0, tokens.Count-1).Or(() => TryMatchDotNetOneParameterAction(memberInfo)).Or(()=>default);
     }
 
+    static Response<IReadOnlyList<(string dotNetType, string parameterName)>> ResolveDotNetTypeNames(IReadOnlyList<TsMethodParameterInfo> parameters)
+    {
+        var items = new List < (string dotNetType, string parameterName)>();
+
+        foreach (var parameter in parameters)
+        {
+            var response = ResolveDotNetTypeName(parameter.TypeReference.Tokens, parameter.TypeReference.StartIndex, parameter.TypeReference.EndIndex);
+            if (response.Fail)
+            {
+                return response.FailInfo;
+            }
+            
+            items.Add((dotNetType: response.Value, parameter.ParameterName));
+        }
+
+        return items;
+
+    }
     static IReadOnlyList<string> AsCSharpMember(ExportInput input, TsMemberInfo memberInfo)
     {
         var lines = new List<string>();
@@ -145,11 +166,12 @@ static class Exporter
             var functionParameters = Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1).To(x=>x.parameters);
             if (functionParameters.Success)
             {
-                var temp = functionParameters.Select(p => ResolveDotNetTypeName(p.TypeReference.Tokens, p.TypeReference.StartIndex, p.TypeReference.EndIndex));
-                    
-                    
-                lines.Add($"public Func<Task,{string.Join(", ",functionParameters.Value.Select(p=>$"{p.TypeReference} {p.ParameterName}"))}> {memberInfo.Name} {{get;set;}}");
-                return lines;
+                var prm = ResolveDotNetTypeNames(functionParameters.Value);
+                if (prm.Success)
+                {
+                    lines.Add($"public Func<Task,{string.Join(", ",prm.Value.Select(p=>$"{p.dotNetType} {p.parameterName}"))}> {memberInfo.Name} {{get;set;}}");
+                    return lines;
+                }
             }
         }
         
@@ -214,7 +236,7 @@ static class Exporter
 
         bool isVoidFunction()
         {
-            if (memberInfo.RemainingPart.StartsWith(":("))
+            if (memberInfo.RemainingPart.StartsWith(0,":("))
             {
                 if (memberInfo.RemainingPart.EndsWith("=> void"))
                 {
