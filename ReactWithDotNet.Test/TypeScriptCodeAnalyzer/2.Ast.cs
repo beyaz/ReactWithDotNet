@@ -460,7 +460,10 @@ static class Ast
                     {
                         var tsTypeReference = new TsTypeReference
                         {
-                            Name = name
+                            Name       = name,
+                            Tokens     = tokens,
+                            StartIndex = startIndex,
+                            EndIndex   = i-1
                         };
 
                         return (true, tsTypeReference, i);

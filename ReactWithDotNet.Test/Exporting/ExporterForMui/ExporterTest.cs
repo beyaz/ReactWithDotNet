@@ -64,7 +64,7 @@ public class ExporterTest
             DefinitionTsCode = GetTsCode(nameof(Accordion)),
             StartFrom        = "AdditionalProps & {",
             ClassName        = "Accordion",
-            SkipMembers      = new[] { "children" },
+            SkipMembers      = new[] { "children","TransitionProps" },
             IsContainer      = true
         });
     }
