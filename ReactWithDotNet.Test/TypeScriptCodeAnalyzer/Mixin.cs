@@ -83,7 +83,7 @@ static class Mixin
             return default;
         }
         
-        while (tokens[index].tokenType == TokenType.Space)
+        while ( index < tokens.Count && tokens[index].tokenType == TokenType.Space)
         {
             index++;
         }
@@ -132,6 +132,15 @@ static class Mixin
                     }
                     
                     return false;
+                }
+            }
+
+            if (hasReadA is false)
+            {
+                var (hasReadB, tokenB, tokenIndexB) = ReadToken(tokensB,startIndexB);
+                if (hasReadB is false)
+                {
+                    return true;
                 }
             }
             
