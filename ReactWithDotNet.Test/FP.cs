@@ -14,7 +14,7 @@ static class FP
     
     public static (bool success, T value) Or<T>(this Response<T> a, Func<(bool success, T value)> b)
     {
-        if (a.Success)
+        if (a.IsSuccess)
         {
             return (true, a.Value);
         }
@@ -24,7 +24,7 @@ static class FP
     
     public static Response<TTarget> To<TSource,TTarget>(this Response<TSource> sourceResponse, Func<TSource, TTarget> nextFunc)
     {
-        if (sourceResponse.Success)
+        if (sourceResponse.IsSuccess)
         {
             return nextFunc(sourceResponse.Value);
         }
@@ -41,7 +41,7 @@ static class FP
 
     public static Response<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Response<IReadOnlyList<IReadOnlyList<TSource>>> response, Func<IReadOnlyList<TSource>, Response<TTarget>> convertFunc)
     {
-        if (response.Fail)
+        if (response.IsFail)
         {
             return response.FailInfo;
         }
@@ -56,7 +56,7 @@ static class FP
         foreach (var item in response.Value)
         {
             var convertResponse = convertFunc(item);
-            if (convertResponse.Fail)
+            if (convertResponse.IsFail)
             {
                 return convertResponse.FailInfo;
             }
@@ -69,7 +69,7 @@ static class FP
     
     public static Response<IReadOnlyList<TTarget>> Select<TSource, TTarget>(this Response<IReadOnlyList<TSource>> response, Func<TSource, Response<TTarget>> convertFunc)
     {
-        if (response.Fail)
+        if (response.IsFail)
         {
             return response.FailInfo;
         }
@@ -84,7 +84,7 @@ static class FP
         foreach (var item in response.Value)
         {
             var convertResponse = convertFunc(item);
-            if (convertResponse.Fail)
+            if (convertResponse.IsFail)
             {
                 return convertResponse.FailInfo;
             }
@@ -102,9 +102,11 @@ public sealed class FailInfo
 }
 public class Response
 {
-    public bool Success { get; init; }
-    public bool Fail { get; init; }
+    public bool IsSuccess { get; init; }
+    public bool IsFail { get; init; }
     public FailInfo FailInfo { get; init; }
+    
+    public string FailMessage => FailInfo.Message;
     
 }
 
@@ -114,11 +116,11 @@ public class Response<TValue> : Response
     
     public static implicit operator Response<TValue>(TValue value)
     {
-        return new Response<TValue> { Value = value, Success = true };
+        return new Response<TValue> { Value = value, IsSuccess = true };
     }
     
     public static implicit operator Response<TValue>(FailInfo failInfo)
     {
-        return new Response<TValue> { Fail = true, FailInfo= failInfo};
+        return new Response<TValue> { IsFail = true, FailInfo= failInfo};
     }
 }

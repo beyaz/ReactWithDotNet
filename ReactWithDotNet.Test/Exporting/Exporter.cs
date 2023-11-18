@@ -141,7 +141,7 @@ static class Exporter
         foreach (var parameter in parameters)
         {
             var response = ResolveDotNetTypeName(parameter.TypeReference.Tokens, parameter.TypeReference.StartIndex, parameter.TypeReference.EndIndex);
-            if (response.Fail)
+            if (response.IsFail)
             {
                 return response.FailInfo;
             }
@@ -164,10 +164,10 @@ static class Exporter
         if (isVoidFunction())
         {
             var functionParameters = Ast.TryReadFunctionParameters(memberInfo.RemainingPart, 1).To(x=>x.parameters);
-            if (functionParameters.Success)
+            if (functionParameters.IsSuccess)
             {
                 var prm = ResolveDotNetTypeNames(functionParameters.Value);
-                if (prm.Success)
+                if (prm.IsSuccess)
                 {
                     lines.Add("[ReactProp]");
                     

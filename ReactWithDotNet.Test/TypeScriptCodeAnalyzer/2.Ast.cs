@@ -177,7 +177,7 @@ static class Ast
             if (isFound)
             {
                 var response = ParseToMemberTokens(tokens, i+1, indexOfPair-1);
-                if (response.Success)
+                if (response.IsSuccess)
                 {
                     return (true, response.Select(Exporter.ParseMemberTokens).Value, indexOfPair + 1);
                 }
