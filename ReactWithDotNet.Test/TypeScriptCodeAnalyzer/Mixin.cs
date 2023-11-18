@@ -15,7 +15,7 @@ static class Mixin
         return t.tokenType != TokenType.Colon;
     }
 
-    public static bool StartsWith(this IReadOnlyList<Token> tokens, string value)
+    public static bool StartsWith(this IReadOnlyList<Token> tokens, int startIndex, string value)
     {
         if (tokens is null || value is null)
         {
@@ -35,7 +35,7 @@ static class Mixin
 
         var valueAsTokens = reactNode.tokens;
         
-        if (Ast.FindMatch(tokens, 0, valueAsTokens).isFound)
+        if (Ast.FindMatch(tokens, startIndex, valueAsTokens).isFound)
         {
             return true;
         }
