@@ -266,7 +266,7 @@ public sealed class Tooltip : ElementBase
     ///     @param {React.SyntheticEvent} event The event source of the callback.
     /// </summary>
     [ReactProp]
-    public Func<SyntheticEvent, Task> onClose {get;set;}
+    public Func<MouseEvent, Task> onClose {get;set;}
     
     /// <summary>
     ///     Callback fired when the component requests to be open.
@@ -276,7 +276,7 @@ public sealed class Tooltip : ElementBase
     ///     @param {React.SyntheticEvent} event The event source of the callback.
     /// </summary>
     [ReactProp]
-    public Func<SyntheticEvent, Task> onOpen {get;set;}
+    public Func<MouseEvent, Task> onOpen {get;set;}
     
     /// <summary>
     ///     If `true`, the component is shown.
