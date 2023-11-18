@@ -265,6 +265,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @param {React.SyntheticEvent} event The event source of the callback.
     /// </summary>
+    [ReactProp]
     public Func<SyntheticEvent, Task> onClose {get;set;}
     
     /// <summary>
@@ -274,6 +275,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @param {React.SyntheticEvent} event The event source of the callback.
     /// </summary>
+    [ReactProp]
     public Func<SyntheticEvent, Task> onOpen {get;set;}
     
     /// <summary>

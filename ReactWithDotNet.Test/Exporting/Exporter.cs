@@ -169,7 +169,7 @@ static class Exporter
                 var prm = ResolveDotNetTypeNames(functionParameters.Value);
                 if (prm.Success)
                 {
-                    //lines.Add("[ReactGrabEventArgumentsByUsingFunction(\"GrabSyntheticEvent\")]");
+                    lines.Add("[ReactProp]");
                     
                     lines.Add($"public Func<{string.Join(", ",prm.Value.Select(p=>$"{p.dotNetType}"))}, Task> {memberInfo.Name} {{get;set;}}");
                     return lines;
