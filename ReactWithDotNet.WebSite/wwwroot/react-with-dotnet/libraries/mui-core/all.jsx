@@ -12,7 +12,7 @@ function register(name, value)
 }
 
 // Connect components as Lazy
-
+register("Accordion", React.lazy(() => import('./Accordion')));
 register("Autocomplete", React.lazy(() => import('./Autocomplete')));
 register("Switch", React.lazy(() => import('./Switch')));
 register("Tooltip",     React.lazy(() => import('./Tooltip')));
@@ -27,7 +27,8 @@ register("CardMedia",   React.lazy(() => import('./CardMedia')));
 register("Card",        React.lazy(() => import('./Card')));
 register("CardContent", React.lazy(() => import('./CardContent')));
 register("CardActions", React.lazy(() => import('./CardActions')));
-register("Typography",  React.lazy(() => import('./Typography')));
+register("Typography", React.lazy(() => import('./Typography')));
+
 register("CircularProgress", React.lazy(() => import('./CircularProgress'))); 
 
 register("Slider", React.lazy(() => import('./Slider')));
