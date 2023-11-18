@@ -75,7 +75,7 @@ static class Exporter
         }
         if (tokens.StartsWith(startIndex,"React.SyntheticEvent"))
         {
-            return "SyntheticEvent";
+            return "MouseEvent";
         }
         
         if (tokens.StartsWith(startIndex,"OverridableStringUnion"))
