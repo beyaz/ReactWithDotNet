@@ -73,8 +73,14 @@ class HeaderMenuBar : PureComponent
                     FontWeight700,
                     CursorDefault
                 }
-            }
+            },
+            onOpen = OnOpen
         };
+    }
+
+    Task OnOpen(SyntheticEvent arg)
+    {
+        return Task.CompletedTask;
     }
 
     Element AsTooltipRow(MenuItem model)

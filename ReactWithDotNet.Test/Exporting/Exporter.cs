@@ -33,7 +33,7 @@ static class Exporter
     static Response<string> ResolveDotNetTypeName(IReadOnlyList<Token> tokens,int startIndex, int endIndex)
     {
         
-        if (endIndex - startIndex == 1)
+        if (endIndex - startIndex == 0)
         {
             var name = tokens[startIndex].value;
 
