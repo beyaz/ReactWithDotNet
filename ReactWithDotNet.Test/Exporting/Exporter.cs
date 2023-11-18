@@ -169,7 +169,7 @@ static class Exporter
                 var prm = ResolveDotNetTypeNames(functionParameters.Value);
                 if (prm.Success)
                 {
-                    lines.Add($"public Func<Task,{string.Join(", ",prm.Value.Select(p=>$"{p.dotNetType} {p.parameterName}"))}> {memberInfo.Name} {{get;set;}}");
+                    lines.Add($"public Func<{string.Join(", ",prm.Value.Select(p=>$"{p.dotNetType}"))}, Task> {memberInfo.Name} {{get;set;}}");
                     return lines;
                 }
             }

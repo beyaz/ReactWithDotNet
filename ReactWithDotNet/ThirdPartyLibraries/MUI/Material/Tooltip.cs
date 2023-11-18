@@ -10,14 +10,14 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public bool? arrow { get; set; }
+    public object arrow { get; set; }
     
     /// <summary>
     ///     If `true`, adds an arrow to the tooltip.
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier Arrow(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.arrow = value);
+    public static IModifier Arrow(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.arrow = value);
     
     /// <summary>
     ///     Override or extend the styles applied to the component.
@@ -70,7 +70,7 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public bool? describeChild { get; set; }
+    public object describeChild { get; set; }
     
     /// <summary>
     ///     Set to `true` if the `title` acts as an accessible description.
@@ -79,7 +79,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DescribeChild(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.describeChild = value);
+    public static IModifier DescribeChild(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.describeChild = value);
     
     /// <summary>
     ///     Do not respond to focus-visible events.
@@ -87,14 +87,14 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public bool? disableFocusListener { get; set; }
+    public object disableFocusListener { get; set; }
     
     /// <summary>
     ///     Do not respond to focus-visible events.
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableFocusListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableFocusListener = value);
+    public static IModifier DisableFocusListener(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableFocusListener = value);
     
     /// <summary>
     ///     Do not respond to hover events.
@@ -102,14 +102,14 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public bool? disableHoverListener { get; set; }
+    public object disableHoverListener { get; set; }
     
     /// <summary>
     ///     Do not respond to hover events.
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableHoverListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableHoverListener = value);
+    public static IModifier DisableHoverListener(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableHoverListener = value);
     
     /// <summary>
     ///     Makes a tooltip not interactive, i.e. it will close when the user
@@ -119,7 +119,7 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public bool? disableInteractive { get; set; }
+    public object disableInteractive { get; set; }
     
     /// <summary>
     ///     Makes a tooltip not interactive, i.e. it will close when the user
@@ -128,7 +128,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableInteractive(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableInteractive = value);
+    public static IModifier DisableInteractive(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableInteractive = value);
     
     /// <summary>
     ///     Do not respond to long press touch events.
@@ -136,14 +136,14 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public bool? disableTouchListener { get; set; }
+    public object disableTouchListener { get; set; }
     
     /// <summary>
     ///     Do not respond to long press touch events.
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier DisableTouchListener(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableTouchListener = value);
+    public static IModifier DisableTouchListener(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.disableTouchListener = value);
     
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip.
@@ -153,7 +153,7 @@ public sealed class Tooltip : ElementBase
     ///     @default 100
     /// </summary>
     [ReactProp]
-    public double? enterDelay { get; set; }
+    public object enterDelay { get; set; }
     
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip.
@@ -162,7 +162,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 100
     /// </summary>
-    public static IModifier EnterDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterDelay = value);
+    public static IModifier EnterDelay(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterDelay = value);
     
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip when one was already recently opened.
@@ -170,14 +170,14 @@ public sealed class Tooltip : ElementBase
     ///     @default 0
     /// </summary>
     [ReactProp]
-    public double? enterNextDelay { get; set; }
+    public object enterNextDelay { get; set; }
     
     /// <summary>
     ///     The number of milliseconds to wait before showing the tooltip when one was already recently opened.
     ///     <br/>
     ///     @default 0
     /// </summary>
-    public static IModifier EnterNextDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterNextDelay = value);
+    public static IModifier EnterNextDelay(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterNextDelay = value);
     
     /// <summary>
     ///     The number of milliseconds a user must touch the element before showing the tooltip.
@@ -185,14 +185,14 @@ public sealed class Tooltip : ElementBase
     ///     @default 700
     /// </summary>
     [ReactProp]
-    public double? enterTouchDelay { get; set; }
+    public object enterTouchDelay { get; set; }
     
     /// <summary>
     ///     The number of milliseconds a user must touch the element before showing the tooltip.
     ///     <br/>
     ///     @default 700
     /// </summary>
-    public static IModifier EnterTouchDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterTouchDelay = value);
+    public static IModifier EnterTouchDelay(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.enterTouchDelay = value);
     
     /// <summary>
     ///     If `true`, the tooltip follow the cursor over the wrapped element.
@@ -200,14 +200,14 @@ public sealed class Tooltip : ElementBase
     ///     @default false
     /// </summary>
     [ReactProp]
-    public bool? followCursor { get; set; }
+    public object followCursor { get; set; }
     
     /// <summary>
     ///     If `true`, the tooltip follow the cursor over the wrapped element.
     ///     <br/>
     ///     @default false
     /// </summary>
-    public static IModifier FollowCursor(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.followCursor = value);
+    public static IModifier FollowCursor(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.followCursor = value);
     
     /// <summary>
     ///     This prop is used to help implement the accessibility logic.
@@ -215,14 +215,14 @@ public sealed class Tooltip : ElementBase
     ///     If you don't provide this prop. It falls back to a randomly generated id.
     /// </summary>
     [ReactProp]
-    public string id { get; set; }
+    public object id { get; set; }
     
     /// <summary>
     ///     This prop is used to help implement the accessibility logic.
     ///     <br/>
     ///     If you don't provide this prop. It falls back to a randomly generated id.
     /// </summary>
-    public static IModifier Id(string value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.id = value);
+    public static IModifier Id(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.id = value);
     
     /// <summary>
     ///     The number of milliseconds to wait before hiding the tooltip.
@@ -232,7 +232,7 @@ public sealed class Tooltip : ElementBase
     ///     @default 0
     /// </summary>
     [ReactProp]
-    public double? leaveDelay { get; set; }
+    public object leaveDelay { get; set; }
     
     /// <summary>
     ///     The number of milliseconds to wait before hiding the tooltip.
@@ -241,7 +241,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @default 0
     /// </summary>
-    public static IModifier LeaveDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.leaveDelay = value);
+    public static IModifier LeaveDelay(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.leaveDelay = value);
     
     /// <summary>
     ///     The number of milliseconds after the user stops touching an element before hiding the tooltip.
@@ -249,14 +249,14 @@ public sealed class Tooltip : ElementBase
     ///     @default 1500
     /// </summary>
     [ReactProp]
-    public double? leaveTouchDelay { get; set; }
+    public object leaveTouchDelay { get; set; }
     
     /// <summary>
     ///     The number of milliseconds after the user stops touching an element before hiding the tooltip.
     ///     <br/>
     ///     @default 1500
     /// </summary>
-    public static IModifier LeaveTouchDelay(double? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.leaveTouchDelay = value);
+    public static IModifier LeaveTouchDelay(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.leaveTouchDelay = value);
     
     /// <summary>
     ///     Callback fired when the component requests to be closed.
@@ -265,6 +265,7 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @param {React.SyntheticEvent} event The event source of the callback.
     /// </summary>
+    public Func<SyntheticEvent, Task> onClose {get;set;}
     
     /// <summary>
     ///     Callback fired when the component requests to be open.
@@ -273,17 +274,18 @@ public sealed class Tooltip : ElementBase
     ///     <br/>
     ///     @param {React.SyntheticEvent} event The event source of the callback.
     /// </summary>
+    public Func<SyntheticEvent, Task> onOpen {get;set;}
     
     /// <summary>
     ///     If `true`, the component is shown.
     /// </summary>
     [ReactProp]
-    public bool? open { get; set; }
+    public object open { get; set; }
     
     /// <summary>
     ///     If `true`, the component is shown.
     /// </summary>
-    public static IModifier Open(bool? value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.open = value);
+    public static IModifier Open(object value) => CreateThirdPartyReactComponentModifier<Tooltip>(x => x.open = value);
     
     /// <summary>
     ///     Tooltip placement.
