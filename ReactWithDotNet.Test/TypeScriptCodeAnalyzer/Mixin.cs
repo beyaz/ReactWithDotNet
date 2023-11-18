@@ -137,7 +137,7 @@ static class Mixin
 
             if (hasReadA is false)
             {
-                var (hasReadB, tokenB, tokenIndexB) = ReadToken(tokensB,startIndexB);
+                var (hasReadB, _, _) = ReadToken(tokensB,startIndexB);
                 if (hasReadB is false)
                 {
                     return true;

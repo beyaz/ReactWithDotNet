@@ -28,6 +28,9 @@ public class TsParserTests
         tokensA = ParseTokens("<>Partial< ", 0).tokens;
         tokensB = ParseTokens(" Partial  <", 0).tokens;
         IsEquals(tokensA, 2, tokensA.Count - 1, tokensB, 0, tokensB.Count - 1).Should().BeTrue();
+        
+        
+        
     }
     
     [TestMethod]
