@@ -62,7 +62,7 @@ static class Mixin
                 {
                     for (var i = 0; i < valueAsTokens.Count; i++)
                     {
-                        if (!Ast.Equals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
+                        if (!Ast.IsEquals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
                         {
                             return false;
                         }
@@ -126,7 +126,7 @@ static class Mixin
                 {
                     startIndexB = tokenIndexB+1;
                     
-                    if (Ast.Equals(tokenA, tokenB))
+                    if (Ast.IsEquals(tokenA, tokenB))
                     {
                         continue;
                     }
@@ -184,7 +184,7 @@ static class Mixin
                 {
                     for (var i = 0; i < valueAsTokens.Count; i++)
                     {
-                        if (!Ast.Equals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
+                        if (!Ast.IsEquals(valueAsTokens[i], tokens[tokens.Count - valueAsTokens.Count + i]))
                         {
                             return false;
                         }
