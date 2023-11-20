@@ -266,6 +266,8 @@ static partial class JsonSerializationOptionHelper
         options.Converters.Add(new ValueTupleFactory());
 
         options.Converters.Add(new JsonConverterFactoryForType());
+        
+        options.Converters.Add(new UnionFactory());
 
         return options;
     }
