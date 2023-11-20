@@ -1246,7 +1246,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "cols",
-                        Comment = "Specifies the visible width of the textarea element in characters."
+                        Comment = "Specifies the visible width of the textarea element in characters.",
+                        Type = "UnionProp<string,int?>"
                     },
                     new AttributeInfo
                     {

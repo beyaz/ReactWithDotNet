@@ -3390,7 +3390,7 @@ public sealed partial class textarea : HtmlElement
     ///     Specifies the visible width of the textarea element in characters.
     /// </summary>
     [ReactProp]
-    public string cols { get; set; }
+    public UnionProp<string,int?> cols { get; set; }
 
     /// <summary>
     ///     Specifies the number of visible lines in the textarea element.
@@ -3491,7 +3491,7 @@ public sealed partial class textarea : HtmlElement
     /// <br/>
     ///     Specifies the visible width of the textarea element in characters.
     /// </summary>
-    public static HtmlElementModifier Cols(string value) => Modify(x => x.cols = value);
+    public static HtmlElementModifier Cols(UnionProp<string,int?> value) => Modify(x => x.cols = value);
 
     /// <summary>
     ///     rows = <paramref name="value"/>
