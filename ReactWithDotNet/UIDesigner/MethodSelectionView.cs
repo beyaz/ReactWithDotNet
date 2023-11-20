@@ -4,7 +4,9 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataNode
 {
-    public List<MetadataNode> children { get; set; }
+    List<MetadataNode> children;
+    
+    public List<MetadataNode> Children { get; set; }
     public bool IsClass { get; set; }
     public bool IsMethod { get; set; }
     public bool IsNamespace { get; set; }
@@ -87,7 +89,7 @@ class MethodSelectionView : Component
             return node;
         }
 
-        return FindTreeNode(node.children, hasMatch);
+        return FindTreeNode(node.Children, hasMatch);
     }
 
     static bool HasMatch(MetadataNode node, string treeNodeKey)
@@ -168,10 +170,10 @@ class MethodSelectionView : Component
 
         Element toItem(MetadataNode node)
         {
-            if (node.children?.Count > 0)
+            if (node.Children?.Count > 0)
             {
                 var parent = AsTreeItem(node);
-                var chldrn = AsTreeView(node.children);
+                var chldrn = AsTreeView(node.Children);
 
                 return new Fragment
                 {

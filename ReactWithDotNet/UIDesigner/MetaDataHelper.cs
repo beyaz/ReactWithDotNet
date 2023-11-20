@@ -34,12 +34,12 @@ static class MetadataHelper
 
     static void AddChild(this MetadataNode node, MetadataNode child)
     {
-        (node.children ??= new List<MetadataNode>()).Add(child);
+        (node.Children ??= new List<MetadataNode>()).Add(child);
     }
     
     static bool HasChild(this MetadataNode node)
     {
-        return node.children?.Count > 0;
+        return node.Children?.Count > 0;
     }
     
     public static IEnumerable<MetadataNode> GetMetadataNodes(string assemblyFilePath, string classFilter, string methodFilter)
@@ -56,7 +56,7 @@ static class MetadataHelper
 
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
-                    classNodes = classNodes.Where(classNode => classNode.HasChild()).Take(3).OrderByDescending(classNode => classNode.children.Count).ToList();
+                    classNodes = classNodes.Where(classNode => classNode.HasChild()).Take(3).OrderByDescending(classNode => classNode.Children.Count).ToList();
                 }
 
                 if (classNodes.Count > 0)
@@ -66,7 +66,7 @@ static class MetadataHelper
                         NamespaceReference = namespaceName,
                         IsNamespace        = true,
                         label              = namespaceName,
-                        children = classNodes
+                        Children = classNodes
                     });
                 }
             }
@@ -76,7 +76,7 @@ static class MetadataHelper
 
         static bool ignoreClass(MetadataNode classNode)
         {
-            if (classNode.children?.Count == 0)
+            if (classNode.Children?.Count == 0)
             {
                 if (classNode.TypeReference.IsStaticClass)
                 {
@@ -105,7 +105,7 @@ static class MetadataHelper
             {
                 if (!string.IsNullOrWhiteSpace(methodFilter))
                 {
-                    if (classNode.children is null || classNode.children?.Count < 5)
+                    if (classNode.Children is null || classNode.Children?.Count < 5)
                     {
                         if (m.Name.IndexOf(methodFilter, StringComparison.OrdinalIgnoreCase) >= 0)
                         {
