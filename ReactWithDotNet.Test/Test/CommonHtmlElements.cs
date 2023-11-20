@@ -1230,6 +1230,86 @@ public class ExportingCommonHtmlElements
                     }
                 },
                 EnableCastFromString = false
+            },
+            
+             new()
+            {
+                Tag = "textarea",
+                CreateClassAsPartial = true,
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "name",
+                        Comment = "Specifies a name for the textarea element."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "cols",
+                        Comment = "Specifies the visible width of the textarea element in characters."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "rows",
+                        Comment = "Specifies the number of visible lines in the textarea element."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "placeholder",
+                        Comment = "Specifies a short hint that describes the expected value of the textarea element."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "readOnly",
+                        Comment = "Disables user input in the textarea element."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "required",
+                        Comment = "Indicates that the textarea element must be filled out before the form is submitted."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "autofocus",
+                        Comment = "Automatically gives focus to the textarea element when the page loads."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "autocomplete",
+                        Comment = "Specifies that the user's browser should automatically complete the textarea element's value."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "dirname",
+                        Comment = "Specifies the directory to use as the default value for the 'file' input type."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "form",
+                        Comment = "Specifies the ID of the form that the textarea element belongs to."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "maxlength",
+                        Comment = "Specifies the maximum number of characters that can be entered into the textarea element."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "minlength",
+                        Comment = "Specifies the minimum number of characters that must be entered into the textarea element."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "wrap",
+                        Comment = "Specifies whether the text in the textarea element should wrap to the next line when it reaches the end of the visible area."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "defaultValue",
+                        Comment = "A string. Specifies the initial value for a text area."
+                    }
+                },
+                EnableCastFromString = false
             }
         };
 
