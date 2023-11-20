@@ -739,7 +739,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return $"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{htmlAttribute.Value}\")";
         }
 
-        return $"/* {htmlAttribute.GetTagName()}.{attributeName} = \"{htmlAttribute.Value}\"*/";
+        return $"null/* {htmlAttribute.GetTagName()}.{attributeName} = \"{htmlAttribute.Value}\"*/";
 
         static string UpperCaseFirstChar(string str)
         {

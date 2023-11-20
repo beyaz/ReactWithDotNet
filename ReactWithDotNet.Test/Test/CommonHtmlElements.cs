@@ -36,6 +36,12 @@ public class ExportingCommonHtmlElements
                     {
                         Name = "disabled",
                         Type = "string"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "value",
+                        Type = "string",
+                        Comment = "Specifies an initial value for the button"
                     }
                 },
                 EnableCastFromString = false
