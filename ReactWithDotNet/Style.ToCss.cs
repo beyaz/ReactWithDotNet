@@ -22,6 +22,12 @@ partial class Style
 
         foreach (var line in css.Trim().Split(";").Select(v => v.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)))
         {
+            // Skip css variables
+            if (line.StartsWith("--"))
+            {
+                continue;
+            }
+            
             var array = line.Trim().Split(":").Select(v => v.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)).ToArray();
             if (array.Length != 2)
             {
