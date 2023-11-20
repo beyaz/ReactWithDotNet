@@ -268,6 +268,8 @@ static partial class JsonSerializationOptionHelper
         options.Converters.Add(new JsonConverterFactoryForType());
         
         options.Converters.Add(new UnionStringOrInt32Converter());
+        
+        options.Converters.Add(new UnionPropFactory());
 
         return options;
     }

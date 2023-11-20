@@ -108,7 +108,7 @@ public class SerializationTests
     
     
     [TestMethod]
-    public void TupleSerialize()
+    public void TupleSerialize1()
     {
         UnionStringOrInt32 a = "xyZ";
 
@@ -141,5 +141,33 @@ public class SerializationTests
         a2 = DeserializeJsonBySystemTextJson<UnionStringOrInt32>(json);
         
         (a2 == null).Should().BeTrue();
+    }
+    
+    [TestMethod]
+    public void TupleSerialize()
+    {
+        UnionProp<string,int,bool> a = "xyZ";
+
+        var json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
+
+        json.Should().Be("\"xyZ\"");
+        
+        a = 65;
+
+        json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
+
+        json.Should().Be("65");
+        
+        a = null;
+
+        json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
+
+        json.Should().Be("null");
+        
+        a = false;
+
+        json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
+
+        json.Should().Be("false");
     }
 }
