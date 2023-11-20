@@ -30,19 +30,56 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name = "type",
-                        Type = "string"
+                        Type = "string",
+                        Comment = "Specifies the type of button. button, reset, submit"
                     },
-                    new AttributeInfo
-                    {
-                        Name = "disabled",
-                        Type = "string"
-                    },
-                    new AttributeInfo
+                     new AttributeInfo
                     {
                         Name = "value",
                         Type = "string",
                         Comment = "Specifies an initial value for the button"
-                    }
+                    },
+                    
+                    new AttributeInfo
+                    {
+                        Name    = "autofocus",
+                        Comment = "Specifies that the button should have input focus when the page loads. Only one element in a document can have this attribute."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "disabled",
+                        Comment = "Specifies that the button should be disabled. A disabled button cannot be clicked."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "form",
+                        Comment = "Specifies the form that the button is associated with."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "formaction",
+                        Comment = "Specifies the URL of the form action when the button is clicked."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "formenctype",
+                        Comment = "Specifies the form encoding method (e.g., application/x-www-form-urlencoded, multipart/form-data) when the button is clicked."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "formmethod",
+                        Comment = "Specifies the form submission method (e.g., GET, POST) when the button is clicked."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "formnovalidate",
+                        Comment = "Specifies that the form should not be validated before submission when the button is clicked."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "name",
+                        Comment = "Specifies a name for the button. The name attribute is used to reference form-data after the form has been submitted, or to reference the element in JavaScript."
+                    },
                 },
                 EnableCastFromString = false
             },
