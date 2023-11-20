@@ -29,17 +29,17 @@ public class ExportingCommonHtmlElements
                 {
                     new AttributeInfo
                     {
-                        Name = "type",
-                        Type = "string",
+                        Name    = "type",
+                        Type    = "string",
                         Comment = "Specifies the type of button. button, reset, submit"
                     },
-                     new AttributeInfo
+                    new AttributeInfo
                     {
-                        Name = "value",
-                        Type = "string",
+                        Name    = "value",
+                        Type    = "string",
                         Comment = "Specifies an initial value for the button"
                     },
-                    
+
                     new AttributeInfo
                     {
                         Name    = "autofocus",
@@ -79,7 +79,7 @@ public class ExportingCommonHtmlElements
                     {
                         Name    = "name",
                         Comment = "Specifies a name for the button. The name attribute is used to reference form-data after the form has been submitted, or to reference the element in JavaScript."
-                    },
+                    }
                 },
                 EnableCastFromString = false
             },
@@ -131,8 +131,6 @@ public class ExportingCommonHtmlElements
                 Comment              = "List item",
                 EnableCastFromString = true
             },
-
-
 
             new() { Tag = "h1", Comment = Empty, EnableCastFromString = true },
             new() { Tag = "h2", Comment = Empty, EnableCastFromString = true },
@@ -473,43 +471,43 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "points",
-                        Comment = "Specifies the coordinates of the polygon's vertices, in (x, y) pairs, separated by commas.",
+                        Comment = "Specifies the coordinates of the polygon's vertices, in (x, y) pairs, separated by commas."
                     },
 
                     new AttributeInfo
                     {
                         Name    = "fill",
-                        Comment = "Specifies the fill color of the polygon.",
+                        Comment = "Specifies the fill color of the polygon."
                     },
 
                     new AttributeInfo
                     {
                         Name    = "stroke",
-                        Comment = "Specifies the stroke color of the polygon.",
+                        Comment = "Specifies the stroke color of the polygon."
                     },
 
                     new AttributeInfo
                     {
                         Name    = "stroke-width",
-                        Comment = "Specifies the width of the polygon's stroke, in pixels.",
+                        Comment = "Specifies the width of the polygon's stroke, in pixels."
                     },
 
                     new AttributeInfo
                     {
                         Name    = "stroke-linecap",
-                        Comment = "Specifies the type of line cap used for the polygon's stroke.",
+                        Comment = "Specifies the type of line cap used for the polygon's stroke."
                     },
 
                     new AttributeInfo
                     {
                         Name    = "stroke-linejoin",
-                        Comment = "Specifies the type of line join used for the polygon's stroke.",
+                        Comment = "Specifies the type of line join used for the polygon's stroke."
                     },
 
                     new AttributeInfo
                     {
                         Name    = "fill-rule",
-                        Comment = "Specifies how the polygon is filled.",
+                        Comment = "Specifies how the polygon is filled."
                     }
                 },
                 EnableCastFromString = false
@@ -636,12 +634,12 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "clip-rule",
-                        Comment = "Specifies the fill rule for the clipping path.",
+                        Comment = "Specifies the fill rule for the clipping path."
                     },
                     new AttributeInfo
                     {
                         Name    = "clip-box",
-                        Comment = "Specifies the reference box for the clipping path.",
+                        Comment = "Specifies the reference box for the clipping path."
                     }
                 },
                 EnableCastFromString = false
@@ -688,7 +686,7 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name = "strokeLinejoin"
-                    },
+                    }
                 },
                 EnableCastFromString = false
             },
@@ -698,7 +696,6 @@ public class ExportingCommonHtmlElements
                 Tag = "g",
                 Attributes = new[]
                 {
-
                     new AttributeInfo
                     {
                         Name = "opacity"
@@ -715,30 +712,29 @@ public class ExportingCommonHtmlElements
                 },
                 EnableCastFromString = false
             },
-            
+
             new()
             {
                 Tag = "mask",
                 Attributes = new[]
                 {
-
                     new AttributeInfo
                     {
-                        Name = "height",
+                        Name    = "height",
                         Comment = "This attribute defines the height of the masking area. Value type: length ; Default value: 120%; Animatable: yes"
                     },
 
                     new AttributeInfo
                     {
-                        Name = "maskContentUnits",
+                        Name    = "maskContentUnits",
                         Comment = "This attribute defines the coordinate system for the contents of the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: userSpaceOnUse; Animatable: yes"
                     },
                     new AttributeInfo
                     {
-                        Name = "maskUnits",
-                        Comment="This attribute defines the coordinate system for attributes x, y, width and height on the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: objectBoundingBox; Animatable: yes"
+                        Name    = "maskUnits",
+                        Comment = "This attribute defines the coordinate system for attributes x, y, width and height on the mask. Value type: userSpaceOnUse|objectBoundingBox ; Default value: objectBoundingBox; Animatable: yes"
                     },
-                    
+
                     new AttributeInfo
                     {
                         Name    = "x",
@@ -763,7 +759,6 @@ public class ExportingCommonHtmlElements
                 Tag = "meta",
                 Attributes = new[]
                 {
-
                     new AttributeInfo
                     {
                         Name    = "charset",
@@ -897,30 +892,30 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "profile",
-                        Comment = "Provides a URL to a profile document for the current document.",
+                        Comment = "Provides a URL to a profile document for the current document."
                     },
 
                     new AttributeInfo
                     {
                         Name    = "link",
-                        Comment = "Provides a link to an external resource, such as a stylesheet or script file.",
+                        Comment = "Provides a link to an external resource, such as a stylesheet or script file."
                     },
                     new AttributeInfo
                     {
                         Name    = "meta",
-                        Comment = "Provides metadata about the document, such as the character encoding, author, and keywords.",
+                        Comment = "Provides metadata about the document, such as the character encoding, author, and keywords."
                     },
 
                     new AttributeInfo
                     {
                         Name    = "script",
-                        Comment = "Provides JavaScript code to be executed in the browser.",
+                        Comment = "Provides JavaScript code to be executed in the browser."
                     },
                     new AttributeInfo
                     {
                         Name    = "noscript",
-                        Comment = "Provides content to be displayed if the browser does not support JavaScript.",
-                    },
+                        Comment = "Provides content to be displayed if the browser does not support JavaScript."
+                    }
                     //new AttributeInfo
                     //{
                     //    Name    = "base",
@@ -930,13 +925,11 @@ public class ExportingCommonHtmlElements
                 EnableCastFromString = false
             },
 
-
             new()
             {
                 Tag = "html",
                 Attributes = new[]
                 {
-
                     new AttributeInfo
                     {
                         Name    = "hidden",
@@ -979,9 +972,7 @@ public class ExportingCommonHtmlElements
                         Name    = "htmlFor",
                         Comment = "Specifies which form element a label is bound to."
                     },
-                    
 
-                    
                     new AttributeInfo
                     {
                         Name    = "dropzone",
@@ -993,14 +984,12 @@ public class ExportingCommonHtmlElements
                         Comment = "Hides the element from view."
                     },
 
-                    
-
                     new AttributeInfo
                     {
                         Name    = "tabindex",
                         Comment = "Specifies the element's position in the tab order."
                     }
-                },
+                }
             },
 
             new()
@@ -1053,10 +1042,7 @@ public class ExportingCommonHtmlElements
                         Name    = "name",
                         Comment = "Specifies a name for the link. This can be used to target the link with JavaScript."
                     },
-                   
-                    
-                   
-                    
+
                     new AttributeInfo
                     {
                         Name    = "tabindex",
@@ -1065,9 +1051,7 @@ public class ExportingCommonHtmlElements
                 },
                 EnableCastFromString = false
             },
-            
-            
-             
+
             new()
             {
                 Tag = "img",
@@ -1132,20 +1116,20 @@ public class ExportingCommonHtmlElements
                     {
                         Name    = "referrerpolicy",
                         Comment = "A string that specifies how much referrer information is sent with requests for the image."
-                    },
+                    }
                 },
                 EnableCastFromString = false
             },
-            
-             new()
+
+            new()
             {
-                Tag = "svg",
+                Tag                  = "svg",
                 CreateClassAsPartial = true,
                 Attributes = new[]
                 {
                     new AttributeInfo
                     {
-                        Name    = "focusable"
+                        Name = "focusable"
                     },
                     new AttributeInfo
                     {
@@ -1175,8 +1159,8 @@ public class ExportingCommonHtmlElements
 
                     new AttributeInfo
                     {
-                        Name    = "xmlns",
-                        Comment = "The namespace URI for the SVG element.",
+                        Name         = "xmlns",
+                        Comment      = "The namespace URI for the SVG element.",
                         DefaultValue = "http://www.w3.org/2000/svg"
                     },
 
@@ -1187,15 +1171,55 @@ public class ExportingCommonHtmlElements
                     },
                     new AttributeInfo
                     {
-                        Name    = "viewBox"
+                        Name = "viewBox"
                     },
                     new AttributeInfo
                     {
                         Name = "fill"
-                    },
+                    }
                 },
                 EnableCastFromString = false
             },
+            
+            new()
+            {
+                Tag = "form",
+                CreateClassAsPartial = true,
+                Attributes = new[]
+                {
+                    new AttributeInfo
+                    {
+                        Name    = "action",
+                        Comment = "Specifies the URL of the form's submit target."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "enctype",
+                        Comment = "Specifies the encoding type for the form's data."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "method",
+                        Comment = "Specifies the HTTP method for submitting the form's data (GET or POST)."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "name",
+                        Comment = "Specifies a name for the form for referencing it in JavaScript."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "novalidate",
+                        Comment = "Disables browser default validation of the form."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "target",
+                        Comment = "Specifies the target frame or window for the form's submission."
+                    }
+                },
+                EnableCastFromString = false
+            }
         };
 
         var list = new List<string>
@@ -1234,6 +1258,7 @@ public class ExportingCommonHtmlElements
                     {
                         partDefaultValueAssignment = $" = \"{attribute.DefaultValue}\";";
                     }
+
                     list.Add("    [ReactProp]");
                     list.Add($"    public {attribute.Type} {CamelCase(attribute.Name)} {{ get; set; }}{partDefaultValueAssignment}");
                     list.Add(Empty);
@@ -1261,16 +1286,14 @@ public class ExportingCommonHtmlElements
             list.Add(Empty);
             addComment();
             list.Add($"    public {item.Tag}(Style style) : base(style) {{ }}");
-            
-            
+
             list.Add(Empty);
             addComment();
             list.Add($"    public {item.Tag}(StyleModifier[] styleModifiers) : base(styleModifiers) {{ }}");
-            
-            
+
             list.Add(Empty);
             list.Add($"    public static HtmlElementModifier Modify(Action<{item.Tag}> modifyAction) => CreateHtmlElementModifier(modifyAction);");
-            
+
             if (item.Attributes is not null)
             {
                 foreach (var attribute in item.Attributes)
@@ -1283,12 +1306,11 @@ public class ExportingCommonHtmlElements
                         list.Add($"{padding}///     {attribute.Comment}");
                         list.Add($"{padding}/// </summary>");
                     }
-                   
+
                     list.Add($"    public static HtmlElementModifier {UpperCaseFirstChar(CamelCase(attribute.Name))}({attribute.Type} value) => Modify(x => x.{CamelCase(attribute.Name)} = value);");
                     list.Add(Empty);
                 }
             }
-            
 
             list.Add("}");
 
@@ -1325,7 +1347,7 @@ public class ExportingCommonHtmlElements
 
             return str;
         }
-        
+
         static string UpperCaseFirstChar(string str)
         {
             return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
@@ -1335,9 +1357,9 @@ public class ExportingCommonHtmlElements
     class AttributeInfo
     {
         public string Comment { get; init; }
+        public string DefaultValue { get; set; }
         public string Name { get; init; }
         public string Type { get; init; } = "string";
-        public string DefaultValue { get; set; }
     }
 
     class TagInfo
