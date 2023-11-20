@@ -3396,7 +3396,7 @@ public sealed partial class textarea : HtmlElement
     ///     Specifies the number of visible lines in the textarea element.
     /// </summary>
     [ReactProp]
-    public string rows { get; set; }
+    public UnionProp<string,int?> rows { get; set; }
 
     /// <summary>
     ///     Specifies a short hint that describes the expected value of the textarea element.
@@ -3498,7 +3498,7 @@ public sealed partial class textarea : HtmlElement
     /// <br/>
     ///     Specifies the number of visible lines in the textarea element.
     /// </summary>
-    public static HtmlElementModifier Rows(string value) => Modify(x => x.rows = value);
+    public static HtmlElementModifier Rows(UnionProp<string,int?> value) => Modify(x => x.rows = value);
 
     /// <summary>
     ///     placeholder = <paramref name="value"/>

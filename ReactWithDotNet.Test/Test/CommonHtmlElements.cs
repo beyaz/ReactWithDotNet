@@ -1252,7 +1252,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "rows",
-                        Comment = "Specifies the number of visible lines in the textarea element."
+                        Comment = "Specifies the number of visible lines in the textarea element.",
+                        Type    = "UnionProp<string,int?>"
                     },
                     new AttributeInfo
                     {
