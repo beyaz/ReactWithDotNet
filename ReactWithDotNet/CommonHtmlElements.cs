@@ -39,11 +39,65 @@ public sealed class article : HtmlElement
 
 public sealed class button : HtmlElement
 {
+    /// <summary>
+    ///     Specifies the type of button. button, reset, submit
+    /// </summary>
     [ReactProp]
     public string type { get; set; }
 
+    /// <summary>
+    ///     Specifies an initial value for the button
+    /// </summary>
+    [ReactProp]
+    public string value { get; set; }
+
+    /// <summary>
+    ///     Specifies that the button should have input focus when the page loads. Only one element in a document can have this attribute.
+    /// </summary>
+    [ReactProp]
+    public string autofocus { get; set; }
+
+    /// <summary>
+    ///     Specifies that the button should be disabled. A disabled button cannot be clicked.
+    /// </summary>
     [ReactProp]
     public string disabled { get; set; }
+
+    /// <summary>
+    ///     Specifies the form that the button is associated with.
+    /// </summary>
+    [ReactProp]
+    public string form { get; set; }
+
+    /// <summary>
+    ///     Specifies the URL of the form action when the button is clicked.
+    /// </summary>
+    [ReactProp]
+    public string formaction { get; set; }
+
+    /// <summary>
+    ///     Specifies the form encoding method (e.g., application/x-www-form-urlencoded, multipart/form-data) when the button is clicked.
+    /// </summary>
+    [ReactProp]
+    public string formenctype { get; set; }
+
+    /// <summary>
+    ///     Specifies the form submission method (e.g., GET, POST) when the button is clicked.
+    /// </summary>
+    [ReactProp]
+    public string formmethod { get; set; }
+
+    /// <summary>
+    ///     Specifies that the form should not be validated before submission when the button is clicked.
+    /// </summary>
+    [ReactProp]
+    public string formnovalidate { get; set; }
+
+    /// <summary>
+    ///     Specifies a name for the button. The name attribute is used to reference form-data after the form has been submitted, or to reference the element in JavaScript.
+    /// </summary>
+    [ReactProp]
+    public string name { get; set; }
 
     public button() { }
 
@@ -54,9 +108,75 @@ public sealed class button : HtmlElement
     public button(StyleModifier[] styleModifiers) : base(styleModifiers) { }
 
     public static HtmlElementModifier Modify(Action<button> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     type = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the type of button. button, reset, submit
+    /// </summary>
     public static HtmlElementModifier Type(string value) => Modify(x => x.type = value);
 
+    /// <summary>
+    ///     value = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies an initial value for the button
+    /// </summary>
+    public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
+
+    /// <summary>
+    ///     autofocus = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the button should have input focus when the page loads. Only one element in a document can have this attribute.
+    /// </summary>
+    public static HtmlElementModifier Autofocus(string value) => Modify(x => x.autofocus = value);
+
+    /// <summary>
+    ///     disabled = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the button should be disabled. A disabled button cannot be clicked.
+    /// </summary>
     public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
+
+    /// <summary>
+    ///     form = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the form that the button is associated with.
+    /// </summary>
+    public static HtmlElementModifier Form(string value) => Modify(x => x.form = value);
+
+    /// <summary>
+    ///     formaction = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL of the form action when the button is clicked.
+    /// </summary>
+    public static HtmlElementModifier Formaction(string value) => Modify(x => x.formaction = value);
+
+    /// <summary>
+    ///     formenctype = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the form encoding method (e.g., application/x-www-form-urlencoded, multipart/form-data) when the button is clicked.
+    /// </summary>
+    public static HtmlElementModifier Formenctype(string value) => Modify(x => x.formenctype = value);
+
+    /// <summary>
+    ///     formmethod = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the form submission method (e.g., GET, POST) when the button is clicked.
+    /// </summary>
+    public static HtmlElementModifier Formmethod(string value) => Modify(x => x.formmethod = value);
+
+    /// <summary>
+    ///     formnovalidate = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the form should not be validated before submission when the button is clicked.
+    /// </summary>
+    public static HtmlElementModifier Formnovalidate(string value) => Modify(x => x.formnovalidate = value);
+
+    /// <summary>
+    ///     name = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies a name for the button. The name attribute is used to reference form-data after the form has been submitted, or to reference the element in JavaScript.
+    /// </summary>
+    public static HtmlElementModifier Name(string value) => Modify(x => x.name = value);
 
 }
 

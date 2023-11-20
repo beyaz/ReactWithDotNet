@@ -121,12 +121,6 @@ public abstract class HtmlElement : Element
     [ReactProp]
     public string contenteditable { get; set; }
     
-    
-    
-    
-    [ReactProp]
-    public bool? autofocus { get; set; }
-
     /// <summary>
     ///     Gets or sets the name of the class.
     /// </summary>
