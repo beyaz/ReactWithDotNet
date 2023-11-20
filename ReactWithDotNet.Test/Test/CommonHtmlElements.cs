@@ -1184,7 +1184,7 @@ public class ExportingCommonHtmlElements
             new()
             {
                 Tag = "form",
-                CreateClassAsPartial = true,
+                CreateClassAsPartial = false,
                 Attributes = new[]
                 {
                     new AttributeInfo

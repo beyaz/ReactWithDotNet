@@ -3274,3 +3274,107 @@ public sealed partial class svg : HtmlElement
 
 }
 
+public sealed class form : HtmlElement
+{
+    /// <summary>
+    ///     Specifies the URL of the page where the form data will be submitted.
+    /// </summary>
+    [ReactProp]
+    public string action { get; set; }
+
+    /// <summary>
+    ///     Specifies how the form data will be sent to the server. Possible values are 'get' and 'post'.
+    /// </summary>
+    [ReactProp]
+    public string method { get; set; }
+
+    /// <summary>
+    ///     Specifies the encoding type for form data. Possible values are 'application/x-www-form-urlencoded' and 'multipart/form-data'.
+    /// </summary>
+    [ReactProp]
+    public string enctype { get; set; }
+
+    /// <summary>
+    ///     Specifies the name of the frame where the form will be submitted. The default value is '_self', which means the form will be submitted in the current frame.
+    /// </summary>
+    [ReactProp]
+    public string target { get; set; }
+
+    /// <summary>
+    ///     Specifies a name for the form. This name is used to reference the form in JavaScript or to reference form data after a form is submitted.
+    /// </summary>
+    [ReactProp]
+    public string name { get; set; }
+
+    /// <summary>
+    ///     Disables form validation. This attribute is useful when you want to submit the form without validating the user input.
+    /// </summary>
+    [ReactProp]
+    public string novalidate { get; set; }
+
+    /// <summary>
+    ///     Specifies whether the browser should automatically fill in form fields based on the user's past input.
+    /// </summary>
+    [ReactProp]
+    public string autocomplete { get; set; }
+
+    public form() { }
+
+    public form(params IModifier[] modifiers) : base(modifiers) { }
+
+    public form(Style style) : base(style) { }
+
+    public form(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<form> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     action = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the URL of the page where the form data will be submitted.
+    /// </summary>
+    public static HtmlElementModifier Action(string value) => Modify(x => x.action = value);
+
+    /// <summary>
+    ///     method = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies how the form data will be sent to the server. Possible values are 'get' and 'post'.
+    /// </summary>
+    public static HtmlElementModifier Method(string value) => Modify(x => x.method = value);
+
+    /// <summary>
+    ///     enctype = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the encoding type for form data. Possible values are 'application/x-www-form-urlencoded' and 'multipart/form-data'.
+    /// </summary>
+    public static HtmlElementModifier Enctype(string value) => Modify(x => x.enctype = value);
+
+    /// <summary>
+    ///     target = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the name of the frame where the form will be submitted. The default value is '_self', which means the form will be submitted in the current frame.
+    /// </summary>
+    public static HtmlElementModifier Target(string value) => Modify(x => x.target = value);
+
+    /// <summary>
+    ///     name = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies a name for the form. This name is used to reference the form in JavaScript or to reference form data after a form is submitted.
+    /// </summary>
+    public static HtmlElementModifier Name(string value) => Modify(x => x.name = value);
+
+    /// <summary>
+    ///     novalidate = <paramref name="value"/>
+    /// <br/>
+    ///     Disables form validation. This attribute is useful when you want to submit the form without validating the user input.
+    /// </summary>
+    public static HtmlElementModifier Novalidate(string value) => Modify(x => x.novalidate = value);
+
+    /// <summary>
+    ///     autocomplete = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies whether the browser should automatically fill in form fields based on the user's past input.
+    /// </summary>
+    public static HtmlElementModifier Autocomplete(string value) => Modify(x => x.autocomplete = value);
+
+}
+

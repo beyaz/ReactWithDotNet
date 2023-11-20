@@ -263,19 +263,3 @@ public sealed class textarea : HtmlElement
 }
 
 
-public sealed class form : HtmlElement
-{
-    [ReactProp]
-    public string action { get; set; }
-    
-    [ReactProp]
-    public string method { get; set; }
-
-    public form()
-    {
-    }
-
-    public form(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-}
