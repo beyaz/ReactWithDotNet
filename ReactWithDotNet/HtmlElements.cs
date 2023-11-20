@@ -219,47 +219,37 @@ public sealed class link : HtmlElement
     public string referrerpolicy { get; set; }
 }
 
-public sealed class textarea : HtmlElement
+public sealed partial class textarea : HtmlElement
 {
-    public textarea()
-    {
-        
-    }
-    public textarea(params IModifier[] modifiers) : base(modifiers)
-    {
-    }
-    public textarea(StyleModifier[] styleModifiers)
-    {
-        style.Apply(styleModifiers);
-    }
+   
     
-    [ReactProp]
-    public int? cols { get; set; }
+    //[ReactProp]
+    //public int? cols { get; set; }
 
-    [ReactProp]
-    public string name { get; set; }
+    //[ReactProp]
+    //public string name { get; set; }
 
-    [ReactProp]
-    public string placeholder { get; set; }
+    //[ReactProp]
+    //public string placeholder { get; set; }
 
-    [ReactProp]
-    public bool? readOnly { get; set; }
+    //[ReactProp]
+    //public bool? readOnly { get; set; }
 
-    [ReactProp]
-    public int? rows { get; set; }
+    //[ReactProp]
+    //public int? rows { get; set; }
 
-    [ReactProp]
-    public string value { get; set; }
+    //[ReactProp]
+    //public string value { get; set; }
 
-    [ReactProp]
-    public string defaultValue { get; set; }
+    //[ReactProp]
+    //public string defaultValue { get; set; }
 
     [ReactProp]
     [ReactBind(targetProp = nameof(value), jsValueAccess = "e.target.value", eventName = "onChange")]
     public Expression<Func<string>> valueBind { get; set; }
     
-    [ReactProp]
-    public string disabled { get; set; }
+    //[ReactProp]
+    //public string disabled { get; set; }
 }
 
 

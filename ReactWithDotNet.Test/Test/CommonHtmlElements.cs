@@ -1307,6 +1307,14 @@ public class ExportingCommonHtmlElements
                     {
                         Name    = "defaultValue",
                         Comment = "A string. Specifies the initial value for a text area."
+                    },
+                    new AttributeInfo
+                    {
+                        Name    = "value"
+                    },
+                    new AttributeInfo
+                    {
+                        Name = "disabled"
                     }
                 },
                 EnableCastFromString = false

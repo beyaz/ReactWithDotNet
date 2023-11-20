@@ -3378,3 +3378,208 @@ public sealed class form : HtmlElement
 
 }
 
+public sealed partial class textarea : HtmlElement
+{
+    /// <summary>
+    ///     Specifies a name for the textarea element.
+    /// </summary>
+    [ReactProp]
+    public string name { get; set; }
+
+    /// <summary>
+    ///     Specifies the visible width of the textarea element in characters.
+    /// </summary>
+    [ReactProp]
+    public string cols { get; set; }
+
+    /// <summary>
+    ///     Specifies the number of visible lines in the textarea element.
+    /// </summary>
+    [ReactProp]
+    public string rows { get; set; }
+
+    /// <summary>
+    ///     Specifies a short hint that describes the expected value of the textarea element.
+    /// </summary>
+    [ReactProp]
+    public string placeholder { get; set; }
+
+    /// <summary>
+    ///     Disables user input in the textarea element.
+    /// </summary>
+    [ReactProp]
+    public string readOnly { get; set; }
+
+    /// <summary>
+    ///     Indicates that the textarea element must be filled out before the form is submitted.
+    /// </summary>
+    [ReactProp]
+    public string required { get; set; }
+
+    /// <summary>
+    ///     Automatically gives focus to the textarea element when the page loads.
+    /// </summary>
+    [ReactProp]
+    public string autofocus { get; set; }
+
+    /// <summary>
+    ///     Specifies that the user's browser should automatically complete the textarea element's value.
+    /// </summary>
+    [ReactProp]
+    public string autocomplete { get; set; }
+
+    /// <summary>
+    ///     Specifies the directory to use as the default value for the 'file' input type.
+    /// </summary>
+    [ReactProp]
+    public string dirname { get; set; }
+
+    /// <summary>
+    ///     Specifies the ID of the form that the textarea element belongs to.
+    /// </summary>
+    [ReactProp]
+    public string form { get; set; }
+
+    /// <summary>
+    ///     Specifies the maximum number of characters that can be entered into the textarea element.
+    /// </summary>
+    [ReactProp]
+    public string maxlength { get; set; }
+
+    /// <summary>
+    ///     Specifies the minimum number of characters that must be entered into the textarea element.
+    /// </summary>
+    [ReactProp]
+    public string minlength { get; set; }
+
+    /// <summary>
+    ///     Specifies whether the text in the textarea element should wrap to the next line when it reaches the end of the visible area.
+    /// </summary>
+    [ReactProp]
+    public string wrap { get; set; }
+
+    /// <summary>
+    ///     A string. Specifies the initial value for a text area.
+    /// </summary>
+    [ReactProp]
+    public string defaultValue { get; set; }
+
+    [ReactProp]
+    public string value { get; set; }
+
+    [ReactProp]
+    public string disabled { get; set; }
+
+    public textarea() { }
+
+    public textarea(params IModifier[] modifiers) : base(modifiers) { }
+
+    public textarea(Style style) : base(style) { }
+
+    public textarea(StyleModifier[] styleModifiers) : base(styleModifiers) { }
+
+    public static HtmlElementModifier Modify(Action<textarea> modifyAction) => CreateHtmlElementModifier(modifyAction);
+    /// <summary>
+    ///     name = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies a name for the textarea element.
+    /// </summary>
+    public static HtmlElementModifier Name(string value) => Modify(x => x.name = value);
+
+    /// <summary>
+    ///     cols = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the visible width of the textarea element in characters.
+    /// </summary>
+    public static HtmlElementModifier Cols(string value) => Modify(x => x.cols = value);
+
+    /// <summary>
+    ///     rows = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the number of visible lines in the textarea element.
+    /// </summary>
+    public static HtmlElementModifier Rows(string value) => Modify(x => x.rows = value);
+
+    /// <summary>
+    ///     placeholder = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies a short hint that describes the expected value of the textarea element.
+    /// </summary>
+    public static HtmlElementModifier Placeholder(string value) => Modify(x => x.placeholder = value);
+
+    /// <summary>
+    ///     readOnly = <paramref name="value"/>
+    /// <br/>
+    ///     Disables user input in the textarea element.
+    /// </summary>
+    public static HtmlElementModifier ReadOnly(string value) => Modify(x => x.readOnly = value);
+
+    /// <summary>
+    ///     required = <paramref name="value"/>
+    /// <br/>
+    ///     Indicates that the textarea element must be filled out before the form is submitted.
+    /// </summary>
+    public static HtmlElementModifier Required(string value) => Modify(x => x.required = value);
+
+    /// <summary>
+    ///     autofocus = <paramref name="value"/>
+    /// <br/>
+    ///     Automatically gives focus to the textarea element when the page loads.
+    /// </summary>
+    public static HtmlElementModifier Autofocus(string value) => Modify(x => x.autofocus = value);
+
+    /// <summary>
+    ///     autocomplete = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies that the user's browser should automatically complete the textarea element's value.
+    /// </summary>
+    public static HtmlElementModifier Autocomplete(string value) => Modify(x => x.autocomplete = value);
+
+    /// <summary>
+    ///     dirname = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the directory to use as the default value for the 'file' input type.
+    /// </summary>
+    public static HtmlElementModifier Dirname(string value) => Modify(x => x.dirname = value);
+
+    /// <summary>
+    ///     form = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the ID of the form that the textarea element belongs to.
+    /// </summary>
+    public static HtmlElementModifier Form(string value) => Modify(x => x.form = value);
+
+    /// <summary>
+    ///     maxlength = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the maximum number of characters that can be entered into the textarea element.
+    /// </summary>
+    public static HtmlElementModifier Maxlength(string value) => Modify(x => x.maxlength = value);
+
+    /// <summary>
+    ///     minlength = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies the minimum number of characters that must be entered into the textarea element.
+    /// </summary>
+    public static HtmlElementModifier Minlength(string value) => Modify(x => x.minlength = value);
+
+    /// <summary>
+    ///     wrap = <paramref name="value"/>
+    /// <br/>
+    ///     Specifies whether the text in the textarea element should wrap to the next line when it reaches the end of the visible area.
+    /// </summary>
+    public static HtmlElementModifier Wrap(string value) => Modify(x => x.wrap = value);
+
+    /// <summary>
+    ///     defaultValue = <paramref name="value"/>
+    /// <br/>
+    ///     A string. Specifies the initial value for a text area.
+    /// </summary>
+    public static HtmlElementModifier DefaultValue(string value) => Modify(x => x.defaultValue = value);
+
+    public static HtmlElementModifier Value(string value) => Modify(x => x.value = value);
+
+    public static HtmlElementModifier Disabled(string value) => Modify(x => x.disabled = value);
+
+}
+
