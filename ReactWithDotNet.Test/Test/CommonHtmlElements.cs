@@ -1190,32 +1190,43 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "action",
-                        Comment = "Specifies the URL of the form's submit target."
+                        Comment = "Specifies the URL of the page where the form data will be submitted."
                     },
-                    new AttributeInfo
-                    {
-                        Name    = "enctype",
-                        Comment = "Specifies the encoding type for the form's data."
-                    },
+
                     new AttributeInfo
                     {
                         Name    = "method",
-                        Comment = "Specifies the HTTP method for submitting the form's data (GET or POST)."
+                        Comment = "Specifies how the form data will be sent to the server. Possible values are 'get' and 'post'."
                     },
+
                     new AttributeInfo
                     {
-                        Name    = "name",
-                        Comment = "Specifies a name for the form for referencing it in JavaScript."
+                        Name    = "enctype",
+                        Comment = "Specifies the encoding type for form data. Possible values are 'application/x-www-form-urlencoded' and 'multipart/form-data'."
                     },
-                    new AttributeInfo
-                    {
-                        Name    = "novalidate",
-                        Comment = "Disables browser default validation of the form."
-                    },
+
                     new AttributeInfo
                     {
                         Name    = "target",
-                        Comment = "Specifies the target frame or window for the form's submission."
+                        Comment = "Specifies the name of the frame where the form will be submitted. The default value is '_self', which means the form will be submitted in the current frame."
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "name",
+                        Comment = "Specifies a name for the form. This name is used to reference the form in JavaScript or to reference form data after a form is submitted."
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "novalidate",
+                        Comment = "Disables form validation. This attribute is useful when you want to submit the form without validating the user input."
+                    },
+
+                    new AttributeInfo
+                    {
+                        Name    = "autocomplete",
+                        Comment = "Specifies whether the browser should automatically fill in form fields based on the user's past input."
                     }
                 },
                 EnableCastFromString = false
