@@ -1,10 +1,12 @@
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
 [Serializable]
-public sealed class Union<A,B>
+[DebuggerDisplay("{value}")]
+public sealed class UnionStringOrInt32
 {
     internal readonly object value;
     
@@ -13,71 +15,95 @@ public sealed class Union<A,B>
         return value?.ToString();
     }
 
-    internal Union(object value)
+
+    //public override int GetHashCode()
+    //{
+
+    //    return value?.GetHashCode();
+    //}
+
+    //static bool Equals<T1,T2>(Nullable<T> n1, Nullable<T> n2) where T : struct
+    //{
+    //    if (n1.HasValue)
+    //    {
+    //        if (n2.HasValue) return EqualityComparer<T>.Default.Equals(n1.value, n2.value);
+    //        return false;
+    //    }
+    //    if (n2.HasValue) return false;
+    //    return true;
+    //}
+
+    //public override bool Equals(object obj)
+    //{
+    //    if (obj is null)
+    //    {
+    //        if (value is null)
+    //        {
+    //            return true;
+    //        }
+
+    //        return false;
+    //    }
+
+    //    if (value is null)
+    //    {
+    //        return false;
+    //    }
+    //    if (obj is Union<A, B> union)
+    //    {
+    //        return union.value?.Equals(value) == true;
+    //    }
+
+    //    return value?.Equals(obj) == true;
+    //}
+
+    internal UnionStringOrInt32(object value)
     {
         this.value = value;
     }
 
-    public static implicit operator Union<A,B>(A a)
+    public static implicit operator UnionStringOrInt32(string a)
     {
-        return new Union<A, B>(a);
+        return new UnionStringOrInt32(a);
     }
-    public static implicit operator Union<A,B>(B b)
+    public static implicit operator UnionStringOrInt32(int b)
     {
-        return new Union<A, B>(b);
-    }
-
-    public static implicit operator A(Union<A, B> union)
-    {
-        return (A)Convert.ChangeType(union.value, typeof(A));
+        return new UnionStringOrInt32(b);
     }
 
-    public static implicit operator B(Union<A, B> union)
+    public static implicit operator string(UnionStringOrInt32 union)
     {
-        return (B)Convert.ChangeType(union.value, typeof(B));
+        return union.value?.ToString();
+    }
+
+    public static implicit operator int(UnionStringOrInt32 union)
+    {
+        return Convert.ToInt32(union.value);
     }
 }
 
 partial class JsonSerializationOptionHelper
 {
-    class UnionConverter<T1, T2> : JsonConverter<Union<T1, T2>>
+    class UnionStringOrInt32Converter : JsonConverter<UnionStringOrInt32>
     {
-        public override Union<T1, T2> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override UnionStringOrInt32 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (!reader.Read())
+            if (reader.TokenType == JsonTokenType.String)
             {
-                throw new JsonException();
+                return reader.GetString();
             }
-
-            return new Union<T1, T2>(reader.GetString());
-        }
-
-        public override void Write(Utf8JsonWriter writer, Union<T1, T2> value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value.value, options);
-        }
-    }
-
-   
-    class UnionFactory : JsonConverterFactory
-    {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            return typeToConvert .IsGenericType && typeToConvert.GetGenericTypeDefinition() == typeof(Union<,>);
-        }
-
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            var genericArguments = typeToConvert.GetGenericArguments();
-
-            var converterType = genericArguments.Length switch
+                
+            if (reader.TokenType == JsonTokenType.Number)
             {
-                2 => typeof(UnionConverter<,>).MakeGenericType(genericArguments),
+                return reader.GetInt32();
+            }
+            
+            throw new JsonException();
+        }
 
-                // And add other cases as needed
-                _ => throw new NotSupportedException()
-            };
-            return (JsonConverter)Activator.CreateInstance(converterType);
+        public override void Write(Utf8JsonWriter writer, UnionStringOrInt32 union, JsonSerializerOptions options)
+        {
+            JsonSerializer.Serialize(writer, union.value, options);
         }
     }
 }

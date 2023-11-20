@@ -105,4 +105,41 @@ public class SerializationTests
         public List<A> Children { get; set; }
         public string Prop0 { get; set; }
     }
+    
+    
+    [TestMethod]
+    public void TupleSerialize()
+    {
+        UnionStringOrInt32 a = "xyZ";
+
+        var json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
+
+        json.Should().Be("\"xyZ\"");
+        
+        var a2 = DeserializeJsonBySystemTextJson<UnionStringOrInt32>(json);
+        
+        (a2 == "xyZ").Should().BeTrue();
+        
+        
+        a = 65;
+
+        json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
+
+        json.Should().Be("65");
+        
+        a2 = DeserializeJsonBySystemTextJson<UnionStringOrInt32>(json);
+        
+        (a2 == 65).Should().BeTrue();
+        
+        
+        a = null;
+
+        json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
+
+        json.Should().Be("null");
+        
+        a2 = DeserializeJsonBySystemTextJson<UnionStringOrInt32>(json);
+        
+        (a2 == null).Should().BeTrue();
+    }
 }
