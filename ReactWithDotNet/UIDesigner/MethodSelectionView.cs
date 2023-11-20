@@ -4,9 +4,10 @@ namespace ReactWithDotNet.UIDesigner;
 
 class MetadataNode
 {
-    List<MetadataNode> children;
+    internal List<MetadataNode> children;
+
+    public IReadOnlyList<MetadataNode> Children => children;
     
-    public List<MetadataNode> Children { get; set; }
     public bool IsClass { get; set; }
     public bool IsMethod { get; set; }
     public bool IsNamespace { get; set; }

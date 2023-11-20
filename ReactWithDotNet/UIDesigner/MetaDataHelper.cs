@@ -34,7 +34,7 @@ static class MetadataHelper
 
     static void AddChild(this MetadataNode node, MetadataNode child)
     {
-        (node.Children ??= new List<MetadataNode>()).Add(child);
+        (node.children ??= new List<MetadataNode>()).Add(child);
     }
     
     static bool HasChild(this MetadataNode node)
@@ -66,7 +66,7 @@ static class MetadataHelper
                         NamespaceReference = namespaceName,
                         IsNamespace        = true,
                         label              = namespaceName,
-                        Children = classNodes
+                        children = classNodes
                     });
                 }
             }
