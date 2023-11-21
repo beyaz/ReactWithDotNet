@@ -53,7 +53,7 @@ class MethodSelectionView : Component
     {
         var nodes = GetNodes().ToList();
 
-        return new div(Height(400), MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
+        return new div(Height(250), MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
         {
             AsTreeView(nodes)
         };

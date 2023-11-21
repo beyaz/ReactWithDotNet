@@ -145,7 +145,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 }
             },
 
-            new FlexColumn(HeightMaximized)
+            new FlexColumn(FlexGrow(1))
             {
                 // h e a d e r
                 new FlexRow(Color("#6c757d"), CursorPointer, TextAlignCenter)
