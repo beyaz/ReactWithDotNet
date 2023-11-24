@@ -526,6 +526,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 var propertyInfo = TryFindProperty(attribute.GetTagName(), attribute.GetName());
                 if (propertyInfo is not null)
                 {
+                    if (smartMode)
+                    {
+                        return [ToModifier(attribute)];
+                    }
+                    
                     return new List<string> { $"{propertyInfo.Name} = \"{attribute.Value}\"" };
                 }
 
