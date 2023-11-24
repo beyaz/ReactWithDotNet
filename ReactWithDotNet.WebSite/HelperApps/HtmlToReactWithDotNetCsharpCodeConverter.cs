@@ -495,12 +495,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return false;
             }
 
-            if (htmlNode.Attributes.Count <= 3)
+            if (htmlNode.Attributes.Count > 3)
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         static bool canStyleExportInOneLine(Style style)
@@ -570,6 +570,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             if (canBeExportInOneLine())
             {
+                if (smartMode && modifiers.Count > 0)
+                {
+                    return [$"new {htmlNodeName} {{ {string.Join(", ", modifiers)} }}"];
+                }
+                
                 var sb = new StringBuilder();
                 sb.Append($"new {htmlNodeName}");
 
@@ -581,7 +586,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         sb.ToString()
                     };
                 }
-
+                
                 if (modifiers.Count > 0)
                 {
                     sb.Append("(");
