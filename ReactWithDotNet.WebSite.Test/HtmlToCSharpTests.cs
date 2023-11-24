@@ -31,7 +31,14 @@ public class HtmlToCSharpTests
                """,
 
                """
-               new a { Aria("hidden", "true"), Data("testid", "AcUnitIcon"), TargetBlank, BorderRadius(12), Color(rgb(28, 32, 37)) }
+               new a 
+               { 
+                   Aria("hidden", "true"),
+                   Data("testid", "AcUnitIcon"),
+                   TargetBlank,
+                   BorderRadius(12),
+                   Color(rgb(28, 32, 37))
+               }
                """);
         
         static void Assert(string html, string expected)
