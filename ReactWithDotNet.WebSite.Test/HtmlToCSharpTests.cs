@@ -41,6 +41,24 @@ public class HtmlToCSharpTests
                }
                """);
         
+        Assert("""
+               <a target='_blank'  aria-hidden="true"   data-testid="AcUnitIcon"  style = "color:rgb(28, 32, 37);border-radius:12px;">
+               xyz
+               </a>
+               """,
+
+               """
+               new a
+               {
+                   "xyz",
+                   TargetBlank,
+                   Aria("hidden", "true"),
+                   Data("testid", "AcUnitIcon"),
+                   BorderRadius(12),
+                   Color(rgb(28, 32, 37))
+               }
+               """);
+        
         static void Assert(string html, string expected)
         {
             var current = HtmlToCSharp(html, true);
