@@ -4,8 +4,27 @@ using static ReactWithDotNet.WebSite.HelperApps.HtmlToReactWithDotNetCsharpCodeC
 namespace ReactWithDotNet.WebSite.Test;
 
 [TestClass]
-public class UnitTest1
+public class HtmlToCSharpTests
 {
+    [TestMethod]
+    public void _1()
+    {
+        Assert("""
+               <a target='_blank' />
+               """,
+
+               """
+               new a { target = "_blank" }
+               """);
+
+
+        
+        static void Assert(string html, string expected)
+        {
+            HtmlToCSharp(html, true).Should().Be(expected);
+        }
+    }
+    
     [TestMethod]
     public void _0()
     {
@@ -60,12 +79,13 @@ public class UnitTest1
                """
                new FlexRow(Aria("hidden", "true"), Data("testid", "AcUnitIcon")) { style = { color = "blue" } }
                """);
-    }
-
-
-    static void Assert(string html, string expected)
-    {
         
-        HtmlToCSharp(html,false).Should().Be(expected);
+        static void Assert(string html, string expected)
+        {
+            HtmlToCSharp(html,false).Should().Be(expected);
+        }
     }
+
+
+    
 }
