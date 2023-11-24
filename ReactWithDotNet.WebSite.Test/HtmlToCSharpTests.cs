@@ -25,6 +25,15 @@ public class HtmlToCSharpTests
                new a { TargetBlank, BorderRadius(12), Color(rgb(28, 32, 37)) }
                """);
         
+        
+        Assert("""
+               <a target='_blank'  aria-hidden="true"   data-testid="AcUnitIcon"  style = "color:rgb(28, 32, 37);border-radius:12px;"/>
+               """,
+
+               """
+               new a { Aria("hidden", "true"), Data("testid", "AcUnitIcon"), TargetBlank, BorderRadius(12), Color(rgb(28, 32, 37)) }
+               """);
+        
         static void Assert(string html, string expected)
         {
             var current = HtmlToCSharp(html, true);
