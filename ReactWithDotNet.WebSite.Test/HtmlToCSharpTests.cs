@@ -17,7 +17,13 @@ public class HtmlToCSharpTests
                new a { TargetBlank }
                """);
 
+        Assert("""
+               <a target='_blank' style = "color:rgb(28, 32, 37);border-radius:12px;"/>
+               """,
 
+               """
+               new a { TargetBlank, BorderRadius(12), Color(rgb(28, 32, 37)) } }
+               """);
         
         static void Assert(string html, string expected)
         {
