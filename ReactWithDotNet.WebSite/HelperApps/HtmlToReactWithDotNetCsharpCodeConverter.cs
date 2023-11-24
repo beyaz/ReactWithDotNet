@@ -702,6 +702,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string value)
     {
         var success = (string modifierCode) => (true, modifierCode);
+
+        value ??= string.Empty;
         
         if (name == "target" && value == "_blank")
         {
@@ -715,8 +717,19 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success(modifierFullName);
         }
 
-        if (typeof(Mixin).GetMethod(CamelCase(name), new[] { typeof(string) }) is not null)
+        if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(string)] ) is not null)
         {
+            if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(double)] ) is not null && 
+                value.EndsWith("px",StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return success($"{CamelCase(name)}({value.RemoveFromEnd("px")})");
+            }
+
+            if (value.StartsWith("rgb(", StringComparison.OrdinalIgnoreCase))
+            {
+                return success($"{CamelCase(name)}({value})");
+            }
+            
             return success($"{CamelCase(name)}(\"{value}\")");
         }
 

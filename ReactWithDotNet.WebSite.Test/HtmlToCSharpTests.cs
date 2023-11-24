@@ -22,7 +22,7 @@ public class HtmlToCSharpTests
                """,
 
                """
-               new a { TargetBlank, BorderRadius(12), Color(rgb(28, 32, 37)) } }
+               new a { TargetBlank, BorderRadius(12), Color(rgb(28, 32, 37)) }
                """);
         
         static void Assert(string html, string expected)
