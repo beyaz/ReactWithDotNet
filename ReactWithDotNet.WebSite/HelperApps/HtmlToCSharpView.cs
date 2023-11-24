@@ -44,7 +44,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             SmartMode = true
         };
 
-        OnHtmlValueChanged(state.HtmlText);
+        CalculateOutput();
 
         return Task.CompletedTask;
     }
@@ -184,6 +184,11 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             return;
         }
 
+        CalculateOutput();
+    }
+
+    void CalculateOutput()
+    {
         try
         {
             var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, state.SmartMode);
