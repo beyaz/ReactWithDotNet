@@ -718,8 +718,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     
     static (bool success, string modifierCode) TryConvertToModifier(HtmlAttribute htmlAttribute)
     {
+        
         var name = htmlAttribute.GetName();
         var value = htmlAttribute.Value;
+        var tagName = htmlAttribute.OwnerNode.Name;
         
         var success = (string modifierCode) => (true, modifierCode);
 
@@ -730,17 +732,18 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success("TargetBlank");
         }
 
-        if (name == "focusable" && htmlAttribute.OwnerNode.Name == "svg")
+        
+        if (name == "focusable" && tagName == "svg")
         {
             return success($"svg.Focusable(\"{value}\")");
         }
 
-        if (name == "type" && htmlAttribute.OwnerNode.Name == "button")
+        if (name == "type" && tagName == "button")
         {
             return success($"button.Type(\"{value}\")");
         }
 
-        if (name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && htmlAttribute.OwnerNode.Name == "svg")
+        if (name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && tagName == "svg")
         {
             return success($"ViewBox(\"{value}\")");
         }
@@ -757,14 +760,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success($"{CamelCase(name)}(\"{value}\")");
         }
 
-        var propertyInfo = TryFindProperty(htmlAttribute.GetTagName(), name);
+        var propertyInfo = TryFindProperty(tagName, name);
         if (propertyInfo is not null)
         {
             if (propertyInfo.PropertyType == typeof(double?))
             {
                 if (double.TryParse(value, out var valueAsDouble))
                 {
-                    return success($"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})");
+                    return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})");
                 }
             }
 
@@ -772,14 +775,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (int.TryParse(value, out var valueAsInt32))
                 {
-                    return success($"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})");
+                    return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})");
                 }
             }
 
-            return success($"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{value}\")");
+            return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{value}\")");
         }
 
-        return (success: false, modifierCode:$"null/* {htmlAttribute.GetTagName()}.{name} = \"{value}\"*/");
+        return (success: false, modifierCode:$"null/* {tagName}.{name} = \"{value}\"*/");
 
         static string UpperCaseFirstChar(string str)
         {
