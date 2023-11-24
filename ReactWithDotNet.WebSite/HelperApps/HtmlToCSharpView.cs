@@ -109,6 +109,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             onChange = e =>
             {
                 state.SmartMode = Convert.ToBoolean(e.target.value);
+                CalculateOutput();
                 return Task.CompletedTask;
             }
         };
