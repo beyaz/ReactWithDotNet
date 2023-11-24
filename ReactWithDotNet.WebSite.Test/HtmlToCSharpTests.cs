@@ -59,6 +59,16 @@ public class HtmlToCSharpTests
                }
                """);
         
+        Assert("""
+               <div aria-hidden="true"   data-testid="AcUnitIcon"  style = "display: flex; flexDirection: row; color: blue;">
+
+               </div>
+               """,
+
+               """
+               new FlexRow { Aria("hidden", "true"), Data("testid", "AcUnitIcon"), Color("blue") }
+               """);
+        
         static void Assert(string html, string expected)
         {
             var current = HtmlToCSharp(html, true);
