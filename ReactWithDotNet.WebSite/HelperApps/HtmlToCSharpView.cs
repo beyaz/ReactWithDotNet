@@ -169,7 +169,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         try
         {
-            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText);
+            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, false);
 
             var sb = new StringBuilder();
             sb.AppendLine("using ReactWithDotNet;");

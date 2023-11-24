@@ -66,6 +66,6 @@ public class UnitTest1
     static void Assert(string html, string expected)
     {
         
-        HtmlToCSharp(html).Should().Be(expected);
+        HtmlToCSharp(html,false).Should().Be(expected);
     }
 }

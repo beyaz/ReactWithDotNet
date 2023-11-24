@@ -20,7 +20,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         { "preserveaspectratio", "preserveAspectRatio" }
     };
 
-    public static string HtmlToCSharp(string htmlRootNode)
+    public static string HtmlToCSharp(string htmlRootNode, bool smartMode)
     {
         if (string.IsNullOrWhiteSpace(htmlRootNode))
         {
@@ -31,7 +31,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         document.LoadHtml(htmlRootNode.Trim());
 
-        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild));
+        return ToCSharpCode(ToCSharpCode(document.DocumentNode.FirstChild,smartMode));
     }
 
     static string CamelCase(string str)
@@ -236,7 +236,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return sb.ToString().Trim();
     }
 
-    static List<string> ToCSharpCode(HtmlNode htmlNode)
+    static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode)
     {
         var modifiers = new List<string>();
 
@@ -660,7 +660,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 "{"
             };
 
-            foreach (var items in htmlNode.ChildNodes.Select(ToCSharpCode))
+            foreach (var items in htmlNode.ChildNodes.Select(x=>ToCSharpCode(x,smartMode)))
             {
                 if (items.Count > 0)
                 {
