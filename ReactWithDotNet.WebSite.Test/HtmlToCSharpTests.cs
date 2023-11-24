@@ -51,9 +51,9 @@ public class HtmlToCSharpTests
                new a
                {
                    "xyz",
-                   TargetBlank,
                    Aria("hidden", "true"),
                    Data("testid", "AcUnitIcon"),
+                   TargetBlank,
                    BorderRadius(12),
                    Color(rgb(28, 32, 37))
                }

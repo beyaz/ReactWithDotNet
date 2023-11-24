@@ -359,7 +359,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     var text = htmlNode.ChildNodes[0].InnerText.Trim();
                     if (string.IsNullOrWhiteSpace(text) is false)
                     {
-                        htmlNode.Attributes.Insert(0, "text", text);
+                        if (smartMode)
+                        {
+                            modifiers.Insert(0, '"' + text + '"');
+                        }
+                        else
+                        {
+                            htmlNode.Attributes.Insert(0, "text", text);    
+                        }
+                        
                     }
 
                     htmlNode.ChildNodes.RemoveAt(0);
