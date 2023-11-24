@@ -11,6 +11,7 @@ class HtmlToCSharpViewModel
     public int EditCount { get; set; }
     public string HtmlText { get; set; }
     public string StatusMessage { get; set; }
+    public bool SmartMode { get; set; }
 }
 
 class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
@@ -38,7 +39,9 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         </div>
     </div>
 </div>
-"
+",
+            
+            SmartMode = true
         };
 
         OnHtmlValueChanged(state.HtmlText);
@@ -75,8 +78,6 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             }
         };
 
-        
-
         var csharpEditor = new Editor
         {
             valueBind                = ()=>state.CSharpCode,
@@ -100,6 +101,18 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             style    = { position = "fixed", zIndex = "5", bottom = "25px", right = "25px", display = state.StatusMessage is null ? "none" : "" }
         };
 
+        var smartModeEditor = new input
+        {
+            type     = "checkbox",
+            value    = (!state.SmartMode).ToString(),
+            @checked = state.SmartMode,
+            onChange = e =>
+            {
+                state.SmartMode = Convert.ToBoolean(e.target.value);
+                return Task.CompletedTask;
+            }
+        };
+        
         return new FlexColumn
         {
             new style{ text = @"
@@ -114,6 +127,10 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             {
                 "Html to ReactWithDotNet",
                 (small)" ( paste any html text to left panel )"
+            },
+            new FlexRow
+            {
+                "SmartMode", smartModeEditor
             },
             new FlexRow(WidthHeightMaximized, BorderForPaper, BorderRadiusForPaper)
             {
@@ -169,7 +186,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 
         try
         {
-            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, false);
+            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, state.SmartMode);
 
             var sb = new StringBuilder();
             sb.AppendLine("using ReactWithDotNet;");
