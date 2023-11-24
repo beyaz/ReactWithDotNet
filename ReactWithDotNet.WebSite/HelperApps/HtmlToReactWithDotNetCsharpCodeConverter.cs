@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 using HtmlAgilityPack;
 using PropertyInfo = System.Reflection.PropertyInfo;
 
@@ -500,6 +501,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     if (canStyleExportInOneLine(style))
                     {
+                        if (smartMode)
+                        {
+                            return [string.Join(", ",style.ToDictionary().Select(p=>TryConvertStyleValuePairToModifier(p.Key,p.Value)).Where(x=>x.success).Select(x=>x.modifierCode))];
+                        }
+                        
                         return new List<string> { $"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}" };
                     }
 
@@ -686,6 +692,25 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
     }
 
+    static (bool success, string modifierCode) TryConvertStyleValuePairToModifier(string key, string value)
+    {
+        var success = (string modifierCode) => (true, modifierCode);
+        
+        var modifierFullName = $"{CamelCase(key)}{CamelCase(value)}";
+
+        if (typeof(Style).GetProperty(modifierFullName, BindingFlags.Static| BindingFlags.Public) is not null)
+        {
+            return success(modifierFullName);
+        }
+        
+        if (typeof(Style).GetMethod(CamelCase(key), new[] { typeof(string) }) is not null)
+        {
+            return success($"{CamelCase(key)}(\"{value}\")");
+        }
+
+        return default;
+    }
+    
     static string ToModifier(HtmlAttribute htmlAttribute)
     {
         return TryConvertToModifier(htmlAttribute).modifierCode;
