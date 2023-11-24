@@ -688,38 +688,46 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static string ToModifier(HtmlAttribute htmlAttribute)
     {
+        return TryConvertToModifier(htmlAttribute).modifierCode;
+    }
+    
+    static (bool success, string modifierCode) TryConvertToModifier(HtmlAttribute htmlAttribute)
+    {
         var attributeName = htmlAttribute.GetName();
+
+        var success = (string modifierCode) => (true, modifierCode);
+        
 
         if (attributeName == "target" && htmlAttribute.Value == "_blank")
         {
-            return "TargetBlank";
+            return success("TargetBlank");
         }
 
         if (attributeName == "focusable" && htmlAttribute.OwnerNode.Name == "svg")
         {
-            return $"svg.Focusable(\"{htmlAttribute.Value}\")";
+            return success($"svg.Focusable(\"{htmlAttribute.Value}\")");
         }
 
         if (attributeName == "type" && htmlAttribute.OwnerNode.Name == "button")
         {
-            return $"button.Type(\"{htmlAttribute.Value}\")";
+            return success($"button.Type(\"{htmlAttribute.Value}\")");
         }
 
         if (attributeName.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && htmlAttribute.OwnerNode.Name == "svg")
         {
-            return $"ViewBox(\"{htmlAttribute.Value}\")";
+            return success($"ViewBox(\"{htmlAttribute.Value}\")");
         }
 
         var modifierFullName = $"{CamelCase(attributeName)}{CamelCase(htmlAttribute.Value)}";
 
         if (typeof(Mixin).GetProperty(modifierFullName) is not null)
         {
-            return modifierFullName;
+            return success(modifierFullName);
         }
 
         if (typeof(Mixin).GetMethod(CamelCase(attributeName), new[] { typeof(string) }) is not null)
         {
-            return $"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")";
+            return success($"{CamelCase(attributeName)}(\"{htmlAttribute.Value}\")");
         }
 
         var propertyInfo = TryFindProperty(htmlAttribute.GetTagName(), attributeName);
@@ -729,7 +737,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (double.TryParse(htmlAttribute.Value, out var valueAsDouble))
                 {
-                    return $"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})";
+                    return success($"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})");
                 }
             }
 
@@ -737,14 +745,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             {
                 if (int.TryParse(htmlAttribute.Value, out var valueAsInt32))
                 {
-                    return $"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})";
+                    return success($"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsInt32})");
                 }
             }
 
-            return $"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{htmlAttribute.Value}\")";
+            return success($"{htmlAttribute.GetTagName()}.{UpperCaseFirstChar(propertyInfo.Name)}(\"{htmlAttribute.Value}\")");
         }
 
-        return $"null/* {htmlAttribute.GetTagName()}.{attributeName} = \"{htmlAttribute.Value}\"*/";
+        return (success: false, modifierCode:$"null/* {htmlAttribute.GetTagName()}.{attributeName} = \"{htmlAttribute.Value}\"*/");
 
         static string UpperCaseFirstChar(string str)
         {
