@@ -503,7 +503,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     {
                         if (smartMode)
                         {
-                            return [string.Join(", ",style.ToDictionary().Select(p=>TryConvertStyleValuePairToModifier(p.Key,p.Value)).Where(x=>x.success).Select(x=>x.modifierCode))];
+                            return [string.Join(", ",style.ToDictionary().Select(p=>TryConvertToModifier_From_Mixin_Extension(p.Key,p.Value)).Where(x=>x.success).Select(x=>x.modifierCode))];
                         }
                         
                         return new List<string> { $"style = {{ {string.Join(", ", style.ToDictionary().Select(kv => kv.Key + " = \"" + kv.Value + "\""))} }}" };
@@ -692,28 +692,35 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
     }
 
-    static (bool success, string modifierCode) TryConvertStyleValuePairToModifier(string key, string value)
-    {
-        var success = (string modifierCode) => (true, modifierCode);
-        
-        var modifierFullName = $"{CamelCase(key)}{CamelCase(value)}";
-
-        if (typeof(Style).GetProperty(modifierFullName, BindingFlags.Static| BindingFlags.Public) is not null)
-        {
-            return success(modifierFullName);
-        }
-        
-        if (typeof(Style).GetMethod(CamelCase(key), new[] { typeof(string) }) is not null)
-        {
-            return success($"{CamelCase(key)}(\"{value}\")");
-        }
-
-        return default;
-    }
+   
     
     static string ToModifier(HtmlAttribute htmlAttribute)
     {
         return TryConvertToModifier(htmlAttribute).modifierCode;
+    }
+    
+    static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string value)
+    {
+        var success = (string modifierCode) => (true, modifierCode);
+        
+        if (name == "target" && value == "_blank")
+        {
+            return success("TargetBlank");
+        }
+
+        var modifierFullName = $"{CamelCase(name)}{CamelCase(value)}";
+
+        if (typeof(Mixin).GetProperty(modifierFullName) is not null)
+        {
+            return success(modifierFullName);
+        }
+
+        if (typeof(Mixin).GetMethod(CamelCase(name), new[] { typeof(string) }) is not null)
+        {
+            return success($"{CamelCase(name)}(\"{value}\")");
+        }
+
+        return default;
     }
     
     static (bool success, string modifierCode) TryConvertToModifier(HtmlAttribute htmlAttribute)
@@ -725,13 +732,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         
         var success = (string modifierCode) => (true, modifierCode);
 
-        
-        
-        if (name == "target" && value == "_blank")
-        {
-            return success("TargetBlank");
-        }
 
+        var response = TryConvertToModifier_From_Mixin_Extension(name, value);
+        if (response.success)
+        {
+            return response;
+        }
         
         if (name == "focusable" && tagName == "svg")
         {
@@ -746,18 +752,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         if (name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && tagName == "svg")
         {
             return success($"ViewBox(\"{value}\")");
-        }
-
-        var modifierFullName = $"{CamelCase(name)}{CamelCase(value)}";
-
-        if (typeof(Mixin).GetProperty(modifierFullName) is not null)
-        {
-            return success(modifierFullName);
-        }
-
-        if (typeof(Mixin).GetMethod(CamelCase(name), new[] { typeof(string) }) is not null)
-        {
-            return success($"{CamelCase(name)}(\"{value}\")");
         }
 
         var propertyInfo = TryFindProperty(tagName, name);
