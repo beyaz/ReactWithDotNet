@@ -14,7 +14,7 @@ public class HtmlToCSharpTests
                """,
 
                """
-               new a { target = "_blank" }
+               new a { TargetBlank }
                """);
 
 
