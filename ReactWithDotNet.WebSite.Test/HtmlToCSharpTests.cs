@@ -31,8 +31,8 @@ public class HtmlToCSharpTests
                """,
 
                """
-               new a 
-               { 
+               new a
+               {
                    Aria("hidden", "true"),
                    Data("testid", "AcUnitIcon"),
                    TargetBlank,

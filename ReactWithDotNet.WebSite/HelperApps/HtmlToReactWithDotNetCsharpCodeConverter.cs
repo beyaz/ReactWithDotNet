@@ -465,6 +465,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
         }
 
+        if (smartMode && style is not null)
+        {
+            modifiers.AddRange(htmlNode.Attributes.Select(ToModifier));
+            
+            ((ICollection<HtmlAttribute>)htmlNode.Attributes).Clear();
+            modifiers.AddRange(style.ToDictionary().Select(p => TryConvertToModifier_From_Mixin_Extension(p.Key, p.Value)).Where(x => x.success).Select(x => x.modifierCode));
+
+            style = null;
+        }
+        
         bool canBeExportInOneLine()
         {
             if (htmlNode.Attributes.Contains("text"))
@@ -478,6 +488,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     return false;
                 }
+            }
+
+            if (htmlNode.ChildNodes.Count == 0 && smartMode && modifiers.Count > 3)
+            {
+                return false;
             }
 
             if (htmlNode.Attributes.Count <= 3)
@@ -589,6 +604,31 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             // multiline
             {
+
+                if (smartMode)
+                {
+                    if (modifiers.Count > 0 && htmlNode.Attributes.Count  == 0)
+                    {
+                        var lines = new List<string>
+                        {
+                            $"new {htmlNodeName}",
+                            "{"
+                        };
+
+                        foreach (var modifier in modifiers)
+                        {
+                            lines.Add(modifier);
+                            
+                            lines[^1] += ",";
+                        }
+
+                        lines[^1] = lines[^1].RemoveFromEnd(",");
+                        lines.Add("}");
+
+                        return lines;
+                    }
+                }
+                
                 var sb = new StringBuilder();
                 sb.Append($"new {htmlNodeName}");
 
@@ -599,34 +639,36 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     sb.Append(")");
                 }
 
-                var lines = new List<string>
                 {
-                    sb.ToString()
-                };
-
-                if (htmlNode.Attributes.Count > 0)
-                {
-                    lines.Add("{");
-
-                    foreach (var list in htmlNode.Attributes.Select(attributeToString))
+                    var lines = new List<string>
                     {
-                        if (list.Count > 0)
+                        sb.ToString()
+                    };
+
+                    if (htmlNode.Attributes.Count > 0)
+                    {
+                        lines.Add("{");
+
+                        foreach (var list in htmlNode.Attributes.Select(attributeToString))
                         {
-                            lines.AddRange(list);
-                        }
-                        else
-                        {
-                            lines.Add(list[0]);
+                            if (list.Count > 0)
+                            {
+                                lines.AddRange(list);
+                            }
+                            else
+                            {
+                                lines.Add(list[0]);
+                            }
+
+                            lines[^1] += ",";
                         }
 
-                        lines[^1] += ",";
+                        lines[^1] = lines[^1].RemoveFromEnd(",");
+                        lines.Add("}");
                     }
 
-                    lines[^1] = lines[^1].RemoveFromEnd(",");
-                    lines.Add("}");
+                    return lines;
                 }
-
-                return lines;
             }
         }
 
