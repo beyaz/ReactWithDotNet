@@ -354,24 +354,21 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             if (htmlNode.ChildNodes.Count == 1 && htmlNode.ChildNodes[0].Name == "#text")
             {
-                if (htmlNode.Attributes.Any() || modifiers.Any())
+                var text = htmlNode.ChildNodes[0].InnerText.Trim();
+                
+                if (string.IsNullOrWhiteSpace(text) is false)
                 {
-                    var text = htmlNode.ChildNodes[0].InnerText.Trim();
-                    if (string.IsNullOrWhiteSpace(text) is false)
+                    if (smartMode)
                     {
-                        if (smartMode)
-                        {
-                            modifiers.Insert(0, '"' + text + '"');
-                        }
-                        else
-                        {
-                            htmlNode.Attributes.Insert(0, "text", text);    
-                        }
-                        
+                        modifiers.Insert(0, '"' + text + '"');
                     }
-
-                    htmlNode.ChildNodes.RemoveAt(0);
+                    else //if (htmlNode.Attributes.Any())
+                    {
+                        htmlNode.Attributes.Insert(0, "text", text);   
+                    }
                 }
+                
+                htmlNode.ChildNodes.RemoveAt(0);
             }
         }
 
