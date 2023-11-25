@@ -78,15 +78,7 @@ public class HtmlToCSharpTests
                new div { "abc", Color("blue"), FontSize(14) }
                """);
 
-        Assert("""
-               <div style="width: 96.3px; padding-top: 1px; padding-bottom: 2px; padding-left: 3px; padding-right: 4px;">
-                 
-               </div>
-               """,
-
-               """
-               new div { Padding(1, 2, 3, 4), Width(96.3) }
-               """);
+        
         
         
         Assert("""

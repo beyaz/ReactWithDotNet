@@ -68,6 +68,8 @@ partial class Mixin
 
     public static StyleModifier Width(CssUnit width) => Width(width.ToString());
     
+    public static StyleModifier Width(double width) => Width(width.AsPixel());
+    
     public static StyleModifier Height(CssUnit value) => Height(value.ToString());
 
 
