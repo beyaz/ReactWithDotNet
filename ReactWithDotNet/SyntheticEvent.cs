@@ -31,6 +31,8 @@ public sealed class ShadowHtmlElement
     public string tagName { get; set; }
 
     public string value { get; set; }
+    
+    public IReadOnlyDictionary<string,string> data { get;  set; }
 }
 
 public sealed class MouseEvent : UIEvent

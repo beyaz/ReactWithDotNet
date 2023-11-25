@@ -1360,7 +1360,8 @@ function ConvertToShadowHtmlElement(htmlElement)
         selectedIndex: selectedIndex,
         selectionStart: selectionStart,
         tagName: htmlElement.tagName,
-        value: value
+        value: value,
+        data: htmlElement.dataset
     };
 }
 
