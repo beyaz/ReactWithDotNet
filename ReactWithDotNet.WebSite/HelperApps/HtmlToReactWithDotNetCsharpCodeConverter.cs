@@ -455,10 +455,10 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
        
         
-        // border
-        {
-            if (style is not null)
+        
+        if (style is not null)
             {
+                // border
                 foreach (var prefix in new[] { "borderTop", "borderRight", "borderLeft", "borderBottom" })
                 {
                     var xStyle = style[$"{prefix}Style"];
@@ -497,16 +497,24 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     style.paddingTop = style.paddingRight = style.paddingBottom = style.paddingLeft = null;
                 }
+                
+                // m a r g i n
+                if (style.marginTop.HasValue() &&
+                    style.marginRight.HasValue() &&
+                    style.marginBottom.HasValue() &&
+                    style.marginLeft.HasValue())
+                {
+                    style.margin = $"{style.marginTop} {style.marginRight} {style.marginBottom} {style.marginLeft}";    
+
+                    style.marginTop = style.marginRight = style.marginBottom = style.marginLeft = null;
+                }
 
                 if (smartMode)
                 {
                     // padding: TopBottom
                     if (style.paddingTop.EndsWithPixel() &&
                         style.paddingBottom.EndsWithPixel() &&
-                        style.paddingTop == style.paddingBottom &&
-                        
-                        style.paddingLeft.HasNoValue() && 
-                        style.paddingRight.HasNoValue())
+                        style.paddingTop == style.paddingBottom )
                     {
                         style.padding = MarkAsAlreadyCalculatedModifier($"PaddingTopBottom({style.paddingTop.RemovePixelFromEnd()})");
 
@@ -516,19 +524,36 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     // padding: LeftRight
                     if (style.paddingLeft.EndsWithPixel() &&
                         style.paddingRight.EndsWithPixel() &&
-                        style.paddingLeft == style.paddingRight &&
-                        
-                        style.paddingTop.HasNoValue() && 
-                        style.paddingBottom.HasNoValue())
+                        style.paddingLeft == style.paddingRight)
                     {
                         style.padding = MarkAsAlreadyCalculatedModifier($"PaddingLeftRight({style.paddingLeft.RemovePixelFromEnd()})");
 
                         style.paddingLeft = style.paddingRight = null;
                     }
+                    
+                    
+                    // margin: TopBottom
+                    if (style.marginTop.EndsWithPixel() &&
+                        style.marginBottom.EndsWithPixel() &&
+                        style.marginTop == style.marginBottom )
+                    {
+                        style.margin = MarkAsAlreadyCalculatedModifier($"MarginTopBottom({style.marginTop.RemovePixelFromEnd()})");
+
+                        style.marginTop = style.marginBottom = null;
+                    }
+
+                    // margin: LeftRight
+                    if (style.marginLeft.EndsWithPixel() &&
+                        style.marginRight.EndsWithPixel() &&
+                        style.marginLeft == style.marginRight)
+                    {
+                        style.margin = MarkAsAlreadyCalculatedModifier($"MarginLeftRight({style.marginLeft.RemovePixelFromEnd()})");
+
+                        style.marginLeft = style.marginRight = null;
+                    }
                 }
                 
             }
-        }
 
         
         // remove comments
@@ -839,6 +864,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             if (paddingValues.Count == 4 && paddingValues.TrueForAll(x=>x.EndsWith("px", StringComparison.OrdinalIgnoreCase)))
             {
                 return success($"Padding({paddingValues[0].RemoveFromEnd("px")}, {paddingValues[1].RemoveFromEnd("px")}, {paddingValues[2].RemoveFromEnd("px")}, {paddingValues[3].RemoveFromEnd("px")})");
+            }
+        }
+        
+        if (name == "flex")
+        {
+            var parameters = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+            if (parameters.Count == 3 && parameters.TrueForAll(x=>double.TryParse(x,out _)))
+            {
+                return success($"Flex({parameters[0]}, {parameters[1]}, {parameters[2]})");
             }
         }
         
