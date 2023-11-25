@@ -445,7 +445,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
                     }
 
-                    if (style.display == "flex" && style.flexDirection == "row")
+                    if (style.display == "flex" && (style.flexDirection is null || style.flexDirection == "row"))
                     {
                         htmlNodeName  = "FlexRow";
                         style.display = style.flexDirection = null;
