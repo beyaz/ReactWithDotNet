@@ -780,7 +780,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 return success($"Padding({paddingValues[0].RemoveFromEnd("px")}, {paddingValues[1].RemoveFromEnd("px")}, {paddingValues[2].RemoveFromEnd("px")}, {paddingValues[3].RemoveFromEnd("px")})");
             }
         }
-
+        
         var modifierFullName = $"{CamelCase(name)}{CamelCase(value)}";
 
         if (typeof(Mixin).GetProperty(modifierFullName) is not null)

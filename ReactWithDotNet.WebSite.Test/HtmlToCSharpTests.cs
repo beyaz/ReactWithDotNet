@@ -79,24 +79,24 @@ public class HtmlToCSharpTests
                """);
 
         Assert("""
-               <div style="width: 96px; padding-top: 1px; padding-bottom: 2px; padding-left: 3px; padding-right: 4px;">
+               <div style="width: 96.3px; padding-top: 1px; padding-bottom: 2px; padding-left: 3px; padding-right: 4px;">
                  
                </div>
                """,
 
                """
-               new div { Width(96), Padding(1, 2, 3, 4) }
+               new div { Padding(1, 2, 3, 4), Width(96.3) }
                """);
         
         
         Assert("""
-               <div style="width: 96px; padding-top: 1px; padding-bottom: 3px; padding-left: 4px; padding-right: 2px;">
+               <div style="width: 96.7px; padding-top: 1px; padding-bottom: 3px; padding-left: 4px; padding-right: 2px;">
                  
                </div>
                """,
 
                """
-               new div { Padding(1, 2, 3, 4), Width("96px") }
+               new div { Padding(1, 2, 3, 4), Width(96.7) }
                """);
         
         
