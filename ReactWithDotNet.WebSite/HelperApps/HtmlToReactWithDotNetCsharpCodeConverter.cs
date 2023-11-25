@@ -462,6 +462,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         }
                     }
                 }
+                
+                if (style.paddingTop.HasValue() &&
+                    style.paddingRight.HasValue() &&
+                    style.paddingBottom.HasValue() &&
+                    style.paddingLeft.HasValue())
+                {
+                    style.padding = $"{style.paddingTop} {style.paddingRight} {style.paddingBottom} {style.paddingLeft}";    
+
+                    style.paddingTop = style.paddingRight = style.paddingBottom = style.paddingLeft = null;
+                }
             }
         }
 
@@ -761,6 +771,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return success("TargetBlank");
         }
+        
+        if (name == "padding")
+        {
+            var paddingValues = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+            if (paddingValues.Count == 4 && paddingValues.TrueForAll(x=>x.EndsWith("px", StringComparison.OrdinalIgnoreCase)))
+            {
+                return success($"Padding({paddingValues[0].RemoveFromEnd("px")}, {paddingValues[1].RemoveFromEnd("px")}, {paddingValues[2].RemoveFromEnd("px")}, {paddingValues[3].RemoveFromEnd("px")})");
+            }
+        }
 
         var modifierFullName = $"{CamelCase(name)}{CamelCase(value)}";
 
@@ -860,4 +879,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     {
         return typeof(div).Assembly.GetType(nameof(ReactWithDotNet) + "." + htmlTagName, false, true);
     }
+    
+    static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
 }

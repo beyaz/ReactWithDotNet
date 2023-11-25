@@ -862,6 +862,15 @@ public static partial class Mixin
     
     public static StyleModifier Padding(double topBottomPx, double lefRighttPx) => Padding($"{topBottomPx}px {lefRighttPx}px");
     
+    public static StyleModifier Padding(double topPx, double rightPx, double bottomPx, double leftPx) 
+        => new(style =>
+        {
+            style.paddingTop    = topPx.AsPixel();
+            style.paddingRight  = rightPx.AsPixel();
+            style.paddingBottom = bottomPx.AsPixel();
+            style.paddingLeft = leftPx.AsPixel();
+        });
+    
 
     public static StyleModifier PaddingLeft(double paddingLeftAsPx) => new(style => style.paddingLeft = paddingLeftAsPx.AsPixel());
     public static StyleModifier PaddingRight(double paddingRightAsPx) => new(style => style.paddingRight = paddingRightAsPx.AsPixel());

@@ -89,6 +89,16 @@ public class HtmlToCSharpTests
                """);
         
         
+        Assert("""
+               <div style="width: 96px; padding-top: 1px; padding-bottom: 3px; padding-left: 4px; padding-right: 2px;">
+                 
+               </div>
+               """,
+
+               """
+               new div { Padding(1, 2, 3, 4), Width("96px") }
+               """);
+        
         
         static void Assert(string html, string expected)
         {
