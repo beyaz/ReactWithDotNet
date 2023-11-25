@@ -1277,8 +1277,6 @@ function ConvertToSyntheticMouseEvent(e)
         firstNotEmptyId = null;
     }
 
-    const target = ConvertToShadowHtmlElement(e.target);
-
     return {
         FirstNotEmptyId: firstNotEmptyId,
 
@@ -1295,9 +1293,11 @@ function ConvertToSyntheticMouseEvent(e)
         screenX:   e.screenX,
         screenY:   e.screenY,
         shiftKey:  e.shiftKey,
-        target:    target,
         timeStamp: e.timeStamp,
-        type:      e.type
+        type:      e.type,
+
+        target: ConvertToShadowHtmlElement(e.target),
+        currentTarget :ConvertToShadowHtmlElement(e.currentTarget)
     };
 }
 
