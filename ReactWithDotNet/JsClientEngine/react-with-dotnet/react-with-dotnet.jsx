@@ -827,14 +827,7 @@ function isTwoLiteralObjectEquivent(o1, o2)
 
 function GetAllCachedMethodsOfComponent(component)
 {
-    if (component.props &&
-        component.props.$jsonNode &&
-        component.props.$jsonNode.$CachedMethods)
-    {
-        return component.props.$jsonNode.$CachedMethods;
-    }
-
-    return null;
+    return component.state.$CachedMethods;
 }
 
 function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
@@ -1720,27 +1713,36 @@ function DefineComponent(componentDeclaration)
 
             const instance = this;
 
+            // new way
             const initialState = {};
+            if (props)
+            {
+                Object.assign(initialState, props.$jsonNode);
 
-            initialState[DotNetState] = NotNull(props.$jsonNode[DotNetState]);
-            initialState[SyncId] = ShouldBeNumber(props[SyncId]);
-            initialState[RootNode] = props.$jsonNode[RootNode];
-            initialState[DotNetProperties] = NotNull(props.$jsonNode[DotNetProperties]);
-            initialState[DotNetComponentUniqueIdentifier] = NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier]);
-
-            if (props.$jsonNode[HasComponentDidMountMethod]) {
-                initialState[HasComponentDidMountMethod] = props.$jsonNode[HasComponentDidMountMethod];
+                initialState[SyncId] = ShouldBeNumber(props[SyncId]);
             }
 
-            if (props.$jsonNode[ClientTasks]) {
-                initialState[ClientTasks] = props.$jsonNode[ClientTasks];
-            }
+            // old way todo: check and remove
+            //initialState[DotNetState]      = NotNull(props.$jsonNode[DotNetState]);
+            //initialState[SyncId]           = ShouldBeNumber(props[SyncId]);
+            //initialState[RootNode]         = props.$jsonNode[RootNode];
+            //initialState[DotNetProperties] = NotNull(props.$jsonNode[DotNetProperties]);
+            //initialState[DotNetComponentUniqueIdentifier] = NotNull(props.$jsonNode[DotNetComponentUniqueIdentifier]);
 
-            initialState[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
+            //if (props.$jsonNode[HasComponentDidMountMethod]) {
+            //    initialState[HasComponentDidMountMethod] = props.$jsonNode[HasComponentDidMountMethod];
+            //}
+
+            //if (props.$jsonNode[ClientTasks]) {
+            //    initialState[ClientTasks] = props.$jsonNode[ClientTasks];
+            //}
+
+            //initialState.$CachedMethods = props.$jsonNode.$CachedMethods;
+           
 
             instance.state = initialState;
 
-            instance[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
+            initialState[DotNetTypeOfReactComponent] = instance[DotNetTypeOfReactComponent] = dotNetTypeOfReactComponent;
 
             instance[ON_COMPONENT_DESTROY] = [];
 
