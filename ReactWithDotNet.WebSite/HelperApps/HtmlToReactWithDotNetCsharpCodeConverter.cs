@@ -486,6 +486,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     }
                 }
                 
+                // p a d d i n g
                 if (style.paddingTop.HasValue() &&
                     style.paddingRight.HasValue() &&
                     style.paddingBottom.HasValue() &&
