@@ -72,9 +72,9 @@ static class ReflectionHelper
 
     public static T DeepCopy<T>(T value)
     {
-        var json = JsonSerializer.Serialize(value);
+        var json = JsonSerializer.Serialize(value, JsonSerializerOptionsInstance);
 
-        return (T)JsonSerializer.Deserialize(json, value.GetType());
+        return (T)JsonSerializer.Deserialize(json, value.GetType(), JsonSerializerOptionsInstance);
     }
 
     public static MethodInfo FindMethod(this Type type, string methodName, BindingFlags bindingFlags)
