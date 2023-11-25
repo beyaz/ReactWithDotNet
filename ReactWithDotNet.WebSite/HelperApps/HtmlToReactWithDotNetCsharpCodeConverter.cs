@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using System.Reflection;
 using System.Text;
-using System.Xml;
 using HtmlAgilityPack;
 using PropertyInfo = System.Reflection.PropertyInfo;
 
@@ -454,6 +453,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
         }
 
+       
+        
         // border
         {
             if (style is not null)
@@ -496,9 +497,40 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     style.paddingTop = style.paddingRight = style.paddingBottom = style.paddingLeft = null;
                 }
+
+                if (smartMode)
+                {
+                    // padding: TopBottom
+                    if (style.paddingTop.EndsWithPixel() &&
+                        style.paddingBottom.EndsWithPixel() &&
+                        style.paddingTop == style.paddingBottom &&
+                        
+                        style.paddingLeft.HasNoValue() && 
+                        style.paddingRight.HasNoValue())
+                    {
+                        style.padding = MarkAsAlreadyCalculatedModifier($"PaddingTopBottom({style.paddingTop.RemovePixelFromEnd()})");
+
+                        style.paddingTop = style.paddingBottom = null;
+                    }
+                    
+                    // padding: LeftRight
+                    if (style.paddingLeft.EndsWithPixel() &&
+                        style.paddingRight.EndsWithPixel() &&
+                        style.paddingLeft == style.paddingRight &&
+                        
+                        style.paddingTop.HasNoValue() && 
+                        style.paddingBottom.HasNoValue())
+                    {
+                        style.padding = MarkAsAlreadyCalculatedModifier($"PaddingLeftRight({style.paddingLeft.RemovePixelFromEnd()})");
+
+                        style.paddingLeft = style.paddingRight = null;
+                    }
+                }
+                
             }
         }
 
+        
         // remove comments
         {
             htmlNode.ChildNodes.RemoveAll(childNode => childNode.Name == "#comment");
@@ -795,6 +827,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return success("TargetBlank");
         }
+
+        if (IsMarkedAsAlreadyCalculatedModifier(value))
+        {
+            return success(UnMarkAsAlreadyCalculatedModifier(value));
+        }
         
         if (name == "padding")
         {
@@ -815,9 +852,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(string)] ) is not null)
         {
             if (typeof(Mixin).GetMethod(CamelCase(name), [typeof(double)] ) is not null && 
-                value.EndsWith("px",StringComparison.OrdinalIgnoreCase) == true)
+                value.EndsWithPixel())
             {
-                return success($"{CamelCase(name)}({value.RemoveFromEnd("px")})");
+                return success($"{CamelCase(name)}({value.RemovePixelFromEnd()})");
             }
 
             if (value.StartsWith("rgb(", StringComparison.OrdinalIgnoreCase))
@@ -921,4 +958,24 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     }
     
     static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
+    static bool HasNoValue(this string value) => string.IsNullOrWhiteSpace(value);
+    static bool EndsWithPixel(this string value) => value?.EndsWith("px", StringComparison.OrdinalIgnoreCase) == true;
+    static string RemovePixelFromEnd(this string value) => value?.RemoveFromEnd("px");
+
+    #region already calculated modifier
+    static string MarkAsAlreadyCalculatedModifier(string modifierCode)
+    {
+        return "|" + modifierCode;
+    }
+    static string UnMarkAsAlreadyCalculatedModifier(string modifierCode)
+    {
+        return modifierCode.Substring(1);
+    }
+    
+    static bool IsMarkedAsAlreadyCalculatedModifier(string modifierCode)
+    {
+        return modifierCode?.Length > 2 && modifierCode[0] == '|';
+    }
+    #endregion
+
 }
