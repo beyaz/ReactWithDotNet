@@ -10,6 +10,7 @@ class HtmlToCSharpViewModel
     public string CSharpCode { get; set; }
     public int EditCount { get; set; }
     public string HtmlText { get; set; }
+    public int MaxAttributeCountPerLine { get; set; }
     public string StatusMessage { get; set; }
     public bool SmartMode { get; set; }
 }
@@ -41,7 +42,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
 </div>
 ",
             
-            SmartMode = true
+            SmartMode = true,
+            MaxAttributeCountPerLine = 4
         };
 
         CalculateOutput();
@@ -114,6 +116,18 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             }
         };
         
+        var maxAttributeCountPerLineEditor = new input
+        {
+            type     = "input",
+            valueBind    = ()=>state.MaxAttributeCountPerLine,
+            valueBindDebounceTimeout = 1000,
+            valueBindDebounceHandler = ()=>
+            {
+                CalculateOutput();
+                return Task.CompletedTask;
+            }
+        };
+        
         return new FlexColumn
         {
             new style{ text = @"
@@ -129,9 +143,13 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
                 "Html to ReactWithDotNet",
                 (small)" ( paste any html text to left panel )"
             },
-            new FlexRow
+            new FlexRow(Gap(5))
             {
                 "SmartMode", smartModeEditor
+            },
+            new FlexRow(Gap(5))
+            {
+                "MaxAttributeCountPerLine", maxAttributeCountPerLineEditor
             },
             new FlexRow(WidthHeightMaximized, BorderForPaper, BorderRadiusForPaper)
             {
@@ -192,7 +210,7 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
     {
         try
         {
-            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, state.SmartMode);
+            var renderBody = HtmlToReactWithDotNetCsharpCodeConverter.HtmlToCSharp(state.HtmlText, state.SmartMode, state.MaxAttributeCountPerLine);
 
             var sb = new StringBuilder();
             sb.AppendLine("using ReactWithDotNet;");
@@ -233,6 +251,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
         }
     }
 
+    
+    
     Element CreatePreview()
     {
         if (state.CSharpCode?.Length  > 0)
