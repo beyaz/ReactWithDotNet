@@ -396,6 +396,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         htmlNodeName  = "InlineFlexColumnCentered";
                         style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
                     }
+                    
+                    if (style.display == "inline-flex" &&
+                        style.flexDirection == "column")
+                    {
+                        htmlNodeName  = "InlineFlexColumn";
+                        style.display = style.flexDirection = null;
+                    }
 
                     if (style.display == "flex" &&
                         style.flexDirection == "column" &&
@@ -420,6 +427,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     {
                         htmlNodeName  = "InlineFlexRowCentered";
                         style.display = style.flexDirection = style.justifyContent = style.alignItems = null;
+                    }
+                    
+                    if (style.display == "inline-flex" &&
+                        (style.flexDirection is null || style.flexDirection == "row"))
+                    {
+                        htmlNodeName  = "InlineFlexRow";
+                        style.display = style.flexDirection = null;
                     }
 
                     if (style.display == "flex" &&

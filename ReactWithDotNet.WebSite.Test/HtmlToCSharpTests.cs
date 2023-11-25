@@ -9,6 +9,9 @@ public class HtmlToCSharpTests
     [TestMethod]
     public void _1()
     {
+      
+        
+        
         Assert("""
                <a target='_blank' />
                """,
@@ -89,6 +92,16 @@ public class HtmlToCSharpTests
 
                """
                new div { Padding(1, 2, 3, 4), Width(96.7) }
+               """);
+        
+        Assert("""
+               <div style="width: 246.7px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
+                
+               </div>
+               """,
+
+               """
+               new InlineFlexColumn { AlignItemsFlexStart, JustifyContentFlexStart, Width(246.7) }
                """);
         
         
