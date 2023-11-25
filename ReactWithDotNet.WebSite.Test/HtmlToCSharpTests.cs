@@ -69,6 +69,17 @@ public class HtmlToCSharpTests
                new FlexRow { Aria("hidden", "true"), Data("testid", "AcUnitIcon"), Color("blue") }
                """);
         
+        
+        Assert("""
+               <div style='color: blue; font-size: 14px;'>abc</div>
+               """,
+
+               """
+               new div { "abc", Color("blue"), FontSize(14) }
+               """);
+        
+        
+        
         static void Assert(string html, string expected)
         {
             var current = HtmlToCSharp(html, true);
