@@ -825,32 +825,45 @@ function isTwoLiteralObjectEquivent(o1, o2)
     return true;
 };
 
-function tryToFindCachedMethodInfo(targetComponent, remoteMethodName, eventArguments)
+function GetAllCachedMethodsOfComponent(component)
 {
-    if (targetComponent.props &&
-        targetComponent.props.$jsonNode &&
-        targetComponent.props.$jsonNode.$CachedMethods)
+    if (component.props &&
+        component.props.$jsonNode &&
+        component.props.$jsonNode.$CachedMethods)
     {
-        for (var i = 0; i < targetComponent.props.$jsonNode.$CachedMethods.length; i++)
+        return component.props.$jsonNode.$CachedMethods;
+    }
+
+    return null;
+}
+
+function tryToFindCachedMethodInfo(component, remoteMethodName, eventArguments)
+{
+    const cachedMethods = GetAllCachedMethodsOfComponent(component);
+    if (cachedMethods == null)
+    {
+        return null;
+    }
+
+    for (var i = 0; i < cachedMethods.length; i++)
+    {
+        const cachedMethodInfo = cachedMethods[i];
+
+        if (cachedMethodInfo.MethodName === remoteMethodName && cachedMethodInfo.IgnoreParameters)
         {
-            const cachedMethodInfo = targetComponent.props.$jsonNode.$CachedMethods[i];
+            return cachedMethodInfo;
+        }
 
-            if (cachedMethodInfo.MethodName === remoteMethodName && cachedMethodInfo.IgnoreParameters)
+        if (remoteMethodName === 'componentDidMount' && cachedMethodInfo.MethodName.endsWith('|componentDidMount'))
+        {
+            return cachedMethodInfo;
+        }
+
+        if (cachedMethodInfo.MethodName === remoteMethodName && eventArguments.length === 1)
+        {
+            if (isEquivent(eventArguments[0], cachedMethodInfo.Parameter))
             {
                 return cachedMethodInfo;
-            }
-
-            if (remoteMethodName === 'componentDidMount' && cachedMethodInfo.MethodName.endsWith('|componentDidMount'))
-            {
-                return cachedMethodInfo;
-            }
-
-            if (cachedMethodInfo.MethodName === remoteMethodName && eventArguments.length === 1)
-            {
-                if (isEquivent(eventArguments[0], cachedMethodInfo.Parameter))
-                {
-                    return cachedMethodInfo;
-                }
             }
         }
     }
@@ -1526,6 +1539,22 @@ function HandleAction(actionArguments)
 
 function CalculateNewStateFromJsonElement(componentState, jsonElement)
 {
+    // connect unique idendifiers
+    if (NotNull(componentState[DotNetComponentUniqueIdentifier]) !== NotNull(jsonElement[DotNetComponentUniqueIdentifier]))
+    {
+        const component = COMPONENT_CACHE.FindComponentByDotNetComponentUniqueIdentifier(componentState[DotNetComponentUniqueIdentifier]);
+        if (component)
+        {
+            component[DotNetComponentUniqueIdentifiers].push(jsonElement[DotNetComponentUniqueIdentifier]);
+        }
+    }
+
+    // new way
+    jsonElement[SyncId] = GetNextSequence();
+    return jsonElement;
+
+
+    // old way  todo: check usage
     const newState = {};
 
     newState[DotNetState]     = NotNull(jsonElement[DotNetState]);
@@ -1534,17 +1563,6 @@ function CalculateNewStateFromJsonElement(componentState, jsonElement)
     newState[ClientTasks]     = jsonElement[ClientTasks];
     newState[DotNetProperties] = jsonElement[DotNetProperties];
     newState[DotNetComponentUniqueIdentifier] = jsonElement[DotNetComponentUniqueIdentifier];
-
-
-    if (NotNull(componentState[DotNetComponentUniqueIdentifier]) !== NotNull(jsonElement[DotNetComponentUniqueIdentifier]))
-    {
-        const component = COMPONENT_CACHE.FindComponentByDotNetComponentUniqueIdentifier(componentState[DotNetComponentUniqueIdentifier]);
-        if (component)
-        {
-            component[DotNetComponentUniqueIdentifiers].push(jsonElement[DotNetComponentUniqueIdentifier]);
-        }
-
-    }
 
     return newState;
 }
