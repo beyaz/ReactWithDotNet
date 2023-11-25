@@ -141,11 +141,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         return htmlAttribute.OwnerNode.Name;
     }
 
-    static bool HasNoValue(this string value)
-    {
-        return string.IsNullOrWhiteSpace(value);
-    }
-
     static bool HasValue(this string value)
     {
         return !string.IsNullOrWhiteSpace(value);
@@ -600,12 +595,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 }
             }
 
-            if (htmlNode.ChildNodes.Count == 0 && smartMode && modifiers.Count > 3)
+            if (htmlNode.ChildNodes.Count == 0 && smartMode && modifiers.Count > maxAttributeCountPerLine)
             {
                 return false;
             }
 
-            if (htmlNode.Attributes.Count > 3)
+            if (htmlNode.Attributes.Count > maxAttributeCountPerLine)
             {
                 return false;
             }
@@ -861,6 +856,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         var success = (string modifierCode) => (true, modifierCode);
 
+        if (tagName == "svg" && name.Equals("width",StringComparison.OrdinalIgnoreCase) && double.TryParse(value,out _))
+        {
+            return success($"svg.Width({value})");
+        }
+        if (tagName == "svg" && name.Equals("height",StringComparison.OrdinalIgnoreCase) && double.TryParse(value,out _))
+        {
+            return success($"svg.Height({value})");
+        }
+        
         if (name == "focusable" && tagName == "svg")
         {
             return success($"svg.Focusable(\"{value}\")");
@@ -890,13 +894,14 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         var propertyInfo = TryFindProperty(tagName, name);
         if (propertyInfo is not null)
         {
-            if (propertyInfo.PropertyType == typeof(double?))
+            if (propertyInfo.PropertyType == typeof(double?) || propertyInfo.PropertyType == typeof(double))
             {
                 if (double.TryParse(value, out var valueAsDouble))
                 {
                     return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})");
                 }
             }
+            
 
             if (propertyInfo.PropertyType == typeof(int?))
             {

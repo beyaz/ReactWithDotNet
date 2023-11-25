@@ -125,7 +125,8 @@ class HtmlToCSharpView : Component<HtmlToCSharpViewModel>
             {
                 CalculateOutput();
                 return Task.CompletedTask;
-            }
+            },
+            style = { Width(50) }
         };
         
         return new FlexColumn

@@ -63,6 +63,8 @@ public sealed class MouseEvent : UIEvent
     public bool shiftKey { get; set; }
 
     public ShadowHtmlElement target { get; set; }
+    public ShadowHtmlElement currentTarget { get; set; }
+    
 
     public double timeStamp { get; set; }
 
