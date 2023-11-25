@@ -239,6 +239,13 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
     static List<string> ToCSharpCode(HtmlNode htmlNode, bool smartMode)
     {
+        // ignore smart mode for specific case beautiful code format
+        var smartModeIgnoredTags = new List<string>{ "rect", "path" };
+        if (htmlNode.ChildNodes.Count == 0 && smartModeIgnoredTags.Any(tag=>htmlNode.Name.Equals(tag, StringComparison.OrdinalIgnoreCase)))
+        {
+            smartMode = false;
+        }
+        
         var modifiers = new List<string>();
 
         var htmlNodeName = htmlNode.OriginalName;
