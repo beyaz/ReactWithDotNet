@@ -352,7 +352,9 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                 foreach (var htmlAttribute in htmlNode.Attributes.RemoveAll(isStyleAttribute))
                 {
-                    style[htmlAttribute.Name] = htmlAttribute.Value;
+                    style ??= new Style();
+                    
+                    style[htmlAttribute.Name] =   htmlAttribute.Value;
                 }
             }
         }
@@ -823,13 +825,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         
         var success = (string modifierCode) => (true, modifierCode);
 
-
-        var response = TryConvertToModifier_From_Mixin_Extension(name, value);
-        if (response.success)
-        {
-            return response;
-        }
-        
         if (name == "focusable" && tagName == "svg")
         {
             return success($"svg.Focusable(\"{value}\")");
@@ -842,8 +837,20 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && tagName == "svg")
         {
+            if (tryParseViewBoxValues(value).success)
+            {
+                return success($"ViewBox({ string.Join(", ",tryParseViewBoxValues(value).parameters) })");    
+            }
             return success($"ViewBox(\"{value}\")");
         }
+
+        var response = TryConvertToModifier_From_Mixin_Extension(name, value);
+        if (response.success)
+        {
+            return response;
+        }
+        
+       
 
         var propertyInfo = TryFindProperty(tagName, name);
         if (propertyInfo is not null)
@@ -872,6 +879,17 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         static string UpperCaseFirstChar(string str)
         {
             return char.ToUpper(str[0], new CultureInfo("en-US")) + str.Substring(1);
+        }
+
+        static (bool success, string[] parameters) tryParseViewBoxValues(string value)
+        {
+            var parameters = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToArray();
+            if (parameters.Length == 4)
+            {
+                return (true, parameters);
+            }
+
+            return default;
         }
     }
 
