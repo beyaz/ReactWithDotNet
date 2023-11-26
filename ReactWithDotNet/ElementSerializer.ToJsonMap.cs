@@ -750,7 +750,12 @@ partial class ElementSerializer
             }
             else
             {
-                throw DeveloperException("Action handler method should belong to React component");
+                throw DeveloperException(string.Join(Environment.NewLine,
+                [
+                    "Action handler method should belong to React component.",
+                    $"@delegate.Target: {@delegate.Target?.GetType().FullName}",
+                    $"@delegate.Method: {@delegate.Method}"
+                ]));
             }
         }
     }
