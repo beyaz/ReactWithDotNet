@@ -11,36 +11,18 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     public static bool IsAttached { get; set; }
 
     public int UpdatingProgress { get; set; }
-    
-    
+
     protected override Task constructor()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
         state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
 
-        Client.ListenEvent("ComponentPreviewRefreshed",OnComponentPreviewRefreshed);
-        
+        Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
+
         return Task.CompletedTask;
     }
 
-    Task OnComponentPreviewRefreshed()
-    {
-        UpdatingProgress = 25;
-        Client.GotoMethod(UpdateProgress,UpdatingProgress+25);
-        return Task.CompletedTask;
-    }
-    
-    Task UpdateProgress(int newValue)
-    {
-        UpdatingProgress = newValue;
-        if (UpdatingProgress <= 100)
-        {
-            Client.GotoMethod(500,UpdateProgress,UpdatingProgress+25);    
-        }
-        return Task.CompletedTask;
-    }
-    
     protected override Element render()
     {
         Element createJsonEditor()
@@ -54,8 +36,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             return new Fragment
             {
-                new link{href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet"},
-                
+                new link { href = "https://fonts.cdnfonts.com/css/ibm-plex-mono-3", rel = "stylesheet" },
+
                 new Editor
                 {
                     defaultLanguage          = "json",
@@ -64,11 +46,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     valueBindDebounceHandler = OnKeypressFinished,
                     options =
                     {
-                        renderLineHighlight ="none",
-                        fontFamily          ="'IBM Plex Mono Medium', 'Courier New', monospace",
-                        fontSize = 11,
+                        renderLineHighlight = "none",
+                        fontFamily          = "'IBM Plex Mono Medium', 'Courier New', monospace",
+                        fontSize            = 11,
                         minimap             = new { enabled = false },
-                        lineNumbers = "off"
+                        lineNumbers         = "off"
                     }
                 }
             };
@@ -89,11 +71,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                 new input
                 {
-                    type="text",
+                    type                     = "text",
                     valueBind                = () => state.ClassFilter,
                     valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnFilterChanged,
-                    style                    = { FontSize12, Padding(8), Border(Solid(1,"#ced4da")), Focus(OutlineNone), BorderRadius(3), Color("#495057") }
+                    style                    = { FontSize12, Padding(8), Border(Solid(1, "#ced4da")), Focus(OutlineNone), BorderRadius(3), Color("#495057") }
                 }
             },
             new FlexColumn(MarginLeftRight(3), MarginTopBottom(3))
@@ -102,14 +84,14 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                 new input
                 {
-                    type                     ="text",
+                    type                     = "text",
                     valueBind                = () => state.MethodFilter,
                     valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnFilterChanged,
-                    style                    = { FontSize12, Padding(8), Border(Solid(1,"#ced4da")), Focus(OutlineNone), BorderRadius(3), Color("#495057") }
+                    style                    = { FontSize12, Padding(8), Border(Solid(1, "#ced4da")), Focus(OutlineNone), BorderRadius(3), Color("#495057") }
                 }
             },
-            
+
             SpaceY(5),
             new MethodSelectionView
             {
@@ -127,7 +109,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 Border("1px solid #d9d9d9"),
                 BorderRadius(4),
                 //PaddingTop(15),
-               
+
                 new legend
                 {
                     createLabel($"Media Size: {state.ScreenWidth}px")
@@ -136,12 +118,12 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 {
                     step                     = 10,
                     type                     = "range",
-                    min                      =300,
+                    min                      = 300,
                     max                      = 1600,
-                    valueBind        = ()=>state.ScreenWidth,
+                    valueBind                = () => state.ScreenWidth,
                     valueBindDebounceTimeout = 500,
                     valueBindDebounceHandler = OnMediaSizeChanged,
-                    style = { Height(7), WidthMaximized, BorderRadius(38)}
+                    style                    = { Height(7), WidthMaximized, BorderRadius(38) }
                 }
             },
 
@@ -177,19 +159,18 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         Element createVerticleRuler()
         {
             var maxHeight = 600;
-            
+
             var step = 50;
             var max = maxHeight / step + 1;
-            
-            
+
             IReadOnlyList<Element> createTenPoints()
             {
                 var returnList = new List<Element>();
 
                 var miniStep = 10;
-                
+
                 var cursor = 0;
-                var distance =  miniStep;
+                var distance = miniStep;
                 while (distance <= maxHeight)
                 {
                     cursor++;
@@ -200,22 +181,21 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     {
                         continue;
                     }
-                    
+
                     returnList.Add(new div(PositionAbsolute)
                     {
-                        Right(3), 
+                        Right(3),
                         Top(distance),
-                        
+
                         Height(0.5),
                         Width(4),
                         Background("green")
                     });
                 }
-                
 
                 return returnList;
             }
-            
+
             return new div(WidthHeightMaximized, PositionRelative)
             {
                 Enumerable.Range(0, max).Select(number => new div(PositionAbsolute)
@@ -235,9 +215,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                             Background("green")
                         }
                     }
-
                 }),
-                
+
                 createTenPoints()
             };
         }
@@ -255,12 +234,12 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 {
                     return -2;
                 }
-                
+
                 if (label < 100)
                 {
                     return -4.5;
                 }
-                
+
                 if (label < 1000)
                 {
                     return -7;
@@ -274,9 +253,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 var returnList = new List<Element>();
 
                 var miniStep = 10;
-                
+
                 var cursor = 0;
-                var distance =  miniStep;
+                var distance = miniStep;
                 while (distance <= state.ScreenWidth)
                 {
                     cursor++;
@@ -287,23 +266,22 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     {
                         continue;
                     }
-                    
+
                     returnList.Add(new div(PositionAbsolute)
                     {
-                        Bottom(3), 
+                        Bottom(3),
                         Left(distance),
-                        
+
                         Width(0.5),
                         Height(4),
                         Background("green")
                     });
                 }
-                
 
                 return returnList;
             }
-            
-            return new FlexRow(PositionRelative,WidthMaximized,Height(20))
+
+            return new FlexRow(PositionRelative, WidthMaximized, Height(20))
             {
                 Enumerable.Range(0, (int)max).Select(number => new div(PositionAbsolute)
                 {
@@ -324,23 +302,22 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     }
                 }),
                 createTenPoints()
-                
             };
         }
-        
+
         var outputPanel = new div(PositionRelative)
         {
             BackgroundImage("radial-gradient(#a5a8ed 0.5px, #f8f8f8 0.5px)"),
             BackgroundSize("10px 10px"),
-            
-            createHorizontalRuler()+PositionAbsolute,
-            new div(PositionAbsolute, Top(18),WidthMaximized, Height("calc(100% - 20px)"))
+
+            createHorizontalRuler() + PositionAbsolute,
+            new div(PositionAbsolute, Top(18), WidthMaximized, Height("calc(100% - 20px)"))
             {
                 new div(PositionRelative)
                 {
                     WidthHeightMaximized,
                     createElement(),
-                
+
                     new div(PositionAbsolute, Top(0), Left(0))
                     {
                         createVerticleRuler
@@ -349,76 +326,54 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             },
 
             Width(state.ScreenWidth <= 100 ? state.ScreenWidth + "%" : state.ScreenWidth + "px"),
-            
+
             HeightMaximized,
-            BoxShadow(0,4, 12,0,rgba(0, 0, 0, 0.1))
+            BoxShadow(0, 4, 12, 0, rgba(0, 0, 0, 0.1))
         };
 
         Element createElement()
         {
             return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { Border("none"), WidthMaximized, HeightMaximized } };
         }
-        
+
         return new FlexRow(WidthHeightMaximized, PrimaryBackground)
         {
             new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
             {
-                When(UpdatingProgress is > 0 and <= 100,()=>new div(PositionAbsolute,TopRight(5))
-                { 
+                When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(5))
+                {
                     When(state.PropertyPanelIsClosed, PositionStatic),
-                    
-                    new LoadingIcon()+Size(12,12)
+
+                    new LoadingIcon() + Size(12, 12)
                 }),
-                
+
                 new div
-                { 
+                {
                     state.PropertyPanelIsClosed ? "→" : "←",
-                    OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel: ClosePropertyPanel),
-                    PositionAbsolute, 
-                    TopRight(0), 
-                    FontSize14, 
+                    OnClick(state.PropertyPanelIsClosed ? OpenPropertyPanel : ClosePropertyPanel),
+                    PositionAbsolute,
+                    TopRight(0),
+                    FontSize14,
                     FontWeight500,
                     Color("#c5d7e8"),
                     CursorPointer,
                     Hover(FontSize17, Color("#9090f2")),
                     When(state.PropertyPanelIsClosed, PositionSticky),
-                    
-                    Size(12,12),
+
+                    Size(12, 12),
                     When(UpdatingProgress is > 0 and <= 100, DisplayNone)
                 },
-                
-                
+
                 When(state.PropertyPanelIsClosed == false, propertyPanel),
                 When(state.PropertyPanelIsClosed, Width(15))
             },
-            new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7),MarginLeft(40))
+            new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7), MarginLeft(40))
             {
                 outputPanel
             }
         };
     }
-    
-    Task OnMediaSizeChanged()
-    {
-        SaveState();
-        
-        return Task.CompletedTask;
-    }
 
-    Task ClosePropertyPanel(MouseEvent _)
-    {
-        state.PropertyPanelIsClosed = true;
-        SaveState();
-        
-        return Task.CompletedTask;
-    }
-    Task OpenPropertyPanel(MouseEvent _)
-    {
-        state.PropertyPanelIsClosed = false;
-        SaveState();
-        return Task.CompletedTask;
-    }
-    
     bool canShowInstanceEditor()
     {
         if (state.SelectedMethod?.IsStatic == true)
@@ -438,12 +393,27 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         return false;
     }
-    
+
+    Task ClosePropertyPanel(MouseEvent _)
+    {
+        state.PropertyPanelIsClosed = true;
+        SaveState();
+
+        return Task.CompletedTask;
+    }
+
+    Task OnComponentPreviewRefreshed()
+    {
+        UpdatingProgress = 25;
+        Client.GotoMethod(UpdateProgress, UpdatingProgress + 25);
+        return Task.CompletedTask;
+    }
+
     Task OnElementSelected(string keyOfSelectedTreeNode)
     {
         var classFilter = state.ClassFilter;
         var methodFileter = state.MethodFilter;
-        
+
         state.SelectedType   = null;
         state.SelectedMethod = null;
 
@@ -471,7 +441,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 state = StateCache.TryRead(state.SelectedMethod) ?? state;
             }
         }
-        
+
         state.ClassFilter  = classFilter;
         state.MethodFilter = methodFileter;
 
@@ -496,9 +466,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         }
 
         SaveState();
-        
+
         return Task.CompletedTask;
-        
+
         void initializeInstanceJson()
         {
             var typeOfInstance = state.SelectedType ?? state.SelectedMethod?.DeclaringType;
@@ -512,10 +482,10 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(typeOfInstance)?.GetProperties(BindingFlags.Instance | BindingFlags.Public) ?? new PropertyInfo[] { })
             {
-                var name         = propertyInfo.Name;
+                var name = propertyInfo.Name;
                 var propertyType = propertyInfo.PropertyType;
 
-                if (propertyType.GetInterfaces().Any(x=>x==typeof(IModifier)))
+                if (propertyType.GetInterfaces().Any(x => x == typeof(IModifier)))
                 {
                     continue;
                 }
@@ -535,7 +505,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 }
 
                 if (propertyInfo.DeclaringType == typeof(Element) ||
-                    propertyInfo.DeclaringType == typeof(ReactComponentBase)||
+                    propertyInfo.DeclaringType == typeof(ReactComponentBase) ||
                     propertyInfo.DeclaringType == typeof(PureComponent))
                 {
                     continue;
@@ -563,14 +533,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 }
             }
 
-            
-
-           
-            
-            
-            state.JsonTextForDotNetInstanceProperties = System.Text.Json.JsonSerializer.Serialize(map,new JsonSerializerOptions
+            state.JsonTextForDotNetInstanceProperties = JsonSerializer.Serialize(map, new JsonSerializerOptions
             {
-                WriteIndented = true,
+                WriteIndented          = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
         }
@@ -589,13 +554,18 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                 map.Add(name, ReflectionHelper.CreateDefaultValue(parameterInfo.ParameterType));
             }
-            
-            state.JsonTextForDotNetMethodParameters = System.Text.Json.JsonSerializer.Serialize(map,new JsonSerializerOptions
+
+            state.JsonTextForDotNetMethodParameters = JsonSerializer.Serialize(map, new JsonSerializerOptions
             {
                 WriteIndented          = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
         }
+    }
+
+    Task OnFilterChanged()
+    {
+        return Task.CompletedTask;
     }
 
     Task OnKeypressFinished()
@@ -604,8 +574,17 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         return Task.CompletedTask;
     }
 
-    Task OnFilterChanged()
+    Task OnMediaSizeChanged()
     {
+        SaveState();
+
+        return Task.CompletedTask;
+    }
+
+    Task OpenPropertyPanel(MouseEvent _)
+    {
+        state.PropertyPanelIsClosed = false;
+        SaveState();
         return Task.CompletedTask;
     }
 
@@ -625,8 +604,18 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         OnComponentPreviewRefreshed();
     }
-    
-    
+
+    Task UpdateProgress(int newValue)
+    {
+        UpdatingProgress = newValue;
+        if (UpdatingProgress <= 100)
+        {
+            Client.GotoMethod(500, UpdateProgress, UpdatingProgress + 25);
+        }
+
+        return Task.CompletedTask;
+    }
+
     // Taken from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader
     class LoadingIcon : PureComponent
     {
@@ -645,13 +634,13 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                       -webkit-animation: spin 1s linear infinite; /* Safari */
                       animation: spin 1s linear infinite;
                     }
-                    
+
                     /* Safari */
                     @-webkit-keyframes spin {
                       0% { -webkit-transform: rotate(0deg); }
                       100% { -webkit-transform: rotate(360deg); }
                     }
-                    
+
                     @keyframes spin {
                       0% { transform: rotate(0deg); }
                       100% { transform: rotate(360deg); }
