@@ -967,7 +967,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             }
         }
 
-        var modifierFullName = $"{CamelCase(name)}{CamelCase(value)}";
+        var modifierFullName = $"{CamelCase(name)}{CamelCase(value.RemovePixelFromEnd())}";
 
         if (typeof(Mixin).GetProperty(modifierFullName) is not null)
         {

@@ -18,6 +18,12 @@ partial class Mixin
     {
         client.CallJsFunction(Core + nameof(DispatchEvent), eventName, eventArguments);
     }
+    
+    public static void DispatchEvent(this Client client, Enum eventName, params object[] eventArguments)
+    {
+        DispatchEvent(client, eventName.ToString(), eventArguments);
+    }
+    
 
     public static void HistoryBack(this Client client)
     {
@@ -56,6 +62,11 @@ partial class Mixin
     public static void ListenEvent<TEventArgument1>(this Client client, string eventName, Func<TEventArgument1,Task> handler)
     {
         ListenEvent(client, eventName, handler.Method.Name);
+    }
+    
+    public static void ListenEvent<TEventArgument1>(this Client client, Enum eventName, Func<TEventArgument1,Task> handler)
+    {
+        ListenEvent(client, eventName.ToString(), handler.Method.Name);
     }
     
     public static void ListenEvent(this Client client, Action<Client> triggerMethod, Func<Task> handler)
