@@ -99,14 +99,13 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 return new div { text = "Method declaring type is null." };
                             }
 
-                            var instance = CreateElementFromJson(state.JsonTextForDotNetInstanceProperties, declaringType);
+                            var instance = createInstance(declaringType);
+                            
+                            ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                             tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
                             if (instance is ReactComponentBase component)
                             {
-                                component.key     = "0";
-                                component.Context = Context;
-
                                 if (component.IsStateNull)
                                 {
                                     tryUpdateStateFromStateTree(component, Context);
@@ -124,9 +123,6 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                             if (instance is PureComponent reactPureComponent)
                             {
-                                reactPureComponent.key     = "0";
-                                reactPureComponent.Context = Context;
-
                                 reactPureComponent.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
 
                                 return reactPureComponent;
@@ -160,23 +156,23 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
                 }
 
-                static Element CreateElementFromJson(string json, Type type)
+                static void ModifyElementByJson(string json, object instance)
                 {
-                    var instance = (Element)Activator.CreateInstance(type);
+                    var type = instance.GetType();
 
                     var map = JsonSerializer.Deserialize<Dictionary<string, object>>(json.HasValue() ? json : "{}");
                     foreach (var (propertyName, propertyValue) in map)
                     {
                         var propertyInfo = type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.IgnoreCase);
-                        if (propertyInfo is not null)
+                        if (propertyInfo is not null && propertyInfo.GetIndexParameters().Length == 0)
                         {
                             propertyInfo.SetValue(instance, ArrangeValueForTargetType(propertyValue, propertyInfo.PropertyType));
                         }
                     }
-
-                    return instance;
                 }
 
+
+                
                 if (state.SelectedType is not null)
                 {
                     var type = assembly.TryLoadFrom(state.SelectedType);
@@ -185,15 +181,14 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                         return "type not found.@" + state.SelectedType.FullName;
                     }
 
-                    var instance = CreateElementFromJson(state.JsonTextForDotNetInstanceProperties, type);
+                    var instance = createInstance(type);
+                    
+                    ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                     tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                     if (instance is ReactComponentBase component)
                     {
-                        component.key     = "0";
-                        component.Context = Context;
-
                         if (component.IsStateNull)
                         {
                             tryUpdateStateFromStateTree(component, Context);
@@ -209,9 +204,6 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                     if (instance is PureComponent reactPureComponent)
                     {
-                        reactPureComponent.key     = "0";
-                        reactPureComponent.Context = Context;
-
                         return reactPureComponent;
                     }
 
@@ -231,6 +223,24 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
         return "Element not created. Select type or method from left panel";
 
+        Element createInstance(Type type)
+        {
+            var instance = (Element)Activator.CreateInstance(type);
+            if (instance is ReactComponentBase component)
+            {
+                component.key = "0";
+                component.Context      = Context;
+            }
+
+            if (instance is PureComponent reactPureComponent)
+            {
+                reactPureComponent.key     = "0";
+                reactPureComponent.Context = Context;
+            }
+
+            return instance;
+        }
+        
         static void tryUpdateStateFromStateTree(object component, ReactContext reactContext)
         {
             if (reactContext.CapturedStateTree?.TryGetValue("0,0", out var stateInfo) == true)
