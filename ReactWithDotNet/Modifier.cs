@@ -26,6 +26,14 @@ public sealed class StyleModifier : IModifier
     {
         return new StyleModifier(x => x.Import(style));
     }
+    
+    
+    public static Element operator +(StyleModifier styleModifier, Element element)
+    {
+        ModifyHelper.ProcessModifier(element, styleModifier);
+
+        return element;
+    }
 }
 
 public sealed class ElementModifier : IModifier

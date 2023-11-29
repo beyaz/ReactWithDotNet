@@ -944,6 +944,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             return success("TargetBlank");
         }
 
+        if (name.Equals("Width", StringComparison.OrdinalIgnoreCase) && value == "100%")
+        {
+            return success("WidthMaximized");
+        }
+        
+        if (name.Equals("Height", StringComparison.OrdinalIgnoreCase) && value == "100%")
+        {
+            return success("HeightMaximized");
+        }
+        
         if (IsMarkedAsAlreadyCalculatedModifier(value))
         {
             return success(UnMarkAsAlreadyCalculatedModifier(value));
