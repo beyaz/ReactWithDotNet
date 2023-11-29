@@ -562,6 +562,25 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
                     style.marginLeft = style.marginRight = null;
                 }
+                
+                
+                // padding: WidthHeightMaximized
+                if (style.width == "100%" && style.height == "100%")
+                {
+                    style.width = MarkAsAlreadyCalculatedModifier("WidthHeightMaximized");
+
+                    style.height = null;
+                }
+                
+                // margin: WidthHeight
+                if (style.width.EndsWithPixel() &&
+                    style.height.EndsWithPixel() &&
+                    style.width == style.height)
+                {
+                    style.width = MarkAsAlreadyCalculatedModifier($"WidthHeight({style.width.RemovePixelFromEnd()})");
+
+                    style.height = null;
+                }
             }
         }
 
