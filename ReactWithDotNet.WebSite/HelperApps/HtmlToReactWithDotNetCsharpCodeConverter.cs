@@ -878,14 +878,17 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         if (name.Equals("viewbox", StringComparison.OrdinalIgnoreCase) && tagName == "svg")
         {
-            if (tryParseViewBoxValues(value).success)
+            var parseResponse = tryParseViewBoxValues(value);
+            if (parseResponse.success)
             {
-                return success($"ViewBox({string.Join(", ", tryParseViewBoxValues(value).parameters)})");
+                return success($"ViewBox({string.Join(", ", parseResponse.parameters)})");
             }
 
             return success($"ViewBox(\"{value}\")");
         }
 
+        
+        
         var response = TryConvertToModifier_From_Mixin_Extension(name, value);
         if (response.success)
         {
@@ -931,6 +934,8 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
             return default;
         }
+        
+        
     }
 
     static (bool success, string modifierCode) TryConvertToModifier_From_Mixin_Extension(string name, string value)
@@ -953,6 +958,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return success("HeightMaximized");
         }
+        if (name.Equals("boxShadow", StringComparison.OrdinalIgnoreCase))
+        {
+            var parseResponse = TryParseBoxShadow(value);
+            if (parseResponse.success)
+            {
+                return success($"BoxShadow({string.Join(", ", parseResponse.parameters)})");   
+            }
+        }
+        
 
         if (IsMarkedAsAlreadyCalculatedModifier(value))
         {
@@ -1001,6 +1015,37 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         }
 
         return default;
+        
+        static (bool success, IReadOnlyList<string> parameters) TryParseBoxShadow(string boxShadow)
+        {
+            // sample: "0.1px 1px 2px rgba(28, 43, 61, 0.12)"
+        
+            if (boxShadow is null)
+            {
+                return default;
+            }
+        
+            var index = boxShadow.IndexOf("rgba", StringComparison.OrdinalIgnoreCase);
+            if (index <= 0)
+            {
+                index = boxShadow.IndexOf("rgb", StringComparison.OrdinalIgnoreCase);
+            }
+        
+            if (index  > 0)
+            {
+                var firstPart = boxShadow.Substring(0, index);
+
+                var list = firstPart.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (list.TrueForAll(x=>x.EndsWithPixel()))
+                {
+                    var parameters = list.Select(x => x.RemovePixelFromEnd()).ToList();
+                    parameters.Add(boxShadow.Substring(index));
+                    return (success:true, parameters);
+                }
+            }
+        
+            return default;
+        }
     }
 
     static PropertyInfo TryFindProperty(string htmlTagName, string attributeName)
@@ -1033,4 +1078,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
     }
 
     #endregion
+
+   
 }
