@@ -856,15 +856,16 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         var success = (string modifierCode) => (true, modifierCode);
 
-        if (tagName == "svg" && name.Equals("width",StringComparison.OrdinalIgnoreCase) && double.TryParse(value,out _))
+        if (tagName == "svg" && name.Equals("width", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
             return success($"svg.Width({value})");
         }
-        if (tagName == "svg" && name.Equals("height",StringComparison.OrdinalIgnoreCase) && double.TryParse(value,out _))
+
+        if (tagName == "svg" && name.Equals("height", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
             return success($"svg.Height({value})");
         }
-        
+
         if (name == "focusable" && tagName == "svg")
         {
             return success($"svg.Focusable(\"{value}\")");
@@ -901,7 +902,6 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                     return success($"{tagName}.{UpperCaseFirstChar(propertyInfo.Name)}({valueAsDouble})");
                 }
             }
-            
 
             if (propertyInfo.PropertyType == typeof(int?))
             {
@@ -948,12 +948,12 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
         {
             return success("WidthMaximized");
         }
-        
+
         if (name.Equals("Height", StringComparison.OrdinalIgnoreCase) && value == "100%")
         {
             return success("HeightMaximized");
         }
-        
+
         if (IsMarkedAsAlreadyCalculatedModifier(value))
         {
             return success(UnMarkAsAlreadyCalculatedModifier(value));
