@@ -882,6 +882,7 @@ partial class ElementSerializer
                         || propertyInfo.Name == "state"
                         || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
                         || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
+                        || (propertyInfo.Name == "Item" && propertyInfo.GetIndexParameters().Length > 0)
                        )
                     {
                         continue;
