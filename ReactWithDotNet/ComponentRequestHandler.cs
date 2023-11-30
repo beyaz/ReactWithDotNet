@@ -340,6 +340,10 @@ static class ComponentRequestHandler
                 try
                 {
                     eventArguments[i] = DeserializeJsonBySystemTextJson(eventArgumentsAsJsonArray[i], parameterInfo.ParameterType);
+                    if (eventArguments[i] is MouseEvent mouseEvent)
+                    {
+                        MouseEvent.Fix(mouseEvent);
+                    }
                 }
                 catch (Exception)
                 {

@@ -33,6 +33,14 @@ public sealed class ShadowHtmlElement
     public string value { get; set; }
     
     public IReadOnlyDictionary<string,string> data { get;  set; }
+
+    internal static void Fix(ShadowHtmlElement shadowHtmlElement)
+    {
+        if (shadowHtmlElement?.data is not null)
+        {
+            shadowHtmlElement.data = new Dictionary<string, string>(shadowHtmlElement?.data, StringComparer.OrdinalIgnoreCase);
+        }
+    }
 }
 
 public sealed class MouseEvent : UIEvent
@@ -69,6 +77,12 @@ public sealed class MouseEvent : UIEvent
     public double timeStamp { get; set; }
 
     public string type { get; set; }
+
+    internal static void Fix(MouseEvent mouseEvent)
+    {
+        ShadowHtmlElement.Fix(mouseEvent.target);
+        ShadowHtmlElement.Fix(mouseEvent.currentTarget);
+    }
 }
 
 public delegate Task MouseEventHandler(MouseEvent e);

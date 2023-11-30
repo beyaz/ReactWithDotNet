@@ -15,6 +15,16 @@ partial class Mixin
         return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue));
     }
     
+    public static HtmlElementModifier Data(string dataName, int dataValue)
+    {
+        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue.ToString()));
+    }
+    
+    public static HtmlElementModifier Data(string dataName, long dataValue)
+    {
+        return CreateHtmlElementModifier<HtmlElement>(el => el.data.Add(dataName, dataValue.ToString()));
+    }
+    
     /// <summary>
     /// Automatically generates a css class then adds class name to element.
     /// <br/>
