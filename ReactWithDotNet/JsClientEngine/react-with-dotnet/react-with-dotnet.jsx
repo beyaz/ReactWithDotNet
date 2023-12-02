@@ -2301,6 +2301,11 @@ RegisterCoreFunction("GotoMethod", function (timeout, remoteMethodName, remoteMe
 
     setTimeout(() =>
     {
+        if (component.ComponentWillUnmountIsCalled)
+        {
+            return;
+        }
+
         const cachedMethodInfo = tryToFindCachedMethodInfo(component, remoteMethodName, remoteMethodArguments);
         if (cachedMethodInfo)
         {
@@ -2355,6 +2360,11 @@ RegisterCoreFunction("ListenEvent", function (eventName, remoteMethodName)
 
     const onEventFired = (eventArgumentsAsArray) =>
     {
+        if (component.ComponentWillUnmountIsCalled)
+        {
+            return;
+        }
+
         const actionArguments = {
             component: component,
             remoteMethodName: remoteMethodName,
