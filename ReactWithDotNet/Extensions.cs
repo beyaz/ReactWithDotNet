@@ -7,73 +7,7 @@ static class Extensions
 {
     public static (IReadOnlyList<string> path, bool isConnectedToState) AsBindingPath<T>(this Expression<Func<T>> propertyAccessor)
     {
-        var expression = propertyAccessor.Body;
-
-        var path = new List<string>();
-
-        while (expression is not null)
-        {
-            if (expression is UnaryExpression unaryExpression)
-            {
-                expression = unaryExpression.Operand;
-
-                continue;
-            }
-            
-            if (expression is MemberExpression memberExpression)
-            {
-                path.Add(memberExpression.Member.Name);
-
-                expression = memberExpression.Expression;
-
-                if (expression is ConstantExpression)
-                {
-                    break;
-                }
-
-                continue;
-            }
-
-            if (expression is BinaryExpression binaryExpression)
-            {
-                if (binaryExpression.Right is ConstantExpression constantExpression)
-                {
-                    path.Add("]");
-                    path.Add(constantExpression.Value!.ToString());
-                    path.Add("[");
-
-                    expression = binaryExpression.Left;
-                    continue;
-                }
-            }
-
-            if (expression is MethodCallExpression { Method.Name: "get_Item" } methodCallExpression)
-            {
-                if (methodCallExpression.Arguments[0] is ConstantExpression constantExpression1)
-                {
-                    path.Add("]");
-                    path.Add(constantExpression1.Value!.ToString());
-                    path.Add("[");
-
-                    expression = methodCallExpression.Object;
-                    continue;
-                }
-
-                if (methodCallExpression.Arguments[0] is MemberExpression { Expression: ConstantExpression constantExpression })
-                {
-                    var index = constantExpression.Value!.GetType().GetFields()[0].GetValue(constantExpression.Value);
-
-                    path.Add("]");
-                    path.Add(index?.ToString());
-                    path.Add("[");
-
-                    expression = methodCallExpression.Object;
-                    continue;
-                }
-            }
-
-            throw new DeveloperException(propertyAccessor.ToString());
-        }
+        var path = AsPath(propertyAccessor.Body);
 
         if (path.Count == 0)
         {
@@ -92,6 +26,77 @@ static class Extensions
         path.Reverse();
 
         return (path, false);
+
+        static List<string> AsPath(Expression expression)
+        {
+            var path = new List<string>();
+
+            while (expression is not null)
+            {
+                if (expression is UnaryExpression unaryExpression)
+                {
+                    expression = unaryExpression.Operand;
+
+                    continue;
+                }
+
+                if (expression is MemberExpression memberExpression)
+                {
+                    path.Add(memberExpression.Member.Name);
+
+                    expression = memberExpression.Expression;
+
+                    if (expression is ConstantExpression)
+                    {
+                        break;
+                    }
+
+                    continue;
+                }
+
+                if (expression is BinaryExpression binaryExpression)
+                {
+                    if (binaryExpression.Right is ConstantExpression constantExpression)
+                    {
+                        path.Add("]");
+                        path.Add(constantExpression.Value!.ToString());
+                        path.Add("[");
+
+                        expression = binaryExpression.Left;
+                        continue;
+                    }
+                }
+
+                if (expression is MethodCallExpression { Method.Name: "get_Item" } methodCallExpression)
+                {
+                    if (methodCallExpression.Arguments[0] is ConstantExpression constantExpression1)
+                    {
+                        path.Add("]");
+                        path.Add(constantExpression1.Value!.ToString());
+                        path.Add("[");
+
+                        expression = methodCallExpression.Object;
+                        continue;
+                    }
+
+                    if (methodCallExpression.Arguments[0] is MemberExpression { Expression: ConstantExpression constantExpression })
+                    {
+                        var index = constantExpression.Value!.GetType().GetFields()[0].GetValue(constantExpression.Value);
+
+                        path.Add("]");
+                        path.Add(index?.ToString());
+                        path.Add("[");
+
+                        expression = methodCallExpression.Object;
+                        continue;
+                    }
+                }
+
+                throw new DeveloperException(expression.ToString());
+            }
+
+            return path;
+        }
     }
 
     public static (object value, Exception exception) ChangeType(object value, Type targetType)
