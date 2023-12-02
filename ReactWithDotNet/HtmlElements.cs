@@ -48,6 +48,12 @@ public sealed class input : HtmlElement
 
     [ReactProp]
     public bool? disabled { get; set; }
+    
+    /// <summary>
+    ///     Element must automatically get focus when the page loads.
+    /// </summary>
+    [ReactProp]
+    public bool? autoFocus  { get; set; }
 
     [ReactProp]
     public string name { get; set; }
