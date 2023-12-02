@@ -375,6 +375,12 @@ function SetValueInPath(obj, steps, value)
     {
         var step = steps[i];
 
+        if (len === i + 3 && steps[i] === '[' && steps[i + 2] === ']')
+        {
+            obj[steps[i + 1]] = value;
+            return;
+        }
+
         if (obj[step] == null)
         {
             obj[step] = {};
