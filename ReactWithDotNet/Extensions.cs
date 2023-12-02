@@ -90,6 +90,16 @@ static class Extensions
                         expression = methodCallExpression.Object;
                         continue;
                     }
+                    
+                    if (methodCallExpression.Arguments[0] is MemberExpression { Expression: MemberExpression e1 })
+                    {
+                        path.Add("]");
+                        path.AddRange(AsPath(e1));
+                        path.Add("[");
+
+                        expression = methodCallExpression.Object;
+                        continue;
+                    }
                 }
 
                 throw new DeveloperException(expression.ToString());
