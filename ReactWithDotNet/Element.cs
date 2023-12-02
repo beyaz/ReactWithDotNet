@@ -113,6 +113,11 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         Add(elementCreatorFunc?.Invoke());
     }
+    
+    public void Add<TElement>(Action<TElement> action) where TElement : Element
+    {
+        action?.Invoke((TElement)this);
+    }
 
     /// <summary>
     ///     Gets the enumerator.
