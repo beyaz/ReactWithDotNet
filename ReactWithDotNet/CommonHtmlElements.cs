@@ -1825,37 +1825,37 @@ public sealed class rect : HtmlElement
     ///     The x-coordinate of the top-left corner of the rectangle.
     /// </summary>
     [ReactProp]
-    public string x { get; set; }
+    public UnionProp<string,double> x { get; set; }
 
     /// <summary>
     ///     The y-coordinate of the top-left corner of the rectangle.
     /// </summary>
     [ReactProp]
-    public string y { get; set; }
+    public UnionProp<string,double> y { get; set; }
 
     /// <summary>
     ///     The width of the rectangle.
     /// </summary>
     [ReactProp]
-    public string width { get; set; }
+    public UnionProp<string,double> width { get; set; }
 
     /// <summary>
     ///     The height of the rectangle.
     /// </summary>
     [ReactProp]
-    public string height { get; set; }
+    public UnionProp<string,double> height { get; set; }
 
     /// <summary>
     ///     The border radius of the rectangle on the horizontal axis.
     /// </summary>
     [ReactProp]
-    public string rx { get; set; }
+    public UnionProp<string,double> rx { get; set; }
 
     /// <summary>
     ///     The border radius of the rectangle on the vertical axis.
     /// </summary>
     [ReactProp]
-    public string ry { get; set; }
+    public UnionProp<string,double> ry { get; set; }
 
     /// <summary>
     ///     The fill color of the rectangle.
@@ -1873,7 +1873,7 @@ public sealed class rect : HtmlElement
     ///     The width of the rectangle's stroke.
     /// </summary>
     [ReactProp]
-    public string strokeWidth { get; set; }
+    public UnionProp<string,double> strokeWidth { get; set; }
 
     /// <summary>
     ///     The linecap style of the rectangle's stroke.
@@ -1901,42 +1901,42 @@ public sealed class rect : HtmlElement
     /// <br/>
     ///     The x-coordinate of the top-left corner of the rectangle.
     /// </summary>
-    public static HtmlElementModifier X(string value) => Modify(x => x.x = value);
+    public static HtmlElementModifier X(UnionProp<string,double> value) => Modify(x => x.x = value);
 
     /// <summary>
     ///     y = <paramref name="value"/>
     /// <br/>
     ///     The y-coordinate of the top-left corner of the rectangle.
     /// </summary>
-    public static HtmlElementModifier Y(string value) => Modify(x => x.y = value);
+    public static HtmlElementModifier Y(UnionProp<string,double> value) => Modify(x => x.y = value);
 
     /// <summary>
     ///     width = <paramref name="value"/>
     /// <br/>
     ///     The width of the rectangle.
     /// </summary>
-    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+    public static HtmlElementModifier Width(UnionProp<string,double> value) => Modify(x => x.width = value);
 
     /// <summary>
     ///     height = <paramref name="value"/>
     /// <br/>
     ///     The height of the rectangle.
     /// </summary>
-    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+    public static HtmlElementModifier Height(UnionProp<string,double> value) => Modify(x => x.height = value);
 
     /// <summary>
     ///     rx = <paramref name="value"/>
     /// <br/>
     ///     The border radius of the rectangle on the horizontal axis.
     /// </summary>
-    public static HtmlElementModifier Rx(string value) => Modify(x => x.rx = value);
+    public static HtmlElementModifier Rx(UnionProp<string,double> value) => Modify(x => x.rx = value);
 
     /// <summary>
     ///     ry = <paramref name="value"/>
     /// <br/>
     ///     The border radius of the rectangle on the vertical axis.
     /// </summary>
-    public static HtmlElementModifier Ry(string value) => Modify(x => x.ry = value);
+    public static HtmlElementModifier Ry(UnionProp<string,double> value) => Modify(x => x.ry = value);
 
     /// <summary>
     ///     fill = <paramref name="value"/>
@@ -1957,7 +1957,7 @@ public sealed class rect : HtmlElement
     /// <br/>
     ///     The width of the rectangle's stroke.
     /// </summary>
-    public static HtmlElementModifier StrokeWidth(string value) => Modify(x => x.strokeWidth = value);
+    public static HtmlElementModifier StrokeWidth(UnionProp<string,double> value) => Modify(x => x.strokeWidth = value);
 
     /// <summary>
     ///     strokeLinecap = <paramref name="value"/>

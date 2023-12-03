@@ -521,32 +521,38 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "x",
-                        Comment = "The x-coordinate of the top-left corner of the rectangle."
+                        Comment = "The x-coordinate of the top-left corner of the rectangle.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
                         Name    = "y",
-                        Comment = "The y-coordinate of the top-left corner of the rectangle."
+                        Comment = "The y-coordinate of the top-left corner of the rectangle.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
                         Name    = "width",
-                        Comment = "The width of the rectangle."
+                        Comment = "The width of the rectangle.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
                         Name    = "height",
-                        Comment = "The height of the rectangle."
+                        Comment = "The height of the rectangle.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
                         Name    = "rx",
-                        Comment = "The border radius of the rectangle on the horizontal axis."
+                        Comment = "The border radius of the rectangle on the horizontal axis.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
                         Name    = "ry",
-                        Comment = "The border radius of the rectangle on the vertical axis."
+                        Comment = "The border radius of the rectangle on the vertical axis.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
@@ -561,7 +567,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "stroke-width",
-                        Comment = "The width of the rectangle's stroke."
+                        Comment = "The width of the rectangle's stroke.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
