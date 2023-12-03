@@ -336,7 +336,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { Border("none"), WidthMaximized, HeightMaximized } };
         }
 
-        return new FlexRow(WidthHeightMaximized, PrimaryBackground)
+        return new FlexRow(WidthMaximized, Height100vh, PrimaryBackground,FontFamily("system-ui"))
         {
             new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
             {
