@@ -676,15 +676,15 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         return [ToModifier(attribute)];
                     }
 
-                    return new List<string> { $"{propertyInfo.Name} = \"{attribute.Value}\"" };
+                    return [$"{propertyInfo.Name} = \"{attribute.Value}\""];
                 }
 
                 if (canBeExportInOneLine())
                 {
-                    return new List<string> { $"/* {attribute.GetName()} = \"{attribute.Value}\"*/" };
+                    return [$"/* {attribute.GetName()} = \"{attribute.Value}\"*/"];
                 }
 
-                return new List<string> { $"// {attribute.GetName()} = \"{attribute.Value}\"" };
+                return [$"// {attribute.GetName()} = \"{attribute.Value}\""];
             }
 
             if (style is not null)
