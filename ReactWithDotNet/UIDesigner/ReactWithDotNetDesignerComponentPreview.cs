@@ -7,7 +7,15 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 {
     public DateTime? LastWriteTime { get; set; }
 
-    static StyleModifier ComponentIndicatorStyle => new(s => { s.border ??= "0.5px dotted blue"; });
+    static StyleModifier ComponentIndicatorStyle => new(s =>
+    {
+        if (s.border is not null || s.boxShadow is not null)
+        {
+            return;
+        }
+        
+        s.border ??= "0.5px dotted blue";
+    });
 
     public Task Refresh()
     {
