@@ -979,7 +979,7 @@ partial class ElementSerializer
         {
             foreach (var (key, value) in htmlElement._data)
             {
-                map.Add($"data-{key}", value);
+                map.Add($"data-{key.ToLower()}", value);
             }
         }
 
