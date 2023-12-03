@@ -971,7 +971,7 @@ partial class ElementSerializer
         {
             foreach (var (key, value) in htmlElement._aria)
             {
-                map.Add($"aria-{key}", value);
+                map.Add($"aria-{key.ToLower()}", value);
             }
         }
 
