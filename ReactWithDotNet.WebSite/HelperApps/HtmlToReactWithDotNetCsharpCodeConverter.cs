@@ -676,6 +676,23 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                         return [ToModifier(attribute)];
                     }
 
+                    if (propertyInfo.PropertyType.IsGenericType)
+                    {
+                        if (propertyInfo.PropertyType.GetGenericTypeDefinition().Name.StartsWith("UnionProp`"))
+                        {
+                            var genericArguments = propertyInfo.PropertyType.GetGenericArguments();
+                            
+                            if (genericArguments.Contains(typeof(double)) ||
+                                genericArguments.Contains(typeof(double?)))
+                            {
+                                if (double.TryParse(attribute.Value.Replace(".",""), out _))
+                                {
+                                    return [$"{propertyInfo.Name} = {attribute.Value}"];
+                                }
+                            }
+                        }
+                    }
+
                     return [$"{propertyInfo.Name} = \"{attribute.Value}\""];
                 }
 
