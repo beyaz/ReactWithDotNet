@@ -46,7 +46,7 @@ partial class Mixin
                     return Activator.CreateInstance(targetType);
                 }
 
-                return ReflectionHelper.ConvertNonEmptyOrNullStringValueToNumberType(stringValue, targetType);
+                return ReflectionHelper.ConvertNonEmptyOrNullStringValueToPrimitiveType(stringValue, targetType);
             }
 
             // BOOL
