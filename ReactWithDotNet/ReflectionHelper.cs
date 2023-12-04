@@ -149,4 +149,81 @@ static class ReflectionHelper
 
         return false;
     }
+
+    public static object ConvertNonEmptyOrNullStringValueToNumberType(string value, Type targetNumberType)
+    {
+        if (ReferenceEquals(targetNumberType,Type_bool))
+        {
+            return Convert.ToBoolean(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_char))
+        {
+            return Convert.ToChar(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_sbyte))
+        {
+            return Convert.ToSByte(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_byte))
+        {
+            return Convert.ToByte(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_short))
+        {
+            return Convert.ToInt16(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_ushort))
+        {
+            return Convert.ToUInt16(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_int))
+        {
+            return Convert.ToInt32(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_uint))
+        {
+            return Convert.ToUInt32(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_long))
+        {
+            return Convert.ToInt64(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_ulong))
+        {
+            return Convert.ToUInt16(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_float))
+        {
+            return Convert.ToSingle(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_double))
+        {
+            return Convert.ToDouble(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_decimal))
+        {
+            return Convert.ToDecimal(value);
+        }
+        if (ReferenceEquals(targetNumberType,Type_DateTime))
+        {
+            return Convert.ToDateTime(value);
+        }
+
+        throw new InvalidCastException($"{value} not casted to {targetNumberType}");
+    }
+
+    static readonly Type Type_bool = typeof(bool);
+    static readonly Type Type_char = typeof(char);
+    static readonly Type Type_sbyte = typeof(sbyte);
+    static readonly Type Type_byte =typeof(byte);
+    static readonly Type Type_short =typeof(short);
+    static readonly Type Type_ushort =typeof(ushort);
+    static readonly Type Type_int =typeof(int);
+    static readonly Type Type_uint =typeof(uint);
+    static readonly Type Type_long =typeof(long);
+    static readonly Type Type_ulong =typeof(ulong);
+    static readonly Type Type_float =typeof(float);
+    static readonly Type Type_double =typeof(double);
+    static readonly Type Type_decimal =typeof(decimal);
+    static readonly Type Type_DateTime =typeof(DateTime);
 }

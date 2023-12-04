@@ -7,6 +7,7 @@ namespace ReactWithDotNet;
 
 partial class Mixin
 {
+    
     internal static object ArrangeValueForTargetType(object value, Type targetType)
     {
         if (value is null)
@@ -45,7 +46,7 @@ partial class Mixin
                     return Activator.CreateInstance(targetType);
                 }
 
-                return Convert.ChangeType(stringValue, targetType);
+                return ReflectionHelper.ConvertNonEmptyOrNullStringValueToNumberType(stringValue, targetType);
             }
 
             // BOOL
