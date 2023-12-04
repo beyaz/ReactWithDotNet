@@ -19,14 +19,35 @@ partial class Mixin
             return Activator.CreateInstance(targetType);
         }
 
-
-
         if (value is JsonElement jsonElement)
         {
-            if (targetType == typeof(string))
+            if (jsonElement.ValueKind == JsonValueKind.String)
             {
-                return jsonElement.GetString();
+                var stringValue = jsonElement.GetString();
+                
+                if (targetType == typeof(string))
+                {
+                    return stringValue;
+                }
+                
+                if (targetType == typeof(Type))
+                {
+                    return JsonConverterFactoryForType.DeserializeType(stringValue);    
+                }
+                
+                if (string.IsNullOrWhiteSpace(stringValue))
+                {
+                    if (targetType.IsClass)
+                    {
+                        return null;    
+                    }
+
+                    return Activator.CreateInstance(targetType);
+                }
+
+                return Convert.ChangeType(stringValue,targetType);
             }
+            
 
             // BOOL
             if (targetType == typeof(bool) || targetType == typeof(bool?))
@@ -164,18 +185,7 @@ partial class Mixin
             }
 
             if (targetType == typeof(int?))
-            {
-                if (jsonElement.ValueKind == JsonValueKind.String)
-                {
-                    var str = jsonElement.GetString();
-                    if (string.IsNullOrWhiteSpace(str))
-                    {
-                        return null;
-                    }
-
-                    return Convert.ToInt32(str);
-
-                }
+            {   
                 if (jsonElement.TryGetInt32(out var int32Value))
                 {
                     return int32Value;
@@ -231,11 +241,6 @@ partial class Mixin
             if (jsonElement.ValueKind == JsonValueKind.Array)
             {
                 return jsonElement.Deserialize(targetType,JsonSerializerOptionsInstance);
-            }
-
-            if (jsonElement.ValueKind == JsonValueKind.String && targetType == typeof(Type))
-            {
-                return JsonConverterFactoryForType.DeserializeType(jsonElement.GetString());
             }
             
             throw new Exception();
