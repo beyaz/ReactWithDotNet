@@ -165,6 +165,17 @@ partial class Mixin
 
             if (targetType == typeof(int?))
             {
+                if (jsonElement.ValueKind == JsonValueKind.String)
+                {
+                    var str = jsonElement.GetString();
+                    if (string.IsNullOrWhiteSpace(str))
+                    {
+                        return null;
+                    }
+
+                    return Convert.ToInt32(str);
+
+                }
                 if (jsonElement.TryGetInt32(out var int32Value))
                 {
                     return int32Value;

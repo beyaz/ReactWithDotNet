@@ -205,15 +205,6 @@ static class ComponentRequestHandler
 
             instance.ComponentUniqueIdentifier = request.ComponentUniqueIdentifier;
 
-            // transfer properties
-            {
-                var errorMessage = ElementSerializer.TransferPropertiesToDotNetComponent(instance, type, request.CapturedStateTree["0"].DotNetProperties);
-                if (errorMessage is not null)
-                {
-                    return new ComponentResponse { ErrorMessage = errorMessage };
-                }
-            }
-
             // Init state
             {
                 var errorMessage = setState(type, instance, request.CapturedStateTree["0"].StateAsJson);
@@ -223,6 +214,15 @@ static class ComponentRequestHandler
                 }
 
                 instance.Context = context;
+            }
+            
+            // transfer properties
+            {
+                var errorMessage = ElementSerializer.TransferPropertiesToDotNetComponent(instance, type, request.CapturedStateTree["0"].DotNetProperties);
+                if (errorMessage is not null)
+                {
+                    return new ComponentResponse { ErrorMessage = errorMessage };
+                }
             }
 
             // Find method
