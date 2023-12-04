@@ -24,37 +24,35 @@ partial class Mixin
             if (jsonElement.ValueKind == JsonValueKind.String)
             {
                 var stringValue = jsonElement.GetString();
-                
+
                 if (targetType == typeof(string))
                 {
                     return stringValue;
                 }
-                
+
                 if (targetType == typeof(Type))
                 {
-                    return JsonConverterFactoryForType.DeserializeType(stringValue);    
+                    return JsonConverterFactoryForType.DeserializeType(stringValue);
                 }
-                
+
                 if (string.IsNullOrWhiteSpace(stringValue))
                 {
                     if (targetType.IsClass)
                     {
-                        return null;    
+                        return null;
                     }
 
                     return Activator.CreateInstance(targetType);
                 }
 
-                return Convert.ChangeType(stringValue,targetType);
+                return Convert.ChangeType(stringValue, targetType);
             }
-            
 
             // BOOL
             if (targetType == typeof(bool) || targetType == typeof(bool?))
             {
                 return jsonElement.GetBoolean();
             }
-
 
             // DATE
             if (targetType == typeof(DateTime))
@@ -98,7 +96,6 @@ partial class Mixin
                 }
             }
 
-
             // NUMBER TYPES
             if (targetType == typeof(sbyte))
             {
@@ -109,7 +106,6 @@ partial class Mixin
             {
                 return jsonElement.GetByte();
             }
-
 
             if (targetType == typeof(short))
             {
@@ -140,7 +136,6 @@ partial class Mixin
             {
                 return jsonElement.GetDecimal();
             }
-
 
             // UNSIGNED NUMBER TYPES
             if (targetType == typeof(ushort))
@@ -175,7 +170,6 @@ partial class Mixin
                 }
             }
 
-
             if (targetType == typeof(short?))
             {
                 if (jsonElement.TryGetInt16(out var int16Value))
@@ -185,7 +179,7 @@ partial class Mixin
             }
 
             if (targetType == typeof(int?))
-            {   
+            {
                 if (jsonElement.TryGetInt32(out var int32Value))
                 {
                     return int32Value;
@@ -224,8 +218,6 @@ partial class Mixin
                 }
             }
 
-
-
             if (jsonElement.ValueKind == JsonValueKind.Object)
             {
                 if (targetType == typeof(Style))
@@ -235,14 +227,14 @@ partial class Mixin
                     return style;
                 }
 
-                return jsonElement.Deserialize(targetType,JsonSerializerOptionsInstance);
+                return jsonElement.Deserialize(targetType, JsonSerializerOptionsInstance);
             }
 
             if (jsonElement.ValueKind == JsonValueKind.Array)
             {
-                return jsonElement.Deserialize(targetType,JsonSerializerOptionsInstance);
+                return jsonElement.Deserialize(targetType, JsonSerializerOptionsInstance);
             }
-            
+
             throw new Exception();
         }
 
@@ -260,6 +252,7 @@ partial class Mixin
         return changeResponse.value;
     }
 }
+
 static partial class JsonSerializationOptionHelper
 {
     public static JsonSerializerOptions Modify(JsonSerializerOptions options)
@@ -282,35 +275,10 @@ static partial class JsonSerializationOptionHelper
         options.Converters.Add(new ValueTupleFactory());
 
         options.Converters.Add(new JsonConverterFactoryForType());
-        
+
         options.Converters.Add(new UnionPropFactory());
 
         return options;
-    }
-
-    public class JsonConverterForEnum : JsonConverterFactory
-    {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            if (typeToConvert.Assembly == typeof(JsonConverterForEnum).Assembly)
-            {
-                return typeToConvert.IsSubclassOf(typeof(Enum));
-            }
-
-            return false;
-        }
-
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            var converter = (JsonConverter)Activator.CreateInstance(typeof(EnumToStringConverter<>)
-                                                                        .MakeGenericType(typeToConvert),
-                                                                    BindingFlags.Instance | BindingFlags.Public,
-                                                                    null,
-                                                                    null,
-                                                                    null)!;
-
-            return converter;
-        }
     }
 
     public class JsonConverterFactoryForType : JsonConverterFactory
@@ -359,6 +327,31 @@ static partial class JsonSerializationOptionHelper
 
                 writer.WriteStringValue(SerializeType(value));
             }
+        }
+    }
+
+    public class JsonConverterForEnum : JsonConverterFactory
+    {
+        public override bool CanConvert(Type typeToConvert)
+        {
+            if (typeToConvert.Assembly == typeof(JsonConverterForEnum).Assembly)
+            {
+                return typeToConvert.IsSubclassOf(typeof(Enum));
+            }
+
+            return false;
+        }
+
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        {
+            var converter = (JsonConverter)Activator.CreateInstance(typeof(EnumToStringConverter<>)
+                                                                        .MakeGenericType(typeToConvert),
+                                                                    BindingFlags.Instance | BindingFlags.Public,
+                                                                    null,
+                                                                    null,
+                                                                    null)!;
+
+            return converter;
         }
     }
 
@@ -427,7 +420,6 @@ static partial class JsonSerializationOptionHelper
     {
         public override Style Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            
             throw new NotImplementedException();
         }
 
