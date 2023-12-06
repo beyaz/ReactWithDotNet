@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -133,5 +134,53 @@ public class SerializationTests
         json = JsonSerializer.Serialize(a, JsonSerializerOptionsInstance);
 
         json.Should().Be("false");
+    }
+
+
+    enum MyEnum
+    {
+        A=5,B=6, C4TYU3 =7
+    }
+
+    class MyClass
+    {
+        public MyEnum JJJ { get; set; }
+        public string Prop1{ get; set; }
+    }
+    
+    [TestMethod]
+    public void EnumSerialize()
+    {
+        var instance = new MyClass
+        {
+            JJJ   = MyEnum.C4TYU3,
+            Prop1 = "a"
+        };
+
+        
+        var json = JsonSerializer.Serialize(instance, JsonSerializerOptionsInstance);
+
+        json.Should().Be(
+                         """
+                         {
+                           "JJJ": "C4TYU3",
+                           "Prop1": "a"
+                         }
+                         """);
+
+        json = """
+               {
+                 "JJJ": "C4TYU3",
+                 "Prop1": "a"
+               }
+               """;
+
+
+        instance = JsonSerializer.Deserialize<MyClass>(json,JsonSerializerOptionsInstance);
+        
+        instance.Prop1.Should().Be("a");
+        instance.JJJ.Should().Be(MyEnum.C4TYU3);
+
+
     }
 }

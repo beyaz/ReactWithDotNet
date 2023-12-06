@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using static ReactWithDotNet.JsonSerializationOptionHelper;
@@ -265,7 +264,7 @@ static partial class JsonSerializationOptionHelper
 
         options.PropertyNamingPolicy = null;
 
-        options.Converters.Add(new JsonConverterForEnum());
+        options.Converters.Add(new JsonStringEnumConverter());
 
         options.Converters.Add(new StyleConverter());
 
@@ -328,44 +327,6 @@ static partial class JsonSerializationOptionHelper
 
                 writer.WriteStringValue(SerializeType(value));
             }
-        }
-    }
-
-    public class JsonConverterForEnum : JsonConverterFactory
-    {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            if (typeToConvert.Assembly == typeof(JsonConverterForEnum).Assembly)
-            {
-                return typeToConvert.IsSubclassOf(typeof(Enum));
-            }
-
-            return false;
-        }
-
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            var converter = (JsonConverter)Activator.CreateInstance(typeof(EnumToStringConverter<>)
-                                                                        .MakeGenericType(typeToConvert),
-                                                                    BindingFlags.Instance | BindingFlags.Public,
-                                                                    null,
-                                                                    null,
-                                                                    null)!;
-
-            return converter;
-        }
-    }
-
-    class EnumToStringConverter<T> : JsonConverter<T>
-    {
-        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(value.ToString()?.ToLower());
         }
     }
 
