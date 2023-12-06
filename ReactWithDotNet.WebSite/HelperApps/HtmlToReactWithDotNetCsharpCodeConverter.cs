@@ -1014,6 +1014,19 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
             var paddingValues = value.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
             if (paddingValues.Count == 4 && paddingValues.TrueForAll(x => x.EndsWith("px", StringComparison.OrdinalIgnoreCase)))
             {
+                if (paddingValues[0] == paddingValues[1] &&   
+                    paddingValues[0] == paddingValues[2] && 
+                    paddingValues[0] == paddingValues[3])
+                {
+                    return success($"Padding({paddingValues[0].RemoveFromEnd("px")})");
+                }
+                
+                if (paddingValues[0] == paddingValues[2] &&   
+                    paddingValues[1] == paddingValues[3] )
+                {
+                    return success($"Padding({paddingValues[0].RemoveFromEnd("px")}, {paddingValues[1].RemoveFromEnd("px")})");
+                }
+                
                 return success($"Padding({paddingValues[0].RemoveFromEnd("px")}, {paddingValues[1].RemoveFromEnd("px")}, {paddingValues[2].RemoveFromEnd("px")}, {paddingValues[3].RemoveFromEnd("px")})");
             }
         }
