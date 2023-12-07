@@ -775,7 +775,7 @@ public static partial class Mixin
 
     internal static string AsPixel(this double value) => value + "px";
 
-    // todo: think better solution write to output stream
+    // todo: think better solution write to output stream or maybe span
     internal static string ToJson(this ComponentResponse value)
     {
         return JsonSerializer.Serialize(value, JsonSerializerOptionsInstance);
