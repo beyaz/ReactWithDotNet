@@ -34,17 +34,15 @@ static class ReactWithDotNetIntegration
 #endif
     }
 
-    static async Task HandleReactWithDotNetRequest(HttpContext httpContext)
+    static Task HandleReactWithDotNetRequest(HttpContext httpContext)
     {
         httpContext.Response.ContentType = "application/json; charset=utf-8";
 
-        var jsonText = await CalculateRenderInfo(new CalculateRenderInfoInput
+        return ProcessReactWithDotNetRequest(new CalculateRenderInfoInput
         {
             HttpContext           = httpContext,
             OnReactContextCreated = InitializeTheme
         });
-
-        await httpContext.Response.WriteAsync(jsonText);
     }
 
     static async Task HomePage(HttpContext httpContext)

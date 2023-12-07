@@ -85,7 +85,32 @@ partial class Mixin
         });
     }
 
-    public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
+    //public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
+    //{
+    //    if (calculateRenderInfoInput is null)
+    //    {
+    //        throw new ArgumentNullException(nameof(calculateRenderInfoInput));
+    //    }
+
+    //    if (calculateRenderInfoInput.HttpContext is null)
+    //    {
+    //        throw new ArgumentNullException(string.Join('.', nameof(calculateRenderInfoInput), nameof(calculateRenderInfoInput.HttpContext)));
+    //    }
+
+    //    var input = new ProcessReactWithDotNetRequestInput
+    //    {
+    //        HttpContext                    = calculateRenderInfoInput.HttpContext,
+    //        OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
+    //        OnReactContextDisposed         = calculateRenderInfoInput.OnReactContextDisposed,
+    //        BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient
+    //    };
+
+    //    var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
+
+    //    return componentResponse.ToJson();
+    //}
+    
+    public static async Task ProcessReactWithDotNetRequest(CalculateRenderInfoInput calculateRenderInfoInput)
     {
         if (calculateRenderInfoInput is null)
         {
@@ -106,8 +131,8 @@ partial class Mixin
         };
 
         var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
-
-        return componentResponse.ToJson();
+        
+        await componentResponse.ToJson(calculateRenderInfoInput.HttpContext.Response.Body);
     }
 
     internal static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput input)
