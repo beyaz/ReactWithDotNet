@@ -84,31 +84,6 @@ partial class Mixin
             BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
         });
     }
-
-    //public static async Task<string> CalculateRenderInfo(CalculateRenderInfoInput calculateRenderInfoInput)
-    //{
-    //    if (calculateRenderInfoInput is null)
-    //    {
-    //        throw new ArgumentNullException(nameof(calculateRenderInfoInput));
-    //    }
-
-    //    if (calculateRenderInfoInput.HttpContext is null)
-    //    {
-    //        throw new ArgumentNullException(string.Join('.', nameof(calculateRenderInfoInput), nameof(calculateRenderInfoInput.HttpContext)));
-    //    }
-
-    //    var input = new ProcessReactWithDotNetRequestInput
-    //    {
-    //        HttpContext                    = calculateRenderInfoInput.HttpContext,
-    //        OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
-    //        OnReactContextDisposed         = calculateRenderInfoInput.OnReactContextDisposed,
-    //        BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient
-    //    };
-
-    //    var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
-
-    //    return componentResponse.ToJson();
-    //}
     
     public static async Task ProcessReactWithDotNetRequest(CalculateRenderInfoInput calculateRenderInfoInput)
     {
