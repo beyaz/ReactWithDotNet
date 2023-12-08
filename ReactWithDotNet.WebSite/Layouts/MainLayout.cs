@@ -70,21 +70,17 @@ class MainLayout : PureComponent, IPageLayout
                 },
                 
 
-                new script
+                new script(script.Type("module"))
                 {
-                    type = "module",
-                    text = 
-                    $@"
+                    $$"""
+                      import {ReactWithDotNet} from './{{root}}/dist/index.js?v={{Guid.NewGuid():N}}';
 
-import {{ReactWithDotNet}} from './{root}/dist/index.js?v={Guid.NewGuid():N}';
-
-ReactWithDotNet.StrictMode = false;
-ReactWithDotNet.RenderComponentIn({{
-  idOfContainerHtmlElement: '{ContainerDomElementId}',
-  renderInfo: {RenderInfo.ToJsonString()}
-}});
-
-"
+                      ReactWithDotNet.StrictMode = false;
+                      ReactWithDotNet.RenderComponentIn({
+                        idOfContainerHtmlElement: '{{ContainerDomElementId}}',
+                        renderInfo: {{RenderInfo.ToJsonString()}}
+                      });
+                      """
                 }
 
 
