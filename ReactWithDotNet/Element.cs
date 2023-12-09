@@ -132,7 +132,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
         return CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
         {
             Component = new ToStringHandlerComponent(this)
-        }).GetAwaiter().GetResult();
+        }).GetAwaiter().GetResult().ToString();
     }
 
     /// <summary>

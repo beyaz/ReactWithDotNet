@@ -8,7 +8,7 @@ static class HtmlTextGenerator
 {
     static readonly IReadOnlyList<string> SelfClosingTags = "area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr".Split(',');
 
-    public static string ToHtml(ComponentResponse componentResponse)
+    public static StringBuilder ToHtml(ComponentResponse componentResponse)
     {
         return CalculateHtml((JsonMap)componentResponse.ElementAsJson, (JsonMap)componentResponse.DynamicStyles);
     }
@@ -93,7 +93,7 @@ static class HtmlTextGenerator
         };
     }
 
-    static string CalculateHtml(JsonMap element, JsonMap dynamicStyles)
+    static StringBuilder CalculateHtml(JsonMap element, JsonMap dynamicStyles)
     {
         var sb = new StringBuilder();
 
@@ -103,7 +103,7 @@ static class HtmlTextGenerator
 
         ToString(sb, 0, wrapperNode);
 
-        return sb.ToString().Trim();
+        return sb;
 
         void tryAddDynamicStylesToHeadNode()
         {

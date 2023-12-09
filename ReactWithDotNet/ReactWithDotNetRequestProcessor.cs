@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
@@ -38,7 +39,7 @@ static class ReactWithDotNetRequestProcessor
 
 partial class Mixin
 {
-    public static async Task<string> CalculateFirstRender(CalculateFirstRenderInput input)
+    public static async Task ProcessReactWithDotNetPageRequest(ProcessReactWithDotNetPageRequestInput input)
     {
         if (input is null)
         {
@@ -61,11 +62,13 @@ partial class Mixin
 
         var component = (Element)Activator.CreateInstance(input.MainContentType);
 
+        var httpContext = input.HttpContext;
+        
         layoutInstance.RenderInfo = await CalculateComponentRenderInfo(new CalculateComponentRenderInfoInput
         {
             Component                      = component,
-            HttpContext                    = input.HttpContext,
-            QueryString                    = input.HttpContext.Request.QueryString.ToString(),
+            HttpContext                    = httpContext,
+            QueryString                    = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
             OnReactContextDisposed         = input.OnReactContextDisposed,
             BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
@@ -73,44 +76,46 @@ partial class Mixin
 
         var reactContext = layoutInstance.RenderInfo.ComponentResponse.ReactContext;
 
-        return await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
+        var sb = await CalculateComponentHtmlText(new CalculateComponentHtmlTextInput
         {
-            HttpContext                    = input.HttpContext,
+            HttpContext                    = httpContext,
             Component                      = (Element)layoutInstance,
-            QueryString                    = input.HttpContext.Request.QueryString.ToString(),
+            QueryString                    = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated          = input.OnReactContextCreated,
             OnReactContextDisposed         = input.OnReactContextDisposed,
             ReactContext                   = reactContext,
             BeforeSerializeElementToClient = input.BeforeSerializeElementToClient
         });
+
+        await httpContext.Response.WriteAsync(sb.ToString());
     }
     
-    public static async Task ProcessReactWithDotNetRequest(CalculateRenderInfoInput calculateRenderInfoInput)
+    public static async Task ProcessReactWithDotNetComponentRequest(ProcessReactWithDotNetComponentRequestInput processReactWithDotNetComponentRequestInput)
     {
-        if (calculateRenderInfoInput is null)
+        if (processReactWithDotNetComponentRequestInput is null)
         {
-            throw new ArgumentNullException(nameof(calculateRenderInfoInput));
+            throw new ArgumentNullException(nameof(processReactWithDotNetComponentRequestInput));
         }
 
-        if (calculateRenderInfoInput.HttpContext is null)
+        if (processReactWithDotNetComponentRequestInput.HttpContext is null)
         {
-            throw new ArgumentNullException(string.Join('.', nameof(calculateRenderInfoInput), nameof(calculateRenderInfoInput.HttpContext)));
+            throw new ArgumentNullException(string.Join('.', nameof(processReactWithDotNetComponentRequestInput), nameof(processReactWithDotNetComponentRequestInput.HttpContext)));
         }
 
         var input = new ProcessReactWithDotNetRequestInput
         {
-            HttpContext                    = calculateRenderInfoInput.HttpContext,
-            OnReactContextCreated          = calculateRenderInfoInput.OnReactContextCreated,
-            OnReactContextDisposed         = calculateRenderInfoInput.OnReactContextDisposed,
-            BeforeSerializeElementToClient = calculateRenderInfoInput.BeforeSerializeElementToClient
+            HttpContext                    = processReactWithDotNetComponentRequestInput.HttpContext,
+            OnReactContextCreated          = processReactWithDotNetComponentRequestInput.OnReactContextCreated,
+            OnReactContextDisposed         = processReactWithDotNetComponentRequestInput.OnReactContextDisposed,
+            BeforeSerializeElementToClient = processReactWithDotNetComponentRequestInput.BeforeSerializeElementToClient
         };
 
         var componentResponse = await ReactWithDotNetRequestProcessor.ProcessReactWithDotNetRequest(input);
         
-        await componentResponse.ToJson(calculateRenderInfoInput.HttpContext.Response.Body);
+        await componentResponse.ToJson(processReactWithDotNetComponentRequestInput.HttpContext.Response.Body);
     }
 
-    internal static async Task<string> CalculateComponentHtmlText(CalculateComponentHtmlTextInput input)
+    internal static async Task<StringBuilder> CalculateComponentHtmlText(CalculateComponentHtmlTextInput input)
     {
         if (input is null)
         {
@@ -268,7 +273,7 @@ partial class Mixin
     }
 }
 
-public sealed class CalculateFirstRenderInput
+public sealed class ProcessReactWithDotNetPageRequestInput
 {
     public Type LayoutType, MainContentType;
     public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
@@ -297,7 +302,7 @@ sealed class CalculateComponentHtmlTextInput
     public ReactContext ReactContext { get; init; }
 }
 
-public sealed class CalculateRenderInfoInput
+public sealed class ProcessReactWithDotNetComponentRequestInput
 {
     public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
 
@@ -307,7 +312,7 @@ public sealed class CalculateRenderInfoInput
     public OnReactContextDisposed OnReactContextDisposed { get; init; }
 }
 
-public sealed class CalculateComponentRenderInfoInput
+sealed class CalculateComponentRenderInfoInput
 {
     public BeforeSerializeElementToClient BeforeSerializeElementToClient { get; init; }
     public Element Component { get; init; }

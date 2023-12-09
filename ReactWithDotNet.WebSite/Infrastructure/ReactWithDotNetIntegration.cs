@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -14,40 +15,26 @@ static class ReactWithDotNetIntegration
         endpoints.MapGet("/", HomePage);
         endpoints.MapPost("/" + nameof(HandleReactWithDotNetRequest), HandleReactWithDotNetRequest);
 
-        endpoints.MapGet("/LiveEditor", async httpContext => { await WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(HtmlToCSharpView)); });
-        endpoints.MapGet("/CSharpPropertyMapper", async httpContext => { await WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(CSharpPropertyMapperView)); });
-        
-#if DEBUG // this two endpoints should use only development mode
+        endpoints.MapGet("/LiveEditor", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(HtmlToCSharpView)));
+        endpoints.MapGet("/CSharpPropertyMapper", httpContext => WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(CSharpPropertyMapperView)));
 
-        endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), async httpContext =>
-        {
-            ReactWithDotNetDesigner.IsAttached = true;
-
-            await WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesigner));
-        });
-        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), async httpContext =>
-        {
-            ReactWithDotNetDesigner.IsAttached = true;
-
-            await WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesignerComponentPreview));
-        });
-#endif
+        RegisterReactWithDotNetDevelopmentTools(endpoints);
     }
 
     static Task HandleReactWithDotNetRequest(HttpContext httpContext)
     {
         httpContext.Response.ContentType = "application/json; charset=utf-8";
 
-        return ProcessReactWithDotNetRequest(new CalculateRenderInfoInput
+        return ProcessReactWithDotNetComponentRequest(new ()
         {
             HttpContext           = httpContext,
             OnReactContextCreated = InitializeTheme
         });
     }
 
-    static async Task HomePage(HttpContext httpContext)
+    static Task HomePage(HttpContext httpContext)
     {
-        await WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(MainWindow));
+        return WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(MainWindow));
     }
 
     static Task InitializeTheme(HttpContext httpContext, ReactContext context)
@@ -55,11 +42,28 @@ static class ReactWithDotNetIntegration
         context.Set(ThemeKey, new LightTheme());
 
         KeyForHttpContext[context] = httpContext;
-        
+
         return Task.CompletedTask;
     }
 
-    static async Task WriteHtmlResponse(HttpContext httpContext, Type layoutType, Type mainContentType)
+    [Conditional("DEBUG")]
+    static void RegisterReactWithDotNetDevelopmentTools(IEndpointRouteBuilder endpoints)
+    {
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), httpContext =>
+        {
+            ReactWithDotNetDesigner.IsAttached = true;
+
+            return WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesigner));
+        });
+        endpoints.MapGet("/" + nameof(ReactWithDotNetDesignerComponentPreview), httpContext =>
+        {
+            ReactWithDotNetDesigner.IsAttached = true;
+
+            return WriteHtmlResponse(httpContext, typeof(MainLayout), typeof(ReactWithDotNetDesignerComponentPreview));
+        });
+    }
+
+    static Task WriteHtmlResponse(HttpContext httpContext, Type layoutType, Type mainContentType)
     {
         httpContext.Response.ContentType = "text/html; charset=UTF-8";
 
@@ -67,7 +71,7 @@ static class ReactWithDotNetIntegration
         httpContext.Response.Headers[HeaderNames.Expires]      = "0";
         httpContext.Response.Headers[HeaderNames.Pragma]       = "no-cache";
 
-        var html = await CalculateFirstRender(new CalculateFirstRenderInput
+        return ProcessReactWithDotNetPageRequest(new ()
         {
             LayoutType            = layoutType,
             MainContentType       = mainContentType,
@@ -75,7 +79,5 @@ static class ReactWithDotNetIntegration
             QueryString           = httpContext.Request.QueryString.ToString(),
             OnReactContextCreated = InitializeTheme
         });
-
-        await httpContext.Response.WriteAsync(html);
     }
 }
