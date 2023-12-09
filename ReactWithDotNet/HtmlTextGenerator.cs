@@ -289,7 +289,7 @@ static class HtmlTextGenerator
 
         var children = htmlNode.Children;
 
-        if ((htmlNode.IsThirdPartyComponent || htmlNode.IsReactFragment || htmlNode.IsVirtualNode))
+        if (htmlNode.IsThirdPartyComponent || htmlNode.IsReactFragment || htmlNode.IsVirtualNode)
         {
             if (children?.Count > 0)
             {
