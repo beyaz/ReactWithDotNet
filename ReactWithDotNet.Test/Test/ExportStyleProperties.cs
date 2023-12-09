@@ -31,17 +31,6 @@ public class ExportStyleProperties
             list.Add($"{indent}public string {propertyName} {{ get; set; }}");
         }
 
-        static string getPropertyName(string name)
-        {
-            
-            if (rezervedWords.Contains(name))
-            {
-                return "@" + name;
-            }
-            
-            return name;
-        }
-        
         ////////////////////////////////////////
         // isEmpty
         ////////////////////////////////////////
@@ -228,6 +217,18 @@ public class ExportStyleProperties
         }
 
         File.WriteAllText(@"C:\github\ReactWithDotNet\ReactWithDotNet\Style.generated.cs", sb.ToString());
+        return;
+
+        static string getPropertyName(string name)
+        {
+            
+            if (rezervedWords.Contains(name))
+            {
+                return "@" + name;
+            }
+            
+            return name;
+        }
 
         static string getStyleModifierName(string propertyName)
         {
