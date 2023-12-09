@@ -37,6 +37,35 @@ public sealed partial class Style
     {
         return s.headNode  is null;
     }
+
+
+    static string getByName2(Style s, ReadOnlySpan<char> name)
+    {
+        var currentNode = s.headNode;
+        
+        while (currentNode != null)
+        {
+            // update
+            if (name.Equals(currentNode.NameInfo.NameInKebabCase,StringComparison.OrdinalIgnoreCase))
+            {
+                return currentNode.Value;
+            }
+
+            if (currentNode.Next == null)
+            {
+                break;
+            }
+            
+            currentNode = currentNode.Next;
+        }
+        
+        return null;
+    }
+
+    static void setByName2(Style s, string name, string value)
+    {
+        
+    }
     
     
     StyleAttributeValue headNode;
