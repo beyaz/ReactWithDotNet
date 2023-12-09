@@ -34,10 +34,7 @@ public sealed partial class Style
 
     StyleAttributeValue headNode;
 
-    static class Names
-    {
-        public static readonly StyleAttributeNameInfo accentColor = new StyleAttributeNameInfo("accentColor","accent-color");
-    }
+    
 
     string Get(StyleAttributeNameInfo nameInfo)
     {

@@ -21,9 +21,22 @@ public class ExportStyleProperties
             "namespace ReactWithDotNet;",
             "",
             "partial class Style",
-            "{"
+            "{",
+            $"{indent}static class Names",
+            $"{indent}{{"
+            
         };
 
+        // Define names
+        foreach (var name in propertyNames)
+        {
+            var propertyName = getPropertyName(name);
+            
+            list.Add($"{indent}{indent}public static readonly StyleAttributeNameInfo {propertyName} = new (\"{propertyName}\", \"{ArrangeWebKit(ConvertCamelCaseToSnakeCase(propertyName))}\");");
+        }
+        list.Add($"{indent}}}");
+        
+        
         foreach (var name in propertyNames)
         {
             var propertyName = getPropertyName(name);
