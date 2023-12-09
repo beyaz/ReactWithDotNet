@@ -34,6 +34,18 @@ public class ExportStyleProperties
             
             list.Add($"{indent}{indent}public static readonly StyleAttributeNameInfo {propertyName} = new (\"{propertyName}\", \"{ArrangeWebKit(ConvertCamelCaseToSnakeCase(propertyName))}\");");
         }
+        
+        list.Add($"{indent}{indent}public static readonly StyleAttributeNameInfo[] AllNames = ");
+        list.Add($"{indent}{indent}[");
+        foreach (var name in propertyNames)
+        {
+            var propertyName = getPropertyName(name);
+            
+            list.Add($"{indent}{indent}{indent}{propertyName},");
+        }
+        list.Add($"{indent}{indent}];");
+        
+        
         list.Add($"{indent}}}");
         
         
