@@ -38,25 +38,34 @@ public sealed partial class Style
         return s.headNode  is null;
     }
 
+    static StyleAttributeNameInfo TryFindNameInfoByName(Style s, ReadOnlySpan<char> name)
+    {
+        var allNames = Names.AllNames;
+        var length = allNames.Length;
+        
+        for (int i = 0; i < length; i++)
+        {
+            if (name.Equals(allNames[i].NameInKebabCase,StringComparison.OrdinalIgnoreCase))
+            {
+                return allNames[i];
+            }
+        }
 
+        return null;
+    }
+    
     static string getByName2(Style s, ReadOnlySpan<char> name)
     {
-        var currentNode = s.headNode;
-        
-        while (currentNode != null)
+        var value = s.Get(name);
+        if (value is not null)
         {
-            // update
-            if (name.Equals(currentNode.NameInfo.NameInKebabCase,StringComparison.OrdinalIgnoreCase))
-            {
-                return currentNode.Value;
-            }
-
-            if (currentNode.Next == null)
-            {
-                break;
-            }
-            
-            currentNode = currentNode.Next;
+            return value;
+        }
+        
+        var nameInfo = TryFindNameInfoByName(s, name);
+        if (nameInfo is null)
+        {
+            throw CssParseException(name.ToString());    
         }
         
         return null;
@@ -65,6 +74,13 @@ public sealed partial class Style
     static void setByName2(Style s, string name, string value)
     {
         
+        var nameInfo = TryFindNameInfoByName(s, name);
+        if (nameInfo == null)
+        {
+            throw CssParseException(name.ToString());    
+        }
+        
+        s.Set(nameInfo, value);
     }
     
     
@@ -80,6 +96,28 @@ public sealed partial class Style
         {
             // update
             if (ReferenceEquals(nameInfo, currentNode.NameInfo))
+            {
+                return currentNode.Value;
+            }
+
+            if (currentNode.Next == null)
+            {
+                break;
+            }
+            
+            currentNode = currentNode.Next;
+        }
+        
+        return null;
+    }
+    
+    string Get(ReadOnlySpan<char> name)
+    {
+        var currentNode = headNode;
+        
+        while (currentNode != null)
+        {
+            if (name.Equals(currentNode.NameInfo.NameInCamelCase, StringComparison.OrdinalIgnoreCase))
             {
                 return currentNode.Value;
             }
@@ -154,6 +192,7 @@ public sealed partial class Style
             Previous = currentNode
         };
     }
+    
 
     string ToCss2(bool isImportant)
     {
