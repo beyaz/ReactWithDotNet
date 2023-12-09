@@ -6,13 +6,9 @@ partial class Style
     {
         var map = new Dictionary<string, string>();
 
-        VisitNotNullValues(map.Add);
+        this.VisitNotNullValues(map.Add);
 
         return map;
     }
 
-    internal void VisitNotNullValues(Action<string, string> action)
-    {
-        visitNotNullValues(this, action);
-    }
 }

@@ -85,9 +85,9 @@ public sealed partial class Style
         return null;
     }
 
-    static void visitNotNullValues(Style s, Action<string, string> action)
+    internal void VisitNotNullValues(Action<string, string> action)
     {
-        var node = s.headNode;
+        var node = headNode;
 
         while (node != null)
         {

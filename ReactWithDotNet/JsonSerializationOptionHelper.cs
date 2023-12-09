@@ -392,6 +392,7 @@ static partial class JsonSerializationOptionHelper
             value.VisitNotNullValues(add);
 
             writer.WriteEndObject();
+            return;
 
             void add(string propertyName, string propertyValue)
             {
