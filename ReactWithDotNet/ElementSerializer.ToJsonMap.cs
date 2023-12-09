@@ -672,12 +672,10 @@ partial class ElementSerializer
 
         foreach (var item in reactProperties)
         {
-            var propertyInfo = item.PropertyInfo;
-
             var valueExportInfo = await GetPropertyValue(typeInfo, element, item, context);
             if (valueExportInfo.NeedToExport)
             {
-                add(GetPropertyName(propertyInfo), valueExportInfo.Value);
+                add(GetPropertyName(item), valueExportInfo.Value);
             }
         }
     }

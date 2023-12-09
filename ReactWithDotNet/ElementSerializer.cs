@@ -249,8 +249,10 @@ static partial class ElementSerializer
         };
     }
 
-    static string GetPropertyName(PropertyInfo propertyInfo)
+    static string GetPropertyName(PropertyAccessInfo propertyAccessInfo)
     {
+        var propertyInfo = propertyAccessInfo.PropertyInfo;
+        
         var propertyName = propertyInfo.Name;
 
         var jsonPropertyNameAttribute = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
