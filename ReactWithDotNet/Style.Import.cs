@@ -1,11 +1,8 @@
-﻿using System.Text.Json.Serialization;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 partial class Style
 {
-    [JsonIgnore]
-    public bool IsEmpty => isEmpty(this);
+   
 
     public string this[string key]
     {
@@ -25,7 +22,7 @@ partial class Style
                 throw new ArgumentNullException(nameof(key));
             }
 
-            setByName(this, key.Replace("-", string.Empty), value);
+            Set(key.Replace("-", string.Empty), value);
         }
     }
 

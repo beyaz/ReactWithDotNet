@@ -1,96 +1,157 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Text.Json.Serialization;
+
+namespace ReactWithDotNet;
 
 [Serializable]
 public sealed partial class Style
 {
+    StyleAttributeValue headNode;
 
-    sealed class StyleAttributeNameInfo
+    [JsonIgnore]
+    public bool IsEmpty => headNode is null;
+
+    static StyleAttributeValue FastCloneAll(StyleAttributeValue headNode)
     {
-        public readonly string NameInCamelCase;
-        public readonly string NameInKebabCase;
+        var nodeInSource = headNode;
 
-        public StyleAttributeNameInfo(string nameInCamelCase, string nameInKebabCase)
+        if (nodeInSource is null)
         {
-            NameInCamelCase      = nameInCamelCase;
-            NameInKebabCase = nameInKebabCase;
+            return null;
+        }
+
+        StyleAttributeValue clonedHeadNode = null;
+
+        StyleAttributeValue nodeInTarget = null;
+
+        while (nodeInSource is not null)
+        {
+            var node = new StyleAttributeValue(nodeInSource.NameInfo)
+            {
+                Value    = nodeInSource.Value,
+                Previous = nodeInTarget
+            };
+
+            if (clonedHeadNode is null)
+            {
+                nodeInTarget = clonedHeadNode = node;
+            }
+            else
+            {
+                nodeInTarget.Next = node;
+
+                nodeInTarget = node;
+            }
+
+            nodeInSource = nodeInSource.Next;
+        }
+
+        return clonedHeadNode;
+    }
+
+    static void transfer(Style source, Style target)
+    {
+        var nodeInSource = source.headNode;
+        var nodeInTarget = target.headNode;
+
+        if (nodeInTarget is null)
+        {
+            target.headNode = FastCloneAll(nodeInSource);
+
+            return;
+        }
+
+        while (nodeInSource != null)
+        {
+            target.Set(nodeInSource.NameInfo, nodeInSource.Value);
+
+            nodeInSource = nodeInSource.Next;
         }
     }
 
-    sealed class StyleAttributeValue
+    static StyleAttributeNameInfo TryFindNameInfoByName(ReadOnlySpan<char> name)
     {
-        public readonly StyleAttributeNameInfo NameInfo;
-        public string Value;
+        var allNames = Names.AllNames;
 
-        public StyleAttributeValue(StyleAttributeNameInfo nameInfo)
+        var length = allNames.Length;
+
+        for (var i = 0; i < length; i++)
         {
-            NameInfo   = nameInfo;
+            if (name.Equals(allNames[i].NameInCamelCase, StringComparison.OrdinalIgnoreCase))
+            {
+                return allNames[i];
+            }
         }
 
-        public StyleAttributeValue Previous;
-        public StyleAttributeValue Next;
+        return null;
     }
-    
+
+    static void visitNotNullValues(Style s, Action<string, string> action)
+    {
+        var node = s.headNode;
+
+        while (node != null)
+        {
+            action(node.NameInfo.NameInCamelCase, node.Value);
+
+            node = node.Next;
+        }
+    }
+
     string Get(StyleAttributeNameInfo nameInfo)
     {
         var node = headNode;
-        
+
         while (node != null)
         {
             if (ReferenceEquals(node.NameInfo, nameInfo))
             {
                 return node.Value;
             }
-            
+
             node = node.Next;
         }
-        
+
         return null;
     }
-    
+
     string Get(ReadOnlySpan<char> name)
     {
         var node = headNode;
-        
+
         while (node != null)
         {
             if (name.Equals(node.NameInfo.NameInCamelCase, StringComparison.OrdinalIgnoreCase))
             {
                 return node.Value;
             }
-            
+
             node = node.Next;
         }
-        
+
         var nameInfo = TryFindNameInfoByName(name);
         if (nameInfo is null)
         {
-            throw CssParseException(name.ToString());    
+            throw CssParseException(name.ToString());
         }
-        
+
         return null;
     }
-    
-    static bool isEmpty(Style s)
-    {
-        return s.headNode  is null;
-    }
 
-    static void setByName(Style s, ReadOnlySpan<char> name, string value)
+    void Set(ReadOnlySpan<char> name, string value)
     {
-        
         var nameInfo = TryFindNameInfoByName(name);
         if (nameInfo == null)
         {
-            throw CssParseException(name.ToString());    
+            throw CssParseException(name.ToString());
         }
-        
-        s.Set(nameInfo, value);
+
+        Set(nameInfo, value);
     }
-    
+
     void Set(StyleAttributeNameInfo nameInfo, string value)
     {
         var node = headNode;
-        
+
         // try remove
         if (value == null)
         {
@@ -104,25 +165,24 @@ public sealed partial class Style
                         headNode = null;
                         return;
                     }
-                    
+
                     node.Previous.Next = node.Next;
                     return;
                 }
-                
+
                 node = node.Next;
             }
-            
+
             // not found
             return;
         }
-        
+
         if (node == null)
         {
             headNode = new StyleAttributeValue(nameInfo) { Value = value };
             return;
         }
 
-        
         while (node != null)
         {
             // modify
@@ -136,7 +196,7 @@ public sealed partial class Style
             {
                 break;
             }
-            
+
             node = node.Next;
         }
 
@@ -146,135 +206,30 @@ public sealed partial class Style
             Previous = node
         };
     }
-    
-    static void visitNotNullValues(Style s, Action<string, string> action)
+
+    sealed class StyleAttributeNameInfo
     {
-        var node = s.headNode;
-        
-        while (node != null)
+        public readonly string NameInCamelCase;
+        public readonly string NameInKebabCase;
+
+        public StyleAttributeNameInfo(string nameInCamelCase, string nameInKebabCase)
         {
-            action(node.NameInfo.NameInCamelCase, node.Value);
-            
-            node = node.Next;
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    static StyleAttributeNameInfo TryFindNameInfoByName(ReadOnlySpan<char> name)
-    {
-        var allNames = Names.AllNames;
-        
-        var length = allNames.Length;
-        
-        for (int i = 0; i < length; i++)
-        {
-            if (name.Equals(allNames[i].NameInCamelCase,StringComparison.OrdinalIgnoreCase))
-            {
-                return allNames[i];
-            }
-        }
-
-        return null;
-    }
-    
-
-    
-    
-    
-    StyleAttributeValue headNode;
-
-    
-
-   
-
-   
-    
-
-
-
-    static void transfer(Style source, Style target)
-    {
-        var nodeInSource = source.headNode;
-        var nodeInTarget = target.headNode;
-        
-        if (nodeInTarget is null)
-        {
-            // fast clone to target
-
-            target.headNode = FastCloneAll(nodeInSource);
-            
-            return;
-        }
-        
-        
-        while (nodeInSource != null)
-        {
-            target.Set(nodeInSource.NameInfo, nodeInSource.Value);
-                
-            nodeInSource = nodeInSource.Next;
+            NameInCamelCase = nameInCamelCase;
+            NameInKebabCase = nameInKebabCase;
         }
     }
 
-    static StyleAttributeValue FastCloneAll(StyleAttributeValue headNode)
+    sealed class StyleAttributeValue
     {
-        var nodeInSource = headNode;
-        
-        if (nodeInSource is null)
+        public readonly StyleAttributeNameInfo NameInfo;
+        public StyleAttributeValue Next;
+
+        public StyleAttributeValue Previous;
+        public string Value;
+
+        public StyleAttributeValue(StyleAttributeNameInfo nameInfo)
         {
-            return null;
+            NameInfo = nameInfo;
         }
-
-        StyleAttributeValue clonedHeadNode = null;
-
-        StyleAttributeValue nodeInTarget = null;
-       
-        
-        while (nodeInSource is not null)
-        {
-            var node = new StyleAttributeValue(nodeInSource.NameInfo)
-            {
-                Value    = nodeInSource.Value,
-                Previous = nodeInTarget
-            };
-            
-            if (clonedHeadNode is null)
-            {
-                nodeInTarget = clonedHeadNode = node;
-            }
-            else
-            {
-                nodeInTarget.Next = node;
-
-                nodeInTarget = node;
-            }
-            
-            nodeInSource = nodeInSource.Next;
-        }
-
-        return clonedHeadNode;
     }
-
-    
-
 }
