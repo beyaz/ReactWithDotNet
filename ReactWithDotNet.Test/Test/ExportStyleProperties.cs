@@ -63,27 +63,6 @@ public class ExportStyleProperties
         
         
         
-        ////////////////////////////////////////
-        // visitNotNullValues
-        ////////////////////////////////////////
-        list.Add("");
-        list.Add($"{indent}static void visitNotNullValues(Style s, Action<string, string> action)");
-        list.Add($"{indent}{{");
-        
-        foreach (var name in propertyNames)
-        {
-            var propertyName = getPropertyName(name);
-            
-            list.Add($"{indent}{indent}if (s.{propertyName} != null)");
-            list.Add( $"{indent}{indent}{{");
-            list.Add($"{indent}{indent}{indent}action(nameof({propertyName}), s.{propertyName});");
-            list.Add( $"{indent}{indent}}}");
-            
-        }
-        
-        list.Add($"{indent}}}");
-        ////////////////////////////////////////
-        
         
         ////////////////////////////////////////
         // toCss

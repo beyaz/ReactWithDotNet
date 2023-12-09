@@ -277,9 +277,21 @@ public sealed partial class Style
         return clonedHeadNode;
     }
 
-    internal void VisitNotNullValues2(Action<string, string> action)
+    static void visitNotNullValues(Style s, Action<string, string> action)
     {
+        var currentNode = s.headNode;
         
+        while (currentNode != null)
+        {
+            action(currentNode.NameInfo.NameInCamelCase, currentNode.Value);
+
+            if (currentNode.Next == null)
+            {
+                break;
+            }
+            
+            currentNode = currentNode.Next;
+        }
     }
 
     public string accentColor2
