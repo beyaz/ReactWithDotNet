@@ -6,9 +6,8 @@ partial class Style
     {
         var map = new Dictionary<string, string>();
 
-        this.VisitNotNullValues(map.Add);
+        VisitNotNullValues(map.Add);
 
         return map;
     }
-
 }
