@@ -225,7 +225,7 @@ public sealed partial class Style
         return sb.ToString();
     }
 
-    static void transfer2(Style source, Style target)
+    static void transfer(Style source, Style target)
     {
         var nodeInSource = source.headNode;
         var nodeInTarget = target.headNode;
