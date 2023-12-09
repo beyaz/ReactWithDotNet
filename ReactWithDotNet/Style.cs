@@ -105,21 +105,16 @@ public sealed partial class Style
     
     string Get(ReadOnlySpan<char> name)
     {
-        var currentNode = headNode;
+        var node = headNode;
         
-        while (currentNode != null)
+        while (node != null)
         {
-            if (name.Equals(currentNode.NameInfo.NameInCamelCase, StringComparison.OrdinalIgnoreCase))
+            if (name.Equals(node.NameInfo.NameInCamelCase, StringComparison.OrdinalIgnoreCase))
             {
-                return currentNode.Value;
-            }
-
-            if (currentNode.Next == null)
-            {
-                break;
+                return node.Value;
             }
             
-            currentNode = currentNode.Next;
+            node = node.Next;
         }
         
         return null;
