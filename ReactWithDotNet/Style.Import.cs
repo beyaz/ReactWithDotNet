@@ -16,7 +16,7 @@ partial class Style
                 throw new ArgumentNullException(nameof(key));
             }
 
-            return getByName(this, key.Replace("-", string.Empty));
+            return Get(key.Replace("-", string.Empty));
         }
         set
         {

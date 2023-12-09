@@ -61,6 +61,12 @@ public sealed partial class Style
             node = node.Next;
         }
         
+        var nameInfo = TryFindNameInfoByName(name);
+        if (nameInfo is null)
+        {
+            throw CssParseException(name.ToString());    
+        }
+        
         return null;
     }
     
@@ -69,6 +75,17 @@ public sealed partial class Style
         return s.headNode  is null;
     }
 
+    static void setByName(Style s, ReadOnlySpan<char> name, string value)
+    {
+        
+        var nameInfo = TryFindNameInfoByName(name);
+        if (nameInfo == null)
+        {
+            throw CssParseException(name.ToString());    
+        }
+        
+        s.Set(nameInfo, value);
+    }
     
     void Set(StyleAttributeNameInfo nameInfo, string value)
     {
@@ -164,14 +181,15 @@ public sealed partial class Style
     
     
     
-    static StyleAttributeNameInfo TryFindNameInfoByName(Style s, ReadOnlySpan<char> name)
+    static StyleAttributeNameInfo TryFindNameInfoByName(ReadOnlySpan<char> name)
     {
         var allNames = Names.AllNames;
+        
         var length = allNames.Length;
         
         for (int i = 0; i < length; i++)
         {
-            if (name.Equals(allNames[i].NameInKebabCase,StringComparison.OrdinalIgnoreCase))
+            if (name.Equals(allNames[i].NameInCamelCase,StringComparison.OrdinalIgnoreCase))
             {
                 return allNames[i];
             }
@@ -180,34 +198,8 @@ public sealed partial class Style
         return null;
     }
     
-    static string getByName(Style s, ReadOnlySpan<char> name)
-    {
-        var value = s.Get(name);
-        if (value is not null)
-        {
-            return value;
-        }
-        
-        var nameInfo = TryFindNameInfoByName(s, name);
-        if (nameInfo is null)
-        {
-            throw CssParseException(name.ToString());    
-        }
-        
-        return null;
-    }
 
-    static void setByName(Style s, string name, string value)
-    {
-        
-        var nameInfo = TryFindNameInfoByName(s, name);
-        if (nameInfo == null)
-        {
-            throw CssParseException(name.ToString());    
-        }
-        
-        s.Set(nameInfo, value);
-    }
+    
     
     
     StyleAttributeValue headNode;
@@ -246,26 +238,36 @@ public sealed partial class Style
 
     static StyleAttributeValue FastCloneAll(StyleAttributeValue headNode)
     {
-        if (headNode is null)
+        var nodeInSource = headNode;
+        
+        if (nodeInSource is null)
         {
             return null;
         }
 
-        var clonedHeadNode =  new StyleAttributeValue(headNode.NameInfo)
-        {
-            Value = headNode.Value
-        };
+        StyleAttributeValue clonedHeadNode = null;
 
-        var nodeInTarget = clonedHeadNode;
-        var nodeInSource = headNode;
+        StyleAttributeValue nodeInTarget = null;
+       
         
         while (nodeInSource is not null)
         {
-            nodeInTarget = new StyleAttributeValue(nodeInSource.NameInfo)
+            var node = new StyleAttributeValue(nodeInSource.NameInfo)
             {
                 Value    = nodeInSource.Value,
                 Previous = nodeInTarget
             };
+            
+            if (clonedHeadNode is null)
+            {
+                nodeInTarget = clonedHeadNode = node;
+            }
+            else
+            {
+                nodeInTarget.Next = node;
+
+                nodeInTarget = node;
+            }
             
             nodeInSource = nodeInSource.Next;
         }
