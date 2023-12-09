@@ -87,7 +87,7 @@ static class HtmlTextGenerator
         {
             Tag = "style",
 
-            Attributes = [new() { Name = "id", Value = "ReactWithDotNetDynamicCss" }],
+            Attributes = [new HtmlAttribute { Name = "id", Value = "ReactWithDotNetDynamicCss" }],
 
             Text = sb.ToString()
         };
@@ -168,7 +168,7 @@ static class HtmlTextGenerator
     static void ProcessJsonMapNode(HtmlNode htmlNode, string name, object value)
     {
         if (name == "key" || name == "DotNetProperties" || name == "onClick" || name == "$DotNetComponentUniqueIdentifier" ||
-            name == "$State" || name == "$Type"  ||
+            name == "$State" || name == "$Type" ||
             name == "$ClientTasks")
         {
             return;
@@ -303,7 +303,7 @@ static class HtmlTextGenerator
                     }
 
                     ToString(sb, depth, child);
-                }    
+                }
             }
 
             return;
