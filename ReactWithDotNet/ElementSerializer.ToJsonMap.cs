@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
@@ -1090,7 +1091,8 @@ partial class ElementSerializer
             DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
             HasReactAttribute          = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
             TransformValueInServerSide = getTransformValueInServerSideTransformFunction(),
-            TemplateAttribute = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>()
+            TemplateAttribute = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>(),
+            JsonPropertyName = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>()
         };
 
         Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction()
@@ -1120,6 +1122,7 @@ partial class ElementSerializer
         public Action<object, object> SetValueFunc { get; init; }
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
         public ReactTemplateAttribute TemplateAttribute { get; init; }
+        public JsonPropertyNameAttribute JsonPropertyName { get; init; }
     }
 
     sealed class Node

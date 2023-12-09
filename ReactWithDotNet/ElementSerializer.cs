@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace ReactWithDotNet;
@@ -251,17 +250,13 @@ static partial class ElementSerializer
 
     static string GetPropertyName(PropertyAccessInfo propertyAccessInfo)
     {
-        var propertyInfo = propertyAccessInfo.PropertyInfo;
-        
-        var propertyName = propertyInfo.Name;
-
-        var jsonPropertyNameAttribute = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
-        if (jsonPropertyNameAttribute != null)
+        var jsonPropertyName = propertyAccessInfo.JsonPropertyName;
+        if (jsonPropertyName != null)
         {
-            propertyName = jsonPropertyNameAttribute.Name;
+            return jsonPropertyName.Name;
         }
 
-        return propertyName;
+        return propertyAccessInfo.PropertyInfo.Name;
     }
 
     static async Task<ValueExportInfo<object>> GetPropertyValue(TypeInfo typeInfo, object instance, PropertyAccessInfo property, ElementSerializerContext context)
