@@ -150,7 +150,7 @@ public class ToHtmlTests
 
 """;
 
-        el.ToString().Trim().Should().Be(expectedHtml.Trim());
+        el.ToHtml().Trim().Should().Be(expectedHtml.Trim());
     }
 
     [TestMethod]
@@ -173,7 +173,7 @@ public class ToHtmlTests
 
 """;
 
-        el.ToString().Should().BeEquivalentTo(expectedHtml.Trim());
+        el.ToHtml().Should().BeEquivalentTo(expectedHtml.Trim());
     }
 
     [TestMethod]
@@ -304,7 +304,7 @@ public class ToHtmlTests
 
     static void Assert(Element element, string expectedHtml)
     {
-        var actualHtml = element.ToString();
+        var actualHtml = element.ToHtml();
 
         actualHtml.Should().BeEquivalentTo(expectedHtml.Trim());
     }
