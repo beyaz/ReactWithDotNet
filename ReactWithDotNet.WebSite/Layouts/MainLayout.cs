@@ -70,23 +70,29 @@ class MainLayout : PureComponent, IPageLayout
                 },
                 
 
-                new script(script.Type("module"))
+                new script
                 {
-                    $$"""
-                      import {ReactWithDotNet} from './{{root}}/dist/index.js?v={{Guid.NewGuid():N}}';
+                    type="module",
+                    text = $@"
 
-                      ReactWithDotNet.StrictMode = false;
-                      ReactWithDotNet.RenderComponentIn({
-                        idOfContainerHtmlElement: '{{ContainerDomElementId}}',
-                        renderInfo: {{RenderInfo.ToJsonString()}}
-                      });
-                      """
+import {{ReactWithDotNet}} from './{root}/dist/index.js?v={Guid.NewGuid():N}';
+
+ReactWithDotNet.StrictMode = false;
+
+ReactWithDotNet.RenderComponentIn({{
+  idOfContainerHtmlElement: '{ContainerDomElementId}',
+  renderInfo: {RenderInfo.ToJsonString()}
+}});
+
+"
+    
+    
+                    
                 }
 
 
             }
         };
-
 
         IEnumerable<Element> arrangeFonts()
         {
@@ -177,11 +183,7 @@ html{{  }}
             };
         }
     }
-    
-    
-    
 }
-
 
 partial class Extensions
 {

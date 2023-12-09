@@ -326,7 +326,7 @@ public sealed class ComponentRenderInfo
 {
     internal ComponentResponse ComponentResponse;
 
-    public string ToJsonString()
+    public ReadOnlySpan<char> ToJsonString()
     {
         return ComponentResponse.ToJson();
     }
