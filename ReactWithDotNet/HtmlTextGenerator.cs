@@ -87,7 +87,7 @@ static class HtmlTextGenerator
         {
             Tag = "style",
 
-            Attributes = new List<HtmlAttribute> { new() { Name = "id", Value = "ReactWithDotNetDynamicCss" } },
+            Attributes = [new() { Name = "id", Value = "ReactWithDotNetDynamicCss" }],
 
             Text = sb.ToString()
         };
