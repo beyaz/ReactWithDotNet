@@ -54,7 +54,7 @@ public sealed partial class Style
         return null;
     }
     
-    static string getByName2(Style s, ReadOnlySpan<char> name)
+    static string getByName(Style s, ReadOnlySpan<char> name)
     {
         var value = s.Get(name);
         if (value is not null)
@@ -71,7 +71,7 @@ public sealed partial class Style
         return null;
     }
 
-    static void setByName2(Style s, string name, string value)
+    static void setByName(Style s, string name, string value)
     {
         
         var nameInfo = TryFindNameInfoByName(s, name);

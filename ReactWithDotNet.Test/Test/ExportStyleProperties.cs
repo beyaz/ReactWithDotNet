@@ -57,51 +57,6 @@ public class ExportStyleProperties
             list.Add($"{indent}public string {propertyName} {{ get => Get(Names.{propertyName}); set => Set(Names.{propertyName}, value); }}");
         }
         
-        ////////////////////////////////////////
-        // getValueByName
-        ////////////////////////////////////////
-        list.Add("");
-        list.Add($"{indent}static string getByName(Style s, string name)");
-        list.Add($"{indent}{{");
-        
-        foreach (var name in propertyNames)
-        {
-            var propertyName = getPropertyName(name);
-            
-            list.Add($"{indent}{indent}if (nameof({propertyName}).Equals(name, StringComparison.OrdinalIgnoreCase))");
-            list.Add( $"{indent}{indent}{{");
-            list.Add($"{indent}{indent}{indent}return s.{propertyName};");
-            list.Add( $"{indent}{indent}}}");
-            
-        }
-        
-        list.Add($"{indent}{indent}throw CssParseException(name);");
-        list.Add($"{indent}}}");
-        
-        
-        ////////////////////////////////////////
-        // setValueByName
-        ////////////////////////////////////////
-        list.Add("");
-        list.Add($"{indent}static void setByName(Style s, string name, string value)");
-        list.Add($"{indent}{{");
-        
-        foreach (var name in propertyNames)
-        {
-            var propertyName = getPropertyName(name);
-            
-            list.Add($"{indent}{indent}if (nameof({propertyName}).Equals(name, StringComparison.OrdinalIgnoreCase))");
-            list.Add( $"{indent}{indent}{{");
-            list.Add($"{indent}{indent}{indent}s.{propertyName} = value;");
-            list.Add($"{indent}{indent}{indent}return;");
-            list.Add( $"{indent}{indent}}}");
-            
-        }
-        
-        list.Add($"{indent}{indent}throw CssParseException(name);");
-        list.Add($"{indent}}}");
-        
-        
         
         ////////////////////////////////////////
         // transfer
