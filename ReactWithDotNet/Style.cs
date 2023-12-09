@@ -29,13 +29,49 @@ public sealed partial class Style
         public StyleAttributeValue Previous;
         public StyleAttributeValue Next;
     }
-
-
+    
+    string Get(StyleAttributeNameInfo nameInfo)
+    {
+        var node = headNode;
+        
+        while (node != null)
+        {
+            if (ReferenceEquals(node.NameInfo, nameInfo))
+            {
+                return node.Value;
+            }
+            
+            node = node.Next;
+        }
+        
+        return null;
+    }
+    
+    string Get(ReadOnlySpan<char> name)
+    {
+        var node = headNode;
+        
+        while (node != null)
+        {
+            if (name.Equals(node.NameInfo.NameInCamelCase, StringComparison.OrdinalIgnoreCase))
+            {
+                return node.Value;
+            }
+            
+            node = node.Next;
+        }
+        
+        return null;
+    }
+    
     static bool isEmpty(Style s)
     {
         return s.headNode  is null;
     }
 
+    
+    
+    
     static StyleAttributeNameInfo TryFindNameInfoByName(Style s, ReadOnlySpan<char> name)
     {
         var allNames = Names.AllNames;
@@ -86,97 +122,65 @@ public sealed partial class Style
 
     
 
-    string Get(StyleAttributeNameInfo nameInfo)
-    {
-        var node = headNode;
-        
-        while (node != null)
-        {
-            if (ReferenceEquals(node.NameInfo, nameInfo))
-            {
-                return node.Value;
-            }
-            
-            node = node.Next;
-        }
-        
-        return null;
-    }
-    
-    string Get(ReadOnlySpan<char> name)
-    {
-        var node = headNode;
-        
-        while (node != null)
-        {
-            if (name.Equals(node.NameInfo.NameInCamelCase, StringComparison.OrdinalIgnoreCase))
-            {
-                return node.Value;
-            }
-            
-            node = node.Next;
-        }
-        
-        return null;
-    }
+   
 
     void Set(StyleAttributeNameInfo nameInfo, string value)
     {
-        var currentNode = headNode;
+        var node = headNode;
         
         // try remove
         if (value == null)
         {
-            while (currentNode != null)
+            while (node != null)
             {
                 // remove node
-                if (ReferenceEquals(nameInfo, currentNode.NameInfo))
+                if (ReferenceEquals(nameInfo, node.NameInfo))
                 {
-                    currentNode.Previous = currentNode.Next;
+                    node.Previous = node.Next;
                     return;
                 }
 
                 // not found
-                if (currentNode.Next == null)
+                if (node.Next == null)
                 {
                     break;
                 }
             
-                currentNode = currentNode.Next;
+                node = node.Next;
             }
             
             // not found
             return;
         }
         
-        if (currentNode == null)
+        if (node == null)
         {
             headNode = new StyleAttributeValue(nameInfo) { Value = value };
             return;
         }
 
         
-        while (currentNode != null)
+        while (node != null)
         {
             // update
-            if (ReferenceEquals(nameInfo, currentNode.NameInfo))
+            if (ReferenceEquals(nameInfo, node.NameInfo))
             {
-                currentNode.Value = value;
+                node.Value = value;
                 return;
             }
 
-            if (currentNode.Next == null)
+            if (node.Next == null)
             {
                 break;
             }
             
-            currentNode = currentNode.Next;
+            node = node.Next;
         }
 
-        currentNode.Next = new StyleAttributeValue(nameInfo)
+        node.Next = new StyleAttributeValue(nameInfo)
         {
             Value = value,
-            Previous = currentNode
+            Previous = node
         };
     }
     
