@@ -44,27 +44,6 @@ public class ExportStyleProperties
             
             list.Add($"{indent}public string {propertyName} {{ get => Get(Names.{propertyName}); set => Set(Names.{propertyName}, value); }}");
         }
-
-        ////////////////////////////////////////
-        // isEmpty
-        ////////////////////////////////////////
-        list.Add("");
-        list.Add($"{indent}static bool isEmpty(Style s)");
-        list.Add($"{indent}{{");
-        
-        foreach (var name in propertyNames)
-        {
-            var propertyName = getPropertyName(name);
-            
-            list.Add($"{indent}{indent}if (s.{propertyName} != null)");
-            list.Add( $"{indent}{indent}{{");
-            list.Add($"{indent}{indent}{indent}return false;");
-            list.Add( $"{indent}{indent}}}");
-            
-        }
-        
-        list.Add($"{indent}{indent}return true;");
-        list.Add($"{indent}}}");
         
         ////////////////////////////////////////
         // getValueByName

@@ -32,6 +32,13 @@ public sealed partial class Style
         public StyleAttributeValue Next;
     }
 
+
+    static bool isEmpty(Style s)
+    {
+        return s.headNode  is null;
+    }
+    
+    
     StyleAttributeValue headNode;
 
     
