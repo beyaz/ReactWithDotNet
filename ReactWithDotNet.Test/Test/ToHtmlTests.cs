@@ -289,10 +289,10 @@ public class ToHtmlTests
 
         const string expectedHtml = """
 
-<div style="align-items:center;display:flex;flex-direction:column;width:140px;">
-  <div style="gap:25px;display:flex;flex-direction:row;">
-    <img style="height:30px;width:30px;" height="0" src="A.svg" width="0">
-    <img style="height:30px;width:30px;" height="0" src="B.svg" width="0">
+<div style="display:flex;flex-direction:column;width:140px;align-items:center;">
+  <div style="display:flex;flex-direction:row;gap:25px;">
+    <img style="width:30px;height:30px;" src="A.svg">
+    <img style="width:30px;height:30px;" src="B.svg">
   </div>
   <small>React with DotNet</small>
 </div>
