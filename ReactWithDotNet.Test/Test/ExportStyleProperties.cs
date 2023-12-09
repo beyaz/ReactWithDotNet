@@ -57,40 +57,6 @@ public class ExportStyleProperties
             list.Add($"{indent}public string {propertyName} {{ get => Get(Names.{propertyName}); set => Set(Names.{propertyName}, value); }}");
         }
         
-        
-        
-        
-        
-        
-        
-        
-        ////////////////////////////////////////
-        // toCss
-        ////////////////////////////////////////
-        list.Add("");
-        list.Add($"{indent}static void toCss(Style s, System.Text.StringBuilder sb, string separator)");
-        list.Add($"{indent}{{");
-        
-        foreach (var name in propertyNames)
-        {
-            var propertyName = getPropertyName(name);
-            
-            list.Add($"{indent}{indent}if (s.{propertyName} != null)");
-            list.Add( $"{indent}{indent}{{");
-            list.Add($"{indent}{indent}{indent}sb.Append(\"{ArrangeWebKit(ConvertCamelCaseToSnakeCase(propertyName))}\");");
-            list.Add($"{indent}{indent}{indent}sb.Append(\":\");");
-            list.Add($"{indent}{indent}{indent}sb.Append(s.{propertyName});");
-            list.Add($"{indent}{indent}{indent}sb.Append(separator);");
-            list.Add( $"{indent}{indent}}}");
-            
-        }
-        
-        list.Add($"{indent}}}");
-        ////////////////////////////////////////
-        
-        
-        
-        
         list.Add("}");// end of class
         
         

@@ -194,36 +194,7 @@ public sealed partial class Style
     }
     
 
-    string ToCss2(bool isImportant)
-    {
-        var sb = new StringBuilder();
 
-        var separator = isImportant ? " !important;" : ";";
-        
-        var currentNode = headNode;
-        
-        while (currentNode != null)
-        {
-            sb.Append(currentNode.NameInfo.NameInKebabCase);
-            sb.Append(":");
-            sb.Append(currentNode.Value);
-            sb.Append(separator);
-
-            if (currentNode.Next == null)
-            {
-                break;
-            }
-            
-            currentNode = currentNode.Next;
-        }
-
-        if (sb.Length == 0)
-        {
-            return null;
-        }
-
-        return sb.ToString();
-    }
 
     static void transfer(Style source, Style target)
     {

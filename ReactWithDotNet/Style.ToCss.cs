@@ -82,14 +82,29 @@ partial class Style
     {
         return new Exception("Css parse error." + message);
     }
-
+    
     string ToCss(bool isImportant)
     {
         var sb = new StringBuilder();
 
         var separator = isImportant ? " !important;" : ";";
         
-        toCss(this, sb, separator);
+        var currentNode = headNode;
+        
+        while (currentNode != null)
+        {
+            sb.Append(currentNode.NameInfo.NameInKebabCase);
+            sb.Append(":");
+            sb.Append(currentNode.Value);
+            sb.Append(separator);
+
+            if (currentNode.Next == null)
+            {
+                break;
+            }
+            
+            currentNode = currentNode.Next;
+        }
 
         if (sb.Length == 0)
         {
