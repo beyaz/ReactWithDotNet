@@ -166,14 +166,14 @@ public class ToHtmlTests
         var expectedHtml = """
 
 <div style="width:21px;">
-  <div style="height:43px;width:32px;"></div>
-  <div style="height:44px;width:33px;"></div>
-  <div style="height:45px;width:34px;"></div>
+  <div style="width:32px;height:43px;"></div>
+  <div style="width:33px;height:44px;"></div>
+  <div style="width:34px;height:45px;"></div>
 </div>
 
 """;
 
-        el.ToHtml().Should().BeEquivalentTo(expectedHtml.Trim());
+        el.ToHtml().Trim().Should().BeEquivalentTo(expectedHtml.Trim());
     }
 
     [TestMethod]
@@ -210,7 +210,7 @@ public class ToHtmlTests
         const string expectedHtml = """
 <div style="width:21px;">
   <div style="width:22px;">
-    <div style="height:33px;width:43px;"></div>
+    <div style="width:43px;height:33px;"></div>
   </div>
 </div>
 
@@ -226,7 +226,7 @@ public class ToHtmlTests
 
         const string expectedHtml = """
 
-<div style="height:33px;width:30px;"></div>
+<div style="width:30px;height:33px;"></div>
 
 """;
 
