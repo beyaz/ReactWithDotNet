@@ -1091,7 +1091,8 @@ partial class ElementSerializer
             PropertyInfo               = propertyInfo,
             DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
             HasReactAttribute          = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
-            TransformValueInServerSide = getTransformValueInServerSideTransformFunction()
+            TransformValueInServerSide = getTransformValueInServerSideTransformFunction(),
+            TemplateAttribute = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>()
         };
 
         Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction()
@@ -1120,6 +1121,7 @@ partial class ElementSerializer
         public PropertyInfo PropertyInfo { get; init; }
         public Action<object, object> SetValueFunc { get; init; }
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
+        public ReactTemplateAttribute TemplateAttribute { get; init; }
     }
 
     sealed class Node

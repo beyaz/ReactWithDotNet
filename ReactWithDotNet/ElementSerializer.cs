@@ -503,7 +503,7 @@ static partial class ElementSerializer
             };
         }
 
-        var templateAttribute = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>();
+        var templateAttribute = property.TemplateAttribute;
         if (templateAttribute is not null)
         {
             var func = (Delegate)propertyInfo.GetValue(instance);
