@@ -636,637 +636,637 @@ partial class Style
         public static readonly StyleAttributeNameInfo navUp = new ("navUp", "nav-up");
         public static readonly StyleAttributeNameInfo overflowClipBox = new ("overflowClipBox", "overflow-clip-box");
     }
-    public string accentColor { get; set; }
-    public string additiveSymbols { get; set; }
-    public string alignContent { get; set; }
-    public string alignItems { get; set; }
-    public string alignSelf { get; set; }
-    public string alignmentBaseline { get; set; }
-    public string all { get; set; }
-    public string animation { get; set; }
-    public string animationComposition { get; set; }
-    public string animationDelay { get; set; }
-    public string animationDirection { get; set; }
-    public string animationDuration { get; set; }
-    public string animationFillMode { get; set; }
-    public string animationIterationCount { get; set; }
-    public string animationName { get; set; }
-    public string animationPlayState { get; set; }
-    public string animationRange { get; set; }
-    public string animationRangeEnd { get; set; }
-    public string animationRangeStart { get; set; }
-    public string animationTimeline { get; set; }
-    public string animationTimingFunction { get; set; }
-    public string appRegion { get; set; }
-    public string appearance { get; set; }
-    public string ascentOverride { get; set; }
-    public string aspectRatio { get; set; }
-    public string backdropFilter { get; set; }
-    public string backfaceVisibility { get; set; }
-    public string background { get; set; }
-    public string backgroundAttachment { get; set; }
-    public string backgroundBlendMode { get; set; }
-    public string backgroundClip { get; set; }
-    public string backgroundColor { get; set; }
-    public string backgroundImage { get; set; }
-    public string backgroundOrigin { get; set; }
-    public string backgroundPosition { get; set; }
-    public string backgroundPositionX { get; set; }
-    public string backgroundPositionY { get; set; }
-    public string backgroundRepeat { get; set; }
-    public string backgroundRepeatX { get; set; }
-    public string backgroundRepeatY { get; set; }
-    public string backgroundSize { get; set; }
-    public string basePalette { get; set; }
-    public string baselineShift { get; set; }
-    public string baselineSource { get; set; }
-    public string blockSize { get; set; }
-    public string border { get; set; }
-    public string borderBlock { get; set; }
-    public string borderBlockColor { get; set; }
-    public string borderBlockEnd { get; set; }
-    public string borderBlockEndColor { get; set; }
-    public string borderBlockEndStyle { get; set; }
-    public string borderBlockEndWidth { get; set; }
-    public string borderBlockStart { get; set; }
-    public string borderBlockStartColor { get; set; }
-    public string borderBlockStartStyle { get; set; }
-    public string borderBlockStartWidth { get; set; }
-    public string borderBlockStyle { get; set; }
-    public string borderBlockWidth { get; set; }
-    public string borderBottom { get; set; }
-    public string borderBottomColor { get; set; }
-    public string borderBottomLeftRadius { get; set; }
-    public string borderBottomRightRadius { get; set; }
-    public string borderBottomStyle { get; set; }
-    public string borderBottomWidth { get; set; }
-    public string borderCollapse { get; set; }
-    public string borderColor { get; set; }
-    public string borderEndEndRadius { get; set; }
-    public string borderEndStartRadius { get; set; }
-    public string borderImage { get; set; }
-    public string borderImageOutset { get; set; }
-    public string borderImageRepeat { get; set; }
-    public string borderImageSlice { get; set; }
-    public string borderImageSource { get; set; }
-    public string borderImageWidth { get; set; }
-    public string borderInline { get; set; }
-    public string borderInlineColor { get; set; }
-    public string borderInlineEnd { get; set; }
-    public string borderInlineEndColor { get; set; }
-    public string borderInlineEndStyle { get; set; }
-    public string borderInlineEndWidth { get; set; }
-    public string borderInlineStart { get; set; }
-    public string borderInlineStartColor { get; set; }
-    public string borderInlineStartStyle { get; set; }
-    public string borderInlineStartWidth { get; set; }
-    public string borderInlineStyle { get; set; }
-    public string borderInlineWidth { get; set; }
-    public string borderLeft { get; set; }
-    public string borderLeftColor { get; set; }
-    public string borderLeftStyle { get; set; }
-    public string borderLeftWidth { get; set; }
-    public string borderRadius { get; set; }
-    public string borderRight { get; set; }
-    public string borderRightColor { get; set; }
-    public string borderRightStyle { get; set; }
-    public string borderRightWidth { get; set; }
-    public string borderSpacing { get; set; }
-    public string borderStartEndRadius { get; set; }
-    public string borderStartStartRadius { get; set; }
-    public string borderStyle { get; set; }
-    public string borderTop { get; set; }
-    public string borderTopColor { get; set; }
-    public string borderTopLeftRadius { get; set; }
-    public string borderTopRightRadius { get; set; }
-    public string borderTopStyle { get; set; }
-    public string borderTopWidth { get; set; }
-    public string borderWidth { get; set; }
-    public string bottom { get; set; }
-    public string boxShadow { get; set; }
-    public string boxSizing { get; set; }
-    public string breakAfter { get; set; }
-    public string breakBefore { get; set; }
-    public string breakInside { get; set; }
-    public string bufferedRendering { get; set; }
-    public string captionSide { get; set; }
-    public string caretColor { get; set; }
-    public string clear { get; set; }
-    public string clip { get; set; }
-    public string clipPath { get; set; }
-    public string clipRule { get; set; }
-    public string color { get; set; }
-    public string colorInterpolation { get; set; }
-    public string colorInterpolationFilters { get; set; }
-    public string colorRendering { get; set; }
-    public string colorScheme { get; set; }
-    public string columnCount { get; set; }
-    public string columnFill { get; set; }
-    public string columnGap { get; set; }
-    public string columnRule { get; set; }
-    public string columnRuleColor { get; set; }
-    public string columnRuleStyle { get; set; }
-    public string columnRuleWidth { get; set; }
-    public string columnSpan { get; set; }
-    public string columnWidth { get; set; }
-    public string columns { get; set; }
-    public string contain { get; set; }
-    public string containIntrinsicBlockSize { get; set; }
-    public string containIntrinsicHeight { get; set; }
-    public string containIntrinsicInlineSize { get; set; }
-    public string containIntrinsicSize { get; set; }
-    public string containIntrinsicWidth { get; set; }
-    public string container { get; set; }
-    public string containerName { get; set; }
-    public string containerType { get; set; }
-    public string content { get; set; }
-    public string contentVisibility { get; set; }
-    public string counterIncrement { get; set; }
-    public string counterReset { get; set; }
-    public string counterSet { get; set; }
-    public string cursor { get; set; }
-    public string cx { get; set; }
-    public string cy { get; set; }
-    public string d { get; set; }
-    public string descentOverride { get; set; }
-    public string direction { get; set; }
-    public string display { get; set; }
-    public string dominantBaseline { get; set; }
-    public string emptyCells { get; set; }
-    public string fallback { get; set; }
-    public string fill { get; set; }
-    public string fillOpacity { get; set; }
-    public string fillRule { get; set; }
-    public string filter { get; set; }
-    public string flex { get; set; }
-    public string flexBasis { get; set; }
-    public string flexDirection { get; set; }
-    public string flexFlow { get; set; }
-    public string flexGrow { get; set; }
-    public string flexShrink { get; set; }
-    public string flexWrap { get; set; }
-    public string @float { get; set; }
-    public string floodColor { get; set; }
-    public string floodOpacity { get; set; }
-    public string font { get; set; }
-    public string fontDisplay { get; set; }
-    public string fontFamily { get; set; }
-    public string fontFeatureSettings { get; set; }
-    public string fontKerning { get; set; }
-    public string fontOpticalSizing { get; set; }
-    public string fontPalette { get; set; }
-    public string fontSize { get; set; }
-    public string fontStretch { get; set; }
-    public string fontStyle { get; set; }
-    public string fontSynthesis { get; set; }
-    public string fontSynthesisSmallCaps { get; set; }
-    public string fontSynthesisStyle { get; set; }
-    public string fontSynthesisWeight { get; set; }
-    public string fontVariant { get; set; }
-    public string fontVariantAlternates { get; set; }
-    public string fontVariantCaps { get; set; }
-    public string fontVariantEastAsian { get; set; }
-    public string fontVariantLigatures { get; set; }
-    public string fontVariantNumeric { get; set; }
-    public string fontVariantPosition { get; set; }
-    public string fontVariationSettings { get; set; }
-    public string fontWeight { get; set; }
-    public string forcedColorAdjust { get; set; }
-    public string gap { get; set; }
-    public string grid { get; set; }
-    public string gridArea { get; set; }
-    public string gridAutoColumns { get; set; }
-    public string gridAutoFlow { get; set; }
-    public string gridAutoRows { get; set; }
-    public string gridColumn { get; set; }
-    public string gridColumnEnd { get; set; }
-    public string gridColumnGap { get; set; }
-    public string gridColumnStart { get; set; }
-    public string gridGap { get; set; }
-    public string gridRow { get; set; }
-    public string gridRowEnd { get; set; }
-    public string gridRowGap { get; set; }
-    public string gridRowStart { get; set; }
-    public string gridTemplate { get; set; }
-    public string gridTemplateAreas { get; set; }
-    public string gridTemplateColumns { get; set; }
-    public string gridTemplateRows { get; set; }
-    public string height { get; set; }
-    public string hyphenateCharacter { get; set; }
-    public string hyphenateLimitChars { get; set; }
-    public string hyphens { get; set; }
-    public string imageOrientation { get; set; }
-    public string imageRendering { get; set; }
-    public string inherits { get; set; }
-    public string initialLetter { get; set; }
-    public string initialValue { get; set; }
-    public string inlineSize { get; set; }
-    public string inset { get; set; }
-    public string insetBlock { get; set; }
-    public string insetBlockEnd { get; set; }
-    public string insetBlockStart { get; set; }
-    public string insetInline { get; set; }
-    public string insetInlineEnd { get; set; }
-    public string insetInlineStart { get; set; }
-    public string isolation { get; set; }
-    public string justifyContent { get; set; }
-    public string justifyItems { get; set; }
-    public string justifySelf { get; set; }
-    public string left { get; set; }
-    public string letterSpacing { get; set; }
-    public string lightingColor { get; set; }
-    public string lineBreak { get; set; }
-    public string lineGapOverride { get; set; }
-    public string lineHeight { get; set; }
-    public string listStyle { get; set; }
-    public string listStyleImage { get; set; }
-    public string listStylePosition { get; set; }
-    public string listStyleType { get; set; }
-    public string margin { get; set; }
-    public string marginBlock { get; set; }
-    public string marginBlockEnd { get; set; }
-    public string marginBlockStart { get; set; }
-    public string marginBottom { get; set; }
-    public string marginInline { get; set; }
-    public string marginInlineEnd { get; set; }
-    public string marginInlineStart { get; set; }
-    public string marginLeft { get; set; }
-    public string marginRight { get; set; }
-    public string marginTop { get; set; }
-    public string marker { get; set; }
-    public string markerEnd { get; set; }
-    public string markerMid { get; set; }
-    public string markerStart { get; set; }
-    public string mask { get; set; }
-    public string maskType { get; set; }
-    public string mathDepth { get; set; }
-    public string mathShift { get; set; }
-    public string mathStyle { get; set; }
-    public string maxBlockSize { get; set; }
-    public string maxHeight { get; set; }
-    public string maxInlineSize { get; set; }
-    public string maxWidth { get; set; }
-    public string minBlockSize { get; set; }
-    public string minHeight { get; set; }
-    public string minInlineSize { get; set; }
-    public string minWidth { get; set; }
-    public string mixBlendMode { get; set; }
-    public string negative { get; set; }
-    public string objectFit { get; set; }
-    public string objectPosition { get; set; }
-    public string objectViewBox { get; set; }
-    public string offset { get; set; }
-    public string offsetAnchor { get; set; }
-    public string offsetDistance { get; set; }
-    public string offsetPath { get; set; }
-    public string offsetPosition { get; set; }
-    public string offsetRotate { get; set; }
-    public string opacity { get; set; }
-    public string order { get; set; }
-    public string orphans { get; set; }
-    public string outline { get; set; }
-    public string outlineColor { get; set; }
-    public string outlineOffset { get; set; }
-    public string outlineStyle { get; set; }
-    public string outlineWidth { get; set; }
-    public string overflow { get; set; }
-    public string overflowAnchor { get; set; }
-    public string overflowClipMargin { get; set; }
-    public string overflowWrap { get; set; }
-    public string overflowX { get; set; }
-    public string overflowY { get; set; }
-    public string overlay { get; set; }
-    public string overrideColors { get; set; }
-    public string overscrollBehavior { get; set; }
-    public string overscrollBehaviorBlock { get; set; }
-    public string overscrollBehaviorInline { get; set; }
-    public string overscrollBehaviorX { get; set; }
-    public string overscrollBehaviorY { get; set; }
-    public string pad { get; set; }
-    public string padding { get; set; }
-    public string paddingBlock { get; set; }
-    public string paddingBlockEnd { get; set; }
-    public string paddingBlockStart { get; set; }
-    public string paddingBottom { get; set; }
-    public string paddingInline { get; set; }
-    public string paddingInlineEnd { get; set; }
-    public string paddingInlineStart { get; set; }
-    public string paddingLeft { get; set; }
-    public string paddingRight { get; set; }
-    public string paddingTop { get; set; }
-    public string page { get; set; }
-    public string pageBreakAfter { get; set; }
-    public string pageBreakBefore { get; set; }
-    public string pageBreakInside { get; set; }
-    public string pageOrientation { get; set; }
-    public string paintOrder { get; set; }
-    public string perspective { get; set; }
-    public string perspectiveOrigin { get; set; }
-    public string placeContent { get; set; }
-    public string placeItems { get; set; }
-    public string placeSelf { get; set; }
-    public string pointerEvents { get; set; }
-    public string position { get; set; }
-    public string prefix { get; set; }
-    public string quotes { get; set; }
-    public string r { get; set; }
-    public string range { get; set; }
-    public string resize { get; set; }
-    public string right { get; set; }
-    public string rotate { get; set; }
-    public string rowGap { get; set; }
-    public string rubyPosition { get; set; }
-    public string rx { get; set; }
-    public string ry { get; set; }
-    public string scale { get; set; }
-    public string scrollBehavior { get; set; }
-    public string scrollMargin { get; set; }
-    public string scrollMarginBlock { get; set; }
-    public string scrollMarginBlockEnd { get; set; }
-    public string scrollMarginBlockStart { get; set; }
-    public string scrollMarginBottom { get; set; }
-    public string scrollMarginInline { get; set; }
-    public string scrollMarginInlineEnd { get; set; }
-    public string scrollMarginInlineStart { get; set; }
-    public string scrollMarginLeft { get; set; }
-    public string scrollMarginRight { get; set; }
-    public string scrollMarginTop { get; set; }
-    public string scrollPadding { get; set; }
-    public string scrollPaddingBlock { get; set; }
-    public string scrollPaddingBlockEnd { get; set; }
-    public string scrollPaddingBlockStart { get; set; }
-    public string scrollPaddingBottom { get; set; }
-    public string scrollPaddingInline { get; set; }
-    public string scrollPaddingInlineEnd { get; set; }
-    public string scrollPaddingInlineStart { get; set; }
-    public string scrollPaddingLeft { get; set; }
-    public string scrollPaddingRight { get; set; }
-    public string scrollPaddingTop { get; set; }
-    public string scrollSnapAlign { get; set; }
-    public string scrollSnapStop { get; set; }
-    public string scrollSnapType { get; set; }
-    public string scrollTimeline { get; set; }
-    public string scrollTimelineAxis { get; set; }
-    public string scrollTimelineName { get; set; }
-    public string scrollbarGutter { get; set; }
-    public string shapeImageThreshold { get; set; }
-    public string shapeMargin { get; set; }
-    public string shapeOutside { get; set; }
-    public string shapeRendering { get; set; }
-    public string size { get; set; }
-    public string sizeAdjust { get; set; }
-    public string speak { get; set; }
-    public string speakAs { get; set; }
-    public string src { get; set; }
-    public string stopColor { get; set; }
-    public string stopOpacity { get; set; }
-    public string stroke { get; set; }
-    public string strokeDasharray { get; set; }
-    public string strokeDashoffset { get; set; }
-    public string strokeLinecap { get; set; }
-    public string strokeLinejoin { get; set; }
-    public string strokeMiterlimit { get; set; }
-    public string strokeOpacity { get; set; }
-    public string strokeWidth { get; set; }
-    public string suffix { get; set; }
-    public string symbols { get; set; }
-    public string syntax { get; set; }
-    public string system { get; set; }
-    public string tabSize { get; set; }
-    public string tableLayout { get; set; }
-    public string textAlign { get; set; }
-    public string textAlignLast { get; set; }
-    public string textAnchor { get; set; }
-    public string textCombineHorizontal { get; set; }
-    public string textCombineUpright { get; set; }
-    public string textDecoration { get; set; }
-    public string textDecorationColor { get; set; }
-    public string textDecorationLine { get; set; }
-    public string textDecorationSkipInk { get; set; }
-    public string textDecorationStyle { get; set; }
-    public string textDecorationThickness { get; set; }
-    public string textEmphasis { get; set; }
-    public string textEmphasisColor { get; set; }
-    public string textEmphasisPosition { get; set; }
-    public string textEmphasisStyle { get; set; }
-    public string textIndent { get; set; }
-    public string textOrientation { get; set; }
-    public string textOverflow { get; set; }
-    public string textRendering { get; set; }
-    public string textShadow { get; set; }
-    public string textSizeAdjust { get; set; }
-    public string textTransform { get; set; }
-    public string textUnderlineOffset { get; set; }
-    public string textUnderlinePosition { get; set; }
-    public string textWrap { get; set; }
-    public string timelineScope { get; set; }
-    public string top { get; set; }
-    public string touchAction { get; set; }
-    public string transform { get; set; }
-    public string transformBox { get; set; }
-    public string transformOrigin { get; set; }
-    public string transformStyle { get; set; }
-    public string transition { get; set; }
-    public string transitionBehavior { get; set; }
-    public string transitionDelay { get; set; }
-    public string transitionDuration { get; set; }
-    public string transitionProperty { get; set; }
-    public string transitionTimingFunction { get; set; }
-    public string translate { get; set; }
-    public string unicodeBidi { get; set; }
-    public string unicodeRange { get; set; }
-    public string userSelect { get; set; }
-    public string vectorEffect { get; set; }
-    public string verticalAlign { get; set; }
-    public string viewTimeline { get; set; }
-    public string viewTimelineAxis { get; set; }
-    public string viewTimelineInset { get; set; }
-    public string viewTimelineName { get; set; }
-    public string viewTransitionName { get; set; }
-    public string visibility { get; set; }
-    public string WebkitAlignContent { get; set; }
-    public string WebkitAlignItems { get; set; }
-    public string WebkitAlignSelf { get; set; }
-    public string WebkitAnimation { get; set; }
-    public string WebkitAnimationDelay { get; set; }
-    public string WebkitAnimationDirection { get; set; }
-    public string WebkitAnimationDuration { get; set; }
-    public string WebkitAnimationFillMode { get; set; }
-    public string WebkitAnimationIterationCount { get; set; }
-    public string WebkitAnimationName { get; set; }
-    public string WebkitAnimationPlayState { get; set; }
-    public string WebkitAnimationTimingFunction { get; set; }
-    public string WebkitAppRegion { get; set; }
-    public string WebkitAppearance { get; set; }
-    public string WebkitBackfaceVisibility { get; set; }
-    public string WebkitBackgroundClip { get; set; }
-    public string WebkitBackgroundOrigin { get; set; }
-    public string WebkitBackgroundSize { get; set; }
-    public string WebkitBorderAfter { get; set; }
-    public string WebkitBorderAfterColor { get; set; }
-    public string WebkitBorderAfterStyle { get; set; }
-    public string WebkitBorderAfterWidth { get; set; }
-    public string WebkitBorderBefore { get; set; }
-    public string WebkitBorderBeforeColor { get; set; }
-    public string WebkitBorderBeforeStyle { get; set; }
-    public string WebkitBorderBeforeWidth { get; set; }
-    public string WebkitBorderBottomLeftRadius { get; set; }
-    public string WebkitBorderBottomRightRadius { get; set; }
-    public string WebkitBorderEnd { get; set; }
-    public string WebkitBorderEndColor { get; set; }
-    public string WebkitBorderEndStyle { get; set; }
-    public string WebkitBorderEndWidth { get; set; }
-    public string WebkitBorderHorizontalSpacing { get; set; }
-    public string WebkitBorderImage { get; set; }
-    public string WebkitBorderRadius { get; set; }
-    public string WebkitBorderStart { get; set; }
-    public string WebkitBorderStartColor { get; set; }
-    public string WebkitBorderStartStyle { get; set; }
-    public string WebkitBorderStartWidth { get; set; }
-    public string WebkitBorderTopLeftRadius { get; set; }
-    public string WebkitBorderTopRightRadius { get; set; }
-    public string WebkitBorderVerticalSpacing { get; set; }
-    public string WebkitBoxAlign { get; set; }
-    public string WebkitBoxDecorationBreak { get; set; }
-    public string WebkitBoxDirection { get; set; }
-    public string WebkitBoxFlex { get; set; }
-    public string WebkitBoxOrdinalGroup { get; set; }
-    public string WebkitBoxOrient { get; set; }
-    public string WebkitBoxPack { get; set; }
-    public string WebkitBoxReflect { get; set; }
-    public string WebkitBoxShadow { get; set; }
-    public string WebkitBoxSizing { get; set; }
-    public string WebkitClipPath { get; set; }
-    public string WebkitColumnBreakAfter { get; set; }
-    public string WebkitColumnBreakBefore { get; set; }
-    public string WebkitColumnBreakInside { get; set; }
-    public string WebkitColumnCount { get; set; }
-    public string WebkitColumnGap { get; set; }
-    public string WebkitColumnRule { get; set; }
-    public string WebkitColumnRuleColor { get; set; }
-    public string WebkitColumnRuleStyle { get; set; }
-    public string WebkitColumnRuleWidth { get; set; }
-    public string WebkitColumnSpan { get; set; }
-    public string WebkitColumnWidth { get; set; }
-    public string WebkitColumns { get; set; }
-    public string WebkitFilter { get; set; }
-    public string WebkitFlex { get; set; }
-    public string WebkitFlexBasis { get; set; }
-    public string WebkitFlexDirection { get; set; }
-    public string WebkitFlexFlow { get; set; }
-    public string WebkitFlexGrow { get; set; }
-    public string WebkitFlexShrink { get; set; }
-    public string WebkitFlexWrap { get; set; }
-    public string WebkitFontFeatureSettings { get; set; }
-    public string WebkitFontSmoothing { get; set; }
-    public string WebkitHyphenateCharacter { get; set; }
-    public string WebkitJustifyContent { get; set; }
-    public string WebkitLineBreak { get; set; }
-    public string WebkitLineClamp { get; set; }
-    public string WebkitLocale { get; set; }
-    public string WebkitLogicalHeight { get; set; }
-    public string WebkitLogicalWidth { get; set; }
-    public string WebkitMarginAfter { get; set; }
-    public string WebkitMarginBefore { get; set; }
-    public string WebkitMarginEnd { get; set; }
-    public string WebkitMarginStart { get; set; }
-    public string WebkitMask { get; set; }
-    public string WebkitMaskBoxImage { get; set; }
-    public string WebkitMaskBoxImageOutset { get; set; }
-    public string WebkitMaskBoxImageRepeat { get; set; }
-    public string WebkitMaskBoxImageSlice { get; set; }
-    public string WebkitMaskBoxImageSource { get; set; }
-    public string WebkitMaskBoxImageWidth { get; set; }
-    public string WebkitMaskClip { get; set; }
-    public string WebkitMaskComposite { get; set; }
-    public string WebkitMaskImage { get; set; }
-    public string WebkitMaskOrigin { get; set; }
-    public string WebkitMaskPosition { get; set; }
-    public string WebkitMaskPositionX { get; set; }
-    public string WebkitMaskPositionY { get; set; }
-    public string WebkitMaskRepeat { get; set; }
-    public string WebkitMaskRepeatX { get; set; }
-    public string WebkitMaskRepeatY { get; set; }
-    public string WebkitMaskSize { get; set; }
-    public string WebkitMaxLogicalHeight { get; set; }
-    public string WebkitMaxLogicalWidth { get; set; }
-    public string WebkitMinLogicalHeight { get; set; }
-    public string WebkitMinLogicalWidth { get; set; }
-    public string WebkitOpacity { get; set; }
-    public string WebkitOrder { get; set; }
-    public string WebkitPaddingAfter { get; set; }
-    public string WebkitPaddingBefore { get; set; }
-    public string WebkitPaddingEnd { get; set; }
-    public string WebkitPaddingStart { get; set; }
-    public string WebkitPerspective { get; set; }
-    public string WebkitPerspectiveOrigin { get; set; }
-    public string WebkitPerspectiveOriginX { get; set; }
-    public string WebkitPerspectiveOriginY { get; set; }
-    public string WebkitPrintColorAdjust { get; set; }
-    public string WebkitRtlOrdering { get; set; }
-    public string WebkitRubyPosition { get; set; }
-    public string WebkitShapeImageThreshold { get; set; }
-    public string WebkitShapeMargin { get; set; }
-    public string WebkitShapeOutside { get; set; }
-    public string WebkitTapHighlightColor { get; set; }
-    public string WebkitTextCombine { get; set; }
-    public string WebkitTextDecorationsInEffect { get; set; }
-    public string WebkitTextEmphasis { get; set; }
-    public string WebkitTextEmphasisColor { get; set; }
-    public string WebkitTextEmphasisPosition { get; set; }
-    public string WebkitTextEmphasisStyle { get; set; }
-    public string WebkitTextFillColor { get; set; }
-    public string WebkitTextOrientation { get; set; }
-    public string WebkitTextSecurity { get; set; }
-    public string WebkitTextSizeAdjust { get; set; }
-    public string WebkitTextStroke { get; set; }
-    public string WebkitTextStrokeColor { get; set; }
-    public string WebkitTextStrokeWidth { get; set; }
-    public string WebkitTransform { get; set; }
-    public string WebkitTransformOrigin { get; set; }
-    public string WebkitTransformOriginX { get; set; }
-    public string WebkitTransformOriginY { get; set; }
-    public string WebkitTransformOriginZ { get; set; }
-    public string WebkitTransformStyle { get; set; }
-    public string WebkitTransition { get; set; }
-    public string WebkitTransitionDelay { get; set; }
-    public string WebkitTransitionDuration { get; set; }
-    public string WebkitTransitionProperty { get; set; }
-    public string WebkitTransitionTimingFunction { get; set; }
-    public string WebkitUserDrag { get; set; }
-    public string WebkitUserModify { get; set; }
-    public string WebkitUserSelect { get; set; }
-    public string WebkitWritingMode { get; set; }
-    public string whiteSpace { get; set; }
-    public string whiteSpaceCollapse { get; set; }
-    public string widows { get; set; }
-    public string width { get; set; }
-    public string willChange { get; set; }
-    public string wordBreak { get; set; }
-    public string wordSpacing { get; set; }
-    public string wordWrap { get; set; }
-    public string writingMode { get; set; }
-    public string x { get; set; }
-    public string y { get; set; }
-    public string zIndex { get; set; }
-    public string zoom { get; set; }
-    public string mozOsxFontSmoothing { get; set; }
-    public string boxDecorationBreak { get; set; }
-    public string cssFloat { get; set; }
-    public string cssText { get; set; }
-    public string fontLanguageOverride { get; set; }
-    public string fontSizeAdjust { get; set; }
-    public string gridAutoPosition { get; set; }
-    public string icon { get; set; }
-    public string imageResolution { get; set; }
-    public string imeMode { get; set; }
-    public string marks { get; set; }
-    public string navDown { get; set; }
-    public string navIndex { get; set; }
-    public string navLeft { get; set; }
-    public string navRight { get; set; }
-    public string navUp { get; set; }
-    public string overflowClipBox { get; set; }
+    public string accentColor { get => Get(Names.accentColor); set => Set(Names.accentColor, value); }
+    public string additiveSymbols { get => Get(Names.additiveSymbols); set => Set(Names.additiveSymbols, value); }
+    public string alignContent { get => Get(Names.alignContent); set => Set(Names.alignContent, value); }
+    public string alignItems { get => Get(Names.alignItems); set => Set(Names.alignItems, value); }
+    public string alignSelf { get => Get(Names.alignSelf); set => Set(Names.alignSelf, value); }
+    public string alignmentBaseline { get => Get(Names.alignmentBaseline); set => Set(Names.alignmentBaseline, value); }
+    public string all { get => Get(Names.all); set => Set(Names.all, value); }
+    public string animation { get => Get(Names.animation); set => Set(Names.animation, value); }
+    public string animationComposition { get => Get(Names.animationComposition); set => Set(Names.animationComposition, value); }
+    public string animationDelay { get => Get(Names.animationDelay); set => Set(Names.animationDelay, value); }
+    public string animationDirection { get => Get(Names.animationDirection); set => Set(Names.animationDirection, value); }
+    public string animationDuration { get => Get(Names.animationDuration); set => Set(Names.animationDuration, value); }
+    public string animationFillMode { get => Get(Names.animationFillMode); set => Set(Names.animationFillMode, value); }
+    public string animationIterationCount { get => Get(Names.animationIterationCount); set => Set(Names.animationIterationCount, value); }
+    public string animationName { get => Get(Names.animationName); set => Set(Names.animationName, value); }
+    public string animationPlayState { get => Get(Names.animationPlayState); set => Set(Names.animationPlayState, value); }
+    public string animationRange { get => Get(Names.animationRange); set => Set(Names.animationRange, value); }
+    public string animationRangeEnd { get => Get(Names.animationRangeEnd); set => Set(Names.animationRangeEnd, value); }
+    public string animationRangeStart { get => Get(Names.animationRangeStart); set => Set(Names.animationRangeStart, value); }
+    public string animationTimeline { get => Get(Names.animationTimeline); set => Set(Names.animationTimeline, value); }
+    public string animationTimingFunction { get => Get(Names.animationTimingFunction); set => Set(Names.animationTimingFunction, value); }
+    public string appRegion { get => Get(Names.appRegion); set => Set(Names.appRegion, value); }
+    public string appearance { get => Get(Names.appearance); set => Set(Names.appearance, value); }
+    public string ascentOverride { get => Get(Names.ascentOverride); set => Set(Names.ascentOverride, value); }
+    public string aspectRatio { get => Get(Names.aspectRatio); set => Set(Names.aspectRatio, value); }
+    public string backdropFilter { get => Get(Names.backdropFilter); set => Set(Names.backdropFilter, value); }
+    public string backfaceVisibility { get => Get(Names.backfaceVisibility); set => Set(Names.backfaceVisibility, value); }
+    public string background { get => Get(Names.background); set => Set(Names.background, value); }
+    public string backgroundAttachment { get => Get(Names.backgroundAttachment); set => Set(Names.backgroundAttachment, value); }
+    public string backgroundBlendMode { get => Get(Names.backgroundBlendMode); set => Set(Names.backgroundBlendMode, value); }
+    public string backgroundClip { get => Get(Names.backgroundClip); set => Set(Names.backgroundClip, value); }
+    public string backgroundColor { get => Get(Names.backgroundColor); set => Set(Names.backgroundColor, value); }
+    public string backgroundImage { get => Get(Names.backgroundImage); set => Set(Names.backgroundImage, value); }
+    public string backgroundOrigin { get => Get(Names.backgroundOrigin); set => Set(Names.backgroundOrigin, value); }
+    public string backgroundPosition { get => Get(Names.backgroundPosition); set => Set(Names.backgroundPosition, value); }
+    public string backgroundPositionX { get => Get(Names.backgroundPositionX); set => Set(Names.backgroundPositionX, value); }
+    public string backgroundPositionY { get => Get(Names.backgroundPositionY); set => Set(Names.backgroundPositionY, value); }
+    public string backgroundRepeat { get => Get(Names.backgroundRepeat); set => Set(Names.backgroundRepeat, value); }
+    public string backgroundRepeatX { get => Get(Names.backgroundRepeatX); set => Set(Names.backgroundRepeatX, value); }
+    public string backgroundRepeatY { get => Get(Names.backgroundRepeatY); set => Set(Names.backgroundRepeatY, value); }
+    public string backgroundSize { get => Get(Names.backgroundSize); set => Set(Names.backgroundSize, value); }
+    public string basePalette { get => Get(Names.basePalette); set => Set(Names.basePalette, value); }
+    public string baselineShift { get => Get(Names.baselineShift); set => Set(Names.baselineShift, value); }
+    public string baselineSource { get => Get(Names.baselineSource); set => Set(Names.baselineSource, value); }
+    public string blockSize { get => Get(Names.blockSize); set => Set(Names.blockSize, value); }
+    public string border { get => Get(Names.border); set => Set(Names.border, value); }
+    public string borderBlock { get => Get(Names.borderBlock); set => Set(Names.borderBlock, value); }
+    public string borderBlockColor { get => Get(Names.borderBlockColor); set => Set(Names.borderBlockColor, value); }
+    public string borderBlockEnd { get => Get(Names.borderBlockEnd); set => Set(Names.borderBlockEnd, value); }
+    public string borderBlockEndColor { get => Get(Names.borderBlockEndColor); set => Set(Names.borderBlockEndColor, value); }
+    public string borderBlockEndStyle { get => Get(Names.borderBlockEndStyle); set => Set(Names.borderBlockEndStyle, value); }
+    public string borderBlockEndWidth { get => Get(Names.borderBlockEndWidth); set => Set(Names.borderBlockEndWidth, value); }
+    public string borderBlockStart { get => Get(Names.borderBlockStart); set => Set(Names.borderBlockStart, value); }
+    public string borderBlockStartColor { get => Get(Names.borderBlockStartColor); set => Set(Names.borderBlockStartColor, value); }
+    public string borderBlockStartStyle { get => Get(Names.borderBlockStartStyle); set => Set(Names.borderBlockStartStyle, value); }
+    public string borderBlockStartWidth { get => Get(Names.borderBlockStartWidth); set => Set(Names.borderBlockStartWidth, value); }
+    public string borderBlockStyle { get => Get(Names.borderBlockStyle); set => Set(Names.borderBlockStyle, value); }
+    public string borderBlockWidth { get => Get(Names.borderBlockWidth); set => Set(Names.borderBlockWidth, value); }
+    public string borderBottom { get => Get(Names.borderBottom); set => Set(Names.borderBottom, value); }
+    public string borderBottomColor { get => Get(Names.borderBottomColor); set => Set(Names.borderBottomColor, value); }
+    public string borderBottomLeftRadius { get => Get(Names.borderBottomLeftRadius); set => Set(Names.borderBottomLeftRadius, value); }
+    public string borderBottomRightRadius { get => Get(Names.borderBottomRightRadius); set => Set(Names.borderBottomRightRadius, value); }
+    public string borderBottomStyle { get => Get(Names.borderBottomStyle); set => Set(Names.borderBottomStyle, value); }
+    public string borderBottomWidth { get => Get(Names.borderBottomWidth); set => Set(Names.borderBottomWidth, value); }
+    public string borderCollapse { get => Get(Names.borderCollapse); set => Set(Names.borderCollapse, value); }
+    public string borderColor { get => Get(Names.borderColor); set => Set(Names.borderColor, value); }
+    public string borderEndEndRadius { get => Get(Names.borderEndEndRadius); set => Set(Names.borderEndEndRadius, value); }
+    public string borderEndStartRadius { get => Get(Names.borderEndStartRadius); set => Set(Names.borderEndStartRadius, value); }
+    public string borderImage { get => Get(Names.borderImage); set => Set(Names.borderImage, value); }
+    public string borderImageOutset { get => Get(Names.borderImageOutset); set => Set(Names.borderImageOutset, value); }
+    public string borderImageRepeat { get => Get(Names.borderImageRepeat); set => Set(Names.borderImageRepeat, value); }
+    public string borderImageSlice { get => Get(Names.borderImageSlice); set => Set(Names.borderImageSlice, value); }
+    public string borderImageSource { get => Get(Names.borderImageSource); set => Set(Names.borderImageSource, value); }
+    public string borderImageWidth { get => Get(Names.borderImageWidth); set => Set(Names.borderImageWidth, value); }
+    public string borderInline { get => Get(Names.borderInline); set => Set(Names.borderInline, value); }
+    public string borderInlineColor { get => Get(Names.borderInlineColor); set => Set(Names.borderInlineColor, value); }
+    public string borderInlineEnd { get => Get(Names.borderInlineEnd); set => Set(Names.borderInlineEnd, value); }
+    public string borderInlineEndColor { get => Get(Names.borderInlineEndColor); set => Set(Names.borderInlineEndColor, value); }
+    public string borderInlineEndStyle { get => Get(Names.borderInlineEndStyle); set => Set(Names.borderInlineEndStyle, value); }
+    public string borderInlineEndWidth { get => Get(Names.borderInlineEndWidth); set => Set(Names.borderInlineEndWidth, value); }
+    public string borderInlineStart { get => Get(Names.borderInlineStart); set => Set(Names.borderInlineStart, value); }
+    public string borderInlineStartColor { get => Get(Names.borderInlineStartColor); set => Set(Names.borderInlineStartColor, value); }
+    public string borderInlineStartStyle { get => Get(Names.borderInlineStartStyle); set => Set(Names.borderInlineStartStyle, value); }
+    public string borderInlineStartWidth { get => Get(Names.borderInlineStartWidth); set => Set(Names.borderInlineStartWidth, value); }
+    public string borderInlineStyle { get => Get(Names.borderInlineStyle); set => Set(Names.borderInlineStyle, value); }
+    public string borderInlineWidth { get => Get(Names.borderInlineWidth); set => Set(Names.borderInlineWidth, value); }
+    public string borderLeft { get => Get(Names.borderLeft); set => Set(Names.borderLeft, value); }
+    public string borderLeftColor { get => Get(Names.borderLeftColor); set => Set(Names.borderLeftColor, value); }
+    public string borderLeftStyle { get => Get(Names.borderLeftStyle); set => Set(Names.borderLeftStyle, value); }
+    public string borderLeftWidth { get => Get(Names.borderLeftWidth); set => Set(Names.borderLeftWidth, value); }
+    public string borderRadius { get => Get(Names.borderRadius); set => Set(Names.borderRadius, value); }
+    public string borderRight { get => Get(Names.borderRight); set => Set(Names.borderRight, value); }
+    public string borderRightColor { get => Get(Names.borderRightColor); set => Set(Names.borderRightColor, value); }
+    public string borderRightStyle { get => Get(Names.borderRightStyle); set => Set(Names.borderRightStyle, value); }
+    public string borderRightWidth { get => Get(Names.borderRightWidth); set => Set(Names.borderRightWidth, value); }
+    public string borderSpacing { get => Get(Names.borderSpacing); set => Set(Names.borderSpacing, value); }
+    public string borderStartEndRadius { get => Get(Names.borderStartEndRadius); set => Set(Names.borderStartEndRadius, value); }
+    public string borderStartStartRadius { get => Get(Names.borderStartStartRadius); set => Set(Names.borderStartStartRadius, value); }
+    public string borderStyle { get => Get(Names.borderStyle); set => Set(Names.borderStyle, value); }
+    public string borderTop { get => Get(Names.borderTop); set => Set(Names.borderTop, value); }
+    public string borderTopColor { get => Get(Names.borderTopColor); set => Set(Names.borderTopColor, value); }
+    public string borderTopLeftRadius { get => Get(Names.borderTopLeftRadius); set => Set(Names.borderTopLeftRadius, value); }
+    public string borderTopRightRadius { get => Get(Names.borderTopRightRadius); set => Set(Names.borderTopRightRadius, value); }
+    public string borderTopStyle { get => Get(Names.borderTopStyle); set => Set(Names.borderTopStyle, value); }
+    public string borderTopWidth { get => Get(Names.borderTopWidth); set => Set(Names.borderTopWidth, value); }
+    public string borderWidth { get => Get(Names.borderWidth); set => Set(Names.borderWidth, value); }
+    public string bottom { get => Get(Names.bottom); set => Set(Names.bottom, value); }
+    public string boxShadow { get => Get(Names.boxShadow); set => Set(Names.boxShadow, value); }
+    public string boxSizing { get => Get(Names.boxSizing); set => Set(Names.boxSizing, value); }
+    public string breakAfter { get => Get(Names.breakAfter); set => Set(Names.breakAfter, value); }
+    public string breakBefore { get => Get(Names.breakBefore); set => Set(Names.breakBefore, value); }
+    public string breakInside { get => Get(Names.breakInside); set => Set(Names.breakInside, value); }
+    public string bufferedRendering { get => Get(Names.bufferedRendering); set => Set(Names.bufferedRendering, value); }
+    public string captionSide { get => Get(Names.captionSide); set => Set(Names.captionSide, value); }
+    public string caretColor { get => Get(Names.caretColor); set => Set(Names.caretColor, value); }
+    public string clear { get => Get(Names.clear); set => Set(Names.clear, value); }
+    public string clip { get => Get(Names.clip); set => Set(Names.clip, value); }
+    public string clipPath { get => Get(Names.clipPath); set => Set(Names.clipPath, value); }
+    public string clipRule { get => Get(Names.clipRule); set => Set(Names.clipRule, value); }
+    public string color { get => Get(Names.color); set => Set(Names.color, value); }
+    public string colorInterpolation { get => Get(Names.colorInterpolation); set => Set(Names.colorInterpolation, value); }
+    public string colorInterpolationFilters { get => Get(Names.colorInterpolationFilters); set => Set(Names.colorInterpolationFilters, value); }
+    public string colorRendering { get => Get(Names.colorRendering); set => Set(Names.colorRendering, value); }
+    public string colorScheme { get => Get(Names.colorScheme); set => Set(Names.colorScheme, value); }
+    public string columnCount { get => Get(Names.columnCount); set => Set(Names.columnCount, value); }
+    public string columnFill { get => Get(Names.columnFill); set => Set(Names.columnFill, value); }
+    public string columnGap { get => Get(Names.columnGap); set => Set(Names.columnGap, value); }
+    public string columnRule { get => Get(Names.columnRule); set => Set(Names.columnRule, value); }
+    public string columnRuleColor { get => Get(Names.columnRuleColor); set => Set(Names.columnRuleColor, value); }
+    public string columnRuleStyle { get => Get(Names.columnRuleStyle); set => Set(Names.columnRuleStyle, value); }
+    public string columnRuleWidth { get => Get(Names.columnRuleWidth); set => Set(Names.columnRuleWidth, value); }
+    public string columnSpan { get => Get(Names.columnSpan); set => Set(Names.columnSpan, value); }
+    public string columnWidth { get => Get(Names.columnWidth); set => Set(Names.columnWidth, value); }
+    public string columns { get => Get(Names.columns); set => Set(Names.columns, value); }
+    public string contain { get => Get(Names.contain); set => Set(Names.contain, value); }
+    public string containIntrinsicBlockSize { get => Get(Names.containIntrinsicBlockSize); set => Set(Names.containIntrinsicBlockSize, value); }
+    public string containIntrinsicHeight { get => Get(Names.containIntrinsicHeight); set => Set(Names.containIntrinsicHeight, value); }
+    public string containIntrinsicInlineSize { get => Get(Names.containIntrinsicInlineSize); set => Set(Names.containIntrinsicInlineSize, value); }
+    public string containIntrinsicSize { get => Get(Names.containIntrinsicSize); set => Set(Names.containIntrinsicSize, value); }
+    public string containIntrinsicWidth { get => Get(Names.containIntrinsicWidth); set => Set(Names.containIntrinsicWidth, value); }
+    public string container { get => Get(Names.container); set => Set(Names.container, value); }
+    public string containerName { get => Get(Names.containerName); set => Set(Names.containerName, value); }
+    public string containerType { get => Get(Names.containerType); set => Set(Names.containerType, value); }
+    public string content { get => Get(Names.content); set => Set(Names.content, value); }
+    public string contentVisibility { get => Get(Names.contentVisibility); set => Set(Names.contentVisibility, value); }
+    public string counterIncrement { get => Get(Names.counterIncrement); set => Set(Names.counterIncrement, value); }
+    public string counterReset { get => Get(Names.counterReset); set => Set(Names.counterReset, value); }
+    public string counterSet { get => Get(Names.counterSet); set => Set(Names.counterSet, value); }
+    public string cursor { get => Get(Names.cursor); set => Set(Names.cursor, value); }
+    public string cx { get => Get(Names.cx); set => Set(Names.cx, value); }
+    public string cy { get => Get(Names.cy); set => Set(Names.cy, value); }
+    public string d { get => Get(Names.d); set => Set(Names.d, value); }
+    public string descentOverride { get => Get(Names.descentOverride); set => Set(Names.descentOverride, value); }
+    public string direction { get => Get(Names.direction); set => Set(Names.direction, value); }
+    public string display { get => Get(Names.display); set => Set(Names.display, value); }
+    public string dominantBaseline { get => Get(Names.dominantBaseline); set => Set(Names.dominantBaseline, value); }
+    public string emptyCells { get => Get(Names.emptyCells); set => Set(Names.emptyCells, value); }
+    public string fallback { get => Get(Names.fallback); set => Set(Names.fallback, value); }
+    public string fill { get => Get(Names.fill); set => Set(Names.fill, value); }
+    public string fillOpacity { get => Get(Names.fillOpacity); set => Set(Names.fillOpacity, value); }
+    public string fillRule { get => Get(Names.fillRule); set => Set(Names.fillRule, value); }
+    public string filter { get => Get(Names.filter); set => Set(Names.filter, value); }
+    public string flex { get => Get(Names.flex); set => Set(Names.flex, value); }
+    public string flexBasis { get => Get(Names.flexBasis); set => Set(Names.flexBasis, value); }
+    public string flexDirection { get => Get(Names.flexDirection); set => Set(Names.flexDirection, value); }
+    public string flexFlow { get => Get(Names.flexFlow); set => Set(Names.flexFlow, value); }
+    public string flexGrow { get => Get(Names.flexGrow); set => Set(Names.flexGrow, value); }
+    public string flexShrink { get => Get(Names.flexShrink); set => Set(Names.flexShrink, value); }
+    public string flexWrap { get => Get(Names.flexWrap); set => Set(Names.flexWrap, value); }
+    public string @float { get => Get(Names.@float); set => Set(Names.@float, value); }
+    public string floodColor { get => Get(Names.floodColor); set => Set(Names.floodColor, value); }
+    public string floodOpacity { get => Get(Names.floodOpacity); set => Set(Names.floodOpacity, value); }
+    public string font { get => Get(Names.font); set => Set(Names.font, value); }
+    public string fontDisplay { get => Get(Names.fontDisplay); set => Set(Names.fontDisplay, value); }
+    public string fontFamily { get => Get(Names.fontFamily); set => Set(Names.fontFamily, value); }
+    public string fontFeatureSettings { get => Get(Names.fontFeatureSettings); set => Set(Names.fontFeatureSettings, value); }
+    public string fontKerning { get => Get(Names.fontKerning); set => Set(Names.fontKerning, value); }
+    public string fontOpticalSizing { get => Get(Names.fontOpticalSizing); set => Set(Names.fontOpticalSizing, value); }
+    public string fontPalette { get => Get(Names.fontPalette); set => Set(Names.fontPalette, value); }
+    public string fontSize { get => Get(Names.fontSize); set => Set(Names.fontSize, value); }
+    public string fontStretch { get => Get(Names.fontStretch); set => Set(Names.fontStretch, value); }
+    public string fontStyle { get => Get(Names.fontStyle); set => Set(Names.fontStyle, value); }
+    public string fontSynthesis { get => Get(Names.fontSynthesis); set => Set(Names.fontSynthesis, value); }
+    public string fontSynthesisSmallCaps { get => Get(Names.fontSynthesisSmallCaps); set => Set(Names.fontSynthesisSmallCaps, value); }
+    public string fontSynthesisStyle { get => Get(Names.fontSynthesisStyle); set => Set(Names.fontSynthesisStyle, value); }
+    public string fontSynthesisWeight { get => Get(Names.fontSynthesisWeight); set => Set(Names.fontSynthesisWeight, value); }
+    public string fontVariant { get => Get(Names.fontVariant); set => Set(Names.fontVariant, value); }
+    public string fontVariantAlternates { get => Get(Names.fontVariantAlternates); set => Set(Names.fontVariantAlternates, value); }
+    public string fontVariantCaps { get => Get(Names.fontVariantCaps); set => Set(Names.fontVariantCaps, value); }
+    public string fontVariantEastAsian { get => Get(Names.fontVariantEastAsian); set => Set(Names.fontVariantEastAsian, value); }
+    public string fontVariantLigatures { get => Get(Names.fontVariantLigatures); set => Set(Names.fontVariantLigatures, value); }
+    public string fontVariantNumeric { get => Get(Names.fontVariantNumeric); set => Set(Names.fontVariantNumeric, value); }
+    public string fontVariantPosition { get => Get(Names.fontVariantPosition); set => Set(Names.fontVariantPosition, value); }
+    public string fontVariationSettings { get => Get(Names.fontVariationSettings); set => Set(Names.fontVariationSettings, value); }
+    public string fontWeight { get => Get(Names.fontWeight); set => Set(Names.fontWeight, value); }
+    public string forcedColorAdjust { get => Get(Names.forcedColorAdjust); set => Set(Names.forcedColorAdjust, value); }
+    public string gap { get => Get(Names.gap); set => Set(Names.gap, value); }
+    public string grid { get => Get(Names.grid); set => Set(Names.grid, value); }
+    public string gridArea { get => Get(Names.gridArea); set => Set(Names.gridArea, value); }
+    public string gridAutoColumns { get => Get(Names.gridAutoColumns); set => Set(Names.gridAutoColumns, value); }
+    public string gridAutoFlow { get => Get(Names.gridAutoFlow); set => Set(Names.gridAutoFlow, value); }
+    public string gridAutoRows { get => Get(Names.gridAutoRows); set => Set(Names.gridAutoRows, value); }
+    public string gridColumn { get => Get(Names.gridColumn); set => Set(Names.gridColumn, value); }
+    public string gridColumnEnd { get => Get(Names.gridColumnEnd); set => Set(Names.gridColumnEnd, value); }
+    public string gridColumnGap { get => Get(Names.gridColumnGap); set => Set(Names.gridColumnGap, value); }
+    public string gridColumnStart { get => Get(Names.gridColumnStart); set => Set(Names.gridColumnStart, value); }
+    public string gridGap { get => Get(Names.gridGap); set => Set(Names.gridGap, value); }
+    public string gridRow { get => Get(Names.gridRow); set => Set(Names.gridRow, value); }
+    public string gridRowEnd { get => Get(Names.gridRowEnd); set => Set(Names.gridRowEnd, value); }
+    public string gridRowGap { get => Get(Names.gridRowGap); set => Set(Names.gridRowGap, value); }
+    public string gridRowStart { get => Get(Names.gridRowStart); set => Set(Names.gridRowStart, value); }
+    public string gridTemplate { get => Get(Names.gridTemplate); set => Set(Names.gridTemplate, value); }
+    public string gridTemplateAreas { get => Get(Names.gridTemplateAreas); set => Set(Names.gridTemplateAreas, value); }
+    public string gridTemplateColumns { get => Get(Names.gridTemplateColumns); set => Set(Names.gridTemplateColumns, value); }
+    public string gridTemplateRows { get => Get(Names.gridTemplateRows); set => Set(Names.gridTemplateRows, value); }
+    public string height { get => Get(Names.height); set => Set(Names.height, value); }
+    public string hyphenateCharacter { get => Get(Names.hyphenateCharacter); set => Set(Names.hyphenateCharacter, value); }
+    public string hyphenateLimitChars { get => Get(Names.hyphenateLimitChars); set => Set(Names.hyphenateLimitChars, value); }
+    public string hyphens { get => Get(Names.hyphens); set => Set(Names.hyphens, value); }
+    public string imageOrientation { get => Get(Names.imageOrientation); set => Set(Names.imageOrientation, value); }
+    public string imageRendering { get => Get(Names.imageRendering); set => Set(Names.imageRendering, value); }
+    public string inherits { get => Get(Names.inherits); set => Set(Names.inherits, value); }
+    public string initialLetter { get => Get(Names.initialLetter); set => Set(Names.initialLetter, value); }
+    public string initialValue { get => Get(Names.initialValue); set => Set(Names.initialValue, value); }
+    public string inlineSize { get => Get(Names.inlineSize); set => Set(Names.inlineSize, value); }
+    public string inset { get => Get(Names.inset); set => Set(Names.inset, value); }
+    public string insetBlock { get => Get(Names.insetBlock); set => Set(Names.insetBlock, value); }
+    public string insetBlockEnd { get => Get(Names.insetBlockEnd); set => Set(Names.insetBlockEnd, value); }
+    public string insetBlockStart { get => Get(Names.insetBlockStart); set => Set(Names.insetBlockStart, value); }
+    public string insetInline { get => Get(Names.insetInline); set => Set(Names.insetInline, value); }
+    public string insetInlineEnd { get => Get(Names.insetInlineEnd); set => Set(Names.insetInlineEnd, value); }
+    public string insetInlineStart { get => Get(Names.insetInlineStart); set => Set(Names.insetInlineStart, value); }
+    public string isolation { get => Get(Names.isolation); set => Set(Names.isolation, value); }
+    public string justifyContent { get => Get(Names.justifyContent); set => Set(Names.justifyContent, value); }
+    public string justifyItems { get => Get(Names.justifyItems); set => Set(Names.justifyItems, value); }
+    public string justifySelf { get => Get(Names.justifySelf); set => Set(Names.justifySelf, value); }
+    public string left { get => Get(Names.left); set => Set(Names.left, value); }
+    public string letterSpacing { get => Get(Names.letterSpacing); set => Set(Names.letterSpacing, value); }
+    public string lightingColor { get => Get(Names.lightingColor); set => Set(Names.lightingColor, value); }
+    public string lineBreak { get => Get(Names.lineBreak); set => Set(Names.lineBreak, value); }
+    public string lineGapOverride { get => Get(Names.lineGapOverride); set => Set(Names.lineGapOverride, value); }
+    public string lineHeight { get => Get(Names.lineHeight); set => Set(Names.lineHeight, value); }
+    public string listStyle { get => Get(Names.listStyle); set => Set(Names.listStyle, value); }
+    public string listStyleImage { get => Get(Names.listStyleImage); set => Set(Names.listStyleImage, value); }
+    public string listStylePosition { get => Get(Names.listStylePosition); set => Set(Names.listStylePosition, value); }
+    public string listStyleType { get => Get(Names.listStyleType); set => Set(Names.listStyleType, value); }
+    public string margin { get => Get(Names.margin); set => Set(Names.margin, value); }
+    public string marginBlock { get => Get(Names.marginBlock); set => Set(Names.marginBlock, value); }
+    public string marginBlockEnd { get => Get(Names.marginBlockEnd); set => Set(Names.marginBlockEnd, value); }
+    public string marginBlockStart { get => Get(Names.marginBlockStart); set => Set(Names.marginBlockStart, value); }
+    public string marginBottom { get => Get(Names.marginBottom); set => Set(Names.marginBottom, value); }
+    public string marginInline { get => Get(Names.marginInline); set => Set(Names.marginInline, value); }
+    public string marginInlineEnd { get => Get(Names.marginInlineEnd); set => Set(Names.marginInlineEnd, value); }
+    public string marginInlineStart { get => Get(Names.marginInlineStart); set => Set(Names.marginInlineStart, value); }
+    public string marginLeft { get => Get(Names.marginLeft); set => Set(Names.marginLeft, value); }
+    public string marginRight { get => Get(Names.marginRight); set => Set(Names.marginRight, value); }
+    public string marginTop { get => Get(Names.marginTop); set => Set(Names.marginTop, value); }
+    public string marker { get => Get(Names.marker); set => Set(Names.marker, value); }
+    public string markerEnd { get => Get(Names.markerEnd); set => Set(Names.markerEnd, value); }
+    public string markerMid { get => Get(Names.markerMid); set => Set(Names.markerMid, value); }
+    public string markerStart { get => Get(Names.markerStart); set => Set(Names.markerStart, value); }
+    public string mask { get => Get(Names.mask); set => Set(Names.mask, value); }
+    public string maskType { get => Get(Names.maskType); set => Set(Names.maskType, value); }
+    public string mathDepth { get => Get(Names.mathDepth); set => Set(Names.mathDepth, value); }
+    public string mathShift { get => Get(Names.mathShift); set => Set(Names.mathShift, value); }
+    public string mathStyle { get => Get(Names.mathStyle); set => Set(Names.mathStyle, value); }
+    public string maxBlockSize { get => Get(Names.maxBlockSize); set => Set(Names.maxBlockSize, value); }
+    public string maxHeight { get => Get(Names.maxHeight); set => Set(Names.maxHeight, value); }
+    public string maxInlineSize { get => Get(Names.maxInlineSize); set => Set(Names.maxInlineSize, value); }
+    public string maxWidth { get => Get(Names.maxWidth); set => Set(Names.maxWidth, value); }
+    public string minBlockSize { get => Get(Names.minBlockSize); set => Set(Names.minBlockSize, value); }
+    public string minHeight { get => Get(Names.minHeight); set => Set(Names.minHeight, value); }
+    public string minInlineSize { get => Get(Names.minInlineSize); set => Set(Names.minInlineSize, value); }
+    public string minWidth { get => Get(Names.minWidth); set => Set(Names.minWidth, value); }
+    public string mixBlendMode { get => Get(Names.mixBlendMode); set => Set(Names.mixBlendMode, value); }
+    public string negative { get => Get(Names.negative); set => Set(Names.negative, value); }
+    public string objectFit { get => Get(Names.objectFit); set => Set(Names.objectFit, value); }
+    public string objectPosition { get => Get(Names.objectPosition); set => Set(Names.objectPosition, value); }
+    public string objectViewBox { get => Get(Names.objectViewBox); set => Set(Names.objectViewBox, value); }
+    public string offset { get => Get(Names.offset); set => Set(Names.offset, value); }
+    public string offsetAnchor { get => Get(Names.offsetAnchor); set => Set(Names.offsetAnchor, value); }
+    public string offsetDistance { get => Get(Names.offsetDistance); set => Set(Names.offsetDistance, value); }
+    public string offsetPath { get => Get(Names.offsetPath); set => Set(Names.offsetPath, value); }
+    public string offsetPosition { get => Get(Names.offsetPosition); set => Set(Names.offsetPosition, value); }
+    public string offsetRotate { get => Get(Names.offsetRotate); set => Set(Names.offsetRotate, value); }
+    public string opacity { get => Get(Names.opacity); set => Set(Names.opacity, value); }
+    public string order { get => Get(Names.order); set => Set(Names.order, value); }
+    public string orphans { get => Get(Names.orphans); set => Set(Names.orphans, value); }
+    public string outline { get => Get(Names.outline); set => Set(Names.outline, value); }
+    public string outlineColor { get => Get(Names.outlineColor); set => Set(Names.outlineColor, value); }
+    public string outlineOffset { get => Get(Names.outlineOffset); set => Set(Names.outlineOffset, value); }
+    public string outlineStyle { get => Get(Names.outlineStyle); set => Set(Names.outlineStyle, value); }
+    public string outlineWidth { get => Get(Names.outlineWidth); set => Set(Names.outlineWidth, value); }
+    public string overflow { get => Get(Names.overflow); set => Set(Names.overflow, value); }
+    public string overflowAnchor { get => Get(Names.overflowAnchor); set => Set(Names.overflowAnchor, value); }
+    public string overflowClipMargin { get => Get(Names.overflowClipMargin); set => Set(Names.overflowClipMargin, value); }
+    public string overflowWrap { get => Get(Names.overflowWrap); set => Set(Names.overflowWrap, value); }
+    public string overflowX { get => Get(Names.overflowX); set => Set(Names.overflowX, value); }
+    public string overflowY { get => Get(Names.overflowY); set => Set(Names.overflowY, value); }
+    public string overlay { get => Get(Names.overlay); set => Set(Names.overlay, value); }
+    public string overrideColors { get => Get(Names.overrideColors); set => Set(Names.overrideColors, value); }
+    public string overscrollBehavior { get => Get(Names.overscrollBehavior); set => Set(Names.overscrollBehavior, value); }
+    public string overscrollBehaviorBlock { get => Get(Names.overscrollBehaviorBlock); set => Set(Names.overscrollBehaviorBlock, value); }
+    public string overscrollBehaviorInline { get => Get(Names.overscrollBehaviorInline); set => Set(Names.overscrollBehaviorInline, value); }
+    public string overscrollBehaviorX { get => Get(Names.overscrollBehaviorX); set => Set(Names.overscrollBehaviorX, value); }
+    public string overscrollBehaviorY { get => Get(Names.overscrollBehaviorY); set => Set(Names.overscrollBehaviorY, value); }
+    public string pad { get => Get(Names.pad); set => Set(Names.pad, value); }
+    public string padding { get => Get(Names.padding); set => Set(Names.padding, value); }
+    public string paddingBlock { get => Get(Names.paddingBlock); set => Set(Names.paddingBlock, value); }
+    public string paddingBlockEnd { get => Get(Names.paddingBlockEnd); set => Set(Names.paddingBlockEnd, value); }
+    public string paddingBlockStart { get => Get(Names.paddingBlockStart); set => Set(Names.paddingBlockStart, value); }
+    public string paddingBottom { get => Get(Names.paddingBottom); set => Set(Names.paddingBottom, value); }
+    public string paddingInline { get => Get(Names.paddingInline); set => Set(Names.paddingInline, value); }
+    public string paddingInlineEnd { get => Get(Names.paddingInlineEnd); set => Set(Names.paddingInlineEnd, value); }
+    public string paddingInlineStart { get => Get(Names.paddingInlineStart); set => Set(Names.paddingInlineStart, value); }
+    public string paddingLeft { get => Get(Names.paddingLeft); set => Set(Names.paddingLeft, value); }
+    public string paddingRight { get => Get(Names.paddingRight); set => Set(Names.paddingRight, value); }
+    public string paddingTop { get => Get(Names.paddingTop); set => Set(Names.paddingTop, value); }
+    public string page { get => Get(Names.page); set => Set(Names.page, value); }
+    public string pageBreakAfter { get => Get(Names.pageBreakAfter); set => Set(Names.pageBreakAfter, value); }
+    public string pageBreakBefore { get => Get(Names.pageBreakBefore); set => Set(Names.pageBreakBefore, value); }
+    public string pageBreakInside { get => Get(Names.pageBreakInside); set => Set(Names.pageBreakInside, value); }
+    public string pageOrientation { get => Get(Names.pageOrientation); set => Set(Names.pageOrientation, value); }
+    public string paintOrder { get => Get(Names.paintOrder); set => Set(Names.paintOrder, value); }
+    public string perspective { get => Get(Names.perspective); set => Set(Names.perspective, value); }
+    public string perspectiveOrigin { get => Get(Names.perspectiveOrigin); set => Set(Names.perspectiveOrigin, value); }
+    public string placeContent { get => Get(Names.placeContent); set => Set(Names.placeContent, value); }
+    public string placeItems { get => Get(Names.placeItems); set => Set(Names.placeItems, value); }
+    public string placeSelf { get => Get(Names.placeSelf); set => Set(Names.placeSelf, value); }
+    public string pointerEvents { get => Get(Names.pointerEvents); set => Set(Names.pointerEvents, value); }
+    public string position { get => Get(Names.position); set => Set(Names.position, value); }
+    public string prefix { get => Get(Names.prefix); set => Set(Names.prefix, value); }
+    public string quotes { get => Get(Names.quotes); set => Set(Names.quotes, value); }
+    public string r { get => Get(Names.r); set => Set(Names.r, value); }
+    public string range { get => Get(Names.range); set => Set(Names.range, value); }
+    public string resize { get => Get(Names.resize); set => Set(Names.resize, value); }
+    public string right { get => Get(Names.right); set => Set(Names.right, value); }
+    public string rotate { get => Get(Names.rotate); set => Set(Names.rotate, value); }
+    public string rowGap { get => Get(Names.rowGap); set => Set(Names.rowGap, value); }
+    public string rubyPosition { get => Get(Names.rubyPosition); set => Set(Names.rubyPosition, value); }
+    public string rx { get => Get(Names.rx); set => Set(Names.rx, value); }
+    public string ry { get => Get(Names.ry); set => Set(Names.ry, value); }
+    public string scale { get => Get(Names.scale); set => Set(Names.scale, value); }
+    public string scrollBehavior { get => Get(Names.scrollBehavior); set => Set(Names.scrollBehavior, value); }
+    public string scrollMargin { get => Get(Names.scrollMargin); set => Set(Names.scrollMargin, value); }
+    public string scrollMarginBlock { get => Get(Names.scrollMarginBlock); set => Set(Names.scrollMarginBlock, value); }
+    public string scrollMarginBlockEnd { get => Get(Names.scrollMarginBlockEnd); set => Set(Names.scrollMarginBlockEnd, value); }
+    public string scrollMarginBlockStart { get => Get(Names.scrollMarginBlockStart); set => Set(Names.scrollMarginBlockStart, value); }
+    public string scrollMarginBottom { get => Get(Names.scrollMarginBottom); set => Set(Names.scrollMarginBottom, value); }
+    public string scrollMarginInline { get => Get(Names.scrollMarginInline); set => Set(Names.scrollMarginInline, value); }
+    public string scrollMarginInlineEnd { get => Get(Names.scrollMarginInlineEnd); set => Set(Names.scrollMarginInlineEnd, value); }
+    public string scrollMarginInlineStart { get => Get(Names.scrollMarginInlineStart); set => Set(Names.scrollMarginInlineStart, value); }
+    public string scrollMarginLeft { get => Get(Names.scrollMarginLeft); set => Set(Names.scrollMarginLeft, value); }
+    public string scrollMarginRight { get => Get(Names.scrollMarginRight); set => Set(Names.scrollMarginRight, value); }
+    public string scrollMarginTop { get => Get(Names.scrollMarginTop); set => Set(Names.scrollMarginTop, value); }
+    public string scrollPadding { get => Get(Names.scrollPadding); set => Set(Names.scrollPadding, value); }
+    public string scrollPaddingBlock { get => Get(Names.scrollPaddingBlock); set => Set(Names.scrollPaddingBlock, value); }
+    public string scrollPaddingBlockEnd { get => Get(Names.scrollPaddingBlockEnd); set => Set(Names.scrollPaddingBlockEnd, value); }
+    public string scrollPaddingBlockStart { get => Get(Names.scrollPaddingBlockStart); set => Set(Names.scrollPaddingBlockStart, value); }
+    public string scrollPaddingBottom { get => Get(Names.scrollPaddingBottom); set => Set(Names.scrollPaddingBottom, value); }
+    public string scrollPaddingInline { get => Get(Names.scrollPaddingInline); set => Set(Names.scrollPaddingInline, value); }
+    public string scrollPaddingInlineEnd { get => Get(Names.scrollPaddingInlineEnd); set => Set(Names.scrollPaddingInlineEnd, value); }
+    public string scrollPaddingInlineStart { get => Get(Names.scrollPaddingInlineStart); set => Set(Names.scrollPaddingInlineStart, value); }
+    public string scrollPaddingLeft { get => Get(Names.scrollPaddingLeft); set => Set(Names.scrollPaddingLeft, value); }
+    public string scrollPaddingRight { get => Get(Names.scrollPaddingRight); set => Set(Names.scrollPaddingRight, value); }
+    public string scrollPaddingTop { get => Get(Names.scrollPaddingTop); set => Set(Names.scrollPaddingTop, value); }
+    public string scrollSnapAlign { get => Get(Names.scrollSnapAlign); set => Set(Names.scrollSnapAlign, value); }
+    public string scrollSnapStop { get => Get(Names.scrollSnapStop); set => Set(Names.scrollSnapStop, value); }
+    public string scrollSnapType { get => Get(Names.scrollSnapType); set => Set(Names.scrollSnapType, value); }
+    public string scrollTimeline { get => Get(Names.scrollTimeline); set => Set(Names.scrollTimeline, value); }
+    public string scrollTimelineAxis { get => Get(Names.scrollTimelineAxis); set => Set(Names.scrollTimelineAxis, value); }
+    public string scrollTimelineName { get => Get(Names.scrollTimelineName); set => Set(Names.scrollTimelineName, value); }
+    public string scrollbarGutter { get => Get(Names.scrollbarGutter); set => Set(Names.scrollbarGutter, value); }
+    public string shapeImageThreshold { get => Get(Names.shapeImageThreshold); set => Set(Names.shapeImageThreshold, value); }
+    public string shapeMargin { get => Get(Names.shapeMargin); set => Set(Names.shapeMargin, value); }
+    public string shapeOutside { get => Get(Names.shapeOutside); set => Set(Names.shapeOutside, value); }
+    public string shapeRendering { get => Get(Names.shapeRendering); set => Set(Names.shapeRendering, value); }
+    public string size { get => Get(Names.size); set => Set(Names.size, value); }
+    public string sizeAdjust { get => Get(Names.sizeAdjust); set => Set(Names.sizeAdjust, value); }
+    public string speak { get => Get(Names.speak); set => Set(Names.speak, value); }
+    public string speakAs { get => Get(Names.speakAs); set => Set(Names.speakAs, value); }
+    public string src { get => Get(Names.src); set => Set(Names.src, value); }
+    public string stopColor { get => Get(Names.stopColor); set => Set(Names.stopColor, value); }
+    public string stopOpacity { get => Get(Names.stopOpacity); set => Set(Names.stopOpacity, value); }
+    public string stroke { get => Get(Names.stroke); set => Set(Names.stroke, value); }
+    public string strokeDasharray { get => Get(Names.strokeDasharray); set => Set(Names.strokeDasharray, value); }
+    public string strokeDashoffset { get => Get(Names.strokeDashoffset); set => Set(Names.strokeDashoffset, value); }
+    public string strokeLinecap { get => Get(Names.strokeLinecap); set => Set(Names.strokeLinecap, value); }
+    public string strokeLinejoin { get => Get(Names.strokeLinejoin); set => Set(Names.strokeLinejoin, value); }
+    public string strokeMiterlimit { get => Get(Names.strokeMiterlimit); set => Set(Names.strokeMiterlimit, value); }
+    public string strokeOpacity { get => Get(Names.strokeOpacity); set => Set(Names.strokeOpacity, value); }
+    public string strokeWidth { get => Get(Names.strokeWidth); set => Set(Names.strokeWidth, value); }
+    public string suffix { get => Get(Names.suffix); set => Set(Names.suffix, value); }
+    public string symbols { get => Get(Names.symbols); set => Set(Names.symbols, value); }
+    public string syntax { get => Get(Names.syntax); set => Set(Names.syntax, value); }
+    public string system { get => Get(Names.system); set => Set(Names.system, value); }
+    public string tabSize { get => Get(Names.tabSize); set => Set(Names.tabSize, value); }
+    public string tableLayout { get => Get(Names.tableLayout); set => Set(Names.tableLayout, value); }
+    public string textAlign { get => Get(Names.textAlign); set => Set(Names.textAlign, value); }
+    public string textAlignLast { get => Get(Names.textAlignLast); set => Set(Names.textAlignLast, value); }
+    public string textAnchor { get => Get(Names.textAnchor); set => Set(Names.textAnchor, value); }
+    public string textCombineHorizontal { get => Get(Names.textCombineHorizontal); set => Set(Names.textCombineHorizontal, value); }
+    public string textCombineUpright { get => Get(Names.textCombineUpright); set => Set(Names.textCombineUpright, value); }
+    public string textDecoration { get => Get(Names.textDecoration); set => Set(Names.textDecoration, value); }
+    public string textDecorationColor { get => Get(Names.textDecorationColor); set => Set(Names.textDecorationColor, value); }
+    public string textDecorationLine { get => Get(Names.textDecorationLine); set => Set(Names.textDecorationLine, value); }
+    public string textDecorationSkipInk { get => Get(Names.textDecorationSkipInk); set => Set(Names.textDecorationSkipInk, value); }
+    public string textDecorationStyle { get => Get(Names.textDecorationStyle); set => Set(Names.textDecorationStyle, value); }
+    public string textDecorationThickness { get => Get(Names.textDecorationThickness); set => Set(Names.textDecorationThickness, value); }
+    public string textEmphasis { get => Get(Names.textEmphasis); set => Set(Names.textEmphasis, value); }
+    public string textEmphasisColor { get => Get(Names.textEmphasisColor); set => Set(Names.textEmphasisColor, value); }
+    public string textEmphasisPosition { get => Get(Names.textEmphasisPosition); set => Set(Names.textEmphasisPosition, value); }
+    public string textEmphasisStyle { get => Get(Names.textEmphasisStyle); set => Set(Names.textEmphasisStyle, value); }
+    public string textIndent { get => Get(Names.textIndent); set => Set(Names.textIndent, value); }
+    public string textOrientation { get => Get(Names.textOrientation); set => Set(Names.textOrientation, value); }
+    public string textOverflow { get => Get(Names.textOverflow); set => Set(Names.textOverflow, value); }
+    public string textRendering { get => Get(Names.textRendering); set => Set(Names.textRendering, value); }
+    public string textShadow { get => Get(Names.textShadow); set => Set(Names.textShadow, value); }
+    public string textSizeAdjust { get => Get(Names.textSizeAdjust); set => Set(Names.textSizeAdjust, value); }
+    public string textTransform { get => Get(Names.textTransform); set => Set(Names.textTransform, value); }
+    public string textUnderlineOffset { get => Get(Names.textUnderlineOffset); set => Set(Names.textUnderlineOffset, value); }
+    public string textUnderlinePosition { get => Get(Names.textUnderlinePosition); set => Set(Names.textUnderlinePosition, value); }
+    public string textWrap { get => Get(Names.textWrap); set => Set(Names.textWrap, value); }
+    public string timelineScope { get => Get(Names.timelineScope); set => Set(Names.timelineScope, value); }
+    public string top { get => Get(Names.top); set => Set(Names.top, value); }
+    public string touchAction { get => Get(Names.touchAction); set => Set(Names.touchAction, value); }
+    public string transform { get => Get(Names.transform); set => Set(Names.transform, value); }
+    public string transformBox { get => Get(Names.transformBox); set => Set(Names.transformBox, value); }
+    public string transformOrigin { get => Get(Names.transformOrigin); set => Set(Names.transformOrigin, value); }
+    public string transformStyle { get => Get(Names.transformStyle); set => Set(Names.transformStyle, value); }
+    public string transition { get => Get(Names.transition); set => Set(Names.transition, value); }
+    public string transitionBehavior { get => Get(Names.transitionBehavior); set => Set(Names.transitionBehavior, value); }
+    public string transitionDelay { get => Get(Names.transitionDelay); set => Set(Names.transitionDelay, value); }
+    public string transitionDuration { get => Get(Names.transitionDuration); set => Set(Names.transitionDuration, value); }
+    public string transitionProperty { get => Get(Names.transitionProperty); set => Set(Names.transitionProperty, value); }
+    public string transitionTimingFunction { get => Get(Names.transitionTimingFunction); set => Set(Names.transitionTimingFunction, value); }
+    public string translate { get => Get(Names.translate); set => Set(Names.translate, value); }
+    public string unicodeBidi { get => Get(Names.unicodeBidi); set => Set(Names.unicodeBidi, value); }
+    public string unicodeRange { get => Get(Names.unicodeRange); set => Set(Names.unicodeRange, value); }
+    public string userSelect { get => Get(Names.userSelect); set => Set(Names.userSelect, value); }
+    public string vectorEffect { get => Get(Names.vectorEffect); set => Set(Names.vectorEffect, value); }
+    public string verticalAlign { get => Get(Names.verticalAlign); set => Set(Names.verticalAlign, value); }
+    public string viewTimeline { get => Get(Names.viewTimeline); set => Set(Names.viewTimeline, value); }
+    public string viewTimelineAxis { get => Get(Names.viewTimelineAxis); set => Set(Names.viewTimelineAxis, value); }
+    public string viewTimelineInset { get => Get(Names.viewTimelineInset); set => Set(Names.viewTimelineInset, value); }
+    public string viewTimelineName { get => Get(Names.viewTimelineName); set => Set(Names.viewTimelineName, value); }
+    public string viewTransitionName { get => Get(Names.viewTransitionName); set => Set(Names.viewTransitionName, value); }
+    public string visibility { get => Get(Names.visibility); set => Set(Names.visibility, value); }
+    public string WebkitAlignContent { get => Get(Names.WebkitAlignContent); set => Set(Names.WebkitAlignContent, value); }
+    public string WebkitAlignItems { get => Get(Names.WebkitAlignItems); set => Set(Names.WebkitAlignItems, value); }
+    public string WebkitAlignSelf { get => Get(Names.WebkitAlignSelf); set => Set(Names.WebkitAlignSelf, value); }
+    public string WebkitAnimation { get => Get(Names.WebkitAnimation); set => Set(Names.WebkitAnimation, value); }
+    public string WebkitAnimationDelay { get => Get(Names.WebkitAnimationDelay); set => Set(Names.WebkitAnimationDelay, value); }
+    public string WebkitAnimationDirection { get => Get(Names.WebkitAnimationDirection); set => Set(Names.WebkitAnimationDirection, value); }
+    public string WebkitAnimationDuration { get => Get(Names.WebkitAnimationDuration); set => Set(Names.WebkitAnimationDuration, value); }
+    public string WebkitAnimationFillMode { get => Get(Names.WebkitAnimationFillMode); set => Set(Names.WebkitAnimationFillMode, value); }
+    public string WebkitAnimationIterationCount { get => Get(Names.WebkitAnimationIterationCount); set => Set(Names.WebkitAnimationIterationCount, value); }
+    public string WebkitAnimationName { get => Get(Names.WebkitAnimationName); set => Set(Names.WebkitAnimationName, value); }
+    public string WebkitAnimationPlayState { get => Get(Names.WebkitAnimationPlayState); set => Set(Names.WebkitAnimationPlayState, value); }
+    public string WebkitAnimationTimingFunction { get => Get(Names.WebkitAnimationTimingFunction); set => Set(Names.WebkitAnimationTimingFunction, value); }
+    public string WebkitAppRegion { get => Get(Names.WebkitAppRegion); set => Set(Names.WebkitAppRegion, value); }
+    public string WebkitAppearance { get => Get(Names.WebkitAppearance); set => Set(Names.WebkitAppearance, value); }
+    public string WebkitBackfaceVisibility { get => Get(Names.WebkitBackfaceVisibility); set => Set(Names.WebkitBackfaceVisibility, value); }
+    public string WebkitBackgroundClip { get => Get(Names.WebkitBackgroundClip); set => Set(Names.WebkitBackgroundClip, value); }
+    public string WebkitBackgroundOrigin { get => Get(Names.WebkitBackgroundOrigin); set => Set(Names.WebkitBackgroundOrigin, value); }
+    public string WebkitBackgroundSize { get => Get(Names.WebkitBackgroundSize); set => Set(Names.WebkitBackgroundSize, value); }
+    public string WebkitBorderAfter { get => Get(Names.WebkitBorderAfter); set => Set(Names.WebkitBorderAfter, value); }
+    public string WebkitBorderAfterColor { get => Get(Names.WebkitBorderAfterColor); set => Set(Names.WebkitBorderAfterColor, value); }
+    public string WebkitBorderAfterStyle { get => Get(Names.WebkitBorderAfterStyle); set => Set(Names.WebkitBorderAfterStyle, value); }
+    public string WebkitBorderAfterWidth { get => Get(Names.WebkitBorderAfterWidth); set => Set(Names.WebkitBorderAfterWidth, value); }
+    public string WebkitBorderBefore { get => Get(Names.WebkitBorderBefore); set => Set(Names.WebkitBorderBefore, value); }
+    public string WebkitBorderBeforeColor { get => Get(Names.WebkitBorderBeforeColor); set => Set(Names.WebkitBorderBeforeColor, value); }
+    public string WebkitBorderBeforeStyle { get => Get(Names.WebkitBorderBeforeStyle); set => Set(Names.WebkitBorderBeforeStyle, value); }
+    public string WebkitBorderBeforeWidth { get => Get(Names.WebkitBorderBeforeWidth); set => Set(Names.WebkitBorderBeforeWidth, value); }
+    public string WebkitBorderBottomLeftRadius { get => Get(Names.WebkitBorderBottomLeftRadius); set => Set(Names.WebkitBorderBottomLeftRadius, value); }
+    public string WebkitBorderBottomRightRadius { get => Get(Names.WebkitBorderBottomRightRadius); set => Set(Names.WebkitBorderBottomRightRadius, value); }
+    public string WebkitBorderEnd { get => Get(Names.WebkitBorderEnd); set => Set(Names.WebkitBorderEnd, value); }
+    public string WebkitBorderEndColor { get => Get(Names.WebkitBorderEndColor); set => Set(Names.WebkitBorderEndColor, value); }
+    public string WebkitBorderEndStyle { get => Get(Names.WebkitBorderEndStyle); set => Set(Names.WebkitBorderEndStyle, value); }
+    public string WebkitBorderEndWidth { get => Get(Names.WebkitBorderEndWidth); set => Set(Names.WebkitBorderEndWidth, value); }
+    public string WebkitBorderHorizontalSpacing { get => Get(Names.WebkitBorderHorizontalSpacing); set => Set(Names.WebkitBorderHorizontalSpacing, value); }
+    public string WebkitBorderImage { get => Get(Names.WebkitBorderImage); set => Set(Names.WebkitBorderImage, value); }
+    public string WebkitBorderRadius { get => Get(Names.WebkitBorderRadius); set => Set(Names.WebkitBorderRadius, value); }
+    public string WebkitBorderStart { get => Get(Names.WebkitBorderStart); set => Set(Names.WebkitBorderStart, value); }
+    public string WebkitBorderStartColor { get => Get(Names.WebkitBorderStartColor); set => Set(Names.WebkitBorderStartColor, value); }
+    public string WebkitBorderStartStyle { get => Get(Names.WebkitBorderStartStyle); set => Set(Names.WebkitBorderStartStyle, value); }
+    public string WebkitBorderStartWidth { get => Get(Names.WebkitBorderStartWidth); set => Set(Names.WebkitBorderStartWidth, value); }
+    public string WebkitBorderTopLeftRadius { get => Get(Names.WebkitBorderTopLeftRadius); set => Set(Names.WebkitBorderTopLeftRadius, value); }
+    public string WebkitBorderTopRightRadius { get => Get(Names.WebkitBorderTopRightRadius); set => Set(Names.WebkitBorderTopRightRadius, value); }
+    public string WebkitBorderVerticalSpacing { get => Get(Names.WebkitBorderVerticalSpacing); set => Set(Names.WebkitBorderVerticalSpacing, value); }
+    public string WebkitBoxAlign { get => Get(Names.WebkitBoxAlign); set => Set(Names.WebkitBoxAlign, value); }
+    public string WebkitBoxDecorationBreak { get => Get(Names.WebkitBoxDecorationBreak); set => Set(Names.WebkitBoxDecorationBreak, value); }
+    public string WebkitBoxDirection { get => Get(Names.WebkitBoxDirection); set => Set(Names.WebkitBoxDirection, value); }
+    public string WebkitBoxFlex { get => Get(Names.WebkitBoxFlex); set => Set(Names.WebkitBoxFlex, value); }
+    public string WebkitBoxOrdinalGroup { get => Get(Names.WebkitBoxOrdinalGroup); set => Set(Names.WebkitBoxOrdinalGroup, value); }
+    public string WebkitBoxOrient { get => Get(Names.WebkitBoxOrient); set => Set(Names.WebkitBoxOrient, value); }
+    public string WebkitBoxPack { get => Get(Names.WebkitBoxPack); set => Set(Names.WebkitBoxPack, value); }
+    public string WebkitBoxReflect { get => Get(Names.WebkitBoxReflect); set => Set(Names.WebkitBoxReflect, value); }
+    public string WebkitBoxShadow { get => Get(Names.WebkitBoxShadow); set => Set(Names.WebkitBoxShadow, value); }
+    public string WebkitBoxSizing { get => Get(Names.WebkitBoxSizing); set => Set(Names.WebkitBoxSizing, value); }
+    public string WebkitClipPath { get => Get(Names.WebkitClipPath); set => Set(Names.WebkitClipPath, value); }
+    public string WebkitColumnBreakAfter { get => Get(Names.WebkitColumnBreakAfter); set => Set(Names.WebkitColumnBreakAfter, value); }
+    public string WebkitColumnBreakBefore { get => Get(Names.WebkitColumnBreakBefore); set => Set(Names.WebkitColumnBreakBefore, value); }
+    public string WebkitColumnBreakInside { get => Get(Names.WebkitColumnBreakInside); set => Set(Names.WebkitColumnBreakInside, value); }
+    public string WebkitColumnCount { get => Get(Names.WebkitColumnCount); set => Set(Names.WebkitColumnCount, value); }
+    public string WebkitColumnGap { get => Get(Names.WebkitColumnGap); set => Set(Names.WebkitColumnGap, value); }
+    public string WebkitColumnRule { get => Get(Names.WebkitColumnRule); set => Set(Names.WebkitColumnRule, value); }
+    public string WebkitColumnRuleColor { get => Get(Names.WebkitColumnRuleColor); set => Set(Names.WebkitColumnRuleColor, value); }
+    public string WebkitColumnRuleStyle { get => Get(Names.WebkitColumnRuleStyle); set => Set(Names.WebkitColumnRuleStyle, value); }
+    public string WebkitColumnRuleWidth { get => Get(Names.WebkitColumnRuleWidth); set => Set(Names.WebkitColumnRuleWidth, value); }
+    public string WebkitColumnSpan { get => Get(Names.WebkitColumnSpan); set => Set(Names.WebkitColumnSpan, value); }
+    public string WebkitColumnWidth { get => Get(Names.WebkitColumnWidth); set => Set(Names.WebkitColumnWidth, value); }
+    public string WebkitColumns { get => Get(Names.WebkitColumns); set => Set(Names.WebkitColumns, value); }
+    public string WebkitFilter { get => Get(Names.WebkitFilter); set => Set(Names.WebkitFilter, value); }
+    public string WebkitFlex { get => Get(Names.WebkitFlex); set => Set(Names.WebkitFlex, value); }
+    public string WebkitFlexBasis { get => Get(Names.WebkitFlexBasis); set => Set(Names.WebkitFlexBasis, value); }
+    public string WebkitFlexDirection { get => Get(Names.WebkitFlexDirection); set => Set(Names.WebkitFlexDirection, value); }
+    public string WebkitFlexFlow { get => Get(Names.WebkitFlexFlow); set => Set(Names.WebkitFlexFlow, value); }
+    public string WebkitFlexGrow { get => Get(Names.WebkitFlexGrow); set => Set(Names.WebkitFlexGrow, value); }
+    public string WebkitFlexShrink { get => Get(Names.WebkitFlexShrink); set => Set(Names.WebkitFlexShrink, value); }
+    public string WebkitFlexWrap { get => Get(Names.WebkitFlexWrap); set => Set(Names.WebkitFlexWrap, value); }
+    public string WebkitFontFeatureSettings { get => Get(Names.WebkitFontFeatureSettings); set => Set(Names.WebkitFontFeatureSettings, value); }
+    public string WebkitFontSmoothing { get => Get(Names.WebkitFontSmoothing); set => Set(Names.WebkitFontSmoothing, value); }
+    public string WebkitHyphenateCharacter { get => Get(Names.WebkitHyphenateCharacter); set => Set(Names.WebkitHyphenateCharacter, value); }
+    public string WebkitJustifyContent { get => Get(Names.WebkitJustifyContent); set => Set(Names.WebkitJustifyContent, value); }
+    public string WebkitLineBreak { get => Get(Names.WebkitLineBreak); set => Set(Names.WebkitLineBreak, value); }
+    public string WebkitLineClamp { get => Get(Names.WebkitLineClamp); set => Set(Names.WebkitLineClamp, value); }
+    public string WebkitLocale { get => Get(Names.WebkitLocale); set => Set(Names.WebkitLocale, value); }
+    public string WebkitLogicalHeight { get => Get(Names.WebkitLogicalHeight); set => Set(Names.WebkitLogicalHeight, value); }
+    public string WebkitLogicalWidth { get => Get(Names.WebkitLogicalWidth); set => Set(Names.WebkitLogicalWidth, value); }
+    public string WebkitMarginAfter { get => Get(Names.WebkitMarginAfter); set => Set(Names.WebkitMarginAfter, value); }
+    public string WebkitMarginBefore { get => Get(Names.WebkitMarginBefore); set => Set(Names.WebkitMarginBefore, value); }
+    public string WebkitMarginEnd { get => Get(Names.WebkitMarginEnd); set => Set(Names.WebkitMarginEnd, value); }
+    public string WebkitMarginStart { get => Get(Names.WebkitMarginStart); set => Set(Names.WebkitMarginStart, value); }
+    public string WebkitMask { get => Get(Names.WebkitMask); set => Set(Names.WebkitMask, value); }
+    public string WebkitMaskBoxImage { get => Get(Names.WebkitMaskBoxImage); set => Set(Names.WebkitMaskBoxImage, value); }
+    public string WebkitMaskBoxImageOutset { get => Get(Names.WebkitMaskBoxImageOutset); set => Set(Names.WebkitMaskBoxImageOutset, value); }
+    public string WebkitMaskBoxImageRepeat { get => Get(Names.WebkitMaskBoxImageRepeat); set => Set(Names.WebkitMaskBoxImageRepeat, value); }
+    public string WebkitMaskBoxImageSlice { get => Get(Names.WebkitMaskBoxImageSlice); set => Set(Names.WebkitMaskBoxImageSlice, value); }
+    public string WebkitMaskBoxImageSource { get => Get(Names.WebkitMaskBoxImageSource); set => Set(Names.WebkitMaskBoxImageSource, value); }
+    public string WebkitMaskBoxImageWidth { get => Get(Names.WebkitMaskBoxImageWidth); set => Set(Names.WebkitMaskBoxImageWidth, value); }
+    public string WebkitMaskClip { get => Get(Names.WebkitMaskClip); set => Set(Names.WebkitMaskClip, value); }
+    public string WebkitMaskComposite { get => Get(Names.WebkitMaskComposite); set => Set(Names.WebkitMaskComposite, value); }
+    public string WebkitMaskImage { get => Get(Names.WebkitMaskImage); set => Set(Names.WebkitMaskImage, value); }
+    public string WebkitMaskOrigin { get => Get(Names.WebkitMaskOrigin); set => Set(Names.WebkitMaskOrigin, value); }
+    public string WebkitMaskPosition { get => Get(Names.WebkitMaskPosition); set => Set(Names.WebkitMaskPosition, value); }
+    public string WebkitMaskPositionX { get => Get(Names.WebkitMaskPositionX); set => Set(Names.WebkitMaskPositionX, value); }
+    public string WebkitMaskPositionY { get => Get(Names.WebkitMaskPositionY); set => Set(Names.WebkitMaskPositionY, value); }
+    public string WebkitMaskRepeat { get => Get(Names.WebkitMaskRepeat); set => Set(Names.WebkitMaskRepeat, value); }
+    public string WebkitMaskRepeatX { get => Get(Names.WebkitMaskRepeatX); set => Set(Names.WebkitMaskRepeatX, value); }
+    public string WebkitMaskRepeatY { get => Get(Names.WebkitMaskRepeatY); set => Set(Names.WebkitMaskRepeatY, value); }
+    public string WebkitMaskSize { get => Get(Names.WebkitMaskSize); set => Set(Names.WebkitMaskSize, value); }
+    public string WebkitMaxLogicalHeight { get => Get(Names.WebkitMaxLogicalHeight); set => Set(Names.WebkitMaxLogicalHeight, value); }
+    public string WebkitMaxLogicalWidth { get => Get(Names.WebkitMaxLogicalWidth); set => Set(Names.WebkitMaxLogicalWidth, value); }
+    public string WebkitMinLogicalHeight { get => Get(Names.WebkitMinLogicalHeight); set => Set(Names.WebkitMinLogicalHeight, value); }
+    public string WebkitMinLogicalWidth { get => Get(Names.WebkitMinLogicalWidth); set => Set(Names.WebkitMinLogicalWidth, value); }
+    public string WebkitOpacity { get => Get(Names.WebkitOpacity); set => Set(Names.WebkitOpacity, value); }
+    public string WebkitOrder { get => Get(Names.WebkitOrder); set => Set(Names.WebkitOrder, value); }
+    public string WebkitPaddingAfter { get => Get(Names.WebkitPaddingAfter); set => Set(Names.WebkitPaddingAfter, value); }
+    public string WebkitPaddingBefore { get => Get(Names.WebkitPaddingBefore); set => Set(Names.WebkitPaddingBefore, value); }
+    public string WebkitPaddingEnd { get => Get(Names.WebkitPaddingEnd); set => Set(Names.WebkitPaddingEnd, value); }
+    public string WebkitPaddingStart { get => Get(Names.WebkitPaddingStart); set => Set(Names.WebkitPaddingStart, value); }
+    public string WebkitPerspective { get => Get(Names.WebkitPerspective); set => Set(Names.WebkitPerspective, value); }
+    public string WebkitPerspectiveOrigin { get => Get(Names.WebkitPerspectiveOrigin); set => Set(Names.WebkitPerspectiveOrigin, value); }
+    public string WebkitPerspectiveOriginX { get => Get(Names.WebkitPerspectiveOriginX); set => Set(Names.WebkitPerspectiveOriginX, value); }
+    public string WebkitPerspectiveOriginY { get => Get(Names.WebkitPerspectiveOriginY); set => Set(Names.WebkitPerspectiveOriginY, value); }
+    public string WebkitPrintColorAdjust { get => Get(Names.WebkitPrintColorAdjust); set => Set(Names.WebkitPrintColorAdjust, value); }
+    public string WebkitRtlOrdering { get => Get(Names.WebkitRtlOrdering); set => Set(Names.WebkitRtlOrdering, value); }
+    public string WebkitRubyPosition { get => Get(Names.WebkitRubyPosition); set => Set(Names.WebkitRubyPosition, value); }
+    public string WebkitShapeImageThreshold { get => Get(Names.WebkitShapeImageThreshold); set => Set(Names.WebkitShapeImageThreshold, value); }
+    public string WebkitShapeMargin { get => Get(Names.WebkitShapeMargin); set => Set(Names.WebkitShapeMargin, value); }
+    public string WebkitShapeOutside { get => Get(Names.WebkitShapeOutside); set => Set(Names.WebkitShapeOutside, value); }
+    public string WebkitTapHighlightColor { get => Get(Names.WebkitTapHighlightColor); set => Set(Names.WebkitTapHighlightColor, value); }
+    public string WebkitTextCombine { get => Get(Names.WebkitTextCombine); set => Set(Names.WebkitTextCombine, value); }
+    public string WebkitTextDecorationsInEffect { get => Get(Names.WebkitTextDecorationsInEffect); set => Set(Names.WebkitTextDecorationsInEffect, value); }
+    public string WebkitTextEmphasis { get => Get(Names.WebkitTextEmphasis); set => Set(Names.WebkitTextEmphasis, value); }
+    public string WebkitTextEmphasisColor { get => Get(Names.WebkitTextEmphasisColor); set => Set(Names.WebkitTextEmphasisColor, value); }
+    public string WebkitTextEmphasisPosition { get => Get(Names.WebkitTextEmphasisPosition); set => Set(Names.WebkitTextEmphasisPosition, value); }
+    public string WebkitTextEmphasisStyle { get => Get(Names.WebkitTextEmphasisStyle); set => Set(Names.WebkitTextEmphasisStyle, value); }
+    public string WebkitTextFillColor { get => Get(Names.WebkitTextFillColor); set => Set(Names.WebkitTextFillColor, value); }
+    public string WebkitTextOrientation { get => Get(Names.WebkitTextOrientation); set => Set(Names.WebkitTextOrientation, value); }
+    public string WebkitTextSecurity { get => Get(Names.WebkitTextSecurity); set => Set(Names.WebkitTextSecurity, value); }
+    public string WebkitTextSizeAdjust { get => Get(Names.WebkitTextSizeAdjust); set => Set(Names.WebkitTextSizeAdjust, value); }
+    public string WebkitTextStroke { get => Get(Names.WebkitTextStroke); set => Set(Names.WebkitTextStroke, value); }
+    public string WebkitTextStrokeColor { get => Get(Names.WebkitTextStrokeColor); set => Set(Names.WebkitTextStrokeColor, value); }
+    public string WebkitTextStrokeWidth { get => Get(Names.WebkitTextStrokeWidth); set => Set(Names.WebkitTextStrokeWidth, value); }
+    public string WebkitTransform { get => Get(Names.WebkitTransform); set => Set(Names.WebkitTransform, value); }
+    public string WebkitTransformOrigin { get => Get(Names.WebkitTransformOrigin); set => Set(Names.WebkitTransformOrigin, value); }
+    public string WebkitTransformOriginX { get => Get(Names.WebkitTransformOriginX); set => Set(Names.WebkitTransformOriginX, value); }
+    public string WebkitTransformOriginY { get => Get(Names.WebkitTransformOriginY); set => Set(Names.WebkitTransformOriginY, value); }
+    public string WebkitTransformOriginZ { get => Get(Names.WebkitTransformOriginZ); set => Set(Names.WebkitTransformOriginZ, value); }
+    public string WebkitTransformStyle { get => Get(Names.WebkitTransformStyle); set => Set(Names.WebkitTransformStyle, value); }
+    public string WebkitTransition { get => Get(Names.WebkitTransition); set => Set(Names.WebkitTransition, value); }
+    public string WebkitTransitionDelay { get => Get(Names.WebkitTransitionDelay); set => Set(Names.WebkitTransitionDelay, value); }
+    public string WebkitTransitionDuration { get => Get(Names.WebkitTransitionDuration); set => Set(Names.WebkitTransitionDuration, value); }
+    public string WebkitTransitionProperty { get => Get(Names.WebkitTransitionProperty); set => Set(Names.WebkitTransitionProperty, value); }
+    public string WebkitTransitionTimingFunction { get => Get(Names.WebkitTransitionTimingFunction); set => Set(Names.WebkitTransitionTimingFunction, value); }
+    public string WebkitUserDrag { get => Get(Names.WebkitUserDrag); set => Set(Names.WebkitUserDrag, value); }
+    public string WebkitUserModify { get => Get(Names.WebkitUserModify); set => Set(Names.WebkitUserModify, value); }
+    public string WebkitUserSelect { get => Get(Names.WebkitUserSelect); set => Set(Names.WebkitUserSelect, value); }
+    public string WebkitWritingMode { get => Get(Names.WebkitWritingMode); set => Set(Names.WebkitWritingMode, value); }
+    public string whiteSpace { get => Get(Names.whiteSpace); set => Set(Names.whiteSpace, value); }
+    public string whiteSpaceCollapse { get => Get(Names.whiteSpaceCollapse); set => Set(Names.whiteSpaceCollapse, value); }
+    public string widows { get => Get(Names.widows); set => Set(Names.widows, value); }
+    public string width { get => Get(Names.width); set => Set(Names.width, value); }
+    public string willChange { get => Get(Names.willChange); set => Set(Names.willChange, value); }
+    public string wordBreak { get => Get(Names.wordBreak); set => Set(Names.wordBreak, value); }
+    public string wordSpacing { get => Get(Names.wordSpacing); set => Set(Names.wordSpacing, value); }
+    public string wordWrap { get => Get(Names.wordWrap); set => Set(Names.wordWrap, value); }
+    public string writingMode { get => Get(Names.writingMode); set => Set(Names.writingMode, value); }
+    public string x { get => Get(Names.x); set => Set(Names.x, value); }
+    public string y { get => Get(Names.y); set => Set(Names.y, value); }
+    public string zIndex { get => Get(Names.zIndex); set => Set(Names.zIndex, value); }
+    public string zoom { get => Get(Names.zoom); set => Set(Names.zoom, value); }
+    public string mozOsxFontSmoothing { get => Get(Names.mozOsxFontSmoothing); set => Set(Names.mozOsxFontSmoothing, value); }
+    public string boxDecorationBreak { get => Get(Names.boxDecorationBreak); set => Set(Names.boxDecorationBreak, value); }
+    public string cssFloat { get => Get(Names.cssFloat); set => Set(Names.cssFloat, value); }
+    public string cssText { get => Get(Names.cssText); set => Set(Names.cssText, value); }
+    public string fontLanguageOverride { get => Get(Names.fontLanguageOverride); set => Set(Names.fontLanguageOverride, value); }
+    public string fontSizeAdjust { get => Get(Names.fontSizeAdjust); set => Set(Names.fontSizeAdjust, value); }
+    public string gridAutoPosition { get => Get(Names.gridAutoPosition); set => Set(Names.gridAutoPosition, value); }
+    public string icon { get => Get(Names.icon); set => Set(Names.icon, value); }
+    public string imageResolution { get => Get(Names.imageResolution); set => Set(Names.imageResolution, value); }
+    public string imeMode { get => Get(Names.imeMode); set => Set(Names.imeMode, value); }
+    public string marks { get => Get(Names.marks); set => Set(Names.marks, value); }
+    public string navDown { get => Get(Names.navDown); set => Set(Names.navDown, value); }
+    public string navIndex { get => Get(Names.navIndex); set => Set(Names.navIndex, value); }
+    public string navLeft { get => Get(Names.navLeft); set => Set(Names.navLeft, value); }
+    public string navRight { get => Get(Names.navRight); set => Set(Names.navRight, value); }
+    public string navUp { get => Get(Names.navUp); set => Set(Names.navUp, value); }
+    public string overflowClipBox { get => Get(Names.overflowClipBox); set => Set(Names.overflowClipBox, value); }
 
     static bool isEmpty(Style s)
     {

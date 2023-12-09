@@ -37,11 +37,12 @@ public class ExportStyleProperties
         list.Add($"{indent}}}");
         
         
+        // Define properties
         foreach (var name in propertyNames)
         {
             var propertyName = getPropertyName(name);
             
-            list.Add($"{indent}public string {propertyName} {{ get; set; }}");
+            list.Add($"{indent}public string {propertyName} {{ get => Get(Names.{propertyName}); set => Set(Names.{propertyName}, value); }}");
         }
 
         ////////////////////////////////////////

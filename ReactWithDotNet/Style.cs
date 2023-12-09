@@ -209,7 +209,7 @@ public sealed partial class Style
 
     public string accentColor2
     {
-        set => Set(Names.accentColor, value);
+        set => Set(Names.@float, value);
         get => Get(Names.accentColor);
     }
 
