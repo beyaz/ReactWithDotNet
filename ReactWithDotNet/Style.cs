@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace ReactWithDotNet;
+﻿namespace ReactWithDotNet;
 
 [Serializable]
 public sealed partial class Style
@@ -90,22 +88,16 @@ public sealed partial class Style
 
     string Get(StyleAttributeNameInfo nameInfo)
     {
-        var currentNode = headNode;
+        var node = headNode;
         
-        while (currentNode != null)
+        while (node != null)
         {
-            // update
-            if (ReferenceEquals(nameInfo, currentNode.NameInfo))
+            if (ReferenceEquals(node.NameInfo, nameInfo))
             {
-                return currentNode.Value;
-            }
-
-            if (currentNode.Next == null)
-            {
-                break;
+                return node.Value;
             }
             
-            currentNode = currentNode.Next;
+            node = node.Next;
         }
         
         return null;
