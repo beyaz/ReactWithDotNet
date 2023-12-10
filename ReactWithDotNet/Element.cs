@@ -74,6 +74,20 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return new HtmlTextNode { text = number?.ToString() };
     }
+    
+    public static implicit operator Element(Task<Element> task)
+    {
+        return new ElementAsTask(task);
+    }
+    
+    public static implicit operator Element(Func<Element> fn)
+    {
+        return fn();
+    }
+    public static implicit operator Element(Func<Task<Element>> fn)
+    {
+        return fn();
+    }
 
     /// <summary>
     ///     Adds the specified element.
@@ -82,7 +96,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         children.Add(element);
     }
-
+    
     public void Add(params IModifier[] modifiers)
     {
         this.Apply(modifiers);
@@ -111,12 +125,35 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     /// </summary>
     public void Add(Func<Element> elementCreatorFunc)
     {
-        Add(elementCreatorFunc?.Invoke());
+        if (elementCreatorFunc == null)
+        {
+            return;
+        }
+        
+        Add(elementCreatorFunc.Invoke());
+    }
+    
+    /// <summary>
+    ///     Invokes <paramref name="elementCreatorFunc" /> then adds return value to children.
+    /// </summary>
+    public void Add(Func<Task<Element>> elementCreatorFunc)
+    {
+        if (elementCreatorFunc == null)
+        {
+            return;
+        }
+        
+        Add(elementCreatorFunc.Invoke());
     }
     
     public void Add<TElement>(Action<TElement> action) where TElement : Element
     {
-        action?.Invoke((TElement)this);
+        if (action == null)
+        {
+            return;
+        }
+        
+        action.Invoke((TElement)this);
     }
 
     /// <summary>
@@ -167,4 +204,14 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 sealed class FakeChild : Element
 {
     public int Index { get; set; }
+}
+
+sealed class ElementAsTask : Element
+{
+    public readonly Task<Element> Value;
+
+    public ElementAsTask(Task<Element> value)
+    {
+        Value = value;
+    }
 }

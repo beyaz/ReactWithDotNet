@@ -39,6 +39,50 @@ partial class ElementSerializer
                 break;
             }
 
+            if (node.ElementIsTask)
+            {
+                var realElement = await node.ElementAsTask.Value;
+
+                node = ReplaceNode(node, ConvertToNode(realElement));
+                
+                continue;
+            }
+
+            static Node ReplaceNode(Node node, Node newNode)
+            {
+                newNode.Parent = node.Parent;
+                
+                if (node.Parent is not null )
+                {
+                    if (node.Parent.FirstChild == node)
+                    {
+                        node.Parent.FirstChild = newNode;
+                    }
+
+                    if (node.Parent.DotNetComponentRootNode == node)
+                    {
+                        node.Parent.DotNetComponentRootNode = newNode;
+                    }
+                }
+                    
+                if (node.PreviousSibling is not null)
+                {
+                    node.PreviousSibling.NextSibling = newNode;
+                }
+                
+                newNode.NextSibling = node.NextSibling;
+
+                if (newNode.NextSibling is not null)
+                {
+                    newNode.NextSibling.PreviousSibling = newNode;
+                }
+
+                newNode.Element.key = node.Element.key;
+                
+
+                return newNode;
+            }
+            
             if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false && node.ElementIsDotNetReactPureComponent is false)
             {
                 // Try Calculate ThirdParty Component Suspense Fallback
@@ -98,6 +142,8 @@ partial class ElementSerializer
                 node.ElementAsJsonMap = jsMap;
                 continue;
             }
+            
+            
 
             InitializeKeyIfNotExists(node.Element);
 
@@ -838,6 +884,16 @@ partial class ElementSerializer
                 ElementAsDotNetReactPureComponent = pureComponent
             };
         }
+        
+        if (element is ElementAsTask elementAsTask)
+        {
+            return new Node
+            {
+                Element = element,
+                ElementIsTask = true,
+                ElementAsTask = elementAsTask
+            };
+        }
 
         throw FatalError("Node type not recognized");
     }
@@ -880,7 +936,7 @@ partial class ElementSerializer
                         || propertyInfo.Name == nameof(ReactComponentBase.Client)
                         || propertyInfo.Name == "state"
                         || propertyInfo.PropertyType.IsSubclassOf(typeof(Delegate))
-                        || propertyInfo.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() is not null
+                        || propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() is not null
                         || (propertyInfo.Name == "Item" && propertyInfo.GetIndexParameters().Length > 0)
                        )
                     {
@@ -1076,6 +1132,8 @@ partial class ElementSerializer
             }
 
             child.NextSibling = childNode;
+            
+            childNode.PreviousSibling = child;
 
             child = childNode;
         }
@@ -1185,6 +1243,9 @@ partial class ElementSerializer
         public long? Begin { get; set; }
         public long? End { get; set; }
         public bool IsHighOrderComponent { get; set; }
+        public bool ElementIsTask { get; init; }
+        public ElementAsTask ElementAsTask { get; init; }
+        public Node PreviousSibling;
     }
 
     sealed class TypeInfo
