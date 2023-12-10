@@ -215,5 +215,5 @@ sealed class ElementAsTask : Element
         Value = value;
     }
     
-    internal LinkedList<IModifier> Modifiers;
+    internal List<IModifier> Modifiers;
 }

@@ -319,7 +319,7 @@ static class ModifyHelper
         
         if (element is ElementAsTask elementAsTask)
         {
-            (elementAsTask.Modifiers ??= []).AddLast(modifier);
+            (elementAsTask.Modifiers ??= []).Add(modifier);
             
             return;
         }
