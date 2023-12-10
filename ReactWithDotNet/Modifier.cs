@@ -228,34 +228,7 @@ static class ModifyHelper
         {
             return;
         }
-
-        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
-        {
-            if (modifier is StyleModifier styleModifier)
-            {
-                styleModifier.ModifyStyle(thirdPartyReactComponent.style);
-                return;
-            }
-
-            if (modifier is ElementModifier elementModifier)
-            {
-                elementModifier.ModifyElement(thirdPartyReactComponent);
-                return;
-            }
-
-            if (modifier is ThirdPartyReactComponentModifier thirdPartyReactComponentModifier)
-            {
-                thirdPartyReactComponentModifier.Modify(thirdPartyReactComponent);
-                return;
-            }
-
-            if (modifier is Style style)
-            {
-                thirdPartyReactComponent.style.Import(style);
-                return;
-            }
-        }
-
+        
         if (element is HtmlElement htmlElement)
         {
             if (modifier is StyleModifier styleModifier)
@@ -279,6 +252,33 @@ static class ModifyHelper
             if (modifier is Style style)
             {
                 htmlElement.style.Import(style);
+                return;
+            }
+        }
+        
+        if (element is ThirdPartyReactComponent thirdPartyReactComponent)
+        {
+            if (modifier is StyleModifier styleModifier)
+            {
+                styleModifier.ModifyStyle(thirdPartyReactComponent.style);
+                return;
+            }
+
+            if (modifier is ElementModifier elementModifier)
+            {
+                elementModifier.ModifyElement(thirdPartyReactComponent);
+                return;
+            }
+
+            if (modifier is ThirdPartyReactComponentModifier thirdPartyReactComponentModifier)
+            {
+                thirdPartyReactComponentModifier.Modify(thirdPartyReactComponent);
+                return;
+            }
+
+            if (modifier is Style style)
+            {
+                thirdPartyReactComponent.style.Import(style);
                 return;
             }
         }
