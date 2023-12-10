@@ -47,41 +47,6 @@ partial class ElementSerializer
                 
                 continue;
             }
-
-            static Node ReplaceNode(Node node, Node newNode)
-            {
-                newNode.Parent = node.Parent;
-                
-                if (node.Parent is not null )
-                {
-                    if (node.Parent.FirstChild == node)
-                    {
-                        node.Parent.FirstChild = newNode;
-                    }
-
-                    if (node.Parent.DotNetComponentRootNode == node)
-                    {
-                        node.Parent.DotNetComponentRootNode = newNode;
-                    }
-                }
-                    
-                if (node.PreviousSibling is not null)
-                {
-                    node.PreviousSibling.NextSibling = newNode;
-                }
-                
-                newNode.NextSibling = node.NextSibling;
-
-                if (newNode.NextSibling is not null)
-                {
-                    newNode.NextSibling.PreviousSibling = newNode;
-                }
-
-                newNode.Element.key = node.Element.key;
-                
-
-                return newNode;
-            }
             
             if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false && node.ElementIsDotNetReactPureComponent is false)
             {
@@ -711,6 +676,41 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
+    static Node ReplaceNode(Node node, Node newNode)
+    {
+        newNode.Parent = node.Parent;
+                
+        if (node.Parent is not null )
+        {
+            if (node.Parent.FirstChild == node)
+            {
+                node.Parent.FirstChild = newNode;
+            }
+
+            if (node.Parent.DotNetComponentRootNode == node)
+            {
+                node.Parent.DotNetComponentRootNode = newNode;
+            }
+        }
+                    
+        if (node.PreviousSibling is not null)
+        {
+            node.PreviousSibling.NextSibling = newNode;
+        }
+                
+        newNode.NextSibling = node.NextSibling;
+
+        if (newNode.NextSibling is not null)
+        {
+            newNode.NextSibling.PreviousSibling = newNode;
+        }
+
+        newNode.Element.key = node.Element.key;
+                
+
+        return newNode;
+    }
+    
     static async Task AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
         var typeInfo = GetTypeInfo(element.GetType());
