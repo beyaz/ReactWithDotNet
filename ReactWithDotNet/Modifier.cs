@@ -319,9 +319,7 @@ static class ModifyHelper
         
         if (element is ElementAsTask elementAsTask)
         {
-            elementAsTask.Modifiers ??= new LinkedList<IModifier>();
-            
-            elementAsTask.Modifiers.AddLast(modifier);
+            (elementAsTask.Modifiers ??= []).AddLast(modifier);
             
             return;
         }
