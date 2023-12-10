@@ -42,6 +42,13 @@ partial class ElementSerializer
             if (node.ElementIsTask)
             {
                 var realElement = await node.ElementAsTask.Value;
+                if (node.ElementAsTask.Modifiers is not null)
+                {
+                    foreach (var modifier in node.ElementAsTask.Modifiers)
+                    {
+                        ModifyHelper.ProcessModifier(realElement, modifier );    
+                    }                    
+                }
 
                 node = ReplaceNode(node, ConvertToNode(realElement));
 

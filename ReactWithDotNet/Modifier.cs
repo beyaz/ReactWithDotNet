@@ -316,6 +316,15 @@ static class ModifyHelper
 
             return;
         }
+        
+        if (element is ElementAsTask elementAsTask)
+        {
+            elementAsTask.Modifiers ??= new LinkedList<IModifier>();
+            
+            elementAsTask.Modifiers.AddLast(modifier);
+            
+            return;
+        }
 
         throw new DeveloperException("Modifier is not suitable for element. Element is " + element.GetType().FullName);
     }
