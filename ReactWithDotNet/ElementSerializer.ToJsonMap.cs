@@ -13,7 +13,7 @@ partial class ElementSerializer
     public static async Task<IReadOnlyJsonMap> ToJsonMap(this Element element, ElementSerializerContext context)
     {
         var tracer = context.Tracer;
-        
+
         var node = ConvertToNode(element);
 
         while (true)
@@ -44,10 +44,10 @@ partial class ElementSerializer
                 var realElement = await node.ElementAsTask.Value;
 
                 node = ReplaceNode(node, ConvertToNode(realElement));
-                
+
                 continue;
             }
-            
+
             if (node.IsAllChildrenCompleted && node.ElementIsDotNetReactComponent is false && node.ElementIsDotNetReactPureComponent is false)
             {
                 // Try Calculate ThirdParty Component Suspense Fallback
@@ -71,7 +71,7 @@ partial class ElementSerializer
                         node.SuspenseFallbackNode.Parent = node;
 
                         node.FirstChildTemp = node.FirstChild;
-                    
+
                         node.FirstChild = node.SuspenseFallbackNode;
 
                         node = node.SuspenseFallbackNode;
@@ -107,8 +107,6 @@ partial class ElementSerializer
                 node.ElementAsJsonMap = jsMap;
                 continue;
             }
-            
-            
 
             InitializeKeyIfNotExists(node.Element);
 
@@ -173,16 +171,12 @@ partial class ElementSerializer
 
             if (node.ElementIsDotNetReactPureComponent)
             {
-
                 node.Begin ??= tracer.ElapsedMilliseconds;
-                
-                
+
                 var reactPureComponent = node.ElementAsDotNetReactPureComponent;
 
                 if (node.DotNetComponentRenderMethodInvoked is false)
                 {
-                    
-                    
                     reactPureComponent.Context = context.ReactContext;
 
                     node.DotNetComponentRenderMethodInvoked = true;
@@ -241,7 +235,7 @@ partial class ElementSerializer
                 node.ElementAsJsonMap = map;
 
                 node.IsCompleted = true;
-                
+
                 node.End ??= tracer.ElapsedMilliseconds;
 
                 if (node.End - node.Begin >= 3)
@@ -322,8 +316,6 @@ partial class ElementSerializer
 
                 reactStatefulComponent.ComponentUniqueIdentifier ??= context.ComponentUniqueIdentifierNextValue++;
 
-               
-
                 var state = stateProperty.GetValueFunc(reactStatefulComponent);
                 if (state == null)
                 {
@@ -349,7 +341,7 @@ partial class ElementSerializer
                     {
                         node.IsHighOrderComponent = true;
                     }
-                    
+
                     node.DotNetComponentRenderMethodInvoked = true;
 
                     if (reactStatefulComponent.Modifiers is not null)
@@ -525,8 +517,6 @@ partial class ElementSerializer
 
                             var cachedVersion = await ToJsonMap(component, newElementSerializerContext);
 
-                           
-
                             // take back dynamic styles
                             context.DynamicStyles.ListOfClasses.Clear();
                             context.DynamicStyles.ListOfClasses.AddRange(newElementSerializerContext.DynamicStyles.ListOfClasses);
@@ -549,7 +539,7 @@ partial class ElementSerializer
                     {
                         var component = (ReactComponentBase)reactStatefulComponent.Clone();
 
-                        dotNetProperties.Foreach((name,value)=>copyPropertyValueDeeply(dotNetTypeOfReactComponent,component, name, value));
+                        dotNetProperties.Foreach((name, value) => copyPropertyValueDeeply(dotNetTypeOfReactComponent, component, name, value));
 
                         stateProperty.SetValueFunc(component, ReflectionHelper.DeepCopy(state));
 
@@ -559,11 +549,11 @@ partial class ElementSerializer
                         }
                         else
                         {
-                            component.Client = ReflectionHelper.DeepCopy(component.Client);    
+                            component.Client = ReflectionHelper.DeepCopy(component.Client);
                         }
 
                         return component;
-                        
+
                         static void copyPropertyValueDeeply(Type dotNetTypeOfReactComponent, object component, string dotNetPropertyName, object dotNetPropertyValue)
                         {
                             var noNeedToDeeplyAssign = dotNetPropertyValue is null || dotNetPropertyValue is string || dotNetPropertyValue.GetType().IsValueType;
@@ -676,41 +666,38 @@ partial class ElementSerializer
         return node.ElementAsJsonMap;
     }
 
-    static Node ReplaceNode(Node node, Node newNode)
+    internal static string TransferPropertiesToDotNetComponent(ReactComponentBase instance, Type type, IReadOnlyDictionary<string, object> props)
     {
-        newNode.Parent = node.Parent;
-                
-        if (node.Parent is not null )
+        if (props == null)
         {
-            if (node.Parent.FirstChild == node)
+            return null;
+        }
+
+        foreach (var (key, value) in props)
+        {
+            if (key == "$LogicalChildrenCount")
             {
-                node.Parent.FirstChild = newNode;
+                var childrenCount = (int)ArrangeValueForTargetType(value, typeof(int));
+                for (var i = 0; i < childrenCount; i++)
+                {
+                    instance.children.Add(new FakeChild { Index = i });
+                }
+
+                continue;
             }
 
-            if (node.Parent.DotNetComponentRootNode == node)
+            var property = type.GetProperty(key);
+            if (property == null)
             {
-                node.Parent.DotNetComponentRootNode = newNode;
+                return $"Property not found.{type.FullName}::{key}";
             }
-        }
-                    
-        if (node.PreviousSibling is not null)
-        {
-            node.PreviousSibling.NextSibling = newNode;
-        }
-                
-        newNode.NextSibling = node.NextSibling;
 
-        if (newNode.NextSibling is not null)
-        {
-            newNode.NextSibling.PreviousSibling = newNode;
+            property.SetValue(instance, ArrangeValueForTargetType(value, property.PropertyType));
         }
 
-        newNode.Element.key = node.Element.key;
-                
-
-        return newNode;
+        return null;
     }
-    
+
     static async Task AddReactAttributes(Action<string, object> add, Element element, ElementSerializerContext context)
     {
         var typeInfo = GetTypeInfo(element.GetType());
@@ -884,12 +871,12 @@ partial class ElementSerializer
                 ElementAsDotNetReactPureComponent = pureComponent
             };
         }
-        
+
         if (element is ElementAsTask elementAsTask)
         {
             return new Node
             {
-                Element = element,
+                Element       = element,
                 ElementIsTask = true,
                 ElementAsTask = elementAsTask
             };
@@ -908,7 +895,7 @@ partial class ElementSerializer
         if (!TypeInfoMap.TryGetValue(type, out var typeInfo))
         {
             var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
-            
+
             var reactCustomEventProperties = new List<PropertyAccessInfo>();
             {
                 foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
@@ -1002,7 +989,7 @@ partial class ElementSerializer
                 map.Add("style", valueExportInfo.Value);
             }
         }
-        
+
         if (htmlElement.classNameList is not null)
         {
             foreach (var style in htmlElement.classNameList)
@@ -1132,11 +1119,45 @@ partial class ElementSerializer
             }
 
             child.NextSibling = childNode;
-            
+
             childNode.PreviousSibling = child;
 
             child = childNode;
         }
+    }
+
+    static Node ReplaceNode(Node node, Node newNode)
+    {
+        newNode.Parent = node.Parent;
+
+        if (node.Parent is not null)
+        {
+            if (node.Parent.FirstChild == node)
+            {
+                node.Parent.FirstChild = newNode;
+            }
+
+            if (node.Parent.DotNetComponentRootNode == node)
+            {
+                node.Parent.DotNetComponentRootNode = newNode;
+            }
+        }
+
+        if (node.PreviousSibling is not null)
+        {
+            node.PreviousSibling.NextSibling = newNode;
+        }
+
+        newNode.NextSibling = node.NextSibling;
+
+        if (newNode.NextSibling is not null)
+        {
+            newNode.NextSibling.PreviousSibling = newNode;
+        }
+
+        newNode.Element.key = node.Element.key;
+
+        return newNode;
     }
 
     static PropertyAccessInfo ToFastAccess(this PropertyInfo propertyInfo)
@@ -1149,8 +1170,8 @@ partial class ElementSerializer
             DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
             HasReactAttribute          = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
             TransformValueInServerSide = getTransformValueInServerSideTransformFunction(),
-            TemplateAttribute = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>(),
-            JsonPropertyName = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>()
+            TemplateAttribute          = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>(),
+            JsonPropertyName           = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>()
         };
 
         Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction()
@@ -1176,11 +1197,11 @@ partial class ElementSerializer
         public object DefaultValue { get; init; }
         public Func<object, object> GetValueFunc { get; init; }
         public bool HasReactAttribute { get; init; }
+        public JsonPropertyNameAttribute JsonPropertyName { get; init; }
         public PropertyInfo PropertyInfo { get; init; }
         public Action<object, object> SetValueFunc { get; init; }
-        public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
         public ReactTemplateAttribute TemplateAttribute { get; init; }
-        public JsonPropertyNameAttribute JsonPropertyName { get; init; }
+        public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
     }
 
     sealed class Node
@@ -1188,8 +1209,10 @@ partial class ElementSerializer
         public PureComponent ElementAsDotNetReactPureComponent;
         public bool ElementIsDotNetReactPureComponent;
         public bool IsSuspenseFallbackElementCalculated;
+        public Node PreviousSibling;
         public Element SuspenseFallbackElement;
         public Node SuspenseFallbackNode;
+        public long? Begin { get; set; }
         public string BreadCrumbPath { get; set; }
         public int? CurrentOrder { get; set; }
         public bool DotNetComponentRenderMethodInvoked { get; set; }
@@ -1207,6 +1230,7 @@ partial class ElementSerializer
         public HtmlTextNode ElementAsHtmlTextElement { get; init; }
 
         public IReadOnlyJsonMap ElementAsJsonMap { get; set; }
+        public ElementAsTask ElementAsTask { get; init; }
 
         public ThirdPartyReactComponent ElementAsThirdPartyReactComponent { get; init; }
 
@@ -1218,11 +1242,13 @@ partial class ElementSerializer
         public bool ElementIsHtmlTextElement { get; init; }
 
         public bool ElementIsNull { get; init; }
+        public bool ElementIsTask { get; init; }
 
         public bool ElementIsThirdPartyReactComponent { get; init; }
+        public long? End { get; set; }
 
         public Node FirstChild { get; set; }
-        
+
         public Node FirstChildTemp { get; set; }
 
         public bool HasFirstChild => FirstChild is not null;
@@ -1235,17 +1261,12 @@ partial class ElementSerializer
         public bool IsChildrenOpened { get; set; }
 
         public bool IsCompleted { get; set; }
+        public bool IsHighOrderComponent { get; set; }
 
         public Node NextSibling { get; set; }
 
         public Node Parent { get; set; }
         public Stopwatch Stopwatch { get; set; }
-        public long? Begin { get; set; }
-        public long? End { get; set; }
-        public bool IsHighOrderComponent { get; set; }
-        public bool ElementIsTask { get; init; }
-        public ElementAsTask ElementAsTask { get; init; }
-        public Node PreviousSibling;
     }
 
     sealed class TypeInfo
@@ -1258,44 +1279,11 @@ partial class ElementSerializer
         public IReadOnlyList<PropertyAccessInfo> ReactAttributedPropertiesOfType { get; init; }
         public PropertyAccessInfo StateProperty { get; init; }
     }
-
-
-    internal static string TransferPropertiesToDotNetComponent(ReactComponentBase instance, Type type, IReadOnlyDictionary<string, object> props)
-    {
-        if (props == null)
-        {
-            return null;
-        }
-
-        foreach (var (key, value) in props)
-        {
-            if (key == "$LogicalChildrenCount")
-            {
-                var childrenCount = (int)ArrangeValueForTargetType(value, typeof(int));
-                for (var i = 0; i < childrenCount; i++)
-                {
-                    instance.children.Add(new FakeChild { Index = i });
-                }
-
-                continue;
-            }
-
-            var property = type.GetProperty(key);
-            if (property == null)
-            {
-                return $"Property not found.{type.FullName}::{key}";
-            }
-
-            property.SetValue(instance, ArrangeValueForTargetType(value, property.PropertyType));
-        }
-
-        return null;
-    }
 }
 
-internal record TransformValueInServerSideContext(Func<Style, string> ConvertStyleToCssClass);
+record TransformValueInServerSideContext(Func<Style, string> ConvertStyleToCssClass);
 
-internal record TransformValueInServerSideResponse(bool needToExport, object newValue = null);
+record TransformValueInServerSideResponse(bool needToExport, object newValue = null);
 
 static class DoNotSendToClientWhenStyleEmpty
 {
