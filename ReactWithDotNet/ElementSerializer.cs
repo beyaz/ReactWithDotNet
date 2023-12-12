@@ -366,13 +366,20 @@ static partial class ElementSerializer
             {
                 if (@delegate.Target is ReactComponentBase target)
                 {
+                    int? htmlElementScrollDebounceTimeout = null;
+                    if (propertyInfo.Name == nameof(HtmlElement.onScroll) && propertyInfo.DeclaringType == typeof(HtmlElement))
+                    {
+                        htmlElementScrollDebounceTimeout = ((HtmlElement)instance).onScrollDebounceTimeout;
+                    }
+                    
                     propertyValue = new RemoteMethodInfo
                     {
                         IsRemoteMethod                   = true,
                         remoteMethodName                 = @delegate.Method.GetNameWithToken(),
                         HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
                         FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
-                        StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null
+                        StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
+                        HtmlElementScrollDebounceTimeout = htmlElementScrollDebounceTimeout
                     };
                 }
                 else

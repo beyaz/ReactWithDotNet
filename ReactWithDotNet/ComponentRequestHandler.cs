@@ -344,6 +344,10 @@ static class ComponentRequestHandler
                     {
                         MouseEvent.Fix(mouseEvent);
                     }
+                    if (eventArguments[i] is ScrollEvent scrollEvent)
+                    {
+                        ScrollEvent.Fix(scrollEvent);
+                    }
                 }
                 catch (Exception)
                 {

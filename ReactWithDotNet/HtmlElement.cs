@@ -218,19 +218,13 @@ public abstract class HtmlElement : Element
     [ReactGrabEventArgumentsByUsingFunction("ReactWithDotNet::Core::CalculateSyntheticMouseEventArguments")]
     public MouseEventHandler onMouseLeave { get; set; }
 
-    /// <summary>
-    ///     Handler <paramref name="value" /> should be in client js codes.<br />
-    ///     <br />
-    ///     Sample Usage:<br />
-    ///     <br />
-    ///     ReactWithDotNet.RegisterExternalJsObject(<paramref name="value" />, function(e){<br />
-    ///     ...<br />
-    ///     ...<br />
-    ///     });
-    /// </summary>
     [ReactProp]
-    [ReactTransformValueInClient("ReactWithDotNet.GetExternalJsObject")]
-    public string onScroll { get; set; }
+    public ScrollEventHandler onScroll { get; set; }
+
+    /// <summary>
+    ///     Default value: 400 <br />
+    /// </summary>
+    public int? onScrollDebounceTimeout { get; set; } = 400;
 
     /// <summary>
     ///     A space-separated list of the part names of the element. Part names allows CSS to select and style specific

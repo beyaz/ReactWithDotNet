@@ -876,7 +876,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
     const handlerComponentUniqueIdentifier = remoteMethodInfo.HandlerComponentUniqueIdentifier;
     const functionNameOfGrabEventArguments = remoteMethodInfo.FunctionNameOfGrabEventArguments;
     const stopPropagation = remoteMethodInfo.StopPropagation;
-
+    const htmlElementScrollDebounceTimeout = remoteMethodInfo.HtmlElementScrollDebounceTimeout;
 
     NotNull(remoteMethodName);
     NotNull(handlerComponentUniqueIdentifier);
@@ -930,6 +930,43 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
 
             return;
         }
+        
+        if (htmlElementScrollDebounceTimeout > 0)
+        {
+            var eventName = eventArguments[0]._reactName;
+
+            const executionQueueItemName = eventName + '-debounce-' + GetFirstAssignedUniqueIdentifierValueOfComponent(handlerComponentUniqueIdentifier);
+
+            if (FunctionExecutionQueueCurrentEntry &&
+                FunctionExecutionQueueCurrentEntry.name === executionQueueItemName)
+            {
+                FunctionExecutionQueueCurrentEntry.isValid = false;
+            }
+
+            const timeoutKey = eventName + '-debounceTimeoutId';
+
+            clearTimeout(targetComponent.state[timeoutKey]);
+
+            var newState = {};
+            newState[timeoutKey] = setTimeout(() =>
+            {
+                const actionArguments = {
+                    component: targetComponent,
+                    remoteMethodName: remoteMethodName,
+                    remoteMethodArguments: eventArguments
+                };
+                const executionEntry = StartAction(actionArguments);
+                executionEntry.name = executionQueueItemName;
+
+            }, htmlElementScrollDebounceTimeout);
+
+            newState[SyncId] = GetNextSequence();
+
+            targetComponent.setState(newState);
+
+            return;
+        }
+
 
         const actionArguments = {
             component: targetComponent,
@@ -1313,6 +1350,16 @@ function ConvertToSyntheticMouseEvent(e)
     };
 }
 
+function ConvertToSyntheticScrollEvent(e)
+{
+    return {
+        currentTarget: ConvertToShadowHtmlElement(e.currentTarget),
+        target: ConvertToShadowHtmlElement(e.target),
+        timeStamp: e.timeStamp,
+        type: e.type
+    };
+}
+
 
 function ConvertToSyntheticChangeEvent(e)
 {
@@ -1423,9 +1470,21 @@ function ArrangeRemoteMethodArguments(remoteMethodArguments)
         {
             var prm = remoteMethodArguments[i];
 
-            if (IsSyntheticBaseEvent(prm) && prm._reactName && prm._reactName.indexOf('Mouse') > 0)
+            if (IsSyntheticBaseEvent(prm))
             {
-                remoteMethodArguments[i] = ConvertToSyntheticMouseEvent(prm);
+                if (prm._reactName)
+                {
+                    if (prm._reactName && prm._reactName.indexOf('Mouse') > 0)
+                    {
+                        remoteMethodArguments[i] = ConvertToSyntheticMouseEvent(prm);
+                        continue;
+                    }
+                    if (prm._reactName && prm._reactName === 'onScroll')
+                    {
+                        remoteMethodArguments[i] = ConvertToSyntheticScrollEvent(prm);
+                        continue;
+                    }
+                }
             }
         }
     }    

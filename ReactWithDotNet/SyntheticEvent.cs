@@ -43,6 +43,27 @@ public sealed class ShadowHtmlElement
     }
 }
 
+   
+
+public sealed class ScrollEvent : UIEvent
+{
+    public ShadowHtmlElement currentTarget { get; set; }
+    public ShadowHtmlElement target { get; set; }
+
+    public double timeStamp { get; set; }
+
+    public string type { get; set; }
+
+    internal static void Fix(ScrollEvent e)
+    {
+        ShadowHtmlElement.Fix(e.target);
+        ShadowHtmlElement.Fix(e.currentTarget);
+    }
+}
+public delegate Task ScrollEventHandler(ScrollEvent e);
+
+    
+
 public sealed class MouseEvent : UIEvent
 {
     public bool altKey { get; set; }
@@ -78,10 +99,10 @@ public sealed class MouseEvent : UIEvent
 
     public string type { get; set; }
 
-    internal static void Fix(MouseEvent mouseEvent)
+    internal static void Fix(MouseEvent e)
     {
-        ShadowHtmlElement.Fix(mouseEvent.target);
-        ShadowHtmlElement.Fix(mouseEvent.currentTarget);
+        ShadowHtmlElement.Fix(e.target);
+        ShadowHtmlElement.Fix(e.currentTarget);
     }
 }
 

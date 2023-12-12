@@ -624,17 +624,13 @@ public static partial class Mixin
     public static HtmlElementModifier OnMouseLeave(MouseEventHandler onMouseLeaveHandler)
         => CreateHtmlElementModifier<HtmlElement>(element => element.onMouseLeave = onMouseLeaveHandler);
 
-    /// <summary>
-    ///     Handler <paramref name="jsMethodName" /> should be in client js codes.<br />
-    ///     <br />
-    ///     Sample Usage:<br />
-    ///     <br />
-    ///     ReactWithDotNet.RegisterExternalJsObject(<paramref name="jsMethodName" />, function(e){<br />
-    ///     ...<br />
-    ///     ...<br />
-    ///     });
-    /// </summary>
-    public static HtmlElementModifier OnScroll(string jsMethodName) => CreateHtmlElementModifier<HtmlElement>(element => element.onScroll = jsMethodName);
+    public static HtmlElementModifier OnScroll(ScrollEventHandler handler, int debounceTimeout = 400) 
+        => CreateHtmlElementModifier<HtmlElement>(element =>
+        {
+            element.onScroll = handler;
+            
+            element.onScrollDebounceTimeout = debounceTimeout;
+        });
 
     
 
