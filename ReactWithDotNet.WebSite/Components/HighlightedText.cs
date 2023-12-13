@@ -5,7 +5,7 @@ namespace ReactWithDotNet.WebSite.Components;
 class HighlightedText : PureComponent
 {
     public string Text { get; set; }
-    
+
     protected override Element render()
     {
         return new Fragment
@@ -14,32 +14,9 @@ class HighlightedText : PureComponent
         };
     }
 
-    Element CreateAttractiveText(string text)
-    {
-        return new span
-        {
-            text = text,
-            style =
-            {
-                PaddingLeftRight(3),
-                WebkitTextFillColor(Transparent),
-                Background(linear_gradientTo("right", Theme.Blue400, Theme.Blue600)),
-                BackgroundClipText,
-                WebkitBackgroundClipText
-            }
-        };
-    }
-    
-    IEnumerable<Element> ConvertToHighlighted(string str)
-    {
-        return ParseSpecialString("[]", str).Select(x => (x.isSpecial ? CreateAttractiveText(x.value) : x.value) as Element);
-    }
-
     static IReadOnlyList<(string value, bool isSpecial)> ParseSpecialString(string specialBeginEndChars, string value)
     {
-
         var items = new List<(string value, bool isSpecial)>();
-
 
         if (value == null)
         {
@@ -47,7 +24,7 @@ class HighlightedText : PureComponent
         }
 
         var currentText = new StringBuilder();
-        var isSpecial   = false;
+        var isSpecial = false;
 
         foreach (var c in value)
         {
@@ -83,5 +60,26 @@ class HighlightedText : PureComponent
         }
 
         return items;
+    }
+
+    IEnumerable<Element> ConvertToHighlighted(string str)
+    {
+        return ParseSpecialString("[]", str).Select(x => x.isSpecial ? CreateAttractiveText(x.value) : x.value);
+    }
+
+    Element CreateAttractiveText(string text)
+    {
+        return new span
+        {
+            text = text,
+            style =
+            {
+                PaddingLeftRight(3),
+                WebkitTextFillColor(Transparent),
+                Background(linear_gradientTo("right", Theme.Blue400, Theme.Blue600)),
+                BackgroundClipText,
+                WebkitBackgroundClipText
+            }
+        };
     }
 }
