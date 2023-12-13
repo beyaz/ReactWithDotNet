@@ -22,10 +22,10 @@ class HighlightedText : PureComponent
             style =
             {
                 PaddingLeftRight(3),
-                BackgroundClipText,
-                WebkitBackgroundClipText,
                 WebkitTextFillColor(Transparent),
-                Background(linear_gradientTo("right", Theme.Blue400, Theme.Blue600))
+                Background(linear_gradientTo("right", Theme.Blue400, Theme.Blue600)),
+                BackgroundClipText,
+                WebkitBackgroundClipText
             }
         };
     }
