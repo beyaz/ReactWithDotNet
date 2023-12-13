@@ -1270,7 +1270,8 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "readOnly",
-                        Comment = "Disables user input in the textarea element."
+                        Comment = "Disables user input in the textarea element.",
+                        Type    = "UnionProp<string,bool>"
                     },
                     new AttributeInfo
                     {

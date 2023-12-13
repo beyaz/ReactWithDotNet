@@ -3408,7 +3408,7 @@ public sealed partial class textarea : HtmlElement
     ///     Disables user input in the textarea element.
     /// </summary>
     [ReactProp]
-    public string readOnly { get; set; }
+    public UnionProp<string,bool> readOnly { get; set; }
 
     /// <summary>
     ///     Indicates that the textarea element must be filled out before the form is submitted.
@@ -3512,7 +3512,7 @@ public sealed partial class textarea : HtmlElement
     /// <br/>
     ///     Disables user input in the textarea element.
     /// </summary>
-    public static HtmlElementModifier ReadOnly(string value) => Modify(x => x.readOnly = value);
+    public static HtmlElementModifier ReadOnly(UnionProp<string,bool> value) => Modify(x => x.readOnly = value);
 
     /// <summary>
     ///     required = <paramref name="value"/>
