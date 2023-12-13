@@ -41,6 +41,11 @@ public sealed class ShadowHtmlElement
             shadowHtmlElement.data = new Dictionary<string, string>(shadowHtmlElement?.data, StringComparer.OrdinalIgnoreCase);
         }
     }
+    
+    public double scrollHeight { get; set; }
+    public double scrollLeft { get; set; }
+    public double scrollTop { get; set; }
+    public double scrollWidth { get; set; }
 }
 
    
@@ -59,6 +64,8 @@ public sealed class ScrollEvent : UIEvent
         ShadowHtmlElement.Fix(e.target);
         ShadowHtmlElement.Fix(e.currentTarget);
     }
+
+    
 }
 public delegate Task ScrollEventHandler(ScrollEvent e);
 
