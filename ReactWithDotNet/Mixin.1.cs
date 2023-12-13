@@ -350,6 +350,11 @@ public static partial class Mixin
 
 
     public static StyleModifier WebkitBackgroundClipText=>WebkitBackgroundClip("text");
+    
+    /// <summary>
+    ///     style.cackgroundClip = 'text'
+    /// </summary>
+    public static StyleModifier BackgroundClipText=>BackgroundClip("text");
 
     public static readonly string Transparent = "transparent";
 
