@@ -15,7 +15,7 @@ public class StyleTests
             height   = "5.32rem"
         };
 
-        style.ToCss().Should().BeEquivalentTo("height:5.32rem;min-width:4.56px;");
+        style.ToCss().Should().BeEquivalentTo("min-width:4.56px;height:5.32rem;");
     }
     
     [TestMethod]
