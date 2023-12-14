@@ -76,24 +76,12 @@ public abstract class ReactComponentBase : Element
     ///     Sample event dispatching <br />
     ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
-    protected void DispatchEvent(Expression<Func<Func<Task>>> expressionForAccessingCustomReactEventProperty)
+    protected void DispatchEvent(Expression<Func<Delegate>> expressionForAccessingCustomReactEventProperty)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)));
     }
 
-    /// <summary>
-    ///     Sample event declaration
-    ///     <br />
-    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
-    ///     <br />
-    ///     <br />
-    ///     Sample event dispatching <br />
-    ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
-    /// </summary>
-    protected void DispatchEvent<A>(Expression<Func<Func<A,Task>>> expressionForAccessingCustomReactEventProperty, A a)
-    {
-        Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
-    }
+    
     
     /// <summary>
     ///     Sample event declaration
@@ -118,7 +106,7 @@ public abstract class ReactComponentBase : Element
     ///     Sample event dispatching <br />
     ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
-    protected void DispatchEvent<A, B>(Expression<Func<Func<A,B,Task>>> expressionForAccessingCustomReactEventProperty, A a, B b)
+    protected void DispatchEvent<A, B>(Expression<Func<Delegate>> expressionForAccessingCustomReactEventProperty, A a, B b)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b);
     }
@@ -132,7 +120,7 @@ public abstract class ReactComponentBase : Element
     ///     Sample event dispatching <br />
     ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
-    protected void DispatchEvent<A, B, C>(Expression<Func<Func<A, B, C, Task>>> expressionForAccessingCustomReactEventProperty, A a, B b, C c)
+    protected void DispatchEvent<A, B, C>(Expression<Func<Delegate>> expressionForAccessingCustomReactEventProperty, A a, B b, C c)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b, c);
     }
