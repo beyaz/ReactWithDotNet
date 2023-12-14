@@ -212,24 +212,11 @@ static class ReflectionHelper
         return null;
     }
 
-    public static bool IsVoidTaskFunc1Or2Or3(this Type type)
+    public static bool IsVoidTaskDelegate(this PropertyInfo propertyInfo)
     {
-        // todo: rename with more meaningfull
-
-        if (type.BaseType == typeof(MulticastDelegate))
-        {
-            var invokeMethodInfo = type.GetMethod("Invoke");
-            if (invokeMethodInfo is not null &&
-                invokeMethodInfo.ReturnType == typeof(Task) &&
-                invokeMethodInfo.GetParameters().Length <= 3)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return propertyInfo.PropertyType.GetMethod("Invoke")?.ReturnType.FullName == "System.Threading.Tasks.Task";
     }
-
+    
     internal static class PrimitiveTypeCache
     {
         public static readonly Type Type_bool = typeof(bool);

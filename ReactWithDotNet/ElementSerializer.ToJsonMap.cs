@@ -900,6 +900,8 @@ partial class ElementSerializer
 
     static TypeInfo GetTypeInfo(Type type)
     {
+        
+        
         if (!TypeInfoMap.TryGetValue(type, out var typeInfo))
         {
             var serializableProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty);
@@ -908,16 +910,12 @@ partial class ElementSerializer
             {
                 foreach (var propertyInfo in serializableProperties.Where(x => x.GetCustomAttribute<ReactCustomEventAttribute>() is not null))
                 {
-                    var isVoidTask = propertyInfo.PropertyType.FullName == typeof(Func<Task>).FullName;
-                    var isVoidTaskWithParameter = propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.IsVoidTaskFunc1Or2Or3();
-
-                    if (isVoidTask || isVoidTaskWithParameter)
+                    if (!propertyInfo.IsVoidTaskDelegate())
                     {
-                        reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
-                        continue;
+                        throw DeveloperException($"Delegate should return 'Task'. @PropertyName is '{propertyInfo.Name}'");
                     }
-
-                    throw DeveloperException($"{nameof(ReactCustomEventAttribute)} can only use with Func<Task> or Func<A,Task> or Func<A,B,Task> or Func<A,B,C,Task>");
+                    
+                    reactCustomEventProperties.Add(propertyInfo.ToFastAccess());
                 }
             }
 
@@ -1182,7 +1180,7 @@ partial class ElementSerializer
             JsonPropertyName               = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>(),
             TransformValueInClientFunction = TryGetTransformValueInClientFunctionName(propertyInfo),
             
-            PropertyTypeIsVoidTaskFunc1Or2Or3 = propertyInfo.PropertyType.IsVoidTaskFunc1Or2Or3()
+            PropertyTypeIsIsVoidTaskDelegate = propertyInfo.IsVoidTaskDelegate()
         };
 
         static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
@@ -1218,8 +1216,8 @@ partial class ElementSerializer
         public Action<object, object> SetValueFunc { get; init; }
         public ReactTemplateAttribute TemplateAttribute { get; init; }
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
-        public string TransformValueInClientFunction { get; set; }
-        public bool PropertyTypeIsVoidTaskFunc1Or2Or3 { get; set; }
+        public string TransformValueInClientFunction { get; init; }
+        public bool PropertyTypeIsIsVoidTaskDelegate { get; init; }
     }
 
     sealed class Node

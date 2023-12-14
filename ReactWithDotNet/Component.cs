@@ -104,6 +104,20 @@ public abstract class ReactComponentBase : Element
     ///     Sample event dispatching <br />
     ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
     /// </summary>
+    protected void DispatchEvent<A>(Expression<Func<Delegate>> expressionForAccessingCustomReactEventProperty, A a)
+    {
+        Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a);
+    }
+    
+    /// <summary>
+    ///     Sample event declaration
+    ///     <br />
+    ///     [ReactCustomEvent] public Func&lt;UserInfo,Task&gt; OnUserChanged { get; set; }
+    ///     <br />
+    ///     <br />
+    ///     Sample event dispatching <br />
+    ///     DispatchEvent(()=> OnUserChanged, new UserInfo { Name = '..'});
+    /// </summary>
     protected void DispatchEvent<A, B>(Expression<Func<Func<A,B,Task>>> expressionForAccessingCustomReactEventProperty, A a, B b)
     {
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b);
