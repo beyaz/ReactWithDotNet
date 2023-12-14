@@ -361,8 +361,7 @@ static partial class ElementSerializer
                 }
             }
             
-            
-            if (propertyInfo.PropertyType.IsVoidTaskFunc1Or2Or3())
+            if (property.PropertyTypeIsVoidTaskFunc1Or2Or3)
             {
                 if (@delegate.Target is ReactComponentBase target)
                 {
@@ -558,12 +557,11 @@ static partial class ElementSerializer
             return template;
         }
 
-        var reactTransformValueInClient = propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>();
-        if (reactTransformValueInClient is not null)
+        if (property.TransformValueInClientFunction is not null)
         {
             var jsonMap = new JsonMap();
 
-            jsonMap.Add("$transformValueFunction", reactTransformValueInClient.TransformFunction);
+            jsonMap.Add("$transformValueFunction", property.TransformValueInClientFunction);
             jsonMap.Add("RawValue", propertyValue);
 
             return jsonMap;

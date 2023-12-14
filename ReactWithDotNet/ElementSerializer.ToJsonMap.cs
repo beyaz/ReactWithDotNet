@@ -1172,17 +1172,20 @@ partial class ElementSerializer
     {
         return new PropertyAccessInfo
         {
-            SetValueFunc               = ReflectionHelper.CreateSetFunction(propertyInfo),
-            GetValueFunc               = ReflectionHelper.CreateGetFunction(propertyInfo),
-            PropertyInfo               = propertyInfo,
-            DefaultValue               = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
-            HasReactAttribute          = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
-            TransformValueInServerSide = getTransformValueInServerSideTransformFunction(),
-            TemplateAttribute          = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>(),
-            JsonPropertyName           = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>()
+            SetValueFunc                   = ReflectionHelper.CreateSetFunction(propertyInfo),
+            GetValueFunc                   = ReflectionHelper.CreateGetFunction(propertyInfo),
+            PropertyInfo                   = propertyInfo,
+            DefaultValue                   = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null,
+            HasReactAttribute              = propertyInfo.GetCustomAttribute<ReactPropAttribute>() is not null,
+            TransformValueInServerSide     = getTransformValueInServerSideTransformFunction(propertyInfo),
+            TemplateAttribute              = propertyInfo.GetCustomAttribute<ReactTemplateAttribute>(),
+            JsonPropertyName               = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>(),
+            TransformValueInClientFunction = TryGetTransformValueInClientFunctionName(propertyInfo),
+            
+            PropertyTypeIsVoidTaskFunc1Or2Or3 = propertyInfo.PropertyType.IsVoidTaskFunc1Or2Or3()
         };
 
-        Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction()
+        static Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> getTransformValueInServerSideTransformFunction(PropertyInfo propertyInfo)
         {
             var attribute = propertyInfo.GetCustomAttribute<ReactTransformValueInServerSideAttribute>();
             if (attribute == null)
@@ -1198,6 +1201,11 @@ partial class ElementSerializer
 
             return (Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>)methodInfo.CreateDelegate(typeof(Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse>));
         }
+
+        static string TryGetTransformValueInClientFunctionName(PropertyInfo propertyInfo)
+        {
+            return propertyInfo.GetCustomAttribute<ReactTransformValueInClientAttribute>()?.TransformFunction;
+        }
     }
 
     internal class PropertyAccessInfo
@@ -1210,6 +1218,8 @@ partial class ElementSerializer
         public Action<object, object> SetValueFunc { get; init; }
         public ReactTemplateAttribute TemplateAttribute { get; init; }
         public Func<object, TransformValueInServerSideContext, TransformValueInServerSideResponse> TransformValueInServerSide { get; init; }
+        public string TransformValueInClientFunction { get; set; }
+        public bool PropertyTypeIsVoidTaskFunc1Or2Or3 { get; set; }
     }
 
     sealed class Node
