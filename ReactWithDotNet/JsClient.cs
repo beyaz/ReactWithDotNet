@@ -68,6 +68,11 @@ partial class Mixin
     {
         ListenEvent(client, eventName.ToString(), handler.Method.Name);
     }
+    
+    public static void ListenEvent(this Client client, Enum eventName, Func<Task> handler)
+    {
+        ListenEvent(client, eventName.ToString(), handler.Method.Name);
+    }
 
     public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
     {
