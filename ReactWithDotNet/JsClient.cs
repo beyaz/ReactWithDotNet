@@ -68,18 +68,6 @@ partial class Mixin
     {
         ListenEvent(client, eventName.ToString(), handler.Method.Name);
     }
-    
-    public static void ListenEvent(this Client client, Action<Client> triggerMethod, Func<Task> handler)
-    {
-        ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
-    }
-
-    public static void ListenEvent<TEventArgument1>(this Client client, Action<Client, TEventArgument1> triggerMethod, Func<TEventArgument1,Task> handler)
-    {
-        ListenEvent(client, triggerMethod.Method.Name, handler.Method.Name);
-    }
-
-    
 
     public static void ListenWindowResizeEvent(this Client client, int resizeTimeout)
     {
@@ -91,26 +79,26 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(NavigateToUrl), url);
     }
 
-    public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> action)
+    public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> func)
     {
-        if (action.Target is ReactComponentBase target)
+        if (func.Target is ReactComponentBase target)
         {
             if (target.ComponentUniqueIdentifier is null)
             {
                 throw DeveloperException("ComponentUniqueIdentifier not initialized yet. @" + target.GetType().FullName);
             }
 
-            client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, action.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.Value);
+            client.CallJsFunction(Core + nameof(OnOutsideClicked), idOfElement, func.Method.GetNameWithToken(), target.ComponentUniqueIdentifier.Value);
         }
         else
         {
-            throw DeveloperException("Action handler method should belong to React component");
+            throw DeveloperException($"Handler method '{func.Method.Name}' should belong to React component");
         }
     }
 
-    public static void OnWindowResize(this Client client, Func<Task> handlerAction)
+    public static void OnWindowResize(this Client client, Func<Task> handler)
     {
-        client.ListenEvent(Core + nameof(OnWindowResize), handlerAction.Method.Name);
+        client.ListenEvent(Core + nameof(OnWindowResize), handler.Method.Name);
     }
 
     public static void SetCookie(this Client client, string cookieName, string cookieValue, int expiredays)
@@ -155,34 +143,34 @@ partial class Mixin
 
 
     #region GotoMethod
-    public static void GotoMethod(this Client client, int timeoutInMilliseconds, Func<Task> action)
+    public static void GotoMethod(this Client client, int timeoutInMilliseconds, Func<Task> func)
     {
-        GotoMethod(client, timeoutInMilliseconds, action.Method.GetNameWithToken());
+        GotoMethod(client, timeoutInMilliseconds, func.Method.GetNameWithToken());
     }
     
-    public static void GotoMethod(this Client client, Func<Task> action)
+    public static void GotoMethod(this Client client, Func<Task> func)
     {
-        GotoMethod(client, 0, action.Method.GetNameWithToken());
+        GotoMethod(client, 0, func.Method.GetNameWithToken());
     }
 
-    public static void GotoMethod<TArgument>(this Client client, int timeoutInMilliseconds, Func<TArgument,Task> action, TArgument argument)
+    public static void GotoMethod<TArgument>(this Client client, int timeoutInMilliseconds, Func<TArgument,Task> func, TArgument argument)
     {
-        GotoMethod(client, timeoutInMilliseconds, action.Method.GetNameWithToken(), argument);
+        GotoMethod(client, timeoutInMilliseconds, func.Method.GetNameWithToken(), argument);
     }
 
-    public static void GotoMethod<TArgument>(this Client client, Func<TArgument,Task> action, TArgument argument)
+    public static void GotoMethod<TArgument>(this Client client, Func<TArgument,Task> func, TArgument argument)
     {
-        GotoMethod(client, 3, action.Method.GetNameWithToken(), argument);
+        GotoMethod(client, 3, func.Method.GetNameWithToken(), argument);
     }
 
-    public static void GotoMethod<TArgument1, TArgument2>(this Client client, int timeoutInMilliseconds, Func<TArgument1, TArgument2,Task> action, TArgument1 argument1, TArgument2 argument2)
+    public static void GotoMethod<TArgument1, TArgument2>(this Client client, int timeoutInMilliseconds, Func<TArgument1, TArgument2,Task> func, TArgument1 argument1, TArgument2 argument2)
     {
-        GotoMethod(client, timeoutInMilliseconds, action.Method.GetNameWithToken(), argument1, argument2);
+        GotoMethod(client, timeoutInMilliseconds, func.Method.GetNameWithToken(), argument1, argument2);
     }
 
-    public static void GotoMethod<TArgument1, TArgument2>(this Client client, Func<TArgument1, TArgument2,Task> action, TArgument1 argument1, TArgument2 argument2)
+    public static void GotoMethod<TArgument1, TArgument2>(this Client client, Func<TArgument1, TArgument2,Task> func, TArgument1 argument1, TArgument2 argument2)
     {
-        GotoMethod(client, 3, action.Method.GetNameWithToken(), argument1, argument2);
+        GotoMethod(client, 3, func.Method.GetNameWithToken(), argument1, argument2);
     }
 
     static void GotoMethod(Client client, int timeoutInMilliseconds, string methodName, params object[] methodArguments)
