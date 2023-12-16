@@ -15,7 +15,7 @@ public sealed class Fragment : Element
             return;
         }
 
-        (this.Modifiers ??= new List<IModifier>()).AddRange(modifiers);
+        (Modifiers = []).AddRange(modifiers);
     }
 
     internal void ArrangeChildren()
@@ -25,8 +25,6 @@ public sealed class Fragment : Element
             return;
         }
 
-        
-        
         foreach (var modifier in Modifiers)
         {
             if (modifier is ElementModifier { IsModifyReactKey: true } elementModifier)
