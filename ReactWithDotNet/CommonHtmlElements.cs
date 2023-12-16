@@ -1630,19 +1630,19 @@ public sealed class circle : HtmlElement
     ///     The x-coordinate of the center of the circle.
     /// </summary>
     [ReactProp]
-    public string cx { get; set; }
+    public UnionProp<string,double> cx { get; set; }
 
     /// <summary>
     ///     The y-coordinate of the center of the circle.
     /// </summary>
     [ReactProp]
-    public string cy { get; set; }
+    public UnionProp<string,double> cy { get; set; }
 
     /// <summary>
     ///     The radius of the circle.
     /// </summary>
     [ReactProp]
-    public string r { get; set; }
+    public UnionProp<string,double> r { get; set; }
 
     /// <summary>
     ///     The fill color of the circle.
@@ -1676,21 +1676,21 @@ public sealed class circle : HtmlElement
     /// <br/>
     ///     The x-coordinate of the center of the circle.
     /// </summary>
-    public static HtmlElementModifier Cx(string value) => Modify(x => x.cx = value);
+    public static HtmlElementModifier Cx(UnionProp<string,double> value) => Modify(x => x.cx = value);
 
     /// <summary>
     ///     cy = <paramref name="value"/>
     /// <br/>
     ///     The y-coordinate of the center of the circle.
     /// </summary>
-    public static HtmlElementModifier Cy(string value) => Modify(x => x.cy = value);
+    public static HtmlElementModifier Cy(UnionProp<string,double> value) => Modify(x => x.cy = value);
 
     /// <summary>
     ///     r = <paramref name="value"/>
     /// <br/>
     ///     The radius of the circle.
     /// </summary>
-    public static HtmlElementModifier R(string value) => Modify(x => x.r = value);
+    public static HtmlElementModifier R(UnionProp<string,double> value) => Modify(x => x.r = value);
 
     /// <summary>
     ///     fill = <paramref name="value"/>

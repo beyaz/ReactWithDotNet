@@ -683,6 +683,7 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                             var genericArguments = propertyInfo.PropertyType.GetGenericArguments();
                             
                             if (genericArguments.Contains(typeof(double)) ||
+                                genericArguments.Contains(typeof(double)) ||
                                 genericArguments.Contains(typeof(double?)))
                             {
                                 if (double.TryParse(attribute.Value.Replace(".",""), out _))

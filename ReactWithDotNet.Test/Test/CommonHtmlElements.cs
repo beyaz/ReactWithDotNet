@@ -432,17 +432,20 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "cx",
-                        Comment = "The x-coordinate of the center of the circle."
+                        Comment = "The x-coordinate of the center of the circle.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
                         Name    = "cy",
-                        Comment = "The y-coordinate of the center of the circle."
+                        Comment = "The y-coordinate of the center of the circle.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
                         Name    = "r",
-                        Comment = "The radius of the circle."
+                        Comment = "The radius of the circle.",
+                        Type    = "UnionProp<string,double>"
                     },
                     new AttributeInfo
                     {
