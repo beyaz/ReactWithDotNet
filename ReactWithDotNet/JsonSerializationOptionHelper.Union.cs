@@ -223,7 +223,7 @@ partial class JsonSerializationOptionHelper
             {
                 throw new NotSupportedException();
             }
-            return (JsonConverter)Activator.CreateInstance(converterTypes[genericArgumentsLength]);
+            return (JsonConverter)Activator.CreateInstance(converterTypes[genericArgumentsLength].MakeGenericType(genericArguments));
         }
     }
 }

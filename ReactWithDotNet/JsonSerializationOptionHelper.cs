@@ -339,18 +339,7 @@ static partial class JsonSerializationOptionHelper
 
         public override void Write(Utf8JsonWriter writer, JsonMap jsonMap, JsonSerializerOptions options)
         {
-            writer.WriteStartObject();
-
-            jsonMap.Foreach(add);
-
-            writer.WriteEndObject();
-
-            void add(string key, object value)
-            {
-                writer.WritePropertyName(key);
-
-                JsonSerializer.Serialize(writer, value, options);
-            }
+            jsonMap.Write(writer, options);
         }
     }
 
@@ -363,19 +352,7 @@ static partial class JsonSerializationOptionHelper
 
         public override void Write(Utf8JsonWriter writer, IReadOnlyJsonMap jsonMap, JsonSerializerOptions options)
         {
-            writer.WriteStartObject();
-
-            jsonMap.Foreach(add);
-
-            writer.WriteEndObject();
-            return;
-
-            void add(string key, object value)
-            {
-                writer.WritePropertyName(key);
-
-                JsonSerializer.Serialize(writer, value, options);
-            }
+            jsonMap.Write(writer, options);
         }
     }
 

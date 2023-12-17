@@ -1,9 +1,12 @@
+using System.Text.Json;
+
 namespace ReactWithDotNet;
 
 interface IReadOnlyJsonMap
 {
     int Count { get; }
     void Foreach(Action<string, object> action);
+    void Write(Utf8JsonWriter writer, JsonSerializerOptions options);
 }
 
 sealed class JsonMap : IReadOnlyJsonMap
@@ -32,13 +35,8 @@ sealed class JsonMap : IReadOnlyJsonMap
 
     public void Foreach(Action<string, object> action)
     {
-        if (Head == null)
-        {
-            return;
-        }
-
         var node = Head;
-
+        
         while (node is not null)
         {
             action(node.Key, node.Value);
@@ -62,6 +60,24 @@ sealed class JsonMap : IReadOnlyJsonMap
 
             node = node.Next;
         }
+    }
+    
+    public void Write(Utf8JsonWriter writer, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+
+        var node = Head;
+        
+        while (node is not null)
+        {
+            writer.WritePropertyName(node.Key);
+
+            JsonSerializer.Serialize(writer, node.Value, options);
+
+            node = node.Next;
+        }
+
+        writer.WriteEndObject();
     }
 
     internal sealed class Node
