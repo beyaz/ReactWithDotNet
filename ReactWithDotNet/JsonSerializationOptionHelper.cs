@@ -388,19 +388,7 @@ static partial class JsonSerializationOptionHelper
 
         public override void Write(Utf8JsonWriter writer, Style value, JsonSerializerOptions options)
         {
-            writer.WriteStartObject();
-
-            value.VisitNotNullValues(add);
-
-            writer.WriteEndObject();
-            return;
-
-            void add(string propertyName, string propertyValue)
-            {
-                writer.WritePropertyName(propertyName);
-
-                writer.WriteStringValue(propertyValue);
-            }
+            value.Write(writer);
         }
     }
 }

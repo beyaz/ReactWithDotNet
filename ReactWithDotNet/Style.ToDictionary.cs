@@ -6,7 +6,14 @@ partial class Style
     {
         var map = new Dictionary<string, string>();
 
-        VisitNotNullValues(map.Add);
+        var node = headNode;
+
+        while (node != null)
+        {
+            map.Add(node.NameInfo.NameInCamelCase, node.Value);
+
+            node = node.Next;
+        }
 
         return map;
     }

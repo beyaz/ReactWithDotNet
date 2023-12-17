@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ReactWithDotNet;
 
@@ -84,17 +85,23 @@ public sealed partial class Style
 
         return null;
     }
-
-    internal void VisitNotNullValues(Action<string, string> action)
+    
+    internal void Write(Utf8JsonWriter writer)
     {
+        writer.WriteStartObject();
+
         var node = headNode;
 
         while (node != null)
         {
-            action(node.NameInfo.NameInCamelCase, node.Value);
+            writer.WritePropertyName(node.NameInfo.NameInCamelCase);
+
+            writer.WriteStringValue(node.Value);
 
             node = node.Next;
         }
+        
+        writer.WriteEndObject();
     }
 
     string Get(StyleAttributeNameInfo nameInfo)
