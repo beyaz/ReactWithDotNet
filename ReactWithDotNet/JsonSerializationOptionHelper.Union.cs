@@ -184,6 +184,13 @@ partial class JsonSerializationOptionHelper
 
     class UnionPropFactory : JsonConverterFactory
     {
+        static readonly Type[] UnionPropTypesCache =
+        [
+            typeof(UnionProp<,>),
+            typeof(UnionProp<,,>),
+            typeof(UnionProp<,,,>)
+        ];
+        
         public override bool CanConvert(Type typeToConvert)
         {
             if (typeToConvert.IsGenericType is false)
@@ -193,23 +200,30 @@ partial class JsonSerializationOptionHelper
 
             var genericTypeDefinition = typeToConvert.GetGenericTypeDefinition();
 
-            return genericTypeDefinition == typeof(UnionProp<,>) ||
-                   genericTypeDefinition == typeof(UnionProp<,,>) ||
-                   genericTypeDefinition == typeof(UnionProp<,,,>);
+            return Array.IndexOf(UnionPropTypesCache, genericTypeDefinition) >= 0;
         }
 
+        static readonly Type[] UnionPropConverterTypesCache =
+        [
+            null,
+            null,
+            typeof(UnionPropConverter<,>),
+            typeof(UnionPropConverter<,,>),
+            typeof(UnionPropConverter<,,,>)
+        ];
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
+            var converterTypes = UnionPropConverterTypesCache;
+            
             var genericArguments = typeToConvert.GetGenericArguments();
 
-            var converterType = genericArguments.Length switch
+            var genericArgumentsLength = genericArguments.Length;
+
+            if (genericArgumentsLength > converterTypes.Length)
             {
-                2 => typeof(UnionPropConverter<,>).MakeGenericType(genericArguments),
-                3 => typeof(UnionPropConverter<,,>).MakeGenericType(genericArguments),
-                4 => typeof(UnionPropConverter<,,,>).MakeGenericType(genericArguments),
-                _ => throw new NotSupportedException()
-            };
-            return (JsonConverter)Activator.CreateInstance(converterType);
+                throw new NotSupportedException();
+            }
+            return (JsonConverter)Activator.CreateInstance(converterTypes[genericArgumentsLength]);
         }
     }
 }

@@ -264,14 +264,14 @@ static partial class JsonSerializationOptionHelper
 
         options.PropertyNamingPolicy = null;
 
-        options.Converters.Add(new JsonStringEnumConverter());
-
         options.Converters.Add(new StyleConverter());
 
         options.Converters.Add(new JsMapConverter());
 
         options.Converters.Add(new ReadOnlyJsonMapConverter());
 
+        options.Converters.Add(new JsonStringEnumConverter());
+        
         options.Converters.Add(new ValueTupleFactory());
 
         options.Converters.Add(new JsonConverterFactoryForType());
@@ -368,6 +368,7 @@ static partial class JsonSerializationOptionHelper
             jsonMap.Foreach(add);
 
             writer.WriteEndObject();
+            return;
 
             void add(string key, object value)
             {

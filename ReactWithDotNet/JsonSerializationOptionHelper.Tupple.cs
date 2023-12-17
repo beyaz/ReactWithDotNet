@@ -478,24 +478,33 @@ partial class JsonSerializationOptionHelper
             return iTuple != null;
         }
 
+        static readonly Type[] ConverterDefinitionTypes =
+        [
+            null,
+            typeof(ValueTupleConverter<>),
+            typeof(ValueTupleConverter<,>),
+            typeof(ValueTupleConverter<,,>),
+            typeof(ValueTupleConverter<,,,>),
+            typeof(ValueTupleConverter<,,,,>),
+            typeof(ValueTupleConverter<,,,,,>),
+            typeof(ValueTupleConverter<,,,,,,>),
+            typeof(ValueTupleConverter<,,,,,,,>)
+        ];
+        
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
             var genericArguments = typeToConvert.GetGenericArguments();
 
-            var converterType = genericArguments.Length switch
-            {
-                1 => typeof(ValueTupleConverter<>).MakeGenericType(genericArguments),
-                2 => typeof(ValueTupleConverter<,>).MakeGenericType(genericArguments),
-                3 => typeof(ValueTupleConverter<,,>).MakeGenericType(genericArguments),
-                4 => typeof(ValueTupleConverter<,,,>).MakeGenericType(genericArguments),
-                5 => typeof(ValueTupleConverter<,,,,>).MakeGenericType(genericArguments),
-                6 => typeof(ValueTupleConverter<,,,,,>).MakeGenericType(genericArguments),
-                7 => typeof(ValueTupleConverter<,,,,,,>).MakeGenericType(genericArguments),
-                8 => typeof(ValueTupleConverter<,,,,,,,>).MakeGenericType(genericArguments),
+            var converterTypes = ConverterDefinitionTypes;
 
-                // And add other cases as needed
-                _ => throw new NotSupportedException()
-            };
+            var genericArgumentsLength = genericArguments.Length;
+            if (genericArgumentsLength>converterTypes.Length)
+            {
+                throw new NotSupportedException();
+            }
+
+            var converterType = converterTypes[genericArgumentsLength].MakeGenericType(genericArguments);
+
             return (JsonConverter)Activator.CreateInstance(converterType);
         }
     }
