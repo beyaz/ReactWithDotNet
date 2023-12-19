@@ -306,7 +306,7 @@ public class ToHtmlTests
     {
         var actualHtml = element.ToHtml();
 
-        actualHtml.Should().BeEquivalentTo(expectedHtml.Trim());
+        actualHtml.Trim().Should().BeEquivalentTo(expectedHtml.Trim());
     }
 
     class SamplePureComponent : Component
@@ -328,5 +328,18 @@ public class ToHtmlTests
                 new div { Width(34), Height(45) }
             };
         }
+    }
+    
+    
+    [TestMethod]
+    public void Rect()
+    {
+        const string expectedHtml = """
+
+                                    <rect x="6" y="9" width="45" height="56" rx="3"></rect>
+
+                                    """;
+
+        Assert(new rect { width = 45, height = 56, rx = 3, x = 6, y=9}, expectedHtml);
     }
 }

@@ -232,9 +232,16 @@ static class HtmlTextGenerator
 
         if (name[0] != '$')
         {
-            if (value is string or int or double or bool)
+            var valueType = value.GetType();
+            
+            if (valueType == TypeOfString ||
+                valueType == TypeOfDouble||
+                valueType == TypeOfInt32||
+                valueType == TypeOfInt16||
+                valueType == TypeOfBoolean||
+                (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == TypeOfUnionProp))
             {
-                AddAttribute(htmlNode, new HtmlAttribute { Name = PascalToKebabCase(name), Value = value.ToString() });
+                AddAttribute(htmlNode, new () { Name = PascalToKebabCase(name), Value = value.ToString() });
                 return;
             }
         }
@@ -276,6 +283,13 @@ static class HtmlTextGenerator
             Append(htmlNode, (JsonMap)value);
         }
     }
+
+    static readonly Type TypeOfString = typeof(string);
+    static readonly Type TypeOfInt32= typeof(int);
+    static readonly Type TypeOfInt16= typeof(short);
+    static readonly Type TypeOfDouble= typeof(double);
+    static readonly Type TypeOfBoolean = typeof(bool);
+    static readonly Type TypeOfUnionProp= typeof(UnionProp<,>);
 
     static void ToString(StringBuilder sb, int depth, HtmlNode htmlNode)
     {
