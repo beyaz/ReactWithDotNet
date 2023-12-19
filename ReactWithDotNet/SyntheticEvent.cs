@@ -64,18 +64,8 @@ public sealed class KeyboardEvent : UIEvent
     public int    which { get; init; }
     public double timeStamp { get; set; }
     public string type { get; set; }
-    
-    
-   
-
-    
-
-    internal static void Fix(KeyboardEvent e)
-    {
-        ShadowHtmlElement.Fix(e.target);
-        ShadowHtmlElement.Fix(e.currentTarget);
-    }
 }
+
 public delegate Task KeyboardEventHandler(KeyboardEvent e);
 
 
