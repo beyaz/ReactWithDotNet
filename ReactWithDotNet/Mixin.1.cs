@@ -636,6 +636,9 @@ public static partial class Mixin
             
             element.onScrollDebounceTimeout = debounceTimeout;
         });
+    
+    public static HtmlElementModifier OnKeyDown(KeyboardEventHandler onKeyDownHandler)
+        => CreateHtmlElementModifier<HtmlElement>(element => element.onKeyDown = onKeyDownHandler);
 
     
 
