@@ -384,6 +384,7 @@ sealed class RemoteMethodInfo
 
     public bool? StopPropagation { get; set; }
     public int? HtmlElementScrollDebounceTimeout { get; set; }
+    public IReadOnlyList<string> KeyboardEventCallOnly { get; set; }
 }
 
 [Serializable]

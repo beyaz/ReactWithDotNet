@@ -1,9 +1,7 @@
 ﻿namespace ReactWithDotNet;
 
 [Serializable]
-public class ReactPropAttribute : Attribute
-{
-}
+public class ReactPropAttribute : Attribute;
 
 [Serializable]
 public class ReactBindAttribute : Attribute
@@ -14,9 +12,7 @@ public class ReactBindAttribute : Attribute
 }
 
 [Serializable]
-public class ReactStopPropagationAttribute : Attribute
-{
-}
+public class ReactStopPropagationAttribute : Attribute;
 
 [Serializable]
 public class ReactTemplateAttribute : Attribute
@@ -30,9 +26,7 @@ public class ReactTemplateAttribute : Attribute
 }
 
 [Serializable]
-public class ReactTemplateForNullAttribute : Attribute
-{
-}
+public class ReactTemplateForNullAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class ReactRealTypeAttribute : Attribute
@@ -68,9 +62,7 @@ public class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Property)]
-public class ReactCustomEventAttribute : Attribute
-{
-}
+public class ReactCustomEventAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Method)]
 public class CacheThisMethodByTheseParametersAttribute : Attribute
@@ -84,9 +76,7 @@ public class CacheThisMethodByTheseParametersAttribute : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Method)]
-public class CacheThisMethodAttribute : Attribute
-{
-}
+public class CacheThisMethodAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class ReactTransformValueInServerSideAttribute : Attribute
@@ -97,4 +87,17 @@ public class ReactTransformValueInServerSideAttribute : Attribute
     }
 
     public Type TransformMethodDeclaringType { get; }
+}
+
+
+
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class ReactKeyboardEventCallOnlyAttribute : Attribute
+{
+    public ReactKeyboardEventCallOnlyAttribute(params string[] keys)
+    {
+        Keys = keys ?? throw new ArgumentNullException(nameof(keys));
+    }
+
+    public IReadOnlyList<string> Keys { get; }
 }

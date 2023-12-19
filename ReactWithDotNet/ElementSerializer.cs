@@ -373,12 +373,13 @@ static partial class ElementSerializer
                     
                     propertyValue = new RemoteMethodInfo
                     {
-                        IsRemoteMethod                   = true,
-                        remoteMethodName                 = @delegate.Method.GetNameWithToken(),
-                        HandlerComponentUniqueIdentifier = target.ComponentUniqueIdentifier,
-                        FunctionNameOfGrabEventArguments = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
-                        StopPropagation                  = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
-                        HtmlElementScrollDebounceTimeout = htmlElementScrollDebounceTimeout
+                        IsRemoteMethod                      = true,
+                        remoteMethodName                    = @delegate.Method.GetNameWithToken(),
+                        HandlerComponentUniqueIdentifier    = target.ComponentUniqueIdentifier,
+                        FunctionNameOfGrabEventArguments    = propertyInfo.GetCustomAttribute<ReactGrabEventArgumentsByUsingFunctionAttribute>()?.TransformFunction,
+                        StopPropagation                     = @delegate.Method.GetCustomAttribute<ReactStopPropagationAttribute>() is not null,
+                        HtmlElementScrollDebounceTimeout    = htmlElementScrollDebounceTimeout,
+                        KeyboardEventCallOnly = @delegate.Method.GetCustomAttribute<ReactKeyboardEventCallOnlyAttribute>()?.Keys
                     };
                 }
                 else

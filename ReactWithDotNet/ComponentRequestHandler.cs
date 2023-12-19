@@ -348,6 +348,10 @@ static class ComponentRequestHandler
                     {
                         ScrollEvent.Fix(scrollEvent);
                     }
+                    if (eventArguments[i] is KeyboardEvent keyboardEvent)
+                    {
+                        KeyboardEvent.Fix(keyboardEvent);
+                    }
                 }
                 catch (Exception)
                 {

@@ -48,8 +48,6 @@ public sealed class ShadowHtmlElement
     public double scrollWidth { get; set; }
 }
 
-   
-
 public sealed class ScrollEvent : UIEvent
 {
     public ShadowHtmlElement currentTarget { get; set; }
@@ -64,10 +62,34 @@ public sealed class ScrollEvent : UIEvent
         ShadowHtmlElement.Fix(e.target);
         ShadowHtmlElement.Fix(e.currentTarget);
     }
-
-    
 }
 public delegate Task ScrollEventHandler(ScrollEvent e);
+
+public sealed class KeyboardEvent : UIEvent
+{
+    public int    keyCode { get; init; }
+    public string key { get; init; }
+    public bool   shiftKey { get; init; }
+    public bool   ctrlKey { get; init; }
+    public bool   altKey { get; init; }
+    public int    which { get; init; }
+    public double timeStamp { get; set; }
+    public string type { get; set; }
+    
+    
+    public ShadowHtmlElement currentTarget { get; set; }
+    public ShadowHtmlElement target { get; set; }
+
+    
+
+    internal static void Fix(KeyboardEvent e)
+    {
+        ShadowHtmlElement.Fix(e.target);
+        ShadowHtmlElement.Fix(e.currentTarget);
+    }
+}
+public delegate Task KeyboardEventHandler(KeyboardEvent e);
+
 
     
 
