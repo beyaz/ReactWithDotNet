@@ -8,27 +8,27 @@ public class SyntheticEvent : BaseSyntheticEvent;
 
 public class UIEvent : BaseSyntheticEvent
 {
-    public ShadowHtmlElement currentTarget { get; set; }
-    public ShadowHtmlElement target { get; set; }
+    public ShadowHtmlElement currentTarget { get; init; }
+    public ShadowHtmlElement target { get; init; }
 }
 
 [DebuggerDisplay("{tagName}")]
 public sealed class ShadowHtmlElement
 {
-    public string id { get; set; }
+    public string id { get; init; }
 
-    public int offsetHeight { get; set; }
-    public int offsetLeft { get; set; }
-    public int offsetTop { get; set; }
-    public int offsetWidth { get; set; }
+    public int offsetHeight { get; init; }
+    public int offsetLeft { get; init; }
+    public int offsetTop { get; init; }
+    public int offsetWidth { get; init; }
 
-    public int? selectedIndex { get; set; }
+    public int? selectedIndex { get; init; }
 
-    public int? selectionStart { get; set; }
+    public int? selectionStart { get; init; }
 
-    public string tagName { get; set; }
+    public string tagName { get; init; }
 
-    public string value { get; set; }
+    public string value { get; init; }
     
     public IReadOnlyDictionary<string,string> data { get;  set; }
 
@@ -40,17 +40,17 @@ public sealed class ShadowHtmlElement
         }
     }
     
-    public double scrollHeight { get; set; }
-    public double scrollLeft { get; set; }
-    public double scrollTop { get; set; }
-    public double scrollWidth { get; set; }
+    public double scrollHeight { get; init; }
+    public double scrollLeft { get; init; }
+    public double scrollTop { get; init; }
+    public double scrollWidth { get; init; }
 }
 
 public sealed class ScrollEvent : UIEvent
 {
-    public double timeStamp { get; set; }
+    public double timeStamp { get; init; }
 
-    public string type { get; set; }
+    public string type { get; init; }
 }
 public delegate Task ScrollEventHandler(ScrollEvent e);
 
@@ -73,35 +73,35 @@ public delegate Task KeyboardEventHandler(KeyboardEvent e);
 
 public sealed class MouseEvent : UIEvent
 {
-    public bool altKey { get; set; }
-    public bool bubbles { get; set; }
-    public int clientX { get; set; }
-    public int clientY { get; set; }
-    public bool ctrlKey { get; set; }
+    public bool altKey { get; init; }
+    public bool bubbles { get; init; }
+    public int clientX { get; init; }
+    public int clientY { get; init; }
+    public bool ctrlKey { get; init; }
 
     /// <summary>
     ///     this is the id of first element id which is 'has id value'
     /// </summary>
     public string FirstNotEmptyId { get; set; }
 
-    public bool metaKey { get; set; }
+    public bool metaKey { get; init; }
 
-    public double movementX { get; set; }
-    public double movementY { get; set; }
+    public double movementX { get; init; }
+    public double movementY { get; init; }
 
-    public int pageX { get; set; }
-    public int pageY { get; set; }
+    public int pageX { get; init; }
+    public int pageY { get; init; }
 
-    public int screenX { get; set; }
+    public int screenX { get; init; }
 
-    public int screenY { get; set; }
+    public int screenY { get; init; }
 
-    public bool shiftKey { get; set; }
+    public bool shiftKey { get; init; }
 
 
-    public double timeStamp { get; set; }
+    public double timeStamp { get; init; }
 
-    public string type { get; set; }
+    public string type { get; init; }
 
 }
 
@@ -109,11 +109,11 @@ public delegate Task MouseEventHandler(MouseEvent e);
 
 public sealed class ChangeEvent : UIEvent
 {
-    public bool bubbles { get; set; }
+    public bool bubbles { get; init; }
 
-    public double timeStamp { get; set; }
+    public double timeStamp { get; init; }
 
-    public string type { get; set; }
+    public string type { get; init; }
 }
 
 public delegate Task ChangeEventHandler(ChangeEvent e);
@@ -121,27 +121,27 @@ public delegate Task ChangeEventHandler(ChangeEvent e);
 
 public sealed class FocusEvent
 {
-    public bool bubbles { get; set; }
+    public bool bubbles { get; init; }
 
-    public bool cancelable { get; set; }
+    public bool cancelable { get; init; }
 
-    public ShadowHtmlElement currentTarget { get; set; }
+    public ShadowHtmlElement currentTarget { get; init; }
 
-    public bool defaultPrevented { get; set; }
+    public bool defaultPrevented { get; init; }
 
-    public int detail { get; set; }
+    public int detail { get; init; }
 
-    public int eventPhase { get; set; }
+    public int eventPhase { get; init; }
 
-    public bool isTrusted { get; set; }
+    public bool isTrusted { get; init; }
     
-    public ShadowHtmlElement target { get; set; }
+    public ShadowHtmlElement target { get; init; }
     
-    public ShadowHtmlElement relatedTarget { get; set; }
+    public ShadowHtmlElement relatedTarget { get; init; }
 
-    public double timeStamp { get; set; }
+    public double timeStamp { get; init; }
 
-    public string type { get; set; }
+    public string type { get; init; }
 }
 
 public delegate Task FocusEventHandler(FocusEvent e);
