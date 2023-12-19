@@ -340,17 +340,10 @@ static class ComponentRequestHandler
                 try
                 {
                     eventArguments[i] = DeserializeJsonBySystemTextJson(eventArgumentsAsJsonArray[i], parameterInfo.ParameterType);
-                    if (eventArguments[i] is MouseEvent mouseEvent)
+                    if (eventArguments[i] is UIEvent uiEvent)
                     {
-                        MouseEvent.Fix(mouseEvent);
-                    }
-                    if (eventArguments[i] is ScrollEvent scrollEvent)
-                    {
-                        ScrollEvent.Fix(scrollEvent);
-                    }
-                    if (eventArguments[i] is KeyboardEvent keyboardEvent)
-                    {
-                        KeyboardEvent.Fix(keyboardEvent);
+                        ShadowHtmlElement.Fix(uiEvent.target);
+                        ShadowHtmlElement.Fix(uiEvent.currentTarget);
                     }
                 }
                 catch (Exception)

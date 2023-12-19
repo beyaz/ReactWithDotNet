@@ -2,16 +2,14 @@
 
 namespace ReactWithDotNet;
 
-public class BaseSyntheticEvent
-{
-}
+public class BaseSyntheticEvent;
 
-public class SyntheticEvent : BaseSyntheticEvent
-{
-}
+public class SyntheticEvent : BaseSyntheticEvent;
 
 public class UIEvent : BaseSyntheticEvent
 {
+    public ShadowHtmlElement currentTarget { get; set; }
+    public ShadowHtmlElement target { get; set; }
 }
 
 [DebuggerDisplay("{tagName}")]
@@ -38,7 +36,7 @@ public sealed class ShadowHtmlElement
     {
         if (shadowHtmlElement?.data is not null)
         {
-            shadowHtmlElement.data = new Dictionary<string, string>(shadowHtmlElement?.data, StringComparer.OrdinalIgnoreCase);
+            shadowHtmlElement.data = new Dictionary<string, string>(shadowHtmlElement.data, StringComparer.OrdinalIgnoreCase);
         }
     }
     
@@ -50,18 +48,9 @@ public sealed class ShadowHtmlElement
 
 public sealed class ScrollEvent : UIEvent
 {
-    public ShadowHtmlElement currentTarget { get; set; }
-    public ShadowHtmlElement target { get; set; }
-
     public double timeStamp { get; set; }
 
     public string type { get; set; }
-
-    internal static void Fix(ScrollEvent e)
-    {
-        ShadowHtmlElement.Fix(e.target);
-        ShadowHtmlElement.Fix(e.currentTarget);
-    }
 }
 public delegate Task ScrollEventHandler(ScrollEvent e);
 
@@ -77,8 +66,7 @@ public sealed class KeyboardEvent : UIEvent
     public string type { get; set; }
     
     
-    public ShadowHtmlElement currentTarget { get; set; }
-    public ShadowHtmlElement target { get; set; }
+   
 
     
 
@@ -120,19 +108,11 @@ public sealed class MouseEvent : UIEvent
 
     public bool shiftKey { get; set; }
 
-    public ShadowHtmlElement target { get; set; }
-    public ShadowHtmlElement currentTarget { get; set; }
-    
 
     public double timeStamp { get; set; }
 
     public string type { get; set; }
 
-    internal static void Fix(MouseEvent e)
-    {
-        ShadowHtmlElement.Fix(e.target);
-        ShadowHtmlElement.Fix(e.currentTarget);
-    }
 }
 
 public delegate Task MouseEventHandler(MouseEvent e);
@@ -140,8 +120,6 @@ public delegate Task MouseEventHandler(MouseEvent e);
 public sealed class ChangeEvent : UIEvent
 {
     public bool bubbles { get; set; }
-
-    public ShadowHtmlElement target { get; set; }
 
     public double timeStamp { get; set; }
 
