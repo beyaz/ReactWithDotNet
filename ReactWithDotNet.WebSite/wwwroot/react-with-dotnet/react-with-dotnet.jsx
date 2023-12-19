@@ -79,6 +79,11 @@ class EventBusImp
 
     publish(eventName, eventArgumentsAsArray)
     {
+        if (eventArgumentsAsArray == null)
+        {
+            throw CreateNewDeveloperError("Publish event arguments should be given in array. @Example: ReactWithDotNet.DispatchEvent('MovieNameChanged', ['The Shawshank Redemption']);");
+        }
+
         var listenerFunctions = this.map[eventName];
 
         if (!listenerFunctions)
@@ -99,20 +104,14 @@ const EventBus =
 
     On: function(event, callback)
     {
-        // window.addEventListener(event, callback);
-
         EventBus.bus.subscribe(event, callback);
     },
-    Dispatch: function(event, data)
+    Dispatch: function (eventName, eventArgumentsAsArray)
     {
-        // window.dispatchEvent(new CustomEvent(event, { detail: data }));
-
-        EventBus.bus.publish(event, data);
+        EventBus.bus.publish(eventName, eventArgumentsAsArray);
     },
     Remove: function(event, callback)
     {
-        // window.removeEventListener(event, callback);
-
         EventBus.bus.unsubscribe(event, callback);
     }
 };
