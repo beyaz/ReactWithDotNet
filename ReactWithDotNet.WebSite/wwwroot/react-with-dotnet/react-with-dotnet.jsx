@@ -877,6 +877,7 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
     const functionNameOfGrabEventArguments = remoteMethodInfo.FunctionNameOfGrabEventArguments;
     const stopPropagation = remoteMethodInfo.StopPropagation;
     const htmlElementScrollDebounceTimeout = remoteMethodInfo.HtmlElementScrollDebounceTimeout;
+    const keyboardEventCallOnly = remoteMethodInfo.KeyboardEventCallOnly;
 
     NotNull(remoteMethodName);
     NotNull(handlerComponentUniqueIdentifier);
@@ -912,10 +913,21 @@ function ConvertToEventHandlerFunction(parentJsonNode, remoteMethodInfo)
             arguments[0].stopPropagation();
         }
 
-        const targetComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
-
         let eventArguments = Array.prototype.slice.call(arguments);
 
+        if (keyboardEventCallOnly)
+        {
+            const key = arguments[0].key;
+            if (keyboardEventCallOnly.indexOf(key) < 0)
+            {
+                return;
+            }
+
+            eventArguments[0] = ConvertToSyntheticKeyboardEvent(eventArguments[0]);
+        }
+
+        const targetComponent = GetComponentByDotNetComponentUniqueIdentifier(handlerComponentUniqueIdentifier);
+        
         if (functionNameOfGrabEventArguments)
         {
             eventArguments = GetExternalJsObject(functionNameOfGrabEventArguments)(eventArguments);
@@ -1357,6 +1369,22 @@ function ConvertToSyntheticScrollEvent(e)
         target: ConvertToShadowHtmlElement(e.target),
         timeStamp: e.timeStamp,
         type: e.type
+    };
+}
+
+function ConvertToSyntheticKeyboardEvent(e)
+{ 
+    return {
+        currentTarget: ConvertToShadowHtmlElement(e.currentTarget),
+        target: ConvertToShadowHtmlElement(e.target),
+        timeStamp: e.timeStamp,
+        type: e.type,
+        keyCode: e.keyCode,
+        key: e.key,
+        shiftKey: e.shiftKey,
+        ctrlKey: e.ctrlKey,
+        altKey: e.altKey,
+        which: e.which
     };
 }
 
