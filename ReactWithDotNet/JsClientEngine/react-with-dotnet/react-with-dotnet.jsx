@@ -99,20 +99,14 @@ const EventBus =
 
     On: function(event, callback)
     {
-        // window.addEventListener(event, callback);
-
         EventBus.bus.subscribe(event, callback);
     },
     Dispatch: function(event, data)
     {
-        // window.dispatchEvent(new CustomEvent(event, { detail: data }));
-
         EventBus.bus.publish(event, data);
     },
     Remove: function(event, callback)
     {
-        // window.removeEventListener(event, callback);
-
         EventBus.bus.unsubscribe(event, callback);
     }
 };
