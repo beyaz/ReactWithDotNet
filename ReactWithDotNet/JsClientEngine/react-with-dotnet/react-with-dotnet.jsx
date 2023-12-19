@@ -79,6 +79,11 @@ class EventBusImp
 
     publish(eventName, eventArgumentsAsArray)
     {
+        if (eventArgumentsAsArray == null)
+        {
+            throw CreateNewDeveloperError("Publish event arguments should be given in array. @Example: ReactWithDotNet.DispatchEvent('MovieNameChanged', ['The Shawshank Redemption']);");
+        }
+
         var listenerFunctions = this.map[eventName];
 
         if (!listenerFunctions)
@@ -101,9 +106,9 @@ const EventBus =
     {
         EventBus.bus.subscribe(event, callback);
     },
-    Dispatch: function(event, data)
+    Dispatch: function (eventName, eventArgumentsAsArray)
     {
-        EventBus.bus.publish(event, data);
+        EventBus.bus.publish(eventName, eventArgumentsAsArray);
     },
     Remove: function(event, callback)
     {
