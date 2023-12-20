@@ -333,7 +333,12 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         Element createElement()
         {
-            return new iframe { src = "/ReactWithDotNetDesignerComponentPreview", style = { Border("none"), WidthMaximized, HeightMaximized } };
+            return new iframe
+            {
+                src = "/ReactWithDotNetDesignerComponentPreview", 
+                style = { BorderNone, WidthMaximized, HeightMaximized },
+                title = "Component Preview"
+            };
         }
 
         return new FlexRow(WidthMaximized, Height100vh, PrimaryBackground,FontFamily("system-ui"))
