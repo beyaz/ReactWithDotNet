@@ -1090,12 +1090,14 @@ public class ExportingCommonHtmlElements
                     new AttributeInfo
                     {
                         Name    = "width",
-                        Comment = "The width of the image, in pixels."
+                        Comment = "The width of the image, in pixels.",
+                        Type    = "UnionProp<string,double?>"
                     },
                     new AttributeInfo
                     {
                         Name    = "height",
-                        Comment = "The height of the image, in pixels."
+                        Comment = "The height of the image, in pixels.",
+                        Type    = "UnionProp<string,double?>"
                     },
                     new AttributeInfo
                     {
