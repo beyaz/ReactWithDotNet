@@ -335,6 +335,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         {
             return new iframe
             {
+                id="ComponentPreview",
                 src = "/ReactWithDotNetDesignerComponentPreview", 
                 style = { BorderNone, WidthMaximized, HeightMaximized },
                 title = "Component Preview"
