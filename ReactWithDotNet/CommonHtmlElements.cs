@@ -3032,13 +3032,13 @@ public sealed class img : HtmlElement
     ///     The width of the image, in pixels.
     /// </summary>
     [ReactProp]
-    public string width { get; set; }
+    public UnionProp<string,double?> width { get; set; }
 
     /// <summary>
     ///     The height of the image, in pixels.
     /// </summary>
     [ReactProp]
-    public string height { get; set; }
+    public UnionProp<string,double?> height { get; set; }
 
     /// <summary>
     ///     A Boolean attribute that indicates whether the image is an image map.
@@ -3118,14 +3118,14 @@ public sealed class img : HtmlElement
     /// <br/>
     ///     The width of the image, in pixels.
     /// </summary>
-    public static HtmlElementModifier Width(string value) => Modify(x => x.width = value);
+    public static HtmlElementModifier Width(UnionProp<string,double?> value) => Modify(x => x.width = value);
 
     /// <summary>
     ///     height = <paramref name="value"/>
     /// <br/>
     ///     The height of the image, in pixels.
     /// </summary>
-    public static HtmlElementModifier Height(string value) => Modify(x => x.height = value);
+    public static HtmlElementModifier Height(UnionProp<string,double?> value) => Modify(x => x.height = value);
 
     /// <summary>
     ///     ismap = <paramref name="value"/>
