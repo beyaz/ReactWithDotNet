@@ -16,7 +16,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
-        state.SelectedAssemblyFilePath ??= Assembly.GetEntryAssembly()?.Location;
+        state.SelectedAssemblyFilePath = Assembly.GetEntryAssembly()?.Location;
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
 
