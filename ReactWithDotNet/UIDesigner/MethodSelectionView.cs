@@ -53,9 +53,23 @@ class MethodSelectionView : Component
     {
         var nodes = GetNodes().ToList();
 
+        Element content;
+        
+        if (nodes.Count == 0)
+        {
+            content = new div(WordWrapBreakWord, Color("#c04747"), FontSize11)
+            {
+                $"No records found in assembly. {AssemblyFilePath}"
+            };
+        }
+        else
+        {
+            content = AsTreeView(nodes);
+        }
+
         return new div(Height(250), MarginLeftRight(3), OverflowYScroll, CursorPointer, Padding(5), Border(Solid(1, "rgb(217, 217, 217)")), BorderRadius(3))
         {
-            AsTreeView(nodes)
+            content
         };
     }
 
