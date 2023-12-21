@@ -12,10 +12,11 @@ public class ReactBindAttribute : Attribute
 }
 
 [Serializable]
-public class ReactStopPropagationAttribute : Attribute;
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class ReactStopPropagationAttribute : Attribute;
 
 [Serializable]
-public class ReactTemplateAttribute : Attribute
+public sealed class ReactTemplateAttribute : Attribute
 {
     public ReactTemplateAttribute(string methodNameForGettingItemsSource)
     {
@@ -26,10 +27,10 @@ public class ReactTemplateAttribute : Attribute
 }
 
 [Serializable]
-public class ReactTemplateForNullAttribute : Attribute;
+public sealed class ReactTemplateForNullAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class ReactRealTypeAttribute : Attribute
+public sealed class ReactRealTypeAttribute : Attribute
 {
     public ReactRealTypeAttribute(Type type)
     {
@@ -40,7 +41,7 @@ public class ReactRealTypeAttribute : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Property)]
-public class ReactTransformValueInClientAttribute : Attribute
+public sealed class ReactTransformValueInClientAttribute : Attribute
 {
     public ReactTransformValueInClientAttribute(string transformFunction)
     {
@@ -51,7 +52,7 @@ public class ReactTransformValueInClientAttribute : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Property)]
-public class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
+public sealed class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
 {
     public ReactGrabEventArgumentsByUsingFunctionAttribute(string transformFunction)
     {
@@ -62,10 +63,10 @@ public class ReactGrabEventArgumentsByUsingFunctionAttribute : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Property)]
-public class ReactCustomEventAttribute : Attribute;
+public sealed class ReactCustomEventAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Method)]
-public class CacheThisMethodByTheseParametersAttribute : Attribute
+public sealed class CacheThisMethodByTheseParametersAttribute : Attribute
 {
     public CacheThisMethodByTheseParametersAttribute(string nameofMethodForGettingParameters)
     {
@@ -76,10 +77,10 @@ public class CacheThisMethodByTheseParametersAttribute : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Method)]
-public class CacheThisMethodAttribute : Attribute;
+public sealed class CacheThisMethodAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class ReactTransformValueInServerSideAttribute : Attribute
+public sealed class ReactTransformValueInServerSideAttribute : Attribute
 {
     public ReactTransformValueInServerSideAttribute(Type transformMethodDeclaringType)
     {
@@ -88,8 +89,6 @@ public class ReactTransformValueInServerSideAttribute : Attribute
 
     public Type TransformMethodDeclaringType { get; }
 }
-
-
 
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class ReactKeyboardEventCallOnlyAttribute : Attribute
