@@ -90,7 +90,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             if (instance is ReactComponentBase component)
                             {
                                 tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
-                                
+
                                 if (component.IsStateNull)
                                 {
                                     tryUpdateStateFromStateTree(component, Context);
@@ -102,7 +102,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 }
 
                                 ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
-                                
+
                                 component.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
 
                                 return component;
@@ -111,7 +111,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             if (instance is PureComponent reactPureComponent)
                             {
                                 ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
-                                
+
                                 reactPureComponent.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
 
                                 return reactPureComponent;
@@ -169,11 +169,11 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
 
                     var instance = createInstance(type);
-                    
+
                     if (instance is ReactComponentBase component)
                     {
                         tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
-                        
+
                         if (component.IsStateNull)
                         {
                             tryUpdateStateFromStateTree(component, Context);
@@ -185,14 +185,14 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                         }
 
                         ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
-                        
+
                         return component;
                     }
 
                     if (instance is PureComponent reactPureComponent)
                     {
                         ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
-                        
+
                         return reactPureComponent;
                     }
 
