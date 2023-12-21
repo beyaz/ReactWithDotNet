@@ -13,7 +13,7 @@ public class ReactWithDotNetDesignerModel
 
     public string MethodFilter { get; set; }
 
-    public double ScreenWidth { get; set; } = 100;
+    public double ScreenWidth { get; set; } = 900;
 
     public string SelectedAssemblyFilePath { get; set; }
 
