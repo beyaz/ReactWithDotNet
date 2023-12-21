@@ -107,6 +107,19 @@ partial class Style : IEnumerable<StyleModifier>, IModifier
         modifier?.ModifyStyle(this);
     }
     
+    public void Add(StyleModifier[] modifiers)
+    {
+        if (modifiers is null)
+        {
+            return;
+        }
+
+        foreach (var styleModifier in modifiers)
+        {
+            styleModifier?.ModifyStyle(this);
+        }
+    }
+    
     public void Add(Func<StyleModifier> modifier)
     {
         modifier?.Invoke()?.ModifyStyle(this);
