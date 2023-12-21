@@ -1911,6 +1911,8 @@ function DefineComponent(componentDeclaration)
                         remoteMethodArguments: []
                     };
                     StartAction(actionArguments);
+
+                    OnReactStateReady();
                 }
 
                 SetState(component, partialState, stateCallBack);
