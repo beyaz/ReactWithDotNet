@@ -5,15 +5,13 @@ namespace ReactWithDotNet.UIDesigner;
 
 public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNetDesignerModel>
 {
-    public DateTime? LastWriteTime { get; set; }
-
     static StyleModifier ComponentIndicatorStyle => new(s =>
     {
         if (s.border is not null || s.boxShadow is not null)
         {
             return;
         }
-        
+
         s.border ??= "0.5px dotted blue";
     });
 
@@ -21,34 +19,14 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
 
-        Client.GotoMethod(700, Refresh);
-
-        var fullAssemblyPath = state.SelectedAssemblyFilePath;
-
-        if (File.Exists(fullAssemblyPath))
-        {
-            var fileInfo = new FileInfo(fullAssemblyPath);
-            if (LastWriteTime != fileInfo.LastWriteTime)
-            {
-                Client.RunJavascript("window.parent.ReactWithDotNet.DispatchEvent('ComponentPreviewRefreshed',[])");
-            }
-
-            LastWriteTime = fileInfo.LastWriteTime;
-        }
-
-        return Task.CompletedTask;
-    }
-
-    protected override Task componentDidMount()
-    {
-        Client.GotoMethod(700, Refresh);
-
         return Task.CompletedTask;
     }
 
     protected override Task constructor()
     {
         state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
+
+        Client.ListenEvent("RefreshComponentPreview", Refresh);
 
         return Task.CompletedTask;
     }
@@ -108,7 +86,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             }
 
                             var instance = createInstance(declaringType);
-                            
+
                             ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                             tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
@@ -179,8 +157,6 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
                 }
 
-
-                
                 if (state.SelectedType is not null)
                 {
                     var type = assembly.TryLoadFrom(state.SelectedType);
@@ -190,7 +166,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
 
                     var instance = createInstance(type);
-                    
+
                     ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
 
                     tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
@@ -236,8 +212,8 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
             var instance = (Element)Activator.CreateInstance(type);
             if (instance is ReactComponentBase component)
             {
-                component.key = "0";
-                component.Context      = Context;
+                component.key     = "0";
+                component.Context = Context;
             }
 
             if (instance is PureComponent reactPureComponent)
@@ -248,7 +224,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
             return instance;
         }
-        
+
         static void tryUpdateStateFromStateTree(object component, ReactContext reactContext)
         {
             if (reactContext.CapturedStateTree?.TryGetValue("0,0", out var stateInfo) == true)

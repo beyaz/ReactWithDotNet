@@ -1,10 +1,52 @@
 ﻿using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ReactWithDotNet.ThirdPartyLibraries.MonacoEditorReact;
+using ReactWithDotNet.UIDesigner;
 using static ReactWithDotNet.UIDesigner.Extensions;
 
+[assembly: MetadataUpdateHandler(typeof(HotReloadListener))]
+
 namespace ReactWithDotNet.UIDesigner;
+
+class HotReloadListener : Component
+{
+    public static int StaticChangeCount { get; private set; }
+
+    public int ChangeCount { get; set; }
+
+    public static void UpdateApplication(Type[] _)
+    {
+        StaticChangeCount++;
+    }
+
+    public Task Refresh()
+    {
+        if (ChangeCount != StaticChangeCount)
+        {
+            Client.RunJavascript("window.frames[0].ReactWithDotNet.DispatchEvent('RefreshComponentPreview', []);");
+        }
+
+        ChangeCount = StaticChangeCount;
+
+        Client.GotoMethod(1000, Refresh);
+
+        return Task.CompletedTask;
+    }
+
+    protected override Task componentDidMount()
+    {
+        Client.GotoMethod(700, Refresh);
+
+        return Task.CompletedTask;
+    }
+
+    protected override Element render()
+    {
+        return null;
+    }
+}
 
 public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 {
@@ -335,15 +377,16 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         {
             return new iframe
             {
-                id="ComponentPreview",
-                src = "/ReactWithDotNetDesignerComponentPreview", 
+                id    = "ComponentPreview",
+                src   = "/ReactWithDotNetDesignerComponentPreview",
                 style = { BorderNone, WidthMaximized, HeightMaximized },
                 title = "Component Preview"
             };
         }
 
-        return new FlexRow(WidthMaximized, Height100vh, PrimaryBackground,FontFamily("system-ui"))
+        return new FlexRow(WidthMaximized, Height100vh, PrimaryBackground, FontFamily("system-ui"))
         {
+            new HotReloadListener(),
             new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionRelative)
             {
                 When(UpdatingProgress is > 0 and <= 100, () => new div(PositionAbsolute, TopRight(5))
@@ -577,6 +620,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     Task OnKeypressFinished()
     {
         SaveState();
+
+        Client.RunJavascript("window.frames[0].ReactWithDotNet.DispatchEvent('RefreshComponentPreview', []);");
+
         return Task.CompletedTask;
     }
 
