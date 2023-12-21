@@ -169,11 +169,20 @@ public sealed partial class Style
                 {
                     if (ReferenceEquals(node, headNode))
                     {
-                        headNode = null;
+                        headNode = node.Next;
+                        if (headNode is not null)
+                        {
+                            headNode.Previous = null;
+                        }
                         return;
                     }
 
                     node.Previous.Next = node.Next;
+                    if (node.Next is not null)
+                    {
+                        node.Next.Previous = node.Previous;
+                    }
+                    
                     return;
                 }
 

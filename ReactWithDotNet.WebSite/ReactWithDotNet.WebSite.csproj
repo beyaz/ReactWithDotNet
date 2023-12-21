@@ -80,7 +80,7 @@
 	</Target>
 
 	<Target Name="_AfterPublish_" AfterTargets="Publish">
-		<Copy SourceFiles="@(JsFilesIdDist)" DestinationFolder="$(PublishDir)/wwwroot/dist/" SkipUnchangedFiles="true" />
+		<Copy SourceFiles="@(JsFilesIdDist)" DestinationFolder="$(PublishDir)/wwwroot/dist/" SkipUnchangedFiles="false" />
 		<Delete Files="$(PublishDir)/ReactWithDotNet.pdb" />
 		<Delete Files="$(PublishDir)/ReactWithDotNet.xml" />
 		<Delete Files="$(PublishDir)/$(MSBuildProjectName).pdb" />
