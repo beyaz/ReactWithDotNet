@@ -87,11 +87,10 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                             var instance = createInstance(declaringType);
 
-                            ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
-
-                            tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
                             if (instance is ReactComponentBase component)
                             {
+                                tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
+                                
                                 if (component.IsStateNull)
                                 {
                                     tryUpdateStateFromStateTree(component, Context);
@@ -102,6 +101,8 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                     component.InvokeConstructor().GetAwaiter().GetResult();
                                 }
 
+                                ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
+                                
                                 component.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
 
                                 return component;
@@ -109,6 +110,8 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
                             if (instance is PureComponent reactPureComponent)
                             {
+                                ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
+                                
                                 reactPureComponent.DesignerCustomizedRender = () => (Element)methodInfo.Invoke(instance, invocationParameters.ToArray());
 
                                 return reactPureComponent;
@@ -166,13 +169,11 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                     }
 
                     var instance = createInstance(type);
-
-                    ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
-
-                    tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
-
+                    
                     if (instance is ReactComponentBase component)
                     {
+                        tryUpdateStatePropertyFromJson(state.JsonTextForDotNetInstanceProperties, instance);
+                        
                         if (component.IsStateNull)
                         {
                             tryUpdateStateFromStateTree(component, Context);
@@ -183,11 +184,15 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                             component.InvokeConstructor().GetAwaiter().GetResult();
                         }
 
+                        ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
+                        
                         return component;
                     }
 
                     if (instance is PureComponent reactPureComponent)
                     {
+                        ModifyElementByJson(state.JsonTextForDotNetInstanceProperties, instance);
+                        
                         return reactPureComponent;
                     }
 
