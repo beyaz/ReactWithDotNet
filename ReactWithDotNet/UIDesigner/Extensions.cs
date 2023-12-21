@@ -37,7 +37,10 @@ static class Extensions
         }
     }
 
-    public static bool HasValue(this string value) => !string.IsNullOrWhiteSpace(value);
+    public static bool HasValue(this string value)
+    {
+        return !string.IsNullOrWhiteSpace(value);
+    }
 
     public static void IgnoreException(Action action)
     {
@@ -49,5 +52,10 @@ static class Extensions
         {
             // ignored
         }
+    }
+
+    public static void RefreshComponentPreview(this Client client)
+    {
+        client.RunJavascript("window.frames[0].ReactWithDotNet.DispatchEvent('RefreshComponentPreview', []);");
     }
 }

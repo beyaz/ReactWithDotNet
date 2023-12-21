@@ -25,7 +25,7 @@ class HotReloadListener : Component
     {
         if (ChangeCount != StaticChangeCount)
         {
-            Client.RunJavascript("window.frames[0].ReactWithDotNet.DispatchEvent('RefreshComponentPreview', []);");
+            Client.RefreshComponentPreview();
         }
 
         ChangeCount = StaticChangeCount;
@@ -515,6 +515,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         }
 
         SaveState();
+        
+        Client.RefreshComponentPreview();
 
         return Task.CompletedTask;
 
@@ -621,7 +623,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     {
         SaveState();
 
-        Client.RunJavascript("window.frames[0].ReactWithDotNet.DispatchEvent('RefreshComponentPreview', []);");
+        Client.RefreshComponentPreview();
 
         return Task.CompletedTask;
     }
