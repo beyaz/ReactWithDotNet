@@ -200,7 +200,7 @@ partial class ElementSerializer
                         }
                     }
 
-                    node.DotNetComponentRootElement = reactPureComponent.InvokeRender();
+                    node.DotNetComponentRootElement = await reactPureComponent.InvokeRender();
 
                     if (node.DotNetComponentRootElement is not null)
                     {

@@ -20,7 +20,7 @@ public abstract class PureComponent : Element
     {
         get
         {
-            StyleForRootElement ??= new Style();
+            StyleForRootElement ??= new ();
 
             return StyleForRootElement;
         }
@@ -29,9 +29,29 @@ public abstract class PureComponent : Element
     [JsonIgnore]
     protected internal ReactContext Context { get; internal set; }
 
-    internal Element InvokeRender()
+    internal async Task<Element> InvokeRender()
     {
-        return DesignerCustomizedRender == null ? render() : DesignerCustomizedRender();
+        if (DesignerCustomizedRender != null)
+        {
+            return Task.FromResult(DesignerCustomizedRender());
+        }
+
+        // ReSharper disable once MethodHasAsyncOverload
+        var renderResult = render();
+
+        if (!NoneOfRender.IsNoneOfRender(renderResult))
+        {
+            return renderResult;
+        }
+        
+        var renderAsyncResult = await renderAsync();
+            
+        if (!NoneOfRender.IsNoneOfRender(renderAsyncResult))
+        {
+            return renderAsyncResult;
+        }
+
+        return null;
     }
 
     protected static IModifier Modify<TPureComponent>(Action<TPureComponent> modifyAction)
@@ -40,5 +60,24 @@ public abstract class PureComponent : Element
         return CreatePureComponentModifier(modifyAction);
     }
 
-    protected abstract Element render();
+    protected virtual Element render()
+    {
+        return NoneOfRender.Value;
+    }
+    
+    protected virtual Task<Element> renderAsync()
+    {
+        return Task.FromResult(NoneOfRender.Value);
+    }
+}
+
+static class NoneOfRender
+{
+    public static readonly Element Value = new div();
+
+    public static bool IsNoneOfRender(Element element)
+    {
+        return ReferenceEquals(Value, element);
+    }
+        
 }
