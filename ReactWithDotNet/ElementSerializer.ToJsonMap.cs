@@ -379,7 +379,7 @@ partial class ElementSerializer
                         }
                     }
 
-                    node.DotNetComponentRootElement = reactStatefulComponent.InvokeRender();
+                    node.DotNetComponentRootElement = await reactStatefulComponent.InvokeRender();
 
                     if (node.DotNetComponentRootElement is not null)
                     {

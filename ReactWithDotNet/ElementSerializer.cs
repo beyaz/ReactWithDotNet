@@ -339,7 +339,8 @@ static partial class ElementSerializer
                         }
                     
                         @delegate.Method.Invoke(newTarget, null);
-                        newTarget.InvokeRender();
+                        
+                        await newTarget.InvokeRender();
 
                         context.IsCapturingPreview = true;
                         var newMap = await ToJsonMap(newTarget, context);

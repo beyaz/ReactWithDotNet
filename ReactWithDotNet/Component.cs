@@ -53,7 +53,30 @@ public abstract class ReactComponentBase : Element
 
     internal Task InvokeConstructor() => constructor();
 
-    internal Element InvokeRender() => DesignerCustomizedRender == null ? render() : DesignerCustomizedRender();
+    internal async Task<Element> InvokeRender()
+    {
+        if (DesignerCustomizedRender != null)
+        {
+            return Task.FromResult(DesignerCustomizedRender());
+        }
+
+        // ReSharper disable once MethodHasAsyncOverload
+        var renderResult = render();
+
+        if (!NoneOfRender.IsNoneOfRender(renderResult))
+        {
+            return renderResult;
+        }
+        
+        var renderAsyncResult = await renderAsync();
+            
+        if (!NoneOfRender.IsNoneOfRender(renderAsyncResult))
+        {
+            return renderAsyncResult;
+        }
+
+        return null;
+    }
 
     protected virtual Task componentDidMount()
     {
@@ -125,7 +148,15 @@ public abstract class ReactComponentBase : Element
         Client.DispatchDotNetCustomEvent(GetEventSenderInfo(this, GetPropertyNameOfCustomReactEvent((MemberExpression)expressionForAccessingCustomReactEventProperty.Body)), a, b, c);
     }
 
-    protected abstract Element render();
+    protected virtual Element render()
+    {
+        return NoneOfRender.Value;
+    }
+    
+    protected virtual Task<Element> renderAsync()
+    {
+        return Task.FromResult(NoneOfRender.Value);
+    }
 
     string GetPropertyNameOfCustomReactEvent(MemberExpression expression)
     {
