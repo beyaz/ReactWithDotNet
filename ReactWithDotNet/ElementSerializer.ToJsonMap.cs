@@ -1161,7 +1161,10 @@ partial class ElementSerializer
             newNode.NextSibling.PreviousSibling = newNode;
         }
 
-        newNode.Element.key = node.Element.key;
+        if (newNode.Element != null)
+        {
+            newNode.Element.key = node.Element.key;
+        }
 
         return newNode;
     }
