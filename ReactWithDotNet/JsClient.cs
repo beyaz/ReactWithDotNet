@@ -2,6 +2,18 @@
 
 partial class Mixin
 {
+    
+    public static void ListenEvent<TDelegate>(this Client client, TDelegate handler) where TDelegate: Delegate
+    {
+        ListenEvent(client, handler.GetType().Name, handler.Method.Name);
+    }
+    
+    public static void DispatchEvent<TDelegate>(this Client client, params object[] eventArguments) where TDelegate: Delegate
+    {
+        client.CallJsFunction(Core + nameof(DispatchEvent), typeof(TDelegate).Name, eventArguments);
+    }
+    
+    
     const string Core = "ReactWithDotNet::Core::";
 
     public static void CopyToClipboard(this Client client, string text)
@@ -68,6 +80,7 @@ partial class Mixin
     {
         ListenEvent(client, eventName.ToString(), handler.Method.Name);
     }
+    
     
     public static void ListenEvent(this Client client, Enum eventName, Func<Task> handler)
     {
