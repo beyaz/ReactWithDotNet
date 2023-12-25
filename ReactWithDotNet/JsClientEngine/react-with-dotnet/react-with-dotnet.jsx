@@ -2030,7 +2030,7 @@ function SendRequest(request, onSuccess, onFail)
 
     if (ReactWithDotNet.BeforeSendRequest)
     {
-        options = ReactWithDotNet.BeforeSendRequest(options);
+        ReactWithDotNet.BeforeSendRequest(options);
     }
 
     window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json)).catch(onFail);
