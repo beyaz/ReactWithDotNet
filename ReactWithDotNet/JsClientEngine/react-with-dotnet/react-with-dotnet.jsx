@@ -2334,14 +2334,37 @@ RegisterCoreFunction("CalculateSyntheticFocusEventArguments", (argumentsAsArray)
 
 });
 
-RegisterCoreFunction("SetCookie", function (cookieName, cookieValue, expiredays)
+function SetCookie(cookieNameAsStringNotNull, cookieValueAsStringNotNull, expiredaysAsNumberNotNull)
 {
     var exdate = new Date();
+    
+    exdate.setDate(exdate.getDate() + expiredaysAsNumberNotNull);
 
-    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = cookieNameAsStringNotNull + "=" + encodeURI(cookieValueAsStringNotNull) +
+        "; expires=" + exdate.toUTCString();
+}
 
-    document.cookie = cookieName + "=" + encodeURI(cookieValue) + ((expiredays == null) ? "" : "; expires=" + exdate.toUTCString());
-});
+function GetCookie(cookieName)
+{
+    // Split cookie string and get all individual name=value pairs in an array
+    var cookieArr = document.cookie.split(";");
+    // Loop through the array elements
+    for (var i = 0; i < cookieArr.length; i++)
+    {
+        var cookiePair = cookieArr[i].split("=");
+        /* Removing whitespace at the beginning of the cookie name
+        and compare it with the given string */
+        if (cookieName == cookiePair[0].trim())
+        {
+            // Decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    // Return null if not found
+    return null;
+}
+
+RegisterCoreFunction("SetCookie", SetCookie);
 
 RegisterCoreFunction("HistoryBack", function ()
 {
@@ -2766,7 +2789,12 @@ var ReactWithDotNet =
     IsMediaTablet: IsTablet,
     IsMediaDesktop: IsDesktop,
 
-    Call: InvokeJsFunctionInPath
+    Call: InvokeJsFunctionInPath,
+    Util:
+    {
+        SetCookie: SetCookie,
+        GetCookie: GetCookie
+    }
 };
 
 window.ReactWithDotNet = ReactWithDotNet;
