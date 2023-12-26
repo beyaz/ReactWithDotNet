@@ -108,7 +108,7 @@ public abstract class HtmlElement : Element
     {
         get
         {
-            _aria ??= new Dictionary<string, string>();
+            _aria ??= new();
 
             return _aria;
         }
@@ -160,7 +160,7 @@ public abstract class HtmlElement : Element
     {
         get
         {
-            _data ??= new Dictionary<string, string>();
+            _data ??= new();
 
             return _data;
         }

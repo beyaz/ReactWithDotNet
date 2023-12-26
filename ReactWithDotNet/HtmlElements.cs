@@ -1,4 +1,6 @@
-﻿namespace ReactWithDotNet;
+﻿using System.Text;
+
+namespace ReactWithDotNet;
 
 [Serializable]
 public sealed class InputValueBinder
@@ -120,7 +122,10 @@ public sealed class input : HtmlElement
     public int? step { get; set; }
 }
 
-public sealed class HtmlTextNode : HtmlElement;
+public sealed class HtmlTextNode : HtmlElement
+{
+    internal StringBuilder stringBuilder;
+}
 
 sealed class br : HtmlElement;
 

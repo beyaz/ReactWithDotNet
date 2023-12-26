@@ -734,11 +734,11 @@ partial class ElementSerializer
             {
                 context.TryCallBeforeSerializeElementToClient(child.Element, node.Element);
 
-                (childElements ??= new List<object>()).Add(child.ElementAsHtmlTextElement.innerText);
+                (childElements ??= new()).Add((object)child.ElementAsHtmlTextElement.innerText ?? child.ElementAsHtmlTextElement.stringBuilder);
             }
             else
             {
-                (childElements ??= new List<object>()).Add(child.ElementAsJsonMap);
+                (childElements ??= new()).Add(child.ElementAsJsonMap);
             }
 
             child = child.NextSibling;

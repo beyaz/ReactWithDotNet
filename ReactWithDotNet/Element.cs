@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text;
 
 namespace ReactWithDotNet;
 
@@ -62,6 +63,12 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
     {
         return new HtmlTextNode { text = text };
     }
+    
+    public static implicit operator Element(StringBuilder stringBuilder)
+    {
+        return new HtmlTextNode { stringBuilder = stringBuilder };
+    }
+    
     public static implicit operator Element(int number)
     {
         return new HtmlTextNode { text = number.ToString() };

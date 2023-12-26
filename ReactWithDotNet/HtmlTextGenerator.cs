@@ -58,7 +58,11 @@ static class HtmlTextGenerator
 
     static HtmlNode AsHtmlTextNode(string text)
     {
-        return new HtmlNode { IsTextNode = true, Text = text };
+        return new() { IsTextNode = true, Text = text };
+    }
+    static HtmlNode AsHtmlTextNode(StringBuilder stringBuilder)
+    {
+        return new() { IsTextNode = true, StringBuilder = stringBuilder };
     }
 
     static HtmlNode CalculateDynamicStylesAsHtmlStyleNode(JsonMap dynamicStylesMap)
@@ -266,6 +270,11 @@ static class HtmlTextGenerator
                     AddChild(htmlNode, AsHtmlTextNode(childAsString));
                     continue;
                 }
+                if (child is StringBuilder stringBuilder)
+                {
+                    AddChild(htmlNode, AsHtmlTextNode(stringBuilder));
+                    continue;
+                }
 
                 throw DeveloperException("Invalid child.");
             }
@@ -297,6 +306,11 @@ static class HtmlTextGenerator
 
         if (htmlNode.IsTextNode)
         {
+            if (htmlNode.StringBuilder is not null)
+            {
+                sb.Append(htmlNode.StringBuilder);
+                return;    
+            }
             sb.Append(htmlNode.Text);
             return;
         }
@@ -502,5 +516,7 @@ static class HtmlTextGenerator
 
         public string Tag;
         public string Text;
+        
+        public StringBuilder StringBuilder;
     }
 }

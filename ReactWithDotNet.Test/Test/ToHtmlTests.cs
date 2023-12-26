@@ -1,3 +1,4 @@
+using System.Text;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReactWithDotNet.ThirdPartyLibraries.PrimeReact;
@@ -341,5 +342,21 @@ public class ToHtmlTests
                                     """;
 
         Assert(new rect { width = 45, height = 56, rx = 3, x = 6, y=9}, expectedHtml);
+    }
+    
+    
+    [TestMethod]
+    public void StringBuilderTest()
+    {
+        var sb = new StringBuilder();
+        sb.Append("AbC");
+        
+        const string expectedHtml = """
+
+                                    <div>ABC</div>
+
+                                    """;
+
+        Assert(new div { sb }, expectedHtml);
     }
 }
