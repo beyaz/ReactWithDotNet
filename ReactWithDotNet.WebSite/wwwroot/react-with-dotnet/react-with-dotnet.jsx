@@ -1752,42 +1752,14 @@ function HandleComponentClientTasks(component)
     }
 
     const freeSpace = COMPONENT_CACHE.GetFreeSpaceOfComponent(component[DotNetComponentUniqueIdentifiers][0]);
-    if (freeSpace.waitingClientTasks === clientTasks)
+    if (freeSpace.lastProcessedClientTasks === clientTasks)
     {
         return false;
     }
 
-    if (freeSpace.waitingClientTasks != null)
-    {
-        throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be null at this point.');
-    }
+    freeSpace.lastProcessedClientTasks = clientTasks;
 
-    freeSpace.waitingClientTasks = clientTasks;
-
-    function shouldBeReferenceEquals()
-    {
-        if (freeSpace.waitingClientTasks !== clientTasks)
-        {
-            throw CreateNewDeveloperError('freeSpace.waitingClientTasks should be reference equals to clientTasks at this point.');
-        }
-    }
-
-    const partialState = {};
-
-    partialState[ClientTasks] = null;
-
-    function stateCallback()
-    {
-        shouldBeReferenceEquals();
-
-        ProcessClientTasks(clientTasks, component);
-
-        shouldBeReferenceEquals();
-
-        freeSpace.waitingClientTasks = null;
-    }
-
-    component.setState(partialState, stateCallback);
+    ProcessClientTasks(clientTasks, component);
 
     return true;
 }
@@ -2058,7 +2030,7 @@ function SendRequest(request, onSuccess, onFail)
 
     if (ReactWithDotNet.BeforeSendRequest)
     {
-        options = ReactWithDotNet.BeforeSendRequest(options);
+        ReactWithDotNet.BeforeSendRequest(options);
     }
 
     window.fetch(url, options).then(response => response.json()).then(json => onSuccess(json)).catch(onFail);
