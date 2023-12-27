@@ -121,6 +121,14 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
             children.AddRange(elements);
         }
     }
+    
+    public void Add(Func<IEnumerable<Element>> elements)
+    {
+        if (elements is not null)
+        {
+            Add(elements());
+        }
+    }
 
     public void Add(IModifier modifier)
     {
