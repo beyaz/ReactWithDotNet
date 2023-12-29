@@ -127,11 +127,10 @@ public class Swiper : ThirdPartyReactComponent
     [ReactProp]
     public double? slidesPerView { get; set; }
     
-    
     [ReactProp]
-    public double? slidesPerColumn { get; set; }
+    [ReactTransformValueInClient(Core__ReplaceNullWhenEmpty)]
+    public SwiperGridOption grid { get; } = new();
     
-
     [ReactProp]
     public double? spaceBetween { get; set; }
 
@@ -169,6 +168,11 @@ public sealed class SwiperNavigationOption
     public bool? enabled { get; set; }
     public string nextEl { get; set; }
     public string prevEl { get; set; }
+}
+
+public sealed class SwiperGridOption
+{
+    public double? rows { get; set; }
 }
 
 

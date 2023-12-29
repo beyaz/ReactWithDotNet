@@ -16,7 +16,8 @@ import {
     EffectCube,
     EffectFlip,
     EffectCards,
-    EffectCreative
+    EffectCreative,
+    Grid
 } from 'swiper/modules';
 
 
@@ -46,7 +47,8 @@ const ModuleMap = [
     ['EffectCube', EffectCube],
     ['EffectFlip', EffectFlip],
     ['EffectCards', EffectCards],
-    ['EffectCreative', EffectCreative]
+    ['EffectCreative', EffectCreative],
+    ['Grid', Grid]
 ];
 
 function ToSwiperModule(moduleName)
