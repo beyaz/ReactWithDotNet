@@ -126,6 +126,11 @@ public class Swiper : ThirdPartyReactComponent
 
     [ReactProp]
     public double? slidesPerView { get; set; }
+    
+    
+    [ReactProp]
+    public double? slidesPerColumn { get; set; }
+    
 
     [ReactProp]
     public double? spaceBetween { get; set; }
@@ -197,8 +202,9 @@ public sealed class SwiperAutoplay
 [Serializable]
 public sealed record SwiperBreakpoint
 {
-    public double slidesPerView { get; init; }
-    public double spaceBetween { get; init; }
+    public double? slidesPerView { get; init; }
+    public double? spaceBetween { get; init; }
+    public double? slidesPerColumn { get; init; }
 }
 
 [Serializable]
