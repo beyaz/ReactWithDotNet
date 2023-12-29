@@ -45,6 +45,11 @@ partial class Mixin
                     return Activator.CreateInstance(targetType);
                 }
 
+                if (targetType.IsEnum)
+                {
+                    return Enum.Parse(targetType, stringValue);
+                }
+
                 return ReflectionHelper.ConvertNonEmptyOrNullStringValueToPrimitiveType(stringValue, targetType);
             }
 
