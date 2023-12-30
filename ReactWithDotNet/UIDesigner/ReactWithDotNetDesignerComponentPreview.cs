@@ -66,6 +66,7 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                                 if (parameterName is not null && dictionary.TryGetValue(parameterName, out var parameterValueAsJsonObject))
                                 {
                                     invocationParameters.Add(ArrangeValueForTargetType(parameterValueAsJsonObject, parameterType));
+                                    continue;
                                 }
 
                                 return new div { text = $"Missing parameter {parameterName}" };
