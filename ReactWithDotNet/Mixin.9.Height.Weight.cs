@@ -129,4 +129,15 @@ partial class Mixin
         style.height = height.AsPixel();
     });
 
+    /// <summary>
+    ///     style.width = <paramref name="width_and_height" /> + 'px'
+    ///     <br/>
+    ///     style.height = <paramref name="width_and_height" /> + 'px'
+    /// </summary>
+    public static StyleModifier Size(double width_and_height) => new(style =>
+    {
+        style.width  = width_and_height.AsPixel();
+        style.height = width_and_height.AsPixel();
+    });
+
 }
