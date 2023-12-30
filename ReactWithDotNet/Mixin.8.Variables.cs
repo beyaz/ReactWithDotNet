@@ -7,22 +7,22 @@ partial class Mixin
 
 
     /// <summary>
-    ///     50|percent returns like '50%'
+    ///     50*percent returns like '50%'
     /// </summary>
     public static readonly CssUnit percent = new("%", "");
 
     /// <summary>
-    ///     2|rem returns like '2rem'
+    ///     2*rem returns like '2rem'
     /// </summary>
     public static readonly CssUnit rem = new("rem", "");
 
     /// <summary>
-    ///     7|vh returns like '7vh'
+    ///     7*vh returns like '7vh'
     /// </summary>
     public static readonly CssUnit vh = new("vh", "");
 
     /// <summary>
-    ///     7|vw returns like '7vw'
+    ///     7*vw returns like '7vw'
     /// </summary>
     public static readonly CssUnit vw = new("vw", "");
 
