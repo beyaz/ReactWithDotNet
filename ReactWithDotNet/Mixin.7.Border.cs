@@ -137,6 +137,12 @@ partial class Mixin
         => BoxShadow($"{offsetX}px {offsetY}px {blurRadius}px {color}");
     
     /// <summary>
+    ///     style.boxShadow = <strong>none</strong>
+    /// </summary>
+    public static StyleModifier BoxShadowNone
+        => BoxShadow("none");
+    
+    /// <summary>
     ///     Returns a string like <paramref name="widthAsPx" /><b> + px dashed + </b> <paramref name="color" />"
     /// </summary>
     public static string Dashed(double widthAsPx, string color)
