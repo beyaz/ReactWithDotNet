@@ -190,6 +190,13 @@ partial class Mixin
     /// </summary>
     public static StyleModifier WidthFull = WidthMaximized;
 
-    
+
+    /// <summary>
+    ///     inset: "0"
+    /// </summary>
+    public static StyleModifier Inset0 => Inset("0");
+
+
+
 
 }
