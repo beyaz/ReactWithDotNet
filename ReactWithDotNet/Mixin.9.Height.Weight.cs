@@ -144,6 +144,22 @@ partial class Mixin
     ///     width: 100%
     /// </summary>
     public static StyleModifier w_full = WidthMaximized;
+
+
+    /// <summary>
+    ///     width: <paramref name="percentOfTotal"/> / <paramref name="total"/> * 100 + '%'
+    ///     <br/>Example:<br/>
+    ///     Width(3, 4) means Width("75%")
+    /// </summary>
+    public static StyleModifier Width(double percentOfTotal, double total) => Width( percentOfTotal / total * 100 + "%");
+    
+    /// <summary>
+    ///     height:  <paramref name="percentOfTotal"/> / <paramref name="total"/> * 100 + '%'
+    ///     <br/>Example:<br/>
+    ///     Height(3, 4) means Height("75%")
+    /// </summary>
+    public static StyleModifier Height(double percentOfTotal, double total) => Height(total / percentOfTotal * 100 + "%");
+    
     
     /// <summary>
     ///     height: 100%
