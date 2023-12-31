@@ -140,4 +140,21 @@ partial class Mixin
         style.height = width_and_height.AsPixel();
     });
 
+    /// <summary>
+    ///     width: 100%
+    /// </summary>
+    public static StyleModifier w_full = WidthMaximized;
+    
+    /// <summary>
+    ///     height: 100%
+    /// </summary>
+    public static StyleModifier h_full = HeightMaximized;
+    
+    /// <summary>
+    ///     width: 100%
+    ///     <br />
+    ///     height: 100%
+    /// </summary>
+    public static StyleModifier size_full = WidthHeightMaximized;
+
 }
