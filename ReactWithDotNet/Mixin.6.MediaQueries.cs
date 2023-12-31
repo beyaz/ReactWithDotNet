@@ -117,4 +117,36 @@ partial class Mixin
     /// </summary>
     public static StyleModifier WhenMediaSizeBetween(int minWidthAsPixel,int maxWidthAsPixel, params StyleModifier[] styleModifiers)
         => MediaQuery($"(min-width: {minWidthAsPixel}px) and (max-width: {maxWidthAsPixel}px)", styleModifiers);
+    
+    
+    /// <summary>
+    ///     min-width: 640px
+    /// </summary>
+    public static StyleModifier SM(params StyleModifier[] styleModifiers)
+        => MediaQuery("(min-width: 640px)", new Style(styleModifiers));
+    
+    /// <summary>
+    ///     min-width: 768px
+    /// </summary>
+    public static StyleModifier MD(params StyleModifier[] styleModifiers)
+        => MediaQuery("(min-width: 768px)", new Style(styleModifiers));
+    
+    /// <summary>
+    ///     min-width: 1024px
+    /// </summary>
+    public static StyleModifier LG(params StyleModifier[] styleModifiers)
+        => MediaQuery("(min-width: 1024px)", new Style(styleModifiers));
+    
+    /// <summary>
+    ///     min-width: 1280px
+    /// </summary>
+    public static StyleModifier XL(params StyleModifier[] styleModifiers)
+        => MediaQuery("(min-width: 1280px)", new Style(styleModifiers));
+    
+    /// <summary>
+    ///     min-width: 1536px
+    /// </summary>
+    public static StyleModifier XXL(params StyleModifier[] styleModifiers)
+        => MediaQuery("(min-width: 1536px)", new Style(styleModifiers));
+    
 }
