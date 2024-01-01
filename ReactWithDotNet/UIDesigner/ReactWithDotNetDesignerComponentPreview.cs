@@ -150,10 +150,17 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 {
                     var type = instance.GetType();
 
+                    var propertyInfoList = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
                     var map = JsonSerializer.Deserialize<Dictionary<string, object>>(json.HasValue() ? json : "{}");
                     foreach (var (propertyName, propertyValue) in map)
                     {
-                        var propertyInfo = type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.IgnoreCase);
+                        var propertyInfo = propertyInfoList.FirstOrDefault(p => p.Name == propertyName);
+                        if (propertyInfo is null)
+                        {
+                            propertyInfo = propertyInfoList.FirstOrDefault(p => p.Name.Equals(propertyName,StringComparison.OrdinalIgnoreCase)); 
+                        }
+                        
                         if (propertyInfo is not null && propertyInfo.GetIndexParameters().Length == 0)
                         {
                             propertyInfo.SetValue(instance, ArrangeValueForTargetType(propertyValue, propertyInfo.PropertyType));
