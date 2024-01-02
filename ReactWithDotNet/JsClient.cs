@@ -92,9 +92,16 @@ partial class Mixin
         client.CallJsFunction(Core + nameof(ListenWindowResizeEvent), resizeTimeout);
     }
 
-    public static void NavigateToUrl(this Client client, string url)
+    /// <summary>
+    ///     Example:
+    ///     <br/>
+    ///     Client.NavigateTo("/") navigates to home page
+    ///     <br/>
+    ///     Client.NavigateTo("/AboutUs") navigates to About Us page
+    /// </summary>
+    public static void NavigateTo(this Client client, string path)
     {
-        client.CallJsFunction(Core + nameof(NavigateToUrl), url);
+        client.CallJsFunction(Core + nameof(NavigateTo), path);
     }
 
     public static void OnOutsideClicked(this Client client, string idOfElement, Func<Task> func)

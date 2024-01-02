@@ -2040,12 +2040,6 @@ var LastUsedComponentUniqueIdentifier = 1;
 
 function ConnectComponentFirstResponseToReactSystem(containerHtmlElementId, response)
 {
-    if (response.NavigateToUrl)
-    {
-        window.location.replace(location.origin + response.NavigateToUrl);
-        return;
-    }
-
     if (response.ErrorMessage != null)
     {
         throw response.ErrorMessage;
@@ -2576,10 +2570,14 @@ RegisterCoreFunction("InitializeDotnetComponentEventListener", function (eventSe
     EventBus.On(eventName, onEventFired);
 });
 
-RegisterCoreFunction("NavigateToUrl", function (url)
+function NavigateTo(path)
 {
-     window.location.replace(location.origin + url);
-});
+    var location = window.location;
+
+    location.assign(location.origin + path);
+}
+
+RegisterCoreFunction("NavigateTo", NavigateTo);
 
 RegisterCoreFunction("OnOutsideClicked", function (idOfElement, remoteMethodName, handlerComponentUniqueIdentifier)
 {
