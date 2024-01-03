@@ -31,9 +31,12 @@ static class ReflectionHelper
         {
             var genericTypeDefinition = type.GetGenericTypeDefinition();
 
-            if (genericTypeDefinition == typeof(ImmutableList<>))
+            if (genericTypeDefinition == typeof(ImmutableList<>) ||
+                genericTypeDefinition == typeof(IReadOnlyList<>))
             {
-                return type.GetField("Empty", BindingFlags.Static | BindingFlags.Public)?.GetValue(null);
+                var genericArgument = type.GetGenericArguments().First();
+                
+                return createImmutableListWithSampleData(genericArgument);
             }
             
             if (genericTypeDefinition.GetInterfaces().Contains(typeof(IEnumerable)))
@@ -63,6 +66,21 @@ static class ReflectionHelper
         }
 
         return instance;
+
+        static object createImmutableListWithSampleData(Type genericArgumenType)
+        {
+            var type = typeof(ImmutableList<>).MakeGenericType(genericArgumenType);
+            
+            var immutableList = type.GetField("Empty", BindingFlags.Static | BindingFlags.Public)!.GetValue(null);
+                
+            var addMethod = type.GetMethod("Add")!;
+
+            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType)]);
+            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType)]);
+            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType)]);
+                
+            return immutableList;
+        }
     }
 
     public static bool IsStaticClass(this Type type)
