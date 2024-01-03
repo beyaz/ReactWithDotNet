@@ -893,11 +893,11 @@ public static partial class Mixin
     public static StyleModifier PaddingLeftBottom(string paddingLeftBottom) => new(style => style.paddingLeftBottom = paddingLeftBottom);
     public static StyleModifier PaddingTopRight(string paddingTopRight) => new(style => style.paddingTopRight = paddingTopRight);
 
-    public static StyleModifier PaddingLeftRight(double paddingLeftRight) => new(style => style.paddingLeftRight = paddingLeftRight.AsPixel());
-    public static StyleModifier PaddingTopBottom(double paddingTopBottom) => new(style => style.paddingTopBottom = paddingTopBottom.AsPixel());
-    public static StyleModifier PaddingLeftTop(double paddingLeftTop) => new(style => style.paddingLeftTop = paddingLeftTop.AsPixel());
-    public static StyleModifier PaddingLeftBottom(double paddingLeftBottom) => new(style => style.paddingLeftBottom = paddingLeftBottom.AsPixel());
-    public static StyleModifier PaddingTopRight(double paddingTopRight) => new(style => style.paddingTopRight = paddingTopRight.AsPixel());
+    public static StyleModifier PaddingLeftRight(double leftRightPixel) => new(style => style.paddingLeftRight = leftRightPixel.AsPixel());
+    public static StyleModifier PaddingTopBottom(double topBottomPixel) => new(style => style.paddingTopBottom = topBottomPixel.AsPixel());
+    public static StyleModifier PaddingLeftTop(double leftTopPixel) => new(style => style.paddingLeftTop = leftTopPixel.AsPixel());
+    public static StyleModifier PaddingLeftBottom(double leftBottomPixel) => new(style => style.paddingLeftBottom = leftBottomPixel.AsPixel());
+    public static StyleModifier PaddingTopRight(double topRightPixel) => new(style => style.paddingTopRight = topRightPixel.AsPixel());
     #endregion
 
     #region short
