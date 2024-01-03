@@ -150,23 +150,52 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 Border("1px solid #d9d9d9"),
                 BorderRadius(4),
-                //PaddingTop(15),
+                MarginLeftRight(3),
 
-                new legend
+                new legend(PaddingLeft(5))
                 {
                     createLabel($"Media Size: {state.ScreenWidth}px")
                 },
-                new input
+                new FlexRowCentered(ClassName("reactwithdotnet_designer_slider"), PaddingLeftRight(5), PaddingTop(4),  PaddingBottom(10))
                 {
-                    step                     = 10,
-                    type                     = "range",
-                    min                      = 300,
-                    max                      = 1600,
-                    valueBind                = () => state.ScreenWidth,
-                    valueBindDebounceTimeout = 500,
-                    valueBindDebounceHandler = OnMediaSizeChanged,
-                    style                    = { Height(7), WidthMaximized, BorderRadius(38) }
+                    new style
+                    {
+                        """
+                        .reactwithdotnet_designer_slider input[type="range"] {
+                          -webkit-appearance:none !important;
+                          width:200px;
+                          height:1px;
+                          background:#00acee;
+                          border:none;
+                          outline:none;
+                        }
+                        .reactwithdotnet_designer_slider input[type="range"]::-webkit-slider-thumb {
+                          -webkit-appearance:none !important;
+                          width:20px;
+                          height:20px;
+                          background:#f5f5f5;
+                          border:2px solid #00acee;
+                          border-radius:50%;
+                          cursor:pointer;
+                        }
+                        .reactwithdotnet_designer_slider input[type="range"]::-webkit-slider-thumb:hover {
+                          background:#00acee;
+                        }
+                        """
+                    },
+                    new input
+                    {
+                        step                     = 10,
+                        type                     = "range",
+                        min                      = 300,
+                        max                      = 1600,
+                        valueBind                = () => state.ScreenWidth,
+                        valueBindDebounceTimeout = 500,
+                        valueBindDebounceHandler = OnMediaSizeChanged,
+                        style                    = { Height(10), WidthMaximized, BorderRadius(38) }
+                    }
                 }
+                
             },
 
             new FlexColumn(FlexGrow(1))
