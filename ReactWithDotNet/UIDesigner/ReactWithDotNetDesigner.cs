@@ -152,9 +152,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 BorderRadius(4),
                 MarginLeftRight(3),
 
-                new legend(PaddingLeft(5))
+                new legend(MarginLeft(8))
                 {
-                    createLabel($"Media Size: {state.ScreenWidth}px")
+                    createLabel($"Media Size: {state.ScreenWidth}px") + MarginTop(-2)
                 },
                 new FlexRowCentered(ClassName("reactwithdotnet_designer_slider"), PaddingLeftRight(5), PaddingTop(4),  PaddingBottom(10))
                 {
@@ -177,9 +177,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                           border:2px solid #00acee;
                           border-radius:50%;
                           cursor:pointer;
-                        }
-                        .reactwithdotnet_designer_slider input[type="range"]::-webkit-slider-thumb:hover {
-                          background:#00acee;
                         }
                         """
                     },
