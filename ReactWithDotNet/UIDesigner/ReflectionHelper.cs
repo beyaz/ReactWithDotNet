@@ -10,7 +10,7 @@ static class ReflectionHelper
     {
         if (type == typeof(string))
         {
-            return "";
+            return "abc";
         }
 
         if (type.IsValueType)
