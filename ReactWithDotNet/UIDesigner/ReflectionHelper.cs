@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Immutable;
+using System.Reflection;
 
 namespace ReactWithDotNet.UIDesigner;
 
@@ -28,6 +30,12 @@ static class ReflectionHelper
         if (type.IsGenericType)
         {
             var genericTypeDefinition = type.GetGenericTypeDefinition();
+
+            if (genericTypeDefinition == typeof(ImmutableList<>))
+            {
+                return type.GetField("Empty", BindingFlags.Static | BindingFlags.Public)?.GetValue(null);
+            }
+            
             if (genericTypeDefinition.GetInterfaces().Contains(typeof(IEnumerable)))
             {
                 var genericArgument = type.GetGenericArguments().FirstOrDefault();
