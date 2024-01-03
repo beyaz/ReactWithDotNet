@@ -599,11 +599,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     continue;
                 }
 
-                if (propertyType.IsAbstract)
+                if (propertyType.IsAbstract && propertyType.IsClass)
                 {
                     continue;
                 }
-
+                
                 if (!map.ContainsKey(name))
                 {
                     map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));

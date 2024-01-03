@@ -32,7 +32,9 @@ static class ReflectionHelper
             var genericTypeDefinition = type.GetGenericTypeDefinition();
 
             if (genericTypeDefinition == typeof(ImmutableList<>) ||
-                genericTypeDefinition == typeof(IReadOnlyList<>))
+                genericTypeDefinition == typeof(IReadOnlyList<>)||
+                genericTypeDefinition == typeof(ICollection<>)||
+                genericTypeDefinition == typeof(IList<>))
             {
                 var genericArgument = type.GetGenericArguments().First();
                 
@@ -75,7 +77,6 @@ static class ReflectionHelper
                 
             var addMethod = type.GetMethod("Add")!;
 
-            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType)]);
             immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType)]);
             immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType)]);
                 
