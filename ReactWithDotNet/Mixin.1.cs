@@ -868,19 +868,18 @@ public static partial class Mixin
     #endregion
 
     #region Padding
-    public static StyleModifier Padding(double paddingPx) => new(style => style.padding = paddingPx.AsPixel());
+    public static StyleModifier Padding(double paddingPixel) => new(style => style.padding = paddingPixel.AsPixel());
     
-    public static StyleModifier Padding(double topBottomPx, double lefRighttPx) => Padding($"{topBottomPx}px {lefRighttPx}px");
+    public static StyleModifier Padding(double topBottomPixel, double lefRightPixel) => Padding($"{topBottomPixel}px {lefRightPixel}px");
     
-    public static StyleModifier Padding(double topPx, double rightPx, double bottomPx, double leftPx) 
+    public static StyleModifier Padding(double topPixel, double rightPixel, double bottomPixel, double leftPixel) 
         => new(style =>
         {
-            style.paddingTop    = topPx.AsPixel();
-            style.paddingRight  = rightPx.AsPixel();
-            style.paddingBottom = bottomPx.AsPixel();
-            style.paddingLeft = leftPx.AsPixel();
+            style.paddingTop    = topPixel.AsPixel();
+            style.paddingRight  = rightPixel.AsPixel();
+            style.paddingBottom = bottomPixel.AsPixel();
+            style.paddingLeft = leftPixel.AsPixel();
         });
-    
 
     public static StyleModifier PaddingLeft(double leftPixel) => new(style => style.paddingLeft = leftPixel.AsPixel());
     public static StyleModifier PaddingRight(double rightPixel) => new(style => style.paddingRight = rightPixel.AsPixel());
