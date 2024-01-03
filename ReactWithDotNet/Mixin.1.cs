@@ -846,25 +846,25 @@ public static partial class Mixin
 
     #region Margin
     public static StyleModifier Margin(double margin) => new(style => style.margin = margin.AsPixel());
-    public static StyleModifier Margin(double topBottomPx, double lefRighttPx) => Margin($"{topBottomPx}px {lefRighttPx}px");
+    public static StyleModifier Margin(double topBottomPixel, double lefRighttPixel) => Margin($"{topBottomPixel}px {lefRighttPixel}px");
     
 
-    public static StyleModifier MarginLeft(double marginLeftAsPx) => new(style => style.marginLeft = marginLeftAsPx.AsPixel());
-    public static StyleModifier MarginRight(double marginRightAsPx) => new(style => style.marginRight = marginRightAsPx.AsPixel());
-    public static StyleModifier MarginTop(double marginTopAsPx) => new(style => style.marginTop = marginTopAsPx.AsPixel());
-    public static StyleModifier MarginBottom(double marginBottomAsPx) => new(style => style.marginBottom = marginBottomAsPx.AsPixel());
+    public static StyleModifier MarginLeft(double leftPixel) => new(style => style.marginLeft = leftPixel.AsPixel());
+    public static StyleModifier MarginRight(double rightPixel) => new(style => style.marginRight = rightPixel.AsPixel());
+    public static StyleModifier MarginTop(double topPixel) => new(style => style.marginTop = topPixel.AsPixel());
+    public static StyleModifier MarginBottom(double bottomPixel) => new(style => style.marginBottom = bottomPixel.AsPixel());
 
-    public static StyleModifier MarginLeftRight(string marginLeftRight) => new(style => style.marginLeftRight = marginLeftRight);
-    public static StyleModifier MarginTopBottom(string marginTopBottom) => new(style => style.marginTopBottom = marginTopBottom);
-    public static StyleModifier MarginLeftTop(string marginLeftTop) => new(style => style.marginLeftTop = marginLeftTop);
-    public static StyleModifier MarginLeftBottom(string marginLeftBottom) => new(style => style.marginLeftBottom = marginLeftBottom);
-    public static StyleModifier MarginTopRight(string marginTopRight) => new(style => style.marginTopRight = marginTopRight);
+    public static StyleModifier MarginLeftRight(string leftRightPixel) => new(style => style.marginLeftRight = leftRightPixel);
+    public static StyleModifier MarginTopBottom(string topBottomPixel) => new(style => style.marginTopBottom = topBottomPixel);
+    public static StyleModifier MarginLeftTop(string leftTopPixel) => new(style => style.marginLeftTop = leftTopPixel);
+    public static StyleModifier MarginLeftBottom(string leftBottomPixel) => new(style => style.marginLeftBottom = leftBottomPixel);
+    public static StyleModifier MarginTopRight(string topRightPixel) => new(style => style.marginTopRight = topRightPixel);
 
-    public static StyleModifier MarginLeftRight(double marginLeftRight) => new(style => style.marginLeftRight = marginLeftRight.AsPixel());
-    public static StyleModifier MarginTopBottom(double marginTopBottom) => new(style => style.marginTopBottom = marginTopBottom.AsPixel());
-    public static StyleModifier MarginLeftTop(double marginLeftTop) => new(style => style.marginLeftTop = marginLeftTop.AsPixel());
-    public static StyleModifier MarginLeftBottom(double marginLeftBottom) => new(style => style.marginLeftBottom = marginLeftBottom.AsPixel());
-    public static StyleModifier MarginTopRight(double marginTopRight) => new(style => style.marginTopRight = marginTopRight.AsPixel());
+    public static StyleModifier MarginLeftRight(double leftRightPixel) => new(style => style.marginLeftRight = leftRightPixel.AsPixel());
+    public static StyleModifier MarginTopBottom(double topBottomPixel) => new(style => style.marginTopBottom = topBottomPixel.AsPixel());
+    public static StyleModifier MarginLeftTop(double leftTopPixel) => new(style => style.marginLeftTop = leftTopPixel.AsPixel());
+    public static StyleModifier MarginLeftBottom(double leftBottomPixel) => new(style => style.marginLeftBottom = leftBottomPixel.AsPixel());
+    public static StyleModifier MarginTopRight(double topRightPixel) => new(style => style.marginTopRight = topRightPixel.AsPixel());
     #endregion
 
     #region Padding
