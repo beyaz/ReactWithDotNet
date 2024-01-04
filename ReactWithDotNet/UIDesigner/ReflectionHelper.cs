@@ -79,7 +79,7 @@ static class ReflectionHelper
 
                 if (isNumberType(propertyInfo.PropertyType))
                 {
-                    var hasDefaultValue = propertyInfo.GetValue(instance) == Activator.CreateInstance(propertyInfo.PropertyType);
+                    var hasDefaultValue = propertyInfo.GetValue(instance)!.Equals(Activator.CreateInstance(propertyInfo.PropertyType));
                     if (hasDefaultValue)
                     {
                         return (isCalculated: true, value: Convert.ChangeType(index, propertyInfo.PropertyType));
