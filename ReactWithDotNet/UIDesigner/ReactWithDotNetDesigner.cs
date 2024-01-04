@@ -557,64 +557,96 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             var map = DeserializeJsonBySystemTextJson<Dictionary<string, object>>(state.JsonTextForDotNetInstanceProperties ?? string.Empty) ?? new Dictionary<string, object>();
 
-            foreach (var propertyInfo in MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(typeOfInstance)?.GetProperties(BindingFlags.Instance | BindingFlags.Public) ?? new PropertyInfo[] { })
+            var instanceType = MetadataHelper.LoadAssembly(fullAssemblyPath).TryLoadFrom(typeOfInstance);
+            
+            if (instanceType is not null)
             {
-                var name = propertyInfo.Name;
-                var propertyType = propertyInfo.PropertyType;
-
-                if (propertyType.GetInterfaces().Any(x => x == typeof(IModifier)))
+                var instance = Activator.CreateInstance(instanceType);
+                
+                foreach (var propertyInfo in instanceType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
                 {
-                    continue;
-                }
+                    var name = propertyInfo.Name;
+                    var propertyType = propertyInfo.PropertyType;
 
-                if (name is "state")
-                {
-                    if (propertyType == typeof(EmptyState))
+                    if (propertyType.GetInterfaces().Any(x => x == typeof(IModifier)))
                     {
                         continue;
                     }
 
+                    if (name is "state")
+                    {
+                        if (propertyType == typeof(EmptyState))
+                        {
+                            continue;
+                        }
+
+                        if (!map.ContainsKey(name))
+                        {
+                            map.Add(name, ReflectionHelper.CreateDummyValue(propertyType));
+                            continue;
+                        }
+                    }
+
+                    if (propertyInfo.DeclaringType == typeof(Element) ||
+                        propertyInfo.DeclaringType == typeof(ReactComponentBase) ||
+                        propertyInfo.DeclaringType == typeof(PureComponent))
+                    {
+                        continue;
+                    }
+
+                    if (propertyInfo.DeclaringType?.IsGenericType == true &&
+                        propertyInfo.DeclaringType.GetGenericTypeDefinition() == typeof(Component<>))
+                    {
+                        continue;
+                    }
+
+                    if (propertyType.BaseType == typeof(MulticastDelegate))
+                    {
+                        continue;
+                    }
+
+                    if (propertyType.IsAbstract && propertyType.IsClass)
+                    {
+                        continue;
+                    }
+
+                    if (isNumberType(propertyInfo.PropertyType))
+                    {
+                        var existingValue = propertyInfo.GetValue(instance);
+                        var defaultValue = Activator.CreateInstance(propertyInfo.PropertyType);
+
+                        var hasDefaultValue = defaultValue!.Equals(existingValue);
+                        if (!hasDefaultValue)
+                        {
+                            map.Add(name, existingValue);
+                            continue;
+                        }
+                    }
+                
                     if (!map.ContainsKey(name))
                     {
                         map.Add(name, ReflectionHelper.CreateDummyValue(propertyType));
-                        continue;
                     }
-                }
-
-                if (propertyInfo.DeclaringType == typeof(Element) ||
-                    propertyInfo.DeclaringType == typeof(ReactComponentBase) ||
-                    propertyInfo.DeclaringType == typeof(PureComponent))
-                {
-                    continue;
-                }
-
-                if (propertyInfo.DeclaringType?.IsGenericType == true &&
-                    propertyInfo.DeclaringType.GetGenericTypeDefinition() == typeof(Component<>))
-                {
-                    continue;
-                }
-
-                if (propertyType.BaseType == typeof(MulticastDelegate))
-                {
-                    continue;
-                }
-
-                if (propertyType.IsAbstract && propertyType.IsClass)
-                {
-                    continue;
-                }
-                
-                if (!map.ContainsKey(name))
-                {
-                    map.Add(name, ReflectionHelper.CreateDummyValue(propertyType));
-                }
+                }    
             }
+            
+            
 
             state.JsonTextForDotNetInstanceProperties = JsonSerializer.Serialize(map, new JsonSerializerOptions
             {
                 WriteIndented          = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             });
+            
+            static bool isNumberType(Type type) =>
+                type == typeof(int) ||
+                type == typeof(long) ||
+                type == typeof(decimal) ||
+                type == typeof(byte) ||
+                type == typeof(short) ||
+                type == typeof(decimal) ||
+                type == typeof(double) ||
+                type == typeof(float);
         }
 
         void initializeParametersJson()

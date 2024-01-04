@@ -79,7 +79,7 @@ static class ReflectionHelper
 
                 if (isNumberType(propertyInfo.PropertyType))
                 {
-                    var hasDefaultValue = propertyInfo.GetValue(instance)!.Equals(Activator.CreateInstance(propertyInfo.PropertyType));
+                    var hasDefaultValue = propertyInfo.GetValue(instance)?.Equals(Activator.CreateInstance(propertyInfo.PropertyType))==true;
                     if (hasDefaultValue)
                     {
                         return (isCalculated: true, value: Convert.ChangeType(index, propertyInfo.PropertyType));
@@ -103,22 +103,15 @@ static class ReflectionHelper
             }
         }
 
-        static bool isNumberType(Type type)
-        {
-            if (type == typeof(int) ||
-                type == typeof(long) ||
-                type == typeof(decimal) ||
-                type == typeof(byte) ||
-                type == typeof(short) ||
-                type == typeof(decimal) ||
-                type == typeof(double) ||
-                type == typeof(float))
-            {
-                return true;
-            }
-
-            return false;
-        }
+        static bool isNumberType(Type type) =>
+            type == typeof(int) ||
+            type == typeof(long) ||
+            type == typeof(decimal) ||
+            type == typeof(byte) ||
+            type == typeof(short) ||
+            type == typeof(decimal) ||
+            type == typeof(double) ||
+            type == typeof(float);
 
         static object createImmutableListWithSampleData(Type genericArgumenType)
         {
