@@ -6,13 +6,25 @@ namespace ReactWithDotNet.UIDesigner;
 
 static class ReflectionHelper
 {
-    public static object CreateDefaultValue(Type type)
+    public static object CreateDefaultValue(Type type, int index = 1)
     {
         if (type == typeof(string))
         {
-            return "abc";
+            return "abc"+index;
         }
 
+        if (type == typeof(int)||
+            type == typeof(long)||
+            type == typeof(decimal)||
+            type == typeof(byte)||
+            type == typeof(short)||
+            type == typeof(decimal)||
+            type == typeof(double)||
+            type == typeof(float))
+        {
+            return Convert.ChangeType(index, type);
+        }
+        
         if (type.IsValueType)
         {
             return Activator.CreateInstance(type);
@@ -51,23 +63,25 @@ static class ReflectionHelper
             }
         }
 
-        var instance = Activator.CreateInstance(type);
-
-        foreach (var propertyInfo in type.GetProperties())
         {
-            if (propertyInfo.GetIndexParameters().Length > 0)
+            var instance = Activator.CreateInstance(type);
+
+            foreach (var propertyInfo in type.GetProperties())
             {
-                continue;
+                if (propertyInfo.GetIndexParameters().Length > 0)
+                {
+                    continue;
+                }
+
+                var existingValue = propertyInfo.GetValue(instance);
+                if (existingValue == null)
+                {
+                    propertyInfo.SetValue(instance, CreateDefaultValue(propertyInfo.PropertyType,index));
+                }
             }
 
-            var existingValue = propertyInfo.GetValue(instance);
-            if (existingValue == null)
-            {
-                propertyInfo.SetValue(instance, CreateDefaultValue(propertyInfo.PropertyType));
-            }
+            return instance;
         }
-
-        return instance;
 
         static object createImmutableListWithSampleData(Type genericArgumenType)
         {
@@ -77,8 +91,9 @@ static class ReflectionHelper
                 
             var addMethod = type.GetMethod("Add")!;
 
-            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType)]);
-            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType)]);
+            // ReSharper disable once RedundantArgumentDefaultValue
+            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType,1)]);
+            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType,2)]);
                 
             return immutableList;
         }
