@@ -576,7 +576,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                     if (!map.ContainsKey(name))
                     {
-                        map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));
+                        map.Add(name, ReflectionHelper.CreateDummyValue(propertyType));
                         continue;
                     }
                 }
@@ -606,7 +606,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 
                 if (!map.ContainsKey(name))
                 {
-                    map.Add(name, ReflectionHelper.CreateDefaultValue(propertyType));
+                    map.Add(name, ReflectionHelper.CreateDummyValue(propertyType));
                 }
             }
 
@@ -629,7 +629,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     continue;
                 }
 
-                map.Add(name, ReflectionHelper.CreateDefaultValue(parameterInfo.ParameterType));
+                map.Add(name, ReflectionHelper.CreateDummyValue(parameterInfo.ParameterType));
             }
 
             state.JsonTextForDotNetMethodParameters = JsonSerializer.Serialize(map, new JsonSerializerOptions

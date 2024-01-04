@@ -6,25 +6,18 @@ namespace ReactWithDotNet.UIDesigner;
 
 static class ReflectionHelper
 {
-    public static object CreateDefaultValue(Type type, int index = 1)
+    public static object CreateDummyValue(Type type, int index = 1)
     {
         if (type == typeof(string))
         {
-            return "abc"+index;
+            return "abc" + index;
         }
 
-        if (type == typeof(int)||
-            type == typeof(long)||
-            type == typeof(decimal)||
-            type == typeof(byte)||
-            type == typeof(short)||
-            type == typeof(decimal)||
-            type == typeof(double)||
-            type == typeof(float))
+        if (isNumberType(type))
         {
             return Convert.ChangeType(index, type);
         }
-        
+
         if (type.IsValueType)
         {
             return Activator.CreateInstance(type);
@@ -44,15 +37,15 @@ static class ReflectionHelper
             var genericTypeDefinition = type.GetGenericTypeDefinition();
 
             if (genericTypeDefinition == typeof(ImmutableList<>) ||
-                genericTypeDefinition == typeof(IReadOnlyList<>)||
-                genericTypeDefinition == typeof(ICollection<>)||
+                genericTypeDefinition == typeof(IReadOnlyList<>) ||
+                genericTypeDefinition == typeof(ICollection<>) ||
                 genericTypeDefinition == typeof(IList<>))
             {
                 var genericArgument = type.GetGenericArguments().First();
-                
+
                 return createImmutableListWithSampleData(genericArgument);
             }
-            
+
             if (genericTypeDefinition.GetInterfaces().Contains(typeof(IEnumerable)))
             {
                 var genericArgument = type.GetGenericArguments().FirstOrDefault();
@@ -68,33 +61,77 @@ static class ReflectionHelper
 
             foreach (var propertyInfo in type.GetProperties())
             {
-                if (propertyInfo.GetIndexParameters().Length > 0)
+                var (isCalculated, value) = processProperty(instance, propertyInfo, index);
+                if (isCalculated)
                 {
-                    continue;
-                }
-
-                var existingValue = propertyInfo.GetValue(instance);
-                if (existingValue == null)
-                {
-                    propertyInfo.SetValue(instance, CreateDefaultValue(propertyInfo.PropertyType,index));
+                    propertyInfo.SetValue(instance, value);
                 }
             }
 
             return instance;
+
+            static (bool isCalculated, object value) processProperty(object instance, PropertyInfo propertyInfo, int index)
+            {
+                if (propertyInfo.GetIndexParameters().Length > 0)
+                {
+                    return default;
+                }
+
+                if (isNumberType(propertyInfo.PropertyType))
+                {
+                    var hasDefaultValue = propertyInfo.GetValue(instance) == Activator.CreateInstance(propertyInfo.PropertyType);
+                    if (hasDefaultValue)
+                    {
+                        return (isCalculated: true, value: Convert.ChangeType(index, propertyInfo.PropertyType));
+                    }
+                }
+
+                if (propertyInfo.PropertyType.IsValueType)
+                {
+                    return default;
+                }
+
+                {
+                    var existingValue = propertyInfo.GetValue(instance);
+                    if (existingValue == null)
+                    {
+                        return (isCalculated: true, value: CreateDummyValue(propertyInfo.PropertyType, index));
+                    }
+                }
+
+                return default;
+            }
+        }
+
+        static bool isNumberType(Type type)
+        {
+            if (type == typeof(int) ||
+                type == typeof(long) ||
+                type == typeof(decimal) ||
+                type == typeof(byte) ||
+                type == typeof(short) ||
+                type == typeof(decimal) ||
+                type == typeof(double) ||
+                type == typeof(float))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         static object createImmutableListWithSampleData(Type genericArgumenType)
         {
             var type = typeof(ImmutableList<>).MakeGenericType(genericArgumenType);
-            
+
             var immutableList = type.GetField("Empty", BindingFlags.Static | BindingFlags.Public)!.GetValue(null);
-                
+
             var addMethod = type.GetMethod("Add")!;
 
             // ReSharper disable once RedundantArgumentDefaultValue
-            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType,1)]);
-            immutableList = addMethod.Invoke(immutableList, [CreateDefaultValue(genericArgumenType,2)]);
-                
+            immutableList = addMethod.Invoke(immutableList, [CreateDummyValue(genericArgumenType, 1)]);
+            immutableList = addMethod.Invoke(immutableList, [CreateDummyValue(genericArgumenType, 2)]);
+
             return immutableList;
         }
     }
