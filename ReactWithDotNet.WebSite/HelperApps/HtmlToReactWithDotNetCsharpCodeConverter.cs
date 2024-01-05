@@ -347,12 +347,26 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
                 {
                     htmlNode.Attributes.Remove("xmlns");
                 }
+                
+                if (htmlNode.Attributes.Contains("width") &&
+                    htmlNode.Attributes.Contains("height") && 
+                    htmlNode.Attributes["width"].Value == htmlNode.Attributes["height"].Value)
+                {
+                    htmlNode.Attributes.Add("size",htmlNode.Attributes["width"].Value);
+                    
+                    htmlNode.Attributes.Remove("width");
+                    htmlNode.Attributes.Remove("height");
+                }
             }
 
             if (htmlNode.Name == "svg" || htmlNode.Name == "path")
             {
                 bool isStyleAttribute(HtmlAttribute htmlAttribute)
                 {
+                    if (htmlNode.Name == "svg" && "size".Equals(htmlAttribute.Name,StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
                     if (TryFindProperty(htmlNode.Name, htmlAttribute.Name) is null)
                     {
                         if (typeof(Style).GetProperty(htmlAttribute.Name.Replace("-", ""), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase) is not null)
@@ -893,6 +907,11 @@ static class HtmlToReactWithDotNetCsharpCodeConverter
 
         var success = (string modifierCode) => (true, modifierCode);
 
+        if (tagName == "svg" && name.Equals("size", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
+        {
+            return success($"svg.Size({value})");
+        }
+        
         if (tagName == "svg" && name.Equals("width", StringComparison.OrdinalIgnoreCase) && double.TryParse(value, out _))
         {
             return success($"svg.Width({value})");
