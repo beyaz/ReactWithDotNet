@@ -11,7 +11,29 @@ partial class svg
     ///     svg.height = <paramref name="height" /> + 'px'
     /// </summary>
     public static HtmlElementModifier Height(double height) => Height(height.AsPixel());
+    
+    /// <summary>
+    ///     svg.width = <paramref name="width" /> + 'px'
+    ///     <br/>
+    ///     svg.height = <paramref name="height" /> + 'px'
+    /// </summary>
+    public static HtmlElementModifier Size(double width, double height) => Modify(x =>
+    {
+        x.width = width.AsPixel();
+        x.height = height.AsPixel();
+    });
 
+    /// <summary>
+    ///     svg.width = <paramref name="size" /> + 'px'
+    ///     <br/>
+    ///     svg.height = <paramref name="size" /> + 'px'
+    /// </summary>
+    public static HtmlElementModifier Size(double size) => Modify(x =>
+    {
+        x.width  = size.AsPixel();
+        x.height = size.AsPixel();
+    });
+    
     /// <summary>
     ///     svg.viewBox = '<paramref name="minX" /> <paramref name="minY" /> <paramref name="width" /> <paramref name="height" />'
     /// </summary>
