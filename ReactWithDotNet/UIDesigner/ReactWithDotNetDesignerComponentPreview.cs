@@ -22,20 +22,6 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
         return Task.CompletedTask;
     }
 
-    protected override Task constructor()
-    {
-        state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
-
-        Client.ListenEvent("RefreshComponentPreview", Refresh);
-
-        return Task.CompletedTask;
-    }
-
-    protected override Element render()
-    {
-        return CreateElement(state, Context) + ComponentIndicatorStyle;
-    }
-
     internal static Element CreateElement(ReactWithDotNetDesignerModel state, ReactContext Context)
     {
         try
@@ -158,9 +144,9 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                         var propertyInfo = propertyInfoList.FirstOrDefault(p => p.Name == propertyName);
                         if (propertyInfo is null)
                         {
-                            propertyInfo = propertyInfoList.FirstOrDefault(p => p.Name.Equals(propertyName,StringComparison.OrdinalIgnoreCase)); 
+                            propertyInfo = propertyInfoList.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
                         }
-                        
+
                         if (propertyInfo is not null && propertyInfo.GetIndexParameters().Length == 0)
                         {
                             propertyInfo.SetValue(instance, ArrangeValueForTargetType(propertyValue, propertyInfo.PropertyType));
@@ -258,5 +244,19 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
                 }
             }
         }
+    }
+
+    protected override Task constructor()
+    {
+        state = StateCache.ReadState() ?? new ReactWithDotNetDesignerModel();
+
+        Client.ListenEvent("RefreshComponentPreview", Refresh);
+
+        return Task.CompletedTask;
+    }
+
+    protected override Element render()
+    {
+        return CreateElement(state, Context) + ComponentIndicatorStyle;
     }
 }
