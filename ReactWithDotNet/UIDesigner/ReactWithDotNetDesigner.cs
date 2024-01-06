@@ -1058,7 +1058,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
     {
         var record = GetStyle().FirstOrDefault(x => string.Join(",", x.VisualTreePath) == state.ComponentElementTreeSelectedNodePath);
 
-        return record.Modifiers;
+        return record?.Modifiers;
     }
     
 }

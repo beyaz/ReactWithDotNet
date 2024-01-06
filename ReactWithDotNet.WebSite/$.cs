@@ -1,4 +1,4 @@
-﻿namespace ReactWithDotNet.__designer__; // ReSharper disable All
+namespace ReactWithDotNet.__designer__; // ReSharper disable All
 
 static class Designer
 {
@@ -14,7 +14,7 @@ static class Designer
 
                 Modifiers = new[]
                 {
-                    Background("green"),
+                    Background("yellow"),
                     Padding(0)
                 }
             }
