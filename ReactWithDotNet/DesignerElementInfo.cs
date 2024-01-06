@@ -18,8 +18,11 @@ public sealed class DesignerElementInfo
 
 static class DesignerHelper
 {
-    public static void Override(Type componentType, Element rootNode)
+    public static void Override(Element component, Element rootNode)
     {
+
+        Type componentType = component.GetType();
+            
         var designerType = componentType.Assembly.GetType("ReactWithDotNet.__designer__.Designer");
         if (designerType == null)
         {
@@ -68,7 +71,7 @@ static class DesignerHelper
                 i++;
             }
 
-            if (i <= len)
+            if (i < len)
             {
                 break;
             }
