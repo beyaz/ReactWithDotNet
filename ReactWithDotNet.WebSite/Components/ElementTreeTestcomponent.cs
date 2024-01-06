@@ -8,7 +8,7 @@ class ElementTreeTestcomponent : PureComponent
     {
         return new div(Size(300,300))
         {
-            Designer.GetStyle(this.GetType())[0].modifiers[0],
+            Designer.GetStyle(this.GetType())[0].Modifiers[0],
             new div(Size(250,250))
             {
                 new div(Size(200,200))

@@ -2,19 +2,30 @@
 
 static class Designer
 {
-    public static List<(List<int> treePath, List<StyleModifier> modifiers)> GetStyle(Type type)
+    public static IReadOnlyList<DesignerElementInfo> GetStyle(Type type)
     {
-        if (type == typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent))
+        return new DesignerElementInfo[]
         {
-            return 
-            [
-                ([0],
-                [
+            new DesignerElementInfo()
+            {
+                TargetType = typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent),
+                
+                VisualTreePath = [0],
+                
+                Modifiers = new []
+                {
                     Background("green")
-                ])
-            ];
-        }
-        
-        return null;
+                }
+            }
+        };
     }
+}
+
+public sealed class DesignerElementInfo
+{
+    public Type TargetType { get; set; }
+    
+    public IReadOnlyList<int> VisualTreePath { get; set; }
+    
+    public IReadOnlyList<StyleModifier> Modifiers { get; set; }
 }
