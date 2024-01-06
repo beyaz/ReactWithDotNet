@@ -566,25 +566,33 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                                      
                                      static class Designer
                                      {
-                                         public static IReadOnlyList<DesignerElementInfo> GetStyle(Type type)
+                                         public static IReadOnlyList<DesignerComponentInfo> GetStyle(Type type)
                                          {
-                                             return new DesignerElementInfo[]
+                                             return new DesignerComponentInfo[]
                                              {
                                                  new()
                                                  {
                                                      TargetType = typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent),
                                      
-                                                     VisualTreePath = [0],
+                                                     VisualTree =
+                                                     [
+                                                         new ()
+                                                         {
+                                                             VisualTreePath = [0],
                                      
-                                                     Modifiers = new[]
-                                                     {
-                                                         Background("yellow"),
-                                                         Padding(0)
-                                                     }
+                                                             Modifiers = new[]
+                                                             {
+                                                                 Background("yellow"),
+                                                                 Padding(0)
+                                                             }
+                                                         }
+                                                     ]
                                                  }
                                              };
                                          }
                                      }
+                                     
+                                     
                                      
                                      
                                      """);
