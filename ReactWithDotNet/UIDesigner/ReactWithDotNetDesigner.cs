@@ -912,9 +912,9 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     class StyleSearchInput : Component
     {
-        Element IconSearch => new svg(svg.Size(18), ViewBox(0, 0, 18, 18))
+        Element IconSearch => new svg(svg.Size(18), ViewBox(0, 0, 18, 18),MarginLeftRight(5))
         {
-            new path { d = "M14.8539503,14.1467096 C15.0478453,14.3412138 15.0475893,14.6560006 14.8533783,14.8501892 C14.6592498,15.0442953 14.3445263,15.0442862 14.1504091,14.8501689 L12.020126,12.7261364 C11.066294,13.5214883 9.8390282,14 8.5,14 C5.46243388,14 3,11.5375661 3,8.5 C3,5.46243388 5.46243388,3 8.5,3 C11.5375661,3 14,5.46243388 14,8.5 C14,9.83874333 13.5216919,11.0657718 12.726644,12.0195172 L14.8539503,14.1467096 Z M8.5,13 C10.9852814,13 13,10.9852814 13,8.5 C13,6.01471863 10.9852814,4 8.5,4 C6.01471863,4 4,6.01471863 4,8.5 C4,10.9852814 6.01471863,13 8.5,13 Z" }
+            new path { fill="#dbdde5",  d = "M14.8539503,14.1467096 C15.0478453,14.3412138 15.0475893,14.6560006 14.8533783,14.8501892 C14.6592498,15.0442953 14.3445263,15.0442862 14.1504091,14.8501689 L12.020126,12.7261364 C11.066294,13.5214883 9.8390282,14 8.5,14 C5.46243388,14 3,11.5375661 3,8.5 C3,5.46243388 5.46243388,3 8.5,3 C11.5375661,3 14,5.46243388 14,8.5 C14,9.83874333 13.5216919,11.0657718 12.726644,12.0195172 L14.8539503,14.1467096 Z M8.5,13 C10.9852814,13 13,10.9852814 13,8.5 C13,6.01471863 10.9852814,4 8.5,4 C6.01471863,4 4,6.01471863 4,8.5 C4,10.9852814 6.01471863,13 8.5,13 Z" }
         };
 
         Element IconClose => new svg(svg.Size(18), ViewBox(0, 0, 18, 18))
@@ -935,6 +935,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 {
 
                     IconSearch,
+                    
                     new input
                     {
                         type                     = "text",
@@ -942,13 +943,13 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         valueBindDebounceTimeout = 700,
                         valueBindDebounceHandler = OnTypingFinished,
                         onKeyDown = OnKeyDown,
-                        style                    = { BorderNone, FlexGrow(1) }
+                        style                    = { BorderNone, FlexGrow(1), FontFamily("inherit"), FontSize("inherit") }
                     },
                     IconClose,
 
 
                 },
-                new FlexColumn
+                IsEnterPressedJustBefore ? null : new FlexColumn
                 {
                     GetProperties().Select(ToOption)
                 }
@@ -959,6 +960,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         public int? SelectedSuggestionOffset { get; set; }
 
+        public bool IsEnterPressedJustBefore { get; set; }
+        
 
         IReadOnlyList<PropertyInfo> GetProperties()
         {
@@ -973,7 +976,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 p.Name,
                 
-                index == SelectedSuggestionOffset ? Background("green") : null
+                index == SelectedSuggestionOffset ? Background("#c2ddea") : null
             };
         }
         
@@ -981,6 +984,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         [ReactKeyboardEventCallOnly("ArrowDown","ArrowUp","Enter")]
         Task OnKeyDown(KeyboardEvent e)
         {
+            IsEnterPressedJustBefore = false;
+            
             if (e.key == "ArrowDown")
             {
                 SelectedSuggestionOffset ??= -1;
@@ -997,22 +1002,34 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             
             if (e.key == "Enter")
             {
-                SelectedSuggestionOffset = null;
+                //DispatchEvent(()=>OnChange, GetProperties()[SelectedSuggestionOffset.Value].Name);
+                
+                //SelectedSuggestionOffset = null;
 
-                SelectedSuggestionOffset--;
+                IsEnterPressedJustBefore = true;
+
+                Value = GetProperties()[SelectedSuggestionOffset.Value].Name;
             }
             
             
             return Task.CompletedTask;
         }
+        
+        [ReactCustomEvent]
+        public Func<string,Task> OnChange { get; set; }
+        
 
         Task OnTypingFinished()
         {
             SelectedSuggestionOffset = null;
+            
+            IsEnterPressedJustBefore = false;
             
             return Task.CompletedTask;
         }
 
         public string Value { get; set; }
     }
+    
+    
 }
