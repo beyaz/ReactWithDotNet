@@ -452,11 +452,70 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     Element ComponentInspector()
     {
+        Element elementInstance = null;
+        
+        try
+        {
+            elementInstance = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
+        }
+        catch (Exception exception)
+        {
+            return exception.ToString();
+        }
+        
         return new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionFixed, Right(0), Top(0), Height100vh, Background("yellow"))
         {
-
+            CreateElementTree(elementInstance)
         };
+        
+      
+        
     }
+
+    Element CreateElementTree(Element element)
+    {
+        if (element is null)
+        {
+            return "-";
+        }
+
+       
+        
+        var tree = new FlexColumnCentered
+        {
+            
+        };
+
+        addNode(element,2);
+        
+        return tree;
+        
+        void addNode(Element node, int leftIndent)
+        {
+            if (node is null)
+            {
+                tree.Add(new div(PaddingLeft(leftIndent)){"null"});
+                return;
+            }
+
+            var name = node.GetType().Name;
+            
+            tree.Add(new div(PaddingLeft(leftIndent)){name});
+
+            if (node._children is null)
+            {
+                return;
+            }
+            
+            foreach (var child in node._children)
+            {
+                addNode(child, leftIndent + 2);
+            }
+            
+
+        }
+    }
+    
 
     bool canShowInstanceEditor()
     {
