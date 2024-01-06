@@ -50,6 +50,33 @@ static class DesignerHelper
         
         foreach (var item in record.VisualTree)
         {
+            var node = rootNode;
+            var i = 1;
+            var len = item.VisualTreePath.Count;
+            
+            while (i < len)
+            {
+                var offset = item.VisualTreePath[i];
+
+                if (node is null)
+                {
+                    break;
+                }
+                
+                node = node._children[offset];
+                
+                i++;
+            }
+
+            if (i <= len)
+            {
+                break;
+            }
+
+            foreach (var styleModifier in item.Modifiers)
+            {
+                ModifyHelper.ProcessModifier(node, styleModifier);
+            }
             
         }
     }
