@@ -452,7 +452,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     async Task<Element> ComponentInspector()
     {
-        Element rootNode = null;
+        Element rootNode;
         
         try
         {
