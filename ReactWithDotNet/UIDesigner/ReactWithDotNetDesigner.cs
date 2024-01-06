@@ -509,7 +509,21 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             
             return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
             {
-                new FlexColumn(Gap(5), JustifyContentFlexStart)
+                new FlexRowCentered(Gap(5), Padding(4))
+                {
+                    new FlexRowCentered(PaddingTopBottom(1),PaddingLeftRight(10),BackgroundWhite, BorderRadius(5))
+                    {
+                        "normal",
+                        Border(Solid(1,"#ccf7fc"))
+                    },
+                    
+                    new FlexRowCentered(PaddingTopBottom(1),PaddingLeftRight(10),BackgroundWhite, BorderRadius(5))
+                    {
+                        "hover"
+                    }
+                },
+                
+                new FlexColumn(Gap(5), JustifyContentFlexStart,Padding(5))
                 {
                     DesignerHelper.ToCsharpCode(node.Modifiers).Select(toElement),
                     
@@ -521,6 +535,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
             Element toElement(string csharpLine)
             {
+                return new StyleSearchInput { Value = csharpLine };
+                
                 return new FlexRow(Padding(5), BorderRadius(3), Border(Solid(1,"#d2f8fc")),  Hover(Background("#ececf5")), CursorDefault)
                 {
                     csharpLine,
@@ -944,7 +960,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         Element IconClose => new svg(svg.Size(18), ViewBox(0, 0, 18, 18))
         {
-            new path { fill ="#dbdde5", d = "M8.44 9.5L6 7.06A.75.75 0 1 1 7.06 6L9.5 8.44 11.94 6A.75.75 0 0 1 13 7.06L10.56 9.5 13 11.94A.75.75 0 0 1 11.94 13L9.5 10.56 7.06 13A.75.75 0 0 1 6 11.94L8.44 9.5z" }
+            new path { fill ="#65676b", d = "M8.44 9.5L6 7.06A.75.75 0 1 1 7.06 6L9.5 8.44 11.94 6A.75.75 0 0 1 13 7.06L10.56 9.5 13 11.94A.75.75 0 0 1 11.94 13L9.5 10.56 7.06 13A.75.75 0 0 1 6 11.94L8.44 9.5z" }
         };
         protected override Element render()
         {
@@ -957,7 +973,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                     input:focus { outline:none; }
                     """
                 },
-                new FlexRow(BackgroundWhite, Border(Solid(1, "#dbdde5")), Padding(3), BorderRadius(3))
+                new FlexRow
                 {
 
                     
@@ -968,17 +984,38 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                         valueBind                = () => Value,
                         valueBindDebounceTimeout = 700,
                         valueBindDebounceHandler = OnTypingFinished,
+                        onBlur = OnBlur,
                         onKeyDown = OnKeyDown,
-                        style                    = { BorderNone, PaddingLeft(3), FlexGrow(1), FontFamily("inherit"), FontSize("inherit") }
+                        style                    =
+                        {
+                            BackgroundWhite, Border(Solid(1, "#dbdde5")), Height(30),  BorderRadius(3),
+                            
+                            PaddingLeft(3), FlexGrow(1), FontFamily("inherit"), FontSize("inherit")
+                        }
                     },
                     
                     //IconSearch,
-                    IconClose,
+                    new FlexRowCentered(PaddingLeftRight(10), CursorDefault)
+                    {
+                        "-",
+                        
+                        FontSize19,
+                        FontWeight600,
+                        Border(Solid(1, "#dbdde5")),
+                        Hover(Border(Solid(1, "#bcc4e3")))
+                    }
 
 
                 },
                 Suggestions
             };
+        }
+
+        Task OnBlur(FocusEvent e)
+        {
+            ShowSuggestions = false;
+            
+            return Task.CompletedTask;
         }
 
         Element Suggestions()
@@ -988,11 +1025,18 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 return null;
             }
 
+            var suggestionItemList = GetProperties();
+
+            if (suggestionItemList.Count == 0)
+            {
+                return null;
+            }
+            
             return new FlexColumn(PositionRelative,SizeFull)
             {
                 new FlexColumn(PositionAbsolute,SizeFull, HeightAuto, Background("white"), BoxShadow(0, 6, 6, 0, rgba(22,45,61,.06)),Padding(5), BorderRadius(5))
                 {
-                    GetProperties().Select(ToOption)
+                    suggestionItemList.Select(ToOption)
                 }
             };
         }
