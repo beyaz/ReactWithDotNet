@@ -570,22 +570,27 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                                      
                                      static class Designer
                                      {
-                                         public static List<(List<int> treePath, List<StyleModifier> modifiers)> GetStyle(Type type)
+                                         public static IReadOnlyList<DesignerElementInfo> GetStyle(Type type)
                                          {
-                                             if (type == typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent))
+                                             return new DesignerElementInfo[]
                                              {
-                                                 return 
-                                                 [
-                                                     ([0],
-                                                     [
-                                                         Background("yellow")
-                                                     ])
-                                                 ];
-                                             }
-                                             
-                                             return null;
+                                                 new()
+                                                 {
+                                                     TargetType = typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent),
+                                     
+                                                     VisualTreePath = [0],
+                                     
+                                                     Modifiers = new[]
+                                                     {
+                                                         Background("yellow"),
+                                                         Padding(0)
+                                                     }
+                                                 }
+                                             };
                                          }
                                      }
+                                     
+                                     
                                      """);
         
         
