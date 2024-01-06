@@ -1034,7 +1034,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         public string Value { get; set; }
     }
     
-    List<(List<int> treePath, List<StyleModifier> modifiers)> GetStyle()
+    IReadOnlyList<DesignerElementInfo> GetStyle()
     {
         var type = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context).GetType();
 
@@ -1042,18 +1042,18 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         var getStyleMethodInfo = designerType.GetMethod("GetStyle", BindingFlags.Static | BindingFlags.Public);
 
-        var abc = (List<(List<int> treePath, List<StyleModifier> modifiers)>)getStyleMethodInfo.Invoke(null, [type]);
+        var abc = (IReadOnlyList<DesignerElementInfo>)getStyleMethodInfo.Invoke(null, [type]);
 
 
         return abc;
     }
     
     
-    List<StyleModifier> GetSelectedStyle()
+    IReadOnlyList<StyleModifier> GetSelectedStyle()
     {
-        var record = GetStyle().FirstOrDefault(x => string.Join(",", x.treePath) == state.ComponentElementTreeSelectedNodePath);
+        var record = GetStyle().FirstOrDefault(x => string.Join(",", x.VisualTreePath) == state.ComponentElementTreeSelectedNodePath);
 
-        return record.modifiers;
+        return record.Modifiers;
     }
     
 }

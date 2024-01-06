@@ -6,13 +6,13 @@ static class Designer
     {
         return new DesignerElementInfo[]
         {
-            new DesignerElementInfo()
+            new()
             {
                 TargetType = typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent),
-                
+
                 VisualTreePath = [0],
-                
-                Modifiers = new []
+
+                Modifiers = new[]
                 {
                     Background("green")
                 }
@@ -21,11 +21,3 @@ static class Designer
     }
 }
 
-public sealed class DesignerElementInfo
-{
-    public Type TargetType { get; set; }
-    
-    public IReadOnlyList<int> VisualTreePath { get; set; }
-    
-    public IReadOnlyList<StyleModifier> Modifiers { get; set; }
-}

@@ -1,7 +1,5 @@
 ﻿namespace ReactWithDotNet;
 
-
-
 partial class Mixin
 {
    
