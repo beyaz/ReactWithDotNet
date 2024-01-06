@@ -450,13 +450,17 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         };
     }
 
-    Element ComponentInspector()
+    async Task<Element> ComponentInspector()
     {
         Element elementInstance = null;
         
         try
         {
             elementInstance = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
+            if (elementInstance is PureComponent pureComponent)
+            {
+                elementInstance = await pureComponent.InvokeRender();
+            }
         }
         catch (Exception exception)
         {

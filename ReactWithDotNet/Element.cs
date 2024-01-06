@@ -202,7 +202,7 @@ public abstract class Element : IEnumerable<Element>, IEnumerable<IModifier>
 
     class ToStringHandlerComponent : PureComponent
     {
-        Element _element;
+        readonly Element _element;
 
         public ToStringHandlerComponent(Element element)
         {
