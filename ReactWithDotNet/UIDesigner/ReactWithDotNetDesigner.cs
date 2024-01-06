@@ -950,17 +950,47 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 },
                 new FlexColumn
                 {
-                    typeof(Mixin).GetProperties(BindingFlags. Static | BindingFlags.Public)
-                        .Where(p=>p.Name.Contains(Value+"",StringComparison.OrdinalIgnoreCase))
-                        .Select(p=>new div{p.Name})
-                        .Take(5)
+                    GetProperties().Select(render)
                 }
             };
         }
 
-        [ReactKeyboardEventCallOnly("ESC")]
+        
+        
+        public int? SelectedSuggestionOffset { get; set; }
+
+
+        IReadOnlyList<PropertyInfo> GetProperties()
+        {
+            return typeof(Mixin).GetProperties(BindingFlags.Static | BindingFlags.Public)
+                .Where(p => p.Name.Contains(Value + "", StringComparison.OrdinalIgnoreCase))
+                .Take(5).ToList();
+        }
+        
+        Element render(PropertyInfo p)
+        {
+            return new div { p.Name };
+        }
+        
+        
+        [ReactKeyboardEventCallOnly("ArrowDown")]
         Task OnKeyDown(KeyboardEvent e)
         {
+            if (e.key == "ArrowDown")
+            {
+                SelectedSuggestionOffset ??= -1;
+
+                SelectedSuggestionOffset++;
+            }
+            
+            if (e.key == "ArrowUp")
+            {
+                SelectedSuggestionOffset ??= -1;
+
+                SelectedSuggestionOffset--;
+            }
+            
+            
             return Task.CompletedTask;
         }
 
