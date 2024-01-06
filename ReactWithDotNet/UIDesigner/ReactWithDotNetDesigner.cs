@@ -473,20 +473,22 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             CreateElementTree(rootNode) + FlexGrow(1),
             CreateStyleEditor() + FlexGrow(3)
         };
+        
+        Element CreateStyleEditor()
+        {
+            return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
+            {
+                new FlexColumn(Gap(5), JustifyContentFlexStart)
+                {
+                    new input{type = "text", value = "abc2"},
+                
+                    new StyleSearchInput()
+                }
+            };
+        }
     }
 
-    Element CreateStyleEditor()
-    {
-        return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
-        {
-            new FlexColumn(Gap(5), JustifyContentFlexStart)
-            {
-                new input{type = "text", value = "abc2"},
-                
-                new StyleSearchInput()
-            }
-        };
-    }
+    
     Element CreateElementTree(Element rootNode)
     {
         if (rootNode is null)
