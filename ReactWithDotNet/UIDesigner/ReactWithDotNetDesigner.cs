@@ -445,7 +445,16 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             new div(DisplayFlex, JustifyContentCenter, FlexGrow(1), Padding(7), MarginLeft(40))
             {
                 outputPanel
-            }
+            },
+            ComponentInspector
+        };
+    }
+
+    Element ComponentInspector()
+    {
+        return new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionFixed, Right(0), Top(0), Height100vh, Background("yellow"))
+        {
+
         };
     }
 
