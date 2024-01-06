@@ -12,7 +12,8 @@ static class Designer
                 [
                     TextAlignCenter,
                     DisplayBlock,
-                    BorderRadius(10)
+                    BorderRadius(10),
+                    Hover(BorderRadius(5))
                 ])
             ];
         }
