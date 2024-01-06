@@ -476,9 +476,13 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     Element CreateStyleEditor()
     {
-        return new div(BorderTop("1px dotted #d9d9d9"))
+        return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
         {
-            
+            new FlexColumn(Gap(5))
+            {
+                new input{type = "text", value = "abc"},
+                new input{type = "text", value = "abc2"}
+            }
         };
     }
     Element CreateElementTree(Element rootNode)
