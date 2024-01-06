@@ -1,6 +1,4 @@
-﻿using ReactWithDotNet.__designer__;
-
-namespace ReactWithDotNet.WebSite.Components;
+﻿namespace ReactWithDotNet.WebSite.Components;
 
 class ElementTreeTestcomponent : PureComponent
 {
@@ -8,7 +6,6 @@ class ElementTreeTestcomponent : PureComponent
     {
         return new div(Size(300,300))
         {
-            Designer.GetStyle(this.GetType())[0].Modifiers[0],
             new div(Size(250,250))
             {
                 new div(Size(200,200))
