@@ -467,12 +467,20 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             return exception.ToString();
         }
         
-        return new div(BorderRight("1px dotted #d9d9d9"), Width(300), PositionFixed, Right(0), Top(0), Height100vh, Background("yellow"))
+        return new FlexColumn(BorderLeft("1px dotted #d9d9d9"), Width(300), PositionFixed, Right(0), Top(0), Height100vh)
         {
-            CreateElementTree(rootNode)
+            CreateElementTree(rootNode) + FlexGrow(1),
+            CreateStyleEditor() + FlexGrow(3)
         };
     }
 
+    Element CreateStyleEditor()
+    {
+        return new div(BorderTop("1px dotted #d9d9d9"))
+        {
+            
+        };
+    }
     Element CreateElementTree(Element rootNode)
     {
         if (rootNode is null)
@@ -482,7 +490,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         var tree = new FlexColumn
         {
-            FontFamily("Verdana, sans-serif"), FontSize11, CursorDefault
+            FontFamily("system-ui"), FontSize11, CursorDefault, FontWeight500, FontStyleItalic
         };
 
         addNode(rootNode,2);
@@ -522,7 +530,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 return new div
                 {
                     label,
-                    Hover(BackgroundColor("#f8f8fb"))
+                    Hover(BackgroundColor("#eaeaf1"))
                 };
             }
             
