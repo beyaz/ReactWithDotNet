@@ -33,10 +33,10 @@ public class ReactWithDotNetDesignerComponentPreview : Component<ReactWithDotNet
 
     protected override Element render()
     {
-        return CreateElement() + ComponentIndicatorStyle;
+        return CreateElement(state, Context) + ComponentIndicatorStyle;
     }
 
-    Element CreateElement()
+    internal static Element CreateElement(ReactWithDotNetDesignerModel state, ReactContext Context)
     {
         try
         {
