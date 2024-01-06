@@ -1,16 +1,19 @@
-﻿
-namespace ReactWithDotNet.__designer__; // ReSharper disable All
+﻿namespace ReactWithDotNet.__designer__; // ReSharper disable All
 
 static class Designer
 {
-    public static List<StyleModifier> GetStyle(Type type)
+    public static List<(List<int> treePath, List<StyleModifier> modifiers)> GetStyle(Type type)
     {
         if (type == typeof(ReactWithDotNet.WebSite.Components.GetStartedButton))
         {
-            return
+            return 
             [
-                TextAlignCenter,
-                DisplayBlock
+                ([0],
+                [
+                    TextAlignCenter,
+                    DisplayBlock,
+                    BorderRadius(10)
+                ])
             ];
         }
         
