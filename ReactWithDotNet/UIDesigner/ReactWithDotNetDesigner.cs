@@ -493,11 +493,11 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             FontFamily("system-ui"), FontSize11, CursorDefault, FontWeight500, FontStyleItalic
         };
 
-        addNode(rootNode,2);
+        addNode(rootNode,"0",2);
         
         return tree;
         
-        void addNode(Element node, int leftIndent)
+        void addNode(Element node, string path, int leftIndent)
         {
             var selectedColor = "#e7eaff";
             
@@ -510,6 +510,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             var name = node.GetType().Name;
 
             var treeNode = createNewTreeNode(name);
+
+            treeNode.Add(Data("path", path));
             
             treeNode.Add(PaddingLeft(leftIndent));
             
@@ -519,10 +521,15 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             {
                 return;
             }
-            
+
+            var childIndex = 0;
             foreach (var child in node._children)
             {
-                addNode(child, leftIndent + 8);
+                var newPath = path + "," + childIndex;
+                
+                addNode(child, newPath, leftIndent + 8);
+                
+                childIndex++;
             }
 
             static Element createNewTreeNode(string label)
