@@ -69,7 +69,7 @@ static class DesignerHelper
 
     static IReadOnlyList<DesignerComponentInfo> ReadFromAssembly(Assembly assembly)
     {
-        var cacheKey = assembly.FullName;
+        var cacheKey = assembly.GetName().Name;
 
         var item = Cache.FirstOrDefault(x => x.assemblyFullName == cacheKey);
 
