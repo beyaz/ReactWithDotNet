@@ -499,8 +499,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         void addNode(Element node, string path, int leftIndent)
         {
-            var selectedColor = "#e7eaff";
-            
             if (node is null)
             {
                 tree.Add(new div(PaddingLeft(leftIndent)){"null"});
@@ -512,6 +510,12 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             var treeNode = createNewTreeNode(name);
 
             treeNode.Add(Data("path", path));
+            treeNode.onClick = OnComponentElementTreeNodeClicked;
+
+            if (path == state.ComponentElementTreeSelectedNodePath)
+            {
+                treeNode.Add(BackgroundColor("#e7eaff"));
+            }
             
             treeNode.Add(PaddingLeft(leftIndent));
             
@@ -532,17 +536,26 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
                 childIndex++;
             }
 
-            static Element createNewTreeNode(string label)
+            static HtmlElement createNewTreeNode(string label)
             {
                 return new div
                 {
                     label,
-                    Hover(BackgroundColor("#eaeaf1"))
+                    Hover(BackgroundColor("#f4f5fe"))
                 };
             }
             
 
         }
+    }
+
+    Task OnComponentElementTreeNodeClicked(MouseEvent e)
+    {
+        state.ComponentElementTreeSelectedNodePath = e.currentTarget.data["path"];
+        
+        SaveState();
+        
+        return Task.CompletedTask; 
     }
     
 

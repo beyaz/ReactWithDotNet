@@ -14,7 +14,16 @@ class ElementTreeTestcomponent : PureComponent
                     {
                         new label
                         {
-                            "abc"
+                            "abc0"
+                        },
+                        new label
+                        {
+                            "abc1"
+                        },
+                        
+                        new label
+                        {
+                            "abc2"
                         }
                     }
                 }
