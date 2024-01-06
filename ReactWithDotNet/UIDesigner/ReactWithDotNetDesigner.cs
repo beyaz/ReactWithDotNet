@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel;
+using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -62,6 +63,23 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
         Client.ListenEvent("ComponentPreviewRefreshed", OnComponentPreviewRefreshed);
 
+        Client.ListenEvent<OnDesignerManagedStyleChanged>(OnDesignerManagedStyleChangeHandler);
+        
+        return Task.CompletedTask;
+    }
+
+    Task OnDesignerManagedStyleChangeHandler(string newvalue)
+    {
+
+        var component = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context);
+
+        var r = DesignerHelper.GetComponentInfo(component);
+
+        r.VisualTree[0].Modifiers = new List<StyleModifier>{   Background("blue"),
+            PaddingLeft(0)};
+        
+        Client.RefreshComponentPreview();
+        
         return Task.CompletedTask;
     }
 
@@ -1084,6 +1102,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
                 ShowSuggestions = false;
 
+                Client.DispatchEvent<OnDesignerManagedStyleChanged>("Background(\"yellow\")");
+                
                 Value = GetProperties()[SelectedSuggestionOffset.Value].Name;
             }
             
@@ -1091,8 +1111,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             return Task.CompletedTask;
         }
         
-        [ReactCustomEvent]
-        public Func<string,Task> OnChange { get; set; }
+
         
 
         Task OnTypingFinished()
@@ -1108,7 +1127,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         public string Value { get; set; }
     }
-    
-   
-    
+
+    delegate Task OnDesignerManagedStyleChanged(string newValue);
+
 }
