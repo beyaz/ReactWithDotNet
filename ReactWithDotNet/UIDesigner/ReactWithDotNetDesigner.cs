@@ -482,7 +482,7 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         var tree = new FlexColumn
         {
-            
+            FontFamily("Verdana, sans-serif"), FontSize11, CursorDefault
         };
 
         addNode(rootNode,2);
@@ -491,6 +491,8 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         
         void addNode(Element node, int leftIndent)
         {
+            var selectedColor = "#e7eaff";
+            
             if (node is null)
             {
                 tree.Add(new div(PaddingLeft(leftIndent)){"null"});
@@ -498,8 +500,12 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             }
 
             var name = node.GetType().Name;
+
+            var treeNode = createNewTreeNode(name);
             
-            tree.Add(new div(PaddingLeft(leftIndent)){name});
+            treeNode.Add(PaddingLeft(leftIndent));
+            
+            tree.Add(treeNode);
 
             if (node._children is null)
             {
@@ -508,7 +514,16 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             
             foreach (var child in node._children)
             {
-                addNode(child, leftIndent + 2);
+                addNode(child, leftIndent + 8);
+            }
+
+            static Element createNewTreeNode(string label)
+            {
+                return new div
+                {
+                    label,
+                    Hover(BackgroundColor("#f8f8fb"))
+                };
             }
             
 
