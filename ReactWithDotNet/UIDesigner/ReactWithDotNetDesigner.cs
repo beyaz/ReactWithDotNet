@@ -536,15 +536,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
             Element toElement(string csharpLine)
             {
                 return new StyleSearchInput { Value = csharpLine };
-                
-                return new FlexRow(Padding(5), BorderRadius(3), Border(Solid(1,"#d2f8fc")),  Hover(Background("#ececf5")), CursorDefault)
-                {
-                    csharpLine,
-                    BackgroundImage("linear-gradient(0deg, #FFFFFF 0%, #F3FEFF 100%)")
-                    // background-color: #D9AFD9;
-                    // background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
-                    // 
-                };
             }
         }
     }
