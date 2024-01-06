@@ -32,7 +32,6 @@ static class DesignerHelper
         {
             throw new MissingMemberException("componentInformationListPropertyInfo");
         }
-        
 
         return (IReadOnlyList<DesignerComponentInfo>)componentInformationListPropertyInfo.GetValue(null);
     }
