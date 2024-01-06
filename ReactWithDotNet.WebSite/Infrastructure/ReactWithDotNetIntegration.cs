@@ -49,7 +49,7 @@ static class ReactWithDotNetIntegration
     [Conditional("DEBUG")]
     static void RegisterReactWithDotNetDevelopmentTools(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/" + nameof(ReactWithDotNetDesigner), httpContext =>
+        endpoints.MapGet("/$", httpContext =>
         {
             ReactWithDotNetDesigner.IsAttached = true;
 
