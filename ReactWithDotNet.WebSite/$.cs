@@ -14,7 +14,7 @@ static class Designer
 
                 Modifiers = new[]
                 {
-                    Background("yellow"),
+                    Background("green"),
                     Padding(0)
                 }
             }
