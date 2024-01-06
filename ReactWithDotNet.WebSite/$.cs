@@ -2,21 +2,27 @@ namespace ReactWithDotNet.__designer__; // ReSharper disable All
 
 static class Designer
 {
-    public static IReadOnlyList<DesignerElementInfo> GetStyle(Type type)
+    public static IReadOnlyList<DesignerComponentInfo> GetStyle(Type type)
     {
-        return new DesignerElementInfo[]
+        return new DesignerComponentInfo[]
         {
             new()
             {
                 TargetType = typeof(ReactWithDotNet.WebSite.Components.ElementTreeTestcomponent),
 
-                VisualTreePath = [0],
+                VisualTree =
+                [
+                    new ()
+                    {
+                        VisualTreePath = [0],
 
-                Modifiers = new[]
-                {
-                    Background("green"),
-                    Padding(0)
-                }
+                        Modifiers = new[]
+                        {
+                            Background("green"),
+                            Padding(0)
+                        }
+                    }
+                ]
             }
         };
     }

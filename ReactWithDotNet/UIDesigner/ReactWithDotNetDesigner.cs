@@ -477,14 +477,10 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
 
     Element CreateStyleEditor()
     {
-        var abc = GetSelectedStyle();
-        
-        
         return new FlexColumn(BorderTop("1px dotted #d9d9d9"))
         {
             new FlexColumn(Gap(5), JustifyContentFlexStart)
             {
-                new input{type = "text", value = new Style(abc).ToCss()},
                 new input{type = "text", value = "abc2"},
                 
                 new StyleSearchInput()
@@ -1039,26 +1035,6 @@ public class ReactWithDotNetDesigner : Component<ReactWithDotNetDesignerModel>
         public string Value { get; set; }
     }
     
-    IReadOnlyList<DesignerElementInfo> GetStyle()
-    {
-        var type = ReactWithDotNetDesignerComponentPreview.CreateElement(state, Context).GetType();
-
-        var designerType = type.Assembly.GetType("ReactWithDotNet.__designer__.Designer");
-
-        var getStyleMethodInfo = designerType.GetMethod("GetStyle", BindingFlags.Static | BindingFlags.Public);
-
-        var abc = (IReadOnlyList<DesignerElementInfo>)getStyleMethodInfo.Invoke(null, [type]);
-
-
-        return abc;
-    }
-    
-    
-    IReadOnlyList<StyleModifier> GetSelectedStyle()
-    {
-        var record = GetStyle().FirstOrDefault(x => string.Join(",", x.VisualTreePath) == state.ComponentElementTreeSelectedNodePath);
-
-        return record?.Modifiers;
-    }
+   
     
 }
